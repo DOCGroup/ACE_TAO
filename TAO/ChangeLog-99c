@@ -1,706 +1,713 @@
+Sun Oct 10 09:17:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/ORB_Core.cpp (~TAO_ORB_Core): don't delete poa_current_
+          on LynxOS/ppc, to avoid a seg fault on ORB shutdown.  This
+          is a temporary hack, until we find the root cause of the
+          problem. [Bug 93]
+
 Sun Oct 10 01:16:31 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	  use TAO_debug_level to print debug messages conditionally.
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+          use TAO_debug_level to print debug messages conditionally.
 
 Sun Oct 10 01:11:47 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/examples/Log/Client/Makefile:
-	* orbsvcs/examples/Log/Client/TLS_Client.cpp:
-	* orbsvcs/examples/Log/Client/TLS_Client.h:
-	* orbsvcs/examples/Log/Client/main.cpp:
-	  Added a simple example to show how to create a Log object and use it.
-	* orbsvcs/Logging_Service/README:
-	  README to describe the Logging service.
+        * orbsvcs/examples/Log/Client/Makefile:
+        * orbsvcs/examples/Log/Client/TLS_Client.cpp:
+        * orbsvcs/examples/Log/Client/TLS_Client.h:
+        * orbsvcs/examples/Log/Client/main.cpp:
+          Added a simple example to show how to create a Log object and use it.
+        * orbsvcs/Logging_Service/README:
+          README to describe the Logging service.
 
 Sat Oct  9 20:36:16 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  added "Log" to the orbsvcs build.
-	* orbsvcs/Makefile:
-	  added the <Logging_Service> directory to compile.
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	  added explicit template instantiation macros
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	  used ACE_UINT64_FORMAT_SPECIFIER to sprintf ulonglong.
+        * orbsvcs/orbsvcs/Makefile:
+          added "Log" to the orbsvcs build.
+        * orbsvcs/Makefile:
+          added the <Logging_Service> directory to compile.
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+          added explicit template instantiation macros
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+          used ACE_UINT64_FORMAT_SPECIFIER to sprintf ulonglong.
 
 Sat Oct  9 14:29:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Reply_Dispatcher.{h,i,cpp}:
-	* tao/Asynch_Invocation.{h,i.cpp}:
-	  Added some #if !defined (TAO_HAS_MINIMUM_CORBA)
-	  guards that I had overlooked.
+        * tao/Reply_Dispatcher.{h,i,cpp}:
+        * tao/Asynch_Invocation.{h,i.cpp}:
+          Added some #if !defined (TAO_HAS_MINIMUM_CORBA)
+          guards that I had overlooked.
 
 Sat Oct 09 14:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/MessagingC.h: Added the collocation function and
-	  removed the unnecessary implementation of constructor
-	  and destructor of the the ExceptionHolder in the header file.
+        * tao/MessagingC.h: Added the collocation function and
+          removed the unnecessary implementation of constructor
+          and destructor of the the ExceptionHolder in the header file.
 
 Fri Oct  8 23:00:49 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Log_i.h:
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
-	* orbsvcs/orbsvcs/Log/Iterator_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
-	* orbsvcs/orbsvcs/Log/Log_i.cpp:
-	* orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
-	* orbsvcs/orbsvcs/Log/BasicLog_i.h:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.h:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
-	* orbsvcs/orbsvcs/Log/Log_i.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp:
-	  minor corrections.
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.cpp:
+        * orbsvcs/orbsvcs/Log/Iterator_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogMgr_i.cpp:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.cpp:
+        * orbsvcs/orbsvcs/Log/Log_i.cpp:
+        * orbsvcs/orbsvcs/Log/BasicLogFactory_i.h:
+        * orbsvcs/orbsvcs/Log/BasicLog_i.h:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.h:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Log/Log_i.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.cpp:
+          minor corrections.
 
 Fri Oct  8 19:55:31 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/MProfile/server.cpp:
-	* tests/MProfile/client.cpp:
-	* tests/MProfile/README: The server is made persistent. The client
-	  now makes the calls in a loop. At the end of the loop the
-	  primary is shutdown. They were made this way to help me with the
-	  DOORS stuff.
+        * tests/MProfile/server.cpp:
+        * tests/MProfile/client.cpp:
+        * tests/MProfile/README: The server is made persistent. The client
+          now makes the calls in a loop. At the end of the loop the
+          primary is shutdown. They were made this way to help me with the
+          DOORS stuff.
 
 Fri Oct  8 19:30:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Asynch_Invocation.{h,i,cpp}:
-	* tao/Reply_Dispatcher.{h,i,cpp}:
-	* tao/Request.{h,cpp}:
-	* tao/MessagingC.h:
-	* tao/Stub.{h,cpp}:
-	  Removed the #if defined (TAO_HAS_AMI_CALLBACK)
-	  || defined (TAO_HAS_AMI_POLLER) from around the
-	  deferred synchoronous code checked in earlier. It doesn't
-	  use AMI callbacks or pollers.
+        * tao/Asynch_Invocation.{h,i,cpp}:
+        * tao/Reply_Dispatcher.{h,i,cpp}:
+        * tao/Request.{h,cpp}:
+        * tao/MessagingC.h:
+        * tao/Stub.{h,cpp}:
+          Removed the #if defined (TAO_HAS_AMI_CALLBACK)
+          || defined (TAO_HAS_AMI_POLLER) from around the
+          deferred synchoronous code checked in earlier. It doesn't
+          use AMI callbacks or pollers.
 
 Fri Oct  8 18:16:18 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/Naming_Service/Naming_Service.cpp (run):
-	  Removed code to destroy poa to avoid double deletion,
-	  since TAO_ORB_Manager does it for us in its destructor.  Thanks
-	  to Martin Krumpolec <krumpo@pobox.sk> for reporting the problem,
-	  and to Irfan for helping me realize that I fixed this problem
-	  long time ago but never committed the fix.
+        * orbsvcs/Naming_Service/Naming_Service.cpp (run):
+          Removed code to destroy poa to avoid double deletion,
+          since TAO_ORB_Manager does it for us in its destructor.  Thanks
+          to Martin Krumpolec <krumpo@pobox.sk> for reporting the problem,
+          and to Irfan for helping me realize that I fixed this problem
+          long time ago but never committed the fix.
 
 Fri Oct 08 12:05:03 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Messaging_Policy_i.h (SyncScopePolicy): Added
-	  TAO_Sync_Scope_Policy, an implementation for the Messaging
-	  SyncScopePolicy.
+        * tao/Messaging_Policy_i.h (SyncScopePolicy): Added
+          TAO_Sync_Scope_Policy, an implementation for the Messaging
+          SyncScopePolicy.
 
-	* tao/Messaging.pidl: Added TAO specific SYNC_FLUSH option to the
-	  SyncScope policy defined in the Messaging specification.  This
-	  allows the user to flush any queue messages on this connection.
+        * tao/Messaging.pidl: Added TAO specific SYNC_FLUSH option to the
+          SyncScope policy defined in the Messaging specification.  This
+          allows the user to flush any queue messages on this connection.
 
-	* tao/TAO.pidl (BufferingConstraintPolicy): Added new policy for
-	  selecting parameters for buffering.  This includes buffering
-	  constraints based on timeouts, message counts, and/or message
-	  bytes.  This policy comes into effect with the selection of the
-	  SYNC_NONE option for the SyncScope policy defined in the
-	  Messaging specification.
+        * tao/TAO.pidl (BufferingConstraintPolicy): Added new policy for
+          selecting parameters for buffering.  This includes buffering
+          constraints based on timeouts, message counts, and/or message
+          bytes.  This policy comes into effect with the selection of the
+          SYNC_NONE option for the SyncScope policy defined in the
+          Messaging specification.
 
-	  Also added the respective stubs and skeletons.
+          Also added the respective stubs and skeletons.
 
-	  The stub and skeleton files were missing TAO_HAS_CORBA_MESSAGING
-	  guards.  Those files and Client_Priority_Policy.* should be
-	  fixed now.
+          The stub and skeleton files were missing TAO_HAS_CORBA_MESSAGING
+          guards.  Those files and Client_Priority_Policy.* should be
+          fixed now.
 
-	  Buffering_Constraint_Policy.* contain code for the servant
-	  implementation for this policy.
+          Buffering_Constraint_Policy.* contain code for the servant
+          implementation for this policy.
 
-	* tao/orbconf.h (TAO_BUFFERING_CONSTRAINT_POLICY_TYPE): Added
-	  policy type constant for new (TAO specific) buffer constraint
-	  policy.
+        * tao/orbconf.h (TAO_BUFFERING_CONSTRAINT_POLICY_TYPE): Added
+          policy type constant for new (TAO specific) buffer constraint
+          policy.
 
-	* tao: Added support the SyncScope and the BufferingContraint
-	  policies to the following Stub, ORB, and ORB_Core.
+        * tao: Added support the SyncScope and the BufferingContraint
+          policies to the following Stub, ORB, and ORB_Core.
 
-	* tao/Sync_Strategies: This new files contains three strategies
-	  for dealing with oneway invocations.
-	  TAO_Transport_Sync_Strategy synchronizes with the transport
-	  layer. TAO_None_Sync_Strategy buffers oneways till some
-	  buffering constraints are met. TAO_Flush_Sync_Strategy flushes
-	  any queued message to the transport layer.
+        * tao/Sync_Strategies: This new files contains three strategies
+          for dealing with oneway invocations.
+          TAO_Transport_Sync_Strategy synchronizes with the transport
+          layer. TAO_None_Sync_Strategy buffers oneways till some
+          buffering constraints are met. TAO_Flush_Sync_Strategy flushes
+          any queued message to the transport layer.
 
-	* tao/{U,I}IOP_Transport.cpp (send): If we have a valid stub, use
-	  the sync strategy to send the data.  Only clients have valid
-	  stubs; server don't.
+        * tao/{U,I}IOP_Transport.cpp (send): If we have a valid stub, use
+          the sync strategy to send the data.  Only clients have valid
+          stubs; server don't.
 
-	* tao/Invocation.cpp (invoke): Invocation class now provides the
-	  stub to the transport.  This can be used to find the correct
-	  Sync Strategy to use.
+        * tao/Invocation.cpp (invoke): Invocation class now provides the
+          stub to the transport.  This can be used to find the correct
+          Sync Strategy to use.
 
-	* tao/GIOP.cpp (send_message): This message now takes an
-	  additional <stub> parameter.
+        * tao/GIOP.cpp (send_message): This message now takes an
+          additional <stub> parameter.
 
-	* tao/Pluggable.h (TAO_Transport): Added a message queue pointer
-	  to the base class.  This queue is created on demand. Also added
-	  new <send> and <send_request> methods that take a stub pointer
-	  as an additional parameter.
+        * tao/Pluggable.h (TAO_Transport): Added a message queue pointer
+          to the base class.  This queue is created on demand. Also added
+          new <send> and <send_request> methods that take a stub pointer
+          as an additional parameter.
 
-	* examples/Buffered_Oneways: This is a simple test for buffered
-	  oneways.  It invokes multiple oneway calls.  Due to buffering in
-	  the ORB, the calls are automatically bunched together instead of
-	  being delivered to the server upon every invocation.
+        * examples/Buffered_Oneways: This is a simple test for buffered
+          oneways.  It invokes multiple oneway calls.  Due to buffering in
+          the ORB, the calls are automatically bunched together instead of
+          being delivered to the server upon every invocation.
 
-	* tao/Typecode.i (equal): If the two pointers <this> and <tc> are
-	  the same, immediately return true.  Thanks to Carlos for helping
-	  with this.
+        * tao/Typecode.i (equal): If the two pointers <this> and <tc> are
+          the same, immediately return true.  Thanks to Carlos for helping
+          with this.
 
-	* tao/Policy_Manager.cpp: Added code for the two new policies,
-	  BufferingConstraintPolicy and SyncScope. Also code for the
-	  Client Priority policy was missing from <copy_from>.  This was
-	  fixed.
+        * tao/Policy_Manager.cpp: Added code for the two new policies,
+          BufferingConstraintPolicy and SyncScope. Also code for the
+          Client Priority policy was missing from <copy_from>.  This was
+          fixed.
 
-	* tao/TimeBase.pidl: Added missing #pragma prefix "" at the end of
-	  the file.  Otherwise, any file including TimeBase.pidl got the
-	  "omg.org" prefix.
+        * tao/TimeBase.pidl: Added missing #pragma prefix "" at the end of
+          the file.  Otherwise, any file including TimeBase.pidl got the
+          "omg.org" prefix.
 
 Fri Oct  8 11:28:54 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/orbsvcs.dsp:
-	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
-	  Added the new Trader files to orbsvcs - Interpreter.cpp,
-	  Trader_Constraint_Visitors.cpp, Interpreter_Utils_T.cpp
-	  , Interpreter_Utils.cpp
+        * orbsvcs/orbsvcs/orbsvcs.dsp:
+        * orbsvcs/orbsvcs/orbsvcs_static.dsp:
+          Added the new Trader files to orbsvcs - Interpreter.cpp,
+          Trader_Constraint_Visitors.cpp, Interpreter_Utils_T.cpp
+          , Interpreter_Utils.cpp
 
 Fri Oct  8 11:25:21 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Request.h:
-	* tao/Request.cpp:
-	  Implementation of the DII send_deferred(), get_response(),
-	  and poll_response() methods. The Request passed its this
-	  pointer to a new method in the stub called do_deferred_call(),
-	  described below. get_response() blocks until the reply is
-	  received. poll_response() is used to minimize that blocking.
-	  New method called handle_response() gets the CDR from
-	  the reply dispatcher and does the appropriate thing. If the
-	  request's NVList has the lazy_evaluation flag set (a recent
-	  addition by Carlos), get_reponse() will decode the stream
-	  at the last moment.
+        * tao/Request.h:
+        * tao/Request.cpp:
+          Implementation of the DII send_deferred(), get_response(),
+          and poll_response() methods. The Request passed its this
+          pointer to a new method in the stub called do_deferred_call(),
+          described below. get_response() blocks until the reply is
+          received. poll_response() is used to minimize that blocking.
+          New method called handle_response() gets the CDR from
+          the reply dispatcher and does the appropriate thing. If the
+          request's NVList has the lazy_evaluation flag set (a recent
+          addition by Carlos), get_reponse() will decode the stream
+          at the last moment.
 
-	* tao/Stub.h:
-	* tao/Stub.cpp:
-	  New method do_deferred_call() creates a new kind of
-	  invocation called TAO_GIOP_DII_Deferred_Invocation,
-	  described below, passes along the request pointer, calls
-	  invoke() and returns without blocking.
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+          New method do_deferred_call() creates a new kind of
+          invocation called TAO_GIOP_DII_Deferred_Invocation,
+          described below, passes along the request pointer, calls
+          invoke() and returns without blocking.
 
-	* tao/Asynch_Invocation.h:
-	* tao/Asynch_Invocation.i:
-	* tao/Asynch_Invocation.cpp:
-	  TAO_GIOP_DII_Deferred_Invocation creates a new
-	  kind of reply dispatcher, TAO_DII_Deferred_Reply_Dispatcher,
-	  described below, passing along the request pointer.
+        * tao/Asynch_Invocation.h:
+        * tao/Asynch_Invocation.i:
+        * tao/Asynch_Invocation.cpp:
+          TAO_GIOP_DII_Deferred_Invocation creates a new
+          kind of reply dispatcher, TAO_DII_Deferred_Reply_Dispatcher,
+          described below, passing along the request pointer.
 
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.i:
-	* tao/Reply_Dispatcher.cpp:
- 	  TAO_DII_Deferred_Reply_Dispatcher uses the request
-	  pointer in place of a reply handler, and the handle_response()
-	  method in class CORBA_Request in place of the reply stub.
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.i:
+        * tao/Reply_Dispatcher.cpp:
+          TAO_DII_Deferred_Reply_Dispatcher uses the request
+          pointer in place of a reply handler, and the handle_response()
+          method in class CORBA_Request in place of the reply stub.
 
-	* tao/Object.cpp:
-	  In order for get_response() to block, class CORBA_Request needs a
-	  pointer to its orb, which it never had before. The request
-	  creation methods in class CORBA_Object now grab and orb
-	  pointer and pass it to the request's constuctor.
+        * tao/Object.cpp:
+          In order for get_response() to block, class CORBA_Request needs a
+          pointer to its orb, which it never had before. The request
+          creation methods in class CORBA_Object now grab and orb
+          pointer and pass it to the request's constuctor.
 
 Fri Oct 08 10:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/Makefile: Updated dependencies.
+        * TAO_IDL/Makefile: Updated dependencies.
 
-	* TAO_IDL/be/be_interface_strategy.cpp: Added a new strategy
-	  to suppor the generation of AMI interfaces. A forward declaration
-	  of the AMI Handler is generated.
+        * TAO_IDL/be/be_interface_strategy.cpp: Added a new strategy
+          to suppor the generation of AMI interfaces. A forward declaration
+          of the AMI Handler is generated.
 
-	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp: The visit_scope () method
-	  now makes a copy of the list to have it not be influenced by
-	  newly added nodes.
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp: The visit_scope () method
+          now makes a copy of the list to have it not be influenced by
+          newly added nodes.
 
-	* TAO_IDL/be/be_visitor_interface.cpp,
-	  TAO_IDL/be/be_visitor_factory.cpp: Added new interface visitor.
+        * TAO_IDL/be/be_visitor_interface.cpp,
+          TAO_IDL/be/be_visitor_factory.cpp: Added new interface visitor.
 
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
-	  TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	  Removed AMI dependencies.
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp,
+          TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+          Removed AMI dependencies.
 
-	* TAO_IDL/be/be_visitor_module/module.cpp,
-	  TAO_IDL/be/be_visitor_root/root.cpp:
-	  Added hooks, which trigger additional code generation.
+        * TAO_IDL/be/be_visitor_module/module.cpp,
+          TAO_IDL/be/be_visitor_root/root.cpp:
+          Added hooks, which trigger additional code generation.
 
-	* TAO_IDL/be_include/be_interface_strategy.h:
-	  New strategy to trigger the generation of forward declarations.
+        * TAO_IDL/be_include/be_interface_strategy.h:
+          New strategy to trigger the generation of forward declarations.
 
-	* TAO_IDL/be_include/be_codegen.h: Added a new state
-	  and removed old AMI states.
+        * TAO_IDL/be_include/be_codegen.h: Added a new state
+          and removed old AMI states.
 
-	* TAO_IDL/be_include/be_visitor_interface.h: Added a visitor
-	  for AMI interfaces to generate forward declarations.
+        * TAO_IDL/be_include/be_visitor_interface.h: Added a visitor
+          for AMI interfaces to generate forward declarations.
 
-	* TAO_IDL/include/ast_module.h: Changed the behavior of the
-	  be_add_interface () method to insert the new node *after*
-	  the given node and not *before* it.
+        * TAO_IDL/include/ast_module.h: Changed the behavior of the
+          be_add_interface () method to insert the new node *after*
+          the given node and not *before* it.
 
-	* TAO_IDL/include/utl_scope.h,
-	  TAO_IDL/util/utl_scope.cpp:
-	  Changed the behavior of the add_referenced () and add_decl ()
-	  method to add the new reference/decl *after* the given
-	  decl, instead of inserting it *before* it.
+        * TAO_IDL/include/utl_scope.h,
+          TAO_IDL/util/utl_scope.cpp:
+          Changed the behavior of the add_referenced () and add_decl ()
+          method to add the new reference/decl *after* the given
+          decl, instead of inserting it *before* it.
 
-	* tests/AMI/ami_test.idl: Activated the the shutdown ()
-	  operation.
+        * tests/AMI/ami_test.idl: Activated the the shutdown ()
+          operation.
 
 Thu Oct  7 14:54:01 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/Logging_Service/Logging_Service.h:
-	* orbsvcs/Logging_Service/Logging_Service.cpp:
-	* orbsvcs/Logging_Service/Makefile:
-	  Added the Telecom Log Service's front end files.
-	* orbsvcs/orbsvcs/Makefile:
-	  Added a "Log" section for the Log Service.
+        * orbsvcs/Logging_Service/Logging_Service.h:
+        * orbsvcs/Logging_Service/Logging_Service.cpp:
+        * orbsvcs/Logging_Service/Makefile:
+          Added the Telecom Log Service's front end files.
+        * orbsvcs/orbsvcs/Makefile:
+          Added a "Log" section for the Log Service.
 
 Thu Oct  7 13:14:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Any.h:
-	* tao/Any.cpp:
-	* tao/GIOP_Server_Request.h:
-	* tao/GIOP_Server_Request.i:
-	* tao/GIOP_Server_Request.cpp:
-	* tao/NVList.h:
-	* tao/NVList.i:
-	* tao/NVList.cpp:
-	* tao/Request.h:
-	* tao/Request.i:
-	* tao/Request.cpp:
-	* tao/Server_Request.h:
-	* tao/Stub.h:
-	* tao/Stub.cpp:
-	  The implementation of efficient DSI/DII gateways is trickier
-	  than i first thought. The problem is that the spec supports the
-	  following use case:
-	  + Initialize an Any with some user provided variable.
-	  + Put the Any into an NVList
-	  + Use the NVList in a Server_Request.
-	  + The argument should be in the user variable after that.
-	  Obviously lazy evaluation does not work in that case, because
-	  the user does not invoke any operation after the invocation.
-	  I have changed the code to use lazy evaluation *only* if a flag
-	  is set, this flag is controlled by the application developer
-	  using a TAO extension.  Later we could figure out an automatic
-	  way to set the flag.
-	  Finally i simplified the marshaling and demarshaling of
-	  arguments into Anys, by moving the code into the Any class, and
-	  out of Stub, NVList, Request and other places it was spread
-	  over.
-	  I also fixed a couple of latent bugs with the implementations of
-	  Any demarshaling.
+        * tao/Any.h:
+        * tao/Any.cpp:
+        * tao/GIOP_Server_Request.h:
+        * tao/GIOP_Server_Request.i:
+        * tao/GIOP_Server_Request.cpp:
+        * tao/NVList.h:
+        * tao/NVList.i:
+        * tao/NVList.cpp:
+        * tao/Request.h:
+        * tao/Request.i:
+        * tao/Request.cpp:
+        * tao/Server_Request.h:
+        * tao/Stub.h:
+        * tao/Stub.cpp:
+          The implementation of efficient DSI/DII gateways is trickier
+          than i first thought. The problem is that the spec supports the
+          following use case:
+          + Initialize an Any with some user provided variable.
+          + Put the Any into an NVList
+          + Use the NVList in a Server_Request.
+          + The argument should be in the user variable after that.
+          Obviously lazy evaluation does not work in that case, because
+          the user does not invoke any operation after the invocation.
+          I have changed the code to use lazy evaluation *only* if a flag
+          is set, this flag is controlled by the application developer
+          using a TAO extension.  Later we could figure out an automatic
+          way to set the flag.
+          Finally i simplified the marshaling and demarshaling of
+          arguments into Anys, by moving the code into the Any class, and
+          out of Stub, NVList, Request and other places it was spread
+          over.
+          I also fixed a couple of latent bugs with the implementations of
+          Any demarshaling.
 
-	* tests/DSI_Gateway/test_dsi.cpp:
-	  Use the new TAO extensions to enable lazy evaluation.
+        * tests/DSI_Gateway/test_dsi.cpp:
+          Use the new TAO extensions to enable lazy evaluation.
 
-	* tests/DSI_Gateway/run_test.pl:
-	  Fixed typo
+        * tests/DSI_Gateway/run_test.pl:
+          Fixed typo
 
-	* tests/Param_Test/param_test_i.cpp:
-	  Added debugging messages in the <test_short> method.
+        * tests/Param_Test/param_test_i.cpp:
+          Added debugging messages in the <test_short> method.
 
-	* tests/Param_Test/run_test.pl:
-	  Minor cosmetic fixes.
+        * tests/Param_Test/run_test.pl:
+          Minor cosmetic fixes.
 
 Thu Oct  7 11:46:31 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Thanks to Dave Meyer <dmeyer@std.saic.com> we can select the
-	  network interface used by the TAO_ECG_Mcast_EH to receive mcast
-	  traffic.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Thanks to Dave Meyer <dmeyer@std.saic.com> we can select the
+          network interface used by the TAO_ECG_Mcast_EH to receive mcast
+          traffic.
 
 Thu Oct  7 05:04:11 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Log/Iterator_i.{h.cpp}:
-	* orbsvcs/orbsvcs/Log/LogRecordStore.{h.cpp}:
-	* orbsvcs/orbsvcs/Log/Log_i.{h.cpp}:
-	  Added implementation of the many query methods in the Log
-	  interface.
-	  Methods that now lack implementation in Log are: setting the max.
-	  record life, log duration, weekly scheduling and copy.
-	  Methods to be completed in LogMgr is "list_logs_by_id"
+        * orbsvcs/orbsvcs/Log/Iterator_i.{h.cpp}:
+        * orbsvcs/orbsvcs/Log/LogRecordStore.{h.cpp}:
+        * orbsvcs/orbsvcs/Log/Log_i.{h.cpp}:
+          Added implementation of the many query methods in the Log
+          interface.
+          Methods that now lack implementation in Log are: setting the max.
+          record life, log duration, weekly scheduling and copy.
+          Methods to be completed in LogMgr is "list_logs_by_id"
 
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.{h.cpp}:
-	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.{h.cpp}:
-	  Added these 2 files to use with the Trader's TCL query
-	  interpreter files.
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Interpreter.{h.cpp}:
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.{h.cpp}:
+          Added these 2 files to use with the Trader's TCL query
+          interpreter files.
 
 Thu Oct  7 04:48:28 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile:
-	  added -
-	  Trader/Interpreter \
-	  Trader/Trader_Constraint_Visitors \
-	  Trader/Interpreter_Utils_T \
-	  Trader/Interpreter_Utils
-	  to the Trader compile section and updated dependencies.
+        * orbsvcs/orbsvcs/Makefile:
+          added -
+          Trader/Interpreter \
+          Trader/Trader_Constraint_Visitors \
+          Trader/Interpreter_Utils_T \
+          Trader/Interpreter_Utils
+          to the Trader compile section and updated dependencies.
 
 Thu Oct  7 04:31:44 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Interpreter.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.{h,cpp}:
-	  Added these new files to the Trader to decouple the TCL
-	  interpreter from the rest of the Trader.
-	* orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
-	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
-	  Minor surgery to these files to accomodate the changes from
-	  the decoupling.
+        * orbsvcs/orbsvcs/Trader/Interpreter.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.{h,cpp}:
+          Added these new files to the Trader to decouple the TCL
+          interpreter from the rest of the Trader.
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitors.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_T.{h,cpp}:
+          Minor surgery to these files to accomodate the changes from
+          the decoupling.
 
-	To use the TCL in any other service, the set of files that you
-	need are : Interpreter.cpp, Constraint_Visitors.cpp,
-	Constraint_Nodes.cpp, Constraint_l.cpp, Constraint_y.cpp,
-	Interpreter_Utils_T.cpp and Interpreter_Utils.cpp
+        To use the TCL in any other service, the set of files that you
+        need are : Interpreter.cpp, Constraint_Visitors.cpp,
+        Constraint_Nodes.cpp, Constraint_l.cpp, Constraint_y.cpp,
+        Interpreter_Utils_T.cpp and Interpreter_Utils.cpp
 
 Thu Oct  7 01:23:01 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* examples/Quoter/Makefile:
-	  Updated dependencies.  This file was missed during:
-	  Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
+        * examples/Quoter/Makefile:
+          Updated dependencies.  This file was missed during:
+          Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 Wed Oct  6 10:33:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tao/MessagingC.h,
-	  tao/MessagingC.i,
-	  tao/MessagingC.cpp: In the .cpp file file were inline
-	  methods, moved these to the .i file.
+        * tao/MessagingC.h,
+          tao/MessagingC.i,
+          tao/MessagingC.cpp: In the .cpp file file were inline
+          methods, moved these to the .i file.
 
-	* tao/Reply_Dispatcher.cpp: Cosmetic changes.
+        * tao/Reply_Dispatcher.cpp: Cosmetic changes.
 
-	* tests/AMI/Makefile: Added the -Ge 1 switch to the IDL compiler.
+        * tests/AMI/Makefile: Added the -Ge 1 switch to the IDL compiler.
 
 Wed Oct  6 07:23:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/client.cpp,
-	  tests/AMI/simple_client.cpp: Cosmetic changes.
+        * tests/AMI/client.cpp,
+          tests/AMI/simple_client.cpp: Cosmetic changes.
 
 Wed Oct  6 07:00:25 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* Reformatted some of the ORB code to make it correspond to
-	  ACE+TAO programming conventions.
+        * Reformatted some of the ORB code to make it correspond to
+          ACE+TAO programming conventions.
 
 Wed Oct  6 06:40:23 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/AMI/ami_test_i.cpp: Fixed the way we throw the
-	  exception in method  foo ().
+        * tests/AMI/ami_test_i.cpp: Fixed the way we throw the
+          exception in method  foo ().
 
 Tue Oct  5 18:41:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* examples/Simple/bank/README: Updated the explanation of options
-	  to the server and the client. Removed the description of
-	  obsolete options.
+        * examples/Simple/bank/README: Updated the explanation of options
+          to the server and the client. Removed the description of
+          obsolete options.
 
 Tue Oct  5 15:43:03 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_Test/params.idl:
-	  Changed the name of a struct to avoid a clash with
-	  a struct in another IDL file.
+        * tests/IDL_Test/params.idl:
+          Changed the name of a struct to avoid a clash with
+          a struct in another IDL file.
 
 Mon Oct  4 20:42:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/NVList.h:
-	* tao/NVList.i:
-	* tao/NVList.cpp:
-	  Implemented new optimizations in the NVList class:
-	  - When demarshaling a request (or reply) the CDR stream is not
-	    interpreted until it is required (i.e. one of the standard
-	    methods is invoked).
-	  - When marshaling an NVList if the CDR stream is available then
-	    we use that instead of the individual Anys.
-	  they are useful for DSI/DII based gateways.
+        * tao/NVList.h:
+        * tao/NVList.i:
+        * tao/NVList.cpp:
+          Implemented new optimizations in the NVList class:
+          - When demarshaling a request (or reply) the CDR stream is not
+            interpreted until it is required (i.e. one of the standard
+            methods is invoked).
+          - When marshaling an NVList if the CDR stream is available then
+            we use that instead of the individual Anys.
+          they are useful for DSI/DII based gateways.
 
-	* tao/GIOP_Server_Request.cpp:
-	* tao/Stub.cpp:
-	  Use the new _tao_incoming_cdr() to set the CDR of the NVList,
-	  delaying the dermashaling as much as possible.
+        * tao/GIOP_Server_Request.cpp:
+        * tao/Stub.cpp:
+          Use the new _tao_incoming_cdr() to set the CDR of the NVList,
+          delaying the dermashaling as much as possible.
 
-	* tao/Invocation.h:
-	* tao/Invocation.i:
-	  Removed obsolete methods, like put_param() and get_value().
+        * tao/Invocation.h:
+        * tao/Invocation.i:
+          Removed obsolete methods, like put_param() and get_value().
 
-	* tests/Makefile:
-	* tests/DSI_Gateway/Makefile:
-	* tests/DSI_Gateway/README:
-	* tests/DSI_Gateway/test.idl:
-	* tests/DSI_Gateway/client.cpp:
-	* tests/DSI_Gateway/gateway.cpp:
-	* tests/DSI_Gateway/run_test.pl:
-	* tests/DSI_Gateway/server.cpp:
-	* tests/DSI_Gateway/test_dsi.h:
-	* tests/DSI_Gateway/test_dsi.i:
-	* tests/DSI_Gateway/test_dsi.cpp:
-	* tests/DSI_Gateway/test_i.h:
-	* tests/DSI_Gateway/test_i.i:
-	* tests/DSI_Gateway/test_i.cpp:
-	  A new test/example to check that the DSI/DII optimizations
-	  actually work.
+        * tests/Makefile:
+        * tests/DSI_Gateway/Makefile:
+        * tests/DSI_Gateway/README:
+        * tests/DSI_Gateway/test.idl:
+        * tests/DSI_Gateway/client.cpp:
+        * tests/DSI_Gateway/gateway.cpp:
+        * tests/DSI_Gateway/run_test.pl:
+        * tests/DSI_Gateway/server.cpp:
+        * tests/DSI_Gateway/test_dsi.h:
+        * tests/DSI_Gateway/test_dsi.i:
+        * tests/DSI_Gateway/test_dsi.cpp:
+        * tests/DSI_Gateway/test_i.h:
+        * tests/DSI_Gateway/test_i.i:
+        * tests/DSI_Gateway/test_i.cpp:
+          A new test/example to check that the DSI/DII optimizations
+          actually work.
 
-	* tao/append.cpp:
-	* tao/ORB.h:
-	* tao/Server_Request.h:
-	* tao/Asynch_Invocation.h:
-	* tao/Any.cpp:
-	* tao/CDR.cpp:
-	  Cosmetic fixes
+        * tao/append.cpp:
+        * tao/ORB.h:
+        * tao/Server_Request.h:
+        * tao/Asynch_Invocation.h:
+        * tao/Any.cpp:
+        * tao/CDR.cpp:
+          Cosmetic fixes
 
 Mon Oct  4 17:08:03 1999  Marina Spivak  <marina@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Naming_Context.{h,cpp}
-	* orbsvcs/orbsvcs/Naming/Naming_Context_Interface.{h,cpp}:
-	  Changed the name of the files from Naming_Context.* to
-	  Naming_Context_Interface.*   This is bugzilla bug #340.
+        * orbsvcs/orbsvcs/Naming/Naming_Context.{h,cpp}
+        * orbsvcs/orbsvcs/Naming/Naming_Context_Interface.{h,cpp}:
+          Changed the name of the files from Naming_Context.* to
+          Naming_Context_Interface.*   This is bugzilla bug #340.
 
-	  We can't have two files with the same name if they involve
-	  template instantiations.  orbsvcs/Naming/Naming_Context.cpp
-	  conflicts with ace/Naming_Context.cpp.  Thanks to Greg Holtmeyer
-	  <Greg.Holtmeyer@MW.Boeing.com> for pointing this out.
+          We can't have two files with the same name if they involve
+          template instantiations.  orbsvcs/Naming/Naming_Context.cpp
+          conflicts with ace/Naming_Context.cpp.  Thanks to Greg Holtmeyer
+          <Greg.Holtmeyer@MW.Boeing.com> for pointing this out.
 
-	* orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
-	* orbsvcs/orbsvcs/Naming/Naming_Utils.h
-	* orbsvcs/orbsvcs/Naming/README
-	* orbsvcs/orbsvcs/Makefile
-	* orbsvcs/Naming_Service/Makefile
-	* orbsvcs/tests/Simple_Naming/Makefile
-	* tests/InterOp-Naming/Makefile
-	* examples/Callback_Quoter/Makefile
-	* examples/Event_Comm/Makefile
-	* examples/Simple/bank/Makefile
-	* examples/Simple/time/Makefile
-	* examples/Simple/time-date/Makefile
-	* examples/Simple/echo/Makefile
-	* examples/Simple/grid/Makefile
-	* examples/Logging/Makefile
-	* orbsvcs/Concurrency_Service/Makefile
-	* orbsvcs/CosEC/Factory/Makefile
-	* orbsvcs/Time_Service/Makefile
-	* orbsvcs/tests/Concurrency/Makefile
-	* orbsvcs/tests/Property/Makefile
-	* orbsvcs/tests/Time/Makefile
-	* orbsvcs/tests/Sched_Conf/Makefile
-	* orbsvcs/tests/CosEC_Multiple/Makefile
-	* orbsvcs/tests/AVStreams/benchmark/Makefile
-	* orbsvcs/orbsvcs/orbsvcs.dsp
-	* orbsvcs/orbsvcs_static.dsp
-	Updated inclusions and makefile dependencies to reflect the
-	  change above.
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h
+        * orbsvcs/orbsvcs/Naming/Naming_Utils.h
+        * orbsvcs/orbsvcs/Naming/README
+        * orbsvcs/orbsvcs/Makefile
+        * orbsvcs/Naming_Service/Makefile
+        * orbsvcs/tests/Simple_Naming/Makefile
+        * tests/InterOp-Naming/Makefile
+        * examples/Callback_Quoter/Makefile
+        * examples/Event_Comm/Makefile
+        * examples/Simple/bank/Makefile
+        * examples/Simple/time/Makefile
+        * examples/Simple/time-date/Makefile
+        * examples/Simple/echo/Makefile
+        * examples/Simple/grid/Makefile
+        * examples/Logging/Makefile
+        * orbsvcs/Concurrency_Service/Makefile
+        * orbsvcs/CosEC/Factory/Makefile
+        * orbsvcs/Time_Service/Makefile
+        * orbsvcs/tests/Concurrency/Makefile
+        * orbsvcs/tests/Property/Makefile
+        * orbsvcs/tests/Time/Makefile
+        * orbsvcs/tests/Sched_Conf/Makefile
+        * orbsvcs/tests/CosEC_Multiple/Makefile
+        * orbsvcs/tests/AVStreams/benchmark/Makefile
+        * orbsvcs/orbsvcs/orbsvcs.dsp
+        * orbsvcs/orbsvcs_static.dsp
+        Updated inclusions and makefile dependencies to reflect the
+          change above.
 
 Mon Oct 04 15:20:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
-	  TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
-	  tao/MessagingC.h:
-	  Fixed the usage of the "_var_type" typedef on
-	  anonymous sequences.
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
+          TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
+          tao/MessagingC.h:
+          Fixed the usage of the "_var_type" typedef on
+          anonymous sequences.
 
 Mon Oct  4 14:46:17 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tests/IDL_test/params.idl:
-	* tests/IDL_Test/idl_test/dsp:
-	* tests/IDL_Test/Makefile:
-	  New IDL file for IDL problem files relating to
-	  function return types and args. The example was
-	  originally sent in by Torsten Kuepper
-	  <kuepper2@uni-wuppertal.de> and modified by me
-	  and Michael Kircher <Michael.Kircher@mchp.siemens.de>.
+        * tests/IDL_test/params.idl:
+        * tests/IDL_Test/idl_test/dsp:
+        * tests/IDL_Test/Makefile:
+          New IDL file for IDL problem files relating to
+          function return types and args. The example was
+          originally sent in by Torsten Kuepper
+          <kuepper2@uni-wuppertal.de> and modified by me
+          and Michael Kircher <Michael.Kircher@mchp.siemens.de>.
 
 Mon Oct  4 13:23:26 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_argument/argument.cpp:
-	  Eliminated use of ACE_NESTED_CLASS macro when
-	  generating function parameters in the header file. As
-	  with return types, MSVC does not have namespace
-	  problems with function parameters, and certain cases
-	  can lead to an insufficiently scoped name as the
-	  evaluation of the macro. Thanks to Michael Kircher
-	  <Michael.Kircher@mchp.siemens.de> for pointing
-	  this out.
+        * TAO_IDL/be/be_visitor_argument/argument.cpp:
+          Eliminated use of ACE_NESTED_CLASS macro when
+          generating function parameters in the header file. As
+          with return types, MSVC does not have namespace
+          problems with function parameters, and certain cases
+          can lead to an insufficiently scoped name as the
+          evaluation of the macro. Thanks to Michael Kircher
+          <Michael.Kircher@mchp.siemens.de> for pointing
+          this out.
 
 Mon Oct 04 12:52:17 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/Servant_Base.cpp (TAO_DynamicImplementation::_create_stub):
-	  The checking for a valid POA current was not correct.  This
-	  should be fixed now.  Thanks to Carlos for pointing this out.
+        * tao/Servant_Base.cpp (TAO_DynamicImplementation::_create_stub):
+          The checking for a valid POA current was not correct.  This
+          should be fixed now.  Thanks to Carlos for pointing this out.
 
 Mon Oct  4 11:08:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
-	* TAO_IDL/be/be_visitor_union/union_ch.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
-	  Added generation of typedef for _ptr_type and
-	  _var_type (just _ptr_type for exceptions).
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_structure/structure_ch.cpp:
+        * TAO_IDL/be/be_visitor_union/union_ch.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ch.cpp:
+          Added generation of typedef for _ptr_type and
+          _var_type (just _ptr_type for exceptions).
 
-	* TAO_IDL/be/be_visitor_sequence/exception_ctor.cpp:
-	  Cosmetic changes to generated code.
+        * TAO_IDL/be/be_visitor_sequence/exception_ctor.cpp:
+          Cosmetic changes to generated code.
 
 Mon Oct 04 08:40:00 1999  Michael Kircher <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
-	  TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
-	  Removed a superfluous ";" after the method implementation.
+        * TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp,
+          TAO_IDL/be/be_visitor_valuetype/ami_exception_holder_ch.cpp:
+          Removed a superfluous ";" after the method implementation.
 
 1999-10-03  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Vic/Makefile:
-	  Modified the Makefile so that it will include the libAVsvc library
+        * orbsvcs/tests/AVStreams/Vic/Makefile:
+          Modified the Makefile so that it will include the libAVsvc library
 
 Sun Oct  3 16:16:12 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	  Removed an unused variable.
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+          Removed an unused variable.
 
-	* TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-	  Removed an extra semicolon.
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+          Removed an extra semicolon.
 
-	* tests/Param_Test/recursive_union.cpp:
-	  Removed an unreachable statement.
+        * tests/Param_Test/recursive_union.cpp:
+          Removed an unreachable statement.
 
 Sun Oct 03 13:10:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
-	  TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
-	  tao/MessagingC.h:
-	  Fixed the generation and usage of a typedef for anonymous
-	  valuetype field types. This also involved generating a typedef
-	  for the "var" type.
+        * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
+          TAO_IDL/be/be_visitor_valuetype/field_ch.cpp,
+          tao/MessagingC.h:
+          Fixed the generation and usage of a typedef for anonymous
+          valuetype field types. This also involved generating a typedef
+          for the "var" type.
 
 Sat Oct  2 18:14:36 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* param_test.idl:
-	* param_test_i.h:
-	* param_test_i.cpp:
-	* client.dsp:
-	* Makefile:
-	* driver.cpp:
-	* options.h:
-	* options.cpp:
-	* tests.h:
-	* run_test.pl:
-	  Changes for new recursive union test.
+        * param_test.idl:
+        * param_test_i.h:
+        * param_test_i.cpp:
+        * client.dsp:
+        * Makefile:
+        * driver.cpp:
+        * options.h:
+        * options.cpp:
+        * tests.h:
+        * run_test.pl:
+          Changes for new recursive union test.
 
-	* recursive_union.h:
-	* recursive_union.cpp:
-	  New files added for recursive union test.
+        * recursive_union.h:
+        * recursive_union.cpp:
+          New files added for recursive union test.
 
-	* recursive_struct.h:
-	* recursive_struct.cpp:
-	* bd_array_sequence.cpp:
-	  Cosmetic changes.
+        * recursive_struct.h:
+        * recursive_struct.cpp:
+        * bd_array_sequence.cpp:
+          Cosmetic changes.
 
 Sat Oct  2 17:56:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	  Fixed assignment operator if union is recursive. Before,
-	  the only way to initialize such a union was from the
-	  bottom up. Otherwise we would end up calling the member
-	  sequence copy constructor with a dereference null
-	  pointer as an rhs. Now recursive unions can be initialized
-	  from the top down.
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+          Fixed assignment operator if union is recursive. Before,
+          the only way to initialize such a union was from the
+          bottom up. Otherwise we would end up calling the member
+          sequence copy constructor with a dereference null
+          pointer as an rhs. Now recursive unions can be initialized
+          from the top down.
 
 Sat Oct  2 16:36:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/Makefile:
-	  Updated dependencies.
+        * tao/Makefile:
+          Updated dependencies.
 
 Sat Oct  2 16:19:18 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	  Moved code to generate typedef for anonymous member
-	  sequence to its correct place.
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+          Moved code to generate typedef for anonymous member
+          sequence to its correct place.
 
 Sat Oct 02 14:50:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_attribute.cpp,
-	  TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
-	  TAO_IDL/be/be_visitor_attribute/attribute.cpp,
-	  TAO_IDL/be/be_visitor_operation/ami_cs.cpp,
-	  TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
-	  TAO_IDL/be_include/be_attribute.h,
-	  TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
-	  Added support for attributes.
+        * TAO_IDL/be/be_attribute.cpp,
+          TAO_IDL/be/be_visitor_ami_pre_proc.cpp,
+          TAO_IDL/be/be_visitor_attribute/attribute.cpp,
+          TAO_IDL/be/be_visitor_operation/ami_cs.cpp,
+          TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp,
+          TAO_IDL/be_include/be_attribute.h,
+          TAO_IDL/be_include/be_visitor_ami_pre_proc.h:
+          Added support for attributes.
 
-	* TAO_IDL/ast/ast_interface.cpp
-	  TAO_IDL/include/ast_interface.h: Added be_replace_operation
-	  method to be able to replace operations if needed.
+        * TAO_IDL/ast/ast_interface.cpp
+          TAO_IDL/include/ast_interface.h: Added be_replace_operation
+          method to be able to replace operations if needed.
 
-	  TAO_IDL/include/utl_scope.h
-	  TAO_IDL/util/utl_scope.cpp: Added replace operations for
-	  scope and referenced.
+          TAO_IDL/include/utl_scope.h
+          TAO_IDL/util/utl_scope.cpp: Added replace operations for
+          scope and referenced.
 
-	* tests/AMI/ami_test.idl,
-	  tests/AMI/simple_client.cpp: Activated the tests for
-	  attributes again.
+        * tests/AMI/ami_test.idl,
+          tests/AMI/simple_client.cpp: Activated the tests for
+          attributes again.
 
-	* docs/releasenotes/index.html: Updated comment on support
-	  for AMI attributes.
+        * docs/releasenotes/index.html: Updated comment on support
+          for AMI attributes.
 
 Fri Oct  1 19:02:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.i:
-	* tao/ORB_Core.cpp:
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.i:
+        * tao/ORB_Core.cpp:
 
-	  Made service configurator argument vector in init() a member of
-	  the TAO_ORB_Core class so that it is properly deallocated when
-	  an error occurs in init().  This makes the allocation of the
-	  argument vector exception safe.  [Bug 330]
+          Made service configurator argument vector in init() a member of
+          the TAO_ORB_Core class so that it is properly deallocated when
+          an error occurs in init().  This makes the allocation of the
+          argument vector exception safe.  [Bug 330]
 
-	  Added a TAO_ORB_Core_Auto_Ptr class that properly calls
-	  TAO_ORB_Core::fini() upon destruction.
+          Added a TAO_ORB_Core_Auto_Ptr class that properly calls
+          TAO_ORB_Core::fini() upon destruction.
 
-	  Made allocation of TAO_POA_Manager in create_and_set_root_poa()
-	  exception safe by using an auto_ptr.
+          Made allocation of TAO_POA_Manager in create_and_set_root_poa()
+          exception safe by using an auto_ptr.
 
-	  Updated init() method to accept a CORBA::Environment variable,
-	  and updated returned error conditions to throw the appropriate
-	  exception.  [Bug 14]
+          Updated init() method to accept a CORBA::Environment variable,
+          and updated returned error conditions to throw the appropriate
+          exception.  [Bug 14]
 
-	  Removed owns_resources_ member from TAO_ORB_Core_TSS_Resources
-	  class since it wasn't used, nor should it be used.  The amount
-	  of control it provided over what gets owned by TSS was too
-	  coarse grained.
+          Removed owns_resources_ member from TAO_ORB_Core_TSS_Resources
+          class since it wasn't used, nor should it be used.  The amount
+          of control it provided over what gets owned by TSS was too
+          coarse grained.
 
-	* tao/ORB.cpp (ORB_init);
+        * tao/ORB.cpp (ORB_init);
 
-	  Made allocation of TAO_ORB_Core exception safe by using the
-	  newly added TAO_ORB_Core_Auto_Ptr.
+          Made allocation of TAO_ORB_Core exception safe by using the
+          newly added TAO_ORB_Core_Auto_Ptr.
 
-	* tao/IIOP_Acceptor.cpp (open):
+        * tao/IIOP_Acceptor.cpp (open):
 
-	  Fixed endpoint parsing code so that it works as users expect.
-	  Specifically, the following -ORBEndpoint use cases will work as
-	  expected:
+          Fixed endpoint parsing code so that it works as users expect.
+          Specifically, the following -ORBEndpoint use cases will work as
+          expected:
 
-	    -ORBEndpoint iiop://my_host
-	    -ORBEndpoint iiop://:my_port   (note colon ':' before
-	                                    my_port)
-	  [Bug 311]
+            -ORBEndpoint iiop://my_host
+            -ORBEndpoint iiop://:my_port   (note colon ':' before
+                                            my_port)
+          [Bug 311]
 
-	* tao/Stub.i (reset):
+        * tao/Stub.i (reset):
 
-	  Do not call _decr_refcnt() in TAO_Stub_Auto_Ptr::reset() if the
-	  underlying pointer is zero.
+          Do not call _decr_refcnt() in TAO_Stub_Auto_Ptr::reset() if the
+          underlying pointer is zero.
 
-	* docs/Options.html:
+        * docs/Options.html:
 
-	  Spelling corrections.
+          Spelling corrections.
 
 Fri Oct  1 15:00:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -713,8 +720,8 @@ Fri Oct  1 15:00:40 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Fri Oct 01 15:00:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* TAO_IDL/be/be_visitor_operation/ami_reply_handler_stub_operation_cs.cpp:
-	  Fixed a hardcoded operation name to use the correct one.
+        * TAO_IDL/be/be_visitor_operation/ami_reply_handler_stub_operation_cs.cpp:
+          Fixed a hardcoded operation name to use the correct one.
 
 Fri Oct  1 13:46:00 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -4970,10 +4977,10 @@ Thu Aug 26 10:29:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
         * docs/Options.html:
         * tao/default_server.cpp (TAO_Default_Server_Strategy_Factory):
           Added THR_DETACHED into the default thread creation flag for ORB
- 	  spawned threads so the resources used by ORB spawned threads
- 	  will be released automatically after the threads have exited to
- 	  prevent handle leaks.  Thanks to Sreedharani Dharani
- 	  <dharani@sutmyn.com> and Carlos for pointing out the problem.
+          spawned threads so the resources used by ORB spawned threads
+          will be released automatically after the threads have exited to
+          prevent handle leaks.  Thanks to Sreedharani Dharani
+          <dharani@sutmyn.com> and Carlos for pointing out the problem.
 
 Thu Aug 26 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
