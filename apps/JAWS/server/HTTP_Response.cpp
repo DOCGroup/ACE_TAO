@@ -359,10 +359,12 @@ HTTP_Response::build_headers (void)
         }
 
       if (! this->request_.cgi ())
-        HTTP_HEADER_LENGTH +=
-          ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
-                          "Content-type: %s\r\n\r\n",
-                          "text/html");
+        {
+          HTTP_HEADER_LENGTH +=
+            ACE_OS::sprintf(HTTP_HEADER+HTTP_HEADER_LENGTH, 
+                            "Content-type: %s\r\n\r\n",
+                            "text/html");
+        }
     }
 
   HTTP_TRAILER = "";
