@@ -1,3 +1,11 @@
+Mon Jan 20 13:58:25 2003  Rich Seibel <seibel_r@ociweb.com>
+
+        * ace/config-macosx.h: Added ACE_HAS_SNPRINTF as well as
+          ACE_LACKS_PERFECT_MULTICAST_FILTERING to make the ACE
+          Mac OSX 10.2.x build pass the Log_Msg_Test and the
+          Multicast_Test.  Thanks to John Michael Zorko <j.zorko@att.net>
+          for providing this patch.
+
 Mon Jan 20 18:59:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/Makefile.CLD:
