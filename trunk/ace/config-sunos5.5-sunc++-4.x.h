@@ -113,7 +113,7 @@
 #define ACE_HAS_SVR4_TIME
 
 // ACE_HAS_CLOCK_GETTIME requires linking with -lposix4.
-// #define ACE_HAS_CLOCK_GETTIME
+#define ACE_HAS_CLOCK_GETTIME
 
 // Platform supports the /proc file system.
 #define ACE_HAS_PROC_FS
@@ -180,10 +180,6 @@
 // . . . but only supports SCHED_OTHER scheduling policy
 #define ACE_HAS_ONLY_SCHED_OTHER
 #define ACE_HAS_SIGWAIT
-// If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
-// #define ACE_LACKS_CONDATTR_PSHARED
-// #define ACE_LACKS_MUTEXATTR_PSHARED
 
 // Compiler/platform has thread-specific storage
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
