@@ -45,10 +45,10 @@ main (int argc, char *argv[])
         poa->activate_object (theServer TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Object_var server_obj =
-        poa->id_to_reference (oid.in() TAO_ENV_ARG_PARAMETER);
+        poa->id_to_reference (oid.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::String_var server_IORString =
-        orb->object_to_string (server_obj TAO_ENV_ARG_PARAMETER);
+        orb->object_to_string (server_obj.in () TAO_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       //
