@@ -1,3 +1,8 @@
+Tue May 18 11:32:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Condition_Thread_Mutex.h:
+          Documentation fix
+
 Tue May 18 11:28:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SOCK.{h,cpp,i}:
