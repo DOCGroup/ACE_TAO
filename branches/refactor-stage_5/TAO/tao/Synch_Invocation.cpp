@@ -11,7 +11,6 @@
 #include "Wait_Strategy.h"
 #include "Messaging_SyncScopeC.h"
 #include "TAOC.h"
-#include <iostream>
 
 ACE_RCSID (tao,
            Synch_Invocation,
@@ -19,11 +18,15 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
-  Synch_Twoway_Invocation::Synch_Twoway_Invocation (Profile_Transport_Resolver &resolver,
-                                                    TAO_Operation_Details &detail)
-    : Remote_Invocation (resolver, detail)
+  Synch_Twoway_Invocation::Synch_Twoway_Invocation (CORBA::Object_ptr otarget,
+                                                    Profile_Transport_Resolver &resolver,
+                                                    TAO_Operation_Details &detail,
+                                                    bool response_expected)
+    : Remote_Invocation (otarget,
+                         resolver,
+                         detail,
+                         response_expected)
   {
-
   }
 
   Invocation_Status
@@ -174,7 +177,6 @@ namespace TAO
           s = TAO_INVOKE_RESTART;
         else
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
-	  std::cout << "Any chances " << std::endl;
           ACE_RE_THROW;
       }
 # endif  /* ACE_HAS_EXCEPTIONS &&
@@ -452,7 +454,7 @@ namespace TAO
     Reply_Guard mon (this,
                      TAO_INVOKE_FAILURE);
 
-    // if (TAO_debug_level > 3)
+    if (TAO_debug_level > 3)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
                   "handle_system_exception \n"));
@@ -503,9 +505,10 @@ namespace TAO
     // the CORBA::Environment class manages the memory.
     auto_ptr<CORBA::SystemException> safety (ex);
 #endif
-   ACE_DEBUG ((LM_DEBUG,
-              "TAO (%P|%t) - Synch_Twoway_Invocation::"
-               "handle_system_exception  about to raise\n"));
+    if (TAO_debug_level > 4)
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) - Synch_Twoway_Invocation::"
+                  "handle_system_exception  about to raise\n"));
 
     mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
 
@@ -516,9 +519,13 @@ namespace TAO
   }
 /*================================================================================*/
 
-  Synch_Oneway_Invocation::Synch_Oneway_Invocation (Profile_Transport_Resolver &r,
+  Synch_Oneway_Invocation::Synch_Oneway_Invocation (CORBA::Object_ptr otarget,
+                                                    Profile_Transport_Resolver &r,
                                                     TAO_Operation_Details &d)
-    : Synch_Twoway_Invocation (r, d)
+    : Synch_Twoway_Invocation (otarget,
+                               r,
+                               d,
+                               false)
   {
   }
 

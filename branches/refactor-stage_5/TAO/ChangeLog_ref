@@ -1,3 +1,30 @@
+Thu Aug 14 16:09:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/ClientRequestInfo.cpp: Removed extraneous header inclusion. 
+	
+	* tao/ClientRequestInfo_i.cpp:
+	* tao/ClientRequestInfo_i.h: Cleaned up the implementation of
+	  target (), effective_target (), effective_profile (),
+	  effective_tagged_component (), and response_expected (). 
+
+	* tao/ClientRequestInterceptor_Adapter.h: Removed the
+	  invok_status_ member from the class. 
+
+	* tao/Collocated_Invocation.cpp:
+	* tao/Collocated_Invocation.h: Interceptors have been enabled for
+	  collocated invocations. 
+
+	* tao/Invocation_Adapter.cpp:
+	* tao/Invocation_Base.cpp:
+	* tao/Invocation_Base.h:
+	* tao/Remote_Invocation.cpp:
+	* tao/Remote_Invocation.h:
+	* tao/Synch_Invocation.cpp:
+	* tao/Synch_Invocation.h: Changes to get the effective target and
+	  target right for interceptors. We now cache the original target
+	  as well as the original target within the Invocation_Base
+	  class. 
+
 Wed Aug 13 18:16:24 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_global.cpp:

@@ -47,7 +47,7 @@ namespace TAO
   class TAO_Export Profile_Transport_Resolver
   {
   public:
-    Profile_Transport_Resolver (CORBA::Object *p,
+    Profile_Transport_Resolver (CORBA::Object *ep,
                                 TAO_Stub *);
 
     ~Profile_Transport_Resolver (void);

@@ -23,8 +23,6 @@
 
 #include "tao/Invocation_Base.h"
 
-
-
 #include "ace/CORBA_macros.h"
 
 
@@ -54,8 +52,10 @@ namespace TAO
   class TAO_Export Remote_Invocation : protected Invocation_Base
   {
   public:
-    Remote_Invocation (Profile_Transport_Resolver &resolver,
-                       TAO_Operation_Details &detail);
+    Remote_Invocation (CORBA::Object_ptr otarget,
+                       Profile_Transport_Resolver &resolver,
+                       TAO_Operation_Details &detail,
+                       bool response_expected);
 
   protected:
 

@@ -14,9 +14,14 @@ ACE_RCSID (tao,
 
 namespace TAO
 {
-  Remote_Invocation::Remote_Invocation (Profile_Transport_Resolver &resolver,
-                                        TAO_Operation_Details &detail)
-    : Invocation_Base (resolver.object (), detail)
+  Remote_Invocation::Remote_Invocation (CORBA::Object_ptr otarget,
+                                        Profile_Transport_Resolver &resolver,
+                                        TAO_Operation_Details &detail,
+                                        bool response_expected)
+    : Invocation_Base (otarget,
+                       resolver.object (),
+                       detail,
+                       response_expected)
     , resolver_ (resolver)
   {
   }
