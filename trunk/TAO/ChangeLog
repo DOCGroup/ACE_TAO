@@ -1,3 +1,9 @@
+Wed Nov 27 18:58:25 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/CosNotification_Static.dsp:
+
+          Fixed project settings.
+
 Wed Nov 27 18:32:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/OBV/TC_Alignment/Makefile:
