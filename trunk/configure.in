@@ -3485,7 +3485,8 @@ dnl backwards compatibility with Pthread Draft 4 functions of the same
 dnl name.
 
   AC_CHECK_FUNC(pthread_sigmask, dnl
-    AC_DEFINE(ACE_HAS_PTHREAD_SIGMASK),)
+    AC_DEFINE(ACE_HAS_PTHREAD_SIGMASK),
+    AC_DEFINE(ACE_LACKS_PTHREAD_SIGMASK))
 
   AC_CHECK_FUNC(pthread_key_create, dnl
     AC_DEFINE(ACE_HAS_THREAD_SPECIFIC_STORAGE),
@@ -5496,6 +5497,28 @@ ACE_CACHE_CHECK(for MAP_FAILED constant,
      ])
   ],)
 
+dnl Check if platform supports TCP_NODELAY support
+ACE_CACHE_CHECK(for TCP_NODELAY support,
+  ace_cv_feature_tcp_nodelay,[
+    AC_EGREP_CPP(ACE_TCPNODELAY,
+      [
+#ifndef ACE_LACKS_SYS_TYPES_H
+# include <sys/types.h>
+#endif
+#include <netinet/tcp.h>
+
+#if defined (TCP_NODELAY)
+       ACE_TCPNODELAY
+#endif
+      ],
+      [
+       ace_cv_feature_tcp_nodelay=yes
+      ],
+      [
+       ace_cv_feature_tcp_nodelay=no
+      ])
+  ], , AC_DEFINE(ACE_LACKS_TCP_NODELAY))
+
 dnl Check if platform supports SO_SNDBUF/SO_RCVBUF socket options
 ACE_CACHE_CHECK(for SO_SNDBUF/SO_RCVBUF socket options,
   ace_cv_feature_so_sndbuf_rcvbuf,[
@@ -5507,8 +5530,8 @@ ACE_CACHE_CHECK(for SO_SNDBUF/SO_RCVBUF socket options,
 #include <sys/socket.h>
 
 #if defined (SO_SNDBUF) && \
-           defined (SO_RCVBUF)
-          ACE_SO_BUF
+    defined (SO_RCVBUF)
+       ACE_SO_BUF
 #endif
       ],
       [
@@ -5935,6 +5958,97 @@ dnl        the UNIX International threads library was detected.
   fi dnl test "$ace_has_pthreads" = yes
 
   if test "$ace_has_pthreads" = yes; then
+
+    dnl Check if OS requires non-null status pointer for ::pthread_join ()
+    dnl
+    dnl This test must be performed after the POSIX threads implementation
+    dnl that the platform supports has been determined.
+    ACE_CACHE_CHECK(for pthread_join null status pointer support,
+      ace_cv_have_null_status_pthread_join,[
+        AC_EGREP_CPP(WE_HAVE_PTHREADS_D4,
+          [
+#if defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREADS_DRAFT4)
+/* This test is only valid for Pthreads Draft 4 */
+WE_HAVE_PTHREADS_D4
+#endif
+          ],
+          [
+           AC_TRY_RUN(
+             [
+#ifndef _REENTRANT
+#define _REENTRANT
+#endif 
+
+#ifndef _THREAD_SAFE
+#define _THREAD_SAFE
+#endif           
+
+#include <pthread.h>
+#include <stdio.h>
+
+#ifdef __CPLUSPLUS
+extern "C"
+#endif
+void *
+nothing (void *unused)
+{
+  return (void *) 34;
+};
+
+int
+main (int argc, char *argv[])
+{
+  pthread_attr_t attr;
+  pthread_t id;
+  void *status;
+  int retval = 0;
+
+  /* ----- */
+  /* We return 0 on error for these calls since we only want to
+     return an error status if pthread_join fails.  If these calls
+     fail then we've got other problems! */
+  if (pthread_attr_create (&attr) != 0) return 0 /*1*/;
+
+  if (pthread_create (&id, attr, &nothing, 0) != 0) return 0 /*2*/;
+
+  if (pthread_attr_delete (&attr) != 0) return /*3*/;
+  /* ----- */
+
+  /* With a second (status) arg of 0, LynxOS 3.0.0 pthread_join ()
+     will fail with errno 14 (address fault detected). */
+  if (pthread_join (id, 0) == -1) {
+    fprintf (stderr, "%s: %d; ", __FILE__, __LINE__);
+    perror ("pthread_join");
+    retval = 1;
+  }
+
+  if (pthread_join (id, &status) == -1) {
+    fprintf (stderr, "%s: %d; ", __FILE__, __LINE__);
+    perror ("pthread_join");
+    retval = 2;
+  }
+
+  return retval;
+}
+             ],
+             [
+              ace_cv_have_null_status_pthread_join=yes
+             ],
+             [
+              ace_cv_have_null_status_pthread_join=no
+             ],
+             [
+              dnl If we are cross-compiling let's hope that
+              dnl that we have a working null status pointer
+              dnl for pthread_join.
+              ace_cv_have_null_status_pthread_join=yes
+             ])
+          ],
+          [
+           ace_cv_have_null_status_pthread_join=yes
+          ])
+      ], , AC_DEFINE(ACE_LACKS_NULL_PTHREAD_STATUS))
+
     dnl Check if platform only supports SCHED_OTHER scheduling policy
     dnl
     dnl This test must be performed after the POSIX threads implementation

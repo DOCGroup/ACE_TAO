@@ -1088,6 +1088,9 @@
 /* Platform lacks pthread_mutexattr_setpshared(). */
 #undef ACE_LACKS_MUTEXATTR_PSHARED
 
+/* OS requires non-null status pointer for ::pthread_join () */
+#undef ACE_LACKS_NULL_PTHREAD_STATUS
+
 /* Platform lacks <sys/param.h> (e.g., MVS) */
 #undef ACE_LACKS_PARAM_H
 
@@ -1120,6 +1123,9 @@
 
 /* Platform lacks pthread_cancel(). */
 #undef ACE_LACKS_PTHREAD_CANCEL
+
+/* Platform lacks pthread_sigmask () /
+#undef ACE_LACKS_PTHREAD_SIGMASK
 
 /* Platform lacks pthread_thr_sigsetmask (e.g., MVS, HP/UX, and OSF/1 3.2) */
 #undef ACE_LACKS_PTHREAD_THR_SIGSETMASK
@@ -1220,6 +1226,9 @@
 
 /* Platform doesn't have netinet/tcp.h */
 #undef ACE_LACKS_TCP_H
+
+/* OS does not support TCP_NODELAY */
+#undef ACE_LACKS_TCP_NODELAY
 
 /* Platform lacks pthread_attr_setscope() */
 #undef ACE_LACKS_THREAD_PROCESS_SCOPING
