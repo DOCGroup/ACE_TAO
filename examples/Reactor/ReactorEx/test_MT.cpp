@@ -22,7 +22,7 @@
 static int concurrent_threads = 1;
 static int number_of_handles = ACE_ReactorEx::DEFAULT_SIZE;
 static int number_of_handles_to_signal = 1;
-static int interval = 1;
+static int interval = 2;
 
 
 // Explain usage and exit.
@@ -89,7 +89,6 @@ public:
   ACE_HANDLE get_handle () const;
 private:
   int index_;
-  ACE_ReactorEx *reactorEx_;
   ACE_Auto_Event *handles_;
   int number_of_handles_;
   ACE_HANDLE handle_;
@@ -102,16 +101,15 @@ Event_Handler::open (int index,
 		     int number_of_handles)
 {
   index_ = index;
-  reactorEx_ = &reactorEx;
   handles_ = handles;
   number_of_handles_ = number_of_handles;
   this->handle_ = this->handles_[this->index_].handle ();
   
   // Register self with ReactorEx
-  if (this->reactorEx_->register_handler (this) == -1)
+  if (reactorEx.register_handler (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be registered with ReactorEx\n", 
 		       "Event_Handler::open", this->index_), -1);
-    
+  
   return 0;
 }
 
@@ -120,12 +118,13 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   // When signaled, print message, remove self, and add self
   // This will force ReactorEx to update its internal handle tables
-  ACE_DEBUG ((LM_DEBUG, "(%t)\thandle_signal() called in handler # %d\n", this->index_));
-  if (this->reactorEx_->remove_handler (this) == -1)
+  ACE_DEBUG ((LM_DEBUG, "(%t) handle_signal() called in handler # %d\n", this->index_));
+
+  if (this->reactorEx ()->remove_handler (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be unregistered from ReactorEx\n", 
 		       "Event_Handler::open", this->index_), -1);
   
-  if (this->reactorEx_->register_handler (this) == -1)
+  if (this->reactorEx ()->register_handler (this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\tevent handler %d cannot be registered with ReactorEx\n", 
 		       "Event_Handler::open", this->index_), -1);
   
@@ -165,6 +164,9 @@ main (int argc, char **argv)
       // Sleep for a while
       ACE_OS::sleep (::interval);
       // Randomly generate events
+      ACE_DEBUG ((LM_DEBUG, "***************************************\n"));		
+      ACE_DEBUG ((LM_DEBUG, "(%t -- main thread) signaling %d events\n", ::number_of_handles_to_signal));		
+      ACE_DEBUG ((LM_DEBUG, "***************************************\n"));		
       for (i = 0; i < ::number_of_handles_to_signal; i++)
 	{
 	  int index = ACE_OS::rand() % ::number_of_handles;
