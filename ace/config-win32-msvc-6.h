@@ -153,6 +153,9 @@
 // MSVC allows throw keyword but complains about it.
 # pragma warning( disable : 4290 )
 
+// Inheritance by dominance is A-OK by us
+# pragma warning (disable:4250)
+
 
 # if !defined(ACE_HAS_WINCE)
 #  if defined(ACE_HAS_DLL) && (ACE_HAS_DLL != 0)

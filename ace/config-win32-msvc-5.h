@@ -155,6 +155,8 @@
 // MSVC allows throw keyword but complains about it.
 # pragma warning( disable : 4290 )
 
+// Inheritance by dominance is A-OK by us
+# pragma warning (disable:4250)
 
 // Compiler/Platform supports the "using" keyword.
 #define ACE_HAS_USING_KEYWORD
