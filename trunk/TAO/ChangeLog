@@ -1,3 +1,18 @@
+Sun Aug 24 11:41:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicAny/DynamicAny.cpp:
+        * tao/DynamicAny/DynamicAny.h:
+        * tao/DynamicAny/DynAny_i.h:
+        * tao/DynamicAny/DynAnyFactory.cpp:
+        * tao/DynamicAny/DynAnyFactory.h:
+        * tao/DynamicAny/DynArray_i.h:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynEnum_i.h:
+        * tao/DynamicAny/DynSequence_i.h:
+        * tao/DynamicAny/DynStruct_i.h:
+        * tao/DynamicAny/DynUnion_i.h:
+          Converted to doxygen format.
+
 Sat Aug 23 12:03:18 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.h (setup_lanes):

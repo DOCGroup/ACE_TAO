@@ -1,19 +1,16 @@
 /* -*- C++ -*- */
 
-// $Id$
 
-// =========================================================================
-//
-// = LIBRARY
-//    TAO
-//
-// = FILENAME
-//    DynamicAny.h
-//
-// = AUTHOR
-//    Carlos O'Ryan <coryan@uci.edu>
-//
-// =========================================================================
+//=============================================================================
+/**
+ *  @file    DynamicAny.h
+ *
+ *  $Id$
+ *
+ *  @author Carlos O'Ryan <coryan@uci.edu>
+ */
+//=============================================================================
+
 
 #ifndef TAO_DYNAMICANY_H
 #define TAO_DYNAMICANY_H
@@ -30,18 +27,18 @@
 class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 {
 public:
+  /// Constructor
   TAO_DynamicAny_Loader (void);
-  // Constructor
 
+  /// Creates a DynamicAny factory and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,
                                            ACE_TCHAR *argv []
                                            ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  // Creates a DynamicAny factory and returns it.
 
+  /// Used to force the initialization of the ORB code.
   static int Initializer (void);
-  // Used to force the initialization of the ORB code.
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_DynamicAny_Loader)
