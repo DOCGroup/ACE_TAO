@@ -728,6 +728,8 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
+      ACE_DEBUG ((LM_DEBUG, "Setup ready\n"));
+
       // Run exceptions tests.
       invalid_name_test (root_context,
                          TAO_TRY_ENV);
@@ -769,8 +771,8 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
       root_context->resolve (test_name,
                              TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      }
-
+      ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
+    }
   TAO_CATCH (CosNaming::NamingContext::InvalidName, ex)
     {
       TAO_TRY_ENV.clear ();
@@ -779,6 +781,7 @@ Exceptions_Test::invalid_name_test (TAO_Naming_Client &root_context,
     }
   TAO_CATCHANY
     {
+      ACE_DEBUG ((LM_DEBUG, "Invalid name test failed\n"));
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -800,8 +803,8 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
                           obj.in (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
     }
-
   TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       TAO_TRY_ENV.clear ();
@@ -810,6 +813,7 @@ Exceptions_Test::already_bound_test (TAO_Naming_Client &root_context,
     }
   TAO_CATCHANY
     {
+      ACE_DEBUG ((LM_DEBUG, "Already bound (case 1) test failed\n"));
       TAO_RETHROW;
     }
 
@@ -833,8 +837,8 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
                           obj.in (),
                           TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
     }
-
   TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {
       TAO_TRY_ENV.clear ();
@@ -843,6 +847,7 @@ Exceptions_Test::already_bound_test2 (TAO_Naming_Client &root_context,
     }
   TAO_CATCHANY
     {
+      ACE_DEBUG ((LM_DEBUG, "Already bound (case 2) test failed\n"));
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -863,8 +868,8 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
       root_context->unbind (test_name,
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG, "Not found test failed\n"));
     }
-
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       if (ex.why == CosNaming::NamingContext::not_object &&
@@ -881,6 +886,7 @@ Exceptions_Test::not_found_test (TAO_Naming_Client &root_context,
     }
   TAO_CATCHANY
     {
+      ACE_DEBUG ((LM_DEBUG, "Not found test failed\n"));
       TAO_RETHROW;
     }
   TAO_ENDTRY;
@@ -901,8 +907,8 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
       root_context->unbind (test_name,
                             TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG, "Unbind test failed\n"));
     }
-
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       if (ex.why == CosNaming::NamingContext::missing_node
@@ -921,6 +927,7 @@ Exceptions_Test::not_found_test2 (TAO_Naming_Client &root_context,
     }
   TAO_CATCHANY
     {
+      ACE_DEBUG ((LM_DEBUG, "Unbind test failed\n"));
       TAO_RETHROW;
     }
 
@@ -941,8 +948,8 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
 
       root_context->unbind (test_name, TAO_TRY_ENV);
       TAO_CHECK_ENV;
+      ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
     }
-
   TAO_CATCH (CosNaming::NamingContext::NotFound, ex)
     {
       if (ex.why == CosNaming::NamingContext::not_context
@@ -961,6 +968,7 @@ Exceptions_Test::not_found_test3 (TAO_Naming_Client &root_context,
     }
   TAO_CATCHANY
     {
+      ACE_DEBUG ((LM_DEBUG, "Not found (case 3) test failed\n"));
       TAO_RETHROW;
     }
   TAO_ENDTRY;
