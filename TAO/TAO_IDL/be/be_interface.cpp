@@ -907,7 +907,7 @@ int be_interface::gen_server_skeletons (void)
   *ss << "{\n";
   ss->incr_indent ();
   *ss << "TAO_Skeleton skel; // pointer to skeleton for operation" << nl;
-  *ss << "CORBA::String opname = req.op_name (); // retrieve operation name" <<
+  *ss << "CORBA::String opname = req.operation (); // retrieve operation name" <<
                                                  nl;
   *ss << "// find the skeleton corresponding to this opname" << nl;
   *ss << "if (this->_find (opname, skel) == -1)" << nl;
