@@ -52,6 +52,15 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 #       Local targets
 #----------------------------------------------------------------------------
 
+ifneq ($(BIN),)
+  ifeq ($(SHLIB), $(findstring $(SHLIB), $(BUILD)))
+    $(BIN): $(SHLIB)
+  endif
+  ifeq ($(LIB), $(findstring $(LIB), $(BUILD)))
+    $(BIN): $(LIB)
+  endif
+endif # BIN
+
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------
