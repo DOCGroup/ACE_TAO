@@ -1,3 +1,9 @@
+Sat Nov 13 23:49:57 2004  Kobi Cohen-Arazi  <kobi.cohenarazi@gmail.com>
+
+	* tests/Test_Output.cpp (ACE_Test_Output::close): 
+	Added delete of the stream and setting msg_ostream to 0. That way when
+	re-initing the stream, it will be recreated. 
+
 Fri Nov 12 09:10:28 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-integritySCA.h:

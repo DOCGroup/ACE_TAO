@@ -172,6 +172,9 @@ ACE_Test_Output::close (void)
   {
     this->output_file_->flush ();
     this->output_file_->close ();
+    delete this->output_file_;
+    this->output_file_=0;
+    ACE_LOG_MSG->msg_ostream (this->output_file_);
   }
   // else something else changed the stream and hence should
   // have closed and deleted the output_file_ 
