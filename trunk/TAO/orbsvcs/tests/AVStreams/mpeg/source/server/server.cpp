@@ -215,7 +215,8 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                             Mpeg_Global::rttag, 
                             -INET_SOCKET_BUFFER_SIZE);
       //    ACE_Reactor::instance ()->end_event_loop ();
-      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
+      TAO_ORB_Core_instance ()->orb ()->shutdown ();
+
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t)handle_connection : "),
@@ -404,9 +405,9 @@ void
 AV_Server_Sig_Handler::int_handler (int sig)
 {
   ACE_DEBUG ((LM_DEBUG, 
-              "(%P|%t) killed by signal %d",
+              "(%P|%t) Received signal %d, shutting down the event loop\n",
               sig));
-  exit (0);
+  TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
 
 // AV_Server routines
@@ -587,13 +588,13 @@ AV_Server::run (CORBA::Environment& env)
   // Run the ORB event loop
   this->orb_manager_->run (env);
 
-  TAO_CHECK_ENV_RETURN (env,-1);
-
   ACE_DEBUG ((LM_DEBUG,
               "(%P)AV_Server::run () "
               "came out of the (acceptor) "
               "event loop %p\n",
               "run_event_loop\n"));
+
+  TAO_CHECK_ENV_RETURN (env,-1);
 }
 
 AV_Server::~AV_Server (void)
