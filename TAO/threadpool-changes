@@ -902,3 +902,7 @@ Fri Aug 24 18:08:37 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ACE_ROOT/ace/OS.h: THR_SCOPE_PROCESS and THR_SCOPE_SYSTEM
           were not defined for NT.  Added them.
+
+        * ACE_ROOT/bin/auto_run_tests.lst: Added new RTCORBA tests.
+          Removed Minimum CORBA dependency on these tests.
+

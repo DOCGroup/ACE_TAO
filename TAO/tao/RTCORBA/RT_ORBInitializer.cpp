@@ -81,11 +81,11 @@ TAO_RT_ORBInitializer::pre_init (
     (TAO_ServerProtocolPolicy::hook);
 
   // Conversion.
-  long sched_policy = SCHED_OTHER;
+  long sched_policy = ACE_SCHED_OTHER;
   if (this->sched_policy_ == THR_SCHED_FIFO)
-    sched_policy = SCHED_FIFO;
+    sched_policy = ACE_SCHED_FIFO;
   else if (this->sched_policy_ == THR_SCHED_RR)
-    sched_policy = SCHED_RR;
+    sched_policy = ACE_SCHED_RR;
 
   // Create the initial priority mapping instance.
   TAO_Priority_Mapping *pm;
