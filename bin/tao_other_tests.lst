@@ -86,6 +86,11 @@ TAO/orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:!MINIMUM
 TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:!MINIMUM
 TAO/orbsvcs/tests/ImplRepo/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
+TAO/orbsvcs/tests/InterfaceRepo/Application_Test/run_test.pl:  !MINIMUM
+TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/run_test.pl:  !MINIMUM
+TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/run_test.pl:  !MINIMUM
+TAO/orbsvcs/tests/InterfaceRepo/Latency_Test/run_test.pl:  !MINIMUM
+TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test/run_test.pl:  !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/scale/run_test.pl: !MINIMUM
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !STATIC !ST Exceptions
