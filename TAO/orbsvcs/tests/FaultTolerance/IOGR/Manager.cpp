@@ -169,7 +169,7 @@ Manager::make_merged_iors (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK_RETURN (-1);
 
   iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
 

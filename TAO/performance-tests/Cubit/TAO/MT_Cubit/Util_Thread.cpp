@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Util_Thread.h"
+#include "ace/ACE.h"
 
 ACE_RCSID(MT_Cubit, Util_Thread, "$Id$")
 

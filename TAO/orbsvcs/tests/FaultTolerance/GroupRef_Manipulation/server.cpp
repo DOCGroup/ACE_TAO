@@ -2,6 +2,9 @@
 
 #include "ace/Get_Opt.h"
 #include "test_i.h"
+
+#if TAO_HAS_INTERCEPTORS
+
 #include "Server_ORBInitializer.h"
 #include "Server_Request_Interceptor.h"
 #include "tao/IORManipulation/IORManipulation.h"
@@ -51,7 +54,7 @@ add_ft_prop (CORBA::ORB_ptr o,
   ACE_CHECK;
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM ACE_ENV_ARG_PARAMETER);
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   FT::TagFTGroupTaggedComponent ft_tag_component;
@@ -262,3 +265,13 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#else
+
+int
+main (int argc, char *argv[])
+{
+  return 0;
+}
+
+#endif /* TAO_HAS_INTERCEPTORS */

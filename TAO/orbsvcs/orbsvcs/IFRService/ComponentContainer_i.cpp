@@ -7,6 +7,7 @@
 #include "ComponentDef_i.h"
 #include "ValueDef_i.h"
 #include "IFR_Service_Utils.h"
+#include "ace/SString.h"
 
 ACE_RCSID (IFRService, 
            ComponentContainer_i, 
