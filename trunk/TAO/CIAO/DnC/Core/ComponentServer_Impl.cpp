@@ -87,8 +87,8 @@ CIAO::ComponentServer_Impl::create_container (const Components::ConfigValues & c
   ACE_CHECK_RETURN (0);
 
   PortableServer::ServantBase_var safe_servant (container_servant);
-  container_servant->init (config,
-                           this->get_component_installation ()
+  container_servant->init (config
+                           //, this->get_component_installation ()
                            ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 

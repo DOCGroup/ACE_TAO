@@ -17,14 +17,14 @@ CIAO::Container_Impl::_default_POA (void)
 }
 
 int
-CIAO::Container_Impl::init (const ::Components::ConfigValues &options,
-                            Components::Deployment::ComponentInstallation_ptr inst
+CIAO::Container_Impl::init (const ::Components::ConfigValues &options
+                            //,Components::Deployment::ComponentInstallation_ptr inst
                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->config_ = options;
-  this->installation_ =
-    Components::Deployment::ComponentInstallation::_duplicate (inst);
+  //this->installation_ =
+  //  Components::Deployment::ComponentInstallation::_duplicate (inst);
 
   // @@ Initialize container and create the internal container
   // implementation that actually interacts with installed
@@ -245,6 +245,10 @@ CIAO::Container_Impl::parse_config_values (const char *id,
 
   if (this->static_config_flag_ == 0)
     {
+      ACE_DEBUG((LM_DEBUG, "Static configuration is broken now!"));
+      //@@ Due to the change of interfaces we have to leave the static configuration
+      //   broken.      --Tao
+      /*
       component_install_info.executor_dll_ =
         this->installation_->get_implementation (id
                                                  ACE_ENV_ARG_PARAMETER);
@@ -270,7 +274,8 @@ CIAO::Container_Impl::parse_config_values (const char *id,
           exc->_raise ();
 #else
           ACE_TRY_ENV.exception (exc);
-#endif /*ACE_HAS_EXCEPTIONS*/
+#endif
         }
+    */
     }
 }
