@@ -73,12 +73,4 @@
 
 #include /**/ <pthread.h>
 
-#if defined (ACE_HAS_TSS_EMULATION)
-  // This seems necessary to avoid an occasional seg fault at the end
-  // of some threaded tests, only with ACE_HAS_TSS_EMULATION.  It
-  // appears to be problem in the LinuxThreads library, especially if
-  // a sleep solves it.
-# define ACE_FINI_HOOK ACE_OS::sleep (1)
-#endif /* ACE_HAS_TSS_EMULATION */
-
 #endif /* ACE_CONFIG_H */
