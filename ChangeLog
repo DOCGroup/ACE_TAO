@@ -100,7 +100,18 @@ Wed Sep  1 10:12:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           has much more stuff than we currently use. Everything is tested
           on HPUX 11i v2, maybe it breaks older versions, I don't think so
           but if it will, our daily builds will trigger this and we have
-          to make the defines than dependent on the HPUX version.
+          to make the defines than dependent on the HPUX version. Added are:
+          ACE_HAS_NEW_NO_H, ACE_HAS_AUTOMATIC_INIT_FINI,
+          ACE_HAS_LONG_MAP_FAILED, ACE_HAS_MEMCHR,
+          ACE_HAS_POSITION_INDEPENDENT_POINTERS, ACE_HAS_POSIX_GETPWNAM_R,
+          ACE_HAS_P_READ_WRITE, ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS,
+          ACE_LACKS_PRI_T, ACE_HAS_SIG_C_FUNC, ACE_HAS_SIGSUSPEND,
+          ACE_HAS_SOCKLEN_T, ACE_HAS_SYS_ERRLIST, ACE_HAS_VOIDPTR_MMAP,
+          ACE_HAS_VOIDPTR_SOCKOPT, ACE_HAS_GETRUSAGE_PROTOTYPE, ACE_HAS_TIMOD_H,
+          ACE_HAS_SYS_XTI_H, ACE_HAS_PTHREAD_RESUME_NP. If you don't agree to
+          one of these defines, let us know, then we also have some work on
+          the autoconf support, because autoconf gave info all these can be
+          setup.
 
 Wed Sep  1 07:02:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
