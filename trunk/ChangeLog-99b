@@ -8,6 +8,222 @@ Fri Jul  2 12:25:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  "purge_connections ()" whihc allows explicit purging of
 	  connnections from the connection cache.
 
+Fri Jul 01 11:50:21 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_lib.dsp: Added Pharlap ETS configurations for Debug and
+          Release.
+
+        * ace/config-pharlap.h: Added ACE_LACKS_* definitions to avoid some
+          unimplemented memory mapped things. Added a definition for
+          ACE_PAGE_SIZE because it's not obvious how to get it at run time.
+          Include <embkern.h> because some of the OS functions call ETS
+          kernel functions for low-level system info gathering.
+          Set ACE_HAS_TSS_EMULATION. The PharLap TSS leaves some to be
+          desired, according to TSS_Test.
+
+        * ace/config-win32-common.h: In building for PharLap, don't bring in
+          the OS-supplied wsock32.lib - need to use the PharLap one.
+
+        * ace/ACE.cpp: PharLap ETS changes:
+          ACE::ldfind: PharLap doesn't have expand environment strings.
+          ACE::get_ip_interfaces: Use PharLap kernel functions to find
+             interfaces and learn their addresses.
+          ACE::terminate_process: Unsupported on PharLap.
+          ACE::handle_timed_open: If the open times out, set errno to
+             ETIMEDOUT, not ETIME. 
+          ACE::handle_timed_accept: If the select times out, set errno to
+             ETIMEDOUT, not ETIME. 
+          ACE::sock_error: If not a known error, format a message with the
+             error number in it - this is the only chance for a PharLap
+             system error to indicate the error number.
+
+        * ace/OS.h: Changed def of ACE_DEFAULT_SERVER_HOST to ACE_LOCALHOST.
+
+        * ace/OS.cpp (ACE_OS::uname): PharLap: Use ETS kernel functions to get
+          target processor class. PharLap doesn't do GetSystemInfo.
+
+        * ace/OS.i (ACE_OS::hostname): PharLap: Attempt gethostname if using
+          RT version, though this isn't too reliable (requires ethernet and
+          BOOTP).
+          (ACE_OS::dlerror): PharLap doesn't support FormatMessage,
+          so format the error number.
+          (ACE_OS::mmap, ACE_OS::mprotect, ACE_OS::msync): PharLap doesn't
+          do memory-mapped files.
+          (ACE_OS::getpagesize): PharLap - use page size set from config.h.
+          Don't know a way to get this info at run time.
+          (ACE_OS::hostname (whar_t *, size_t)): PharLap - no wide chars.
+
+        * ace/Log_Msg.cpp (log): PharLap doesn't do FormatMessage, so print
+          <unknown error> = %d for %p.
+
+        * ace/Pipe.cpp (open): The protocol level for TCP_NODELAY on PharLap
+          is SOL_SOCKET, as opposed to Win32, where it's IPPROTO_TCP.
+
+        * ace/SPIPE_Connector.cpp (connect): PharLap doesn't have the
+          SetNamedPipeHandleState function.
+
+        * ace/WFMO_Reactor.cpp: PharLap ETS changes, because PharLap doesn't
+          implement async I/O, or WaitForMultipleObjectsEx.
+          register_handler_i: (This is a general Winsock 1.1 change) Creating
+              an event handle for a socket is not supported.
+          ok_to_wait, wait_for_multiple_events: Use WaitForMultipleObjects,
+              not WaitForMultipleObjectsEx. Should be fine since the big
+              difference is alertable, and that's not supported on ETS anyway.
+
+        * tests/test_config.h: On PharLap, direct all logging to host console.
+
+        * tests/tests_pharlap_msvc.lnk: Cleaned things up; extended stack size
+          from 8K to 32K. Change the starting load offset to
+          0x100000 - the tests don't all fit in the default range.
+          Disabled the target screen driver to make all the test output from
+          all threads go to the host, thereby getting saved in the log files.
+
+        * tests/run_pharlap_tests.bat: Fixed names of the executables.
+
+        * tests/Atomic_Op_Test.dsp:
+        * tests/Barrier_Test.dsp:
+        * tests/Basic_Types_Test.dsp:
+        * tests/Buffer_Stream_Test.dsp:
+        * tests/CDR_Test_Test.dsp:
+        * tests/Collection_Test.dsp:
+        * tests/Conn_Test.dsp:
+        * tests/DLList_Test.dsp:
+        * tests/Dynamic_Priority_Test.dsp:
+        * tests/Enum_Interfaces_Test.dsp:
+        * tests/Env_Value_Test.dsp:
+        * tests/Future_Test.dsp:
+        * tests/Handle_Set_Test.dsp:
+        * tests/Hash_Map_Manager_Test.dsp:
+        * tests/High_Res_Timer_Test.dsp:
+        * tests/IOStream_Test.dsp:
+        * tests/Map_Manager_Test.dsp:
+        * tests/Map_Test.dsp:
+        * tests/Mem_Map_Test.dsp:
+        * tests/Message_Block_Test.dsp:
+        * tests/Message_Queue_Notifications_Test.dsp:
+        * tests/Message_Queue_Test.dsp:
+        * tests/MM_Shared_Memory_Test.dsp:
+        * tests/MT_Reactor_Timer_Test.dsp:
+        * tests/MT_SOCK_Test.dsp:
+        * tests/Naming_Test.dsp:
+        * tests/New_Fail_Test.dsp:
+        * tests/Notify_Performance_Test.dsp:
+        * tests/OrdMultiSet_Test.dsp:
+        * tests/Pipe_Test.dsp:
+        * tests/Priority_Buffer_Test.dsp:
+        * tests/Priority_Reactor_Test.dsp:
+        * tests/Priority_Task_Test.dsp:
+        * tests/Process_Mutex_Test.dsp:
+        * tests/Process_Strategy_Test.dsp:
+        * tests/RB_Tree_Test.dsp:
+        * tests/Reactor_Exceptions_Test.dsp:
+        * tests/Reactor_Notify_Test.dsp:
+        * tests/Reactor_Performance_Test.dsp:
+        * tests/Reactor_Timer_Test.dsp:
+        * tests/Reactors_Test.dsp:
+        * tests/Reader_Writer_Test.dsp:
+        * tests/Recursive_Mutex_Test.dsp:
+        * tests/Reverse_Lock_Test.dsp:
+        * tests/Semaphore_Test.dsp:
+        * tests/Service_Config_Test.dsp:
+        * tests/Sigset_Ops_Test.dsp:
+        * tests/Simple_Message_Block_Test.dsp:
+        * tests/SOCK_Connector_Test.dsp:
+        * tests/SOCK_Send_Recv_Test.dsp:
+        * tests/SOCK_Test.dsp:
+        * tests/SPIPE_Test.dsp:
+        * tests/SString_Test.dsp:
+        * tests/SV_Shared_Memory_Test.dsp:
+        * tests/Svc_Handler_Test.dsp:
+        * tests/Task_Test.dsp:
+        * tests/Thread_Manager_Test.dsp:
+        * tests/Thread_Mutex_Test.dsp:
+        * tests/Thread_Pool_Reactor_Test.dsp:
+        * tests/Thread_Pool_Test.dsp:
+        * tests/Time_Service_Test.dsp:
+        * tests/Time_Value_Test.dsp:
+        * tests/Timeprobe_Test.dsp:
+        * tests/Timer_Queue_Test.dsp:
+        * tests/Tokens_Test.dsp:
+        * tests/TSS_Test.dsp:
+        * tests/Upgradeable_RW_Test.dsp:
+        * tests/UPIPE_SAP_Test.dsp:
+          Fixed settings for PharLap ETS configurations.
+
+        * tests/Conn_Test.cpp (server): If the acceptor fails, do not try to
+          close the svc_handler - the failed ACE_Oneshot_Acceptor already
+          closed it.
+
+        * tests/SOCK_Send_Recv_Test.cpp: Use ACE_LOCALHOST, not "localhost".
+
+Thu Jul  1 21:49:39 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
+
+	* ace/Containers_T.i,h,cpp
+	  Added reset () methods to the derived classes of
+	  ACE_Double_Linked_List_Iterator because the behavior of the base 
+	  class's version was not sufficient (and would cause way fun
+	  segfaults when used). 
+	
+	* tests/Map_Manager_Test.cpp 
+	* tests/DLList_Test.cpp
+	  ACE_const_cast'ed some string literals to char *'s to appease
+	  the evil monstrosity that is SC 5.0. 
+
+Wed Jun 30 18:11:41 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/OS.i (strncasecmp):
+
+	  Corrected ACE_TRACE statement to contain "strncasecmp" instead
+	  of "strcasecmp."
+
+Thu Jul 01 21:07:22 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+        * ACE version 4.6.43 released.
+
+Thu Jul 01 10:53:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          set INCLDIRS, so that wrapper_macros.GNU doesn't insert -I.
+          Otherwise, with GHS on NT host, ACE's Signal.h gets #included
+          instead of VxWorks' signal.h by target/h/private/sigLibP.h.
+          Thanks to Dale Wood <dale_wood@Mitel.com> and
+          Dave Steele <Dave_Steele@Mitel.COM> for helping to figure
+          this out.
+
+Thu Jul 01 10:53:33 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU,
+          bin/ace_ld: changed -c option to -C [...] --, so
+          that its arguments don't need to be quoted.  I
+          couldn't figure out a way to quote on NT host.  Thanks
+          to Dale Wood <dale_wood@Mitel.com> for enlightening me
+          on some of the intricacies of NT.
+
+Thu Jul 01 10:47:41 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/libsize.pl: always use `pwd`, because the PWD environment
+          variable doesn't appear to get updated by recursive makes.
+
+Thu Jul 01 08:46:10 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: filter out lines from IDL_Cubit
+          that contain "0 errors".
+
+Thu Jul 01 00:24:52 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * docs/ACE-guidelines.html: Added a table explaining how to use
+          all the different ACE_*_STRING macros.
+
+        * tests/DLList_Test.cpp:
+        * tests/Hash_Map_Manager_Test.cpp:
+        * tests/Map_Manager_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Notify_Performance_Test.cpp:
+        * tests/Priority_Task_Test.cpp:
+        * tests/Thread_Pool_Reactor_Test.cpp:
+        * tests/test_config.h: UNICODE fixes.  The usage of ASYS_TCHAR and
+          LPCTSTR were mistaken in many places.
+
 Wed Jun 30 16:31:11 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* tests/Cache_Map_Manager_Test.cpp (purge_test_cache): Solved
