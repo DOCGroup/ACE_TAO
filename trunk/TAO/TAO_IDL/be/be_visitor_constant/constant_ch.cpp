@@ -55,7 +55,9 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   // to us here itself, else it will be in the *.cpp file.
 
 //  if (be_global->gen_inline_constants ())
-//    {
+  if (! node->is_nested ()
+      || node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
+    {
       if (node->et () == AST_Expression::EV_enum)
         {
           *os << node->enum_full_name ();
@@ -68,25 +70,11 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
       *os << " const "
           << node->local_name () << " = "
           << node->constant_value ();
-//    }
-  // Is our enclosing scope a module? We need this check because for
-  // platforms that support namespaces, the constant must be declared
-  // extern.
-/*
+    }
+  // We are nested inside an interface or a valuetype.
   else 
     {
-      AST_Decl::NodeType nt = node->defined_in ()->scope_node_type ();
-
-      if (node->is_nested () && nt == AST_Decl::NT_module)
-        {
-          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
-        }
-      else
-        {
-          *os << "static ";
-        }
-
-      *os << "const ";
+      *os << "static const ";
 
       if (node->et () == AST_Expression::EV_enum)
         {
@@ -106,7 +94,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
           *os << " = " << node->constant_value ();
         }
     }
-*/
+
   *os << ";" << be_nl << be_nl;
 
   node->cli_hdr_gen (I_TRUE);
