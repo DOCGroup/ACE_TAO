@@ -1,3 +1,9 @@
+Mon Feb 21 15:54:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/IDL_Test/union.idl:
+	  Added an IDL code simplified from an example sent in
+	  by Jonathan Reis <reis@stentorsoft.com>
+
 Mon Feb 21 10:59:00 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_generator.cpp:
