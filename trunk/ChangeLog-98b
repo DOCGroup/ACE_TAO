@@ -15,6 +15,9 @@ Wed May 27 07:04:42 1998  David L. Levine  <levine@cs.wustl.edu>
           if there is overflow.  This allows, e.g., a mean to be
           calculated even if the standard deviation calculation overflow.
 
+        * performance-tests/Misc/context_switch_time.cpp: don't run the
+          Yield_Test on VxWorks because it takes too long.
+
 Tue May 26 22:25:18 1998  Stephen Coy  <stevec@wsa.com.au>
 
         * ace/Log_Msg.{h,cpp},Service_Config.cpp: added support for
