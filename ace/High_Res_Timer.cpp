@@ -14,34 +14,34 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
 // by zero errors.
 #if defined (ACE_WIN32)
 
-u_long 
+u_long
 ACE_High_Res_Timer::get_registry_scale_factor (void)
 {
-  HKEY hk; 
-  unsigned long speed;  
+  HKEY hk;
+  unsigned long speed;
   unsigned long speed_size = sizeof speed;
   unsigned long speed_type = REG_DWORD;
 
-  long rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE, 
-			    __TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"), 
-			    NULL, 
-			    KEY_READ, 
-			    &hk);
-  
-  if (rc != ERROR_SUCCESS) 
-    // Couldn't find key
-    return 1; 
+  long rc = ::RegOpenKeyEx (HKEY_LOCAL_MACHINE,
+                            __TEXT ("HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0"),
+                            NULL,
+                            KEY_READ,
+                            &hk);
 
-  rc = ::RegQueryValueEx (hk, 
-			  __TEXT ("~MHz"), 
-			  0, 
-			  &speed_type, 
-			  (LPBYTE) &speed, 
-			  &speed_size);
-  
+  if (rc != ERROR_SUCCESS)
+    // Couldn't find key
+    return 1;
+
+  rc = ::RegQueryValueEx (hk,
+                          __TEXT ("~MHz"),
+                          0,
+                          &speed_type,
+                          (LPBYTE) &speed,
+                          &speed_size);
+
   ::RegCloseKey (hk);
 
-  if (rc != ERROR_SUCCESS) 
+  if (rc != ERROR_SUCCESS)
     // Couldn't get the value
     return 1;
 
@@ -100,19 +100,14 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  u_long nseconds = (u_long) ((this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_);
-#else
-  u_long nseconds = (u_long) ((this->end_ - this->start_).lo () % global_scale_factor_ * 1000 / global_scale_factor_);
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
+  // The division by 1 transparently converts an ACE_U_LongLong to an
+  // ACE_UINT32.
+  u_long nseconds = (u_long) ((this->end_ - this->start_) / 1 %
+                                global_scale_factor_ * 1000 /
+                                global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  ACE_hrtime_t useconds; 
-#else
-  u_long useconds; 
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
-  useconds = (this->end_ - this->start_) / global_scale_factor_;
+  ACE_UINT32 useconds = (this->end_ - this->start_) / global_scale_factor_ / 1;
 
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
@@ -149,19 +144,14 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)
   // The cast avoids a MSVC 4.1 compiler warning about narrowing.
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  u_long nseconds = (u_long) ((this->end_ - this->start_) % global_scale_factor_ * 1000 / global_scale_factor_);
-#else
-  u_long nseconds = (u_long) ((this->end_ - this->start_).lo () % global_scale_factor_ * 1000 / global_scale_factor_);
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
+  // The division by 1 transparently converts an ACE_U_LongLong to an
+  // ACE_UINT32.
+  u_long nseconds = (u_long) ((this->end_ - this->start_) / 1 %
+                                global_scale_factor_ * 1000 /
+                                global_scale_factor_);
 
   // Get just the microseconds (dropping any left over nanoseconds).
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  ACE_hrtime_t useconds; 
-#else
-  u_long useconds; 
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
-  useconds = (this->end_ - this->start_) / global_scale_factor_;
+  ACE_UINT32 useconds = (this->end_ - this->start_) / global_scale_factor_ / 1;
 
   // Total nanoseconds in a single 64-bit value.
   nanoseconds = useconds * 1000 + nseconds;
@@ -179,18 +169,13 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
 
   // Separate to seconds and nanoseconds.
   u_long total_secs  = (u_long) (total_nanoseconds / ACE_ONE_SECOND_IN_NSECS);
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  u_long extra_nsecs = (u_long) (total_nanoseconds % ACE_ONE_SECOND_IN_NSECS);
-#else
-  // Ignore the hi portion of the ACE_hrtime_t.
-  u_long extra_nsecs = total_nanoseconds.lo () % ACE_ONE_SECOND_IN_NSECS;
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
+  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds / 1 % ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
     {
       ACE_hrtime_t avg_nsecs = total_nanoseconds / count;
-      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %lu), avg usecs = %lu\n",
+      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
              (u_long) ((avg_nsecs + 500) / 1000));
     }
@@ -213,23 +198,18 @@ ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE ha
 
   // Separate to seconds and nanoseconds.
   u_long total_secs  = (u_long) (total_nanoseconds / ACE_ONE_SECOND_IN_NSECS);
-#if defined (ACE_WIN32) || defined (ACE_HAS_LONGLONG_T)
-  u_long extra_nsecs = (u_long) (total_nanoseconds % ACE_ONE_SECOND_IN_NSECS);
-#else
-  // Ignore the hi portion of the ACE_hrtime_t.
-  u_long extra_nsecs = total_nanoseconds.lo () % ACE_ONE_SECOND_IN_NSECS;
-#endif /* ACE_WIN32 || ACE_HAS_LONGLONG_T */
+  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds / 1 % ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
     {
       ACE_hrtime_t avg_nsecs   = this->total_ / count;
-      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %lu), avg usecs = %lu\n",
+      ACE_OS::sprintf (buf, " count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
              (u_long) ((avg_nsecs + 500) / 1000));
     }
   else
-    ACE_OS::sprintf (buf, " total %3lu.%06lu secs\n",
+    ACE_OS::sprintf (buf, " total %3lu.%06u secs\n",
              total_secs, (extra_nsecs + 500) / 1000);
 
   ACE_OS::write (handle, str, ACE_OS::strlen (str));
@@ -243,14 +223,14 @@ ACE_High_Res_Timer::get_env_global_scale_factor (const char *env)
     {
       const char *env_value = ACE_OS::getenv (env);
       if (env_value != 0)
-	{
-	  int value = ACE_OS::atoi (env_value);
-	  if (value > 0)
-	    {
-	      ACE_High_Res_Timer::global_scale_factor (value);
-	      return 0;
-	    }
-	}
+        {
+          int value = ACE_OS::atoi (env_value);
+          if (value > 0)
+            {
+              ACE_High_Res_Timer::global_scale_factor (value);
+              return 0;
+            }
+        }
     }
 
   return -1;
