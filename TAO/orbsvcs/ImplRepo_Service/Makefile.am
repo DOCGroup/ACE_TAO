@@ -21,12 +21,23 @@ ImplRepo_Service_LDADD = \
 	$(top_builddir)/ace/libACE.la $(top_builddir)/TAO/tao/libTAO.la
 
 ImplRepo_Service_SOURCES = \
+        Adapter_Activator.cpp \
+        Forwarder.cpp \
         ImplRepo.cpp \
         ImplRepo_i.cpp \
+        Iterator.cpp \
+        Locator.cpp \
+        NT_Service.h \
+        Options.cpp \
         Repository.cpp
 
 noinst_HEADERS = \
+        Adapter_Activator.h \
+        Forwarder.h \
         ImplRepo_i.h \
+        Iterator.h \
+        NT_Service.h \
+        Options.h \
         Repository.h
 
 ## EXTRA_DIST = README

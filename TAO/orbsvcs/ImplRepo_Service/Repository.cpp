@@ -4,8 +4,6 @@
 #include "Options.h"
 #include "ace/ACE.h"
 
-ACE_RCSID(ImplRepo_Service, Repository, "$Id$")
-
 // Initialize the command_line and working_dir.
 
 Server_Info::Server_Info (
@@ -14,7 +12,7 @@ Server_Info::Server_Info (
     const ACE_TString startup_command,
     const ImplementationRepository::EnvironmentList environment_vars,
     const ACE_TString working_dir,
-    const ActivationMode activation
+    const ImplementationRepository::ActivationMode activation
   )
 : starting_up_ (0),
   logical_server_name_ (logical_server_name),
@@ -56,7 +54,7 @@ Server_Info::get_startup_info (
     ACE_TString &startup_command,
     ImplementationRepository::EnvironmentList &environment_vars,
     ACE_TString &working_dir,
-    ActivationMode &activation
+    ImplementationRepository::ActivationMode &activation
   )
 {
   logical_server_name = this->logical_server_name_;
@@ -113,7 +111,7 @@ Server_Repository::init ()
     {
       ACE_TString logical, startup, working_dir;
       u_int activation_val = 0;
-      Server_Info::ActivationMode activation;
+      ImplementationRepository::ActivationMode activation;
 
       ImplementationRepository::EnvironmentList environment_vars;
 
@@ -142,7 +140,7 @@ Server_Repository::init ()
                                           activation_val);
 
       activation =
-        ACE_static_cast (Server_Info::ActivationMode, activation_val);
+        ACE_static_cast (ImplementationRepository::ActivationMode, activation_val);
 
       // Maybe environments variables?? need a straightforward 
       // way to store env vars.
@@ -180,7 +178,7 @@ Server_Repository::add (
     const ACE_TString startup_command,
     const ImplementationRepository::EnvironmentList environment_vars,
     const ACE_TString working_dir,
-    const Server_Info::ActivationMode activation
+    const ImplementationRepository::ActivationMode activation
   )
 {
   ACE_Configuration *config = OPTIONS::instance ()->config ();
@@ -254,7 +252,7 @@ Server_Repository::get_startup_info (
     ACE_TString &startup_command,
     ImplementationRepository::EnvironmentList &environment_vars,
     ACE_TString &working_dir,
-    Server_Info::ActivationMode &activation
+    ImplementationRepository::ActivationMode &activation
   )
 {
   Server_Info *server;

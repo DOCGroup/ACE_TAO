@@ -1,3 +1,64 @@
+Fri Nov 10 12:41:32 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.cpp: (added)
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h: (added)
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp: (added)
+        * orbsvcs/ImplRepo_Service/Forwarder.h: (added)
+        * orbsvcs/ImplRepo_Service/ImplRepo.bor:
+        * orbsvcs/ImplRepo_Service/ImplRepo.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * orbsvcs/ImplRepo_Service/Iterator.cpp: (added)
+        * orbsvcs/ImplRepo_Service/Iterator.h: (added)
+        * orbsvcs/ImplRepo_Service/Locator.cpp: (added)
+        * orbsvcs/ImplRepo_Service/Locator.h: (added)
+        * orbsvcs/ImplRepo_Service/Makefile:
+        * orbsvcs/ImplRepo_Service/Makefile.am: 
+        * orbsvcs/ImplRepo_Service/NT_ImplRepo_Server.cpp: (removed)
+        * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.cpp: (removed)
+        * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.h: (removed)
+        * orbsvcs/ImplRepo_Service/NT_Service.cpp: (added)
+        * orbsvcs/ImplRepo_Service/NT_Service.h: (added)
+        * orbsvcs/ImplRepo_Service/Options.cpp:
+        * orbsvcs/ImplRepo_Service/Options.h:
+        * orbsvcs/ImplRepo_Service/README.txt: (added)
+        * orbsvcs/ImplRepo_Service/Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Repository.h:
+        * orbsvcs/ImplRepo_Service/implrepo.dsp:
+        * orbsvcs/ImplRepo_Service/tao_imr.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+
+          First split up the ImplRepo_Service into separate files, 
+          around one per class.  Also doxygenated the ImplRepo 
+          documentation.  Finally, merged the two 
+
+        * orbsvcs/tests/ImplRepo/airplane_client_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_i.h:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_i.h:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.h:
+
+          Doxygenation.
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+
+          First, defaults to both_ir if no testname is passed in.
+
+          Changed the NT_Service test around a bit.  The executable
+          changed and started running things from the bin directory,
+          so when it runs as a service it automatically finds the
+          DLL's it needs. 
+
+        * TAOACE.dsw:
+        * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.dsp: (removed)
+        * orbsvcs/ImplRepo_Service/ImplRepo.dsw:
+        * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
+
+          Removed NT_ImplRepo_Service.dsp, since the functionality was 
+          moved into ImplRepo_Service itself.
+
 Fri Nov 10 12:06:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/Latency/Makefile : 

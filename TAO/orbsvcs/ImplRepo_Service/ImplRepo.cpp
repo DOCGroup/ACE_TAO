@@ -1,47 +1,87 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "Options.h"
 #include "ImplRepo_i.h"
+#include "NT_Service.h"
 
-ACE_RCSID(ImplRepo_Service, ImplRepo, "$Id$")
-
-int
-main (int argc, char *argv[])
+int 
+run_standalone (void)
 {
   ImplRepo_i server;
-
-  ACE_DEBUG ((LM_DEBUG, "TAO Implementation Repository\n"));
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      if (server.init (argc, argv, ACE_TRY_ENV) == -1)
-        return 1;
+      int status = server.init (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (status == -1)
+        {
+          return 1;
+        }
       else
         {
           server.run (ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
-          if (server.fini (ACE_TRY_ENV) == -1)
-            return 1;
+          status = server.fini (ACE_TRY_ENV);
           ACE_TRY_CHECK;
+          
+          if (status == -1)
+            return 1;
         }
     }
   ACE_CATCH (CORBA::SystemException, sysex)
     {
       ACE_PRINT_EXCEPTION (sysex, "System Exception");
-      return -1;
+      return 1;
     }
   ACE_CATCH (CORBA::UserException, userex)
     {
       ACE_PRINT_EXCEPTION (userex, "User Exception");
-      return -1;
+      return 1;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unknown Exception");
-      return -1;
+      return 1;
     }
   ACE_ENDTRY;
+  
   return 0;
+}
+
+ACE_NT_SERVICE_DEFINE (service, ImR_NT_Service, IMR_SERVICE_NAME);
+
+int
+run_service (void)
+{
+  // @todo: Update me
+
+  // If we get here, we either run the app in debug mode (-d) or are
+  // being called from the service manager to start the service.
+
+  ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
+  
+  if (ret == 0)
+    ACE_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+
+  return ret;
+}
+
+int
+main (int argc, char *argv[])
+{
+  int result = OPTIONS::instance ()->parse_args (argc, argv);
+  
+  if (result < 0)
+    return 1;  // Error parsing args
+  else if (result > 0)
+    return 0;  // No error, but we should exit anyway.
+
+  if (OPTIONS::instance ()->service () == 1)
+    return run_service ();
+
+  return run_standalone ();
 }

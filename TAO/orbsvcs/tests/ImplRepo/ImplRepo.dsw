@@ -39,18 +39,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "NT_ImplRepo_Service"=..\..\ImplRepo_Service\NT_ImplRepo_Service.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Nestea Client"=.\nestea_client.dsp - Package Owner=<4>
 
 Package=<5>
