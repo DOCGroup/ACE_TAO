@@ -457,7 +457,7 @@ ACE_Function_Node::ACE_Function_Node (const ACE_TCHAR *path,
   : function_name_ (func_name ? ACE_Lib_Find::ldname (func_name) : 0)
 {
   ACE_TRACE ("ACE_Function_Node::ACE_Function_Node");
-  this->pathname (path);
+  this->pathname (path ? ACE::strnew (path) : 0);
   this->must_delete_ = 1;
 }
 
@@ -528,6 +528,7 @@ ACE_Function_Node::~ACE_Function_Node (void)
 {
   ACE_TRACE ("ACE_Function_Node::~ACE_Function_Node");
   delete[] ACE_const_cast (ACE_TCHAR *, function_name_);
+  delete[] ACE_const_cast (ACE_TCHAR *, pathname_);
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Dummy_Node)

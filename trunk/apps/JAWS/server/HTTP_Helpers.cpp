@@ -87,7 +87,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
     {
     }
 
-  delete buf;
+  delete [] buf;
 
   tms.tm_year = HTTP_Helper::fixyear (tms.tm_year);
   tms.tm_mon = HTTP_Helper::HTTP_month (month);

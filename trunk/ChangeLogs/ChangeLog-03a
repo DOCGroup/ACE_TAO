@@ -1,3 +1,13 @@
+Fri Aug 24 18:33:09 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Parse_Node.cpp (ACE_Function_Node): Make sure to dynamically
+	  allocate the pathname_ so we can delete it!   Thanks to
+	  Don Hinton for reporting this.
+
+	* ace/Configuration_Import_Export.cpp: Changed a couple of
+	  delete (char *) buf to delete (char *) [] buf.  Thanks to
+	  Don Hinton for reporting this.
+
 Fri Aug 24 16:10:20 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	Merged in changes from the reactor_deadlock branch. This set of
