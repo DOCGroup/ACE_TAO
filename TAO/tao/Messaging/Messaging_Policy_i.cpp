@@ -214,7 +214,7 @@ TAO_Sync_Scope_Policy::policy_type (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 void
 TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                              TAO_Stub *stub,
-                             int &has_synchronization,
+                             bool &has_synchronization,
                              Messaging::SyncScope &scope)
 {
   CORBA::Policy_var policy =
@@ -239,7 +239,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
                   0),
                 CORBA::COMPLETED_NO));
 
-      has_synchronization = 1;
+      has_synchronization = true;
       scope = p->synchronization (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

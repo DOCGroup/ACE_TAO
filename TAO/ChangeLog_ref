@@ -1,3 +1,16 @@
+Mon Aug 11 12:02:38 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Invocation_Adapter.cpp: Initialized boolean value. 
+	* tao/ORB_Core.cpp(call_timeout_hook): Fixed a typo which caused
+	  the "has_timeout" to be set to true if the hook was present. 
+	
+	* tao/Synch_Invocation.cpp:Remove some debug messages. 
+
+	* tao/Messaging/Messaging_Policy_i.cpp:
+	* tao/Messaging/Messaging_Policy_i.h: Fixed compile errors with
+	  g++ 3.3. 
+
+
 Mon Aug 11 11:31:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_interface/thru_poa_proxy_impl_sh.cpp:

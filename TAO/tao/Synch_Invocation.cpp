@@ -158,7 +158,6 @@ namespace TAO
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
 #endif /*TAO_HAS_INTERCEPTORS*/
-	  std::cout << "Here " << std::endl;
           ACE_RE_THROW;
       }
 # if defined (ACE_HAS_EXCEPTIONS) \
@@ -183,7 +182,6 @@ namespace TAO
     ACE_ENDTRY;
     ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-	  std::cout << "Here ????" << std::endl;
     return s;
   }
 
