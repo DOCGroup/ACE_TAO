@@ -6,136 +6,128 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../../../../bin";
-
-require ACEutils;
-use Cwd;
+use PerlACE::Run_Test;
 
 $con_count = 10;
 $sup_count = 10;
 $ev_count = 8;
 $status = 0;
-$port = ACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
 
-ACE::checkForTarget(getcwd());
+$nsior = PerlACE::LocalFile ("ns.ior");
 
-sub cosec_multiple_test2
-{
-    # first start the Naming service..
-    $SV1 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."Naming_Service".$DIR_SEPARATOR
-			    ."Naming_Service".$EXE_EXT,
-                            "-o ns.ior");
-
-    sleep 10;
-
-    # now start the Rt EC..
-    $SV2 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."Event_Service".$DIR_SEPARATOR
-			    ."Event_Service".$EXE_EXT,
-			    "-t new -ORBInitRef NameService=file://ns.ior");
-
-    sleep 10;
-
-    # now start the CosEC1..
-    $SV3 = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR
-			    ."..".$DIR_SEPARATOR
-			    ."bin".$DIR_SEPARATOR
-			    ."RtEC_Based_CosEC".$EXE_EXT,
-			    "-ORBInitRef NameService=file://ns.ior"
-			    ." $CosEC1_params");
-
-    sleep 10;
-
-    # now start the consumers
-    for ($cntr1 = 0; $cntr1 < $con_count ; $cntr1+=1)
-    {
-        print "creating consumer# $cntr1\n";
-        $CONS = Process::Create ($EXEPREFIX."Consumer".$EXE_EXT,
-                                 "-ORBInitRef NameService=file://ns.ior"
-				 ." -c $ev_count");
-        sleep 10;
-    }
-
-
-    # now start the suppliers
-    for ($cntr2 = 0; $cntr2 < $con_count ; $cntr2+=1)
-    {
-        print "creating supplier# $cntr2\n";
-        $SUPP = Process::Create ($EXEPREFIX."Supplier".$EXE_EXT,
-                                 "-ORBInitRef NameService=file://ns.ior"
-				 ." -c $ev_count");
-        sleep 10;
-    }
-
-    print "waiting for the last supplier to finish\n";
-    if ($SUPP->TimedWait (60) == -1) {
-      print STDERR "ERROR: supplier timedout\n";
-      $status = 1;
-      $SUPP->Kill (); $SUPP->TimedWait (1);
-    }
-
-
-    print "waiting for the last consumer to finish\n";
-    if ($CONS->TimedWait (60) == -1) {
-      print STDERR "ERROR: consumer timedout\n";
-      $status = 1;
-      $CONS->Kill (); $CONS->TimedWait (1);
-    }
-
-
-    print "cleanup...\n";
-    $SV1->Kill ();
-    $SV2->Kill ();
-    $SV3->Kill ();
-
-    $SV1->TimedWait (1);
-    $SV2->TimedWait (1);
-    $SV3->TimedWait (1);
-
-    print "done!.\n";
-}
+unlink $nsior;
 
 # Parse the arguments
 
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
-    {
-        print "usage: run_test2.pl [-chorus <target>] -e event_count -c consumers -s suppliers -h help\n";
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
+        print "usage: run_test2.pl -e event_count -c consumers -s suppliers -h help\n";
         exit;
     }
-    if ($ARGV[$i] eq "-e")
-    {
+    elsif ($ARGV[$i] eq "-e") {
         $ev_count = $ARGV[$i + 1];
         $i++;
-        last SWITCH;
     }
-    if ($ARGV[$i] eq "-c")
-    {
+    elsif ($ARGV[$i] eq "-c") {
         $con_count = $ARGV[$i + 1];
         $i++;
-        last SWITCH;
     }
-    if ($ARGV[$i] eq "-s")
-    {
+    elsif ($ARGV[$i] eq "-s") {
         $sup_count = $ARGV[$i + 1];
         $i++;
-        last SWITCH;
     }
-  }
+}
+
+$NS  = new PerlACE::Process ("../../../../../Naming_Service/Naming_Service", 
+                             "-o $nsior");
+                             
+$EC  = new PerlACE::Process ("../../../../../Event_Service/Event_Service", 
+                             "-t new -ORBInitRef NameService=file://$nsior");
+                             
+$CE1 = new PerlACE::Process ("../../bin/RtEC_Based_CosEC", 
+                             "-ORBInitRef NameService=file://$nsior");
+
+for ($cntr1 = 0; $cntr1 < $con_count ; ++$cntr1) {
+    push @CONS, (new PerlACE::Process ("Consumer", "-ORBInitRef NameService=file://$nsior -c $ev_count"));
+}
+
+for ($cntr2 = 0; $cntr2 < $con_count ; ++$cntr2) {
+    push @SUPS, (new PerlACE::Process ("Supplier", "-ORBInitRef NameService=file://$nsior -c $ev_count"));
+}
+
+# first start the Naming service..
+$NS->Spawn ();
+
+sleep 10;
+
+# now start the Rt EC..
+$EC->Spawn ();
+
+sleep 10;
+
+# now start the CosEC1..
+$CE1->Spawn ();
+
+sleep 10;
+
+# now start the consumers
+foreach $co (@CONS) {
+    print "creating consumer# $cntr1\n";
+    $co->Spawn ();
+    sleep 10;
+}
+
+# now start the suppliers
+foreach $su (@SUPS) {
+    print "creating supplier# $cntr2\n";
+    $su->Spawn ();
+    sleep 10;
+}
+
+print "waiting for the suppliers to finish\n";
+foreach $su (@SUPS) {
+    $supplier = $su->WaitKill (60);
+    
+    if ($supplier != 0) {
+        print STDERR "ERROR: A supplier returned $supplier\n";
+        $status = 1;
+    }
 }
 
 
-cosec_multiple_test2 ();
+print "waiting for the last consumer to finish\n";
+foreach $co (@CONS) {
+    $consumer = $co->WaitKill (60);
+    
+    if ($consumer != 0) {
+        print STDERR "ERROR: A consumer returned $consumer\n";
+        $status = 1;
+    }
+}
+
+print "cleanup...\n";
+$CE1->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: CosEC1 returned $server\n";
+    $status = 1;
+}
+
+$EC->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: EC returned $server\n";
+    $status = 1;
+}
+
+$NS->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: NS returned $server\n";
+    $status = 1;
+}
+print "done!.\n";
+
+unlink $nsior;
 
 exit $status;
