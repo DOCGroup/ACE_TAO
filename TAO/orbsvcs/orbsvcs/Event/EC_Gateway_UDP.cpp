@@ -1085,7 +1085,7 @@ TAO_ECG_Mcast_EH::close (CORBA::Environment& ACE_TRY_ENV)
                                         ACE_Event_Handler::READ_MASK) == -1)
     return -1;
 
-  if (this->dgram_.unsubscribe () == -1)
+  if (this->dgram_.close () == -1)
     return -1;
 
   return 0;
