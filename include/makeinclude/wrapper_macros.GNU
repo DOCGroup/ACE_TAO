@@ -438,12 +438,15 @@ ifeq ($(pace),0)
 endif # pace
 
 ifneq ($(pace),)
-ifneq ($(inline),0)
-  CFLAGS+= -DPACE_HAS_INLINE=1
-endif
-  CFLAGS+= -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
-  LDFLAGS+= -L$(ACE_ROOT)/PACE/pace/
-  ACELIB=-lACE -lPACE
+  ifneq ($(inline),0)
+    CFLAGS += -DPACE_HAS_INLINE=1
+  endif
+  CFLAGS += -DACE_HAS_PACE -DPACE_HAS_ALL_POSIX_FUNCS -I$(ACE_ROOT)/PACE
+  ACELIB = -lACE
+  ifeq ($(inline),0)
+    ACELIB += -lPACE
+    LDFLAGS += -L$(ACE_ROOT)/PACE/pace/
+  endif # inline == 0
   include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
 endif # pace
 
