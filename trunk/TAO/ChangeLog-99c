@@ -16,7 +16,7 @@ Thu May 27 19:16:47 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  the above types to the symbol table.
 
 	* TAO_IDL/ast/ast_module.cpp:
-	  If called for 'module CORBA' inside orb.idl, adds
+	  If called for 'module CORBA' inside orb.idl, constructor adds
 	  'CORBA::TypeCode' and 'CORBA::ValueBase' to symbol
 	  table.
 
