@@ -1,3 +1,9 @@
+Fri Aug  3 08:07:45 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/CDR_Base.cpp: Added a check for a memory allocation failure
+	  in grow (). Thanks to Francis Paul <FranciP@navcanada.ca> for
+	  pointing this out.
+
 Thu Aug  2 18:37:23 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/RW_Process_Mutex.cpp: Added ACE_DEFAULT_OPEN_PERMS
