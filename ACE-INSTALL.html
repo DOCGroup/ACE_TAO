@@ -801,12 +801,12 @@ do not, follow these steps to add them.</P>
   <LI>Now go to the Project settings.
   <LI>For the General Settings, change the output directories to standard ACE
       output directores. Intermediate Directories are &quot;Debug&quot; and
-	  &quot;Release&quot; in most cases.  The Output Directories are blank,
-	  except for Release versions of executables, in which it is also
-	  &quot;Release&quot;.
+          &quot;Release&quot; in most cases.  The Output Directories are blank,
+          except for Release versions of executables, in which it is also
+          &quot;Release&quot;.
   <LI>For the C/C++ Settings, make sure that the Code Generation's runtime
       library is set to &quot;Multithreaded DLL&quot; or &quot;Debug Multithreaded
-	  DLL&quot;.
+          DLL&quot;.
 </OL>
 
 <HR>
@@ -1356,6 +1356,13 @@ Please note that the effects of a flag may be platform specific.
 Also, combinations of certain flags may or may not be allowed on
 specific platforms, e.g., debug=1 opt=1 is supported by g++ but
 not all other C++ compilers.<P>
+
+If you use Purify or Quantify:  purify or quantify <strong>must</strong>
+be on your <code>PATH</strong>.  By default, ACE puts the Purify/Quantify
+caches below <code>/tmp</code>.  To override that, set the
+<code>PURE_CACHE_BASE_DIR</code> variable, either in your environment
+or on the <code>make</code> make command line, to the destination
+directory for your instrumented libraries.<p>
 
 <PRE>
 Flag             Description
