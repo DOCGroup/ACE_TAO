@@ -17,8 +17,7 @@
 #define TAO_OBJECT_REFERENCE_TEMPLATE_H
 
 #include "ace/pre.h"
-
-#include "portableserver_export.h"
+#include "tao/PortableServer/portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -50,7 +49,6 @@ class TAO_PortableServer_Export TAO_ObjectReferenceTemplate
   /// Constructor
   TAO_ObjectReferenceTemplate (const char *server_id,
                                const char *orb_id,
-                               PortableInterceptor::AdapterName *adapter_name,
                                TAO_POA *poa);
 
   /// Destructor
@@ -80,12 +78,7 @@ private:
 
   const char *server_id_;
   const char *orb_id_;
-
-  // @@ Priyanka, make this a PortableInterceptor::AdapterName_var.
-  //    Otherwise, you'll have a memory leak since you never
-  //    deallocate the instance.
-  PortableInterceptor::AdapterName *adapter_name_;
-
+  PortableInterceptor::AdapterName_var adapter_name_;
   TAO_POA *poa_;
 
 };

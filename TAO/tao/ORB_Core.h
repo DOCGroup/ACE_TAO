@@ -849,11 +849,6 @@ public:
   TAO_IORInterceptor_List::TYPE & ior_interceptors (void);
   //@}
 
-  /// Set up the ORB Core's acceptor to listen on the
-  /// previously-specified port for requests.  Returns -1 on failure,
-  /// otherwise 0.
-  int open (ACE_ENV_SINGLE_ARG_DECL);
-
   /// Return the underlying transport cache
   TAO_Transport_Cache_Manager *transport_cache (void);
 

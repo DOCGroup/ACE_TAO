@@ -215,15 +215,10 @@ public:
   PortableInterceptor::AdapterManagerId get_manager_id (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // @@ Priyanka, shouldn't this method return a
-  //    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
-  //    may be a typedef of the other but they have different
-  //    TypeCodes!
-  //
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
   /// Adapter. Added wrt to ORT Spec.
-  CORBA::StringSeq *adapter_name (ACE_ENV_SINGLE_ARG_DECL)
+  PortableInterceptor::AdapterName *adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// {@ Accessor methods to ObjectReferenceTemplate
@@ -237,9 +232,9 @@ public:
   /// {@ Accessor methods to PortableInterceptor::ObjectReferenceFactory
   PortableInterceptor::ObjectReferenceFactory * get_obj_ref_factory ();
 
-  void set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory *
-                            current_factory
+  void set_obj_ref_factory (PortableInterceptor::ObjectReferenceFactory *current_factory
                             ACE_ENV_ARG_DECL);
+
   /// @}
 
   /// Call the establish components.
@@ -248,9 +243,7 @@ public:
 
   /// Give each registered IOR interceptor the opportunity to add
   /// tagged components to profiles of each created servant.
-  // @@ Priyanka, this first parameter should be a
-  //    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
-  void establish_components (PortableInterceptor::IORInfo *info
+  void establish_components (PortableInterceptor::IORInfo_ptr info
                              ACE_ENV_ARG_DECL);
 
   /// TAO_IORInfo requests these members.
@@ -258,19 +251,12 @@ public:
 
   TAO_MProfile *get_mprofile ();
 
-  // @@ Priyanka, this method appears to be very useless and broken.
-  //    Do you really need it?
-  void
-  save_ior_component (const IOP::TaggedComponent &component
-                      ACE_ENV_ARG_DECL);
+  void save_ior_component (const IOP::TaggedComponent &component
+                           ACE_ENV_ARG_DECL);
 
-  // @@ Priyanka, this method appears to be very useless and broken.
-  //    Do you really need it?
-  void
-  save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
-                                     IOP::ProfileId profile_id
-                                     ACE_ENV_ARG_DECL);
-
+  void save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
+                                          IOP::ProfileId profile_id
+                                          ACE_ENV_ARG_DECL);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -553,22 +539,19 @@ protected:
   PortableServer::POAList *the_children_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  // @@ Priyanka, shouldn't this method return a
-  //    PortableInterceptor::AdapterName, not a CORBA::StringSeq?  One
-  //    may be a typedef of the other but they have different
-  //    TypeCodes!
-  //
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
   /// Adapter. Added wrt to ORT Spec.
-  CORBA::StringSeq *adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
+  PortableInterceptor::AdapterName *adapter_name_i (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
   void adapter_state_changed (
-   const PortableInterceptor::ObjectReferenceTemplateSeq *seq_obj_ref_template,
-   PortableInterceptor::AdapterState state);
+   const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+   PortableInterceptor::AdapterState state
+   ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   void set_policy_list (CORBA::PolicyList *policy_list);
   void set_mprofile (TAO_MProfile *mp);
@@ -745,9 +728,7 @@ protected:
 
   TAO_Active_Object_Map &active_object_map (void) const;
 
-  // @@ Priyanka, this first parameter should be a
-  //    PortableInterceptor::IORInfo_ptr.  Please learn the C++ mapping!
-  void components_established_i (PortableInterceptor::IORInfo *info
+  void components_established_i (PortableInterceptor::IORInfo_ptr info
                                  ACE_ENV_ARG_DECL);
 
   int delete_child (const String &child);
@@ -836,11 +817,11 @@ protected:
 
   TAO_MProfile *mprofile_;
 
-  IOP::TaggedComponent tagged_component_;
+  IOP::TaggedComponentList tagged_component_;
 
-  IOP::ProfileId profile_id_;
+  IOP::TaggedComponentList tagged_component_id_;
 
-  CORBA::Boolean add_component_support_;
+  ACE_Array_Base <IOP::ProfileId> profile_id_array_;
 
   TAO_POA_Policy_Set policies_;
 
@@ -854,17 +835,9 @@ protected:
 
   CORBA::OctetSeq id_;
 
-  // @@ Priyanka, this should be a
-  //    PortableInterceptor::ObjectReferenceTemplate_var.  Not only
-  //    does it simplify memory management but it also fixes a memory
-  //    leak that you introduced.
-  PortableInterceptor::ObjectReferenceTemplate *ort_template_;
+  PortableInterceptor::ObjectReferenceTemplate_var ort_template_;
 
-  // @@ Priyanka, this should be a
-  //    PortableInterceptor::ObjectReferenceFactory_var.  Not only
-  //    does it simplify memory management but it also fixes a memory
-  //    leak that you introduced.
-  PortableInterceptor::ObjectReferenceFactory *obj_ref_factory_;
+  PortableInterceptor::ObjectReferenceFactory_var obj_ref_factory_;
 
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;

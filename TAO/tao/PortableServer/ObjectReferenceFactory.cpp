@@ -32,16 +32,16 @@ TAO_ObjectReferenceFactory::make_object (
     CORBA::SystemException
   ))
 {
-  CORBA::OctetSeq object_id = id;
-
-  PortableServer::ObjectId *user_id =
-    ACE_reinterpret_cast (PortableServer::ObjectId *,
-                          &object_id);
+  PortableServer::ObjectId oid;
+  oid.replace (id.maximum (),
+               id.length (),
+               ACE_const_cast (CORBA::Octet *,id.get_buffer ()),
+               0);
 
   // Create a reference
   CORBA::Object_var object =
     this->poa_->invoke_key_to_object (intf,
-                                      *user_id
+                                      oid
                                       ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 

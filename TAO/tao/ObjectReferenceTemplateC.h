@@ -187,7 +187,9 @@ TAO_NAMESPACE  PortableInterceptor
 
     // TAO internals
     virtual void *_tao_obv_narrow (ptr_arith_t);
-    
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+
   private:
     ObjectReferenceFactory (const ObjectReferenceFactory &);
     void operator= (const ObjectReferenceFactory &);
@@ -317,7 +319,9 @@ TAO_NAMESPACE  PortableInterceptor
 
     // TAO internals
     virtual void *_tao_obv_narrow (ptr_arith_t);
-    
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+
   private:
     ObjectReferenceTemplate (const ObjectReferenceTemplate &);
     void operator= (const ObjectReferenceTemplate &);
