@@ -378,7 +378,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
     }
 
   // OK fallback on the hardcoded ones....
-  this->parser_names_count_ = 4; /*HOW MANY DO WE HAVE?*/
+  this->parser_names_count_ = 4; // HOW MANY DO WE HAVE?
 
   this->parser_names_ = new char *[this->parser_names_count_];
 
@@ -387,7 +387,9 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
        ++i)
     this->parser_names_[i] = 0;
 
-  // Ensure that there is enough space in the parser_names_ array */
+  // Ensure that there is enough space in the parser_names_ array
+
+  size_t index = 0;
 
   // DLL_Parser
   TAO_IOR_Parser *tmp =
@@ -406,12 +408,8 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
         }
     }
 
-  int index = 0;
-  if (tmp != 0)
-    {
-      this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
-      index++;
-    }
+  this->parser_names_[index] = CORBA::string_dup ("DLL_Parser");
+  index++;
 
   // FILE_Parser
   tmp =
@@ -430,12 +428,9 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
                              "Error Configuring FILE Parser\n"), -1);
         }
     }
-  if (tmp != 0)
-    {
-      this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
-      index++;
-    }
 
+  this->parser_names_[index] = CORBA::string_dup ("FILE_Parser");
+  index++;
 
   // CORBALOC_Parser
   tmp =
