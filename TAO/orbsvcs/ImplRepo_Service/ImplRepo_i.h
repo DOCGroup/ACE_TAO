@@ -24,6 +24,7 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/PortableServer/ImplRepoS.h"
 #include "tao/IORTable/IORTable.h"
+#include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "ace/Process_Manager.h"
 
 // Forward declarations.
@@ -273,7 +274,7 @@ private:
   friend class IMR_Forwarder;
 };
 
-class IMR_Forwarder: public PortableServer::DynamicImplementation
+class IMR_Forwarder: public TAO_DynamicImplementation
   // = TITLE
   //    Implementation Repository Forwarder
   //
