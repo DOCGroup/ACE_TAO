@@ -1,3 +1,19 @@
+Mon Jul 22 14:22:49 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.idl:
+
+	  Refined the CosLoadBalancing IDL.  Neglected to commit these
+	  changes in an earlier commit.
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+
+	  Added new CosLoadBalancing source files to the source list(s).
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp
+	  (built_in_strategy):
+
+	  Removed extraneous "ACE_INLINE" declaration.
+
 Mon Jul 22 13:49:28 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tao/Utils/RIR_Narrow.h:
