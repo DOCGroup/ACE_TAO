@@ -1,3 +1,10 @@
+Tue Jul 20 09:33:02 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,i} (sigwait): only use the DIGITAL_UNIX sigwait
+          massaging with cxx, not with any other compiler.  Thanks to
+          Doug Anderson <dla@home.com> for suggesting this, because
+          egcs issued warnings with it.
+
 Tue Jul 20 07:06:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_osf1_4.0.GNU:
