@@ -1,3 +1,8 @@
+Mon Feb  4 09:46:09 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/activity.dsp: 
+	  Added missing idl compile section for Win32 Release.
+
 Sun Feb  3 07:55:49 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* examples/RTCORBA/Activity/activity.dsp: 
