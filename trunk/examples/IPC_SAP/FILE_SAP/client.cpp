@@ -49,7 +49,7 @@ main (int argc, char *argv[])
   else
     ACE_OS::printf ("fileinfo : mode = %o\nno of links = %lu\nsize = %lu\n",
                     fileinfo.mode_ & 0777,
-                    ACE_static_cast(unsigned long,fileinfo.nlink_),
+                    ACE_static_cast(unsigned ,fileinfo.nlink_),
                     (u_long) fileinfo.size_);
 
   off_t fpos = cli_file.position ();
