@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#ifndef TAO_DYNCOMMON_I_H
-#define TAO_DYNCOMMON_I_H
+#ifndef TAO_DYNCOMMON_H
+#define TAO_DYNCOMMON_H
 #include /**/ "ace/pre.h"
 
 #include "DynamicAny.h"
@@ -553,4 +553,4 @@ private:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_DYNCOMMON_I_H */
+#endif /* TAO_DYNCOMMON_H */
