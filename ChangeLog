@@ -1,3 +1,19 @@
+Thu Nov  4 14:00:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/QoS/Makefile.am:
+
+	  Added includedir definition so that headers are installed
+	  in $prefix/include/ace/QoS.
+
+	* configure.ac:
+	* ace/Makefile.am:
+
+	  Changed to configure/build HTBP protocol library.
+
+	* ace/HTBP/Makefile.am:
+
+	  Added new file, automake support for HTBP protocol.
+
 Thu Nov  4 06:28:34 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/IPC_SAP/SSL_SAP/SSL-client.cpp:

@@ -15,6 +15,7 @@ ACE_ROOT = $(top_srcdir)
 
 SUBDIRS = \
         . \
+	HTBP \
 	QoS \
         RMCast \
         SSL \
