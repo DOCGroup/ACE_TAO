@@ -1,3 +1,23 @@
+Wed Nov 21 08:49:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * ace/OS.h
+          Added ACE_LIB_TEXT around ACE_DEFAULT_RENDEZVOUS to make a unicode
+          constant when ACE_USES_WCHAR is defined
+
+        * tests/FlReactor_Test.cpp
+        * tests/TkReactor_Test.cpp
+        * tests/XtReactor_Test.cpp
+          Changed type of argv argument of main from char to ACE_TCHAR so that
+          these tests compile without problems when ACE_USES_WCHAR is defined
+
+        * examples/IPC_SAP/ATM_SAP/CPP-client.cpp
+        * examples/IPC_SAP/ATM_SAP/CPP-server.cpp
+        * examples/IPC_SAP/FIFO_SAP/FIFO-client.cpp
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.cpp
+        * examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.cpp
+        * examples/IPC_SAP/FIFO_SAP/FIFO-server.cpp
+          Made these example compiling when ACE_USES_WCHAR is set
+
 Tue Nov 20 12:02:16 2001  Ossama Othman  <ossama@uci.edu>
 
 	* configure.in:
@@ -13,7 +33,7 @@ Tue Nov 20 13:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/Strategies.cpp:
 	* ace/Strategies.i: Re-added files back into the main trunk. Got
 	  accidentally removed from the main when I was doing some work on
-	  a branch.  
+	  a branch.
 
 Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
