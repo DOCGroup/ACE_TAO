@@ -17,7 +17,7 @@
 //
 //   1. Patch this pidl file to (a) remove the CORBA module bringing
 //   the Current interface to the global scope; and (b) rename the
-//   Current interface to CORBA_Current.
+//   Current interface to CORBA::Current.
 //
 //   Apply patches using the following commands:
 //

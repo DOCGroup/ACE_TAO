@@ -200,10 +200,10 @@ TAO_NAMESPACE  PortableServer
 
     virtual void _downcast (
         void* target,
-        CORBA_Object *src
+        CORBA::Object *src
         ACE_ENV_ARG_DECL_WITH_DEFAULTS
       );
-    virtual CORBA_Object* _upcast (void *src) const;
+    virtual CORBA::Object* _upcast (void *src) const;
   };
 
 #endif /* end #if !defined */
@@ -1833,7 +1833,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #define _PORTABLESERVER_POAMANAGER_CH_
 
   class TAO_PortableServer_Export POAManager
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2058,7 +2058,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #define _PORTABLESERVER_ADAPTERACTIVATOR_CH_
 
   class TAO_PortableServer_Export AdapterActivator
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2196,7 +2196,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #define _PORTABLESERVER_SERVANTMANAGER_CH_
 
   class TAO_PortableServer_Export ServantManager
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2645,7 +2645,7 @@ TAO_NAMESPACE_STORAGE_CLASS ::CORBA::TypeCode_ptr _tc_NotAGroupObject;
 #define _PORTABLESERVER_POA_CH_
 
   class TAO_PortableServer_Export POA
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

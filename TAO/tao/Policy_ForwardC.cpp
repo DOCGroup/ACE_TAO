@@ -146,7 +146,7 @@ CORBA::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_shrink_buffer (CORBA::U
 void 
 CORBA::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_downcast (
     void* target,
-    CORBA_Object *src
+    CORBA::Object *src
     ACE_ENV_ARG_DECL
   )
 {
@@ -155,7 +155,7 @@ CORBA::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_downcast (
   ACE_CHECK;
 }
 
-CORBA_Object*
+CORBA::Object*
 CORBA::_TAO_Unbounded_Object_Sequence_CORBA_PolicyList::_upcast (void *src) const
 {
   return tao_CORBA_Policy_upcast (src);

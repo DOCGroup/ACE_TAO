@@ -153,7 +153,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
   if (!ior)
     // Failure: Null IOR string pointer
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
-      CORBA_SystemException::_tao_minor_code (
+      CORBA::SystemException::_tao_minor_code (
         TAO_DEFAULT_MINOR_CODE,
         EINVAL),
       CORBA::COMPLETED_NO),
@@ -180,7 +180,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
       else
         // Failure: Null pointer to connector in connector registry.
         ACE_THROW_RETURN (CORBA::INV_OBJREF (
-          CORBA_SystemException::_tao_minor_code (
+          CORBA::SystemException::_tao_minor_code (
             TAO_DEFAULT_MINOR_CODE,
             EINVAL),
           CORBA::COMPLETED_NO),
@@ -190,7 +190,7 @@ TAO_Connector_Registry::make_mprofile (const char *ior,
   // Failure: None of the connectors were able to parse the URL style
   // IOR into an MProfile.
   ACE_THROW_RETURN (CORBA::INV_OBJREF (
-   CORBA_SystemException::_tao_minor_code (
+   CORBA::SystemException::_tao_minor_code (
       TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL,
       0),
    CORBA::COMPLETED_NO),

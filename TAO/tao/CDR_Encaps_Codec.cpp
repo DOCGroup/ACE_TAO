@@ -57,7 +57,7 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
@@ -123,10 +123,10 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
-                                          CORBA_SystemException::_tao_minor_code (
-                                            TAO_DEFAULT_MINOR_CODE,
-                                            ENOMEM),
-                                          CORBA::COMPLETED_NO));
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            ENOMEM),
+                          CORBA::COMPLETED_NO));
       ACE_CHECK_RETURN (0);
 
       CORBA::Any_var safe_any = any;
@@ -181,7 +181,7 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
       ACE_NEW_THROW_EX (octet_seq,
                         CORBA::OctetSeq,
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
@@ -306,10 +306,10 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
           ACE_NEW_THROW_EX (any,
                             CORBA::Any,
                             CORBA::NO_MEMORY (
-                                              CORBA_SystemException::_tao_minor_code (
-                                                TAO_DEFAULT_MINOR_CODE,
-                                                ENOMEM),
-                                              CORBA::COMPLETED_NO));
+                              CORBA::SystemException::_tao_minor_code (
+                                TAO_DEFAULT_MINOR_CODE,
+                                ENOMEM),
+                              CORBA::COMPLETED_NO));
           ACE_CHECK_RETURN (0);
 
           CORBA::Any_var safe_any = any;

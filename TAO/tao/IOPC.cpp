@@ -1899,8 +1899,8 @@ const char* IOP::Codec::_interface_repository_id (void) const
 
 // Default constructor.
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0",
-                         "InvalidTypeForEncoding")
+  : CORBA::UserException ("IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0",
+                          "InvalidTypeForEncoding")
 {
 }
 
@@ -1911,8 +1911,8 @@ IOP::Codec::InvalidTypeForEncoding::~InvalidTypeForEncoding (void)
 
 // Copy constructor.
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (const ::IOP::Codec::InvalidTypeForEncoding &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id (),
-                         _tao_excp._name ())
+  : CORBA::UserException (_tao_excp._rep_id (),
+                          _tao_excp._name ())
 {
 }
 
@@ -1920,7 +1920,7 @@ IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (const ::IOP::Codec::
 IOP::Codec::InvalidTypeForEncoding&
 IOP::Codec::InvalidTypeForEncoding::operator= (const ::IOP::Codec::InvalidTypeForEncoding &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -2030,8 +2030,8 @@ CORBA::TypeCode_ptr IOP::Codec::InvalidTypeForEncoding::_type (void) const
 
 // Default constructor.
 IOP::Codec::FormatMismatch::FormatMismatch (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0",
-                         "FormatMismatch")
+  : CORBA::UserException ("IDL:omg.org/IOP/Codec/FormatMismatch:1.0",
+                          "FormatMismatch")
 {
 }
 
@@ -2042,7 +2042,7 @@ IOP::Codec::FormatMismatch::~FormatMismatch (void)
 
 // Copy constructor.
 IOP::Codec::FormatMismatch::FormatMismatch (const ::IOP::Codec::FormatMismatch &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id (),
+  : CORBA::UserException (_tao_excp._rep_id (),
                          _tao_excp._name ())
 {
 }
@@ -2051,7 +2051,7 @@ IOP::Codec::FormatMismatch::FormatMismatch (const ::IOP::Codec::FormatMismatch &
 IOP::Codec::FormatMismatch&
 IOP::Codec::FormatMismatch::operator= (const ::IOP::Codec::FormatMismatch &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -2157,8 +2157,8 @@ CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_type (void) const
 
 // Default constructor.
 IOP::Codec::TypeMismatch::TypeMismatch (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0",
-                         "TypeMismatch")
+  : CORBA::UserException ("IDL:omg.org/IOP/Codec/TypeMismatch:1.0",
+                          "TypeMismatch")
 {
 }
 
@@ -2169,8 +2169,8 @@ IOP::Codec::TypeMismatch::~TypeMismatch (void)
 
 // Copy constructor.
 IOP::Codec::TypeMismatch::TypeMismatch (const ::IOP::Codec::TypeMismatch &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id (),
-                         _tao_excp._name ())
+  : CORBA::UserException (_tao_excp._rep_id (),
+                          _tao_excp._name ())
 {
 }
 
@@ -2178,7 +2178,7 @@ IOP::Codec::TypeMismatch::TypeMismatch (const ::IOP::Codec::TypeMismatch &_tao_e
 IOP::Codec::TypeMismatch&
 IOP::Codec::TypeMismatch::operator= (const ::IOP::Codec::TypeMismatch &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -2738,8 +2738,8 @@ const char* IOP::CodecFactory::_interface_repository_id (void) const
 
 // Default constructor.
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (void)
-  : CORBA_UserException ("IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0",
-                         "UnknownEncoding")
+  : CORBA::UserException ("IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0",
+                          "UnknownEncoding")
 {
 }
 
@@ -2750,8 +2750,8 @@ IOP::CodecFactory::UnknownEncoding::~UnknownEncoding (void)
 
 // Copy constructor.
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (const ::IOP::CodecFactory::UnknownEncoding &_tao_excp)
-  : CORBA_UserException (_tao_excp._rep_id (),
-                         _tao_excp._name ())
+  : CORBA::UserException (_tao_excp._rep_id (),
+                          _tao_excp._name ())
 {
 }
 
@@ -2759,7 +2759,7 @@ IOP::CodecFactory::UnknownEncoding::UnknownEncoding (const ::IOP::CodecFactory::
 IOP::CodecFactory::UnknownEncoding&
 IOP::CodecFactory::UnknownEncoding::operator= (const ::IOP::CodecFactory::UnknownEncoding &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 

@@ -47,6 +47,7 @@
 #include "tao/LocalObject.h"
 #include "tao/Principal.h"
 #include "tao/ORB.h"
+#include "tao/varbase.h"
 
 #include "tao/CurrentC.h"
 #include "tao/BoundsC.h"

@@ -706,7 +706,7 @@ TAO_NAMESPACE  RTCORBA
 #define _RTCORBA_PROTOCOLPROPERTIES_CH_
 
   class TAO_RTCORBA_Export ProtocolProperties
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
     , public TAO_Encodable
   {
   public:
@@ -2675,7 +2675,7 @@ TAO_NAMESPACE  RTCORBA
 #define _RTCORBA_MUTEX_CH_
 
   class TAO_RTCORBA_Export Mutex
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -2828,7 +2828,7 @@ TAO_NAMESPACE  RTCORBA
 #define _RTCORBA_RTORB_CH_
 
   class TAO_RTCORBA_Export RTORB
-    : public virtual CORBA_Object
+    : public virtual CORBA::Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)

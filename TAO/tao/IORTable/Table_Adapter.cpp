@@ -97,7 +97,7 @@ CORBA::Object_ptr
 TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
                                              const TAO_MProfile &)
 {
-  return new CORBA_Object (stub);
+  return new CORBA::Object (stub);
 }
 
 // ****************************************************************

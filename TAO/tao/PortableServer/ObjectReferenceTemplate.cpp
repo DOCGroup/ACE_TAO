@@ -51,7 +51,7 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
                         PortableInterceptor::AdapterName (
                           *(this->adapter_name_)),
                         CORBA::NO_MEMORY (
-                           CORBA_SystemException::_tao_minor_code (
+                           CORBA::SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
                               ENOMEM),
                            CORBA::COMPLETED_NO));
@@ -72,7 +72,7 @@ TAO_ObjectReferenceTemplate::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
                         PortableInterceptor::AdapterName (
                           *(this->adapter_name_)),
                         CORBA::NO_MEMORY (
-                           CORBA_SystemException::_tao_minor_code (
+                           CORBA::SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
                               ENOMEM),
                            CORBA::COMPLETED_NO));

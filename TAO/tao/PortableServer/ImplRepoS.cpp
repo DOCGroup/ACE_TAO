@@ -570,7 +570,7 @@ POA_ImplementationRepository::_TAO_ServerObject_ThruPOA_Proxy_Impl::_TAO_ServerO
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_ServerObject_ThruPOA_Proxy_Impl::ping (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -610,7 +610,7 @@ void POA_ImplementationRepository::_TAO_ServerObject_ThruPOA_Proxy_Impl::ping (
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_ServerObject_ThruPOA_Proxy_Impl::shutdown (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -655,7 +655,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::_TAO_ServerOb
 {}
 
 void POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping  (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -672,7 +672,7 @@ void POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping  (
 }
 
 void POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::shutdown  (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -1001,7 +1001,7 @@ void POA_ImplementationRepository::ServerObject::_interface_skel (
   )
 {
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *) _tao_servant;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
   
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -3040,7 +3040,7 @@ POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::_TAO_Admin
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::activate_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3084,7 +3084,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::activ
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 char * POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::activate_server_with_startup (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     CORBA::Long check_startup
     ACE_ENV_ARG_DECL
@@ -3131,7 +3131,7 @@ char * POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::act
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::register_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -3176,7 +3176,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::regis
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::reregister_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -3220,7 +3220,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::rereg
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::remove_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3263,7 +3263,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::remov
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::shutdown_server (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3306,7 +3306,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::shutd
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 char * POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::server_is_running (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * addr,
     ImplementationRepository::ServerObject_ptr server_object
@@ -3354,7 +3354,7 @@ char * POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::ser
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::server_is_shutting_down (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3397,7 +3397,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::serve
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::find (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     ImplementationRepository::ServerInformation_out info
     ACE_ENV_ARG_DECL
@@ -3442,7 +3442,7 @@ void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::find 
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_Administration_ThruPOA_Proxy_Impl::list (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -3493,7 +3493,7 @@ POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::_TAO_Admini
 {}
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::activate_server  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3514,7 +3514,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::activa
 }
 
 char * POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::activate_server_with_startup  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     CORBA::Long check_startup
     ACE_ENV_ARG_DECL
@@ -3537,7 +3537,7 @@ char * POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::acti
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::register_server  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -3559,7 +3559,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::regist
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::reregister_server  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const ImplementationRepository::StartupOptions & options
     ACE_ENV_ARG_DECL
@@ -3580,7 +3580,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::reregi
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::remove_server  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3600,7 +3600,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::remove
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::shutdown_server  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3620,7 +3620,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::shutdo
 }
 
 char * POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::server_is_running  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     const char * addr,
     ImplementationRepository::ServerObject_ptr server_object
@@ -3644,7 +3644,7 @@ char * POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::serv
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::server_is_shutting_down  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server
     ACE_ENV_ARG_DECL
   )
@@ -3664,7 +3664,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::server
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::find  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     const char * server,
     ImplementationRepository::ServerInformation_out info
     ACE_ENV_ARG_DECL
@@ -3686,7 +3686,7 @@ void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::find  
 }
 
 void POA_ImplementationRepository::_TAO_Administration_Direct_Proxy_Impl::list  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list,
     ImplementationRepository::ServerInformationIterator_out server_iterator
@@ -5137,7 +5137,7 @@ void POA_ImplementationRepository::Administration::_interface_skel (
   )
 {
   POA_ImplementationRepository::Administration *_tao_impl = (POA_ImplementationRepository::Administration *) _tao_servant;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
   
   TAO_IFR_Client_Adapter *_tao_adapter =
@@ -5842,7 +5842,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_ThruPOA_Proxy_Impl:
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_ThruPOA_Proxy_Impl::next_n (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list
     ACE_ENV_ARG_DECL
@@ -5887,7 +5887,7 @@ CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_Thru
 // be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:67
 
 void POA_ImplementationRepository::_TAO_ServerInformationIterator_ThruPOA_Proxy_Impl::destroy (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -5932,7 +5932,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_Impl::
 {}
 
 CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_Impl::next_n  (
-    CORBA_Object *_collocated_tao_target_,
+    CORBA::Object *_collocated_tao_target_,
     CORBA::ULong how_many,
     ImplementationRepository::ServerInformationList_out server_list
     ACE_ENV_ARG_DECL
@@ -5953,7 +5953,7 @@ CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_Dire
 }
 
 void POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_Impl::destroy  (
-    CORBA_Object *_collocated_tao_target_
+    CORBA::Object *_collocated_tao_target_
     ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((
@@ -6305,7 +6305,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
   )
 {
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl = (POA_ImplementationRepository::ServerInformationIterator *) _tao_servant;
-  CORBA_InterfaceDef_ptr _tao_retval = 0;
+  CORBA::InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
   
   TAO_IFR_Client_Adapter *_tao_adapter =

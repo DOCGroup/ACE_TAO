@@ -1,13 +1,12 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "DynUnion_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID(DynamicAny, DynUnion_i, "$Id$")
 
-// Constructors and destructor.
+ACE_RCSID (DynamicAny,
+           DynUnion_i,
+           "$Id$")
+
 
 TAO_DynUnion_i::TAO_DynUnion_i (void)
 {
@@ -30,7 +29,7 @@ TAO_DynUnion_i::init_common (void)
 }
 
 void
-TAO_DynUnion_i::init (const CORBA_Any& any
+TAO_DynUnion_i::init (const CORBA::Any& any
                       ACE_ENV_ARG_DECL)
 {
   CORBA::TypeCode_var tc = any.type ();
@@ -58,7 +57,7 @@ TAO_DynUnion_i::init (const CORBA_Any& any
 }
 
 void
-TAO_DynUnion_i::init (CORBA_TypeCode_ptr tc
+TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc
                       ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
@@ -136,7 +135,7 @@ TAO_DynUnion_i::_tao_QueryInterface (ptr_arith_t type)
 // This code is common to from_any() and the init() overload that takes
 // an Any argument.
 void
-TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
+TAO_DynUnion_i::set_from_any (const CORBA::Any & any,
                               CORBA::Boolean from_factory
                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
@@ -153,10 +152,10 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
 
   CORBA::TypeCode_var tc = any.type ();
 
-  CORBA_TypeCode_var disc_tc = tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var disc_tc = tc->discriminator_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA_Any disc_any (disc_tc.in (),
+  CORBA::Any disc_any (disc_tc.in (),
                       0,
                       cdr.byte_order (),
                       cdr.start ());
@@ -188,7 +187,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
   // Get the index.
   for (i = 0; i < count; ++i)
     {
-      CORBA_Any_var label_any = tc->member_label (i
+      CORBA::Any_var label_any = tc->member_label (i
                                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -216,7 +215,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
                                                        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
-      CORBA_Any member_any (member_tc.in (),
+      CORBA::Any member_any (member_tc.in (),
                             0,
                             cdr.byte_order (),
                             cdr.start ());
@@ -262,7 +261,7 @@ TAO_DynUnion_i::set_from_any (const CORBA_Any & any,
                                                             ACE_ENV_ARG_PARAMETER);
           ACE_CHECK;
 
-          CORBA_Any default_any (default_tc.in (),
+          CORBA::Any default_any (default_tc.in (),
                                  0,
                                  cdr.byte_order (),
                                  cdr.start ());
@@ -328,13 +327,13 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value
       ACE_THROW (DynamicAny::DynAny::TypeMismatch ());
     }
 
-  CORBA_Any_var value_any = value->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var value_any = value->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   CORBA::ULong length = this->type_->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA_Any_var label_any;
+  CORBA::Any_var label_any;
   CORBA::ULong i;
 
   // member_label() does not work with aliased type codes.
@@ -570,7 +569,7 @@ TAO_DynUnion_i::discriminator_kind (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::tk_null);
     }
 
-  CORBA_TypeCode_var tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
@@ -666,7 +665,7 @@ TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
                         CORBA::tk_null);
     }
 
-  CORBA_TypeCode_var tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::tk_null);
 
   CORBA::TCKind retval = TAO_DynAnyFactory::unalias (tc.in ()
@@ -679,7 +678,7 @@ TAO_DynUnion_i::member_kind (ACE_ENV_SINGLE_ARG_DECL)
 // ****************************************************************
 
 void
-TAO_DynUnion_i::from_any (const CORBA_Any& any
+TAO_DynUnion_i::from_any (const CORBA::Any& any
                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException,
@@ -734,10 +733,10 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   // Add the discriminator to the CDR stream.
 
-  CORBA_TypeCode_var disc_tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var disc_tc = this->discriminator_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA_Any_var disc_any = this->discriminator_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var disc_any = this->discriminator_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *disc_mb = disc_any->_tao_get_cdr ();
@@ -753,10 +752,10 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   // Add the member to the CDR stream.
 
-  CORBA_TypeCode_var member_tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var member_tc = this->member_->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  CORBA_Any_var member_any = this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var member_any = this->member_->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   ACE_Message_Block *member_mb = member_any->_tao_get_cdr ();
@@ -773,9 +772,9 @@ TAO_DynUnion_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
   // Make the Any.
   TAO_InputCDR in_cdr (out_cdr);
 
-  CORBA_Any_ptr retval = 0;
+  CORBA::Any_ptr retval = 0;
   ACE_NEW_THROW_EX (retval,
-                    CORBA_Any (this->type_.in (),
+                    CORBA::Any (this->type_.in (),
                                0,
                                in_cdr.byte_order (),
                                in_cdr.start ()),
@@ -901,8 +900,8 @@ TAO_DynUnion_i::current_component (ACE_ENV_SINGLE_ARG_DECL)
 // ****************************************************************
 
 CORBA::Boolean
-TAO_DynUnion_i::label_match (const CORBA_Any &my_any,
-                             const CORBA_Any &other_any
+TAO_DynUnion_i::label_match (const CORBA::Any &my_any,
+                             const CORBA::Any &other_any
                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
       CORBA::SystemException

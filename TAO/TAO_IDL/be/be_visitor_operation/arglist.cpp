@@ -53,7 +53,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_BASE_PROXY_IMPL_CH:
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
-      *os << "CORBA_Object *_collocated_tao_target_";
+      *os << "CORBA::Object *_collocated_tao_target_";
 
       if (node->argument_count () > 0)
         {

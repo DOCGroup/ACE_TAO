@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Invocation_Endpoint_Selectors.h"
 
 #if !defined (__ACE_INLINE__)
@@ -18,27 +16,35 @@
 #include "RT_Protocols_Hooks.h"
 #include "tao/debug.h"
 
-ACE_RCSID(tao, RT_Invocation_Endpoint_Selectors, "$Id$")
+
+ACE_RCSID (RTCORBA,
+           RT_Invocation_Endpoint_Selectors,
+           "$Id$")
+
 
 void
-TAO_RT_Invocation_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invocation
-                                                      ACE_ENV_ARG_DECL)
+TAO_RT_Invocation_Endpoint_Selector::select_endpoint (
+  TAO_GIOP_Invocation *invocation
+  ACE_ENV_ARG_DECL)
 {
   CORBA::Policy_var client_protocol_policy_base =
-    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation ACE_ENV_ARG_PARAMETER);
+    TAO_RT_Endpoint_Utils::client_protocol_policy (invocation
+                                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (client_protocol_policy_base.ptr () == 0)
     {
-      this->TAO_Default_Endpoint_Selector::select_endpoint (invocation
-                                                            ACE_ENV_ARG_PARAMETER);
+      this->TAO_Default_Endpoint_Selector::select_endpoint (
+        invocation
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
   else
     {
       RTCORBA::ClientProtocolPolicy_var client_protocol_policy =
-        RTCORBA::ClientProtocolPolicy::_narrow (client_protocol_policy_base.in ()
-                                                ACE_ENV_ARG_PARAMETER);
+        RTCORBA::ClientProtocolPolicy::_narrow (
+          client_protocol_policy_base.in ()
+          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
       /// Cast to TAO_ClientProtocolPolicy
@@ -50,19 +56,21 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint (TAO_GIOP_Invocation *invoc
       RTCORBA::ProtocolList &client_protocols =
         tao_client_protocol_policy->protocols_rep ();
 
-      this->select_endpoint_based_on_client_protocol_policy (invocation,
-                                                             client_protocol_policy.in (),
-                                                             client_protocols
-                                                             ACE_ENV_ARG_PARAMETER);
+      this->select_endpoint_based_on_client_protocol_policy (
+        invocation,
+        client_protocol_policy.in (),
+        client_protocols
+        ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 }
 
 void
-TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_policy (TAO_GIOP_Invocation *invocation,
-                                                                                      RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
-                                                                                      RTCORBA::ProtocolList &client_protocols
-                                                                                      ACE_ENV_ARG_DECL)
+TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_policy (
+  TAO_GIOP_Invocation *invocation,
+  RTCORBA::ClientProtocolPolicy_ptr client_protocol_policy,
+  RTCORBA::ProtocolList &client_protocols
+  ACE_ENV_ARG_DECL)
 {
   CORBA::Boolean valid_profile_found = 0;
 
@@ -95,7 +103,8 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
               invocation->endpoint (invocation->profile ()->endpoint ());
 
               int status =
-                this->endpoint_from_profile (invocation ACE_ENV_ARG_PARAMETER);
+                this->endpoint_from_profile (invocation
+                                             ACE_ENV_ARG_PARAMETER);
               ACE_CHECK;
 
               if (status == 1)
@@ -126,8 +135,9 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
 }
 
 int
-TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation *invocation
-                                                            ACE_ENV_ARG_DECL)
+TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
+  TAO_GIOP_Invocation *invocation
+  ACE_ENV_ARG_DECL)
 {
   // Narrow to the RT Stub.
   TAO_RT_Stub *rt_stub =
@@ -138,7 +148,7 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
       ACE_DEBUG ((LM_DEBUG, "Unexpected error narrowing stub to TAO_RT_Stub"));
 
       ACE_THROW_RETURN (CORBA::INTERNAL (
-                           CORBA_SystemException::_tao_minor_code (
+                           CORBA::SystemException::_tao_minor_code (
                               TAO_DEFAULT_MINOR_CODE,
                               EINVAL),
                            CORBA::COMPLETED_NO),
@@ -210,12 +220,13 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
         {
           // Get client thread priority.
           int status =
-            protocol_hooks->get_thread_CORBA_priority (client_thread_priority  // side effect
-                                                       ACE_ENV_ARG_PARAMETER);
+            protocol_hooks->get_thread_CORBA_priority (
+              client_thread_priority  // side effect
+              ACE_ENV_ARG_PARAMETER);
           ACE_CHECK_RETURN (0);
           if (status == -1)
             {
-              ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1,
+              ACE_THROW_RETURN (CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 1,
                                                         CORBA::COMPLETED_NO),
                                 0);
             }
@@ -232,11 +243,12 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
             {
               // Check which band range we fall in.
               int in_range = 0;
-              protocol_hooks->get_selector_bands_policy_hook (bands_policy.in (),
-                                                              client_thread_priority,
-                                                              min_priority,
-                                                              max_priority,
-                                                              in_range);
+              protocol_hooks->get_selector_bands_policy_hook (
+                bands_policy.in (),
+                client_thread_priority,
+                min_priority,
+                max_priority,
+                in_range);
 
               // If priority doesn't fall into any of the bands.
               if (!in_range)
@@ -247,7 +259,8 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
                       invocation->inconsistent_policies ()[0u] =
                         CORBA::Policy::_duplicate (bands_policy.in ());
                       invocation->inconsistent_policies ()[1u] =
-                        CORBA::Policy::_duplicate (priority_model_policy.in ());
+                        CORBA::Policy::_duplicate (
+                          priority_model_policy.in ());
                     }
 
                   // Indicate error.
@@ -289,19 +302,23 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (TAO_GIOP_Invocation 
           int status;
           if (rt_stub->private_connection ())
             {
-              TAO_Private_Transport_Descriptor private_desc (invocation->endpoint (),
-                                                             ACE_reinterpret_cast (long, invocation->stub ()));
+              TAO_Private_Transport_Descriptor private_desc (
+                invocation->endpoint (),
+                ACE_reinterpret_cast (long, invocation->stub ()));
 
               status =
-                invocation->perform_call (private_desc ACE_ENV_ARG_PARAMETER);
+                invocation->perform_call (private_desc
+                                          ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
           else
             {
-              TAO_Base_Transport_Property default_desc (invocation->endpoint ());
+              TAO_Base_Transport_Property default_desc (
+                invocation->endpoint ());
 
               status =
-                invocation->perform_call (default_desc ACE_ENV_ARG_PARAMETER);
+                invocation->perform_call (default_desc
+                                          ACE_ENV_ARG_PARAMETER);
               ACE_CHECK_RETURN (-1);
             }
 

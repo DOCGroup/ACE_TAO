@@ -181,8 +181,8 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out (void)
     {
       // Generate a fake exception....
       CORBA::TIMEOUT timeout_failure (
-        CORBA_SystemException::_tao_minor_code (TAO_TIMEOUT_SEND_MINOR_CODE,
-                                                errno),
+        CORBA::SystemException::_tao_minor_code (TAO_TIMEOUT_SEND_MINOR_CODE,
+                                                 errno),
          CORBA::COMPLETED_NO);
 
       TAO_OutputCDR out_cdr;

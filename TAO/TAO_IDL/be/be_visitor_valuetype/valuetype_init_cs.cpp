@@ -106,11 +106,11 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
     {
       // generate create_for_unmarshal()
       *os << be_nl << be_nl
-          << "CORBA_ValueBase *" << be_nl
+          << "CORBA::ValueBase *" << be_nl
           << fname << "::create_for_unmarshal" << " "
           << "(void)" << be_nl
           << "{" << be_idt_nl
-          << "CORBA_ValueBase *ret_val = 0;" << be_nl
+          << "CORBA::ValueBase *ret_val = 0;" << be_nl
           << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
           << "ret_val," << be_nl
           << "OBV_" << node->full_name () << "," << be_nl
@@ -125,7 +125,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                 << "CORBA::AbstractBase_ptr" << be_nl
                 << fname << "::create_for_unmarshal_abstract (void)" << be_nl
                 << "{" << be_idt_nl
-                << "CORBA_AbstractBase *ret_val = 0;" << be_nl
+                << "CORBA::AbstractBase *ret_val = 0;" << be_nl
                 << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
                 << "ret_val," << be_nl
                 << "OBV_" << node->full_name () << "," << be_nl

@@ -82,7 +82,7 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
   *os << "return" << be_idt_nl
-      << "CORBA_ValueBase::_tao_marshal (" << be_idt << be_idt_nl
+      << "CORBA::ValueBase::_tao_marshal (" << be_idt << be_idt_nl
       << "strm," << be_nl
       << "ACE_const_cast (" << be_idt << be_idt_nl
       << node->full_name () << " *," << be_nl

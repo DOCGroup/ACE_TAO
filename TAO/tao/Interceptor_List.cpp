@@ -75,7 +75,7 @@ TAO_Interceptor_List::add_interceptor_i (
     }
   else
     ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                        CORBA_SystemException::_tao_minor_code (
+                        CORBA::SystemException::_tao_minor_code (
                           TAO_DEFAULT_MINOR_CODE,
                           EINVAL),
                         CORBA::COMPLETED_NO),

@@ -274,7 +274,7 @@ TAO_ServerRequestInfo::sending_exception (ACE_ENV_SINGLE_ARG_DECL)
   ACE_NEW_THROW_EX (temp,
                     CORBA::Any,
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));

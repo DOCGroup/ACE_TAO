@@ -1,14 +1,11 @@
-// -*- C++ -*-
-//
-// $Id$
-
 #include "BiDir_PolicyFactory.h"
 #include "BiDirGIOP.h"
 #include "BiDir_Policy_i.h"
 
-ACE_RCSID (BiDir_GIOP, BiDir_PolicyFactory, "$Id$")
 
-
+ACE_RCSID (BiDir_GIOP,
+           BiDir_PolicyFactory,
+           "$Id$")
 
 
 CORBA::Policy_ptr
@@ -31,7 +28,7 @@ TAO_BiDir_PolicyFactory::create_policy (
       ACE_NEW_THROW_EX (policy,
                         TAO_BidirectionalPolicy (val),
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));

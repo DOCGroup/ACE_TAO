@@ -141,7 +141,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY (
-                          CORBA_SystemException::_tao_minor_code (
+                          CORBA::SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
@@ -153,7 +153,7 @@ TAO_PICurrent_Impl::get_slot (PortableInterceptor::SlotId id
   ACE_NEW_THROW_EX (any,
                     CORBA::Any (table[id]), // Make a copy.
                     CORBA::NO_MEMORY (
-                      CORBA_SystemException::_tao_minor_code (
+                      CORBA::SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
                         ENOMEM),
                       CORBA::COMPLETED_NO));

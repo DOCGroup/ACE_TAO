@@ -30,7 +30,8 @@ class TAO_Operation_Table;
  *
  * @brief Base class for skeletons and servants.
  *
- * The POA spec requires that all servants inherit from this class.
+ * The POA spec requires that all servants inherit from this class'
+ * base class.
  */
 class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase
@@ -38,7 +39,6 @@ class TAO_PortableServer_Export TAO_ServantBase
 public:
   friend class TAO_POA;
   friend class TAO_Object_Adapter;
-  friend class CORBA_Object;
   friend class TAO_Local_ServantBase;
 
   /// Destructor.
@@ -59,11 +59,12 @@ public:
     );
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA_InterfaceDef_ptr _get_interface (
-                                                 ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  virtual CORBA::InterfaceDef_ptr _get_interface (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
-  /// Default <_get_component>: always returns CORBA::Object::_nil().
-  virtual CORBA::Object_ptr _get_component (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  /// Default @c _get_component>: always returns CORBA::Object::_nil().
+  virtual CORBA::Object_ptr _get_component (
+    ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
   /// Get the correct vtable.
   virtual void *_downcast (const char *repository_id) = 0;

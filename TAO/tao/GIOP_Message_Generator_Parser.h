@@ -30,6 +30,7 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Pluggable_Reply_Params_Base;
 class TAO_GIOP_Locate_Status_Msg;
 class TAO_GIOP_Locate_Request_Header;
+class TAO_ServerRequest;
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "DynCommon.h"
 #include "DynAnyFactory.h"
 #include "DynAny_i.h"
@@ -10,14 +7,16 @@
 #include "DynStruct_i.h"
 #include "DynUnion_i.h"
 
-ACE_RCSID(DynamicAny, DynCommon, "$Id$")
 
-// Constructor.
+ACE_RCSID (DynamicAny,
+           DynCommon,
+           "$Id$")
+
+
 TAO_DynCommon::TAO_DynCommon (void)
 {
 }
 
-// Destructor.
 TAO_DynCommon::~TAO_DynCommon (void)
 {
 }
@@ -52,16 +51,17 @@ TAO_DynCommon::assign (DynamicAny::DynAny_ptr dyn_any
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 
-  CORBA_TypeCode_var tc = dyn_any->type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var tc = dyn_any->type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  CORBA::Boolean equivalent = this->type_.in ()->equivalent (tc.in ()
-                                                             ACE_ENV_ARG_PARAMETER);
+  CORBA::Boolean equivalent =
+    this->type_.in ()->equivalent (tc.in ()
+                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   if (equivalent)
     {
-      CORBA_Any_var any = dyn_any->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::Any_var any = dyn_any->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
 
       this->from_any (any.in ()
@@ -748,7 +748,7 @@ TAO_DynCommon::insert_dyn_any (DynamicAny::DynAny_ptr value
       ACE_THROW (CORBA::OBJECT_NOT_EXIST ());
     }
 
-  CORBA_Any_var any = value->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var any = value->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
   this->insert_any (any.in ()
@@ -1415,14 +1415,14 @@ TAO_DynCommon::get_any (ACE_ENV_SINGLE_ARG_DECL)
     }
   else
     {
-      CORBA_Any_ptr tmp = 0;
+      CORBA::Any_ptr tmp = 0;
 
       ACE_NEW_THROW_EX (tmp,
-                        CORBA_Any,
+                        CORBA::Any,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (0);
 
-      CORBA_Any_var val = tmp;
+      CORBA::Any_var val = tmp;
 
       if ((this->any_ >>= *tmp) == 0)
         {
@@ -1450,7 +1450,7 @@ TAO_DynCommon::get_dyn_any (ACE_ENV_SINGLE_ARG_DECL)
                         0);
     }
 
-  CORBA_Any_var any = this->get_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var any = this->get_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   return TAO_DynAnyFactory::make_dyn_any (any.in ()
@@ -1559,7 +1559,7 @@ TAO_DynCommon::copy (ACE_ENV_SINGLE_ARG_DECL)
                         DynamicAny::DynAny::_nil ());
     }
 
-  CORBA_Any_var any = this->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::Any_var any = this->to_any (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DynamicAny::DynAny::_nil ());
 
   DynamicAny::DynAny_ptr retval =

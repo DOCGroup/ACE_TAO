@@ -1,4 +1,4 @@
-//-*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -20,6 +20,8 @@
 #include "tao/Object_KeyC.h"
 #include "tao/IOPC.h"
 
+
+class TAO_ServerRequest;
 
 /**
  * @class TAO_Request_Dispatcher

@@ -128,7 +128,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "," << be_nl;
 
           // dump the scoped name.
-          *os << "  public virtual CORBA_DefaultValueRefCountBase";
+          *os << "  public virtual CORBA::DefaultValueRefCountBase";
         }
 
       *os << be_uidt_nl;

@@ -1,13 +1,12 @@
-/* -*- C++ -*- */
-// $Id$
-
 #include "DynSequence_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Marshal.h"
 
-ACE_RCSID(DynamicAny, DynSequence_i, "$Id$")
 
-// Constructors and destructor.
+ACE_RCSID (DynamicAny,
+           DynSequence_i,
+           "$Id$")
+
 
 TAO_DynSequence_i::TAO_DynSequence_i (void)
 {
@@ -92,7 +91,7 @@ TAO_DynSequence_i::init (const CORBA::Any& any
 }
 
 void
-TAO_DynSequence_i::init (CORBA_TypeCode_ptr tc
+TAO_DynSequence_i::init (CORBA::TypeCode_ptr tc
                          ACE_ENV_ARG_DECL)
 {
   CORBA::TCKind kind = TAO_DynAnyFactory::unalias (tc
@@ -160,20 +159,20 @@ TAO_DynSequence_i::get_element_type (ACE_ENV_SINGLE_ARG_DECL)
 
   // Strip away aliases (if any) on top of the outer type.
   CORBA::TCKind kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   while (kind != CORBA::tk_sequence)
     {
       element_type = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
       kind = element_type->kind (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
+      ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
     }
 
   // Return the content type.
   CORBA::TypeCode_ptr retval = element_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA_TypeCode::_nil ());
+  ACE_CHECK_RETURN (CORBA::TypeCode::_nil ());
 
   return retval;
 }
@@ -650,7 +649,8 @@ TAO_DynSequence_i::to_any (ACE_ENV_SINGLE_ARG_DECL)
 
   out_cdr.write_ulong (this->component_count_);
 
-  CORBA_TypeCode_var field_tc = this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CORBA::TypeCode_var field_tc =
+    this->get_element_type (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   for (CORBA::ULong i = 0; i < this->component_count_; ++i)

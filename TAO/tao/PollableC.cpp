@@ -958,7 +958,7 @@ const char* CORBA::PollableSet::_interface_repository_id (void) const
 
 // Default constructor.
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:omg.org/CORBA/PollableSet/NoPossiblePollable:1.0",
         "NoPossiblePollable"
       )
@@ -972,7 +972,7 @@ CORBA::PollableSet::NoPossiblePollable::~NoPossiblePollable (void)
 
 // Copy constructor.
 CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -983,7 +983,7 @@ CORBA::PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA::Polla
 CORBA::PollableSet::NoPossiblePollable&
 CORBA::PollableSet::NoPossiblePollable::operator= (const ::CORBA::PollableSet::NoPossiblePollable &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
@@ -1042,7 +1042,7 @@ void CORBA::PollableSet::NoPossiblePollable::_tao_decode (
 
 // Default constructor.
 CORBA::PollableSet::UnknownPollable::UnknownPollable (void)
-  : CORBA_UserException (
+  : CORBA::UserException (
         "IDL:omg.org/CORBA/PollableSet/UnknownPollable:1.0",
         "UnknownPollable"
       )
@@ -1056,7 +1056,7 @@ CORBA::PollableSet::UnknownPollable::~UnknownPollable (void)
 
 // Copy constructor.
 CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
-  : CORBA_UserException (
+  : CORBA::UserException (
         _tao_excp._rep_id (),
         _tao_excp._name ()
       )
@@ -1067,7 +1067,7 @@ CORBA::PollableSet::UnknownPollable::UnknownPollable (const ::CORBA::PollableSet
 CORBA::PollableSet::UnknownPollable&
 CORBA::PollableSet::UnknownPollable::operator= (const ::CORBA::PollableSet::UnknownPollable &_tao_excp)
 {
-  this->CORBA_UserException::operator= (_tao_excp);
+  this->UserException::operator= (_tao_excp);
   return *this;
 }
 
