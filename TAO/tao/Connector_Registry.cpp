@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-#include "tao/Connector_Registry.h"
 #include "tao/ORB_Core.h"
+#include "tao/Connector_Registry.h"
 #include "tao/Profile.h"
 #include "tao/Environment.h"
 #include "tao/debug.h"
@@ -145,11 +145,6 @@ TAO_Connector_Registry::preconnect (TAO_ORB_Core *orb_core,
         if (*connector)
           (*connector)->preconnect (i->c_str ());
     }
-
-  // No longer need the preconnect set since all associated
-  // preconnections have been opened by now.  Reclaim the memory used
-  // by the preconnect set.
-  preconnections.reset ();
 
   return 0;  // Success
 }
@@ -351,8 +346,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 
       TAO_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
-                      TAO_Unknown_Profile (tag,
-                                           cdr.orb_core ()),
+                      TAO_Unknown_Profile (tag),
                       0);
       if (pfile->decode (cdr) == -1)
         {

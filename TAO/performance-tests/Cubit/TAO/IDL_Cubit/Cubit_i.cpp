@@ -306,13 +306,13 @@ Cubit_i::cube_octet_sequence (const Cubit::octet_seq &input,
 
   if (output.ptr () == 0)
     {
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
       ACE_Message_Block mb (input.length ());
       mb.wr_ptr (input.length ());
       output = new Cubit::octet_seq (input.length (),  &mb);
 #else
       output = new Cubit::octet_seq (input.length ());
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
     }
 
   output->length (input.length ());

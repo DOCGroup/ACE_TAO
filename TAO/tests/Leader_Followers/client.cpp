@@ -254,9 +254,26 @@ main (int argc, char **argv)
       if (parse_args_result != 0)
         return parse_args_result;
 
-      // Get an object reference from the argument string.
       CORBA::Object_var object =
-        orb->string_to_object (IOR, ACE_TRY_ENV);
+        orb->resolve_initial_references ("RootPOA",
+                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (object.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      PortableServer::POAManager_var poa_manager =
+        root_poa->the_POAManager (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa_manager->activate (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Get an object reference from the argument string.
+      object = orb->string_to_object (IOR,
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a <server> reference.
@@ -295,6 +312,11 @@ main (int argc, char **argv)
           server->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
+
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {

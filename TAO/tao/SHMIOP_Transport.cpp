@@ -5,8 +5,6 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-ACE_RCSID (tao, SHMIOP_Transport, "$Id$")
-
 #include "tao/SHMIOP_Connect.h"
 #include "tao/SHMIOP_Profile.h"
 #include "tao/Timeprobe.h"

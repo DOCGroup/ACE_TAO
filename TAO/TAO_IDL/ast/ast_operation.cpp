@@ -319,11 +319,6 @@ AST_Operation::dump(ostream &o)
   }
 }
 
-void
-AST_Operation::destroy (void)
-{
-}
-
 /*
  * Data accessors
  */

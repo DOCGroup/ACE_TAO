@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class TAO_IDL_FE_Export AST_Generator
+class   AST_Generator
 {
 public:
   // Operations

@@ -53,10 +53,10 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
 
   // generate the CDR << and >> operator declarations
   os->indent ();
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
       << " operator<< (TAO_OutputCDR &, const " << node->name ()
       << " &);" << be_nl;
-  *os << be_global->stub_export_macro () << " CORBA::Boolean"
+  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>> (TAO_InputCDR &, "
       << node->name () << " &);\n";
 
@@ -73,6 +73,11 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
     }
 
   *os << be_nl;
+
+  // Generate the iostream operator overload for this exception,
+  // unless it is suppressed.
+  if (idl_global->gen_except_ostream_op ())
+    node->gen_iostream_op_hdr (os);
 
   node->cli_hdr_cdr_op_gen (1);
   return 0;

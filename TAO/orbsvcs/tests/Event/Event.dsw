@@ -14,9 +14,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -31,9 +28,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -50,9 +44,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -67,9 +58,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -86,9 +74,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -103,9 +88,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -122,14 +104,11 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
 
-Project: "ECTest DLL"=.\lib\ECTest.dsp - Package Owner=<4>
+Project: "ECTest"=.\lib\ECTest.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -152,9 +131,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -169,9 +145,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -188,9 +161,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -205,9 +175,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -224,9 +191,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -241,9 +205,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -260,9 +221,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -277,9 +235,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -296,9 +251,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -313,9 +265,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 
@@ -332,9 +281,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name ECTest
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -349,9 +295,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name ECTest
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ECTest DLL
     End Project Dependency
 }}}
 

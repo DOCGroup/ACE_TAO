@@ -100,254 +100,213 @@ COMMON_Base::is_abstract (void)
   return this->is_abstract_;
 }
 
-void
-COMMON_Base::destroy (void)
+
+/*
+ * Constructor(s) and destructor
+ */
+
+AST_Decl::AST_Decl()
+  : pd_imported(I_FALSE),
+    pd_in_main_file(I_FALSE),
+    pd_defined_in(NULL),
+    pd_node_type(NT_module),
+    pd_line(-1),
+    pd_file_name(NULL),
+    pd_name(NULL),
+    pd_local_name(NULL),
+    pd_original_local_name (NULL),
+    pd_pragmas(NULL),
+    pd_added(I_FALSE)
 {
 }
 
-// Constructor(s) and destructor
-
-AST_Decl::AST_Decl (void)
-  : pd_imported (I_FALSE),
-    pd_in_main_file (I_FALSE),
-    pd_defined_in (0),
-    pd_node_type (NT_module),
-    pd_line (-1),
-    pd_file_name (0),
-    pd_name (0),
-    pd_local_name (0),
-    pd_original_local_name (0),
-    pd_pragmas (0),
-    pd_added (I_FALSE)
-{
-}
-
-AST_Decl::AST_Decl (NodeType nt, 
-                    UTL_ScopedName *n, 
-                    UTL_StrList *p)
-  : pd_imported (idl_global->imported ()),
-    pd_in_main_file (idl_global->in_main_file ()),
-    pd_defined_in (idl_global->scopes ()->depth () > 0
-                     ? idl_global->scopes ()->top ()
-                     : 0),
-    pd_node_type (nt),
-    pd_line (idl_global->lineno ()),
-    pd_file_name (idl_global->filename ()),
-    pd_name (0),
-    pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
-    pd_pragmas (p),
-    pd_added (I_FALSE)
+AST_Decl::AST_Decl(NodeType nt, UTL_ScopedName *n, UTL_StrList *p)
+  : pd_imported(idl_global->imported()),
+    pd_in_main_file(idl_global->in_main_file()),
+    pd_defined_in(idl_global->scopes()->depth() > 0
+                  ? idl_global->scopes()->top()
+                  : 0),
+    pd_node_type(nt),
+    pd_line(idl_global->lineno()),
+    pd_file_name(idl_global->filename()),
+    pd_local_name(n == NULL ? 0 : n->last_component()),
+    pd_pragmas(p),
+    pd_added(I_FALSE)
 {
   compute_full_name (n);
 
   // Keep the name _cxx_ removed, if any.
   if (n != 0)
     {
-      this->original_local_name (n->last_component ()->copy ());
+      this->original_local_name (n->last_component ());
     }
 }
 
 AST_Decl::~AST_Decl (void)
 {
+  if (this->pd_name)
+    {
+      delete this->pd_name;
+      this->pd_name = 0;
+    }
 }
 
-// Private operations
+/*
+ * Private operations
+ */
 
-// Compute the full scoped name of an AST node
+/*
+ * Compute the full scoped name of an AST node
+ */
 void
-AST_Decl::compute_full_name (UTL_ScopedName *n)
+AST_Decl::compute_full_name(UTL_ScopedName *n)
 {
-  UTL_ScopedName *cn = 0;
-  AST_Decl *d = 0;
+  UTL_ScopedName        *cn = NULL;
+  AST_Decl              *d  = NULL;
 
-  // Initialize this name to 0.
-  this->pd_name = 0;
-
-  // Global scope?
-  if (defined_in () == 0) 
-    {
-      this->pd_name = n;
-      return;
-    }
-
-  // OK, not global. So copy name of containing scope, then
-  // smash last cdr of copy with new component
-  d = ScopeAsDecl (this->defined_in ());
-
-  if (d != 0)
-    cn = d->name ();
-
-  if (cn != 0)
-    this->pd_name = (UTL_ScopedName *) cn->copy ();
-
-  if (this->pd_local_name != 0)
-    {
-      if (this->pd_name == 0)
-        {
-          ACE_NEW (this->pd_name,
-                   UTL_ScopedName (this->pd_local_name->copy (),
-                                   0));
-        }
-      else
-        {
-          UTL_ScopedName *conc_name = 0;
-          ACE_NEW (conc_name,
-                   UTL_ScopedName (this->pd_local_name->copy (),
-                                   0));
-
-          this->pd_name->nconc (conc_name);
-        }
-    }
+  /*
+   * Initialize this name to NULL
+   */
+  pd_name = NULL;
+  /*
+   * Global scope?
+   */
+  if (defined_in() == NULL) {
+    pd_name = n;
+    return;
+  }
+  /*
+   * OK, not global. So copy name of containing scope, then
+   * smash last cdr of copy with new component
+   */
+  d = ScopeAsDecl(defined_in());
+  if (d != NULL)
+    cn = d->name();
+  if (cn != NULL)
+    pd_name = (UTL_ScopedName *) cn->copy();
+  if (pd_name == NULL)
+    pd_name = new UTL_ScopedName(local_name(), NULL);
   else
-    {
-      if (this->pd_name == 0)
-        {
-          ACE_NEW (this->pd_name,
-                   UTL_ScopedName (0,
-                                   0));
-        }
-      else
-        {
-          UTL_ScopedName *conc_name = 0;
-          ACE_NEW (conc_name,
-                   UTL_ScopedName (0,
-                                   0));
-
-          this->pd_name->nconc (conc_name);
-        }
-    }
+    pd_name->nconc(new UTL_ScopedName(local_name(), NULL));
 }
 
-// Public operations
+/*
+ * Public operations
+ */
 
-// Return TRUE if one of my ancestor scopes is "s"
-// and FALSE otherwise.
+/*
+ * Return TRUE if one of my ancestor scopes is "s"
+ * and FALSE otherwise
+ */
 idl_bool
-AST_Decl::has_ancestor (AST_Decl *s)
+AST_Decl::has_ancestor(AST_Decl *s)
 {
   if (this == s)
-    {
-      return I_TRUE;
-    }
-
+    return I_TRUE;
   if (pd_defined_in == NULL)
-    {
-      return I_FALSE;
-    }
-
-  return ScopeAsDecl (pd_defined_in)->has_ancestor (s);
+    return I_FALSE;
+  return ScopeAsDecl(pd_defined_in)->has_ancestor(s);
 }
 
-// Dump this AST_Decl to the ostream o.
+/*
+ * Dump this AST_Decl to the ostream o
+ */
 void
-AST_Decl::dump (ostream &o)
+AST_Decl::dump(ostream &o)
 {
-  this->pd_local_name->dump (o);
+  pd_local_name->dump(o);
 }
 
-void
-AST_Decl::destroy (void)
-{
-  this->pd_name->destroy ();
-  delete this->pd_name;
-  this->pd_name = 0;
+/*
+ * Redefinition of inherited virtual operations
+ */
 
-  this->pd_local_name->destroy ();
-  delete this->pd_local_name;
-  this->pd_local_name = 0;
-
-  this->pd_original_local_name->destroy ();
-  delete this->pd_original_local_name;
-  this->pd_original_local_name = 0;
-
-  // Pragmas will be done in IDL_GlobalData
-  // because they're not copied.
-}
-
-// Data accessors.
+/*
+ * Data accessors
+ */
 
 idl_bool
-AST_Decl::imported (void)
+AST_Decl::imported()
 {
-  return this->pd_imported;
+  return pd_imported;
 }
 
 void
-AST_Decl::set_imported (idl_bool is_it)
+AST_Decl::set_imported(idl_bool is_it)
 {
-  this->pd_imported = is_it;
+  pd_imported = is_it;
 }
 
 idl_bool
-AST_Decl::in_main_file (void)
+AST_Decl::in_main_file()
 {
-  return this->pd_in_main_file;
+  return pd_in_main_file;
 }
 
 void
-AST_Decl::set_in_main_file (idl_bool is_it)
+AST_Decl::set_in_main_file(idl_bool is_it)
 {
-  this->pd_in_main_file = is_it;
+  pd_in_main_file = is_it;
 }
 
 idl_bool
-AST_Decl::added (void)
+AST_Decl::added()
 {
-  return this->pd_added;
+  return pd_added;
 }
 
 void
-AST_Decl::set_added (idl_bool is_it)
+AST_Decl::set_added(idl_bool is_it)
 {
-  this->pd_added = is_it;
+  pd_added = is_it;
 }
 
 UTL_Scope *
-AST_Decl::defined_in (void)
+AST_Decl::defined_in()
 {
-  return this->pd_defined_in;
+  return pd_defined_in;
 }
 
 void
 AST_Decl::set_defined_in(UTL_Scope *s)
 {
-  this->pd_defined_in = s;
+  pd_defined_in = s;
 }
 
 AST_Decl::NodeType
-AST_Decl::node_type (void)
+AST_Decl::node_type()
 {
-  return this->pd_node_type;
+  return pd_node_type;
 }
 
 long
-AST_Decl::line (void)
+AST_Decl::line()
 {
-  return this->pd_line;
+  return pd_line;
 }
 
 void
-AST_Decl::set_line (long l)
+AST_Decl::set_line(long l)
 {
-  this->pd_line = l;
+  pd_line = l;
 }
 
 UTL_String *
-AST_Decl::file_name (void)
+AST_Decl::file_name()
 {
-  return this->pd_file_name;
+  return pd_file_name;
 }
 
 void
-AST_Decl::set_file_name (UTL_String *s)
+AST_Decl::set_file_name(UTL_String *s)
 {
-  this->pd_file_name = s;
+  pd_file_name = s;
 }
 
 UTL_ScopedName *
-AST_Decl::name (void)
+AST_Decl::name()
 {
-  return this->pd_name;
+  return pd_name;
 }
 
 
@@ -357,15 +316,12 @@ AST_Decl::name (void)
 // Variation of the <name>. Computes scoped name string, applying
 // prefix and suffix to the local name component.
 UTL_ScopedName *
-AST_Decl::compute_name (const char *prefix, 
-                        const char *suffix)
+AST_Decl::compute_name (const char *prefix, const char *suffix)
 {
   if (prefix == 0 || suffix == 0)
-    {
-      return 0;
-    }
+    return 0;
 
-  UTL_ScopedName *result_name = 0;
+  UTL_ScopedName *result_name = NULL;
 
   // Prepare prefix_<local_name>_suffix string.
 
@@ -377,23 +333,17 @@ AST_Decl::compute_name (const char *prefix,
   result_local_str += suffix_str;
 
   // Identifier for the resulting local name.
-  Identifier *result_local_id = 0;
-  ACE_NEW_RETURN (result_local_id,
-                  Identifier (result_local_str.c_str (),
-                              1,
-                              0,
-                              I_FALSE),
-                  0);
+  Identifier *result_local_id = new Identifier (result_local_str.c_str (),
+                                                1,
+                                                0,
+                                                I_FALSE);
 
   // UTL_Scoped name for the resulting local name.
-  UTL_ScopedName *result_local_name = 0;
-  ACE_NEW_RETURN (result_local_name,
-                  UTL_ScopedName (result_local_id,
-                                  0),
-                  0);
+  UTL_ScopedName *result_local_name = new UTL_ScopedName (result_local_id,
+                                                          NULL);
 
   // Global scope?
-  if (this->defined_in () == 0)
+  if (this->defined_in () == NULL)
     {
       result_name = result_local_name;
     }
@@ -402,58 +352,55 @@ AST_Decl::compute_name (const char *prefix,
       // OK, not global. So copy name of containing scope, then
       // smash last cdr of copy with new component.
 
-      AST_Decl *d = ScopeAsDecl (this->defined_in ());
-
-      if (d != 0)
+      AST_Decl *d = ScopeAsDecl(defined_in());
+      if (d != NULL)
         {
-          UTL_ScopedName *cn = d->name ();
-
-          if (cn != 0)
+          UTL_ScopedName *cn = d->name();
+          if (cn != NULL)
             {
-              result_name = (UTL_ScopedName *) cn->copy ();
-              if (result_name == 0)
+              result_name = (UTL_ScopedName *) cn->copy();
+              if (result_name == NULL)
                 {
                   result_name = result_local_name;
                 }
               else
-                {
-                  result_name->nconc (result_local_name);
-                }
+                result_name->nconc(result_local_name);
             }
         }
     }
 
   return result_name;
+
 }
+
+
+
+
 
 void
-AST_Decl::set_name (UTL_ScopedName *n)
+AST_Decl::set_name(UTL_ScopedName *n)
 {
-  this->pd_name = n;
-
+  pd_name = n;
   if (n != NULL)
     {
-      this->pd_local_name = n->last_component ()->copy ();
+      pd_local_name = n->last_component();
 
       // The name without _cxx_ prefix removed, if there was any.
-      this->original_local_name (n->last_component ()->copy ());
+      original_local_name (n->last_component ());
     }
 }
 
 Identifier *
-AST_Decl::local_name (void)
+AST_Decl::local_name()
 {
-  return this->pd_local_name;
+  return pd_local_name;
 }
 
 Identifier *
-AST_Decl::compute_local_name (const char *prefix, 
-                              const char *suffix)
+AST_Decl::compute_local_name (const char *prefix, const char *suffix)
 {
   if (prefix == 0 || suffix == 0)
-    {
-      return 0;
-    }
+    return 0;
 
   // Init the result with prefix.
   ACE_CString result_str (prefix);
@@ -465,14 +412,10 @@ AST_Decl::compute_local_name (const char *prefix,
   result_str += ACE_CString (suffix);
 
   // Identifier for the resulting local name.
-  Identifier *result_id = 0;
-  ACE_NEW_RETURN (result_id,
-                  Identifier (result_str.c_str (),
-                              1,
-                              0,
-                              I_FALSE),
-                  0);
-
+  Identifier *result_id = new Identifier (result_str.c_str (),
+                                          1,
+                                          0,
+                                          I_FALSE);
   return result_id;
 }
 
@@ -486,9 +429,7 @@ void
 AST_Decl::original_local_name (Identifier *local_name)
 {
   // Remove _cxx_ if it is present.
-  if (ACE_OS::strstr (local_name->get_string (), 
-                      "_cxx_") 
-        == local_name->get_string ())
+  if (ACE_OS::strstr (local_name->get_string (), "_cxx_") == local_name->get_string ())
     {
       // CSting class is good to do this stuff.
       ACE_CString name_str (local_name->get_string ());
@@ -497,49 +438,47 @@ AST_Decl::original_local_name (Identifier *local_name)
       name_str = name_str.substr (ACE_OS::strlen ("_cxx_"));
 
       // Assign to the Identifier variable.
-      ACE_NEW (this->pd_original_local_name,
-               Identifier (name_str.c_str (),
-               1,
-               0,
-               I_FALSE));
+      this->pd_original_local_name = new Identifier (name_str.c_str (),
+                                                     1,
+                                                     0,
+                                                     I_FALSE);
     }
   else
     {
-      this->pd_original_local_name = local_name->copy ();
+      this->pd_original_local_name = local_name;
     }
 }
 
 Identifier *
-AST_Decl::original_local_name (void)
+AST_Decl::original_local_name ()
 {
-  return this->pd_original_local_name;
+  return pd_original_local_name;
 }
 
 void
-AST_Decl::add_pragmas (UTL_StrList *p)
+AST_Decl::add_pragmas(UTL_StrList *p)
 {
-  if (p != 0) 
-    {
-      if (this->pd_pragmas != 0)
-        {
-          this->pd_pragmas->nconc (p);
-        }
-      else
-        {
-          this->pd_pragmas = p;
-        }
-    }
+  if (p != NULL) {
+    if (pd_pragmas != NULL)
+      pd_pragmas->nconc(p);
+    else
+      pd_pragmas = p;
+  }
 }
 
 UTL_StrList *
-AST_Decl::pragmas (void)
+AST_Decl::pragmas()
 {
-  return this->pd_pragmas;
+  return pd_pragmas;
 }
 
-//Narrowing methods for AST_Decl.
+/*
+ * Narrowing methods for AST_Decl
+ */
 IMPL_NARROW_METHODS0(AST_Decl)
 IMPL_NARROW_FROM_DECL(AST_Decl)
 
-// Narrowing methods for COMMON_Base.
+/*
+** Narrowing methods for COMMON_Base
+*/
 IMPL_NARROW_METHODS0(COMMON_Base)

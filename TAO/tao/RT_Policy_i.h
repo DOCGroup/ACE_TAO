@@ -29,8 +29,8 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/RTCORBAS.h"
-#include "tao/LocalObject.h"
+#include "RTCORBAS.h"
+
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -42,7 +42,8 @@
 
 class Policy_Factory;
 
-class TAO_Export TAO_PriorityModelPolicy :  public RTCORBA::PriorityModelPolicy, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PriorityModelPolicy :
+  public RTCORBA::PriorityModelPolicy
 {
   // = TITLE
   //   RTCORBA::PriorityModelPolicy implementation
@@ -71,25 +72,22 @@ public:
   virtual RTCORBA::PriorityModel priority_model (CORBA::Environment
                                                  &ACE_TRY_ENV =
                                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC (());
 
   virtual RTCORBA::Priority server_priority (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC (());
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the object state.
@@ -99,6 +97,8 @@ public:
 
 protected:
 
+  // @@ Angelo, Do we want this friendship or should we just make the
+  // default constructor public?  Check with Irfan or Carlos...
   friend class TAO_Policy_Factory;
   TAO_PriorityModelPolicy (void);
   // This constructor is used by TAO_Policy_Factory when decoding
@@ -111,9 +111,9 @@ private:
   // Attributes.
 };
 
-//*************************************************************************
+////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_ThreadpoolPolicy : public RTCORBA::ThreadpoolPolicy, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ThreadpoolPolicy : public RTCORBA::ThreadpoolPolicy
 {
   // = TITLE
   //   RTCORBA::ThreadpoolPolicy implementation
@@ -138,16 +138,13 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-        ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
 private:
 
@@ -155,9 +152,10 @@ private:
   // Attribute.
 };
 
-//*************************************************************************
+//////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_PrivateConnectionPolicy : public RTCORBA::PrivateConnectionPolicy, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PrivateConnectionPolicy :
+  public RTCORBA::PrivateConnectionPolicy
 {
   // = TITLE
   //   RTCORBA::PrivateConnectionPolicy implementation
@@ -179,21 +177,18 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 };
+////////////////////////////////////////////////////////////////////////////
 
-//*************************************************************************
-
-class TAO_Export TAO_PriorityBandedConnectionPolicy : public RTCORBA::PriorityBandedConnectionPolicy, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_PriorityBandedConnectionPolicy :
+  public  RTCORBA::PriorityBandedConnectionPolicy
 {
   // = TITLE
   //   RTCORBA::PriorityBandedConnectionPolicy implementation
@@ -228,16 +223,13 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object.
@@ -257,10 +249,10 @@ private:
   RTCORBA::PriorityBands priority_bands_;
   // Attribute.
 };
+////////////////////////////////////////////////////////////////////////////
 
-//*************************************************************************
-
-class TAO_Export TAO_ServerProtocolPolicy : public RTCORBA::ServerProtocolPolicy, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ServerProtocolPolicy :
+  public RTCORBA::ServerProtocolPolicy
 {
   // = TITLE
   //   RTCORBA::ServerProtocolPolicy implementation
@@ -279,11 +271,6 @@ public:
   virtual ~TAO_ServerProtocolPolicy (void);
   // Destructor.
 
-  RTCORBA::ProtocolList & protocols_rep (void);
-  // Accessor to the underlying protocols list of the policy (does not
-  // make a copy like the idl accessor <protocols> implementation
-  // below.)
-
   virtual RTCORBA::ProtocolList * protocols (CORBA::Environment
                                              &ACE_TRY_ENV =
                                              TAO_default_environment ())
@@ -291,16 +278,13 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
 private:
 
@@ -308,9 +292,10 @@ private:
   // Attribute.
 };
 
-//*************************************************************************
+////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_ClientProtocolPolicy : public RTCORBA::ClientProtocolPolicy, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_ClientProtocolPolicy :
+  public  RTCORBA::ClientProtocolPolicy
 {
   // = TITLE
   //   RTCORBA::ClientProtocolPolicy implementation
@@ -341,18 +326,15 @@ public:
 
   virtual CORBA::PolicyType policy_type (CORBA::Environment
                                          &ACE_TRY_ENV =
-                                         TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual CORBA::Policy_ptr copy (CORBA::Environment &ACE_TRY_ENV =
-                                  TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
   virtual void destroy (CORBA::Environment &ACE_TRY_ENV =
-                        TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                         TAO_default_environment ());
 
-  // = CDR Encoder/Decoder.
+  // CDR Encoder/Decoder.
 
   virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
   // This method writes a CDR representation of the current object.
@@ -373,9 +355,9 @@ private:
   // Attribute.
 };
 
-//*************************************************************************
+////////////////////////////////////////////////////////////////////////////
 
-class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_TCP_Properties : public RTCORBA::TCPProtocolProperties
 
 {
   // = TITLE
@@ -461,161 +443,18 @@ private:
   CORBA::Boolean no_delay_;
 };
 
-//*************************************************************************
+class  TAO_Protocol_Properties_Factory;
 
-class TAO_Export TAO_Unix_Domain_Properties : public RTCORBA::UnixDomainProtocolProperties, public TAO_Local_RefCounted_Object
-{
-  // = TITLE
-  //   RTCORBA::UnixDomainProtocolProperties implementation.
-  //
-  // = DESCRIPTION
-  //   Stores Unix Domain Sockets (Local IPC) Protocol configuration
-  //   properties.
-  //
-public:
-  TAO_Unix_Domain_Properties (CORBA::Long send_buffer_size =
-                              ACE_DEFAULT_MAX_SOCKET_BUFSIZ,
-                              CORBA::Long recv_buffer_size =
-                              ACE_DEFAULT_MAX_SOCKET_BUFSIZ);
-
-  // Constructor.
-
-  virtual ~TAO_Unix_Domain_Properties (void);
-  // Destructor.
-
-  virtual CORBA::Long send_buffer_size (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual void send_buffer_size (CORBA::Long send_buffer_size,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual CORBA::Long recv_buffer_size (CORBA::Environment
-                                        &ACE_TRY_ENV =
-                                        TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual void recv_buffer_size (CORBA::Long recv_buffer_size,
-                                 CORBA::Environment &ACE_TRY_ENV =
-                                 TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes the CDR encapsulation of an instance of 
-  // UnixDomainProperties. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
-  // RT CORBA Spec. The current implementation encodes the field
-  // according to the order of declaration (i.e. first is encoded
-  // send_buffer_size and then recv_buffer_size).
-
-  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads an instance of UnixDomainProperties from
-  // a CDR encapsulation. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
-  // RT CORBA Spec. The current implementation expect the field
-  // according to the order of declaration.
-
-private:
-
-  // = Attributes.
-  CORBA::Long send_buffer_size_;
-  CORBA::Long recv_buffer_size_;
-};
-
-//*************************************************************************
-
-class TAO_Export TAO_SMEM_Properties : public RTCORBA::SharedMemoryProtocolProperties, public TAO_Local_RefCounted_Object
-{
-  // = TITLE
-  //   RTCORBA::SharedMemoryProtocolProperties implementation.
-  //
-  // = DESCRIPTION
-  //   Stores Shared Memory Protocol configuration
-  //   properties.
-  //
-public:
-  TAO_SMEM_Properties (void);
-  // Constructor.
-
-  virtual ~TAO_SMEM_Properties (void);
-  // Destructor.
-
-  // = IDL interface methods.
-
-  virtual CORBA::Long preallocate_buffer_size (CORBA::Environment
-                                               &ACE_TRY_ENV =
-                                               TAO_default_environment
-                                               ())
-    ACE_THROW_SPEC (());
-
-  virtual void preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
-                                        CORBA::Environment
-                                        &ACE_TRY_ENV = TAO_default_environment
-                                        ())
-    ACE_THROW_SPEC (());
-
-  virtual char * mmap_filename (CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual void mmap_filename (const char * mmap_filename,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual char * mmap_lockname (CORBA::Environment &ACE_TRY_ENV =
-                                TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual void mmap_lockname (const char * mmap_lockname,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
-    ACE_THROW_SPEC (());
-
-  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-  // This method writes the CDR encapsulation of an instance of 
-  // SMEMProperties. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
-  // RT CORBA Spec. The current implementation encodes the field
-  // according to the order of declaration.
-
-  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
-  // This method reads an instance of SMEMProperties from
-  // a CDR encapsulation. This Protocol Property in TAO specific,
-  // so there is no order of encapsulation specified in the 
-  // RT CORBA Spec. The current implementation expect the field
-  // according to the order of declaration.
-  
-private:
-
-  // = Attributes.
-  CORBA::Long preallocate_buffer_size_;
-  ACE_CString mmap_filename_;
-  ACE_CString mmap_lockname_;
-};
-
-//*************************************************************************
-
-class TAO_Export TAO_GIOP_Properties : public RTCORBA::GIOPProtocolProperties, public TAO_Local_RefCounted_Object
+class TAO_Export TAO_GIOP_Properties :
+  public RTCORBA::GIOPProtocolProperties
 {
 public:
   virtual ~TAO_GIOP_Properties ();
-
-  // = CDR encoding methods
-
-  virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
-
-  virtual CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
   friend class TAO_Protocol_Properties_Factory;
   TAO_GIOP_Properties (void);
 };
-
-//*************************************************************************
 
 class TAO_Export TAO_Protocol_Properties_Factory
 {

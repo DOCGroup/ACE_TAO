@@ -4,53 +4,43 @@
 
 ACE_RCSID(tao, Counter_Servant, "$Id$")
 
-// Dtor-Ctor Implementation.
+// Dtor-Ctor Implementation
 
-Counter_Servant::Counter_Servant (Policy_Tester *policy_tester)
+Counter_Servant::Counter_Servant (CORBA::ORB_ptr o)
   : count_ (0),
-    policy_tester_ (policy_tester)
+    orb_ (CORBA::ORB::_duplicate (o))
 {
-  // No-Op.
 }
 
 Counter_Servant::~Counter_Servant (void)
 {
-  // No-Op.
 }
 
-// Counter Interface Methods Implementation.
+// Counter Interface Methods Implementation
+
+// @@ Angelo, you are going to get warnings about unused environment
+// parameter in the methods below.
 
 void
 Counter_Servant::increment (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   ++this->count_;
 }
 
 CORBA::Long
 Counter_Servant::get_count (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
   return this->count_;
 }
 
-void 
-Counter_Servant::reset (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  ACE_UNUSED_ARG (ACE_TRY_ENV);
-  this->count_ = 0;
-}
-
+// @@ Angelo, it is important that thowspecs in .h file match
+// throwspecs in .cpp file, which is not the case for the method
+// below.  You will get warnings here.
 void
 Counter_Servant::shutdown (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->policy_tester_->shutdown (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  this->orb_->shutdown ();
 }
 
-
-
+// @@ Angelo, please *use* environment parameter to catch exceptions,
+// i.e., ORB::shutdown takes environment argument - use it!

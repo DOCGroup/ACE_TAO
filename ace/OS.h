@@ -102,6 +102,136 @@ typedef long      id_t;
 #   define ACE_NO_INLINE
 # endif /* defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE) */
 
+# if defined (ACE_HAS_ANSI_CASTS)
+
+#   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
+
+#   define ACE_static_cast(TYPE, EXPR)                                 static_cast<TYPE> (EXPR)
+#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       static_cast<TYPE<T1> *> (EXPR)
+#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> *> (EXPR)
+#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> *> (EXPR)
+#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       static_cast<TYPE<T1> &> (EXPR)
+#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   static_cast<TYPE<T1, T2> &> (EXPR)
+#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               static_cast<TYPE<T1, T2, T3> &> (EXPR)
+#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+
+#   define ACE_const_cast(TYPE, EXPR)                                  const_cast<TYPE> (EXPR)
+#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        const_cast<TYPE<T1> *> (EXPR)
+#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> *> (EXPR)
+#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> *> (EXPR)
+#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        const_cast<TYPE<T1> &> (EXPR)
+#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    const_cast<TYPE<T1, T2> &> (EXPR)
+#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                const_cast<TYPE<T1, T2, T3> &> (EXPR)
+#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            const_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        const_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+
+#   define ACE_reinterpret_cast(TYPE, EXPR)                            reinterpret_cast<TYPE> (EXPR)
+#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> *> (EXPR)
+#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> *> (EXPR)
+#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> *> (EXPR)
+#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  reinterpret_cast<TYPE<T1> &> (EXPR)
+#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              reinterpret_cast<TYPE<T1, T2> &> (EXPR)
+#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          reinterpret_cast<TYPE<T1, T2, T3> &> (EXPR)
+#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      reinterpret_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  reinterpret_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+
+#   if defined (ACE_LACKS_RTTI)
+#     define ACE_dynamic_cast(TYPE, EXPR)                              static_cast<TYPE> (EXPR)
+#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    static_cast<TYPE<T1> *> (EXPR)
+#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> *> (EXPR)
+#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> *> (EXPR)
+#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    static_cast<TYPE<T1> &> (EXPR)
+#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                static_cast<TYPE<T1, T2> &> (EXPR)
+#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            static_cast<TYPE<T1, T2, T3> &> (EXPR)
+#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        static_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    static_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+#   else  /* ! ACE_LACKS_RTTI */
+#     define ACE_dynamic_cast(TYPE, EXPR)                              dynamic_cast<TYPE> (EXPR)
+#     define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> *> (EXPR)
+#     define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> *> (EXPR)
+#     define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> *> (EXPR)
+#     define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> *> (EXPR)
+#     define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> *> (EXPR)
+#     define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                    dynamic_cast<TYPE<T1> &> (EXPR)
+#     define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                dynamic_cast<TYPE<T1, T2> &> (EXPR)
+#     define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)            dynamic_cast<TYPE<T1, T2, T3> &> (EXPR)
+#     define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)        dynamic_cast<TYPE<T1, T2, T3, T4> &> (EXPR)
+#     define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)    dynamic_cast<TYPE<T1, T2, T3, T4, T5> &> (EXPR)
+#   endif /* ! ACE_LACKS_RTTI */
+
+# else
+
+#   define ACE_sap_any_cast(TYPE)                                      ((TYPE) (ACE_Addr::sap_any))
+
+#   define ACE_static_cast(TYPE, EXPR)                                 ((TYPE) (EXPR))
+#   define ACE_static_cast_1_ptr(TYPE, T1, EXPR)                       ((TYPE<T1> *) (EXPR))
+#   define ACE_static_cast_2_ptr(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_static_cast_3_ptr(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_static_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_static_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_static_cast_1_ref(TYPE, T1, EXPR)                       ((TYPE<T1> &) (EXPR))
+#   define ACE_static_cast_2_ref(TYPE, T1, T2, EXPR)                   ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_static_cast_3_ref(TYPE, T1, T2, T3, EXPR)               ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_static_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)           ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_static_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)       ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+
+#   define ACE_const_cast(TYPE, EXPR)                                  ((TYPE) (EXPR))
+#   define ACE_const_cast_1_ptr(TYPE, T1, EXPR)                        ((TYPE<T1> *) (EXPR))
+#   define ACE_const_cast_2_ptr(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_const_cast_3_ptr(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_const_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_const_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_const_cast_1_ref(TYPE, T1, EXPR)                        ((TYPE<T1> &) (EXPR))
+#   define ACE_const_cast_2_ref(TYPE, T1, T2, EXPR)                    ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_const_cast_3_ref(TYPE, T1, T2, T3, EXPR)                ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_const_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)            ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_const_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)        ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+
+#   define ACE_reinterpret_cast(TYPE, EXPR)                            ((TYPE) (EXPR))
+#   define ACE_reinterpret_cast_1_ptr(TYPE, T1, EXPR)                  ((TYPE<T1> *) (EXPR))
+#   define ACE_reinterpret_cast_2_ptr(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_reinterpret_cast_3_ptr(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_reinterpret_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_reinterpret_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_reinterpret_cast_1_ref(TYPE, T1, EXPR)                  ((TYPE<T1> &) (EXPR))
+#   define ACE_reinterpret_cast_2_ref(TYPE, T1, T2, EXPR)              ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_reinterpret_cast_3_ref(TYPE, T1, T2, T3, EXPR)          ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_reinterpret_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)      ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_reinterpret_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)  ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+
+#   define ACE_dynamic_cast(TYPE, EXPR)                                ((TYPE) (EXPR))
+#   define ACE_dynamic_cast_1_ptr(TYPE, T1, EXPR)                      ((TYPE<T1> *) (EXPR))
+#   define ACE_dynamic_cast_2_ptr(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> *) (EXPR))
+#   define ACE_dynamic_cast_3_ptr(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> *) (EXPR))
+#   define ACE_dynamic_cast_4_ptr(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> *) (EXPR))
+#   define ACE_dynamic_cast_5_ptr(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> *) (EXPR))
+#   define ACE_dynamic_cast_1_ref(TYPE, T1, EXPR)                      ((TYPE<T1> &) (EXPR))
+#   define ACE_dynamic_cast_2_ref(TYPE, T1, T2, EXPR)                  ((TYPE<T1, T2> &) (EXPR))
+#   define ACE_dynamic_cast_3_ref(TYPE, T1, T2, T3, EXPR)              ((TYPE<T1, T2, T3> &) (EXPR))
+#   define ACE_dynamic_cast_4_ref(TYPE, T1, T2, T3, T4, EXPR)          ((TYPE<T1, T2, T3, T4> &) (EXPR))
+#   define ACE_dynamic_cast_5_ref(TYPE, T1, T2, T3, T4, T5, EXPR)      ((TYPE<T1, T2, T3, T4, T5> &) (EXPR))
+# endif /* ACE_HAS_ANSI_CASTS */
+
+# if !defined (ACE_CAST_CONST)
+    // Sun CC 4.2, for example, requires const in reinterpret casts of
+    // data members in const member functions.  But, other compilers
+    // complain about the useless const.  This keeps everyone happy.
+#   if defined (__SUNPRO_CC)
+#     define ACE_CAST_CONST const
+#   else  /* ! __SUNPRO_CC */
+#     define ACE_CAST_CONST
+#   endif /* ! __SUNPRO_CC */
+# endif /* ! ACE_CAST_CONST */
+
 // Deal with MSVC++ insanity for CORBA...
 # if defined (ACE_HAS_BROKEN_NAMESPACES)
 #   define ACE_CORBA_1(NAME) CORBA_##NAME
@@ -499,6 +629,19 @@ typedef int key_t;
 #   endif /* ACE_WIN32 */
 # endif /* ACE_LACKS_KEY_T */
 
+# if defined (VXWORKS)
+#   if defined (ghs)
+    // GreenHills 1.8.8 needs the stdarg.h #include before the #include of
+    // vxWorks.h.
+    // Also, be sure that these #includes come _after_ the key_t typedef, and
+    // before the #include of time.h.
+#     include /**/ <stdarg.h>
+#   endif /* ghs */
+
+#   include /**/ <vxWorks.h>
+# endif /* VXWORKS */
+
+
 ///////////////////////////////////////////
 //                                       //
 // NOTE: Please do not add any #includes //
@@ -508,31 +651,54 @@ typedef int key_t;
 //                                       //
 ///////////////////////////////////////////
 
-#if defined (ACE_HAS_PACE)
-# include "pace/dirent.h"
-# include "pace/fcntl.h"
-# include "pace/sys/mman.h"
-# include "pace/pthread.h"
-# include "pace/pwd.h"
-# include "pace/stdio.h"
-# include "pace/stdlib.h"
-# include "pace/sched.h"
-# include "pace/semaphore.h"
-# include "pace/signal.h"
-# include "pace/sys/stat.h"
-# include "pace/stdio.h"
-# include "pace/time.h"
-# include "pace/unistd.h"
-# include "pace/sys/utsname.h"
-# include "pace/sys/wait.h"
-# define ACE_HAS_POSIX_SEM
-#endif /* ACE_HAS_PACE */
-
 # if defined (ACE_PSOS)
 
-#   if defined (ACE_LACKS_ASSERT_MACRO)
-#     define assert(expr)
-#   endif
+    // remap missing error numbers for system functions
+#   define EPERM        1        /* Not super-user                        */
+#   define ENOENT       2        /* No such file or directory             */
+#   define ESRCH        3        /* No such process                       */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+#     define EINTR        4        /* interrupted system call               */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+#   define EBADF        9        /* Bad file number                       */
+#   define EAGAIN       11       /* Resource temporarily unavailable      */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
+#     define ENOMEM       12       /* Not enough core                       */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+#   define EACCES       13       /* Permission denied                     */
+#   define EFAULT       14       /* Bad access                            */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+#     define EEXIST       17       /* File exists                           */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+#   define ENOSPC       28       /* No space left on device               */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+#     define EPIPE        32       /* Broken pipe                           */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+#   define ETIME        62       /* timer expired                         */
+#   define ENAMETOOLONG 78       /* path name is too long                 */
+#   define ENOSYS       89       /* Unsupported file system operation     */
+#   if ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM)
+#     define EADDRINUSE   125      /* Address already in use                */
+#     define ENETUNREACH  128      /* Network is unreachable                */
+#     define EISCONN      133      /* Socket is already connected           */
+#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
+#     define ECONNREFUSED 146      /* Connection refused                    */
+#     define EINPROGRESS  150      /* operation now in progress             */
+#   endif /* ! defined (ACE_PSOS_PROVIDES_ERROR_SYMBOLS_TM) */
+#   define ERRMAX       151      /* Last error number                     */
+
+#   if ! defined (NSIG)
+#     define NSIG 32
+#   endif /* NSIG */
+
+#   if ! defined (TCP_NODELAY)
+#     define TCP_NODELAY  1
+#   endif /* TCP_NODELAY */
+
+#if defined (ACE_LACKS_ASSERT_MACRO)
+ #define assert(expr)
+#endif
 
 #   if defined (ACE_PSOSIM)
 
@@ -570,30 +736,19 @@ typedef int key_t;
 
 #     if defined (ACE_PSOS_CANT_USE_SYS_TYPES)
       // these are missing from the pSOS types.h file, and the compiler
-      // supplied types.h file collides with the pSOS version.
-#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-      typedef unsigned char     u_char;
-      typedef unsigned short    u_short;
-#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-      typedef unsigned int      u_int;
-#       if !defined (ACE_SHOULD_NOT_DEFINE_SYS_TYPES)
-      typedef unsigned long     u_long;
-#       endif /* ACE_SHOULD_NOT_DEFINE_SYS_TYPES */
-
-      // These are defined in types.h included by (among others) pna.h
-#       if 0
-      typedef unsigned char     uchar_t;
-      typedef unsigned short    ushort_t;
-      typedef unsigned int      uint_t;
-      typedef unsigned long     ulong_t;
-#       endif /* 0 */
-      typedef char *            caddr_t;
+      // supplied types.h file collides with the pSOS version
+      typedef unsigned char  u_char;
+      typedef unsigned short u_short;
+      typedef unsigned int   u_int;
+      typedef unsigned long  u_long;
+      typedef unsigned char  uchar_t;
+      typedef unsigned short ushort_t;
+      typedef unsigned int   uint_t;
+      typedef unsigned long  ulong_t;
+      typedef char *         caddr_t;
 
 #       if defined (ACE_PSOS_DIAB_PPC)
-      // pid_t is defined in sys/types.h
-#         if 0
       typedef unsigned long pid_t;
-#         endif /* 0 */
 #     define ACE_INVALID_PID ((pid_t) ~0)
 #       else /* !defined (ACE_PSOS_DIAB_PPC) */
       typedef long pid_t;
@@ -601,7 +756,7 @@ typedef int key_t;
 #       endif /* defined (ACE_PSOS_DIAB_PPC) */
 
 //      typedef unsigned char wchar_t;
-#     endif /* ACE_PSOS_CANT_USE_SYS_TYPES */
+#     endif
 
 #     include /**/ "ace/sys_conf.h" /* system configuration file */
 #     include /**/ <configs.h>   /* includes all pSOS headers */
@@ -621,26 +776,18 @@ typedef int key_t;
 // This collides with phile.h
 //    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
 
-// Some versions have missing preprocessor definitions
-#     if !defined (AF_UNIX)
-#       define AF_UNIX 0x1
-#     endif /* AF_UNIX */
+  // missing preprocessor definitions
+#     define AF_UNIX 0x1
 #     define PF_UNIX AF_UNIX
 #     define PF_INET AF_INET
-#     if !defined (AF_MAX)
-#       define AF_MAX AF_INET
-#     endif /* AF_MAX */
-#     if !defined (IFF_LOOPBACK)
-#       define IFF_LOOPBACK IFF_EXTLOOPBACK
-#     endif /* IFF_LOOPBACK */
+#     define AF_MAX AF_INET
+#     define IFF_LOOPBACK IFF_EXTLOOPBACK
 
   typedef long fd_mask;
 #     define IPPORT_RESERVED       1024
 #     define IPPORT_USERRESERVED   5000
 
-#     if !defined (howmany)
-#       define howmany(x, y) (((x)+((y)-1))/(y))
-#     endif /* howmany */
+#     define howmany(x, y) (((x)+((y)-1))/(y))
 
   extern "C"
   {
@@ -654,89 +801,6 @@ typedef int key_t;
 
 #   endif /* defined (ACE_PSOSIM) */
 
-// Some versions of pSOS do not define error numbers, but newer
-// versions do. So, include errno.h and then see which ones are not
-// yet defined.
-#   include /**/ <errno.h>
-
-#   if !defined (EPERM)
-#     define EPERM        1        /* Not super-user                        */
-#   endif /* EPERM */
-#   if !defined (ENOENT)
-#     define ENOENT       2        /* No such file or directory             */
-#   endif /* ENOENT */
-#   if !defined (ESRCH)
-#     define ESRCH        3        /* No such process                       */
-#   endif /* ESRCH */
-#   if ! defined (EINTR)
-#     define EINTR        4        /* interrupted system call               */
-#   endif /* EINTR */
-#   if !defined (EBADF)
-#     define EBADF        9        /* Bad file number                       */
-#   endif /* EBADF */
-#   if !defined (EAGAIN)
-#     define EAGAIN       11       /* Resource temporarily unavailable      */
-#   endif /* EAGAIN */
-#   if !defined (EWOULDBLOCK)
-#     define EWOULDBLOCK  EAGAIN   /* Blocking resource request would block */
-#   endif /* EWOULDBLOCK */
-#   if !defined (ENOMEM)
-#     define ENOMEM       12       /* Not enough core                       */
-#   endif /* ENOMEM */
-#   if !defined (EACCESS)
-#     define EACCES       13       /* Permission denied                     */
-#   endif /* EACCESS */
-#   if !defined (EFAULT)
-#     define EFAULT       14       /* Bad access                            */
-#   endif /* EFAULT */
-#   if !defined (EEXIST)
-#     define EEXIST       17       /* File exists                           */
-#   endif /* EEXIST */
-#   if !defined (ENOSPC)
-#     define ENOSPC       28       /* No space left on device               */
-#   endif /* ENOSPC */
-#   if !defined (EPIPE)
-#     define EPIPE        32       /* Broken pipe                           */
-#   endif /* EPIPE */
-#   if !defined (ETIME)
-#     define ETIME        62       /* timer expired                         */
-#   endif /* ETIME */
-#   if !defined (ENAMETOOLONG)
-#     define ENAMETOOLONG 78       /* path name is too long                 */
-#   endif /* ENAMETOOLONG */
-#   if !defined (ENOSYS)
-#     define ENOSYS       89       /* Unsupported file system operation     */
-#   endif /* ENOSYS */
-#   if !defined (EADDRINUSE)
-#     define EADDRINUSE   125      /* Address already in use                */
-#   endif /* EADDRINUSE */
-#   if !defined (ENETUNREACH)
-#     define ENETUNREACH  128      /* Network is unreachable                */
-#   endif /* ENETUNREACH */
-#   if !defined (EISCONN)
-#     define EISCONN      133      /* Socket is already connected           */
-#   endif /* EISCONN */
-#   if !defined (ESHUTDOWN)
-#     define ESHUTDOWN    143      /* Can't send after socket shutdown      */
-#   endif /* ESHUTDOWN */
-#   if !defined (ECONNREFUSED)
-#     define ECONNREFUSED 146      /* Connection refused                    */
-#   endif /* ECONNREFUSED */
-#   if !defined (EINPROGRESS)
-#     define EINPROGRESS  150      /* operation now in progress             */
-#   endif /* EINPROGRESS */
-#   if !defined (ERRMAX)
-#     define ERRMAX       151      /* Last error number                     */
-#   endif /* ERRMAX */
-
-#   if ! defined (NSIG)
-#     define NSIG 32
-#   endif /* NSIG */
-
-#   if ! defined (TCP_NODELAY)
-#     define TCP_NODELAY  1
-#   endif /* TCP_NODELAY */
-
 // For general purpose portability
 
 #   define ACE_BITS_PER_ULONG (8 * sizeof (u_long))
@@ -745,11 +809,6 @@ typedef u_long ACE_idtype_t;
 typedef u_long ACE_id_t;
 #   define ACE_SELF (0)
 typedef u_long ACE_pri_t;
-
-// pHILE+ calls the DIR struct XDIR instead
-#    if !defined (ACE_PSOS_DIAB_PPC)
-typedef XDIR DIR;
-#    endif /* !defined (ACE_PSOS_DIAB_PPC) */
 
 // Use pSOS semaphores, wrapped . . .
 typedef struct
@@ -1010,13 +1069,6 @@ extern "C" pthread_t pthread_self (void);
 #   define ACE_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 # endif /* ACE_NTRACE */
 
-// By default we perform no tracing on the OS layer, otherwise the
-// coupling between the OS layer and Log_Msg is too tight.  But the
-// application can override the default if they wish to.
-# if !defined(ACE_OS_TRACE)
-#  define ACE_OS_TRACE(X)
-# endif /* ACE_OS_TRACE */
-
 # if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
 #     include /**/ <time.h>
 #   if defined (__Lynx__)
@@ -1034,12 +1086,6 @@ extern "C" pthread_t pthread_self (void);
 #     include /**/ <sys/time.h>
 #   endif /* VXWORKS */
 # endif /* ACE_LACKS_SYSTIME_H */
-
-# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
-             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
-using std::time_t;
-using std::tm;
-# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
 # if !defined (ACE_HAS_POSIX_TIME) && !defined (ACE_PSOS)
 // Definition per POSIX.
@@ -1075,7 +1121,6 @@ ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
 
 ACE_Export ACE_Time_Value operator - (const ACE_Time_Value &tv1,
                                       const ACE_Time_Value &tv2);
-
 // -------------------------------------------------------------------
 
 class ACE_Export ACE_Time_Value
@@ -1178,16 +1223,14 @@ public:
   void usec (long usec);
   // Set microseconds.
 
-  // = The following arithmetic methods operate on <Time_Value>s.
+  // = The following are arithmetic methods for operating on
+  // Time_Values.
 
   void operator += (const ACE_Time_Value &tv);
   // Add <tv> to this.
 
   void operator -= (const ACE_Time_Value &tv);
   // Subtract <tv> to this.
-
-  ACE_Time_Value &operator *= (double d);
-  // Multiply the time value by the <d> factor, which must be >= 0.
 
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
                                                const ACE_Time_Value &tv2);
@@ -1298,6 +1341,18 @@ private:  ACE_Time_Value *max_wait_time_;
 # else
 #   define ACE_TEMPLATE_METHOD_SPECIALIZATION
 # endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
+
+# if defined (ACE_HAS_EXPLICIT_KEYWORD)
+#   define ACE_EXPLICIT explicit
+# else  /* ! ACE_HAS_EXPLICIT_KEYWORD */
+#   define ACE_EXPLICIT
+# endif /* ! ACE_HAS_EXPLICIT_KEYWORD */
+
+# if defined (ACE_HAS_MUTABLE_KEYWORD)
+#   define ACE_MUTABLE mutable
+# else  /* ! ACE_HAS_MUTABLE_KEYWORD */
+#   define ACE_MUTABLE
+# endif /* ! ACE_HAS_MUTABLE_KEYWORD */
 
 // The following is necessary since many C++ compilers don't support
 // typedef'd types inside of classes used as formal template
@@ -1638,27 +1693,9 @@ typedef const struct rlimit ACE_SETRLIMIT_TYPE;
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
     if (OBJ.locked () == 0) return RETURN;
 
-#if defined (ACE_HAS_PACE)
-# include "pace/semaphore.h"
-#   if !defined (SEM_FAILED)
-#     define SEM_FAILED ((pace_sem_t *) -1)
-#   endif  /* !SEM_FAILED */
-
-
-typedef struct
-{
-  pace_sem_t *sema_;
-  // Pointer to semaphore handle.  This is allocated by ACE if we are
-  // working with an unnamed POSIX semaphore or by the OS if we are
-  // working with a named POSIX semaphore.
-
-  char *name_;
-  // Name of the semaphore (if this is non-NULL then this is a named
-  // POSIX semaphore, else its an unnamed POSIX semaphore).
-} ACE_sema_t;
-
-# elif defined (ACE_HAS_POSIX_SEM)
+# if defined (ACE_HAS_POSIX_SEM)
 #   include /**/ <semaphore.h>
+
 #   if !defined (SEM_FAILED) && !defined (ACE_LACKS_NAMED_POSIX_SEM)
 #     define SEM_FAILED ((sem_t *) -1)
 #   endif  /* !SEM_FAILED */
@@ -1674,7 +1711,7 @@ typedef struct
   // Name of the semaphore (if this is non-NULL then this is a named
   // POSIX semaphore, else its an unnamed POSIX semaphore).
 } ACE_sema_t;
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_POSIX_SEM */
 
 struct cancel_state
 {
@@ -2003,13 +2040,7 @@ typedef pthread_mutex_t ACE_thread_mutex_t;
 #     define THR_SCHED_FIFO          0x00020000
 #     define THR_SCHED_RR            0x00040000
 #     define THR_SCHED_DEFAULT       0x00080000
-
-#     if defined (ACE_HAS_IRIX62_THREADS)
-#     define THR_SCOPE_SYSTEM        0x00100000
-#     else
 #     define THR_SCOPE_SYSTEM        THR_BOUND
-#endif /*ACE_HAS_IRIX62_THREADS*/
-
 #     define THR_SCOPE_PROCESS       0x00200000
 #     define THR_INHERIT_SCHED       0x00400000
 #     define THR_EXPLICIT_SCHED      0x00800000
@@ -2259,16 +2290,13 @@ typedef struct
 // Wrapper for NT Events.
 typedef HANDLE ACE_event_t;
 
-#   if !defined (ACE_HAS_PACE)
-// This can probably get _wider_ as more types are defined in PACE.
-// ie: see above ACE_mutex_t
-
 //@@ ACE_USES_WINCE_SEMA_SIMULATION is used to debug
 //   semaphore simulation on WinNT.  It should be
 //   changed to ACE_USES_HAS_WINCE at some later point.
 #     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
 typedef HANDLE ACE_sema_t;
 #     else
+
 class ACE_Export ACE_sema_t
 {
   // = TITLE
@@ -2285,7 +2313,6 @@ public:
 };
 
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   endif /* !ACE_HAS_PACE */
 
 // These need to be different values, neither of which can be 0...
 #     define USYNC_THREAD 1
@@ -2846,15 +2873,7 @@ typedef int sig_atomic_t;
 typedef int ssize_t;
 # endif /* ACE_HAS_SSIZE_T */
 
-# if defined (ACE_HAS_PACE)
-#   if defined (ACE_HAS_LYNXOS_SIGNALS)
-typedef void (*ACE_SignalHandler)(...);
-typedef void (*ACE_SignalHandlerV)(...);
-#   else
-typedef pace_sig_pf ACE_SignalHandler;
-typedef pace_sig_pf ACE_SignalHandlerV;
-#   endif /* ACE_HAS_LYNXOS_SIGNALS */
-# elif defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
+# if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
 // Prototypes for both signal() and struct sigaction are consistent..
 #   if defined (ACE_HAS_SIG_C_FUNC)
 extern "C" {
@@ -2902,7 +2921,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 typedef void (*ACE_SignalHandler)(int);
 #   endif /* SIG_PF */
 typedef void (*ACE_SignalHandlerV)(...);
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
 # if defined (BUFSIZ)
 #   define ACE_STREAMBUF_SIZE BUFSIZ
@@ -3508,9 +3527,7 @@ typedef void (*__sighandler_t)(int); // keep Signal compilation happy
 #     include /**/ <sys/uio.h>
 #     include /**/ <sys/ipc.h>
 #     include /**/ <sys/shm.h>
-#     if ! defined (__MACOSX__)
-#       include /**/ <sys/sem.h>
-#     endif /* ! defined (__MACOSX__) */
+#     include /**/ <sys/sem.h>
 #     include /**/ <sys/file.h>
 #     include /**/ <sys/time.h>
 #     include /**/ <sys/resource.h>
@@ -3785,10 +3802,7 @@ struct utsname
 // Increase the range of "address families".  Please note that this
 // must appear _after_ the include of sys/socket.h, for the AF_FILE
 // definition on Linux/glibc2.
-#if !defined (AF_ANY)
 # define AF_ANY (-1)
-#endif /* AF_ANY */
-
 # define AF_SPIPE (AF_MAX + 1)
 # if !defined (AF_FILE)
 #   define AF_FILE (AF_MAX + 2)
@@ -4155,7 +4169,7 @@ union semun
 // Create some useful typedefs.
 
 typedef const char **SYS_SIGLIST;
-
+typedef void *(*ACE_THR_FUNC)(void *);
 // This is for C++ static methods.
 # if defined (VXWORKS)
 typedef int ACE_THR_FUNC_INTERNAL_RETURN_TYPE;
@@ -4170,6 +4184,19 @@ extern "C" {
 typedef void (*ACE_THR_C_DEST)(void *);
 }
 typedef void (*ACE_THR_DEST)(void *);
+
+extern "C"
+{
+# if defined (VXWORKS)
+typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
+# elif defined (ACE_PSOS)
+// needed to handle task entry point type inconsistencies in pSOS+
+typedef void (*PSOS_TASK_ENTRY_POINT)();
+typedef void (*ACE_THR_C_FUNC)(void *);
+# else
+typedef void *(*ACE_THR_C_FUNC)(void *);
+# endif /* VXWORKS */
+}
 
 # if !defined (MAP_FAILED) || defined (ACE_HAS_BROKEN_MAP_FAILED)
 #   undef MAP_FAILED
@@ -4429,8 +4456,262 @@ private:
   // ACE_Cleanup_Info).
 };
 
-class ACE_Base_Thread_Adapter;
-class ACE_Thread_Hook;
+// Run the thread entry point for the <ACE_Thread_Adapter>.  This must
+// be an extern "C" to make certain compilers happy...
+#if defined (ACE_PSOS)
+extern "C" void ace_thread_adapter (unsigned long args);
+#else /* ! defined (ACE_PSOS) */
+extern "C" ACE_Export void *ace_thread_adapter (void *args);
+#endif /* ACE_PSOS */
+
+class ACE_OS_Thread_Descriptor
+{
+  // = TITLE
+  //     Parent class of all ACE_Thread_Descriptor classes.
+  //
+  // =
+  //     Container for ACE_Thread_Descriptor members that are
+  //     used in ACE_OS.
+public:
+  long flags (void) const;
+  // Get the thread creation flags.
+
+protected:
+  ACE_OS_Thread_Descriptor (long flags = 0);
+  // For use by ACE_Thread_Descriptor.
+
+  long flags_;
+  // Keeps track of whether this thread was created "detached" or not.
+  // If a thread is *not* created detached then if someone calls
+  // <ACE_Thread_Manager::wait>, we need to join with that thread (and
+  // close down the handle).
+};
+
+// Forward decl.
+class ACE_Thread_Manager;
+class ACE_Thread_Descriptor;
+
+class ACE_Export ACE_Thread_Adapter
+{
+  // = TITLE
+  //     Converts a C++ function into a function <ace_thread_adapter>
+  //     function that can be called from a thread creation routine
+  //     (e.g., <pthread_create> or <_beginthreadex>) that expects an
+  //     extern "C" entry point.  This class also makes it possible to
+  //     transparently provide hooks to register a thread with an
+  //     <ACE_Thread_Manager>.
+  //
+  // = DESCRIPTION
+  //     This class is used in <ACE_OS::thr_create>.  In general, the
+  //     thread that creates an object of this class is different from
+  //     the thread that calls <invoke> on this object.  Therefore,
+  //     the <invoke> method is responsible for deleting itself.
+public:
+  ACE_Thread_Adapter (ACE_THR_FUNC user_func,
+                      void *arg,
+                      ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ace_thread_adapter,
+                      ACE_Thread_Manager *thr_mgr = 0,
+                      ACE_Thread_Descriptor *td = 0
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                      , ACE_SEH_EXCEPT_HANDLER selector = 0,
+                      ACE_SEH_EXCEPT_HANDLER handler = 0
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                      );
+  // Constructor.
+
+  void *invoke (void);
+  // Execute the <user_func_> with the <arg>.  This function deletes
+  // <this>, thereby rendering the object useless after the call
+  // returns.
+
+  ACE_Thread_Manager *thr_mgr (void);
+  // Accessor for the optional <Thread_Manager>.
+
+  ACE_THR_C_FUNC entry_point (void);
+  // Accessor for the C entry point function to the OS thread creation
+  // routine.
+
+private:
+  ~ACE_Thread_Adapter (void);
+  // Ensure that this object must be allocated on the heap.
+
+  void inherit_log_msg (void);
+  // Inherit the logging features if the parent thread has an
+  // <ACE_Log_Msg>.
+
+  static ACE_INIT_LOG_MSG_HOOK init_log_msg_hook_;
+  static ACE_INHERIT_LOG_MSG_HOOK inherit_log_msg_hook_;
+  // The hooks to inherit and cleanup the Log_Msg attributes
+
+  static void set_log_msg_hooks (ACE_INIT_LOG_MSG_HOOK init_hook,
+                                 ACE_INHERIT_LOG_MSG_HOOK inherit_hook);
+  // Set the Log_Msg hooks
+
+  friend class ACE_Log_Msg;
+  // Allow the ACE_Log_Msg class to set its hooks.
+
+private:
+  ACE_THR_FUNC user_func_;
+  // Thread startup function passed in by the user (C++ linkage).
+
+  void *arg_;
+  // Argument to thread startup function.
+
+  ACE_THR_C_FUNC entry_point_;
+  // Entry point to the underlying OS thread creation call (C
+  // linkage).
+
+  ACE_Thread_Manager *thr_mgr_;
+  // Optional thread manager.
+
+  ACE_OS_Thread_Descriptor *thr_desc_;
+  // Optional thread descriptor.  Passing this pointer in will force
+  // the spawned thread to cache this location in <Log_Msg> and wait
+  // until <Thread_Manager> fills in all information in thread
+  // descriptor.
+
+  void *log_msg_attributes_;
+  // The ACE_Log_Msg attributes.
+
+  friend class ACE_Thread_Adapter_Has_Private_Destructor;
+  // Friend declaration to avoid compiler warning:  only defines a private
+  // destructor and has no friends.
+};
+
+class ACE_Export ACE_Thread_Hook
+{
+  // = TITLE
+  //     This class makes it possible to provide user-defined "start"
+  //     hooks that are called before the thread entry point function
+  //     is invoked.
+
+public:
+  virtual void *start (ACE_THR_FUNC func,
+                       void *arg);
+  // This method can be overridden in a subclass to customize this
+  // pre-function call "hook" invocation that can perform
+  // initialization processing before the thread entry point <func>
+  // method is called back.  The <func> and <arg> passed into the
+  // start hook are the same as those passed by the application that
+  // spawned the thread.
+
+  static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *hook);
+  // sets the system wide thread hook, returns the previous thread
+  // hook or 0 if none is set.
+
+  static ACE_Thread_Hook *thread_hook (void);
+  // Returns the current system thread hook.
+};
+
+class ACE_Export ACE_Thread_Control
+{
+  // = TITLE
+  //     Used to keep track of a thread's activities within its entry
+  //     point function.
+  //
+  // = DESCRIPTION
+  //     A <ACE_Thread_Manager> uses this class to ensure that threads
+  //     it spawns automatically register and unregister themselves
+  //     with it.
+  //
+  //     This class can be stored in thread-specific storage using the
+  //     <ACE_TSS> wrapper.  When a thread exits the
+  //     <ACE_TSS::cleanup> function deletes this object, thereby
+  //     ensuring that it gets removed from its associated
+  //     <ACE_Thread_Manager>.
+public:
+  ACE_Thread_Control (ACE_Thread_Manager *tm = 0,
+                      int insert = 0);
+  // Initialize the thread control object.  If <insert> != 0, then
+  // register the thread with the Thread_Manager.
+
+  ~ACE_Thread_Control (void);
+  // Remove the thread from its associated <Thread_Manager> and exit
+  // the thread if <do_thr_exit> is enabled.
+
+  void *exit (void *status,
+              int do_thr_exit);
+  // Remove this thread from its associated <Thread_Manager> and exit
+  // the thread if <do_thr_exit> is enabled.
+
+  int insert (ACE_Thread_Manager *tm, int insert = 0);
+  // Store the <Thread_Manager> and use it to register ourselves for
+  // correct shutdown.
+
+  ACE_Thread_Manager *thr_mgr (void);
+  // Returns the current <Thread_Manager>.
+
+  ACE_Thread_Manager *thr_mgr (ACE_Thread_Manager *);
+  // Atomically set a new <Thread_Manager> and return the old
+  // <Thread_Manager>.
+
+  void *status (void *status);
+  // Set the exit status (and return existing status).
+
+  void *status (void);
+  // Get the current exit status.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Thread_Manager *tm_;
+  // Pointer to the thread manager for this block of code.
+
+  void *status_;
+  // Keeps track of the exit status for the thread.
+};
+
+class ACE_Export ACE_Thread_Exit
+{
+  // = TITLE
+  //    Keep exit information for a Thread in thread specific storage.
+  //    so that the thread-specific exit hooks will get called no
+  //    matter how the thread exits (e.g., via <ACE_Thread::exit>, C++
+  //    or Win32 exception, "falling off the end" of the thread entry
+  //    point function, etc.).
+  //
+  // = DESCRIPTION
+  //    This clever little helper class is stored in thread-specific
+  //    storage using the <ACE_TSS> wrapper.  When a thread exits the
+  //    <ACE_TSS::cleanup> function deletes this object, thereby
+  //    closing it down gracefully.
+public:
+  ACE_Thread_Exit (void);
+  // Capture the Thread that will be cleaned up automatically.
+
+  void thr_mgr (ACE_Thread_Manager *tm);
+  // Set the <ACE_Thread_Manager>.
+
+  ~ACE_Thread_Exit (void);
+  // Destructor calls the thread-specific exit hooks when a thread
+  // exits.
+
+  static ACE_Thread_Exit *instance (void);
+  // Singleton access point.
+
+  static void cleanup (void *instance, void *);
+  // Cleanup method, used by the <ACE_Object_Manager> to destroy the
+  // singleton.
+
+private:
+  friend class ACE_OS_Object_Manager;
+  // Allow OS_Object_Manager to reset the status of <is_constructed_>.
+
+  ACE_Thread_Control thread_control_;
+  // Automatically add/remove the thread from the
+  // <ACE_Thread_Manager>.
+
+  static u_int is_constructed_;
+  // Used to detect whether we should create a new instance (or not)
+  // within the instance method -- we don't trust the instance_ ptr
+  // because the destructor may have run (if ACE::fini() was called).
+  // See bug #526.
+  // We don't follow the singleton pattern due to dependency issues.
+};
 
 # if defined (ACE_HAS_PHARLAP_RT)
 #define ACE_IPPROTO_TCP SOL_SOCKET
@@ -5771,7 +6052,7 @@ public:
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
                          size_t stacksize = 0,
-                         ACE_Base_Thread_Adapter *thread_adapter = 0);
+                         ACE_Thread_Adapter *thread_adapter = 0);
   // Creates a new thread having <flags> attributes and running <func>
   // with <args> (if <thread_adapter> is non-0 then <func> and <args>
   // are ignored and are obtained from <thread_adapter>).  <thr_id>
@@ -6105,15 +6386,6 @@ public:
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
   // Returns the existing thread hook and assign a <new_thread_hook>.
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  static ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
-  static ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
-  // Get/Set TSS exception action.
-
-  static ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
-  static ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-
 public:
   // = Applications shouldn't use these so they're hidden here.
 
@@ -6144,13 +6416,6 @@ private:
 
   ACE_OS_Exit_Info exit_info_;
   // For at_exit support.
-
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
-  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-  // These handlers determine how a thread handles win32 structured
-  // exception.
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   int at_exit (ACE_EXIT_HOOK func);
   // For <ACE_OS::atexit> support.
@@ -6728,10 +6993,7 @@ private:
 #   endif /* defined (__Lynx__) && __LYNXOS_SDK_VERSION == 199701L */
 # endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
 
-#if defined (ACE_HAS_PACE)
-#   define ACE_PTHREAD_CLEANUP_PUSH(A) pace_pthread_cleanup_push (ACE_OS::mutex_lock_cleanup, (void *) A);
-#   define ACE_PTHREAD_CLEANUP_POP(A) pace_pthread_cleanup_pop(A)
-# elif defined (ACE_HAS_THR_C_FUNC)
+# if defined (ACE_HAS_THR_C_FUNC)
 // This is necessary to work around nasty problems with MVS C++.
 extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 #   define ACE_PTHREAD_CLEANUP_PUSH(A) pthread_cleanup_push (ace_mutex_lock_cleanup_adapter, (void *) A);
@@ -6742,7 +7004,7 @@ extern "C" ACE_Export void ace_mutex_lock_cleanup_adapter (void *args);
 # else
 #   define ACE_PTHREAD_CLEANUP_PUSH(A)
 #   define ACE_PTHREAD_CLEANUP_POP(A)
-# endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_THR_C_FUNC */
 
 # if !defined (ACE_DEFAULT_MUTEX)
 #   define ACE_DEFAULT_MUTEX ACE_TEXT ("ACE_MUTEX")
@@ -7258,10 +7520,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
 
 #if !defined (ACE_ONLY_LATEST_AND_GREATEST)
 # include "ace/Log_Msg.h"
-# include "ace/Thread_Hook.h"
-# include "ace/Thread_Adapter.h"
-# include "ace/Thread_Exit.h"
-# include "ace/Thread_Control.h"
 #endif  /* ACE_ONLY_LATEST_AND_GREATEST */
 
 #include "ace/post.h"

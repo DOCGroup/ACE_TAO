@@ -72,13 +72,13 @@ TAO_NAMESPACE  IOP
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
 
@@ -233,13 +233,13 @@ TAO_NAMESPACE  IOP
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
 
@@ -434,13 +434,13 @@ TAO_NAMESPACE  IOP
       _tao_seq_Octet (const _tao_seq_Octet &); // copy ctor
       ~_tao_seq_Octet (void); // dtor
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
 

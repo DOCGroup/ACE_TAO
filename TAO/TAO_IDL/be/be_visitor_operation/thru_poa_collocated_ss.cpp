@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_operation.h"
 
@@ -101,7 +101,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
   delete visitor;
 
   *os << " " << intf->full_coll_name (be_interface::THRU_POA) << "::";
-  *os << node->local_name ();
+  *os << node->local_name () << " ";
 
   // STEP 4: generate the argument list with the appropriate mapping (same as
   // in the header file)
@@ -130,7 +130,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
 
   *os << "{" << be_idt << "\n";
 
-  if (!be_global->exception_support ())
+  if (!idl_global->exception_support ())
     {
       // Declare a return type
       ctx = *this->ctx_;
@@ -170,13 +170,13 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
 
   *os <<"TAO_Object_Adapter::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
-      << "this->_stubobj ()->servant_orb_var ()->orb_core ()"
+      << "*this->_stubobj ()->servant_orb_var ()->orb_core ()->object_adapter ()"
       << be_uidt_nl
       << ");" << be_uidt_nl
       << "servant_upcall.prepare_for_upcall (" << be_idt << be_idt_nl
       << "this->_object_key ()," << be_nl
       << "\"" << node->original_local_name () << "\"";
-  if (!be_global->exception_support ())
+  if (!idl_global->exception_support ())
     *os << "," << be_nl
         << "ACE_TRY_ENV" << be_uidt_nl
         << ");\n" << be_uidt;
@@ -184,7 +184,7 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
     *os << be_uidt_nl << ");\n" << be_uidt;
 
   // check if there is an exception
-  if (!be_global->exception_support ())
+  if (!idl_global->exception_support ())
     if (this->gen_check_exception (bt) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -217,25 +217,23 @@ int be_visitor_operation_thru_poa_collocated_ss::visit_operation (be_operation *
       *os << "return;";
     }
 
-  *os << "}\n\n";
+  *os << be_uidt_nl
+      << "}\n\n";
 
   return 0;
 }
 
-int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (
-    be_visitor_context &ctx,
-    be_operation *node
-  )
+int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (be_visitor_context &ctx,
+                                                    be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << "->" << node->local_name () << " ("
-      << be_idt << be_idt << be_idt_nl;
+      << be_idt << be_idt << "\n";
 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-
   if (!visitor || (node->accept (visitor) == -1))
     {
       delete visitor;
@@ -246,10 +244,9 @@ int be_visitor_operation_thru_poa_collocated_ss::gen_invoke (
                         -1);
     }
 
-  // End the upcall
+  // end the upcall
   *os << be_uidt_nl
-      << ");\n";
-
+      << ");\n" << be_uidt;
   return 0;
 }
 

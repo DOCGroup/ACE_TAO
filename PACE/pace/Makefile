@@ -1,39 +1,59 @@
 #----------------------------------------------------------------------------
 #       $Id$
 #
-#       Makefile for the PACE/pace C library release
+#       Makefile for the pace/pace C library release
 #----------------------------------------------------------------------------
+
+ifndef PACE_ROOT
+  PACE_ROOT = $(ACE_ROOT)/pace
+endif # ! PACE_ROOT
 
 ifndef static_libs_only
   ifndef shared_libs_only
     static_libs_only = 1
-  endif # ! shared_libs_only
-endif # ! static_libs_only
-
-# If we are inlining the PACE functions then we need to define
-# PACE_HAS_INLINE. Inlining is the default.
-ifndef inline
-  CFLAGS += -DPACE_HAS_INLINE
-endif # ! inline
-
-ifeq (1,$(inline))
-  CFLAGS += -DPACE_HAS_INLINE
-endif # inline
+  endif # shared_libs_only
+endif # static_libs_only
 
 MAKEFILE = Makefile
 LIB      = libPACE.a
 SHLIB    = libPACE.$(SOEXT)
 
+ifeq ($(PACE_SYSNAME),)
+  PACE_SYSNAME = $(shell uname -s)
+endif # ! PACE_SYSNAME
+
+VPATH:=common:arpa:config:netinet:sys
+
+# List of platforms and uname -s values
+# =====================================
+# Solaris           SunOS
+# NT                "NT" (uname not supported)
+# LynxOS            LynxOS
+# VxWorks           "VxWorks" (strictly cross-compiled)
+# Linux             Linux
+# pSOS              "pSOS" (strictly cross-compiled)
+# Chorus            "Chorus" (strictly cross-compiled)
+# QNX Neutrino      "Neutrino" (strictly cross-compiled)
+# OSF/1             OSF1
+# IRIX (64 bit)     IRIX64
+# IRIX (32 bit)     IRIX (unconfirmed)
+# HPUX              HP-UX
+
+# Solaris is POSIX - change this when the platform directories get
+# squared away
+#ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
+ifeq ($(PACE_SYSNAME),SunOS)
+VPATH :=.:posix:$(VPATH)
+INCLDIRS += -I$(PACE_ROOT)/pace/posix
+endif
+
 PACE_FILES = \
   aio \
-  assert \
-  ctype \
   dirent \
   fcntl \
   grp \
-  locale \
-  math \
   mqueue \
+  netdb \
   pthread \
   pwd \
   sched \
@@ -43,17 +63,23 @@ PACE_FILES = \
   stdio \
   stdlib \
   string \
-  termios \
+  strings \
   time \
   unistd \
-  utime
-CONFIG_FILES =
+  utime \
+  wait
+ARPA_FILES = \
+  arpa/inet
+CONFIG_FILES = 
+NETINET_FILES = \
+  netinet/in
 SYS_FILES = \
   sys/mman \
+  sys/socket \
   sys/stat \
+  sys/termios \
   sys/times \
-  sys/utsname \
-  sys/wait
+  sys/utsname
 # POSIX_SINGLE_PROCESS Unit of Functionality (POSIX.1)
 # pace_sysconf is in unistd.h;
 # pace_time is in time.h;
@@ -81,7 +107,7 @@ POSIX_MP_FILES = \
   stdlib \
   locale \
   sys/times \
-  sys/wait
+  wait
 # POSIX_SIGNALS Unit of Functionality (POSIX.1)
 # pace_abort is in stdlib.h;
 # pace_alarm is in unistd.h;
@@ -173,14 +199,14 @@ POSIX_P_FILES = \
   unistd
 # POSIX_DEVICE_SPECIFIC Unit of Functionality (POSIX.1)
 # pace_cfgetispeed, pace_cfgetospeed, pace_cfsetispeed, pace_cfsetospeed are
-#  in termios.h;
+#  in sys/termios.h;
 # pace_ctermid is in stdio.h;
 # pace_isatty is in unistd.h;
 # pace_tcdrain, pace_tcflow, pace_tcflush, pace_tcgetattr, pace_tcsendbreak,
-#  pace_tcsetattr are in termios.h;
+#  pace_tcsetattr are in sys/termios.h;
 # pace_ttyname is in unistd.h;
 POSIX_DS_FILES = \
-  termios \
+  sys/termios \
   stdio \
   unistd
 # POSIX_SYSTEM_DATABASE Unit of Functionality (POSIX.1)
@@ -188,50 +214,15 @@ POSIX_DS_FILES = \
 POSIX_SD_FILES = \
   grp
 # POSIX_C_LANG_SUPPORT Unit of Functionality (POSIX.1)
-# Character handling functions (e.g., isalnum, toupper) are in ctype.h;
-# Mathematics functions (e.g., acos, tanh) are in math.h;
-# Non-local jump functions (i.e., longjmp, setjmp) are in setjmp.h;
-# General utility functions (i.e., abs, srand) are in stdlib.h;
-# String handling functions (i.e., strcat, strtok) are in string.h;
-# Date and Time functions (i.e., asctime, tzset) are in time.h;
+# pace_isalnum is in ??.h;
 POSIX_CLS_FILES = \
-  ctype \
-  math \
-  setjmp \
-  stdlib \
-  time
+  ??
 # _POSIX_JOB_CONTROL Unit of Functionality (POSIX.1)
 # pace_setpgid is in unistd.h;
-# pace_tcgetpgrp, pace_tcsetpgrp are in termios.h
+# pace_tcgetpgrp, pace_tcsetpgrp are in sys/termios.h
 _POSIX_JC_FILES = \
   unistd \
-  termios
-# POSIX_USER_GROUPS_R Unit of Functionality (POSIX.1)
-# pace_getlogin_r is in unistd.h;
-POSIX_UGR_FILES = \
-  unistd
-# POSIX_FILE_LOCKING Unit of Functionality (POSIX.1)
-# pace_flockfile, pace_ftrylockfile, pace_funlockfile, pace_getc_unlocked,
-# pace_getchar_unlocked, pace_putc_unlocked, pace_putchar_unlocked are in
-# stdio.h;
-POSIX_FL_FILES = \
-  stdio
-# POSIX_C_LANG_SUPPORT_R Unit of Functionality (POSIX.1)
-# pace_asctime_r, pace_ctime_r, pace_gmtime_r, pace_localtime_r are in time.h;
-# pace_rand_r is in stdlib.h;
-# pace_strtok_r is in string.h;
-# pace_readdir_r is in dirent.h;
-POSIX_CLSR_FILES = \
-  time \
-  stdlib \
-  string \
-  dirent
-# POSIX_SYSTEM_DATABASE_R Unit of Functionality (POSIX.1)
-# pace_getgrgid_r, pace_getgrnam_r are in grp.h;
-# pace_getpwnam_r, pace_getpwuid_r are in pwd.h;
-POSIX_SDR_FILES = \
-  grp \
-  pwd
+  sys/termios
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -240,6 +231,7 @@ POSIX_SDR_FILES = \
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 INCLDIRS += -I$(PACE_ROOT)
+#INCLDIRS = -I$(PACE_ROOT)
 
 ####
 #### Build customization.
@@ -250,18 +242,20 @@ ifndef PACE_COMPONENTS
   #### Please see docs/PACE-subsets.html for documentation. ??
   PACE_COMPONENTS = \
     Pace \
+    Arpa \
     Config \
+    Netinet \
     Sys
-  CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 endif # PACE_COMPONENTS
 
 ifeq (FOR_ACE,$(PACE_COMPONENTS))
   #### These PACE components are necessary to support ACE.
   override PACE_COMPONENTS = \
     Pace \
+    Arpa \
     Config \
+    Netinet \
     Sys
-  CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
 else  # ! FOR_ACE
   #### Is there anything in PACE that ACE doesn't need? Probably not
 endif # ! FOR_ACE
@@ -273,9 +267,17 @@ ifneq (,$(findstring Pace,$(PACE_COMPONENTS)))
   FILES += $(PACE_FILES)
 endif # Pace
 
+ifneq (,$(findstring Arpa,$(PACE_COMPONENTS)))
+  FILES += $(ARPA_FILES)
+endif # Arpa
+
 ifneq (,$(findstring Config,$(PACE_COMPONENTS)))
   FILES += $(CONFIG_FILES)
 endif # Config
+
+ifneq (,$(findstring Netinet,$(PACE_COMPONENTS)))
+  FILES += $(NETINET_FILES)
+endif # Netinet
 
 ifneq (,$(findstring Sys,$(PACE_COMPONENTS)))
   FILES += $(SYS_FILES)
@@ -285,127 +287,85 @@ ifneq (,$(findstring Posix_sp,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SP_FILES)
   LIB   = libPACE_SP.a
   SHLIB = libPACE_SP.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_SP_UOF
 endif # Single Process
 
 ifneq (,$(findstring Posix_mp,$(PACE_COMPONENTS)))
   FILES = $(POSIX_MP_FILES)
   LIB   = libPACE_MP.a
   SHLIB = libPACE_MP.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_MP_UOF
 endif # Multi Process
 
 ifneq (,$(findstring Posix_sig,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SIG_FILES)
   LIB   = libPACE_S.a
   SHLIB = libPACE_S.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_SIG_UOF
 endif # Signals
 
-ifneq (,$(findstring Posix_usg,$(PACE_COMPONENTS)))
+ifneq (,$(findstring Posix_ug,$(PACE_COMPONENTS)))
   FILES = $(POSIX_UG_FILES)
   LIB   = libPACE_UG.a
   SHLIB = libPACE_UG.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_UG_UOF
 endif # User Groups
 
 ifneq (,$(findstring Posix_fs,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FS_FILES)
   LIB   = libPACE_FS.a
   SHLIB = libPACE_FS.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_FS_UOF
 endif # File System
 
 ifneq (,$(findstring Posix_fa,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FA_FILES)
   LIB   = libPACE_FA.a
   SHLIB = libPACE_FA.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_FA_UOF
 endif # File Attributes
 
 ifneq (,$(findstring Posix_fif,$(PACE_COMPONENTS)))
   FILES = $(POSIX_F_FILES)
   LIB   = libPACE_F.a
   SHLIB = libPACE_F.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_F_UOF
 endif # Fifo
 
 ifneq (,$(findstring Posix_di,$(PACE_COMPONENTS)))
   FILES = $(POSIX_DI_FILES)
   LIB   = libPACE_DI.a
   SHLIB = libPACE_DI.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_DI_UOF
 endif # Device Input/Output
 
 ifneq (,$(findstring Posix_fm,$(PACE_COMPONENTS)))
   FILES = $(POSIX_FM_FILES)
   LIB   = libPACE_FM.a
   SHLIB = libPACE_FM.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_FM_UOF
 endif # File Descriptor Management
 
 ifneq (,$(findstring Posix_p,$(PACE_COMPONENTS)))
   FILES = $(POSIX_P_FILES)
   LIB   = libPACE_P.a
   SHLIB = libPACE_P.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_P_UOF
 endif # Pipe
 
 ifneq (,$(findstring Posix_ds,$(PACE_COMPONENTS)))
   FILES = $(POSIX_DS_FILES)
   LIB   = libPACE_DS.a
   SHLIB = libPACE_DS.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_DS_UOF
 endif # Device Specific
 
 ifneq (,$(findstring Posix_sd,$(PACE_COMPONENTS)))
   FILES = $(POSIX_SD_FILES)
   LIB   = libPACE_SD.a
   SHLIB = libPACE_SD.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_SD_UOF
 endif # System Database
 
 ifneq (,$(findstring Posix_cls,$(PACE_COMPONENTS)))
   FILES = $(POSIX_CLS_FILES)
   LIB   = libPACE_CLS.a
   SHLIB = libPACE_CLS.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_CLS_UOF
 endif # C Language Support
 
 ifneq (,$(findstring Posix_jc,$(PACE_COMPONENTS)))
   FILES = $(_POSIX_JC_FILES)
   LIB   = libPACE_JC.a
   SHLIB = libPACE_JC.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_JC_UOF
 endif # Job Control
-
-ifneq (,$(findstring Posix_ugr,$(PACE_COMPONENTS)))
-  FILES = $(POSIX_UGR_FILES)
-  LIB   = libPACE_UGR.a
-  SHLIB = libPACE_UGR.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_UGR_UOF
-endif # User Groups - Reentrant
-
-ifneq (,$(findstring Posix_fl,$(PACE_COMPONENTS)))
-  FILES = $(POSIX_FL_FILES)
-  LIB   = libPACE_FL.a
-  SHLIB = libPACE_FL.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_FL_UOF
-endif # File Locking
-
-ifneq (,$(findstring Posix_clr,$(PACE_COMPONENTS)))
-  FILES = $(POSIX_CLSR_FILES)
-  LIB   = libPACE_CLSR.a
-  SHLIB = libPACE_CLSR.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_CLSR_UOF
-endif # C Language Support - Reentrant
-
-ifneq (,$(findstring Posix_sr,$(PACE_COMPONENTS)))
-  FILES = $(POSIX_SDR_FILES)
-  LIB   = libPACE_SDR.a
-  SHLIB = libPACE_SDR.$(SOEXT)
-  CFLAGS += -DPACE_HAS_POSIX_SDR_UOF
-endif # System Database - Reentrant
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
@@ -426,18 +386,16 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 INSTALL =
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
-include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
-
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
 
 .PHONY: PACE_COMPONENTS
 PACE_COMPONENTS:
-	@sh $(ACE_ROOT)/bin/ace_components --pace --set ' $(PACE_COMPONENTS) '
+	@sh $(ACE_ROOT)/bin/pace_components --pace --set ' $(PACE_COMPONENTS) '
 
 realclean:
-	@sh $(ACE_ROOT)/bin/ace_components --pace --remove
+	@sh $(ACE_ROOT)/bin/pace_components --pace --remove
 
 # AIX template compilation speedup hack
 # Not added for PACE - can always be added later if needed

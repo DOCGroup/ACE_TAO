@@ -76,7 +76,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "_ptr;" << be_nl;
 
   // now generate the class definition
-  *os << "class " << be_global->skel_export_macro ()
+  *os << "class " << idl_global->skel_export_macro ()
       << " " << namebuf << " : ";
   if (node->n_inherits () > 0)
     {
@@ -180,29 +180,15 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                          "inheritance graph traversal failed\n"),
                         -1);
     }
-// Generate the embedded RequestInfo classes per operation.
-  // This is to be used by interceptors.
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = 0;
-  // Interceptor related classes.
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_ch::"
-                         "visit_interface - "
-                         "codegen for interceptor classes failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
 
   *os << be_uidt_nl << "};\n\n";
-  ctx = *this->ctx_;
+
+
+  be_visitor_context ctx (*this->ctx_);
+  be_visitor *visitor = 0;
+
   // generate the collocated class
-  if (be_global->gen_thru_poa_collocation ())
+  if (idl_global->gen_thru_poa_collocation ())
     {
       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SH);
       visitor = tao_cg->make_visitor (&ctx);
@@ -219,7 +205,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       visitor = 0;
     }
 
-  if (be_global->gen_direct_collocation ())
+  if (idl_global->gen_direct_collocation ())
     {
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SH);
@@ -237,7 +223,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       visitor = 0;
     }
 
-  if (be_global->gen_tie_classes ())
+  if (idl_global->gen_tie_classes ())
     {
       // generate the TIE class.
       ctx = *this->ctx_;

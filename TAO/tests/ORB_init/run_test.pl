@@ -11,7 +11,8 @@ use Cwd;
 
 ACE::checkForTarget(getcwd());
 
-$orb_init = Process::Create ($EXEPREFIX."ORB_init".$EXE_EXT);
+$orb_init = Process::Create ($EXEPREFIX."ORB_init$EXE_EXT ");
+
 
 $pid = $orb_init->TimedWait (15);
 if ($pid == -1) {

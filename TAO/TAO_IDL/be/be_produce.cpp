@@ -70,42 +70,28 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
-#include  "TAO_IDL_BE_Export.h"
 
 ACE_RCSID(be, be_produce, "$Id$")
 
-// Abort this run of the BE.
-TAO_IDL_BE_Export void
-BE_abort (void)
-{
-  ACE_ERROR ((LM_ERROR,
-              "Fatal Error - Aborting\n"));
+/*
+ * Do the work of this BE. This is the starting point for code generation.
+ */
 
-  ACE_OS::exit (1);
-}
- 
-// Do the work of this BE. This is the starting point for code generation.
-TAO_IDL_BE_Export void
+void
 BE_produce (void)
 {
-  // Root of the AST made up of BE nodes.
-  be_root *root = 0;
+  be_root *root;   // root of the AST made up of BE nodes
+  be_visitor *visitor; // visitor for root
+  be_visitor_context ctx; // context information for the visitor root
 
-  // Visitor for root.
-  be_visitor *visitor = 0;
-
-  // Context information for the visitor root.
-  be_visitor_context ctx;
-
-  // Configure the CodeGen object with the strategy to generate the visitors
-  // that can produce interpretive or compiled marshaling stubs and skeletons.
+  // configure the CodeGen object with the strategy to generate the visitors
+  // that can produce interpretive or compiled marshaling stubs and skeletons
   tao_cg->config_visitor_factory ();
 
-  // Get the root node and narrow it down to be the back-end root node.
+  // get the root node and narrow it down to be the back-end root node
   AST_Decl *d = idl_global->root ();
   root = be_root::narrow_from_decl (d);
-
-  if (root == 0)
+  if (!root)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_produce - "
@@ -113,16 +99,13 @@ BE_produce (void)
       BE_abort ();
     }
 
-  if (be_global->ami_call_back () == I_TRUE)
+  if (idl_global->ami_call_back () == I_TRUE)
     {
       // Make a first pass over the AST and introduce
       // AMI specific interfaces, methods and valuetypes.
-      be_visitor_context *local_ctx = 0;
-      ACE_NEW (local_ctx,
-               be_visitor_context (ctx));
+      be_visitor_context *local_ctx = new be_visitor_context (ctx);
 
-      ACE_NEW (visitor,
-               be_visitor_ami_pre_proc (local_ctx));
+      visitor = new be_visitor_ami_pre_proc (local_ctx);
       
       if (root->accept (visitor) == -1)
         {
@@ -131,21 +114,19 @@ BE_produce (void)
                       "client header for Root failed\n"));
           BE_abort ();
         }
-
+      // it is our responsibility to free up the visitor
       delete visitor;
     }
 
   // Code generation involves six steps because of the six files that we
   // generate.
 
-  // (1) Generate client header,
-  // instantiate a visitor context, and set the codegen state
-  ctx.state (TAO_CodeGen::TAO_ROOT_CH);
-
-  // Get a root visitor.
+  // (1) generate client header
+  // instantiate a visitor context
+  ctx.state (TAO_CodeGen::TAO_ROOT_CH); // set the codegen state
+  // get a root visitor
   visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the client header
+  // generate code for the client header
   if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -153,18 +134,16 @@ BE_produce (void)
                   "client header for Root failed\n"));
       BE_abort ();
     }
-
+  // it is our responsibility to free up the visitor
   delete visitor;
 
-  // (2) Generate client inline and
-  // set the context information.
+  // (2) generate client inline
+  // set the context information
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_CI);
-
-  // Create a visitor.
+  // create a visitor
   visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the client inline file.
+  // generate code for the client inline file
   if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -172,18 +151,16 @@ BE_produce (void)
                   "client inline for Root failed\n"));
       BE_abort ();
     }
-
+  // it is our responsibility to free up the visitor
   delete visitor;
 
 
-  // (3) Generate client stubs.
+  // (3) generate client stubs
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_CS);
-
-  // Create a visitor.
+  // create a visitor
   visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the client stubs.
+  // generate code for the client stubs
   if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -191,17 +168,15 @@ BE_produce (void)
                   "client stubs for Root failed\n"));
       BE_abort ();
     }
-
+  // it is our responsibility to free up the visitor
   delete visitor;
 
-  // (4) Generate server header.
+  // (4) generate server header
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
-
-  // Create a visitor.
+  // create a visitor
   visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the server header file.
+  // generate code for the server header file
   if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -209,17 +184,15 @@ BE_produce (void)
                   "server header for Root failed\n"));
       BE_abort ();
     }
-
+  // it is our responsibility to free up the visitor
   delete visitor;
 
-  // (5) Generate server inline.
+  // (5) generate server inline
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SI);
-
-  // Create a visitor.
+  // create a visitor
   visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the server inline file.
+  // generate code for the server inline file
   if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -227,17 +200,15 @@ BE_produce (void)
                   "server inline for Root failed\n"));
       BE_abort ();
     }
-
+  // it is our responsibility to free up the visitor
   delete visitor;
 
-  // (6) Generate server skeletons
+  // (6) generate server skeletons
   ctx.reset ();
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
-
-  // create a visitor.
+  // create a visitor
   visitor = tao_cg->make_visitor (&ctx);
-
-  // Generate code for the server skeletons.
+  // generate code for the server skeletons
   if (root->accept (visitor) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -245,21 +216,20 @@ BE_produce (void)
                   "server skeletons for Root failed\n"));
       BE_abort ();
     }
-
+  // it is our responsibility to free up the visitor
   delete visitor;
 
-  // Check if the flags are set for generating the 
-  // the implementation header and skeleton files.
-  if (be_global->gen_impl_files ())
+  //check if the flags are set for generating the 
+  //the implementation header and skeleton files
+  if(idl_global->gen_impl_files())
     {
-      // (7) generate implementation skeleton header.      
+      // (7) generate implementation skeleton header
+      
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IH);
-
-      // Create a visitor.
+      // create a visitor
       visitor = tao_cg->make_visitor (&ctx);
-
-      // Generate code for the implementation skeleton header.
+      // generate code for the implementation skeleton header
       if (root->accept (visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -268,16 +238,17 @@ BE_produce (void)
           BE_abort ();
         }
       
+      // it is our responsibility to free up the visitor
       delete visitor;
       
-      // (8) Generate implementation skeleton header.      
+      // (8) generate implementation skeleton header
+      
       ctx.reset ();
       ctx.state (TAO_CodeGen::TAO_ROOT_IS);
-
-      // Create a visitor.
+      // create a visitor
       visitor = tao_cg->make_visitor (&ctx);
       
-      // Generate code for the implementation skeleton header.
+      // generate code for the implementation skeleton header
       if (root->accept (visitor) == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -286,17 +257,18 @@ BE_produce (void)
           BE_abort ();
         }
       
+      // it is our responsibility to free up the visitor
       delete visitor;
     }
-
-  // Start the cleanup process.
-  root->destroy ();
-  delete root;
-  root = 0;
-
-  // Some miscellaneous cleanup.
-  idl_global->destroy ();
-  delete idl_global;
-  idl_global = 0;
 }
 
+/*
+ * Abort this run of the BE
+ */
+void
+BE_abort (void)
+{
+  ACE_ERROR ((LM_ERROR,
+              "Fatal Error - Aborting\n"));
+  ACE_OS::exit (1);
+}

@@ -54,7 +54,7 @@ const TAO_INDENT be_idt_nl (1);
 const TAO_UNINDENT be_uidt;
 const TAO_UNINDENT be_uidt_nl (1);
 
-// Methods of the TAO_OutStream class.
+// methods of the TAO_OutStream class
 
 TAO_OutStream::TAO_OutStream (void)
   : fp_ (NULL),
@@ -64,13 +64,12 @@ TAO_OutStream::TAO_OutStream (void)
 
 TAO_OutStream::~TAO_OutStream (void)
 {
-  // Close the underlying I/O handle only if it exists.
-  if (this->fp_ != 0)
+  // close the underlying I/O handle only if it exists
+  if (fp_)
     {
-      ACE_OS::fclose (this->fp_);
-      this->fp_ = 0;
+      ACE_OS::fclose (fp_);
+      fp_ = NULL;
     }
-
   indent_level_ = 0;
 }
 
@@ -78,31 +77,24 @@ int
 TAO_OutStream::open (const char *fname,
                      TAO_OutStream::STREAM_TYPE st)
 {
-  if (fname != 0)
+  if (fname)
     {
-      // File name exists, open an I/O file handle.
-      this->fp_ = ACE_OS::fopen (fname, "w");
-
-      if (this->fp_ != 0)
+      // file name exists, open an I/O file handle
+      fp_ = ACE_OS::fopen (fname, "w");
+      if (fp_)
         {
           this->st_ = st;
-          // Put the copyright notice.  Not for the gperf's temp input
+          // put the copyright notice.  Not for the gperf's temp input
           // file.
           if (st != TAO_OutStream::TAO_GPERF_INPUT)
             {
-              ACE_OS::fprintf (this->fp_, 
-                               "%s\n", 
-                               copyright);
-
-              ACE_OS::fflush (this->fp_);
+              ACE_OS::fprintf (fp_, "%s\n", copyright);
+              ACE_OS::fflush (fp_);
             }
-
           return 0;
         }
       else
-        {
-          return -1;
-        }
+        return -1;
     }
   else
     {
@@ -135,62 +127,51 @@ int
 TAO_OutStream::incr_indent (unsigned short flag)
 {
   indent_level_++;
-
-  if (flag != 0)
-    {
-      return this->indent ();
-    }
+  if (flag)
+    return this->indent ();
   else
-    {
-      // Do not indent output.
-      return 0;
-    }
+    return 0; // do not indent output
 }
 
-// Indentation
+// indentation
 int
 TAO_OutStream::decr_indent (unsigned short flag)
 {
-  this->indent_level_--;
+  indent_level_--;
   // Just in case somebody gets "unindent happy".
   if (this->indent_level_ < 0)
     {
       // ACE_DEBUG ((LM_DEBUG, "negative indentation?\n"));
       this->indent_level_ = 0;
     }
-  if (flag != 0)
-    {
-      return this->indent ();
-    }
+  if (flag)
+    return this->indent ();
   else
-    {
-      // Do not indent output.
-      return 0;
-    }
+    return 0; // do not indent output
 }
 
 int
 TAO_OutStream::reset (void)
 {
-  this->indent_level_ = 0;
+  indent_level_ = 0;
   return 0;
 }
 
-// Indented print.
+// indented print
 int
 TAO_OutStream::indent (void)
 {
-  // Based on the current indentation level, leave appropriate number of blank
-  // spaces in the output.
+  int i;
+  // based on the current indentation level, leave appropriate number of blank
+  // spaces in the output
   if (this->indent_level_ > 0)
     {
-      for (int i = 0; i < this->indent_level_; i++)
+      for (i = 0; i < this->indent_level_; i++)
         {
           ACE_OS::fprintf (this->fp_, "  ");
           ACE_OS::fflush (this->fp_);
         }
     }
-
   return 0;
 }
 
@@ -202,21 +183,16 @@ TAO_OutStream::nl (void)
   return 0;
 }
 
-// Macro generation.
+// macro generation
 int
-TAO_OutStream::gen_ifdef_macro (const char *flat_name, 
-                                const char *suffix)
+TAO_OutStream::gen_ifdef_macro (const char *flat_name, const char *suffix)
 {
   static char macro [NAMEBUFSIZE];
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  ACE_OS::memset (macro, 
-                  '\0', 
-                  NAMEBUFSIZE);
-
-  ACE_OS::sprintf (macro, 
-                   "_%s_", 
-                   tao_cg->upcase (flat_name));
-  if (suffix != 0)
+  ACE_OS::memset (macro, '\0', NAMEBUFSIZE);
+  ACE_OS::sprintf (macro, "_%s_", cg->upcase (flat_name));
+  if (suffix)
     {
       //ACE_OS::sprintf (macro, "%s_%s_", macro, cg->upcase (suffix));
       // Can't have macro on both sides of sprintf
@@ -224,13 +200,13 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
       // not, but having it gives the same functionality as the old
       // sprintf call...
       ACE_OS::strcat (macro, "_");
-      ACE_OS::strcat (macro, tao_cg->upcase (suffix));
+      ACE_OS::strcat (macro, cg->upcase (suffix));
       ACE_OS::strcat (macro, "_");
     }
 
-  // Append a suffix representing the stream type.
+  // append a suffix representing the stream type
   switch (this->st_)
-  {
+    {
     case TAO_OutStream::TAO_CLI_HDR:
       ACE_OS::strcat (macro, "CH_");
       break;
@@ -257,10 +233,9 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
       break;
     default:
       return -1;
-  }
+    }
   *this << "\n#if !defined (" << macro << ")\n";
   *this << "#define " << macro << "\n\n";
-
   return 0;
 }
 
@@ -268,19 +243,17 @@ int
 TAO_OutStream::gen_endif (void)
 {
   *this << "\n#endif /* end #if !defined */\n\n";
-
   return 0;
 }
 
 
-// ifdef generation.
+// ifdef generation
 int
 TAO_OutStream::gen_ifdef_AHETI (void)
 {
   *this << "\n"
         << "#if !defined (TAO_USE_SEQUENCE_TEMPLATES)"
         << be_idt_nl;
-
   return 0;
 }
 
@@ -289,7 +262,6 @@ TAO_OutStream::gen_else_AHETI (void)
 {
   *this << "\n#else /* TAO_USE_SEQUENCE_TEMPLATES */"
         << be_nl;
-
   return 0;
 }
 
@@ -299,28 +271,20 @@ TAO_OutStream::gen_endif_AHETI (void)
   *this << be_uidt
         << "\n#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ "
         << be_nl;
-
   return 0;
 }
 
 
-// Printf style variable argument print.
+// printf style variable argument print
 int
 TAO_OutStream::print (const char *format, ...)
 {
   int result = 0;
   va_list ap;
   va_start (ap, format);
-  ACE_OSCALL (::vfprintf (this->fp_, 
-                          format, 
-                          ap), 
-              int, 
-              -1, 
-              result);
-
-  ACE_OS::fflush (this->fp_);
+  ACE_OSCALL (::vfprintf (this->fp_, format, ap), int, -1, result);
+  ACE_OS::fflush (fp_);
   va_end (ap);
-
   return result;
 }
 
@@ -328,89 +292,63 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
-  ACE_OS::fflush (this->fp_);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::UShort num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%hu", 
-                   num);
-
-  ACE_OS::fflush (this->fp_);
-
+  ACE_OS::fprintf (this->fp_, "%hu", num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Short num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%hd", 
-                   num);
-
-  ACE_OS::fflush (this->fp_);
-
+  ACE_OS::fprintf (this->fp_, "%hd", num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULong num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%lu", 
-                   (unsigned long) num);
-
-  ACE_OS::fflush (this->fp_);
-
+  ACE_OS::fprintf (this->fp_, "%lu", (unsigned long) num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::Long num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%ld", 
-                   (long) num);
-
-  ACE_OS::fflush (this->fp_);
-
+  ACE_OS::fprintf (this->fp_, "%ld", (long) num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const unsigned long num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%lu", 
-                   num);
-
-  ACE_OS::fflush (this->fp_);
-
+  ACE_OS::fprintf (this->fp_, "%lu", num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const long num)
 {
-  ACE_OS::fprintf (this->fp_, 
-                   "%ld", 
-                   num);
-
-  ACE_OS::fflush (this->fp_);
-
+  ACE_OS::fprintf (this->fp_, "%ld", num);
+  ACE_OS::fflush (fp_);
   return *this;
 }
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_NL&)
 {
-  ACE_OS::fprintf (this->fp_ , 
-                   "\n");
+  ACE_OS::fprintf (this->fp_ , "\n");
   this->indent ();
-
   return *this;
 }
 
@@ -418,12 +356,8 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_INDENT& i)
 {
   this->incr_indent (0);
-
   if (i.do_now_)
-    {
-      this->nl ();
-    }
-
+    this->nl ();
   return *this;
 }
 
@@ -431,12 +365,8 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const TAO_UNINDENT& i)
 {
   this->decr_indent (0);
-
   if (i.do_now_)
-    {
-      this->nl ();
-    }
-
+    this->nl ();
   return *this;
 }
 

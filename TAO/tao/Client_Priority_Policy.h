@@ -32,7 +32,6 @@
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
 #include "tao/TAOC.h"
-#include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -41,9 +40,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_Client_Priority_Policy
-  : public TAO::ClientPriorityPolicy,
-    public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Client_Priority_Policy : public TAO::ClientPriorityPolicy
 {
   // = TITLE
   //
@@ -76,16 +73,13 @@ public:
     ACE_THROW_SPEC (());
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   virtual CORBA::Policy_ptr copy (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-    )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
   virtual void destroy (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
-       )
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    );
 
 private:
   TAO::PrioritySpecification priority_spec_;

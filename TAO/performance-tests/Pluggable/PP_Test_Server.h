@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/TAO.h"
 #include "PP_Test_i.h"
 
 class PP_Test_Server

@@ -34,12 +34,6 @@ ifdef COMSPEC
   endif # ! TAO_IDL_PREPROCESSOR
 endif # COMSPEC
 
-####
-#### TAO libraries
-####
-TAO_BASE_LIBS=-lTAO $(ACELIB) $(LIBS)
-TAO_SRVR_LIBS=-lTAO_PortableServer $(TAO_BASE_LIBS)
-TAO_CLNT_LIBS=-lTAO $(TAO_BASE_LIBS)
 
 ####
 #### Macro customization.
@@ -71,8 +65,6 @@ ifeq ($(ami),0)
   CPPFLAGS += -DTAO_HAS_AMI=0
 else
   override ami = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI=1
   ifndef ami_callback
     ami_callback = 1
@@ -86,8 +78,6 @@ ifeq ($(ami_poller),0)
   CPPFLAGS += -DTAO_HAS_AMI_POLLER=0
 else  # ami_poller
   override ami_poller = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_POLLER=1
 endif # ami_poller
 
@@ -95,8 +85,6 @@ ifeq ($(ami_callback),0)
   CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=0
 else  # ami_callback
   override ami_callback = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_AMI_CALLBACK=1
 endif # ami_callback
 
@@ -104,8 +92,6 @@ ifeq ($(rt_corba),0)
   CPPFLAGS += -DTAO_HAS_RT_CORBA=0
 else  # rt_corba
   override rt_corba = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_RT_CORBA=1
 endif # rt_corba
 
@@ -113,8 +99,6 @@ ifeq ($(corba_messaging),0)
   CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=0
 else  # corba_messaging
   override corba_messaging = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING=1
 endif # corba_messaging
 
@@ -122,19 +106,8 @@ ifeq ($(smart_proxies),1)
   CPPFLAGS += -DTAO_HAS_SMART_PROXIES=1
 else  # smart_proxies
   override smart_proxies = 0
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
   # CPPFLAGS += -DTAO_HAS_SMART_PROXIES=0
 endif # smart_proxies
-
-ifeq ($(interceptors),0)
-  CPPFLAGS += -DTAO_HAS_INTERCEPTORS=0
-else  # interceptors
-  override interceptors = 1
-  # The following line is not needed,
-  # the $TAO_ROOT/tao/orbconf.h file defines it by default
-  # CPPFLAGS += -DTAO_HAS_INTERCEPTORS=1
-endif # interceptors
 
 ifeq (1,$(CROSS-COMPILE))
 else
@@ -191,13 +164,13 @@ IDL_EXT2=Cli.h $(IDL_EXT2_MINUS)
 
 ifneq ($(use_flick),1)
 $(foreach ext, $(IDL_EXT_MINUS), %$(ext)): %C.h
-	@
+	@true $@
 
 %C.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<
 
 $(foreach ext, $(IDL_EXT2_MINUS), %$(ext)): %Cli.h
-	@
+	@true $@
 
 %Cli.h: %.idl $(TAO_IDL)
 	$(TAO_IDL) $(TAO_IDLFLAGS) $<

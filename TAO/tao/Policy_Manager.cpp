@@ -281,10 +281,6 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
       ACE_CHECK;
     }
 
-  // Flag, indicating whether we have already overridden
-  // RTCORBA::ServerProtocolPolicy during this call.
-  int server_protocol_set = 0;
-
   for (CORBA::ULong i = 0; i < policies.length ();  ++i)
     {
       CORBA::Policy_ptr policy = policies[i];
@@ -484,17 +480,6 @@ TAO_Policy_Manager_Impl::set_policy_overrides (
 
         case TAO_RT_SERVER_PROTOCOL_POLICY_TYPE:
           {
-            // Only one ServerProtocolPolicy should be included in a
-            // given PolicyList (section 4.15.2 of RTCORBA 1.0, i.e.,
-            // ptc/99-05-03).
-            // User-caused exceptional conditions can leave the Policy
-            // Manager in an inconsistent state.  It is the
-            // responsibility of the user to return it to consistent state.
-            if (server_protocol_set != 0)
-              ACE_THROW (CORBA::INV_POLICY ());
-            else
-              server_protocol_set = 0;
-
             RTCORBA::ServerProtocolPolicy_var p =
               RTCORBA::ServerProtocolPolicy::_narrow (policy);
 
@@ -1122,13 +1107,6 @@ TAO_Policy_Manager_Impl::client_protocol (void) const
   return result;
 }
 
-void
-TAO_Policy_Manager_Impl::server_protocol (TAO_ServerProtocolPolicy *server_protocol)
-{
-  CORBA::release (this->server_protocol_);
-  this->server_protocol_ = server_protocol;
-}
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
@@ -1149,6 +1127,7 @@ TAO_Policy_Current::implementation (void) const
 {
   return *TAO_TSS_RESOURCES::instance ()->policy_current_;
 }
+
 
 void
 TAO_Policy_Current_Impl::set_policy_overrides (
@@ -1185,6 +1164,23 @@ TAO_Policy_Current_Impl::get_policy_overrides (
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure policies of interest are allowed
+  // at this scope.
+  for (CORBA::ULong i = 0; i < ts.length ();  ++i)
+    {
+      CORBA::ULong type = ts[i];
+
+      if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+          || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+          || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                          0);
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   return this->manager_impl_.get_policy_overrides (ts, ACE_TRY_ENV);
 }
 

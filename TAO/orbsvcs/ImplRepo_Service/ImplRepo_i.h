@@ -20,11 +20,11 @@
 #ifndef IMPLREPO_I_H
 #define IMPLREPO_I_H
 
-#include "Repository.h"
-#include "orbsvcs/IOR_Multicast.h"
-#include "tao/PortableServer/ImplRepoS.h"
-#include "tao/IORTable/IORTable.h"
 #include "ace/Process_Manager.h"
+#include "tao/ImplRepoS.h"
+#include "orbsvcs/IOR_Multicast.h"
+#include "tao/IOR_LookupTable.h"
+#include "Repository.h"
 
 // Forward declarations.
 class ImplRepo_i;
@@ -34,7 +34,7 @@ class IMR_Forwarder;
 typedef ImplRepo_i *ImplRepo_i_ptr;
 typedef ImplRepo_i_ptr ImplRepo_i_ref;
 
-class IMR_Adapter_Activator : public PortableServer::AdapterActivator
+class IMR_Adapter_Activator : public POA_PortableServer::AdapterActivator
 {
   // = TITLE
   //    Implementation Repository Adapter Activator
@@ -50,8 +50,7 @@ public:
   virtual CORBA::Boolean unknown_adapter (PortableServer::POA_ptr parent,
                                           const char *name,
                                           CORBA_Environment &ACE_TRY_ENV
-                                            = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                                            = TAO_default_environment ());
   // Called by the POA when the incoming requested object/POA isn't found.  This will
   // create POAs when needed and will also put a DSI object (IMR_Forwarder) in that POA
   // as a default servant to handle that request
@@ -60,31 +59,9 @@ private:
   // The object to use as the default servant.
 };
 
-// ****************************************************************
-
-class ImplRepo_i;
-
-class IMR_Locator : public virtual IORTable::Locator,
-                    public virtual TAO_Local_RefCounted_Object
-{
-public:
-  IMR_Locator (ImplRepo_i *repo);
-
-  // = The IORTable::KeyLocator methods, check IORTable.pidl for
-  // details.
-  char * locate (const char *object_key,
-                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
-
-private:
-  ImplRepo_i *repo_;
-  // The Implementation Repository implementation
-};
-
-// ****************************************************************
-
-class ImplRepo_i
-  : public POA_ImplementationRepository::Administration
+class ImplRepo_i 
+: public POA_ImplementationRepository::Administration,
+  public TAO_IOR_LookupTable_Callback
 {
   // = TITLE
   //    Implementation Repository
@@ -96,9 +73,7 @@ public:
   ImplRepo_i (void);
   ~ImplRepo_i (void);
 
-  char *find_ior (const ACE_CString &object_name,
-                  CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound));
+  virtual int find_ior (const ACE_CString &object_name, ACE_CString &ior);
   // IOR_LookupTable_Callback method.  Will return an IOR
 
   // = Interface methods
@@ -186,17 +161,14 @@ private:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::NotFound,
                      ImplementationRepository::Administration::CannotActivate));
-  // Implementation of activate_server.  <check_startup> is a flag to check
-  // the activation mode before attempting to start it.
+  // Implementation of activate_server.  <check_startup> is a flag to check 
+  // the activation mode before attempting to start it.  
 
   void start_server_i (const char *server,
                        CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
                      ImplementationRepository::Administration::CannotActivate));
   // This method starts the server process.
-
-  IORTable::Locator_var locator_;
-  // The locator interface for the IORTable
 
   ACE_Process_Manager process_mgr_;
   // The Process Manager.
@@ -229,7 +201,7 @@ private:
   // The ior_multicast event handler.
 
   CORBA::String_var imr_ior_;
-  // Implementation Repository's IOR.  Why do we store it here?  Multicast
+  // Implementation Repository's IOR.  Why do we store it here?  Multicast 
   // doesn't work otherwise.
 
   int argc_;
@@ -237,7 +209,7 @@ private:
 
   char **argv_;
   // The command line arguments.
-
+  
   friend class IMR_Forwarder;
 };
 

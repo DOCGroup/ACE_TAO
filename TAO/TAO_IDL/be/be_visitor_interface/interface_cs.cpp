@@ -63,12 +63,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   // Generate the destructor and default constructor.
   *os << be_nl;
   *os << "// default constructor" << be_nl;
-  *os << node->name () << "::" << node->local_name ()
+  *os << node->name () << "::" << node->local_name () 
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
   *os << "// destructor" << be_nl;
-  *os << node->name () << "::~" << node->local_name ()
+  *os << node->name () << "::~" << node->local_name () 
       << " (void)" << be_nl;
   *os << "{}" << be_nl << be_nl;
 
@@ -155,20 +155,18 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       // The default proxy will either be returned else be transformed to
       // a smart one!
       *os << "if (CORBA::is_nil (default_proxy))" << be_idt_nl
-          << "ACE_NEW_RETURN (default_proxy, ::" << bt->name ()
+          << "ACE_NEW_RETURN (default_proxy, "
+          << bt->nested_type_name (this->ctx_->scope ())
           << " (stub), " << bt->nested_type_name (this->ctx_->scope ())
-          << "::_nil ());"<< be_uidt_nl;
-      if (be_global->gen_smart_proxies ())
-        {
-          *os << "  return TAO_" << node->flat_name ()
-              << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
-              << be_nl;
-        }
-      else
-        {
-          *os << "  return default_proxy;" << be_nl;
-        }
-      *os << "}" << be_uidt_nl
+          << "::_nil ());"<< be_uidt_nl
+          << "#if (TAO_HAS_SMART_PROXIES == 1)" << be_idt_nl
+          << "return TAO_" << node->flat_name ()
+          << "_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);"
+          << be_uidt_nl
+          << "#else " << be_idt_nl
+          << "return default_proxy;" << be_uidt_nl
+          << "#endif /*TAO_HAS_SMART_PROXIES == 1*/" << be_uidt_nl
+          << "}" << be_uidt_nl
           << "else " << be_idt_nl;
     }
   else
@@ -268,24 +266,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
-  // Interceptor classes
-
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = 0;
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
 
   // Smart Proxy classes
   if (! node->is_local ())
@@ -321,8 +301,8 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                              "TypeCode definition failed\n"),
                             -1);
         }
-
     }
+
 
   return 0;
 }

@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//     AMI_Observer
+//     Content_Server
 //
 // = FILENAME
 //     Callback_Handler.h
@@ -21,6 +21,8 @@
 #ifndef CALLBACK_HANDLER_H
 #define CALLBACK_HANDLER_H
 
+#include "ace/pre.h"
+
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_IO.h"
 #include "Push_Web_ServerS.h"
@@ -29,58 +31,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class Callback_Handler
   : public virtual POA_Web_Server::AMI_CallbackHandler,
     public virtual PortableServer::RefCountServantBase
 {
-  // = TITLE
-  //    Class that asynchronously sends chunks of data to the
-  //    client-side <Callback> object, and handles all asynchronous
-  //    replies emanating from it.
-  //
-  // = DESCRIPTION
-  //    The <Push_Iterator_Factory_i> object in the Content Server
-  //    creates a <Callback_Handler> instance for each requested file,
-  //    and executes the run() method in that instance (in this
-  //    class).  To allow the Content Server to service other requests
-  //    without having to wait for the requested file to be completely
-  //    sent to the client, the run() method in this class issues the
-  //    next_chunk() method, which reads the first chunk of data and
-  //    sends it asynchronously to the client-side <Callback> object
-  //    by issuing a sendc_next_chunk() call.
-  //
-  //    This may seem a bit odd since the next_chunk() method in this
-  //    class is actually the reply handler method for the
-  //    sendc_next_chunk() method.  The next_chunk() method is
-  //    initially invoked as a means to bootstrap the process of
-  //    asynchronously sending chunks of data to the client-side
-  //    <Callback> object.  However, since the next_chunk() method
-  //    actually invokes sendc_next_chunk(), all subsequent calls will
-  //    be performed asynchronously.  This design also guarantees that
-  //    the client-side <Callback> object will receive all chunks of
-  //    data in the proper order since the next chunk of data will not
-  //    be sent until this <Callback_Handler> receives the asynchronous
-  //    reply from the client-side <Callback> object.  Again, that
-  //    asynchronous reply is handled by the next_chunk() method, at
-  //    which point the entire cycle is started again until the last
-  //    chunk of data is sent.
-  //
-  //    Notice that no threads are explicitly created at the
-  //    application level, yet concurrency is achieved due to the fact
-  //    that all operations are performed asynchronously.
-
-  friend class Callback_Handler_Friend;
-  // Dummy friend class declaration to quiet down a warning.
-
 public:
   Callback_Handler (const char *pathname,
                     Web_Server::Callback_ptr callback);
@@ -95,7 +49,7 @@ public:
                                  CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void run (CORBA::Environment &ACE_TRY_ENV)
+  ACE_HANDLE run (CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Web_Server::Error_Result));
   // Activate and run this Reply Handler.  The contents (not the
@@ -145,8 +99,6 @@ private:
   // Flag that indicates all chunks of data have been sent.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
+#include "ace/post.h"
 
 #endif  /* CALLBACK_HANDLER_H */

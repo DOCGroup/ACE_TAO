@@ -25,23 +25,25 @@
 
 ACE_RCSID(be, be_expression, "$Id$")
 
+/*
+ * BE_Expression
+ */
+
+// the constructors
 be_expression::be_expression (UTL_ScopedName *n)
   : AST_Expression (n)
 {
 }
 
 be_expression::be_expression (AST_Expression *b, AST_Expression::ExprType t)
-  : AST_Expression (b, 
-                    t)
+  : AST_Expression (b, t)
 {
 }
 
 be_expression::be_expression (AST_Expression::ExprComb c,
                               AST_Expression *v1,
                               AST_Expression *v2)
-  : AST_Expression (c, 
-                    v1, 
-                    v2)
+  : AST_Expression (c, v1, v2)
 {
 }
 
@@ -50,10 +52,8 @@ be_expression::be_expression (long l)
 {
 }
 
-be_expression::be_expression (long l, 
-                              AST_Expression::ExprType t)
-  : AST_Expression (l, 
-                    t)
+be_expression::be_expression (long l, AST_Expression::ExprType t)
+  : AST_Expression (l, t)
 {
 }
 

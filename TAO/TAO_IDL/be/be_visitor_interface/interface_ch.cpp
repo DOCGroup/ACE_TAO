@@ -101,8 +101,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       os->gen_ifdef_macro (node->flat_name ());
 
       // now generate the class definition
-      *os << "class " << be_global->stub_export_macro ()
-          << " " << node->local_name ();
+      *os << "class " << idl_global->stub_export_macro ()
+                << " " << node->local_name ();
 
       if (node->n_inherits () > 0)  // node interface inherits from other
                                     // interfaces
@@ -227,6 +227,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_local ())
         *os << node->local_name ()
             << " (TAO_Stub *objref, " << be_idt << be_idt_nl
+            << "TAO_ServantBase *_tao_servant = 0, " << be_nl
             << "CORBA::Boolean _tao_collocated = 0" << be_uidt_nl
             << ");" << be_uidt_nl;
 
@@ -239,30 +240,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << node->local_name () << " (const " << node->local_name () << " &);"
           << be_nl
           << "void operator= (const " << node->local_name () << " &);";
-
-      // Generate the embedded RequestInfo classes per operation.
-      // This is to be used by interceptors.
-      be_visitor_context ctx (*this->ctx_);
-      be_visitor *visitor = 0;
-      // Interceptor related classes.
-      ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
-        {
-          delete visitor;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_interface_ch::"
-                                 "visit_interface - "
-                                 "codegen for interceptor classes failed\n"),
-                                -1);
-        }
-      delete visitor;
-      visitor = 0;
-
-      ctx = *this->ctx_;
-
       *os << be_uidt_nl;
       *os << "};\n\n";
+
+      be_visitor_context ctx (*this->ctx_);
+      be_visitor *visitor = 0;
 
       // Don't support smart proxies for local interfaces.
       if (! node->is_local ())
@@ -304,7 +286,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
             }
 
         }
-
       node->cli_hdr_gen (I_TRUE);
     } // if !cli_hdr_gen
 

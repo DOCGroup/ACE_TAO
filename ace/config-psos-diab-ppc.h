@@ -34,10 +34,6 @@
 
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
-#else
-// At least true with newer Diab compiler...
-# define ACE_LACKS_PRAGMA_ONCE
-# define ACE_HAS_EXCEPTIONS
 #endif /* __GNUG__ */
 
 #define ACE_PSOS_LACKS_PREPC
@@ -222,7 +218,7 @@
 
 #define ACE_LACKS_UNIX_SIGNALS
 
-#define ACE_THREADS_LACK_SHARED_SOCKETS
+#defined ACE_THREADS_LACK_SHARED_SOCKETS
 
 // #define ACE_MALLOC_ALIGN 8
 // #define ACE_LACKS_SYSTIME_H

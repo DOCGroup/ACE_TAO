@@ -90,12 +90,6 @@ TAO_Resource_Factory::get_reactor (void)
   return 0;
 }
 
-void
-TAO_Resource_Factory::reclaim_reactor (ACE_Reactor *)
-{
-  return;
-}
-
 TAO_Connector_Registry *
 TAO_Resource_Factory::get_connector_registry (void)
 {
@@ -158,6 +152,13 @@ TAO_Resource_Factory::purge_percentage (void) const
 
 TAO_Priority_Mapping *
 TAO_Resource_Factory::get_priority_mapping (void)
+{
+  return 0;
+}
+
+int
+TAO_Resource_Factory::get_parser_names (const char **&,
+                                        int &)
 {
   return 0;
 }

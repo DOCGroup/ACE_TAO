@@ -17,9 +17,8 @@
 #ifndef NOTIFY_SERVICE_H
 #define NOTIFY_SERVICE_H
 
-#include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
+#include "orbsvcs/CosNotifyChannelAdminC.h"
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"

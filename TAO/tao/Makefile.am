@@ -18,7 +18,8 @@ POA_FILES = \
   Object_Adapter.cpp \
   Key_Adapters.cpp \
   POA.cpp \
-  PortableServerC.cpp \
+  POAC.cpp \
+  POAS.cpp \
   POAManager.cpp \
   Active_Object_Map.cpp \
   Servant_Base.cpp \
@@ -47,19 +48,19 @@ PLUGGABLE_PROTOCOLS_FILES = \
   IORManipulation.cpp
 
 PLUGGABLE_MESSAGING_FILES = \
-  Pluggable_Messaging \
-  Pluggable_Messaging_Utils \
-  GIOP_Message_Base \
-  GIOP_Message_Connectors \
-  GIOP_Message_Acceptors \
-  GIOP_Message_Accept_State \
-  GIOP_Utils \
-  GIOP_Message_Headers \
-  target_specification \
-  GIOP_Server_Request \
-  GIOP_Message_Lite \
-  GIOP_Message_State \
-  Tagged_Profile
+Pluggable_Messaging \
+Pluggable_Messaging_Utils \
+GIOP_Message_Base \
+GIOP_Message_Connectors \
+GIOP_Message_Acceptors \
+GIOP_Message_Accept_State \
+GIOP_Utils \
+GIOP_Message_Headers \
+target_specification \
+GIOP_Server_Request \
+GIOP_Message_Lite \
+GIOP_Message_State \
+Tagged_Profile
 
 DEFAULT_RESOURCES_FILES = \
   default_client.cpp \
@@ -83,6 +84,7 @@ IDL_COMPILER_FILES = \
 ORB_CORE_FILES = \
   Any.cpp \
   CurrentC.cpp \
+  CurrentS.cpp \
   Exception.cpp \
   WrongTransactionC.cpp \
   Environment.cpp \
@@ -163,9 +165,18 @@ ORB_CORE_FILES = \
   Direct_Priority_Mapping.cpp \
   RT_Current.cpp \
   Pool_Per_Endpoint.cpp \
-  GIOPC.cpp \
-  TAO_Singleton_Manager.cpp \
-  DLL_ORB.cpp
+  GIOPC.cpp
+
+DYNAMIC_ANY_FILES = \
+  DynAnyC.cpp \
+  DynAnyS.cpp \
+  DynAny_i.cpp \
+  DynArray_i.cpp \
+  DynEnum_i.cpp \
+  DynSequence_i.cpp \
+  DynStruct_i.cpp \
+  DynUnion_i.cpp \
+  InconsistentTypeCodeC.cpp
 
 # Build a libtool library, libTAO.la for installation in libdir.
 lib_LTLIBRARIES = libTAO.la
@@ -175,7 +186,8 @@ libTAO_la_SOURCES = \
   $(DEFAULT_RESOURCES_FILES) \
   $(INTERPRETIVE_MARSHALING_FILES) \
   $(IDL_COMPILER_FILES) \
-  $(ORB_CORE_FILES)
+  $(ORB_CORE_FILES) \
+  $(DYNAMIC_ANY_FILES)
 
 ## The following is an excerpt from the "libtool" manual, written by
 ## Gordon Matzigkeit:
@@ -230,7 +242,6 @@ TEMPLATE_FILES = \
   Sequence_T.cpp \
   TAOS_T.cpp \
   TimeBaseS_T.cpp \
-  TAO_Singleton.cpp
 else
 TEMPLATE_FILES =
 endif
@@ -257,7 +268,6 @@ HEADER_FILES = \
   Connector_Registry.h \
   Context.h \
   CurrentC.h \
-  DLL_ORB.h
   Direct_Priority_Mapping.h \
   DomainC.h \
   DomainS_T.h \
@@ -314,8 +324,9 @@ HEADER_FILES = \
   Object_KeyC.h \
   Operation_Table.h \
   POA.h \
-  PortableServerC.h \
+  POAC.h \
   POAManager.h \
+  POAS.h \
   POA_CORBA.h \
   Pluggable.h \
   PolicyC.h \
@@ -347,7 +358,6 @@ HEADER_FILES = \
   TAOS.h \
   TAOS_T.h \
   TAO_Internal.h \
-  TAO_Singleton.h \
   Tagged_Components.h \
   TimeBaseC.h \
   TimeBaseS.h \
@@ -407,7 +417,6 @@ INLINE_FILES = \
   Connector_Registry.i \
   Context.i \
   CurrentC.i \
-  DLL_ORB.inl \
   Direct_Priority_Mapping.i \
   DomainC.i \
   DomainS_T.i \
@@ -448,8 +457,9 @@ INLINE_FILES = \
   Object_Adapter.i \
   Object_KeyC.i \
   POA.i \
-  PortableServerC.i \
+  POAC.i \
   POAManager.i \
+  POAS.i \
   Pluggable.i \
   PolicyC.i \
   Policy_Manager.i \
@@ -476,7 +486,6 @@ INLINE_FILES = \
   Single_Reactor.i \
   Stub.i \
   Sync_Strategies.i \
-  TAO_Singleton.inl \
   TAOC.i \
   TAOS.i \
   TAOS_T.i \

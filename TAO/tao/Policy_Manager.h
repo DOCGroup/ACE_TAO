@@ -25,19 +25,11 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/LocalObject.h"
-#include "tao/PolicyC.h"
+#include "tao/POA_CORBA.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
 
 // Forward declarations.
 class TAO_RelativeRoundtripTimeoutPolicy;
@@ -133,12 +125,6 @@ public:
   TAO_ServerProtocolPolicy *server_protocol (void) const;
   TAO_ClientProtocolPolicy *client_protocol (void) const;
 
-  // = Speedy policy setters.  Take ownership of the argument policy
-  // objects - no copying.
-
-  void server_protocol (TAO_ServerProtocolPolicy *server_protocol);
-
-
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
 private:
@@ -198,9 +184,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_Policy_Manager :
-  public CORBA::PolicyManager,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Policy_Manager : public POA_CORBA::PolicyManager
 {
 public:
   TAO_Policy_Manager (void);
@@ -218,16 +202,12 @@ public:
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+      );
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
                                      CORBA::SetOverrideType set_add,
                                      CORBA::Environment &ACE_TRY_ENV =
                                      CORBA::Environment::default_environment ()
-                                     )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA_InvalidPolicies));
+                                     );
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 
@@ -334,9 +314,7 @@ private:
 
 // ****************************************************************
 
-class TAO_Export TAO_Policy_Current :
-  public CORBA::PolicyCurrent,
-  public TAO_Local_RefCounted_Object
+class TAO_Export TAO_Policy_Current : public POA_CORBA::PolicyCurrent
 {
 public:
   TAO_Policy_Current (void);
@@ -355,17 +333,13 @@ public:
         const CORBA::PolicyTypeSeq & ts,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
+      );
   virtual void set_policy_overrides (
         const CORBA::PolicyList & policies,
         CORBA::SetOverrideType set_add,
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
-      )
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     CORBA_InvalidPolicies));
+      );
 
 #if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
 

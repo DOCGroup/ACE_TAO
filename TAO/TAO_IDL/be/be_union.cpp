@@ -26,10 +26,13 @@
 ACE_RCSID(be, be_union, "$Id$")
 
 
+/*
+ * BE_Union
+ */
+
 be_union::be_union (void)
 {
-  // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (I_TRUE);  // always the case
 }
 
 be_union::be_union (AST_ConcreteType *dt,
@@ -37,108 +40,79 @@ be_union::be_union (AST_ConcreteType *dt,
                     UTL_StrList *p,
                     idl_bool local,
                     idl_bool abstract)
-  : AST_Union (dt, 
-               n, 
-               p, 
-               local, 
-               abstract),
-    AST_Structure (AST_Decl::NT_union, 
-                   n, 
-                   p, 
-                   local, 
-                   abstract),
-    AST_Decl (AST_Decl::NT_union, 
-              n, 
-              p),
+  : AST_Union (dt, n, p, local, abstract),
+    AST_Structure (AST_Decl::NT_union, n, p, local, abstract),
+    AST_Decl (AST_Decl::NT_union, n, p),
     UTL_Scope (AST_Decl::NT_union),
-    COMMON_Base (local, 
-                 abstract),
+    COMMON_Base (local, abstract),
     default_index_ (-2)
 {
   this->default_value_.computed_ = -2;
-
-  // Always the case.
-  this->has_constructor (I_TRUE);
+  this->has_constructor (I_TRUE);  // always the case
 }
 
-// Compute total number of members.
+// compute total number of members
 int
 be_union::compute_default_index (void)
 {
-  UTL_ScopeActiveIterator *si = 0;
-  AST_Decl *d = 0;
-  be_union_branch *bub = 0;
-  int i = 0;
+  UTL_ScopeActiveIterator *si;  // iterator
+  AST_Decl *d;  // temp node
+  be_union_branch *bub; // union branch node
+  int i = 0; // counter
 
-  // If default case does not exist, it will have a value of -1 according to
-  // the spec.
+  // if default case does not exist, it will have a value of -1 according to
+  // the spec
   this->default_index_ = -1;
 
-  // If there are elements in this scope...
+  // if there are elements in this scope
   if (this->nmembers () > 0)
     {
-      // Instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
+      // instantiate a scope iterator.
+      si = new UTL_ScopeActiveIterator (this,
+                                        UTL_Scope::IK_decls);
 
-      while (!si->is_done ())
+      while (!(si->is_done ()))
         {
-          // Get the next AST decl node.
+          // get the next AST decl node
           d = si->item ();
-
           if (!d->imported ())
             {
               bub = be_union_branch::narrow_from_decl (d);
-
               for (unsigned long j = 0;
                    j < bub->label_list_length ();
                    ++j)
                 {
-                  // Check if we are printing the default case.
+                  // check if we are printing the default case
                   if (bub->label (j)->label_kind ()
-                        == AST_UnionLabel::UL_default)
-                    {
-                      // Zero based indexing.
-                      this->default_index_ = i;
-                    }
+                      == AST_UnionLabel::UL_default)
+                    this->default_index_ = i; // zero based indexing
+                  i++;
                 }
-
-              // TAO's Typecode class keeps only a member count (not
-              // a label count) so this increment has been moved
-              // out of the inner loop.
-              i++;
             }
-
           si->next ();
-        }
-
-      delete si;
+        } // end of while
+      delete si; // free the iterator object
     }
-
   return 0;
 }
 
-// Return the default_index.
+// return the default_index
 int
 be_union::default_index (void)
 {
   if (this->default_index_ == -2)
-    {
-      this->compute_default_index ();
-    }
+    this->compute_default_index ();
 
   return this->default_index_;
 }
 
-// Generate the _var definition for ourself.
+// generate the _var definition for ourself
 int
 be_union::gen_var_defn (char *)
 {
-  TAO_OutStream *ch = 0;
-  TAO_NL nl;
-  char namebuf [NAMEBUFSIZE];
+  TAO_OutStream *ch; // output stream
+  TAO_NL  nl;        // end line
+  char namebuf [NAMEBUFSIZE];  // names
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -148,61 +122,59 @@ be_union::gen_var_defn (char *)
                    "%s_var",
                    this->local_name ()->get_string ());
 
-  ch = tao_cg->client_header ();
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  // Generate the var definition (always in the client header).
+  ch = cg->client_header ();
+
+  // generate the var definition (always in the client header).
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << be_global->stub_export_macro ()
+  *ch << "class " << idl_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
-
-  // Default constructor.
+  // default constr
   *ch << namebuf << " (void); // default constructor" << nl;
-
-  // Constructor.
+  // constr
   *ch << namebuf << " (" << this->local_name () << " *);" << nl;
-
-  // Copy constructor.
+  // copy constructor
   *ch << namebuf << " (const " << namebuf <<
     " &); // copy constructor" << nl;
 
-  // Fixed-size types only.
+  // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << namebuf << " (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
-  // Destructor.
+  // destructor
   *ch << "~" << namebuf << " (void); // destructor" << nl;
   *ch << nl;
-
-  // Assignment operator from a pointer.
+  // assignment operator from a pointer
   *ch << namebuf << " &operator= ("
       << this->local_name () << " *);" << nl;
-
-  // Assignment from _var.
+  // assignment from _var
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
 
-  // Fixed-size types only.
+  // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << namebuf << " &operator= (const " << this->local_name ()
           << " &); // fixed-size types only" << nl;
     }
 
-  // Arrow operator.
+  // arrow operator
   *ch << local_name () << " *operator-> (void);" << nl;
   *ch << "const " << this->local_name ()
       << " *operator-> (void) const;" << nl;
   *ch << nl;
 
-  // Other extra types (cast operators, [] operator, and others).
+  // other extra types (cast operators, [] operator, and others)
   *ch << "operator const " << this->local_name () << " &() const;" << nl;
   *ch << "operator " << this->local_name () << " &();" << nl;
   *ch << "operator " << this->local_name () << " &() const;" << nl;
@@ -215,9 +187,8 @@ be_union::gen_var_defn (char *)
 
   *ch << nl;
   *ch << "// in, inout, out, _retn " << nl;
-
-  // The return types of in, out, inout, and _retn are based on the parameter
-  // passing rules and the base type.
+  // the return types of in, out, inout, and _retn are based on the parameter
+  // passing rules and the base type
   if (this->size_type () == be_decl::FIXED)
     {
       *ch << "const " << local_name () << " &in (void) const;" << nl;
@@ -233,14 +204,13 @@ be_union::gen_var_defn (char *)
       *ch << this->local_name () << " *_retn (void);" << nl;
     }
 
-  // Generate an additional member function that 
-  // returns the underlying pointer.
+  // generate an additional member function that returns the underlying pointer
   *ch << this->local_name () << " *ptr(void) const;\n";
 
   *ch << "\n";
   ch->decr_indent ();
 
-  // Generate the private section
+  // generate the private section
   *ch << "private:\n";
   ch->incr_indent ();
   *ch << this->local_name () << " *ptr_;\n";
@@ -250,18 +220,16 @@ be_union::gen_var_defn (char *)
   return 0;
 }
 
-// Implementation of the _var class. All of these get generated in the inline
-// file.
+// implementation of the _var class. All of these get generated in the inline
+// file
 int
 be_union::gen_var_impl (char *,
                         char *)
 {
-  TAO_OutStream *ci = 0;
-  TAO_NL nl;
-
-  // To hold the full and local _var names.
-  char fname [NAMEBUFSIZE];
-  char lname [NAMEBUFSIZE];
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _var names
 
   ACE_OS::memset (fname,
                   '\0',
@@ -279,24 +247,26 @@ be_union::gen_var_impl (char *,
                    "%s_var",
                    this->local_name ()->get_string ());
 
-  ci = tao_cg->client_inline ();
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  // Start with whatever was our current indent level.
-  ci->indent ();
+  ci = cg->client_inline ();
+
+  ci->indent (); // start with whatever was our current indent level
 
   *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
-  // Default constructor.
+  // default constr
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
   *ci << "  " << ": ptr_ (0)" << nl;
   *ci << "{}\n\n";
 
-  // Constructor from a pointer.
+  // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
@@ -304,11 +274,11 @@ be_union::gen_var_impl (char *,
   *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
-  // Copy constructor.
+  // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
-  *ci << fname << "::" << lname << " (const ::" << fname 
-      << " &p) // copy constructor" << nl;
+  *ci << fname << "::" << lname << " (const ::" << fname <<
+    " &p) // copy constructor" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
@@ -319,7 +289,7 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Fixed-size types only.
+  // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
       *ci << "// fixed-size types only" << nl;
@@ -334,7 +304,7 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
     }
 
-  // Destructor.
+  // destructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::~" << lname << " (void) // destructor" << nl;
@@ -344,7 +314,7 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Assignment operator from a pointer.
+  // assignment operator from a pointer
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
   *ci << fname << "::operator= (" << this->local_name ()
@@ -357,11 +327,11 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Assignment operator from _var.
+  // assignment operator from _var
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
-  *ci << fname << "::operator= (const ::" << fname 
-      << " &p)" << nl;
+  *ci << fname << "::operator= (const ::" << fname <<
+    " &p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (this != &p)" << nl;
@@ -376,7 +346,7 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Fixed-size types only.
+  // fixed-size types only
   if (this->size_type () == be_decl::FIXED)
     {
       ci->indent ();
@@ -399,7 +369,7 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
     }
 
-  // Two arrow operators.
+  // two arrow operators
   ci->indent ();
   *ci << "ACE_INLINE const ::" << this->name () << " *" << nl;
   *ci << fname << "::operator-> (void) const" << nl;
@@ -418,7 +388,7 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Other extra methods - 3 cast operator ().
+  // other extra methods - 3 cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
   *ci << fname << "::operator const ::" << this->name ()
@@ -449,7 +419,7 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Variable-size types only.
+  // variable-size types only
   if (this->size_type () == be_decl::VARIABLE)
     {
       ci->indent ();
@@ -464,7 +434,7 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
     }
 
-  // in, inout, out, _retn, and ptr.
+  // in, inout, out, _retn, and ptr
   ci->indent ();
   *ci << "ACE_INLINE const ::" << this->name () << " &" << nl;
   *ci << fname << "::in (void) const" << nl;
@@ -483,7 +453,7 @@ be_union::gen_var_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // The out and _retn are handled differently based on our size type.
+  // the out and _retn are handled differently based on our size type
   ci->indent ();
   if (this->size_type () == be_decl::VARIABLE)
     {
@@ -531,7 +501,7 @@ be_union::gen_var_impl (char *,
       *ci << "}\n\n";
     }
 
-  // The additional ptr () member function.
+  // the additional ptr () member function
   ci->indent ();
   *ci << "ACE_INLINE ::" << this->name () << " *" << nl;
   *ci << fname << "::ptr (void) const" << nl;
@@ -544,15 +514,13 @@ be_union::gen_var_impl (char *,
   return 0;
 }
 
-// Generate the _out definition
+// generate the _out definition
 int
 be_union::gen_out_defn (char *)
 {
-  TAO_OutStream *ch = 0;
-  TAO_NL nl;
-
-  // To hold the _out name.
-  char namebuf [NAMEBUFSIZE];
+  TAO_OutStream *ch; // output stream
+  TAO_NL  nl;        // end line
+  char namebuf [NAMEBUFSIZE];  // to hold the _out name
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -562,45 +530,38 @@ be_union::gen_out_defn (char *)
                    "%s_out",
                    this->local_name ()->get_string ());
 
-  ch = tao_cg->client_header ();
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  // Generate the out definition (always in the client header).
+  ch = cg->client_header ();
 
-  // Start with whatever was our current indent level.
-  ch->indent ();
+  // generate the out definition (always in the client header)
+  ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << be_global->stub_export_macro ()
+  *ch << "class " << idl_global->stub_export_macro ()
       << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
 
-  // No default constructor.
+  // No default constructor
 
-  // Constructor from a pointer.
+  // constructor from a pointer
   *ch << namebuf << " (" << this->local_name () << " *&);" << nl;
-
-  // Constructor from a _var &.
+  // constructor from a _var &
   *ch << namebuf << " (" << this->local_name () << "_var &);" << nl;
-
-  // Constructor from a _out &.
+  // constructor from a _out &
   *ch << namebuf << " (const " << namebuf << " &);" << nl;
-
-  // Assignment operator from a _out &.
+  // assignment operator from a _out &
   *ch << namebuf << " &operator= (const " << namebuf << " &);" << nl;
-
-  // Assignment operator from a pointer &, cast operator, ptr fn, operator
-  // -> and any other extra operators.
-
-  // Assignment.
+  // assignment operator from a pointer &, cast operator, ptr fn, operator
+  // -> and any other extra operators
+  // assignment
   *ch << namebuf << " &operator= (" << this->local_name () << " *);" << nl;
-
-  // operator ().
+  // operator ()
   *ch << "operator " << local_name () << " *&();" << nl;
-
-  // ptr function.
+  // ptr fn
   *ch << this->local_name () << " *&ptr (void);" << nl;
-
   // operator ->
   *ch << this->local_name () << " *operator-> (void);" << nl;
 
@@ -621,12 +582,10 @@ int
 be_union::gen_out_impl (char *,
                         char *)
 {
-  TAO_OutStream *ci = 0;
-  TAO_NL nl;
-
-  // To hold the full and local _out names.
-  char fname [NAMEBUFSIZE];
-  char lname [NAMEBUFSIZE];
+  TAO_OutStream *ci; // output stream
+  TAO_NL  nl;        // end line
+  char fname [NAMEBUFSIZE];  // to hold the full and
+  char lname [NAMEBUFSIZE];  // local _out names
 
   ACE_OS::memset (fname,
                   '\0',
@@ -644,19 +603,21 @@ be_union::gen_out_impl (char *,
                    "%s_out",
                    this->local_name ()->get_string ());
 
-  ci = tao_cg->client_inline ();
+  // retrieve a singleton instance of the code generator
+  TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-  // Generate the var implementation in the inline file.
+  ci = cg->client_inline ();
 
-  // Start with whatever was our current indent level.
-  ci->indent ();
+  // generate the var implementation in the inline file
+
+  ci->indent (); // start with whatever was our current indent level
 
   *ci << "// *************************************************************"
       << nl;
   *ci << "// Inline operations for class " << fname << nl;
   *ci << "// *************************************************************\n\n";
 
-  // Constructor from a pointer.
+  // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
@@ -668,7 +629,7 @@ be_union::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Constructor from _var &.
+  // constructor from _var &
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->local_name ()
@@ -681,7 +642,7 @@ be_union::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Copy constructor.
+  // copy constructor
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const ::" << fname
@@ -689,7 +650,7 @@ be_union::gen_out_impl (char *,
   *ci << "  : ptr_ (ACE_const_cast (" << lname << "&, p).ptr_)" << nl;
   *ci << "{}\n\n";
 
-  // Assignment operator from _out &.
+  // assignment operator from _out &
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
   *ci << fname << "::operator= (const ::" << fname
@@ -701,9 +662,9 @@ be_union::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Assignment from _var is not allowed by a private declaration.
+  // assignment from _var is not allowed by a private declaration
 
-  // Assignment operator from pointer.
+  // assignment operator from pointer
   ci->indent ();
   *ci << "ACE_INLINE ::" << fname << " &" << nl;
   *ci << fname << "::operator= (" << this->local_name () << " *p)" << nl;
@@ -714,7 +675,7 @@ be_union::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // Other extra methods - cast operator ().
+  // other extra methods - cast operator ()
   ci->indent ();
   *ci << "ACE_INLINE " << nl;
   *ci << fname << "::operator ::" << this->name ()
@@ -725,7 +686,7 @@ be_union::gen_out_impl (char *,
   ci->decr_indent ();
   *ci << "}\n\n";
 
-  // ptr function.
+  // ptr function
   ci->indent ();
   *ci << "ACE_INLINE ::" << this->name () << " *&" << nl;
   *ci << fname << "::ptr (void) // ptr" << nl;
@@ -749,32 +710,30 @@ be_union::gen_out_impl (char *,
   return 0;
 }
 
-// Compute the size type of the node in question.
+// compute the size type of the node in question
 int
 be_union::compute_size_type (void)
 {
-  UTL_ScopeActiveIterator *si = 0;
-  AST_Decl *d = 0;
-  be_decl *bd = 0;
+  UTL_ScopeActiveIterator *si;
+  AST_Decl *d;
+  be_decl *bd;
 
   if (this->nmembers () > 0)
     {
-      // If there are elements in this scope,
+      // if there are elements in this scope
+
+      si = new UTL_ScopeActiveIterator (this,
+                                        UTL_Scope::IK_decls);
       // instantiate a scope iterator.
 
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
+      while (!(si->is_done ()))
         {
-          // Get the next AST decl node.
+          // get the next AST decl node
           d = si->item ();
           bd = be_decl::narrow_from_decl (d);
           if (bd != 0)
             {
-              // Our sizetype depends on the sizetype of our members. Although
+              // our sizetype depends on the sizetype of our members. Although
               // previous value of sizetype may get overwritten, we are
               // guaranteed by the "size_type" call that once the value reached
               // be_decl::VARIABLE, nothing else can overwrite it.
@@ -786,42 +745,37 @@ be_union::compute_size_type (void)
                           "WARNING (%N:%l) be_union::compute_size_type - "
                           "narrow_from_decl returned 0\n"));
             }
-
           si->next ();
-        }
-
-      delete si;
+        } // end of while
+      delete si; // free the iterator object
     }
-
   return 0;
 }
 
-// Are we or the parameter node involved in any recursion?
+// Are we or the parameter node involved in any recursion
 idl_bool
 be_union::in_recursion (be_type *node)
 {
-  if (node == 0)
+  if (!node)
     {
-      // We are determining the recursive status for ourselves.
+      // we are determining the recursive status for ourselves
       node = this;
     }
 
-  // Proceed if the number of members in our scope is greater than 0.
+  // proceed if the number of members in our scope is greater than 0
   if (this->nmembers () > 0)
     {
-      // Initialize an iterator to iterate thru our scope.
-      UTL_ScopeActiveIterator *si = 0;
+      // initialize an iterator to iterate thru our scope
+      UTL_ScopeActiveIterator *si;
       ACE_NEW_RETURN (si,
                       UTL_ScopeActiveIterator (this,
                                                UTL_Scope::IK_decls),
-                      0);
-      // Continue until each element is visited.
+                      -1);
+      // continue until each element is visited
       while (!si->is_done ())
         {
-          be_union_branch *field = 
-            be_union_branch::narrow_from_decl (si->item ());
-
-          if (field == 0)
+          be_union_branch *field = be_union_branch::narrow_from_decl (si->item ());
+          if (!field)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -830,10 +784,8 @@ be_union::in_recursion (be_type *node)
                                  ACE_TEXT ("bad field node\n")),
                                 0);
             }
-
           be_type *type = be_type::narrow_from_decl (field->field_type ());
-
-          if (type == 0)
+          if (!type)
             {
               delete si;
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -842,30 +794,27 @@ be_union::in_recursion (be_type *node)
                                  ACE_TEXT ("bad field type\n")),
                                 0);
             }
-
           if (type->in_recursion (node))
             {
               delete si;
               return 1;
             }
-
           si->next ();
-        }
-
+        } // end of while loop
       delete si;
-    }
+    } // end of if
 
-  // Not in recursion.
+  // not in recursion
   return 0;
 }
 
-// Return the default value.
+// return the default value
 int
 be_union::default_value (be_union::DefaultValue &dv)
 {
   if (this->default_value_.computed_ == -2)
     {
-      // We need to compute it.
+      // we need to compute it
       if (this->compute_default_value () == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -876,52 +825,43 @@ be_union::default_value (be_union::DefaultValue &dv)
                             -1);
         }
     }
-
   dv = this->default_value_;
   return 0;
 }
 
-// Determine the implicit default value (if any).
+// determine the implicit default value (if any)
 int
 be_union::compute_default_value (void)
 {
-  // Check if we really need a default value. This will be true if there is an
+  // check if we really need a default value. This will be true if there is an
   // explicit default case OR if an implicit default exists because not all
   // values of the discriminant type are covered by the cases.
 
-  // Compute the total true "case" labels i.e., exclude the "default" case.
+  // compute the total true "case" labels i.e., exclude the "default" case
   int total_case_members = 0;
 
-  // Instantiate a scope iterator.
-  UTL_ScopeActiveIterator *si = 0;
-  ACE_NEW_RETURN (si,
-                  UTL_ScopeActiveIterator (this,
-                                           UTL_Scope::IK_decls),
-                  -1);
-
-  while (!si->is_done ())
+  // instantiate a scope iterator.
+  UTL_ScopeActiveIterator *si
+    = new UTL_ScopeActiveIterator (this,
+                                   UTL_Scope::IK_decls);
+  while (!(si->is_done ()))
     {
-      // Get the next AST decl node.
+      // get the next AST decl node
       be_union_branch *ub =
         be_union_branch::narrow_from_decl (si->item ());
-
-      if (ub != 0)
+      if (ub)
         {
-          // If the label is a case label, increment by 1.
+          // if the label is a case label, increment by 1
           for (unsigned long i = 0;
                i < ub->label_list_length ();
                ++i)
             {
               if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
-                {
-                  total_case_members++;
-                }
+                total_case_members++;
             }
         }
-
       si->next ();
     }
-
   delete si;
 
   // Check if the total_case_members cover the entire
@@ -935,23 +875,17 @@ be_union::compute_default_value (void)
     {
     case AST_Expression::EV_short:
     case AST_Expression::EV_ushort:
-      if (total_case_members == ACE_UINT16_MAX + 1)
-        {
-          this->default_value_.computed_ = 0;
-        }
-
+      if (total_case_members == ACE_UINT16_MAX+1)
+        this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_long:
     case AST_Expression::EV_ulong:
       if ((unsigned int) total_case_members > ACE_UINT32_MAX)
-        {
-          this->default_value_.computed_ = 0;
-        }
-
+        this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_longlong:
     case AST_Expression::EV_ulonglong:
-      // Error for now.
+      // error for now
       this->default_value_.computed_ = -1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_union::compute_default_value ")
@@ -960,49 +894,35 @@ be_union::compute_default_value (void)
                         -1);
       ACE_NOTREACHED (break;)
     case AST_Expression::EV_char:
-      if (total_case_members == ACE_OCTET_MAX + 1)
-        {
-          this->default_value_.computed_ = 0;
-        }
-
+      if (total_case_members == ACE_OCTET_MAX+1)
+        this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_wchar:
-      if (total_case_members == ACE_WCHAR_MAX + 1)
-        {
-          this->default_value_.computed_ = 0;
-        }
-
+      if (total_case_members == ACE_WCHAR_MAX+1)
+        this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_bool:
       if (total_case_members == 2)
-        {
-          this->default_value_.computed_ = 0;
-        }
-
+        this->default_value_.computed_ = 0;
       break;
     case AST_Expression::EV_any:
-      // Has to be enum.
+      // has to be enum
       {
         be_decl *d = be_decl::narrow_from_decl (this->disc_type ());
-
         if (d->node_type () == AST_Decl::NT_typedef)
           {
             be_typedef *bt = be_typedef::narrow_from_decl (d);
             d = bt->primitive_base_type ();
           }
-
         be_enum *en = be_enum::narrow_from_decl (d);
-
-        if (en != 0)
+        if (en)
           {
             if (total_case_members == en->member_count ())
-              {
-                this->default_value_.computed_ = 0;
-              }
+              this->default_value_.computed_ = 0;
           }
         else
           {
-            // Error.
+            // error
             this->default_value_.computed_ = -1;
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("(%N:%l) be_union::")
@@ -1013,21 +933,21 @@ be_union::compute_default_value (void)
       }
       break;
     default:
-      // Error.
+      // error
       this->default_value_.computed_ = -1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_union::compute_default_value ")
                          ACE_TEXT ("- Bad discriminant type\n")),
                         -1);
       ACE_NOTREACHED (break;)
-    } // End of switch
+    } // end of switch
 
-  // If we have determined that we don't need a default case and even then a
-  // default case was provided, flag this off as error.
-  if ((this->default_value_.computed_ == 0) 
-      && (this->default_index () != -1))
+  // if we have determined that we don't need a default case and even then a
+  // default case was provided, flag this off as error
+  if ((this->default_value_.computed_ == 0) &&
+      (this->default_index () != -1))
     {
-      // Error.
+      // error
       this->default_value_.computed_ = -1;
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%N:%l) be_union::compute_default_value ")
@@ -1035,22 +955,22 @@ be_union::compute_default_value (void)
                         -1);
     }
 
-  // Proceed only if necessary.
+  // proceed only if necessary
   switch (this->default_value_.computed_)
     {
     case -1:
-      // Error. We should never be here because errors have already been caught
-      // above.
+      // error. We should never be here because errors have already been caught
+      // above
       return -1;
     case 0:
-      // Nothing more to do.
+      // nothing more to do
       return 0;
     default:
-      // Proceed further down.
+      // proceed further down
       break;
     }
 
-  // Initialization of the default value data member.
+  // initialization of the default value data member
   switch (this->udisc_type ())
     {
     case AST_Expression::EV_short:
@@ -1060,7 +980,7 @@ be_union::compute_default_value (void)
       this->default_value_.u.ushort_val = 0;
       break;
     case AST_Expression::EV_long:
-      // The +1 is to avert a warning on many compilers.
+      // The +1 is to avert an MSVC warning
       this->default_value_.u.long_val = ACE_INT32_MIN + 1;
       break;
     case AST_Expression::EV_ulong:
@@ -1080,30 +1000,25 @@ be_union::compute_default_value (void)
       break;
     case AST_Expression::EV_longlong:
     case AST_Expression::EV_ulonglong:
-      // Unimplemented.
+      // unimplemented
     default:
-      // Error caught earlier.
+      // error caught earlier.
       break;
-    }
+    } // end of switch
 
-  // Proceed until we have found the appropriate default value.
+  // proceed until we have found the appropriate default value
   while (this->default_value_.computed_ == -2)
     {
-      // Instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this, 
-                                               UTL_Scope::IK_decls),
-                      -1);
+      si = new UTL_ScopeActiveIterator (this, UTL_Scope::IK_decls);
+      // instantiate a scope iterator.
 
       int break_loop = 0;
 
-      while (!si->is_done () && break_loop == 0)
+      while (!(si->is_done ()) && !break_loop)
         {
-          // Get the next AST decl node
-          be_union_branch *ub = 
-            be_union_branch::narrow_from_decl (si->item ());
-
-          if (ub != 0)
+          // get the next AST decl node
+          be_union_branch *ub = be_union_branch::narrow_from_decl (si->item ());
+          if (ub)
             {
               for (unsigned long i = 0;
                    i < ub->label_list_length () && !break_loop;
@@ -1111,12 +1026,11 @@ be_union::compute_default_value (void)
                 {
                   if (ub->label (i)->label_kind () == AST_UnionLabel::UL_label)
                     {
-                      // Not a default.
+                      // not a default
                       AST_Expression *expr = ub->label (i)->label_val ();
-
-                      if (expr == 0)
+                      if (!expr)
                         {
-                          // Error.
+                          // error
                           this->default_value_.computed_ = -1;
                           ACE_ERROR_RETURN
                             ((LM_ERROR,
@@ -1128,108 +1042,96 @@ be_union::compute_default_value (void)
 
                       switch (expr->ev ()->et)
                         {
-                          // Check if they match in which case this
+                          // check if they match in which case this
                           // cannot be the implicit default value. So
                           // start with a new value and try the whole loop
-                          // again because our case labels may not be sorted.
+                          // again because our case labels may not be sorted
                         case AST_Expression::EV_short:
                           if (this->default_value_.u.short_val
-                                == expr->ev ()->u.sval)
+                              == expr->ev ()->u.sval)
                             {
                               this->default_value_.u.short_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_ushort:
                           if (this->default_value_.u.ushort_val
-                                == expr->ev ()->u.usval)
+                              == expr->ev ()->u.usval)
                             {
                               this->default_value_.u.ushort_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_long:
                           if (this->default_value_.u.long_val
-                                == expr->ev ()->u.lval)
+                              == expr->ev ()->u.lval)
                             {
                               this->default_value_.u.long_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_ulong:
                           if (this->default_value_.u.ulong_val
-                                == expr->ev ()->u.ulval)
+                              == expr->ev ()->u.ulval)
                             {
                               this->default_value_.u.ulong_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_char:
                           if (this->default_value_.u.char_val
-                                == expr->ev ()->u.cval)
+                              == expr->ev ()->u.cval)
                             {
                               this->default_value_.u.char_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_wchar:
                           if (this->default_value_.u.wchar_val
-                                == expr->ev ()->u.wcval)
+                              == expr->ev ()->u.wcval)
                             {
                               this->default_value_.u.wchar_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_bool:
                           if (this->default_value_.u.bool_val
-                                == expr->ev ()->u.bval)
+                              == expr->ev ()->u.bval)
                             {
                               this->default_value_.u.bool_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_any:
                           // this is the case of enums. We maintain
                           // evaluated values which always start with 0
                           if (this->default_value_.u.enum_val
-                                == expr->ev ()->u.eval)
+                              == expr->ev ()->u.eval)
                             {
                               this->default_value_.u.enum_val++;
                               break_loop = 1;
                             }
-
                           break;
                         case AST_Expression::EV_longlong:
                         case AST_Expression::EV_ulonglong:
-                          // Unimplemented. right now - flag as error.
+                          // unimplemented. right now flag as error.
                         default:
-                          // Error.
+                          // error
                           break;
-                        } // End of switch.
+                        } // end of switch
                     } // if label_Kind == label
-                } // End of for loop going thru all labels.
-            } // If valid union branch.
-
+                } // end of for loop going thru all labels
+            } // if valid union branch
           si->next ();
-        } // End of while scope iterator loop.
+        } // end of while scope iterator loop
+      delete si; // free the iterator object
 
-      delete si;
+      // we have not aborted the inner loops which means we have found the
+      // default value
+      if (!break_loop)
+        this->default_value_.computed_ = 1;
 
-      // We have not aborted the inner loops which means we have found the
-      // default value.
-      if (break_loop == 0)
-        {
-          this->default_value_.computed_ = 1;
-        }
-
-    } // End of outer while (default_value.computed == -2).
+    } // end of outer while
 
   return 0;
 }
@@ -1237,12 +1139,10 @@ be_union::compute_default_value (void)
 idl_bool
 be_union::has_duplicate_case_labels (void)
 {
-  // Instantiate a scope iterator.
-  UTL_ScopeActiveIterator *si = 0;
-  ACE_NEW_RETURN (si,
-                  UTL_ScopeActiveIterator (this,
-                                           UTL_Scope::IK_decls),
-                  0);
+  // instantiate a scope iterator.
+  UTL_ScopeActiveIterator *si =
+    new UTL_ScopeActiveIterator (this,
+                                 UTL_Scope::IK_decls);
 
   while (!si->is_done ())
     {
@@ -1261,22 +1161,15 @@ be_union::has_duplicate_case_labels (void)
   return I_FALSE;
 }
 
-void
-be_union::destroy (void)
-{
-  // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_type::destroy ();
-}
+// visitor method
 
-// Visitor method.
 int
 be_union::accept (be_visitor *visitor)
 {
   return visitor->visit_union (this);
 }
 
-// Narrowing.
+// Narrowing
 IMPL_NARROW_METHODS3 (be_union, AST_Union, be_scope, be_type)
 IMPL_NARROW_FROM_DECL (be_union)
 IMPL_NARROW_FROM_SCOPE (be_union)

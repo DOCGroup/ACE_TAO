@@ -4,9 +4,8 @@
 
 #include "tao/GIOP_Server_Request.h"
 
-#include "tao/GIOP_Message_Acceptors.h"
-
 #include "tao/CDR.h"
+#include "tao/POAC.h"
 #include "tao/Environment.h"
 #include "tao/NVList.h"
 #include "tao/Principal.h"
@@ -17,6 +16,7 @@
 #include "tao/Marshal.h"
 #include "tao/debug.h"
 #include "tao/GIOP_Utils.h"
+#include "tao/POA.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Server_Request.i"
@@ -49,14 +49,12 @@ TAO_GIOP_ServerRequest::
     TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                             TAO_InputCDR &input,
                             TAO_OutputCDR &output,
-                            TAO_Transport *transport,
-                            TAO_ORB_Core *orb_core)
+                            TAO_ORB_Core *orb_core,
+                            const TAO_GIOP_Version & /*version*/)
       :mesg_base_ (mesg_base),
        incoming_ (&input),
        outgoing_ (&output),
-       transport_(transport),
        response_expected_ (0),
-       deferred_reply_ (0),
        sync_with_server_ (0),
        lazy_evaluation_ (0),
 
@@ -70,6 +68,7 @@ TAO_GIOP_ServerRequest::
        exception_ (0),
        exception_type_ (TAO_GIOP_NO_EXCEPTION),
        orb_core_ (orb_core),
+       //       version_ (version),
        service_info_ (),
        request_id_ (0),
        profile_ (orb_core),
@@ -83,22 +82,19 @@ TAO_GIOP_ServerRequest::
 
 TAO_GIOP_ServerRequest::
     TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-                            CORBA::ULong request_id,
-                            CORBA::Boolean response_expected,
-                            CORBA::Boolean deferred_reply,
+                            CORBA::ULong &request_id,
+                            CORBA::Boolean &response_expected,
                             TAO_ObjectKey &object_key,
                             const ACE_CString &operation,
                             TAO_OutputCDR &output,
-                            TAO_Transport *transport,
                             TAO_ORB_Core *orb_core,
+                            const TAO_GIOP_Version & /*version*/,
                             int &parse_error)
       : mesg_base_ (mesg_base),
         operation_ (operation),
         incoming_ (0),
         outgoing_ (&output),
-        transport_ (transport),
         response_expected_ (response_expected),
-        deferred_reply_ (deferred_reply),
         sync_with_server_ (0),
         lazy_evaluation_ (0),
 
@@ -112,6 +108,7 @@ TAO_GIOP_ServerRequest::
         exception_ (0),
         exception_type_ (TAO_GIOP_NO_EXCEPTION),
         orb_core_ (orb_core),
+        //version_ (version),
         service_info_ (),
         request_id_ (request_id),
         profile_ (orb_core),
@@ -186,25 +183,43 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
 {
   if (this->retval_ || this->exception_)
     ACE_THROW (CORBA::BAD_INV_ORDER ());
+  else
+  {
 
-  ACE_NEW_THROW_EX (this->exception_,
-                    CORBA::Any (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK;
+#if (TAO_HAS_MINIMUM_CORBA == 0)
 
-  this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+    const PortableServer::ForwardRequest *forward_request = 0;
 
-  if (value.value ())
-    {
-      // @@ This cast is not safe, but we haven't implemented the >>=
-      // and <<= operators for base exceptions (yet).
-      CORBA_Exception* x = (CORBA_Exception*)value.value ();
+    // If extraction of exception succeeded
+    if ((value >>= forward_request) != 0)
+      {
+        this->forward_location_ = forward_request->forward_reference;
+        this->exception_type_ = TAO_GIOP_LOCATION_FORWARD;
+      }
+    // Normal exception
+    else
+#endif /* TAO_HAS_MINIMUM_CORBA */
+      {
+        ACE_NEW_THROW_EX (this->exception_,
+                          CORBA::Any (value),
+                          CORBA::NO_MEMORY ());
+        ACE_CHECK;
 
-      if (CORBA_SystemException::_downcast (x) != 0)
-        {
-          this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
-        }
-    }
+        this->exception_type_ = TAO_GIOP_USER_EXCEPTION;
+
+        if (value.value ())
+          {
+            // @@ This cast is not safe, but we haven't implemented the >>=
+            // and <<= operators for base exceptions (yet).
+            CORBA_Exception* x = (CORBA_Exception*)value.value ();
+
+            if (CORBA_SystemException::_downcast (x) != 0)
+              {
+                this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
+              }
+          }
+      }
+   }
 }
 
 // this method will be utilized by the DSI servant to marshal outgoing
@@ -288,9 +303,7 @@ TAO_GIOP_ServerRequest::init_reply (CORBA::Environment &ACE_TRY_ENV)
     reply_params.params_ = this->params_;
 #endif /*TAO_HAS_MINIMUM_CORBA */
 
-  // Pass in the service context list.  We are sending back what we
-  // received in the Request.  (RTCORBA relies on it.  Check before
-  // modifying...) marina
+  // Pass in the service context
   reply_params.service_context_notowned (&this->service_info_);
 
   // Forward exception only.
@@ -362,7 +375,7 @@ TAO_GIOP_ServerRequest::exception_type (void)
 }
 
 void
-TAO_GIOP_ServerRequest::send_no_exception_reply (void)
+TAO_GIOP_ServerRequest::send_no_exception_reply (TAO_Transport *transport)
 {
   // Construct our reply generator
   TAO_Pluggable_Reply_Params reply_params;
@@ -372,14 +385,10 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (void)
   reply_params.params_ = 0;
 #endif /*TAO_HAS_MINIMUM_CORBA*/
 
-  // Change this to pass back the same thing we received, as well as
-  // leave a comment why this is important!
   reply_params.svc_ctx_.length (0);
 
-  // Pass in the service context list.  We are sending back what we
-  // received in the Request.  (RTCORBA relies on it.  Check before
-  // modifying...) marina
-  reply_params.service_context_notowned (&this->service_info_);
+  // Pass in the service context
+  reply_params.service_context_notowned (& reply_params.svc_ctx_);
 
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
 
@@ -388,7 +397,7 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (void)
                                         reply_params);
 
   // Send the message
-  int result = this->mesg_base_->send_message (transport_,
+  int result = this->mesg_base_->send_message (transport,
                                                *this->outgoing_);
 
   if (result == -1)
@@ -404,63 +413,10 @@ TAO_GIOP_ServerRequest::send_no_exception_reply (void)
     }
 }
 
-
-void
-TAO_GIOP_ServerRequest::tao_send_reply(void)
+CORBA::Object_ptr
+TAO_GIOP_ServerRequest::objref (CORBA_Environment &ACE_TRY_ENV)
 {
+  TAO_POA_Current_Impl *pci = TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
-
-  int result = mesg_base_->send_message(transport_,
-                                        *outgoing_);
-  if (result == -1)
-    {
-      if (TAO_debug_level > 0)
-        {
-          // No exception but some kind of error, yet a response
-          // is required.
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO: (%P|%t) %p: cannot send reply\n"),
-                      ACE_TEXT ("TAO_GIOP_ServerRequest::tao_send_reply")));
-
-      }
-    }
-}
-
-void
-TAO_GIOP_ServerRequest::tao_send_reply_exception(CORBA::Exception& ex)
-{
-  int result = 0;
-  if (response_expected_)
-  {
-    result = ACE_static_cast(TAO_GIOP_Message_Acceptors*,mesg_base_)->send_reply_exception (transport_,
-                                               orb_core_,
-                                               request_id_,
-                                               &service_info(),
-                                               &ex);
-    if (result == -1)
-    {
-      if (TAO_debug_level > 0)
-         ACE_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO: (%P|%t|%N|%l) %p: cannot send exception reply\n"),
-                     ACE_TEXT ("tao_send_reply_exception()")));
-         ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                              "TAO: ");
-    }
-
-  }
-  else if (TAO_debug_level > 0)
-  {
-    // It is unfotunate that an exception (probably a system
-    // exception) was thrown by the upcall code (even by the
-    // user) when the client was not expecting a response.
-    // However, in this case, we cannot close the connection
-    // down, since it really isn't the client's fault.
-
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) exception thrown ")
-                ACE_TEXT ("but client is not waiting a response\n")));
-    ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "TAO: ");
-   }
-
+  return pci->poa ()->id_to_reference (pci->object_id (), ACE_TRY_ENV);
 }

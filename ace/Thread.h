@@ -19,7 +19,6 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "ace/Thread_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -42,8 +42,7 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
     purge_percentage_ (TAO_PURGE_PERCENT),
     reactor_mask_signals_ (1),
     sched_policy_ (ACE_SCHED_OTHER),
-    priority_mapping_type_ (TAO_PRIORITY_MAPPING_DIRECT),
-    dynamically_allocated_reactor_ (0)
+    priority_mapping_type_ (TAO_PRIORITY_MAPPING_LINEAR)
 {
 }
 
@@ -64,6 +63,26 @@ int
 TAO_Default_Resource_Factory::init (int argc, char **argv)
 {
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
+
+  this->parser_names_count_ = 0;
+
+  for (int curarg = 0; curarg < argc; ++curarg)
+  {
+    // Parse thro' and find the number of Parsers to be loaded.
+    if (ACE_OS::strcasecmp (argv[curarg],
+                            "-ORBIORParser") == 0)
+      ++this->parser_names_count_;
+
+    ++curarg;
+
+    if (curarg == (argc-1) && this->parser_names_count_ != 0)
+      {
+        // This is the last loop..
+        this->parser_names_ =
+          new const char *[this->parser_names_count_];
+        this->index_ = 0;
+      }
+  }
 
   for (int curarg = 0; curarg < argc; curarg++)
     if (ACE_OS::strcasecmp (argv[curarg],
@@ -321,6 +340,143 @@ TAO_Default_Resource_Factory::init (int argc, char **argv)
                           ACE_TEXT (" <%s> for -ORBPriorityMapping\n"), name));
           }
       }
+
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 "-ORBIORParser") == 0)
+      {
+        curarg++;
+
+        if (curarg < argc)
+          {
+            this->add_to_ior_parser_names (argv[curarg]);
+          }
+      }
+  return 0;
+}
+
+int
+TAO_Default_Resource_Factory::get_parser_names (const char **&names,
+                                                int &number_of_names)
+{
+  if (this->parser_names_count_ != 0)
+    {
+      // The user used some -ORBIORParser options, just return those.
+      names = this->parser_names_;
+      number_of_names = this->parser_names_count_;
+
+      return 0;
+    }
+
+  // OK fallback on the hardcoded ones....
+  this->parser_names_count_ = 4; /*HOW MANY DO WE HAVE?*/
+
+  this->parser_names_ = new const char * [this->parser_names_count_];
+
+  // Ensure that there is enough space in the parser_names_ array */
+
+  // DLL_Parser
+  TAO_IOR_Parser *tmp =
+    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("DLL_Parser");
+
+  if (tmp == 0)
+    {
+      int r = ACE_Service_Config::process_directive
+        (
+         "dynamic DLL_Parser Service_Object * TAO:_make_TAO_DLL_Parser()"
+         );
+      if (r != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error configuring DLL parser\n"), -1);
+        }
+    }
+
+  int index = 0;
+  if (tmp != 0)
+    {
+      this->parser_names_[index] = "DLL_Parser";
+      index++;
+    }
+
+  // FILE_Parser
+  tmp =
+    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("FILE_Parser");
+
+  if (tmp == 0)
+    {
+      int r = ACE_Service_Config::process_directive
+        (
+         "dynamic FILE_Parser Service_Object * TAO:_make_TAO_FILE_Parser()"
+         );
+
+      if (r != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Configuring FILE Parser\n"), -1);
+        }
+    }
+  if (tmp != 0)
+    {
+      this->parser_names_[index] = "FILE_Parser";
+      index++;
+    }
+
+  // CORBALOC_Parser
+  tmp =
+    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBALOC_Parser");
+
+  if (tmp == 0)
+    {
+      int r = ACE_Service_Config::process_directive
+        (
+         "dynamic CORBALOC_Parser Service_Object * TAO_IOR_CORBALOC:_make_TAO_CORBALOC_Parser()"
+         );
+
+      if (r != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Configuring CORBALOC Parser\n"), -1);
+        }
+    }
+
+  this->parser_names_[index] = "CORBALOC_Parser";
+  index++;
+  
+  // CORBANAME_Parser
+  tmp =
+    ACE_Dynamic_Service<TAO_IOR_Parser>::instance ("CORBANAME_Parser");
+
+  if (tmp == 0)
+    {
+      int r = ACE_Service_Config::process_directive
+        (
+         "dynamic CORBANAME_Parser Service_Object * TAO_IOR_CORBANAME:_make_TAO_CORBANAME_Parser()"
+         );
+
+      if (r != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error Configuring CORBANAME Parser\n"), -1);
+        }
+    }
+
+  this->parser_names_[index] = "CORBANAME_Parser";
+  index++;
+  
+  names = this->parser_names_;
+
+  //  number_of_names = this->parser_names_count_;
+  number_of_names = index;
+
+  return 0;
+}
+
+int
+TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
+{
+  this->parser_names_[this->index_] = CORBA::string_dup (curarg);
+
+  ++this->index_;
 
   return 0;
 }
@@ -730,19 +886,9 @@ TAO_Default_Resource_Factory::get_reactor (void)
       delete reactor;
       reactor = 0;
     }
-  else
-    this->dynamically_allocated_reactor_ = 1;
 
   return reactor;
 }
-
-void
-TAO_Default_Resource_Factory::reclaim_reactor (ACE_Reactor *reactor)
-{
-  if (this->dynamically_allocated_reactor_ == 1)
-    delete reactor;
-}
-
 
 typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL,ACE_Null_Mutex> NULL_LOCK_MALLOC;
 typedef ACE_Allocator_Adapter<NULL_LOCK_MALLOC> NULL_LOCK_ALLOCATOR;

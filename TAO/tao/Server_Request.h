@@ -131,6 +131,10 @@ public:
   virtual unsigned int operation_length (void) const = 0;
   // get the length of the operation name
 
+  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ()) = 0;
+  // Return the object reference of the request.
+
   virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) = 0;
   // Start a Reply message.
@@ -162,23 +166,14 @@ public:
   virtual CORBA::Boolean response_expected (void) const = 0;
   // is the response expected
 
-  virtual CORBA::Boolean deferred_reply (void) const = 0;
-  // is the reply deferred?
-
   virtual CORBA::Boolean sync_with_server (void) const = 0;
   // Should we return before dispatching the servant?
-
 
   virtual void _tao_lazy_evaluation (int lazy_evaluation) = 0;
   // Set the lazy evaluation flag
 
-  virtual void send_no_exception_reply (/*TAO_Transport *transport*/) = 0;
+  virtual void send_no_exception_reply (TAO_Transport *transport) = 0;
   // Used with reliable oneway requests.
-
-  virtual void tao_send_reply (void) = 0;
-
-  virtual void tao_send_reply_exception (CORBA::Exception&) = 0;
-
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ServerRequest_ptr _ptr_type;

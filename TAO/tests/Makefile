@@ -23,7 +23,6 @@ DIRS  = CDR \
         IORManipulation \
         Connection_Purging \
         ORB_init \
-        ORB_destroy \
         Nested_Event_Loop \
         Leader_Followers \
 	Object_Loader \
@@ -37,13 +36,12 @@ DIRS  = CDR \
 	Timeout \
 	Timed_Buffered_Oneways \
 	Smart_Proxies \
-	Portable_Interceptors \
+	Interceptors \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
 	DynAny_Test \
 	Policies \
-	LongUpcalls \
-	RTCORBA
+	LongUpcalls
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

@@ -134,10 +134,6 @@
 
 # define ACE_HAS_SIGSUSPEND
 
-// Some misc wide character stuff
-# define ACE_HAS_SAFE_WCSTOK
-# define ACE_LACKS_WCSDUP_PROTOTYPE
-
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 # define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
@@ -179,12 +175,9 @@
 
 #define ACE_HAS_GETPAGESIZE 1
 
-#if (__GLIBC__  < 2)  ||  (__GLIBC__ == 2 && __GLIBC_MINOR__ < 2)
-  // GLIBC 2.2 and higher doesn't need this macro any more.
-  // Platform lacks POSIX prototypes for certain System V functions
-  // like shared memory and message queues.
-# define ACE_LACKS_SOME_POSIX_PROTOTYPES
-#endif
+// Platform lacks POSIX prototypes for certain System V functions
+// like shared memory and message queues.
+#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 // Platform defines struct timespec but not timespec_t
 #define ACE_LACKS_TIMESPEC_T

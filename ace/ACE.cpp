@@ -158,9 +158,7 @@ ACE::compiler_beta_version (void)
 int
 ACE::terminate_process (pid_t pid)
 {
-#if defined (ACE_HAS_PACE)
-  return pace_kill (pid, 9);
-#elif defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_PHARLAP)
   ACE_UNUSED_ARG (pid);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32)
@@ -196,22 +194,13 @@ ACE::terminate_process (pid_t pid)
       return -1;
 #else
   return ACE_OS::kill (pid, 9);
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_WIN32 */
 }
 
 int
 ACE::process_active (pid_t pid)
 {
-#if defined (ACE_HAS_PACE)
-  int retval = pace_kill (pid, 0);
-
-  if (retval == 0)
-    return 1;
-  else if (errno == ESRCH)
-    return 0;
-  else
-    return -1;
-#elif !defined(ACE_WIN32)
+#if !defined(ACE_WIN32)
   int retval = ACE_OS::kill (pid, 0);
 
   if (retval == 0)
@@ -237,7 +226,7 @@ ACE::process_active (pid_t pid)
       else
         return 1;
     }
-#endif /* ACE_HAS_PACE */
+#endif /* ACE_WIN32 */
 }
 
 // Split a string up into 'token'-delimited pieces, ala Perl's
@@ -491,7 +480,8 @@ u_long ACE::crc_table_[] =
   0xf0a5bd1d, 0xf464a0aa, 0xf9278673, 0xfde69bc4, 0x89b8fd09,
   0x8d79e0be, 0x803ac667, 0x84fbdbd0, 0x9abc8bd5, 0x9e7d9662,
   0x933eb0bb, 0x97ffad0c, 0xafb010b1, 0xab710d06, 0xa6322bdf,
-  0xa2f33668, 0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4};
+  0xa2f33668, 0xbcb4666d, 0xb8757bda, 0xb5365d03, 0xb1f740b4
+};
 
 // Compute a POSIX 1003.2 checksum.  The routine takes an string and
 // computes the CRC for it (it stops on the first '\0' character).
@@ -946,42 +936,6 @@ ACE::ldopen (const ACE_TCHAR *filename,
     return 0;
   else
     return ACE_OS::fopen (buf, type);
-}
-
-ACE_TCHAR *
-ACE::ldname (const ACE_TCHAR *entry_point)
-{
-  ACE_TRACE ("ACE::ldname");
-
-#if defined (__BORLANDC__)
-  size_t size =
-    1 // leading '_'
-    + ACE_OS::strlen (entry_point)
-    + 1;
-
-  ACE_TCHAR *new_name;
-  ACE_NEW_RETURN (new_name,
-                  ACE_TCHAR[size],
-                  0);
-
-  ACE_OS::strcpy (new_name, ACE_TEXT ("_"));
-  ACE_OS::strcat (new_name, entry_point);
-
-  return new_name;
-#else /* __BORLANDC__ */
-  size_t size =
-    ACE_OS::strlen (entry_point)
-    + 1;
-
-  ACE_TCHAR *new_name;
-  ACE_NEW_RETURN (new_name,
-                  ACE_TCHAR[size],
-                  0);
-
-  ACE_OS::strcpy (new_name, entry_point);
-
-  return new_name;
-#endif /* __BORLANDC__ */
 }
 
 int
@@ -3003,37 +2957,22 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                    (int) local.wMinute,
                    (int) local.wSecond,
                    (int) local.wMilliseconds * 1000);
-  date_and_time[26] = '\0';
-  return &date_and_time[11];
 #else  /* UNIX */
   ACE_TCHAR timebuf[26]; // This magic number is based on the ctime(3c) man page.
   ACE_Time_Value cur_time = ACE_OS::gettimeofday ();
   time_t secs = cur_time.sec ();
-
   ACE_OS::ctime_r (&secs,
                    timebuf,
                    sizeof timebuf);
   ACE_OS::strncpy (date_and_time,
                    timebuf,
                    date_and_timelen);
-  char yeartmp[5];
-  ACE_OS::strncpy (yeartmp,
-                   &date_and_time[20],
-                   4);
-  yeartmp[4] = '\0';
-  char timetmp[9];
-  ACE_OS::strncpy (timetmp,
-                   &date_and_time[11],
-                   8);
-  timetmp[8] = '\0';
-  ACE_OS::sprintf (&date_and_time[11],
-                   "%s %s.%06ld",
-                   yeartmp,
-                   timetmp,
+  ACE_OS::sprintf (&date_and_time[19],
+                   ".%06ld",
                    cur_time.usec ());
-  date_and_time[33] = '\0';
-  return &date_and_time[15];
 #endif /* WIN32 */
+  date_and_time[26] = '\0';
+  return &date_and_time[11];
 }
 
 // This function rounds the request to a multiple of the page size.

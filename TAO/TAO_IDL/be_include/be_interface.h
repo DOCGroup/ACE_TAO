@@ -159,9 +159,6 @@ public:
   void in_mult_inheritance (int mi);
   // set a new value
 
-  virtual void destroy (void);
-  // Cleanup function.
-
   // Visiting
   virtual int accept (be_visitor *visitor);
 

@@ -66,9 +66,6 @@ public:
   virtual idl_bool in_recursion (be_type *node = 0);
   // are we or the node represented by node involved in recursion
 
-  virtual void destroy (void);
-  // Cleanup method.
-
   virtual int accept (be_visitor *visitor);
   // Visiting
 

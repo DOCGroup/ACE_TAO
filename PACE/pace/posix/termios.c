@@ -13,7 +13,7 @@
  *
  * ============================================================================= */
 
-#include "pace/termios.h"
+#include "pace/sys/termios.h"
 
 #if !defined (PACE_HAS_INLINE)
 # include "pace/posix/termios.inl"

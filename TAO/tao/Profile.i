@@ -2,12 +2,10 @@
 // $Id$
 
 ACE_INLINE
-TAO_Profile::TAO_Profile (CORBA::ULong tag,
-                          TAO_ORB_Core *orb_core)
+TAO_Profile::TAO_Profile (CORBA::ULong tag)
   : are_policies_parsed_ (0),
     policy_list_ (0),
     tag_ (tag),
-    orb_core_ (orb_core),
     forward_to_ (0),
     refcount_ (1)
 {
@@ -17,12 +15,6 @@ ACE_INLINE CORBA::ULong
 TAO_Profile::tag (void) const
 {
   return this->tag_;
-}
-
-ACE_INLINE TAO_ORB_Core *
-TAO_Profile::orb_core (void) const
-{
-  return this->orb_core_;
 }
 
 ACE_INLINE CORBA::ULong

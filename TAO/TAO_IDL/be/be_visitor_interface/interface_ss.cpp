@@ -75,7 +75,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << " ()->get_collocation_strategy ())" << be_idt_nl
       << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
 
-  if (be_global->gen_thru_poa_collocation ())
+  if (idl_global->gen_thru_poa_collocation ())
     *os << "{" << be_nl
         << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
@@ -91,20 +91,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
 
-  if (be_global->gen_direct_collocation ())
-    *os << "if (obj->_is_local () != 0)" << be_idt_nl
+  if (idl_global->gen_direct_collocation ())
+    *os << "if (obj->_servant () != 0)" << be_idt_nl
         << "{" << be_idt_nl
-        << "TAO_Collocated_Object *local_object =" << be_nl
-        << "  TAO_Collocated_Object::_narrow (obj);" << be_nl
-        << "if (local_object == 0)" << be_nl
-        << "  return 0;" << be_nl
-        << node->full_skel_name () << " *servant =" << be_idt_nl
-        << "ACE_reinterpret_cast (" << be_idt_nl
-        << node->full_skel_name () << "*," << be_nl
-        << "local_object->_servant ()->_downcast (\""
-        << node->repoID () << "\")" << be_uidt_nl
-        << ");" << be_uidt_nl
-        << "local_object->_remove_ref ();" << be_nl
+        << node->full_skel_name () << " *servant = ACE_reinterpret_cast ("
+        << node->full_skel_name () << "*, obj->_servant ()->_downcast (\""
+        << node->repoID () << "\"));" << be_nl
         << "if (servant != 0)" << be_idt_nl
         << "{" << be_idt_nl
         << node->full_name () << " *retval = 0;" << be_nl
@@ -236,8 +228,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl;
   *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
-  if (be_global->use_raw_throw ())
-    *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
   *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
@@ -246,8 +238,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "ACE_CHECK;" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
-  if (be_global->use_raw_throw ())
-    *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
@@ -270,8 +262,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "ACE_CHECK;" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
-  if (be_global->use_raw_throw ())
-    *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
@@ -306,11 +298,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_downcast (" << be_idt << be_idt_nl
       << "const char* logical_type_id" << be_uidt_nl
       << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
+      << "{\n" << be_idt;
 
-  if (node->traverse_inheritance_graph (be_interface::downcast_helper,
-                                        os)
-       == -1)
+  if (node->traverse_inheritance_graph (be_interface::downcast_helper, os) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_interface_ss::"
@@ -319,6 +309,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
+  os->indent ();
   *os << "if (ACE_OS::strcmp (logical_type_id, "
       << "\"IDL:omg.org/CORBA/Object:1.0\") == 0)" << be_idt_nl
       << "return ACE_static_cast(PortableServer::Servant, this);"
@@ -332,23 +323,21 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     "::_dispatch (CORBA::ServerRequest &req, " <<
     "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
   *os << "{" << be_idt_nl;
-  //BRT
-  *os << "this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);" << be_uidt_nl;
-//  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
-//  *os << "const char *opname = req.operation (); // retrieve operation name"
-//      << be_nl;
-//  *os << "// find the skeleton corresponding to this opname" << be_nl;
-//  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
-//  *os << "{" << be_idt_nl;
-//  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
-//  if (idl_global->use_raw_throw ())
-//    *os << "throw CORBA_BAD_OPERATION ();";
-//  else
-//    *os << "ACE_THROW (CORBA_BAD_OPERATION ());";
-//  *os << be_uidt_nl;
-//  *os << "}" << be_nl;
-//  *os << "else" << be_idt_nl;
-//  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+  *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
+  *os << "const char *opname = req.operation (); // retrieve operation name"
+      << be_nl;
+  *os << "// find the skeleton corresponding to this opname" << be_nl;
+  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
+  *os << "{" << be_idt_nl;
+  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
+  if (idl_global->use_raw_throw ())
+    *os << "throw (CORBA_BAD_OPERATION ());";
+  else
+    *os << "ACE_THROW (CORBA_BAD_OPERATION ());";
+  *os << be_uidt_nl;
+  *os << "}" << be_nl;
+  *os << "else" << be_idt_nl;
+  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
   *os << "}" << be_nl << be_nl;
 
   *os << "const char* " << node->full_skel_name ()
@@ -372,7 +361,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
 
       // Thru POA stub
-  if (be_global->gen_thru_poa_collocation ())
+  if (idl_global->gen_thru_poa_collocation ())
     *os << "{" << be_idt_nl
         << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
@@ -387,7 +376,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
       // Direct stub
   *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-  if (be_global->gen_direct_collocation ())
+  if (idl_global->gen_direct_collocation ())
     *os << "{" << be_idt_nl
         << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
@@ -418,7 +407,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
   // generate the collocated class impl
-  if (be_global->gen_thru_poa_collocation ())
+  if (idl_global->gen_thru_poa_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
@@ -443,7 +432,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       delete visitor;
     }
 
-  if (be_global->gen_direct_collocation ())
+  if (idl_global->gen_direct_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);
@@ -469,25 +458,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
 
   *os << "\n\n";
-
-  // Interceptor classes
-
-  be_visitor_context ctx (*this->ctx_);
-  be_visitor *visitor = 0;
-
-  ctx.state (TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS);
-  visitor = tao_cg->make_visitor (&ctx);
-  if (!visitor || (node->accept (visitor) == -1))
-    {
-      delete visitor;
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for interceptors classes failed\n"),
-                        -1);
-    }
-  delete visitor;
-  visitor = 0;
 
   return 0;
 }

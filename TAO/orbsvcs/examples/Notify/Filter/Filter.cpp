@@ -9,21 +9,16 @@ ACE_RCSID(Filter, Filter, "$Id$")
 #define CA_FILTER "threshold < 20"
 #define SA_FILTER "threshold > 10"
 #define TCL_GRAMMAR "TCL"
-#define EVENTS_TO_SEND 30
-#define EVENTS_EXPECTED_TO_RECEIVE 9*4  // 2 consumers get the same events from 2 suppliers
-
-  ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> g_result_count = 0;
 
 FilterClient::FilterClient (void)
 {
-  g_result_count = 0;
   // No-Op.
-  ifgop_ = CosNotifyChannelAdmin::AND_OP;
+  ifgop_ = CosNotifyChannelAdmin::OR_OP;
 }
 
 FilterClient::~FilterClient ()
 {
-  this->ec_->destroy ();
+  // No-Op.
 }
 
 void
@@ -59,15 +54,6 @@ FilterClient::run (CORBA::Environment &ACE_TRY_ENV)
 {
   send_events (ACE_TRY_ENV);
   ACE_CHECK;
-
-  if (g_result_count != EVENTS_EXPECTED_TO_RECEIVE)
-    this->orb_->run ();// if we still need to wait for events, run the orb.
-}
-
-void
-FilterClient::done (void)
-{
-  this->orb_->shutdown ();
 }
 
 void
@@ -227,18 +213,6 @@ FilterClient:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
 
   consumer_admin_->add_filter (ca_filter.in (), ACE_TRY_ENV);
   ACE_CHECK;
-
-  // Setup the CA to receive all type of events
-  CosNotification::EventTypeSeq added(1);
-  CosNotification::EventTypeSeq removed (0);
-  added.length (1);
-  removed.length (0);
-
-  added[0].domain_name =  CORBA::string_dup ("*");
-  added[0].type_name = CORBA::string_dup ("*");
-
-  this->consumer_admin_->subscription_change (added, removed, ACE_TRY_ENV);
-  ACE_CHECK;
 }
 
 void
@@ -246,7 +220,7 @@ FilterClient::create_consumers (CORBA::Environment &ACE_TRY_ENV)
 {
   // startup the first consumer.
   ACE_NEW_THROW_EX (consumer_1,
-                    Filter_StructuredPushConsumer (this, "consumer1"),
+                    Filter_StructuredPushConsumer ("consumer1"),
                     CORBA::NO_MEMORY ());
 
   consumer_1->connect (consumer_admin_.in (), ACE_TRY_ENV);
@@ -254,7 +228,7 @@ FilterClient::create_consumers (CORBA::Environment &ACE_TRY_ENV)
 
   // startup the second consumer.
   ACE_NEW_THROW_EX (consumer_2,
-                    Filter_StructuredPushConsumer (this, "consumer2"),
+                    Filter_StructuredPushConsumer ("consumer1"),
                     CORBA::NO_MEMORY ());
 
   consumer_2->connect (consumer_admin_.in (), ACE_TRY_ENV);
@@ -315,21 +289,7 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
   event.filterable_data[2].name = CORBA::string_dup("pressure");
   event.filterable_data[2].value <<= (CORBA::Long)80;
 
-  event.filterable_data[0].value <<= (CORBA::Long)4;
-
-  // any
-  event.remainder_of_body <<= (CORBA::Long)4;
-
-  supplier_1->send_event (event, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  supplier_1->disconnect (ACE_TRY_ENV);
-  ACE_CHECK;
-
-  supplier_1->send_event (event, ACE_TRY_ENV);
-  ACE_CHECK;
-
-  /*  for (int i = 0; i < EVENTS_TO_SEND; i++)
+  for (int i = 0; i < 30; i++)
     {
       event.filterable_data[0].value <<= (CORBA::Long)i;
 
@@ -342,13 +302,11 @@ FilterClient::send_events (CORBA::Environment &ACE_TRY_ENV)
       supplier_2->send_event (event, ACE_TRY_ENV);
       ACE_CHECK;
     }
-  */
 }
 
 
-Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filter, const char* my_name)
-  :filter_ (filter),
-   my_name_ (my_name)
+  Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (const char* my_name)
+    :my_name_ (my_name)
 {
 }
 
@@ -417,14 +375,9 @@ Filter_StructuredPushConsumer::push_structured_event (const CosNotification::Str
     // number of expected and sent events to verify that things work
     // correctly in an automatic way...
 
-
     ACE_DEBUG ((LM_DEBUG,
-                "%s received event, %d\n", my_name_.fast_rep (), val));
-
-    ACE_DEBUG ((LM_DEBUG,"event count %d\n", g_result_count.value ()));
-
-    if (++g_result_count == EVENTS_EXPECTED_TO_RECEIVE)
-      this->filter_->done (); // all events received, we're done.
+                "%s received event %d\n", my_name_.fast_rep (),
+                val));
 }
 
 void
@@ -514,13 +467,3 @@ Filter_StructuredPushSupplier::disconnect_structured_push_supplier (CORBA::Envir
 }
 
 /*****************************************************************/
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class  ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, int>
-
-#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

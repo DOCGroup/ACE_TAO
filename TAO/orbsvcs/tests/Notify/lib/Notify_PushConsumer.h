@@ -65,9 +65,9 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_PushConsumer : public POA_CosNotifyComm:
   // Deactivate the object from the POA.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
-protected:
+ protected:
   virtual ~TAO_Notify_PushConsumer ();
   // Destructor
 
@@ -90,8 +90,7 @@ protected:
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         CosEventComm::Disconnected
-      ));
-  // The default operation is no op.
+      )) = 0;
 
     void disconnect_push_consumer (
         CORBA::Environment &ACE_TRY_ENV

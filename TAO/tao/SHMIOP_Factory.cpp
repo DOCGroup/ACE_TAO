@@ -6,15 +6,15 @@
 
 #include "tao/SHMIOP_Acceptor.h"
 #include "tao/SHMIOP_Connector.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, SHMIOP_Factory, "$Id$")
 
 static const char prefix_[] = "shmiop";
 
 TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory (void)
-  : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
-    major_ (TAO_DEF_GIOP_MAJOR),
-    minor_ (TAO_DEF_GIOP_MINOR)
+  :  major_ (TAO_DEF_GIOP_MAJOR),
+     minor_ (TAO_DEF_GIOP_MINOR)
 {
 }
 

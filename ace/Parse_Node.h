@@ -31,7 +31,7 @@ class ACE_Export ACE_Parse_Node
   //    tree of Service Nodes.
 public:
   ACE_Parse_Node (void);
-  ACE_EXPLICIT ACE_Parse_Node (const ACE_TCHAR *name);
+  ACE_Parse_Node (const ACE_TCHAR *name);
   virtual ~ACE_Parse_Node (void);
 
   ACE_Parse_Node *link (void) const;
@@ -278,7 +278,7 @@ class ACE_Export ACE_Static_Function_Node : public ACE_Location_Node
   //     linked in from a DLL, but is statically linked with the
   //     application.
 public:
-  ACE_EXPLICIT ACE_Static_Function_Node (const ACE_TCHAR *func_name);
+  ACE_Static_Function_Node (const ACE_TCHAR *func_name);
   virtual void *symbol (ACE_Service_Object_Exterminator * = 0);
   virtual ~ACE_Static_Function_Node (void);
 
@@ -296,13 +296,6 @@ private:
 #if defined (__ACE_INLINE__)
 #include "ace/Parse_Node.i"
 #endif /* __ACE_INLINE__ */
-
-// Keeps track of the number of errors encountered so far.
-extern int ace_yyerrno;
-
-// Global variable used to communicate between the parser and the main
-// program.
-extern ACE_Service_Config *ace_this_svc;
 
 #include "ace/post.h"
 #endif /* ACE_PARSE_NODE_H */

@@ -18,7 +18,6 @@ OBJFILES = \
 	$(OBJDIR)\Entries.obj \
 	$(OBJDIR)\Hash_Naming_Context.obj \
 	$(OBJDIR)\Naming_Context_Interface.obj \
-	$(OBJDIR)\Naming_Loader.obj \
 	$(OBJDIR)\Naming_Utils.obj \
 	$(OBJDIR)\Persistent_Context_Index.obj \
 	$(OBJDIR)\Persistent_Entries.obj \
@@ -27,29 +26,23 @@ OBJFILES = \
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
-CFLAGS = \
-	$(ACE_CFLAGS) \
-	$(TAO_CFLAGS) \
-	$(TAO_PORTABLESERVER_CFLAGS) \
-	$(TAO_NAMING_CFLAGS) \
-	-DTAO_NAMING_BUILD_DLL
+!ifdef STATIC
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_NAMING_CFLAGS)
+!else
+CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_NAMING_CFLAGS) -DTAO_NAMING_BUILD_DLL
+!endif
 
 CPPDIR = .;Naming
 
 IDLDIR = .
 
-INCDIR_NAME = orbsvcs\Naming
-INCLUDES = Naming\*.h Naming\*_T.cpp
+LIBFILES = $(ACE_LIB) $(TAO_LIB) $(TAO_SVC_UTILS_LIB)
 
-LIBFILES = \
-	$(ACE_LIB) \
-	$(TAO_LIB) \
-	$(TAO_PORTABLESERVER_LIB) \
-	$(TAO_SVC_UTILS_LIB)
-
-all: idl_src_files
+all: idl_src_files naming_lib
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+
+naming_lib: $(TARGET)
 
 
 #

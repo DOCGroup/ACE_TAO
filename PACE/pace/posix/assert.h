@@ -13,17 +13,21 @@
  *
  * =========================================================================== */
 
-#ifndef PACE_ASSERT_H_POSIX
-#define PACE_ASSERT_H_POSIX
-
-#include <assert.h>
+#ifndef PACE_ASSERT_H
+#define PACE_ASSERT_H
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
+  PACE_INLINE void pace_assert (int expression);
+
 # if defined (PACE_HAS_CPLUSPLUS)
 }
 # endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_ASSERT_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/assert.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_ASSERT_H */

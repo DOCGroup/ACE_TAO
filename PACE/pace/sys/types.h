@@ -13,25 +13,17 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_TYPES_H
-#define PACE_SYS_TYPES_H
+#ifndef PACE_SYS_TYPES_H_INDIRECT
+#define PACE_SYS_TYPES_H_INDIRECT
 
 #include "pace/config/defines.h"
 
-#if (PACE_HAS_POSIX)
+#if defined (PACE_HAS_POSIX)
 # include "pace/posix/types.h"
-#elif (PACE_VXWORKS)
+#elif defined (PACE_VXWORKS)
 # include "pace/vxworks/types.h"
-#elif (PACE_WIN32)
+#elif defined (PACE_WIN32)
 # include "pace/win32/types.h"
 #endif
 
-#if defined (PACE_HAS_CPLUSPLUS)
-extern "C" {
-#endif /* PACE_HAS_CPLUSPLUS */
-
-#if defined (PACE_HAS_CPLUSPLUS)
-}
-#endif /* PACE_HAS_CPLUSPLUS */
-
-#endif /* PACE_SYS_TYPES_H */
+#endif /* PACE_SYS_TYPES_H_INDIRECT */

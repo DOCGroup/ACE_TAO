@@ -30,7 +30,9 @@
 class UTL_StrList;
 class be_visitor;
 
-// BE_Module
+/*
+ * BE_Module
+ */
 
 class be_module : public virtual AST_Module,
                   public virtual be_scope,
@@ -44,9 +46,6 @@ public:
 
   be_module (UTL_ScopedName *n, UTL_StrList *p);
   // constructor
-
-  virtual void destroy (void);
-  // Cleanup method.
 
   // Visiting
   virtual int accept (be_visitor *visitor);

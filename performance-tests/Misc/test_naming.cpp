@@ -46,9 +46,7 @@ bind (ACE_Naming_Context *ns_context, int result)
       ACE_WString w_value (value);
 
       ACE_OS::sprintf (type, "%s%d", "type", i);
-      if (ns_context->bind (w_name, w_value, type) != result) {
-        ACE_ERROR ((LM_ERROR, "bind failed!"));
-      }
+      ACE_ASSERT (ns_context->bind (w_name, w_value, type) == result);
     }
   ACE_DEBUG ((LM_DEBUG, "\n"));
 }
@@ -64,9 +62,7 @@ rebind (ACE_Naming_Context *ns_context, int result)
       ACE_OS::sprintf (value, "%s%d", "value", -i);
       ACE_WString w_value (value);
       ACE_OS::sprintf (type, "%s%d", "type", -i);
-      if (ns_context->rebind (w_name, w_value, type) != result) {
-        ACE_ERROR ((LM_ERROR, "rebind failed!"));
-      }
+      ACE_ASSERT (ns_context->rebind (w_name, w_value, type) == result);
     }
 }
 
@@ -78,9 +74,7 @@ unbind (ACE_Naming_Context *ns_context, int result)
     {
       ACE_OS::sprintf (name, "%s%d", "name", i);
       ACE_WString w_name (name);
-      if (ns_context->unbind (w_name) != result) {
-        ACE_ERROR ((LM_ERROR, "unbind failed!"));
-      }
+      ACE_ASSERT (ns_context->unbind (w_name) == result);
     }
 }
 
@@ -113,9 +107,6 @@ find (ACE_Naming_Context *ns_context, int sign, int result)
       ACE_WString val (temp_val);
 
       int resolve_result = ns_context->resolve (w_name, w_value, type_out);
-      if (resolve_result != result) {
-        ACE_ERROR ((LM_ERROR, "resolved failed!"));
-      }
       ACE_ASSERT (resolve_result == result);
       ACE_UNUSED_ARG (resolve_result); // To avoid compile warning
                                        // with ACE_NDEBUG.

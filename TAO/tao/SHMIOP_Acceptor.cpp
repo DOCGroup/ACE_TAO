@@ -163,16 +163,8 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
 int
 TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
-                                   int major,
-                                   int minor,
                                    const char *options)
 {
-  if (major >=0 && minor >= 0)
-    this->version_.set_version (ACE_static_cast (CORBA::Octet,
-                                                 major),
-                                ACE_static_cast (CORBA::Octet,
-                                                 minor));
-
   // Parse options
   if (this->parse_options (options) == -1)
     return -1;
@@ -193,7 +185,6 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core)
 
   ACE_NEW_RETURN (this->creation_strategy_,
                   TAO_SHMIOP_CREATION_STRATEGY (this->orb_core_,
-                                                0,
                                                 this->lite_flag_),
                   -1);
 
@@ -263,17 +254,12 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                                  TAO_ObjectKey &object_key)
 {
   // Create the decoding stream from the encapsulation in the buffer,
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   TAO_InputCDR cdr (profile.profile_data.mb ());
-#else
-  TAO_InputCDR cdr (ACE_reinterpret_cast(char*,profile.profile_data.get_buffer ()),
-                    profile.profile_data.length ());
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
+  
   CORBA::Octet major, minor;
-
+  
   // Read the version. We just read it here. We don't*do any*
-  // processing.
+  // processing. 
   if (!(cdr.read_octet (major)
         && cdr.read_octet (minor)))
   {
@@ -286,7 +272,7 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       }
     return -1;
   }
-
+  
   CORBA::String_var host;
   CORBA::UShort port = 0;
 
@@ -302,11 +288,11 @@ TAO_SHMIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
         }
       return -1;
     }
-
+  
   // ... and object key.
   if ((cdr >> object_key) == 0)
     return -1;
-
+  
   // We are NOT bothered about the rest.
 
   return 1;

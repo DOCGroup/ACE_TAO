@@ -124,18 +124,6 @@
 #define TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT 10019
 #endif /* TAO_DEFAULT_IMPLREPO_SERVER_REPLY_PORT */
 
-// The default UDP multicast port number for locating the TAO
-// Interface Repository Service.
-#if !defined (TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT)
-#define TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT 10020
-#endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REQUEST_PORT */
-
-// The default UDP port number for replying to a location request to
-// the TAO Interface Repository Service.
-#if !defined (TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT)
-#define TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT 10021
-#endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT */
-
 
 // The default timeout receiving the location request to the TAO
 // Naming, Trading and other servicesService.
@@ -213,9 +201,9 @@
 // in 20+ files, define it conditionally.
 // The TAO_OutputCDR class uses the ACE macro, which
 // is defined by default.
-#if !defined(TAO_NO_COPY_OCTET_SEQUENCES)
-# define TAO_NO_COPY_OCTET_SEQUENCES 1
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
+//#if defined (ACE_NO_COPY_OCTET_SEQUENCES)
+#define TAO_NO_COPY_OCTET_SEQUENCES
+//#endif /* ACE_NO_COPY_OCTET_SEQUENCES */
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # define TAO_HAS_EXCEPTIONS
@@ -226,25 +214,13 @@
 # error "tao/orbconf.h: You can only use exceptions in TAO if ACE supports them"
 #endif /* TAO_HAS_EXCEPTIONS */
 
-#if !defined (TAO_HAS_EXCEPTIONS)
+#if !defined(TAO_HAS_EXCEPTIONS)
 #define TAO_ENV_ARG_DECL , CORBA::Environment &ACE_TRY_ENV
-#define TAO_ENV_ARG_DECL_WITH_DEFAULTS , CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
 #define TAO_ENV_ARG_DECL_NOT_USED , CORBA::Environment &
-#define TAO_ENV_ARG_PARAMETER ,ACE_TRY_ENV
-#define TAO_ENV_SINGLE_ARG_DECL CORBA::Environment &ACE_TRY_ENV
-#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
-#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED CORBA::Environment &
-#define TAO_ENV_SINGLE_ARG_PARAMETER ACE_TRY_ENV
 #define TAO_ENV_ARG_DEFN
 #else
 #define TAO_ENV_ARG_DECL
-#define TAO_ENV_ARG_DECL_WITH_DEFAULTS
 #define TAO_ENV_ARG_DECL_NOT_USED
-#define TAO_ENV_ARG_PARAMETER
-#define TAO_ENV_SINGLE_ARG_DECL
-#define TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
-#define TAO_ENV_SINGLE_ARG_DECL_NOT_USED
-#define TAO_ENV_SINGLE_ARG_PARAMETER
 #define TAO_ENV_ARG_DEFN CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ()
 #endif /* TAO_HAS_EXCEPTIONS */
 
@@ -345,14 +321,10 @@
 #define TAO_OBJID_POLICYMANAGER       "ORBPolicyManager"
 #define TAO_OBJID_POLICYCURRENT       "PolicyCurrent"
 #define TAO_OBJID_IORMANIPULATION     "IORManipulation"
-#define TAO_OBJID_IORTABLE            "IORTable"
-#define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
-#define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
-#define TAO_OBJID_RTORB               "RTORB"
-#define TAO_OBJID_RTCURRENT               "RTCurrent"
-#define TAO_OBJID_PRIORITYMAPPINGMANAGER  "PriorityMappingManager"
 #define TAO_OBJID_SECURITYCURRENT     "SecurityCurrent"
 #define TAO_OBJID_TRANSACTIONCURRENT  "TransactionCurrent"
+#define TAO_OBJID_DYNANYFACTORY       "DynAnyFactory"
+#define TAO_OBJID_TYPECODEFACTORY     "TypeCodeFactory"
 
 // Comma separated list of the above ObjectIDs.
 // DO NOT include unimplemented services!
@@ -364,28 +336,20 @@
         TAO_OBJID_IMPLREPOSERVICE, \
         TAO_OBJID_ROOTPOA, \
         TAO_OBJID_POACURRENT, \
-        TAO_OBJID_INTERFACEREP, \
         TAO_OBJID_POLICYMANAGER, \
         TAO_OBJID_POLICYCURRENT, \
-        TAO_OBJID_IORMANIPULATION, \
-        TAO_OBJID_IORTABLE, \
-        TAO_OBJID_DYNANYFACTORY, \
-        TAO_OBJID_TYPECODEFACTORY, \
-        TAO_OBJID_RTORB, \
-        TAO_OBJID_RTCURRENT, \
-        TAO_OBJID_PRIORITYMAPPINGMANAGER
+        TAO_OBJID_IORMANIPULATION
 
 // Service IDs for the services that are located through Multicast.
 enum MCAST_SERVICEID
 {
   NAMESERVICE,
   TRADINGSERVICE,
-  IMPLREPOSERVICE,
-  INTERFACEREPOSERVICE
+  IMPLREPOSERVICE
 };
 
 // No. of services locatable through multicast.
-#define NO_OF_MCAST_SERVICES 4
+#define NO_OF_MCAST_SERVICES 3
 
 // TAO Naming Service.
 
@@ -801,6 +765,49 @@ enum MCAST_SERVICEID
 #  define TAO_HAS_INTERFACE_REPOSITORY 0
 #endif  /* !TAO_HAS_INTERFACE_REPOSITORY */
 
+// REMOTE_POLICIES support is enabled by default if TAO is not
+// configured for minimum CORBA.  If TAO is configured for minimum
+// CORBA, then REMOTE_POLICIES will be disabled by default.
+// To explicitly enable REMOTE_POLICIES support uncomment the following
+// #define TAO_HAS_REMOTE_POLICIES 1
+// To explicitly disable REMOTE_POLICIES support uncomment the following
+// #define TAO_HAS_REMOTE_POLICIES 0
+
+// Default REMOTE_POLICIES settings
+#if !defined (TAO_HAS_REMOTE_POLICIES)
+#  if (TAO_HAS_MINIMUM_CORBA == 1)
+#    define TAO_HAS_REMOTE_POLICIES 0
+#  else
+#    define TAO_HAS_REMOTE_POLICIES 1
+#  endif  /* TAO_HAS_MINIMUM_CORBA */
+#endif  /* !TAO_HAS_REMOTE_POLICIES */
+
+// TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro and
+// should not be set by the user.
+#if defined (TAO_HAS_LOCALITY_CONSTRAINT_POLICIES)
+# undef TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+# warning TAO_HAS_LOCALITY_CONSTRAINT_POLICIES is an internal macro \
+and should not be set by the user. Please use TAO_HAS_REMOTE_POLICIES instead.
+#endif /* TAO_HAS_LOCALITY_CONSTRAINT_POLICIES */
+
+#if (TAO_HAS_REMOTE_POLICIES == 0)
+# define TAO_HAS_LOCALITY_CONSTRAINT_POLICIES
+#endif /* TAO_HAS_REMOTE_POLICIES */
+
+// With minimum CORBA, we don't have the ForwardRequest exception.
+// Therefore, we can't support the INS forwarding agent.  Otherwise,
+// we allow user to supress it.
+#if (TAO_HAS_MINIMUM_CORBA == 1)
+# if defined (TAO_NO_IOR_TABLE)
+#   undef TAO_NO_IOR_TABLE
+# endif /* TAO_NO_IOR_TABLE */
+# define TAO_NO_IOR_TABLE 1
+#else
+# if !defined (TAO_NO_IOR_TABLE)
+#  define TAO_NO_IOR_TABLE 0
+# endif /* TAO_NO_IOR_TABLE */
+#endif /* TAO_HAS_MINIMUM_CORBA */
+
 // Interceptors is supported by default if we are not building for
 // MinimumCORBA.
 #if !defined (TAO_HAS_INTERCEPTORS)
@@ -890,26 +897,6 @@ enum MCAST_SERVICEID
 // SMART PROXIES support is disabled by default.
 // To explicitly enable SMART_PROXIES support uncomment the following
 // #define TAO_HAS_SMART_PROXIES 1
-
-// By default FT_CORBA  is disabled.
-# if !defined (TAO_HAS_FT_CORBA)
-#    define TAO_HAS_FT_CORBA 0
-#endif /*TAO_HAS_FT_CORBA*/
-
-#if (TAO_HAS_FT_CORBA == 1)
-// This is the version of the FT_CORBA spec that TAO supports. The
-// exact use of this version has not been emphasised. But TAO would
-// get TaggedComponents for a group with version number. So, for the
-// present we will have this here and do a sanity check for our
-// supported version and the one we receive -- raise an error if
-// necessary.
-#if !defined (TAO_DEF_FT_CORBA_MAJOR)
-#define TAO_DEF_FT_CORBA_MAJOR 1
-#endif /* TAO_DEF_FT_CORBA_MAJOR */
-#if !defined (TAO_DEF_FT_CORBA_MINOR)
-#define TAO_DEF_FT_CORBA_MINOR 0
-#endif /* TAO_DEF_FT_CORBA_MINOR */
-#endif /*TAO_HAS_FT_CORBA == 1 */
 
 #include "ace/post.h"
 #endif  /* TAO_ORB_CONFIG_H */

@@ -28,9 +28,6 @@ public:
               Test::Index max_range);
   // ctor
 
-  ~Database_i (void);
-  // dtor
-
   // = The Simple_Server methods.
   void set (Test::Index i,
             const Test::OctetSeq& seq,

@@ -191,7 +191,7 @@ private:
   // Keeps track of all free buffers.
 
   ACE_SYNCH_MUTEX notify_queue_lock_;
-  // Synchronization for handling of queues.
+  // synchronization for handling of queues
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 
@@ -255,7 +255,7 @@ public:
   int handle_in_range (ACE_HANDLE handle);
 
   // = Accessors.
-  size_t size (void) const;
+  size_t size (void);
   // Returns the current table size.
 
   size_t max_handlep1 (void);

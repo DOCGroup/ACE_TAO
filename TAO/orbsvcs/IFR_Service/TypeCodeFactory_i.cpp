@@ -39,7 +39,7 @@ TAO_TypeCodeFactory_i::create_struct_tc (
     {
       cdr << members[index].name;
 
-      cdr << members[index].type.in ();
+      cdr << members[index].type;
     }
 
   CORBA::TypeCode_ptr struct_typecode = 
@@ -153,7 +153,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
       cdr << members[index].name;
 
-      cdr << members[index].type.in ();
+      cdr << members[index].type;
     }
 
   CORBA::TypeCode_ptr union_typecode = 
@@ -216,7 +216,7 @@ CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_alias_tc (
     const char *id,
     const char *name,
-    CORBA::TypeCode_ptr original_type,
+    const CORBA::TypeCode_ptr original_type,
     CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
@@ -276,7 +276,7 @@ TAO_TypeCodeFactory_i::create_exception_tc (
 
       cdr << struct_member.name;
 
-      cdr << struct_member.type.in ();
+      cdr << struct_member.type;
     }
 
   CORBA::TypeCode_ptr exception_typecode = 
@@ -383,9 +383,9 @@ TAO_TypeCodeFactory_i::create_wstring_tc (
 
 CORBA::TypeCode_ptr 
 TAO_TypeCodeFactory_i::create_fixed_tc (
-    CORBA::UShort /* digits */,
-    CORBA::UShort /* scale */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    CORBA::UShort digits,
+    CORBA::UShort scale,
+    CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -455,12 +455,12 @@ TAO_TypeCodeFactory_i::create_array_tc (
 
 CORBA::TypeCode_ptr 
 TAO_TypeCodeFactory_i::create_value_tc (
-    const char * /* id */,
-    const char * /* name */,
-    CORBA::ValueModifier /* type_modifier */,
-    CORBA::TypeCode_ptr /* concrete_base */,
-    const IR::ValueMemberSeq & /* members */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    const char *id,
+    const char *name,
+    CORBA::ValueModifier type_modifier,
+    CORBA::TypeCode_ptr concrete_base,
+    const IR::ValueMemberSeq &members,
+    CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -535,8 +535,8 @@ TAO_TypeCodeFactory_i::create_native_tc (
 
 CORBA::TypeCode_ptr 
 TAO_TypeCodeFactory_i::create_recursive_tc (
-    const char * /* id */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    const char *id,
+    CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -546,9 +546,9 @@ TAO_TypeCodeFactory_i::create_recursive_tc (
 
 CORBA::TypeCode_ptr 
 TAO_TypeCodeFactory_i::create_abstract_interface_tc (
-    const char * /* id */,
-    const char * /* name */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -558,9 +558,9 @@ TAO_TypeCodeFactory_i::create_abstract_interface_tc (
 
 CORBA::TypeCode_ptr 
 TAO_TypeCodeFactory_i::create_component_tc (
-    const char * /* id */,
-    const char * /* name */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -570,9 +570,9 @@ TAO_TypeCodeFactory_i::create_component_tc (
 
 CORBA::TypeCode_ptr 
 TAO_TypeCodeFactory_i::create_home_tc (
-    const char * /* id */,
-    const char * /* name */,
-    CORBA::Environment & /* ACE_TRY_ENV */
+    const char *id,
+    const char *name,
+    CORBA::Environment &ACE_TRY_ENV
   )
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -599,11 +599,8 @@ TAO_TypeCodeFactory_i::compute_default_label (CORBA::TCKind kind,
     CORBA::ULong ulong_val;
     CORBA::ULongLong ulonglong_val;
     CORBA::ULong enum_val;
-    // TODO - handle (u)longlong types
+    // TODO - handle longlong types
   } dv, u;
-
-  // To prevent 'may be uninitialized' warnings.
-  dv.ulonglong_val = 0;
 
   // Set these to the minimum value they can have.
   switch (kind)

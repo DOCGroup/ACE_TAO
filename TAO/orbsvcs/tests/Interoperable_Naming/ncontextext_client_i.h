@@ -46,7 +46,6 @@ class NContextExt_Client_i
   // Initialize the client communication endpoint with the server.
 
  private:
-  
   int parse_args (void);
   // Parses the arguments passed on the command line.
 
@@ -64,7 +63,7 @@ class NContextExt_Client_i
   char * get_name (void);
   // Generates a random name
 
-    int argc_;
+  int argc_;
   // # of arguments on the command line.
 
   char **argv_;
@@ -72,9 +71,6 @@ class NContextExt_Client_i
 
   CosNaming::NamingContextExt_var naming_context_;
   // Naming context
-
-  CORBA::Boolean view_;
-  // Flag to check if '-v' option is set.
 
 };
 

@@ -23,7 +23,6 @@
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
-#include "ace/High_Res_Timer.h"
 
 ACE_RCSID(tests, Reactor_Timer_Test, "$Id$")
 
@@ -231,20 +230,10 @@ test_resetting_timer_intervals (void)
     ACE_Reactor::instance ()->handle_events ();
 }
 
-// If any command line arg is given, run the test with high res timer
-// queue. Else run it normally.
 int
-main (int argc, ACE_TCHAR *[])
+main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Reactor_Timer_Test"));
-
-  if (argc > 1)
-    {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Running with high-res timer queue\n")));
-      ACE_Reactor *r = ACE_Reactor::instance ();
-      (void) ACE_High_Res_Timer::global_scale_factor ();
-      r->timer_queue ()->gettimeofday (&ACE_High_Res_Timer::gettimeofday_hr);
-    }
 
   // Register all different handlers, i.e., one per timer.
   test_registering_all_handlers ();

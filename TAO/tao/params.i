@@ -46,8 +46,8 @@ TAO_ORB_Parameters::sock_rcvbuf_size (void) const
 ACE_INLINE void
 TAO_ORB_Parameters::sock_rcvbuf_size (int s)
 {
-  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ
-    ? s
+  sock_rcvbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ 
+    ? s 
     : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 }
 
@@ -60,8 +60,8 @@ TAO_ORB_Parameters::sock_sndbuf_size (void) const
 ACE_INLINE void
 TAO_ORB_Parameters::sock_sndbuf_size (int s)
 {
-  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ
-    ? s
+  sock_sndbuf_size_ = s <= ACE_DEFAULT_MAX_SOCKET_BUFSIZ 
+    ? s 
     : ACE_DEFAULT_MAX_SOCKET_BUFSIZ;
 }
 
@@ -130,6 +130,12 @@ TAO_ORB_Parameters::mcast_discovery_endpoint (void) const
   return this->mcast_discovery_endpoint_.c_str ();
 }
 
+ACE_INLINE TAO_IOR_LookupTable *
+TAO_ORB_Parameters::ior_lookup_table (void)
+{
+  return &(this->ior_lookup_table_);
+}
+
 ACE_INLINE void
 TAO_ORB_Parameters::default_init_ref (const ACE_CString &default_init_ref)
 {
@@ -165,3 +171,4 @@ TAO_ORB_Parameters::nodelay (int x)
 {
   this->nodelay_ = x;
 }
+

@@ -16,7 +16,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/Client_Priority_Policy.h"
 #include "tao/GIOP_Utils.h"
-#include "tao/ORB_Core.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation.i"
@@ -269,17 +269,12 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  // @@ RT CORBA Policies processing code.  This is a temporary location
+  // RT CORBA Policies processing code.  This is a temporary location
   // for this code until more of it is accumulated.  It will likely be
   // factored into separate method(s)/split/moved to different
   // locations within this method/<prepare_header>.  (Marina)
 
   // RTCORBA::PriorityModelPolicy related processing.
-  // @@ This processing isn't necessary for Locate Requests, since they
-  // do not have Service Context Lists.  However, since this method is
-  // called from TAO_GIOP_Locate_Request_Invocation::start, the
-  // processing does happen for Locate Requests.  It works, but we are
-  // losing some performance ...
   TAO_PriorityModelPolicy *priority_model_policy =
     this->stub_->exposed_priority_model ();
 
@@ -301,12 +296,10 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                                CORBA::COMPLETED_NO));
 
           TAO_OutputCDR cdr;
-          if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-               == 0)
-              || (cdr << thread_priority) == 0)
-            ACE_THROW (CORBA::MARSHAL ());
+          cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
+          cdr << thread_priority;
 
-          IOP::ServiceContextList &context_list =
+          IOP::ServiceContextList context_list =
             this->service_info ();
 
           CORBA::ULong l = context_list.length ();
@@ -329,9 +322,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      // The Object does not contain PriorityModel policy in its IOR.
-      // We must be talking to a non-RT ORB.  Do nothing special -
-      // just proceed with the regular invocation.
+      // @@ What do we do if the PriorityModel wasn't exported: throw
+      // exception (which one) or assume some priority model?
     }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -682,13 +674,6 @@ TAO_GIOP_Twoway_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
                                    this->out_stream_,
                                    ACE_TRY_ENV);
 }
-
-void
-TAO_GIOP_Twoway_Invocation::reset_reply_received (void)
-{
-  this->rd_.reply_received() = 0;
-}
-
 
 int
 TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList_ptr exceptions,

@@ -83,7 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_decl.h"
 
 
-class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
+class   AST_Type : public virtual AST_Decl
 {
 public:
   // Operations

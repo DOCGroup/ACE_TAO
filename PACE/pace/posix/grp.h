@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_GRP_H_POSIX
-#define PACE_GRP_H_POSIX
+#ifndef PACE_GRP_H
+#define PACE_GRP_H
 
 #include <grp.h>
 
@@ -22,13 +22,30 @@
 extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
-#ifndef PACE_GROUP
-#define PACE_GROUP
-typedef struct group pace_group;
-#endif /* PACE_GROUP */
+  PACE_INLINE struct group * pace_getgrgid (pace_gid_t gid);
+
+  PACE_INLINE int pace_getgrgid_r (pace_gid_t gid,
+                                   struct group * grp,
+                                   char * buffer,
+                                   size_t bufsize,
+                                   struct group ** result);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE struct group * pace_getgrnam (const char * name);
+
+  PACE_INLINE int pace_getgrnam_r (const char * name,
+                                   struct group * grp,
+                                   char * buffer,
+                                   size_t bufsize,
+                                   struct group ** result);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
 # if defined (PACE_HAS_CPLUSPLUS)
 }
 # endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_GRP_H_POSIX */
+# if defined (PACE_HAS_INLINE)
+# include "pace/posix/grp.inl"
+# endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_GRP_H */

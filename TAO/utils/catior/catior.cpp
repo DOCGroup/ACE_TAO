@@ -402,7 +402,7 @@ main (int argc, char *argv[])
 
   CORBA::Environment env;
   CORBA::ORB_var orb_var =  CORBA::ORB_init (argc, argv, "TAO", env);
-  CORBA::Boolean b = 0;
+  CORBA::Boolean b;
   int opt;
 
   while ((opt = get_opt ()) != EOF)
@@ -433,67 +433,65 @@ main (int argc, char *argv[])
                 return -1;
               }
 
-            while (!ifstr.eof())
+            char ch;
+            ACE_CString aString;
+
+            while (!ifstr.eof ())
               {
-                char ch;
-                ACE_CString aString;
-
-                while (!ifstr.eof ())
-                  {
-                    ifstr.get (ch);
-                    if (ch == '\n' || ifstr.eof ())
-                      break;
-                    aString += ch;
-                  }
-
-                ACE_DEBUG ((LM_DEBUG,
-                            "\nhere is the IOR\n%s\n\n",
-                            aString.rep ()));
-
-                char* str;
-                if (aString.find ("IOR:") == 0)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,
-                                "decoding an IOR:\n"));
-
-                    // Strip the IOR: off the string.
-                    ACE_CString prefix = "IOR:";
-                    short prefixLength = prefix.length ();
-
-                    ACE_CString subString =
-                      aString.substring (prefixLength,
-                                         aString.length () - prefixLength);
-                    subString[subString.length ()] = '\0';
-                    str = subString.rep ();
-                    b = catior (str, env);
-                  }
-                else if (aString.find ("iiop:") == 0)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,
-                                "decoding an IIOP URL IOR\n"));
-
-                    ACE_CString prefix = "IIOP:";
-                    short prefixLength = prefix.length ();
-
-                    ACE_CString subString =
-                      aString.substring (prefixLength,
-                                         aString.length () - prefixLength);
-                    //subString[subString.length () - 1] = '\0';
-                    str = subString.rep ();
-                    b = catiiop (str, env);
-                  }
-                else if (aString.find (":IR:") > 0)
-                  {
-                    ACE_DEBUG ((LM_DEBUG,
-                                "decoding an POOP IOR\n"));
-
-                    str = aString.rep ();
-                    b = catpoop (str, env);
-                  }
-                else
-                  ACE_ERROR ((LM_ERROR,
-                             "Don't know how to decode this IOR\n"));
+                ifstr.get (ch);
+                if (ch == '\n' || ifstr.eof ())
+                  break;
+                aString += ch;
               }
+
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nhere is the IOR\n%s\n\n",
+                        aString.rep ()));
+
+            char* str;
+            if (aString.find ("IOR:") == 0)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "decoding an IOR:\n"));
+
+                // Strip the IOR: off the string.
+                ACE_CString prefix = "IOR:";
+                short prefixLength = prefix.length ();
+
+                ACE_CString subString =
+                  aString.substring (prefixLength,
+                                     aString.length () - prefixLength);
+                subString[subString.length ()] = '\0';
+                str = subString.rep ();
+                b = catior (str, env);
+              }
+            else if (aString.find ("iiop:") == 0)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "decoding an IIOP URL IOR\n"));
+
+                ACE_CString prefix = "IIOP:";
+                short prefixLength = prefix.length ();
+
+                ACE_CString subString =
+                  aString.substring (prefixLength,
+                                     aString.length () - prefixLength);
+                //subString[subString.length () - 1] = '\0';
+                str = subString.rep ();
+                b = catiiop (str, env);
+              }
+            else if (aString.find (":IR:"))
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "decoding an POOP IOR\n"));
+
+                str = aString.rep ();
+                b = catpoop (str, env);
+              }
+            else
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Don't know how to decode this IOR\n"),
+                                -1);
             if (b == 1)
               ACE_DEBUG ((LM_DEBUG,
                           "catior returned true\n"));

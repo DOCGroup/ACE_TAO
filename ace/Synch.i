@@ -28,13 +28,6 @@ ACE_File_Lock::tryacquire_write (short whence, off_t start, off_t len)
 }
 
 ACE_INLINE int
-ACE_File_Lock::tryacquire_write_upgrade (short whence, off_t start, off_t len)
-{
-// ACE_TRACE ("ACE_File_Lock::tryacquire_write_upgrade");
-  return ACE_OS::flock_trywrlock (&this->lock_, whence, start, len);
-}
-
-ACE_INLINE int
 ACE_File_Lock::tryacquire (short whence, off_t start, off_t len)
 {
 // ACE_TRACE ("ACE_File_Lock::tryacquire");
@@ -149,13 +142,6 @@ ACE_RW_Mutex::tryacquire_write (void)
 }
 
 ACE_INLINE int
-ACE_RW_Mutex::tryacquire_write_upgrade (void)
-{
-// ACE_TRACE ("ACE_RW_Mutex::tryacquire_write_upgrade");
-  return ACE_OS::rw_trywrlock_upgrade (&this->lock_);
-}
-
-ACE_INLINE int
 ACE_RW_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_RW_Mutex::tryacquire");
@@ -231,13 +217,6 @@ ACE_Mutex::tryacquire_write (void)
      return ACE_OS::mutex_trylock (this->process_lock_);
 #endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
-}
-
-ACE_INLINE int
-ACE_Mutex::tryacquire_write_upgrade (void)
-{
-// ACE_TRACE ("ACE_Mutex::tryacquire_write_upgrade");
-  return 0;
 }
 
 ACE_INLINE int
@@ -410,16 +389,6 @@ ACE_Semaphore::tryacquire_write (void)
   return this->tryacquire ();
 }
 
-// This is only here to make the <ACE_Semaphore>
-// interface consistent with the other synchronization APIs.
-// Assumes the caller has already acquired the semaphore using one of
-// the above calls, and returns 0 (success) always.
-ACE_INLINE int
-ACE_Semaphore::tryacquire_write_upgrade (void)
-{
-  return 0;
-}
-
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM) || defined (ACE_PSOS)
 ACE_INLINE const ACE_mutex_t &
 ACE_Process_Mutex::lock (void) const
@@ -474,16 +443,6 @@ ACE_INLINE int
 ACE_Process_Semaphore::tryacquire_write (void)
 {
   return this->tryacquire ();
-}
-
-// This is only here to make the <ACE_Process_Semaphore>
-// interface consistent with the other synchronization APIs.
-// Assumes the caller has already acquired the semaphore using one of
-// the above calls, and returns 0 (success) always.
-ACE_INLINE int
-ACE_Process_Semaphore::tryacquire_write_upgrade (void)
-{
-  return 0;
 }
 
 // Null ACE_Semaphore implementation
@@ -551,12 +510,6 @@ ACE_Null_Semaphore::tryacquire_write (void)
 }
 
 ACE_INLINE int
-ACE_Null_Semaphore::tryacquire_write_upgrade (void)
-{
-  return 0;
-}
-
-ACE_INLINE int
 ACE_Null_Semaphore::acquire_read (void)
 {
   return 0;
@@ -608,13 +561,6 @@ ACE_Thread_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_Thread_Mutex::tryacquire_write");
   return ACE_OS::thread_mutex_trylock (&this->lock_);
-}
-
-ACE_INLINE int
-ACE_Thread_Mutex::tryacquire_write_upgrade (void)
-{
-// ACE_TRACE ("ACE_Thread_Mutex::tryacquire_write_upgrade");
-  return 0;
 }
 
 ACE_INLINE int
@@ -807,12 +753,6 @@ ACE_Recursive_Thread_Mutex::tryacquire_write (void)
   return this->tryacquire ();
 }
 
-ACE_INLINE int
-ACE_Recursive_Thread_Mutex::tryacquire_write_upgrade (void)
-{
-  return 0;
-}
-
 #endif /* ACE_HAS_THREADS */
 
 // Explicitly destroy the mutex.
@@ -871,12 +811,6 @@ ACE_Process_Mutex::tryacquire_write (void)
   return this->lock_.tryacquire_write ();
 }
 
-ACE_INLINE int
-ACE_Process_Mutex::tryacquire_write_upgrade (void)
-{
-  return 0;
-}
-
 // Explicitly destroy the mutex.
 ACE_INLINE int
 ACE_RW_Process_Mutex::remove (void)
@@ -931,13 +865,6 @@ ACE_INLINE int
 ACE_RW_Process_Mutex::tryacquire_write (void)
 {
   return this->lock_.tryacquire_write ();
-}
-
-// Conditionally upgrade a lock (i.e., won't block).
-ACE_INLINE int
-ACE_RW_Process_Mutex::tryacquire_write_upgrade (void)
-{
-  return this->lock_.tryacquire_write_upgrade ();
 }
 
 ACE_INLINE const ACE_File_Lock &
@@ -1012,12 +939,6 @@ ACE_Null_Mutex::acquire_write (void)
 
 ACE_INLINE int
 ACE_Null_Mutex::tryacquire_write (void)
-{
-  return 0;
-}
-
-ACE_INLINE int
-ACE_Null_Mutex::tryacquire_write_upgrade (void)
 {
   return 0;
 }

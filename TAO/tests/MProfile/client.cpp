@@ -1,6 +1,7 @@
 // $Id$
 
-#include "tao/IORManipulation/IORC.h"
+#include "tao/IORManipulation.h"
+#include "tao/IORS.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "testC.h"

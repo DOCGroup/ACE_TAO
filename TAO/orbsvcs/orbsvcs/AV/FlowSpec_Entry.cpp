@@ -4,7 +4,7 @@
 // TAO_FlowSpec_Entry
 //------------------------------------------------------------
 #include "FlowSpec_Entry.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/TAO.h"
 
 #if !defined (__ACE_INLINE__)
 #include "FlowSpec_Entry.i"

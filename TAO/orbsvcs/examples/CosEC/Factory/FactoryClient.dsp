@@ -182,6 +182,10 @@ SOURCE=.\CosEventChannelFactoryC.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CosEventChannelFactoryS.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\FactoryClient.cpp
 # End Source File
 # End Group
@@ -192,6 +196,10 @@ SOURCE=.\FactoryClient.cpp
 
 SOURCE=.\CosEventChannelFactoryC.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\CosEventChannelFactoryS.h
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
@@ -199,6 +207,10 @@ SOURCE=.\CosEventChannelFactoryC.h
 # Begin Source File
 
 SOURCE=.\CosEventChannelFactoryC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\CosEventChannelFactoryS.i
 # End Source File
 # End Group
 # End Target

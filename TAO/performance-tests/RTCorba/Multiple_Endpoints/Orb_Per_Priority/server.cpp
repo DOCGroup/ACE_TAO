@@ -1,7 +1,8 @@
 // $Id$
 
 #include "test_i.h"
-#include "tao/TAOC.h"
+#include "tao/RTCORBAC.h"
+#include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
@@ -109,8 +110,6 @@ main (int argc, char *argv[])
 
   // Create an ORB to obtain Priority Mapping functionality.
   CORBA::ORB_var orb;
-  RTCORBA::PriorityMapping *pm = 0;
-
   ACE_TRY_NEW_ENV
     {
       char *argv_[256];
@@ -123,26 +122,6 @@ main (int argc, char *argv[])
       // Parse the arguments.
       if (parse_args (argc_, argv_) != 0)
         return 1;
-
-      // Obtain Priority Mapping used by the ORB.
-      CORBA::Object_var object =
-        orb->resolve_initial_references ("PriorityMappingManager",
-                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      TAO::PriorityMappingManager_var mapping_manager =
-        TAO::PriorityMappingManager::_narrow (object.in (),
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (mapping_manager.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Priority Mapping Manager is nil\n"),
-                            1);
-        }
-
-      pm = mapping_manager->mapping ();
     }
   ACE_CATCHANY
     {
@@ -152,6 +131,8 @@ main (int argc, char *argv[])
     }
   ACE_ENDTRY;
 
+  RTCORBA::PriorityMapping *pm =
+    orb->orb_core ()->priority_mapping ();
   for (int i = 0; i != nthreads; ++i)
     {
       CORBA::Short native_priority = 0;

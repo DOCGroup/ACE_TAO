@@ -8,6 +8,7 @@
 #include "tao/Environment.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
+#include "tao/POA.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IIOP_Profile, "$Id$")
@@ -27,18 +28,19 @@ TAO_IIOP_Profile::object_key_delimiter (void) const
 }
 
 
+
 TAO_IIOP_Profile::TAO_IIOP_Profile (const ACE_INET_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
-                 orb_core),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
+    orb_core_ (orb_core),
     tagged_profile_ ()
 {
   this->set (addr);
@@ -50,14 +52,14 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
                                     const ACE_INET_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
-                 orb_core),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (port),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
   if (host != 0)
     this->host_ = host;
@@ -66,28 +68,28 @@ TAO_IIOP_Profile::TAO_IIOP_Profile (const char* host,
 TAO_IIOP_Profile::TAO_IIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
-                 orb_core),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
   this->parse_string (string, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
 TAO_IIOP_Profile::TAO_IIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_IIOP_PROFILE,
-                 orb_core),
+  : TAO_Profile (TAO_TAG_IIOP_PROFILE),
     host_ (),
     port_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0)
+    hint_ (0),
+    orb_core_ (orb_core)
 {
 }
 
@@ -96,7 +98,7 @@ TAO_IIOP_Profile::set (const ACE_INET_Addr &addr)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
 
-  if (this->orb_core ()->orb_params ()->use_dotted_decimal_addresses ()
+  if (this->orb_core_->orb_params ()->use_dotted_decimal_addresses ()
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
       const char *tmp = addr.get_host_addr ();
@@ -129,6 +131,7 @@ TAO_IIOP_Profile::~TAO_IIOP_Profile (void)
 // -1 -> error
 //  0 -> can't understand this version
 //  1 -> success.
+
 int
 TAO_IIOP_Profile::decode (TAO_InputCDR& cdr)
 {
@@ -251,18 +254,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');  // Look for a port
-
-  if (cp == 0)
-    {
-      // No host/port delimiter!
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (
-                          CORBA_SystemException::_tao_minor_code (
-                            TAO_DEFAULT_MINOR_CODE,
-                            EINVAL),
-                          CORBA::COMPLETED_NO),
-                        -1);
-    }
+  char *cp_pos = ACE_OS::strchr (start, ':');  // Look for a port
 
   char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
 
@@ -277,27 +269,89 @@ TAO_IIOP_Profile::parse_string (const char *string,
         -1);
     }
 
-  // Don't increment the pointer 'cp' directly since we still need
-  // to use it immediately after this block.
+  // The default port number.
+  const char def_port [] = ":683";
 
-  CORBA::ULong length = okd - (cp + 1);
-  // Don't allocate space for the colon ':'.
+  // Length of port.
+  CORBA::ULong length = 0;
+
+  // Length of host string.
+  CORBA::ULong length_host = 0;
+
+  // Length of <cp>
+  CORBA::ULong length_cp =
+    ACE_OS::strlen ((const char *)okd) + sizeof (def_port);
+
+  CORBA::String_var cp = CORBA::string_alloc (length_cp);
+
+  if (cp_pos == 0)
+    {
+      // No host/port delimiter! Dont raise an exception. Use the
+      // default port No. 683
+      ACE_OS::strcpy (cp, def_port);
+      ACE_OS::strcat (cp, okd);
+
+      length =
+        ACE_OS::strlen (cp.in ()) -
+        ACE_OS::strlen ((const char *)okd) -
+        1;
+
+      length_host =
+        ACE_OS::strlen (start) +
+        sizeof (def_port) -
+        ACE_OS::strlen (cp.in ()) -1;
+    }
+  else
+    {
+      // The port is specified:
+      cp = (const char *)cp_pos;
+      length = ACE_OS::strlen (cp.in ()) - ACE_OS::strlen ((const char *)okd) + 1;
+      length_host = ACE_OS::strlen ((const char *)start) - ACE_OS::strlen (cp.in ());
+    }
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (tmp.inout (), cp + 1, length);
+  ACE_OS::strncpy (tmp.inout (), cp.in () + 1, length);
   tmp[length] = '\0';
 
   this->port_ = (CORBA::UShort) ACE_OS::atoi (tmp.in ());
 
-  length = cp - start;
+  tmp = CORBA::string_alloc (length_host);
 
-  tmp = CORBA::string_alloc (length);
-
-  ACE_OS::strncpy (tmp.inout (), start, length);
-  tmp[length] = '\0';
+  ACE_OS::strncpy (tmp.inout (), start, length_host);
+  tmp[length_host] = '\0';
 
   this->host_ = tmp._retn ();
+
+  ACE_INET_Addr host_addr;
+
+  if (ACE_OS::strcmp (this->host_.in (), "") == 0)
+    {
+      char tmp_host [MAXHOSTNAMELEN + 1];
+
+      // If no host is specified: assign the default host : the local host.
+      if (host_addr.get_host_name (tmp_host,
+                                   sizeof (tmp_host)) != 0)
+      {
+        const char *tmp = host_addr.get_host_addr ();
+        if (tmp == 0)
+          {
+            if (TAO_debug_level > 0)
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO (%P|%t) ")
+                          ACE_TEXT ("IIOP_Profile::parse_string ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
+            return -1;
+          }
+        else
+          this->host_ = tmp;
+      }
+      else
+        {
+          this->host_ = (const char *) tmp_host;
+        }
+    }
 
   if (this->object_addr_.set (this->port_,
                               this->host_.in ()) == -1)
@@ -305,6 +359,8 @@ TAO_IIOP_Profile::parse_string (const char *string,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("Error Occured !")
                       ACE_TEXT ("TAO (%P|%t) IIOP_Profile::parse_string - \n")
                       ACE_TEXT ("TAO (%P|%t) ACE_INET_Addr::set () failed")));
         }
@@ -313,7 +369,7 @@ TAO_IIOP_Profile::parse_string (const char *string,
 
   start = ++okd;  // increment past the object key separator
 
-  TAO_ObjectKey::decode_string_to_sequence (this->object_key_, start);
+  TAO_POA::decode_string_to_sequence (this->object_key_, start);
 
   return 1;
 }
@@ -392,8 +448,8 @@ char *
 TAO_IIOP_Profile::to_string (CORBA::Environment &)
 {
   CORBA::String_var key;
-  TAO_ObjectKey::encode_sequence_to_string (key.inout(),
-                                             this->object_key_);
+  TAO_POA::encode_sequence_to_string (key.inout(),
+                                      this->object_key_);
 
   u_int buflen = (ACE_OS::strlen (::prefix_) +
                   3 /* "loc" */ +
@@ -440,11 +496,11 @@ TAO_IIOP_Profile::encode (TAO_OutputCDR &stream) const
   // Create the encapsulation....
   TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                        TAO_ENCAP_BYTE_ORDER,
-                       this->orb_core ()->output_cdr_buffer_allocator (),
-                       this->orb_core ()->output_cdr_dblock_allocator (),
-                       this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
-                       this->orb_core ()->to_iso8859 (),
-                       this->orb_core ()->to_unicode ());
+                       this->orb_core_->output_cdr_buffer_allocator (),
+                       this->orb_core_->output_cdr_dblock_allocator (),
+                       this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                       this->orb_core_->to_iso8859 (),
+                       this->orb_core_->to_unicode ());
 
 
   // Create the profile body
@@ -470,35 +526,20 @@ TAO_IIOP_Profile::create_tagged_profile (void)
       // Create the encapsulation....
       TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                            TAO_ENCAP_BYTE_ORDER,
-                           this->orb_core ()->output_cdr_buffer_allocator (),
-                           this->orb_core ()->output_cdr_dblock_allocator (),
-                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
-                           this->orb_core ()->to_iso8859 (),
-                           this->orb_core ()->to_unicode ());
+                           this->orb_core_->output_cdr_buffer_allocator (),
+                           this->orb_core_->output_cdr_dblock_allocator (),
+                           this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
+                           this->orb_core_->to_iso8859 (),
+                           this->orb_core_->to_unicode ());
 
       // Create the profile body
       this->create_profile_body (encap);
 
-      CORBA::ULong length =
-        ACE_static_cast(CORBA::ULong,encap.total_length ());
-
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       // Place the message block in to the Sequence of Octets that we
       // have
-      this->tagged_profile_.profile_data.replace (length,
-                                                  encap.begin ());
-#else
-      this->tagged_profile_.profile_data.length (length);
-      CORBA::Octet *buffer =
-        this->tagged_profile_.profile_data.get_buffer ();
-      for (const ACE_Message_Block *i = encap.begin ();
-           i != encap.end ();
-           i = i->next ())
-        {
-          ACE_OS::memcpy (buffer, i->rd_ptr (), i->length ());
-          buffer += i->length ();
-        }
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
+      this->tagged_profile_.profile_data.replace (
+            (CORBA::ULong) encap.total_length (),
+            encap.begin ());
     }
 
   return this->tagged_profile_;

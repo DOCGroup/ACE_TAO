@@ -1,4 +1,3 @@
-$Id$
 These are the plans for splitting up ACE_OS and their status for both being
 split up and being PACE enabled.
 
@@ -15,3 +14,4 @@ OS_Process
 OS_Synch
 OS_Socket
 OS_QoS
+

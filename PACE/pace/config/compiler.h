@@ -17,28 +17,20 @@
 #define PACE_CONFIG_COMPILER_H
 
 #if defined (__cplusplus)
-# define PACE_HAS_CPLUSPLUS __cplusplus
-# if defined (PACE_HAS_INLINE)
-#   define PACE_INLINE inline
-# else
-#   define PACE_INLINE
-# endif /* ! PACE_HAS_INLINE */
+# define PACE_HAS_CPLUSPLUS
+# define PACE_INLINE inline
 #else  /* ! __cplusplus */
-/* If PACE_HAS_INLINE is defined then we need the PACE functions to be
- * static. Otherwise, we want PACE_INLINE to be defined as nothing.
- */
-# if defined (PACE_HAS_INLINE)
+# if defined (__GNUC__)
+#   if defined __OPTIMIZE__
+#     define PACE_INLINE static
+#   else /* ! __OPTIMIZE__ */
+      /* To suppress warnings about unused static functions. */
+#     define PACE_INLINE
+#   endif /* __GNUC__ */
+# else  /* ! __GNUC__ */
 #   define PACE_INLINE static
-# else
-#   define PACE_INLINE
-# endif /* ! PACE_HAS_INLINE */
-#endif /* ! __cplusplus */
-
-#if defined (PACE_HAS_INLINE) && defined (__GNUC__) && !(PACE_LYNXOS)
-# define PACE_BROKEN_INLINE inline
-#else
-# define PACE_BROKEN_INLINE
-#endif /* PACE_HAS_INLINE */
+# endif /* ! __GNUC__ */
+#endif /* ! __cplusplus */ 
 
 /* ============================================================================
  * Compiler Silencing macros
@@ -67,3 +59,12 @@
 #endif /* ! ghs || __GNUC__ || ..... */
 
 #endif /* PACE_CONFIG_COMPILER_H */
+
+
+
+
+
+
+
+
+

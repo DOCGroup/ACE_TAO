@@ -24,7 +24,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#define ACE_Component_Repository ACE_Service_Repository
 class ACE_Export ACE_Service_Repository
 {
   // = TITLE

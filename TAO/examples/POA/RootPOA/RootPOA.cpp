@@ -19,7 +19,6 @@
 //=========================================================================
 
 #include "tao/corba.h"
-#include "tao/PortableServer/PortableServer.h"
 
 ACE_RCSID(RootPOA, RootPOA, "$Id$")
 
@@ -40,8 +39,8 @@ main (int argc, char **argv)
         orb->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      // apply _narrow on the object of type CORBA::Object, to make it
-      // a POA class Object.
+      // apply _narrow on the object of type CORBA::Object, to make it a
+      // POA class Object.
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -54,14 +53,20 @@ main (int argc, char **argv)
       ACE_DEBUG ((LM_DEBUG,
                   "The RootPOA is : %s\n",
                   poa_name.in ()));
+
+      // Destroy the POA object,also destroys the child POAs if any.
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception raised");
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exceptions raised \n"));
       ACE_CHECK_RETURN (-1);
     }
   ACE_ENDTRY;
 
-  return 0;
+return 0;
 }

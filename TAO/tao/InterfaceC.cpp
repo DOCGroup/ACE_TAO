@@ -192,37 +192,98 @@ IR::DefinitionKind CORBA::IRObject::def_kind (
       13,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_def_kind",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_def_kind",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_def_kind",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -249,31 +310,91 @@ void CORBA::IRObject::destroy (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "destroy",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "destroy",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "destroy",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -421,9 +542,9 @@ void TAO_CORBA_IRObject_Smart_Proxy_Base::destroy  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_CORBA_IRObject_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_CORBA_IRObject[] =
@@ -521,38 +642,97 @@ char * IR_Contained::id (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_id",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_id",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_id",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -580,37 +760,96 @@ void IR_Contained::id (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_id",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_id",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_id",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -637,38 +876,97 @@ char * IR_Contained::name (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_name",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -696,37 +994,96 @@ void IR_Contained::name (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << name)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_name",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -753,38 +1110,97 @@ char * IR_Contained::version (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_version",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_version",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_version",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -812,35 +1228,96 @@ void IR_Contained::version (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_version",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << version)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_version",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_version",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -868,38 +1345,97 @@ IR_Container_ptr IR_Contained::defined_in (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_defined_in",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_defined_in",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_defined_in",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -926,37 +1462,97 @@ char * IR_Contained::absolute_name (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_absolute_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_absolute_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_absolute_name",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -984,37 +1580,97 @@ IR_Repository_ptr IR_Contained::containing_repository (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_containing_repository",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_containing_repository",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_containing_repository",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -1103,36 +1759,97 @@ IR_Contained::Description * IR_Contained::describe (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "describe",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "describe",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "describe",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -1162,17 +1879,45 @@ void IR_Contained::move (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "move",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -1180,21 +1925,52 @@ void IR_Contained::move (
               (_tao_out << new_name) &&
               (_tao_out << new_version)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "move",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "move",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -1472,9 +2248,9 @@ void TAO_IR_Contained_Smart_Proxy_Base::move  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_Contained_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_Contained[] =
@@ -4098,43 +4874,103 @@ IR_Contained_ptr IR_Container::lookup (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "lookup",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << search_name)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "lookup",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "lookup",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4165,44 +5001,104 @@ IR_ContainedSeq * IR_Container::contents (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "contents",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << limit_type) &&
               (_tao_out << CORBA::Any::from_boolean (exclude_inherited))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "contents",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "contents",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4235,17 +5131,45 @@ IR_ContainedSeq * IR_Container::lookup_name (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "lookup_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4254,28 +5178,59 @@ IR_ContainedSeq * IR_Container::lookup_name (
               (_tao_out << limit_type) &&
               (_tao_out << CORBA::Any::from_boolean (exclude_inherited))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "lookup_name",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "lookup_name",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4544,17 +5499,45 @@ IR_Container::DescriptionSeq * IR_Container::describe_contents (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "describe_contents",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4562,28 +5545,59 @@ IR_Container::DescriptionSeq * IR_Container::describe_contents (
               (_tao_out << CORBA::Any::from_boolean (exclude_inherited)) &&
               (_tao_out << max_returned_objs)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "describe_contents",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "describe_contents",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4614,17 +5628,45 @@ IR_ModuleDef_ptr IR_Container::create_module (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_module",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4632,28 +5674,59 @@ IR_ModuleDef_ptr IR_Container::create_module (
               (_tao_out << name) &&
               (_tao_out << version)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_module",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_module",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4686,17 +5759,45 @@ IR_ConstantDef_ptr IR_Container::create_constant (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_constant",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4706,28 +5807,59 @@ IR_ConstantDef_ptr IR_Container::create_constant (
               (_tao_out << type) &&
               (_tao_out << value)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_constant",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_constant",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4759,17 +5891,45 @@ IR_StructDef_ptr IR_Container::create_struct (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_struct",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4778,28 +5938,59 @@ IR_StructDef_ptr IR_Container::create_struct (
               (_tao_out << version) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_struct",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_struct",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4832,16 +6023,45 @@ IR_UnionDef_ptr IR_Container::create_union (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_union",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4851,28 +6071,59 @@ IR_UnionDef_ptr IR_Container::create_union (
               (_tao_out << discriminator_type) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_union",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_union",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4904,16 +6155,45 @@ IR_EnumDef_ptr IR_Container::create_enum (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_enum",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4922,28 +6202,59 @@ IR_EnumDef_ptr IR_Container::create_enum (
               (_tao_out << version) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_enum",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_enum",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -4975,17 +6286,45 @@ IR_AliasDef_ptr IR_Container::create_alias (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_alias",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -4994,28 +6333,59 @@ IR_AliasDef_ptr IR_Container::create_alias (
               (_tao_out << version) &&
               (_tao_out << original_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_alias",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_alias",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -5049,16 +6419,44 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_interface",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -5069,28 +6467,59 @@ IR_InterfaceDef_ptr IR_Container::create_interface (
               (_tao_out << CORBA::Any::from_boolean (is_abstract)) &&
               (_tao_out << CORBA::Any::from_boolean (is_local))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_interface",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_interface",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -5128,17 +6557,45 @@ IR_ValueDef_ptr IR_Container::create_value (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -5153,28 +6610,59 @@ IR_ValueDef_ptr IR_Container::create_value (
               (_tao_out << supported_interfaces) &&
               (_tao_out << initializers)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_value",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -5206,16 +6694,45 @@ IR_ValueBoxDef_ptr IR_Container::create_value_box (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_box",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -5224,27 +6741,59 @@ IR_ValueBoxDef_ptr IR_Container::create_value_box (
               (_tao_out << version) &&
               (_tao_out << original_type_def)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_box",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_value_box",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -5276,17 +6825,45 @@ IR_ExceptionDef_ptr IR_Container::create_exception (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_exception",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -5295,28 +6872,59 @@ IR_ExceptionDef_ptr IR_Container::create_exception (
               (_tao_out << version) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_exception",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_exception",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -5347,17 +6955,45 @@ IR_NativeDef_ptr IR_Container::create_native (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_native",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -5365,28 +7001,59 @@ IR_NativeDef_ptr IR_Container::create_native (
               (_tao_out << name) &&
               (_tao_out << version)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_native",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_native",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -5828,9 +7495,9 @@ IR_NativeDef_ptr TAO_IR_Container_Smart_Proxy_Base::create_native  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_Container_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_Container[] =
@@ -5916,38 +7583,97 @@ CORBA::TypeCode_ptr IR_IDLType::type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6083,9 +7809,9 @@ CORBA::TypeCode_ptr TAO_IR_IDLType_Smart_Proxy_Base::type  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_IDLType_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_IDLType[] =
@@ -6206,44 +7932,103 @@ IR_Contained_ptr IR_Repository::lookup_id (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "lookup_id",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << search_id)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "lookup_id",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "lookup_id",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6272,44 +8057,103 @@ CORBA::TypeCode_ptr IR_Repository::get_canonical_typecode (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "get_canonical_typecode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << tc)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "get_canonical_typecode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "get_canonical_typecode",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6338,43 +8182,103 @@ IR_PrimitiveDef_ptr IR_Repository::get_primitive (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "get_primitive",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << kind)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "get_primitive",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "get_primitive",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6403,43 +8307,103 @@ IR_StringDef_ptr IR_Repository::create_string (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_string",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_string",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_string",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6468,44 +8432,103 @@ IR_WstringDef_ptr IR_Repository::create_wstring (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_wstring",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_wstring",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_wstring",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6535,45 +8558,104 @@ IR_SequenceDef_ptr IR_Repository::create_sequence (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_sequence",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound) &&
               (_tao_out << element_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_sequence",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_sequence",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6603,45 +8685,104 @@ IR_ArrayDef_ptr IR_Repository::create_array (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_array",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << length) &&
               (_tao_out << element_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_array",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_array",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6671,45 +8812,104 @@ IR_FixedDef_ptr IR_Repository::create_fixed (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_fixed",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << digits) &&
               (_tao_out << scale)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_fixed",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_fixed",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -6959,9 +9159,9 @@ IR_FixedDef_ptr TAO_IR_Repository_Smart_Proxy_Base::create_fixed  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_Repository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_Repository[] =
@@ -7052,16 +9252,45 @@ IR_ComponentDef_ptr IR_ComponentRepository::create_component (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_component",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -7071,28 +9300,59 @@ IR_ComponentDef_ptr IR_ComponentRepository::create_component (
               (_tao_out << base_component) &&
               (_tao_out << supports_interfaces)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_component",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_component",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -7126,16 +9386,45 @@ IR_HomeDef_ptr IR_ComponentRepository::create_home (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_home",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -7146,28 +9435,59 @@ IR_HomeDef_ptr IR_ComponentRepository::create_home (
               (_tao_out << managed_component) &&
               (_tao_out << primary_key)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_home",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_home",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -7340,9 +9660,9 @@ IR_HomeDef_ptr TAO_IR_ComponentRepository_Smart_Proxy_Base::create_home  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ComponentRepository_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ComponentRepository[] =
@@ -7525,9 +9845,9 @@ TAO_IR_ModuleDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ModuleDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ModuleDef[] =
@@ -7685,37 +10005,97 @@ CORBA::TypeCode_ptr IR_ConstantDef::type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -7743,38 +10123,97 @@ IR_IDLType_ptr IR_ConstantDef::type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -7802,37 +10241,96 @@ void IR_ConstantDef::type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -7861,38 +10359,97 @@ CORBA::Any * IR_ConstantDef::value (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_value",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -7920,37 +10477,96 @@ void IR_ConstantDef::value (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << value)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_value",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -8143,9 +10759,9 @@ void TAO_IR_ConstantDef_Smart_Proxy_Base::value  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ConstantDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ConstantDef[] =
@@ -8406,9 +11022,9 @@ TAO_IR_TypedefDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_TypedefDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_TypedefDef[] =
@@ -8570,37 +11186,97 @@ IR_StructMemberSeq * IR_StructDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -8628,37 +11304,96 @@ void IR_StructDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << members)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -8813,9 +11548,9 @@ void TAO_IR_StructDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_StructDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_StructDef[] =
@@ -8901,37 +11636,97 @@ CORBA::TypeCode_ptr IR_UnionDef::discriminator_type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_discriminator_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_discriminator_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_discriminator_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -8959,38 +11754,97 @@ IR_IDLType_ptr IR_UnionDef::discriminator_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_discriminator_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_discriminator_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_discriminator_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -9018,36 +11872,96 @@ void IR_UnionDef::discriminator_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_discriminator_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << discriminator_type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_discriminator_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_discriminator_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -9076,38 +11990,97 @@ IR_UnionMemberSeq * IR_UnionDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -9135,37 +12108,96 @@ void IR_UnionDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << members)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -9361,9 +12393,9 @@ void TAO_IR_UnionDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_UnionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_UnionDef[] =
@@ -9450,37 +12482,97 @@ IR_EnumMemberSeq * IR_EnumDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -9508,37 +12600,96 @@ void IR_EnumDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << members)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -9692,9 +12843,9 @@ void TAO_IR_EnumDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_EnumDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_EnumDef[] =
@@ -9779,37 +12930,98 @@ IR_IDLType_ptr IR_AliasDef::original_type_def (
       22,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_original_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -9837,37 +13049,96 @@ void IR_AliasDef::original_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << original_type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_original_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -10021,9 +13292,9 @@ void TAO_IR_AliasDef_Smart_Proxy_Base::original_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_AliasDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_AliasDef[] =
@@ -10207,9 +13478,9 @@ TAO_IR_NativeDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_NativeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_NativeDef[] =
@@ -10294,37 +13565,97 @@ IR::PrimitiveKind IR_PrimitiveDef::kind (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_kind",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_kind",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_kind",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -10461,9 +13792,9 @@ IR::PrimitiveKind TAO_IR_PrimitiveDef_Smart_Proxy_Base::kind  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_PrimitiveDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_PrimitiveDef[] =
@@ -10548,37 +13879,97 @@ CORBA::ULong IR_StringDef::bound (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_bound",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -10606,37 +13997,96 @@ void IR_StringDef::bound (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_bound",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -10788,9 +14238,9 @@ void TAO_IR_StringDef_Smart_Proxy_Base::bound  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_StringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_StringDef[] =
@@ -10875,37 +14325,97 @@ CORBA::ULong IR_WstringDef::bound (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_bound",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -10933,37 +14443,96 @@ void IR_WstringDef::bound (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_bound",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -11115,9 +14684,9 @@ void TAO_IR_WstringDef_Smart_Proxy_Base::bound  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_WstringDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_WstringDef[] =
@@ -11202,37 +14771,97 @@ CORBA::UShort IR_FixedDef::digits (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_digits",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_digits",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_digits",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -11260,37 +14889,96 @@ void IR_FixedDef::digits (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_digits",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << digits)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_digits",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_digits",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -11317,38 +15005,97 @@ CORBA::Short IR_FixedDef::scale (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_scale",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_scale",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_scale",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -11376,36 +15123,96 @@ void IR_FixedDef::scale (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_scale",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << scale)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_scale",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_scale",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -11585,9 +15392,9 @@ void TAO_IR_FixedDef_Smart_Proxy_Base::scale  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_FixedDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_FixedDef[] =
@@ -11672,37 +15479,97 @@ CORBA::ULong IR_SequenceDef::bound (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_bound",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -11730,37 +15597,96 @@ void IR_SequenceDef::bound (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_bound",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_bound",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -11788,38 +15714,97 @@ CORBA::TypeCode_ptr IR_SequenceDef::element_type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_element_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -11847,38 +15832,97 @@ IR_IDLType_ptr IR_SequenceDef::element_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_element_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -11906,36 +15950,96 @@ void IR_SequenceDef::element_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << element_type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_element_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -12128,9 +16232,9 @@ void TAO_IR_SequenceDef_Smart_Proxy_Base::element_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_SequenceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_SequenceDef[] =
@@ -12215,37 +16319,97 @@ CORBA::ULong IR_ArrayDef::length (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_length",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_length",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_length",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -12273,37 +16437,96 @@ void IR_ArrayDef::length (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_length",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << length)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_length",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_length",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -12331,37 +16554,97 @@ CORBA::TypeCode_ptr IR_ArrayDef::element_type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_element_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -12389,38 +16672,97 @@ IR_IDLType_ptr IR_ArrayDef::element_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_element_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -12448,37 +16790,96 @@ void IR_ArrayDef::element_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << element_type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_element_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_element_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -12671,9 +17072,9 @@ void TAO_IR_ArrayDef_Smart_Proxy_Base::element_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ArrayDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ArrayDef[] =
@@ -12759,37 +17160,97 @@ CORBA::TypeCode_ptr IR_ExceptionDef::type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -12818,38 +17279,97 @@ IR_StructMemberSeq * IR_ExceptionDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -12877,36 +17397,96 @@ void IR_ExceptionDef::members (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << members)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_members",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_members",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -13072,9 +17652,9 @@ void TAO_IR_ExceptionDef_Smart_Proxy_Base::members  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ExceptionDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ExceptionDef[] =
@@ -13577,37 +18157,97 @@ CORBA::TypeCode_ptr IR_AttributeDef::type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -13635,38 +18275,97 @@ IR_IDLType_ptr IR_AttributeDef::type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -13694,37 +18393,96 @@ void IR_AttributeDef::type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -13751,38 +18509,97 @@ IR::AttributeMode IR_AttributeDef::mode (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_mode",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -13810,36 +18627,96 @@ void IR_AttributeDef::mode (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << mode)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_mode",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -14032,9 +18909,9 @@ void TAO_IR_AttributeDef_Smart_Proxy_Base::mode  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_AttributeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_AttributeDef[] =
@@ -14704,37 +19581,97 @@ CORBA::TypeCode_ptr IR_OperationDef::result (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_result",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_result",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_result",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -14762,37 +19699,97 @@ IR_IDLType_ptr IR_OperationDef::result_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_result_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_result_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_result_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -14820,37 +19817,96 @@ void IR_OperationDef::result_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_result_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << result_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_result_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_result_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -14879,37 +19935,97 @@ IR_ParDescriptionSeq * IR_OperationDef::params (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_params",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_params",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_params",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -14937,37 +20053,96 @@ void IR_OperationDef::params (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_params",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << params)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_params",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_params",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -14994,38 +20169,97 @@ IR::OperationMode IR_OperationDef::mode (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_mode",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -15053,37 +20287,96 @@ void IR_OperationDef::mode (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << mode)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_mode",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_mode",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -15112,38 +20405,97 @@ IR_ContextIdSeq * IR_OperationDef::contexts (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_contexts",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_contexts",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_contexts",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -15171,37 +20523,96 @@ void IR_OperationDef::contexts (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_contexts",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << contexts)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_contexts",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_contexts",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -15230,37 +20641,97 @@ IR_ExceptionDefSeq * IR_OperationDef::exceptions (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_exceptions",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_exceptions",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_exceptions",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -15288,37 +20759,96 @@ void IR_OperationDef::exceptions (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_exceptions",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << exceptions)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_exceptions",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_exceptions",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -15595,9 +21125,9 @@ void TAO_IR_OperationDef_Smart_Proxy_Base::exceptions  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_OperationDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_OperationDef[] =
@@ -16696,37 +22226,98 @@ IR_InterfaceDefSeq * IR_InterfaceDef::base_interfaces (
       20,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_base_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -16754,37 +22345,96 @@ void IR_InterfaceDef::base_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_base_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << base_interfaces)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_base_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_base_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -16811,38 +22461,97 @@ CORBA::Boolean IR_InterfaceDef::is_abstract (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_abstract",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -16870,37 +22579,96 @@ void IR_InterfaceDef::is_abstract (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << CORBA::Any::from_boolean (is_abstract))
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_is_abstract",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -16926,37 +22694,98 @@ CORBA::Boolean IR_InterfaceDef::is_local (
       13,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_local",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_local",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_local",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -16984,37 +22813,96 @@ void IR_InterfaceDef::is_local (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_local",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << CORBA::Any::from_boolean (is_local))
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_local",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_is_local",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -17042,43 +22930,103 @@ CORBA::Boolean IR_InterfaceDef::is_a (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << interface_id)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "is_a",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -17113,17 +23061,45 @@ IR_AttributeDef_ptr IR_InterfaceDef::create_attribute (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_attribute",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -17135,28 +23111,59 @@ IR_AttributeDef_ptr IR_InterfaceDef::create_attribute (
               (_tao_out << get_exceptions) &&
               (_tao_out << put_exceptions)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_attribute",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_attribute",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -17192,17 +23199,45 @@ IR_OperationDef_ptr IR_InterfaceDef::create_operation (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_operation",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -17215,28 +23250,59 @@ IR_OperationDef_ptr IR_InterfaceDef::create_operation (
               (_tao_out << exceptions) &&
               (_tao_out << contexts)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_operation",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_operation",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -17517,9 +23583,9 @@ IR_OperationDef_ptr TAO_IR_InterfaceDef_Smart_Proxy_Base::create_operation  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_InterfaceDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_InterfaceDef[] =
@@ -18481,37 +24547,98 @@ CORBA::TypeCode_ptr IR_ValueMemberDef::type (
       9,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -18539,37 +24666,97 @@ IR_IDLType_ptr IR_ValueMemberDef::type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -18597,37 +24784,96 @@ void IR_ValueMemberDef::type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -18654,38 +24900,97 @@ CORBA::Visibility IR_ValueMemberDef::access (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_access",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_retval)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_access",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_access",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -18713,36 +25018,96 @@ void IR_ValueMemberDef::access (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_access",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << access)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_access",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_access",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -18935,9 +25300,9 @@ void TAO_IR_ValueMemberDef_Smart_Proxy_Base::access  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ValueMemberDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ValueMemberDef[] =
@@ -19024,37 +25389,97 @@ IR_InterfaceDefSeq * IR_ValueDef::supported_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_supported_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -19082,36 +25507,96 @@ void IR_ValueDef::supported_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << supported_interfaces)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_supported_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19140,38 +25625,97 @@ IR_InitializerSeq * IR_ValueDef::initializers (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_initializers",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_initializers",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_initializers",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -19199,37 +25743,96 @@ void IR_ValueDef::initializers (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_initializers",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << initializers)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_initializers",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_initializers",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19257,37 +25860,97 @@ IR_ValueDef_ptr IR_ValueDef::base_value (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_base_value",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -19315,37 +25978,96 @@ void IR_ValueDef::base_value (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_base_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << base_value)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_base_value",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_base_value",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19374,37 +26096,97 @@ IR_ValueDefSeq * IR_ValueDef::abstract_base_values (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_abstract_base_values",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_abstract_base_values",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_abstract_base_values",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -19432,36 +26214,96 @@ void IR_ValueDef::abstract_base_values (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_abstract_base_values",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << abstract_base_values)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_abstract_base_values",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_abstract_base_values",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19488,38 +26330,97 @@ CORBA::Boolean IR_ValueDef::is_abstract (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_abstract",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -19547,36 +26448,96 @@ void IR_ValueDef::is_abstract (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << CORBA::Any::from_boolean (is_abstract))
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_abstract",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_is_abstract",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19603,38 +26564,97 @@ CORBA::Boolean IR_ValueDef::is_custom (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_custom",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_custom",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_custom",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -19662,36 +26682,96 @@ void IR_ValueDef::is_custom (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_custom",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << CORBA::Any::from_boolean (is_custom))
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_custom",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_is_custom",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19718,38 +26798,97 @@ CORBA::Boolean IR_ValueDef::is_truncatable (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_truncatable",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_truncatable",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_truncatable",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -19777,36 +26916,96 @@ void IR_ValueDef::is_truncatable (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_truncatable",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << CORBA::Any::from_boolean (is_truncatable))
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_is_truncatable",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_is_truncatable",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -19834,44 +27033,103 @@ CORBA::Boolean IR_ValueDef::is_a (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "is_a",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -19904,17 +27162,45 @@ IR_ValueMemberDef_ptr IR_ValueDef::create_value_member (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_member",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -19924,28 +27210,59 @@ IR_ValueMemberDef_ptr IR_ValueDef::create_value_member (
               (_tao_out << type) &&
               (_tao_out << access)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_member",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_value_member",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -19980,16 +27297,45 @@ IR_AttributeDef_ptr IR_ValueDef::create_attribute (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_attribute",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -20001,28 +27347,59 @@ IR_AttributeDef_ptr IR_ValueDef::create_attribute (
               (_tao_out << get_exceptions) &&
               (_tao_out << put_exceptions)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_attribute",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_attribute",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -20058,17 +27435,45 @@ IR_OperationDef_ptr IR_ValueDef::create_operation (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_operation",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -20081,28 +27486,59 @@ IR_OperationDef_ptr IR_ValueDef::create_operation (
               (_tao_out << exceptions) &&
               (_tao_out << contexts)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_operation",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_operation",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -20518,9 +27954,9 @@ IR_OperationDef_ptr TAO_IR_ValueDef_Smart_Proxy_Base::create_operation  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ValueDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ValueDef[] =
@@ -21414,36 +28850,97 @@ IR_IDLType_ptr IR_ValueBoxDef::original_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_original_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -21471,37 +28968,96 @@ void IR_ValueBoxDef::original_type_def (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << original_type_def)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_original_type_def",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_original_type_def",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -21655,9 +29211,9 @@ void TAO_IR_ValueBoxDef_Smart_Proxy_Base::original_type_def  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ValueBoxDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ValueBoxDef[] =
@@ -21743,37 +29299,97 @@ IR_InterfaceDef_ptr IR_ProvidesDef::interface_type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_interface_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_interface_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_interface_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -21910,9 +29526,9 @@ IR_InterfaceDef_ptr TAO_IR_ProvidesDef_Smart_Proxy_Base::interface_type  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ProvidesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ProvidesDef[] =
@@ -22077,37 +29693,97 @@ IR_InterfaceDef_ptr IR_UsesDef::interface_type (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_interface_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_interface_type",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_interface_type",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -22134,36 +29810,97 @@ CORBA::Boolean IR_UsesDef::is_multiple (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_multiple",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_multiple",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_multiple",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -22313,9 +30050,9 @@ CORBA::Boolean TAO_IR_UsesDef_Smart_Proxy_Base::is_multiple  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_UsesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_UsesDef[] =
@@ -22845,43 +30582,104 @@ CORBA::Boolean IR_EventDef::is_a (
       4,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << event_id)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "is_a",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -22909,38 +30707,97 @@ IR_ValueDef_ptr IR_EventDef::event (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_event",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_event",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_event",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -23092,9 +30949,9 @@ IR_ValueDef_ptr TAO_IR_EventDef_Smart_Proxy_Base::event  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_EventDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_EventDef[] =
@@ -23356,9 +31213,9 @@ TAO_IR_EmitsDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_EmitsDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_EmitsDef[] =
@@ -23541,9 +31398,9 @@ TAO_IR_PublishesDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_PublishesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_PublishesDef[] =
@@ -23726,9 +31583,9 @@ TAO_IR_ConsumesDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ConsumesDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ConsumesDef[] =
@@ -23815,37 +31672,97 @@ IR_InterfaceDefSeq * IR_ComponentDef::supported_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_supported_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -23873,37 +31790,96 @@ void IR_ComponentDef::supported_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK;
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK;
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK;
+        TAO_INTERCEPTOR_CHECK;
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << supported_interfaces)
           ))
-          ACE_THROW (CORBA::MARSHAL ());
+          TAO_INTERCEPTOR_THROW (CORBA::MARSHAL ());
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK;
+                TAO_INTERCEPTOR_CHECK;
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
+          TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_set_supported_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK;
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_set_supported_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+#endif /* TAO_HAS_INTERCEPTORS */
 
 }
 
@@ -23931,38 +31907,97 @@ IR_ComponentDef_ptr IR_ComponentDef::base_component (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_component",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_component",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_base_component",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -23991,37 +32026,97 @@ IR_ProvidesDefSeq * IR_ComponentDef::provides_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_provides_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_provides_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_provides_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24050,38 +32145,97 @@ IR_UsesDefSeq * IR_ComponentDef::uses_interfaces (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_uses_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_uses_interfaces",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_uses_interfaces",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24110,37 +32264,97 @@ IR_EmitsDefSeq * IR_ComponentDef::emits_events (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_emits_events",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_emits_events",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_emits_events",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24169,38 +32383,97 @@ IR_PublishesDefSeq * IR_ComponentDef::publishes_events (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_publishes_events",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_publishes_events",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_publishes_events",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24229,37 +32502,97 @@ IR_ConsumesDefSeq * IR_ComponentDef::consumes_events (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_consumes_events",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_consumes_events",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_consumes_events",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24286,37 +32619,97 @@ CORBA::Boolean IR_ComponentDef::is_basic (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_basic",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_basic",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_basic",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -24348,17 +32741,45 @@ IR_ProvidesDef_ptr IR_ComponentDef::create_provides (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_provides",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -24367,28 +32788,59 @@ IR_ProvidesDef_ptr IR_ComponentDef::create_provides (
               (_tao_out << version) &&
               (_tao_out << interface_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_provides",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_provides",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24421,16 +32873,45 @@ IR_UsesDef_ptr IR_ComponentDef::create_uses (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_uses",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -24440,28 +32921,59 @@ IR_UsesDef_ptr IR_ComponentDef::create_uses (
               (_tao_out << interface_type) &&
               (_tao_out << CORBA::Any::from_boolean (is_multiple))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_uses",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_uses",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24493,16 +33005,45 @@ IR_EmitsDef_ptr IR_ComponentDef::create_emits (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_emits",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -24511,28 +33052,59 @@ IR_EmitsDef_ptr IR_ComponentDef::create_emits (
               (_tao_out << version) &&
               (_tao_out << value)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_emits",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_emits",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24564,16 +33136,45 @@ IR_PublishesDef_ptr IR_ComponentDef::create_publishes (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_publishes",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -24582,27 +33183,59 @@ IR_PublishesDef_ptr IR_ComponentDef::create_publishes (
               (_tao_out << version) &&
               (_tao_out << value)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_publishes",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_publishes",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -24634,16 +33267,45 @@ IR_ConsumesDef_ptr IR_ComponentDef::create_consumes (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_consumes",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -24652,28 +33314,59 @@ IR_ConsumesDef_ptr IR_ComponentDef::create_consumes (
               (_tao_out << version) &&
               (_tao_out << value)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_consumes",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_consumes",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -25026,9 +33719,9 @@ IR_ConsumesDef_ptr TAO_IR_ComponentDef_Smart_Proxy_Base::create_consumes  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_ComponentDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_ComponentDef[] =
@@ -25558,42 +34251,103 @@ CORBA::Boolean IR_PrimaryKeyDef::is_a (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << primary_key_id)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "is_a",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "is_a",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -25621,38 +34375,97 @@ IR_ValueDef_ptr IR_PrimaryKeyDef::primary_key (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_primary_key",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_primary_key",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_primary_key",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -25804,9 +34617,9 @@ IR_ValueDef_ptr TAO_IR_PrimaryKeyDef_Smart_Proxy_Base::primary_key  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_PrimaryKeyDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_PrimaryKeyDef[] =
@@ -26068,9 +34881,9 @@ TAO_IR_FactoryDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_FactoryDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_FactoryDef[] =
@@ -26253,9 +35066,9 @@ TAO_IR_FinderDef_Smart_Proxy_Base::_stubobj (void) const
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_FinderDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_FinderDef[] =
@@ -26341,37 +35154,97 @@ IR_HomeDef_ptr IR_HomeDef::base_home (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_home",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_base_home",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_base_home",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26399,38 +35272,97 @@ IR_ComponentDef_ptr IR_HomeDef::managed_component (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_managed_component",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_managed_component",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_managed_component",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26458,38 +35390,97 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::primary_key (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_primary_key",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_primary_key",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_primary_key",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26518,37 +35509,97 @@ IR_FactoryDefSeq * IR_HomeDef::factories (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_factories",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_factories",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_factories",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26577,38 +35628,97 @@ IR_FinderDefSeq * IR_HomeDef::finders (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_finders",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_finders",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_finders",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26635,38 +35745,97 @@ CORBA::Boolean IR_HomeDef::is_basic (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN  (_tao_retval);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN  (_tao_retval);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_basic",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN  (_tao_retval);
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN  (_tao_retval);
+                TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), _tao_retval);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "_get_is_basic",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "_get_is_basic",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN  (_tao_retval);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_retval;
 }
 
@@ -26698,17 +35867,45 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::create_primary_key (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_primary_key",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -26717,27 +35914,59 @@ IR_PrimaryKeyDef_ptr IR_HomeDef::create_primary_key (
               (_tao_out << version) &&
               (_tao_out << primary_key)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_primary_key",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_primary_key",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26770,16 +35999,45 @@ IR_FactoryDef_ptr IR_HomeDef::create_factory (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_factory",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -26789,28 +36047,59 @@ IR_FactoryDef_ptr IR_HomeDef::create_factory (
               (_tao_out << params) &&
               (_tao_out << exceptions)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_factory",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_factory",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -26843,16 +36132,45 @@ IR_FinderDef_ptr IR_HomeDef::create_finder (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_finder",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -26862,29 +36180,60 @@ IR_FinderDef_ptr IR_HomeDef::create_finder (
               (_tao_out << params) &&
               (_tao_out << exceptions)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_finder",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
- return _tao_safe_retval._retn ();
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_finder",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
+  return _tao_safe_retval._retn ();
 }
 
 CORBA::Boolean IR_HomeDef::_is_a (const CORBA::Char *value, CORBA::Environment &ACE_TRY_ENV)
@@ -27155,9 +36504,9 @@ IR_FinderDef_ptr TAO_IR_HomeDef_Smart_Proxy_Base::create_finder  (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_IR_HomeDef_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_IR_HomeDef[] =
@@ -27880,16 +37229,46 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_struct_tc (
       16,
       istub->orb_core ()
     );
+
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_struct_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -27897,28 +37276,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_struct_tc (
               (_tao_out << name) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_struct_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_struct_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -27950,17 +37360,45 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_union_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_union_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -27969,28 +37407,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_union_tc (
               (_tao_out << discriminator_type) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_union_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_union_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28021,17 +37490,45 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_enum_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_enum_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -28039,27 +37536,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_enum_tc (
               (_tao_out << name) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_enum_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_enum_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28090,17 +37619,45 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_alias_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_alias_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -28108,28 +37665,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_alias_tc (
               (_tao_out << name) &&
               (_tao_out << original_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_alias_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_alias_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28160,17 +37748,45 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_exception_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_exception_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -28178,27 +37794,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_exception_tc (
               (_tao_out << name) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_exception_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_exception_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28228,45 +37876,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_interface_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_interface_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id) &&
               (_tao_out << name)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_interface_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_interface_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28295,43 +38002,103 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_string_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_string_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_string_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_string_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28360,44 +38127,103 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_wstring_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_wstring_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_wstring_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_wstring_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28427,45 +38253,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_fixed_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_fixed_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << digits) &&
               (_tao_out << scale)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_fixed_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_fixed_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28495,46 +38380,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_sequence_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_sequence_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << bound) &&
               (_tao_out << element_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_sequence_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
 
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_sequence_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28564,45 +38507,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_array_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_array_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << length) &&
               (_tao_out << element_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_array_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_array_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28635,17 +38637,45 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -28655,28 +38685,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_tc (
               (_tao_out << concrete_base) &&
               (_tao_out << members)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_value_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28707,16 +38768,45 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_box_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
+
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_box_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
@@ -28724,27 +38814,59 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_value_box_tc (
               (_tao_out << name) &&
               (_tao_out << boxed_type)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_value_box_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_value_box_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28774,45 +38896,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_native_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_native_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id) &&
               (_tao_out << name)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_native_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_native_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28841,44 +39022,103 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_recursive_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_recursive_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_recursive_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_recursive_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28908,44 +39148,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_abstract_interface_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_abstract_interface_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id) &&
               (_tao_out << name)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_abstract_interface_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_abstract_interface_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -28975,45 +39275,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_component_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_component_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id) &&
               (_tao_out << name)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_component_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_component_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -29043,44 +39402,104 @@ CORBA::TypeCode_ptr CORBA::TypeCodeFactory::create_home_tc (
       istub->orb_core ()
     );
 
+#if defined (TAO_HAS_INTERCEPTORS)
+    TAO_ClientRequestInterceptor_Adapter
+      _tao_vfr (istub->orb_core ()->orb ()->_get_client_interceptor (ACE_TRY_ENV));
+    ACE_CHECK_RETURN (0);
+    PortableInterceptor::Cookies _tao_cookies;
+    CORBA::NVList_var _tao_interceptor_args;
+    if (_tao_vfr.valid ())
+      {
+        istub->orb_core ()->orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);
+        ACE_CHECK_RETURN (0);
+      }
+
+    ACE_TRY
+      {
+#endif /* TAO_HAS_INTERCEPTORS */
 
       for (;;)
       {
         _tao_call.start (ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
+        TAO_INTERCEPTOR (
+            _tao_vfr.preinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_home_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
         // Tremporary hack until GIOP 1.2 is implemented.
 
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
-        ACE_CHECK_RETURN (0);
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << id) &&
               (_tao_out << name)
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
         int _invoke_status =
           _tao_call.invoke (0, 0, ACE_TRY_ENV);
-                ACE_CHECK_RETURN (0);
+                TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         if (_invoke_status == TAO_INVOKE_RESTART)
           continue;
         if (_invoke_status != TAO_INVOKE_OK)
         {
-          ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
 
         }
         TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
         if (!(
               (_tao_in >> _tao_safe_retval.inout ())
           ))
-          ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+          TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES), 0);
+
+        TAO_INTERCEPTOR (
+            _tao_vfr.postinvoke (
+                _tao_call.request_id (),
+                1,
+                this,
+                "create_home_tc",
+                _tao_call.service_info (),
+                _tao_interceptor_args.inout (),
+                _tao_cookies,
+                ACE_TRY_ENV
+              )
+          );
+        TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
 
       }
+#if defined (TAO_HAS_INTERCEPTORS)
+
+    }
+  ACE_CATCHANY
+    {
+      _tao_vfr.exception_occurred (
+          _tao_call.request_id (),
+          1,
+          this,
+          "create_home_tc",
+          _tao_cookies,
+          ACE_TRY_ENV
+        );
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (0);
+#endif /* TAO_HAS_INTERCEPTORS */
   return _tao_safe_retval._retn ();
 }
 
@@ -29522,9 +39941,9 @@ CORBA::TypeCode_ptr TAO_CORBA_TypeCodeFactory_Smart_Proxy_Base::create_home_tc  
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
   defined (ACE_HAS_GNU_REPO)
-template class TAO_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+template class ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate TAO_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+#pragma instantiate ACE_Singleton<TAO_CORBA_TypeCodeFactory_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 static const CORBA::Long _oc_CORBA_TypeCodeFactory[] =

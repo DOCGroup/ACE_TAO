@@ -401,11 +401,6 @@ AST_Structure::dump(ostream &o)
   o << "}";
 }
 
-void
-AST_Structure::destroy (void)
-{
-}
-
 // Narrowing
 IMPL_NARROW_METHODS2(AST_Structure, AST_ConcreteType, UTL_Scope)
 IMPL_NARROW_FROM_DECL(AST_Structure)

@@ -24,7 +24,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::~ACE_Select_Reactor_Handler_Repo
 }
 
 ACE_INLINE size_t
-ACE_Select_Reactor_Handler_Repository::size (void) const
+ACE_Select_Reactor_Handler_Repository::size (void)
 {
   return this->max_size_;
 }

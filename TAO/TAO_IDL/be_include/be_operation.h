@@ -32,8 +32,9 @@ class UTL_StrList;
 class be_visitor;
 class be_argument;
 
-// BE_Operation
-
+/*
+ * BE_Operation
+ */
 class be_operation : public virtual AST_Operation,
                      public virtual be_scope,
                      public virtual be_decl
@@ -68,9 +69,6 @@ public:
 
   be_argument *add_argument_to_scope (be_argument *arg);
   // add an argument to the scope
-
-  virtual void destroy (void);
-  // Cleanup method.
 
   // Visiting
   virtual int accept (be_visitor *visitor);

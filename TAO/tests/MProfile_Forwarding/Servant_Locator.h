@@ -1,6 +1,6 @@
 // $Id$
 
-// ================================================================
+//================================================================================
 //
 // = LIBRARY
 //     TAO/tests/POA/Forwarding/Servant_Locator
@@ -15,15 +15,14 @@
 // = AUTHOR
 //     Irfan Pyarali
 //
-// ================================================================
+//==================================================================================
 
 #ifndef _SERVANT_LOCATOR_H_
 #define _SERVANT_LOCATOR_H_
 
 #include "tao/corba.h"
-#include "tao/PortableServer/PortableServer.h"
 
-class Servant_Locator : public PortableServer::ServantLocator
+class Servant_Locator : public POA_PortableServer::ServantLocator
 {
   // = TITLE
   //   This class is used by a POA with USE_SERVANT_MANAGER and
@@ -39,9 +38,7 @@ public:
                                              PortableServer::POA_ptr adapter,
                                              const char *operation,
                                              PortableServer::ServantLocator::Cookie &the_cookie
-                                             TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+                                             TAO_ENV_ARG_DECL);
   // This method is invoked by a POA whenever it receives a request
   // for MyFoo object that is not currently active.
 
@@ -50,8 +47,7 @@ public:
                            const char *operation,
                            PortableServer::ServantLocator::Cookie the_cookie,
                            PortableServer::Servant the_servant
-                           TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                           TAO_ENV_ARG_DECL);
   // This method is invoked whenever a MyFooServant completes a
   // request.
 

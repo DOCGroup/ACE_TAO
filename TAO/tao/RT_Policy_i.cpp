@@ -22,7 +22,6 @@ TAO_PriorityModelPolicy::TAO_PriorityModelPolicy
 TAO_PriorityModelPolicy::TAO_PriorityModelPolicy (const
                                                   TAO_PriorityModelPolicy &rhs)
   : RTCORBA::PriorityModelPolicy (),
-    TAO_Local_RefCounted_Object (),
     priority_model_ (rhs.priority_model_),
     server_priority_ (rhs.server_priority_)
 {
@@ -34,28 +33,26 @@ TAO_PriorityModelPolicy::~TAO_PriorityModelPolicy (void)
 
 RTCORBA::PriorityModel
 TAO_PriorityModelPolicy::priority_model (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   return this->priority_model_;
 }
 
 RTCORBA::Priority
 TAO_PriorityModelPolicy::server_priority (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC (())
 {
   return this->server_priority_;
 }
 
 CORBA::PolicyType
 TAO_PriorityModelPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_MODEL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityModelPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -68,7 +65,6 @@ TAO_PriorityModelPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityModelPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -85,14 +81,29 @@ TAO_PriorityModelPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
   // the order specified in the RTCORBA 1.0 spec (ptc/99-05-03)
   // section 4.7.3.
 
-  return ((out_cdr << priority_model_) && (out_cdr << server_priority_));
+  // @@ Angelo, this code is wrong: you are missing byte ordering
+  // octet here (and in all other encode/decode places).  See section
+  // 15.3.3 of the CORBA 2.3.1
+  CORBA::Boolean b = (out_cdr << priority_model_);
+  if (b  && (out_cdr << server_priority_))
+    return 1;
+
+  return 0;
 }
 
 CORBA::Boolean
 TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return ((in_cdr >> priority_model_) && (in_cdr >> server_priority_));
+  CORBA::Boolean b = (in_cdr >> priority_model_);
+  if (b  && (in_cdr >> server_priority_))
+    return 1;
+
+  priority_model_ = RTCORBA::SERVER_DECLARED;
+  server_priority_ = 0;
+
+  return 0;
 }
+
 
 // ****************************************************************
 
@@ -104,7 +115,6 @@ TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (RTCORBA::ThreadpoolId id)
 TAO_ThreadpoolPolicy::TAO_ThreadpoolPolicy (const TAO_ThreadpoolPolicy
                                             &rhs)
   : RTCORBA::ThreadpoolPolicy (),
-    TAO_Local_RefCounted_Object (),
     id_ (rhs.id_)
 {
 }
@@ -122,14 +132,12 @@ TAO_ThreadpoolPolicy::threadpool (CORBA::Environment &)
 
 CORBA::PolicyType
 TAO_ThreadpoolPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::THREADPOOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ThreadpoolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ThreadpoolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -142,7 +150,6 @@ TAO_ThreadpoolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_ThreadpoolPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -154,8 +161,7 @@ TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (void)
 
 TAO_PrivateConnectionPolicy::TAO_PrivateConnectionPolicy (const
                                                            TAO_PrivateConnectionPolicy &)
-  : RTCORBA::PrivateConnectionPolicy (),
-    TAO_Local_RefCounted_Object ()
+  : RTCORBA::PrivateConnectionPolicy ()
 {
 }
 
@@ -165,14 +171,12 @@ TAO_PrivateConnectionPolicy::~TAO_PrivateConnectionPolicy (void)
 
 CORBA::PolicyType
 TAO_PrivateConnectionPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIVATE_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PrivateConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PrivateConnectionPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -186,7 +190,6 @@ TAO_PrivateConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_PrivateConnectionPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -202,7 +205,6 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const TAO_PriorityBandedConnectionPolicy &rhs)
   : RTCORBA::PriorityBandedConnectionPolicy (),
-    TAO_Local_RefCounted_Object (),
     priority_bands_ (rhs.priority_bands_)
 {
 }
@@ -227,14 +229,12 @@ TAO_PriorityBandedConnectionPolicy::priority_bands (CORBA::Environment &ACE_TRY_
 
 CORBA::PolicyType
 TAO_PriorityBandedConnectionPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_PriorityBandedConnectionPolicy *tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -247,7 +247,6 @@ TAO_PriorityBandedConnectionPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void TAO_PriorityBandedConnectionPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 
@@ -370,169 +369,67 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay,
 CORBA::Boolean
 TAO_TCP_Properties::_tao_encode (TAO_OutputCDR & out_cdr)
 {
-  return ((out_cdr << this->send_buffer_size_)
-          &&
-          (out_cdr << this->recv_buffer_size_)
-          &&
-          (out_cdr.write_boolean (this->keep_alive_))
-          &&
-          (out_cdr.write_boolean (this->dont_route_))
-          &&
-          (out_cdr.write_boolean (this->no_delay_)));
+  if (!(out_cdr << send_buffer_size_))
+    return 0;
+
+  if (!(out_cdr << recv_buffer_size_))
+    return 0;
+
+  if (!(out_cdr.write_boolean (keep_alive_)))
+    return 0;
+
+  if (!(out_cdr.write_boolean (dont_route_)))
+    return 0;
+
+  if (!(out_cdr.write_boolean (no_delay_)))
+    return 0;
+
+  return 1;
+
+  // @@ Angelo, a more consize and idiomatic way to write what you
+  // have above is the following:
+
+  // @@ Marina your code is more concise, but you go on reading
+  // even after an error occur, and this is not a good habit.
+  // My code is more verbose but it was meant to be that way,
+  // i believe that as soon as something goes wrong you should
+  // stop doing anything.
+  /*
+  return
+    ((out_cdr << send_buffer_size_)
+      and (out_cdr << recv_buffer_size_)
+      and (out_cdr.write_boolean (keep_alive_))
+      and (out_cdr.write_boolean (dont_route_))
+      and (out_cdr.write_boolean (no_delay_)))
+  */
+
+  // @@ Angelo, I sent you an e-mail explaining C++ short-circuiting
+  // feature in operator AND and why the above works.  Please fix.
 }
 
 CORBA::Boolean
 TAO_TCP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
 {
-  return ((in_cdr >> this->send_buffer_size_)
-          &&
-          (in_cdr >> this->recv_buffer_size_)
-          &&
-          (in_cdr.read_boolean (this->keep_alive_))
-          &&
-          (in_cdr.read_boolean (this->dont_route_))
-          &&
-          (in_cdr.read_boolean (this->no_delay_)));
-}
+  if (!(in_cdr >> this->send_buffer_size_))
+    return 0;
 
-// ****************************************************************
+  if (!(in_cdr >> this->recv_buffer_size_))
+    return 0;
 
-TAO_Unix_Domain_Properties::TAO_Unix_Domain_Properties
-(CORBA::Long send_buffer_size,
- CORBA::Long recv_buffer_size)
-  : send_buffer_size_ (send_buffer_size),
-    recv_buffer_size_ (recv_buffer_size)
-{
-}
+  if (in_cdr.read_boolean (this->keep_alive_))
+    return 0;
 
-TAO_Unix_Domain_Properties::~TAO_Unix_Domain_Properties (void)
-{
-}
+  if (in_cdr.read_boolean (this->dont_route_))
+    return 0;
 
-CORBA::Long
-TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  return this->send_buffer_size_;
-}
+  if (in_cdr.read_boolean (this->no_delay_))
+    return 0;
 
-void
-TAO_Unix_Domain_Properties::send_buffer_size (CORBA::Long send_buffer_size,
-                                              CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  this->send_buffer_size_ = send_buffer_size;
-}
-
-CORBA::Long
-TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  return this->recv_buffer_size_;
-}
-
-void
-TAO_Unix_Domain_Properties::recv_buffer_size (CORBA::Long recv_buffer_size,
-                                              CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  this->recv_buffer_size_ = recv_buffer_size;
+  return 1;
 }
 
 
-CORBA::Boolean
-TAO_Unix_Domain_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
-{
-  return ((out_cdr << this->send_buffer_size_)
-          && (out_cdr << this->recv_buffer_size_));
-}
 
-CORBA::Boolean 
-TAO_Unix_Domain_Properties::_tao_decode (TAO_InputCDR &in_cdr)
-{
-  return ((in_cdr >> this->send_buffer_size_)
-          && (in_cdr >> this->recv_buffer_size_));
-}
-    
-// ****************************************************************
-
-TAO_SMEM_Properties::TAO_SMEM_Properties (void)
-  : preallocate_buffer_size_ (0),
-    mmap_filename_ (),
-    mmap_lockname_ ()
-{
-}
-
-TAO_SMEM_Properties::~TAO_SMEM_Properties (void)
-{
-}
-
-
-CORBA::Long
-TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  return this->preallocate_buffer_size_;
-}
-
-void
-TAO_SMEM_Properties::preallocate_buffer_size (CORBA::Long preallocate_buffer_size,
-                                              CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  this->preallocate_buffer_size_ = preallocate_buffer_size;
-}
-
-char *
-TAO_SMEM_Properties::mmap_filename (CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  return this->mmap_filename_.rep ();
-}
-
-void
-TAO_SMEM_Properties::mmap_filename (const char * mmap_filename,
-                                    CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  this->mmap_filename_.set (mmap_filename);
-}
-
-char *
-TAO_SMEM_Properties::mmap_lockname (CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  return this->mmap_lockname_.rep ();
-}
-
-void
-TAO_SMEM_Properties::mmap_lockname (const char * mmap_lockname,
-                                    CORBA::Environment &)
-  ACE_THROW_SPEC (())
-{
-  this->mmap_lockname_.set (mmap_lockname);
-}
-
-CORBA::Boolean
-TAO_SMEM_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
-{
-  return ((out_cdr << this->preallocate_buffer_size_)
-          &&
-          (out_cdr << this->mmap_filename_)
-          &&
-          (out_cdr << this->mmap_lockname_));
-}
-
-CORBA::Boolean 
-TAO_SMEM_Properties::_tao_decode (TAO_InputCDR &in_cdr)
-{
-  return ((in_cdr >> this->preallocate_buffer_size_) 
-          &&
-          (in_cdr >> this->mmap_filename_)
-          &&
-          (in_cdr >> this->mmap_lockname_));
-}
-      
 // ****************************************************************
 
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
@@ -545,7 +442,6 @@ TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
 TAO_ServerProtocolPolicy::TAO_ServerProtocolPolicy (const
                                                     TAO_ServerProtocolPolicy &rhs)
   : RTCORBA::ServerProtocolPolicy (),
-    TAO_Local_RefCounted_Object (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -570,14 +466,12 @@ TAO_ServerProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::PolicyType
 TAO_ServerProtocolPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::SERVER_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ServerProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -591,9 +485,11 @@ TAO_ServerProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ServerProtocolPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
+
+
+
 
 // ****************************************************************
 
@@ -607,7 +503,6 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
 TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (const
                                                     TAO_ClientProtocolPolicy &rhs)
   : RTCORBA::ClientProtocolPolicy (),
-    TAO_Local_RefCounted_Object (),
     protocols_ (rhs.protocols_)
 {
 }
@@ -632,14 +527,12 @@ TAO_ClientProtocolPolicy::protocols (CORBA::Environment &ACE_TRY_ENV)
 
 CORBA::PolicyType
 TAO_ClientProtocolPolicy::policy_type (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE;
 }
 
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_ClientProtocolPolicy* tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -653,8 +546,38 @@ TAO_ClientProtocolPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_ClientProtocolPolicy::destroy (CORBA::Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+}
+
+TAO_GIOP_Properties::TAO_GIOP_Properties (void)
+{
+}
+
+TAO_GIOP_Properties::~TAO_GIOP_Properties (void)
+{
+}
+
+
+RTCORBA::ProtocolProperties*
+TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id)
+{
+  RTCORBA::ProtocolProperties* property = 0;
+
+  if (id == IOP::TAG_INTERNET_IOP)
+    ACE_NEW_RETURN (property, TAO_TCP_Properties, 0);
+
+  return property;
+}
+
+RTCORBA::ProtocolProperties*
+TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id)
+{
+  RTCORBA::ProtocolProperties* property = 0;
+
+  if (id == IOP::TAG_INTERNET_IOP)
+    ACE_NEW_RETURN (property, TAO_GIOP_Properties, 0);
+
+  return property;
 }
 
 ///////////////////////////////////////////////////////
@@ -668,22 +591,42 @@ TAO_ClientProtocolPolicy::TAO_ClientProtocolPolicy (void)
 CORBA::Boolean
 TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
 {
-  CORBA::Boolean is_write_ok = out_cdr << this->protocols_.length ();
+  CORBA::Boolean is_write_ok = out_cdr << protocols_.length ();
 
   for (CORBA::ULong i = 0;
-       (i < this->protocols_.length ()) && is_write_ok;
+       (i < protocols_.length ()) && is_write_ok;
        i++)
     {
-      is_write_ok =
-        (out_cdr << this->protocols_[i].protocol_type)
-        &&
-        this->protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
-        &&
-        this->protocols_[i].transport_protocol_properties->_tao_encode (out_cdr);
+      is_write_ok = out_cdr << protocols_[i].protocol_type;
+
+      if (is_write_ok)
+        is_write_ok =
+          protocols_[i].orb_protocol_properties->_tao_encode (out_cdr);
+
+      if (is_write_ok)
+        is_write_ok =
+          protocols_[i].transport_protocol_properties->_tao_encode (out_cdr);
     }
 
   return is_write_ok;
 }
+// @@ Angelo, like I mentioned in one of the methods above, you can
+// write the code above more concisely.
+
+// @ Marina see explanation above.
+/*
+  For (Corba::ULong i = 0;
+     (i < protocols_.length ()) && is_write_ok;
+     i++)
+{
+  is_write_ok =
+    (out_cdr << protocols_[i].protocol_type
+     and protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
+     and protocols_[i].transport_protocol_properties->_tao_encode (out_cdr));
+}
+  */
+
+// @@ Angelo, see above ...
 
 CORBA::Boolean
 TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
@@ -691,104 +634,59 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
   CORBA::ULong length;
   CORBA::Boolean is_read_ok = in_cdr >> length;
 
-  this->protocols_.length (length);
+  protocols_.length (length);
+  RTCORBA::ProtocolProperties *protocol_properties;
 
   for (CORBA::ULong i = 0; (i < length) && is_read_ok; i++)
     {
-      is_read_ok = in_cdr >> this->protocols_[i].protocol_type;
+      IOP::ProfileId id;
+      is_read_ok = in_cdr >> id;
 
-      this->protocols_[i].orb_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_orb_protocol_property
-        (this->protocols_[i].protocol_type);
+      // @@ Angelo, the code below looks buggy.  For example, I don't
+      // see where transport properties are created: you are calling
+      // create_orb_protocol_property twice.  Please review this
+      // whole method carefully to make sure it's correct.
 
-      this->protocols_[i].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property
-        (this->protocols_[i].protocol_type);
+      protocol_properties =
+        TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
 
-      if (is_read_ok
-          && (this->protocols_[i].orb_protocol_properties.ptr () != 0))
-        is_read_ok =
-          this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
+      protocols_[i].transport_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
 
-      if (is_read_ok
-          && (this->protocols_[i].transport_protocol_properties.ptr () != 0))
-        is_read_ok =
-          this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
+      if (is_read_ok && protocol_properties != 0 )
+        {
+          // @@ Angelo, shouldn't you be checking that the pointer is
+          // *not* 0 in the tests below before proceeding?!  You
+          // should check that allocations succeeded right after you
+          // perform them above and return false immediately on
+          // detecting a failure.
 
+          // @Marina  The factory arlready handle the memory allocation
+          // problems.
+          // But also if I am right we could receive ORB specific protocol
+          // Properties that we need to skip.
+
+          // @@ Angelo, how does the factory handles memory allocation
+          // problem?  by returning 0, so you still need to check for
+          // it here...  Furthermore, if 0 is returned, and you are
+          // trying to invoke a method on it here, you are busted...
+
+          protocols_[i].orb_protocol_properties = protocol_properties;
+
+          if (is_read_ok && (protocols_[i].orb_protocol_properties.ptr () == 0))
+            is_read_ok =
+              protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
+
+          if (is_read_ok
+              && (protocols_[i].transport_protocol_properties.ptr () == 0))
+            is_read_ok =
+              protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
+        }
     }
 
   return is_read_ok;
 }
-// ****************************************************************
-
-TAO_GIOP_Properties::TAO_GIOP_Properties (void)
-{
-}
-
-TAO_GIOP_Properties::~TAO_GIOP_Properties (void)
-{
-}
-
-CORBA::Boolean
-TAO_GIOP_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
-{
-  ACE_UNUSED_ARG (out_cdr);
-  return 1;
-}
-
-CORBA::Boolean
-TAO_GIOP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
-{
-  ACE_UNUSED_ARG (in_cdr);
-  return 1;
-}
-
-// ****************************************************************
-
-RTCORBA::ProtocolProperties*
-TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::ProfileId id)
-{                    
-  RTCORBA::ProtocolProperties* property = 0;
-
-  if (id == IOP::TAG_INTERNET_IOP)
-
-    ACE_NEW_RETURN (property, 
-                    TAO_TCP_Properties, 
-                    0);
-  
-  else if(id == TAO_TAG_SHMEM_PROFILE)
-    ACE_NEW_RETURN (property,
-                    TAO_SMEM_Properties,
-                    0);
-
-  else if (id == TAO_TAG_UIOP_PROFILE)
-    ACE_NEW_RETURN (property,
-                    TAO_Unix_Domain_Properties,
-                    0);
-  return property;
-}
-
-RTCORBA::ProtocolProperties*
-TAO_Protocol_Properties_Factory::create_orb_protocol_property (IOP::ProfileId id)
-{
-  RTCORBA::ProtocolProperties* property = 0;
-
-  if (id == IOP::TAG_INTERNET_IOP)
-    ACE_NEW_RETURN (property, 
-                    TAO_GIOP_Properties, 
-                    0);
-  
-  // Right now the only supported ORB protocol is GIOP
-  // so we couple this with every protocol property.
-  // The else statement is not necessary, but it
-  // is here just to make clear that as soon as
-  // new ORB protocol are supported other case
-  // should be considered.
-  else 
-    ACE_NEW_RETURN (property, 
-                    TAO_GIOP_Properties, 
-                    0);
-   return property;
-}
+// @@ Angelo, please include protocol policy in your Exposed_Policies
+// test to make sure the above works!
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

@@ -29,12 +29,6 @@
 #include "ace/OS_Export.h"
 #include /**/ <stddef.h>
 
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
-using std::size_t;
-using std::wint_t;
-#endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
-
 class ACE_OS_Export ACE_OS_String
   // = TITLE
   //     This class is a wrapper for string operations
@@ -154,11 +148,6 @@ public:
   static int ace_isspace (const ACE_TCHAR s);
   static int ace_isprint (const ACE_TCHAR s);
 
-  static char *itoa (int value, char *string, int radix);
-#if defined (ACE_HAS_WCHAR)
-  static wchar_t *itoa (int value, wchar_t *string, int radix);
-#endif /* ACE_HAS_WCHAR */
-
 private:
   // = These are emulation or platform specific versions of methods.
   static const void *memchr_emulation (const void *s, int c, size_t len);
@@ -180,15 +169,6 @@ private:
                                     const wchar_t *t, 
                                     size_t len);
 #endif /* ACE_HAS_WCHAR */
-
-
-#if !defined (ACE_HAS_ITOA)
-  static char *itoa_emulation (int value, char *string, int radix);
-# if defined (ACE_HAS_WCHAR)
-  static wchar_t *itoa_emulation (int value, wchar_t *string, int radix);
-# endif /* ACE_HAS_WCHAR */
-#endif /* ACE_HAS_ITOA */
-
 };  
 
 # if defined (ACE_HAS_INLINED_OSCALLS)

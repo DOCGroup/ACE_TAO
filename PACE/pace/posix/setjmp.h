@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SETJMP_H_POSIX
-#define PACE_SETJMP_H_POSIX
+#ifndef PACE_SETJMP_H
+#define PACE_SETJMP_H
 
 #include <setjmp.h>
 
@@ -22,11 +22,16 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-  typedef jmp_buf pace_jmp_buf;
-  typedef sigjmp_buf pace_sigjmp_buf;
+  PACE_INLINE int pace_sigsetjmp (sigjmp_buf env, int savemask);
+
+  PACE_INLINE void pace_siglongjmp (sigjmp_buf env, int val);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_SETJMP_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/setjmp.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_SETJMP_H */

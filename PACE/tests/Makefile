@@ -5,39 +5,51 @@
 #       Makefile for all the PACE tests
 #----------------------------------------------------------------------------
 
-ifndef static_libs_only
-  ifndef shared_libs_only
-    static_libs_only = 1
-  endif # shared_libs_only
-endif # static_libs_only
+ifndef PACE_ROOT
+  PACE_ROOT = $(ACE_ROOT)/pace
+endif # ! PACE_ROOT
 
-# If we are inlining the PACE functions then we don't want to include
-# the PACE library (and we need to define PACE_HAS_INLINE). If we're not
-# inlining then we need to include the PACE library. Inlining is the default.
+ifeq ($(PACE_SYSNAME),)
+  PACE_SYSNAME = $(shell uname -s)
+endif # ! PACE_SYSNAME
 
-ifndef inline
-  CFLAGS += -DPACE_HAS_INLINE
-else
-  ifneq (0,$(inline))
-    CFLAGS += -DPACE_HAS_INLINE
-  else
-    LIBS += -L$(ACE_ROOT)/PACE/pace -lPACE
-  endif # ! inline
-endif # ! inline
+VPATH:=common:arpa:config:netinet:sys
+INCLDIRS = -I$(PACE_ROOT)
 
-CFLAGS += -DPACE_HAS_ALL_POSIX_FUNCS
+# List of platforms and uname -s values
+# =====================================
+# Solaris           SunOS
+# NT                "NT" (uname not supported)
+# LynxOS            LynxOS
+# VxWorks           "VxWorks" (strictly cross-compiled)
+# Linux             Linux
+# pSOS              "pSOS" (strictly cross-compiled)
+# Chorus            "Chorus" (strictly cross-compiled)
+# QNX Neutrino      "Neutrino" (strictly cross-compiled)
+# OSF/1             OSF1
+# IRIX (64 bit)     IRIX64
+# IRIX (32 bit)     IRIX (unconfirmed)
+# HPUX              HP-UX
+# AIX               AIX
+
+# Solaris is POSIX - change this when the platform directories get
+# squared away
+#ifeq ($(PACE_SYSNAME),SunOS || $(PACE_SYSNAME),Linux)
+ifeq ($(PACE_SYSNAME),SunOS)
+VPATH :=.:posix:$(VPATH)
+INCLDIRS += -I$(PACE_ROOT)/pace/posix
+endif
 
 #----------------------------------------------------------------------------
 #       Local macros
 #----------------------------------------------------------------------------
 
 BIN =   Stdio_Test \
-        Posix_SP_Test \
-	mqueue_test
+        Posix_SP_Test
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.
-PACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --pace)
+PACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/pace_components --pace)
 
 PSRC=$(addsuffix .c,$(BIN))
 
@@ -47,7 +59,6 @@ PSRC=$(addsuffix .c,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ACELIB =
-INCLDIRS += -I$(PACE_ROOT)
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
@@ -58,13 +69,6 @@ ifndef SOEXT
 endif
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-
-include $(ACE_ROOT)/PACE/include/makeinclude/rules.common.GNU
-
-# To compile in the PACE lib on platforms that compile c code
-ifeq  (1, $(emulation))
-  LIBS += -L$(PACE_ROOT)/pace -lPACE
-endif # emulation
 
 # To build multiple executables in the same directory on AIX, it works
 # best to wipe out any previously-created tempinc directory.

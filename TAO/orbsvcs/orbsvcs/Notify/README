@@ -1,15 +1,9 @@
 $Id$
-
 README for the Notification Service
 -----------------------------------
 
-# @@ Pradeep: do you have a document that describes the internals of
-#    the service?  If not, this is a good place to write that down,
-#    and a good start for the paper...
-
 The following interfaces have been implemented:
-# @@ Pradeep it said 'grammer' it is 'grammar'...
-CosNotifyFilter::Filter (supports the Trader TCL grammar)
+CosNotifyFilter::Filter (supports the Trader TCL grammer)
 CosNotifyFilter::FilterFactory
 
 CosNotifyChannelAdmin::ProxyPushConsumer

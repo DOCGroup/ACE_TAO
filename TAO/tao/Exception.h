@@ -69,14 +69,14 @@ public:
   const char *_id (void) const;
   // Return the repository ID of the Exception.
 
-  virtual CORBA::TypeCode_ptr _type (void) const;
-  // Will be overridden in the concrete derived classes.
+  CORBA::TypeCode_ptr _type (void) const;
+  // Return the TypeCode corresponding to the currently stored.
 
   // = To implement the narrow method.
   virtual int _is_a (const char* repository_id) const;
 
-  CORBA_Exception (const char* repository_id);
-  // Constructor from a respository id.
+  CORBA_Exception (CORBA::TypeCode_ptr type);
+  // Constructor from a TypeCode.
 
   void _tao_print_exception (const char *info,
                              FILE *f = stdout) const;
@@ -92,9 +92,6 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &) = 0;
 
-  static void _tao_any_destructor (void *);
-  // Used in the non-copying Any insertion operator.
-
   // = Methods required for memory management support.
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
@@ -103,10 +100,10 @@ protected:
   CORBA_Exception (void);
   // Default constructor is protected.
 
-private:
-  char *id_;
-  // Storage of our repository id.
+  CORBA::TypeCode_ptr type_;
+  // Type of the Exception.
 
+private:
   CORBA::ULong refcount_;
   // Reference count to avoid copying overhead.
 
@@ -147,8 +144,8 @@ public:
 
   // = TAO specific extension.
 
-  CORBA_UserException (const char* repository_id);
-  // Constructor from a repository id.
+  CORBA_UserException (CORBA::TypeCode_ptr tc);
+  // Constructor from a TypeCode.
 
   virtual int _is_a (const char *interface_id) const;
   // Used for narrowing
@@ -223,10 +220,10 @@ public:
   // value.
 
 protected:
-  CORBA_SystemException (const char *repository_id,
+  CORBA_SystemException (CORBA::TypeCode_ptr tc,
                          CORBA::ULong code,
                          CORBA::CompletionStatus completed);
-  // Ctor using a repository id.
+  // Ctor using a TypeCode.
 
 private:
   CORBA::ULong minor_;
@@ -247,18 +244,12 @@ public: \
   CORBA_ ## name (void); \
   CORBA_ ## name (CORBA::ULong code, \
                   CORBA::CompletionStatus completed) \
-    : CORBA_SystemException ("IDL:omg.org/CORBA/" #name ":1.0", code, completed) \
+    : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
   static CORBA_##name * _downcast (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
   virtual void _raise (void); \
-  virtual CORBA::TypeCode_ptr _type (void) const; \
-  static void _tao_any_destructor (void*); \
-}; \
-TAO_Export void operator<<= (CORBA::Any &, const CORBA_##name &); \
-TAO_Export void operator<<= (CORBA::Any &, CORBA_##name *); \
-TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
-                                       const CORBA_##name *&)
+}
 
 
 TAO_SYSTEM_EXCEPTION(UNKNOWN);          // the unknown exception
@@ -342,9 +333,6 @@ public:
   virtual int _is_a (const char *type_id) const;
   // Helper method to implement _downcast.
 
-  virtual CORBA::TypeCode_ptr _type (void) const;
-  // This class has a specific typecode.
-
 private:
   CORBA_Any *exception_;
   // Holder for the actual exception.
@@ -396,10 +384,6 @@ private:
   // typecodes.  Since at the time, the ORB is mostly still not
   // available.  Using a separate allocator prevent CDR routine from
   // accessing the optimized allocators from the ORB.
-
-  static int initialized_;
-  // Flag that denotes that the TAO's CORBA exceptions have been
-  // initialized.
 };
 
 class CORBA_ExceptionList;

@@ -34,28 +34,23 @@ ACE_RMCast_Partial_Message::fragment_received (ACE_UINT32 message_size,
                                                ACE_Message_Block *mb)
 {
   if (this->message_body_.length () != message_size)
-    {
-      //      ACE_DEBUG ((LM_DEBUG,
-      //                  "Partial_Message::fragment_received - "
-      //                  "invalid message length\n"));
-      return -1;
-    }
+    return -1;
 
   // Just copy the data...
   char *rd_ptr = this->message_body_.rd_ptr () + offset;
-  size_t total_length = 0;
+  size_t total_length = mb->length () - 12;
+  if (total_length > 0)
+    {
+      ACE_OS::memcpy (rd_ptr,
+                      mb->rd_ptr () + 12,
+                      total_length);
+      rd_ptr += total_length;
+    }
   {
-    for (const ACE_Message_Block *i = mb; i != 0; i = i->cont ())
+    for (const ACE_Message_Block *i = mb->cont (); i != 0; i = i->cont ())
       {
-        if (rd_ptr + i->length () > this->message_body_.wr_ptr ())
-          {
-            //            ACE_DEBUG ((LM_DEBUG,
-            //                        "Partial_Message::fragment_received - "
-            //                        "invalid payload length\n"));
-            return -1;
-          }
         ACE_OS::memcpy (rd_ptr, i->rd_ptr (), i->length ());
-        rd_ptr       += i->length ();
+        rd_ptr += i->length ();
         total_length += i->length ();
       }
   }
@@ -68,77 +63,61 @@ ACE_RMCast_Partial_Message::fragment_received (ACE_UINT32 message_size,
   //   iteration if the
 
   ACE_UINT32 start = offset;
-  ACE_UINT32 end   = offset + total_length;
+  ACE_UINT32 end = offset + total_length;
 
-  while (start != end && this->hole_count_ != 0)
+  for (size_t i = 0; i < this->hole_count_; ++i)
     {
-      for (size_t i = 0; i < this->hole_count_; ++i)
+      Hole& hole = this->hole_list_[i];
+
+      if (end <= hole.start)
+        return 0;
+      if (start >= hole.end)
+        continue;
+
+      // OK there is some intersection.
+
+      // There are only three cases for the <start> value:
+      // start < hole.start
+      // start == hole.start
+      // hole.start < start < hole.end
+      //
+      // But the code for both start == hole.start and start <
+      // hole.start is identical....
+
+      if (start <= hole.start)
         {
-          Hole& hole = this->hole_list_[i];
-
-          // First check if the new data insersects the hole...
-          if (end <= hole.start)
-            return 0;
-          if (start >= hole.end)
+          if (end < hole.end)
             {
-              if (i == this->hole_count_ - 1)
-                return 0;
-              else
-                continue;
+              // In this case we shrink the hole
+              hole.start = end;
+              return 0;
             }
-
-          // The hole and the new fragment intersect, we have to
-          // update the hole list.
-          //
-          // There are only three cases for the <start> value:
-          // start < hole.start
-          // start == hole.start
-          // hole.start < start < hole.end
-          //
-          // But the code for both start == hole.start and start <
-          // hole.start is identical....
-
-          if (start <= hole.start)
+          else // end >= hole.end
             {
-              if (end < hole.end)
-                {
-                  // NOTE: hole.start < end, because of previous test
-
-                  // In this case we shrink the hole, but it is not
-                  // removed!
-                  hole.start = end;
-                  return 0;
-                }
-              else // end >= hole.end
-                {
-                  start = hole.end;
-                  // We remove the hole, and continue the iteration...
-                  if (this->remove_hole (i) == -1)
-                    return -1;
-                  break;
-                }
+              // We remove the hole, and continue the iteration...
+              if (this->remove_hole (i) == -1)
+                return -1;
+              continue;
             }
-          else // hole.start < start < hole.end
+        }
+      else // hole.start < start < hole.end
+        {
+          if (end >= hole.end)
             {
-              if (end >= hole.end)
-                {
-                  // Just adjust the size of the hole...
-                  ACE_UINT32 tmp = hole.end;
-                  hole.end = start;
-                  start = tmp;
-                  break;
-                }
-              else // if (end < hole.end)
-                {
-                  // Nasty, we need to insert a new hole...
-                  if (this->insert_hole (i, end, hole.end) == -1)
-                    return -1;
-                  // and change the old hole...
-                  // NOTE: we have to refetch it because the array may
-                  // have been reallocated!
-                  this->hole_list_[i].end = start;
-                  return 0;
-                }
+              // Just adjust the size of the hole...
+              hole.start = start;
+              return 0;
+            }
+          else // if (end < hole.end)
+            {
+              // Nasty, we need to insert a new hole...
+              if (this->insert_hole (i, end, hole.end) == -1)
+                return -1;
+              // and change the old hole...
+              // NOTE: we have to refetch it because the array may
+              // have been reallocated!
+              this->hole_list_[i].end = start;
+              continue;
             }
         }
     }
@@ -171,10 +150,7 @@ ACE_RMCast_Partial_Message::insert_hole (size_t i,
                                          ACE_UINT32 start,
                                          ACE_UINT32 end)
 {
-  //  ACE_DEBUG ((LM_DEBUG,
-  //              "Partial_Message::insert_hole %d = [%d,%d]\n",
-  //              i, start, end));
-  if (this->hole_count_ + 1 > this->max_hole_count_)
+  if (this->hole_count_ == this->max_hole_count_)
     {
       this->max_hole_count_ *= 2;
       Hole *tmp;
@@ -183,15 +159,10 @@ ACE_RMCast_Partial_Message::insert_hole (size_t i,
         {
           tmp[j] = this->hole_list_[j];
         }
-      delete[] this->hole_list_;
-      this->hole_list_ = tmp;
     }
-  if (this->hole_count_ != 0)
+  for (size_t j = this->hole_count_; j != i + 1; --j)
     {
-      for (size_t j = this->hole_count_ - 1; j >= i + 1; --j)
-        {
-          this->hole_list_[j+1] = this->hole_list_[j];
-        }
+      this->hole_list_[j] = this->hole_list_[j - 1];
     }
 
   this->hole_list_[i + 1].start = start;
@@ -204,9 +175,6 @@ ACE_RMCast_Partial_Message::insert_hole (size_t i,
 int
 ACE_RMCast_Partial_Message::remove_hole (size_t i)
 {
-  //  ACE_DEBUG ((LM_DEBUG,
-  //              "Partial_Message::remove_hole %d\n",
-  //              i));
   for (size_t j = i; j != this->hole_count_ - 1; ++j)
     this->hole_list_[j] = this->hole_list_[j + 1];
 

@@ -14,8 +14,7 @@
 //    IIOP specific acceptor processing
 //
 // = AUTHOR
-//    Fred Kuhns <fredk@cs.wustl.edu>
-//    Ossama Othman <ossama@uci.edu>
+//    Fred Kuhns
 //
 //============================================================================
 
@@ -69,8 +68,6 @@ public:
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
-                            int version_major,
-                            int version_minor,
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
@@ -81,7 +78,8 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 private:
-  int open_i (const ACE_INET_Addr &addr);
+  int open_i (TAO_ORB_Core *orb_core,
+              const ACE_INET_Addr &addr);
   // Implement the common part of the open*() methods.
 
   int hostname (TAO_ORB_Core *orb_core,
@@ -99,10 +97,6 @@ private:
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
-  int init_tcp_properties (void);
-  // Obtain tcp properties that must be used by this acceptor, i.e.,
-  // initialize <tcp_properties_>.
-
 protected:
   ACE_INET_Addr *addrs_;
 
@@ -113,9 +107,8 @@ protected:
   // example, if the IP address is INADDR_ANY (0.0.0.0) then there
   // will be possibly a different hostname for each interface.
 
-  size_t endpoint_count_;
-  // The number of host names cached in the hosts_ array (equivalent
-  // to the number of endpoints opened by this Acceptor).
+  size_t num_hosts_;
+  // The number of host names cached in the hosts_ array.
 
   TAO_GIOP_Version version_;
   // The GIOP version for this endpoint
@@ -131,13 +124,10 @@ private:
   TAO_IIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_IIOP_ACCEPT_STRATEGY *accept_strategy_;
   // Acceptor strategies.
-
+  
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
 
-  TAO_IIOP_Handler_Base::TCP_Properties tcp_properties_;
-  // TCP configuration properties to be used for all
-  // connections opened by this acceptor.
 };
 
 #if defined(__ACE_INLINE__)

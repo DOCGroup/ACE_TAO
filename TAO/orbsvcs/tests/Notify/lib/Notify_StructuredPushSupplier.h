@@ -65,7 +65,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushSupplier:public POA_CosNot
   // Deactivate the object.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
 
 protected:
   // = Data Members

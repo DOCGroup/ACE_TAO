@@ -112,26 +112,12 @@
 # endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 // ============================================================================
-// EXPLICIT macro
+// UNICODE macros (to be added later)
 // ============================================================================
 
-# if defined (ACE_HAS_EXPLICIT_KEYWORD)
-#   define ACE_EXPLICIT explicit
-# else  /* ! ACE_HAS_EXPLICIT_KEYWORD */
-#   define ACE_EXPLICIT
-# endif /* ! ACE_HAS_EXPLICIT_KEYWORD */
+// Get the unicode (i.e. ACE_TCHAR) defines
+# include "ace/ace_wchar.h"
 
-// ============================================================================
-// MUTABLE macro
-// ============================================================================
-
-# if defined (ACE_HAS_MUTABLE_KEYWORD)
-#   define ACE_MUTABLE mutable
-#   define ACE_CONST_WHEN_MUTABLE const // Addition #1
-# else  /* ! ACE_HAS_MUTABLE_KEYWORD */
-#   define ACE_MUTABLE
-#   define ACE_CONST_WHEN_MUTABLE       // Addition #2
-# endif /* ! ACE_HAS_MUTABLE_KEYWORD */
 
 // ============================================================================
 // EXPORT macros
@@ -302,14 +288,6 @@
 #     define ACE_CAST_CONST
 #   endif /* ! __SUNPRO_CC */
 # endif /* ! ACE_CAST_CONST */
-
-// ============================================================================
-// UNICODE macros (to be added later)
-// ============================================================================
-
-// Get the unicode (i.e. ACE_TCHAR) defines
-# include "ace/ace_wchar.h"
-
 
 // ============================================================================
 // Compiler Silencing macros
@@ -506,12 +484,6 @@ typedef void (*ACE_INIT_LOG_MSG_HOOK) (void*&
                                        );
 typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*, void*&);
 
-typedef void (*ACE_CLOSE_LOG_MSG_HOOK) (void);
-
-typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
-
-typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) (void);
-
 // ============================================================================
 // Fundamental types
 // ============================================================================
@@ -529,33 +501,6 @@ typedef ACE_HANDLE ACE_SOCKET;
 # define ACE_INVALID_HANDLE -1
 
 #endif /* ACE_WIN32 */
-
-typedef void *(*ACE_THR_FUNC)(void *);
-
-# if defined (VXWORKS)
-#   if defined (ghs)
-    // GreenHills 1.8.8 needs the stdarg.h #include before the #include of
-    // vxWorks.h.
-    // Also, be sure that these #includes come _after_ the key_t typedef, and
-    // before the #include of time.h.
-#     include /**/ <stdarg.h>
-#   endif /* ghs */
-
-#   include /**/ <vxWorks.h>
-# endif /* VXWORKS */
-
-extern "C"
-{
-# if defined (VXWORKS)
-typedef FUNCPTR ACE_THR_C_FUNC;  // where typedef int (*FUNCPTR) (...)
-# elif defined (ACE_PSOS)
-// needed to handle task entry point type inconsistencies in pSOS+
-typedef void (*PSOS_TASK_ENTRY_POINT)();
-typedef void (*ACE_THR_C_FUNC)(void *);
-# else
-typedef void *(*ACE_THR_C_FUNC)(void *);
-# endif /* VXWORKS */
-}
 
 // ============================================================================
 // Miscellaneous macros

@@ -80,15 +80,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from be.h
 */
 
-#include "TAO_IDL_BE_Export.h"
-
-class TAO_IDL_BE_Export be_generator : public AST_Generator 
-{
+class   be_generator : public AST_Generator {
 public:
   virtual AST_Root      *create_root(UTL_ScopedName *n,
                                      UTL_StrList *p);
-  // Create a node representing a module which is the root of an AST made
-  // up of BE nodes
+  // Create a node representing a module which is the root of an AST made up of
+  // BE nodes
 
   // Operations
   virtual AST_PredefinedType

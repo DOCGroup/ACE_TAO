@@ -151,7 +151,7 @@ CORBA_NVList::add_value (const char *name,
           // The normal behaviour for parameters is that the ORB "borrows"
           // their memory for the duration of calls.
           //
-          nv->any_._tao_replace (value.type_.in (),
+          nv->any_._tao_replace (value.type_,
                                  value.byte_order_,
                                  value.cdr_);
         }

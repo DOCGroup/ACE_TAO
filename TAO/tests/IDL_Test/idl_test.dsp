@@ -51,7 +51,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 ace.lib TAO.lib TAO_PortableServer.lib /nologo /subsystem:console /machine:I386 /out:"Release/main.exe" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 ace.lib TAO.lib /nologo /subsystem:console /machine:I386 /out:"Release/main.exe" /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
@@ -76,7 +76,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 aced.lib TAOd.lib TAO_PortableServerd.lib /nologo /subsystem:console /debug /machine:I386 /out:"main.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 aced.lib TAOd.lib /nologo /subsystem:console /debug /machine:I386 /out:"main.exe" /pdbtype:sept /libpath:"..\..\..\ace" /libpath:"..\..\tao"
 
 !ENDIF 
 
@@ -186,22 +186,6 @@ SOURCE=.\pragmaC.cpp
 # Begin Source File
 
 SOURCE=.\pragmaS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include1C.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include1S.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include2C.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include2S.cpp
 # End Source File
 # Begin Source File
 
@@ -337,22 +321,6 @@ SOURCE=.\pragmaS.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\reopen_include1C.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include1S.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include2C.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include2S.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\reopened_modulesC.h
 # End Source File
 # Begin Source File
@@ -434,14 +402,6 @@ SOURCE=.\paramsC.i
 # Begin Source File
 
 SOURCE=.\pragmaC.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include1C.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include2C.i
 # End Source File
 # Begin Source File
 
@@ -1482,74 +1442,12 @@ BuildCmds= \
 # End Source File
 # Begin Source File
 
-SOURCE=.\reopen_include1.idl
-
-!IF  "$(CFG)" == "idl_test - Win32 Release"
-
-USERDEP__REOPE="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
-InputPath=.\reopen_include1.idl
-InputName=reopen_include1
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\bin\release\tao_idl $(InputName).idl
-
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
-
-USERDEP__REOPE="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
-InputPath=.\reopen_include1.idl
-InputName=reopen_include1
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
-
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\reopen_include2.idl
-
-!IF  "$(CFG)" == "idl_test - Win32 Release"
-
-USERDEP__REOPEN="..\..\..\bin\release\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
-InputPath=.\reopen_include2.idl
-InputName=reopen_include2
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\bin\release\tao_idl $(InputName).idl
-
-# End Custom Build
-
-!ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
-
-USERDEP__REOPEN="..\..\..\bin\tao_idl.exe"	
-# Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
-InputPath=.\reopen_include2.idl
-InputName=reopen_include2
-
-"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
-	..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
-
-# End Custom Build
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\reopened_modules.idl
 
 !IF  "$(CFG)" == "idl_test - Win32 Release"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__REOPENE="..\..\..\bin\release\tao_idl.exe"	
+USERDEP__REOPE="..\..\..\bin\release\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopened_modules.idl
 InputName=reopened_modules
@@ -1588,7 +1486,7 @@ BuildCmds= \
 !ELSEIF  "$(CFG)" == "idl_test - Win32 Debug"
 
 # PROP Ignore_Default_Tool 1
-USERDEP__REOPENE="..\..\..\bin\tao_idl.exe"	
+USERDEP__REOPE="..\..\..\bin\tao_idl.exe"	
 # Begin Custom Build - Invoking TAO IDL Compiler on $(InputName).idl
 InputPath=.\reopened_modules.idl
 InputName=reopened_modules

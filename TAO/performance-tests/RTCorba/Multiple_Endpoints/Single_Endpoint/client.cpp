@@ -1,7 +1,8 @@
 // $Id$
 
 #include "testC.h"
-#include "tao/TAOC.h"
+#include "tao/RTCORBAC.h"
+#include "tao/Priority_Mapping.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Stats.h"
@@ -162,25 +163,8 @@ main (int argc, char *argv[])
                             1);
         }
 
-      // Obtain Priority Mapping used by the ORB.
-      object = orb->resolve_initial_references ("PriorityMappingManager",
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      TAO::PriorityMappingManager_var mapping_manager =
-        TAO::PriorityMappingManager::_narrow (object.in (),
-                                              ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (CORBA::is_nil (mapping_manager.in ()))
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Priority Mapping Manager is nil\n"),
-                            1);
-        }
-
       RTCORBA::PriorityMapping *pm =
-        mapping_manager->mapping ();
+        orb->orb_core ()->priority_mapping ();
 
       ACE_Barrier before_connection (nthreads);
       ACE_Barrier after_connection (nthreads);

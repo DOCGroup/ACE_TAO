@@ -16,53 +16,37 @@
 #ifndef PACE_CONFIG_PLATFORM_H
 #define PACE_CONFIG_PLATFORM_H
 
-/* Be careful not to define these macros 2x. */
-/* IE: makefile or other config file. */
-/* This could create compiler warnings. */
-
 /* These platforms are POSIX compliant. */
-
-#if defined (PACE_LINUX)
+#if defined (linux)
+# define PACE_LINUX linux
 # define PACE_HAS_POSIX PACE_LINUX
-# define PACE_LYNXOS 0
-# define PACE_SUNOS 0
-# define PACE_VXWORKS 0
-# define PACE_WIN32 0
-#elif defined (PACE_LYNXOS)
-# define PACE_HAS_POSIX PACE_LYNXOS
-# define PACE_LINUX 0
-# define PACE_SUNOS 0
-# define PACE_VXWORKS 0
-# define PACE_WIN32 0
-#elif defined (PACE_OSF1)
-# define PACE_HAS_POSIX DIGITAL_UNIX
-# define PACE_LINUX 0
-# define PACE_LYNXOS 0
-# define PACE_VXWORKS 0
-# define PACE_WIN32 0
-#elif defined (PACE_SUNOS)
+#elif defined (__Lynx__)
+# define PACE_LYNX __Lynx__
+# define PACE_HAS_POSIX PACE_LYNX
+#elif defined (__osf__)
+# define PACE_OSF __osf__
+# define PACE_HAS_POSIX PACE_OSF
+#elif defined (sunos)
+# define PACE_SUNOS sunos
 # define PACE_HAS_POSIX PACE_SUNOS
-# define PACE_LINUX 0
-# define PACE_LYNXOS 0
-# define PACE_VXWORKS 0
-# define PACE_WIN32 0
 
 /* These platforms are NOT POSIX compliant. */
-
-#elif defined (PACE_VXWORKS)
+#elif defined (VXWORKS)
+# define PACE_VXWORKS VXWORKS
 # define PACE_LACKS_POSIX PACE_VXWORKS
-# define PACE_LINUX 0
-# define PACE_LYNXOS 0
-# define PACE_SUNOS 0
-# define PACE_WIN32 0
-/* Doesn't use the makefile! */
 #elif defined (WIN32)
-# define PACE_WIN32 2000
+# define PACE_WIN32 WIN32
 # define PACE_LACKS_POSIX PACE_WIN32
-# define PACE_LINUX 0
-# define PACE_LYNXOS 0
-# define PACE_SUNOS 0
-# define PACE_VXWORKS 0
 #endif
 
 #endif /* PACE_CONFIG_PLATFORM_H */
+
+
+
+
+
+
+
+
+
+

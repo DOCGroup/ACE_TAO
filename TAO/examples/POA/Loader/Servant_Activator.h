@@ -1,7 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-// ================================================================
+//=================================================================================
 //
 // = LIBRARY
 //     TAO/examples/POA/On_Demand_Loading
@@ -16,7 +16,7 @@
 // = AUTHOR
 //     Kirthika Parameswaran <kirthika@cs.wustl.edu>
 //
-// ================================================================
+//==================================================================================
 
 #include "ace/OS.h"
 
@@ -24,10 +24,9 @@
 #define SERVANT_ACTIVATOR_H
 
 #include "tao/corba.h"
-#include "tao/PortableServer/PortableServer.h"
 #include "ace/DLL.h"
 
-class ServantActivator_i : public PortableServer::ServantActivator
+class ServantActivator_i : public POA_PortableServer::ServantActivator
 {
   //= TITLE
   //   Servant Activator for the MyFoo servant.
@@ -60,9 +59,7 @@ public:
 
   virtual PortableServer::Servant incarnate (const PortableServer::ObjectId &oid,
                                              PortableServer::POA_ptr poa
-                                             TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException,
-                     PortableServer::ForwardRequest));
+                                             TAO_ENV_ARG_DECL);
   // This method is invoked by a POA with USE_SERVANT_MANAGER and
   // RETAIN policies, whenever it receives a request for a
   // MyFooServant object that is not currently active. When an servant
@@ -78,8 +75,7 @@ public:
                             PortableServer::Servant servant,
                             CORBA::Boolean cleanup_in_progress,
                             CORBA::Boolean remaining_activations
-                            TAO_ENV_ARG_DECL)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+                            TAO_ENV_ARG_DECL);
   // This method is invoked whenever a MyFooServant for a MyFoo object
   // is deactivated. This occurs when the POA is destroyed or the
   // Object is deactivated. When the POA is getting destroyed, it

@@ -28,14 +28,18 @@
 #include "tao/Policy_Manager.h"
 #include "tao/Resource_Factory.h"
 #include "tao/params.h"
-#include "tao/TAO_Singleton_Manager.h"
-#include "tao/TAO_Singleton.h"
-#include "tao/Adapter.h"
+#include "tao/POAC.h"
+#include "tao/Parser_Registry.h"
 
 #include "ace/Map_Manager.h"
-#include "ace/Hash_Map_Manager.h"
+#include "ace/Singleton.h"
 
 // Forward declarations
+class TAO_POA;
+class TAO_POA_Current;
+class TAO_POA_Current_Impl;
+class TAO_POA_Manager;
+class TAO_POA_Policies;
 class TAO_Acceptor;
 class TAO_Connector;
 class TAO_Acceptor_Registry;
@@ -45,14 +49,10 @@ class TAO_Resource_Factory;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_Connection_Cache;
-
 class TAO_TSS_Resources;
 class TAO_Reactor_Registry;
 class TAO_Leader_Follower;
 class TAO_Priority_Mapping;
-class TAO_Priority_Mapping_Manager;
-class TAO_RT_ORB;
-class TAO_RT_Current;
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -160,15 +160,7 @@ public:
   TAO_ORB_Parameters *orb_params (void);
   // Accessor for the ORB parameters.
 
-  // @@ In the future this hook should change, instead of hardcoding
-  //    the object we should add a "Resolver" to the ORB, so the
-  //    "POACurrent" object returns a per-ORB object.
-  //    Similarly, each ORB should implement the TSS pattern to put
-  //    the POA_Current_Impl in a void* slot.
-  //    The current approach *does* decouple the POA from the ORB, but
-  //    it cannot add new adapters or other components transparently.
-  CORBA::Object_ptr poa_current (void);
-  void poa_current (CORBA::Object_ptr poa_current);
+  TAO_POA_Current &poa_current (void) const;
   // Accessor to the POA current.
 
   // = Get the connector registry
@@ -177,8 +169,12 @@ public:
   // = Get the acceptor registry
   TAO_Acceptor_Registry  *acceptor_registry  (void);
 
+  // = Get the IOR parser registry
+  TAO_Parser_Registry *parser_registry (void);
+
   // = Get the protocol factories
   TAO_ProtocolFactorySet *protocol_factories (void);
+
 
   // = Set/get pointer to the ORB.
   CORBA::ORB_ptr orb (void);
@@ -190,11 +186,17 @@ public:
   // = Get the ACE_Thread_Manager
   ACE_Thread_Manager *thr_mgr (void);
 
-  CORBA::Object_ptr root_poa (CORBA::Environment &ACE_TRY_ENV);
-  // Return the RootPOA, or try to load it if not initialized already.
-
-  TAO_Adapter_Registry *adapter_registry (void);
-  // Get the adapter registry
+  // = Get the rootPOA
+  TAO_POA *root_poa (CORBA::Environment &ACE_TRY_ENV =
+                           TAO_default_environment (),
+                     const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                     TAO_POA_Manager *poa_manager = 0,
+                     const TAO_POA_Policies *policies = 0);
+  PortableServer::POA_ptr root_poa_reference (
+      CORBA::Environment &ACE_TRY_ENV = TAO_default_environment (),
+      const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+      TAO_POA_Manager *poa_manager = 0,
+      const TAO_POA_Policies *policies = 0);
 
   // = Collocation strategies.
   enum
@@ -250,9 +252,8 @@ public:
 
   CORBA::ULong get_collocation_strategy (void) const;
 
-  TAO_Adapter *poa_adapter (void);
-  // Get the adapter named "RootPOA" and cache the result, this is an
-  // optimization for the POA.
+  TAO_Object_Adapter *object_adapter (void);
+  // Get <Object Adapter>.
 
   int inherit_from_parent_thread (TAO_ORB_Core_TSS_Resources *tss_resources);
   // A spawned thread needs to inherit some properties/objects from
@@ -376,15 +377,9 @@ public:
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-  TAO_RT_ORB *rt_orb (void);
-  // Access the RTORB.
-
-  TAO_RT_Current *rt_current (void);
-  // Access the RT Current.
-
-  TAO_Priority_Mapping_Manager *priority_mapping_manager (void);
-  // Access the priority mapping manager class.  This is a TAO extension but
-  // there is no standard for setting priority mapping either.
+  TAO_Priority_Mapping *priority_mapping (void);
+  // Access the priority mapping class, this is a TAO extension but
+  // there is no standard way to get to it either.
 
   // = Methods for obtaining ORB implementation default values for RT
   //   policies.
@@ -462,14 +457,9 @@ public:
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
-                                TAO_Acceptor_Filter *filter,
                                 CORBA::Environment &ACE_TRY_ENV);
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
-
-  CORBA::Object_ptr create_object (TAO_Stub *the_stub);
-  // Create a new object, use the adapter registry to create a
-  // collocated object, if not possible then create a regular object.
 
   const char *orbid (void) const;
   // Return ORBid string.
@@ -478,39 +468,13 @@ public:
   void implrepo_service (const CORBA::Object_ptr ir);
   // Set/Get the IOR of the Implementation Repository service.
 
-  CORBA::Object_ptr resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV);
-  // Resolve the TypeCodeFactory DLL.
-
-  CORBA::Object_ptr resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV);
-  // Resolve the Dynamic Any Factory
-
-  CORBA::Object_ptr resolve_ior_manipulation (CORBA::Environment&);
-  // Resolve the IOR Manipulation reference for this ORB.
-
-  CORBA::Object_ptr resolve_ior_table (CORBA::Environment&);
-  // Resolve the IOR Table reference for this ORB.
-
-  CORBA::Object_ptr resolve_rir (const char *name,
-                                 CORBA::Environment &);
-  // Resolve an initial reference via the -ORBInitRef and
-  // -ORBDefaultInitRef options
-
-  CORBA_ORB_ObjectIdList_ptr list_initial_references (CORBA::Environment &);
-  // List all the service known by the ORB
+  CORBA::Object_ptr typecode_factory (void);
+  void typecode_factory (const CORBA::Object_ptr tf);
+  // Get/Set the IOR of the TypeCodeFactory DLL.
 
   CORBA::ULong _incr_refcnt (void);
   CORBA::ULong _decr_refcnt (void);
   // Reference counting...
-
-  int register_handle (ACE_HANDLE handle);
-  // Register the handle of an open connection with the ORB Core
-  // handle set.  This handle set will be used to explicitly remove
-  // corresponding event handlers from the reactor.
-
-  int remove_handle (ACE_HANDLE handle);
-  // Remove <handle> from the ORB Core's handle set so that it
-  // isn't included in the set that is passed to the reactor upon ORB
-  // destruction.
 
 protected:
 
@@ -520,6 +484,15 @@ protected:
 
   int fini (void);
   // Final termination hook, typically called by CORBA::ORB's DTOR.
+
+  void create_and_set_root_poa (const char *adapter_name,
+                                TAO_POA_Manager *poa_manager,
+                                const TAO_POA_Policies *policies,
+                                CORBA::Environment &ACE_TRY_ENV);
+  // Initialize the root POA.
+
+  TAO_Object_Adapter *object_adapter_i (void);
+  // Get <Object Adapter>, assume the lock is held...
 
   ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
   ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
@@ -531,31 +504,10 @@ protected:
   // previously-specified port for requests.  Returns -1 on failure,
   // else 0.
 
-  int set_default_policies (void);
-  // Set ORB-level policy defaults for this ORB.
-
-  void resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV);
-  // Obtain and cache the dynamic any factory object reference
-
-  void resolve_dynanyfactory_i (CORBA::Environment &ACE_TRY_ENV);
-  // Obtain and cache the dynamic any factory object reference
-
-  void resolve_iormanipulation_i (CORBA::Environment &ACE_TRY_ENV);
-  // Obtain and cache the IORManipulation factory object reference
 private:
-
-  void resolve_ior_table_i (CORBA::Environment &ACE_TRY_ENV);
-  // Obtain and cache the dynamic any factory object reference
-
   // The ORB Core should not be copied
   ACE_UNIMPLEMENTED_FUNC (TAO_ORB_Core(const TAO_ORB_Core&))
   ACE_UNIMPLEMENTED_FUNC (void operator=(const TAO_ORB_Core&))
-
-  CORBA::Object_ptr create_collocated_object (TAO_Stub *the_stub,
-                                              TAO_ORB_Core *other_orb,
-                                              const TAO_MProfile &mprofile);
-  // Try to create a new collocated object, using <other_orb> as the
-  // target ORB.  If not possible return 0.
 
 protected:
   ACE_SYNCH_MUTEX lock_;
@@ -564,7 +516,7 @@ protected:
   // = Data members.
 
   TAO_Connector_Registry *connector_registry_;
-  // The connector registry which all active connectors must register
+  // The connector registry which all active connecters must register
   // themselves with.
 
   TAO_Acceptor_Registry *acceptor_registry_;
@@ -584,31 +536,22 @@ protected:
   CORBA::Object_ptr typecode_factory_;
   // The cached IOR for the TypeCodeFactory DLL.
 
-  CORBA::Object_ptr dynany_factory_;
-  // The cached object reference for the DynAnyFactory.
-
-  CORBA::Object_ptr ior_manip_factory_;
-  // The cached object reference for the IORManipulataion.
-
-  CORBA::Object_ptr ior_table_;
-  // The cached object reference for the IORTable
-
   CORBA::ORB_var orb_;
   // @@ Should we keep a single ORB pointer? This is good because
   //    multiple calls to ORB_init() with the same ORBid can use the
   //    same object, but maybe don't want so much coupling.
   // Pointer to the ORB.
 
-  CORBA::Object_var root_poa_;
+  TAO_POA *root_poa_;
   // Pointer to the root POA.  It will eventually be the pointer
   // returned by calls to <CORBA::ORB::resolve_initial_references
   // ("RootPOA")>.
 
+  PortableServer::POA_var root_poa_reference_;
+  // Cached POA reference
+
   TAO_ORB_Parameters orb_params_;
   // Parameters used by the ORB.
-
-  typedef ACE_Hash_Map_Manager<ACE_CString,ACE_CString,ACE_Null_Mutex> InitRefMap;
-  InitRefMap init_ref_map_;
 
   char *orbid_;
   // The ORBid for this ORB.
@@ -664,18 +607,15 @@ protected:
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-  CORBA::Object_var poa_current_;
+  TAO_POA_Current *poa_current_;
   // POA current.
   //
   // Note that this is a pointer in order to reduce the include file
   // dependencies.
   //
 
-  TAO_Adapter_Registry adapter_registry_;
-  // The list of Adapters used in this ORB
-
-  TAO_Adapter *poa_adapter_;
-  // An optimization for the POA
+  TAO_Object_Adapter *object_adapter_;
+  // Object Adapter.
 
   ACE_Thread_Manager tm_;
   // The Thread Manager
@@ -719,18 +659,8 @@ protected:
   int open_called_;
   // Flag which denotes that the open method was called.
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  TAO_RT_ORB *rt_orb_;
-  // Implementation of RTCORBA::RTORB interface.
-
-  TAO_RT_Current *rt_current_;
-  // Implementation of RTCORBA::RTCurrent interface.
-
-  TAO_Priority_Mapping_Manager *priority_mapping_manager_;
-  // Manager for setting priority mapping.
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
+  TAO_Priority_Mapping *priority_mapping_;
+  // The priority mapping.
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -754,12 +684,8 @@ protected:
   CORBA::ULong refcount_;
   // Number of outstanding references to this object.
 
-  ACE_Handle_Set handle_set_;
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
+  TAO_Parser_Registry parser_registry_;
+  // The IOR parser registry
 };
 
 // ****************************************************************
@@ -815,7 +741,7 @@ private:
 
 public:
 
-  void *poa_current_impl_;
+  TAO_POA_Current_Impl *poa_current_impl_;
   // Points to structure containing state for the current upcall
   // context in this thread.  Note that it does not come from the
   // resource factory because it must always be held in
@@ -845,7 +771,7 @@ public:
 };
 
 // @@ Must go away....
-typedef TAO_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
+typedef ACE_TSS_Singleton<TAO_TSS_Resources, ACE_SYNCH_MUTEX>
         TAO_TSS_RESOURCES;
 
 // ****************************************************************
@@ -886,7 +812,7 @@ public:
   // Return a unique instance
 
 protected:
-  friend class TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>;
+  friend class ACE_Singleton<TAO_ORB_Table,ACE_SYNCH_MUTEX>;
   TAO_ORB_Table (void);
   // Constructor
 

@@ -37,37 +37,39 @@
 
 ACE_RCSID(tao, TAO_Stub, "$Id$")
 
-  TAO_Stub::TAO_Stub (char *repository_id,
-                      const TAO_MProfile &profiles,
-                      TAO_ORB_Core* orb_core)
-    : type_id (repository_id),
+TAO_Stub::TAO_Stub (char *repository_id,
+                    const TAO_MProfile &profiles,
+                    TAO_ORB_Core* orb_core)
+  : type_id (repository_id),
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-      priority_model_policy_ (0),
-      priority_banded_connection_policy_ (0),
-      client_protocol_policy_ (0),
-      are_policies_parsed_ (0),
+    priority_model_policy_ (0),
+    is_priority_model_policy_parsed_ (0),
+    priority_banded_connection_policy_ (0),
+    is_priority_banded_policy_parsed_ (0),
+    client_protocol_policy_ (0),
+    is_client_protocol_policy_parsed_ (0),
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
-      base_profiles_ ((CORBA::ULong) 0),
-      forward_profiles_ (0),
-      profile_in_use_ (0),
-      profile_lock_ptr_ (0),
-      profile_success_ (0),
-      refcount_lock_ (),
-      refcount_ (1),
-      use_locate_request_ (0),
-      first_locate_request_ (0),
-      orb_core_ (orb_core),
-      orb_ (),
-      servant_orb_ (),
+    base_profiles_ ((CORBA::ULong) 0),
+    forward_profiles_ (0),
+    profile_in_use_ (0),
+    profile_lock_ptr_ (0),
+    profile_success_ (0),
+    refcount_lock_ (),
+    refcount_ (1),
+    use_locate_request_ (0),
+    first_locate_request_ (0),
+    orb_core_ (orb_core),
+    orb_ (),
+    servant_orb_ (),
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-      policies_ (0),
+  policies_ (0),
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-      addressing_mode_ (0)
+  addressing_mode_ (0)
 
 {
   if (this->orb_core_ == 0)
@@ -93,14 +95,6 @@ ACE_RCSID(tao, TAO_Stub, "$Id$")
     this->orb_core_->client_factory ()->create_profile_lock ();
 
   this->base_profiles (profiles);
-  this->base_profiles_.rewind ();
-  TAO_Profile *profile = 0;
-  for (CORBA::ULong i = 0; i < this->base_profiles_.profile_count (); ++i)
-    {
-      // Get the ith profile
-      profile = this->base_profiles_.get_profile (i);
-      profile->the_stub (this);
-    }
 }
 
 TAO_Stub::~TAO_Stub (void)
@@ -136,14 +130,6 @@ TAO_Stub::~TAO_Stub (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   this->orb_core_->_decr_refcnt ();
-
-#if (TAO_HAS_RTCORBA == 1)
-
-  this->priority_model_policy_->destroy ();
-  this->priority_banded_connection_policy_->destroy ();
-  this->client_protocol_policy_->destroy ();
-
-#endif /* TAO_HAS_RT_CORBA */
 }
 
 void
@@ -196,11 +182,11 @@ TAO_Stub::hash (CORBA::ULong max,
                 ACE_TEXT ("(%P|%t) hash called on a null profile\n")));
 
   ACE_THROW_RETURN (CORBA::INTERNAL (
-                                     CORBA_SystemException::_tao_minor_code (
-                                                                             TAO_DEFAULT_MINOR_CODE,
-                                                                             0),
-                                     CORBA::COMPLETED_NO),
-                    0);
+    CORBA_SystemException::_tao_minor_code (
+       TAO_DEFAULT_MINOR_CODE,
+       0),
+    CORBA::COMPLETED_NO),
+    0);
 }
 
 // Expensive comparison of objref data, to see if two objrefs
@@ -209,8 +195,7 @@ TAO_Stub::hash (CORBA::ULong max,
 // object.)
 //
 // NOTE that this must NOT go across the network!
-// @@ Two object references are the same if any two profiles are the
-//    same! This function is only test the profile in use!!!
+// @@ Two object references are the same if any two profiles are the same!
 CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
@@ -281,17 +266,17 @@ TAO_Stub::_decr_refcnt (void)
 // unwind.
 
 class TAO_Synchronous_Cancellation_Required
-// = TITLE
-//     Stick one of these at the beginning of a block that can't
-//     support asynchronous cancellation, and which must be
-//     cancel-safe.
-//
-// = EXAMPLE
-//     somefunc()
-//     {
-//       TAO_Synchronous_Cancellation_Required NOT_USED;
-//       ...
-//     }
+  // = TITLE
+  //     Stick one of these at the beginning of a block that can't
+  //     support asynchronous cancellation, and which must be
+  //     cancel-safe.
+  //
+  // = EXAMPLE
+  //     somefunc()
+  //     {
+  //       TAO_Synchronous_Cancellation_Required NOT_USED;
+  //       ...
+  //     }
 {
 public:
   // These should probably be in a separate inline file, but they're
@@ -299,19 +284,19 @@ public:
   // inlined, so here they sit.
   TAO_Synchronous_Cancellation_Required (void)
     : old_type_ (0)
-  {
+    {
 #if !defined (VXWORKS)
-    ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
+      ACE_OS::thr_setcanceltype (THR_CANCEL_DEFERRED, &old_type_);
 #endif /* ! VXWORKS */
-  }
+    }
 
   ~TAO_Synchronous_Cancellation_Required (void)
-  {
+    {
 #if !defined (VXWORKS)
-    int dont_care;
-    ACE_OS::thr_setcanceltype(old_type_, &dont_care);
+      int dont_care;
+      ACE_OS::thr_setcanceltype(old_type_, &dont_care);
 #endif /* ! VXWORKS */
-  }
+    }
 private:
   int old_type_;
 };
@@ -330,10 +315,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
                            int lazy_evaluation,
                            CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ TOCCST: why do we keep using this function when ACE+TAO code
-  // is clearly not cancel safe anymore?  Furthermore, all the
-  // generated code using the Invocation classes is probably not
-  // cancel safe!
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
   // Do a locate_request if necessary/wanted.
@@ -342,11 +323,6 @@ TAO_Stub::do_dynamic_call (const char *opname,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      // @@ TOCCST: notice how the locate request is only sent for
-      // dynamic and deferred (!!) calls, nothing is done for static
-      // calls, the far more common case.  IMHO this should just go
-      // away, after all we have _validate_connection to do the same
-      // thing!
       TAO_GIOP_Locate_Request_Invocation call (this,
                                                this->orb_core_);
 
@@ -473,10 +449,7 @@ void
 TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
                             CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ TOCCST: why do we keep using this function when ACE+TAO code
-  // is clearly not cancel safe anymore?  Furthermore, all the
-  // generated code using the Invocation classes is probably not
-  // cancel safe!
+
   TAO_Synchronous_Cancellation_Required NOT_USED;
 
   // Do a locate_request if necessary/wanted.
@@ -485,11 +458,6 @@ TAO_Stub::do_deferred_call (const CORBA::Request_ptr req,
   // be forwarded.  No standard way now to know.
   if (this->use_locate_request_ && this->first_locate_request_)
     {
-      // @@ TOCCST: notice how the locate request is only sent for
-      // dynamic and deferred (!!) calls, nothing is done for static
-      // calls, the far more common case.  IMHO this should just go
-      // away, after all we have _validate_connection to do the same
-      // thing!
       TAO_GIOP_Locate_Request_Invocation call (this,
                                                this->orb_core_);
 
@@ -562,48 +530,60 @@ TAO_Stub::put_params (TAO_GIOP_Invocation &call,
 // ****************************************************************
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-#if (TAO_HAS_RT_CORBA == 1)
+  #if (TAO_HAS_RT_CORBA == 1)
 
-void
-TAO_Stub::parse_policies (void)
+// @@ Angelo, would it make sense to parse the whole list once for all
+// policy types we are interested in, rather than keep parsing for
+// each type?  Then we can also keep just one flag, i.e.,
+// are_policies_parse_, rather than one for each policy ...
+
+CORBA::Policy *
+TAO_Stub::parse_policy (CORBA::PolicyType ptype)
 {
+  CORBA::Policy *policy = 0;
+
   CORBA::PolicyList *policy_list
     = this->base_profiles_.policy_list ();
 
   CORBA::ULong length = policy_list->length ();
-
-  for (unsigned int i = 0; i < length; ++i)
+  CORBA::ULong index = 0;
+  while (index < length
+         &&
+         ((*policy_list)[index]->policy_type () != ptype ))
     {
-      if (((*policy_list)[i]->policy_type () == RTCORBA::PRIORITY_MODEL_POLICY_TYPE))
-        this->exposed_priority_model ((*policy_list)[i].in ());
-
-      else if (((*policy_list)[i]->policy_type () == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE))
-        this->exposed_priority_banded_connection ((*policy_list)[i].in ());
-
-      else if (((*policy_list)[i]->policy_type () == RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE))
-        this->exposed_client_protocol ((*policy_list)[i].in ());
+      ++index;
     }
-
-  this->are_policies_parsed_ = 1;
+  if (index < length)
+    {
+      policy = (*policy_list)[index].in ();
+    }
+  return policy;
 }
 
 TAO_PriorityModelPolicy *
 TAO_Stub::exposed_priority_model (void)
 {
-  if (!this->are_policies_parsed_)
-    this->parse_policies ();
+  if (this->is_priority_model_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->priority_model_policy_))
+        this-> priority_model_policy_->_add_ref ();
 
-  if (!CORBA::is_nil (this->priority_model_policy_))
-    this->priority_model_policy_->_add_ref ();
+      return this->priority_model_policy_;
+    }
 
-  return this->priority_model_policy_;
-}
+  // The policy list has not been parsed
+  // yet.
 
-void TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
-{
+  this->is_priority_model_policy_parsed_ = 1;
+
+  CORBA::Policy *policy =
+    this->parse_policy (RTCORBA::PRIORITY_MODEL_POLICY_TYPE);
+
   if (!CORBA::is_nil (policy))
     {
       RTCORBA::PriorityModelPolicy *pm_policy = 0;
+      // @@ Angelo, I think there is a memory leak here.  <narrow>
+      // method creates/adds ref to object... Same applies to other methods...
       pm_policy =
         RTCORBA::PriorityModelPolicy::_narrow (policy);
 
@@ -613,68 +593,86 @@ void TAO_Stub::exposed_priority_model (CORBA::Policy_ptr policy)
             ACE_static_cast (TAO_PriorityModelPolicy *,
                              pm_policy);
 
+          this->priority_model_policy_->_add_ref ();
         }
     }
+
+  return this->priority_model_policy_;
 }
 
 TAO_PriorityBandedConnectionPolicy *
 TAO_Stub::exposed_priority_banded_connection (void)
 {
-  if (!this->are_policies_parsed_)
-    this->parse_policies ();
+  if (this->is_priority_banded_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->priority_banded_connection_policy_))
+        this->priority_banded_connection_policy_->_add_ref ();
 
-  if (!CORBA::is_nil (this->priority_banded_connection_policy_))
-    this->priority_banded_connection_policy_->_add_ref ();
+      return this->priority_banded_connection_policy_;
+    }
 
-  return this->priority_banded_connection_policy_;
-}
+  this->is_priority_banded_policy_parsed_ = 1;
 
-void
-TAO_Stub::exposed_priority_banded_connection (CORBA::Policy_ptr policy)
-{
+  CORBA::Policy *policy =
+    this->parse_policy (RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE);
+
   if (!CORBA::is_nil (policy))
     {
-      RTCORBA::PriorityBandedConnectionPolicy_ptr pbc_policy =
-        RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy);
+      RTCORBA::PriorityBandedConnectionPolicy *pbc_policy = 0;
+
+      pbc_policy =
+        RTCORBA::PriorityBandedConnectionPolicy::_narrow (pbc_policy);
 
       if (!CORBA::is_nil (pbc_policy))
         {
           this->priority_banded_connection_policy_ =
             ACE_static_cast (TAO_PriorityBandedConnectionPolicy *,
                              pbc_policy);
+
+          this->priority_banded_connection_policy_->_add_ref ();
         }
     }
+
+  return this->priority_banded_connection_policy_;
 }
+
 TAO_ClientProtocolPolicy *
 TAO_Stub::exposed_client_protocol (void)
 {
-  if (!this->are_policies_parsed_)
-    this->parse_policies ();
+  if (this->is_client_protocol_policy_parsed_)
+    {
+      if (!CORBA::is_nil (this->client_protocol_policy_))
+        this->client_protocol_policy_->_add_ref ();
 
-  if (!CORBA::is_nil (this->client_protocol_policy_))
-    this->client_protocol_policy_->_add_ref ();
+      return this->client_protocol_policy_;
+    }
 
-  return this->client_protocol_policy_;
-}
+  this->is_client_protocol_policy_parsed_ = 1;
 
-void
-TAO_Stub::exposed_client_protocol (CORBA::Policy_ptr policy)
-{
+  CORBA::Policy *policy =
+    this->parse_policy (RTCORBA::CLIENT_PROTOCOL_POLICY_TYPE);
+
   if (!CORBA::is_nil (policy))
     {
-      RTCORBA::ClientProtocolPolicy_ptr cp_policy =
-        RTCORBA::ClientProtocolPolicy::_narrow (policy);
+      RTCORBA::ClientProtocolPolicy *cp_policy = 0;
+
+      cp_policy =
+        RTCORBA::ClientProtocolPolicy::_narrow (cp_policy);
 
       if (!CORBA::is_nil (cp_policy))
         {
           this->client_protocol_policy_ =
             ACE_static_cast (TAO_ClientProtocolPolicy *,
                              cp_policy);
+
+          this->client_protocol_policy_->_add_ref ();
         }
     }
+
+  return this->client_protocol_policy_;
 }
 
-#endif /* TAO_HAS_RT_CORBA == 1 */
+ #endif /* TAO_HAS_RT_CORBA == 1 */
 
 CORBA::Policy_ptr
 TAO_Stub::get_policy (CORBA::PolicyType type,
@@ -689,7 +687,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type,
   // for this scope.
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE
       || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE)
-    ACE_THROW_RETURN (CORBA::INV_POLICY (),
+    ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
                       CORBA::Policy::_nil ());
 
   // If we are dealing with a client exposed policy, check if any
@@ -741,7 +739,7 @@ TAO_Stub::get_client_policy (CORBA::PolicyType type,
   if (type == RTCORBA::THREADPOOL_POLICY_TYPE
       || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
       || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
-    ACE_THROW_RETURN (CORBA::INV_POLICY (),
+    ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
                       CORBA::Policy::_nil ());
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
@@ -833,7 +831,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
                                             CORBA::SET_OVERRIDE,
                                             ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
-    }
+     }
   else
     {
       policy_manager->copy_from (this->policies_,
@@ -862,11 +860,28 @@ CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
+#if (TAO_HAS_RT_CORBA == 1)
+
+  // Validity check.  Make sure policies of interest are allowed
+  // at this scope.
+  for (CORBA::ULong i = 0; i < types.length ();  ++i)
+    {
+      CORBA::ULong type = types[i];
+
+      if (type == RTCORBA::THREADPOOL_POLICY_TYPE
+          || type == RTCORBA::SERVER_PROTOCOL_POLICY_TYPE
+          || type == RTCORBA::PRIORITY_MODEL_POLICY_TYPE)
+        ACE_THROW_RETURN (CORBA::NO_PERMISSION (),
+                          0);
+    }
+
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
   if (this->policies_ == 0)
     return 0;
 
   return this->policies_->get_policy_overrides (types,
-                                                ACE_TRY_ENV);
+                                           ACE_TRY_ENV);
 }
 
 CORBA::Boolean

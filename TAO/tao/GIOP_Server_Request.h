@@ -48,19 +48,18 @@ public:
   TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
                           TAO_InputCDR &input,
                           TAO_OutputCDR &output,
-                          TAO_Transport *transport,
-                          TAO_ORB_Core *orb_core);
+                          TAO_ORB_Core *orb_core,
+                          const TAO_GIOP_Version &version);
 
   // Constructor
   TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
-                          CORBA::ULong request_id,
-                          CORBA::Boolean response_expected,
-                          CORBA::Boolean deferred_flag,
+                          CORBA::ULong &request_id,
+                          CORBA::Boolean &response_expected,
                           TAO_ObjectKey &object_key,
                           const ACE_CString &operation,
                           TAO_OutputCDR &output,
-                          TAO_Transport *transport,
                           TAO_ORB_Core *orb_core,
+                          const TAO_GIOP_Version &version,
                           int &parse_error);
 
   virtual ~TAO_GIOP_ServerRequest (void);
@@ -130,9 +129,6 @@ public:
   virtual CORBA::Boolean response_expected (void) const;
   // Is the response expected?
 
-  virtual CORBA::Boolean deferred_reply (void) const;
-  // Should the reply be deferred?
-
   virtual void response_expected (CORBA::Boolean response);
   // Set the response expected flag
 
@@ -145,12 +141,16 @@ public:
   virtual void _tao_lazy_evaluation (int lazy_evaluation);
   // Set the lazy evaluation flag
 
-  virtual void send_no_exception_reply (void);
+  virtual void send_no_exception_reply (TAO_Transport *transport);
   // Used with reliable oneway requests.
 
   virtual CORBA::Principal_ptr principal (void) const;
 
   virtual TAO_ObjectKey &object_key (void);
+
+  virtual CORBA::Object_ptr objref (CORBA_Environment &ACE_TRY_ENV =
+                                      TAO_default_environment ());
+  // Return the object reference of the request.
 
   virtual IOP::ServiceContextList &service_info (void);
   virtual void service_info (IOP::ServiceContextList &service_info);
@@ -178,11 +178,6 @@ public:
   TAO_Tagged_Profile &profile (void);
   // Return the reference to the tagged profile
 
-  virtual void tao_send_reply (void);
-
-  virtual void tao_send_reply_exception (CORBA::Exception&);
-
-
 private:
   TAO_Pluggable_Messaging *mesg_base_;
 
@@ -197,18 +192,9 @@ private:
   TAO_OutputCDR *outgoing_;
   // Outgoing stream.
 
-  TAO_Transport *transport_;
-  // Transport class
-
   CORBA::Boolean response_expected_;
   // 0: oneway (SYNC_NONE or SYNC_WITH_TRANSPORT)
   // 1: twoway, or oneway (SYNC_WITH_SERVER or SYNC_WITH_TARGET)
-
-  CORBA::Boolean deferred_reply_;
-  // 0: Reply would be sent by the object of this class which is the
-  //    default.
-  // 1: Reply would not be prepared by this class and it would be
-  //    deferred for somebody
 
   CORBA::Boolean sync_with_server_;
   // 1: oneway (SYNC_WITH_SERVER)

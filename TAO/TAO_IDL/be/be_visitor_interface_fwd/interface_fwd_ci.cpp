@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_interface_fwd.h"
 
@@ -54,15 +54,13 @@ be_visitor_interface_fwd_ci::visit_interface_fwd (be_interface_fwd *node)
 
   if (! node->is_local ())
     {
-      os->gen_ifdef_macro (node->flat_name (), "");
       *os << "ACE_INLINE" << be_nl;
       *os << node->name () << "::" << node->local_name () <<
-        " (TAO_Stub *objref, "
+        " (TAO_Stub *objref, TAO_ServantBase *_tao_servant, "
           << "CORBA::Boolean _tao_collocated) // constructor" << be_nl;
-      *os << "  : CORBA_Object (objref, _tao_collocated)"
+      *os << "  : CORBA_Object (objref, _tao_servant, _tao_collocated)"
           << be_nl;
-      *os << "{}" << be_nl;
-      os->gen_endif ();
+      *os << "{}" << be_nl << be_nl;
     }
 
   // Generate the constructor from stub and servant.

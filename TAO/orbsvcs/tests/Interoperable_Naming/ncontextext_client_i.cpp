@@ -147,7 +147,7 @@ int
 NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
 {
 
-  ACE_TRY_EX (OuterBlock)
+  ACE_TRY
     {
       CosNaming::Name name;
 
@@ -161,28 +161,16 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
        CORBA::String_var str_name =
         this->naming_context_->to_string (name,
                                           ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (OuterBlock);
+      ACE_TRY_CHECK;
 
-      CORBA::Object_var factory_object;
-
-      ACE_TRY_EX (InnerBlock)
-        {
-          // Resolve the name using the stringified form of the name
-          factory_object =
-            this->naming_context_->resolve_str (str_name.in (),
-                                                ACE_TRY_ENV);
-          ACE_TRY_CHECK_EX (InnerBlock);
-        }
-      ACE_CATCH (CosNaming::NamingContext::NotFound, ex)
-        {
-        }
-      ACE_ENDTRY;
+      // Resolve the name using the stringified form of the name
+      CORBA::Object_var factory_object =
+        this->naming_context_->resolve_str (str_name.in ());
 
       // Narrow
       Web_Server::Iterator_Factory_var factory =
         Web_Server::Iterator_Factory::_narrow (factory_object.in (), ACE_TRY_ENV);
-
-      ACE_TRY_CHECK_EX (OuterBlock);
+      ACE_TRY_CHECK;
 
       // Create bindings
       CosNaming::BindingIterator_var iter;
@@ -192,14 +180,14 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
                                    bindings_list.out (),
                                    iter.out (),
                                    ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (OuterBlock);
+      ACE_TRY_CHECK;
 
       // Convert the stringified name back as CosNaming::Name and print
       // them out.
       CosNaming::Name *nam =
         this->naming_context_->to_name (str_name.in (),
                                         ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (OuterBlock);
+      ACE_TRY_CHECK;
 
       // Declare a CosNaming::Name variable and assign length to it.
       CosNaming::Name nm;
@@ -214,7 +202,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       // the LocateReply or LOCATION_FORWARD reply by an agent listening
       // at that address
       //
-      CORBA::String_var address = CORBA::string_dup ("myhost.555xyz.com:9999");
+      CORBA::String_var address = "myhost.555xyz.com:9999";
 
       // Since we are just testing the functionality of the to_url
       // function, use a random object name.
@@ -224,7 +212,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
       CORBA::String_var url_string = this->naming_context_->to_url (address.in (),
                                                                     obj_name.in(),
                                                                     ACE_TRY_ENV);
-      ACE_TRY_CHECK_EX (OuterBlock);
+      ACE_TRY_CHECK;
 
       if (this->view_ == 0)
         {
@@ -248,7 +236,7 @@ NContextExt_Client_i::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "client");
-      return -1;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -316,35 +304,35 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var obj_name,
                                     CORBA::String_var url_string)
 {
-
-  ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %s,"
-             "The first component kind is %s,"
-             "The second component id is %s,"
-             "The second component kind is %s\n\n"),
+  
+  ACE_DEBUG((LM_DEBUG, "The first component id is %s,
+             The first component kind is %s,
+             The second component id is %s,
+             The second component kind is %s\n",
              name[0].id.in (),
              name[0].kind.in (),
              name[1].id.in (),
              name[1].kind.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The string form of the input name is: \n%s\n\n"),
+  ACE_DEBUG ((LM_DEBUG, "The string form of the input name is:\n %s\n",
               str_name.in ()));
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The unstringified version of the name components are:,"
-              "The first component id is %s,"
-              "The first component kind is %s,"
-              "The second component id is %s,"
-              "The second component kind is %s\n\n"),
+  ACE_DEBUG ((LM_DEBUG, "The unstringified version of the name components are:,
+              The first component id is %s,
+              The first component kind is %s,
+                  The second component id is %s,
+                  The second component kind is %s\n",
               nm[0].id.in (),
               nm[0].kind.in (),
               nm[1].id.in (),
               nm[1].kind.in ()));
-
- ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("When the address of the NamingContext is:"
+  
+ ACE_DEBUG ((LM_DEBUG, "When the address of the NamingCOntext is:"
              "myhost.555xyz.com:9999"
-             "and the Object name is \n%s\n"),
+             "\nand the Object name is %s\n",
              obj_name.in ()));
 
- ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %s\n"),
+ ACE_DEBUG ((LM_DEBUG,"The URL form of the string is \n %s\n",
              url_string.in ()));
-
+            
 }

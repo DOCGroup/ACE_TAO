@@ -25,9 +25,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "ace/Hash_Map_Manager.h"
 #include "tao/Pluggable.h"
 #include "tao/Protocol_Factory.h"
+#include "tao/corbafwd.h"
 #include "tao/orbconf.h"
 #include "ace/Containers_T.h"
 
@@ -144,9 +145,6 @@ public:
   virtual ACE_Reactor *get_reactor (void);
   // Return an <ACE_Reactor> to be utilized.
 
-  virtual void reclaim_reactor (ACE_Reactor *reactor);
-  // Reclaim reactor resources (e.g. deallocate, etc).
-
   virtual TAO_Acceptor_Registry *get_acceptor_registry (void);
   // return a reference to the acceptor registry.
 
@@ -185,6 +183,9 @@ public:
 
   virtual TAO_Priority_Mapping *get_priority_mapping (void);
   // Configure the priority mapping for the ORB
+
+  virtual int get_parser_names (const char **&names,
+                                int &number_of_names);
 };
 
 #include "ace/post.h"

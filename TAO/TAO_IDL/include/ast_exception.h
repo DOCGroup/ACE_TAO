@@ -85,7 +85,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
+class   AST_Exception : public virtual AST_Structure
 {
 public:
   // Operations

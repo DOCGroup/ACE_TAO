@@ -9,10 +9,6 @@ ACE_RCSID(ace, OS_String, "$Id$")
 # include "ace/OS_String.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-#if defined (ACE_LACKS_WCSDUP_PROTOTYPE)
-extern "C" wchar_t *wcsdup __P ((__const wchar_t *__s));
-#endif /* ACE_LACKS_WCSDUP_PROTOTYPE */
-
 const char *
 ACE_OS_String::strnstr (const char *s1, const char *s2, size_t len2)
 {
@@ -130,7 +126,7 @@ const wchar_t *
 ACE_OS_String::strnchr (const wchar_t *s, wint_t c, size_t len)
 {
   for (size_t i = 0; i < len; i++)
-    if (s[i] == ACE_static_cast(wchar_t, c))
+    if (s[i] == c)
       return s + i;
 
   return 0;
@@ -171,7 +167,7 @@ ACE_OS_String::strrchr_emulation (const wchar_t *s, wint_t c)
 {
   const wchar_t *p = s + ACE_OS_String::strlen (s);
 
-  while (*p != ACE_static_cast (wchar_t, c))
+  while (*p != c)
     if (p == s)
       return 0;
     else
@@ -185,7 +181,7 @@ ACE_OS_String::strrchr_emulation (wchar_t *s, wint_t c)
 {
   wchar_t *p = s + ACE_OS_String::strlen (s);
 
-  while (*p != ACE_static_cast(wchar_t, c))
+  while (*p != c)
     if (p == s)
       return 0;
     else
@@ -248,7 +244,7 @@ ACE_OS_String::strcasecmp_emulation (const char *s, const char *t)
   const char *scan2 = t;
 
   while (*scan1 != 0
-         && ACE_OS_String::to_lower (*scan1)
+         && ACE_OS_String::to_lower (*scan1) 
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -277,7 +273,7 @@ ACE_OS_String::strcasecmp_emulation (const wchar_t *s, const wchar_t *t)
   const wchar_t *scan2 = t;
 
   while (*scan1 != 0
-         && ACE_OS_String::to_lower (*scan1)
+         && ACE_OS_String::to_lower (*scan1) 
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -300,8 +296,8 @@ ACE_OS_String::strcasecmp_emulation (const wchar_t *s, const wchar_t *t)
 #endif /* ACE_HAS_WCHAR */
 
 int
-ACE_OS_String::strncasecmp_emulation (const char *s,
-                                      const char *t,
+ACE_OS_String::strncasecmp_emulation (const char *s, 
+                                      const char *t, 
                                       size_t len)
 {
   const char *scan1 = s;
@@ -310,7 +306,7 @@ ACE_OS_String::strncasecmp_emulation (const char *s,
 
   while (count++ < len
          && *scan1 != 0
-         && ACE_OS_String::to_lower (*scan1)
+         && ACE_OS_String::to_lower (*scan1) 
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -336,8 +332,8 @@ ACE_OS_String::strncasecmp_emulation (const char *s,
 
 #if defined (ACE_HAS_WCHAR)
 int
-ACE_OS_String::strncasecmp_emulation (const wchar_t *s,
-                                      const wchar_t *t,
+ACE_OS_String::strncasecmp_emulation (const wchar_t *s, 
+                                      const wchar_t *t, 
                                       size_t len)
 {
   const wchar_t *scan1 = s;
@@ -346,7 +342,7 @@ ACE_OS_String::strncasecmp_emulation (const wchar_t *s,
 
   while (count++ > len
          && *scan1 != 0
-         && ACE_OS_String::to_lower (*scan1)
+         && ACE_OS_String::to_lower (*scan1) 
             == ACE_OS_String::to_lower (*scan2))
     {
       ++scan1;
@@ -403,106 +399,3 @@ ACE_OS_String::memchr_emulation (const void *s, int c, size_t len)
   return 0;
 }
 
-#if !defined (ACE_HAS_ITOA)
-char *
-ACE_OS_String::itoa_emulation (int value, char *string, int radix)
-{
-  char *e = string;
-  char *b = string;
-
-  // Short circuit if 0
-
-  if (value == 0)
-    {
-      string[0] = '0';
-      string[1] = 0;
-      return string;
-    }
-
-  // If negative and base 10, print a - and then do the
-  // number.
-
-  if (value < 0 && radix == 10)
-    {
-      string[0] = '-';
-      b++;
-    }
-
-  // Convert to base <radix>, but in reverse order
-
-  while (value != 0)
-    {
-      int mod = value % radix;
-      value = value / radix;
-
-      *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
-    }
-
-  *e-- = 0;
-
-  // Now reverse the string to get the correct result
-
-  while (e > b)
-  {
-    char temp = *e;
-    *e = *b;
-    *b = temp;
-    ++b;
-    --e;
-  }
-
-  return string;
-}
-
-#if defined (ACE_HAS_WCHAR)
-wchar_t *
-ACE_OS_String::itoa_emulation (int value, wchar_t *string, int radix)
-{
-  wchar_t *e = string;
-  wchar_t *b = string;
-
-  // Short circuit if 0
-
-  if (value == 0)
-    {
-      string[0] = '0';
-      string[1] = 0;
-      return string;
-    }
-
-  // If negative and base 10, print a - and then do the
-  // number.
-
-  if (value < 0 && radix == 10)
-    {
-      string[0] = '-';
-      b++;
-    }
-
-  // Convert to base <radix>, but in reverse order
-
-  while (value != 0)
-    {
-      int mod = value % radix;
-      value = value / radix;
-
-      *e++ = (mod < 10) ? '0' + mod : 'a' + mod - 10;
-    }
-
-  *e-- = 0;
-
-  // Now reverse the string to get the correct result
-
-  while (e > b)
-  {
-    wchar_t temp = *e;
-    *e = *b;
-    *b = temp;
-    ++b;
-    --e;
-  }
-
-  return string;
-}
-#endif /* ACE_HAS_WCHAR */
-#endif /* !ACE_HAS_ITOA */

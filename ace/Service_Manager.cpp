@@ -266,16 +266,7 @@ ACE_Service_Manager::handle_input (ACE_HANDLE)
 
   // Read service request from client.
 
-  ssize_t result;
-
-  // Keep looping until we actually get the request.  Note that Win32
-  // sets the socket into non-blocking mode, so we may need to loop if
-  // the system is heavily loaded.
-  do
-    result = client_stream_.recv (request, sizeof request);
-  while (result == -1 && errno == EWOULDBLOCK);
-
-  switch (result)
+  switch (client_stream_.recv (request, sizeof request))
     {
     case -1:
       if (this->debug_)

@@ -18,6 +18,7 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "ior_dll_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,8 +42,6 @@ public:
   // The destructor
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           char *argv [],
                                            CORBA::Environment &)
     ACE_THROW_SPEC (()) = 0;
   // Create and activate a new object into the orb.
@@ -51,7 +50,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-# include "tao/Object_Loader.i"
+# include "Object_Loader.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

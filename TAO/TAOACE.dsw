@@ -15,21 +15,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "ACE_SSL"=..\ace\SSL\ACE_SSL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "AV"=.\orbsvcs\orbsvcs\AV.dsp - Package Owner=<4>
 
 Package=<5>
@@ -52,9 +37,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosTrading
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name IORTable
     End Project Dependency
 }}}
 
@@ -144,21 +126,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CosEvent_Service_Native"=.\orbsvcs\CosEvent_Service\CosEvent_Service_Native.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name CosEvent
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "CosLifeCycle"=.\orbsvcs\orbsvcs\CosLifeCycle.dsp - Package Owner=<4>
 
 Package=<5>
@@ -190,9 +157,6 @@ Package=<4>
 {{{
     Begin Project Dependency
     Project_Dep_Name Svc Utils
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name IORTable
     End Project Dependency
 }}}
 
@@ -236,12 +200,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name PortableServer
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -281,9 +239,6 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name DynamicAny
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -320,30 +275,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name CosNaming
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTOLDEvent
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name RTSched
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "DynamicAny"=.\tao\DynamicAny\TAO_DynamicAny.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
 }}}
 
 ###############################################################################
@@ -375,54 +306,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "IFR_Service"=.\orbsvcs\IFR_Service\IFR_Service.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TypeCodeFactory_DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Svc Utils
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IORManip"=.\tao\IORManipulation\TAO_IORManip.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "IORTable"=.\tao\IORTable\TAO_IORTable.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "ImplRepo_Service"=.\orbsvcs\ImplRepo_Service\implrepo.dsp - Package Owner=<4>
 
 Package=<5>
@@ -439,9 +322,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name IORTable
     End Project Dependency
 }}}
 
@@ -529,21 +409,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name CosNotification
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "PortableServer"=.\tao\PortableServer\TAO_PortableServer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
     End Project Dependency
 }}}
 
@@ -648,24 +513,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "SSLIOP"=.\orbsvcs\orbsvcs\SSLIOP.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE_SSL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name Security
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Scheduling_Service"=.\orbsvcs\Scheduling_Service\Scheduling_Service.dsp - Package Owner=<4>
 
 Package=<5>
@@ -684,27 +531,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Security"=.\orbsvcs\orbsvcs\Security.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name PortableServer
-    End Project Dependency
-}}}
-
-###############################################################################
-
 Project: "Svc Utils"=.\orbsvcs\orbsvcs\Svc_Utils.dsp - Package Owner=<4>
 
 Package=<5>
@@ -718,9 +544,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name PortableServer
     End Project Dependency
 }}}
 
@@ -750,43 +573,10 @@ Package=<5>
 Package=<4>
 {{{
     Begin Project Dependency
-    Project_Dep_Name TAO_IDL_BE_DLL
+    Project_Dep_Name gperf
     End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_FE_DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "TAO_IDL_BE_DLL"=.\TAO_IDL\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL_FE_DLL
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "TAO_IDL_FE_DLL"=.\TAO_IDL\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
     Begin Project Dependency
     Project_Dep_Name ACE DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name gperf
     End Project Dependency
 }}}
 
@@ -808,27 +598,6 @@ Package=<4>
     End Project Dependency
     Begin Project Dependency
     Project_Dep_Name Svc Utils
-    End Project Dependency
-}}}
-
-###############################################################################
-
-Project: "TypeCodeFactory_DLL"=.\orbsvcs\IFR_Service\TypeCodeFactory_DLL.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name ACE DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name PortableServer
     End Project Dependency
 }}}
 

@@ -62,66 +62,68 @@ NOTE:
 SunOS, SunSoft, Sun, Solaris, Sun Microsystems or the Sun logo are
 trademarks or registered trademarks of Sun Microsystems, Inc.
 
-*/
+ */
 
-// Initialization for IDL compiler driver program
+// DRV_init.cc - Initialization for IDL compiler driver program
 
 #include	"idl.h"
 #include	"idl_extern.h"
+
 #include	"drv_private.h"
-#include  "be.h"
+#include 	"drv_link.h"
 
 ACE_RCSID(driver, drv_init, "$Id$")
 
 void
-DRV_init (void)
+DRV_init()
 {
-  // Initialize FE global data object.
-  ACE_NEW (idl_global,
-           IDL_GlobalData);
+  // Initialize global data
 
-  // Initialize some of its data.
-  idl_global->set_scopes (0);
-  idl_global->set_root (0);
-  idl_global->set_gen (0);
-  idl_global->set_err (FE_new_UTL_Error ());
-  idl_global->set_err_count (0);
-  idl_global->set_indent (FE_new_UTL_Indenter ());
-  idl_global->set_filename (0);
-  idl_global->set_main_filename (0);
-  idl_global->set_real_filename (0);
-  idl_global->set_stripped_filename (0);
-  idl_global->set_import (I_TRUE);
-  idl_global->set_in_main_file (I_FALSE);
-  idl_global->set_lineno (-1);
-  idl_global->set_prog_name (0);
+  idl_global = new IDL_GlobalData();
+
+  idl_global->set_scopes(NULL);
+  idl_global->set_root(NULL);
+  idl_global->set_gen(NULL);
+  idl_global->set_err((*DRV_FE_new_UTL_Error)());
+  idl_global->set_err_count(0);
+  idl_global->set_indent((*DRV_FE_new_UTL_Indenter)());
+
+  idl_global->set_filename(NULL);
+  idl_global->set_main_filename(NULL);
+  idl_global->set_real_filename(NULL);
+  idl_global->set_stripped_filename(NULL);
+  idl_global->set_import(I_TRUE);
+  idl_global->set_in_main_file(I_FALSE);
+  idl_global->set_lineno(-1);
+
+  idl_global->set_prog_name(NULL);
 
 #if defined (TAO_IDL_PREPROCESSOR)
-  idl_global->set_cpp_location (TAO_IDL_PREPROCESSOR);
+  idl_global->set_cpp_location(TAO_IDL_PREPROCESSOR);
 #elif defined (ACE_CC_PREPROCESSOR)
-  idl_global->set_cpp_location (ACE_CC_PREPROCESSOR);
+  idl_global->set_cpp_location(ACE_CC_PREPROCESSOR);
 #else
   // Just default to cc
-  idl_global->set_cpp_location ("cc");
+  idl_global->set_cpp_location("cc");
 #endif /* TAO_IDL_PREPROCESSOR */
 
-  char local_escapes[1024];
-  ACE_OS::memset (&local_escapes, 0, 1024);
+  idl_global->set_be("");
 
-  idl_global->set_local_escapes (local_escapes);
-  idl_global->set_be ("");
-  idl_global->set_pragmas (0);
-  idl_global->set_compile_flags (0);
-  idl_global->set_read_from_stdin (I_FALSE);
-  idl_global->set_include_file_names (0);
-  idl_global->set_n_include_file_names (0);
-  idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+  idl_global->set_local_escapes(new char[1024]);
 
-  // Initialize BE global data object.
-  ACE_NEW (be_global,
-           BE_GlobalData);
+  idl_global->set_pragmas(NULL);
+
+  idl_global->set_compile_flags(0);
+
+  idl_global->set_read_from_stdin(I_FALSE);
+
+  idl_global->set_include_file_names(NULL);
+  idl_global->set_n_include_file_names(0);
+
+  idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
 
   // Initialize driver private data
+
   DRV_nfiles = 0;
   DRV_file_index = 0;  
 }

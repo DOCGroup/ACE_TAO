@@ -651,7 +651,6 @@ CORBA_ServiceInformation_out::operator-> (void)
       {
         result = CORBA_ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceOption::allocbuf (this->length_);
         this->buffer_ = result;
-	this->release_ = 1;
       }
       else
       {
@@ -1006,7 +1005,6 @@ CORBA_ServiceInformation::_tao_seq_ServiceOption_out::operator[] (CORBA::ULong s
       {
         result = CORBA_ServiceInformation::_TAO_Unbounded_Sequence_CORBA_ServiceInformation__tao_seq_ServiceDetail::allocbuf (this->length_);
         this->buffer_ = result;
-	this->release_ = 1;
       }
       else
       {

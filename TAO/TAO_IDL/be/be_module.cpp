@@ -25,35 +25,26 @@
 
 ACE_RCSID(be, be_module, "$Id$")
 
+/*
+ * BE_Module
+ */
 be_module::be_module (void)
 {
 }
 
-be_module::be_module (UTL_ScopedName *n, 
-                      UTL_StrList *p)
-  : AST_Module (n, 
-                p),
-    AST_Decl (AST_Decl::NT_module, 
-              n, 
-              p),
+be_module::be_module (UTL_ScopedName *n, UTL_StrList *p)
+  : AST_Module (n, p),
+    AST_Decl (AST_Decl::NT_module, n, p),
     UTL_Scope (AST_Decl::NT_module)
 {
 }
 
-// Compute the size type of the node in question.
+// compute the size type of the node in question
 int
 be_module::compute_size_type (void)
 {
-  // Our size does not matter.
+  // our size does not matter
   return 0;
-}
-
-void
-be_module::destroy (void)
-{
-  // Call the destroy methods of our base classes.
-  be_scope::destroy ();
-  be_decl::destroy ();
 }
 
 int

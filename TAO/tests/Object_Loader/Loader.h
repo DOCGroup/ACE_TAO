@@ -16,7 +16,7 @@
 #ifndef TAO_OBJECT_LOADER_LOADER_H
 #define TAO_OBJECT_LOADER_LOADER_H
 
-#include "tao/Object_Loader.h"
+#include "tao/ior_dll/Object_Loader.h"
 #include "OLT_Export.h"
 
 class OLT_Export Loader : public TAO_Object_Loader
@@ -31,8 +31,6 @@ public:
   // ctor
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
-                                           int argc,
-                                           char *argv [],
                                            CORBA::Environment &)
     ACE_THROW_SPEC (());
   // Create a new instance

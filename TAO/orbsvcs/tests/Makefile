@@ -25,11 +25,9 @@ DIRS  = Simple_Naming \
 	CosEvent \
 	Concurrency \
 	ImplRepo \
-	InterfaceRepo \
 	Trading \
 	AVStreams \
-	Notify \
-	Interoperable_Naming
+	Notify
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO

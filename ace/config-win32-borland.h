@@ -1,5 +1,5 @@
 // -*- C++ -*-
-//$Id$
+// $Id$
 
 // The following configuration file contains defines for Borland compilers.
 
@@ -26,9 +26,8 @@
 # define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 # define ACE_CC_BETA_VERSION (0)
 # define ACE_CC_PREPROCESSOR "CPP32.EXE"
-# define ACE_CC_PREPROCESSOR_ARGS "-P- -ocon -w-"
+# define ACE_CC_PREPROCESSOR_ARGS "-P- -ocon"
 
-# define ACE_HAS_ITOA 1
 # define ACE_EXPORT_NESTED_CLASSES 1
 # define ACE_HAS_ANSI_CASTS 1
 # define ACE_HAS_CPLUSPLUS_HEADERS 1
@@ -55,7 +54,6 @@
 # define ACE_HAS_USER_MODE_MASKS 1
 # define ACE_HAS_USING_KEYWORD 1
 # define ACE_LACKS_ACE_IOSTREAM 1
-# define ACE_LACKS_INLINE_ASSEMBLY 1
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 # define ACE_LACKS_MODE_MASKS 1
 # define ACE_LACKS_NATIVE_STRPTIME 1
@@ -68,8 +66,11 @@
 # define ACE_UINT64_FORMAT_SPECIFIER ACE_TEXT ("%Lu")
 # define ACE_INT64_FORMAT_SPECIFIER ACE_TEXT ("%Ld")
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 # define ACE_WSTRING_HAS_USHORT_SUPPORT 1
+
+/* need to ensure these are included before <iomanip> */
+# include <time.h>
+# include <stdlib.h>
 
 #endif /* defined(__BORLANDC__) */
 

@@ -485,7 +485,8 @@ TAO_NAMESPACE  IR
         dk_Publishes,
         dk_Consumes,
         dk_Provides,
-        dk_Uses
+        dk_Uses,
+        IR_DefinitionKind_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
     };
   typedef DefinitionKind &DefinitionKind_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DefinitionKind;
@@ -822,7 +823,8 @@ TAO_NAMESPACE  IR
   enum AttributeMode
   {
     ATTR_NORMAL,
-    ATTR_READONLY
+    ATTR_READONLY,
+    AttributeMode_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
   };
   typedef AttributeMode &AttributeMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AttributeMode;
@@ -861,7 +863,8 @@ TAO_NAMESPACE  IR
     pk_longdouble,
     pk_wchar,
     pk_wstring,
-    pk_value_base
+    pk_value_base,
+    PrimitiveKind_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
   };
   typedef PrimitiveKind &PrimitiveKind_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimitiveKind;
@@ -869,7 +872,8 @@ TAO_NAMESPACE  IR
   enum OperationMode
   {
     OP_NORMAL,
-    OP_ONEWAY
+    OP_ONEWAY,
+    OperationMode_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
   };
   typedef OperationMode &OperationMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_OperationMode;
@@ -878,7 +882,8 @@ TAO_NAMESPACE  IR
   {
     PARAM_IN,
     PARAM_OUT,
-    PARAM_INOUT
+    PARAM_INOUT,
+    ParameterMode_TAO_ENUM_32BIT_ENFORCER = 0x7FFFFFFF
   };
   typedef ParameterMode &ParameterMode_out;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ParameterMode;

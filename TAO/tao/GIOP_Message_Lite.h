@@ -29,6 +29,7 @@
 
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_State.h"
+#include "tao/ORB_Core.h"
 
 class TAO_GIOP_ServerRequest;
 class TAO_GIOP_Locate_Request_Header;
@@ -148,7 +149,6 @@ private:
   int send_reply_exception (TAO_Transport *transport,
                             TAO_ORB_Core* orb_core,
                             CORBA::ULong request_id,
-                            IOP::ServiceContextList *svc_info,
                             CORBA::Exception *x);
   // We must send a LocateReply through <transport>, this request
   // resulted in some kind of exception.

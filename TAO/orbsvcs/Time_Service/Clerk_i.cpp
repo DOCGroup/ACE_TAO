@@ -11,7 +11,6 @@ ACE_RCSID(Time_Service, Clerk_i, "$Id$")
 Clerk_i::Clerk_i (void)
   : ior_output_file_ (0),
     timer_value_ (3),
-    timer_value_usecs_ (0),
     server_ (Clerk_i::DEFAULT_SERVER_COUNT),
     ior_fp_ (0)
 {

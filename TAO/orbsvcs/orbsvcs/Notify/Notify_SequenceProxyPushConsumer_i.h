@@ -25,6 +25,7 @@
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 
 class TAO_Notify_SupplierAdmin_i;
+class TAO_Notify_Resource_Manager;
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -33,7 +34,7 @@ class TAO_Notify_SupplierAdmin_i;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
+class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>, public PortableServer::RefCountServantBase
 {
   // = TITLE
   //   TAO_Notify_SequenceProxyPushConsumer_i
@@ -43,7 +44,7 @@ class TAO_Notify_Export TAO_Notify_SequenceProxyPushConsumer_i : public TAO_Noti
   //
 
 public:
-  TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* supplier_admin);
+  TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager);
   // Constructor
 
   virtual ~TAO_Notify_SequenceProxyPushConsumer_i (void);
@@ -76,16 +77,19 @@ public:
   ));
 
 protected:
-  // = Helper methods
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
   // Sends updates to the supplier.
+
+  // = Helper methods
+  void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
+  // Cleanup all resources used by this object.
 
   // = Data members
   CosNotifyComm::SequencePushSupplier_ptr push_supplier_;
   // The supplier that we're connected to.
 
-private:
-  typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer> proxy_inherited;
+  typedef TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
+  sequence_proxy_inherited;
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

@@ -6,7 +6,17 @@
 #
 #----------------------------------------------------------------------------
 
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+
 DIRS  = SMI_Iterator
+
+ifneq ($(ami),0)
+  DIRS += \
+	AMI_Iterator \
+	AMI_Observer
+endif  # ami
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -22,13 +32,3 @@ include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nolocal.GNU
-
-#----------------------------------------------------------------------------
-#       Local macros
-#----------------------------------------------------------------------------
-
-ifneq ($(ami), 0)
-  DIRS += \
-	AMI_Iterator \
-	AMI_Observer
-endif  # ami

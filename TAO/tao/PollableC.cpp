@@ -11,6 +11,7 @@
 
 #if (TAO_HAS_AMI_POLLER == 1)
 
+#include "tao/POA_CORBA.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 #include "tao/Any.h"
@@ -201,7 +202,7 @@ CORBA_PollableSet::NoPossiblePollable::~NoPossiblePollable (void)
 
 // copy constructor
 CORBA_PollableSet::NoPossiblePollable::NoPossiblePollable (const ::CORBA_PollableSet::NoPossiblePollable &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._type ())
 {
   }
 
@@ -266,7 +267,7 @@ CORBA_PollableSet::UnknownPollable::~UnknownPollable (void)
 
 // copy constructor
 CORBA_PollableSet::UnknownPollable::UnknownPollable (const ::CORBA_PollableSet::UnknownPollable &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._type ())
 {
   }
 

@@ -96,13 +96,25 @@ SOURCE=".\simple-client.cpp"
 
 SOURCE=.\testC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\testS.cpp
+# End Source File
 # End Group
 # Begin Group "Inline Files"
 
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=.\test_i.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\testC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\testS.i
 # End Source File
 # End Group
 # Begin Group "IDL Files"
@@ -196,6 +208,10 @@ BuildCmds= \
 # Begin Group "Header Files"
 
 # PROP Default_Filter ""
+# Begin Source File
+
+SOURCE=.\test_i.h
+# End Source File
 # End Group
 # End Target
 # End Project

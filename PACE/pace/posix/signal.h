@@ -13,59 +13,59 @@
  *
  * ============================================================================= */
 
-#ifndef PACE_SIGNAL_H_POSIX
-#define PACE_SIGNAL_H_POSIX
+#ifndef PACE_SIGNAL_H
+#define PACE_SIGNAL_H
 
-#include <signal.h>
 #include "pace/sys/types.h"
-#include "pace/time.h"
+#include <signal.h>
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#ifndef PACE_SIG_PF
-# define PACE_SIG_PF
-  typedef void (*pace_sig_pf)(int);
-#endif /* PACE_SIG_PF */
+  PACE_INLINE int pace_kill (pid_t pid, int sig);
 
-#ifndef PACE_SIG_ATOMIC_T
-#define PACE_SIG_ATOMIC_T
-  typedef sig_atomic_t pace_sig_atomic_t;
-#endif /* PACE_SIG_ATOMIC_T */
+  PACE_INLINE int pace_sigaction (int sig,
+                                  const struct sigaction * act,
+                                  struct sigaction * oact);
 
-#ifndef PACE_SIGSET_T
-#define PACE_SIGSET_T
-  typedef sigset_t pace_sigset_t;
-#endif /* PACE_SIGSET_T */
+  PACE_INLINE int pace_sigaddset (sigset_t * set, int signo);
 
-#ifndef PACE_SIGACTION_S
-#define PACE_SIGACTION_S
-  typedef struct sigaction pace_sigaction_s;
-#endif /* PACE_SIGACTION_S */
+  PACE_INLINE int pace_sigemptyset (sigset_t * set);
 
-#ifndef PACE_SIGINFO_T
-#define PACE_SIGINFO_T
-  typedef siginfo_t pace_siginfo_t;
-#endif /* PACE_SIGINFO_T */
+  PACE_INLINE int pace_sigdelset (sigset_t * set, int signo);
 
-#ifndef PACE_SIGEVENT
-#define PACE_SIGEVENT
-  typedef struct sigevent pace_sigevent;
-#endif /* PACE_SIGEVENT */
+  PACE_INLINE int pace_sigfillset (sigset_t * set);
 
-#ifndef PACE_SIGVAL
-#define PACE_SIGVAL
-  typedef union sigval pace_sigval;
-#endif /* PACE_SIGVAL */
+  PACE_INLINE int pace_sigismember (const sigset_t * set, int signo);
 
-#ifndef PACE_TIMESPEC
-#define PACE_TIMESPEC
-  typedef struct timespec pace_timespec;
-#endif /* PACE_TIMESPEC */
+  PACE_INLINE int pace_sigpending (sigset_t * set);
+
+  PACE_INLINE int pace_sigprocmask (int how,
+                                    const sigset_t * set,
+                                    sigset_t * oset);
+
+  PACE_INLINE int pace_sigqueue (pid_t pid,
+                                 int signo,
+                                 const union sigval value);
+
+  PACE_INLINE int pace_sigsuspend (const sigset_t * sigmask);
+
+  PACE_INLINE int pace_sigtimedwait (const sigset_t * set,
+                                     siginfo_t * info,
+                                     const struct timespec * timeout);
+
+  PACE_INLINE int pace_sigwait (const sigset_t * set, int * sig);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE int pace_sigwaitinfo (const sigset_t * set, siginfo_t * info);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_SIGNAL_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/signal.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_SIGNAL_H */

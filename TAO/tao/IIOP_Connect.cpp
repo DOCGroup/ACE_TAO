@@ -9,7 +9,7 @@
 #include "tao/Messaging_Policy_i.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/GIOP_Message_Acceptors.h"
-#include "tao/Server_Strategy_Factory.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/IIOP_Connect.i"
@@ -72,8 +72,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thre
     orb_core_ (0),
     tss_resources_ (0),
     refcount_ (1),
-    lite_flag_ (0),
-    tcp_properties_ (0)
+    lite_flag_ (0)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -84,17 +83,14 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (ACE_Thre
 }
 
 TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                                                        CORBA::Boolean flag,
-                                                                        void *arg)
+                                                                        CORBA::Boolean flag)
   : TAO_IIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     acceptor_factory_ (0),
     orb_core_ (orb_core),
     tss_resources_ (orb_core->get_tss_resources ()),
     refcount_ (1),
-    lite_flag_ (flag),
-    tcp_properties_ (ACE_static_cast
-                     (TAO_IIOP_Handler_Base::TCP_Properties *, arg))
+    lite_flag_ (flag)
 {
   if (lite_flag_)
     {
@@ -106,6 +102,7 @@ TAO_IIOP_Server_Connection_Handler::TAO_IIOP_Server_Connection_Handler (TAO_ORB_
       ACE_NEW (this->acceptor_factory_,
                TAO_GIOP_Message_Acceptors (orb_core));
     }
+
 }
 
 TAO_IIOP_Server_Connection_Handler::~TAO_IIOP_Server_Connection_Handler (void)
@@ -117,28 +114,33 @@ int
 TAO_IIOP_Server_Connection_Handler::open (void*)
 {
 #if !defined (ACE_LACKS_SOCKET_BUFSIZ)
+  int sndbufsize =
+    this->orb_core_->orb_params ()->sock_sndbuf_size ();
+  int rcvbufsize =
+    this->orb_core_->orb_params ()->sock_rcvbuf_size ();
 
-  // @@ Pointers to size in the calls below used to be int*.
   if (this->peer ().set_option (SOL_SOCKET,
                                 SO_SNDBUF,
-                                (void *) &tcp_properties_->send_buffer_size,
-                                sizeof (int)) == -1
+                                (void *) &sndbufsize,
+                                sizeof (sndbufsize)) == -1
       && errno != ENOTSUP)
     return -1;
   else if (this->peer ().set_option (SOL_SOCKET,
                                      SO_RCVBUF,
-                                     (void *) &tcp_properties_->recv_buffer_size,
-                                     sizeof (int)) == -1
+                                     (void *) &rcvbufsize,
+                                     sizeof (rcvbufsize)) == -1
            && errno != ENOTSUP)
     return -1;
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
+  int nodelay =
+    this->orb_core_->orb_params ()->nodelay ();
 
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &tcp_properties_->no_delay,
-                                sizeof (int)) == -1)
+                                (void *) &nodelay,
+                                sizeof (nodelay)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
@@ -151,18 +153,14 @@ TAO_IIOP_Server_Connection_Handler::open (void*)
   // completely connected.
   ACE_INET_Addr addr;
 
-  char client[MAXHOSTNAMELEN + 16];
-
-  // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
-
-  // Verify that we can resolve the peer hostname.
-  else if (addr.addr_to_string (client, sizeof (client)) == -1)
     return -1;
 
   if (TAO_debug_level > 0)
     {
+      char client[MAXHOSTNAMELEN + 16];
+      (void) addr.addr_to_string (client, sizeof (client));
+
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) IIOP connection from client")
                   ACE_TEXT ("<%s> on %d\n"),
@@ -210,26 +208,14 @@ TAO_IIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
 {
   if (TAO_orbdebug)
     ACE_DEBUG  ((LM_DEBUG,
-                 ACE_TEXT ("TAO (%P|%t) ")
-                 ACE_TEXT ("IIOP_Server_Connection_Handler::handle_close ")
+                 ACE_TEXT ("TAO (%P|%t) IIOP_Server_Connection_Handler::handle_close ")
                  ACE_TEXT ("(%d, %d)\n"),
                  handle,
                  rm));
 
   --this->refcount_;
   if (this->refcount_ == 0)
-    {
-      // Remove the handle from the ORB Core's handle set so that it
-      // isn't included in the set that is passed to the reactor upon
-      // ORB destruction.
-      TAO_Server_Strategy_Factory *f =
-        this->orb_core_->server_factory ();
-
-      if (f->activate_server_connections () == 0)
-        (void) this->orb_core_->remove_handle (handle);
-
-      return TAO_SVC_HANDLER::handle_close (handle, rm);
-    }
+    return TAO_SVC_HANDLER::handle_close (handle, rm);
 
   return 0;
 }

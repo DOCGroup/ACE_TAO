@@ -22,22 +22,12 @@
 #if (TAO_HAS_RT_CORBA == 1)
 
 #include "tao/RTCORBAS.h"
-#include "tao/LocalObject.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1200)
-#pragma warning(push)
-#endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
-class TAO_Export TAO_RT_Current :
-  public RTCORBA::Current,
-  public CORBA::LocalObject
+class TAO_Export TAO_RT_Current : public RTCORBA::Current
 {
   // = TITLE
   //   RTCORBA::Current interface iplementation.
@@ -46,7 +36,7 @@ class TAO_Export TAO_RT_Current :
   //   Allows setting/getting the priority of the current thread.
   //
 public:
-  TAO_RT_Current (TAO_ORB_Core *orb_core);
+  TAO_RT_Current (void);
   // Default constructor.
 
   virtual ~TAO_RT_Current (void);
@@ -64,18 +54,12 @@ public:
 
 private:
 
-  TAO_ORB_Core *orb_core_;
-  // ORB Core that owns us.
 };
 
 
 #if defined (__ACE_INLINE__)
 # include "tao/RT_Current.i"
 #endif /* __ACE_INLINE__ */
-
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
-#endif /* _MSC_VER */
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 

@@ -159,7 +159,7 @@ CORBA_Any::CORBA_Any (const CORBA_Any &src)
 {
   if (!CORBA::is_nil (src.type_.in ()))
     this->type_ =
-      CORBA::TypeCode::_duplicate (src.type_.in ());
+      CORBA::TypeCode::_duplicate (src.type_);
   else
     this->type_ =
       CORBA::TypeCode::_duplicate (CORBA::_tc_null);
@@ -195,7 +195,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
   if (!CORBA::is_nil (src.type_.in ()))
     {
       this->type_ =
-        CORBA::TypeCode::_duplicate (src.type_.in ());
+        CORBA::TypeCode::_duplicate (src.type_);
     }
   else
     {
@@ -548,7 +548,6 @@ CORBA_Any::operator<<= (CORBA::TypeCode_ptr tc)
                       stream.begin ());
 }
 
-// Insertion of CORBA::Exception - copying
 void
 CORBA_Any::operator<<= (const CORBA_Exception &exception)
 {
@@ -574,36 +573,8 @@ CORBA_Any::operator<<= (const CORBA_Exception &exception)
   ACE_CHECK;
 }
 
-// Insertion of CORBA::Exception - non-copying
-void
-CORBA_Any::operator<<= (CORBA_Exception *exception)
-{
-  ACE_DECLARE_NEW_CORBA_ENV;
-
-  ACE_TRY
-    {
-      TAO_OutputCDR stream;
-      exception->_tao_encode (stream, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      this->_tao_replace (exception->_type (),
-                          TAO_ENCAP_BYTE_ORDER,
-                          stream.begin (),
-                          1,
-                          exception,
-                          CORBA_Exception::_tao_any_destructor);
-    }
-  ACE_CATCHANY
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Exception in CORBA::Exception insertion\n")));
-    }
-  ACE_ENDTRY;
-  ACE_CHECK;
-}
-
 // Insertion of CORBA object - copying.
+
 void
 CORBA::Any::operator<<= (const CORBA::Object_ptr obj)
 {
@@ -1393,7 +1364,7 @@ CORBA_Any::operator>>= (to_string s) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_.in ());
+        CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
@@ -1455,7 +1426,7 @@ CORBA_Any::operator>>= (to_wstring ws) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_.in ());
+        CORBA::TypeCode::_duplicate (this->type_);
 
       while (kind == CORBA::tk_alias)
         {
@@ -1517,7 +1488,7 @@ CORBA_Any::operator>>= (to_object obj) const
       ACE_TRY_CHECK;
 
       CORBA::TypeCode_var tcvar =
-        CORBA::TypeCode::_duplicate (this->type_.in ());
+        CORBA::TypeCode::_duplicate (this->type_);
       while (kind == CORBA::tk_alias)
         {
           tcvar = tcvar->content_type (ACE_TRY_ENV);

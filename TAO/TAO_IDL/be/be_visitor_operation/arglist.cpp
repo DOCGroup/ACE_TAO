@@ -48,7 +48,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << " (" << be_idt << be_idt_nl;
+  *os << " (" << be_idt << be_idt << "\n";
 
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)
@@ -61,7 +61,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
     }
 
   // generate the CORBA::Environment parameter for the alternative mapping
-  if (!be_global->exception_support ())
+  if (!idl_global->exception_support ())
     {
       // if the operation node has parameters, then we need to insert a comma
       if (node->argument_count () > 0)
@@ -217,7 +217,7 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
   // which case there will not be any CORBA::Environment parameter
   if (!this->last_node (bd))
     {
-      *os << "," << be_nl;
+      *os << ",\n";
     }
   return 0;
 }

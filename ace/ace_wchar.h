@@ -66,15 +66,9 @@ typedef char TCHAR;
 #endif /* ACE_ONLY_LATEST_AND_GREATEST */
 
 #if defined (ACE_HAS_WCHAR)
-# if defined (VXWORKS)
-#   include /**/ <types/vxTypes.h>  /* For wchar_t */
-#   include /**/ <stdlib.h>         /* For mbstowcs, etc. */
-#   include /**/ <string.h>         /* For strlen */
-#   define wint_t unsigned int      /* VxWorks has wchar_t but not wint_t */
-# elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
+# if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #   include /**/ <cwchar>
-#   include /**/ <cwctype>
 # elif !defined (__BORLANDC__) && !defined (ACE_HAS_WINCE)
 #   include /**/ <wchar.h>
 # endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
@@ -82,19 +76,6 @@ typedef char TCHAR;
 # include /**/ <wchar.h>
 #endif
 
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
-using std::size_t;
-#endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
-
-// Since MSVC uses ushort16 = wchar_t, it is the only one
-// that does not need this defined
-
-#if defined (ACE_HAS_WCHAR) && !defined (_MSC_VER)
-# if !defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
-#  define ACE_WSTRING_HAS_USHORT_SUPPORT
-# endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
-#endif /* ACE_HAS_WCHAR && !_MSC_VER */
 
 // Define the unicode/wchar related macros correctly
 
@@ -136,14 +117,6 @@ public:
 # if defined (ACE_WIN32)
     size_t len = ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, 
                                         NULL, 0, NULL, NULL);
-# elif defined (VXWORKS)
-    // @@ we should use a different macro than VXWORKS here, ACE_LACKS_WCSLEN?
-
-    const wchar_t *wtemp = wstr;
-    while (wtemp != 0)
-      ++wtemp;
-
-    size_t len = wtemp - wstr + 1;
 # else
     size_t len = ::wcslen (wstr) + 1;
 # endif
@@ -152,8 +125,6 @@ public:
 
 # if defined (ACE_WIN32)
     ::WideCharToMultiByte (CP_OEMCP, 0, wstr, -1, str, len, NULL, NULL);
-# elif defined (VXWORKS)
-    ::wcstombs (str, wstr, len);
 # else /* ACE_WIN32 */
     for (size_t i = 0; i < len; i++)
       {
@@ -206,8 +177,6 @@ public:
 
 # if defined (ACE_WIN32)
     ::MultiByteToWideChar (CP_OEMCP, 0, str, -1, wstr, len);
-# elif defined (VXWORKS)
-    ::mbstowcs (wstr, str, len);
 # else /* ACE_WIN32 */
     for (size_t i = 0; i < len; i++)
       {
@@ -251,7 +220,6 @@ private:
 #define ACE_TEXT_GetTempPath              ::GetTempPathW
 #define ACE_TEXT_GetUserName              ::GetUserNameW
 #define ACE_TEXT_LoadLibrary              ::LoadLibraryW
-#define ACE_TEXT_MoveFileEx               ::MoveFileExW
 #define ACE_TEXT_OpenSCManager            ::OpenSCManagerW
 #define ACE_TEXT_OpenService              ::OpenServiceW
 #define ACE_TEXT_RegConnectRegistry       ::RegConnectRegistryW
@@ -287,7 +255,6 @@ private:
 #define ACE_TEXT_GetTempPath              ::GetTempPathA
 #define ACE_TEXT_GetUserName              ::GetUserNameA
 #define ACE_TEXT_LoadLibrary              ::LoadLibraryA
-#define ACE_TEXT_MoveFileEx               ::MoveFileExA
 #define ACE_TEXT_OpenSCManager            ::OpenSCManagerA
 #define ACE_TEXT_OpenService              ::OpenServiceA
 #define ACE_TEXT_RegConnectRegistry       ::RegConnectRegistryA

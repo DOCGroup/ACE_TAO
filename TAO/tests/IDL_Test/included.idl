@@ -23,10 +23,11 @@
 #define IDL_TEST_INCLUDED_IDL
 
 // Included in IDL file 'including.idl'.
+// Also #included by reopened modules.idl along with
+// same module in including.idl.
 module Aok 
 {
   typedef sequence<double> Seq1Type;
-  typedef long Me;
 };
 
 enum Agog

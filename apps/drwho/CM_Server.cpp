@@ -52,7 +52,7 @@ CM_Server::receive (int)
                             UDP_PACKET_SIZE,
                             0,
                             (sockaddr *) &this->sin_,
-                            (int *) &sin_len);
+                            &sin_len);
   if (n == -1)
     return -1;
 

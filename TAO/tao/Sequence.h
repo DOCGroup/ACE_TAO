@@ -455,6 +455,7 @@ public:
 
 // ****************************************************************
 
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
 class ACE_Message_Block;
 template<class T> class TAO_Unbounded_Sequence;
 // forward declaration, we are going to specialize that template
@@ -534,8 +535,6 @@ public:
 
   // = TAO extensions
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-
   ACE_Message_Block* mb (void) const;
   // Returns the underlying message block, the caller must *not*
   // release the copy.
@@ -561,8 +560,9 @@ public:
 
 private:
   ACE_Message_Block* mb_;
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 };
+
+#endif /* defined (TAO_NO_COPY_OCTET_SEQUENCES) */
 
 // ****************************************************************
 

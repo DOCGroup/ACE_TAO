@@ -166,12 +166,9 @@ ACE_Log_Msg_Manager::close (void)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
      defined (ACE_HAS_TSS_EMULATION)
 /* static */
-#  if defined (ACE_HAS_THR_C_DEST)
-#   define LOCAL_EXTERN_PREFIX extern "C"
-#  else
-#   define LOCAL_EXTERN_PREFIX
-#  endif /* ACE_HAS_THR_C_DEST */
-LOCAL_EXTERN_PREFIX
+#if defined (ACE_HAS_THR_C_DEST)
+extern "C"
+#endif /* ACE_HAS_THR_C_DEST */
 void
 ACE_TSS_cleanup (void *ptr)
 {
@@ -372,18 +369,6 @@ ACE_Log_Msg::close (void)
   ACE_MT (ACE_Log_Msg_Manager::close ());
 }
 
-void
-ACE_Log_Msg::sync_hook (const ACE_TCHAR *prg_name)
-{
-  ACE_LOG_MSG->sync (prg_name);
-}
-
-ACE_OS_Thread_Descriptor *
-ACE_Log_Msg::thr_desc_hook (void)
-{
-  return ACE_LOG_MSG->thr_desc ();
-}
-
 // Call after a fork to resynchronize the PID and PROGRAM_NAME
 // variables.
 void
@@ -509,6 +494,10 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     tracing_enabled_ (1), // On by default?
     delete_ostream_(0),
     thr_desc_ (0),
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+    seh_except_selector_ (ACE_SEH_Default_Exception_Selector),
+    seh_except_handler_ (ACE_SEH_Default_Exception_Handler),
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
     priority_mask_ (default_priority_mask_)
 {
   // ACE_TRACE ("ACE_Log_Msg::ACE_Log_Msg");
@@ -519,10 +508,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 
   if (this->instance_count_ == 1)
     ACE_Thread_Adapter::set_log_msg_hooks (ACE_Log_Msg_Attributes::init_hook,
-                                           ACE_Log_Msg_Attributes::inherit_hook,
-                                           ACE_Log_Msg::close,
-                                           ACE_Log_Msg::sync_hook,
-                                           ACE_Log_Msg::thr_desc_hook);
+                                           ACE_Log_Msg_Attributes::inherit_hook);
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -767,9 +753,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   if (this->log_priority_enabled (log_priority) == 0)
     return 0;
-
-  // Logging is a benign activity, so don't inadvertently smash errno.
-  ACE_Errno_Guard guard (errno);
 
   ACE_Log_Record log_record (log_priority,
                              ACE_OS::gettimeofday (),
@@ -1240,14 +1223,6 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   ACE_OS::free (ACE_MALLOC_T (save_p));
 
-  // Check that memory was not corrupted.
-  if (bp >= this->msg_ + ACE_Log_Record::MAXLOGMSGLEN)
-    {
-      abort_prog = 1;
-      ACE_OS::fprintf (stderr,
-                       "The following logged message is too long!\n");
-    }
-
   // Copy the message from thread-specific storage into the transfer
   // buffer (this can be optimized away by changing other code...).
   log_record.msg_data (this->msg ());
@@ -1642,31 +1617,35 @@ ACE_Log_Msg::thr_desc (ACE_Thread_Descriptor *td)
     td->acquire_release ();
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && !defined(ACE_HAS_LATEST_AND_GREATEST)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_selector (void)
 {
-  return ACE_OS_Object_Manager::seh_except_selector ();
+  return this->seh_except_selector_;
 }
 
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_selector (ACE_SEH_EXCEPT_HANDLER n)
 {
-  return ACE_OS_Object_Manager::seh_except_selector (n);
+  ACE_SEH_EXCEPT_HANDLER retv = this->seh_except_selector_;
+  this->seh_except_selector_ = n;
+  return retv;
 }
 
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_handler (void)
 {
-  return ACE_OS_Object_Manager::seh_except_handler ();
+  return this->seh_except_handler_;
 }
 
 ACE_SEH_EXCEPT_HANDLER
 ACE_Log_Msg::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
 {
-  return ACE_OS_Object_Manager::seh_except_handler (n);
+  ACE_SEH_EXCEPT_HANDLER retv = this->seh_except_handler_;
+  this->seh_except_handler_ = n;
+  return retv;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && !ACE_HAS_LATEST_AND_GREATEST */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 // Enable the tracing facility on a per-thread basis.
 
@@ -1854,9 +1833,8 @@ void
 ACE_Log_Msg_Attributes::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
                                       void *&attr)
 {
-  void *p_attr = attr;
   ACE_Log_Msg_Attributes *attributes =
-    ACE_static_cast (ACE_Log_Msg_Attributes*, p_attr);
+    ACE_static_cast (ACE_Log_Msg_Attributes*,attr);
 
   attributes->inherit_log_msg (thr_desc);
   delete attributes;
@@ -1908,8 +1886,8 @@ ACE_Log_Msg_Attributes::inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc)
   if (thr_desc != 0)
     // This downcast is safe.  We do it to avoid having to #include
     // ace/Thread_Manager.h.
-    ACE_LOG_MSG->thr_desc (ACE_static_cast (ACE_Thread_Descriptor *,
-                                            thr_desc));
+    ACE_LOG_MSG->thr_desc (ACE_reinterpret_cast (ACE_Thread_Descriptor *,
+                                                 thr_desc));
   // Block the thread from proceeding until
   // thread manager has thread descriptor ready.
 

@@ -68,8 +68,6 @@ public:
                     const char *address,
                     const char *options = 0);
   virtual int open_default (TAO_ORB_Core *orb_core,
-                            int version_major,
-                            int version_minor,
                             const char *options = 0);
   virtual int close (void);
   virtual int create_mprofile (const TAO_ObjectKey &object_key,
@@ -80,7 +78,7 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 private:
-  int open_i (const char *rendezvous);
+  int open_i (TAO_ORB_Core *orb_core, const char *rendezvous);
   // Implement the common part of the open*() methods
 
   void rendezvous_point (ACE_UNIX_Addr &, const char *rendezvous);
@@ -89,10 +87,6 @@ private:
 
   int parse_options (const char *options);
   // Parse protocol specific options.
-
-  int init_uiop_properties (void);
-  // Obtains uiop properties that must be used by this acceptor, i.e.,
-  // initializes <uiop_properties_>.
 
 private:
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
@@ -113,12 +107,9 @@ private:
   // Flag that determines whether or not the rendezvous point should
   // be unlinked on close.  This is really only used when an error
   // occurs.
-
+  
   CORBA::Boolean lite_flag_;
   // Should we use GIOP lite??
-
-  TAO_UIOP_Handler_Base::UIOP_Properties uiop_properties_;
-  // Properties for all connections accepted by this acceptor.
 };
 
 # endif /* TAO_HAS_UIOP == 1 */

@@ -45,7 +45,7 @@ be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
 
-  if (be_global->gen_smart_proxies ())
+  if (idl_global->gen_smart_proxies ())
     {
 
       TAO_OutStream *os = this->ctx_->stream ();
@@ -59,21 +59,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
         bt = node;
       // output the class defn
 
-      *os << "class " << be_global->stub_export_macro ()<< " "
+      *os << "class " << idl_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory" << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl << be_nl
           << "TAO_" << node->flat_name ()
-          << "_Default_Proxy_Factory (int permanent = 1);"
-          << be_nl 
-          <<"// <permanent> signifies that the proxy factory will remain" <<be_nl 
-          <<"// registered with the Proxy Factory Adapter until the program"<<be_nl
-          <<"// terminates. That is, it will be a one-shot factory for the "<<be_nl
-          <<"// interface.  If this value is set to 0, then the factory will"<<be_nl
-          <<"// be unregistered after the first invocation providing the "<<be_nl
-          << "// flexibility of having a different smart proxy per object "<<be_nl
-          <<"// instead of per interface."<<be_nl<< be_nl
+          << "_Default_Proxy_Factory (int register_proxy_factory = 1);"
+          << be_nl << be_nl
           << "virtual ~TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory (void);" << be_nl << be_nl
           << "virtual "<< node->local_name ()
@@ -85,16 +78,15 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << ");" << be_uidt << be_uidt_nl
           << "};\n\n";
 
-      *os << "class " << be_global->stub_export_macro ()<< " "
+      *os << "class " << idl_global->stub_export_macro ()<< " "
           << "TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter" << be_nl
           << "{" << be_nl
           << "public:" << be_idt_nl << be_nl
-          << "friend class TAO_Singleton<TAO_" << node->flat_name ()
+          << "friend class ACE_Singleton<TAO_" << node->flat_name ()
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;" << be_nl << be_nl
           << "int register_proxy_factory (" << be_idt << be_idt_nl
           << "TAO_" << node->flat_name () << "_Default_Proxy_Factory *df,"<< be_nl
-          << "int one_shot_factory = 1,"<<be_nl
           << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl
           << "TAO_default_environment ()" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl << be_nl
@@ -120,17 +112,16 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
           << ");" << be_uidt_nl
           << "TAO_" << node->flat_name ()
           << "_Default_Proxy_Factory *proxy_factory_;" << be_nl
-          << "int one_shot_factory_;" << be_nl
-          << "int disable_factory_;"<<be_nl
+          << "int delete_proxy_factory_;" << be_nl
           << "ACE_SYNCH_RECURSIVE_MUTEX lock_;"<<be_nl << be_uidt_nl
           << "};\n\n";
 
       os->indent ();
-      *os << "typedef TAO_Singleton<TAO_"<<node->flat_name ()
+      *os << "typedef ACE_Singleton<TAO_"<<node->flat_name ()
           << "_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_"
           << node->flat_name ()<< "_PROXY_FACTORY_ADAPTER;"<<be_nl << be_nl;
 
-      *os << "class " << be_global->stub_export_macro ()<< " "
+      *os << "class " << idl_global->stub_export_macro ()<< " "
           << "TAO_"<< node->flat_name ()
           << "_Smart_Proxy_Base" << be_idt_nl
           << ": public virtual "

@@ -58,10 +58,8 @@ be_visitor_operation_argument::post_process (be_decl *bd)
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
-      if (!this->last_node (bd))
-        {
-          *os << "," << be_nl;
-        }
+        if (!this->last_node (bd))
+          *os << ",\n";
       break;
     default:
       break;
@@ -86,7 +84,7 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
 
   // if we are supporting the alternate mapping, we must pass the
   // CORBA::Environment parameter as the last parameter
-  if (!be_global->exception_support ())
+  if (!idl_global->exception_support ())
     {
       switch (this->ctx_->state ())
         {
@@ -97,10 +95,11 @@ be_visitor_operation_argument::visit_operation (be_operation *node)
           if (node->argument_count () > 0)
             {
               // insert a comma only if there were previous parameters
-              *os << "," << be_nl;
+              *os << ",\n";
             }
 
           // last argument is the environment
+          os->indent ();
           *os << "ACE_TRY_ENV";
           break;
         default:
@@ -170,12 +169,21 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
     case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_MARSHAL_SS);
       break;
+//    case TAO_CodeGen::TAO_OPERATION_ARG_PRE_UPCALL_SS:
+//      ctx.state (TAO_CodeGen::TAO_ARGUMENT_PRE_UPCALL_SS);
+//      break;
     case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_COLLOCATED_UPCALL_SS);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_UPCALL_SS);
       break;
+//    case TAO_CodeGen::TAO_OPERATION_ARG_POST_UPCALL_SS:
+//      ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_UPCALL_SS);
+//      break;
+//    case TAO_CodeGen::TAO_OPERATION_ARG_POST_MARSHAL_SS:
+//      ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_MARSHAL_SS);
+//      break;
     default:
       {
         ACE_ERROR_RETURN ((LM_ERROR,

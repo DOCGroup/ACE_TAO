@@ -35,7 +35,7 @@
 
 #if (TAO_HAS_SMART_PROXIES == 1)
 #include "tao/Smart_Proxies.h"
-#include "tao/TAO_Singleton.h"
+#include "ace/Singleton.h"
 #endif /*TAO_HAS_SMART_PROXIES == 1*/
 
 #if defined (TAO_EXPORT_MACRO)
@@ -1903,13 +1903,13 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
 
@@ -2333,13 +2333,13 @@ class TAO_Export QueueOrderPolicy: public virtual CORBA::Policy
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined(TAO_NO_COPY_OCTET_SEQUENCES)
       _tao_seq_Octet (
           CORBA::ULong length,
           const ACE_Message_Block* mb
         )
         : TAO_Unbounded_Sequence<CORBA::Octet> (length, mb) {}
-#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCE */
 
     };
 
@@ -2554,6 +2554,7 @@ class TAO_Export ReplyHandler : public virtual CORBA_Object
   protected:
     ReplyHandler (void);
     ReplyHandler (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~ReplyHandler (void);
@@ -2582,7 +2583,7 @@ class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
   {
   public:
 
-    friend class TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
+    friend class ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>;
 
     int register_proxy_factory (
         TAO_Messaging_ReplyHandler_Default_Proxy_Factory *df,
@@ -2613,7 +2614,7 @@ class TAO_Export TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter
 
   };
 
-  typedef TAO_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
+  typedef ACE_Singleton<TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX> TAO_Messaging_ReplyHandler_PROXY_FACTORY_ADAPTER;
 
   class TAO_Export TAO_Messaging_ReplyHandler_Smart_Proxy_Base
     : public virtual ReplyHandler,

@@ -16,7 +16,7 @@
 
 // default constructor
 CORBA_WrongTransaction::CORBA_WrongTransaction (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/WrongTransaction:1.0")
+  : CORBA_UserException (CORBA::_tc_WrongTransaction)
 {
 }
 
@@ -27,7 +27,7 @@ CORBA_WrongTransaction::~CORBA_WrongTransaction (void)
 
 // copy constructor
 CORBA_WrongTransaction::CORBA_WrongTransaction (const CORBA_WrongTransaction &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._type ())
 {
 }
 

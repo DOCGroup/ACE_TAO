@@ -21,8 +21,7 @@ DIRS    = ace \
           apps \
           examples \
           performance-tests \
-          websvcs \
-          PACE
+          websvcs
 
 CLONE   = Makefile \
           ace \
@@ -35,8 +34,7 @@ CLONE   = Makefile \
           performance-tests \
           TAO \
           tests \
-          websvcs \
-          PACE
+          websvcs
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -129,7 +127,6 @@ CONTROLLED_FILES = \
         Makefile.am \
         Makefile.in \
         NEWS \
-        PACE \
         PROBLEM-REPORT-FORM \
         README \
         THANKS \
@@ -177,7 +174,6 @@ ALL_RELEASE_FILES = \
 
 RELEASE_LIB_FILES = \
         ACE_wrappers/VERSION \
-        ACE_wrappers/PACE \
         ACE_wrappers/ace \
         ACE_wrappers/bin \
         ACE_wrappers/etc \
@@ -191,9 +187,9 @@ RELEASE_LIB_FILES = \
 # of the release file lists since they may already be in a directory
 # found in those lists.
 RELEASE_TAG_FILES = \
-        man/Makefile.am \
-        man/man3/Makefile.am \
-        man/html/Makefile.am
+	man/Makefile.am \
+	man/man3/Makefile.am \
+	man/html/Makefile.am
 
 .PHONY: release releasetao releaseall tag
 

@@ -148,8 +148,8 @@ public:
   static T checkval(int i);
 
 private:
-  CDR_Test (const CDR_Test<T, H>&);
-  CDR_Test<T, H>& operator= (const CDR_Test<T, H>&);
+  CDR_Test (const CDR_Test&);
+  CDR_Test& operator= (const CDR_Test&);
 };
 
 static ACE_UINT32 seal = 0xdeadbeef;
@@ -204,7 +204,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       {
         memabort ();
       }
-    zero(dstbuf, stotal);
+    zero(srcbuf, stotal);
   }
 
   if (use_array)
@@ -274,6 +274,13 @@ CDR_Test<T, H>::checkval (int i)
     }
 }
 
+static char digits[16] = {
+  '0', '1', '2', '3',
+  '4', '5', '6', '7',
+  '8', '9', 'a', 'b',
+  'c', 'd', 'e', 'f'
+};
+
 //
 // Returns in s an hex representation of T's memory.
 // (differences in byte order will be noticed in s).
@@ -288,13 +295,6 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
 {
   const unsigned char *const p =
     ACE_reinterpret_cast(const unsigned char*, &t);
-
-  static char digits[16] = {
-    '0', '1', '2', '3',
-    '4', '5', '6', '7',
-    '8', '9', 'a', 'b',
-    'c', 'd', 'e', 'f'
-  };
 
   const unsigned char* q;
   for (q = p; q < p + H::size (); ++q)
@@ -746,7 +746,6 @@ struct LongHelper
     }
 };
 
-#if !defined (ACE_LACKS_LONGLONG_T)
 struct LongLongHelper
 {
   static const ACE_TCHAR* name ()
@@ -779,7 +778,6 @@ struct LongLongHelper
       return sizeof(ACE_CDR::LongLong);
     }
 };
-#endif /* ! ACE_LACKS_LONGLONG_T */
 
 struct CharHelper
 {
@@ -939,12 +937,10 @@ main (int argc, ACE_TCHAR *argv[])
         CDR_Test<ACE_CDR::Float, FloatHelper>
           test (ftotal, niter, use_array);
       }
-#if !defined (ACE_LACKS_LONGLONG_T)
       {
         CDR_Test<ACE_CDR::LongLong, LongLongHelper>
           test (qtotal, niter, use_array);
       }
-#endif /* ! ACE_LACKS_LONGLONG_T */
       {
         CDR_Test<ACE_CDR::Long, LongHelper>
           test (wtotal, niter, use_array);
@@ -967,9 +963,7 @@ main (int argc, ACE_TCHAR *argv[])
 
 template class CDR_Test<ACE_CDR::Double, DoubleHelper>;
 template class CDR_Test<ACE_CDR::Float, FloatHelper>;
-#if !defined (ACE_LACKS_LONGLONG_T)
- template class CDR_Test<ACE_CDR::LongLong, LongLongHelper>;
-#endif /* ! ACE_LACKS_LONGLONG_T */
+template class CDR_Test<ACE_CDR::LongLong, LongLongHelper>;
 template class CDR_Test<ACE_CDR::Long, LongHelper>;
 template class CDR_Test<ACE_CDR::Short, ShortHelper>;
 template class CDR_Test<ACE_CDR::Char, CharHelper>;
@@ -978,9 +972,7 @@ template class CDR_Test<ACE_CDR::Char, CharHelper>;
 
 #pragma instantiate CDR_Test<ACE_CDR::Double, DoubleHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Float, FloatHelper>
-#if !defined (ACE_LACKS_LONGLONG_T)
-# pragma instantiate CDR_Test<ACE_CDR::LongLong, LongLongHelper>
-#endif /* ! ACE_LACKS_LONGLONG_T */
+#pragma instantiate CDR_Test<ACE_CDR::LongLong, LongLongHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Long, LongHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Short, ShortHelper>
 #pragma instantiate CDR_Test<ACE_CDR::Char, CharHelper>

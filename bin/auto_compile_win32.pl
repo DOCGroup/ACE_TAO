@@ -4,10 +4,6 @@
 
 # use lib "$ENV{ACE_ROOT}/bin";
 
-# **** We no longer use this script in our daily build.  So we
-#      will need to depend on your help to maintain the file
-#      up-to-date if you want to continue using it.
-
 ## TO-DO
 ##   * Added command line options to selective compile library, et.al.
 ##   * Added cvs update.  Also controllable from command line.
@@ -50,7 +46,6 @@
 ace/ace.dsw, ACE DLL:
 apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO DLL:
-TAO/tao/TAO.dsw, PortableServer:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, Svc Utils:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosConcurrency:
@@ -239,7 +234,6 @@ TAO/tests/POA/Identity/Identity.dsw, POA Identity:
 TAO/tests/IORManipulation/IORManipulation.dsw, IORTest:
 TAO/tests/Connection_Purging/Connection_Purging.dsw, POA Connection Purging:
 TAO/tests/ORB_init/ORB_init.dsw, ORB_init:
-TAO/tests/ORB_destroy/ORB_destroy.dsw, ORB_destroy:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Server:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Client:
 TAO/tests/Leader_Followers/Leader_Followers.dsw, Leader_Followers Server:
@@ -273,7 +267,6 @@ EOD
 ace/ace.dsw, ACE DLL:
 apps/gperf/src/gperf.dsw, gperf:
 TAO/tao/TAO.dsw, TAO DLL:
-TAO/tao/TAO.dsw, PortableServer:
 TAO/TAO_IDL/tao_idl.dsw, TAO_IDL Compiler:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, Svc Utils:
 TAO/orbsvcs/orbsvcs/orbsvcs.dsw, CosConcurrency:
@@ -462,7 +455,6 @@ TAO/tests/POA/Identity/Identity.dsw, POA Identity:
 TAO/tests/IORManipulation/IORManipulation.dsw, IORTest:
 TAO/tests/Connection_Purging/Connection_Purging.dsw, POA Connection Purging:
 TAO/tests/ORB_init/ORB_init.dsw, ORB_init:
-TAO/tests/ORB_destroy/ORB_destroy.dsw, ORB_destroy:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Server:
 TAO/tests/Nested_Event_Loop/Nested_Event_Loop.dsw, Nested_Event_Loop Client:
 TAO/tests/Leader_Followers/Leader_Followers.dsw, Leader_Followers Server:

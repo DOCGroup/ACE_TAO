@@ -97,6 +97,10 @@ SOURCE=.\client.cpp
 
 SOURCE=.\Multiple_InheritanceC.cpp
 # End Source File
+# Begin Source File
+
+SOURCE=.\Multiple_InheritanceS.cpp
+# End Source File
 # End Group
 # Begin Group "Header Files"
 
@@ -104,6 +108,14 @@ SOURCE=.\Multiple_InheritanceC.cpp
 # Begin Source File
 
 SOURCE=.\Multiple_InheritanceC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Multiple_InheritanceS.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Multiple_InheritanceS_T.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

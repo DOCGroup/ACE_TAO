@@ -8,11 +8,8 @@
 #include "tao/params.h"
 #include "tao/MProfile.h"
 #include "tao/debug.h"
-#include "tao/RT_Policy_i.h"
-#include "tao/Acceptor_Filter.h"
 
 #include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Acceptor_Registry.i"
@@ -51,23 +48,16 @@ TAO_Acceptor_Registry::endpoint_count (void)
 
 int
 TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
-                                      TAO_MProfile &mprofile,
-                                      TAO_Acceptor_Filter *filter)
+                                      TAO_MProfile &mprofile)
 {
-  // Allocate space for storing the profiles.  There can never be more
-  // profiles than there are endpoints.  In some cases, there can be
-  // less profiles than endpoints.
-  size_t pfile_count = this->endpoint_count ();
-  if (mprofile.set (pfile_count) < 0)
-    return -1;
+  TAO_AcceptorSetIterator end = this->end ();
 
-  // Leave it to the filter to decide which acceptors/in which order
-  // go into the mprofile.
-  return filter->fill_mprofile (object_key,
-                                mprofile,
-                                this->begin (),
-                                this->end ());
+  for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
+    if ((*i)->create_mprofile (object_key,
+                               mprofile) == -1)
+      return -1;
 
+  return 0;
 }
 
 int
@@ -155,6 +145,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       ACE_CHECK_RETURN (-1);
     }
 
+  ACE_Auto_Basic_Array_Ptr <char> addr_str;
+
   for (ACE_CString *endpoint = 0;
        endpoints.next (endpoint) != 0;
        endpoints.advance ())
@@ -174,10 +166,10 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
                         iop.c_str ()));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO),
+            CORBA_SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO),
             -1);
         }
 
@@ -201,22 +193,124 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
            factory != end;
            ++factory)
         {
-
           if ((*factory)->factory ()->match_prefix (prefix))
             {
+              found = 1;  // A usable protocol was found.
+
               // increment slot past the "://" (i.e. add 3)
               ACE_CString addrs = iop.substring (slot + 3);
 
-              int result = this->open_i (orb_core,
-                                         addrs,
-                                         factory,
-                                         ACE_TRY_ENV);
-              ACE_CHECK_RETURN (-1);
+              ACE_CString options;
 
-              if (result != 0)
-                return -1;
+              int options_index =
+                addrs.find ((*factory)->factory ()->options_delimiter ());
 
-              found = 1;  // A usable protocol was found.
+              if (options_index == ACE_static_cast (int,
+                                                    addrs.length () - 1))
+                {
+                  // Get rid of trailing option delimiter.
+                  addrs = addrs.substring (0, addrs.length () - 1);
+                }
+              else if (options_index != ACE_CString::npos)
+                {
+                  options = addrs.substring (options_index + 1);
+
+                  addrs = addrs.substring (0, options_index);
+                }
+
+              // Check for the presence of addresses.
+              if (addrs.length () == 0)
+                {
+                  // Protocol was specified without an endpoint.
+                  // All TAO pluggable protocols are expected to have
+                  // the ability to create a default endpoint.
+                  if (this->open_default (orb_core,
+                                          factory,
+                                          ((options.length () == 0)
+                                           ? 0 : options.c_str ())) == 0)
+                    continue;
+                  else
+                    ACE_THROW_RETURN (CORBA::INTERNAL (
+                      CORBA_SystemException::_tao_minor_code (
+                        TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                        0),
+                      CORBA::COMPLETED_NO),
+                      -1);
+                }
+
+              char *last_addr = 0;
+              addr_str.reset (addrs.rep ());
+
+              // Iterate over the addrs specified in the endpoint.
+              for (char *astr = ACE_OS::strtok_r (addr_str.get (),
+                                                  ",",
+                                                  &last_addr);
+                   astr != 0 ;
+                   astr = ACE_OS::strtok_r (0,
+                                            ",",
+                                            &last_addr))
+                {
+                  ACE_CString address (astr);
+
+                  TAO_Acceptor *acceptor =
+                    (*factory)->factory ()->make_acceptor ();
+                  if (acceptor != 0)
+                    {
+                      // Check if an "N.n@" version prefix was
+                      // specified.
+                      int major = -1;
+                      int minor = -1;
+                      if (isdigit (address[0])
+                          && address[1] == '.'
+                          && isdigit (address[2])
+                          && address[3] == '@')
+                        {
+                          major = address[0] - '0';
+                          minor = address[2] - '0';
+                          address = address.substring (4);
+                        }
+
+                      if (acceptor->open (orb_core,
+                                          major, minor,
+                                          address.c_str (),
+                                          ((options.length () == 0)
+                                           ? 0 : options.c_str ())) == -1)
+                        {
+                          delete acceptor;
+
+                          if (TAO_debug_level > 0)
+                            ACE_ERROR ((LM_ERROR,
+                                        ACE_TEXT ("TAO (%P|%t) unable to open acceptor ")
+                                        ACE_TEXT ("for <%s>%p\n"),
+                                        iop.c_str (),""));
+
+                          ACE_THROW_RETURN (CORBA::BAD_PARAM (
+                            CORBA_SystemException::_tao_minor_code (
+                              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                              EINVAL),
+                            CORBA::COMPLETED_NO),
+                            -1);
+                        }
+
+                      // add acceptor to list
+                      this->acceptors_[this->size_++] = acceptor;
+                    }
+                  else
+                    {
+                      if (TAO_debug_level > 0)
+                        ACE_ERROR ((LM_ERROR,
+                                    ACE_TEXT ("TAO (%P|%t) unable to create ")
+                                    ACE_TEXT ("an acceptor for <%s>.\n"),
+                                    iop.c_str ()));
+
+                      ACE_THROW_RETURN (CORBA::NO_MEMORY (
+                        CORBA_SystemException::_tao_minor_code (
+                          TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+                          ENOMEM),
+                        CORBA::COMPLETED_NO),
+                        -1);
+                    }
+                }
             }
           else
             continue;
@@ -225,23 +319,17 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
       if (found == 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) ")
-                      ACE_TEXT ("no usable transport protocol ")
+                      ACE_TEXT ("TAO (%P|%t) no usable transport protocol ")
                       ACE_TEXT ("was found.\n")));
 
           ACE_THROW_RETURN (CORBA::BAD_PARAM (
-              CORBA_SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                EINVAL),
-              CORBA::COMPLETED_NO),
+            CORBA_SystemException::_tao_minor_code (
+              TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
+              EINVAL),
+            CORBA::COMPLETED_NO),
             -1);
         }
     }
-
-  // No longer need the endpoint set since all associated acceptors
-  // have been opened by now.  Reclaim the memory used by the endpoint
-  // set.
-  endpoint_set.reset ();
 
   return 0;
 }
@@ -280,11 +368,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
       // up if the server crashes.
       if (!(*i)->factory ()->requires_explicit_endpoint ())
         {
-          if (this->open_default (orb_core,
-                                  -1,  /* use default major version */
-                                  -1,  /* use default minor version */
-                                  i,
-                                  options) != 0)
+          if (this->open_default (orb_core, i, options) != 0)
             return -1;
 
           opened_endpoint = 1;
@@ -312,8 +396,6 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
 // the indicated protocol.
 int
 TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
-                                     int major,
-                                     int minor,
                                      TAO_ProtocolFactorySetItor &factory,
                                      const char *options)
 {
@@ -336,10 +418,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
     }
 
   // Initialize the acceptor to listen on a default endpoint.
-  if (acceptor->open_default (orb_core,
-                              major,
-                              minor,
-                              options) == -1)
+  if (acceptor->open_default (orb_core, options) == -1)
     {
       delete acceptor;
 
@@ -378,167 +457,6 @@ TAO_Acceptor_Registry::close_all (void)
 
   return 0;
 }
-
-void
-TAO_Acceptor_Registry::extract_endpoint_options (ACE_CString &addrs,
-                                                 ACE_CString &options,
-                                                 TAO_Protocol_Factory *factory)
-{
-  int options_index =
-    addrs.find (factory->options_delimiter ());
-
-  if (options_index == ACE_static_cast (int,
-                                        addrs.length () - 1))
-    {
-      // Get rid of trailing option delimiter.
-      addrs = addrs.substring (0, addrs.length () - 1);
-    }
-  else if (options_index != ACE_CString::npos)
-    {
-      options = addrs.substring (options_index + 1);
-
-      addrs = addrs.substring (0, options_index);
-    }
-}
-
-void
-TAO_Acceptor_Registry::extract_endpoint_version (ACE_CString &address,
-                                                 int &major,
-                                                 int &minor)
-{
-  // Check if an "N.n@" version prefix was
-  // specified.
-  major = -1;
-  minor = -1;
-  if (isdigit (address[0])
-      && address[1] == '.'
-      && isdigit (address[2])
-      && address[3] == '@')
-    {
-      major = address[0] - '0';
-      minor = address[2] - '0';
-      address = address.substring (4);
-    }
-}
-
-int
-TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
-                               ACE_CString &addrs,
-                               TAO_ProtocolFactorySetItor &factory,
-                               CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_CString options_tmp;
-  this->extract_endpoint_options (addrs,
-                                  options_tmp,
-                                  (*factory)->factory ());
-
-  const char *options = 0;
-  if (options_tmp.length () > 0)
-    options = options_tmp.c_str ();
-
-  char *last_addr = 0;
-  ACE_Auto_Basic_Array_Ptr <char> addr_str (addrs.rep ());
-
-  const char *astr = ACE_OS::strtok_r (addr_str.get (),
-                                       ",",
-                                       &last_addr);
-  if (astr == 0)
-    astr = "";
-
-  // Iterate over the addrs specified in the endpoint.
-
-  for ( ;
-       astr != 0;
-       astr = ACE_OS::strtok_r (0,
-                                ",",
-                                &last_addr))
-    {
-      ACE_CString address (astr);
-
-      TAO_Acceptor *acceptor =
-        (*factory)->factory ()->make_acceptor ();
-      if (acceptor != 0)
-        {
-          // Extract the desired endpoint/protocol version if one
-          // exists.
-          int major = -1;
-          int minor = -1;
-          this->extract_endpoint_version (address,
-                                          major,
-                                          minor);
-
-          // Check for existence of endpoint.
-          if (address.length () == 0)
-            {
-              // Protocol prefix was specified without any endpoints.
-              // All TAO pluggable protocols are expected to have the
-              // ability to create a default endpoint.
-              if (this->open_default (orb_core,
-                                      major,
-                                      minor,
-                                      factory,
-                                      options) == 0)
-                continue;
-
-              // Could not open a default endpoint, nor an explicit
-              // one.
-              else
-                ACE_THROW_RETURN (CORBA::INTERNAL (
-                    CORBA_SystemException::_tao_minor_code (
-                      TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                      0),
-                    CORBA::COMPLETED_NO),
-                  -1);
-            }
-
-          // An explicit endpoint was provided.
-          else if (acceptor->open (orb_core,
-                                   major,
-                                   minor,
-                                   address.c_str (),
-                                   options) == -1)
-            {
-              delete acceptor;
-
-              if (TAO_debug_level > 0)
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) ")
-                            ACE_TEXT ("unable to open acceptor ")
-                            ACE_TEXT ("for <%s>%p\n"),
-                            address.c_str (),
-                            ""));
-
-              ACE_THROW_RETURN (CORBA::BAD_PARAM (
-                  CORBA_SystemException::_tao_minor_code (
-                    TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                    EINVAL),
-                  CORBA::COMPLETED_NO),
-                -1);
-            }
-
-          // add acceptor to list
-          this->acceptors_[this->size_++] = acceptor;
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) unable to create ")
-                        ACE_TEXT ("an acceptor for <%s>.\n"),
-                        address.c_str ()));
-
-          ACE_THROW_RETURN (CORBA::NO_MEMORY (
-              CORBA_SystemException::_tao_minor_code (
-                TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE,
-                ENOMEM),
-              CORBA::COMPLETED_NO),
-            -1);
-        }
-    }
-
-  return 0;
-}
-
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

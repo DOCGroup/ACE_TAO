@@ -44,9 +44,8 @@ int
 be_visitor_root_ss::init (void)
 {
   // first open the file for writing
-  if (tao_cg->start_server_skeletons (
-          be_global->be_get_server_skeleton_fname ()
-        )
+  if (tao_cg->start_server_skeletons (idl_global
+                                      ->be_get_server_skeleton_fname ())
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -54,10 +53,10 @@ be_visitor_root_ss::init (void)
                          "Error opening server skeletons file\n"), -1);
     }
 
-  if (be_global->gen_tie_classes ())
+  if (idl_global->gen_tie_classes ())
     {
       if (tao_cg->start_server_template_skeletons (
-              be_global->be_get_server_template_skeleton_fname ()
+              idl_global->be_get_server_template_skeleton_fname ()
             )
           == -1)
         {

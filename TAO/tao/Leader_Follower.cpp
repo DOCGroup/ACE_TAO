@@ -11,9 +11,7 @@ ACE_RCSID(tao, Leader_Follower, "$Id$")
 
 TAO_Leader_Follower::~TAO_Leader_Follower (void)
 {
-  // Hand the reactor back to the resource factory.
-  this->orb_core_->resource_factory ()->reclaim_reactor (this->reactor_);
-  this->reactor_ = 0;
+  delete this->reactor_;
 }
 
 ACE_SYNCH_CONDITION*

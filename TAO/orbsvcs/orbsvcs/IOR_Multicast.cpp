@@ -55,7 +55,7 @@ TAO_IOR_Multicast::init (const char *ior,
   return common_init (ior, service_id);
 }
 
-int
+int 
 TAO_IOR_Multicast::init (const char *ior,
                          const char *mcast_addr,
                          TAO_Service_ID service_id)
@@ -68,14 +68,14 @@ TAO_IOR_Multicast::init (const char *ior,
 
   return common_init (ior, service_id);
 }
-
-int
+      
+int 
 TAO_IOR_Multicast::common_init (const char *ior,
                                 TAO_Service_ID service_id)
 {
   this->service_id_ = service_id;
   this->ior_ = ior;
-
+  
   if (this->response_addr_.set ((u_short) 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
@@ -171,13 +171,19 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                          "TradingService") != 0
       && ACE_OS::strcmp (service_name,
                          "ImplRepoService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "InterfaceRepository") != 0
                          )
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unknown service requested.\n"),
-                        0);
+      // The client has requested an IOR other than for the
+      // Name/Trading Service.  Lookup the table for the IOR. The call
+      // to find_ior will fill the ior for us if the service name is
+      // found in the table.
+
+      ACE_CString service (service_name);
+
+      if (this->ior_lookup_table_.find_ior (service, ior) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "IOR_Multicast::find failed.\n"),
+			  0);
     }
 
   // Reply to the multicast message.

@@ -13,33 +13,47 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_AIO_H_POSIX
-#define PACE_AIO_H_POSIX
+#ifndef PACE_AIO_H
+#define PACE_AIO_H
 
 #include <aio.h>
-#include "pace/time.h"
-#include "pace/signal.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#define PACE_AIO_ALLDONE AIO_ALLDONE
-#define PACE_AIO_CANCELED AIO_CANCELED
-#define PACE_AIO_NOCANCELED AIO_NOTCANCELED
-#define PACE_LIO_NOP LIO_NOP
-#define PACE_LIO_NOWAIT LIO_NOWAIT
-#define PACE_LIO_READ LIO_READ
-#define PACE_LIO_WAIT LIO_WAIT
-#define PACE_LIO_WRITE LIO_WRITE
+  PACE_INLINE int pace_aio_cancel (int fildes, struct aiocb * aiocb);
 
-#ifndef PACE_AIOCB
-#define PACE_AIOCB
-typedef struct aiocb pace_aiocb;
-#endif /* PACE_AIOCB */
+  PACE_INLINE int pace_aio_error (const struct aiocb * aiocbp);
+
+  PACE_INLINE int pace_aio_fsync (int op, struct aiocb * aiocbp);
+
+  PACE_INLINE int pace_aio_read (struct aiocb * aiocbp);
+
+  PACE_INLINE int pace_aio_return (struct aiocb * aiocbp);
+
+  PACE_INLINE int pace_aio_suspend (const struct aiocb * const list[],
+                                    int nent,
+                                    const struct timespec * timeout);
+
+  PACE_INLINE int pace_aio_write (struct aiocb * aiocbp);
+
+  PACE_INLINE int pace_lio_listio (int mode,
+                                   struct aiocb * const list[],
+                                   int nent,
+                                   struct sigevent * sig);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_AIO_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/aio.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_AIO_H */
+
+
+
+
+

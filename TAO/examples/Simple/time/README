@@ -44,7 +44,7 @@ the -n option below.
 server:
 -------
 
-server [-nd] [-o <ior_output_file>]
+server [-d] [-o <ior_output_file>]
 
 Options:
 -------

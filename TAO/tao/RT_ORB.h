@@ -29,8 +29,7 @@
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-#include "tao/RTCORBAS.h"
-#include "tao/LocalObject.h"
+#include "RTCORBAS.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -39,10 +38,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_Export TAO_RT_ORB :
-  public RTCORBA::RTORB,
-  public CORBA::LocalObject
-
+class TAO_Export TAO_RT_ORB : public RTCORBA::RTORB
 {
   // = TITLE
   //   RTCORBA::RTORB implementation

@@ -19,7 +19,6 @@ TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (
 
 TAO_Client_Priority_Policy::TAO_Client_Priority_Policy (const TAO_Client_Priority_Policy &rhs)
   : TAO::ClientPriorityPolicy (),
-    TAO_Local_RefCounted_Object (),
     priority_spec_ (rhs.priority_spec_)
 {
 }
@@ -33,7 +32,6 @@ TAO_Client_Priority_Policy::priority_specification (CORBA::Environment &)
 
 CORBA::PolicyType
 TAO_Client_Priority_Policy::policy_type (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::CLIENT_PRIORITY_POLICY_TYPE;
 }
@@ -71,7 +69,6 @@ TAO_Client_Priority_Policy::clone (void) const
 
 CORBA::Policy_ptr
 TAO_Client_Priority_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -87,7 +84,6 @@ TAO_Client_Priority_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_Client_Priority_Policy::destroy (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

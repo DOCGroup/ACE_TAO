@@ -30,7 +30,6 @@
 
 class TAO_MProfile;
 class TAO_Stub;
-class TAO_ORB_Core;
 
 class TAO_Export TAO_Profile
 {
@@ -42,8 +41,7 @@ class TAO_Export TAO_Profile
   //   information.  This is based on the CORBA IOR definitions.
   //
 public:
-  TAO_Profile (CORBA::ULong tag,
-               TAO_ORB_Core *orb_core);
+  TAO_Profile (CORBA::ULong tag);
   // Constructor
 
   virtual ~TAO_Profile (void);
@@ -51,9 +49,6 @@ public:
 
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
-
-  TAO_ORB_Core *orb_core (void) const;
-  // Get a poiter to the TAO_ORB_Core
 
   CORBA::ULong _incr_refcnt (void);
   // Increase the reference count by one on this object.
@@ -157,23 +152,20 @@ protected:
 
   TAO_Stub *stub_;
   // Pointer to the TAO_Stub to which this profile is related.
-
+  
   CORBA::PolicyList *policy_list_;
   // Client exposed policies of this profile.
-
-  // NOTE: In this implementation it is assumed that the <policy_list>
+  
+  // NOTE: In this implementation it is assumed that the <policy_list> 
   // is exactly the same for each profile.
   // So to save memory, each TAO_Profile has a pointer to the same
   // PolicyList object. The life cycle of this object is managed
-  // by the TAO_MProfile class.
+  // by the TAO_MProfile class. 
 
 
 private:
   CORBA::ULong tag_;
   // IOP protocol tag.
-
-  TAO_ORB_Core *orb_core_;
-  // Pointer to the ORB core
 
   TAO_MProfile* forward_to_;
   // the TAO_MProfile which contains the profiles for the forwarded
@@ -202,8 +194,7 @@ class TAO_Export TAO_Unknown_Profile : public TAO_Profile
   //   any of the TAO internal methods are invoked.
   //
 public:
-  TAO_Unknown_Profile (CORBA::ULong tag,
-                       TAO_ORB_Core *orb_core);
+  TAO_Unknown_Profile (CORBA::ULong tag);
   // Create the profile
 
   // = The TAO_Profile methods look above

@@ -25,7 +25,7 @@ __DATA__
 // This file is generated automatically by
 // generate_export_file.pl
 // ------------------------------
-#ifndef -UC-_EXPORT_H
+#if !defined (-UC-_EXPORT_H)
 #define -UC-_EXPORT_H
 
 #include "ace/config-all.h"

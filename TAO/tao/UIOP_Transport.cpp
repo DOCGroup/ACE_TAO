@@ -6,8 +6,6 @@
 
 #if TAO_HAS_UIOP == 1
 
-ACE_RCSID (tao, UIOP_Transport, "$Id$")
-
 #include "tao/UIOP_Connect.h"
 #include "tao/UIOP_Profile.h"
 #include "tao/Timeprobe.h"

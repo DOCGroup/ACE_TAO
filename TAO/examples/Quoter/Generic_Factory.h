@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/TAO.h"
 #include "Generic_Factory_i.h"
 
 #ifndef GENERIC_FACTORY_H

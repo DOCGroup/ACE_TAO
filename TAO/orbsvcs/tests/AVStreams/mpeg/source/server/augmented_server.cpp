@@ -42,14 +42,12 @@ MMDevice_Exporter_i::connections (void) const
 
  CORBA::Object_ptr
 MMDevice_Exporter_i::get_audio_mmdevice (CORBA_Environment &ACE_TRY_ENV)
-        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::Object::_duplicate (this->audio_mmdevice_);
 }
 
 CORBA::Object_ptr
 MMDevice_Exporter_i::get_video_mmdevice (CORBA_Environment &ACE_TRY_ENV)
-        ACE_THROW_SPEC (( CORBA::SystemException ))
 {
   return CORBA::Object::_duplicate (this->video_mmdevice_);
 }
@@ -110,14 +108,6 @@ create_B (AVStreams::StreamCtrl_ptr the_requester,
           char *&named_vdev,
           const AVStreams::flowSpec &the_spec,
           CORBA::Environment &env)
-             ACE_THROW_SPEC ((
-               CORBA::SystemException,
-               AVStreams::streamOpFailed,
-               AVStreams::streamOpDenied,
-               AVStreams::notSupported,
-               AVStreams::QoSRequestFailed,
-               AVStreams::noSuchFlow
-            ))                       
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Audio_MMDevice::create_B called \n"));
   AVStreams::StreamEndPoint_B_ptr stream_ptr;
@@ -154,14 +144,6 @@ create_B (AVStreams::StreamCtrl_ptr the_requester,
           char *&named_vdev,
           const AVStreams::flowSpec &the_spec,
           CORBA::Environment &env)
-    ACE_THROW_SPEC ((
-       CORBA::SystemException,
-       AVStreams::streamOpFailed,
-       AVStreams::streamOpDenied,
-       AVStreams::notSupported,
-       AVStreams::QoSRequestFailed,
-       AVStreams::noSuchFlow
-     ))
 {
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_MMDevice::create_B called \n"));
   AVStreams::StreamEndPoint_B_ptr stream_ptr;

@@ -6,7 +6,6 @@
 #include "tao/MessagingC.h"
 #include "tao/Policy_Factory.h"
 #include "tao/Stub.h"
-#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Profile.i"
@@ -14,9 +13,9 @@
 
 ACE_RCSID(tao, Profile, "$Id$")
 
-  // ****************************************************************
+// ****************************************************************
 
-  TAO_Profile::~TAO_Profile (void)
+TAO_Profile::~TAO_Profile (void)
 {
 }
 
@@ -25,16 +24,12 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  if (policy_list == 0)
-    {
-      if (TAO_debug_level)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_Profile::policies: Null Policy List!\n")));
-      return;
-    }
+  ACE_ASSERT (policy_list != 0);
 
-  Messaging::PolicyValue pv;
+  Messaging::PolicyValue *pv_ptr;
   Messaging::PolicyValueSeq policy_value_seq;
+
+  TAO_OutputCDR out_CDR;
 
   CORBA::ULong length;
   CORBA::Octet *buf = 0;
@@ -45,16 +40,17 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   // each CORBA::Policy into a CORBA::PolicyValue
   for (size_t i = 0; i < policy_list->length (); i++)
     {
-      TAO_OutputCDR out_CDR;
-      policy_value_seq[i].ptype = (*policy_list)[i]->policy_type ();
+      // @@ Angelo, avoid unnecessary memory allocations like the one below -
+      // they are very expensive!
+      ACE_NEW (pv_ptr, Messaging::PolicyValue);
+      pv_ptr->ptype = (*policy_list)[i]->policy_type ();
 
-      out_CDR << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
       (*policy_list)[i]->_tao_encode (out_CDR);
 
       length = out_CDR.total_length ();
-      policy_value_seq[i].pvalue.length (length);
+      pv_ptr->pvalue.length (length);
 
-      buf = policy_value_seq[i].pvalue.get_buffer ();
+      buf = pv_ptr->pvalue.get_buffer ();
 
       // Copy the CDR buffer data into the sequence<octect> buffer.
 
@@ -66,43 +62,37 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
           buf += iterator->length ();
         }
 
-      //policy_value_seq[i] = pv;
+      policy_value_seq[i] = *pv_ptr;
+      delete pv_ptr;
 
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
 
-      //out_CDR.reset ();
+      out_CDR.reset ();
     }
 
-  TAO_OutputCDR out_cdr;
   // Now we have to embedd the Messaging::PolicyValueSeq into
   // a TaggedComponent.
 
   IOP::TaggedComponent tagged_component;
+
   tagged_component.tag = Messaging::TAG_POLICIES;
+  out_CDR << policy_value_seq;
 
-  out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
-  out_cdr << policy_value_seq;
-
-  length = out_cdr.total_length ();
-
-  tagged_component.component_data.length (length);
   buf = tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+  for (const ACE_Message_Block *iterator = out_CDR.begin ();
        iterator != 0;
        iterator = iterator->cont ())
-    {
-      CORBA::ULong i_length = iterator->length ();
-      ACE_OS::memcpy (buf, iterator->rd_ptr (), i_length);
-
-      buf += i_length;
-    }
+  {
+    ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
+    buf += iterator->length ();
+  }
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
   tagged_components_.set_component (tagged_component);
-  this->are_policies_parsed_ = 1;
+  are_policies_parsed_ = 1;
 
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -117,10 +107,10 @@ TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-  CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
-
-  if (!this->are_policies_parsed_)
-    // None has already parsed the policies.
+  CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
+  if (!are_policies_parsed_
+      && (policies->length () == 0))
+      // None has already parsed the policies.
     {
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = Messaging::TAG_POLICIES;
@@ -132,19 +122,13 @@ TAO_Profile::policies (void)
           const CORBA::Octet *buf =
             tagged_component.component_data.get_buffer ();
 
-          TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
-                               tagged_component.component_data.length ());
-
-          // Extract the Byte Order
-          CORBA::Boolean byte_order;
-          if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-              return *(stub_->base_profiles ().policy_list ());
-          in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
+          TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
+                              tagged_component.component_data.length ());
 
           // Now we take out the Messaging::PolicyValueSeq out from the
           // CDR.
           Messaging::PolicyValueSeq policy_value_seq;
-          in_cdr >> policy_value_seq;
+          in_CDR >> policy_value_seq;
 
           // Here we extract the Messaging::PolicyValue out of the sequence
           // and we convert those into the proper CORBA::Policy
@@ -152,26 +136,22 @@ TAO_Profile::policies (void)
           CORBA::Policy *policy = 0;
           CORBA::ULong length = policy_value_seq.length ();
 
-          // Set the policy list length.
+          // Get the policy list from the MProfile.
+          CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
           policies->length (length);
 
           for (CORBA::ULong i = 0; i < length; i++)
             {
-              // @@ Angelo: please check my comments on this stuff in
-              // the Policy_Factory.h file.
               policy =
                 TAO_Policy_Factory::create_policy (policy_value_seq[i].ptype);
               if (policy != 0)
                 {
                   buf = policy_value_seq[i].pvalue.get_buffer ();
 
-                  TAO_InputCDR in_cdr (ACE_reinterpret_cast (const char*, buf),
+                  TAO_InputCDR in_CDR (ACE_reinterpret_cast (const char*, buf),
                                        policy_value_seq[i].pvalue.length ());
 
-                  in_cdr >> ACE_InputCDR::to_boolean (byte_order);
-                  in_cdr.reset_byte_order (ACE_static_cast(int, byte_order));
-
-                  policy->_tao_decode (in_cdr);
+                  policy->_tao_decode (in_CDR);
                   (*policies)[i] = policy;
                 }
               else
@@ -180,13 +160,12 @@ TAO_Profile::policies (void)
                   // policies that TAO doesn't support, so as specified
                   // by the RT-CORBA spec. ptc/99-05-03 we just ignore
                   // this un-understood policies.
-
-                  if (TAO_debug_level >= 5)
-                    ACE_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("The IOR contains Unsupported Policies.\n")));
-
                 }
             }
+        }
+      else
+        {
+          // @@ Marina, what should happen here?
         }
 
     }
@@ -210,9 +189,8 @@ TAO_Profile::the_stub (void)
 
 // ****************************************************************
 
-TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
-                                          TAO_ORB_Core *orb_core)
-  : TAO_Profile (tag, orb_core),
+TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
+  : TAO_Profile (tag),
     tagged_profile_ ()
 {
 }

@@ -45,14 +45,6 @@ unless ("$hostname" eq 'ace') {
   die "$0: must run on host ace\n";
 }
 
-if (! "$ENV{'CVSROOT'}") {
-  $ENV{'CVSROOT'} = '/project/cvs-repository';
-}
-
-if (! "$ENV{'ACE_ROOT'}") {
-  chop ($ENV{'ACE_ROOT'} = `/pkg/gnu/bin/pwd`);
-}
-
 
 ########
 ######## Configuration parameters.
@@ -67,11 +59,15 @@ if (-d '/pkg/gnu/bin') {
   $gnu = '';
 }
 
-#### Unconditionally insert this at the head of the path.  We're
-#### running on ace, so if it hadn't been automounted, -d might fail
-#### to find the directory.
-my $gnu2 = '/project/danzon/pkg/gnu/bin';
-$ENV{'PATH'} = "$gnu2" . ':' . $ENV{'PATH'};
+my $gnu2;
+if (-d '/project/danzon/pkg/gnu/bin') {
+  $gnu2 = '/project/danzon/pkg/gnu/bin/';
+  #### Insert it at head of PATH, so that proper GNU utilities are used.
+  $ENV{'PATH'} = "/project/danzon/pkg/gnu/bin:" . $ENV{'PATH'};
+} else {
+  #### The default utilities had better be GNU.
+  $gnu2 = '';
+}
 
 my $export_dir = '/project/ftp-doc/pub/ACE';
 my $diffs_dir = "$export_dir/diffs";
@@ -178,7 +174,6 @@ if ($kit eq 'ace') {
 };
 
 my $chmod = '/bin/chmod';
-my $chgrp = "${gnu}chgrp";
 my $cpio = "${gnu}cpio";
 my $cvs = "${gnu}cvs";
 my $date = "${gnu}date";
@@ -188,7 +183,7 @@ my $gzip = "${gnu}gzip";
 my $make = "${gnu}make -s";
 my $mv = '/bin/mv -f';
 my $rm = "${gnu}rm -f";
-my $md5sum = "${gnu2}/md5sum";
+my $md5sum = "${gnu2}md5sum";
 chop (my $now = `$date +"%a %b %d %T %Y"`);
 
 unless ("$controlled_files") {
@@ -528,9 +523,6 @@ sub update_version_files () {
 ########
 sub update_changelog () {
   my $logname = $ENV{'LOGNAME'};
-  if (! "$logname") {
-    chop ($logname = `/usr/ucb/whoami`);
-  }
   my $signature = $ENV{'SIGNATURE'} || $logname;
   my $message = "$now  $signature  <$logname\@cs.wustl.edu>\n\n" .
                 "        * $KIT version $version released.\n\n";
@@ -558,8 +550,7 @@ sub update_changelog () {
 
   &ex ("$cvs commit -m'$version' " .
        "VERSION PROBLEM-REPORT-FORM ChangeLog $version_h  &&  " .
-       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h; " .
-       "chgrp doc VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
+       "chmod 0644 VERSION PROBLEM-REPORT-FORM ChangeLog $version_h");
   return 1 if $? >> 8;
 
   0;
@@ -657,9 +648,8 @@ sub create_kit () {
           "$gzip -9 > ACE.tar.gz && " .
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
-        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
-        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
-        "$dispose ACE.zip ACE-lib.zip $dest && " .
+        "$chmod a+r ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
+        "$dispose ACE.zip ACE-lib.zip $dest &&" .
         "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
       $archives = " ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip ";
     } else {
@@ -668,8 +658,7 @@ sub create_kit () {
           "$gzip -9 > ACE.tar.gz && " .
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
-        "$chmod 664 ACE.tar.gz ACE-lib.tar.gz && " .
-        "$chgrp doc ACE.tar.gz ACE-lib.tar.gz && " .
+        "$chmod a+r ACE.tar.gz ACE-lib.tar.gz && " .
         "$dispose ACE.tar.gz ACE-lib.tar.gz $dest; ";
       $archives = " ACE.tar.gz ACE-lib.tar.gz ";
     }
@@ -687,16 +676,14 @@ sub create_kit () {
           "zip ACE+TAO.zip -qlg9@ &&" .
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
-        "$chmod 664 ACE+TAO.tar.gz ACE+TAO.zip && " .
-        "$chgrp doc ACE+TAO.tar.gz ACE+TAO.zip && " .
+        "$chmod a+r ACE+TAO.tar.gz ACE+TAO.zip && " .
         "$dispose ACE+TAO.tar.gz ACE+TAO.zip $dest";
       $archives .= " ACE+TAO.tar.gz ACE+TAO.zip ";
     } else {
       $build_command .=
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
-        "$chmod 664 ACE+TAO.tar.gz && " .
-        "$chgrp doc ACE+TAO.tar.gz && " .
+        "$chmod a+r ACE+TAO.tar.gz && " .
         "$dispose ACE+TAO.tar.gz $dest";
       $archives .= " ACE+TAO.tar.gz ";
     }

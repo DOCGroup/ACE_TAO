@@ -111,24 +111,25 @@ class ACE_Export ACE_Process_Manager : protected ACE_Event_Handler
   //    think the "single <Process_Manager>" pattern will be
   //    sufficient in most cases.)
   //
-  //    Incidentally, when you register your <Process_Manager> with a
-  //    <Reactor> its notification pipe is used to help "reap" the
-  //    available exit statuses.  Therefore, you must not use a
-  //    <Reactor> whose notify pipe has been disabled.  Here's the
-  //    sequence of steps used to reap the exit statuses in this case:
+  //    Incidentally, here's how the auto-reaping works on unix when
+  //    you register your <Process_Manager> with a <Reactor>:
   //
-  //    * The <Process_Manager> registers a signal handler for
+  //    * the <Process_Manager> opens ACE_DEV_NULL to get a dummy
+  //      <HANDLE>.
+  //
+  //    * the dummy <HANDLE> is registered with the <Reactor>, but
+  //      with a NULL_MASK so that it's never normally active.
+  //
+  //    * the <Process_Manager> also registers a signal handler for
   //      SIGCHLD.
   //
-  //    * The SIGCHLD handler, when invoked, uses the <Reactor>'s
-  //      <notify> method to inform the <Reactor> to wake up.
+  //    * the SIGCHLD handler, when invoked, marks the dummy <HANDLE>
+  //      as ready for input.
   //
-  //    * Next, the <Reactor> calls the <Process_Manager>'s
-  //      <handle_input>, this happens synchronously, not in
-  //      sighandler-space.
+  //    * the <Reactor> calls the <Process_Manager>'s <handle_input>
+  //      (this happens synchronously, not in sighandler-space).
   //
-  //    * The <handle_input> method collects all available exit
-  //      statuses.
+  //    * <handle_input> collects all available exit statuses.
 public:
   friend class ACE_Process_Control;
 
@@ -299,7 +300,10 @@ protected:
 
 #if !defined(ACE_WIN32)
   virtual int handle_input (ACE_HANDLE proc);
-  // Collect one (or more, on unix) process exit status.
+  // Collect one (or more, on unix) Process exit status
+
+  virtual ACE_HANDLE get_handle (void) const;
+  // (unix only) : return dummy handle
 #endif // !defined(ACE_WIN32)
 
   virtual int handle_signal (int signum,
@@ -312,6 +316,10 @@ protected:
   //
   // On Win32, this routine is called synchronously, and is passed the
   // HANDLE of the Process that exited, so we can do all our work here
+
+  virtual int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask);
+  // we're being removed from Reactor...on unix, close bogus handle.
 
 private:
   int resize (size_t);
@@ -355,6 +363,11 @@ private:
   size_t current_count_;
   // Current number of processes we are managing.
 
+#if !defined(ACE_WIN32)
+  ACE_HANDLE dummy_handle_;
+  // Allows SIGCHLD to be handled synchronously.
+#endif
+
   ACE_Event_Handler *default_exit_handler_;
   // This event handler is used to notify when a process we control
   // exits.
@@ -367,8 +380,8 @@ private:
   // down (we can only delete it safely if we created it!)
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Recursive_Thread_Mutex lock_;
-  // This lock protects access/ops on <process_table_>.
+  // = ACE_Thread_Mutex for access/ops on process_table_
+  ACE_Thread_Mutex lock_;
 #endif /* ACE_HAS_THREADS */
 };
 

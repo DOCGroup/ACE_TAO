@@ -80,13 +80,6 @@ ACE_Token::tryacquire_write (void)
 }
 
 ACE_INLINE int
-ACE_Token::tryacquire_write_upgrade (void)
-{
-  ACE_TRACE ("ACE_Token::tryacquire_write_upgrade");
-  return 0;
-}
-
-ACE_INLINE int
 ACE_Token::acquire_write (void (*sleep_hook_func)(void *),
                           void *arg,
                           ACE_Time_Value *timeout)

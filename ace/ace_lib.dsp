@@ -90,7 +90,7 @@ LIB32=link.exe -lib
 CPP=cl.exe
 # ADD BASE CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MT /W3 /GX /O1 /I "../" /I "../PACE" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O1 /I "../" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -117,7 +117,7 @@ LIB32=link.exe -lib
 CPP=cl.exe
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MTd /W3 /GX /Z7 /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -143,7 +143,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MT /W3 /GX /O1 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /I "../PACE" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "../" /D ACE_OS_HAS_DLL=0 /D ACE_HAS_DLL=0 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -169,7 +169,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /G5 /MTd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D "ACE_NO_INLINE" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_WINDOWS" /D ACE_OS_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D ACE_HAS_DLL=0 /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_WINDOWS" /D ACE_OS_HAS_DLL=0 /D "_DEBUG" /D "WIN32" /D ACE_HAS_DLL=0 /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409
@@ -444,25 +444,6 @@ SOURCE=.\ATM_QoS.cpp
 # Begin Source File
 
 SOURCE=.\ATM_Stream.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Base_Thread_Adapter.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
 
@@ -1317,25 +1298,6 @@ SOURCE=.\Log_Record.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Logging_Strategy.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\LSOCK.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -1926,25 +1888,6 @@ SOURCE=.\OS_Memory.cpp
 # Begin Source File
 
 SOURCE=.\OS_String.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\OS_Thread_Adapter.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
 
@@ -3160,82 +3103,6 @@ SOURCE=.\Thread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Thread_Adapter.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Control.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Exit.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Hook.cpp
-
-!IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Pharlap ETS Static Debug"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Release"
-
-!ELSEIF  "$(CFG)" == "ACE LIB - Win32 Static Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread_Manager.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Alpha Static Release"
@@ -3913,10 +3780,6 @@ SOURCE=.\Base_Pointer_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Thread_Adapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Based_Pointer_Repository.h
 # End Source File
 # Begin Source File
@@ -4189,10 +4052,6 @@ SOURCE=.\Log_Record.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Logging_Strategy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\LSOCK.h
 # End Source File
 # Begin Source File
@@ -4354,10 +4213,6 @@ SOURCE=.\OS_Memory.h
 # Begin Source File
 
 SOURCE=.\OS_String.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\OS_Thread_Adapter.h
 # End Source File
 # Begin Source File
 
@@ -4681,22 +4536,6 @@ SOURCE=.\Thread.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Thread_Adapter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Control.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Exit.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Hook.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread_Manager.h
 # End Source File
 # Begin Source File
@@ -4930,10 +4769,6 @@ SOURCE=.\Atomic_Op.i
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Base_Thread_Adapter.inl
 # End Source File
 # Begin Source File
 
@@ -5261,10 +5096,6 @@ SOURCE=.\OS_String.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Thread_Adapter.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\OS_TLI.inl
 # End Source File
 # Begin Source File
@@ -5502,14 +5333,6 @@ SOURCE=.\Task_T.i
 # Begin Source File
 
 SOURCE=.\Thread.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Adapter.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Control.inl
 # End Source File
 # Begin Source File
 

@@ -112,7 +112,7 @@ LINK32=link.exe
 CPP=cl.exe
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D ACE_HAS_DLL=1 /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /I "../PACE" /D "NDEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FR /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D "NDEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FR /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -146,7 +146,7 @@ LINK32=link.exe
 CPP=cl.exe
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D ACE_HAS_DLL=1 /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /FD /c
 # SUBTRACT BASE CPP /YX /Yc /Yu
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D ACE_HAS_MFC=1 /D ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER=1 /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -178,7 +178,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /I "../PACE" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /Ob2 /I "../" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /o /win32 "NUL"
@@ -209,7 +209,7 @@ LINK32=link.exe
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /MTd /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /I "../PACE" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /Gy /I "../" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "ACE_BUILD_DLL" /D "ACE_OS_BUILD_DLL" /FD /c
 # SUBTRACT CPP /YX /Yc /Yu
 MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
@@ -488,25 +488,6 @@ SOURCE=.\ATM_QoS.cpp
 # Begin Source File
 
 SOURCE=.\ATM_Stream.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Base_Thread_Adapter.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
@@ -1361,25 +1342,6 @@ SOURCE=.\Log_Record.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Logging_Strategy.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\LSOCK.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -1988,25 +1950,6 @@ SOURCE=.\OS_String.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Thread_Adapter.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\OS_TLI.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -2160,25 +2103,6 @@ SOURCE=.\Process_Manager.cpp
 # Begin Source File
 
 SOURCE=.\Profile_Timer.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\QoS_Decorator.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
 
@@ -3223,82 +3147,6 @@ SOURCE=.\Thread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Thread_Adapter.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Control.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Exit.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Hook.cpp
-
-!IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ACE DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread_Manager.cpp
 
 !IF  "$(CFG)" == "ACE DLL - Win32 Alpha Release"
@@ -3976,10 +3824,6 @@ SOURCE=.\Base_Pointer_T.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Thread_Adapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Based_Pointer_Repository.h
 # End Source File
 # Begin Source File
@@ -4252,10 +4096,6 @@ SOURCE=.\Log_Record.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Logging_Strategy.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\LSOCK.h
 # End Source File
 # Begin Source File
@@ -4420,10 +4260,6 @@ SOURCE=.\OS_String.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Thread_Adapter.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\OS_TLI.h
 # End Source File
 # Begin Source File
@@ -4473,10 +4309,6 @@ SOURCE=.\Process_Manager.h
 # Begin Source File
 
 SOURCE=.\Profile_Timer.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\QoS_Decorator.h
 # End Source File
 # Begin Source File
 
@@ -4748,22 +4580,6 @@ SOURCE=.\Thread.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Thread_Adapter.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Control.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Exit.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Hook.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Thread_Manager.h
 # End Source File
 # Begin Source File
@@ -4997,10 +4813,6 @@ SOURCE=.\Atomic_Op.i
 # Begin Source File
 
 SOURCE=.\Auto_Ptr.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Base_Thread_Adapter.inl
 # End Source File
 # Begin Source File
 
@@ -5324,10 +5136,6 @@ SOURCE=.\OS_String.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\OS_Thread_Adapter.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\OS_TLI.inl
 # End Source File
 # Begin Source File
@@ -5565,14 +5373,6 @@ SOURCE=.\Task_T.i
 # Begin Source File
 
 SOURCE=.\Thread.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Adapter.inl
-# End Source File
-# Begin Source File
-
-SOURCE=.\Thread_Control.inl
 # End Source File
 # Begin Source File
 

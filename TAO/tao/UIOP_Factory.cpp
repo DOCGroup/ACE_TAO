@@ -7,14 +7,14 @@
 
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
+#include "ace/Dynamic_Service.h"
 
 ACE_RCSID(tao, UIOP_Factory, "$Id$")
 
 static const char prefix_[] = "uiop";
 
 TAO_UIOP_Protocol_Factory::TAO_UIOP_Protocol_Factory (void)
-  :  TAO_Protocol_Factory (TAO_TAG_UIOP_PROFILE),
-     major_ (TAO_DEF_GIOP_MAJOR),
+  :  major_ (TAO_DEF_GIOP_MAJOR),
      minor_ (TAO_DEF_GIOP_MINOR)
 {
 }

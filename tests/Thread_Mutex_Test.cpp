@@ -64,14 +64,7 @@ spawn (void)
 #if defined (ACE_HAS_THREADS)
   ACE_Thread_Mutex mutex;
 
-  const u_int n_threads =
-#if defined (__Lynx__)
-    3;  /* It just doesn't work with 4 threads. */
-#else  /* ! __Lynx__ */
-    ACE_MAX_THREADS;
-#endif /* ! __Lynx_- */
-
-  if (ACE_Thread_Manager::instance ()->spawn_n (n_threads,
+  if (ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS,
                                                 ACE_THR_FUNC (test),
                                                 (void *) &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)

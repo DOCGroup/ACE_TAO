@@ -55,8 +55,6 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="OBV.html">Object-by-Value</a></li>
 
-<li><a href="#CORBA2.3.1">CORBA 2.3.1 Conformance</a></li>
-
 </UL>
 </TD>
 <TD>
@@ -143,7 +141,7 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of August 23, 2000.)
+<p>Current status: (As of May 29, 2000.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -355,43 +353,7 @@ Option -Ge 2 added which generates 'throw' instead of ACE_THROW_SPEC, ACE_THROW,
 and ACE_RETHROW. Since the expansion of ACE_THROW_RETURN is platform-dependent,
 it was left as is. Same for TAO_INTERCEPTOR_THROW, since it sometimes
 expands to ACE_THROW_RETURN. Of course ACE_HAS_EXCEPTIONS must be defined for
-this option to work.</li>
-
-<li>
-Removed generation of ostream operators for user exceptions, along with the
-command line option to suppress this generation. The ostream operator
-defined in the base class CORBA::Exception works fine and produces the same
-output.</li>
-
-<li>
-The TAO IDL compiler is no longer monolithic. It is composed of a top-level
-executable, a front end library and a back end library. This will enable
-different back ends to be plugged in for code generation in different
-languages, and for IfR administration. Different back ends may require
-a few changes to the executable (described below), but the front end
-library can remain unchanged. The chain of dependencies is as follows:
-<blockquote>
-FE : ACE<br>
-BE : FE<br>
-EXE : FE, BE<br>
-</blockquote>
-Executing the Makefile (or the TAO_IDL Compiler project in the MSVC 'tao_idl'
-workspace) will build whatever is required in the proper order, as before.
-Back end files, classes and functions required by the executable are as follows:
-<blockquote>
-be.h - file containing #includes of the major BE file headers.<br>
-TAO_Codegen - class, holds output stream references for the various generated files.<br>
-TAO_CODEGEN - ACE_Singleton typedef of the above class.<br>
-tao_cg - pointer to instance of TAO_CODEGEN.<br>
-be_generator - class, inherits from AST_Generator in FE and generates AST nodes.<br>
-void BE_produce (void) - global function, starts AST traversal for code generation.<br>
-BE_GlobalData - class, holds default/command line arg settings specific to BE.<br>
-be_global - pointer to instance of above class.<br>
-</blockquote>
-All the code in the executable that may need to be modified for different back
-ends in contained in the file drv_args.cpp. Code in this file processes the
-command line arguments, outputs a usage message, and performs other miscellaneous
-BE initiialization.</li>
+this option to work.
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:
@@ -781,51 +743,32 @@ and transport protocols for a given platform.</li>
 
 <h3> <a NAME="rtcorba"></a>Real-Time CORBA </h3>
 
-<h4> Last Updated:  08/25/2000 </h4>
+<h4> Last Updated:  04/27/2000 </h4>
 
 Points of contact: <a href="mailto:marina@cs.wustl.edu">Marina
 Spivak</a> and <a href="mailto:irfan@cs.wustl.edu">Irfan
 Pyarali</a>
 <P>
 
+Work in Progress:
+<P>
 We are currently working on implementing RT CORBA 1.0 specification in
-TAO.  Our design is an extension of the <em>endpoint-per-priority</em>
+TAO.  Features in progress include POA Threadpools, Client-Propagated
+and Server-Declared Priority Models, and Priority-Banded Connections.
+A version of TAO supporting these features is expected in July.
+<P>
+Our design is an extension of the <em>endpoint-per-priority</em>
 architecture mentioned in the <tt>Recently Completed Work</tt> section
 below.  In this design, codenamed <em>reactor-per-lane</em>, each
 threadpool lane owns a set of I/O resources, i.e., <tt>Reactor</tt>,
-<tt>Acceptor</tt>, and <tt>Connector_Registry.</tt> Each request is
-serviced by a single thread without context switches, i.e., the same
-thread performs I/O and runs the servant code.
+<tt>Acceptor</tt>, and <tt>Connector_Registry.</tt>  Each request is
+serviced by a single thread without context switches, i.e., the same thread
+performs I/O and runs the servant code.  Document
+describing the design in detail will be available this summer.
 <P>
-
-Work in Progress:
-<ul>
-
-<li> Client Protocol Policy (expected ~ September 10) </li>
-<p>
-<li> Priority Banded Connections (expected ~ September 10) </li>
-<p>
-<li> TAO's RTCORBA Documentation web pages (expected ~ September 10) </li>
-<p>
-<li> POA Threadpools & SERVER_DECLARED Priority Model </li>
-</ul>
 
 Recently Completed Work:
 <ul>
-
-<li> CLIENT_PROPAGATED Priority Model  </li>
-<p>
-<li> Server Protocol Policy </li>
-<p>
-<li> RTORB, RTCurrent and ProrityMappingManger interfaces </li>
-<p>
-<li> Support for client-exposed policies </li>
-<p>
-<li> All RTCORBA, Policy and POA interfaces converted to local </li>
-<p>
-<li> Collocation-related  classes are restructured to support RTCORBA </li>
-<p>
-
 
 <li> Implemented Policy framework (defined in the Messaging
 specification, used in RT CORBA). </li>
@@ -891,8 +834,9 @@ href="http://www.cs.wustl.edu/~marina/boeing.pdf">this paper.</a>
 
 Known issues:
 <ul>
-<li> Location forwarding does not work properly with
-<em>endpoint-per-priority</em> model.</li>
+<li> When using <em>endpoint-per-priority</em> model in TAO, the client
+ORB does not use a connection of the right priority if
+it encounters LOCATION_FORWARD.</li>
 </ul>
 
 Future work:
@@ -1067,111 +1011,16 @@ encounter an object whose interface was not known when the program was
 compiled, yet, be able to determine what operations are valid on the
 object and make invocations on it using the DII.
 
-<p>Current Status (as of August 27, 2000):
-<ul>
-
-<LI><P>First pass implementing the new Dynamic Any interfaces.
-  </P>
-</LI>
-
-<li> Implementation of Interface.idl completed, for types fully supported
-by TAO. This excludes valuetypes and all types related to components. </li><p>
-
-<li> TypeCodeFactory methods completed except for the types mentioned above
-and for recursive types.</li><p>
-
-<li> Test code for Interface.idl methods and for
-resolve_initial_references ("InterfaceRespository") completed.</li><p>
-
-<li> Multicast discovery of IFR service debugged and tested.</li><p>
-
-<li> Read/write locking option added.</li><p>
-
-<li> Persistent IFR tested.</li><p>
-
-</ul>
-
-<p>Known Issues:
-<ul>
-<li> With the chosen design, calling move() on a Contained IR object will
-invalidate the object reference, since the object ID is based on the path
-to the object in the database. This is not expected to be a serious problem
-in the forthcoming implementation of automatic IFR administration, but users
-should be aware of this, if they attempt to write their own IFR administration
-code.</li><p>
-
-</ul>
-
-<p>Recent Work:
-<ul>
-<li> The Interface Repository Service has been added to TAO, in
-ACE_wrappers/TAO/orbsvcs/IFR_Service. The implementation follows the
-expanded IDL found in CORBA Components vol. III. The database used to store
-IR objects is an ACE tool called ACE_Configuration, written by
-<a href="mailto:chafey@stentorsoft.com">Chris Hafey</a>. This
-class represents its contents to the user as a tree of hash maps.
-By specifying a disk file to read from at startup, the storage may
-be made persistent. There is also an option to use a win32 registry
-to store the data, although persistence is not available with this
-option.</li><p>
-
-<li> The create_*_tc functions have been moved from the ORB (CORBA 2.x) to
-a new class TypeCodeFactory (CORBA 3.0). The TypeCodeFactory is built as
-a separate DLL, and can be dynamically loaded into a running TAO ORB
-by calling resolve_initial_references ("TypeCodeFactory").</li><p>
-
-<li> Several methods have been added to class TypeCodeFactory, including
-create_exception_tc, create_alias_tc, create_native_tc, create_wstring_tc,
-create_value_box_tc, and create_union_tc. Union typecodes with both
-multiple and default case labels have been tested.</li><p>
-
-<li> Test code for the IFR service has been added in the directory
-ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/IFR_Test.</li><p>
-
-<li> Code to support multicast discovery of the Interface Repository
-IOR has been added to TAO. Testing has been done using loopback on NT,
-loopback on Solaris, and remotely between these two platforms in both
-directions.</li><p>
-
-<li> Read/write locking option added to IFR service. This option should be
-used if the IFR service is started using a service config file that
-chooses the thread-per-request threading model.</li><p>
-
-<li> A test of the persistence option for the IFR added in the directory
-ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/Persistence_Test.</li><p>
-
-</ul>
-
-<p>Future Work:
-<ul>
-<li> Implement administration of the IFR. The current plan is to modify the
-IDL compiler to generate an XML file in a special directory for each IDL
-file processed. Then these XML files can be parsed and the IFR populated
-with their contents at any time.</li><p>
-
-<li> Implement the CORBA::Object methods get_interface_def (CORBA 3.0) and
-get_interface (CORBA 2.x), the latter for backward compatibility.</li><p>
-
-<li> Add support for recursive structs and unions to the IFR, and for
-their typecodes to the TypeCodeFactory.</li><p>
-
-<li> When Object By Value is fully supported in TAO (support is rudimentary at
-present), implement methods for classes ValueDef and ValueMemberDef in the IFR,
-and implement create_value_tc in TypeCodeFactory.</li><p>
-
-<li> When component support is added to TAO, implement methods for ComponentDef,
-ComponentRepository and related classes in the IFR, and create_component_tc and
-create_home_tc in TypeCodeFactory.</li><p>
-
-<li> Add pluggability for commonly used OTS databases.</li><p>
-
-</ul>
-
+<p>Current Status: TDB
+<p>Known Issues: TDB
+<p>Recent Work: TDB
+<p>Future Work: TDB
 <p>
 
 <hr>
 
 <br><!--#include virtual="OBV.html" -->
+<hr>
 
 <h3>
 <a NAME="nservices"></a>CORBA Naming Service and Interoperable Naming Service</h3>
@@ -1393,7 +1242,7 @@ TAO's A/V Service please have a look <A HREF="http://www.cs.wustl.edu/~schmidt/a
   <li>
       A Videoconferencing application based on Vic, a MBONE tool, has
       been implemented using the AV components. Please contact <A
-      HREF="mailto:yamuna@cs.wustl.edu"> yamuna</a> or <A
+      HREF="mailto:yamuna@cs.wustl.edu"> yamuna or <A
       HREF="mailto:naga@cs.wustl.edu"> Naga </A> if you're interested.
   </li>
   <li>
@@ -1601,7 +1450,7 @@ Point of contact: <a href="mailto:krish@cs.wustl.edu">Krishnakumar Elakkara Path
 <hr WIDTH="100%">
 <h3><a NAME="notify"></a>CORBA Notification Service </h3>
 
-<h4> Last updated: Wed Jul 19 16:49:50 CDT 2000 </h4>
+<h4> Last updated: Fri Mar 24 21:12:06 CST 2000</h4>
 Point of contact: <a href="mailto:pradeep@cs.wustl.edu">Pradeep Gore</a>
 <p>
 Work is in progress to implement the CORBA <a href="ftp://ftp.omg.org/pub/docs/telecom/99-07-01.pdf"> Notification Service </a>.
@@ -1629,7 +1478,7 @@ The implementation released in TAO 1.1 consists of the following
         </li>
 
         <li>
-            There is on-going work to add tests in
+            There is on going work to add tests in
             <tt>$TAO_ROOT/orbsvcs/tests/Notify/
             </tt>
         </li>
@@ -1688,79 +1537,57 @@ Please note the following:
       capture these patterns so that they might be used in other similar
       event communication senarios.
   </li>
+</ul>
+
+<h3> Project Schedule </h3
+The TODO list runs like this:
+<ul>
+
+  <li>
+      Implement the QoS properties, The <tt>Reliability</tt>
+      QoS property is not going to be implemented. all others will be.
+  </li>
 
   <li>
       Concurrency:
       <ul>
         <li>
-            The service is thread safe.
+            Make the service thread safe.
         </li>
 
-        <li> MT dispatching of events to consumers - The EventChannel
+        <li> Add MT dispatching of events to consumers - The EventChannel
             will deliver the event in another thread, different from the thread
             that evaluated (checking subscriptions and filters) it.
         </li>
 
-        <li> MT evaluation of events - Events delivered to the
+        <li> Add MT evaluation of events - Events delivered to the
             ProxySuppliers will be evaluated in another thread, different
             from the delivering thread.
         </li>
-
-        <li>
-            MT dispatching of updates - subscription/offer_change
-            updates are delivered on another thread.
-        </li>
-
       </ul>
-  </li>
-
-
-  <li>
-      Memory Management
-      <ul>
-        <li>
-            (almost) All memory allocations are via factory interfaces.
-        </li>
-
-        <li>
-            Uses service configurator to load resource factories and
-            supply strartup options to the service.
-        </li>
-
-      </ul>
-  </li>
-
-</ul>
-
-<h3> Project Schedule </h3>
-The TODO list runs like this:
-<ul>
-
-  <li>
-      Implement the QoS properties - Priority, Expiry times, Earliest
-      delivery times, maximun events per consumer, order policy,
-      discard policy, maximum batch size, pacing interval.
   </li>
 
   <li>
       Filters:
       <ul>
         <li>
-            Intergrate the parser engine for the <tt>Extended TCL</tt>
-            grammer in <tt> orbsvcs/orbsvcs/ETCL </tt> with Notify and
-            remove dependency on the <tt>Trader </tt>.
+            Implement the parser engine for the <tt>Extended TCL</tt> grammer.
+        </li>
+
+        <li>
+            Add a "filter cache" to cache the expression tree for frequently
+            used constraint expressions.
         </li>
 
         <li>
             Implement CosNotifyFilter::MappingFilter.
         </li>
 
-        <li>
-            (Wish list) Add a "filter cache" to cache the expression tree for frequently
-            used constraint expressions.
-        </li>
-
       </ul>
+  </li>
+
+  <li>
+      Use the Service Configurator to supply options to the Notify Service.
   </li>
 
   <li>
@@ -1773,7 +1600,7 @@ The TODO list runs like this:
   </li>
 
   <li>
-      Support policies to remove dead or unresponsive consumers and
+      Support Policies to remove dead or unresponsive consumers and
       suppliers in the Notification Service.
   </li>
 
@@ -1917,16 +1744,13 @@ balancing algorithms:
 <ul>
 <li>Factory must be implemented to allow applications to create load
 balancers at run-time, rather than at application start up time.</li>
+<li>Thread safety needs improvement.</li>
+<li>Exception safety needs improvement.</li>
 </ul>
 
 <h4>Recent Work:</h4>
 <ul>
-<li>Replaced use of DSI for forwarding requests in favor of a
-    ServantLocator.  The ServantLocator implementation provides a more
-    robust way of forwarding requests.  The DSI implementation was a
-    bit of a hack since ForwardRequest exceptions are only supposed to
-    be thrown from ServantManagers, such as ServantLocators.</li>
-<li>All code is now thread-safe and exception-safe.</li>
+<li>TBD</li>
 </ul>
 
 <h4>Future Work:</h4>
@@ -2208,47 +2032,6 @@ please refers to Section 11.1.1 to 11.1.4 of the
 <a href="http://www.omg.org/cgi-bin/doc?orbos/99-07-01/">spec</a> and
 our short <a href="../LocalObject.html">guideline</a> on implementing
 local objects.</p>
-
-<HR><P>
-<h3><a NAME="CORBA2.3.1">CORBA 2.3.1 Conformance</a></h3>
-(updated 9 August 2000)<br>
-Here is a summary of TAO's conformance issues with CORBA 2.3.1:<br>
-
-2.3.1 and 2.3 differ in very little, if at all, check:<br>
-
-<a href="http://ringil.ece.uci.edu/corba/CORBA2.3/99-10-07.pdf">http://ringil.ece.uci.edu/corba/CORBA2.3/99-10-07.pdf</a><br>
-
-   and search for the change bars, meanwhile this can help:
-<ul>
-
-  <li>The full OBV (valueboxes, valuetypes in all sorts of things, value
-   graphs, Anys and value types, abstract interfaces, etc. etc.)
-
-  <li>The old (2.3.1) IfR interface (we support a 3.0 draft, which is
-   non-backwards compatible, and it is going to be changed).
-
-  <li>The IfR database cannot be populated (so it is less than fully
-   operational ;-))
-
-  <li>The old typecode factory methods (we support a much better
-   alternative from a CORBA 3.0 draft)
-
-  <li>Fixed data types (who cares)
-
-  <li>GIOP fragments (1.1 and 1.2) are not completely tested.
-
-  <li>There are several "optional" features like bi-dir GIOP that we
-   don't support yet.
-
-  <li>The old ServantManager interfaces (POA stuff)
-
-  <li>Domain Managers (useful for security, but otherwise nobody seems to
-   care)
-
-  <li>I think our interpretation of codesets is compliant (we only
-   support one codeset), but would have to check.
-</ul>
-
 
 <p>Future Work (aka. known problems):</p>
 <ul>

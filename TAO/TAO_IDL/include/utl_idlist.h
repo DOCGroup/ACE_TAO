@@ -94,7 +94,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "utl_identifier.h"
 #include        "utl_string.h"
 
-class TAO_IDL_FE_Export UTL_IdList : public UTL_List
+class UTL_IdList : public UTL_List
 {
   // =TITLE
   //  UTL_IdList
@@ -102,8 +102,7 @@ class TAO_IDL_FE_Export UTL_IdList : public UTL_List
   //  Used to maintain a list of identifiers. The primary usage of this class
   //  is to maintain a scoped name.
 public:
-  UTL_IdList (Identifier *car, 
-              UTL_IdList *cdr);
+  UTL_IdList (Identifier *car, UTL_IdList *cdr);
   // Constructor(s)
 
   virtual ~UTL_IdList() {}
@@ -114,9 +113,6 @@ public:
   virtual void dump (ostream &o);
   // dump to ostream
 
-  virtual void destroy (void);
-  // Cleanup function.
-
   // Other operations
 
   UTL_List *copy ();
@@ -125,7 +121,7 @@ public:
   Identifier *head ();
   // get element
 
-  Identifier *last_component ();
+  Identifier  *last_component ();
   // Get last element in this list
 private:
   Identifier *pd_car_data;
@@ -133,8 +129,8 @@ private:
 
 // Active iterator for UTL_IdList
 
-class TAO_IDL_FE_Export UTL_IdListActiveIterator 
-  : public UTL_ListActiveIterator
+class   UTL_IdListActiveIterator :
+        public UTL_ListActiveIterator
 {
   // =TITLE
   //  UTL_IdListActiveIterator

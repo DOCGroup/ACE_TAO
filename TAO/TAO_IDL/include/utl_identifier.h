@@ -80,50 +80,43 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "idl_fwd.h"
 #include        "utl_string.h"
 
-class TAO_IDL_FE_Export Identifier
+class Identifier
 {
 public:
   Identifier ();
-  // Default Constructor.
+  // Default Constructor(s)
 
-  Identifier (const char *s, 
-              long x = 1, 
-              long y = 0, 
-              long z = I_FALSE);
-  // Constructor.
+  Identifier (const char *s, long x=1, long y=0, long z=I_FALSE);
+  // constructor
 
   virtual ~Identifier ();
-  // Destructor.
+  // destructor
 
-  // Operations
+  // =Operations
 
-  char *get_string (void);
-  // Get the underlying string.
+  char  *get_string ();
+  // get the underlying string
 
   void replace_string (const char * s);
-  // Replace the underlying string and free the old one.
+  // replace the underlying string and free the old one
 
-  long compare (Identifier *other);
-  // Compare with other Identifier.
+  long  compare (Identifier *other);
+  // compare with other Identifier
 
   long case_compare (Identifier *other);
-  // Also check for case-only difference.
+  // also check for case-only difference
 
   long case_compare_quiet (Identifier *other);
   // Like the above but suppressing error or warning I/O
 
-  Identifier *copy (void);
-  // Create a deep copy.
+  // =Dumping
 
   virtual void  dump (ostream &o);
-  // Dump to an ostream.
-
-  virtual void destroy (void);
-  // Cleanup function.
+  // dump to an ostream
 
 private:
-    // Storage for data.
-    char *pv_string;
+    // Storage for data
+    char        *pv_string;
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH

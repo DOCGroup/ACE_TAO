@@ -23,6 +23,7 @@
 
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Accept_State.h"
+#include "tao/ORB_Core.h"
 
 // @@ Bala: Again, it is not clear what this class has to do with
 // @@ acceptors, it looks more like message parsing for the server
@@ -54,7 +55,7 @@ public:
 
   int parse_reply (TAO_Message_State_Factory &mesg_state,
                    TAO_Pluggable_Reply_Params &params);
-
+  
 
   CORBA::Boolean write_reply_header (TAO_OutputCDR &cdr,
                                      TAO_Pluggable_Reply_Params &reply,
@@ -64,15 +65,7 @@ public:
   // This would prepare a version specific reply to the
   // messages from the client. The type of reply would be context
   // sensitive. Only the common stuff for all the replies to be
-  // sent would be handled.
-
-    int send_reply_exception (TAO_Transport *transport,
-                            TAO_ORB_Core* orb_core,
-                            CORBA::ULong request_id,
-                            IOP::ServiceContextList *svc_info,
-                            CORBA::Exception *x);
-  // We must send a LocateReply through <transport>, this request
-  // resulted in some kind of exception.
+  // sent would be handled. 
 private:
 
   int process_client_request (TAO_Transport *transport,
@@ -106,6 +99,13 @@ private:
   // As on date 1.1 & 1.2 seem to have similar headers. Til an
   // unmanageable difference comes let them be implemented here.
 
+  int send_reply_exception (TAO_Transport *transport,
+                            TAO_ORB_Core* orb_core,
+                            CORBA::ULong request_id,
+                            CORBA::Exception *x);
+  // We must send a LocateReply through <transport>, this request
+  // resulted in some kind of exception.
+
   int validate_version (TAO_GIOP_Message_State *state);
 
   void set_state (CORBA::Octet def_major,
@@ -116,7 +116,7 @@ private:
 
   TAO_GIOP_Message_Accept_Impl implementations_;
   // Different strategies that we know
-
+  
   ACE_Allocator *cdr_buffer_alloc_;
   ACE_Allocator *cdr_dblock_alloc_;
   // Allocators for the outpur CDR that we hold. As we cannot rely on
@@ -124,11 +124,11 @@ private:
   // reason that we cannot believe the ORB core is that, for a
   // multi-threaded servers it dishes out resources cached in
   // TSS. This would be dangerous as TSS gets destroyed before we
-  // would. So we have our own memory that we can rely on.
+  // would. So we have our own memory that we can rely on. 
 
   TAO_OutputCDR *output_;
   // The output CDR stream
-
+  
   char repbuf_[ACE_CDR::DEFAULT_BUFSIZE];
   // A buffer that we will use to initialise the CDR stream
 

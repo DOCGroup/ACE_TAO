@@ -279,9 +279,6 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                 line += string_value + ACE_TEXT("\"");
                 break;
               }
-#ifdef _WIN32
-            case INVALID:
-#endif
             case BINARY:
               {
                 // not supported yet - maybe use BASE64 codeing?
@@ -305,7 +302,6 @@ ACE_Configuration::export_section (const ACE_Configuration_Section_Key& section,
                   --binary_length;
                   ++ptr;
                 }
-                delete (char *)binary_data;
                 break;
               }
             default:
@@ -379,16 +375,12 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
           ACE_TCHAR* end = ACE_OS::strrchr(buffer, ACE_TEXT(']'));
           if(!end)
           {
-            fclose(in);
             return -3;
           }
           *end = 0;
 
           if (expand_path (root_, buffer + 1, section, 1))
-          {
-            fclose(in);
             return -3;
-          }
 
           continue;
         }
@@ -416,10 +408,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
               *trailing = 0;
             }
             if (set_string_value (section, name, end))
-            {
-              fclose(in);
               return -4;
-            }
           }
         else if (ACE_OS::strncmp(end, ACE_TEXT ("dword:"), 6) == 0)
           {
@@ -427,10 +416,7 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
             ACE_TCHAR* endptr = 0;
             u_int value = ACE_OS::strtoul(end + 6, &endptr, 16);
             if (set_integer_value (section, name, value))
-            {
-              fclose(in);
               return -4;
-            }
           }
         else if(ACE_OS::strncmp(end, ACE_TEXT ("hex:"), 4) == 0)
           {
@@ -441,21 +427,18 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
             u_int remaining = length;
             u_char* data = new u_char[length];
             u_char* out = data;
-            ACE_TCHAR* inb = end + 4;
+            ACE_TCHAR* in = end + 4;
             ACE_TCHAR* endptr = 0;
             while(remaining)
             {
-              u_char charin = (u_char)ACE_OS::strtoul(inb, &endptr, 16);
+              u_char charin = (u_char)ACE_OS::strtoul(in, &endptr, 16);
               *out = charin;
               ++out;
               --remaining;
-              inb += 3;
+              in += 3;
             }
             if(set_binary_value(section, name, data, length))
-            {
-              fclose(in);
               return -4;
-            }
           }
         else
           {
@@ -464,14 +447,40 @@ ACE_Configuration::import_config (const ACE_TCHAR* filename)
           }
       }
     }
+    /*
+      // assume this is a value, read in the value name
+      ACE_TCHAR* end = ACE_OS::strchr (buffer, ACE_TEXT ('='));
+      if (!end)  // no =, not a value so just skip it
+        continue;
+
+      // null terminate the name
+      *end = 0;
+      end++;
+      // determine the type
+      if (*end == ACE_TEXT ('\"'))
+        {
+          // string type
+          if (set_string_value (section, buffer, end + 1))
+            return -4;
+        }
+      else if (*end == ACE_TEXT ('#'))
+        {
+          // number type
+          u_int value = ACE_OS::atoi (end + 1);
+          if (set_integer_value (section, buffer, value))
+            return -4;
+        }
+      else
+        {
+          // invalid type, ignore
+          continue;
+        }
+    }
+        */
 
   if (ferror (in))
-  {
-    fclose(in);
     return -1;
-  }
 
-  fclose(in);
   return 0;
 }
 
@@ -813,14 +822,14 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
   if (load_key (key, base_key))
     return -1;
 
-  // Get the size of the binary data from windows
-  DWORD buffer_length = 0;
+  unsigned char buffer[ACE_DEFAULT_BUFSIZE];
+  DWORD buffer_length = ACE_DEFAULT_BUFSIZE;
   DWORD type;
   if (ACE_TEXT_RegQueryValueEx (base_key,
                                 name,
                                 NULL,
                                 &type,
-                                (BYTE*)0,
+                                (BYTE*)&buffer,
                                 &buffer_length) != ERROR_SUCCESS)
     return -2;
 
@@ -829,20 +838,11 @@ ACE_Configuration_Win32Registry::get_binary_value (const ACE_Configuration_Secti
 
   length = buffer_length;
 
-  ACE_NEW_RETURN (data, unsigned char[length], -4);
+  char* new_data;
+  ACE_NEW_RETURN (new_data, char[length], -4);
 
-  if (ACE_TEXT_RegQueryValueEx (base_key,
-                                name,
-                                NULL,
-                                &type,
-                                (BYTE*)data,
-                                &buffer_length) != ERROR_SUCCESS)
-  {
-    delete data;
-    data = 0;
-    return -5;
-  }
-
+  ACE_OS::memcpy (new_data, buffer, length);
+  data = new_data;
   return 0;
 }
 
@@ -1354,7 +1354,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // Allocate memory for items to be stored in the table.
   size_t section_len = section.length () + 1;
-  ACE_TCHAR *ptr = (ACE_TCHAR*) this->allocator_->malloc (section_len * sizeof(ACE_TCHAR));
+  ACE_TCHAR *ptr = (ACE_TCHAR*) this->allocator_->malloc (section_len);
 
   int return_value = -1;
 

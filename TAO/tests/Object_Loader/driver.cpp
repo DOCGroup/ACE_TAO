@@ -7,7 +7,7 @@
 int
 main (int, char *[])
 {
-  int niterations = 1000;
+  int niterations = 10;
   int norbs = 10;
 
   ACE_TRY_NEW_ENV
@@ -49,14 +49,26 @@ main (int, char *[])
             }
         }
 
-      for (int j = 0; j != 10; ++j)
+      for (int j = 0; j != norbs; ++j)
         {
           char buf[16];
-          ACE_OS::sprintf (buf, "%4.4d", j);
+          ACE_OS::sprintf (buf, "ORB_%4.4d", j);
 
           int argc = 0;
           CORBA::ORB_var orb =
             CORBA::ORB_init (argc, 0, buf, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          CORBA::Object_var obj =
+            orb->resolve_initial_references ("RootPOA",
+                                             ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          PortableServer::POA_var poa =
+            PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          poa->destroy (1, 1, ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
           orb->destroy (ACE_TRY_ENV);

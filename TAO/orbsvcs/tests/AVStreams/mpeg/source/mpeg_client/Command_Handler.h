@@ -55,7 +55,7 @@
 #include "ace/Reactor.h"
 #include "ace/Event_Handler.h"
 #include "ace/ARGV.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/TAO.h"
 #include "mpeg_shared/Video_ControlC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/SOCK_Dgram.h"
@@ -84,8 +84,7 @@ class Receiver_i
                       const char* audio_file,
                       CORBA::Object_ptr video_mmdevice,
                       const char *video_file,
-                      CORBA::Environment&)
-                     ACE_THROW_SPEC (( CORBA::SystemException ));
+                      CORBA::Environment&);
 
  private:
   Command_Handler *command_handler_;

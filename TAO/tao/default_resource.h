@@ -25,9 +25,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Singleton.h"
 #include "ace/Service_Config.h"
 
 class TAO_Object_Adapter;
+class TAO_IOR_Parser;
 
 class TAO_Export TAO_Default_Resource_Factory : public TAO_Resource_Factory
 {
@@ -55,6 +57,8 @@ public:
   int parse_args (int argc, char* argv[]);
   // Parse svc.conf arguments
 
+  int get_parser_names (const char **&names,
+                        int &number_of_names);
   // = Member Accessors
   enum
   {
@@ -96,7 +100,6 @@ public:
   virtual int use_locked_data_blocks (void) const;
   virtual TAO_Reactor_Registry *get_reactor_registry (void);
   virtual ACE_Reactor *get_reactor (void);
-  virtual void reclaim_reactor (ACE_Reactor *);
   virtual TAO_Acceptor_Registry  *get_acceptor_registry (void);
   virtual TAO_Connector_Registry *get_connector_registry (void);
   virtual ACE_Allocator* input_cdr_dblock_allocator (void);
@@ -113,6 +116,9 @@ public:
 protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
   // Obtain the reactor implementation
+  
+  int add_to_ior_parser_names (const char *);
+  // Add a Parser name to the list of Parser names.
 
 protected:
   int use_tss_resources_;
@@ -130,6 +136,15 @@ protected:
 
   int cdr_allocator_type_;
   // The type of CDR allocators.
+
+  int parser_names_count_;
+  // The number of the different types of Parsers.
+
+  const char **parser_names_;
+  // Array consisting of the names of the parsers
+
+  int index_;
+  // Index of the current element in the parser_names_ array
 
   TAO_ProtocolFactorySet protocol_factories_;
   // list of loaded protocol factories.
@@ -151,17 +166,6 @@ protected:
 
   int priority_mapping_type_;
   // The type of priority mapping class created by this factory.
-
-  int dynamically_allocated_reactor_;
-  // Flag that is set to 1 if the reactor obtained from the
-  // get_reactor() method is dynamically allocated.  If this flag is
-  // set to 1, then the reclaim_reactor() method with call the delete
-  // operator on the given reactor.  This flag is necessary to make
-  // sure that a reactor not allocated by the default resource factory
-  // is not reclaimed by the default resource factory.  Such a
-  // situation can occur when a resource factory derived from the
-  // default one overrides the get_reactor() method but does not
-  // override the reclaim_reactor() method.
 };
 
 #if defined (__ACE_INLINE__)

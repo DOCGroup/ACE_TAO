@@ -17,7 +17,7 @@
 //
 // ============================================================================
 
-#include "driver.h"
+#include "ace/Get_Opt.h"
 #include "test_dynany.h"
 #include "test_dynarray.h"
 #include "test_dynenum.h"
@@ -25,13 +25,12 @@
 #include "test_dynstruct.h"
 #include "test_dynunion.h"
 #include "test_wrapper.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "ace/Get_Opt.h"
+#include "driver.h"
 
 int main (int argc, char* argv[])
 {
   Driver driver;
-
+  
   // initialize the driver
   if (driver.init (argc, argv) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,7 +49,8 @@ int main (int argc, char* argv[])
 
 // constructor
 Driver::Driver (void)
-  : test_type_ (NO_TEST)
+  : orb_ (0),
+    test_type_ (NO_TEST)
 {
 }
 
@@ -134,7 +134,7 @@ Driver::parse_args (int argc, char* argv[])
                           -1);
       }
 
-  // Indicates successful parsing of command line.
+  // Indicates successful parsing of command line.        
   return 0;
 }
 
@@ -147,7 +147,7 @@ Driver::run (void)
     {
       case TEST_DYNANY:
         {
-          Test_Wrapper<Test_DynAny>* wrapper =
+          Test_Wrapper<Test_DynAny>* wrapper = 
             new Test_Wrapper<Test_DynAny> (new Test_DynAny (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -155,7 +155,7 @@ Driver::run (void)
         break;
       case TEST_DYNARRAY:
         {
-          Test_Wrapper<Test_DynArray>* wrapper =
+          Test_Wrapper<Test_DynArray>* wrapper = 
             new Test_Wrapper<Test_DynArray> (new Test_DynArray (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -163,7 +163,7 @@ Driver::run (void)
         break;
       case TEST_DYNENUM:
         {
-          Test_Wrapper<Test_DynEnum>* wrapper =
+          Test_Wrapper<Test_DynEnum>* wrapper = 
             new Test_Wrapper<Test_DynEnum> (new Test_DynEnum (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -171,7 +171,7 @@ Driver::run (void)
         break;
       case TEST_DYNSEQUENCE:
         {
-          Test_Wrapper<Test_DynSequence>* wrapper =
+          Test_Wrapper<Test_DynSequence>* wrapper = 
             new Test_Wrapper<Test_DynSequence> (new Test_DynSequence (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -179,7 +179,7 @@ Driver::run (void)
         break;
       case TEST_DYNSTRUCT:
         {
-          Test_Wrapper<Test_DynStruct>* wrapper =
+          Test_Wrapper<Test_DynStruct>* wrapper = 
             new Test_Wrapper<Test_DynStruct> (new Test_DynStruct (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -187,7 +187,7 @@ Driver::run (void)
         break;
       case TEST_DYNUNION:
         {
-          Test_Wrapper<Test_DynUnion>* wrapper =
+          Test_Wrapper<Test_DynUnion>* wrapper = 
             new Test_Wrapper<Test_DynUnion> (new Test_DynUnion (this->orb_));
           retstatus = wrapper->run_test ();
           delete wrapper;
@@ -196,32 +196,6 @@ Driver::run (void)
       default:
         break;
     }
-
-  ACE_TRY_NEW_ENV
-    {
-      CORBA::Object_var obj =
-        this->orb_->resolve_initial_references ("RootPOA",
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (obj.in (),
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      root_poa->destroy (1,
-                         1,
-                         ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Driver::run");
-
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
 
   return retstatus;
 }
@@ -241,3 +215,4 @@ template class Test_Wrapper<Test_DynUnion>;
 #pragma instantiate Test_Wrapper<Test_DynStruct>
 #pragma instantiate Test_Wrapper<Test_DynUnion>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+

@@ -11,11 +11,6 @@ TAO_Notify_StructuredPushSupplier::TAO_Notify_StructuredPushSupplier (void)
 
 TAO_Notify_StructuredPushSupplier::~TAO_Notify_StructuredPushSupplier ()
 {
-  // release all resources ...
-  this->default_POA_ = PortableServer::POA::_nil ();
-
-  this->proxy_consumer_ =
-    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_nil ();
 }
 
 void
@@ -53,9 +48,6 @@ TAO_Notify_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin
   proxy_consumer_->connect_structured_push_supplier (supplier_ref.in (),
                                                      ACE_TRY_ENV);
   ACE_CHECK;
-
-  // give ownership to POA
-  this->_remove_ref ();
 }
 
 void
@@ -92,17 +84,20 @@ TAO_Notify_StructuredPushSupplier::_default_POA (CORBA::Environment& /* env */)
 void
 TAO_Notify_StructuredPushSupplier::deactivate (CORBA::Environment &ACE_TRY_ENV)
 {
-  PortableServer::POA_var poa =
-        this->_default_POA ();
-
   PortableServer::ObjectId_var id =
-    poa->servant_to_id (this,
-                        ACE_TRY_ENV);
+    this->default_POA_->servant_to_id (this,
+                                       ACE_TRY_ENV);
   ACE_CHECK;
 
-  poa->deactivate_object (id.in (),
-                          ACE_TRY_ENV);
+  this->default_POA_->deactivate_object (id.in (),
+                                         ACE_TRY_ENV);
   ACE_CHECK;
+
+  // release all resources ...
+  this->default_POA_ = PortableServer::POA::_nil ();
+
+  this->proxy_consumer_ =
+    CosNotifyChannelAdmin::StructuredProxyPushConsumer::_nil ();
 }
 
 void

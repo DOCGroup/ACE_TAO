@@ -498,7 +498,7 @@ public:
   virtual int initialized (void);
   // Returns true if we've been successfully initialized, else false.
 
-  virtual size_t size (void) const;
+  virtual size_t size (void);
   // Returns the current size of the Reactor's internal descriptor
   // table.
 
@@ -543,10 +543,6 @@ protected:
 
   virtual int suspend_i (ACE_HANDLE handle);
   // Suspend the <Event_Handler> associated with <handle>
-
-  virtual int is_suspended_i (ACE_HANDLE handle);
-  // Check to see if the <Event_Handler> associated with <handle> is
-  // suspended. Returns 0 if not, 1 if so.
 
   virtual int resume_i (ACE_HANDLE handle);
   // Resume the <Event_Handler> associated with <handle>

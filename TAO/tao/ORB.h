@@ -29,13 +29,18 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
+#include "tao/IOR_LookupTable.h"
 #include "tao/Services.h"
+#include "tao/IORManipulation.h"
 
 // Interceptor definitions.
-#include "tao/PortableInterceptor.h"
+#include "tao/Interceptor.h"
 
 // IRIX needs this for the throw specs
 #include "tao/PolicyC.h"
+
+// -- Containers --
+#include "ace/Containers_T.h"
 
 // For the (W)String_var and (W)String_out iostream operators.
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
@@ -46,24 +51,29 @@ typedef enum
 {
   TAO_SERVICEID_NAMESERVICE,
   TAO_SERVICEID_TRADINGSERVICE,
-  TAO_SERVICEID_IMPLREPOSERVICE,
-  TAO_SERVICEID_INTERFACEREPOSERVICE
+  TAO_SERVICEID_IMPLREPOSERVICE
 } TAO_Service_ID;
 
 // = Forward declarations.
 class TAO_MProfile;
+class TAO_POA_Manager;
+class TAO_POA_Policies;
 struct TAO_Dispatch_Context;
+class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_InputCDR;
 class TAO_OutputCDR;
+class CORBA_ORB_InconsistentTypeCode;
+class TAO_ServantBase;
 class TAO_Stub;
-
-class TAO_Acceptor_Filter;
 
 #ifdef TAO_HAS_VALUETYPE
 class TAO_ValueFactory_Map;
 #endif /* TAO_HAS_VALUETYPE */
+
+typedef CORBA_ORB_InconsistentTypeCode InconsistentTypeCode;
+typedef CORBA_ORB_InconsistentTypeCode *InconsistentTypeCode_ptr;
 
 class TAO_Export CORBA_String_var
 {
@@ -454,6 +464,40 @@ public:
   CORBA::Boolean poll_next_response (CORBA_Environment &ACE_TRY_ENV =
                                      TAO_default_environment ());
 
+  // Typecode for the above exception.
+  static CORBA::TypeCode_ptr _tc_InconsistentTypeCode;
+
+  // Dynamic Any factory functions.
+
+  CORBA_DynAny_ptr       create_dyn_any       (const CORBA_Any& any,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+  CORBA_DynAny_ptr       create_basic_dyn_any (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+  CORBA_DynStruct_ptr    create_dyn_struct    (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+  CORBA_DynSequence_ptr  create_dyn_sequence  (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+  CORBA_DynArray_ptr     create_dyn_array     (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+  CORBA_DynUnion_ptr     create_dyn_union     (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+  CORBA_DynEnum_ptr      create_dyn_enum      (CORBA_TypeCode_ptr tc,
+                                               CORBA::Environment &ACE_TRY_ENV
+                                               = TAO_default_environment ());
+
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = ORB event loop methods.
@@ -559,15 +603,67 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
-  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV);
+  TAO_SERVANT_LOCATION _get_collocated_servant (TAO_Stub *p,
+                                                TAO_ServantBase *&servant);
+  // Return the object pointer of an collocated object it there is
+  // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
+  // must implement this and determine what is a collocated object
+  // based on information provided in the TAO_Stub.
+
+  int _tao_add_to_IOR_table (const ACE_CString &object_id,
+                             CORBA::Object_ptr obj);
+  // Add a mapping ObjectID->IOR to the table.
+
+  int _tao_find_in_IOR_table (const ACE_CString &object_id,
+                              CORBA::Object_ptr &obj);
+  // Find the given ObjectID in the table.
+
+  void _tao_register_IOR_table_callback (TAO_IOR_LookupTable_Callback *callback,
+                                         int delete_callback);
+  // Registers a new callback class with the table
+
+  CORBA_Object_ptr resolve_root_poa (CORBA_Environment &ACE_TRY_ENV,
+                                     const char *adapter_name =
+                                         TAO_DEFAULT_ROOTPOA_NAME,
+                                     TAO_POA_Manager *poa_manager = 0,
+                                     const TAO_POA_Policies *policies = 0);
   // Resolve the POA.
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
-                                TAO_Acceptor_Filter *acceptor_filter,
                                 CORBA_Environment &ACE_TRY_ENV);
   // Delegates on the ORB_Core to create a TAO_Stub.
+
+
+  CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
+                                  const char *type_id,
+                                  CORBA::PolicyList *policy_list,
+                                  TAO_ServantBase *servant,
+                                  CORBA::Boolean collocated,
+                                  CORBA_Environment &ACE_TRY_ENV);
+
+  // Convert key into an object reference.  Return Object_ptr as out
+  // parameter.  Errors will come through the environment.
+  //
+  // Object IDs are assigned and used by servers to identify objects.
+  //
+  // Type IDs are repository IDs, assigned as part of OMG-IDL
+  // interface definition to identify specific interfaces and their
+  // relationships to other OMG-IDL interfaces.  It's OK to provide a
+  // null type ID.  Providing a null object key will result in an
+  // INV_OBJREF exception.
+  //
+  // <servant> and <collocated> are used to created collocated object
+  // references.  All object references created by this function should
+  // be collocated object.
+  //
+  // Clients which invoke operations using one of these references
+  // when the server is not active (or after the last reference to the
+  // POA is released) will normally see an OBJECT_NOT_EXIST exception
+  // reported by the ORB.  If the POA is a "Named POA" the client's
+  // ORB will not normally return OBJECT_NOT_EXIST unless the POA
+  // reports that fault.
 
   static void init_orb_globals (CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ());
@@ -606,6 +702,12 @@ protected:
   CORBA_ORB (TAO_ORB_Core *orb_core);
   ~CORBA_ORB (void);
 
+  TAO_SERVANT_LOCATION _find_collocated_servant (TAO_Stub *sobj,
+                                                 TAO_ORB_Core *orb_core,
+                                                 TAO_ServantBase *& servant,
+                                                 const TAO_MProfile &mprofile);
+  // Check if local servant exists for <mprofile> in <orb_core>.
+
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
   // Resolve the POA current.
 
@@ -614,16 +716,8 @@ protected:
   CORBA_Object_ptr resolve_policy_current (CORBA::Environment&);
   // Resolve the Policy Current for this thread.
 
-
-
-  CORBA_Object_ptr resolve_rt_orb (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the RTORB.
-
-  CORBA_Object_ptr resolve_rt_current (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the RT Current.
-
-  CORBA_Object_ptr resolve_priority_mapping_manager (CORBA_Environment &ACE_TRY_ENV);
-  // Resolve the Priority_Mapping_Manager.
+  CORBA_Object_ptr resolve_ior_manipulation (CORBA::Environment&);
+  // Resolve the IOR Manipulation reference for this ORB.
 
 private:
 
@@ -692,6 +786,13 @@ private:
   PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
   // Interceptor registries.
 #endif /* TAO_HAS_INTERCEPTORS */
+
+  TAO_IOR_LookupTable lookup_table_;
+  // Table of ObjectID->IOR mappings.
+
+  TAO_IOR_Manipulation_impl ior_manipulation_;
+  // object used for manipulation profiles in an object reference, that
+  // is an IOR.
 
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.

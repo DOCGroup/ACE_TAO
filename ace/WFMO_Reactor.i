@@ -1100,7 +1100,7 @@ ACE_WFMO_Reactor::lock (void)
 }
 
 ACE_INLINE size_t
-ACE_WFMO_Reactor::size (void) const
+ACE_WFMO_Reactor::size (void)
 {
   // Size of repository minus the 2 used for internal purposes
   return this->handler_rep_.max_size_ - 2;

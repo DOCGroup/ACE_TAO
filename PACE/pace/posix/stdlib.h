@@ -13,52 +13,58 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_STDLIB_H_POSIX
-#define PACE_STDLIB_H_POSIX
+#ifndef PACE_STDLIB_H
+#define PACE_STDLIB_H
 
-#include <stdlib.h>
+#include "pace/unistd.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#define PACE_EXIT_FAILURE EXIT_FAILURE
-#define PACE_EXIT_SUCCESS EXIT_SUCCESS
-#define PACE_MB_CUR_MAX MB_CUR_MAX
-#ifndef PACE_NULL
-# define PACE_NULL NULL
-#endif /* PACE_NULL */
-#define PACE_RAND_MAX RAND_MAX
+  PACE_INLINE void pace_abort ();
 
-#ifndef PACE_DIV_T
-#define PACE_DIV_T
-  typedef div_t pace_div_t;
-#endif /* PACE_DIV_T */
+  PACE_INLINE int pace_atoi (const char * str);
 
-#ifndef PACE_LDIV_T
-#define PACE_LDIV_T
-  typedef ldiv_t pace_ldiv_t;
-#endif /* PACE_LDIV_T */
+  PACE_INLINE long pace_atol (const char * str);
 
-#ifndef PACE_SIZE_T
-#define PACE_SIZE_T
-  typedef size_t pace_size_t;
-#endif /* PACE_SIZE_T */
+  PACE_INLINE long long pace_atoll (const char * str);
 
-#ifndef PACE_WCHAR_T
-#define PACE_WCHAR_T
-  typedef wchar_t pace_wchar_t;
-#endif /* PACE_WCHAR_T */
+  PACE_INLINE void pace_exit (int status);
 
-#if defined (PACE_HAS_CPLUSPLUS)
-# ifndef PACE_BSEARCH_PF
-# define PACE_BSEARCH_PF
-  typedef int (*pace_bsearch_pf) (const void*, const void*);
-# endif /* PACE_BSEARCH_PF */
-#endif /* PACE_HAS_CPLUSPLUS */
+  PACE_INLINE char * pace_getenv (const char * name);
+
+  PACE_INLINE char * pace_lltostr (long longvalue, char * endptr);
+
+  PACE_INLINE int pace_rand_r (unsigned int * seed);
+
+  PACE_INLINE long pace_strtol (const char * str, char ** endptr, int base);
+
+  PACE_INLINE long long pace_strtoll (const char * str, char ** endptr, int base);
+
+  PACE_INLINE char * pace_ulltostr (unsigned long longvalue, char * endptr);
+
+  /* Memory Management. */
+
+  PACE_INLINE void * pace_malloc (size_t size);
+
+  PACE_INLINE void * pace_calloc (size_t nelem, size_t elsize);
+
+  PACE_INLINE void pace_free (void * ptr);
+
+  PACE_INLINE void * pace_memalign (size_t alignment, size_t size);
+
+  PACE_INLINE void * pace_realloc (void * ptr, size_t size);
+
+  PACE_INLINE void * pace_valloc (size_t size);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_STDLIB_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/stdlib.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_STDLIB_H */
+

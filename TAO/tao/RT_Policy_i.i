@@ -15,12 +15,6 @@ TAO_ClientProtocolPolicy::protocols_rep (void)
   return protocols_;
 }
 
-ACE_INLINE RTCORBA::ProtocolList &
-TAO_ServerProtocolPolicy::protocols_rep (void)
-{
-  return protocols_;
-}
-
 ACE_INLINE RTCORBA::PriorityModel
 TAO_PriorityModelPolicy::get_priority_model (void)
 {

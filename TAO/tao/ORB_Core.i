@@ -25,40 +25,6 @@ TAO_ORB_Core::_decr_refcnt (void)
   return 0;
 }
 
-ACE_INLINE int
-TAO_ORB_Core::register_handle (ACE_HANDLE handle)
-{
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  // Acquire a lock to ensure that modifications to the state within
-  // the handle set are atomic.
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, -1));
-  this->handle_set_.set_bit (handle);
-
-  return 0;
-}
-
-ACE_INLINE int
-TAO_ORB_Core::remove_handle (ACE_HANDLE handle)
-{
-  if (handle == ACE_INVALID_HANDLE)
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  // Acquire a lock to ensure that modifications to the state within
-  // the handle set are atomic.
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, -1));
-  this->handle_set_.clr_bit (handle);
-
-  return 0;
-}
-
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr (void)
 {
@@ -71,10 +37,20 @@ TAO_ORB_Core::orb (void)
   return this->orb_.in ();
 }
 
-ACE_INLINE TAO_Adapter_Registry *
-TAO_ORB_Core::adapter_registry (void)
+ACE_INLINE TAO_POA *
+TAO_ORB_Core::root_poa (CORBA::Environment &ACE_TRY_ENV,
+                        const char *adapter_name,
+                        TAO_POA_Manager *poa_manager,
+                        const TAO_POA_Policies *policies)
 {
-  return &this->adapter_registry_;
+  if (this->root_poa_ == 0)
+    {
+      this->create_and_set_root_poa (adapter_name,
+                                     poa_manager,
+                                     policies,
+                                     ACE_TRY_ENV);
+    }
+  return this->root_poa_;
 }
 
 ACE_INLINE void
@@ -132,6 +108,12 @@ ACE_INLINE TAO_Acceptor_Registry *
 TAO_ORB_Core::acceptor_registry (void)
 {
   return TAO_OC_RETRIEVE (acceptor_registry);
+}
+
+ACE_INLINE TAO_Parser_Registry *
+TAO_ORB_Core::parser_registry (void)
+{
+  return &this->parser_registry_;
 }
 
 #undef TAO_OC_RETRIEVE
@@ -304,55 +286,15 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_typecodefactory (CORBA::Environment &ACE_TRY_ENV)
+TAO_ORB_Core::typecode_factory (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->typecode_factory_))
-    {
-      this->resolve_typecodefactory_i (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
   return CORBA::Object::_duplicate (this->typecode_factory_);
 }
 
-ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_dynanyfactory (CORBA::Environment &ACE_TRY_ENV)
+ACE_INLINE void
+TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->dynany_factory_))
-    {
-      this->resolve_dynanyfactory_i (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-  return CORBA::Object::_duplicate (this->dynany_factory_);
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_manipulation (CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->ior_manip_factory_))
-    {
-      this->resolve_iormanipulation_i (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-  return CORBA::Object::_duplicate (this->ior_manip_factory_);
-}
-
-ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_table (CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_,
-                    CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->ior_table_))
-    {
-      this->resolve_ior_table_i (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-  return CORBA::Object::_duplicate (this->ior_table_);
+  this->typecode_factory_ = tf;
 }
 
 // ****************************************************************
@@ -389,19 +331,20 @@ TAO_ORB_Core::policy_current (void)
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::poa_current (void)
+#if (TAO_HAS_RT_CORBA == 1)
+
+ACE_INLINE TAO_Priority_Mapping *
+TAO_ORB_Core::priority_mapping (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, mon, this->lock_, 0);
-  return CORBA::Object::_duplicate (this->poa_current_.in ());
+  return this->priority_mapping_;
 }
 
-ACE_INLINE void
-TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
+#endif /* TAO_HAS_RT_CORBA == 1 */
+
+ACE_INLINE TAO_POA_Current &
+TAO_ORB_Core::poa_current (void) const
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, mon, this->lock_);
-  this->poa_current_ =
-    CORBA::Object::_duplicate (current);
+  return *this->poa_current_;
 }
 
 ACE_INLINE CORBA_Environment *
@@ -415,29 +358,6 @@ TAO_ORB_Core::default_environment (CORBA_Environment *env)
 {
   TAO_TSS_RESOURCES::instance ()->default_environment_ = env;
 }
-
-
-#if (TAO_HAS_RT_CORBA == 1)
-
-ACE_INLINE TAO_Priority_Mapping_Manager *
-TAO_ORB_Core::priority_mapping_manager (void)
-{
-  return this->priority_mapping_manager_;
-}
-
-ACE_INLINE TAO_RT_ORB *
-TAO_ORB_Core::rt_orb (void)
-{
-  return this->rt_orb_;
-}
-
-ACE_INLINE TAO_RT_Current *
-TAO_ORB_Core::rt_current (void)
-{
-  return this->rt_current_;
-}
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
 
 // ****************************************************************
 
@@ -521,7 +441,7 @@ TAO_ORB_Core_Auto_Ptr::operator *() const
 ACE_INLINE TAO_ORB_Table *
 TAO_ORB_Table::instance (void)
 {
-  return TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>::instance ();
+  return ACE_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>::instance ();
 }
 
 ACE_INLINE TAO_ORB_Core *

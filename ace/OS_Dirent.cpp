@@ -51,13 +51,18 @@ ACE_OS_Dirent::readdir_emulation (DIR *d)
       d->current_handle_ = ACE_TEXT_FindFirstFile (d->directory_name_,
                                                    &(d->fdata_));
 
-      if (d->current_handle_ != INVALID_HANDLE_VALUE)
+      if (d->current_handle_ != INVALID_HANDLE_VALUE
+          && d->fdata_.dwFileAttributes !=  FILE_ATTRIBUTE_DIRECTORY)
         {
-          // Skip "." and ".."
+          ::FindClose (d->current_handle_);
+          d->current_handle_ = INVALID_HANDLE_VALUE;
+        }
+      else // Skip "." and ".."
+        {
           int retval = 1;
           while (*(d->fdata_.cFileName) == '.'
                  && retval
-                 && d->fdata_.dwFileAttributes == FILE_ATTRIBUTE_DIRECTORY)
+                 && d->current_handle_ != INVALID_HANDLE_VALUE)
             {
               retval = ACE_TEXT_FindNextFile (d->current_handle_,
                                               &(d->fdata_));

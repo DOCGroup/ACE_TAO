@@ -25,7 +25,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Acceptor.h"
-#include "ace/SOCK_Stream.h"
+#include "ace/SOCK_Acceptor.h"
 #include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 
@@ -33,6 +33,10 @@
 #include "tao/Wait_Strategy.h"
 
 #include "tao/IIOP_Transport.h"
+
+
+
+
 
 // Forward Decls
 class TAO_ORB_Core;
@@ -51,16 +55,6 @@ public:
   TAO_IIOP_Handler_Base (ACE_Thread_Manager *t);
   TAO_IIOP_Handler_Base (TAO_ORB_Core *orb_core);
 
-  struct TCP_Properties
-  {
-    // = TITLE
-    //   TCP protocol properties specification for a set of
-    //   connections.
-    //
-    int send_buffer_size;
-    int recv_buffer_size;
-    int no_delay;
-  };
 };
 
 class TAO_Export TAO_IIOP_Client_Connection_Handler : public TAO_IIOP_Handler_Base
@@ -127,13 +121,9 @@ class TAO_Export TAO_IIOP_Server_Connection_Handler : public TAO_IIOP_Handler_Ba
 public:
   TAO_IIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
   TAO_IIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
-                                      CORBA::Boolean flag,
-                                      void *arg);
-  // Constructor. <arg> parameter is used by the Acceptor to pass the
-  // protocol configuration properties for this connection.
-
+                                      CORBA::Boolean flag);
   ~TAO_IIOP_Server_Connection_Handler (void);
-  // Destructor.
+  // Constructor.
 
   virtual int open (void *);
   // Called by the <Strategy_Acceptor> when the handler is completely
@@ -197,9 +187,6 @@ protected:
 
   CORBA::Boolean lite_flag_;
   // Should we use GIOP or GIOPlite
-
-  TCP_Properties *tcp_properties_;
-  // TCP configuration for this connection.
 };
 
 #if defined (__ACE_INLINE__)

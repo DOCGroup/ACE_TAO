@@ -11,19 +11,17 @@
 // ============================================================================
 
 #include "test_config.h"
-#include "ace/Task.h"
 #include "ace/RMCast/RMCast_Reassembly.h"
 
 ACE_RCSID(tests, RMCast_Reassembly_Test, "$Id$")
 
-class ACE_RMCast_Reassembly_Tester
-  : public ACE_Task_Base
-  , public ACE_RMCast_Module
+class ACE_RMCast_Reassembly_Tester : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   ACE_RMCast_Reassembly_Tester (void);
 
-  virtual int data (ACE_RMCast::Data &data);
+  virtual int put (ACE_Message_Block *mb,
+                   ACE_Time_Value *tv = 0);
   virtual int svc (void);
 
 private:
@@ -37,14 +35,15 @@ private:
   int put_fragment (ACE_UINT32 sequence_number,
                     ACE_UINT32 offset,
                     ACE_UINT32 fragment_size,
-                    ACE_Message_Block *mb);
+                    ACE_Message_Block *mb,
+                    ACE_Time_Value *tv);
   // Put one fragment out
 
   ACE_UINT32 next_sequence_number (void);
   // Return the next sequence number..
 
 private:
-  ACE_RMCast_Reassembly reassembly_;
+  ACE_RMCast_Reassembly<ACE_MT_SYNCH> reassembly_;
 
   ACE_SYNCH_MUTEX mutex_;
   ACE_UINT32 message_sequence_number_;
@@ -75,23 +74,22 @@ main (int, ACE_TCHAR *[])
 // ****************************************************************
 
 ACE_RMCast_Reassembly_Tester::ACE_RMCast_Reassembly_Tester (void)
-  : message_sequence_number_ (0)
 {
   this->reassembly_.next (this);
+  this->next (&this->reassembly_);
 }
 
 int
 ACE_RMCast_Reassembly_Tester::svc (void)
 {
-  for (int iteration = 0; iteration != 50; ++iteration)
+  for (int iteration = 0; iteration != 10; ++iteration)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d\n", iteration));
       ACE_UINT32 sequence_number = this->next_sequence_number ();
       {
         ACE_Message_Block received;
 
         const size_t fragment_size = 128;
-        ACE_UINT32 n = 32 * fragment_size;
+        ACE_UINT32 n = 256 * fragment_size;
         ACE_Message_Block big_blob (n);
         big_blob.wr_ptr (n);
 
@@ -108,12 +106,9 @@ ACE_RMCast_Reassembly_Tester::svc (void)
             if (this->put_fragment (sequence_number,
                                     offset,
                                     fragment_size,
-                                    &big_blob) == -1)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Error in put_fragment\n"));
-                return -1;
-              }
+                                    &big_blob,
+                                    0) == -1)
+              return -1;
           }
 
         if (this->compare (&received, &big_blob) == -1)
@@ -125,14 +120,12 @@ ACE_RMCast_Reassembly_Tester::svc (void)
           }
       }
 
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d, first test passed\n",
-                  iteration));
       sequence_number = this->next_sequence_number ();
       {
         ACE_Message_Block received;
 
         const size_t fragment_size = 128;
-        ACE_UINT32 n = 32 * fragment_size;
+        ACE_UINT32 n = 256 * fragment_size;
         ACE_Message_Block big_blob (n);
         big_blob.wr_ptr (n);
 
@@ -148,20 +141,13 @@ ACE_RMCast_Reassembly_Tester::svc (void)
                                               ACE_OS::gethrtime ());
         for (int i = 0; i != 100; ++i)
           {
-            size_t offset = ACE_OS::rand_r (seed) % n;
-            if (offset >= n)
-              {
-                offset = n/2;
-              }
+            size_t offset = ACE_OS::rand_r (seed) % (n - 16);
             if (this->put_fragment (sequence_number,
                                     offset,
                                     fragment_size,
-                                    &big_blob) == -1)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Error in put_fragment\n"));
-                return -1;
-              }
+                                    &big_blob,
+                                    0) == -1)
+              return -1;
           }
 
         for (size_t offset = 0; offset < n; offset += fragment_size)
@@ -169,12 +155,9 @@ ACE_RMCast_Reassembly_Tester::svc (void)
             if (this->put_fragment (sequence_number,
                                     offset,
                                     fragment_size,
-                                    &big_blob) == -1)
-              {
-                ACE_DEBUG ((LM_DEBUG,
-                            "Error in put_fragment\n"));
-                return -1;
-              }
+                                    &big_blob,
+                                    0) == -1)
+              return -1;
           }
 
         if (this->compare (&received, &big_blob) == -1)
@@ -185,8 +168,6 @@ ACE_RMCast_Reassembly_Tester::svc (void)
             return -1;
           }
       }
-      ACE_DEBUG ((LM_DEBUG, "(%t) iteration %d, random test passed\n",
-                  iteration));
     }
 
   return 0;
@@ -217,30 +198,21 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
       blob.copy (i->rd_ptr (), i->length ());
     }
 
-  if (received->rd_ptr () == 0)
-    ACE_ERROR_RETURN ((LM_DEBUG, "INCOMPLETE MESSAGE\n"), -1);
-
   if (ACE_OS::memcmp (blob.rd_ptr (),
                       received->rd_ptr (),
                       n) != 0)
     {
-      for (size_t i = 0; i < n; i += 256)
+      for (size_t offset = 0; offset < n; offset += 256)
         {
           size_t z = 256;
-          if (n - i < 256)
-            z = n - i;
+          if (n - offset < 256)
+            z = n - offset;
           ACE_HEX_DUMP ((LM_DEBUG,
-                         blob.rd_ptr () + i,
+                         blob.rd_ptr () + offset,
                          z,
                          "BIG BLOB"));
-        }
-      for (size_t j = 0; j < n; j += 256)
-        {
-          size_t z = 256;
-          if (n - j < 256)
-            z = n - j;
           ACE_HEX_DUMP ((LM_DEBUG,
-                         received->rd_ptr () + j,
+                         received->rd_ptr () + offset,
                          z,
                          "RECEIVED"));
         }
@@ -250,17 +222,16 @@ ACE_RMCast_Reassembly_Tester::compare (ACE_Message_Block *received,
 }
 
 int
-ACE_RMCast_Reassembly_Tester::data (ACE_RMCast::Data &data)
+ACE_RMCast_Reassembly_Tester::put (ACE_Message_Block *mb,
+                                   ACE_Time_Value *)
 {
-  ACE_Message_Block *mb = data.payload;
-
   ACE_Message_Block *pointer;
   ACE_OS::memcpy (&pointer, mb->rd_ptr (), sizeof(pointer));
 
   size_t l = mb->length ();
   pointer->size (l);
   pointer->wr_ptr (pointer->rd_ptr () + l);
-  ACE_OS::memcpy (pointer->rd_ptr (), mb->rd_ptr (), l);
+  ACE_OS::memcpy (pointer->rd_ptr (), mb->rd_ptr (), mb->length ());
   return 0;
 }
 
@@ -268,25 +239,30 @@ int
 ACE_RMCast_Reassembly_Tester::put_fragment (ACE_UINT32 sequence_number,
                                             ACE_UINT32 offset,
                                             ACE_UINT32 fragment_size,
-                                            ACE_Message_Block *mb)
+                                            ACE_Message_Block *mb,
+                                            ACE_Time_Value *tv)
 {
   size_t total_length = mb->total_length ();
 
+  ACE_UINT32 header[3];
+  header[0] = ACE_HTONL(sequence_number);
+  header[1] = ACE_HTONL(offset);
+  header[2] = ACE_HTONL(total_length);
+
+  ACE_Message_Block h (ACE_reinterpret_cast(char*,header),
+                       sizeof(header));
+  h.wr_ptr (sizeof(header));
   size_t size = fragment_size;
-  if (offset + size >= total_length)
+  if (total_length - offset < size)
     {
       size = total_length - offset;
     }
-  ACE_Message_Block p (mb->rd_ptr () + offset, size);
-
+  ACE_Message_Block p (mb->rd_ptr () + offset,
+                       size);
   p.wr_ptr (size);
+  h.cont (&p);
 
-  ACE_RMCast::Data data;
-  data.sequence_number = sequence_number;
-  data.total_size = total_length;
-  data.fragment_offset = offset;
-  data.payload = &p;
-  return this->reassembly_.data (data);
+  return this->reassembly_.put (&h);
 }
 
 ACE_UINT32
@@ -299,3 +275,13 @@ ACE_RMCast_Reassembly_Tester::next_sequence_number ()
   }
   return r;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class ACE_RMCast_Reassembly<ACE_MT_SYNCH>;
+
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_RMCast_Reassembly<ACE_MT_SYNCH>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

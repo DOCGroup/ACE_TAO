@@ -62,7 +62,8 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_StructuredPushConsumer : public POA_CosN
   // Accessor for <proxy_supplier_>.
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
+  PortableServer::POA_ptr _default_POA (CORBA::Environment &env);
+
 protected:
   // = Data Members
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;

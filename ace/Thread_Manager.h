@@ -19,7 +19,6 @@
 #include "ace/pre.h"
 
 #include "ace/Thread.h"
-#include "ace/Thread_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -484,8 +483,7 @@ public:
                int grp_id = -1,
                void *stack[] = 0,
                size_t stack_size[] = 0,
-               ACE_hthread_t thread_handles[] = 0,
-               ACE_Task_Base *task = 0);
+               ACE_hthread_t thread_handles[] = 0);
   // Spawn N new threads, which execute <func> with argument <arg>.
   // If <thread_ids> != 0 the thread_ids of successfully spawned
   // threads will be placed into the <thread_ids> buffer (which must
@@ -587,18 +585,15 @@ public:
   int testresume (ACE_thread_t t_id);
   // True if <t_id> is active (i.e., resumed), else false.
 
-  // = Send signals to one or more threads without blocking.
+  // = Kill methods, send signals -- which isn't supported on Win32 (will not block).
   int kill_all (int signum);
-  // Send <signum> to all stopped threads.  Not supported on platforms
-  // that do not have advanced signal support, such as Win32.
+  // Send signum to all stopped threads
   int kill (ACE_thread_t,
             int signum);
-  // Send the <signum> to a single thread.  Not supported on platforms
-  // that do not have advanced signal support, such as Win32.
+  // Kill a single thread.
   int kill_grp (int grp_id,
                 int signum);
-  // Send <signum> to a group of threads, not supported on platforms
-  // that do not have advanced signal support, such as Win32.
+  // Kill a group of threads.
 
   // = Cancel methods, which provides a cooperative thread-termination mechanism (will not block).
   int cancel_all (int async_cancel = 0);

@@ -2,7 +2,6 @@
 
 #include "ImplRepo_i.h"
 #include "Options.h"
-#include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "ace/Read_Buffer.h"
@@ -64,18 +63,15 @@ const char *convert_str (ImplementationRepository::ActivationMode mode)
 // Constructor
 
 ImplRepo_i::ImplRepo_i (void)
-  : locator_ (0),
-    forwarder_impl_ (0),
+  : forwarder_impl_ (0),
     activator_ (0),
     ior_multicast_ (0)
 {
-  this->locator_ = new IMR_Locator (this);
+  // Nothing
 }
 
-char *
-ImplRepo_i::find_ior (const ACE_CString &object_name,
-                      CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
+int
+ImplRepo_i::find_ior (const ACE_CString &object_name, ACE_CString &ior)
 {
   ACE_TString endpoint;
   ACE_TString poa_name;
@@ -93,30 +89,27 @@ ImplRepo_i::find_ior (const ACE_CString &object_name,
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "find_ior: poa name <%s>, %d\n", poa_name.c_str (), pos));
 
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
-      endpoint = this->activate_server_i (poa_name.c_str (), 1,
-                                          ACE_TRY_ENV);
+      endpoint = this->activate_server_i (poa_name.c_str (), 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
-      ACE_THROW_RETURN (IORTable::NotFound (), 0);
+      return -1;
     }
   ACE_ENDTRY;
-  ACE_CHECK_RETURN (0);
 
   // Have to do this so it is null terminated
-  ACE_TString object_name2 (object_name.fast_rep (),
-                            object_name.length ());
+  ACE_TString object_name2 (object_name.fast_rep (), object_name.length ());
 
-  ACE_CString ior = endpoint;
+  ior = endpoint;
   ior += object_name2;
 
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "find_ior: new ior is <%s>\n", endpoint.c_str ()));
 
-  return CORBA::string_dup (ior.c_str ());
+  return 0;
 }
 
 
@@ -661,9 +654,7 @@ ImplRepo_i::server_is_running (const char *server,
   TAO_MProfile mp;
   TAO_ObjectKey objkey;
 
-  // Use a Null filter, all the profiles in the ImR are valid, no
-  // matter what the server has.
-  registry->make_mprofile (objkey, mp, 0);
+  registry->make_mprofile (objkey, mp);
 
   // @@ (brunsch) Only look at current profile for now.
   TAO_Profile *profile = mp.get_current_profile ();
@@ -727,23 +718,7 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
       this->orb_ = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable",
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      if (CORBA::is_nil (adapter.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-        }
-      else
-        {
-          adapter->set_locator (this->locator_.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
+      this->orb_->_tao_register_IOR_table_callback (this, 0);
 
       CORBA::Object_var root_poa_object =
         this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
@@ -825,15 +800,14 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
         this->imr_poa_->id_to_reference (imr_id.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
+      // Register with INS.
+      this->orb_->_tao_add_to_IOR_table ("ImplRepoService", imr_obj.in ());
+
       // And its string
 
       this->imr_ior_ =
         this->orb_->object_to_string (imr_obj.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
 
-      // Register with INS.
-      adapter->bind ("ImplRepoService", this->imr_ior_.in (),
-                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (OPTIONS::instance ()->debug () >= 2)
@@ -853,10 +827,14 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
                       IMR_Adapter_Activator (this->forwarder_impl_),
                       -1);
 
+      PortableServer::AdapterActivator_var activator =
+        this->activator_->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       // Register the Adapter_Activator reference to be the RootPOA's
       // Adapter Activator.
 
-      this->root_poa_->the_activator (this->activator_, ACE_TRY_ENV);
+      this->root_poa_->the_activator (activator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       // Get reactor instance from TAO.
@@ -946,27 +924,16 @@ ImplRepo_i::init (int argc, char **argv, CORBA::Environment &ACE_TRY_ENV)
 int
 ImplRepo_i::fini (CORBA::Environment &ACE_TRY_ENV)
 {
+  // Unregister ourself with the orb by replacing with a regular
+  // callback
+  TAO_IOR_LookupTable_Callback *regular;
+
+  ACE_NEW_RETURN (regular, TAO_IOR_LookupTable_Callback, -1);
+
+  this->orb_->_tao_register_IOR_table_callback (regular, 1);
+
   ACE_TRY
     {
-      CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable",
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      if (CORBA::is_nil (adapter.in ()))
-        {
-          ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
-        }
-      else
-        {
-          adapter->set_locator (IORTable::Locator::_nil (),
-                                ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-        }
-
       this->imr_poa_->destroy (1, 1, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
@@ -1062,7 +1029,7 @@ ImplRepo_i::~ImplRepo_i (void)
                   "Implementation Repository: cannot remove handler\n"));
 
   delete this->forwarder_impl_;
-  CORBA::release (this->activator_);
+  delete this->activator_;
   delete this->ior_multicast_;
 }
 
@@ -1277,23 +1244,6 @@ ImplRepo_i::shutdown_server (const char *server,
     }
 }
 
-// ****************************************************************
-
-IMR_Locator::IMR_Locator (ImplRepo_i *repo)
-  :  repo_ (repo)
-{
-}
-
-char *
-IMR_Locator::locate (const char *object_key,
-                     CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException, IORTable::NotFound))
-{
-  ACE_CString key (object_key);
-  return this->repo_->find_ior (key, ACE_TRY_ENV);
-}
-
-// ****************************************************************
 
 IMR_Adapter_Activator::IMR_Adapter_Activator (IMR_Forwarder *servant)
   : servant_ (servant)
@@ -1305,7 +1255,6 @@ CORBA::Boolean
 IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
                                        const char *name,
                                        CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::PolicyList policies (4);
   policies.length (4);
@@ -1357,8 +1306,12 @@ IMR_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
           ACE_TRY_CHECK;
         }
 
+      exception_message = "While _this";
+      PortableServer::AdapterActivator_var activator = this->_this (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
       exception_message = "While child->the_activator";
-      child->the_activator (this, ACE_TRY_ENV);
+      child->the_activator (activator.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       exception_message = "While unknown_adapter, set_servant";
@@ -1399,27 +1352,18 @@ void
 IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
                        CORBA::Environment &ACE_TRY_ENV)
 {
-  // @@ This could be optimized, the PortableServer::Current object
-  // can be cached..
-  CORBA::Object_var tmp =
-    this->orb_var_->resolve_initial_references ("POACurrent",
-                                                ACE_TRY_ENV);
-  ACE_CHECK;
-
-  PortableServer::Current_var current =
-    PortableServer::Current::_narrow (tmp.in (), ACE_TRY_ENV);
-  ACE_CHECK;
+  TAO_ORB_Core *orb_core = this->orb_var_->orb_core ();
+  TAO_POA_Current_Impl *poa_current_impl = orb_core->poa_current ().implementation ();
 
   // The servant determines the key associated with the database entry
   // represented by self
-  PortableServer::ObjectId_var oid =
-    current->get_object_id (ACE_TRY_ENV);
+  PortableServer::ObjectId_var oid = poa_current_impl->get_object_id (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Now convert the id into a string
   CORBA::String_var key = PortableServer::ObjectId_to_string (oid.in ());
 
-  PortableServer::POA_ptr poa = current->get_POA (ACE_TRY_ENV);
+  PortableServer::POA_ptr poa = poa_current_impl->get_POA (ACE_TRY_ENV);
   ACE_CHECK;
 
   // Now activate.
@@ -1434,14 +1378,7 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   // Add the key
 
   char *key_str = 0;
-
-  // @@ Even if the POA Current is cached the following code will
-  //    work.  But the implementation cannot be cached!
-  TAO_POA_Current *tao_current =
-    ACE_dynamic_cast(TAO_POA_Current*, current.in ());
-  TAO_POA_Current_Impl *impl = tao_current->implementation ();
-  TAO_ObjectKey::encode_sequence_to_string (key_str,
-                                            impl->object_key ());
+  TAO_POA::encode_sequence_to_string (key_str, poa_current_impl->object_key ());
 
   ior += key_str;
   CORBA::string_free (key_str);
@@ -1449,8 +1386,7 @@ IMR_Forwarder::invoke (CORBA::ServerRequest_ptr ,
   if (OPTIONS::instance()->debug () >= 2)
     ACE_DEBUG ((LM_DEBUG, "Forwarding to %s\n", ior.c_str ()));
 
-  CORBA::Object_ptr forward_obj =
-    this->orb_var_->string_to_object (ior.c_str (), ACE_TRY_ENV);
+  CORBA::Object_ptr forward_obj = orb_core->orb ()->string_to_object (ior.c_str (), ACE_TRY_ENV);
   ACE_CHECK;
 
   if (!CORBA::is_nil (forward_obj))

@@ -135,9 +135,6 @@ be_visitor_typedef_ci::visit_array (be_array *node)
   be_typedef *tdef = this->ctx_->tdef (); // typedef node
   be_type *bt;
 
-  // This doesn't catch 'typedef of a typedef' if the node is
-  // imported, so we check for that below before generating 
-  // any code.
   if (this->ctx_->alias ()) // typedef of a typedef
     bt = this->ctx_->alias ();
   else
@@ -158,12 +155,6 @@ be_visitor_typedef_ci::visit_array (be_array *node)
     }
   else
     {
-      if (bt->imported ())
-        {
-          // Code below is generated in another file.
-          return 0;
-        }
-
       // generate the inline code for alloc, dup, copy, and free methods
 
       // alloc method

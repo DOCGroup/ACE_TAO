@@ -1,5 +1,5 @@
 /* -*- C++ -*- $Id$ */
-#include "Notify_FilterAdmin_i.h"
+#include "orbsvcs/orbsvcs/Notify/Notify_FilterAdmin_i.h"
 
 ACE_RCSID(Notify, Notify_FilterAdmin_i, "$Id$")
 
@@ -63,7 +63,10 @@ TAO_Notify_FilterAdmin_i::add_filter (
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       0);
   else
-    return new_id;
+    {
+      this->filter_ids_.next ();
+      return new_id;
+    }
 }
 
 void TAO_Notify_FilterAdmin_i::remove_filter (

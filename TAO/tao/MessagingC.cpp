@@ -11,6 +11,7 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
+#include "tao/MessagingS.h"
 #include "tao/Stub.h"
 #include "tao/Invocation.h"
 
@@ -1794,9 +1795,9 @@ Messaging::TAO_Messaging_ReplyHandler_Smart_Proxy_Base::get_proxy (void)
 
     #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || \
     defined (ACE_HAS_GNU_REPO)
-  template class TAO_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
+  template class ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX >;
   #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #pragma instantiate TAO_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
+  #pragma instantiate ACE_Singleton<Messaging::TAO_Messaging_ReplyHandler_Proxy_Factory_Adapter, ACE_SYNCH_RECURSIVE_MUTEX>
   #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* TAO_HAS_SMART_PROXIES */
@@ -2333,7 +2334,7 @@ CORBA::Boolean operator<< (
     {
       // encode all elements
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
       {
         TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
           ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (Messaging::PolicyValue::_tao_seq_Octet *)&_tao_sequence);
@@ -2343,10 +2344,10 @@ CORBA::Boolean operator<< (
           return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
       }
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES */
       return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
     }
     return 0; // error
   }
@@ -2366,7 +2367,7 @@ CORBA::Boolean operator<< (
         return 1;
       // retrieve all the elements
 
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
+#if defined (TAO_NO_COPY_OCTET_SEQUENCES)
       if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
       {
         TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
@@ -2379,10 +2380,10 @@ CORBA::Boolean operator<< (
       else
         return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
 
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+#else /* TAO_NO_COPY_OCTET_SEQUENCES */
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
 
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
+#endif /* TAO_NO_COPY_OCTET_SEQUENCES */
     }
     return 0; // error
   }

@@ -9,14 +9,11 @@ Shawn Atkins <sma1@cs.wustl.edu>
 Matt Braun <mjb2@cs.wustl.edu>
 Darrell Brunsch <brunsch@cs.wustl.edu>
 Chris Cleeland <chris@cs.wustl.edu>
-Eric Ding <qnd1@cs.wustl.edu>
 Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 Chris Gill <cdgill@cs.wustl.edu>
-Andrew G. Gilpin  <agg1@cs.wustl.edu>
 Aniruddha Gokhale <gokhale@cs.wustl.edu>
 Priyanka Gontla <pgontla@ece.uci.edu>
 Pradeep Gore <pradeep@cs.wustl.edu>
-Shawn Hannan <hannan@cs.wustl.edu>
 Tim Harrison <harrison@cs.wustl.edu>
 John Heitmann  <jwh1@cs.wustl.edu>
 James Hu <jxh@cs.wustl.edu>
@@ -361,7 +358,7 @@ Saneyasu <sane@sail.t.u-tokyo.ac.jp>
 Steve Kay <slk1@icore.ih.lucent.com>
 Greg White <gwhite@northlink.com>
 Ki-hyun Yoon <abird@nextware.co.kr>
-Umar Syyid <usyyid@hotmail.com>
+Umar Syyid <usyyid@hns.com>
 Bill Fulton <fultonb@pcnet1.ascs.aro.allied.com>
 Amancio Hasty <hasty@rah.star-gate.com>
 Zoran Ivanovic <Zoran_Ivanovic@i2.com>
@@ -955,7 +952,7 @@ Mathew Samuel <Mathew.Samuel@msdw.com>
 Conrad Hughes <conrad@baltimore.ie>
 John Rodgers <jrrodgers@acm.org>
 Charles Taurines <ctaurines@amadeus.net>
-James Lacey <James.Lacey@motorola.com>
+James Lacey <jlacey@ftw.paging.mot.com>
 Nick Pratt <npratt@microstrategy.com>
 Xiaojun Wu <depender@yahoo.com>
 George Lafortune <lafortg@res.raytheon.com>
@@ -1010,51 +1007,6 @@ Tomer Amiaz <Tomer@bandwiz.com>
 Sergey Osokin <osa@freebsd.org.ru>
 Nick Logvinov <nl@rpb.ru>
 Viatcheslav A. Batenine <slavikb@iname.com>
-Shashi Bhushan <Shashi.Bhushan@lmco.com>
-Javier Corrales <jcorrales@tcpsi.es>
-J. Randy Pitz <james.r.pitz@boeing.com>
-Richard Reitmeyer <richard@verecomm.com>
-Xavier Montet <montet@cena.fr>
-Letha Etzkorn <letzkorn@cs.uah.edu>
-James Dabbs <jdabbs_home@mindspring.com>
-Matej Sekoranja <matej.sekoranja@ijs.si>
-Mattias Eriksson <snaggen@acc.umu.se>
-Nicoletta Viale <nicoletta.viale@sodalia.it>
-George Reid <greid@entrenet.com>
-Kim Lester <Kim_R_Lester@rta.nsw.gov.au>
-Wilson Chan <wilson@i-finance.com.hk>
-William Rucklidge <wjr@imarkets.com>
-Victor Krebss <lopik@delfi.lv>
-Chander P. Thareja <cthareja@ssind.stpn.soft.net>
-John Mills <jmills@tga.com>
-Haifeng Lee <haifeng@dset.com.cn>
-Hans Utz <hans.utz@student.uni-ulm.de>
-Askok Kumar Kalanithi <k_ashok_kumar@yahoo.com>
-Chris Able <cable@scires.com>
-John Hiltenbrand <jhiltenb@uiuc.edu>
-Steve Hespelt <shespelt@bear.com>
-Peter Fischer <fischer@softec.de>
-Madhu Ramachandran <mramacha@atdsprint.com>
-Caleb Epstein <cae@home.com>
-Bruno Marconi <bmarconi@jetstream.com>
-Ken Childress <kchildre@uccs.jpl.nasa.gov>
-Michael Kramer <kramer@ave.ac.agit.de>
-Johhny Willemsen <johnny.willemsen@meco.nl>
-Jonathan Astle <JNASTLE@dera.gov.uk>
-Javier Lopez Sanchez <jlopez@uida.es>
-Nir Drang <Nir@bandwiz.com>
-Albert Wijnja <Albert.Wijnja@meco.nl>
-Marcel Van Der Weert <mvdweert@aweta.nl>
-Mervyn Quah <mquah@guoco.com>
-Giovanni Zito <gzito@mbox.thunder.it>
-Matthew Adams <madams@bexusa.com>
-Sameer Schabungbam <schabungbam@hss.hns.com>
-Jeff Butler <jeff@panasas.com>
-Roland Rüdenauer <roland.ruedenauer@freenet.de>
-John Buckman <john@lyris.com>
-Guy Rosen <grosen@bigfoot.com>
-<amoderni@viasoft.com>
-Bennett R. Stabile <bstabile@home.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

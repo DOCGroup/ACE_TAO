@@ -18,14 +18,12 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO::Buf
 
 TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buffering_Constraint_Policy &rhs)
   : TAO::BufferingConstraintPolicy (),
-    TAO_Local_RefCounted_Object (),
     buffering_constraint_ (rhs.buffering_constraint_)
 {
 }
 
 CORBA::PolicyType
 TAO_Buffering_Constraint_Policy::policy_type (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
 }
@@ -67,7 +65,6 @@ TAO_Buffering_Constraint_Policy::buffering_constraint (CORBA::Environment &)
 
 CORBA::Policy_ptr
 TAO_Buffering_Constraint_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TAO_Buffering_Constraint_Policy* servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -80,7 +77,6 @@ TAO_Buffering_Constraint_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_Buffering_Constraint_Policy::destroy (CORBA_Environment &)
-  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
 

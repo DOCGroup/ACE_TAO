@@ -471,9 +471,6 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
   this->cur_count_--;
 
-  if (this->cur_count_ == 0 && this->head_ == this->tail_)
-    this->head_ = this->tail_ = 0;
-
   // Only signal enqueueing threads if we've fallen below the low
   // water mark.
   if (this->cur_bytes_ <= this->low_water_mark_
@@ -663,7 +660,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::enqueue_prio (ACE_Message_Block *new_item,
 
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue<ACE_SYNCH_USE>::enqueue (ACE_Message_Block *new_item,
-                                           ACE_Time_Value *timeout)
+                                         ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::enqueue");
   return this->enqueue_prio (new_item, timeout);

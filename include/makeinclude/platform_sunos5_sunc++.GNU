@@ -67,7 +67,7 @@ endif # threads
 CC              = cc
 CXX             = CC
 
-CC_VERSION = $(shell $(CXX) -V 2>&1)
+CC_VERSION = $(shell CC -V 2>&1)
 
 ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
@@ -87,7 +87,7 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### Create template repository to avoid compiler warning.
   TEMPLATE_REPOSITORY = Templates.DB
 else  # ! 4.2
-ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
+ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
   #### CC 5.0 or later
   #### Inlining appears to cause link problems with early releases of
   #### CC 5.0.
@@ -104,13 +104,7 @@ ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
     #### Support RTTI by default.  And, use explicit template instantiation
     #### because automatic instantiation appears to be broken, at least
     #### with early releases of CC 5.0.  And, use old iostreams.
-    CCFLAGS += $(CFLAGS) -instances=explicit
-    ifeq (C++ 5.0,$(findstring C++ 5.0,$(CC_VERSION)))
-      CCFLAGS += -library=iostream,no%Cstd
-    else
-      #### SunCC 5.1 seems to need the std cpp lib
-      CCFLAGS += -library=iostream
-    endif # CC 5.0
+    CCFLAGS += $(CFLAGS) -library=iostream,no%Cstd -instances=explicit
   endif # compat4 requested
 endif # CC 5.0 or later
 endif # ! 4.2
@@ -150,7 +144,7 @@ endif
   LIBS          += -lsocket -ldl -lnsl -lgen -lposix4
 endif # orbix
 
-ifeq (C++ 5,$(findstring C++ 5,$(CC_VERSION)))
+ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
         ifeq ($(compat4),1)
                COMPAT_LIBDIR=/opt/SUNWspro/lib/CC4
                LIBS    += -L$(COMPAT_LIBDIR) -lC

@@ -1,10 +1,10 @@
 // $Id$
 
-#include "tao/Object_Loader.h"
+#include "Object_Loader.h"
 #include "ace/Dynamic_Service.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Object_Loader.i"
+#include "Object_Loader.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(tao, Object_Loader, "$Id$")

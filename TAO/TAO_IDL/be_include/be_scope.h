@@ -59,9 +59,6 @@ public:
   virtual be_decl *decl (void);
   // return the be_decl node corresponding to this scope node
 
-  virtual void destroy (void);
-  // Recursively clean up scope members.
-
   // Visiting
   virtual int accept (be_visitor *visitor);
 

@@ -5,7 +5,7 @@
 #include "ace/Handle_Set.h"
 
 ACE_INLINE ACE_Reactor_Impl *
-ACE_Reactor::implementation (void) const
+ACE_Reactor::implementation (void)
 {
   return this->implementation_;
 }
@@ -635,7 +635,7 @@ ACE_Reactor::ready_ops (ACE_HANDLE handle,
 }
 
 ACE_INLINE size_t
-ACE_Reactor::size (void) const
+ACE_Reactor::size (void)
 {
   return this->implementation ()->size ();
 }

@@ -36,7 +36,7 @@ public:
   ACE_Dirent (void);
   // Default constructor.
 
-  ACE_EXPLICIT ACE_Dirent (const ACE_TCHAR *dirname);
+  ACE_Dirent (const ACE_TCHAR *dirname);
   // Constructor calls <opendir>
 
   int open (const ACE_TCHAR *filename);

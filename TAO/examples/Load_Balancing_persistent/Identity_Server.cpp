@@ -54,6 +54,7 @@ Identity_Server::init (int argc,
                        char* argv[])
 {
   int result;
+  CORBA_DynAny_var temp_var;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

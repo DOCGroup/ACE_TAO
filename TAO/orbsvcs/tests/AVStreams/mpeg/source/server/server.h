@@ -65,11 +65,7 @@ public:
                                                      CORBA::Boolean_out met_qos,
                                                      char *&named_vdev,
                                                      const AVStreams::flowSpec &the_spec,
-                                                     CORBA::Environment &env)
-    ACE_THROW_SPEC (( CORBA::SystemException, AVStreams::streamOpFailed,
-      AVStreams::streamOpDenied, AVStreams::notSupported,
-      AVStreams::QoSRequestFailed, AVStreams::noSuchFlow ));
-
+                                                     CORBA::Environment &env);
   // Called by StreamCtrl to create a "B" type streamandpoint and vdev
 
   int connections (void);

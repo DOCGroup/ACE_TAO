@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -p
 # $Id$
 #
 # This is the UNIX version of the one-button ACE tests.

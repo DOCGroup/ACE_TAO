@@ -38,7 +38,25 @@
 
 #include "tao/try_macros.h"
 #include "tao/varbase.h"
-#include "tao/TAO_Export.h"
+
+#if !defined (TAO_HAS_DLL)
+// On Windows NT, the default is to build TAO as a DLL library.
+#  define TAO_HAS_DLL 1
+#endif /* TAO_HAS_DLL */
+
+// Here are definition for TAO library.
+#if defined (TAO_HAS_DLL) && (TAO_HAS_DLL == 1)
+#  if defined (TAO_BUILD_DLL)
+#    define TAO_Export ACE_Proper_Export_Flag
+#    define TAO_SINGLETON_DECLARATION(T) ACE_EXPORT_SINGLETON_DECLARATION (T)
+#  else
+#    define TAO_Export ACE_Proper_Import_Flag
+#    define TAO_SINGLETON_DECLARATION(T) ACE_IMPORT_SINGLETON_DECLARATION (T)
+#  endif /* TAO_BUILD_DLL */
+#else /* TAO_HAS_DLL */
+#  define TAO_Export
+#  define TAO_SINGLETON_DECLARATION(T)
+#endif /* TAO_HAS_DLL */
 
 // @@ NW: Disable messing with the alignment for now.
 // For some reason, PC compilers don't implement "natural" alignment,
@@ -69,6 +87,30 @@ class CORBA_Any;
 class CORBA_Any_var;
 class CORBA_Any_out;
 typedef class CORBA_Any *CORBA_Any_ptr;
+
+class CORBA_DynAny;
+class CORBA_DynAny_var;
+typedef class CORBA_DynAny *CORBA_DynAny_ptr;
+
+class CORBA_DynStruct;
+class CORBA_DynStruct_var;
+typedef CORBA_DynStruct *CORBA_DynStruct_ptr;
+
+class CORBA_DynSequence;
+class CORBA_DynSequence_var;
+typedef CORBA_DynSequence *CORBA_DynSequence_ptr;
+
+class CORBA_DynArray;
+class CORBA_DynArray_var;
+typedef CORBA_DynArray *CORBA_DynArray_ptr;
+
+class CORBA_DynUnion;
+class CORBA_DynUnion_var;
+typedef CORBA_DynUnion *CORBA_DynUnion_ptr;
+
+class CORBA_DynEnum;
+class CORBA_DynEnum_var;
+typedef CORBA_DynEnum *CORBA_DynEnum_ptr;
 
 class CORBA_TypeCode;
 class CORBA_TypeCode_var;
@@ -133,6 +175,11 @@ TAO_SYSTEM_EXCEPTION_LIST
 class CORBA_WrongTransaction;
 typedef CORBA_WrongTransaction *CORBA_WrongTransaction_ptr;
 
+struct CORBA_NameValuePair;
+class CORBA_NameValuePair_var;
+class CORBA_NameValuePair_out;
+typedef CORBA_NameValuePair *CORBA_NameValuePair_ptr;
+
 class CORBA_Request;
 class CORBA_Request_var;
 class CORBA_Request_out;
@@ -168,6 +215,16 @@ class CORBA_ConstructionPolicy_var;
 class CORBA_ConstructionPolicy_out;
 typedef class CORBA_ConstructionPolicy *CORBA_ConstructionPolicy_ptr;
 
+class CORBA_AnySeq;
+class CORBA_AnySeq_var;
+class CORBA_AnySeq_out;
+
+// Forward declarations.
+class CORBA_NameValuePairSeq;
+class CORBA_NameValuePairSeq_var;
+class CORBA_NameValuePairSeq_out;
+typedef CORBA_NameValuePairSeq *CORBA_NameValuePairSeq_ptr;
+
 #endif /* ! TAO_HAS_MINIMUM_CORBA */
 
 class CORBA_ORB;
@@ -179,11 +236,6 @@ class CORBA_Object;
 class CORBA_Object_var;
 class CORBA_Object_out;
 typedef class CORBA_Object *CORBA_Object_ptr;
-
-class CORBA_LocalObject;
-class CORBA_LocalObject_var;
-class CORBA_LocalObject_out;
-typedef class CORBA_LocalObject *CORBA_LocalObject_ptr;
 
 class CORBA_Current;
 class CORBA_Current_var;
@@ -434,6 +486,30 @@ TAO_NAMESPACE CORBA
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
+  typedef CORBA_DynAny DynAny;
+  typedef DynAny *DynAny_ptr;
+  typedef CORBA_DynAny_var DynAny_var;
+
+  typedef CORBA_DynArray DynArray;
+  typedef DynAny *DynArray_ptr;
+  typedef CORBA_DynArray_var DynArray_var;
+
+  typedef CORBA_DynEnum DynEnum;
+  typedef DynAny *DynEnum_ptr;
+  typedef CORBA_DynEnum_var DynEnum_var;
+
+  typedef CORBA_DynSequence DynSequence;
+  typedef DynAny *DynSequence_ptr;
+  typedef CORBA_DynSequence_var DynSequence_var;
+
+  typedef CORBA_DynStruct DynStruct;
+  typedef DynAny *DynStruct_ptr;
+  typedef CORBA_DynStruct_var DynStruct_var;
+
+  typedef CORBA_DynUnion DynUnion;
+  typedef DynAny *DynUnion_ptr;
+  typedef CORBA_DynUnion_var DynUnion_var;
+
   typedef CORBA_Request Request;
   typedef Request *Request_ptr;
   typedef CORBA_Request_var Request_var;
@@ -459,6 +535,10 @@ TAO_NAMESPACE CORBA
   typedef CORBA_ContextList_var ContextList_var;
   typedef CORBA_ContextList_out ContextList_out;
 
+  typedef char *CORBA_FieldName;
+  typedef CORBA_String_var CORBA_FieldName_var;
+  typedef CORBA_String_out CORBA_FieldName_out;
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   typedef CORBA_Object Object;
@@ -466,10 +546,10 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Object_var Object_var;
   typedef CORBA_Object_out Object_out;
 
-  typedef CORBA_LocalObject LocalObject;
-  typedef CORBA_LocalObject *LocalObject_ptr;
-  typedef CORBA_LocalObject_var LocalObject_var;
-  typedef CORBA_LocalObject_out LocalObject_out;
+  class LocalObject;
+  typedef LocalObject *LocalObject_ptr;
+  class LocalObject_var;
+  class LocalObject_out;
 
   typedef CORBA_Principal Principal;
   typedef CORBA_Principal *Principal_ptr;
@@ -518,7 +598,6 @@ TAO_NAMESPACE CORBA
   typedef CORBA_Bounds *Bounds_ptr;
 #ifdef TAO_HAS_VALUETYPE
   typedef CORBA_ValueBase ValueBase;
-  typedef CORBA_ValueBase *ValueBase_ptr;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
   typedef CORBA_ValueFactoryBase *ValueFactory;
   // as CORBA 2.3a C++ map. 20.17.10 says
@@ -827,6 +906,28 @@ TAO_NAMESPACE CORBA
   typedef CORBA_WrongTransaction WrongTransaction;
   typedef WrongTransaction *WrongTransaction_ptr;
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WrongTransaction;
+
+  typedef CORBA_AnySeq AnySeq;
+  typedef CORBA_AnySeq_var AnySeq_var;
+  typedef CORBA_AnySeq_out AnySeq_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AnySeq;
+
+  typedef CORBA_FieldName FieldName;
+  typedef CORBA_FieldName_var FieldName_var;
+  typedef CORBA_FieldName_out FieldName_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FieldName;
+
+  typedef CORBA_NameValuePair NameValuePair;
+  typedef CORBA_NameValuePair *NameValuePair_ptr;
+  typedef CORBA_NameValuePair_var NameValuePair_var;
+  typedef CORBA_NameValuePair_out NameValuePair_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePair;
+
+  typedef CORBA_NameValuePairSeq NameValuePairSeq;
+  typedef CORBA_NameValuePairSeq *NameValuePairSeq_ptr;
+  typedef CORBA_NameValuePairSeq_var NameValuePairSeq_var;
+  typedef CORBA_NameValuePairSeq_out NameValuePairSeq_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePairSeq;
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 

@@ -13,83 +13,78 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_TIME_H_POSIX
-#define PACE_TIME_H_POSIX
-
-#if PACE_LINUX
-# include "pace/emulation/time.h"
-#endif /* PACE_LINUX */
+#ifndef PACE_TIME_H
+#define PACE_TIME_H
 
 #include <time.h>
-#include "pace/signal.h"
 
 #if defined (PACE_HAS_CPLUSPLUS)
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#define PACE_CLK_TCK CLK_TCK
-#define PACE_CLOCKS_PER_SEC CLOCKS_PER_SEC
-#define PACE_CLOCK_REALTIME CLOCK_REALTIME
-#ifndef PACE_NULL
-#define PACE_NULL NULL
-#endif /* PACE_NULL */
-#define PACE_TIMER_ABSTIME TIMER_ABSTIME
+  PACE_INLINE char * pace_asctime_r (const struct tm * tm, char * buf);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_CLOCKID_T
-#define PACE_CLOCKID_T
-# if defined PACE_EMU_CLOCKID_T
-  typedef pace_emu_clockid_t pace_clockid_t;
-# else
-  typedef clockid_t pace_clockid_t;
-# endif /* PACE_LINUX */
-#endif /* PACE_CLOCKID_T */
+  PACE_INLINE int pace_clock_getres (clockid_t clock_id,
+                                     struct timespec * res);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_CLOCK_T
-#define PACE_CLOCK_T
-  typedef clock_t pace_clock_t;
-#endif /* PACE_CLOCK_T */
+  PACE_INLINE int pace_clock_gettime (clockid_t clock_id,
+                                      struct timespec * tp);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_SIZE_T
-#define PACE_SIZE_T
-  typedef size_t pace_size_t;
-#endif /* PACE_SIZE_T */
+  PACE_INLINE int pace_clock_settime (clockid_t clock_id,
+                                      const struct timespec * tp);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_TIMER_T
-#define PACE_TIMER_T
-# if defined PACE_EMU_TIMER_T
-  typedef pace_emu_timer_t pace_timer_t;
-# else
-  typedef timer_t pace_timer_t;
-# endif /* PACE_LINUX */
-#endif /* PACE_TIMER_T */
+  PACE_INLINE char * pace_ctime_r (const time_t * clock, char * buf);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_TIME_T
-#define PACE_TIME_T
-  typedef time_t pace_time_t;
-#endif /* PACE_TIME_T */
+  PACE_INLINE struct tm * pace_gmtime_r (const time_t * clock,
+                                         struct tm * result);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_TM
-#define PACE_TM
-  typedef struct tm pace_tm;
-#endif /* PACE_TM */
+  PACE_INLINE struct tm * pace_localtime_r (const time_t * clock,
+                                            struct tm * result);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_TIMESPEC
-#define PACE_TIMESPEC
-  typedef struct timespec pace_timespec;
-#endif /* PACE_TIMESPEC */
+  PACE_INLINE int pace_nanosleep (const struct timespec * rqtp,
+                                  struct timespec * rmtp);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_ITIMERSPEC
-#define PACE_ITIMERSPEC
-  typedef struct itimerspec pace_itimerspec;
-#endif /* PACE_ITIMERSPEC */
+  PACE_INLINE int pace_time (time_t *tloc);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-#ifndef PACE_SIGEVENT
-#define PACE_SIGEVENT
-  typedef struct sigevent pace_sigevent;
-#endif /* PACE_SIGEVENT */
+  PACE_INLINE int pace_timer_create (clockid_t clock_id,
+                                     struct sigevent * evp,
+                                     timer_t * timerid);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE int pace_timer_delete (timer_t timerid);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE int pace_timer_getoverrun (timer_t timerid);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE int pace_timer_gettime (timer_t timerid,
+                                      struct itimerspec * value);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE int pace_timer_settime (timer_t timerid,
+                                      int flags,
+                                      const struct itimerspec * value,
+                                      struct itimerspec * ovalue);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE void pace_tzset ();
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_TIME_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/time.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_TIME_H */

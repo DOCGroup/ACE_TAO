@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_DIRENT_H_POSIX
-#define PACE_DIRENT_H_POSIX
+#ifndef PACE_DIRENT_H
+#define PACE_DIRENT_H
 
 #include "pace/sys/types.h"
 #include <dirent.h>
@@ -23,18 +23,24 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#ifndef PACE_DIR_T
-#define PACE_DIR_T
-typedef DIR PACE_DIR;
-#endif /* PACE_DIR_T */
+  PACE_INLINE DIR * pace_opendir (const char * dirname);
 
-#ifndef PACE_DIRENT
-#define PACE_DIRENT
-typedef struct dirent pace_dirent;
-#endif /* PACE_DIRENT */
+  PACE_INLINE struct dirent * pace_readdir (DIR * dirp);
+
+  PACE_INLINE int pace_readdir_r (DIR * dirp, struct dirent * entry,
+                                  struct dirent ** result);
+  /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
+
+  PACE_INLINE void pace_rewinddir (DIR * dirp);
+
+  PACE_INLINE int pace_closedir (DIR * dirp);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_DIRENT_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/dirent.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_DIRENT_H */

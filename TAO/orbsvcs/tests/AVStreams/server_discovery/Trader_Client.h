@@ -12,7 +12,7 @@
 #ifndef TRADER_CLIENT_H
 #define TRADER_CLIENT_H
 
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/TAO.h"
 #include "Video_RepositoryC.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Trader_Utils.h"
@@ -150,3 +150,7 @@ private:
 
 
 #endif /* TRADER_CLIENT_H */
+
+
+
+

@@ -3,102 +3,6 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "AMI Peer"=.\AMI\FL_Callback\AMI_Peer.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "AMI Progress"=.\AMI\FL_Callback\AMI_Progress.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "AMI_Iterator Client"=.\Content_Server\AMI_Iterator\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "AMI_Iterator Server"=.\Content_Server\AMI_Iterator\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "AMI_Observer Client"=.\Content_Server\AMI_Observer\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "AMI_Observer Server"=.\Content_Server\AMI_Observer\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Buffered_Oneways Client"=.\Buffered_Oneways\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Buffered_Oneways Server"=.\Buffered_Oneways\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
 Project: "Callback Quoter Consumer"=.\Callback_Quoter\Consumer.dsp - Package Owner=<4>
 
 Package=<5>
@@ -135,7 +39,19 @@ Package=<4>
 
 ###############################################################################
 
-Project: "DualEC_Sup"=.\Simulator\Event_Supplier\DualEC_Sup.dsp - Package Owner=<4>
+Project: "Buffered_Oneways Client"=.\Buffered_Oneways\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Buffered_Oneways Server"=.\Buffered_Oneways\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -172,102 +88,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Event_Comm Supplier"=.\Event_Comm\Supplier.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Event_Sup"=.\Simulator\Event_Supplier\Event_Sup.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Load_Balancing client"=.\Load_Balancing\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Load_Balancing server"=.\Load_Balancing\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Load_Balancing service"=.\Load_Balancing\service.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Load_Balancing_persistent client"=.\Load_Balancing_persistent\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Load_Balancing_persistent server"=.\Load_Balancing_persistent\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Load_Balancing_persistent service"=.\Load_Balancing_persistent\service.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "Logging_Sup"=.\Simulator\Event_Supplier\Logging_Sup.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -549,7 +369,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Persistent Grid Client"=.\Persistent_Grid\Persistent_Grid_Client_Files.dsp - Package Owner=<4>
+Project: "Persistent Grid Client Files"=".\Persistent_Grid\Persistent_Grid_Client_Files.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -561,7 +381,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Persistent Grid Second Client"=.\Persistent_Grid\Persistent_Grid_Second_Client_Files.dsp - Package Owner=<4>
+Project: "Persistent Grid Second Client FIles"=".\Persistent_Grid\Persistent_Grid_Second_Client_Files.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -573,7 +393,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "Persistent Grid Server"=.\Persistent_Grid\Persistent_Grid_Server_Files.dsp - Package Owner=<4>
+Project: "Persistent Grid Server FIles"=".\Persistent_Grid\Persistent_Grid_Server_Files.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -622,30 +442,6 @@ Package=<4>
 ###############################################################################
 
 Project: "Quoter Server"=.\Quoter\server.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SMI_Iterator Client"=.\Content_Server\SMI_Iterator\client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-}}}
-
-###############################################################################
-
-Project: "SMI_Iterator Server"=.\Content_Server\SMI_Iterator\server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -830,4 +626,3 @@ Package=<3>
 }}}
 
 ###############################################################################
-

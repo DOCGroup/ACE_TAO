@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_UTIME_H_POSIX
-#define PACE_UTIME_H_POSIX
+#ifndef PACE_UTIME_H
+#define PACE_UTIME_H
 
 #include "pace/sys/types.h"
 #include <utime.h>
@@ -23,13 +23,15 @@
 extern "C" {
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#ifndef PACE_UTIMBUF
-#define PACE_UTIMBUF
-typedef struct utimbuf pace_utimbuf;
-#endif /* PACE_UTIMBUF */
+  PACE_INLINE int pace_utime (const char * path,
+                              const struct utimbuf * times);
 
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_UTIME_H_POSIX */
+#if defined (PACE_HAS_INLINE)
+# include "pace/posix/utime.inl"
+#endif /* PACE_HAS_INLINE */
+
+#endif /* PACE_UTIME_H */

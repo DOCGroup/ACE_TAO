@@ -235,24 +235,8 @@ class ACE_Export ACE_Log_Msg
   //     This class is very flexible since it allows formatted error
   //     messages to be printed in a thread-safe manner to stderr or a
   //     distributed logger.  Moreover, the message is kept in a
-  //     thread-specific storage location (i.e. there is one ACE_Log_Msg
-  //     object per thread), which can be used to communicate errors
-  //     between framework methods and callers.
-  //
-  //     A message is logged by the log() method, only if the message
-  //     priority is currently enabled.  The ACE_Log_Msg class uses
-  //     two priority masks to control its logging behavior.  The
-  //     <priority_mask_> object attribute is thread specific and
-  //     specifies the priority levels logged by the thread.  The
-  //     <process_priority_mask_> class attribute is not thread
-  //     specific and specifies the priority levels that will be
-  //     logged by all threads in the process.  By default, all
-  //     levels are enabled for <priority_mask_> and all levels
-  //     are disabled for <process_priority_mask_> (i.e. each thread
-  //     determines which priority levels will be logged).  Both
-  //     priority masks can be modified using the priority_mask()
-  //     method of this class.
-
+  //     thread-specific storage location, which can be used to
+  //     communicate errors between framework methods and callers.
 public:
   // Logger Flags.
   enum
@@ -418,20 +402,15 @@ public:
   // td->acquire_release to block execution until this call
   // return.
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS) && !defined(ACE_HAS_LASTEST_AND_GREATEST)
-  // These functions are disabled with ACE_HAS_LATEST_AND_GREATEST
-  // because the *semantics* have changed (they objects are no longer
-  // TSS).
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
   // Get/Set TSS exception action.
-  // NOTE: The action is no longer TSS, they are global!
 
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
   ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
   // Get/Set TSS exception handler.
-  // NOTE: The handler is no longer TSS, they are global!
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS && ! ACE_HAS_GREATES_AND_LATEST*/
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
   // = Stop/start/query tracing status on a per-thread basis...
   void stop_tracing (void);
@@ -587,6 +566,13 @@ private:
   // thread descriptor of the thread.  This can be used to repidly
   // access all thread data kept in <ACE_Thread_Descriptor>.
 
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
+  ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
+  // These handlers determine how a thread handles win32 structured
+  // exception.
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+
   u_long priority_mask_;
   // Keeps track of all the per-thread <ACE_Log_Priority> values that
   // are currently enabled.  Default is for all logging priorities to
@@ -633,33 +619,12 @@ private:
   static void close (void);
   // For cleanup, at program termination.
 
-  static void sync_hook (const ACE_TCHAR *prg_name);
-  // Decouple the OS layer from the Log_Msg layer.
-
-  static ACE_OS_Thread_Descriptor *thr_desc_hook (void);
-  // Return the TSS singleton thread descriptor
-
   friend void ACE_OS::cleanup_tss (const u_int);
 
   // = Disallow these operations.
   ACE_Log_Msg &operator= (const ACE_Log_Msg &);
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
-
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
-     defined (ACE_HAS_TSS_EMULATION)
-/* static */
-#  if defined (ACE_HAS_THR_C_DEST)
-#   define LOCAL_EXTERN_PREFIX extern "C"
-#  else
-#   define LOCAL_EXTERN_PREFIX
-#  endif /* ACE_HAS_THR_C_DEST */
-LOCAL_EXTERN_PREFIX
-void
-ACE_TSS_cleanup (void *ptr);
-# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
-#endif /* ACE_MT_SAFE */
 
 #if defined (ACE_THREAD_HACK)
 #define THREAD ACE_THREAD_HACK

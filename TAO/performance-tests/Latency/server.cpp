@@ -159,15 +159,23 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      orb->destroy (ACE_TRY_ENV);
+      PortableServer::ObjectId_var oid =
+        root_poa->servant_to_id (&server_impl, ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "orb destroyed\n"));
+      root_poa->deactivate_object (oid.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      root_poa->destroy (1, 1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      orb->destroy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception caught:");
+                           "Catched exception:");
       return 1;
     }
   ACE_ENDTRY;

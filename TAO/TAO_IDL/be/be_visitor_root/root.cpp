@@ -133,13 +133,11 @@ int be_visitor_root::visit_root (be_root *node)
       break;
 
     case TAO_CodeGen::TAO_ROOT_IH:
-      (void) tao_cg->end_implementation_header (
-          be_global->be_get_implementation_hdr_fname (0)
-        );
+      (void) tao_cg->end_implementation_header (idl_global->be_get_implementation_hdr_fname (0));
       break;
     case TAO_CodeGen::TAO_ROOT_SH:
       (void) tao_cg->end_server_header ();
-      if (be_global->gen_tie_classes ())
+      if (idl_global->gen_tie_classes ())
         (void) tao_cg->end_server_template_header ();
       return 0;
 
@@ -150,7 +148,7 @@ int be_visitor_root::visit_root (be_root *node)
     case TAO_CodeGen::TAO_ROOT_SI:
       return 0; // nothing to be done
     case TAO_CodeGen::TAO_ROOT_SS:
-      if (be_global->gen_tie_classes ())
+      if (idl_global->gen_tie_classes ())
         (void) tao_cg->end_server_template_skeletons ();
       return 0; // nothing to be done
     default:

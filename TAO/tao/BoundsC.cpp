@@ -17,7 +17,7 @@
 
 // default constructor
 CORBA_Bounds::CORBA_Bounds (void)
-  : CORBA_UserException ("IDL:omg.org/CORBA/Bounds:1.0")
+  : CORBA_UserException (CORBA::_tc_Bounds)
 {
 }
 
@@ -34,9 +34,9 @@ void CORBA_Bounds::_tao_any_destructor (void *x)
 
 // copy constructor
 CORBA_Bounds::CORBA_Bounds (const CORBA::Bounds &_tao_excp)
-  : CORBA_UserException (_tao_excp._id ())
+  : CORBA_UserException (_tao_excp._type ())
 {
-}
+  }
 
 // assignment operator
 CORBA_Bounds&
@@ -91,11 +91,7 @@ CORBA::Exception *CORBA_Bounds::_alloc (void)
   return retval;
 }
 
-CORBA::TypeCode_ptr
-CORBA_Bounds::_type (void) const
-{
-  return CORBA::TypeCode::_tc_Bounds;
-}
+
 
 void operator<<= (CORBA::Any &_tao_any, const CORBA::Bounds &_tao_elem)
 {

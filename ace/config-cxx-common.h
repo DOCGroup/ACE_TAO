@@ -9,18 +9,19 @@
 #endif
 
 #if defined (__DECCXX)
-# if !defined (linux)
+# define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+# define ACE_LACKS_LINEBUFFERED_STREAMBUF
+# define ACE_LACKS_SIGNED_CHAR
+# if defined (linux)
+#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#   define ACE_HAS_CPLUSPLUS_HEADERS
+# else  /* ! linux */
 #   define ACE_HAS_STRING_CLASS
 #   if (__DECCXX_VER >= 60090010)
 #     define ACE_HAS_STDCPP_STL_INCLUDES
 #   endif /* __DECCXX_VER < 60090010 */
 # endif /* ! linux */
-
 # define DEC_CXX
-# define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-# define ACE_LACKS_LINEBUFFERED_STREAMBUF
-# define ACE_LACKS_SIGNED_CHAR
-# define ACE_HAS_CPLUSPLUS_HEADERS
 # if (__DECCXX_VER >= 60090010)
     // DEC CXX 6.0 supports exceptions, etc., by default.  Exceptions
     // are enabled by platform_osf1_4.0.GNU/wrapper_macros.GNU.
@@ -31,7 +32,6 @@
 #   if !defined (__RTTI)
 #     define ACE_LACKS_RTTI
 #   endif
-#   define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   define ACE_HAS_TEMPLATE_SPECIALIZATION
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
@@ -44,7 +44,7 @@
 #     define ACE_LACKS_CHAR_RIGHT_SHIFTS
 #     define ACE_LACKS_IOSTREAM_FX
 #     define ACE_LACKS_UNBUFFERED_STREAMBUF
-#     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#     define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #   else  /* ! __USE_STD_IOSTREAM */
 #     define ACE_USES_OLD_IOSTREAMS
 #   endif /* ! __USE_STD_IOSTREAM */
