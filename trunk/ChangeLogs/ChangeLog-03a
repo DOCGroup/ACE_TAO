@@ -1,3 +1,16 @@
+Fri Nov 22 13:48:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Containers_T.cpp (init_head): Broke up the cascading pointer
+	  assignments to avoid a problem when using position independent
+	  pointer.  Thanks to Eugene Alterman <eugalt@myrealbox.com> for
+	  reporting this.
+
+	* ace/Svc_Conf.l:
+	* ace/Svc_Conf_l.cpp: Changed to always remove the matching quote
+	  character (' or ") instead of first search for double quote,
+	  then single quote.  Thanks to Johnny Willemsen
+	  <jwillemsen@remedy.nl> for sumitting the patch.
+
 Fri Nov 22 04:52:16 2002  Bala  <bala@cs.wustl.edu>
 
         * ACE version 5.2.6 released.

@@ -51,13 +51,8 @@ inactive	      { return token (ACE_INACTIVE); }
 "{"                   { return token ('{'); }
 "}"                   { return token ('}'); }
 {string}	      {
-                        // Check for first type of string, i.e.,
-                        // "double quotes" delimited.  
-                        ACE_TCHAR *s = ACE_OS::strrchr (yytext, '"');
-                        if (s == 0)
-                          // Check for second type of string, i.e.,
-                          // 'single quotes' delimited.
-                          s = ACE_OS::strrchr (yytext, '\'');
+                        // Remove trailing quote character (' or ")
+                        ACE_TCHAR *s = ACE_OS::strrchr (yytext, yytext[0]);
 
                         ACE_ASSERT (s != 0);
                         // Eliminate the opening and closing double or
