@@ -115,22 +115,17 @@ void CAD_Handler::update_spr_refs
 void CAD_Handler::process_instance (DOMNodeIterator* iter,
                                     Deployment::SubcomponentInstantiationDescription& sid)
 {
-  ACE_DEBUG ((LM_DEBUG, "i am processing instance \n"));
   ACE_TString root_node_name;
 
   root_node_name = XMLString::transcode
     (this->doc_->getDocumentElement ()->getNodeName ());
 
-  ACE_DEBUG ((LM_DEBUG, "root node name is %s \n", root_node_name.c_str ()));
 
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())
     {
       XStr node_name (node->getNodeName());
-
-      ACE_DEBUG ((LM_DEBUG, "node name is %s \n", XMLString::transcode
-(node_name)));
 
       if (node_name == XStr
                 (ACE_TEXT ("Deployment:SubcomponentInstantiationDescription")))
@@ -169,7 +164,6 @@ void CAD_Handler::process_instance (DOMNodeIterator* iter,
 void CAD_Handler::process_connection (DOMNodeIterator* iter,
                                       Deployment::AssemblyConnectionDescription& acd)
 {
-  ACE_DEBUG ((LM_DEBUG, " i am inside process_acd \n"));
   for (DOMNode* node = iter->nextNode();
        node != 0;
        node = iter->nextNode ())

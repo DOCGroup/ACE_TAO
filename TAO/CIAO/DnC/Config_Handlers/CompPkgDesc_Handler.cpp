@@ -25,15 +25,11 @@ BEGIN_DEPLOYMENT_NAMESPACE
 void CompPkgDesc_Handler::process_ComponentPackageDescription
 (::Deployment::ComponentPackageDescription &comppkgdesc)
 {
-  ACE_DEBUG ((LM_DEBUG, "I am here in PCD\n"));
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
        node = this->iter_->nextNode())
     {
       XStr node_name (node->getNodeName());
-
-      ACE_DEBUG ((LM_DEBUG, "node name in PCD is %s\n",
-                  XMLString::transcode (node_name)));
 
       if (node_name == XStr
           (ACE_TEXT ("Deployment:ComponentPackageDescription")))

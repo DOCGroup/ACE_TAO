@@ -20,8 +20,6 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 Process_Function <DATA>* func,
                                 REF_MAP& id_map)
 {
-  std::cout << "i am here inside process_element_attributes" <<
-std::endl;
   // the number of attributes
   int length = named_node_map->getLength();
   // iterate the attributes
@@ -42,8 +40,6 @@ std::endl;
       // and process the element
       else if (strattrnodename == XStr (ACE_TEXT ("href")))
         {
-  std::cout << "i am here inside href process_element_attributes" <<
-std::endl;
           XMLURL xml_url (aceattrnodevalue.c_str ());
           XMLURL result (aceattrnodevalue.c_str ());
           std::string url_string = aceattrnodevalue.c_str ();
@@ -58,22 +54,15 @@ std::endl;
 
           if (xml_url.isRelative ())
             {
-  std::cout << "i am here inside relative href process_element_attributes" <<
-std::endl;
-              std::cout << "the URL string is " << final_url << std::endl;
               href_doc = create_document(final_url.c_str ());
             }
           else
             {
-  std::cout << "i am here inside not relative href process_element_attributes" <<
-std::endl;
               href_doc = create_document (url_string.c_str ());
             }
 
           DOMDocumentTraversal* traverse (href_doc);
           DOMNode* root = (href_doc->getDocumentElement ());
-          std::cout << "Root name in TPP is " << XMLString::transcode
-(root->getNodeName()) << std::endl;
           unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
             DOMNodeFilter::SHOW_TEXT;
           DOMNodeIterator* href_iter = traverse->createNodeIterator
