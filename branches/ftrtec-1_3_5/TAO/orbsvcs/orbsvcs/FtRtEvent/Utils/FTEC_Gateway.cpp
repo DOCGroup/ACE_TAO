@@ -348,6 +348,8 @@ void FTEC_Gateway_ProxyPushSupplier::connect_push_consumer (
   PortableServer::ObjectId** oid_ptr = get_remote_oid_ptr(impl_->orb.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
+  FTRTEC_LOGTIME("FTEC_Gateway_ProxyPushSupplier::connect_push_consumer");
+
   *oid_ptr = impl_->ftec->connect_push_consumer(push_consumer, qos ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
