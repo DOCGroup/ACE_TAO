@@ -7,9 +7,6 @@
 #   STL (start)
 #---------------
 
-# STL has exceptions
-exceptions=1
-
 include $(STL_ROOT)/config/local.cfg
 
 CC_INCLUDES += -I$(STD)
@@ -22,6 +19,12 @@ CPPFLAGS += \
 	$(CC_DEFINES) \
 	$(CC_EH) \
 	$(CC_MT)
+
+ifndef exceptions
+CPPFLAGS += -DOS_NO_EXCEPTION_SPECIFIER
+else
+CPPFLAGS += -DOS_STL_ASSERT
+endif
 
 LDFLAGS += -L$(STL_ROOT)/lib
 
@@ -63,7 +66,7 @@ endif
 
 DCFLAGS = -g
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG)#-H
+CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat $(TSS_ORB_FLAG) #-H
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
