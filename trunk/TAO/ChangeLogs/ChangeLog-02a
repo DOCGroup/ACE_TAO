@@ -1,3 +1,18 @@
+Wed May  1 23:21:00 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/default_ports.h: Renamed tao/reserved_ports.h as per
+	  Ossama's suggestion.  He opines that the ports are not reserved
+	  but just defaults in TAO. 
+
+	* tao/reserved_ports.h: Removed file from the repo.
+
+	* tao/ORB.cpp:
+	* tao/MCAST_Parser.cpp:
+	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp:
+	* orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+	* orbsvcs/orbsvcs/Trader/Trading_Loader.cpp: Changed the includes
+	  to the new file.
+	
 Wed May  1 21:01:43 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB_Core.cpp (fini):

@@ -8,7 +8,7 @@
 #include "orbsvcs/CosNamingC.h"
 
 #include "tao/debug.h"
-#include "tao/reserved_ports.h"
+#include "tao/default_ports.h"
 #include "tao/ORB_Core.h"
 
 #include "tao/IORTable/IORTable.h"

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file     reserved_ports.h
+ *  @file     default_ports.h
  *
  *  $Id$
  *
@@ -14,8 +14,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_RESERVED_PORTS_H
-#define TAO_RESERVED_PORTS_H
+#ifndef TAO_DEFAULT_PORTS_H
+#define TAO_DEFAULT_PORTS_H
 #include "ace/pre.h"
 
 #include "ace/config-all.h"
@@ -74,4 +74,4 @@
 #endif /* TAO_DEFAULT_INTERFACEREPO_SERVER_REPLY_PORT */
 
 #include "ace/post.h"
-#endif /*TAO_RESERVED_PORTS_H*/
+#endif /*TAO_DEFAULT_PORTS_H*/
