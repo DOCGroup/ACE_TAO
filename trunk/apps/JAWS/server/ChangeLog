@@ -1,3 +1,15 @@
+Wed Jun 25 01:11:50 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
+
+	* JAWS_File.cpp: Removed initialization of vfs_ (see below) and
+	  changed all references of vfs_ to
+	  JAWS_Virtual_Filesystem::instance ().  Thanks to Detlef Becker
+	  <detlef.becker@med.siemens.de> for pointing this out.
+
+	* JAWS_File.h: Removed private member JAWS_Virtual_Filesystem vfs_
+	  since JAWS_Virtual_Filesystem is a singleton already.  Caching
+	  it doesn't seem to win much and depends on the order of static
+	  variables initialization, which is non-portable.
+
 Fri Jun 13 02:42:39 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* jaws.{mdp,mak}: Updated to incoporate latest changes.
