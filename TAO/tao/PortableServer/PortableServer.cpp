@@ -31,10 +31,10 @@
 #include "ServantRetentionStrategyNonRetainFactoryImpl.h"
 #include "ServantRetentionStrategyRetainFactoryImpl.h"
 
-#include "RequestProcessingStrategyDefaultServantFactoryImpl.h"
+#include "RequestProcessingStrategyDefaultServantFI.h"
 #include "RequestProcessingStrategyAOMOnlyFactoryImpl.h"
-#include "RequestProcessingStrategyServantActivatorFactoryImpl.h"
-#include "RequestProcessingStrategyServantLocatorFactoryImpl.h"
+#include "RequestProcessingStrategyServantActivatorFI.h"
+#include "RequestProcessingStrategyServantLocatorFI.h"
 
 #include "IdUniquenessStrategyUniqueFactoryImpl.h"
 

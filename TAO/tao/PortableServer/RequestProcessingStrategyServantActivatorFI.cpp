@@ -1,6 +1,6 @@
 // $Id$
 
-#include "RequestProcessingStrategyServantActivatorFactoryImpl.h"
+#include "RequestProcessingStrategyServantActivatorFI.h"
 #include "RequestProcessingStrategy.h"
 #include "RequestProcessingStrategyServantActivator.h"
 #include "ace/Dynamic_Service.h"
