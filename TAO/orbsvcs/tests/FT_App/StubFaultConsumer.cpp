@@ -248,7 +248,7 @@ void StubFaultConsumer::push_structured_event(
   const CosNotification::StructuredEvent &notification
   ACE_ENV_ARG_DECL_NOT_USED
   )
-  throw (CORBA::SystemException, CosEventComm::Disconnected)
+  ACE_THROW_SPEC ((CORBA::SystemException, CosEventComm::Disconnected))
 {
   ////////////////////////////////////////
   // keep track of how many we've received
