@@ -39,6 +39,8 @@ Mon Sep 22 07:11:21 1997  David L. Levine  <levine@cs.wustl.edu>
 	  to PRELINK, to allow applications to add libraries or object
 	  files to be munched.
 
+	* ace/stdcpp.h: stdarg.h must be #included before stdio.h on LynxOS.
+
 Sat Sep 20 17:32:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.{h,cpp},Managed_Object.*,
