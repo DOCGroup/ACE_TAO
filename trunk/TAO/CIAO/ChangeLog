@@ -1,15 +1,37 @@
+Tue Aug 05 17:25:45 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP_EC2/BMClosedED/BMClosedED.mpc:
+        * examples/handcrafted/BasicSP_EC2/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP_EC2/EC/EC.mpc:
+        * examples/handcrafted/BasicSP_EC2/BMDisplay/BMDisplay.mpc:
+        * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService.mpc:
+        * examples/handcrafted/BasicSP_EC2/BasicSP.mpc:
+
+        Added library include paths and additional library to MPC files.
+
+        Removed file:
+        * examples/handcrafted/BasicSP_EC2/EC/config:
+
+        Removed unnecessary file.
+
+        * examples/handcrafted/BasicSP_EC2/EC/controller.cpp:
+        * examples/handcrafted/BasicSP_EC2/EC/client.cpp:
+
+        Included ace/Streams.h.
+
 Tue Aug 05 13:23:12 2003  George Edwards <g.edwards@vanderbilt.edu>
 
-       Added files:
-       * examples/handcrafted/BasicSP_EC2/*.*:
-       * examples/handcrafted/BasicSP_EC2/BMClosedED/*.*:
-       * examples/handcrafted/BasicSP_EC2/BMDevice/*.*:
-       * examples/handcrafted/BasicSP_EC2/EC/*.*:
-       * examples/handcrafted/BasicSP_EC2/descriptors/*.*:
-       * examples/handcrafted/BasicSP_EC2/BMDisplay/*.*:
+        Added files:
+        * examples/handcrafted/BasicSP_EC2/*.*:
+        * examples/handcrafted/BasicSP_EC2/BMClosedED/*.*:
+        * examples/handcrafted/BasicSP_EC2/BMDevice/*.*:
+        * examples/handcrafted/BasicSP_EC2/EC/*.*:
+        * examples/handcrafted/BasicSP_EC2/descriptors/*.*:
+        * examples/handcrafted/BasicSP_EC2/BMDisplay/*.*:
+        * examples/handcrafted/BasicSP_EC2/RTEventService/*.*:
 
-       Added new event channel example. The event service is
-       integrated as a separate component.
+        Added new event channel example. The event service is
+        integrated as a separate component.
 
 2003-08-04  Arvind S. Krishna  <arvindk@equus.dre.vanderbilt.edu>
 
