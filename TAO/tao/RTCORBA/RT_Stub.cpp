@@ -30,13 +30,13 @@ TAO_RT_Stub::TAO_RT_Stub (const char *repository_id,
 
 TAO_RT_Stub::~TAO_RT_Stub (void)
 {
-  if (this->priority_model_policy_)
+  if (this->priority_model_policy_.in ())
     this->priority_model_policy_->destroy ();
 
-  if (this->priority_banded_connection_policy_)
+  if (this->priority_banded_connection_policy_.in ())
     this->priority_banded_connection_policy_->destroy ();
 
-  if (this->client_protocol_policy_)
+  if (this->client_protocol_policy_.in ())
     this->client_protocol_policy_->destroy ();
 }
 
