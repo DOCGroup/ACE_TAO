@@ -1,3 +1,11 @@
+Thu Jun 19 15:31:53 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* ace/Timer_Wheel_T.cpp: Fixed problem with expire () not expiring
+	  timers with a timeout of the current time. This was causing 
+	  problems with Timer_Queue_Test when high profile timers were 
+	  disabled (such as Windows NT when the environment variable 
+	  ACE_SCALE_FACTOR was undefined)
+
 Wed Jun 18 19:43:35 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Signal.cpp: 'removed "const" from #define of
