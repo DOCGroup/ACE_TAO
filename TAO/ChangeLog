@@ -1,3 +1,8 @@
+Tue Nov 12 13:13:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/TAO.dsp: 
+	* tao/TAO_Static.dsp: Added the new files.
+
 Tue Nov 12 12:54:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/LF_Invocation_Event.inl: Fixed a typo.
