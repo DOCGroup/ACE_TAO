@@ -56,8 +56,8 @@ Coffee_i::description (const Coffee::Desc &description,
 
 Param_Test_i::Param_Test_i (const char *coffee_name,
                             CORBA::ORB_ptr orb)
-  : obj_ (coffee_name),
-    orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    obj_ (coffee_name)
 {
 }
 
