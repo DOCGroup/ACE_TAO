@@ -1,3 +1,21 @@
+Sat Jul  3 13:35:28 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+        * TAO_IDL/be/be_produce.cpp:
+        
+          Moved the initialization of the stream for generated file
+          containing Any operators (if the option is set to generate
+          these into a separate file) again, to BE_produce, just
+          after the preprocessing visitors and before the stub header
+          visitor. The stream for the *A.cpp file, if applicable,
+          must be set before the stub source visitor is launched,
+          since, if the *A.cpp file is being generated, #includes
+          of Any-related ORB files will be redirected there, and
+          this happens before the actual Any operator pass. But
+          the stream cannot be initialized too early, since the
+          filename for this iteration (if we are processing multiple
+          IDL files) must be set first.
+
 Sat Jul  3 11:25:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_codegen.cpp:
