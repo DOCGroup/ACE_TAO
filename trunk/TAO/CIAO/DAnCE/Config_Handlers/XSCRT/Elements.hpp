@@ -14,6 +14,7 @@
 
 #if defined (_MSC_VER) && (_MSC_VER < 1300)
 
+#pragma warning(disable:4786)
 // Stuff for broken VC6. Don't like what you see - use better compiler!
 //
 

@@ -1,3 +1,14 @@
+Tue Mar 22 10:26:18 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	* DAnCE/Config_Handlers/CCD_Handler.cpp
+
+	Silenced an error in VC6 that occured because it couldn't obey
+	some simple scope rules.
+	
+	* DAnCE/Config_Handlers/XSCRT/Elements.hpp
+
+	Silenced a warning in VC6 debug builds relating to debug identifiers being
+	too long.
+
 Tue Mar 22 08:44:03 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	
 	* DAnCE/ciao/Container_Base.cpp
