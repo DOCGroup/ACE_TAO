@@ -1454,7 +1454,6 @@ ACE_Select_Reactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &dis
           dispatch_set.ex_mask_.sync (this->handler_rep_.max_handlep1 ());
 #endif /* ACE_WIN32 */
         }
-
     }
 
   // Return the number of events to dispatch.
@@ -1473,11 +1472,11 @@ ACE_Select_Reactor::dispatch_notification_handlers (int &number_of_active_handle
                                                     ACE_Select_Reactor_Handle_Set &dispatch_set)
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  // Check to see if the ACE_HANDLE associated with the Select_Reactor's
-  // notify hook is enabled.  If so, it means that one or more
-  // other threads are trying to update the ACE_Select_Reactor's internal
-  // tables.  We'll handle all these threads and then break out to
-  // continue the event loop.
+  // Check to see if the ACE_HANDLE associated with the
+  // Select_Reactor's notify hook is enabled.  If so, it means that
+  // one or more other threads are trying to update the
+  // ACE_Select_Reactor's internal tables.  We'll handle all these
+  // threads and then break out to continue the event loop.
 
   int number_dispatched =
     this->notify_handler_.dispatch_notifications (number_of_active_handles,
@@ -1626,6 +1625,7 @@ ACE_Select_Reactor::dispatch (int number_of_active_handles,
         // State has changed or timer queue has failed, exit inner
         // loop.
         break;
+
       else if (number_of_active_handles <= 0)
         // Bail out since we got here since select() was interrupted.
         {
@@ -1641,14 +1641,20 @@ ACE_Select_Reactor::dispatch (int number_of_active_handles,
           else
             return number_of_active_handles;
         }
-      else if (this->dispatch_notification_handlers
-               (number_of_active_handles, dispatch_set) == -1)
+
+      // Next dispatch the notification handlers (if there are any to
+      // dispatch).  These are required to handle multi-threads that
+      // are trying to update the <Reactor>.
+
+      else if (this->dispatch_notification_handlers (number_of_active_handles,
+						     dispatch_set) == -1)
         break; // State has changed, exit inner loop.
-      else if (this->dispatch_io_handlers
-               (number_of_active_handles, dispatch_set) == -1)
+
+      // Finally, dispatch the I/O handlers.
+      else if (this->dispatch_io_handlers (number_of_active_handles,
+					   dispatch_set) == -1)
         // State has changed, so exit the inner loop.
         break;
-
     }
   while (number_of_active_handles > 0);
 
