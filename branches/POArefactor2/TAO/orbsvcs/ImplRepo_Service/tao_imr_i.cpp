@@ -3,6 +3,7 @@
 #include "tao_imr_i.h"
 
 #include "tao/PortableServer/POA.h"
+#include "tao/PortableServer/ServantManagerC.h"
 
 #include "tao/Stub.h"
 #include "tao/Profile.h"
