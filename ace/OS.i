@@ -6258,10 +6258,18 @@ ACE_OS::open (const char *filename,
 
   if (h == ACE_INVALID_HANDLE)
     {
-      switch ((errno = ::GetLastError ()))
+      errno = ::GetLastError ();
+
+      switch (errno)
         {
         case ERROR_FILE_EXISTS:
           errno = EEXIST;
+	  break;
+	  /* NOTREACHED */
+	case ERROR_SHARING_VIOLATION:
+	  errno = EACCES;
+	  break;
+	  /* NOTREACHED */
         }
     }
   return h;
