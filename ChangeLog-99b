@@ -1,4 +1,11 @@
-Sun Jun 27 17:45:54 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+
+	* ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
+	  around an omission within the EGCS standard library.
+
+	* ace/Auto_Ptr.h: If ACE_LACKS_AUTO_PTR is enabled then
+	  use our version of auto_ptr.  This is necessary to work around
+ 	  problems with EGCS.
 
 	* ace/config-g++-common.h: Define ACE_HAS_STANDARD_CPP_LIBRARY
 	  so that #include <exception> will work properly.  However, this
