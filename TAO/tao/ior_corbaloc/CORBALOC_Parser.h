@@ -80,12 +80,29 @@ public:
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
   virtual int match_prefix (const char *ior_string) const;
+
   virtual CORBA::Object_ptr parse_string (const char *ior,
                                           CORBA::ORB_ptr orb,
                                           CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual int check_prefix (const char *endpoint);
+
+  virtual void parse_string_count_helper (const char * &corbaloc_name,
+                                          CORBA::ULong &addr_list_length, 
+                                          CORBA::ULong &count_addr);
+
+  virtual CORBA::Object_ptr parse_string_mprofile_helper (ACE_Array_Base <char *> &addr, 
+                                                          CORBA::ULong &count_addr,
+                                                          CORBA::ORB_ptr orb,
+                                                          CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual CORBA::Object_ptr parse_string_rir_helper (const char *
+                                                     &corbaloc_name,
+                                                     CORBA::ORB_ptr orb,
+                                                     CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 };
 
 #if defined (__ACE_INLINE__)
