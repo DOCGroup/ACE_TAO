@@ -140,9 +140,9 @@ MTL=midl.exe
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /o /win32 "NUL"
 CPP=cl.exe
-# ADD BASE CPP /nologo /MTd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MTd /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\..\\" /I "..\\" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "TAO_BUILD_DLL" /FD /MDd /c
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
@@ -14042,6 +14042,36 @@ DEP_CPP_GIOP_=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Acceptor.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connector.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Interpreter.cpp
 
 !IF  "$(CFG)" == "TAO - Win32 Release"
@@ -15643,6 +15673,36 @@ DEP_CPP_IIOP_OR=\
 	".\varout.h"\
 	".\varout.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Profile.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Transport.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -21578,6 +21638,21 @@ DEP_CPP_PARAM=\
 	".\varout.h"\
 	".\varout.i"\
 	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable.cpp
+
+!IF  "$(CFG)" == "TAO - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "TAO - Win32 Alpha Debug"
 
 !ENDIF 
 
@@ -31286,6 +31361,14 @@ SOURCE=.\giop.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\IIOP_Acceptor.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Connector.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\IIOP_Interpreter.h
 # End Source File
 # Begin Source File
@@ -31295,6 +31378,14 @@ SOURCE=.\IIOP_Object.h
 # Begin Source File
 
 SOURCE=.\IIOP_ORB.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Profile.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\IIOP_Transport.h
 # End Source File
 # Begin Source File
 
@@ -31343,6 +31434,10 @@ SOURCE=.\orbconf.h
 # Begin Source File
 
 SOURCE=.\params.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pluggable.h
 # End Source File
 # Begin Source File
 
