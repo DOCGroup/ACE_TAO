@@ -4,6 +4,7 @@
 #include "EC_Priority_Dispatching.h"
 #include "EC_MT_Dispatching.h"
 #include "EC_Basic_Filter_Builder.h"
+#include "EC_Prefix_Filter_Builder.h"
 #include "EC_Sched_Filter_Builder.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
@@ -112,9 +113,13 @@ TAO_EC_Default_Factory::init (int argc, char* argv[])
                 {
                   this->filtering_ = 1;
                 }
-               else if (ACE_OS::strcasecmp (opt, "priority") == 0)
+              else if (ACE_OS::strcasecmp (opt, "priority") == 0)
                 {
                   this->filtering_ = 2;
+                }
+              else if (ACE_OS::strcasecmp (opt, "prefix") == 0)
+                {
+                  this->filtering_ = 3;
                 }
               else
                 {
@@ -545,6 +550,8 @@ TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
     return new TAO_EC_Basic_Filter_Builder (ec);
   else if (this->filtering_ == 2)
     return new TAO_EC_Sched_Filter_Builder (ec);
+  else if (this->filtering_ == 3)
+    return new TAO_EC_Prefix_Filter_Builder (ec);
   return 0;
 }
 

@@ -21,26 +21,42 @@ ACE_ConsumerQOS_Factory::~ACE_ConsumerQOS_Factory (void)
 }
 
 int
-ACE_ConsumerQOS_Factory::start_conjunction_group (void)
+ACE_ConsumerQOS_Factory::start_conjunction_group (int nchildren)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_CONJUNCTION_DESIGNATOR;
+  qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
   this->designator_set_ = 1;
   return 0;
 }
 
 int
-ACE_ConsumerQOS_Factory::start_disjunction_group (void)
+ACE_ConsumerQOS_Factory::start_disjunction_group (int nchildren)
 {
   int l = qos_.dependencies.length ();
   qos_.dependencies.length (l + 1);
   if (this->event_initializer_ != 0)
     (*this->event_initializer_) (qos_.dependencies[l].event);
   qos_.dependencies[l].event.header.type = ACE_ES_DISJUNCTION_DESIGNATOR;
+  qos_.dependencies[l].event.header.source = nchildren;
+  qos_.dependencies[l].rt_info = 0;
+  this->designator_set_ = 1;
+  return 0;
+}
+
+int
+ACE_ConsumerQOS_Factory::start_logical_and_group (int nchildren)
+{
+  int l = qos_.dependencies.length ();
+  qos_.dependencies.length (l + 1);
+  if (this->event_initializer_ != 0)
+    (*this->event_initializer_) (qos_.dependencies[l].event);
+  qos_.dependencies[l].event.header.type = ACE_ES_LOGICAL_AND_DESIGNATOR;
+  qos_.dependencies[l].event.header.source = nchildren;
   qos_.dependencies[l].rt_info = 0;
   this->designator_set_ = 1;
   return 0;
