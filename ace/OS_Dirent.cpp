@@ -31,9 +31,8 @@ ACE_RCSID(ace, OS_Dirent, "$Id$")
 # include "ace/OS_Dirent.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-namespace ACE_OS {
 ACE_DIR *
-opendir_emulation (const ACE_TCHAR *filename)
+ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
 {
 #if defined (ACE_WIN32)
   ACE_DIR *dir;
@@ -63,25 +62,25 @@ opendir_emulation (const ACE_TCHAR *filename)
   Phil Mesnier
 */
 
-  size_t lastchar = ACE_OS_String::strlen (filename);
+  size_t lastchar = ACE_OS::strlen (filename);
   if (lastchar > 0)
     {
       if (filename[lastchar-1] != '*')
         {
           if (filename[lastchar-1] != '/' && filename[lastchar-1] != '\\')
-            ACE_OS_String::strcpy (extra, ACE_LIB_TEXT ("/*"));
+            ACE_OS::strcpy (extra, ACE_LIB_TEXT ("/*"));
           else
-            ACE_OS_String::strcpy (extra, ACE_LIB_TEXT ("*"));
+            ACE_OS::strcpy (extra, ACE_LIB_TEXT ("*"));
         }
     }
 
   ACE_NEW_RETURN (dir, ACE_DIR, 0);
   ACE_NEW_RETURN (dir->directory_name_,
-                  ACE_TCHAR[lastchar + ACE_OS_String::strlen (extra) + 1],
+                  ACE_TCHAR[lastchar + ACE_OS::strlen (extra) + 1],
                   0);
-  ACE_OS_String::strcpy (dir->directory_name_, filename);
+  ACE_OS::strcpy (dir->directory_name_, filename);
   if (extra[0])
-    ACE_OS_String::strcat (dir->directory_name_, extra);
+    ACE_OS::strcat (dir->directory_name_, extra);
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
   dir->dirent_ = 0;
@@ -93,7 +92,7 @@ opendir_emulation (const ACE_TCHAR *filename)
 }
 
 void
-closedir_emulation (ACE_DIR *d)
+ACE_OS::closedir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
@@ -103,8 +102,8 @@ closedir_emulation (ACE_DIR *d)
   d->started_reading_ = 0;
   if (d->dirent_ != 0)
     {
-      ACE_OS_Memory::free (d->dirent_->d_name);
-      ACE_OS_Memory::free (d->dirent_);
+      ACE_OS::free (d->dirent_->d_name);
+      ACE_OS::free (d->dirent_);
     }
 #else /* ACE_WIN32 */
   ACE_UNUSED_ARG (d);
@@ -112,13 +111,13 @@ closedir_emulation (ACE_DIR *d)
 }
 
 dirent *
-readdir_emulation (ACE_DIR *d)
+ACE_OS::readdir_emulation (ACE_DIR *d)
 {
 #if defined (ACE_WIN32)
   if (d->dirent_ != 0)
     {
-      ACE_OS_Memory::free (d->dirent_->d_name);
-      ACE_OS_Memory::free (d->dirent_);
+      ACE_OS::free (d->dirent_->d_name);
+      ACE_OS::free (d->dirent_);
       d->dirent_ = 0;
     }
 
@@ -143,14 +142,14 @@ readdir_emulation (ACE_DIR *d)
   if (d->current_handle_ != INVALID_HANDLE_VALUE)
     {
       d->dirent_ = (dirent *)
-        ACE_OS_Memory::malloc (sizeof (dirent));
+        ACE_OS::malloc (sizeof (dirent));
 
       if (d->dirent_ != 0)
         {
           d->dirent_->d_name = (ACE_TCHAR*)
-            ACE_OS_Memory::malloc ((ACE_OS_String::strlen (d->fdata_.cFileName) + 1)
-                                   * sizeof (ACE_TCHAR));
-          ACE_OS_String::strcpy (d->dirent_->d_name, d->fdata_.cFileName);
+            ACE_OS::malloc ((ACE_OS::strlen (d->fdata_.cFileName) + 1)
+                            * sizeof (ACE_TCHAR));
+          ACE_OS::strcpy (d->dirent_->d_name, d->fdata_.cFileName);
           d->dirent_->d_reclen = sizeof (dirent);
         }
 
@@ -165,13 +164,13 @@ readdir_emulation (ACE_DIR *d)
 }
 
 int
-scandir_emulation (const ACE_TCHAR *dirname,
-                   dirent **namelist[],
-                   int (*selector) (const dirent *entry),
-                   int (*comparator) (const dirent **f1,
-                                      const dirent **f2))
+ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
+                           dirent **namelist[],
+                           int (*selector) (const dirent *entry),
+                           int (*comparator) (const dirent **f1,
+                                              const dirent **f2))
 {
-  ACE_DIR *dirp = ACE_OS_Dirent::opendir (dirname);
+  ACE_DIR *dirp = ACE_OS::opendir (dirname);
 
   if (dirp == 0)
     return -1;
@@ -187,9 +186,9 @@ scandir_emulation (const ACE_TCHAR *dirname,
   int fail = 0;
 
   // @@ This code shoulduse readdir_r() rather than readdir().
-  for (dp = ACE_OS_Dirent::readdir (dirp);
+  for (dp = ACE_OS::readdir (dirp);
        dp != 0;
-       dp = ACE_OS_Dirent::readdir (dirp))
+       dp = ACE_OS::readdir (dirp))
     {
       if (selector && (*selector)(dp) == 0)
         continue;
@@ -203,8 +202,8 @@ scandir_emulation (const ACE_TCHAR *dirname,
           else
             arena_size *= 2;
 
-          newv = (dirent **) ACE_OS_Memory::realloc (vector,
-                                                     arena_size * sizeof (dirent *));
+          newv = (dirent **) ACE_OS::realloc (vector,
+                                              arena_size * sizeof (dirent *));
           if (newv == 0)
             {
               fail = 1;
@@ -214,12 +213,12 @@ scandir_emulation (const ACE_TCHAR *dirname,
         }
 
 #if defined (ACE_LACKS_STRUCT_DIR)
-      dirent *newdp = (dirent *) ACE_OS_Memory::malloc (sizeof (dirent));
+      dirent *newdp = (dirent *) ACE_OS::malloc (sizeof (dirent));
 #else
       int dsize =
         sizeof (dirent) +
-        ((ACE_OS_String::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
-      dirent *newdp = (dirent *) ACE_OS_Memory::malloc (dsize);
+        ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      dirent *newdp = (dirent *) ACE_OS::malloc (dsize);
 #endif /* ACE_LACKS_STRUCT_DIR */
 
       if (newdp == 0)
@@ -229,13 +228,13 @@ scandir_emulation (const ACE_TCHAR *dirname,
         }
 
 #if defined (ACE_LACKS_STRUCT_DIR)
-      newdp->d_name = (ACE_TCHAR*) ACE_OS_Memory::malloc (
-        (ACE_OS_String::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      newdp->d_name = (ACE_TCHAR*) ACE_OS::malloc (
+        (ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
 
       if (newdp->d_name == 0)
         {
           fail = 1;
-          ACE_OS_Memory::free (newdp);
+          ACE_OS::free (newdp);
           break;
         }
 
@@ -243,28 +242,28 @@ scandir_emulation (const ACE_TCHAR *dirname,
       newdp->d_ino = dp->d_ino;
       newdp->d_off = dp->d_off;
       newdp->d_reclen = dp->d_reclen;
-      ACE_OS_String::strcpy (newdp->d_name, dp->d_name);
+      ACE_OS::strcpy (newdp->d_name, dp->d_name);
       vector[nfiles++] = newdp;
 #else
-      vector[nfiles++] = (dirent *) ACE_OS_String::memcpy (newdp, dp, dsize);
+      vector[nfiles++] = (dirent *) ACE_OS::memcpy (newdp, dp, dsize);
 #endif /* ACE_LACKS_STRUCT_DIR */
     }
 
   if (fail)
     {
-      ACE_OS_Dirent::closedir (dirp);
+      ACE_OS::closedir (dirp);
       while (nfiles-- > 0)
         {
 #if defined (ACE_LACKS_STRUCT_DIR)
-          ACE_OS_Memory::free (vector[nfiles]->d_name);
+          ACE_OS::free (vector[nfiles]->d_name);
 #endif /* ACE_LACKS_STRUCT_DIR */
-          ACE_OS_Memory::free (vector[nfiles]);
+          ACE_OS::free (vector[nfiles]);
         }
-      ACE_OS_Memory::free (vector);
+      ACE_OS::free (vector);
       return -1;
     }
 
-  ACE_OS_Dirent::closedir (dirp);
+  ACE_OS::closedir (dirp);
 
   *namelist = vector;
 
@@ -277,4 +276,3 @@ scandir_emulation (const ACE_TCHAR *dirname,
   return nfiles;
 }
 
-} /* namespace ACE_OS */

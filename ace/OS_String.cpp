@@ -21,9 +21,8 @@ ACE_RCSID (ace, OS_String, "$Id$")
 extern "C" wchar_t *wcsdup __P ((__const wchar_t *__s));
 #endif /* ACE_LACKS_WCSDUP_PROTOTYPE */
 
-namespace ACE_OS {
 const char *
-strnstr (const char *s1, const char *s2, size_t len2)
+ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
 {
   // Substring length
   size_t len1 = ACE_OS::strlen (s1);
@@ -46,7 +45,7 @@ strnstr (const char *s1, const char *s2, size_t len2)
 }
 
 const ACE_WCHAR_T *
-strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
+ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 {
   // Substring length
   size_t len1 = ACE_OS::strlen (s1);
@@ -69,10 +68,10 @@ strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 }
 
 char *
-strdup (const char *s)
+ACE_OS::strdup (const char *s)
 {
 #if defined (ACE_HAS_STRDUP_EMULATION)
-  char *t = (char *) ACE_OS_Memory::malloc (ACE_OS::strlen (s) + 1);
+  char *t = (char *) ACE_OS::malloc (ACE_OS::strlen (s) + 1);
   if (t == 0)
     return 0;
 
@@ -84,12 +83,12 @@ strdup (const char *s)
 
 #if defined (ACE_HAS_WCHAR)
 wchar_t *
-strdup (const wchar_t *s)
+ACE_OS::strdup (const wchar_t *s)
 {
 #   if defined (ACE_LACKS_WCSDUP)
   wchar_t *buffer =
-    (wchar_t *) ACE_OS_Memory::malloc ((ACE_OS::strlen (s) + 1)
-                                       * sizeof (wchar_t));
+    (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
+                                * sizeof (wchar_t));
   if (buffer == 0)
     return 0;
 
@@ -111,7 +110,7 @@ strdup (const wchar_t *s)
  * Just returns "Unknown Error" all the time.
  */
 char *
-strerror_emulation (int errnum)
+ACE_OS::strerror_emulation (int errnum)
 {
   return "Unknown Error";
 }
@@ -119,7 +118,7 @@ strerror_emulation (int errnum)
 
 #if defined (ACE_LACKS_STRCHR)
 char *
-strchr_emulation (char *s, int c)
+ACE_OS::strchr_emulation (char *s, int c)
 {
   for (;;++s)
     {
@@ -131,7 +130,7 @@ strchr_emulation (char *s, int c)
 }
 
 const char *
-strchr_emulation (const char *s, int c)
+ACE_OS::strchr_emulation (const char *s, int c)
 {
   for (;;++s)
     {
@@ -144,7 +143,7 @@ strchr_emulation (const char *s, int c)
 #endif /* ACE_LACKS_STRCHR */
 
 const char *
-strnchr (const char *s, int c, size_t len)
+ACE_OS::strnchr (const char *s, int c, size_t len)
 {
   for (size_t i = 0; i < len; i++)
     if (s[i] == c)
@@ -154,7 +153,7 @@ strnchr (const char *s, int c, size_t len)
 }
 
 const ACE_WCHAR_T *
-strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
+ACE_OS::strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
 {
   for (size_t i = 0; i < len; i++)
     if (s[i] == ACE_static_cast(ACE_WCHAR_T, c))
@@ -165,7 +164,7 @@ strnchr (const ACE_WCHAR_T *s, ACE_WINT_T c, size_t len)
 
 #if defined (ACE_LACKS_STRRCHR)
 char *
-strrchr_emulation (char *s, int c)
+ACE_OS::strrchr_emulation (char *s, int c)
 {
   char *p = s + ACE_OS::strlen (s);
 
@@ -179,7 +178,7 @@ strrchr_emulation (char *s, int c)
 }
 
 const char *
-strrchr_emulation (const char *s, int c)
+ACE_OS::strrchr_emulation (const char *s, int c)
 {
   const char *p = s + ACE_OS::strlen (s);
 
@@ -195,7 +194,7 @@ strrchr_emulation (const char *s, int c)
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSRCHR)
 const wchar_t *
-wcsrchr_emulation (const wchar_t *s, wint_t c)
+ACE_OS::wcsrchr_emulation (const wchar_t *s, wint_t c)
 {
   const wchar_t *p = s + ACE_OS::strlen (s);
 
@@ -209,7 +208,7 @@ wcsrchr_emulation (const wchar_t *s, wint_t c)
 }
 
 wchar_t *
-wcsrchr_emulation (wchar_t *s, wint_t c)
+ACE_OS::wcsrchr_emulation (wchar_t *s, wint_t c)
 {
   wchar_t *p = s + ACE_OS::strlen (s);
 
@@ -224,7 +223,7 @@ wcsrchr_emulation (wchar_t *s, wint_t c)
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSRCHR */
 
 char *
-strecpy (char *s, const char *t)
+ACE_OS::strecpy (char *s, const char *t)
 {
   register char *dscan = s;
   register const char *sscan = t;
@@ -237,7 +236,7 @@ strecpy (char *s, const char *t)
 
 #if defined (ACE_HAS_WCHAR)
 wchar_t *
-strecpy (wchar_t *s, const wchar_t *t)
+ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
 {
   register wchar_t *dscan = s;
   register const wchar_t *sscan = t;
@@ -251,7 +250,7 @@ strecpy (wchar_t *s, const wchar_t *t)
 
 #if defined (ACE_LACKS_STRCSPN)
 size_t
-strcspn_emulation (const char *s, const char *reject)
+ACE_OS::strcspn_emulation (const char *s, const char *reject)
 {
   const char *scan;
   const char *rej_scan;
@@ -273,7 +272,7 @@ strcspn_emulation (const char *s, const char *reject)
 
 #if defined (ACE_LACKS_STRCASECMP)
 int
-strcasecmp_emulation (const char *s, const char *t)
+ACE_OS::strcasecmp_emulation (const char *s, const char *t)
 {
   const char *scan1 = s;
   const char *scan2 = t;
@@ -303,7 +302,7 @@ strcasecmp_emulation (const char *s, const char *t)
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSICMP)
 int
-wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
+ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 {
   const wchar_t *scan1 = s;
   const wchar_t *scan2 = t;
@@ -333,9 +332,9 @@ wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 
 #if defined (ACE_LACKS_STRCASECMP)
 int
-strncasecmp_emulation (const char *s,
-                       const char *t,
-                       size_t len)
+ACE_OS::strncasecmp_emulation (const char *s,
+                               const char *t,
+                               size_t len)
 {
   const char *scan1 = s;
   const char *scan2 = t;
@@ -370,9 +369,9 @@ strncasecmp_emulation (const char *s,
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSNICMP)
 int
-wcsnicmp_emulation (const wchar_t *s,
-                    const wchar_t *t,
-                    size_t len)
+ACE_OS::wcsnicmp_emulation (const wchar_t *s,
+                            const wchar_t *t,
+                            size_t len)
 {
   const wchar_t *scan1 = s;
   const wchar_t *scan2 = t;
@@ -407,7 +406,7 @@ wcsnicmp_emulation (const wchar_t *s,
 
 #if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
 char *
-strtok_r_emulation (char *s, const char *tokens, char **lasts)
+ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
   if (s == 0)
     s = *lasts;
@@ -430,7 +429,9 @@ strtok_r_emulation (char *s, const char *tokens, char **lasts)
 
 # if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOK)
 wchar_t*
-strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **lasts)
+ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
+                            const ACE_WCHAR_T *tokens,
+                            ACE_WCHAR_T **lasts)
 {
   if (s == 0)
     s = *lasts;
@@ -453,7 +454,7 @@ strtok_r_emulation (ACE_WCHAR_T *s, const ACE_WCHAR_T *tokens, ACE_WCHAR_T **las
 
 #if !defined (ACE_HAS_MEMCHR)
 const void *
-memchr_emulation (const void *s, int c, size_t len)
+ACE_OS::memchr_emulation (const void *s, int c, size_t len)
 {
   const unsigned char *t = (const unsigned char *) s;
   const unsigned char *e = (const unsigned char *) s + len;
@@ -524,7 +525,7 @@ ACE_OS::itoa_emulation (int value, char *string, int radix)
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_ITOW)
 wchar_t *
-itow_emulation (int value, wchar_t *string, int radix)
+ACE_OS::itow_emulation (int value, wchar_t *string, int radix)
 {
   wchar_t *e = string;
   wchar_t *b = string;
@@ -576,7 +577,7 @@ itow_emulation (int value, wchar_t *string, int radix)
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCSPN)
 size_t
-wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
+ACE_OS::wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 {
   const wchar_t *scan;
   const wchar_t *rej_scan;
@@ -638,8 +639,8 @@ wcscspn_emulation (const wchar_t *s, const wchar_t *reject)
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCAT)
 wchar_t *
-wcscat_emulation (wchar_t *destination,
-                  const wchar_t *source)
+ACE_OS::wcscat_emulation (wchar_t *destination,
+                          const wchar_t *source)
 {
   wchar_t *save = destination;
 
@@ -651,8 +652,8 @@ wcscat_emulation (wchar_t *destination,
 
 #if defined (ACE_LACKS_STRSPN)
 size_t
-strspn_emulation (const char *string,
-                  const char *charset)
+ACE_OS::strspn_emulation (const char *string,
+                          const char *charset)
 {
   const char *p = string;
   const char *spanp;
@@ -670,8 +671,8 @@ cont:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSPN)
 size_t
-wcsspn_emulation (const wchar_t *string,
-                  const wchar_t *charset)
+ACE_OS::wcsspn_emulation (const wchar_t *string,
+                          const wchar_t *charset)
 {
   const wchar_t *p = string;
   const wchar_t *spanp;
@@ -689,8 +690,8 @@ cont:
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSSTR)
 wchar_t *
-wcsstr_emulation (const wchar_t *string,
-                  const wchar_t *charset)
+ACE_OS::wcsstr_emulation (const wchar_t *string,
+                          const wchar_t *charset)
 {
   wchar_t c, sc;
   size_t len;
@@ -715,7 +716,7 @@ wcsstr_emulation (const wchar_t *string,
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSLEN)
 size_t
-wcslen_emulation (const ACE_WCHAR_T *string)
+ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
 {
   const ACE_WCHAR_T *s;
 
@@ -728,9 +729,9 @@ wcslen_emulation (const ACE_WCHAR_T *string)
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCPY)
 ACE_WCHAR_T *
-wcsncpy_emulation (ACE_WCHAR_T *destination,
-                   const ACE_WCHAR_T *source,
-                   size_t len)
+ACE_OS::wcsncpy_emulation (ACE_WCHAR_T *destination,
+                           const ACE_WCHAR_T *source,
+                           size_t len)
 {
   if (len != 0)
     {
@@ -755,8 +756,8 @@ wcsncpy_emulation (ACE_WCHAR_T *destination,
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)
 int
-wcscmp_emulation (const ACE_WCHAR_T *string1,
-                  const ACE_WCHAR_T *string2)
+ACE_OS::wcscmp_emulation (const ACE_WCHAR_T *string1,
+                          const ACE_WCHAR_T *string2)
 {
   while (*string1 == *string2++)
     if (*string1++ == 0)
@@ -767,8 +768,8 @@ wcscmp_emulation (const ACE_WCHAR_T *string1,
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCPY)
 wchar_t *
-wcscpy_emulation (wchar_t *destination,
-                  const wchar_t *source)
+ACE_OS::wcscpy_emulation (wchar_t *destination,
+                          const wchar_t *source)
 {
   wchar_t *save = destination;
 
@@ -779,8 +780,8 @@ wcscpy_emulation (wchar_t *destination,
 
 #if defined (ACE_LACKS_STRPBRK)
 char *
-strpbrk_emulation (const char *string,
-                   const char *charset)
+ACE_OS::strpbrk_emulation (const char *string,
+                           const char *charset)
 {
   const char *scanp;
   int c, sc;
@@ -798,8 +799,8 @@ strpbrk_emulation (const char *string,
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSPBRK)
 wchar_t *
-wcspbrk_emulation (const wchar_t *string,
-                   const wchar_t *charset)
+ACE_OS::wcspbrk_emulation (const wchar_t *string,
+                           const wchar_t *charset)
 {
   const wchar_t *scanp;
   int c, sc;
@@ -817,9 +818,9 @@ wcspbrk_emulation (const wchar_t *string,
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
 ACE_WCHAR_T *
-wcsncat_emulation (ACE_WCHAR_T *destination,
-                   const ACE_WCHAR_T *source,
-                   size_t count)
+ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
+                           const ACE_WCHAR_T *source,
+                           size_t count)
 {
   if (count != 0)
     {
@@ -846,7 +847,7 @@ wcsncat_emulation (ACE_WCHAR_T *destination,
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCHR)
 wchar_t *
-wcschr_emulation (const wchar_t *string, wint_t c)
+ACE_OS::wcschr_emulation (const wchar_t *string, wint_t c)
 {
   for (;*string ; ++string)
     if (*string == ACE_static_cast (wchar_t, c))
@@ -858,9 +859,9 @@ wcschr_emulation (const wchar_t *string, wint_t c)
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
 int
-wcsncmp_emulation (const ACE_WCHAR_T *s1,
-                   const ACE_WCHAR_T *s2,
-                   size_t len)
+ACE_OS::wcsncmp_emulation (const ACE_WCHAR_T *s1,
+                           const ACE_WCHAR_T *s2,
+                           size_t len)
 {
   if (len == 0)
     return 0;
@@ -879,7 +880,7 @@ wcsncmp_emulation (const ACE_WCHAR_T *s1,
 
 #if defined (ACE_LACKS_STRTOL)
 long
-strtol_emulation (const char *nptr, char **endptr, int base)
+ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
 {
   register const char *s = nptr;
   register unsigned long acc;
@@ -959,9 +960,9 @@ strtol_emulation (const char *nptr, char **endptr, int base)
 
 #if defined (ACE_LACKS_STRTOUL)
 unsigned long
-strtoul_emulation (const char *nptr,
-                   char **endptr,
-                   register int base)
+ACE_OS::strtoul_emulation (const char *nptr,
+                           char **endptr,
+                           register int base)
 {
   register const char *s = nptr;
   register unsigned long acc;
@@ -1026,7 +1027,7 @@ strtoul_emulation (const char *nptr,
 #endif /* ACE_LACKS_STRTOUL */
 
 char *
-strsncpy (char *dst, const char *src, size_t maxlen)
+ACE_OS::strsncpy (char *dst, const char *src, size_t maxlen)
 {
   register char *rdst = dst;
   register const char *rsrc = src;
@@ -1050,7 +1051,7 @@ strsncpy (char *dst, const char *src, size_t maxlen)
 }
 
 ACE_WCHAR_T *
-strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
+ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
 {
   register ACE_WCHAR_T *rdst = dst;
   register const ACE_WCHAR_T *rsrc = src;
@@ -1072,4 +1073,3 @@ strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
     }
   return dst;
 }
-} /* namespace ACE_OS */

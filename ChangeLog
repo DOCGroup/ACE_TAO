@@ -1,3 +1,20 @@
+Sat Sep 13 18:33:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.{cpp,i}:
+        * ace/OS_Dirent.{cpp,inl}:
+        * ace/OS_Memory.{cpp,inl}:
+        * ace/OS_String.{cpp,inl}:
+        * ace/OS_TLI.inl:
+          Rolled back the namespace directives so each method definition
+          is fully qualified--solves problem on Solaris with SPRO 5.4
+          compiler.  Also changed remaining ACE_OS_*:: invocations to
+          ACE_OS::.
+        
+Thu Sep 11 15:19:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Corrected types in friend declarations for pread/pwrite.
+
 Thu Sep 11 14:52:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:

@@ -24,23 +24,18 @@ ACE_RCSID(ace, OS, "$Id$")
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_WINCE)
-const wchar_t *ACE_OS::day_of_week_name[] = {
-  ACE_LIB_TEXT ("Sun"), ACE_LIB_TEXT ("Mon"),
-  ACE_LIB_TEXT ("Tue"), ACE_LIB_TEXT ("Wed"),
-  ACE_LIB_TEXT ("Thu"), ACE_LIB_TEXT ("Fri"),
-  ACE_LIB_TEXT ("Sat")
-};
-const wchar_t *ACE_OS::month_name[] = {
-  ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
-  ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
-  ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
-  ACE_LIB_TEXT ("Jul"), ACE_LIB_TEXT ("Aug"),
-  ACE_LIB_TEXT ("Sep"), ACE_LIB_TEXT ("Oct"),
-  ACE_LIB_TEXT ("Nov"), ACE_LIB_TEXT ("Dec")
-};
+const wchar_t *ACE_OS::day_of_week_name[] = {ACE_LIB_TEXT ("Sun"), ACE_LIB_TEXT ("Mon"),
+                                             ACE_LIB_TEXT ("Tue"), ACE_LIB_TEXT ("Wed"),
+                                             ACE_LIB_TEXT ("Thu"), ACE_LIB_TEXT ("Fri"),
+                                             ACE_LIB_TEXT ("Sat")};
+const wchar_t *ACE_OS::month_name[] = {ACE_LIB_TEXT ("Jan"), ACE_LIB_TEXT ("Feb"),
+                                       ACE_LIB_TEXT ("Mar"), ACE_LIB_TEXT ("Apr"),
+                                       ACE_LIB_TEXT ("May"), ACE_LIB_TEXT ("Jun"),
+                                       ACE_LIB_TEXT ("Jul"), ACE_LIB_TEXT ("Aug"),
+                                       ACE_LIB_TEXT ("Sep"), ACE_LIB_TEXT ("Oct"),
+                                       ACE_LIB_TEXT ("Nov"), ACE_LIB_TEXT ("Dec") };
 
-static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = 
-  ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
+static const ACE_TCHAR *ACE_OS_CTIME_R_FMTSTR = ACE_LIB_TEXT ("%3s %3s %02d %02d:%02d:%02d %04d\n");
 # endif /* ACE_HAS_WINCE */
 
 # if defined (ACE_WIN32)
@@ -228,11 +223,9 @@ ACE_OS_Recursive_Thread_Mutex_Guard::~ACE_OS_Recursive_Thread_Mutex_Guard ()
       ACE_OS_Object_Manager::ACE_TSS_BASE_LOCK]);
 
 
-namespace ACE_OS {
-
 # if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 int
-netdb_acquire (void)
+ACE_OS::netdb_acquire (void)
 {
   return ACE_OS::thread_mutex_lock ((ACE_thread_mutex_t *)
     ACE_OS_Object_Manager::preallocated_object[
@@ -240,7 +233,7 @@ netdb_acquire (void)
 }
 
 int
-netdb_release (void)
+ACE_OS::netdb_release (void)
 {
   return ACE_OS::thread_mutex_unlock ((ACE_thread_mutex_t *)
     ACE_OS_Object_Manager::preallocated_object[
@@ -253,8 +246,7 @@ netdb_release (void)
 # define ACE_TSS_BASE_GUARD
 #endif /* ! ACE_MT_SAFE */
 
-ACE_EXIT_HOOK exit_hook_ = 0;
-}; /* namespace ACE_OS */
+ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
 ACE_Cleanup_Info::ACE_Cleanup_Info (void)
   : object_ (0),
@@ -418,11 +410,9 @@ ACE_Countdown_Time::~ACE_Countdown_Time (void)
   this->stop ();
 }
 
-namespace ACE_OS {
-
 #if defined (ACE_HAS_POWERPC_TIMER) && defined (ghs)
 void
-readPPCTimeBase (u_long &most, u_long &least)
+ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 {
   ACE_OS_TRACE ("ACE_OS::readPPCTimeBase");
 
@@ -442,7 +432,7 @@ readPPCTimeBase (u_long &most, u_long &least)
 }
 #elif defined (ACE_HAS_POWERPC_TIMER) && defined (__GNUG__)
 void
-readPPCTimeBase (u_long &most, u_long &least)
+ACE_OS::readPPCTimeBase (u_long &most, u_long &least)
 {
   ACE_OS_TRACE ("ACE_OS::readPPCTimeBase");
 
@@ -469,7 +459,7 @@ readPPCTimeBase (u_long &most, u_long &least)
 // string literals, and some compilers, e.g., g++, don't handle those
 // efficiently in unused inline functions.
 int
-uname (ACE_utsname *name)
+ACE_OS::uname (ACE_utsname *name)
 {
   ACE_OS_TRACE ("ACE_OS::uname");
 # if defined (ACE_WIN32)
@@ -684,7 +674,7 @@ uname (ACE_utsname *name)
 
 #if defined (VXWORKS)
 struct hostent *
-gethostbyname (const char *name)
+ACE_OS::gethostbyname (const char *name)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname");
 
@@ -713,7 +703,7 @@ gethostbyname (const char *name)
 }
 
 struct hostent *
-gethostbyaddr (const char *addr, int length, int type)
+ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr");
 
@@ -750,9 +740,9 @@ gethostbyaddr (const char *addr, int length, int type)
 }
 
 struct hostent *
-gethostbyaddr_r (const char *addr, int length, int type,
-                 hostent *result, ACE_HOSTENT_DATA buffer,
-                 int *h_errnop)
+ACE_OS::gethostbyaddr_r (const char *addr, int length, int type,
+                         hostent *result, ACE_HOSTENT_DATA buffer,
+                         int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr_r");
   if (length != 4 || type != AF_INET)
@@ -800,9 +790,9 @@ gethostbyaddr_r (const char *addr, int length, int type,
 }
 
 struct hostent *
-gethostbyname_r (const char *name, hostent *result,
-                 ACE_HOSTENT_DATA buffer,
-                 int *h_errnop)
+ACE_OS::gethostbyname_r (const char *name, hostent *result,
+                         ACE_HOSTENT_DATA buffer,
+                         int *h_errnop)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname_r");
 
@@ -852,8 +842,8 @@ gethostbyname_r (const char *name, hostent *result,
 int ACE_THR_JOIN_DELAY = 5;
 
 int
-thr_join (ACE_hthread_t thr_handle,
-          ACE_THR_FUNC_RETURN *status)
+ACE_OS::thr_join (ACE_hthread_t thr_handle,
+                  ACE_THR_FUNC_RETURN *status)
 {
   // We can't get the status of the thread
   if (status != 0)
@@ -903,9 +893,9 @@ thr_join (ACE_hthread_t thr_handle,
 }
 
 int
-thr_join (ACE_thread_t waiter_id,
-          ACE_thread_t *thr_id,
-          ACE_THR_FUNC_RETURN *status)
+ACE_OS::thr_join (ACE_thread_t waiter_id,
+                  ACE_thread_t *thr_id,
+                  ACE_THR_FUNC_RETURN *status)
 {
   thr_id = 0;
   return ACE_OS::thr_join (taskNameToId (waiter_id), status);
@@ -913,7 +903,7 @@ thr_join (ACE_thread_t waiter_id,
 #endif /* VXWORKS */
 
 void
-ace_flock_t::dump (void) const
+ACE_OS::ace_flock_t::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");
@@ -938,7 +928,7 @@ ace_flock_t::dump (void) const
 }
 
 void
-mutex_lock_cleanup (void *mutex)
+ACE_OS::mutex_lock_cleanup (void *mutex)
 {
   ACE_OS_TRACE ("ACE_OS::mutex_lock_cleanup");
 #if defined (ACE_HAS_THREADS)
@@ -954,8 +944,7 @@ mutex_lock_cleanup (void *mutex)
 }
 
 #if defined (ACE_USES_WCHAR)
-void
-checkUnicodeFormat (FILE* fp)
+void ACE_OS::checkUnicodeFormat (FILE* fp)
 {
     if (fp != 0)
     {
@@ -986,8 +975,8 @@ checkUnicodeFormat (FILE* fp)
 
 #if defined (ACE_WIN32)
 FILE *
-fopen (const ACE_TCHAR *filename,
-       const ACE_TCHAR *mode)
+ACE_OS::fopen (const ACE_TCHAR *filename,
+               const ACE_TCHAR *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   int hmode = _O_TEXT;
@@ -1044,7 +1033,7 @@ fopen (const ACE_TCHAR *filename,
 // they use varargs.
 
 int
-fprintf (FILE *fp, const char *format, ...)
+ACE_OS::fprintf (FILE *fp, const char *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::fprintf");
   int result = 0;
@@ -1057,7 +1046,7 @@ fprintf (FILE *fp, const char *format, ...)
 
 #if defined (ACE_HAS_WCHAR)
 int
-fprintf (FILE *fp, const wchar_t *format, ...)
+ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::fprintf");
 
@@ -1079,7 +1068,7 @@ fprintf (FILE *fp, const wchar_t *format, ...)
 #endif /* ACE_HAS_WCHAR */
 
 int
-printf (const char *format, ...)
+ACE_OS::printf (const char *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::printf");
   int result;
@@ -1091,7 +1080,7 @@ printf (const char *format, ...)
 }
 
 int
-sprintf (char *buf, const char *format, ...)
+ACE_OS::sprintf (char *buf, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::sprintf");
 
@@ -1105,7 +1094,7 @@ sprintf (char *buf, const char *format, ...)
 
 #if defined (ACE_HAS_WCHAR)
 int
-sprintf (wchar_t *buf, const wchar_t *format, ...)
+ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 {
   ACE_OS_TRACE ("ACE_OS::sprintf");
 
@@ -1143,7 +1132,7 @@ sprintf (wchar_t *buf, const wchar_t *format, ...)
 #endif /* ACE_HAS_WCHAR */
 
 int
-snprintf (char *buf, size_t maxlen, const char *format, ...)
+ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
 #if defined (ACE_HAS_SNPRINTF)
@@ -1180,7 +1169,7 @@ snprintf (char *buf, size_t maxlen, const char *format, ...)
 
 #if defined (ACE_HAS_WCHAR)
 int
-snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
+ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
 #if (defined (_XOPEN_SOURCE) && (_XOPEN_SOURCE >= 500)) || defined (ACE_WIN32)
@@ -1220,7 +1209,7 @@ snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 #endif /* ACE_HAS_WCHAR */
 
 char *
-gets (char *str, int n)
+ACE_OS::gets (char *str, int n)
 {
   ACE_OS_TRACE ("ACE_OS::gets");
   int c;
@@ -1254,7 +1243,7 @@ gets (char *str, int n)
 }
 
 int
-execl (const char * /* path */, const char * /* arg0 */, ...)
+ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execl");
 #if defined (ACE_WIN32) || defined (VXWORKS)
@@ -1267,7 +1256,7 @@ execl (const char * /* path */, const char * /* arg0 */, ...)
 }
 
 int
-execle (const char * /* path */, const char * /* arg0 */, ...)
+ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execle");
 #if defined (ACE_WIN32) || defined (VXWORKS)
@@ -1280,7 +1269,7 @@ execle (const char * /* path */, const char * /* arg0 */, ...)
 }
 
 int
-execlp (const char * /* file */, const char * /* arg0 */, ...)
+ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execlp");
 #if defined (ACE_WIN32) || defined (VXWORKS)
@@ -1293,7 +1282,7 @@ execlp (const char * /* file */, const char * /* arg0 */, ...)
 }
 
 int
-scheduling_class (const char *class_name, ACE_id_t &id)
+ACE_OS::scheduling_class (const char *class_name, ACE_id_t &id)
 {
 #if defined (ACE_HAS_PRIOCNTL)
   // Get the priority class ID.
@@ -1323,8 +1312,8 @@ scheduling_class (const char *class_name, ACE_id_t &id)
 }
 
 int
-set_scheduling_params (const ACE_Sched_Params &sched_params,
-                       ACE_id_t id)
+ACE_OS::set_scheduling_params (const ACE_Sched_Params &sched_params,
+                               ACE_id_t id)
 {
 #if defined (ACE_HAS_PRIOCNTL)
   // Set priority class, priority, and quantum of this LWP or process as
@@ -1418,7 +1407,7 @@ set_scheduling_params (const ACE_Sched_Params &sched_params,
 }
 
 int
-thr_setprio (const ACE_Sched_Priority prio)
+ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
 {
   // Set the thread priority on the current thread.
   ACE_hthread_t my_thread_id;
@@ -1457,8 +1446,8 @@ thr_setprio (const ACE_Sched_Priority prio)
 }
 
 int
-sched_params (const ACE_Sched_Params &sched_params,
-              ACE_id_t id)
+ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
+                      ACE_id_t id)
 {
   ACE_OS_TRACE ("ACE_OS::sched_params");
 # if defined (CHORUS)
@@ -1609,16 +1598,16 @@ sched_params (const ACE_Sched_Params &sched_params,
 // as structures...  Under no circumstances should these be given
 // initial values.
 // Note: these three objects require static construction.
-ACE_thread_t NULL_thread;
-ACE_hthread_t NULL_hthread;
+ACE_thread_t ACE_OS::NULL_thread;
+ACE_hthread_t ACE_OS::NULL_hthread;
 #if defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
-  ACE_thread_key_t NULL_key = ACE_static_cast (ACE_thread_key_t, -1);
+  ACE_thread_key_t ACE_OS::NULL_key = ACE_static_cast (ACE_thread_key_t, -1);
 #else  /* ! ACE_HAS_TSS_EMULATION */
-  ACE_thread_key_t NULL_key;
+  ACE_thread_key_t ACE_OS::NULL_key;
 #endif /* ! ACE_HAS_TSS_EMULATION */
 
 #if defined (CHORUS)
-KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
+KnCap ACE_OS::actorcaps_[ACE_CHORUS_MAX_ACTORS];
 // This is used to map an actor's id into a KnCap for killing and
 // waiting actors.
 #endif /* CHORUS */
@@ -1628,10 +1617,9 @@ KnCap actorcaps_[ACE_CHORUS_MAX_ACTORS];
 // = Static initialization.
 
 // Keeps track of whether we've initialized the WinSock DLL.
-int socket_initialized_;
+int ACE_OS::socket_initialized_;
 
 #endif /* WIN32 */
-} /* namespace ACE_OS */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
 
@@ -2473,9 +2461,8 @@ ACE_TSS_Emulation::tss_close ()
 
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 
-namespace ACE_OS {
 void
-cleanup_tss (const u_int main_thread)
+ACE_OS::cleanup_tss (const u_int main_thread)
 {
 #if defined (ACE_HAS_TSS_EMULATION) || defined (ACE_WIN32) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   // Call TSS destructors for current thread.
@@ -2513,7 +2500,6 @@ cleanup_tss (const u_int main_thread)
 #endif /* ACE_HAS_TSS_EMULATION */
     }
 }
-} /* namespace ACE_OS */
 
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 #define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
@@ -2592,17 +2578,16 @@ ace_cleanup_destroyer (ACE_Cleanup *object, void *param)
   object->cleanup (param);
 }
 
-namespace ACE_OS {
 int
-thr_create (ACE_THR_FUNC func,
-            void *args,
-            long flags,
-            ACE_thread_t *thr_id,
-            ACE_hthread_t *thr_handle,
-            long priority,
-            void *stack,
-            size_t stacksize,
-            ACE_Base_Thread_Adapter *thread_adapter)
+ACE_OS::thr_create (ACE_THR_FUNC func,
+                    void *args,
+                    long flags,
+                    ACE_thread_t *thr_id,
+                    ACE_hthread_t *thr_handle,
+                    long priority,
+                    void *stack,
+                    size_t stacksize,
+                    ACE_Base_Thread_Adapter *thread_adapter)
 {
   ACE_OS_TRACE ("ACE_OS::thr_create");
 
@@ -3454,7 +3439,7 @@ thr_create (ACE_THR_FUNC func,
 }
 
 void
-thr_exit (ACE_THR_FUNC_RETURN status)
+ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 {
   ACE_OS_TRACE ("ACE_OS::thr_exit");
 #if defined (ACE_HAS_THREADS)
@@ -3529,7 +3514,7 @@ thr_exit (ACE_THR_FUNC_RETURN status)
 }
 
 int
-lwp_getparams (ACE_Sched_Params &sched_params)
+ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
 {
 # if defined (ACE_HAS_STHREADS) || defined (sun)
   // Get the class TS and RT class IDs.
@@ -3587,7 +3572,7 @@ lwp_getparams (ACE_Sched_Params &sched_params)
 }
 
 int
-lwp_setparams (const ACE_Sched_Params &sched_params)
+ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 {
 # if defined (ACE_HAS_STHREADS) || defined (sun)
   ACE_Sched_Params lwp_params (sched_params);
@@ -3601,7 +3586,7 @@ lwp_setparams (const ACE_Sched_Params &sched_params)
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 int
-thr_setspecific (ACE_OS_thread_key_t key, void *data)
+ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
 #   if defined (ACE_HAS_THREADS)
@@ -3632,7 +3617,7 @@ thr_setspecific (ACE_OS_thread_key_t key, void *data)
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 int
-thr_setspecific (ACE_thread_key_t key, void *data)
+ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_setspecific");
 #if defined (ACE_HAS_THREADS)
@@ -3698,7 +3683,7 @@ thr_setspecific (ACE_thread_key_t key, void *data)
 }
 
 int
-thr_keyfree (ACE_thread_key_t key)
+ACE_OS::thr_keyfree (ACE_thread_key_t key)
 {
   ACE_OS_TRACE ("ACE_OS::thr_keyfree");
 # if defined (ACE_HAS_THREADS)
@@ -3738,7 +3723,7 @@ thr_keyfree (ACE_thread_key_t key)
 
 # if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 int
-thr_keycreate (ACE_OS_thread_key_t *key,
+ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
 #   if defined (ACE_HAS_THR_C_DEST)
                        ACE_THR_C_DEST dest,
 #   else
@@ -3793,13 +3778,13 @@ thr_keycreate (ACE_OS_thread_key_t *key,
 # endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 int
-thr_keycreate (ACE_thread_key_t *key,
+ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 # if defined (ACE_HAS_THR_C_DEST)
-               ACE_THR_C_DEST dest,
+                       ACE_THR_C_DEST dest,
 # else
-               ACE_THR_DEST dest,
+                       ACE_THR_DEST dest,
 # endif /* ACE_HAS_THR_C_DEST */
-               void *inst)
+                       void *inst)
 {
   // ACE_OS_TRACE ("ACE_OS::thr_keycreate");
 #if defined (ACE_HAS_THREADS)
@@ -3882,7 +3867,7 @@ thr_keycreate (ACE_thread_key_t *key,
 }
 
 int
-thr_key_used (ACE_thread_key_t key)
+ACE_OS::thr_key_used (ACE_thread_key_t key)
 {
 # if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   ACE_TSS_Cleanup::instance ()->key_used (key);
@@ -3894,7 +3879,7 @@ thr_key_used (ACE_thread_key_t key)
 }
 
 int
-thr_key_detach (void *inst)
+ACE_OS::thr_key_detach (void *inst)
 {
 # if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION) || (defined (ACE_PSOS) && defined (ACE_PSOS_HAS_TSS))
   if (ACE_TSS_Cleanup::lockable ())
@@ -3912,9 +3897,9 @@ thr_key_detach (void *inst)
 }
 
 void
-unique_name (const void *object,
-             ACE_TCHAR *name,
-             size_t length)
+ACE_OS::unique_name (const void *object,
+                     ACE_TCHAR *name,
+                     size_t length)
 {
   // The process ID will provide uniqueness between processes on the
   // same machine. The "this" pointer of the <object> will provide
@@ -3932,9 +3917,9 @@ unique_name (const void *object,
 }
 
 int
-argv_to_string (ACE_TCHAR **argv,
-                ACE_TCHAR *&buf,
-                int substitute_env_args)
+ACE_OS::argv_to_string (ACE_TCHAR **argv,
+                        ACE_TCHAR *&buf,
+                        int substitute_env_args)
 {
   if (argv == 0 || argv[0] == 0)
     return 0;
@@ -3999,10 +3984,10 @@ argv_to_string (ACE_TCHAR **argv,
 }
 
 int
-string_to_argv (ACE_TCHAR *buf,
-                int &argc,
-                ACE_TCHAR **&argv,
-                int substitute_env_args)
+ACE_OS::string_to_argv (ACE_TCHAR *buf,
+                        int &argc,
+                        ACE_TCHAR **&argv,
+                        int substitute_env_args)
 {
   // Reset the number of arguments
   argc = 0;
@@ -4131,7 +4116,7 @@ string_to_argv (ACE_TCHAR *buf,
 // separated by spaces.
 
 pid_t
-fork_exec (ACE_TCHAR *argv[])
+ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
   ACE_TCHAR *buf;
@@ -4209,10 +4194,10 @@ fork_exec (ACE_TCHAR *argv[])
 }
 
 ssize_t
-read_n (ACE_HANDLE handle,
-        void *buf,
-        size_t len,
-        size_t *bt)
+ACE_OS::read_n (ACE_HANDLE handle,
+                void *buf,
+                size_t len,
+                size_t *bt)
 {
   size_t temp;
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
@@ -4237,10 +4222,10 @@ read_n (ACE_HANDLE handle,
 // system call on UNIX and the <WriteFile> call on Win32).
 
 ssize_t
-write_n (ACE_HANDLE handle,
-         const void *buf,
-         size_t len,
-         size_t *bt)
+ACE_OS::write_n (ACE_HANDLE handle,
+                 const void *buf,
+                 size_t len,
+                size_t *bt)
 {
   size_t temp;
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
@@ -4267,7 +4252,7 @@ write_n (ACE_HANDLE handle,
 // thread-safe.
 
 int
-writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
+ACE_OS::writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 {
   ACE_OS_TRACE ("ACE_OS::writev_emulation");
 
@@ -4313,9 +4298,9 @@ writev_emulation (ACE_HANDLE handle, ACE_WRITEV_TYPE iov[], int n)
 // thread-safe.
 
 ssize_t
-readv_emulation (ACE_HANDLE handle,
-                 ACE_READV_TYPE *iov,
-                 int n)
+ACE_OS::readv_emulation (ACE_HANDLE handle,
+                         ACE_READV_TYPE *iov,
+                         int n)
 {
   ACE_OS_TRACE ("ACE_OS::readv_emulation");
 
@@ -4381,7 +4366,7 @@ ftruncate (ACE_HANDLE handle, long len)
 
 # if defined (ACE_LACKS_MKTEMP)
 ACE_TCHAR *
-mktemp (ACE_TCHAR *s)
+ACE_OS::mktemp (ACE_TCHAR *s)
 {
   ACE_OS_TRACE ("ACE_OS::mktemp");
   if (s == 0)
@@ -4430,7 +4415,7 @@ mktemp (ACE_TCHAR *s)
 # endif /* ACE_LACKS_MKTEMP */
 
 int
-socket_init (int version_high, int version_low)
+ACE_OS::socket_init (int version_high, int version_low)
 {
 # if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ == 0)
@@ -4464,7 +4449,7 @@ socket_init (int version_high, int version_low)
 }
 
 int
-socket_fini (void)
+ACE_OS::socket_fini (void)
 {
 # if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ != 0)
@@ -4730,7 +4715,6 @@ spaef (FUNCPTR entry, ...)
   return ret;
 }
 # endif /* VXWORKS */
-} /* namespace ACE_OS */
 
 # if !defined (ACE_HAS_SIGINFO_T)
 siginfo_t::siginfo_t (ACE_HANDLE handle)
@@ -4746,9 +4730,8 @@ siginfo_t::siginfo_t (ACE_HANDLE *handles)
 }
 # endif /* ACE_HAS_SIGINFO_T */
 
-namespace ACE_OS {
 pid_t
-fork (const ACE_TCHAR *program_name)
+ACE_OS::fork (const ACE_TCHAR *program_name)
 {
   ACE_OS_TRACE ("ACE_OS::fork");
 # if defined (ACE_LACKS_FORK)
@@ -4770,7 +4753,6 @@ fork (const ACE_TCHAR *program_name)
   return pid;
 # endif /* ACE_WIN32 */
 }
-} /* namespace ACE_OS */
 
 void
 ACE_Cleanup::cleanup (void *)
@@ -4907,11 +4889,10 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
   return !(*this == rhs);
 }
 
-namespace ACE_OS {
 // All other platforms have this inlined in OS.i
 #if defined (ACE_PSOS)
 char *
-inet_ntoa (const struct in_addr addr)
+ACE_OS::inet_ntoa (const struct in_addr addr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntoa");
 
@@ -4928,7 +4909,7 @@ inet_ntoa (const struct in_addr addr)
 #endif /* defined (ACE_PSOS) */
 
 int
-inet_aton (const char *host_name, struct in_addr *addr)
+ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 {
 #if defined (ACE_LACKS_INET_ATON)
   ACE_UINT32 ip_addr = ACE_OS::inet_addr (host_name);
@@ -4959,7 +4940,7 @@ inet_aton (const char *host_name, struct in_addr *addr)
 }
 
 struct tm *
-localtime_r (const time_t *t, struct tm *res)
+ACE_OS::localtime_r (const time_t *t, struct tm *res)
 {
   ACE_OS_TRACE ("ACE_OS::localtime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
@@ -5042,10 +5023,10 @@ localtime_r (const time_t *t, struct tm *res)
 }
 
 ssize_t
-pread (ACE_HANDLE handle,
-       void *buf,
-       size_t nbytes,
-       off_t offset)
+ACE_OS::pread (ACE_HANDLE handle,
+               void *buf,
+               size_t nbytes,
+               off_t offset)
 {
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
@@ -5167,10 +5148,10 @@ pread (ACE_HANDLE handle,
 }
 
 ssize_t
-pwrite (ACE_HANDLE handle,
-        const void *buf,
-        size_t nbytes,
-        off_t offset)
+ACE_OS::pwrite (ACE_HANDLE handle,
+                const void *buf,
+                size_t nbytes,
+                off_t offset)
 {
 # if defined (ACE_HAS_P_READ_WRITE)
 #   if defined (ACE_WIN32)
@@ -5286,10 +5267,10 @@ pwrite (ACE_HANDLE handle,
 }
 
 ACE_HANDLE
-open (const char *filename,
-      int mode,
-      int perms,
-      LPSECURITY_ATTRIBUTES sa)
+ACE_OS::open (const char *filename,
+              int mode,
+              int perms,
+              LPSECURITY_ATTRIBUTES sa)
 {
   ACE_OS_TRACE ("ACE_OS::open");
 
@@ -5434,10 +5415,10 @@ open (const char *filename,
 
 #if defined (ACE_HAS_WCHAR)
 ACE_HANDLE
-open (const wchar_t *filename,
-      int mode,
-      int perms,
-      LPSECURITY_ATTRIBUTES sa)
+ACE_OS::open (const wchar_t *filename,
+              int mode,
+              int perms,
+              LPSECURITY_ATTRIBUTES sa)
 {
 #if defined (ACE_WIN32)
   // @@ (brunsch) Yuck, maybe there is a way to combine the code
@@ -5531,7 +5512,7 @@ open (const wchar_t *filename,
 
 # if defined (ACE_LACKS_DIFFTIME)
 double
-difftime (time_t t1, time_t t0)
+ACE_OS::difftime (time_t t1, time_t t0)
 {
   /* return t1 - t0 in seconds */
   struct tm tms[2], *ptms[2], temp;
@@ -5664,7 +5645,7 @@ difftime (time_t t1, time_t t0)
 
 # if defined (ACE_HAS_WINCE)
 ACE_TCHAR *
-ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
+ACE_OS::ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
 {
   // buflen must be at least 26 wchar_t long.
   if (buflen < 26)              // Again, 26 is a magic number.
@@ -5699,7 +5680,7 @@ ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen)
 # endif /* ACE_HAS_WINCE */
 
 time_t
-mktime (struct tm *t)
+ACE_OS::mktime (struct tm *t)
 {
   ACE_OS_TRACE ("ACE_OS::mktime");
 #   if defined (ACE_PSOS) && ! defined (ACE_PSOS_HAS_TIME)
@@ -5730,10 +5711,10 @@ mktime (struct tm *t)
 
 # if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_RWLOCK_T)
 int
-rwlock_init (ACE_rwlock_t *rw,
-             int type,
-             const ACE_TCHAR *name,
-             void *arg)
+ACE_OS::rwlock_init (ACE_rwlock_t *rw,
+                     int type,
+                     const ACE_TCHAR *name,
+                     void *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::rwlock_init");
 #   if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_RWLOCK_T)
@@ -5809,7 +5790,7 @@ rwlock_init (ACE_rwlock_t *rw,
 // to avoid use before definition if they were inline.
 
 int
-cond_destroy (ACE_cond_t *cv)
+ACE_OS::cond_destroy (ACE_cond_t *cv)
 {
   ACE_OS_TRACE ("ACE_OS::cond_destroy");
 # if defined (ACE_HAS_THREADS)
@@ -5829,39 +5810,39 @@ cond_destroy (ACE_cond_t *cv)
 // @@ The following functions could be inlined if i could figure where
 // to put it among the #ifdefs!
 int
-condattr_init (ACE_condattr_t &attributes,
-               int type)
+ACE_OS::condattr_init (ACE_condattr_t &attributes,
+                       int type)
 {
   attributes.type = type;
   return 0;
 }
 
 int
-condattr_destroy (ACE_condattr_t &)
+ACE_OS::condattr_destroy (ACE_condattr_t &)
 {
   return 0;
 }
 
 int
-cond_init (ACE_cond_t *cv,
-           ACE_condattr_t &attributes,
-           const char *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv,
+                   ACE_condattr_t &attributes,
+                   const char *name, void *arg)
 {
   return ACE_OS::cond_init (cv, attributes.type, name, arg);
 }
 
 #if defined (ACE_HAS_WCHAR)
 int
-cond_init (ACE_cond_t *cv,
-           ACE_condattr_t &attributes,
-           const wchar_t *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv,
+                   ACE_condattr_t &attributes,
+                   const wchar_t *name, void *arg)
 {
   return ACE_OS::cond_init (cv, attributes.type, name, arg);
 }
 #endif /* ACE_HAS_WCHAR */
 
 int
-cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
@@ -5891,7 +5872,7 @@ cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 
 #if defined (ACE_HAS_WCHAR)
 int
-cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
@@ -5921,7 +5902,7 @@ cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
 #endif /* ACE_HAS_WCHAR */
 
 int
-cond_signal (ACE_cond_t *cv)
+ACE_OS::cond_signal (ACE_cond_t *cv)
 {
   ACE_OS_TRACE ("ACE_OS::cond_signal");
 # if defined (ACE_HAS_THREADS)
@@ -5946,7 +5927,7 @@ cond_signal (ACE_cond_t *cv)
 }
 
 int
-cond_broadcast (ACE_cond_t *cv)
+ACE_OS::cond_broadcast (ACE_cond_t *cv)
 {
   ACE_OS_TRACE ("ACE_OS::cond_broadcast");
 # if defined (ACE_HAS_THREADS)
@@ -5993,8 +5974,8 @@ cond_broadcast (ACE_cond_t *cv)
 }
 
 int
-cond_wait (ACE_cond_t *cv,
-           ACE_mutex_t *external_mutex)
+ACE_OS::cond_wait (ACE_cond_t *cv,
+                   ACE_mutex_t *external_mutex)
 {
   ACE_OS_TRACE ("ACE_OS::cond_wait");
 # if defined (ACE_HAS_THREADS)
@@ -6087,9 +6068,9 @@ cond_wait (ACE_cond_t *cv,
 }
 
 int
-cond_timedwait (ACE_cond_t *cv,
-                ACE_mutex_t *external_mutex,
-                ACE_Time_Value *timeout)
+ACE_OS::cond_timedwait (ACE_cond_t *cv,
+                        ACE_mutex_t *external_mutex,
+                        ACE_Time_Value *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::cond_timedwait");
 # if defined (ACE_HAS_THREADS)
@@ -6275,9 +6256,9 @@ cond_timedwait (ACE_cond_t *cv,
 
 # if defined (ACE_HAS_WTHREADS)
 int
-cond_timedwait (ACE_cond_t *cv,
-                ACE_thread_mutex_t *external_mutex,
-                ACE_Time_Value *timeout)
+ACE_OS::cond_timedwait (ACE_cond_t *cv,
+                        ACE_thread_mutex_t *external_mutex,
+                        ACE_Time_Value *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::cond_timedwait");
 #   if defined (ACE_HAS_THREADS)
@@ -6368,8 +6349,8 @@ cond_timedwait (ACE_cond_t *cv,
 }
 
 int
-cond_wait (ACE_cond_t *cv,
-           ACE_thread_mutex_t *external_mutex)
+ACE_OS::cond_wait (ACE_cond_t *cv,
+                   ACE_thread_mutex_t *external_mutex)
 {
   ACE_OS_TRACE ("ACE_OS::cond_wait");
 #   if defined (ACE_HAS_THREADS)
@@ -6440,7 +6421,7 @@ cond_wait (ACE_cond_t *cv,
 #endif /* ACE_LACKS_COND_T */
 
 void
-exit (int status)
+ACE_OS::exit (int status)
 {
   ACE_OS_TRACE ("ACE_OS::exit");
 
@@ -6466,8 +6447,6 @@ exit (int status)
   ::TerminateProcess (::GetCurrentProcess (), status);
 #endif /* ACE_HAS_WINCE */
 }
-
-} /* namespace ACE_OS */
 
 # if defined (ACE_PSOS)
 
@@ -7131,7 +7110,6 @@ ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager (void)
 static ACE_OS_Object_Manager_Manager ACE_OS_Object_Manager_Manager_instance;
 #endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
-namespace ACE_OS {
 // You may be asking yourself, why are we doing this?  Well, in winbase.h,
 // MS didn't follow their normal Api_FunctionA and Api_FunctionW style,
 // so we have to #undef their define to get access to the unicode version.
@@ -7142,7 +7120,7 @@ namespace ACE_OS {
 #endif /* ACE_WIN32 && UNICODE !ACE_USES_TCHAR */
 
 ACE_TCHAR *
-getenvstrings (void)
+ACE_OS::getenvstrings (void)
 {
 #if defined (ACE_LACKS_ENV)
   ACE_NOTSUP_RETURN (0);
@@ -7159,7 +7137,7 @@ getenvstrings (void)
 
 #if defined (ACE_HAS_STRPTIME)
 char *
-strptime (char *buf, const char *format, struct tm *tm)
+ACE_OS::strptime (char *buf, const char *format, struct tm *tm)
 {
 #if !defined (ACE_HAS_WINCE)
 #if defined (ACE_LACKS_NATIVE_STRPTIME)
@@ -7401,12 +7379,12 @@ strptime (char *buf, const char *format, struct tm *tm)
 
 # if defined (ACE_LACKS_NATIVE_STRPTIME)
 int
-strptime_getnum (char *buf,
-                 int *num,
-                 int *bi,
-                 int *fi,
-                 int min,
-                 int max)
+ACE_OS::strptime_getnum (char *buf,
+                         int *num,
+                         int *bi,
+                         int *fi,
+                         int min,
+                         int max)
 {
   int i = 0, tmp = 0;
 
@@ -7435,10 +7413,10 @@ strptime_getnum (char *buf,
 
 #if !defined (ACE_HAS_WINCE)
 ACE_HANDLE
-accept (ACE_HANDLE handle,
-        struct sockaddr *addr,
-        int *addrlen,
-        const ACE_Accept_QoS_Params &qos_params)
+ACE_OS::accept (ACE_HANDLE handle,
+                struct sockaddr *addr,
+                int *addrlen,
+                const ACE_Accept_QoS_Params &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
@@ -7457,10 +7435,10 @@ accept (ACE_HANDLE handle,
 }
 
 ACE_HANDLE
-join_leaf (ACE_HANDLE socket,
-           const sockaddr *name,
-           int namelen,
-           const ACE_QoS_Params &qos_params)
+ACE_OS::join_leaf (ACE_HANDLE socket,
+                   const sockaddr *name,
+                   int namelen,
+                   const ACE_QoS_Params &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
@@ -7492,15 +7470,15 @@ join_leaf (ACE_HANDLE socket,
 }
 
 int
-ioctl (ACE_HANDLE socket,
-       u_long io_control_code,
-       void *in_buffer_p,
-       u_long in_buffer,
-       void *out_buffer_p,
-       u_long out_buffer,
-       u_long *bytes_returned,
-       ACE_OVERLAPPED *overlapped,
-       ACE_OVERLAPPED_COMPLETION_FUNC func)
+ACE_OS::ioctl (ACE_HANDLE socket,
+               u_long io_control_code,
+               void *in_buffer_p,
+               u_long in_buffer,
+               void *out_buffer_p,
+               u_long out_buffer,
+               u_long *bytes_returned,
+               ACE_OVERLAPPED *overlapped,
+               ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
@@ -7530,14 +7508,14 @@ ioctl (ACE_HANDLE socket,
 
 
 int
-ioctl (ACE_HANDLE socket,
-       u_long io_control_code,
-       ACE_QoS &ace_qos,
-       u_long *bytes_returned,
-       void *buffer_p,
-       u_long buffer,
-       ACE_OVERLAPPED *overlapped,
-       ACE_OVERLAPPED_COMPLETION_FUNC func)
+ACE_OS::ioctl (ACE_HANDLE socket,
+               u_long io_control_code,
+               ACE_QoS &ace_qos,
+               u_long *bytes_returned,
+               void *buffer_p,
+               u_long buffer,
+               ACE_OVERLAPPED *overlapped,
+               ACE_OVERLAPPED_COMPLETION_FUNC func)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
@@ -7674,10 +7652,10 @@ ioctl (ACE_HANDLE socket,
 }
 
 int
-connect (ACE_HANDLE handle,
-         const sockaddr *addr,
-         int addrlen,
-         const ACE_QoS_Params &qos_params)
+ACE_OS::connect (ACE_HANDLE handle,
+                 const sockaddr *addr,
+                 int addrlen,
+                 const ACE_QoS_Params &qos_params)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -7699,7 +7677,7 @@ connect (ACE_HANDLE handle,
 #endif  // ACE_HAS_WINCE
 
 long
-num_processors (void)
+ACE_OS::num_processors (void)
 {
   ACE_OS_TRACE ("ACE_OS::num_processors");
 
@@ -7715,7 +7693,7 @@ num_processors (void)
 }
 
 long
-num_processors_online (void)
+ACE_OS::num_processors_online (void)
 {
   ACE_OS_TRACE ("ACE_OS::num_processors_online");
 
@@ -7743,7 +7721,7 @@ num_processors_online (void)
 #endif
 
 int
-getmacaddress (struct macaddr_node_t *node)
+ACE_OS::getmacaddress (struct macaddr_node_t *node)
 {
   ACE_OS_TRACE ("ACE_OS::getmacaddress");
 
@@ -7893,5 +7871,3 @@ getmacaddress (struct macaddr_node_t *node)
   ACE_NOTSUP_RETURN (-1);
 #endif
 }
-
-}; /* namespace ACE_OS */
