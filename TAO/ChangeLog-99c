@@ -1,3 +1,41 @@
+Tue Jul 13 12:22:11 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Sequence_T.h:
+	* TAO_IDL/be_include/be_argument.h:
+	* TAO_IDL/be_include/be_array.h:
+	* TAO_IDL/be_include/be_attribute.h:
+	* TAO_IDL/be_include/be_constant.h:
+	* TAO_IDL/be_include/be_decl.h:
+	* TAO_IDL/be_include/be_enum.h:
+	* TAO_IDL/be_include/be_enum_val.h:
+	* TAO_IDL/be_include/be_exception.h:
+	* TAO_IDL/be_include/be_expression.h:
+	* TAO_IDL/be_include/be_field.h:
+	* TAO_IDL/be_include/be_interface.h:
+	* TAO_IDL/be_include/be_interface_fwd.h:
+	* TAO_IDL/be_include/be_module.h:
+	* TAO_IDL/be_include/be_native.h:
+	* TAO_IDL/be_include/be_operation.h:
+	* TAO_IDL/be_include/be_predefined_type.h:
+	* TAO_IDL/be_include/be_root.h:
+	* TAO_IDL/be_include/be_scope.h:
+	* TAO_IDL/be_include/be_sequence.h:
+	* TAO_IDL/be_include/be_state.h:
+	* TAO_IDL/be_include/be_stream_factory.h:
+	* TAO_IDL/be_include/be_string.h:
+	* TAO_IDL/be_include/be_structure.h:
+	* TAO_IDL/be_include/be_sunsoft.h:
+	* TAO_IDL/be_include/be_type.h:
+	* TAO_IDL/be_include/be_typedef.h:
+	* TAO_IDL/be_include/be_union.h:
+	* TAO_IDL/be_include/be_union_branch.h:
+	* TAO_IDL/be_include/be_union_label.h:
+	* TAO_IDL/be_include/be_valuetype.h:
+	* TAO_IDL/be_include/be_valuetype_fwd.h:
+	* TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+	  Added #includes required by AIX template instantiation
+	  mechanisms.
+
 Tue Jul 13 11:03:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/OctetSeq/run_test.pl:

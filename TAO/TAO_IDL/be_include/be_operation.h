@@ -22,6 +22,13 @@
 #ifndef BE_OPERATION_H
 #define BE_OPERATION_H
 
+#include "be_scope.h"
+#include "be_decl.h"
+#include "ast_operation.h"
+
+class AST_Type;
+class UTL_StrList;
+class be_visitor;
 class be_argument;
 
 /*

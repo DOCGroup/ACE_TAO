@@ -23,6 +23,12 @@
 #ifndef _BE_PREDEFINED_TYPE_H
 #define _BE_PREDEFINED_TYPE_H
 
+#include "be_type.h"
+#include "ast_predefined_type.h"
+
+class UTL_StrList;
+class be_visitor;
+
 // be_classes.hh
 //
 // Defines all classes for dummy BE

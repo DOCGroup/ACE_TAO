@@ -23,6 +23,13 @@
 #ifndef BE_STRUCTURE_H
 #define BE_STRUCTURE_H
 
+#include "be_scope.h"
+#include "be_type.h"
+#include "ast_structure.h"
+
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Structure
  */

@@ -3,10 +3,15 @@
 #ifndef BE_UNION_LABEL_H
 #define BE_UNION_LABEL_H
 
+#include "ast_union_label.h"
+
+class be_visitor;
+
 /*
  * BE_UnionLabel
  */
-class   be_union_label : public virtual AST_UnionLabel {
+class   be_union_label : public virtual AST_UnionLabel
+{
 public:
   // Operations
   be_union_label();

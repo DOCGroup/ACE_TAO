@@ -23,6 +23,8 @@
 #ifndef _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 #define _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 
+#include "be_visitor_scope.h"
+
 const int TAO_BE_VISITOR_TYPECODE_DEFN_MAX_STACK_SIZE = 1024;
 
 class be_visitor_typecode_defn : public be_visitor_scope
@@ -221,8 +223,8 @@ public:
 
   // helper to get an array of long from a name
 
-  int tc_name2long (const char *name, 
-                    ACE_CDR::ULong *&larr, 
+  int tc_name2long (const char *name,
+                    ACE_CDR::ULong *&larr,
                     ACE_CDR::ULong &arrlen);
 
   // processing for scopes
@@ -240,7 +242,7 @@ public:
   };
 
 private:
-  
+
   ACE_CDR::Long computed_tc_size_;
   // the tc size of the node under consideration
 
@@ -250,7 +252,7 @@ private:
   ACE_CDR::Long computed_scope_encap_len_;
   // the encap length of the scope of the node under consideration
 
-  // the following are used for recursive and repeated typecodes 
+  // the following are used for recursive and repeated typecodes
 
   ACE_CDR::Long tc_offset_;
   // current computed length of the typecode
@@ -274,7 +276,7 @@ private:
 
   // queue related routines
 
-  const QNode *queue_insert (ACE_Unbounded_Queue <QNode*> &, 
+  const QNode *queue_insert (ACE_Unbounded_Queue <QNode*> &,
                              be_type *node, ACE_CDR::Long offset);
 
   const QNode *queue_lookup (ACE_Unbounded_Queue <QNode*> &, be_type *node);

@@ -23,6 +23,13 @@
 #ifndef BE_ENUM_H
 #define BE_ENUM_H
 
+#include "be_scope.h"
+#include "be_type.h"
+#include "ast_enum.h"
+
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Enum
  */

@@ -23,6 +23,13 @@
 #ifndef BE_INTERFACE_FWD_H
 #define BE_INTERFACE_FWD_H
 
+#include "be_type.h"
+#include "ast_interface_fwd.h"
+
+class AST_Interface;
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_InterfaceFwd
  */

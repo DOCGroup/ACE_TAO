@@ -22,6 +22,13 @@
 #ifndef BE_ARGUMENT_H
 #define BE_ARGUMENT_H
 
+#include "be_decl.h"
+#include "ast_argument.h"
+
+class AST_Type;
+class UTL_StrList;
+class be_visitor;
+
 /*
  * BE_Argument
  */
