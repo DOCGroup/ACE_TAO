@@ -40,7 +40,7 @@ project(NodeAppTest_RoundTrip_svnt) : ciao_servant_dnc {
 }
 
 project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
-  after += NodeAppTest_RoundTrip_svnt
+  after += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
 
   sharedname = NodeAppTest_RoundTrip_exec
   libs      += NodeAppTest_RoundTrip_stub NodeAppTest_RoundTrip_svnt
@@ -56,7 +56,7 @@ project(NodeAppTest_RoundTrip_exec) : ciao_component_dnc {
 }
 
 project (NodeAppTest_client_simple) : ciao_server_dnc, ciao_deployment_svnt {
- after += NodeAppTest_RoundTrip_exec
+ after += NodeAppTest_RoundTrip_stub
 
  libs += NodeAppTest_RoundTrip_stub 
  exename += client_simple
@@ -70,7 +70,7 @@ project (NodeAppTest_client_simple) : ciao_server_dnc, ciao_deployment_svnt {
 }
 
 project (NodeAppTest_client) : ciao_server_dnc, ciao_deployment_svnt {
- after += NodeAppTest_RoundTrip_exec
+ after += NodeAppTest_RoundTrip_stub
  libs += NodeAppTest_RoundTrip_stub
  exename += client
 
@@ -84,7 +84,7 @@ project (NodeAppTest_client) : ciao_server_dnc, ciao_deployment_svnt {
 }
 
 project (NodeAppTest_client_ex) : ciao_server_dnc, ciao_deployment_svnt {
- after += NodeAppTest_RoundTrip_exec
+ after += NodeAppTest_RoundTrip_stub
  libs += NodeAppTest_RoundTrip_stub 
  exename += client_ex
 
