@@ -1,3 +1,10 @@
+Thu Jun 14 17:44:15 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+        * tao/RTCORBA/rtcorbafwd.h:
+          
+          Changed the minPriority and maxPriority typedefs to use a
+          CORBA::Short to fix compiler errors on the IA64 compiler.          
+
 Thu Jun 14 16:31:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* tao/Policy_Set.i (compatible_scope):
