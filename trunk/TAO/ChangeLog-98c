@@ -4,11 +4,14 @@ Thu Mar 19 08:41:27 1998  David L. Levine  <levine@cs.wustl.edu>
           ???! with ???? in comment to avoid g++ "warning: 1 trigraph(s)
           encountered".
 
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp: removed two ACE_Lock_Adapter
+          template instantiations because they're in tao/poa.cpp.
+
         * orbsvcs/orbsvcs/Runtime_Scheduler.cpp: wrapped a few return
           statements that follow ACE_THROW's with ACE_NOTREACHED.
 
-        * orbsvcs/orbsvcs/Sched/Scheduler.cpp: removed two ACE_Lock_Adapter
-          template instantiations because they're in tao/poa.cpp.
+        * orbsvcs/orbsvcs/Config_Scheduler.cpp: wrapped a couple of break
+          statements that follow returns with ACE_NOTREACHED.
 
 Thu Mar 19 05:26:10 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
