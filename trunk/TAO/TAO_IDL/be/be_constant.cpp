@@ -58,7 +58,7 @@ be_constant::gen_client_header (void)
 
   ch->indent (); // start from whatever indentation level we were at
   *ch << "static const " << this->exprtype_to_string () << " " << local_name ();
-  if (this->is_nested ())
+  if (!this->is_nested ())
     {
       // We were defined at the outermost scope. So we put the value in the
       // header itself

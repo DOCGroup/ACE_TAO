@@ -1,3 +1,13 @@
+Sat Nov 15 21:38:48 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_sequence.cpp: 
+	  The generated length() method will reallocate the sequences
+	  now.
+
+	* TAO_IDL/be/be_constant.cpp: 
+	  It was initializing nested constants in the client header file,
+	  Andy told me how to fix it.
+
 Sat Nov 15 21:20:01 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_string.cpp: The typecode info was getting
