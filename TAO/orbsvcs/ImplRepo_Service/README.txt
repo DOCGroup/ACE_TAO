@@ -30,6 +30,8 @@ as the specification for TAO's ImR.
 
 @ref ntservice - Running the ImR as a NT Service
 
+@ref imrandnaming - Using the Naming Service with the Implmentation Repository
+
 @section authors Authors
 
 The guy currently in charge of the ImR is Darrell Brunsch
@@ -352,4 +354,34 @@ a service) it will use these options.
 
 */
 
+/**
+@page imrandnaming Naming Service
 
+@subsection lowdown The Short Answer
+
+Register the Naming Service with an Implementation Repository using the
+POA name "NameService".  So for example:
+
+<CODE>tao_imr add NameService -c "Naming_Service -ORBUseIMR 1"</CODE>
+
+And then an IOR can be created by:
+
+<CODE>tao_imr ior NameService</CODE>
+
+The above commands depend on multicast (since the commands are shorter and
+easier put in documents).  You might need to add "-ORBInitRef 
+ImplRepoService=..." for a more robust solution.
+
+@subsection details Various Details
+
+The Naming Service in TAO contains one persistant POA named "NameService".  
+If -ORBUseIMR 1 is passed to it, it will communicate with the ImR as any 
+other persistent POA does.  Also, the Naming Service recognizes the INS
+object key "NameService".  This allows you to use the "tao_imr ior"
+command to create corbaloc IORS
+
+NameService was chosen because resolve_initial_references () uses that 
+name.  And that allows us to do interesting things with ORBDefaultInitRef
+(as shown in the @ref defaultinitref section).
+
+*/
