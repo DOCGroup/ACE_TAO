@@ -71,9 +71,11 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  AST_Decl::NodeType nt = bt->node_type ();
+
   // If our base type is an anonymouse sequence, we must create a  name
   // and generate a class declaration for it as well.
-  if (bt->node_type () == AST_Decl::NT_sequence)
+  if (nt == AST_Decl::NT_sequence)
     {
       if (bt->accept (this) != 0)
         {
@@ -185,16 +187,16 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
             be_typedef::narrow_from_decl (bt);
 
       if (alias == 0)
-              {
-                predef = be_predefined_type::narrow_from_decl (bt);
-              }
+        {
+          predef = be_predefined_type::narrow_from_decl (bt);
+        }
       else
-              {
-                predef =
+        {
+          predef =
             be_predefined_type::narrow_from_decl (
                 alias->primitive_base_type ()
               );
-              }
+        }
     }
 
   // Now generate the extension...
@@ -206,7 +208,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                 << "CORBA::ULong length," << be_nl
                 << "const ACE_Message_Block* mb" << be_uidt_nl
                 << ")" << be_uidt_nl
-                << "  : " << node->instance_name ()
+                << "  : CORBA::OctetSeq"
                 << " (length, mb) {}" << "\n"
                 << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
     }
