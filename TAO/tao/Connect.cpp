@@ -143,6 +143,13 @@ TAO_Server_Connection_Handler::activate (long flags,
                                          size_t stack_size[],
                                          ACE_thread_t  thread_names[])
 {
+  if (TAO_orbdebug) 
+    {
+      ACE_DEBUG  ((LM_DEBUG,
+                   "(%P|%t) TAO_Server_Connection_Handler::activate %d threads, flags = %d\n",
+                   n_threads, flags, THR_BOUND));
+    }
+
   return TAO_SVC_HANDLER::activate (flags,
                                     n_threads,
                                     force_active,

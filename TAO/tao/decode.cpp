@@ -145,7 +145,7 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
   // actual buffer. Hence it makes no sense keeping pointers to stack
   // memory.
   //
-  // See IIOP_Object.cpp::do_static_call in which a GIOP_Invocation is
+  // See STUB_Object.cpp::do_static_call in which a GIOP_Invocation is
   // allocated on stack
 #if 0
   any->cdr_ = ACE_Message_Block::duplicate ((ACE_Message_Block *)
@@ -592,7 +592,7 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
   // we unmarshal objrefs.
 
   CORBA::ULong profiles;
-  IIOP_Object *objdata = 0;
+  STUB_Object *objdata = 0;
 
   // get the count of profiles that follow
   continue_decoding = stream->read_ulong (profiles);
@@ -606,112 +606,127 @@ TAO_Marshal_ObjRef::decode (CORBA::TypeCode_ptr,
       type_hint = 0;
       return CORBA_TypeCode::TRAVERSE_CONTINUE;
     }
-  else
-    while (profiles-- != 0 && objdata == 0)
+
+  // get a profile container to store all profiles in the IOR.
+  TAO_MProfile *mp = new TAO_MProfile (profiles);
+
+  while (profiles-- != 0 )  
+  {
+    // @@ For now we just take IIOP_Profiles,  FRED
+    // We keep decoding until we find a valid IIOP profile.
+    CORBA::ULong tag;
+
+    // get the profile ID tag
+    if ( (continue_decoding = stream->read_ulong (tag)) == 0)
       {
-        // We keep decoding until we find a valid IIOP profile.
-        CORBA::ULong tag;
+        ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
+        continue;
+      }
 
-        // get the profile ID tag
-        if ( (continue_decoding = stream->read_ulong (tag)) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "cannot read profile tag\n"));
-            continue;
-          }
+    if (tag != TAO_IOP_TAG_INTERNET_IOP ) // || objdata != 0)
+      {
+        continue_decoding = stream->skip_string ();
+        ACE_DEBUG ((LM_DEBUG, "unknown tag %d skipping\n", tag));
+        continue;
+      }
 
-        if (tag != TAO_IOP_TAG_INTERNET_IOP || objdata != 0)
-          {
-            continue_decoding = stream->skip_string ();
-            ACE_DEBUG ((LM_DEBUG, "unknown tag %d skipping\n", tag));
-            continue;
-          }
+    // OK, we've got an IIOP profile.  It's going to be
+    // encapsulated ProfileData.  Create a new decoding stream and
+    // context for it, and tell the "parent" stream that this data
+    // isn't part of it any more.
 
-        // OK, we've got an IIOP profile.  It's going to be
-        // encapsulated ProfileData.  Create a new decoding stream and
-        // context for it, and tell the "parent" stream that this data
-        // isn't part of it any more.
+    CORBA::ULong encap_len;
+    // ProfileData is encoded as a sequence of octet. So first get
+    // the length of the sequence.
+    if ( (continue_decoding = stream->read_ulong (encap_len)) == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
+        continue;
+      }
 
-        CORBA::ULong encap_len;
-        // ProfileData is encoded as a sequence of octet. So first get
-        // the length of the sequence.
-        if ( (continue_decoding = stream->read_ulong (encap_len)) == 0)
-          {
-            ACE_DEBUG ((LM_DEBUG, "cannot read encap length\n"));
-            continue;
-          }
+    // Create the decoding stream from the encapsulation in the
+    // buffer, and skip the encapsulation.
+    TAO_InputCDR str (*stream, encap_len);
 
-        // Create the decoding stream from the encapsulation in the
-        // buffer, and skip the encapsulation.
-        TAO_InputCDR str (*stream, encap_len);
+    continue_decoding =
+      str.good_bit ()
+      && stream->skip_bytes(encap_len);
 
-        continue_decoding =
-          str.good_bit ()
-          && stream->skip_bytes(encap_len);
+    if (!continue_decoding)
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "problem decoding encapsulated stream, "
+                    "len = %d\n", encap_len));
+        continue;
+      }
 
-        if (!continue_decoding)
-          {
-            ACE_DEBUG ((LM_DEBUG,
-                        "problem decoding encapsulated stream, "
-                        "len = %d\n", encap_len));
-            continue;
-          }
+    // get the default IIOP Profile and fill in the blanks
+    // with str.
+    TAO_IIOP_Profile *pfile = new TAO_IIOP_Profile;
 
-        // Ownership of type_hint is given to IIOP_Object
-        ACE_NEW_RETURN (objdata,
-                IIOP_Object (type_hint),
-                CORBA::TypeCode::TRAVERSE_STOP);
-
-
-        // return code will be -1 if an error occurs
-        // otherwise 0 for stop (can't read this profile type or version)
-        // and 1 for continue.
-        // @@ check with carlos about how TRAVERSE_CONTINUE is used!
-        switch (objdata->profile_in_use ()->parse (str, continue_decoding, env))
-        {
-          case -1:
-            objdata->_decr_refcnt ();
-            return CORBA::TypeCode::TRAVERSE_STOP;
-          case 0:
-            objdata->type_id = (const char *) 0;
-            objdata->_decr_refcnt ();
-            objdata = 0;
-            continue;
-          case 1:
-          default:
-            // all other return values indicate success
-            break;
-        }
-
+    // return code will be -1 if an error occurs
+    // otherwise 0 for stop (can't read this profile type or version)
+    // and 1 for continue.
+    // @@ check with carlos about how TRAVERSE_CONTINUE is used!  FRED
+    switch (pfile->parse (str, continue_decoding, env))
+    {
+      case -1:
+        pfile->_decr_refcnt ();
+        return CORBA::TypeCode::TRAVERSE_STOP;
+        break;
+      case 0:
+        break;
+      case 1:
+      default:
+        mp->add_profile (pfile);
+        // all other return values indicate success
+        break;
     }
+    // get more profiles
+    pfile->_decr_refcnt ();
+    continue;
+  }
 
-  if (objdata == 0)
+  // make sure we got some profiles!
+  if (mp->profile_count () == 0)
     {
       env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_MAYBE));
-      ACE_DEBUG ((LM_DEBUG, "objdata is 0, maybe because "
-                  "no IIOP v%d.%d (or earlier) profile in IOR!\n",
-                  TAO_IIOP_Profile::DEF_IIOP_MAJOR, TAO_IIOP_Profile::DEF_IIOP_MINOR));
+      ACE_DEBUG ((LM_DEBUG, "no IIOP v%d.%d (or earlier) profile in IOR!\n",
+                TAO_IIOP_Profile::DEF_IIOP_MAJOR, TAO_IIOP_Profile::DEF_IIOP_MINOR));
+      // get rid of the original MProfile!
+      delete mp;
+  
       return CORBA::TypeCode::TRAVERSE_STOP;
     }
+
+  // Ownership of type_hint is given to STUB_Object
+  // STUB_Object will make a copy of mp!
+  objdata = new STUB_Object (type_hint, mp);
+
+  // get rid of the original MProfile!
+  delete mp;
+
+  if ( objdata == 0)
+    return CORBA::TypeCode::TRAVERSE_STOP;
+
+  // Create a new CORBA_Object and give it the STUB_Object just
+  // created.
+  TAO_ServantBase *servant =
+    TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
+  CORBA_Object *corba_proxy = 0;
+
+  corba_proxy = new CORBA_Object (objdata, servant, servant != 0);
+
+  if (corba_proxy)
+    *(CORBA_Object **)data = corba_proxy;
   else
-    {
-      // Create a new CORBA_Object and give it the IIOP_Object just
-      // created.
-      TAO_ServantBase *servant =
-        TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (objdata);
-      CORBA_Object *corba_proxy = 0;
+    continue_decoding = 0;
 
-      corba_proxy = new CORBA_Object (objdata, servant, servant != 0);
+    // the corba proxy would have already incremented the reference count on
+    // the objdata. So we decrement it here by 1 so that the objdata is now
+    // fully owned by the corba_proxy that was created.
+    // objdata->_decr_refcnt ();
 
-      if (corba_proxy)
-        *(CORBA_Object **)data = corba_proxy;
-      else
-        continue_decoding = 0;
-
-      // the corba proxy would have already incremented the reference count on
-      // the objdata. So we decrement it here by 1 so that the objdata is now
-      // fully owned by the corba_proxy that was created.
-      // objdata->_decr_refcnt ();
-    }
   if (retval == CORBA::TypeCode::TRAVERSE_CONTINUE
       && continue_decoding == 1)
     return CORBA::TypeCode::TRAVERSE_CONTINUE;

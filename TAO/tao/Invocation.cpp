@@ -53,7 +53,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Invocation_Timeprobe_Description,
 // call.  That is less disruptive (and error prone) in general than
 // restructuring an ORB core in terms of asynchrony.
 
-TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
+TAO_GIOP_Invocation::TAO_GIOP_Invocation (STUB_Object *data,
                                           const char *operation,
                                           TAO_ORB_Core* orb_core)
   : data_ (data),
@@ -84,7 +84,6 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
                   ACE_MIN (sizeof (me), sizeof (this->my_request_id_)));
 }
 
-// @@ this should be a call to the transport object's idle() method. fredk
 TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 {
   if (this->data_->profile_in_use ()->transport () != 0)
@@ -129,13 +128,16 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // Get a pointer to the connector registry, which might be in 
   // thread-specific storage, depending on the concurrency model.
   TAO_Connector_Registry *conn_reg = this->orb_core_->connector_registry ();
+
+  // The connection registry is also responsible for selecting the 
+  // profile to use based on some policy or the current forwarding state.
+  // We will use the returned profile 
+  // Note: data_->profile_in_use () == profile
   TAO_Profile *profile = conn_reg->connect (this->data_, TAO_IN_ENV);
+
   const TAO_ObjectKey *key = &profile->object_key();
 
   ACE_TIMEPROBE (TAO_GIOP_INVOCATION_START_CONNECT);
-
-  // Use the TAO_SOCK_Stream from the Client_Connection_Handler for
-  // communication inplace of the endpoint used below.
 
   // POLICY DECISION: If the client expects most agents to forward,
   // then it could try to make sure that it's been forwarded at least
@@ -282,11 +284,8 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
 {
   // Send Request, return on error or if we're done
 
-  TAO_Transport *transport = this->data_->profile_in_use ()->transport ();
-  // @@ This should be call to GIOP::send_request and not
-  //    handler().  All the Invocation processing must be isolated 
-  //    from transport specific processing!  fredk
-  // @@ UGLY!!
+  TAO_Profile   *profile   = this->data_->profile_in_use ();
+  TAO_Transport *transport = profile->transport ();
   if (transport == 0 ||
       transport->send_request (this->orb_core_,
                                this->out_stream_,
@@ -294,8 +293,7 @@ TAO_GIOP_Invocation::invoke (CORBA::Boolean is_roundtrip,
     {
       // send_request () closed the connection; we just set the
       // handler to 0 here.
-      // @@ STILL UGLY
-      this->data_->profile_in_use ()->reset_hint ();
+      profile->reset_hint ();
 
       //
       // @@ highly desirable to know whether we wrote _any_ data; if
@@ -329,31 +327,26 @@ TAO_GIOP_Invocation::close_connection (void)
   // resource being reclaimed might also have been the process,
   // not just the connection.  Without reinitializing, we'd give
   // false error reports to applications.
-  {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
-                              guard,
-                              data_->get_fwd_profile_lock (),
-                              TAO_GIOP_SYSTEM_EXCEPTION));
 
-    TAO_Profile *old = data_->set_fwd_profile (0);
-    delete old;
-    old = 0;
-    // sets the forwarding profile to 0 and deletes the old one;
-
-    data_->reset_first_locate_request ();
-    // resets the flag of the first call locate request to true
-  }
-
-  // @@ get rid of transport/handler specific code here! fredk
   this->data_->profile_in_use ()->transport ()->close_conn ();
   this->data_->profile_in_use ()->reset_hint ();
+
+  // @@ Get rid of any forwarding profiles and reset 
+  // the profile list to point to the first profile! FRED
+  // For now we will not deal with recursive forwards! 
+  // TAO_GIOP_SYSTEM_EXCEPTION;
+
+  data_->reset_profiles ();
+  // sets the forwarding profile to 0 and deletes the old one;
+  // rewinds the profiles list back to the first one.
+
   return TAO_GIOP_LOCATION_FORWARD;
 }
 
 
 // Handle the GIOP Reply with status = LOCATION_FORWARD
 // Replace the IIOP Profile. The call is then automatically
-// reinvoked by the IIOP_Object::do_static_call method.
+// reinvoked by the STUB_Object::do_static_call method.
 
 TAO_GIOP_ReplyStatusType
 TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
@@ -388,19 +381,16 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // in order to extract the profile.
 
   STUB_Object *stubobj = object_ptr->_stubobj ();
-    // @@ ACE_dynamic_cast (STUB_Object*, object_ptr->_stubobj ());
 
   if (stubobj == 0)
     {
-      // @@ or this->data_->transport()->close_conn ();
-      // @@ or this->data_->hint ()->handle_close ();
       transport->close_conn ();
       TAO_THROW_RETURN (CORBA::UNKNOWN (CORBA::COMPLETED_NO), TAO_GIOP_SYSTEM_EXCEPTION);
     }
 
   // Make a copy of the IIOP profile in the forwarded objref,
   // reusing memory where practical.  Then delete the forwarded
-  // objref, retaining only its profile.
+  // objref, retaining only its profile list (mprofiles).
   //
   // @@ add and use a "forward count", to prevent loss of data
   // in forwarding chains during concurrent calls -- only a
@@ -408,14 +398,18 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // be recorded here. (This is just an optimization, and is not
   // related to correctness.)
 
-  // the copy method on IIOP::Profile will be used to copy the content
+  // New for Multiple profile.  Get the MProfile list from the
+  // forwarded object refererence, and assign it to the current profile
+  // in use.  Note, it should not be the case that the current profile 
+  // in use already has a forward profile defined!  That is, even if we
+  // were using a forward_profile in the request which resulted in this
+  // location_forward response, it will have a null fwd_mprofiles list.
 
-  // @@ Ug, what is going on here, fredk
-  data_->set_fwd_profile (stubobj->profile_in_use ());
-  // store the new profile in the forwarding profile
+  data_->set_fwd_profiles (stubobj->get_profiles ());
+  // store the new profile list and set the first forwarding profile
   // note: this has to be and is thread safe
 
-  // The object is no longer needed, because we have now the IIOP_Object
+  // The object is no longer needed, because we have now the STUB_Object
   // @@ Is this exception safe?
   CORBA::release (object_ptr);
 
@@ -479,10 +473,7 @@ TAO_GIOP_Twoway_Invocation::invoke (CORBA::ExceptionList &exceptions,
                                                      this->inp_stream_,
                                                      this->orb_core_);
 
-  // @@ More ugliness, having to deal withe the handler here!
-  // @@ this->orb_core_->reactor ()->resume_handler (transport->handler ());
   transport->resume_conn (this->orb_core_->reactor ());
-
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)
@@ -1012,7 +1003,6 @@ TAO_GIOP_Locate_Request_Invocation::invoke (CORBA::Environment &TAO_IN_ENV)
                                                      this->orb_core_);
 
   transport->resume_conn (this->orb_core_->reactor ());
-
   // suspend was called in TAO_Client_Connection_Handler::handle_input
 
   switch (m)

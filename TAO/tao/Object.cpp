@@ -242,22 +242,21 @@ CORBA_Object::_is_equivalent (CORBA_Object_ptr other_obj,
 TAO_ObjectKey *
 CORBA::Object::_key (CORBA::Environment &env)
 {
-  return this->_stubobj ()->profile_in_use ()->_key (env);
+  if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
+    return this->_stubobj ()->profile_in_use ()->_key (env);
+
+  ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
 }
 
 
+// @@ This doesn't seemed to be used anyplace! It should go away!! FRED
 void 
 CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 {
-  IIOP_Object *iiopobj =
-    ACE_dynamic_cast (IIOP_Object *, this->_stubobj ());
-  
-  if (iiopobj == 0)
-    {
-      return;
-    }
+  if ( this->_stubobj () )
+    this->_stubobj ()->use_locate_requests (use_it);
 
-  iiopobj->use_locate_requests (use_it);
+  return;
 }
 
 // ****************************************************************
