@@ -47,7 +47,8 @@ be_decl::be_decl (void)
     repoID_ (0),
     ami_handler_repoID_ (0),
     prefix_ (0),
-    size_type_ (be_decl::SIZE_UNKNOWN)
+    size_type_ (be_decl::SIZE_UNKNOWN),
+    has_constructor_ (I_FALSE)
 {
 }
 
@@ -75,7 +76,8 @@ be_decl::be_decl (AST_Decl::NodeType type,
     repoID_ (0),
     ami_handler_repoID_ (0),
     prefix_ (0),
-    size_type_ (be_decl::SIZE_UNKNOWN)
+    size_type_ (be_decl::SIZE_UNKNOWN),
+    has_constructor_ (I_FALSE)
 {
 }
 
