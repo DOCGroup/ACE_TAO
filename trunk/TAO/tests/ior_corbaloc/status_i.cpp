@@ -2,14 +2,14 @@
 
 #include "status_i.h"
 
-corbaloc_Status_i::corbaloc_Status_i (ACE_ENV_ARG_DECL_NOT_USED)
+corbaloc_Status_i::corbaloc_Status_i ()
   : server_name_()
 {
   // Constructor
 }
 
 CORBA::Boolean
-corbaloc_Status_i::print_status (ACE_ENV_ARG_DECL_NOT_USED)
+corbaloc_Status_i::print_status (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // If the server received the request from the client, return true
