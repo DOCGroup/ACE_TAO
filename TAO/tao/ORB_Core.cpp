@@ -1824,6 +1824,7 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion
       // contains references to objects, which themselves may contain
       // reference to this ORB.
       this->object_ref_table_.destroy ();
+      this->pi_current_ = 0;  // For the sake of consistency.
     }
 }
 
@@ -1845,7 +1846,8 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
   //
 
   // Shutdown the ORB and block until the shutdown is complete.
-  this->shutdown (1 ACE_ENV_ARG_PARAMETER);
+  this->shutdown (1
+                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 
   // Now remove it from the ORB table so that it's ORBid may be
@@ -1860,38 +1862,79 @@ TAO_ORB_Core::destroy (ACE_ENV_SINGLE_ARG_DECL)
 void
 TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
 {
-  size_t len = 0;
+  size_t len = 0;   // The length of the interceptor array.
+  size_t ilen = 0;  // The incremental length of the interceptor array.
 
 #if TAO_HAS_INTERCEPTORS == 1
   TAO_ClientRequestInterceptor_List::TYPE &client_interceptors =
     this->client_request_interceptors_.interceptors ();
 
   len = client_interceptors.size ();
+  ilen = len;
   for (size_t i = 0; i < len; ++i)
     {
-      client_interceptors[i]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      client_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      client_interceptors.size (ilen);
     }
 
   TAO_ServerRequestInterceptor_List::TYPE &server_interceptors =
     this->server_request_interceptors_.interceptors ();
 
   len = server_interceptors.size ();
+  ilen = len;
   for (size_t j = 0; j < len; ++j)
     {
-      server_interceptors[j]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      server_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      server_interceptors.size (ilen);
     }
+
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
   TAO_IORInterceptor_List::TYPE &ior_interceptors =
     this->ior_interceptors_.interceptors ();
 
   len = ior_interceptors.size ();
+  ilen = len;
   for (size_t k = 0; k < len; ++k)
     {
-      ior_interceptors[k]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
+      // Destroy the interceptors in reverse order in case the array
+      // list is only partially destroyed and another invocation
+      // occurs afterwards.
+      --ilen;
+
+      ior_interceptors[ilen]->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_CHECK;
+
+      // Since Interceptor::destroy() can throw an exception, decrease
+      // the size of the interceptor array incrementally since some
+      // interceptors may not have been destroyed yet.  Note that this
+      // size reduction is fast since no memory is actually
+      // deallocated.
+      ior_interceptors.size (ilen);
     }
 }
 
