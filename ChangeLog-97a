@@ -1,5 +1,13 @@
 Thu Mar 13 00:12:15 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
+	* ace/Local_Name_Space_T.cpp (dump): Added ACE_UNUSED_ARG around
+ 	  fake_this to stop the compiler from complaining about unused
+ 	  variables.
+
+	* ace/Message_Block.cpp (ACE_Data_Block::size): Moved the copying
+ 	  of the old base before freeing it up. Thanks to Dieter Quehl
+	  (dietrich.quehl@med.siemens.de) for pointing this out.
+
 	* ace/Local_Name_Space_T.cpp: Added code to the list methods such
  	  that structured exceptions are handled correctly.  Thanks to
  	  Karlheinz Dorn (karlheinz.dorn@med.siemens.de) for reporting
