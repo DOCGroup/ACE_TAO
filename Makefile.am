@@ -10,6 +10,9 @@
 ##  Process this file with automake to create Makefile.in
 ##
 
+AUTOMAKE_OPTIONS = 1.7 foreign
+
+
 bin_SCRIPTS = ace-config
 
 man_MANS = ace-config.1
