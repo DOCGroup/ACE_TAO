@@ -69,7 +69,15 @@ TAO_FILE_Parser::parse_string (const char *ior,
   return object;
 }
 
-ACE_FACTORY_DEFINE (TAO_IOR_FILE, TAO_FILE_Parser)
+ACE_STATIC_SVC_DEFINE (TAO_FILE_Parser,
+                       ACE_TEXT ("FILE_Parser"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_FILE_Parser),
+                       ACE_Service_Type::DELETE_THIS |
+                                  ACE_Service_Type::DELETE_OBJ,
+                       0)
+
+ACE_FACTORY_DEFINE (TAO, TAO_FILE_Parser)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -152,7 +152,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->transport_sync_strategy_,
            TAO_Transport_Sync_Strategy);
 
-  this->parser_registry_.open ();
+  //  this->parser_registry_.open (this);
 }
 
 TAO_ORB_Core::~TAO_ORB_Core (void)
@@ -1027,6 +1027,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
                           CORBA::COMPLETED_NO),
                         -1);
     }
+
+  // Calling the open method here so that the svc.conf file is
+  // opened and TAO_default_resource_factory::init () is called by the
+  // time this method is called.
+  this->parser_registry_.open (this);
 
   // Initialize the pointers to resources in the ORB Core instance,
   // e.g., reactor, connector, etc.  Must do this after we open

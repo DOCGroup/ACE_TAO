@@ -156,6 +156,13 @@ TAO_Resource_Factory::get_priority_mapping (void)
   return 0;
 }
 
+int
+TAO_Resource_Factory::get_parser_names (const char **&,
+                                        int &)
+{
+  return 0;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_Dynamic_Service<TAO_Resource_Factory>;
