@@ -1,3 +1,19 @@
+Mon Feb  2 20:00:07 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tools/XML_Helpers/RTConfiguration.idl:
+
+	  Include RTCORBA_include.pidl instead of RTCORBA.pidl. 
+	
+	* tools/XML_Helpers/RTConfiguration_Stubs.cpp:
+
+	  Removed the hacks in this file since they are no longer
+	  necessary. 
+	
+	* tools/XML_Helpers/XMLHelpers.mpc:
+
+	  Changed the order of inheritance to get the libraries in the
+	  right order.
+
 Sat Jan 31 18:26:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tools/XML_Helpers/RTConfiguration.idl:

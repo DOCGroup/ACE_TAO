@@ -8,7 +8,7 @@
  * Define the data structure for configuraing RTComponentServer.
  */
 
-#include "tao/RTCORBA/RTCORBA.pidl"
+#include "tao/RTCORBA/RTCORBA_include.pidl"
 
 module CIAO
 {
