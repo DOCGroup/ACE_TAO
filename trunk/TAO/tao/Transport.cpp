@@ -389,18 +389,29 @@ TAO_Transport::make_idle (void)
 void
 TAO_Transport::close_connection (void)
 {
-  ACE_MT (ACE_GUARD (ACE_Lock,
-                     guard,
-                     *this->handler_lock_));
+  ACE_Event_Handler *eh = 0;
+  {
+    ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->handler_lock_));
 
-  // Call handle close on the handler.
-  // The event handler is as common as we can get
-  ACE_Event_Handler *eh = this->event_handler_i ();
-  if (eh)
-    eh->handle_close (ACE_INVALID_HANDLE,
-                      ACE_Event_Handler::ALL_EVENTS_MASK);
+    eh = this->event_handler_i ();
+
+    this->transition_handler_state_i ();
+
+    if (eh == 0)
+      return;
+  }
+
+  // Close the underlying connection, it is enough to get an
+  // Event_Handler pointer to do this, so we can factor out the code
+  // in the base TAO_Transport class.
+  (void) eh->handle_close (ACE_INVALID_HANDLE,
+                           ACE_Event_Handler::ALL_EVENTS_MASK);
 
   // Purge the entry
+  // @todo This is redundant, handle_close() eventually calls
+  //       this->connection_handler_closing(), that performs the same
+  //       work, for some reason they hold the mutex while they do
+  //       that work though.
   this->orb_core_->transport_cache ().purge_entry (this->cache_map_entry_);
 }
 
