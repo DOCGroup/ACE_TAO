@@ -16,6 +16,12 @@ on the corresponding test.  List of tests:
                 Tests PriorityModelPolicy with
                 RTCORBA::CLIENT_PROPAGATED value.
 
+
+              . Server_Declared
+
+                Tests PriorityModelPolicy with
+                RTCORBA::SERVER_DECLARED value.
+
               . Server_Protocol
 
                 Tests various settings of
