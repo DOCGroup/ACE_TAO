@@ -141,12 +141,12 @@ foreach $file ( @files ) {
 
                 print "symlink $up/$file $build/$file\n" if $verbose;
                 symlink ("$up/$file", "$build/$file")  ||
-                    die "$0 symlink to $build/$file failed\n";
+                    warn "$0: symlink to $build/$file failed\n";
             } else {
                 $path = $source . '/' . $file;
                 print "symlink $path $build/$file\n" if $verbose;
                 symlink ("$path", "$build/$file")  ||
-                    die "$0 symlink to $build/$file failed\n";
+                    warn "$0: symlink to $build/$file failed\n";
             }
         }
     }
@@ -156,7 +156,7 @@ foreach $file ( @files ) {
 #### Find all the symlinks in the build directory
 ####
 open (LINKS, "$find $build -type l |") ||
-    die "$0 cannot find symlinks in $build\n";
+    die "$0: cannot find symlinks in $build\n";
 
 while (<LINKS>) {
     chop;
@@ -164,12 +164,12 @@ while (<LINKS>) {
     if ($#s == -1) {
 	print "Removing $_ \n" if $verbose;
 	unlink $_ ||
-	    warn "$0 unlink of $_ failed\n";
+	    warn "$0: unlink of $_ failed\n";
     }
 
 }
 close (LINKS) ||
-    die "$0 cannot close symlinks pipe\n";
+    die "$0: cannot close symlinks pipe\n";
 
 ####
 #### Done: print message.
