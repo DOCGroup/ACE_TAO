@@ -6,6 +6,8 @@
 #include "ace/Service_Config.h"
 #include "ace/SString.h"
 
+#include "ace/streams.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/SString.i"
 #endif /* __ACE_INLINE__ */

@@ -192,15 +192,6 @@
 		#define ACE_HAS_TEMPLATE_TYPEDEFS
 	#endif
 
-	// MSVC 5.0 ?
-	#if (_MSC_VER > 1020)
-		// Compiler/platform supports typename keyword
-		#define ACE_HAS_TYPENAME_KEYWORD
-
-		// Compiler/platform defines the sig_atomic_t typedef
-		#define ACE_HAS_SIG_ATOMIC_T
-	#endif
-
 	// MSVC 4.0 or greater
 	#if (_MSC_VER >= 1000)
 		// Compiler/Platform supports the "using" keyword.

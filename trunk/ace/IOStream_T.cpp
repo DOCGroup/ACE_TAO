@@ -4,7 +4,10 @@
 #if !defined (ACE_IOSTREAM_T_C)
 #define ACE_IOSTREAM_T_C
 
-#include "ace/config.h"
+#define ACE_BUILD_DLL
+
+#include "ace/IOStream_T.h"
+
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #if defined (__GNUG__)
@@ -20,9 +23,6 @@
     int ACE_IOStream_global_of_builtin_type_to_avoid_munch_problems = 0;
 # endif /* ! ACE_IOSTREAM_T_H */
 #endif /* __GNUG__ */
-
-#define ACE_BUILD_DLL
-#include "ace/IOStream_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/IOStream_T.i"

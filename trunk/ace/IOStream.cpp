@@ -4,6 +4,7 @@
 #define ACE_IOSTREAM_C
 
 #define ACE_BUILD_DLL
+
 #include "ace/IOStream.h"
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)

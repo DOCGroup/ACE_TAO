@@ -7,7 +7,6 @@
 
 #define ACE_BUILD_DLL
 
-#include "ace/config.h"
 #include "ace/Timer_Hash.h"
 
 #if defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
