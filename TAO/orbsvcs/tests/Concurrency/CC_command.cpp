@@ -59,7 +59,7 @@ CC_Command::GetLockSet(char *lock_set_name, CORBA::Environment &_env)
       else
         {
           // No lock set name was given. Use the global lock set.
-          if(cc_lockset_==0)
+          if(cc_lockset_.in()==0)
             {
               TAO_TRY_ENV.clear();
               TAO_TRY_ENV.exception (new CORBA::UNKNOWN (CORBA::COMPLETED_NO));
@@ -558,7 +558,7 @@ CC_Lookup_Cmd::execute(void)
   printf("Executing lookup command (lock set: %s)\n", name_);
 
   // Do the lookup if we haven't done it before
-  if(cc_lockset_ == 0)
+  if(cc_lockset_.in() == 0)
     {
       TAO_TRY
         {
