@@ -3,9 +3,10 @@ Fri Jan  7 15:22:38 2000  Ossama Othman  <othman@cs.wustl.edu>
 	* tao/ORB.cpp (destroy):
 
 	  Corrected behavior where ORB::destroy() would throw a
-	  BAD_INV_ORDER exception if the ORB was already shutdown, which
-	  does not agree with the CORBA specification.  It is now possible 
-	  to call ORB::destroy() after ORB::shutdown().
+ 	  BAD_INV_ORDER exception if the ORB was already shutdown, which
+ 	  does not agree with the CORBA specification.  It is now possible
+ 	  to call ORB::destroy() after ORB::shutdown().  Thanks to Mogens
+ 	  Hansen <mogens_h@dk-online.dk> for reporting this problem.
 
 Fri Jan  7 11:52:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
