@@ -290,8 +290,9 @@ ACE_Time_Value::operator FILETIME () const
 #if defined (ghs)
   ACE_U_LongLong LL_sec(this->tv_.tv_sec);
   ACE_U_LongLong LL_usec(this->tv_.tv_usec);
-  ACE_U_LongLong LL_100ns =
-       LL_sec * (ACE_UINT32)(10000 * 1000) + LL_usec * (ACE_UINT32)10;
+  ACE_U_LongLong LL_100ns = LL_sec * (ACE_UINT32)(10000 * 1000) +
+                            LL_usec * (ACE_UINT32)10 +
+                            ACE_Time_Value::FILETIME_to_timval_skew);
   file_time.dwLowDateTime = LL_100ns.lo();
   file_time.dwHighDateTime = LL_100ns.hi();
 #else
