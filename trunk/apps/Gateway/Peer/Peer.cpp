@@ -28,6 +28,8 @@
 #include "ace/INET_Addr.h"
 #include "Event.h"
 
+static int verbose = 0;
+
 // Handle Peer events arriving as events. 
 
 class Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -459,14 +461,10 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
           this->msg_frag_ = 0; 
         }
 
-#if defined (VERBOSE)
-      ACE_DEBUG ((LM_DEBUG, "(%t) connection id = %d, supplier id = %d, len = %d, payload = %*s",
-		 event_addr.conn_id_, event->header_.supplier_id_, event->header_.len_,
-		 event->header_.len_, event->data_));
-#else
       ACE_DEBUG ((LM_DEBUG, "(%t) supplier id = %d, cur len = %d, total bytes read = %d\n",
 		 event->header_.supplier_id_, event->header_.len_, data_received + header_received));
-#endif /* VERBOSE */
+      if (verbose)
+	ACE_DEBUG ((LM_DEBUG, "data_ = %*s\n", event->header_.len_ - 2, event->data_));
       return data_received + header_received;
     }
 }
@@ -552,18 +550,14 @@ Peer_Handler::await_events (void)
 	Event *event = (Event *) mb->rd_ptr ();
 	this->total_bytes_ += mb->length ();
 
-#if defined (VERBOSE)
-	ACE_DEBUG ((LM_DEBUG, 
-		    "route id = %d, len = %d, payload = %*s",
-		   event->header_.supplier_id_, event->header_.len_,
-		   event->header_.len_, event->data_));
-#else
 	ACE_DEBUG ((LM_DEBUG, 
 		    "route id = %d, cur len = %d, total len = %d\n",
 		    event->header_.supplier_id_, 
 		    event->header_.len_, 
 		    this->total_bytes_));
-#endif /* VERBOSE */
+      if (verbose)
+	ACE_DEBUG ((LM_DEBUG, "data_ = %s\n", event->data_));
+
 	mb->release ();
 	return 0;
       }
@@ -722,7 +716,7 @@ Peer_Acceptor::fini (void)
 void
 Peer_Acceptor::parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dp:", 0);
+  ACE_Get_Opt get_opt (argc, argv, "dp:v", 0);
 
   for (int c; (c = get_opt ()) != -1; )
     {
@@ -732,6 +726,9 @@ Peer_Acceptor::parse_args (int argc, char *argv[])
 	  this->addr_.set (ACE_OS::atoi (get_opt.optarg));
 	  break;
 	case 'd':
+	  break;
+	case 'v': // Verbose mode.
+	  verbose = 1;
 	  break;
 	default:
 	  break;

@@ -53,7 +53,7 @@ ACE_Timer_Queue_Iterator::~ACE_Timer_Queue_Iterator (void)
 {
 }
 
-// Determines the maximum amount of time that the Reactor must wait
+// Determines the minimum amount of time that the Reactor must wait
 // before timing out.  This is computed as the smaller of (1) the
 // amount the caller requested when calling handle_events() and (2)
 // the earliest time registered in the Timer Queue (if any).  Must be

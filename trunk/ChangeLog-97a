@@ -1,3 +1,15 @@
+Fri Feb 21 08:06:41 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.i: Yikes, it looks like the Solaris and the POSIX version
+ 	  of sigwait() are different!  The Solaris version returns the
+ 	  signal number, whereas the POSIX version returns 0 on success,
+ 	  errno on failure, and sets a parameter with the signal on
+ 	  success.  I've fixed the ACE_OS C++ wrapper so that the right
+ 	  thing happens, i.e., errno is always set to the error (if
+ 	  sigwait() returns -1) and the signum is always returned as the
+ 	  argument and the return value on success ...  Thanks to Harry
+ 	  Gunnarsson <hg@carmenta.se> for reporting this.
+
 Fri Feb 21 11:01:22 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Thread_Priority.cpp: fixed return type of
@@ -23,6 +35,31 @@ Fri Feb 21 04:12:31 1997    <irfan@TWOSTEP>
 	* ace/ReactorEx.cpp (safe_dispatch): Added protection against
  	  structured exceptions caused by user code when dispatching
  	  handles
+
+Thu Feb 20 17:32:54 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* apps/Gateway: Added a new -v flag to the peerd and gatewayd
+ 	  applications so that they will print out the strings that are
+ 	  passed to them.  This makes it easier to debug and see what's
+ 	  happening.
+
+Wed Feb 19 19:39:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* apps/Gateway/Gateway/Concrete_Proxy_Handlers.cpp (recv): Removed
+ 	  the VERBOSE #ifdefs since they weren't used and were causing
+ 	  compile errors.  Thanks to Bert Craytor
+ 	  <Bert_Craytor@peoplesoft.com> for reporting this.
+
+Wed Feb 19 00:39:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* examples/ASX/Event_Server: Updated the README file a bit to
+ 	  clarify some loose ends.  The documentation now explains
+ 	  precisely how to start up the transceivers correctly.  Thanks to
+ 	  Patty Genuald <genualdp@agcs.com> for suggesting this.
+
+	* include/makeinclude: Removed the default symlink for
+ 	  platform_macros.GNU since it is "Solaris-biased" ;-).  Thanks to
+ 	  Amos Shapira <amos@dsi.co.il> for reporting this.
 
 Wed Feb 19 14:41:18 1997  Tim H. Harrison  <harrison@lambada.cs.wustl.edu>
 
