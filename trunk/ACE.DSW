@@ -39,6 +39,54 @@ Package=<4>
 
 ###############################################################################
 
+Project: "CPP_inclient"=.\examples\IPC_SAP\SOCK_SAP\CPP_inclient.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "CPP_inserver"=.\examples\IPC_SAP\SOCK_SAP\CPP_inserver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "C_inclient"=.\examples\IPC_SAP\SOCK_SAP\SOCK_SAP.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "C_inserver"=.\examples\IPC_SAP\SOCK_SAP\C_inserver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "Conn_Test"=.\tests\Conn_Test.dsp - Package Owner=<4>
 
 Package=<5>
@@ -52,6 +100,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Enum_Interfaces_Test"=.\tests\Enum_Interfaces_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Event_Server"=.\examples\ASX\Event_Server\Event_Server\Event_Server.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -88,6 +148,18 @@ Package=<4>
 ###############################################################################
 
 Project: "IOStream_Test"=.\tests\IOStream_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Log_Msg"=.\examples\Log_Msg\Log_Msg.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -220,6 +292,18 @@ Package=<4>
 ###############################################################################
 
 Project: "Priority_Task_Test"=.\tests\Priority_Task_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "Process"=.\examples\OS\Process\Process.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -507,7 +591,175 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Transceiver"=.\examples\ASX\Event_Server\Transceiver\transceiver.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "UPIPE_Event_Server"=.\examples\ASX\UPIPE_Event_Server\UPIPE_Event_Server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "UPIPE_SAP_Test"=.\tests\UPIPE_SAP_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "acceptor"=.\examples\Connection\blocking\acceptor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "auto_event"=.\examples\Threads\test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "barrier1"=.\examples\Threads\barrier1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "barrier2"=.\examples\Threads\barrier2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "cancel"=.\examples\Threads\cancel.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "client"=.\examples\Connection\non_blocking\non_blocking.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "connector"=.\examples\Connection\blocking\SPIPE.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "future1"=.\examples\Threads\future1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "future2"=.\examples\Threads\future2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "iterator"=.\examples\Registry\Registry.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "manual_event"=.\examples\Threads\manual_event.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "multiple_contexts"=.\examples\Naming\multiple_contexts.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -531,7 +783,355 @@ Package=<4>
 
 ###############################################################################
 
+Project: "non_existent"=.\examples\Naming\non_existent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "notification"=.\examples\Reactor\Misc\notification.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ntalk"=.\examples\Reactor\ReactorEx\reactorex.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ntalker"=.\examples\Reactor\Ntalker\ntalker.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "process_mutex"=.\examples\Threads\process_mutex.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "process_semaphore"=.\examples\Threads\process_semaphore.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "reader_writer"=.\examples\Threads\reader_writer.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "recursive_mutex"=.\examples\Threads\recursive_mutex.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "server"=.\examples\Connection\non_blocking\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "server_loggerd"=".\examples\Logger\Acceptor-server\server_loggerd.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "servers"=.\netsvcs\servers\servers.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "task_four"=.\examples\Threads\task_four.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "task_one"=.\examples\Threads\task_one.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "task_three"=.\examples\Threads\task_three.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "task_two"=.\examples\Threads\task_two.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_MT"=.\examples\Reactor\ReactorEx\test_MT.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_exception"=.\examples\Reactor\ReactorEx\test_exception.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_multiple_loops"=.\examples\Reactor\Proactor\test_multiple_loops.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_proactor"=.\examples\Reactor\Proactor\test_proactor.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_remove_handler"=.\examples\Reactor\ReactorEx\test_remove_handler.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "test_timeout"=.\examples\Reactor\Proactor\test_timeout.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "thread_manager"=.\examples\Threads\thread_manager.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "thread_pool"=.\examples\Threads\thread_pool.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "thread_specific"=.\examples\Threads\thread_specific.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "timer_queue"=.\examples\Reactor\Misc\Misc.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "token"=.\examples\Threads\token.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "tss1"=.\examples\Threads\tss1.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "tss2"=.\examples\Threads\tss2.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "update"=.\examples\Registry\update.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "writers"=.\examples\Naming\Naming.dsp - Package Owner=<4>
 
 Package=<5>
 {{{
