@@ -1,32 +1,39 @@
+Tue Apr  8 06:50:38 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Removed the ProgramDataBaseFileName section.  It seems to cause
+          build problems.
+
 Mon Apr  7 16:58:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Select_Reactor_Base.cpp (unbind): Fixed a subtle problem
-	  during complete shutdown of the event handler. 
+        * ace/Select_Reactor_Base.cpp (unbind): Fixed a subtle problem
+          during complete shutdown of the event handler.
 
-	  Problem: During the unbind () call we call handle_close () after
-	  which we nullify the event handlers without much checks. This
-	  dangerous if the application during the callback,
-	  ie. handle_close () call registers a new handler with the
-	  reactor. It is quite possible that the map is changed during
-	  registration. 
+          Problem: During the unbind () call we call handle_close () after
+          which we nullify the event handlers without much checks. This
+          dangerous if the application during the callback,
+          ie. handle_close () call registers a new handler with the
+          reactor. It is quite possible that the map is changed during
+          registration.
 
-	  Solution: We check whether the event handler's pointer in the
-	  map and the one that was cached before calling handle_close ()
-	  are the same. 
+          Solution: We check whether the event handler's pointer in the
+          map and the one that was cached before calling handle_close ()
+          are the same.
 
-	  Thanks to Kobi Cohen-Arazi" <kobi@mivzak.com> for reporting the
-	  problem. 
+          Thanks to Kobi Cohen-Arazi" <kobi@mivzak.com> for reporting the
+          problem.
 
 Mon Apr  7 17:04:20 2003  Steve Huston  <shuston@riverace.com>
 
-	* tests/Unbounded_Set_Test_Ex.cpp: Moved the definition of MyNode
-	  to its own file, Unbounded_Set_Test_Ex.h to allow the
-	  ever-cooperative AIX Visual Age C++ compiler to find the definition
-	  when instantiating templates. Also changed the name of the
-	  recorded log file to match the test name so the autobuild
-	  log analysis can find it.
+        * tests/Unbounded_Set_Test_Ex.cpp: Moved the definition of MyNode
+          to its own file, Unbounded_Set_Test_Ex.h to allow the
+          ever-cooperative AIX Visual Age C++ compiler to find the definition
+          when instantiating templates. Also changed the name of the
+          recorded log file to match the test name so the autobuild
+          log analysis can find it.
 
-	* tests/run_test.lst: Added Unbounded_Set_Test_Ex.
+        * tests/run_test.lst: Added Unbounded_Set_Test_Ex.
 
 Mon Apr  7 12:27:25 2003  Chad Elliott  <elliott_c@ociweb.com>
 
