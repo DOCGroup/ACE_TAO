@@ -1,3 +1,24 @@
+Thu Mar 25 13:13:51 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* Makefile.am (ACE.ifnames):
+	  Placed rule generation of ACE.ifnames within a MAINTAINER_MODE
+	  automake conditional.  If a `--enable-maintainer-mode' option
+	  isn't given on the configure script command line then don't
+	  generate a new `ACE.ifnames' file.
+
+	* configure.in:
+	  Added AM_MAINTAINER_MODE so that maintainer level Makefile
+	  features are disabled by default.
+
+	* acconfig.h:
+	* ace/OS.h:
+	* ace/README:
+	  Added ACE_HAS_BROKEN_MAP_FAILED macro for platforms that do not
+	  cast MAP_FAILED to a (void *).  Defining this macro prevents
+	  compilers on those platforms from complaining about assigning
+	  an int to a (void *).  Thanks to Roland Gigler
+	  <roland@mch.pn.siemens.de> for providing feedback about this.
+
 Thu Mar 25 11:30:44 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* docs/exceptions.html: 

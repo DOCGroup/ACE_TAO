@@ -101,8 +101,13 @@ ace-config.1: ace-config.1.in Makefile
 noinst_DATA = ACE.ifnames
 
 ACE.ifnames: ChangeLog acconfig.h
-	ifnames ace/*.{h,i,cpp} | sed -e 's/ .*//g' > ACE.ifnames
-
+if MAINTAINER_MODE
+        rm -f $@
+	ifnames $(top_srcdir)/ace/*.{h,i,cpp} | sed -e 's/ .*//g' \
+           > $(top_srcdir)/$@
+else
+	touch $(top_srcdir)/$@
+endif
 
 ## Directories to include in the distribution but which I am too lazy to
 ## create Makefile.am files for.  A Makefile.am for these directories isn't

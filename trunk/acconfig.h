@@ -29,10 +29,6 @@
 # undef _REENTRANT
 #endif
 
-#ifndef _POSIX_C_SOURCE
-# undef _POSIX_C_SOURCE
-#endif
-
 #ifndef _POSIX_THREADS
 # undef _POSIX_THREADS
 #endif
@@ -242,16 +238,13 @@
 
 /* typedef for ACE_UINT64 */
 /*
-   We only make the typedef if ACE_UINT64_TYPEDEF is defined and
-   ACE_LACKS_LONGLONG_T isn't defined  .  Otherwise,
-   let ace/Basic_Types.h do the work for us.  ACE_UINT64_TYPEDEF is
-   defined during the initial configuration process if a 64 bit unsigned int
-   was found.
+   We only make the typedef if ACE_UINT64_TYPEDEF is defined.  Otherwise,
+   let ace/Basic_Types.h do the work for us.
 */
 #undef ACE_UINT64_TYPEDEF
 #if defined(ACE_UINT64_TYPEDEF)
-  typedef ACE_UINT64_TYPEDEF ACE_UINT64;
-#endif /* ACE_UINT64_TYPEDEF */
+   typedef ACE_UINT64_TYPEDEF ACE_UINT64;
+#endif /* ACE_UINT64_TYPEDEF && !ACE_DISABLE_AUTOCONF_UINT64 */
 
 /* Enable ACE inlining */
 #undef __ACE_INLINE__
@@ -358,6 +351,9 @@
 /* Compiler handles explicit calling of template destructor correctly.
    See "ace/OS.h" for details. */
 #undef ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
+
+/* Platform doesn't cast MAP_FAILED to a (void *). */
+#undef ACE_HAS_BROKEN_MAP_FAILED
 
 /* Compiler/platform doesn't support namespaces (or the support is not fully
    implemented.) */
