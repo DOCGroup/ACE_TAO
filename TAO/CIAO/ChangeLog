@@ -1,3 +1,9 @@
+Thu Jan 22 23:38:32 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* examples/OEP/Display/descriptors/DualDisplay.cad:
+
+	  Changed the name of the file.
+
 Wed Jan 21 11:16:31 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/CCF/IDL2/Parsing/Recovery.hpp:
@@ -8,7 +14,7 @@ Wed Jan 21 11:16:31 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 	* CIDLC/ServantSourceGenerator.cpp:
 
 	  Cosmetic changes.
-	
+
 Wed Jan 21 10:17:22 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
 	* CCF/Makefile:
