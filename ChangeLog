@@ -1,3 +1,9 @@
+Wed Oct 15 18:28:02 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/net/os_if.h:
+          Added #undef of IOR on HP-UX.  IOR is used in TAO.  Thanks to
+          Torsten Kopper <tkue_0931@fastmail.fm> for this patch.
+
 Wed Oct 15 12:10:39 2003  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ACE-INSTALL.html: Updated the documentation to make it 
