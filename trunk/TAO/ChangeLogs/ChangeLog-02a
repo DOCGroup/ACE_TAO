@@ -1,3 +1,9 @@
+Wed Jun  7 15:28:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Makefile.bor:
+
+          Added some missing files.
+
 Wed Jun 07 13:41:17 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Policy_Factory.cpp
