@@ -1,3 +1,16 @@
+Thu Jun 17 12:48:09 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/configure.ac:
+	  Added small part of change: 
+	  Wed Jun 16 16:00:52 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+	  that was not committed at the time.
+	
+	* ace/OS_NS_time.h:
+	  Changed to avoid use of gettimeofday() for timezone info
+	  on *BSD systems.  Changed to always call tzset() for all 
+	  systems that get timezone info from global variable.
+	  This fixes bugzilla bug 1845.
+
 Thu Jun 17 09:19:45 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
