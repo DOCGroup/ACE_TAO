@@ -186,13 +186,23 @@ CORBA::Exception::_tao_any_destructor (void *x)
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-// Convenient ostrean operator.
-ostream& operator<< (ostream &os,
-                     const CORBA::Exception &e)
+namespace CORBA
 {
-  os << e._name () << " (" << e._rep_id () << ')';
+  ostream& operator<< (ostream &os,
+                       const CORBA::Exception &e)
+  {
+    os << e._name () << " (" << e._rep_id () << ')';
 
-  return os;
+    return os;
+  }
+
+  ostream& operator<< (ostream &os,
+                       const CORBA::Exception *e)
+  {
+    os << e->_name () << " (" << e->_rep_id () << ')';
+
+    return os;
+  }
 }
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
