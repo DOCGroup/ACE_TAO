@@ -89,3 +89,21 @@ module string_array
   typedef MyString ArrayOfMyString[15];
 };
 
+// Checks code generation for arrays and typedefs of arrays
+// when they are not declared globally or inside a module.
+interface testdata 
+{
+  typedef char Arraychar[2];
+  typedef Arraychar ArrayDeChar;
+
+  struct struct2 
+  {
+    Arraychar field_1;
+    ArrayDeChar field_2;
+  };
+
+  typedef sequence<Arraychar> ArraycharList;
+
+  typedef sequence<ArrayDeChar> ArrayDeCharList;
+};
+
