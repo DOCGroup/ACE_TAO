@@ -13,11 +13,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
 
-#include "tao/orb.h"
-#include "tao/orbobj.h"
-#include "tao/boa.h"
-#include "tao/debug.h"
-#include "tao/connect.h"
+#include "tao/corba.h"
 
 #include "cubit_i.h"
 
@@ -78,7 +74,6 @@ main (int    argc, char   *argv[])
   CORBA_ORB_ptr	orb_ptr;
   CORBA_BOA_ptr   oa_ptr;
   char		*orb_name = "internet";
-  int			idle = -1;
 
   orb_ptr = CORBA_ORB_init (argc, argv, orb_name, env);
   if (env.exception () != 0) {
@@ -187,12 +182,12 @@ main (int    argc, char   *argv[])
   // Handle requests for this object until we're killed, or one of
   // the methods asks us to exit.
   //
-  int terminationStatus = 0;
-
 
 #if !defined(USE_HOMEBREW_EVENT_LOOP)
   ACE_Reactor::run_event_loop();
 #else
+  int terminationStatus = 0;
+
   while (1)
     {
       int result = params->reactor()->handle_events ();

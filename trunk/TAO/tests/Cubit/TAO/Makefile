@@ -26,7 +26,7 @@ BASIC_CLT_OBJS = test1.o test1_clnt.o
 ECHO_SVR_OBJS = test1.o echo_svr.o
 ECHO_CLT_OBJS = test1.o echo_clnt.o
 
-BIN = svr clnt test1_svr test1_clnt
+BIN = svr clnt
 BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

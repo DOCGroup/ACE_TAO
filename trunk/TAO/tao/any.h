@@ -24,6 +24,9 @@
 
 #include "ace/Synch_T.h"
 
+#include "tao/orb.h"
+#include "tao/typecode.h"
+
 extern "C" const IID IID_CORBA_Any;
 
 class ACE_Svc_Export CORBA_Any : public IUnknown

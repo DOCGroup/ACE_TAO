@@ -20,12 +20,7 @@
 #endif
 
 #include "test1.h"
-#include "tao/boa.h"
-#include "tao/roa.h"
-#include "tao/orbobj.h"
-#include "tao/nvlist.h"
-#include "tao/debug.h"
-
+#include "tao/corba.h"
 
 
 #if !defined (_WIN32)
