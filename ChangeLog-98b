@@ -1,3 +1,10 @@
+Mon Jun  8 21:03:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor.cpp (any_ready): Fixed a more unrighteous bug
+ 	  where we were assigning the values in the wait_set_ rather than
+ 	  the ready_set_.  Thanks to Stefan Ericsson
+ 	  <Stefan.Ericsson@osd.uab.ericsson.se> for reporting this bug.
+
 Mon Jun  8 19:15:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Malloc.h:
