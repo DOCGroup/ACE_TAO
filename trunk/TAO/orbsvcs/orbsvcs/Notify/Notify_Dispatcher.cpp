@@ -51,6 +51,10 @@ void
 Notify_Reactive_Dispatcher::dispatch_event (const CORBA::Any & data,
                                             CORBA::Environment &ACE_TRY_ENV)
 {
+  // @@ Pradeep: here is where all kinds of things can go wrong with
+  // concurrency, please check the documentation of the RTEC for more
+  // details.
+
   // TODO: Filtering comes here..
 
   DISPATCHER_SET_ITER iter (contained_);
@@ -95,7 +99,7 @@ Notify_Reactive_Dispatcher::dispatch_event (
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Unbounded_Set<TAO_Notify_Dispatcher *>;
 template class ACE_Unbounded_Set_Iterator<TAO_Notify_Dispatcher *>;
-template class ACE_Node <TAO_Notify_Dispatcher *>; 
+template class ACE_Node <TAO_Notify_Dispatcher *>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Unbounded_Set<TAO_Notify_Dispatcher *>

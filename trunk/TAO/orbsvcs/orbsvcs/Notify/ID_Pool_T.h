@@ -20,8 +20,12 @@
 #define ID_POOL_T_H
 
 // Need this to get ACE macros
+// @@ Pradeep, we *never* #include this directly, use ace/OS.h
+// instead.
 #include "ace/config.h"
 
+  // @@ Pradeep: ID_Pool should have some prefix, TAO_Notify or
+  // something similar.
 template <class ID_TYPE>
 class ID_Pool
 {
@@ -33,6 +37,8 @@ class ID_Pool
   //   can be reused, hence the need to recycle.
   //
 
+  // @@ Pradeep: fix the indentation, leave some blank lines, in
+  // general make this stuff more readable.
  public:
   ID_TYPE get (void);
   // Returns a new or recycled ID

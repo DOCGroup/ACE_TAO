@@ -27,6 +27,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (const char* constraints,
     }
   else
     {
+      // @@ Pradeep: Where is root_ set???
       if (TAO_Interpreter::build_tree (constraints) != 0)
           ACE_THROW (CosNotifyFilter::InvalidConstraint ());
     }
