@@ -27,6 +27,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Basic_Log_Test"=.\Log\Basic_Log_Test\Basic_Log_Test.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "CC_client"=.\Concurrency\CC_client.dsp - Package Owner=<4>
 
 Package=<5>

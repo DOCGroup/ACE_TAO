@@ -1,3 +1,80 @@
+Fri Oct  4 18:07:35 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsw: 
+	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.dsp: 
+
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsw: 
+	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.dsp: 
+
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsw: 
+	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.dsp: 
+
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsw: 
+	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.dsp: 
+
+	* orbsvcs/Logging_Service/Logging_Service.dsw: 
+
+	  Files added.
+
+Fri Oct  4 18:03:17 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsw: 
+	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.dsp:
+
+	  Files added.
+
+Fri Oct  4 17:56:04 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/examples/Log/Basic/Client.dsw: 
+	* orbsvcs/examples/Log/Basic/Client.dsp:
+
+	* orbsvcs/examples/Log/Event/Simple.dsw:
+	* orbsvcs/examples/Log/Event/Log_CEC_Simple_Consumer.dsp:
+	* orbsvcs/examples/Log/Event/Log_CEC_Simple_Supplier.dsp:
+
+	* orbsvcs/examples/Log/Notify/Simple.dsw:
+	* orbsvcs/examples/Log/Notify/Log_Notify_Simple_Consumer.dsp:
+	* orbsvcs/examples/Log/Notify/Log_Notify_Simple_Supplier.dsp:
+
+	* orbsvcs/examples/Log/RTEvent/Simple.dsw:
+	* orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Consumer.dsp:
+	* orbsvcs/examples/Log/RTEvent/Log_RTEvent_Simple_Supplier.dsp:
+
+	  Files added.	
+
+Fri Oct  4 17:52:17 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* orbsvcs/orbsvcs/RTEventLog.dsp: 
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.dsp:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.dsp:
+
+	  Files added for Logging Service.
+
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+
+	  Amended to include LogNotification and
+	  DsLogNotification.idl.
+
+Fri Oct  4 17:50:06 2002  D A Hanvey  <dhanvey@qub.ac.uk>
+
+	* TAOACE.dsw: 
+
+	  New projects added - DsLogAdmin
+	                       DsEventLogAdmin
+	                       DsNotifyAdmin
+	                       RTEventLog
+	
+	* orbsvcs/orbsvcs/orbsvcs.dsw
+
+	  New projects added - DsLogAdmin
+	                       DsEventLogAdmin
+	                       DsNotifyAdmin
+	                       RTEventLog
+
+	* orbsvcs/tests/tests.dsw
+
+	  New project added - Basic_Log_Test.dsp
+
 Fri Oct  4 14:01:05 2002  D A Hanvey  <dhanvey@qub.ac.uk>
 
 	* orbsvcs/tests/Log/Basic_Log_Test/Basic_Log_Test.cpp: 

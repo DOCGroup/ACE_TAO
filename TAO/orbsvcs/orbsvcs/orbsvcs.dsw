@@ -156,6 +156,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "DsEventLogAdmin"=.\DsEventLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "DsLogAdmin"=.\DsLogAdmin.dsp - Package Owner=<4>
 
 Package=<5>
@@ -170,6 +182,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name Svc Utils
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "DsNotifyLogAdmin"=.\DsNotifyLogAdmin.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
@@ -272,6 +296,18 @@ Package=<4>
     Begin Project Dependency
     Project_Dep_Name RTSched
     End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "RTEventLog"=.\RTEventLog.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
 }}}
 
 ###############################################################################
