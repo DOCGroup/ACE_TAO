@@ -125,6 +125,13 @@ $(SHLIB:%.$(SOEXT)=$(INSLIB)/%*.$(SOEXT))
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
 
 ifeq (,$(LN_S))
+  ifndef COMSPEC
+    ifdef ComSpec
+      #### ACE+TAO use COMSPEC, but ComSpec is defined.
+      COMPSPEC = $(ComSpec)
+    endif # ComSpec
+  endif # ! COMPSPEC
+
   ifdef COMSPEC
     #### Assume we're on a WIN32 host.
     LN_S = cp -p

@@ -1,6 +1,15 @@
+Thu Oct 28 09:27:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/rules.local.GNU,
+          include/makeinclude/wrapper_macros.GNU
+          include/makeinclude/platform_vxworks5.x_g++.GNU:
+          support ComSpec as well as COMSPEC environment variable
+          (on Windows).  Thanks to Tom Venturella for reporting that
+          ComSpec was defined on the system that he was using.
+
 Wed Oct 27 20:31:22 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
-	* ace/Arg_Shifter.h (ACE_Arg_Shifter): Spelling errors.
+        * ace/Arg_Shifter.h (ACE_Arg_Shifter): Spelling errors.
 
 Wed Oct 27 16:45:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
