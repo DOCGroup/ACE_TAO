@@ -1,3 +1,12 @@
+Thu Jun 17 12:58:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/GIOP_Server_Request.cpp:
+	  Fixed operation demarshaling for non-ASCII platforms.
+
+	* examples/POA/RootPOA/run_test.pl:
+	* examples/POA/Identity/run_test.pl:
+	  Fixed include path
+
 Thu Jun 17 12:33:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
