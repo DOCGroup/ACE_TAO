@@ -1568,7 +1568,7 @@ struct strrecvfd {};
 
 # if defined (ACE_HAS_PROC_FS)
 #   include /**/ <sys/procfs.h>
-# endif /* ACE_HAS_PROC_FD */
+# endif /* ACE_HAS_PROC_FS */
 
 # if defined (ACE_HAS_UNICODE)
 #   if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
