@@ -1,0 +1,380 @@
+// README,v 1.19 2001/02/02 20:21:38 schmidt Exp
+
+This directory contains files that implement a server for the TAO
+Naming Service.  In addition, it contains files that run the TAO
+Naming Service as a Windows NT Service.  Both of these services are
+described below.
+
+How to Run the TAO Naming Service
+=================================
+
+The following describes how to run the TAO Naming Service.
+
+1. Syntax
+
+        % Naming_Service [-ORBNameServicePort nsport]
+                         [-o ior_output_file]
+                         [-p pid_file_name]
+                         [-s context_size]
+                         [-t time]
+                         [-f persitence_file_name]
+                         [-b base_address]
+			 [-m (1=enable multicast responses,0=disable(default)]
+
+2. Optional Command-line Arguments
+
+        -ORBNameServicePort nsport
+                Multicast port for listening for requests from clients
+                trying to bootstrap to a Naming Service through the
+                use of multicast.  This is only used when multicast
+                responding is enabled via '-m 1'.
+
+        -o ior_output_file
+                The name of the file, in which to store the IOR of the
+                root Naming Service context.
+
+        -p pid_file_name
+                The name of the file, in which to store the process id
+                of the Naming Service server.
+
+        -s context_size
+                Size of the hash table allocated for the root Naming
+                Context (if one is created).  All contexts created
+                under the root will use the same size for their hash
+                tables.  The default is 1024.
+
+        -t time
+                How long (in seconds) the server should listen for
+                client requests before terminating.
+
+        -f persistence_file_name
+                The name of the file to use to store/retrieve
+                persistent state of the Naming Service.  Without this
+                option, Naming Service is started in non-persistent
+                mode.
+
+        -b base_address
+                The address used for memory mapping the file specified
+                with the "-f" option above.  The value supplied with
+                this option is only used when the Naming Service runs
+                in persistent mode, i.e., "-f" option is present.
+
+	-m <0|1>
+                TAO offers a simple, very non-standard method for
+                clients to discover the initial reference for the
+                Naming Service.  However, since it can be innadequate and cause
+		unexpected results if, for example, there are multiple
+		naming services running on the network, the DEFAULT
+		behavior is for the Naming Service to NOT RESPOND to
+		such multicast queries (use the Interoperable Naming
+		Service bootstrap options instead).
+
+3. Environment Variables
+
+        NameServicePort
+                Multicast port for listening for requests from clients
+                trying to bootstrap to a Naming Service through the
+                use of multicast.  This is only used when multicast
+                responding is enabled via '-m 1'.
+
+4. Persistence
+
+        TAO Naming Service has an optional persistence capability.  By
+        default, the Naming Service is started in a non-persistent
+        mode.  Supplying "-f" command-line option to the server causes
+        a persistent version of the Naming Service to run.
+
+        The file specified with the "-f" option is used to store the
+        persistent state of the Naming Service, i.e., all Naming
+        Contexts and their bindings.  When "-f" option is specified:
+
+        1. If the specified file does not exist, it is created and
+           used to store the state of the Naming Service.  An initial
+           (root) Naming Context is also created.
+
+        2. If the specified file exists, it is scanned and:
+
+                a) If any inconsistency is detected in the stored
+                state, or the file is not recognized by the Naming
+                Service, the server exits.  (This may happen, for
+                example, if a server or host crashed in the middle of
+                writing a record to this file on a previous run).  A
+                noncorrupted version of the file must be used instead.
+
+                b) If the file is recognized and is ok, the state
+                stored in the file becomes the current state of the
+                Naming Service.
+
+        Internally, TAO uses memory mapped file to implement
+        persistence feature of the Naming Service.  A default memory
+        address (ACE_DEFAULT_BASE_ADDR) is used for mapping the file.
+        Alternate mapping address can be specified at compile-time by
+        redefining TAO_NAMING_BASE_ADDR in tao/orbconf.h.  Alternate
+        mapping address can also be specified at run-time
+        with the "-b" command-line option, which takes precedence over
+        TAO_NAMING_BASE_ADDR definition.
+        NOTE: Naming Service stores absolute pointers in its
+        memory-mapped file.  Therefore, it is important to use the
+        same mapping address on each run for the same persistence file.
+
+
+5. Implementation Policies
+
+        a. Destroying Binding Iterators
+
+                A binding iterator is destroyed when client invokes
+                <destroy> operation either on the iterator itself or
+                on the naming context it is iterating over.  In both
+                cases, subsequent calls on the binding iterator object
+                will cause OBJECT_NOT_EXIST exception.
+
+        b. Dealing with orphaned contexts
+
+                This implementation of the Naming Service does not
+                include any form of 'garbage collection' for orphaned
+                naming contexts.  It is solely the responsibility of
+                clients to clean up after themselves and not leak
+                server resources.  All the resources, including
+                orphaned contexts, are released during the Naming
+                Server shutdown.
+
+6. Clients: ways to bootstrap to the Naming Service:
+
+        There are several methods for a client to bootstrap to a
+        Naming Service, i.e., there are several mechanisms
+        <resolve_initial_references> can use when asked for
+        "NameService".  In order of predictable behavior, they are:
+
+        1. Command-line options
+
+                The "-ORBInitRef NameService=IOR:..." or environment
+                variable NameServiceIOR can be used on the client side
+                to specify the object that the call to
+                <resolve_initial_references> should return to the
+                client.  (On the server side, -o option can be used to
+                get the ior).
+
+                Example (Unix, same host):
+
+                        % TAO_ROOT/orbsvcs/Naming_Service -o ior_file
+                        % my_client -ORBInitRef NameService=file://ior_file
+
+                        On the first line, we start the Naming
+                        Service, and output its ior to <ior_file>.  On
+                        the second line, we start some client, and
+                        specify the ior <resolve_initial_references>
+                        should return for the Naming Service in a file
+                        format.
+
+        2. Interoperable Naming Service.
+
+                TAO implements the standard CORBA Interoperable Naming
+                Service (ING).  Therefore, most initialization options
+                provided by INS can be used to bootstrap to the Naming
+                Service (see TAO's releasenotes for the status of INS
+                implementation).
+
+        3. Multicast
+
+                When started with the "respond to multicast queries"
+                option turned on ('-m 1'), clients can use IP
+                multicast to query for a Naming Service, and this
+                instance will respond. TAO Naming Server is listening
+                for client multicast requests on a specified port.  On
+                the client side, <resolve_initial_references> sends
+                out a multicast request on the network, trying to
+                locate a Naming Service.  When a Naming Server
+                receives a multicast request from a client, it replies
+                to the sender with the ior of its root Naming Context.
+                Note, the port used for this bootstrapping process,
+                i.e., 'multicast port', has nothing to do with the ORB
+                port used for CORBA communication.  Other points worth
+                mentioning:
+
+                - A client and a server will only click through this
+                  multicast protocol if they are using the same
+                  multicast port.  For both client and server
+                  -ORBnameserviceport command-line option and
+                  NameServicePort environment variable can be used to
+                  specify the multicast port to use.  If none is
+                  specified, the default port is used.  (The ability
+                  to specify multicast ports can be used to match
+                  certain clients with certain Naming Servers, when
+                  there are more than one Naming Server running on the
+                  network).
+
+                - If there are several Naming Servers running on the
+                  network, each listening on the same port for
+                  multicast requests, each will send a reply to a
+                  client's request.  The client's orb will use the
+                  first response it receives, so the Naming Service
+                  will, in fact, be selected at random.
+
+                Since this mechanism is proprietary to TAO (i.e.,
+                non-standard), it only works when both client and
+                server are written using TAO.  There is no way to turn
+                multicasting off on the client side, but it is used
+                only as a last resort, i.e., any of the other options
+                will override it.
+
+                When OS platform doesn't support multicast, or client
+                or server isn't written using TAO, or a more
+                reliable/predictable location method is desired, etc.,
+                one of the other options can be used to bootstrap to
+                the Naming Service.
+
+
+How to use the NT_Naming_Service
+================================
+
+To set the options for the TAO Naming Sevice, go to the Services icon
+in the Settings group under the start menu (start menu -> settings ->
+services).  There, highlight the NT_Naming_Service, which is the name
+used by the Naming Service when it is registered.  After it's
+highlighted, you should see at the bottom of the dialog box an area to
+specify options.  Just enter the options you wish in that edit box and
+everything should just work.  However, some options, such as
+-ORBDebugLevel, won't work since an NT service can't write output to
+standard out.
+
+1. Syntax
+
+        % NT_Naming_Server [-i value]
+                           [-r]
+                           [-s]
+                           [-k]
+                           [-t n]
+                           [-d]
+
+2. Optional Command-line Arguments
+
+        -i value
+                Install this program as an NT service, with specified startup
+
+        -r
+                Remove this program from the Service Manager
+        -s
+                Start the service
+
+        -k
+                Kill the service
+
+        -t value
+                Set startup for an existing service
+
+        -d
+                Debug; run as a regular application
+
+3. Usage
+
+        To see different stages of an NT service application, you have
+        to run the program several times, with different options.
+        Please note: run with only one option at a time.
+
+        a. First, you must initialize the service in the NT SCM
+           database.  Run NT_Naming_Service with -in, where n is one of
+           the following startup options:
+
+           // Start Type (from WinNT.h)
+           //
+           #define SERVICE_SYSTEM_START    0x00000001
+           #define SERVICE_AUTO_START      0x00000002
+           #define SERVICE_DEMAND_START    0x00000003
+           #define SERVICE_DISABLED        0x00000004
+
+           If only -i is specified, SERVICE_DEMAND_START is default option.
+
+        b. Now you are ready to run the actual service. Run
+           NT_Naming_Service again, this time with -s option. If the
+           service starts successfully, it will ring the system
+           bell every second or so until the service is stopped.
+
+        c. To stop service execution, run NT_Naming_Service with the
+           -k option.
+
+        d. To remove the service from the Service Control Manager
+           database, run NT_Naming_Service with -r.
+
+        In addition, once you have initialized this service (by using
+        the -i option) you can change its startup type to one of the
+        other values above.  To do this, run NT_Naming_Service with
+        -tn option. n is as explained above for -i.
+
+        In order to debug the service's execution itself, use the -d
+        option.
+
+Troubleshooting
+============================================
+
+Q1. Error Message: "subscribe: no such device"
+
+A1. On starting, the error message "subscribe: no such device" is a
+rather cryptic message saying that basically either you don't support
+multicasting or there is no route for multicasting on one of your
+network interfaces( e.g. eth0 ).
+
+---------------------------------------
+(Step 1)
+Check to see if you have mutlicasting enabled. In the case of Linux
+you will need to check the configuration of your kernel. RedHat users
+have multicasting enabled by default. Once you are sure that you have
+multicast enabled then move to the next step. Alternative is to start
+Naming_Service with multicast disabled.
+
+
+---------------------------------------
+(Step 2)
+Check to see if you have the route for multicasting. Linux users can
+do this by running:
+
+	/sbin/route
+
+You should see something like this:
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.255.255.0   U     0      0        0 eth0
+127.0.0.0       *               255.0.0.0       U     0      0        0 lo
+224.0.0.0       *               240.0.0.0       U     0      0        0 eth0
+
+If you don't see the line for multicast routing:
+
+224.0.0.0       *               240.0.0.0       U     0      0        0 eth0
+
+You will need to add in the next step. If you do see that line and the
+problem is still there then contact the tao-users list by using
+email. Please remember to use the problem form. It helps developers to
+have a more educated guess at the exact problem you are having.
+
+
+---------------------------------------
+(Step 3)
+
+You can do this manually in a script that start the Naming service:
+
+(Linux/Unix):
+
+	/sbin/route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0
+
+Alternatively for RedHat users you can add this into a file
+"/etc/sysconfig/static-routes". As of Redhat 7, you might have to
+create this file, you can make an entry:
+
+	eth0 net 240.0.0.0 netmask 240.0.0.0
+
+On startup when the network interfaces that will be supporting
+multicast routing are started the route will be added. In my case it
+adds multicasting routing to eth0 (the first NIC).
+
+----------------------------------------
+(Step 4)
+
+Double check that the route has been added correctly using /sbin/route.
+
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        *               255.255.255.0   U     0      0        0 eth0
+127.0.0.0       *               255.0.0.0       U     0      0        0 lo
+224.0.0.0       *               240.0.0.0       U     0      0        0 eth0
+
+At this point you should be able to run Naming_Service. Have fun!

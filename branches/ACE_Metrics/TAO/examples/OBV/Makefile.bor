@@ -1,0 +1,9 @@
+
+#
+# Makefile for building the TAO OBV examples
+#
+
+DIRS = \
+        Typed_Events
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

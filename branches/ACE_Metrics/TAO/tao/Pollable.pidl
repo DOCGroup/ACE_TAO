@@ -1,0 +1,69 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file   Pollable.pidl
+ *
+ *  $Id$
+ *
+ * This file was used to generate the code in Pollable{C,S,S_T}.{h,i,cpp}
+ *
+ * The command used to generate code from this file is:
+ *
+ *   tao_idl
+ *     -o orig -Gp -Gd -Ge 1 -Gv -DCORBA3
+ *     -Wb,export_macro=TAO_Export
+ *     -Wb,export_include="tao/corbafwd.h"
+ *     -Wb,pre_include="ace/pre.h"
+ *     -Wb,post_include="ace/post.h"
+ *     Pollable.pidl
+ *
+ * after the file is generated a patch must be applied.  The patch
+ * fixes the interface repository IDs, disables the code under
+ * certain configurations, and eliminates cycles in the include
+ * dependencies.  Those changes are required because the generated
+ * code is part of the TAO library, it hardly makes any sense to
+ * change the IDL compiler to support changes that are very
+ * occasional.
+ *
+ *
+ */
+//=============================================================================
+
+#ifndef TAO_POLLABLE_PIDL
+#define TAO_POLLABLE_PIDL
+
+#pragma prefix "omg.org"
+
+module CORBA
+{
+  local interface PollableSet;
+
+  local interface Pollable {
+    boolean is_ready(in unsigned long timeout);
+    PollableSet create_pollable_set( );
+  };
+
+  local interface DIIPollable : Pollable { };
+
+  local interface PollableSet {
+    exception NoPossiblePollable { };
+    exception UnknownPollable { };
+
+    DIIPollable create_dii_pollable();
+
+    void add_pollable(in Pollable potential );
+
+    Pollable poll(in unsigned long timeout)
+      raises( NoPossiblePollable );
+
+    void remove(in Pollable potential )
+      raises( UnknownPollable );
+
+    unsigned short number_left( );
+  };
+};
+
+#pragma prefix ""
+
+#endif /* TAO_POLLABLE_PIDL */

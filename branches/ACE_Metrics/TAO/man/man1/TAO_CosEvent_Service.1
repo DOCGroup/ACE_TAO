@@ -1,0 +1,88 @@
+.\" Process this file with
+.\" groff -man -Tascii TAO_CosEvent_Service.1
+.\"
+.\" $Id$
+.\"
+.TH TAO_CosEvent_Service 1 "April 1999" "CORBA Tools"
+.SH NAME
+TAO_CosEvent_Service \- The TAO COS compliant Event Service
+.SH SYNOPSIS
+.B TAO_CosEvent_Service
+.B [
+.I OPTIONS
+.B ]
+.SH DESCRIPTION
+.B TAO_CosEvent_Service
+is a COS compilant Event Service.  The service is registered with the naming
+service with the name "CosEventService." It exposes the EventChannel interface
+which can be used by suppliers and consumers to send and receive events.
+
+TAO_Naming_Service (1) and TAO_Event_Service (1) must be running in order to
+run the Event Channel.
+.SH OPTIONS
+.TP
+.BI \-n \ COS_Event_Service_Name
+specify the name with which to register the Event Service
+.TP
+.BI \-r \ Real_Time_Event_Service_Name
+specify the name with which to
+.I look
+for the RtEC
+.TP
+.BI \-s \ global | local
+specify if the scheduler is
+.I local
+or
+.I global
+
+If the scheduler option is
+.I global
+then the naming service is to locate the scheduling service with the name
+"ScheduleService."
+
+If the scheduler is
+.I local
+then a new scheduling service is created and started.
+.I local
+is the default.
+.TP
+.B \-l
+specify that a local Real Time Event Channel (RtEC).
+
+If you specify this option but no RtEC is already running, then the 
+TAO_CosEvent_Service starts its oewn RtEC.
+.SH FILTERING OPTIONS
+The following options are used to introduce a filtering mechanism for the Event
+Channel based on event types and source IDs.
+.TP
+.BI \-e \ "EventType_1\ EventType_2\ ..."
+specify the event types for the ConsumerQOS.  The ConsumerQOS is specified
+when the RtEC is being set up.
+
+The event types should be >= ACE_ES_EVENT_UNDEFINED = 16.  For example, \-e
+"17 20 40" specifies that event types with IDs 17, 20 and 40 should be passed
+to the consumers.
+.TP
+.BI \-o \ "EventSourceID_1\ EventSourceID_2\ ..."
+specify the source IDs for the ConsumerQOS.
+.TP
+.BI \-p \ "sourceID\ EventTypeID"
+specify a sourceID and event type pair for the Supplier QOS.
+.SH BUGS
+(blank for now)
+.SH AUTHORS
+.IP
+Pradeep Gore <pradeep@cs.wustl.edu>
+.IP
+Ossama Othman <othman@cs.wustl.edu>
+.SH "SEE ALSO"
+.BR TAO (7),
+.BR TAO_Concurrency_Service (1),
+.BR TAO_Event_Service (1),
+.BR TAO_ImplRepo_Service (1),
+.BR TAO_LifeCycle_Service (1),
+.BR TAO_Logging_Service (1),
+.BR TAO_Naming_Service (1),
+.BR TAO_Scheduling_Service (1),
+.BR TAO_Time_Service (1),
+.BR TAO_Trading_Service (1)
