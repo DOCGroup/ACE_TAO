@@ -1,16 +1,24 @@
 // $Id$
+
 #include "Stopwatch_display.h"
 
-Stopwatch_display::Stopwatch_display (Widget &parent )
+Stopwatch_display::Stopwatch_display (Widget &parent)
 {
   // Instantiate the  sub-components of the Stopwatch_display
-  this->frame_ = XtCreateWidget ("frame", xmFrameWidgetClass,
-                                 parent, 0, 0 );
-  this->label_ = XtCreateWidget ("label", xmLabelWidgetClass,
-                                 this->frame_, 0, 0 );
+  this->frame_ = XtCreateWidget ("frame",
+                                 xmFrameWidgetClass,
+                                 parent,
+                                 0,
+                                 0);
+
+  this->label_ = XtCreateWidget ("label",
+                                 xmLabelWidgetClass,
+                                 this->frame_,
+                                 0,
+                                 0);
 }
 
-Stopwatch_display::~Stopwatch_display ( )
+Stopwatch_display::~Stopwatch_display (void)
 {
   //No-op
 }
@@ -25,7 +33,7 @@ Stopwatch_display::manage (void)
 void
 Stopwatch_display::set_time (CORBA::Float time)
 {
-  char     buf[50];
+  char buf[50];
   
   // Format value as a string
   ACE_OS::sprintf (buf, "%6.3f", time);

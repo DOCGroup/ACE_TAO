@@ -11,10 +11,9 @@
 ACE_RCSID(FL_Cube, test_i, "$Id$")
 
 Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb, Timer_imp *timer)
-  :  orb_ (CORBA::ORB::_duplicate (orb)),
-     timer_ (timer)
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    timer_ (timer)
 {
-
 }
 
 void
@@ -34,6 +33,5 @@ Stopwatch_imp::shutdown (CORBA::Environment&)
 {
   this->orb_->shutdown (0);
 }
-
 
 #endif /* ACE_HAS_XT */

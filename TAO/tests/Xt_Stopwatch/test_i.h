@@ -19,7 +19,6 @@
 #include "testS.h"
 #include "timer.h"
 
-
 #if defined(ACE_HAS_XT)
 
 class Stopwatch_imp : public POA_Stopwatch
