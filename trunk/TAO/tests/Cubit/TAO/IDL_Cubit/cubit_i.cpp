@@ -137,11 +137,39 @@ Cubit_i::cube_sequence(const Cubit::vector &input,
 
   output->length (input.length ());
 
+#if 0
   for (CORBA::ULong i = 0; i < input.length (); ++i)
     {
       CORBA::Long x = input[i];
       output[i] = x * x * x;
     }
+#else
+  CORBA::Long x = input[0];
+  output[0] = x * x * x;
+#endif
+}
+
+// Cube an octet sequence
+void
+Cubit_i::cube_raw (const Cubit::Raw &input,
+		   Cubit::Raw_out output,
+		   CORBA::Environment &)
+{
+  if (output.ptr () == 0)
+    output = new Cubit::Raw (input.length ());
+
+  output->length (input.length ());
+
+#if 0
+  for (CORBA::ULong i = 0; i < input.length (); ++i)
+    {
+      CORBA::Octet x = input[i];
+      output[i] = x * x * x;
+    }
+#else
+  CORBA::Octet x = input[0];
+  output[0] = x * x * x;
+#endif
 }
 
 // Shutdown.

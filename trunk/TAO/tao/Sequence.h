@@ -425,7 +425,7 @@ public:
   // See the general description of this methods in "Sequence_T.h".
 
   // = TAO extension
-  ACE_Message_Block* mb (void);
+  ACE_Message_Block* mb (void) const;
   // returns a duplicate of the underlying message block, it is the
   // caller responsability to release the copy (IMHO this is
   // consistent with the CORBA calling semantics, return values are

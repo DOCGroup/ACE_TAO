@@ -1,3 +1,28 @@
+Thu May 14 13:14:40 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/Cubit/TAO/IDL_Cubit/cubit.idl: 
+	* tests/Cubit/TAO/IDL_Cubit/client.h: 
+	* tests/Cubit/TAO/IDL_Cubit/client.cpp: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.h: 
+	* tests/Cubit/TAO/IDL_Cubit/cubit_i.cpp: 
+	  Added a simple test for octet sequences, it tries to compare the
+	  end-to-end cost of a normal sequence (longs) vs an octet
+	  sequence; it compares the cost for a small sequence<long> vs a
+	  small sequence<octet> and then repeats the test for a large
+	  sequence. To make the comparison more acurate it uses the same
+	  number of bytes in the sequence<long> as in the sequence<octet>,
+	  not the same number of elements.
+
+	* tao/Sequence.h: 
+	* tao/Sequence.i: 
+	  The message block accessor can be constant now.
+
+	* tao/Typecode.h: 
+	* tao/Typecode.i: 
+	* tao/Typecode.cpp: 
+	  Clean up the destruction code: made the destructor nilpotent to
+	  avoid double destructions. Also removed the redundant operator
+	  new and operator delete; they were not doing any actual work.
 
 Thu May 14  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 

@@ -69,9 +69,6 @@ public:
     BadKind (void);
   };
 
-  void operator delete (void*);
-  // Help debug free-non-heap-memory problems.
-
   static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
   // Duplicates i.e., increments ref count.
 
@@ -155,10 +152,6 @@ public:
   // of the parent, even the "parent" argument matters because this
   // implies that all children will share the octet buffers of its
   // parent
-
-  // = Class-specific allocation.
-  void *operator new (size_t, void *p);
-  void *operator new (size_t s);
 
   ~CORBA_TypeCode (void);
   // destructor

@@ -18,13 +18,6 @@
 # include "tao/Typecode.i"
 #endif /* ! __ACE_INLINE__ */
 
-// Just fetch the 'kind' field out of the typecode.
-void *
-CORBA_TypeCode::operator new (size_t s)
-{
-  return ::operator new (s);
-}
-
 // CORBA compliant duplicate
 CORBA::TypeCode_ptr
 CORBA_TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
@@ -149,15 +142,6 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
 // Destructor.  For "indirected" typecodes and children, the typecode
 // reuses the buffer owned by its parent.
 
-void
-CORBA_TypeCode::operator delete (void* p)
-{
-  CORBA::TypeCode_ptr tc = (CORBA_TypeCode *) p;
-
-  if (!tc->orb_owns_)
-    ::delete p;
-}
-
 CORBA_TypeCode::~CORBA_TypeCode (void)
 {
   if (this->orb_owns_)
@@ -168,10 +152,15 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
           this->delete_flag_ = CORBA::B_TRUE;
 
           // Free up our private state (if any)
-          delete this->private_state_;
+	  if (this->private_state_)
+	    {
+	      delete this->private_state_;
+	      this->private_state_ = 0;
+	    }
 
           // Delete the original, possibly nonaligned, buffer.
           delete [] this->non_aligned_buffer_;
+          this->non_aligned_buffer_ = 0;
           this->buffer_ = 0;
         }
     }
@@ -199,6 +188,7 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 
           // We share the buffer octets of our parent. Hence we don't
           // deallocate it.
+          this->non_aligned_buffer_ = 0;
           this->buffer_ = 0;
         }
       // Else, somebody maliciously tried to delete us, but we won't
@@ -213,9 +203,11 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
 
       // Free up our children.
       delete this->private_state_;
+      this->private_state_ = 0;
 
       // Delete the original, possibly nonaligned, buffer.
       delete [] this->non_aligned_buffer_;
+      this->non_aligned_buffer_ = 0;
       this->buffer_ = 0;
     }
 }
