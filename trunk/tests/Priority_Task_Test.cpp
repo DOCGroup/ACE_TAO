@@ -60,7 +60,15 @@ Priority_Task::open (void *arg)
   // To get FIFO scheduling with PTHREADS.  Instead of doing this,
   // OS.h should be fixed to defined THR_SCHED_FIFO on non-PTHREADS
   // platforms, such as Solaris with STHREADS and without PTHREADS.
+#if defined LINUX
+  // See comments below about setting policy/priority if not superuser.
+  if (ACE_OS::getuid () == 0)
+    {
+      flags |= THR_SCHED_FIFO;
+    }
+#else
   flags |= THR_SCHED_FIFO;
+#endif /* LINUX */
 #endif /* THR_SCHED_FIFO */
 
   // Become an active object.
@@ -110,12 +118,21 @@ main (int, char *[])
   int priority = ACE_Sched_Params::priority_min (ACE_SCHED_FIFO,
                                                  ACE_SCOPE_THREAD);
 
-  // skip priority 0 until that gets fixed in ACE_OS:
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                              priority,
-                                              ACE_SCOPE_THREAD);
   for (i = 0; i < ACE_MAX_ITERATIONS; i++)
     {
+
+#if defined LINUX
+      // On Linux, only the superuser can set the policy to other
+      // than ACE_SCHED_OTHER.  But with ACE_SCHED_OTHER, there is
+      // only 1 thread priority value, 0.  So, let the superuser
+      // run an interesting test, but for other users override the
+      // priority with 0.
+      if (ACE_OS::getuid () != 0)
+        {
+          priority = 0;
+        }
+#endif /* LINUX */
+
       tasks[i].open ((void *) &priority);
       priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                                   priority,
