@@ -107,14 +107,11 @@ sub strip_line {
 }
 
 
-sub collect_line {
+sub preprocess_line {
   my($self) = shift;
   my($fh)   = shift;
-  my($lref) = shift;
   my($line) = shift;
-
-  $$lref = $self->strip_line($line);
-  return $self->parse_line($fh, $$lref);
+  return $self->strip_line($line);
 }
 
 
@@ -127,9 +124,9 @@ sub read_file {
 
   $self->{'line_number'} = 0;
   if (open($ih, $input)) {
-    my($line) = '';
     while(<$ih>) {
-      ($status, $errorString) = $self->collect_line($ih, \$line, $_);
+      ($status, $errorString) = $self->parse_line(
+                                    $ih, $self->preprocess_line($ih, $_));
 
       if (!$status) {
         last;

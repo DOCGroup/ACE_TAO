@@ -683,7 +683,7 @@ sub parse_components {
   }
 
   while(<$fh>) {
-    my($line) = $self->strip_line($_);
+    my($line) = $self->preprocess_line($fh, $_);
 
     if ($line eq '') {
     }
@@ -760,7 +760,7 @@ sub parse_verbatim {
   my($array) = $self->{'verbatim'}->{$type}->{$loc};
 
   while(<$fh>) {
-    my($line) = $self->strip_line($_);
+    my($line) = $self->preprocess_line($fh, $_);
 
     if ($line =~ /^}/) {
       ## This is not an error,
@@ -817,7 +817,7 @@ sub process_feature {
     ## that nothing was defined.
     my($curly) = 1;
     while(<$fh>) {
-      my($line) = $self->strip_line($_);
+      my($line) = $self->preprocess_line($fh, $_);
 
       ## This is a very simplistic way of finding the end of
       ## the feature definition.  It will work as long as no spurious
@@ -895,7 +895,7 @@ sub parse_define_custom {
     }
 
     while(<$fh>) {
-      my($line) = $self->strip_line($_);
+      my($line) = $self->preprocess_line($fh, $_);
 
       if ($line eq '') {
       }
