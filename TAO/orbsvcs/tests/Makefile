@@ -40,7 +40,8 @@ ifndef minimum_corba
 # Trader uses DynAny which is disabled when compiling with minimum
 # CORBA support.  LifeCycle and AV depend on Trader so don't build
 # them either.
-  DIRS += Trading AVStreams
+  DIRS += Trading 
+#AVStreams
 
 endif # minimum_corba
 
