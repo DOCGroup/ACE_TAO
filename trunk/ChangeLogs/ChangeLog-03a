@@ -68,7 +68,6 @@ Sun Jan 26 16:42:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           Don't set any BUILD_DLL defines in this file, the BUILD_DLL defines
           are set in the specific makefiles.
 
->>>>>>> 4.4596
 Sat Jan 25 20:31:56 2003  Frank Hunleth  <frank@hunleth.com>
 
         * ace/config-openbsd.h:
