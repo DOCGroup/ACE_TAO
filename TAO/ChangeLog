@@ -1,3 +1,9 @@
+Mon Jan 24 22:06:05 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/ORB_Core.h (TAO_ORB_Core):
+
+	  Removed obsolete "friend class TAO_ORB_Table" declaration.
+
 Mon Jan 24 21:38:09 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosLoadBalancing.idl (CosLoadBalancing):
