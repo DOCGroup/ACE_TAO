@@ -1,3 +1,19 @@
+Sat Dec 27 16:15:57 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Added generation of orbconf.h include and redefintion of the
+	  export macro to the anyop header file (when using the -GA
+	  option). 
+	
+	* tao/Typecode.cpp:
+	* tao/Typecode.h:
+
+	  Added spec-defined fixed_digits() and fixed_scale() methods,
+	  which just throw CORBA::NO_IMPLEMENT, since TAO doesn't support
+	  IDL fixed types. Thanks to Irfan Pyarali <irfan@oomworks.com>
+	  for reporting the missing methods. This closes [BUGID:1643].
+
 Sat Dec 27 12:43:21 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAOACE.dsw:

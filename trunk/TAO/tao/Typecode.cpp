@@ -492,6 +492,18 @@ CORBA::TypeCode::content_type (ACE_ENV_SINGLE_ARG_DECL) const
 
 }
 
+CORBA::UShort
+CORBA::TypeCode::fixed_digits (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
+CORBA::Short
+CORBA::TypeCode::fixed_scale (ACE_ENV_SINGLE_ARG_DECL) const
+{
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
+}
+
 CORBA::Visibility
 CORBA::TypeCode::member_visibility (CORBA::ULong slot
                                     ACE_ENV_ARG_DECL) const
