@@ -10,5 +10,6 @@ DIRS = \
         Pluggable \
         POA \
         RTCorba \
+	Throughput
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
