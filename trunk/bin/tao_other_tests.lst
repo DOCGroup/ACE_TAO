@@ -66,6 +66,12 @@ TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/run_test.pl -p SCTP_SEQ: !
 TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/AVStreams/Component_Switching/run_test.pl: !MINIMUM
+TAO/orbsvcs/tests/Bug_1334_Regression/run_test.pl
+TAO/orbsvcs/tests/Bug_1393_Regression/run_test.pl
+TAO/orbsvcs/tests/Bug_1395_Regression/run_test.pl
+TAO/orbsvcs/tests/Bug_1436_Regression/run_test.pl
+TAO/orbsvcs/tests/Bug_1437_Regression/run_test.pl
+TAO/orbsvcs/tests/Bug_1630_Regression/run_test.pl
 TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !SUNCC5_1 !NO_MESSAGING
 TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !SUNCC5_1 !MINIMUM !NO_MESSAGING
 TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !ST !SUNCC5_1 !MINIMUM
