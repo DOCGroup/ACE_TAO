@@ -8,10 +8,10 @@ Tue Jul 29 09:24:16 2003  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* tao/Muxed_TMS.cpp
 
-	  Reverted the changes to the file to version 1.23, which might 
-	  cause applications to crash, because in the clear_cache () 
-	  function the unbind () function call will make the iterator
-	  to be invalid.
+	  Reverted the changes to the file to version 1.23, since the
+	  changes might cause applications to crash, because in the 
+	  clear_cache () function the unbind () function call will make
+	  the iterator to be invalid.
 
 Tue Jul 29 01:08:10 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>	
 
