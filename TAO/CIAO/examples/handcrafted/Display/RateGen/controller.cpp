@@ -2,6 +2,7 @@
 
 #include "RateGenC.h"
 #include "ace/Get_Opt.h"
+#include "ace/streams.h"
 
 /**
  * @file controller.cpp
