@@ -1,49 +1,56 @@
+Sun Apr 15 17:16:33 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tests/MT_Timeout/Client_Task.cpp (one_iteration):
+          Relaxed the conditions to accept the elapsed time of each
+          request.  Now we accept up to 30 milliseconds over the expected
+          time as valid.
+
 Sun Apr 15 15:31:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp: 	
-	 
-	  Fixed Fuzz error.	
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+
+          Fixed Fuzz error.
 
 Sun Apr 15 14:03:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/input: 	
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/input:
 
-	  Added a new input file as the older one was too short to test
-	  all the different use cases in the run_test.pl. This was breaking
-	  the test on all platforms.
-	
+          Added a new input file as the older one was too short to test
+          all the different use cases in the run_test.pl. This was breaking
+          the test on all platforms.
+
 Sun Apr 15 12:13:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 
-	  Removed unused method definitions which were breaking builds.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+          Removed unused method definitions which were breaking builds.
 
 Sat Apr 14 23:57:01 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	  Reverted changes, they would not compile on any platform.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+          Reverted changes, they would not compile on any platform.
 
 Sat Apr 14 23:00:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Modify_QoS/Makefile: 
-	* orbsvcs/tests/AVStreams/Modify_QoS/Modify_QoS.dsw: 	
-	* orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl: 
-	* orbsvcs/tests/AVStreams/Modify_QoS/input: 	
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.h: 	
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp: 		
-	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.dsp: 		
-	* orbsvcs/tests/AVStreams/Modify_QoS/sender.h: 	
-	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp: 		
-	* orbsvcs/tests/AVStreams/Modify_QoS/sender.dsp: 	
+        * orbsvcs/tests/AVStreams/Modify_QoS/Makefile:
+        * orbsvcs/tests/AVStreams/Modify_QoS/Modify_QoS.dsw:
+        * orbsvcs/tests/AVStreams/Modify_QoS/run_test.pl:
+        * orbsvcs/tests/AVStreams/Modify_QoS/input:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/receiver.dsp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.h:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Modify_QoS/sender.dsp:
 
-	  Added a new test Modify_QoS to demonstrate how the qos of
-	  the flows can be changed during run-time.
-	
+          Added a new test Modify_QoS to demonstrate how the qos of
+          the flows can be changed during run-time.
+
 Sat Apr 14 19:31:56 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
-	  
-	  Added modify_qos support to enable modifying the qos of the individual flows during run time.
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+
+          Added modify_qos support to enable modifying the qos of the individual flows during run time.
 
 Fri Apr 13 16:41:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
