@@ -37,10 +37,27 @@ module Deployment
   //============connection==================
 
   typedef sequence < Object > Endpoints;
+  typedef Object Endpoint;
 
+  enum CCMComponentPortKind {
+    Facet,
+    SimplexReceptacle,
+    MultiplexReceptacle,
+    EventEmitter,
+    EventPublisher,
+    EventConsumer
+  };
+
+  // To avoid the connection info in the plan being passed to the
+  // local node and to make the implementation not very cumbersome
+  // I changed the connection struct to include some extra informations.
   struct Connection {
-    string name;
-    Endpoints endpoint;
+    string component_inst_name;
+    string port_name;
+    CCMComponentPortKind port_kind;
+    // the endpoints member is change to endpoint.
+    // Since we will not have more than 1 objref in there.
+    Endpoint endpoint;
   };
   typedef sequence < Connection > Connections;
 

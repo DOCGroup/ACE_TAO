@@ -78,15 +78,6 @@ module Deployment {
     Properties infoProperty;
   };
 
-  enum CCMComponentPortKind {
-    Facet,
-    SimplexReceptacle,
-    MultiplexReceptacle,
-    EventEmitter,
-    EventPublisher,
-    EventConsumer
-  };
-
   struct ComponentPortDescription {
     string name;
     string specificType;
@@ -311,7 +302,7 @@ module Deployment {
 
   typedef sequence < Application > Applications;
 
-  interface DomainApplicationManager 
+  interface DomainApplicationManager
   {
     DeploymentPlan getPlan ();
     void startLaunch (in Properties configProperty, in boolean start)
