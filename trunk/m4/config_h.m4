@@ -36,13 +36,21 @@ AH_TOP([
 ])
 
 dnl Text to be placed at the bottom of the `ace/config.h' header.
+dnl
+dnl @note Do not remove the "] [" between the words "Local Variables".
+dnl       The generated Emacs "Local Variables" block will not contain
+dnl       those characters.  They are merely interpreted by M4 as two
+dnl       concatenated text blocks.  This is necessary to prevent
+dnl       Emacs from inadvertently applying the "Local Variables"
+dnl       block to be placed in the generated "config.h" header to
+dnl       this Autoconf/M4 file.
 AH_BOTTOM([
 
 
 #endif  /* ACE_CONFIG_H */
 
 
-// Local Variables:
+// Local] [Variables:
 // mode:C++
 // End:
 ])
