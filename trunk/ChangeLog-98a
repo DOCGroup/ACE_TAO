@@ -45,6 +45,12 @@ Fri Apr 03 09:16:24 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/run_tests.vxworks: Reactor_Notify_Test is OK on
           VxWorks now.
 
+        * ace/OS.h,config-sunos5.5-sunc++-4.x.h: added ACE_CAST_CONST,
+          so that we can work around broken cast constness requirements
+          with Sun CC 4.2.  It requires, for example, that a reinterpret
+          cast to a local pointer variable in a const member function be
+          const.  Wrong.
+
 Thu Apr 02 16:23:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/WFMO_Reactor.i (dump): Also changed the method from HANDLE
