@@ -303,8 +303,8 @@ public:
   /// Assignment from T *.
   TAO_Object_Manager<T,T_var> &operator= (T *);
 
-  /// Assignment from T *.
-  TAO_Object_Manager<T,T_var> &operator= (T_var &);
+  /// Assignment from T_var.
+  TAO_Object_Manager<T,T_var> &operator= (const T_var &);
 
   /// Return pointer.
   T * operator-> (void) const;
