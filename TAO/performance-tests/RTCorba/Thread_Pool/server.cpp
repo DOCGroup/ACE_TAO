@@ -274,7 +274,7 @@ main (int argc, char *argv[])
           policies.length (policies.length () + 1);
           policies[policies.length () - 1] =
             rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                                  0,
+                                                  default_thread_priority,
                                                   ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }

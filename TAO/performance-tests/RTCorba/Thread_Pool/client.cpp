@@ -25,11 +25,12 @@ static CORBA::ULong time_for_test = 10;
 static CORBA::ULong work = 10;
 static CORBA::ULong max_throughput_timeout = 5;
 static int set_priority = 1;
+static int individual_continuous_worker_stats = 0;
 
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:");
+  ACE_Get_Opt get_opts (argc, argv, "hxk:r:c:w:t:p:i:");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -67,6 +68,11 @@ parse_args (int argc, char *argv[])
         set_priority = ACE_OS::atoi (get_opts.optarg);
         break;
 
+      case 'i':
+        individual_continuous_worker_stats =
+          ACE_OS::atoi (get_opts.optarg);
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,6 +85,7 @@ parse_args (int argc, char *argv[])
                            "-w <work> "
                            "-t <time for test> "
                            "-p <set priorities> "
+                           "-i <print stats of individual continuous workers> "
                            "\n",
                            argv [0]),
                           -1);
@@ -236,7 +243,6 @@ int
 Paced_Worker::svc (void)
 {
   CORBA::ULong deadlines_missed = 0;
-  CORBA::Short native_priority = 0;
 
   ACE_TRY_NEW_ENV
     {
@@ -245,16 +251,27 @@ Paced_Worker::svc (void)
           this->current_->the_priority (this->priority_,
                                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
-
-          CORBA::Boolean result =
-            priority_mapping_.to_native (this->priority_,
-                                         native_priority);
-          if (!result)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Error in converting CORBA priority %d to native priority\n",
-                               this->priority_),
-                              -1);
         }
+      else
+        {
+          this->current_->the_priority (0,
+                                        ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+        }
+
+      CORBA::Short CORBA_priority =
+        this->current_->the_priority (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      CORBA::Short native_priority = 0;
+      CORBA::Boolean result =
+        priority_mapping_.to_native (CORBA_priority,
+                                     native_priority);
+      if (!result)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Error in converting CORBA priority %d to native priority\n",
+                           CORBA_priority),
+                          -1);
 
       this->start_of_test_ =
         ACE_OS::gettimeofday ();
@@ -312,8 +329,8 @@ Paced_Worker::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                   "Priority = %d/%d; Rate = %d/sec; Iterations = %d; "
                   "deadlines made = %d; deadlines missed = %d; Success = %d%%\n",
-                  set_priority ? this->priority_ : -1,
-                  set_priority ? native_priority : -1,
+                  CORBA_priority,
+                  native_priority,
                   this->rate_,
                   this->history_.max_samples (),
                   this->history_.sample_count (),
@@ -360,6 +377,8 @@ public:
   CORBA::ULong iterations_;
   ACE_SYNCH_MUTEX &output_lock_;
   RTCORBA::Current_var current_;
+  ACE_Basic_Stats collective_stats_;
+  ACE_hrtime_t time_for_test_;
 };
 
 Continuous_Worker::Continuous_Worker (test_ptr test,
@@ -369,7 +388,8 @@ Continuous_Worker::Continuous_Worker (test_ptr test,
   : test_ (test::_duplicate (test)),
     iterations_ (iterations),
     output_lock_ (output_lock),
-    current_ (RTCORBA::Current::_duplicate (current))
+    current_ (RTCORBA::Current::_duplicate (current)),
+    time_for_test_ (0)
 {
 }
 
@@ -408,25 +428,33 @@ Continuous_Worker::svc (void)
                         this->output_lock_,
                         -1);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n************ Statistics for thread %t ************\n\n"));
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "Iterations = %d\n",
-                  history.sample_count ()));
-
-      if (do_dump_history)
+      if (individual_continuous_worker_stats)
         {
-          history.dump_samples ("HISTORY", gsf);
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n************ Statistics for thread %t ************\n\n"));
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "Iterations = %d\n",
+                      history.sample_count ()));
+
+          if (do_dump_history)
+            {
+              history.dump_samples ("HISTORY", gsf);
+            }
+
+          ACE_Basic_Stats stats;
+          history.collect_basic_stats (stats);
+          stats.dump_results ("Total", gsf);
+
+          ACE_Throughput_Stats::dump_throughput ("Total", gsf,
+                                                 test_end - test_start,
+                                                 stats.samples_count ());
         }
 
-      ACE_Basic_Stats stats;
-      history.collect_basic_stats (stats);
-      stats.dump_results ("Total", gsf);
-
-      ACE_Throughput_Stats::dump_throughput ("Total", gsf,
-                                             test_end - test_start,
-                                             stats.samples_count ());
+      // Collective samples.
+      history.collect_basic_stats (this->collective_stats_);
+      this->time_for_test_ =
+        test_end - test_start;
     }
   ACE_CATCHANY
     {
@@ -619,6 +647,30 @@ main (int argc, char *argv[])
         }
 
       ACE_Thread_Manager::instance ()->wait ();
+
+      if (continuous_workers > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "\n************ Statistics for continuous workers ************\n\n"));
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "Collective iterations = %d; Workers = %d; Average = %d\n",
+                      continuous_worker.collective_stats_.samples_count (),
+                      continuous_workers,
+                      continuous_worker.collective_stats_.samples_count () /
+                      continuous_workers));
+
+          continuous_worker.collective_stats_.dump_results ("Collective", gsf);
+
+          ACE_Throughput_Stats::dump_throughput ("Collective", gsf,
+                                                 continuous_worker.time_for_test_,
+                                                 continuous_worker.collective_stats_.samples_count () /
+                                                 continuous_workers);
+
+          ACE_Throughput_Stats::dump_throughput ("Individual", gsf,
+                                                 continuous_worker.time_for_test_,
+                                                 continuous_worker.collective_stats_.samples_count ());
+        }
 
       for (i = 0;
            i < rates.size ();
