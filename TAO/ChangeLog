@@ -1,3 +1,8 @@
+Tue Mar  1 15:18:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Valuetype/AbstractBase.{h,cpp}:
+          Made the _tao_marshal_v a const method
+
 Tue Mar  1 01:46:22 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_interface/amh_si.cpp:
