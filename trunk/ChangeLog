@@ -1,3 +1,10 @@
+Mon Sep 15 06:42:28 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Added a check in the dependency sorter for an undefined dependency
+          value (this only happended with the vc7 and vc71 types).
+
 Fri Sep 12 13:31:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
