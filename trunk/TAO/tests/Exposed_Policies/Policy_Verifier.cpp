@@ -6,9 +6,9 @@ Policy_Verifier::Policy_Verifier (void)
   : priority_bands_ (0)
 {
   ACE_OS_String::strcpy (this->base_object_ref_,
-                         "file://");
+                         "file://default.ior");
   ACE_OS_String::strcpy (this->overridden_object_ref_,
-                         "file://");
+                         "file://overridden.ior");
 }
 
 Policy_Verifier::~Policy_Verifier (void)
@@ -21,86 +21,101 @@ Policy_Verifier::init (int argc,
                        char *argv[],
                        CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_TRY
+  this->orb_ =
+    CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
+  ACE_CHECK;
+
+  ACE_Arg_Shifter arg_shifter (argc, argv);
+
+  while (arg_shifter.is_anything_left ())
     {
-      this->orb_ =
-        CORBA::ORB_init (argc, argv, "", ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      ACE_Arg_Shifter arg_shifter (argc, argv);
-
-      while (arg_shifter.is_anything_left ())
+      char *arg;
+      // IOR File Name Option.
+      if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
         {
-          char *arg;
-          // IOR File Name Option.
-          if ((arg = arg_shifter.get_the_parameter ("-POAConfigFile")))
-            {
-              this->rt_poa_properties_ =
-                RT_Properties::read_from (arg, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              ACE_OS_String::strcat (this->base_object_ref_,
-                                     this->rt_poa_properties_->ior_source ());
-
-              this->priority_bands_ = this->rt_poa_properties_->priority_bands ().length ();
-
-            }
-          else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
-            {
-              this->rt_object_properties_ =
-                RT_Properties::read_from (arg, ACE_TRY_ENV);
-              ACE_TRY_CHECK;
-
-              ACE_OS_String::strcat (this->overridden_object_ref_,
-                                     this->rt_object_properties_->ior_source ());
-
-            }
-          else
-            arg_shifter.consume_arg ();
+          this->rt_poa_properties_ =
+            RT_Properties::read_from (arg, ACE_TRY_ENV);
+          ACE_CHECK;
+          this->priority_bands_ =
+            this->rt_poa_properties_->priority_bands ().length ();
+        }
+      else if ((arg = arg_shifter.get_the_parameter ("-ObjectConfigFile")))
+        {
+          this->rt_object_properties_ =
+            RT_Properties::read_from (arg, ACE_TRY_ENV);
+          ACE_CHECK;
 
         }
-
-      if ((this->rt_poa_properties_ == 0) || (this->rt_object_properties_ == 0))
+      else if ((arg = arg_shifter.get_the_parameter ("-BaseObjectIOR")))
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Configuration file missing!\n")));
-          return;
+          if (this->rt_poa_properties_ == 0)
+            {
+              ACE_NEW_THROW_EX (this->rt_poa_properties_,
+                                RT_Properties,
+                                CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                                  CORBA::COMPLETED_NO));
+              ACE_CHECK;
+            }
+          this->rt_poa_properties_->ior_source (arg);
+          ACE_OS_String::strcpy (this->base_object_ref_, "file://");
+          ACE_OS_String::strcat (this->base_object_ref_, this->rt_poa_properties_->ior_source ());
         }
-
-      // Get the Object references.
-      CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_,
-                                                               ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
-        return;
-
-      this->base_object_ = Counter::_narrow (object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!Policy_Verifier::check_reference (this->base_object_.in (),
-                                           "Unable to convert the IOR to the proper object reference.\n"))
-        return;
-
-      object = this->orb_->string_to_object (this->overridden_object_ref_, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
-        return;
-
-      this->overridden_object_ = Counter::_narrow (object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      if (!Policy_Verifier::check_reference (this->overridden_object_.in (),
-                                           "Unable to convert the IOR to the proper object reference.\n"))
-        return;
-
+      else if ((arg = arg_shifter.get_the_parameter ("-OverriddenIOR")))
+        {
+          if (this->rt_object_properties_ == 0)
+            {
+              ACE_NEW_THROW_EX (this->rt_object_properties_,
+                                RT_Properties,
+                                CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                                  CORBA::COMPLETED_NO));
+              ACE_CHECK;
+            }
+          this->rt_object_properties_->ior_source (arg);
+          ACE_OS_String::strcpy (this->overridden_object_ref_, "file://");
+          ACE_OS_String::strcat (this->overridden_object_ref_,
+                                 this->rt_object_properties_->ior_source ());
+        }
+      else
+        {
+          arg_shifter.consume_arg ();
+        }
     }
-  ACE_CATCHANY
+
+  if ((this->rt_poa_properties_ == 0) || (this->rt_object_properties_ == 0))
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "CORBA Excaption Raised");
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Configuration file missing!\n")));
+      return;
     }
-  ACE_ENDTRY;
+
+  // Get the Object references.
+  CORBA::Object_var object = this->orb_->string_to_object (this->base_object_ref_,
+                                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
+    return;
+
+  this->base_object_ = Counter::_narrow (object.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!Policy_Verifier::check_reference (this->base_object_.in (),
+                                         "Unable to convert the IOR to the proper object reference.\n"))
+    return;
+
+  object = this->orb_->string_to_object (this->overridden_object_ref_, ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!Policy_Verifier::check_reference (object.in (), "Invalid IOR file!\n"))
+    return;
+
+  this->overridden_object_ = Counter::_narrow (object.in (), ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (!Policy_Verifier::check_reference (this->overridden_object_.in (),
+                                         "Unable to convert the IOR to the proper object reference.\n"))
+    return;
+
 }
 
 void
@@ -244,4 +259,3 @@ Policy_Verifier::check_reference (CORBA::Object_ptr object,
     }
   return 1;
 }
-
