@@ -583,7 +583,7 @@ be_interface::gen_var_impl (char *interface_local_name,
   *ci << fname << "::" << lname << " (const " << "::" << interface_full_name
       << "_var &p) // copy constructor" << nl;
   *ci << "  : TAO_Base_var ()," << nl;
-  *ci << "    ptr_ (" << this->name () << "::_duplicate (p.ptr ()))" << nl;
+  *ci << "    ptr_ (" << interface_local_name << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
