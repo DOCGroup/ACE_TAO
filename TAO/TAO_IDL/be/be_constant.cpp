@@ -32,15 +32,12 @@ be_constant::be_constant (void)
 
 be_constant::be_constant (AST_Expression::ExprType et,
 			                    AST_Expression *v,
-                          UTL_ScopedName *n,
-                          UTL_StrList *p)
+                          UTL_ScopedName *n)
   : AST_Constant (et, 
                   v, 
-                  n, 
-                  p),
+                  n),
     AST_Decl (AST_Decl::NT_const, 
-              n, 
-              p)
+              n)
 {
   this->size_type (be_decl::FIXED);
 }

@@ -87,14 +87,12 @@ public:
 
   AST_Constant (AST_Expression::ExprType et,
                 AST_Decl::NodeType nt,
-                AST_Expression *ev,
-                UTL_ScopedName *n,
-                UTL_StrList *p);
+                AST_Expression *ev, 
+                UTL_ScopedName *n);
 
   AST_Constant (AST_Expression::ExprType et,
                 AST_Expression *ev,
-                UTL_ScopedName *n,
-                UTL_StrList *p);
+                UTL_ScopedName *n);
 
   // Destructor.
   virtual ~AST_Constant (void);

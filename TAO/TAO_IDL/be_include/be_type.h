@@ -35,8 +35,7 @@ public:
   // Default constructor.
 
   be_type (AST_Decl::NodeType nt, 
-           UTL_ScopedName *n, 
-           UTL_StrList *p);
+           UTL_ScopedName *n);
   // Constructor.
 
   virtual ~be_type (void);

@@ -82,12 +82,10 @@ AST_PredefinedType::AST_PredefinedType (void)
 {
 }
 
-AST_PredefinedType::AST_PredefinedType (PredefinedType t,
-                                        UTL_ScopedName *n,
-                                                                UTL_StrList *p)
- : AST_Decl (AST_Decl::NT_pre_defined,
+AST_PredefinedType::AST_PredefinedType (PredefinedType t, 
+                                        UTL_ScopedName *n)
+ : AST_Decl (AST_Decl::NT_pre_defined, 
              n,
-             p,
              I_TRUE),
          pd_pt (t)
 {

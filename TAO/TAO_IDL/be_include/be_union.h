@@ -27,7 +27,6 @@
 #include "ast_union.h"
 
 class AST_ConcreteType;
-class UTL_StrList;
 class be_visitor;
 
 class be_union : public virtual AST_Union,
@@ -40,7 +39,6 @@ public:
 
   be_union(AST_ConcreteType *dt,
            UTL_ScopedName *n,
-           UTL_StrList *p,
            idl_bool local,
            idl_bool abstract);
   // Constructor.

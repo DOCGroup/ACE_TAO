@@ -262,7 +262,7 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_INTERFACE_FWD_ANY_OP_CH:
       return new be_visitor_interface_fwd_any_op_ch (new_ctx);
 
-#   ifdef IDL_HAS_VALUETYPE
+      // Valuetype-related visitors
 
     case TAO_CodeGen::TAO_VALUETYPE_CH:
       return new be_visitor_valuetype_ch (new_ctx);
@@ -271,12 +271,15 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_VALUETYPE_CI:
       return new be_visitor_valuetype_ci (new_ctx);
 
-#if 0
     case TAO_CodeGen::TAO_VALUETYPE_FWD_CH:
       return new be_visitor_valuetype_fwd_ch (new_ctx);
     case TAO_CodeGen::TAO_VALUETYPE_FWD_CI:
       return new be_visitor_valuetype_fwd_ci (new_ctx);
-#endif /* 0 */
+
+    case TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CH:
+      return new be_visitor_valuetype_fwd_cdr_op_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CI:
+      return new be_visitor_valuetype_fwd_cdr_op_ci (new_ctx);
 
     case TAO_CodeGen::TAO_VALUETYPE_OBV_CH:
       return new be_visitor_valuetype_obv_ch (new_ctx);
@@ -304,13 +307,21 @@ TAO_Common_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CI:
       return new be_visitor_valuetype_cdr_op_ci (new_ctx);
     case TAO_CodeGen::TAO_VALUETYPE_CDR_OP_CS:
-      return new be_visitor_decl (new_ctx); // noop
+      return new be_visitor_valuetype_cdr_op_cs (new_ctx);
 
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CH:
     case TAO_CodeGen::TAO_VALUETYPE_ANY_OP_CS:
       return new be_visitor_decl (new_ctx);  // @@ TODO
 
-#   endif /* IDL_HAS_VALUETYPE */
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CH:
+      return new be_visitor_valuetype_init_ch (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CI:
+      return new be_visitor_valuetype_init_ci (new_ctx);
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_CS:
+      return new be_visitor_valuetype_init_cs (new_ctx);
+
+    case TAO_CodeGen::TAO_VALUETYPE_INIT_ARGLIST_CH:
+      return new be_visitor_valuetype_init_arglist_ch (new_ctx);
 
     case TAO_CodeGen::TAO_STRUCT_CH:
       return new be_visitor_structure_ch (new_ctx);
@@ -790,10 +801,3 @@ TAO_Compiled_Visitor_Factory::make_visitor (be_visitor_context *ctx)
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Singleton<TAO_Common_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;
-template class ACE_Singleton<TAO_Compiled_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Singleton<TAO_Common_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX>
-#pragma instantiate ACE_Singleton<TAO_Compiled_Visitor_Factory, ACE_SYNCH_RECURSIVE_MUTEX>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

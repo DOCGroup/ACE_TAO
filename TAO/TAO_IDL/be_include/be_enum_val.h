@@ -26,7 +26,6 @@
 #include "be_decl.h"
 #include "ast_enum_val.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_enum_val : public virtual AST_EnumVal,
@@ -37,8 +36,7 @@ public:
   // Default constructor.
 
   be_enum_val (unsigned long v, 
-               UTL_ScopedName *n, 
-               UTL_StrList *p);
+               UTL_ScopedName *n);
   // Constructor.
 
   // Visiting

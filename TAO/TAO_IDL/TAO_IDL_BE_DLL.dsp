@@ -142,6 +142,10 @@ SOURCE=.\be\be_expression.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_factory.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_field.cpp
 # End Source File
 # Begin Source File
@@ -219,6 +223,10 @@ SOURCE=.\be\be_structure.cpp
 # Begin Source File
 
 SOURCE=.\be\be_sunsoft.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\be\be_tmplinst.cpp
 # End Source File
 # Begin Source File
 
@@ -403,6 +411,10 @@ SOURCE=.\be_include\be_exception.h
 # Begin Source File
 
 SOURCE=.\be_include\be_expression.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_factory.h
 # End Source File
 # Begin Source File
 

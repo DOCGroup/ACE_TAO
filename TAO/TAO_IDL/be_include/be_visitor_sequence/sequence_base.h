@@ -51,6 +51,8 @@ public:
   virtual int visit_predefined_type (be_predefined_type *node);
   virtual int visit_interface (be_interface *node);
   virtual int visit_interface_fwd (be_interface_fwd *node);
+  virtual int visit_valuetype (be_valuetype *node);
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_structure (be_structure *node);
   virtual int visit_enum (be_enum *node);
   virtual int visit_exception (be_exception *node);
@@ -59,11 +61,6 @@ public:
   virtual int visit_string (be_string *node);
   virtual int visit_sequence (be_sequence *node);
   virtual int visit_typedef (be_typedef *node);
-
-#if defined(IDL_HAS_VALUETYPE)
-  virtual int visit_valuetype (be_valuetype *node);
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
-#endif
 
 protected:
   int visit_node (be_type *);
@@ -94,6 +91,10 @@ public:
   virtual int visit_interface (be_interface *node);
 
   virtual int visit_interface_fwd (be_interface_fwd *node);
+
+  virtual int visit_valuetype (be_valuetype *node);
+
+  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
 
   virtual int visit_predefined_type (be_predefined_type *node);
 private:

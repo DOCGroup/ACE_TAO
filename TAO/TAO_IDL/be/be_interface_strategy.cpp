@@ -24,23 +24,23 @@
 ACE_RCSID(be, be_interface_strategy, "$Id$")
 
 
-  be_interface_strategy::be_interface_strategy (be_interface *node,
-                                                Strategy_Kind strategy_type)
-    : local_name_(0),
-      full_name_(0),
-      flat_name_(0),
-      repoID_(0),
-      full_skel_name_(0),
-      full_coll_name_(0),
-      local_coll_name_(0),
-      relative_skel_name_(0),
-      node_ (node),
-      cached_type_ (-1),
-      strategy_type_ (strategy_type)
+be_interface_strategy::be_interface_strategy (be_interface *node,
+                                              Strategy_Kind strategy_type)
+  : local_name_(0),
+    full_name_(0),
+    flat_name_(0),
+    repoID_(0),
+    full_skel_name_(0),
+    full_coll_name_(0),
+    local_coll_name_(0),
+    relative_skel_name_(0),
+    node_ (node),
+    cached_type_ (-1),
+    strategy_type_ (strategy_type)
 {
 }
 
-be_interface_strategy::~be_interface_strategy ()
+be_interface_strategy::~be_interface_strategy (void)
 {
   if (this->local_name_ != 0)
     delete [] this->local_name_;

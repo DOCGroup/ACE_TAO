@@ -47,7 +47,37 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
   if (node->cli_inline_cdr_op_gen () || node->imported ())
     return 0;
 
+  // Generate helper functions implementation.
+  if (node->gen_helper_inline () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cdr_op_ci::"
+                         "visit_valuetype - "
+                         "codegen for helper functions failed\n"), -1);
+    }
+
   TAO_OutStream *os = this->ctx_->stream ();
+  os->indent (); //start with whatever indentation level we are at now
+
+  // Generate CDR << and >> operator signatures
+
+  //@@ Boris: Can I move this to be_valuetype? (as with _var, _out, etc?)
+    
+  //This is just declaration so no ACE_INLINE
+  *os << be_global->stub_export_macro () 
+      << "CORBA::Boolean operator<< (TAO_OutputCDR &, const " 
+      << node->full_name () << " *);" << be_nl;
+
+  *os << be_global->stub_export_macro () 
+      << "CORBA::Boolean operator>> (TAO_InputCDR &, "
+      << node->full_name () << " *&);" << be_nl;
+
+
+
+  // Generate marshaling code if any
+
+  // @@ Boris: the next statement is patrue anymore since I moved code
+  //    to stubs.
 
   // First generate code for our children. The reason we do this first is
   // because the inlined code for our children must be available before we use
@@ -64,50 +94,6 @@ be_visitor_valuetype_cdr_op_ci::visit_valuetype (be_valuetype *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  //  set the sub state as generating code for the output operator
-  this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
-  os->indent ();
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl
-      << "operator<< (TAO_OutputCDR &strm, const "
-      << node->full_name ()
-      << " *_tao_valuetype)" << be_nl
-      << "{" << be_idt_nl;
-  *os << "return CORBA_ValueBase::_tao_marshal (strm,"  << be_idt_nl
-      << "ACE_const_cast (" << node->full_name () << "*, _tao_valuetype)," << be_nl
-      << "(ptr_arith_t) &" << node->full_name() <<"::_downcast);"
-      << be_uidt<< be_uidt_nl
-      << "}\n\n";
-
-  // set the substate as generating code for the input operator
-  //this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
-  *os << "ACE_INLINE CORBA::Boolean" << be_nl
-      << "operator>> (TAO_InputCDR &strm, "
-      << node->full_name ()
-      << " *&_tao_valuetype)" << be_nl
-      << "{" << be_idt_nl;
-  *os << "return " << node->full_name() << "::_tao_unmarshal (strm, _tao_valuetype);"
-#ifdef obv_marshal_old_version
-  *os << "CORBA::ValueBase *ptr;" << be_nl
-      << "int retval = CORBA_ValueBase::_tao_unmarshal (strm,"
-      << be_idt_nl << "ptr, (ptr_arith_t) &" << node->full_name() <<"::_downcast);"
-      << be_uidt_nl
-      << "if (retval) {" << be_idt_nl
-      << "_tao_valuetype = " << node->full_name() << "::_downcast (ptr);"
-      << be_nl << "if (_tao_valuetype) retval = 1;"
-      << be_uidt_nl << "}" << be_idt_nl
-      << "return retval;"
-#endif /* obv_marshal_old_version */
-      << be_uidt_nl
-      << "}\n\n";
-
-  if (!node->is_abstract_valuetype ())
-    { // functions that marshal state
-      be_visitor_context* new_ctx  =
-        new be_visitor_context (*this->ctx_);
-      be_visitor_valuetype_marshal_cs visitor (new_ctx);
-      visitor.visit_valuetype (node);
-    }
-
-  node->cli_inline_cdr_op_gen (1);
+  node->cli_inline_cdr_op_gen (I_TRUE);
   return 0;
 }

@@ -78,14 +78,12 @@ AST_Enum::AST_Enum (void)
 }
 
 AST_Enum::AST_Enum (UTL_ScopedName *n,
-                    UTL_StrList *p,
                     idl_bool local,
                     idl_bool abstract)
- : AST_Decl (AST_Decl::NT_enum,
-             n,
-             p),
-         UTL_Scope (AST_Decl::NT_enum),
-   COMMON_Base (local,
+ : AST_Decl (AST_Decl::NT_enum, 
+             n),
+	 UTL_Scope (AST_Decl::NT_enum),
+   COMMON_Base (local, 
                 abstract),
          pd_enum_counter (0),
    member_count_ (-1)
@@ -262,8 +260,7 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
         t->constant_value ()->coerce (AST_Expression::EV_ulong)->u.ulval;
 
       t1 = idl_global->gen ()->create_enum_val (tmp,
-                                                t->name (),
-                                                t->pragmas ());
+                                                t->name ());
 
       t->set_name (munge_name_for_enumval (t->name (),
                                            t->local_name ()));

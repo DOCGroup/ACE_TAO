@@ -114,12 +114,14 @@ DRV_init (void)
 
   idl_global->set_local_escapes (local_escapes);
   idl_global->set_be ("");
-  idl_global->set_pragmas (0);
   idl_global->set_compile_flags (0);
   idl_global->set_read_from_stdin (I_FALSE);
   idl_global->set_include_file_names (0);
   idl_global->set_n_include_file_names (0);
   idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+
+  // Put an empty prefix on the stack for the global scope.
+  idl_global->pragma_prefixes ().push (ACE::strnew (""));
 
   // Initialize BE global data object.
   ACE_NEW (be_global,

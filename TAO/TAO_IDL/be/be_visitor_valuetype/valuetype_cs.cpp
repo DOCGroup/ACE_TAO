@@ -47,12 +47,33 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os; // output stream
 
   if (node->cli_stub_gen () || node->imported ())
-    return 0;
+    {
+      return 0;
+    }
 
   os = this->ctx_->stream ();
 
   os->indent (); // start with whatever indentation level we are at
 
+  // Generate methods for _var class
+  if (node->gen_var_impl () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cs::"
+                         "visit_valuetype - "
+                         "codegen for _var failed\n"), -1);
+    }
+
+  // Generate methods for _out class
+  if (node->gen_out_impl () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_cs::"
+                         "visit_valuetype - "
+                         "codegen for _out failed\n"), -1);
+    }
+
+  
   // The _downcast method    // %! use ACE_xxx_cast here ?
   *os << node->name() << "* " << node->name()
       <<                 "::_downcast (CORBA::ValueBase* v)" << be_nl
@@ -80,15 +101,18 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Find the possible base classes.
 
   int n_inherits_downcastable = 0;
+
   for (int i = 0; i < node->n_inherits (); i++)
     {
       AST_Interface *inherited =
           AST_Interface::narrow_from_decl (node->inherits ()[i]);
+
       if (inherited->is_valuetype())
         {
           ++n_inherits_downcastable;
           *os << "if (rval == 0)" << be_idt_nl
               << "rval = "; 
+
           if (inherited->defined_in ()->scope_node_type () == AST_Decl::NT_module)
             {
               be_decl *scope = be_scope::narrow_from_scope (inherited->defined_in ())->decl ();
@@ -97,7 +121,10 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
                   << inherited->local_name () << ")";
             }
           else
-            *os << inherited->name ();
+            {
+              *os << inherited->name ();
+            }
+
           *os << "::_tao_obv_narrow (type_id);" << be_uidt_nl;
         }
     }
@@ -109,14 +136,17 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   if (!node->is_abstract_valuetype ())
     {
       // The virtual _tao_marshal_v method
-      *os << "CORBA::Boolean " << node->name()
+      *os << "CORBA::Boolean " << node->name ()
           <<                   "::_tao_marshal_v (TAO_OutputCDR & strm)"
           << be_nl
           <<  "{" << be_idt_nl
           <<   "return ";
       if (node->opt_accessor ())
         {
-          *os << node->name ()
+          be_decl *scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          *os << "ACE_NESTED_CLASS ("
+              << scope->name () << ","
+              << node->local_name () << ")"
               <<"::_tao_marshal_state (strm);" << be_uidt_nl;
         }
       else
@@ -124,17 +154,21 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           *os << "this->_tao_marshal__" << node->flat_name ()
               << " (strm);" << be_uidt_nl;
         }
+
       *os << "}\n" << be_nl;
 
       // The virtual _tao_unmarshal_v method
-      *os << "CORBA::Boolean " << node->name()
+      *os << "CORBA::Boolean " << node->name ()
           <<                   "::_tao_unmarshal_v (TAO_InputCDR & strm)"
           << be_nl
           <<  "{" << be_idt_nl
           <<   "return ";
       if (node->opt_accessor ())
         {
-          *os << node->name ()
+          be_decl *scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+          *os << "ACE_NESTED_CLASS ("
+              << scope->name () << ","
+              << node->local_name () << ")"
               <<"::_tao_unmarshal_state (strm);" << be_uidt_nl;
         }
       else
@@ -142,8 +176,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           *os << "this->_tao_unmarshal__" << node->flat_name ()
               << " (strm);" << be_uidt_nl;
         }
+
       *os << "}\n" << be_nl;
-    }  // !node->is_abstract_valuetype ()
+    }
 
   // The static T::_tao_unmarshal method  ----------------------------
 
@@ -189,17 +224,6 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   // The static T::_tao_unmarshal method  ------------------------ end
 
-  // generate the ifdefined macro for  the _init type
-  os->gen_ifdef_macro (node->flat_name (), "_init");
-  if (this->gen_init_impl (node) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_valuetype_cs::"
-                         "visit_valuetype - "
-                         "codegen for _init failed\n"), -1);
-    }
-  os->gen_endif ();
-
   // generate code for the elements of the valuetype
   if (this->visit_scope (node) == -1)
     {
@@ -209,10 +233,36 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
                          "codegen for scope failed\n"), -1);
     }
 
+  // Generate the _init -related code.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_VALUETYPE_INIT_CS);
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+
+  if (!visitor)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ch::"
+                         "visit_valuetype - "
+                         "NULL visitor.\n"
+                         ),  -1);
+    }
+  
+  if (visitor->visit_valuetype(node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_valuetype_ch::"
+                         "visit_valuetype - "
+                         "failed to generate _init construct.\n"
+                         ),  -1);
+    }
+
+  delete visitor;
+
+
   // by using a visitor to declare and define the TypeCode, we have the
   // added advantage to conditionally not generate any code. This will be
   // based on the command line options. This is still TO-DO
-     // (see interface code how to do this. not yet impl.)
+  // (see interface code how to do this. not yet impl.)
 
   return 0;
 }

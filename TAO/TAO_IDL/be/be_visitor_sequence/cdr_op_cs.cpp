@@ -266,6 +266,18 @@ be_visitor_sequence_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_sequence_cdr_op_cs::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_node (node);
+}
+
+int
+be_visitor_sequence_cdr_op_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_node (node);
+}
+
+int
 be_visitor_sequence_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

@@ -81,11 +81,9 @@ AST_InterfaceFwd::AST_InterfaceFwd (void)
 }
 
 AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
-                                    UTL_ScopedName *n,
-                                    UTL_StrList *p)
-  : AST_Decl (AST_Decl::NT_interface_fwd,
-              n,
-              p)
+                                    UTL_ScopedName *n)
+  : AST_Decl (AST_Decl::NT_interface_fwd, 
+              n)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations
@@ -179,6 +177,12 @@ void
 AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 {
   this->pd_full_definition = nfd;
+}
+
+idl_bool
+AST_InterfaceFwd::is_defined (void)
+{
+  return this->pd_full_definition->is_defined ();
 }
 
 // Narrowing methods.

@@ -31,19 +31,15 @@ be_argument::be_argument (void)
 
 be_argument::be_argument (AST_Argument::Direction d, 
                           AST_Type *ft,
-                          UTL_ScopedName *n, 
-                          UTL_StrList *p)
+                          UTL_ScopedName *n)
   : AST_Argument (d, 
                   ft, 
-                  n, 
-                  p),
+                  n),
     AST_Field (AST_Decl::NT_argument, 
                ft, 
-               n, 
-               p),
+               n),
     AST_Decl (AST_Decl::NT_argument, 
-              n, 
-              p)
+              n)
 {
 }
 

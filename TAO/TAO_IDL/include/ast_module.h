@@ -82,8 +82,7 @@ public:
   // Constructor(s) and destructor.
   AST_Module (void);
 
-  AST_Module (UTL_ScopedName *n,
-              UTL_StrList *p);
+  AST_Module (UTL_ScopedName *n);
 
   virtual ~AST_Module (void);
 

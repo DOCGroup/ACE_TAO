@@ -31,15 +31,12 @@ be_field::be_field (void)
 
 be_field::be_field (AST_Type *ft, 
                     UTL_ScopedName *n, 
-                    UTL_StrList *p, 
                     Visibility vis)
   : AST_Field (ft, 
                n, 
-               p, 
                vis),
     AST_Decl (AST_Decl::NT_field, 
-              n, 
-              p),
+              n),
     COMMON_Base (ft->is_local (), 
                  ft->is_abstract ())
 {

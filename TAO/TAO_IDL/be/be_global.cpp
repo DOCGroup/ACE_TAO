@@ -828,24 +828,3 @@ BE_GlobalData::destroy (void)
 {
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class ACE_Node <be_interface *>;
-template class ACE_Unbounded_Queue <be_interface *>;
-template class ACE_Unbounded_Queue_Iterator <be_interface *>;
-
-template class ACE_Node <be_interface_fwd *>;
-template class ACE_Unbounded_Queue <be_interface_fwd *>;
-template class ACE_Unbounded_Queue_Iterator <be_interface_fwd *>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate ACE_Node <be_interface *>
-#pragma instantiate ACE_Unbounded_Queue <be_interface *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <be_interface *>
-
-#pragma instantiate ACE_Node <be_interface_fwd *>
-#pragma instantiate ACE_Unbounded_Queue <be_interface_fwd *>
-#pragma instantiate ACE_Unbounded_Queue_Iterator <be_interface_fwd *>
-
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

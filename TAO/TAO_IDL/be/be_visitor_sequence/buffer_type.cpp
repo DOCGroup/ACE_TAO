@@ -100,6 +100,18 @@ be_visitor_sequence_buffer_type::visit_interface_fwd (be_interface_fwd *node)
 }
 
 int
+be_visitor_sequence_buffer_type::visit_valuetype (be_valuetype *node)
+{
+  return this->visit_interface (node);
+}
+
+int
+be_visitor_sequence_buffer_type::visit_valuetype_fwd (be_valuetype_fwd *node)
+{
+  return this->visit_interface_fwd (node);
+}
+
+int
 be_visitor_sequence_buffer_type::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();

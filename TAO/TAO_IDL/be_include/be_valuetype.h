@@ -18,8 +18,6 @@
 #ifndef TAO_BE_VALUETYPE_H
 #define TAO_BE_VALUETYPE_H
 
-#ifdef IDL_HAS_VALUETYPE
-
 #include "be_interface.h"
 
 class TAO_OutStream;
@@ -40,7 +38,6 @@ public:
   be_valuetype (UTL_ScopedName *n, 
                 AST_Interface **ih, 
                 long nih,
-                UTL_StrList *p, 
                 idl_bool set_abstract = 0);
   // Constructor that sets its scoped name <n>, a list of inherited valuetypes
   // and supported interfaces <ih>, the number of inherited interfaces <nih>,
@@ -49,8 +46,7 @@ public:
   ~be_valuetype (void);
   // Destructor.
 
-  virtual void redefine (AST_Interface *from, 
-                         UTL_StrList *p);
+  virtual void redefine (AST_Interface *from);
 
   idl_bool opt_accessor (void);
   // Should generate optimized form?
@@ -68,6 +64,18 @@ public:
   virtual int gen_out_impl (char *local_name = 0,
                             char *full_name = 0);
   // Generate the _out implementation.
+
+  virtual int gen_helper_header (char *local_name = 0,
+         char *full_name = 0);
+  // Generate the helper functions definition.
+  
+  virtual int gen_helper_inline (char *local_name = 0,
+         char *full_name = 0);
+  // Generate the helper functions inline implementation.  
+
+  virtual int gen_helper_stubs (char *local_name = 0,
+        char *full_name = 0);
+  // Generate the helper functions implementation.  
 
   const char *full_obv_skel_name (void);
   // Retrieve the fully scoped skel class name.
@@ -110,7 +118,5 @@ public:
 private:
   char *full_obv_skel_name_;
 };
-
-#endif  /* IDL_HAS_VALUETYPE */
 
 #endif  // if !defined

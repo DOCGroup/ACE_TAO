@@ -75,29 +75,32 @@ ACE_RCSID(narrow, narrow, "$Id$")
  * Convert a UTL_Scope node into an AST_Decl node if possible
  */
 AST_Decl *
-ScopeAsDecl(UTL_Scope *s)
+ScopeAsDecl (UTL_Scope *s)
 {
-  if (s == NULL) return NULL;
+  if (s == 0) return 0;
 
-  switch (s->scope_node_type()) {
-  case AST_Decl::NT_module:
-    return AST_Module::narrow_from_scope(s);
-  case AST_Decl::NT_root:
-    return AST_Root::narrow_from_scope(s);
-  case AST_Decl::NT_interface:
-    return AST_Interface::narrow_from_scope(s);
-  case AST_Decl::NT_op:
-    return AST_Operation::narrow_from_scope(s);
-  case AST_Decl::NT_except:
-    return AST_Exception::narrow_from_scope(s);
-  case AST_Decl::NT_union:
-    return AST_Union::narrow_from_scope(s);
-  case AST_Decl::NT_struct:
-    return AST_Structure::narrow_from_scope(s);
-  case AST_Decl::NT_enum:
-    return AST_Enum::narrow_from_scope(s);
-  default:
-    return NULL;
+  switch (s->scope_node_type ()) 
+  {
+    case AST_Decl::NT_module:
+      return AST_Module::narrow_from_scope (s);
+    case AST_Decl::NT_root:
+      return AST_Root::narrow_from_scope (s);
+    case AST_Decl::NT_interface:
+      return AST_Interface::narrow_from_scope (s);
+    case AST_Decl::NT_op:
+      return AST_Operation::narrow_from_scope (s);
+    case AST_Decl::NT_factory:
+      return AST_Factory::narrow_from_scope (s);
+    case AST_Decl::NT_except:
+      return AST_Exception::narrow_from_scope (s);
+    case AST_Decl::NT_union:
+      return AST_Union::narrow_from_scope (s);
+    case AST_Decl::NT_struct:
+      return AST_Structure::narrow_from_scope (s);
+    case AST_Decl::NT_enum:
+      return AST_Enum::narrow_from_scope (s);
+    default:
+      return 0;
   }
 }
 
@@ -105,37 +108,40 @@ ScopeAsDecl(UTL_Scope *s)
  * Convert an AST_Decl to a UTL_Scope if possible
  */
 UTL_Scope *
-DeclAsScope(AST_Decl *d)
+DeclAsScope (AST_Decl *d)
 {
-   if (d == NULL) return NULL;
+   if (d == 0) return 0;
 
-   switch (d->node_type()) {
-   case AST_Decl::NT_interface_fwd:
-      /*
-       * Resolve forward declared interface by looking at full_definition()
-       * field and iterating
-       */
-      d = (AST_InterfaceFwd::narrow_from_decl(d))->full_definition();
-      /*
-       * Fall through
-       */
-   case AST_Decl::NT_interface:
-      return AST_Interface::narrow_from_decl(d);
-   case AST_Decl::NT_module:
-      return AST_Module::narrow_from_decl(d);
-   case AST_Decl::NT_root:
-      return AST_Root::narrow_from_decl(d);
-   case AST_Decl::NT_except:
-      return AST_Exception::narrow_from_decl(d);
-   case AST_Decl::NT_union:
-      return AST_Union::narrow_from_decl(d);
-   case AST_Decl::NT_struct:
-      return AST_Structure::narrow_from_decl(d);
-   case AST_Decl::NT_enum:
-      return AST_Enum::narrow_from_decl(d);
-   case AST_Decl::NT_op:
-      return AST_Operation::narrow_from_decl(d);
-   default:
-      return NULL;
+   switch (d->node_type ()) 
+   {
+     case AST_Decl::NT_interface_fwd:
+        /*
+         * Resolve forward declared interface by looking at full_definition()
+         * field and iterating
+         */
+        d = (AST_InterfaceFwd::narrow_from_decl (d))->full_definition ();
+        /*
+         * Fall through
+         */
+     case AST_Decl::NT_interface:
+        return AST_Interface::narrow_from_decl (d);
+     case AST_Decl::NT_module:
+        return AST_Module::narrow_from_decl (d);
+     case AST_Decl::NT_root:
+        return AST_Root::narrow_from_decl (d);
+     case AST_Decl::NT_except:
+        return AST_Exception::narrow_from_decl (d);
+     case AST_Decl::NT_union:
+        return AST_Union::narrow_from_decl (d);
+     case AST_Decl::NT_struct:
+        return AST_Structure::narrow_from_decl (d);
+     case AST_Decl::NT_enum:
+        return AST_Enum::narrow_from_decl (d);
+     case AST_Decl::NT_op:
+        return AST_Operation::narrow_from_decl (d);
+     case AST_Decl::NT_factory:
+        return AST_Factory::narrow_from_decl (d);
+     default:
+        return 0;
    }
 }

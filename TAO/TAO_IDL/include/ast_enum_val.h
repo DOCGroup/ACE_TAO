@@ -79,9 +79,8 @@ public:
   // Constructor(s).
   AST_EnumVal (void);
 
-  AST_EnumVal (unsigned long v,
-               UTL_ScopedName *n,
-               UTL_StrList *p);
+  AST_EnumVal (unsigned long v, 
+               UTL_ScopedName *n);
 
   // Destructor.
   virtual ~AST_EnumVal (void);

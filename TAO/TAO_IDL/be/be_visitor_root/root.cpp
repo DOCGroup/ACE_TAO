@@ -143,7 +143,6 @@ int be_visitor_root::visit_root (be_root *node)
   be_visitor *visitor;
   be_visitor_context ctx (*this->ctx_);
 
-#ifdef IDL_HAS_VALUETYPE
   // make one more pass over the entire tree and generate the OBV_ namespaces
   // and OBV_ classes
 
@@ -187,7 +186,6 @@ int be_visitor_root::visit_root (be_root *node)
         }
       delete visitor;
     }
-#endif /* IDL_HAS_VALUETYPE */
 
   // The next thing we need to do is make one more pass thru the entire tree
   // and generate code for all the <<= and >>= operators for all the
@@ -763,9 +761,7 @@ be_visitor_root::visit_interface_fwd (be_interface_fwd *node)
   return 0;
 }
 
-#ifdef IDL_HAS_VALUETYPE
-
-// visit an valuetype
+// visit a valuetype
 int
 be_visitor_root::visit_valuetype (be_valuetype *node)
 {
@@ -901,8 +897,6 @@ be_visitor_root::visit_valuetype_fwd (be_valuetype_fwd *node)
       ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CI);
       break;
     case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
-      ctx.state (TAO_CodeGen::TAO_VALUETYPE_FWD_CDR_OP_CS);
-      break;
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
     case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
     case TAO_CodeGen::TAO_ROOT_CS:
@@ -945,9 +939,7 @@ be_visitor_root::visit_valuetype_fwd (be_valuetype_fwd *node)
   return 0;
 }
 
-#endif /* IDL_HAS_VALUETYPE */
-
-// visit an module
+// visit a module
 int
 be_visitor_root::visit_module (be_module *node)
 {

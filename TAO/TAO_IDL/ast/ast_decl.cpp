@@ -69,7 +69,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  *
  * AST_Decl is the base class for all AST nodes except AST_Expression.
  * AST_Decls have a node type (a value from the enum AST_Decl::NodeType)
- * a name (a UTL_ScopedName) and a list of pragmas (a UTL_StrList).
+ * and a name (a UTL_ScopedName).
  * Additionally AST_Decl nodes record the scope of definition, the
  * file name in which they were defined, the line on which they were
  * defined in that file, and a boolean denoting whether this is the
@@ -119,17 +119,16 @@ AST_Decl::AST_Decl (void)
     pd_name (0),
     pd_local_name (0),
     pd_original_local_name (0),
-    pd_pragmas (0),
     pd_added (I_FALSE),
     full_name_ (0),
     prefix_ (0),
+    version_ (0),
     anonymous_ (I_FALSE)
 {
 }
 
 AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
-                    UTL_StrList *p,
                     idl_bool anonymous)
   : repoID_ (0),
     pd_imported (idl_global->imported ()),
@@ -142,13 +141,25 @@ AST_Decl::AST_Decl (NodeType nt,
     pd_file_name (idl_global->filename ()),
     pd_name (0),
     pd_local_name (n == 0 ? 0 : n->last_component ()->copy ()),
-    pd_pragmas (p),
     pd_added (I_FALSE),
     full_name_ (0),
     prefix_ (0),
+    version_ (0),
     anonymous_ (anonymous)
 {
-  compute_full_name (n);
+  this->compute_full_name (n);
+
+  char *prefix = 0;
+  idl_global->pragma_prefixes ().top (prefix);
+
+  if (prefix == 0)
+    {
+      this->prefix_ = ACE::strnew ("");
+    }
+  else
+    {
+      this->prefix_ = ACE::strnew (prefix);
+    }
 
   // Keep the name _cxx_ removed, if any.
   if (n != 0)
@@ -228,85 +239,6 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
                                    0));
 
           this->pd_name->nconc (conc_name);
-        }
-    }
-}
-
-// Compoute stringified prefix.
-void
-AST_Decl::compute_prefix (void)
-{
-  const char* pragma = 0;
-
-  if (this->pragmas () != 0)
-    {
-      for (UTL_StrlistActiveIterator i (this->pragmas ());
-           !i.is_done ();
-           i.next ())
-        {
-          const char* s = i.item ()->get_string ();
-
-          if (ACE_OS::strncmp (s, "#pragma prefix", 14) == 0)
-            {
-              pragma = s;
-            }
-        }
-    }
-
-  if (pragma != 0)
-    {
-      // Get pointers to each end of the substring between the quotes.
-      const char* start = ACE_OS::strchr (pragma, '"') + 1;
-      const char* end = ACE_OS::strchr (start, '"');
-
-      if (end == 0)
-        {
-          idl_global->err ()->syntax_error (
-              IDL_GlobalData::PS_PragmaPrefixSyntax
-            );
-          this->prefix_ = ACE::strnew ("");
-          return;
-        }
-
-      int len = end - start;
-
-      ACE_NEW (this->prefix_,
-               char[len + 1]);
-
-      ACE_OS::strncpy (this->prefix_,
-                       start,
-                       len);
-
-      this->prefix_[len] = 0;
-      return;
-    }
-
-  // Could not find it in the local scope, try to recurse to the top
-  // scope...
-  if (this->defined_in () == 0)
-    {
-      this->prefix_ = ACE::strnew ("");
-    }
-  else
-    {
-      UTL_Scope *scope = this->defined_in ();
-
-      if (scope == 0)
-        {
-          this->prefix_ = ACE::strnew ("");
-        }
-      else
-        {
-          AST_Decl *d = ScopeAsDecl (scope);
-
-          if (d != 0)
-            {
-              this->prefix_ = ACE::strnew (d->prefix ());
-            }
-          else
-            {
-              this->prefix_ = ACE::strnew ("");
-            }
         }
     }
 }
@@ -420,18 +352,27 @@ AST_Decl::compute_repoID (void)
     }
   else
     {
-      long namelen = 8; // for the prefix "IDL:" and suffix ":1.0"
-      UTL_IdListActiveIterator *i = 0;
+      long namelen = 4; // for the prefix "IDL:"
       long first = I_TRUE;
       long second = I_FALSE;
 
       // in the first loop compute the total length
-      namelen += ACE_OS::strlen (this->prefix ()) + 1;
+      namelen += ACE_OS::strlen (this->prefix_) + 1;
 
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
+      if (this->version_ != 0)
+        {
+          // Version member string + ':'
+          namelen += ACE_OS::strlen (this->version_) + 1;
+        }
+      else
+        {
+          // For ":1.0"
+          namelen += 4;
+        }
 
-      while (!(i->is_done ()))
+      UTL_IdListActiveIterator i (this->name ());
+
+      while (!(i.is_done ()))
         {
           if (!first)
             {
@@ -443,11 +384,11 @@ AST_Decl::compute_repoID (void)
             }
 
           // Print the identifier.
-          namelen += ACE_OS::strlen (i->item ()->get_string ());
+          namelen += ACE_OS::strlen (i.item ()->get_string ());
 
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (i.item ()->get_string (), "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -458,10 +399,8 @@ AST_Decl::compute_repoID (void)
                 }
             }
 
-          i->next ();
+          i.next ();
         }
-
-      delete i;
 
       ACE_NEW (this->repoID_,
                char[namelen + 1]);
@@ -472,22 +411,21 @@ AST_Decl::compute_repoID (void)
                        "%s",
                        "IDL:");
 
-      ACE_OS::strcat (this->repoID_,
-                      this->prefix ());
+      ACE_OS::strcat (this->repoID_, 
+                      this->prefix_);
 
       // Add the "/" only if there is a prefix.
-      if (ACE_OS::strcmp (this->prefix (), "") != 0)
+      if (ACE_OS::strcmp (this->prefix_, "") != 0)
         {
           ACE_OS::strcat (this->repoID_, "/");
         }
 
-      ACE_NEW (i,
-               UTL_IdListActiveIterator (this->name ()));
+      UTL_IdListActiveIterator j (this->name ());
 
       first = I_TRUE;
       second = I_FALSE;
 
-      while (!(i->is_done ()))
+      while (!(j.is_done ()))
         {
           if (!first)
             {
@@ -499,11 +437,12 @@ AST_Decl::compute_repoID (void)
             }
 
           // Print the identifier.
-          ACE_OS::strcat (this->repoID_, i->item ()->get_string ());
+          ACE_OS::strcat (this->repoID_, 
+                          j.item ()->get_string ());
 
           if (first)
             {
-              if (ACE_OS::strcmp (i->item ()->get_string (), "") != 0)
+              if (ACE_OS::strcmp (j.item ()->get_string (), "") != 0)
                 {
                   // Does not start with a "".
                   first = I_FALSE;
@@ -514,12 +453,21 @@ AST_Decl::compute_repoID (void)
                 }
             }
 
-          i->next ();
+          j.next ();
         }
 
-      delete i;
-      ACE_OS::strcat (this->repoID_,
-                      ":1.0");
+      if (this->version_ != 0)
+        {
+          ACE_OS::strcat (this->repoID_,
+                          ":");
+          ACE_OS::strcat (this->repoID_,
+                          this->version_);
+        }
+      else
+        {
+          ACE_OS::strcat (this->repoID_, 
+                          ":1.0");
+        }
     }
 
   return;
@@ -594,26 +542,17 @@ AST_Decl::destroy (void)
   delete this->pd_original_local_name;
   this->pd_original_local_name = 0;
 
-  if (this->full_name_ != 0)
-    {
-      delete [] this->full_name_;
-      this->full_name_ = 0;
-    }
+  delete [] this->full_name_;
+  this->full_name_ = 0;
 
-  if (this->repoID_ != 0)
-    {
-      delete [] this->repoID_;
-      this->repoID_ = 0;
-    }
+  delete [] this->repoID_;
+  this->repoID_ = 0;
 
-  if (this->prefix_ != 0)
-    {
-      delete [] this->prefix_;
-      this->prefix_ = 0;
-    }
+  delete [] this->prefix_;
+  this->prefix_ = 0;
 
-  // Pragmas will be done in IDL_GlobalData
-  // because they're not copied.
+  delete [] this->version_;
+  this->version_ = 0;
 }
 
 const char *
@@ -638,15 +577,81 @@ AST_Decl::repoID (void)
   return this->repoID_;
 }
 
+void
+AST_Decl::repoID (char *value)
+{
+  if (this->repoID_ == 0)
+    {
+      this->repoID_ = value;
+
+      // Forces version to be set to the last id component.
+      delete [] this->version_;
+      this->version_ = 0;
+      const char *tmp = this->version ();
+    }
+  else if (ACE_OS::strcmp (this->repoID_, value) != 0)
+    {
+      idl_global->err ()->id_reset_error (this->repoID_,
+                                          value);
+    }
+}
+
 const char *
 AST_Decl::prefix (void)
 {
-  if (this->prefix_ == 0)
+  return this->prefix_;
+}
+
+void
+AST_Decl::prefix (char *value)
+{
+  this->prefix_ = value;
+}
+
+const char *
+AST_Decl::version (void)
+{
+  if (this->version_ == 0)
     {
-      this->compute_prefix ();
+      // Calling the method will compute if necessary.
+      const char *repo_id = this->repoID ();
+
+      // All forms of repo id should contain two colons, the
+      // version coming after the second one.
+      const char *tail1 = 0;
+      const char *tail2 = 0;
+
+      if (repo_id != 0)
+        {
+          tail1 = ACE_OS::strchr (repo_id,
+                                  ':');
+        }
+
+      if (tail1 != 0)
+        {
+          tail2 = ACE_OS::strchr (tail1 + 1,
+                                  ':');
+        }
+
+      this->version_ = (tail2 == 0) ? ACE::strnew ("1.0")
+                                    : ACE::strnew (tail2 + 1);
     }
 
-  return this->prefix_;
+  return this->version_;
+}
+
+void
+AST_Decl::version (char *value)
+{
+  // Previous #pragma version or #pragma id make this illegal.
+  if (this->version_ == 0 && this->repoID_ == 0)
+    {
+      this->version_ = value;
+    }
+  else
+    {
+      idl_global->err ()->version_reset_error ();
+    }
 }
 
 idl_bool
@@ -895,34 +900,6 @@ Identifier *
 AST_Decl::original_local_name (void)
 {
   return this->pd_original_local_name;
-}
-
-void
-AST_Decl::add_pragmas (UTL_StrList *p)
-{
-  if (p != 0)
-    {
-      if (this->pd_pragmas != 0)
-        {
-          this->pd_pragmas->nconc (p);
-        }
-      else
-        {
-          this->pd_pragmas = p;
-        }
-    }
-}
-
-UTL_StrList *
-AST_Decl::pragmas (void)
-{
-  return this->pd_pragmas;
-}
-
-void
-AST_Decl:: pragmas (UTL_StrList *p)
-{
-  this->pd_pragmas = p;
 }
 
 //Narrowing methods for AST_Decl.

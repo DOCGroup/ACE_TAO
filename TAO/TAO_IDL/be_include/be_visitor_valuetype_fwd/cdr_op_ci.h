@@ -9,7 +9,7 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_ci.h
+//    valuetype_fwd_cdr_op_ci.h
 //
 // = DESCRIPTION
 //    Concrete visitor for the valuetype_fwd class
@@ -18,7 +18,8 @@
 //    declaration in the client inline.
 //
 // = AUTHOR
-//    Torsten Kuepper
+//    Boris Kolpackov <bosk@ipmce.ru>
+//    based on code from Torsten Kuepper
 //    based on code from Aniruddha Gokhale & Carlos O'Ryan
 //
 // ============================================================================
@@ -46,7 +47,6 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   // visit valuetype
-
 };
 
 #endif /* BE_VISITOR_VALUETYPE_FWD_CDR_OP_CI_H */

@@ -147,7 +147,24 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "buf[i] = ";
 
-  if (bt_is_defined)
+  int is_valuetype = 0;
+  {
+    be_interface *bf = be_interface::narrow_from_decl (pt);
+    if (bf != 0)
+      is_valuetype = bf->is_valuetype ();
+    else
+      {
+        be_interface_fwd *bff = be_interface_fwd::narrow_from_decl (pt);
+        if (bff != 0)
+          is_valuetype = bff->is_valuetype ();
+      }
+  }
+
+  if (is_valuetype)
+    {
+      *os << "0;";
+    }
+  else if (bt_is_defined)
     {
       bt->accept (visitor);
 
@@ -233,9 +250,17 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
   *os << " ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < rhs.length_; ++i)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "tmp1[i] = ";
+      << "{" << be_idt_nl;
 
+  if (is_valuetype)
+    {
+      *os << "if (tmp2[i] != 0)" << be_idt_nl
+          << "tmp2[i]->_add_ref ();" << be_uidt_nl
+          << "tmp1[i] = tmp2 [i];";
+    }
+  else
+    {
+      *os << "tmp1[i] = ";
   if (bt_is_defined)
     {
       bt->accept (visitor);
@@ -245,6 +270,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
   else
     {
       *os << "tao_" << pt->flat_name () << "_duplicate (tmp2[i]);";
+    }
     }
 
   *os << be_uidt_nl
@@ -280,7 +306,13 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
       << "for (CORBA::ULong i = 0; i < this->length_; ++i)" << be_nl
       << "{" << be_idt_nl;
 
-  if (bt_is_defined)
+  if (is_valuetype)
+    {
+      *os << "if (tmp[i] != 0)" << be_idt_nl
+          << "tmp[i]->_remove_ref ();" << be_uidt_nl
+          << "tmp[i] = 0;";
+    }
+  else if (bt_is_defined)
     {
       *os << "CORBA::release (tmp[i]);" << be_nl
           << "tmp[i] = ";
@@ -329,9 +361,17 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
   *os << " ** ACE_CAST_CONST, rhs.buffer_);" << be_nl
       << be_nl
       << "for (CORBA::ULong i = 0; i < rhs.length_; ++i)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "tmp1[i] = ";
+      << "{" << be_idt_nl;
 
+  if (is_valuetype)
+    {
+      *os << "if (tmp2[i] != 0)" << be_idt_nl
+          << "tmp2[i]->_add_ref ();" << be_uidt_nl
+          << "tmp1[i] = tmp2 [i];";
+    }
+  else
+    {
+      *os << "tmp1[i] = ";
   if (bt_is_defined)
     {
       bt->accept (visitor);
@@ -342,7 +382,7 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
     {
       *os << "tao_" << pt->flat_name () << "_duplicate (tmp2[i]);";
     }
-
+    }
   *os << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
       << "return *this;" << be_uidt_nl
@@ -356,13 +396,15 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
     && prim && prim->pt () == AST_PredefinedType::PT_pseudo
     && ACE_OS::strcmp (prim->local_name ()->get_string (),
                        "Object") != 0;
-
   if (is_pseudo_object)
     {
       *os << "ACE_INLINE TAO_Pseudo_Object_Manager<";
     }
   else
     {
+      if (is_valuetype)
+        *os << "ACE_INLINE TAO_Valuetype_Manager<";
+      else
       *os << "ACE_INLINE TAO_Object_Manager<";
     }
 
@@ -388,6 +430,9 @@ be_visitor_sequence_ci::gen_unbounded_obj_sequence (be_sequence *node)
     }
   else
     {
+      if (is_valuetype)
+        *os << "return TAO_Valuetype_Manager<";
+      else
       *os << "return TAO_Object_Manager<";
     }
 

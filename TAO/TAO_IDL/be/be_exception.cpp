@@ -32,15 +32,12 @@ be_exception::be_exception (void)
 }
 
 be_exception::be_exception (UTL_ScopedName *n,
-                            UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
   : AST_Decl (AST_Decl::NT_except, 
-              n, 
-              p),
+              n),
     AST_Structure (AST_Decl::NT_except, 
                    n, 
-                   p, 
                    local, 
                    abstract),
     UTL_Scope (AST_Decl::NT_except),

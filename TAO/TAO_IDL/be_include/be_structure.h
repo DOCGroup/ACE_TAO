@@ -27,7 +27,6 @@
 #include "be_type.h"
 #include "ast_structure.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_structure : public virtual AST_Structure,
@@ -39,7 +38,6 @@ public:
   // Default constructor.
 
   be_structure (UTL_ScopedName *n,
-                UTL_StrList *p,
                 idl_bool local,
                 idl_bool abstract);
   // Constructor.

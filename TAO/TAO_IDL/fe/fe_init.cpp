@@ -112,128 +112,112 @@ fe_populate_global_scope (AST_Module *m)
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_long,
-                            create_scoped_name ("long"),
-                            NULL
+                            create_scoped_name ("long")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_ulong,
-                            create_scoped_name ("unsigned long"),
-                            NULL
+                            create_scoped_name ("unsigned long")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_longlong,
-                            create_scoped_name ("long long"),
-                            NULL
+                            create_scoped_name ("long long")
                           );
   m->fe_add_predefined_type(pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_ulonglong,
-                            create_scoped_name ("unsigned long long"),
-                            NULL
+                            create_scoped_name ("unsigned long long")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_short,
-                            create_scoped_name ("short"),
-                            NULL
+                            create_scoped_name ("short")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_ushort,
-                            create_scoped_name ("unsigned short"),
-                            NULL
+                            create_scoped_name ("unsigned short")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_float,
-                            create_scoped_name ("float"),
-                            NULL
+                            create_scoped_name ("float")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_double,
-                            create_scoped_name("double"),
-                            NULL
+                            create_scoped_name("double")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_longdouble,
-                            create_scoped_name ("long double"),
-                            NULL
+                            create_scoped_name ("long double")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_char,
-                            create_scoped_name ("char"),
-                            NULL
+                            create_scoped_name ("char")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_wchar,
-                            create_scoped_name ("wchar"),
-                            NULL
+                            create_scoped_name ("wchar")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_octet,
-                            create_scoped_name ("octet"),
-                            NULL
+                            create_scoped_name ("octet")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_any,
-                            create_scoped_name ("any"),
-                            NULL
+                            create_scoped_name ("any")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt =
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_boolean,
-                            create_scoped_name ("boolean"),
-                            NULL
+                            create_scoped_name ("boolean")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_void,
-                            create_scoped_name ("void"),
-                            NULL
+                            create_scoped_name ("void")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name("Object"),
-                            NULL
+                            create_scoped_name("Object")
                           );
   m->fe_add_predefined_type (pdt);
 
@@ -242,200 +226,175 @@ fe_populate_global_scope (AST_Module *m)
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("attribute"),
-                            NULL
+                            create_scoped_name ("attribute")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("case"),
-                            NULL
+                            create_scoped_name ("case")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("const"),
-                            NULL
+                            create_scoped_name ("const")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("context"),
-                            NULL
+                            create_scoped_name ("context")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("default"),
-                            NULL
+                            create_scoped_name ("default")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("enum"),
-                            NULL
+                            create_scoped_name ("enum")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("exception"),
-                            NULL
+                            create_scoped_name ("exception")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("in"),
-                            NULL
+                            create_scoped_name ("in")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("out"),
-                            NULL
+                            create_scoped_name ("out")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("inout"),
-                            NULL
+                            create_scoped_name ("inout")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("interface"),
-                            NULL
+                            create_scoped_name ("interface")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("module"),
-                            NULL
+                            create_scoped_name ("module")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("oneway"),
-                            NULL
+                            create_scoped_name ("oneway")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("raises"),
-                            NULL
+                            create_scoped_name ("raises")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("readonly"),
-                            NULL
+                            create_scoped_name ("readonly")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("sequence"),
-                            NULL
+                            create_scoped_name ("sequence")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
       idl_global->gen ()->create_predefined_type (
                               AST_PredefinedType::PT_pseudo,
-                              create_scoped_name ("string"),
-                              NULL
+                              create_scoped_name ("string")
                             );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("wstring"),
-                            NULL
+                            create_scoped_name ("wstring")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("struct"),
-                            NULL
+                            create_scoped_name ("struct")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("switch"),
-                            NULL
+                            create_scoped_name ("switch")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("typedef"),
-                            NULL
+                            create_scoped_name ("typedef")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("union"),
-                            NULL
+                            create_scoped_name ("union")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("unsigned"),
-                            NULL
+                            create_scoped_name ("unsigned")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("TRUE"),
-                            NULL
+                            create_scoped_name ("TRUE")
                           );
   m->fe_add_predefined_type (pdt);
 
   pdt = 
     idl_global->gen ()->create_predefined_type (
                             AST_PredefinedType::PT_pseudo,
-                            create_scoped_name ("FALSE"),
-                           NULL
+                            create_scoped_name ("FALSE")
                          );
   m->fe_add_predefined_type (pdt);
 
@@ -445,64 +404,49 @@ fe_populate_global_scope (AST_Module *m)
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("abstract"),
-                                NULL
+                                create_scoped_name ("abstract")
                               );
       m->fe_add_predefined_type (pdt);
 
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("custom"),
-                                NULL
+                                create_scoped_name ("custom")
                               );
       m->fe_add_predefined_type (pdt);
 
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("init"),
-                                NULL
+                                create_scoped_name ("private")
                               );
       m->fe_add_predefined_type (pdt);
 
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("private"),
-                                NULL
+                                create_scoped_name ("public")
                               );
       m->fe_add_predefined_type (pdt);
 
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("public"),
-                                NULL
+                                create_scoped_name ("supports")
                               );
       m->fe_add_predefined_type (pdt);
 
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("supports"),
-                                NULL
+                                create_scoped_name ("truncatable")
                               );
       m->fe_add_predefined_type (pdt);
 
       pdt = 
         idl_global->gen ()->create_predefined_type (
                                 AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("truncatable"),
-                                NULL
-                              );
-      m->fe_add_predefined_type (pdt);
-
-      pdt = 
-        idl_global->gen ()->create_predefined_type (
-                                AST_PredefinedType::PT_pseudo,
-                                create_scoped_name ("valuetype"),
-                                NULL
+                                create_scoped_name ("valuetype")
                               );
       m->fe_add_predefined_type (pdt);
     }
@@ -617,7 +561,7 @@ FE_init_stage2 (void)
     }
 
   // Create a global root for the AST. Note that the AST root has no name.
-  r = idl_global->gen ()->create_root (create_scoped_name (""), 0);
+  r = idl_global->gen ()->create_root (create_scoped_name (""));
   idl_global->set_root (r);
 
   if (r == 0) 

@@ -89,14 +89,12 @@ AST_Field::AST_Field (void)
 }
 
 // To be used when constructing an AST_Field node.
-AST_Field::AST_Field (AST_Type *ft,
+AST_Field::AST_Field (AST_Type *ft, 
                       UTL_ScopedName *n,
-                      UTL_StrList *p,
                       Visibility vis)
-  : AST_Decl (AST_Decl::NT_field,
-              n,
-              p),
-    pd_field_type (ft),
+  : AST_Decl (AST_Decl::NT_field, 
+              n),
+    pd_field_type (ft), 
     pd_visibility (vis)
 {
 }
@@ -104,13 +102,11 @@ AST_Field::AST_Field (AST_Type *ft,
 // To be used when constructing a node of a subclass of AST_Field.
 AST_Field::AST_Field (AST_Decl::NodeType nt,
                       AST_Type *ft,
-                      UTL_ScopedName *n,
-                      UTL_StrList *p,
+                      UTL_ScopedName *n, 
                       Visibility vis)
-  : AST_Decl (nt,
-              n,
-              p),
-    pd_field_type (ft),
+  : AST_Decl (nt, 
+              n),
+    pd_field_type (ft), 
     pd_visibility (vis)
 {
 }

@@ -26,7 +26,6 @@
 #include "ast_argument.h"
 
 class AST_Type;
-class UTL_StrList;
 class be_visitor;
 
 class be_argument : public virtual AST_Argument,
@@ -39,8 +38,7 @@ public:
   // Constructor.
   be_argument (AST_Argument::Direction d, 
                AST_Type *ft, 
-               UTL_ScopedName *n,
-               UTL_StrList *p);
+               UTL_ScopedName *n);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

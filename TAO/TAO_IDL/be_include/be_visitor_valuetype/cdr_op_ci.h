@@ -9,14 +9,14 @@
 //    TAO IDL
 //
 // = FILENAME
-//    cdr_op_ci.h
+//    valuetype_cdr_op_ci.h
 //
 // = DESCRIPTION
 //    Concrete visitor for valuetypes.
 //    This one provides code generation for the CDR operators.
 //
 // = AUTHOR
-//    Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
+//    Torsten Kuepper <kuepper2@lfa.uni-wuppertal.de>
 //
 // ============================================================================
 
@@ -43,7 +43,6 @@ public:
 
   virtual int visit_valuetype (be_valuetype *node);
   // visit valuetype
-
 };
 
 #endif /* _BE_VISITOR_VALUETYPE_CDR_OP_CI_H_ */

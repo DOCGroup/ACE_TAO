@@ -1,4 +1,4 @@
-// $Id$
+/ $Id$
 
 /*
 
@@ -83,13 +83,11 @@ AST_Typedef::AST_Typedef (void)
 
 AST_Typedef::AST_Typedef (AST_Type *bt,
                           UTL_ScopedName *n,
-                          UTL_StrList *p,
                           idl_bool local,
                           idl_bool abstract)
- : AST_Decl (AST_Decl::NT_typedef,
-             n,
-             p),
-   COMMON_Base (bt->is_local () || local,
+ : AST_Decl (AST_Decl::NT_typedef, 
+             n),
+   COMMON_Base (bt->is_local () || local, 
                 abstract),
    pd_base_type (bt)
 {

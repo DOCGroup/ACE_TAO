@@ -101,9 +101,8 @@ public:
   // Constructor(s).
   AST_PredefinedType (void);
 
-  AST_PredefinedType (PredefinedType t,
-                      UTL_ScopedName *n,
-                      UTL_StrList *p);
+  AST_PredefinedType (PredefinedType t, 
+                      UTL_ScopedName *n);
 
   virtual ~AST_PredefinedType (void);
 

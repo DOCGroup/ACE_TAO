@@ -25,7 +25,6 @@
 #include "be_decl.h"
 #include "ast_field.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_field : public virtual AST_Field,
@@ -37,7 +36,6 @@ public:
 
   be_field (AST_Type *ft, 
             UTL_ScopedName *n, 
-            UTL_StrList *p,
             Visibility vis = vis_NA);
   // Constructor.
 

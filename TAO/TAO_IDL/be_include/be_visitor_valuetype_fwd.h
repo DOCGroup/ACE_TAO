@@ -23,15 +23,12 @@
 #ifndef TAO_BE_VISITOR_VALUETYPE_FWD_H
 #define TAO_BE_VISITOR_VALUETYPE_FWD_H
 
-#ifdef IDL_HAS_VALUETYPE
-
 #include "be_visitor.h"
 #include "be_visitor_scope.h"
 
 #include "be_visitor_valuetype_fwd/valuetype_fwd_ch.h"
 #include "be_visitor_valuetype_fwd/valuetype_fwd_ci.h"
+#include "be_visitor_valuetype_fwd/cdr_op_ch.h"
 #include "be_visitor_valuetype_fwd/cdr_op_ci.h"
-
-#endif /* IDL_HAS_VALUETYPE */
 
 #endif /* TAO_BE_VISITOR_VALUETYPE_FWD_H */

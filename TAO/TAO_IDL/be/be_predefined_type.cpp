@@ -30,14 +30,11 @@ be_predefined_type::be_predefined_type (void)
 }
 
 be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
-                                        UTL_ScopedName *n, 
-                                        UTL_StrList *p)
+                                        UTL_ScopedName *n)
   : AST_PredefinedType (t, 
-                        n, 
-                        p),
+                        n),
     AST_Decl (AST_Decl::NT_pre_defined, 
               n, 
-              p,
               I_TRUE)
 {
   // Generate a new Scoped Name for us such that we belong to the CORBA

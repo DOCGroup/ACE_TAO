@@ -24,7 +24,6 @@
 #include "be_type.h"
 #include "ast_native.h"
 
-class UTL_StrList;
 class be_visitor;
 
 // Representation of "native" IDL type added by the POA spec.
@@ -36,8 +35,7 @@ public:
   be_native (void);
   // Default constructor.
 
-  be_native (UTL_ScopedName *n, 
-             UTL_StrList *p);
+  be_native (UTL_ScopedName *n);
   // Constructor that initializes its scoped name.
 
   virtual ~be_native (void) {}

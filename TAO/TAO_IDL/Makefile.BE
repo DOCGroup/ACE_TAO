@@ -31,6 +31,7 @@ FILES = be/be_array \
         be/be_enum_val \
         be/be_exception \
         be/be_expression \
+        be/be_factory \
         be/be_field \
 	be/be_global \
         be/be_interface \
@@ -86,7 +87,8 @@ FILES = be/be_array \
         be/be_visitor_typecode \
         be/be_visitor_typedef \
         be/be_visitor_union \
-        be/be_visitor_union_branch
+        be/be_visitor_union_branch \
+        be/be_tmplinst
 
 LSRC = $(addsuffix .cpp,$(FILES))
 

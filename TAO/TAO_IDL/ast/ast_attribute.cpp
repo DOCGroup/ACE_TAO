@@ -84,17 +84,14 @@ AST_Attribute::AST_Attribute (void)
 AST_Attribute::AST_Attribute (idl_bool ro,
                               AST_Type *ft,
                               UTL_ScopedName *n,
-                              UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
-  : AST_Field (AST_Decl::NT_attr,
-               ft,
-               n,
-               p),
-    AST_Decl (AST_Decl::NT_attr,
-              n,
-              p),
-    COMMON_Base (local,
+  : AST_Field (AST_Decl::NT_attr, 
+               ft, 
+               n),
+    AST_Decl (AST_Decl::NT_attr, 
+              n),
+    COMMON_Base (local, 
                  abstract),
     pd_readonly (ro)
 {

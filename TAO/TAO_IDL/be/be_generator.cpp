@@ -77,13 +77,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ACE_RCSID(be, be_generator, "$Id$")
 
 AST_Root *
-be_generator::create_root (UTL_ScopedName *n,
-                           UTL_StrList *p)
+be_generator::create_root (UTL_ScopedName *n)
 {
   be_root *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_root (n,
-                           p),
+                  be_root (n),
                   0);
 
   return retval;
@@ -91,14 +89,12 @@ be_generator::create_root (UTL_ScopedName *n,
 
 AST_PredefinedType *
 be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
-                                      UTL_ScopedName *n,
-                                      UTL_StrList *p)
+                                      UTL_ScopedName *n)
 {
   be_predefined_type *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_predefined_type (t,
-                                      n,
-                                      p),
+                                      n),
                   0);
 
   return retval;
@@ -106,8 +102,7 @@ be_generator::create_predefined_type (AST_PredefinedType::PredefinedType t,
 
 AST_Module *
 be_generator::create_module (UTL_Scope *s,
-                             UTL_ScopedName *n,
-                             UTL_StrList *p)
+                             UTL_ScopedName *n)
 {
   AST_Decl *d = 0;
   AST_Module *m = 0;
@@ -123,8 +118,7 @@ be_generator::create_module (UTL_Scope *s,
   // members to the new module's scope.
   AST_Module *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_module (n, 
-                             p),
+                  be_module (n),
                   0);
 
 
@@ -195,7 +189,6 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 long nih,
                                 AST_Interface **ih_flat,
                                 long nih_flat,
-                                UTL_StrList *p,
                                 idl_bool l,
                                 idl_bool a)
 {
@@ -206,7 +199,6 @@ be_generator::create_interface (UTL_ScopedName *n,
                                 nih,
                                 ih_flat,
                                 nih_flat,
-                                p,
                                 l,
                                 a),
                   0);
@@ -216,7 +208,6 @@ be_generator::create_interface (UTL_ScopedName *n,
 
 AST_InterfaceFwd *
 be_generator::create_interface_fwd (UTL_ScopedName *n,
-                                    UTL_StrList *p,
                                     idl_bool local,
                                     idl_bool abstract)
 {
@@ -227,11 +218,9 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
                                                             -1,
                                                             0,
                                                             0,
-                                                            p,
                                                             local,
                                                             abstract),
-                                    n,
-                                    p),
+                                    n),
                    0);
 
   return retval;
@@ -240,59 +229,40 @@ be_generator::create_interface_fwd (UTL_ScopedName *n,
 AST_Interface *
 be_generator::create_valuetype (UTL_ScopedName *n,
                                 AST_Interface **ih,
-                                long nih,
-                                UTL_StrList *p)
+                                long nih)
 {
-#ifdef IDL_HAS_VALUETYPE
   be_valuetype *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_valuetype (n, 
                                 ih, 
-                                nih, 
-                                p),
+                                nih),
                   0);
 
   return retval;
-#else
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "Valuetype support not enabled\n"),
-                    0);
-#endif /* IDL_HAS_VALUETYPE */
 }
 
 AST_InterfaceFwd *
-be_generator::create_valuetype_fwd (UTL_ScopedName *n, 
-                                    UTL_StrList *p)
+be_generator::create_valuetype_fwd (UTL_ScopedName *n)
 {
-#ifdef IDL_HAS_VALUETYPE
   be_valuetype_fwd *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_valuetype_fwd (this->create_valuetype (n, 
                                                             0, 
-                                                            -1, 
-                                                            p),
-                                    n,
-                                    p),
+                                                            -1),
+                                    n),
                   0);
 
   return retval;
-#else
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "Valuetype support not enabled\n"),
-                    0);
-#endif /* IDL_HAS_VALUETYPE */
 }
 
 AST_Exception *
 be_generator::create_exception (UTL_ScopedName *n,
-                                UTL_StrList *p,
                                 idl_bool local,
                                 idl_bool abstract)
 {
   be_exception *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_exception (n,
-                                p,
                                 local,
                                 abstract),
                   0);
@@ -302,14 +272,12 @@ be_generator::create_exception (UTL_ScopedName *n,
 
 AST_Structure *
 be_generator::create_structure (UTL_ScopedName *n,
-                                UTL_StrList *p,
                                 idl_bool local,
                                 idl_bool abstract)
 {
   be_structure *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_structure (n,
-                                p,
                                 local,
                                 abstract),
                   0);
@@ -319,14 +287,12 @@ be_generator::create_structure (UTL_ScopedName *n,
 
 AST_Enum *
 be_generator::create_enum (UTL_ScopedName *n,
-                           UTL_StrList *p,
                            idl_bool local,
                            idl_bool abstract)
 {
   be_enum *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_enum (n, 
-                           p, 
                            local, 
                            abstract),
                   0);
@@ -338,7 +304,6 @@ AST_Operation *
 be_generator::create_operation (AST_Type *rt,
                                 AST_Operation::Flags fl,
                                 UTL_ScopedName *n,
-                                UTL_StrList *p,
                                 idl_bool local,
                                 idl_bool abstract)
 {
@@ -347,7 +312,6 @@ be_generator::create_operation (AST_Type *rt,
                   be_operation (rt,
                                 fl,
                                 n,
-                                p,
                                 local,
                                 abstract),
                   0);
@@ -358,14 +322,12 @@ be_generator::create_operation (AST_Type *rt,
 AST_Field *
 be_generator::create_field (AST_Type *ft,
                             UTL_ScopedName *n,
-                            UTL_StrList *p,
                             AST_Field::Visibility vis)
 {
   be_field *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_field (ft, 
                             n, 
-                            p, 
                             vis),
                   0);
 
@@ -375,15 +337,13 @@ be_generator::create_field (AST_Type *ft,
 AST_Argument *
 be_generator::create_argument (AST_Argument::Direction d,
                                AST_Type *ft,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
+                               UTL_ScopedName *n)
 {
   be_argument *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_argument (d, 
                                ft, 
-                               n, 
-                               p),
+                               n),
                   0);
 
   return retval;
@@ -393,7 +353,6 @@ AST_Attribute *
 be_generator::create_attribute (idl_bool ro,
                                 AST_Type *ft,
                                 UTL_ScopedName *n,
-                                UTL_StrList *p,
                                 idl_bool local,
                                 idl_bool abstract)
 {
@@ -402,7 +361,6 @@ be_generator::create_attribute (idl_bool ro,
                   be_attribute (ro,
                                 ft,
                                 n,
-                                p,
                                 local,
                                 abstract),
                   0);
@@ -413,7 +371,6 @@ be_generator::create_attribute (idl_bool ro,
 AST_Union *
 be_generator::create_union (AST_ConcreteType *dt,
                             UTL_ScopedName *n,
-                            UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
 {
@@ -421,7 +378,6 @@ be_generator::create_union (AST_ConcreteType *dt,
   ACE_NEW_RETURN (retval,
                   be_union (dt,
                             n,
-                            p,
                             local,
                             abstract),
                   0);
@@ -432,15 +388,13 @@ be_generator::create_union (AST_ConcreteType *dt,
 AST_UnionBranch *
 be_generator::create_union_branch (UTL_LabelList *ll,
                                    AST_Type *ft,
-                                   UTL_ScopedName *n,
-                                   UTL_StrList *p)
+                                   UTL_ScopedName *n)
 {
   be_union_branch *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_union_branch (ll, 
                                    ft, 
-                                   n, 
-                                   p),
+                                   n),
                   0);
 
   return retval;
@@ -462,15 +416,13 @@ be_generator::create_union_label (AST_UnionLabel::UnionLabel ul,
 AST_Constant *
 be_generator::create_constant (AST_Expression::ExprType et,
                                AST_Expression *ev,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
+                               UTL_ScopedName *n)
 {
   be_constant *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_constant (et, 
                                ev, 
-                               n, 
-                               p),
+                               n),
                   0);
 
   return retval;
@@ -607,14 +559,12 @@ be_generator::create_expr (double d)
 
 AST_EnumVal *
 be_generator::create_enum_val (unsigned long v,
-                               UTL_ScopedName *n,
-                               UTL_StrList *p)
+                               UTL_ScopedName *n)
 {
   be_enum_val *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_enum_val (v, 
-                               n, 
-                               p),
+                               n),
                   0);
 
   return retval;
@@ -682,7 +632,6 @@ be_generator::create_wstring (AST_Expression *v)
 AST_Typedef *
 be_generator::create_typedef (AST_Type *bt,
                               UTL_ScopedName *n,
-                              UTL_StrList *p,
                               idl_bool local,
                               idl_bool abstract)
 {
@@ -690,7 +639,6 @@ be_generator::create_typedef (AST_Type *bt,
   ACE_NEW_RETURN (retval,
                   be_typedef (bt, 
                               n, 
-                              p, 
                               local, 
                               abstract),
                   0);
@@ -699,13 +647,22 @@ be_generator::create_typedef (AST_Type *bt,
 }
 
 AST_Native *
-be_generator::create_native (UTL_ScopedName *n,
-                             UTL_StrList *p)
+be_generator::create_native (UTL_ScopedName *n)
 {
   be_native *retval = 0;
   ACE_NEW_RETURN (retval,
-                  be_native (n, 
-                             p),
+                  be_native (n),
+                  0);
+
+  return retval;
+}
+
+AST_Factory *
+be_generator::create_factory (UTL_ScopedName *n)
+{
+  be_factory *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_factory (n),
                   0);
 
   return retval;

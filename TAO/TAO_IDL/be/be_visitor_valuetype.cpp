@@ -23,8 +23,6 @@
 #include "idl_extern.h"
 #include "be.h"
 
-#ifdef IDL_HAS_VALUETYPE
-
 #include "be_visitor_valuetype.h"
 
 #include "be_visitor_valuetype/valuetype.cpp"
@@ -36,6 +34,7 @@
 #include "be_visitor_valuetype/valuetype_cs.cpp"
 #include "be_visitor_valuetype/cdr_op_ch.cpp"
 #include "be_visitor_valuetype/cdr_op_ci.cpp"
+#include "be_visitor_valuetype/cdr_op_cs.cpp"
 #include "be_visitor_valuetype/marshal_ch.cpp"
 #include "be_visitor_valuetype/marshal_cs.cpp"
 #include "be_visitor_valuetype/arglist.cpp"
@@ -47,6 +46,10 @@
 #include "be_visitor_valuetype/obv_module.cpp"
 #include "be_visitor_valuetype/ami_exception_holder_ch.cpp"
 #include "be_visitor_valuetype/ami_exception_holder_cs.cpp"
+#include "be_visitor_valuetype/valuetype_init.cpp"
+#include "be_visitor_valuetype/valuetype_init_ch.cpp"
+#include "be_visitor_valuetype/valuetype_init_ci.cpp"
+#include "be_visitor_valuetype/valuetype_init_cs.cpp"
+#include "be_visitor_valuetype/valuetype_init_arglist_ch.cpp"
 
 
-#endif /* IDL_HAS_VALUETYPE */

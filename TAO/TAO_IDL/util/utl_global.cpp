@@ -69,7 +69,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "idl.h"
 #include        "idl_extern.h"
-#include        "ace/OS.h"
 
 ACE_RCSID(util, utl_global, "$Id$")
 
@@ -97,7 +96,6 @@ IDL_GlobalData::IDL_GlobalData (void)
       pd_be (0),
       pd_local_escapes (0),
       pd_indent (0),
-      pd_pragmas (0),
       pd_read_from_stdin (I_FALSE),
       pd_include_file_names (0),
       pd_n_include_file_names (0),
@@ -112,7 +110,8 @@ IDL_GlobalData::IDL_GlobalData (void)
       ident_string_ (0),
       obv_support_ (I_FALSE),
       case_diff_error_ (I_TRUE),
-      idl_flags_ ("")
+      idl_flags_ (""),
+      last_seen_index_ (1)
  {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
@@ -431,22 +430,6 @@ IDL_GlobalData::set_indent (UTL_Indenter *i)
   this->pd_indent = i;
 }
 
-// Get or set list of pragmas being parsed
-UTL_StrList *
-IDL_GlobalData::pragmas (void)
-{
-  UTL_StrList *p = this->pd_pragmas;
-
-  this->pd_pragmas = 0;
-  return p;
-}
-
-void
-IDL_GlobalData::set_pragmas (UTL_StrList *p)
-{
-  this->pd_pragmas = p;
-}
-
 // Get or set indicator whether we're reading from stdin.
 idl_bool
 IDL_GlobalData::read_from_stdin (void)
@@ -460,37 +443,58 @@ IDL_GlobalData::set_read_from_stdin (idl_bool r)
   this->pd_read_from_stdin = r;
 }
 
-// Have we seen this include file name before?
+// Have we seen this #include file name before?
 long
 IDL_GlobalData::seen_include_file_before (UTL_String *n)
 {
   unsigned long i;
 
-  for (i = 0; i < this->pd_n_include_file_names; i++)
-    if (n->compare (this->pd_include_file_names[i]))
-      return I_TRUE;
+  for (i = 0; i < this->pd_n_include_file_names; ++i)
+    {
+      if (n->compare (this->pd_include_file_names[i]))
+        {
+          // We use the index value in the function below. We
+          // add 1 so a match on the first try will not return 0.
+          return (long) i + 1;
+        }
+    }
+
   return I_FALSE;
 }
 
-// Store a name of an #include file
+// Store the name of an #include file.
 void
 IDL_GlobalData::store_include_file_name (UTL_String *n)
 {
-  UTL_String        **o_include_file_names;
-  unsigned long o_n_alloced_file_names, i;
+  UTL_String **o_include_file_names;
+  unsigned long o_n_alloced_file_names;
+  unsigned long i;
+  long seen = this->seen_include_file_before (n);
 
-  /*
-   * Check if we need to store it at all or whether we've seen it already
-   */
-  if (seen_include_file_before (n))
-    return;
-  /*
-   * OK, need to store. Make sure there's space for one more string
-   */
+  // Check if we need to store it at all or whether we've seen it already
+  if (seen)
+    {
+      if (seen != this->last_seen_index_)
+        {
+          // If it's not the same as the current filename, then we have
+          // just finished with some other included file, and its
+          // (possible empty) prefix must be popped.
+          char *trash = 0;
+          idl_global->pragma_prefixes ().pop (trash);
+          delete [] trash;
+        }
+
+      this->last_seen_index_ = seen;
+      return;
+    }
+
+  // If it's a new filename, we need to push an empty prefix.
+  idl_global->pragma_prefixes ().push (ACE::strnew (""));
+
+  // OK, need to store. Make sure there's space for one more string
   if (this->pd_n_include_file_names == this->pd_n_alloced_file_names)
     {
       // Allocating more space.
-
       if (this->pd_n_alloced_file_names == 0)
         {
           this->pd_n_alloced_file_names = INCREMENT;
@@ -510,6 +514,7 @@ IDL_GlobalData::store_include_file_name (UTL_String *n)
 
   // Store it.
   this->pd_include_file_names[this->pd_n_include_file_names++] = n;
+  this->last_seen_index_ = this->pd_n_include_file_names;
 }
 
 void
@@ -848,7 +853,15 @@ IDL_GlobalData::destroy (void)
   delete [] this->ident_string_;
   this->ident_string_ = 0;
 
-  // Should do pragmas here.
+  size_t size = this->pragma_prefixes ().size  ();
+  char *trash = 0;
+
+  for (size_t i = 0; i < size; ++i)
+    {
+      this->pragma_prefixes ().pop (trash);
+      delete [] trash;
+      trash = 0;
+    }
 }
 
 void
@@ -869,26 +882,98 @@ IDL_GlobalData::idl_keywords (void)
   return this->idl_keywords_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+ACE_Unbounded_Stack<char *> &
+IDL_GlobalData::pragma_prefixes (void)
+{
+  return this->pragma_prefixes_;
+}
 
-template class ACE_Hash_Map_Entry<ACE_CString, int>;
-template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Equal_To<ACE_CString>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash<ACE_CString>;
-template class ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>;
+UTL_ScopedName *
+IDL_GlobalData::string_to_scoped_name (char *s)
+{
+  char *start = s;
+  int len = 0;
+  UTL_ScopedName *retval = 0;
 
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+  char *end = ACE_OS::strstr (start, "::");
 
-#pragma instantiate ACE_Hash_Map_Entry<ACE_CString, int>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Equal_To<ACE_CString>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash<ACE_CString>
-#pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_CString, int, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex>
+  while (end != 0)
+    {
+      len = end - start;
 
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+      if (len != 0)
+        {
+          char tmp[256];
+
+          ACE_OS::strncpy (tmp,
+                           start,
+                           len);
+
+          tmp[len] = '\0';
+
+          Identifier *id = 0;
+          ACE_NEW_RETURN (id,
+                          Identifier (tmp),
+                          0);
+
+          if (retval == 0)
+            {
+              ACE_NEW_RETURN (retval,
+                              UTL_ScopedName (id,
+                                              0),
+                              0);
+            }
+          else
+            {
+              UTL_ScopedName *conc_name = 0;
+              ACE_NEW_RETURN (conc_name,
+                              UTL_ScopedName (id,
+                                              0),
+                              0);
+
+              retval->nconc (conc_name);
+            }
+        }
+
+      start = end + 2;
+
+      end = ACE_OS::strstr (start, "::");
+    }
+
+  end = ACE_OS::strchr (start, ' ');
+
+  len = end - start;
+
+  char tmp[256];
+
+  ACE_OS::strncpy (tmp,
+                   start,
+                   len);
+
+  tmp[len] = '\0';
+
+  Identifier *id = 0;
+  ACE_NEW_RETURN (id,
+                  Identifier (tmp),
+                  0);
+
+  if (retval == 0)
+    {
+      ACE_NEW_RETURN (retval,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+    }
+  else
+    {
+      UTL_ScopedName *conc_name = 0;
+      ACE_NEW_RETURN (conc_name,
+                      UTL_ScopedName (id,
+                                      0),
+                      0);
+
+      retval->nconc (conc_name);
+    }
+
+  return retval;
+}

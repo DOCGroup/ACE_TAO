@@ -86,8 +86,7 @@ public:
   AST_Type (void);
 
   AST_Type (AST_Decl::NodeType nt,
-            UTL_ScopedName *n,
-            UTL_StrList *p);
+            UTL_ScopedName *n);
 
   // Destructor.
   virtual ~AST_Type (void);
@@ -96,6 +95,10 @@ public:
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
   // If the parameter is 0, we are trying to determine this for ourselves.
+
+  // To be overridden by the subclasses interface, struct, union, and
+  // the corresponding forward declaration classes.
+  virtual idl_bool is_defined (void);
 
   // Accessors/mutators for the private members.
 

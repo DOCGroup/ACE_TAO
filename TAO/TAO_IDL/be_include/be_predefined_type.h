@@ -26,7 +26,6 @@
 #include "be_type.h"
 #include "ast_predefined_type.h"
 
-class UTL_StrList;
 class be_visitor;
 
 class be_predefined_type : public virtual AST_PredefinedType,
@@ -37,8 +36,7 @@ public:
   // Default constructor.
 
   be_predefined_type (AST_PredefinedType::PredefinedType t,
-                      UTL_ScopedName *n,
-                      UTL_StrList *p);
+                      UTL_ScopedName *n);
   // Constructor.
 
   // Visiting.

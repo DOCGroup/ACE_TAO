@@ -79,98 +79,81 @@ class TAO_IDL_BE_Export be_generator : public AST_Generator
 public:
   // Create a node representing a module which is the root of an AST made
   // up of BE nodes.
-  virtual AST_Root *create_root (UTL_ScopedName *n,
-                                 UTL_StrList *p);
+  virtual AST_Root *create_root (UTL_ScopedName *n);
 
   virtual AST_PredefinedType *create_predefined_type (
       AST_PredefinedType::PredefinedType t,
-      UTL_ScopedName *n,
-      UTL_StrList *p
+      UTL_ScopedName *n
     );
 
   virtual AST_Module *create_module (UTL_Scope *s,
-                                     UTL_ScopedName *n,
-                                     UTL_StrList *p);
+                                     UTL_ScopedName *n);
 
   virtual AST_Interface *create_interface (UTL_ScopedName *n,
                                            AST_Interface **ih,
                                            long nih,
                                            AST_Interface **ih_flat,
                                            long nih_flat,
-                                           UTL_StrList *p,
                                            idl_bool local,
                                            idl_bool abstract);
 
   virtual AST_InterfaceFwd *create_interface_fwd (UTL_ScopedName *n,
-                                                  UTL_StrList *p,
                                                   idl_bool local,
                                                   idl_bool abstract);
 
   virtual AST_Interface *create_valuetype (UTL_ScopedName *n,
                                            AST_Interface **ih,
-                                           long nih,
-                                           UTL_StrList *p);
+                                           long nih);
 
-  virtual AST_InterfaceFwd *create_valuetype_fwd (UTL_ScopedName *n,
-                                                  UTL_StrList *p);
+  virtual AST_InterfaceFwd *create_valuetype_fwd (UTL_ScopedName *n);
 
   virtual AST_Exception *create_exception (UTL_ScopedName *n,
-                                           UTL_StrList *p,
                                            idl_bool local,
                                            idl_bool abstract);
 
   virtual AST_Structure *create_structure (UTL_ScopedName *n,
-                                           UTL_StrList *p,
                                            idl_bool local,
                                            idl_bool abstract);
 
   virtual AST_Enum *create_enum (UTL_ScopedName *n,
-                                 UTL_StrList *p,
                                  idl_bool local,
                                  idl_bool abstract);
 
   virtual AST_Operation *create_operation (AST_Type *rt,
                                            AST_Operation::Flags fl,
                                            UTL_ScopedName *n,
-                                           UTL_StrList *p,
                                            idl_bool local,
                                            idl_bool abstract);
 
   virtual AST_Field *create_field (AST_Type *ft, UTL_ScopedName *n,
-                                   UTL_StrList *p,
                                    AST_Field::Visibility vis = 
                                      AST_Field::vis_NA);
 
   virtual AST_Argument *create_argument (AST_Argument::Direction d,
                                          AST_Type *ft,
-                                         UTL_ScopedName *n,
-                                         UTL_StrList *p);
+                                         UTL_ScopedName *n);
 
   virtual AST_Attribute *create_attribute (idl_bool ro,
                                            AST_Type *ft,
                                            UTL_ScopedName *n,
-                                           UTL_StrList *p,
                                            idl_bool local,
                                            idl_bool abstract);
 
   virtual AST_Union *create_union(AST_ConcreteType *dt,
                                   UTL_ScopedName *n,
-                                  UTL_StrList *p,
                                   idl_bool local,
                                   idl_bool abstract);
 
   virtual AST_UnionBranch *create_union_branch (UTL_LabelList *ll,
                                                 AST_Type *ft,
-                                                UTL_ScopedName *n,
-                                                UTL_StrList *p);
+                                                UTL_ScopedName *n);
 
   virtual AST_UnionLabel *create_union_label (AST_UnionLabel::UnionLabel ul,
                                               AST_Expression *lv);
 
   virtual AST_Constant *create_constant (AST_Expression::ExprType et,
                                          AST_Expression *ev,
-                                         UTL_ScopedName *n,
-                                         UTL_StrList *p);
+                                         UTL_ScopedName *n);
 
   virtual AST_Expression *create_expr(UTL_ScopedName *n);
 
@@ -199,8 +182,7 @@ public:
   virtual AST_Expression *create_expr(double d);
 
   virtual AST_EnumVal *create_enum_val (unsigned long v,
-                                        UTL_ScopedName *n,
-                                        UTL_StrList *p);
+                                        UTL_ScopedName *n);
 
   virtual AST_Array *create_array (UTL_ScopedName *n,
                                    unsigned long ndims,
@@ -219,14 +201,14 @@ public:
 
   virtual AST_Typedef *create_typedef (AST_Type *bt,
                                        UTL_ScopedName *n,
-                                       UTL_StrList *p,
                                        idl_bool local,
                                        idl_bool abstract);
 
   // Create a node representing a native
-  virtual AST_Native *create_native (UTL_ScopedName *n,
-                                     UTL_StrList *p);
+  virtual AST_Native *create_native (UTL_ScopedName *n);
 
+  // Create a node representing a OBV factory construct
+  virtual AST_Factory *create_factory (UTL_ScopedName *n);
 };
 
 #endif           // _BE_GENERATOR_BE_GENERATOR_HH

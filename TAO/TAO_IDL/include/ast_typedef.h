@@ -80,7 +80,6 @@ public:
 
   AST_Typedef (AST_Type *base_type,
                UTL_ScopedName *n,
-               UTL_StrList *p,
                idl_bool local,
                idl_bool abstract);
 

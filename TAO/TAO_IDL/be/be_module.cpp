@@ -29,13 +29,10 @@ be_module::be_module (void)
 {
 }
 
-be_module::be_module (UTL_ScopedName *n, 
-                      UTL_StrList *p)
-  : AST_Module (n, 
-                p),
+be_module::be_module (UTL_ScopedName *n)
+  : AST_Module (n),
     AST_Decl (AST_Decl::NT_module, 
-              n, 
-              p),
+              n),
     UTL_Scope (AST_Decl::NT_module)
 {
 }

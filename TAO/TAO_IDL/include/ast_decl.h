@@ -145,6 +145,7 @@ public:
       , NT_native                   // Denotes a native type
                                     // dependent on the programming
                                     // language
+      , NT_factory                  // Denotes a OBV factory construct
   };
 
   // Operations.
@@ -152,9 +153,8 @@ public:
   // Constructor(s).
   AST_Decl (void);
 
-  AST_Decl (NodeType type,
+  AST_Decl (NodeType type, 
             UTL_ScopedName *n,
-            UTL_StrList *pragmas,
             idl_bool anonymous = I_FALSE);
 
   virtual ~AST_Decl (void);
@@ -202,10 +202,16 @@ public:
   // Return the stringified full name.
 
   const char *repoID (void);
-  // Retrieve the repository ID.
+  void repoID (char *value);
+  // Accessors for the repository ID.
 
   const char *prefix (void);
-  // Retrieve the repository ID prefix.
+  void prefix (char *value);
+  // Accessors for the repository ID prefix.
+
+  const char *version (void);
+  void version (char *value);
+  // Accessors for the version member.
 
   idl_bool anonymous (void) const;
   // Are we an anonymous (no repo ID) type?
@@ -222,12 +228,6 @@ public:
 
   void original_local_name (Identifier *);
   // Set.
-
-  void add_pragmas (UTL_StrList *p);
-
-  UTL_StrList *pragmas (void);
-
-  void pragmas (UTL_StrList *p);
 
   idl_bool added (void);
 
@@ -297,9 +297,6 @@ private:
   Identifier *pd_original_local_name;
   // _cxx_ removed if any.
 
-  UTL_StrList *pd_pragmas;
-  // Pragmas.
-
   idl_bool pd_added;
   // Already added.
 
@@ -309,13 +306,13 @@ private:
   char *prefix_;
   // The repository ID prefix.
 
+  char *version_;
+  // Set by #pragma version.
+
   idl_bool anonymous_;
   // Are we an anonymous (no repo ID) type?
 
   // Operations
-
-  void compute_prefix (void);
-  // Computes the prefix for the repoID.
 
   // Compute the full name of an AST node.
   void compute_full_name (UTL_ScopedName *n);
