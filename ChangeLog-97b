@@ -1,5 +1,9 @@
 Fri Sep 19 14:52:53 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
+	* netsvcs/lib/Client_Logging_Handler.cpp (get_handle): Can't use
+	  ACE_ERROR_RETURN here because ACE_HANDLE is a void* on NT, not
+	  int. 
+
 	* examples/Reactor/Misc: Added reactors.dsp signals_1.dsp
 	  signals_2.dsp. 
 	
