@@ -21,7 +21,7 @@
 // ============================================================================
 
 #if !defined (TAO_ORB_CONFIG_H)
-#define	TAO_ORB_CONFIG_H
+#define TAO_ORB_CONFIG_H
 
 #include "ace/OS.h"
 
@@ -59,14 +59,18 @@
 #endif /* TAO_MAXBUFSIZE */
 
 // This controls the alignment for TAO structs.
-#define TAO_ALIGNMENT_MAGIC_NUMBER 64
+#if ACE_SIZEOF_LONG > 4
+# define TAO_ALIGNMENT_MAGIC_NUMBER 128
+#else  /* ACE_SIZEOF_LONG <= 4 */
+# define TAO_ALIGNMENT_MAGIC_NUMBER 64
+#endif /* ACE_SIZEOF_LONG <= 4 */
 
 // BC++ seems to have a different convention for detecting Win32 than
 // VC++.
 
 #if defined (__WIN32__)
-#	define _WIN32
-#endif	/* BC++ convention */
+# define _WIN32
+#endif /* BC++ convention */
 
 // Define to `int' if <sys/types.h> doesn't define.
 /* #undef pid_t */
@@ -150,14 +154,14 @@
 // Assume DOS/Windows if "configure" didn't get run.
 
 #if !defined (SIZEOF_LONG) || defined (_WIN32)
-//#	if defined (_WIN32) || defined (linux)
-//#		define	SIZEOF_INT	4
-//#	else	// Win16
-//#		define	SIZEOF_INT	2
-//#	endif	// Win32/Win16
+//#     if defined (_WIN32) || defined (linux)
+//#             define  SIZEOF_INT      4
+//#     else    // Win16
+//#             define  SIZEOF_INT      2
+//#     endif   // Win32/Win16
 
 #  if !defined (linux) && !defined (_WIN32)
-typedef	unsigned long pid_t;
+typedef unsigned long pid_t;
 #  endif /* !defined (linux) && !defined (_WIN32) */
 
 // "C4355: 'this' : used in base member initializer list"
@@ -165,4 +169,4 @@ typedef	unsigned long pid_t;
 
 #endif /* !defined (SIZEOF_LONG) || defined (_WIN32) */
 
-#endif	/* TAO_ORB_CONFIG_H */
+#endif  /* TAO_ORB_CONFIG_H */
