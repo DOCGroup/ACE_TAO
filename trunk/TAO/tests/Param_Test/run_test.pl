@@ -37,6 +37,7 @@ $port = 30001 + $uid;
 $iorfile = "theior";
 $invocation = "sii";
 $num = 1;
+$other = "";
 
 sub run_test
 {
@@ -69,13 +70,15 @@ for ($i = 0; $i <= $#ARGV; $i++)
   {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
     {
-      print "run_test [-n num] [-d] [-onewin] [-h] [-t type]\n";
+      print "Run_Test Perl script for TAO Param Test\n\n";
+      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
       print "-onewin             -- keeps all tests in one window on NT\n";
       print "-h                  -- prints this information\n";
-      print "-t                  -- runs only one type of param test\n";
+      print "-t type             -- runs only one type of param test\n";
+      print "-i (dii|sii)        -- Changes the type of invocation\n";
       exit;
     }
     if ($ARGV[$i] eq "-n")
@@ -103,6 +106,13 @@ for ($i = 0; $i <= $#ARGV; $i++)
       $i++;
       last SWITCH;
     }
+    if ($ARGV[$i] eq "-i")
+    {
+      $invocation = $ARGV[$i + 1];
+      $i++;
+      last SWITCH;
+    }
+    $other .= $ARGV[$i];
   }
 }
 
