@@ -151,7 +151,12 @@ be_visitor_sequence_ci::gen_bounded_obj_sequence (be_sequence *node)
       << "{" << be_idt_nl
       << "buf[i] = ";
 
-  int is_valuetype = be_interface::narrow_from_decl (pt)->is_valuetype ();
+  int is_valuetype = 0;
+  {
+    be_interface *bf = be_interface::narrow_from_decl (pt);
+    if (bf != 0)
+      is_valuetype = bf->is_valuetype ();
+  }
 
   if (is_valuetype)
     {

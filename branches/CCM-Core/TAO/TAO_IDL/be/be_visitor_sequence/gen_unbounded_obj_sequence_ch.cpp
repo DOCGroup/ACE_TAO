@@ -127,7 +127,9 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
   else
     {
       be_interface *bf = be_interface::narrow_from_decl (pt);
-      is_valuetype = bf->is_valuetype ();
+      if (bf != 0)
+        is_valuetype = bf->is_valuetype ();
+
       if (is_valuetype)
         *os << "TAO_Valuetype_Manager<";
       else
