@@ -44,5 +44,36 @@ Notes:
    UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf 
    and Win32clerk.conf). 
 
+
+On VxWorks, there currently is no batch file for running all of the
+tests.  If you would like to contribute one, that would be great.
+The straightforward approach of loading a test program, running it
+by calling ace_main, and then unloading it doesn't work, because
+the unload often fails.  If the program is run by spawning a new
+task (-> sp ace_main), then the unload will succeed.  However, then
+we need a way to tell when the test is done.  OS::thr_join () could
+probably be used, but it first has to be implemented for VxWorks.
+
+All of the tests on VxWorks (g++ 2.7.2/VxWorks 5.3.1) pass, with
+these exceptions:
+
+    Buffer_Stream_Test                      ENOTSUP: unknown
+    Conn_Test                               unknown
+    MM_Shared_Memory_Test                   ENOTSUP: unknown
+    Mem_Map_Test                            ENOTSUP: unknown (mmap)
+    Naming_Test                             failed: (uses mmap?)
+    Pipe_Test                               failed: fork
+    Process_Mutex_Test                      (not run: requires processes)
+    Process_Strategy_Test                   (not run: requires processes)
+    Reactor_Notify_Test                     unknown
+    Service_Config_Test                     failed: page fault
+    Sigset_Ops_Test                         failed: line 109 assertion
+    Time_Service_Test                       failed: uses spawn (fork)
+    Tokens_Test                             (not run: uses fork)
+
+If you are able to determine the cause of failure of any of these
+tests, please let us know!
+
+
 If you have any questions/suggestions, please send email to
 ace-users@cs.wustl.edu.
