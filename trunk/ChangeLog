@@ -1,3 +1,46 @@
+Mon Jul  1 21:59:44 2002  Krishnakumar B  <kitty@cs.wustl.edu>
+
+        * ACEXML/common/Attributes.h:
+        * ACEXML/common/AttributesImpl.h:
+        * ACEXML/common/Attributes_Def_Builder.h:
+        * ACEXML/common/CharStream.h:
+        * ACEXML/common/ContentHandler.h:
+        * ACEXML/common/DTDHandler.h:
+        * ACEXML/common/DTD_Manager.h:
+        * ACEXML/common/DefaultHandler.h:
+        * ACEXML/common/Element_Def_Builder.h:
+        * ACEXML/common/EntityResolver.h:
+        * ACEXML/common/Env.h:
+        * ACEXML/common/ErrorHandler.h:
+        * ACEXML/common/Exception.h:
+        * ACEXML/common/FileCharStream.h:
+        * ACEXML/common/HttpCharStream.h:
+        * ACEXML/common/InputSource.h:
+        * ACEXML/common/Locator.h:
+        * ACEXML/common/LocatorImpl.h:
+        * ACEXML/common/Mem_Map_Stream.h:
+        * ACEXML/common/NamespaceSupport.h:
+        * ACEXML/common/SAXExceptions.h:
+        * ACEXML/common/StrCharStream.h:
+        * ACEXML/common/Transcode.h:
+        * ACEXML/common/URL_Addr.h:
+        * ACEXML/common/Validator.h:
+        * ACEXML/common/XMLFilter.h:
+        * ACEXML/common/XMLFilterImpl.h:
+        * ACEXML/common/XMLReader.h:
+        * ACEXML/common/XML_Codecs.h:
+        * ACEXML/common/XML_Types.h:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.cpp:
+        * ACEXML/parser/debug_validator/Debug_Attributes_Builder.h:
+        * ACEXML/parser/debug_validator/Debug_DTD_Manager.h:
+        * ACEXML/parser/debug_validator/Debug_Element_Builder.h:
+        * ACEXML/parser/debug_validator/Element_Tree.h:
+        * ACEXML/parser/parser/Entity_Manager.h:
+        * ACEXML/parser/parser/Parser.cpp:
+        * ACEXML/parser/parser/Parser.h:
+
+        ACE_LACKS_PRAGMA_ONCE fixes.
+
 Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/Sock_Connect.cpp (count_interfaces): Added a MacOSX-specific
@@ -6,15 +49,15 @@ Mon Jul  1 06:21:00 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Based_Pointer_Repository.h: 
-	* ace/Array_Base.h: Added #include "ace/OS.h" to get the 
+	* ace/Based_Pointer_Repository.h:
+	* ace/Array_Base.h: Added #include "ace/OS.h" to get the
 	  definition of size_t on MacOS.  Thanks to John Zorko
  	  <j.zorko@att.net> for this fix.
 
 	* ace/Synch.cpp: Fixed the ACE_recursive_mutex_state::reset() method
 	  so that it sets m.LockCount to 0.  Thanks to Davide Pasetto
  	  <dipo@sis.it> for reporting this.
-	
+
 	* ace/Synch.cpp: Fixed the implementation of
 	  ACE_Condition<ACE_Recursive_Thread_Mutex> so that it works
  	  properly on Windows, where the recursive mutex count is
@@ -26,7 +69,7 @@ Sun Jun 30 15:32:47 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 	  parameter to "chunk" to be consistent with the terminology in
  	  the book.
 
-	* examples/C++NPv2/TP_Logging_Server.h: 
+	* examples/C++NPv2/TP_Logging_Server.h:
 	* examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp: Added some
 	  new code to safely allocate an array.
 

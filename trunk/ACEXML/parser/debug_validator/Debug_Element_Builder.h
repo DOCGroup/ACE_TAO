@@ -12,8 +12,14 @@
 #ifndef _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 #define _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 
-#include "ACEXML/common/Element_Def_Builder.h"
+#include "ace/pre.h"
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ACEXML/common/Element_Def_Builder.h"
 #include "ACEXML/parser/debug_validator/Element_Tree.h"
 
 /**
@@ -119,5 +125,8 @@ private:
 
   ACEXML_Element_Tree_List_Stack active_list_;
 };
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_DEBUG_ELEMENT_BUILDER_H_ */

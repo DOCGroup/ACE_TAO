@@ -27,9 +27,9 @@
  *
  * This class is designed to sit between an XMLReader and the client
  * application's event handlers. By default, it does nothing but pass
- * requests up to the reader and events on to the handlers unmodified,
- * but subclasses can override specific methods to modify the event
- * stream or the configuration requests as they pass through.
+ * requests up to the reader and events on to the handlers unmodified, but
+ * subclasses can override specific methods to modify the event stream or
+ * the configuration requests as they pass through.
  */
 class ACEXML_Export ACEXML_XMLFilterImpl
   : public ACEXML_XMLFilter,
@@ -330,4 +330,7 @@ private:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/XMLFilterImpl.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* ACEXML_XMLFILTERIMPL_H */

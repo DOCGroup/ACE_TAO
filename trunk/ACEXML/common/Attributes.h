@@ -113,4 +113,7 @@ public:
   virtual const ACEXML_Char *getValue (const ACEXML_Char *uri,
                                        const ACEXML_Char *localPart) = 0;
 };
+
+#include "ace/post.h"
+
 #endif /* _ACEXML_ ATTRIBUTES_H_ */

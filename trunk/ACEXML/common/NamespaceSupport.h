@@ -13,6 +13,13 @@
 #ifndef ACEXML_NAMESPACESUPPORT_H
 #define ACEXML_NAMESPACESUPPORT_H
 
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ACEXML/common/XML_Types.h"
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
@@ -225,4 +232,7 @@ private:
 #if defined (__ACEXML_INLINE__)
 # include "ACEXML/common/NamespaceSupport.i"
 #endif /* __ACEXML_INLINE__ */
+
+#include "ace/post.h"
+
 #endif /* ACEXML_NAMESPACESUPPORT_H */

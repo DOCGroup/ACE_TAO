@@ -16,12 +16,15 @@
 #ifndef _ACEXML_XML_CODECS_H
 #define _ACEXML_XML_CODECS_H
 
-#include "ACEXML/common/XML_Types.h"
-#include "ace/Codecs.h"
+#include "ace/pre.h"
+#include "ACEXML/common/ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ACEXML/common/XML_Types.h"
+#include "ace/Codecs.h"
 
 /**
  * @class ACEXML_Base64
@@ -65,5 +68,8 @@ public:
 
   //@}
 };
+
+
+#include "ace/post.h"
 
 #endif /* _ACEXML_XML_CODECS_H */

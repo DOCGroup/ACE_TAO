@@ -12,8 +12,14 @@
 #ifndef _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 #define _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_
 
-#include "ACEXML/common/Attributes_Def_Builder.h"
+#include "ace/pre.h"
 #include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ACEXML/common/Attributes_Def_Builder.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Queue.h"
 
@@ -166,5 +172,6 @@ protected:
 };
 
 
+#include "ace/post.h"
 
 #endif /* _ACEXML_DEBUG_ATTRIBUTES_BUILDER_H_ */
