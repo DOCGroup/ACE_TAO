@@ -8,7 +8,7 @@ Thu Jan 17 23:31:13 2002  Ossama Othman  <ossama@uci.edu>
 Fri Jan 18 07:55:12 2002  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/Makefile.bor:
-          Added Policy_Validator
+          Added Policy_Validator, ObjectReferenceTemplateC
 
         * tao/PortableServer/Makefile.bor:
           Removed Policy_Validator
