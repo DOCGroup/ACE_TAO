@@ -785,3 +785,21 @@ ACE_WString::strstr (const ACE_WString &s) const
       return -1;
     }
 }
+
+u_long
+ACE_CString::hash (void) const
+{
+  return ACE::hash_pjw (this->rep_);
+}
+
+u_long
+ACE_SString::hash (void) const
+{
+  return ACE::hash_pjw (this->rep_);
+}
+
+u_long
+ACE_WString::hash (void) const
+{
+  return ACE::hash_pjw (this->rep_);
+}
