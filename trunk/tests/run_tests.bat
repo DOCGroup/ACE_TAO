@@ -147,6 +147,7 @@ call %run_cmd% %dopure% %platform% RB_Tree_Test
 call %run_cmd% %dopure% %platform% Reactors_Test
 call %run_cmd% %dopure% %platform% Reactor_Exceptions_Test
 call %run_cmd% %dopure% %platform% Reactor_Notify_Test
+call %run_cmd% %dopure% %platform% Reactor_Dispatch_Order_Test
 call %run_cmd% %dopure% %platform% Reactor_Performance_Test
 call %run_cmd% %dopure% %platform% Reactor_Timer_Test
 call %run_cmd% %dopure% %platform% Reader_Writer_Test

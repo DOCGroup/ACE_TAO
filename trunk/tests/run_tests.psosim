@@ -99,6 +99,8 @@ run SOCK_Connector_Test                 # uses SOCK_Connector
 
 run Reactor_Timer_Test                  # uses Event_Handler, Reactor
 
+run Reactor_Dispatch_Order_Test         # uses Event_Handler, Reactor
+
 #Reactor_Performance_Test: threads not supported on this platform
 #run Reactor_Performance_Test            # uses Event_Handler, Reactor
 

@@ -282,6 +282,10 @@ subproject Reactor_Notify_Test icc "Reactor_Notify_Test.icc", ics "Reactor_Notif
 {
 }
 
+subproject Reactor_Dispatch_Order_Test icc "Reactor_Dispatch_Order_Test.icc", ics "Reactor_Dispatch_Order_Test.ics"
+{
+}
+
 subproject Reactor_Performance_Test icc "Reactor_Performance_Test.icc", ics "Reactor_Performance_Test.ics"
 {
 }
@@ -501,6 +505,7 @@ use Process_Strategy_Test
 use RB_Tree_Test
 use Reactor_Exceptions_Test
 use Reactor_Notify_Test
+use Reactor_Dispatch_Order_Test
 use Reactor_Performance_Test
 use Reactor_Timer_Test
 use Reactors_Test
