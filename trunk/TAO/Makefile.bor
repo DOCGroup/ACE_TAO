@@ -2,20 +2,31 @@
 # Makefile for building ACE and TAO 
 #
 
-!ifndef BUILDALL
+!ifndef BUILD
+BUILD = typical
+!endif
 
-# By default we build a smaller set of libraries and executables.
+!if $(BUILD) == minimal
+
 DIRS = \
 	..\ace \
 	..\apps\gperf\src \
 	tao \
-	tao_idl \
+	TAO_IDL \
+	orbsvcs
+
+!elif $(BUILD) == typical
+
+DIRS = \
+	..\ace \
+	..\apps\gperf\src \
+	tao \
+	TAO_IDL \
 	orbsvcs \
 	utils
 
-!else
+!elif $(BUILD) == all
 
-# When BUILDALL is defined we will make everything that can be built.
 DIRS = \
 	..\ace \
 	..\apps \
@@ -28,6 +39,8 @@ DIRS = \
 	tests \
 	utils
 
+!else
+!error Please set your BUILD variable to one of "minimal", "typical" or "all".
 !endif
 	
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
