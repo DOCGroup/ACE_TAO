@@ -1,3 +1,12 @@
+Wed Aug 13 09:44:51 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/Event_Service/Event_Service.{h,cpp}:
+          Added a commandline option q to specify that a persistent POA
+          must be used for the EC and as argument specify the servant
+          name. The option p was already taken, so then the next one.
+          This makes it easy to use the Event Service in applications
+          where just the exe is used but also persistent IORs are needed.
+
 Wed Aug 13 09:05:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
