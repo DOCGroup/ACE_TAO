@@ -256,7 +256,7 @@ ACE_Object_Manager::init (void)
 int
 ACE_Object_Manager::fini (void)
 {
-  if (instance_ == 0)
+  if (instance_ == 0  ||  instance_->shutting_down_ == 1)
     // Too late.  Or, maybe too early.  Either fini () has already
     // been called, or init () was never called.
     return -1;
