@@ -1,3 +1,9 @@
+Mon Sep 27 06:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+          Base ImR_Activator_Service on messaging instead of valuetype,
+          messaging seems to be needed an has valuetype as its base
+
 Mon Sep 27 06:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
