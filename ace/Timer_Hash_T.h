@@ -78,7 +78,7 @@ private:
 /**
  * @class ACE_Timer_Hash_Iterator_T
  *
- * @brief Iterates over an <ACE_Timer_Hash>.
+ * @brief Iterates over an <ACE_Timer_Hash_T>.
  *
  * This is a generic iterator that can be used to visit every
  * node of a timer queue.  Be aware that it doesn't transverse

@@ -342,16 +342,22 @@ public:
   static ACE_Log_Msg_Backend *msg_backend (ACE_Log_Msg_Backend *b);
   static ACE_Log_Msg_Backend *msg_backend (void);
 
-  // = Nesting depth increment and decrement.
+  /// Nesting depth increment.
   int inc (void);
+
+  /// Nesting depth decrement.
   int dec (void);
 
-  // = Get/set trace depth.
+  /// Get trace depth.
   int trace_depth (void);
+
+  /// Set trace depth.
   void trace_depth (int);
 
-  // = Get/set trace active status.
+  /// Set trace active status.
   int trace_active (void);
+
+  /// Get trace active status.
   void trace_active (int value);
 
   /// Get the TSS thread descriptor.
@@ -392,8 +398,9 @@ public:
 
   // = Get/set the priority mask.
   /// Get the current <ACE_Log_Priority> mask.
-  /// Set the <ACE_Log_Priority> mask, returns original mask.
   u_long priority_mask (MASK_TYPE = THREAD);
+
+  /// Set the <ACE_Log_Priority> mask, returns original mask.
   u_long priority_mask (u_long, MASK_TYPE = THREAD);
 
   /// Return true if the requested priority is enabled.
@@ -419,8 +426,10 @@ public:
   /// cached...).
   pid_t getpid (void) const;
 
-  // = Set/get the name of the local host.
+  /// Get the name of the local host.
   const ACE_TCHAR *local_host (void) const;
+
+  /// Set the name of the local host.
   void local_host (const ACE_TCHAR *);
 
   /**
