@@ -7850,10 +7850,7 @@ ACE_OS::open (const char *filename,
     ACE_FAIL_RETURN (h);
 
   if (ACE_BIT_ENABLED (mode, _O_APPEND))
-    {
-      long fsize = ACE_OS::filesize (h);
-      ::SetFilePointer (h, 0, 0, FILE_END);
-    }
+    ::SetFilePointer (h, 0, 0, FILE_END);
 
   return h;
 #else
@@ -9664,8 +9661,11 @@ ACE_OS::open (const wchar_t *filename,
 
   if (h == ACE_INVALID_HANDLE)
     ACE_FAIL_RETURN (h);
-  else
-    return h;
+
+  if (ACE_BIT_ENABLED (mode, _O_APPEND))
+    ::SetFilePointer (h, 0, 0, FILE_END);
+
+  return h;
 }
 
 ACE_INLINE int
