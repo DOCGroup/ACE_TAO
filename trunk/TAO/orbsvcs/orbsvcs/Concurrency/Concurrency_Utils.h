@@ -10,10 +10,10 @@
 //    Concurrency_Utils.h
 //
 // = DESCRIPTION
-//      This class implements a Concurrency Server wrapper class which holds
-//      a number of lock sets
-//      The server must run in the thread per request concurrency model in
-//      order to let the clients block on the semaphores.
+//      This class implements a Concurrency Server wrapper class which
+//      holds a number of lock sets.  The server must run in the
+//      thread per request concurrency model in order to let the
+//      clients block on the semaphores.
 //
 // = AUTHORS
 //    Torben Worm <tworm@cs.wustl.edu>
@@ -34,11 +34,9 @@ class TAO_ORBSVCS_Export TAO_Concurrency_Server
   //    concurrency server.
   //
   // = DESCRIPTION
-  //    
-  //    
-  //    
-  //    
+  //   @@ Torben, please fill in here...
 public:
+  // = Initialization and termination methods.
   TAO_Concurrency_Server (void);
   //Default constructor.
 
@@ -47,18 +45,19 @@ public:
   // Takes the POA under which to register the Concurrency Service
   // implementation object.
 
+  ~TAO_Concurrency_Server (void);
+  // Destructor.
+
   int init (CORBA::ORB_var &orb,
             PortableServer::POA_var &poa);
   // Initialize the concurrency server under the given ORB and POA.
 
   CC_LockSetFactory *GetLockSetFactory(void);
-  // Get the lock set factory 
-
-  ~TAO_Concurrency_Server (void);
-  // Destructor.
+  // Get the lock set factory.
 
 private:
   CC_LockSetFactory lock_set_factory_;
+  // @@ Torben, please comment this.
 };
 
 #endif /* _CONCURRENCY_SERVER_H */

@@ -1,5 +1,6 @@
 // -*- c++ -*-
 // $Id$
+
 // ============================================================================
 //
 // = LIBRARY
@@ -22,11 +23,15 @@
 #include "orbsvcs/CosNamingC.h"
 #include "CC_naming_service.h"
 
-#if !defined(_CC_TESTS_H_)
+#if !defined (_CC_TESTS_H_)
 #define _CC_TESTS_H_
 
-enum {CC_FAIL, CC_SUCCESS = 1};
 // Return codes for the tests
+enum 
+{
+  CC_FAIL,
+  CC_SUCCESS = 1
+};
 
 class CC_Test
 {
@@ -36,87 +41,97 @@ class CC_Test
   // = DESCRIPTION
   //    This class declares an interface to run the test of the
   //    concurrency service.
-  //
 public:
-  CC_Test(CC_naming_service *ns);
+  CC_Test (CC_naming_service *ns);
   // Default constructor
 
-  ~CC_Test(void);
+  ~CC_Test (void);
   // Destructor
 
-  virtual int run(int times_to_run = 1) = 0;
-  // Run the test times_to_run number of times. Returns CC_SUCCESS on success
-  // CC_FAIL otherwise
+  virtual int run (int times_to_run = 1) = 0;
+  // Run the test times_to_run number of times. Returns CC_SUCCESS on
+  // success CC_FAIL otherwise.
 
-  CosConcurrencyControl::LockSet_ptr
-  create_lock_set(void);
-  // Create a new lock set using the default global lock set factory from 
-  // the naming service
+  CosConcurrencyControl::LockSet_ptr create_lock_set (void);
+  // Create a new lock set using the default global lock set factory
+  // from the naming service.
 
-  char *get_lock_mode_name(CosConcurrencyControl::lock_mode mode);
-  // Returns a human readable string from the lock mode enum
+  char *get_lock_mode_name (CosConcurrencyControl::lock_mode mode);
+  // Returns a human readable string from the lock mode enum.
 
 protected:
   int result;
   CC_naming_service *naming_service_;
-private:
 };
 
-// This is a simple test that checks that it is possible to set the lock
-// in the desired mode, try it, and release it.
 class Test_Single_Lock_With_Mode : public CC_Test
 {
+  // = TITLE
+  //   This is a simple test that checks that it is possible to set
+  //   the lock in the desired mode, try it, and release it.
 public:
-  Test_Single_Lock_With_Mode(CC_naming_service *naming_service,
-                             CosConcurrencyControl::lock_mode mode);
+  // @@ Torben, can you please document these methods?
+  Test_Single_Lock_With_Mode (CC_naming_service *naming_service,
+                              CosConcurrencyControl::lock_mode mode);
+  ~Test_Single_Lock_With_Mode (void);
 
-  ~Test_Single_Lock_With_Mode();
+  virtual int run (int times_to_run = 1);
 
-  virtual int run(int times_to_run = 1);
 private:
   CosConcurrencyControl::lock_mode mode_;
 };
 
-// This class creates a read lock, registeres it with the naming
-// service and locks it.
 class Test_Setup_LockSet : public CC_Test
 {
+  // = TITLE
+  //   This class creates a read lock, registeres it with the naming
+  //   service and locks it.
 public:
-  Test_Setup_LockSet(CC_naming_service *naming_service_, char *name);
+  // @@ Torben, can you please document these methods?
+  Test_Setup_LockSet (CC_naming_service *naming_service_,
+                      char *name);
   
-  ~Test_Setup_LockSet();
+  ~Test_Setup_LockSet (void);
 
-  virtual int run(int times_to_run = 1);
+  virtual int run (int times_to_run = 1);
+
 private:
   char *my_name_;
 };
 
-// This class looks up the lock in the naming service and locks it
 class Test_Use_Already_Created_LockSet : public CC_Test
 {
+  // = TITLE
+  //   This class looks up the lock in the naming service and locks
+  //   it.  
 public:
-  Test_Use_Already_Created_LockSet(CC_naming_service *naming_service_,
+  // @@ Torben, can you please document these methods?
+  Test_Use_Already_Created_LockSet (CC_naming_service *naming_service_,
                                    char *name);
   
-  ~Test_Use_Already_Created_LockSet();
+  ~Test_Use_Already_Created_LockSet (void);
   
-  virtual int run(int times_to_run = 1);
+  virtual int run (int times_to_run = 1);
 private:
   char *my_name_;
 };
 
-// This class looks up the lock in the naming service and unlocks it
 class Test_Unlock_Already_Created_LockSet : public CC_Test
 {
+  // = TITLE
+  //   This class looks up the lock in the naming service and unlocks
+  //   it.
 public:
-  Test_Unlock_Already_Created_LockSet(CC_naming_service *naming_service_,
-                                   char *name);
+  // @@ Torben, can you please document these methods?
+  Test_Unlock_Already_Created_LockSet (CC_naming_service *naming_service_,
+                                       char *name);
   
-  ~Test_Unlock_Already_Created_LockSet();
+  ~Test_Unlock_Already_Created_LockSet (void);
   
-  virtual int run(int times_to_run = 1);
+  virtual int run (int times_to_run = 1);
+
 private:
   char *my_name_;
 };
 
-#endif /* !defined(_CC_TESTS_H_) */
+#endif /* !defined (_CC_TESTS_H_) */

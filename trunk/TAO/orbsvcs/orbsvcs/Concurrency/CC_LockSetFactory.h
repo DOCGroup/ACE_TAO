@@ -11,7 +11,7 @@
 //
 // = DESCRIPTION
 //      This class implements the lock set factory interface from the
-//      concuurency service
+//      concurrency service.
 //
 // = AUTHORS
 //    Torben Worm <tworm@cs.wustl.edu>
@@ -29,31 +29,31 @@ class TAO_ORBSVCS_Export CC_LockSetFactory : public POA_CosConcurrencyControl::L
   //     CC_LockSetFactory
   //
   // = DESCRIPTION
-  //     This class implements the LockSetFactory interface that is part
-  //     of the CosConcurrency service. Please consult the idl file for
-  //     detailed descriptions apart from the comments in this file
+  //     This class implements the LockSetFactory interface that is
+  //     part of the CosConcurrency service. Please consult the idl
+  //     file for detailed descriptions apart from the comments in
+  //     this file.
 {
 public:
+  // = Initialization and termination methods.
   CC_LockSetFactory(void);
-  // Default constructor
+  // Default constructor.
 
   ~CC_LockSetFactory(void);
-  // Destructor
+  // Destructor.
 
-  virtual CosConcurrencyControl::LockSet_ptr create ( CORBA::Environment &env);
+  virtual CosConcurrencyControl::LockSet_ptr create (CORBA::Environment &env);
 
-  virtual CosConcurrencyControl::LockSet_ptr
-    create_related (CosConcurrencyControl::LockSet_ptr which,
-		    CORBA::Environment &env);
+  virtual CosConcurrencyControl::LockSet_ptr create_related (CosConcurrencyControl::LockSet_ptr which,
+                                                             CORBA::Environment &env);
 private:
   ACE_Lock *lock_;
   // Lock to serialize the access to the factory.
-}; // CC_LockSetFactory
 
-//#if defined (__ACE_INLINE__)
-//#include "CC_LockSetFactory.i"
-//#endif // defined INLINE
+};
 
-typedef CC_LockSetFactory *CC_LockSetFactory_var ;
+// @@ Torben, can you please add a comment as to why you need this
+// typedef?!
+typedef CC_LockSetFactory *CC_LockSetFactory_var;
 
 #endif /* _CC_LOCKSETFACTORY_H */

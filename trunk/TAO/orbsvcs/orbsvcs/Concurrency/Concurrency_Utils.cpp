@@ -8,10 +8,6 @@
 // = FILENAME
 //    Concurrency_Utils.cpp
 //
-// = DESCRIPTION
-//      
-//      
-//
 // = AUTHOR
 //    Torben Worm <tworm@cs.wustl.edu>
 //
@@ -36,8 +32,8 @@ TAO_Concurrency_Server::TAO_Concurrency_Server (CORBA::ORB_var &orb,
   this->init (orb, poa);
 }
 
-// Function to initialize the concurrency server object under the passed orb
-// and poa
+// Function to initialize the concurrency server object under the
+// passed orb and poa.
 
 int
 TAO_Concurrency_Server::init (CORBA::ORB_var &orb,
@@ -81,7 +77,8 @@ TAO_Concurrency_Server::init (CORBA::ORB_var &orb,
   return 0;
 }
 
-// Get the lock set factory 
+// Get the lock set factory.
+
 CC_LockSetFactory *
 TAO_Concurrency_Server::GetLockSetFactory(void)
 {
