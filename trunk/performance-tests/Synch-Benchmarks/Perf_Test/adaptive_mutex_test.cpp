@@ -11,11 +11,11 @@ ACE_RCSID(Synch_Benchmarks, adaptive_mutex_test, "$Id$")
 class ACE_Svc_Export Adaptive_Mutex_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, char *[]);
+  virtual int init (int, ACE_TCHAR *[]);
 };
 
 int
-Adaptive_Mutex_Test::init (int, char *[])
+Adaptive_Mutex_Test::init (int, ACE_TCHAR *[])
 {
   ACE_Lock *lock;
   ACE_NEW_RETURN (lock,
