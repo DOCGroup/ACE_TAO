@@ -32,6 +32,7 @@ public:
   virtual int cancel_output (TAO_Transport *transport);
   virtual int flush_message (TAO_Transport *transport,
                              TAO_Queued_Message *msg);
+  virtual int flush_transport (TAO_Transport *transport);
 };
 
 #include "ace/post.h"

@@ -47,3 +47,30 @@ TAO_Reactive_Flushing_Strategy::flush_message (TAO_Transport *transport,
 
   return result;
 }
+
+int
+TAO_Reactive_Flushing_Strategy::flush_transport (TAO_Transport *transport)
+{
+  // @@ Should we pass this down?  Can we?
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      TAO_ORB_Core *orb_core = transport->orb_core ();
+
+      while (!transport->queue_is_empty ())
+        {
+          int result = orb_core->run (0, 1, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+
+          if (result == -1)
+            return -1;
+        }
+    }
+  ACE_CATCHANY
+    {
+      return -1;
+    }
+  ACE_ENDTRY;
+
+  return 0;
+}

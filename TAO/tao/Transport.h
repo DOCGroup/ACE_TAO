@@ -193,54 +193,6 @@ public:
    */
   virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
 
-#if 0
-  /// Send a request or queue it for later.
-  /**
-   * If the right policies are set queue the request for later.
-   * Otherwise, or if the queue size has reached the configured
-   * limits, start draining the queue.
-   *
-   * If any data is to be sent it blocks until the queue is completely
-   * drained.
-   *
-   * This method serializes on handler_lock_, guaranteeing that only
-   * thread can execute it on the same instance concurrently.
-   *
-   * @todo: this routine will probably go away as part of the
-   * reorganization to support non-blocking writes.
-   */
-  // @@ lockme
-  ssize_t send_or_buffer (TAO_Stub *stub,
-                          int two_way,
-                          const ACE_Message_Block *mblk,
-                          const ACE_Time_Value *s = 0);
-
-  /**
-   * Return the TSS leader follower condition variable used in the
-   * Wait Strategy. Muxed Leader Follower implementation returns a
-   * valid condition variable, others return 0.
-   */
-  virtual TAO_SYNCH_CONDITION *leader_follower_condition_variable (void);
-
-  /// Queue for buffering transport messages.
-  virtual TAO_Transport_Buffering_Queue &buffering_queue (void);
-
-  /// Timer id associated with buffering.
-  long buffering_timer_id (void) const;
-  void buffering_timer_id (long);
-
-  /// Timeout value associated with buffering.
-  const ACE_Time_Value &buffering_timeout_value (void) const;
-  void buffering_timeout_value (const ACE_Time_Value &time);
-
-  /// Send any messages that have been buffered.
-  // @@ lockme
-  ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
-
-  /// Send any messages that have been buffered.
-  ssize_t send_buffered_messages (const ACE_Time_Value *max_wait_time = 0);
-#endif /* 0 */
-
   /**
    * Initialising the messaging object. This would be used by the
    * connector side. On the acceptor side the connection handler
@@ -257,7 +209,8 @@ public:
   /**
    * Called by the cache when the cache is closing in order to fill
    * in a handle_set in a lock-safe manner.
-   * @param handle_set the ACE_Handle_Set into which the transport should place any handle registered with the reactor
+   * @param handle_set the ACE_Handle_Set into which the transport
+   *        should place any handle registered with the reactor 
    */
   void provide_handle (ACE_Handle_Set &handle_set);
 
@@ -272,6 +225,12 @@ public:
    * @todo: shouldn't this be automated?
    */
   void dequeue_all (void);
+
+  /// Check if there are messages pending in the queue
+  /**
+   * @return 1 if the queue is empty
+   */
+  int queue_is_empty (void);
 
   /// Register the handler with the reactor.
   /**
