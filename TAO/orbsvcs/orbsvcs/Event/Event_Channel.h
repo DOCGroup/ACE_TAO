@@ -100,6 +100,10 @@ void TAO_ORBSVCS_Export dump_event (const RtecEventComm::Event &event);
 // ************************************************************
 
 
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 class TAO_ORBSVCS_Export ACE_RTU_Manager
 // = TITLE
 //   ACE RTU Manager
@@ -1393,5 +1397,9 @@ private:
 #if defined (__ACE_INLINE__)
 #include "Event_Channel.i"
 #endif /* __ACE_INLINE__ */
+
+#if defined(_MSC_VER)
+#pragma warning(default:4250)
+#endif /* _MSC_VER */
 
 #endif /* ACE_EVENT_CHANNEL_H */
