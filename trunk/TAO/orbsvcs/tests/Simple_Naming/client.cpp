@@ -558,6 +558,19 @@ Simple_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_DEBUG,
                   "Unbound name OK\n"));
+
+      // Now, unregister our servant from POA before exiting
+      PortableServer::POA_var poa =
+        test_obj_impl._default_POA ();
+
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&test_obj_impl,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (),
+                              ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -689,6 +702,22 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
                            "Problems with rebind in Tree Test\n"),
                           -1);
       ACE_TRY_CHECK;
+
+      // Now, unregister our servant from POA before exiting.
+      PortableServer::POA_var poa = impl1._default_POA ();
+
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&impl1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      id = poa->servant_to_id (&impl2, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
 
   ACE_CATCHANY
@@ -767,6 +796,18 @@ Exceptions_Test::execute (TAO_Naming_Client &root_context)
       ACE_TRY_CHECK;
       not_found_test3 (root_context,
                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      // Now, unregister our servant from POA before exiting.
+      PortableServer::POA_var poa = impl._default_POA ();
+
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&impl,
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (),
+                              ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -1107,6 +1148,33 @@ Iterator_Test::execute (TAO_Naming_Client &root_context)
                           -1);
       iter->destroy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      PortableServer::POA_var poa = impl1._default_POA ();
+
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&impl1, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      id = poa->servant_to_id (&impl2, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      id = poa->servant_to_id (&impl3, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      id = poa->servant_to_id (&impl4, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
@@ -1156,7 +1224,18 @@ Destroy_Test::execute (TAO_Naming_Client &root_context)
       not_exist_test (my_context,
                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      // Now, unregister our servant from POA before exiting.
+      PortableServer::POA_var poa = impl._default_POA ();
+
+      PortableServer::ObjectId_var id =
+        poa->servant_to_id (&impl, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      poa->deactivate_object (id.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
     }
+
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Unexpected exception in Exceptions test");
