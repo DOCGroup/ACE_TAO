@@ -3,7 +3,7 @@
 //
 #include "Payload_Receiver.h"
 
-ACE_RCSID(Big_Request_Muxing, Payload_Receiver, "$Id$")
+ACE_RCSID(PMB_With_Fragments, Payload_Receiver, "$Id$")
 
 Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
  : count_ (0),
