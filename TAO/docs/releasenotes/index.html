@@ -375,7 +375,7 @@ QoS, network and transport protocols, addresses or routes.<p>
 
 <li>
 <b>Example Transport protocols</b>- The first example, aside from IIOP, that
-has been implemented uses UNIX domain sockets. Other interesting transport
+has been implemented, UIOP, uses local IPC. Other interesting transport
 protocols would be for ATM, Buses (VME or PCI), shared memory, TP4, GSMP, and
 UDP/IP.</li> <p>
 
@@ -400,7 +400,7 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
             list of TAO_Acceptors is kept in the Acceptor
             Registry. When the ORB needs to create an IOR it iterates
             over all the acceptors to do so. Using either multiple
-            <code>-ORBendpoint</code> options or several endpoints
+            <code>-ORBEndpoint</code> options or several endpoints
             separated by semi-colons ';', the user can specify what
             addresses the ORB should use.  Each endpoint is specified
             in URL format (ex: <code>iiop://foo.bar.com:0</code>),
@@ -431,11 +431,10 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
 
 <li>
 	    Enabled the UIOP protocol, this protocol uses local IPC
-            (aka UNIX domain) sockets as the transport mechanism.  The
-            protocol is loaded by default but no endpoints are created
-            unless an explicit <code>-ORBendpoint</code> option is
-            used (ex: <code>-ORBendpoint
-            uiop:///tmp/my_rendezvous</code>).
+            (aka UNIX domain sockets) as the transport mechanism.  The
+            protocol is loaded by default.  If no explicit
+            <code>-ORBEndpoint</code> option is used (ex:
+            <code>-ORBEndpoint uiop:///tmp/my_rendezvous</code>). 
 
 </li><P>
 
@@ -445,22 +444,25 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
             its list of arguments.  These protocol names are used to
             load an abstract factory via the service configurator.
             This factory can create acceptors or connectors on demand.
-            By default only IIOP and UIOP are loaded.
+            By default only IIOP and UIOP (if supported by the
+            platform) are loaded.
 </li><P>
 
 <li>
-	    The <code>-ORBhost</code> and <code>-ORBport</code>
-            options are deprecated. The new <code>-ORBendpoint</code>
+	    The <code>-ORBHost</code> and <code>-ORBPort</code>
+            options are deprecated. The new <code>-ORBEndpoint</code>
             option supercedes them. If the deprecated options are
-            used, the ORB issues a warning.
+            used, the ORB issues a warning.  The user should not
+            depend on the existence of these options in the future.
 </li><P>
 
 <li>
-            The <code>-ORBpreconnect</code> option supports multiple
+            The <code>-ORBPreconnect</code> option supports multiple
             protocols using the same URL formats that
-            <code>-ORBendpoint</code> does. Note that the old
+            <code>-ORBEndpoint</code> does. Note that the old
             <em><code>host:port</code></em> format is supported for
-            backwards compatibility.
+            backwards compatibility, but the user should not depend on 
+            the existence of this old format.
 </li><P>
 
 <li>
@@ -480,7 +482,7 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
 &lt;key_string&gt; = &lt;string&gt; | empty_string<br>
 </code></blockquote>
 
-            <code>iiop</code> URL style object references are
+            In TAO, <code>iiop</code> URL style object references are
             equivalent to <code>iioploc</code> URL style object
             references.  <code>uiop</code> URL style object references
             have a similar syntax:
@@ -508,9 +510,43 @@ and <tt>EC_Throughput</tt> were run successfully.</li><P>
 
             The <i>rendezvous point</i> for <code>uiop</code> is
             any valid path and filename that the ORB has permission to
-            read and write to.<P>
+            read and write to.  However, UIOP rendezvous points have
+            the same restrictions that local IPC has:
+                <blockquote><li>
+                  To guarantee portability, local IPC rendezvous
+                  points (including the path and filename) should not
+                  be longer than 99 characters long. Some platforms
+                  may support longer rendezvous points, usually 108
+                  characters including the null terminator, but
+                  Posix.1g only requires that local IPC rendezvous
+                  point arrays contain a maximum of <b>at least</b>
+                  100 characters, including the null terminator.<P>
 
-            The <code>-ORBendpoint</code> option uses a syntax similar
+                  If an endpoint is longer than what the platform
+                  supports then it will be truncated so that it fits,
+                  and a warning will be issued.<P>
+                </li>
+                <li>
+                  Avoid using <em>relative</em> paths in your UIOP endpoints.
+                  If possible, use <b><em>absolute</em></b> paths
+                  instead.  Imagine that the server is given an
+                  endpoint to create using <code>-ORBEndpoint
+                  uiop://foobar</code>.  A local IPC rendezvous
+                  point called <code>foobar</code> will be created
+                  in the current  working directory.  If the client
+                  is not started in the directory where the
+                  <code>foobar</code> rendezvous point exists then
+                  the client will not be able to communicate with
+                  the server since its point of communication, the
+                  rendezvous point, was not found. On the other
+                  hand, if an absolute path was used, the client
+                  would know exactly where to find the rendezvous
+                  point.<P>  It is up to the user to make sure that
+                  a given UIOP endpoint is accessible by both the
+                  server and the client.<P>
+                </li></blockquote>
+
+            The <code>-ORBEndpoint</code> option uses a syntax similar
             to that of the URL style object reference shown above.
             The only difference is that the object key delimiter and
             the object key string are not specified.
