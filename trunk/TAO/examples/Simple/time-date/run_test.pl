@@ -50,7 +50,7 @@ if ($client != 0) {
     $status = 1;
 }
 
-$SV->Kill (); 
+$SV->Kill ();
 
 unlink $iorfile;
 
