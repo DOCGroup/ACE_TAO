@@ -1,3 +1,18 @@
+Thu Aug 17 14:07:24 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* test/Exposed_Policies/server.cpp:
+	* test/Exposed_Policies/client.cpp:
+	* test/test/Exposed_Policies/Client.dsp:
+	* test/Exposed_Policies/Server.dsp:
+	* test/Exposed_Policies/RTProperties.h:
+	* test/Exposed_Policies/RTProperties.cpp:
+	* test/Exposed_Policies/README:
+	* test/Exposed_Policies/Makefile:
+	* test/Exposed_Policies/POA.cfg
+	* test/Exposed_Policies/Object.cfg
+	  Extended the example to test the client exposed policies 
+	  to read the policies from a configuration file (.cfg file).
+
 Thu Aug 17 11:46:49 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/Naming_Service/Naming_Service.cpp (parse_args):
