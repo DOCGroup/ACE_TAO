@@ -13,6 +13,7 @@ DIRS = \
         Reference_Counted_Servant \
         Loader \
         NewPOA \
+        POA_BiDir \
         RootPOA \
         TIE
 

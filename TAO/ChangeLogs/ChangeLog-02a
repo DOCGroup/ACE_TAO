@@ -1,3 +1,15 @@
+Sun Apr 07 10:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/MT_BiDir/server.bor:
+        * tests/MT_BiDir/client.bor:
+          Corrected makefiles
+
+        * examples/POA/Makefile.bor:
+          Added new POA_BiDir directory
+
+        * examples/POA/POA_BiDir/Makefile.bor:
+          Corrected makefile
+
 Sat Apr 06 22:24:03 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Policy_Validator.cpp: #included debug.h. This should fix
@@ -9,13 +21,13 @@ Sat Apr 06 15:50:19 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  error in Win32.
 
 	* examples/POA/POA_BiDir/POA_BiDir.dsp: Fixed the workspace files
-	  to compile and link properly on Win32. 
-	
+	  to compile and link properly on Win32.
+
 Sat Apr  6 15:27:35 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/Makefile: Added the new test to the list of tests. 
+	* examples/POA/Makefile: Added the new test to the list of tests.
 	* examples/POA/POA_BiDir/run_test.pl: Fixed the script to work
-	  right. 
+	  right.
 
 Sat Apr  6 12:27:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -27,17 +39,17 @@ Sat Apr  6 12:27:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/POA/POA_BiDir/README:
 	* examples/POA/POA_BiDir/run_test.pl*: A new test that tests
 	  multiple POA's with one of the POA's assigned BiDirGIOP
-	  policy. 
+	  policy.
 
 Sat Apr  6 12:10:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Policy_Validator.cpp: Added a check to make sure that we
-	  dont get the same validator to be chained. 
-	
+	  dont get the same validator to be chained.
+
 	* tao/BiDir_GIOP/BiDirGIOP.cpp:
 	* tao/BiDir_GIOP/BiDirGIOP.h: Added a flag to indicate whether the
 	  validator has been loaded. We dont need to load the validator
-	  twice. 
+	  twice.
 
 	  All this changes had to be done to put up with the *broken*
 	  BiDirGIOP specification. We maintain the BiDirGIOP policies at
@@ -46,7 +58,7 @@ Sat Apr  6 12:10:22 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  create problems if the same validator is chained twice. This
 	  would lead to an infinite loop when policies are parsed till
 	  stack overflows and the program crashes. Thanks to Werner
-	  Buchert <w.buchert@medat.de> for reporting this problem. 
+	  Buchert <w.buchert@medat.de> for reporting this problem.
 
 Sat Apr  6 17:22:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 

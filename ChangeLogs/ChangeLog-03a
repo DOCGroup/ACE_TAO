@@ -1,11 +1,18 @@
+Sun Apr 07 10:25:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+          Added include of Log_Msg.h to fix build errors in BCB
+
 Fri Apr 05 21:17:44 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.cpp: Initialized a null wstring properly. 
-	
-	* tests/CDR_Test.cpp (test_get): Added a test case for a
-	  marshalling and unmarshalling a zero length wstring. 
+	* ace/CDR_Stream.cpp: Initialized a null wstring properly.
 
-	  The above changes fix [Bug 1169]. Thanks to Duane Binder 
+	* tests/CDR_Test.cpp (test_get): Added a test case for a
+	  marshalling and unmarshalling a zero length wstring.
+
+	  The above changes fix [Bug 1169]. Thanks to Duane Binder
 	  <duane.binder@veritas.com> for suggesting these fixes.
 
 Fri Apr  5 19:20:39 2002  Steve Huston  <shuston@riverace.com>
@@ -19,21 +26,21 @@ Fri Apr  5 19:20:39 2002  Steve Huston  <shuston@riverace.com>
           compile problem on AIX.
 
 Fri Apr  5 11:30:00 2002  Justin Michel  <michel_j@ociweb.com>
-        
+
         * ace/OS.i:
         * ace/config-win32-common.h:
 
           SO_REUSEADDR fix brought over from 1.2a
           FD_SETSIZE fix brought over from 1.2a
-	  Thanks to Juergen Pfreundt <Juergen.Pfreundt@gft.com> for 
-	  motivating this. 
+	  Thanks to Juergen Pfreundt <Juergen.Pfreundt@gft.com> for
+	  motivating this.
 
 Fri Apr  5 07:45:54 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Local_Tokens.cpp: Fixed a compile error.
 
 Fri Apr  5 12:51:11 UTC 2002  Don Hinton  <dhinton@ieee.org>
-	
+
 	* ace/ACE.i (strnew): Added null pointer check to
 	  the wchar_t version so its behavior matches the char
 	  version.
