@@ -886,7 +886,9 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
             // @@ We should raise a CORBA::NO_MEMORY, but we ran out
             //    of memory already. We need a pre-allocated, TSS,
             //    CORBA::NO_MEMORY instance
-            ACE_NEW_RETURN (ex, CORBA::UNKNOWN, TAO_INVOKE_EXCEPTION);
+            ACE_NEW_RETURN (ex, 
+                            CORBA::UNKNOWN, 
+                            TAO_INVOKE_EXCEPTION);
           }
 
         ex->minor (minor);
@@ -1045,12 +1047,27 @@ TAO_GIOP_Oneway_Invocation::invoke (CORBA::Environment &ACE_TRY_ENV)
       return TAO_INVOKE_OK;
 
     case TAO_GIOP_USER_EXCEPTION:
-      // This should never happen.
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO_GIOP_Oneway_Invocation - "
-                  "user exception thrown in oneway request\n"));
+      {
+        // Pull the exception from the stream.
+        CORBA::String_var buf;
 
-      return TAO_INVOKE_OK;
+        if ((this->inp_stream () >> buf.inout ()) == 0)
+          {
+            // Could not demarshal the exception id, raise an local
+            // CORBA::MARSHAL
+            ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
+                                              CORBA::COMPLETED_MAYBE),
+                              TAO_INVOKE_EXCEPTION);
+          }
+
+        // This kind of exception shouldn't happen with oneways,
+        // but if it does, we turn it into a CORBA::UNKNOWN exception.
+        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
+                                          CORBA::COMPLETED_YES),
+                          TAO_INVOKE_EXCEPTION);
+
+        return TAO_INVOKE_EXCEPTION;
+      }
 
     case TAO_GIOP_SYSTEM_EXCEPTION:
       {
