@@ -1,17 +1,29 @@
+Thu May 27 11:18:46 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* man/man1/TAO_Concurrency_Service.1:
+	* man/man1/TAO_CosEvent_Service.1:
+	* man/man1/TAO_Event_Service.1:
+	* man/man1/tao_idl.1:
+	* man/man7/TAO.7:
+
+	  Removed these man pages.  They are out-of-date and no longer
+	  maintained.
+
 Wed May 26 13:44:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any.cpp:
         * tao/Any.h:
         * tao/Any_Impl.cpp:
         * tao/Any_Impl.h:
-        
+
           Added comments to the void* value() method saying that it no
  	  longer appears in the CORBA C++ mapping, is deprecated by the
  	  OMG, and is no longer used in TAO.  Thanks to Mike Hepburn
- 	  <mike@anvil.com> for motivating this change.	  
+ 	  <mike@anvil.com> for motivating this change.
+
         * tao/append.cpp (TAO_Marshal_Union::append):
         * tao/skip.cpp (TAO_Marshal_Union::skip):
-        
+
           In finding the value of an enum discriminator, replace the
           call to the Any::value() with the creation of an ACE
           Message Block and the marshaling of the Any's contents
@@ -23,14 +35,14 @@ Mon May 24 22:48:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_init_arglist_ch.cpp:
         * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
-        
+
           Clean up the formatting of code generation for valuetype
           factory operations.
 
 Mon May 24 09:57:24 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp (gen_throw_spec):
-        
+
           Added another leading double colon generation, this one
           in the node helper method that generates the throw
           spec for other node helper methods that generate base
@@ -41,7 +53,7 @@ Mon May 24 09:57:24 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Sun May 23 17:31:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
-        
+
           Added yet another leading double colon to the declarations
           of the arguments inside the skeleton method body. Thanks
           to Tao Lu <lu@dre.vanderbilt.edu> for finding the bug.
@@ -49,27 +61,27 @@ Sun May 23 17:31:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Sun May 23 14:46:52 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-        
+
           Reverted changed just made in
-          
+
           Sun May 23 14:00:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           For some reason, the leading '::' before an operation name
           in *C.cpp confuses MSVC 7.1 about the preceding return type
           declaration, if it is itself a scoped name.
-          
+
         * TAO_IDL/be/be_visitor_array/array_ci.cpp:
         * TAO_IDL/be/be_visitor_typedef/typedef_ci.cpp:
-        
+
           Fixed duplicate generation of the definition of array helper
           methods - the check to exclude generation when the array
           in question is from an included file had a hole in it.
           Thanks to Thomas Groth <groth.th@nord-com.net> for sending
           in the example pair of IDL files that demonstrated the
           problem.
-          
+
         * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
-        
+
           Fixed implied IDL generation of reply handler interface to
           have the scoped name correctly set, so it in turn generates
           correctly when used as the first argument in the sendc_*
@@ -79,7 +91,7 @@ Sun May 23 14:00:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/argument.cpp:
         * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-        
+
           Added leading double colons to the generation of scoped
           names for the argument list, in the stub head and source
           files, and to the generation of the operation name in
@@ -99,7 +111,7 @@ Fri May 21 17:25:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_operation/direct_proxy_impl_ss.cpp:
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
         * TAO_IDL/be/be_visitor_operation/thru_poa_proxy_impl_ss.cpp:
-        
+
           Added leading double colons in several places where scoped
           names are generated - in the exception list in raises
           clauses, and in the template argument to TAO::Arg_Traits
@@ -1106,7 +1118,7 @@ Wed Apr 28 06:32:15 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
         * tao/Exception.cpp:
 
-          Removed the comment that _type () is decremented. Infact its
+          Removed the comment that _type () is deprecated.  Infact it's
           not.
 
 Wed Apr 28 10:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
