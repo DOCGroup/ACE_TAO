@@ -47,6 +47,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       Object_ID oid = ACE_OBJECT_COUNTER->increment();
       evnt.header.eid.id = oid.id;
       evnt.header.eid.tid = oid.tid;
+      evnt.header.eid.pid = oid.pid;
       evnt.header.eid.queue_id = oid.queue_id;
 
       DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_TIMEOUT_GENERATOR, 0, sizeof(Object_ID), (char*)&oid);

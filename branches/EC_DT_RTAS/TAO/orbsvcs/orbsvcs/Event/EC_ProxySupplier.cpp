@@ -297,6 +297,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
     Object_ID oid;
     oid.id = event[0].header.eid.id;
     oid.tid = event[0].header.eid.tid;
+    oid.pid = event[0].header.eid.pid;
     oid.queue_id = event[0].header.eid.queue_id;
 
     DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
@@ -361,6 +362,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
     Object_ID oid;
     oid.id = event[0].header.eid.id;
     oid.tid = event[0].header.eid.tid;
+    oid.pid = event[0].header.eid.pid;
     oid.queue_id = event[0].header.eid.queue_id;
 
     DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
@@ -403,6 +405,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
       Object_ID oid;
       oid.id = event[0].header.eid.id;
       oid.tid = event[0].header.eid.tid;
+      oid.pid = event[0].header.eid.pid;
       oid.queue_id = event[0].header.eid.queue_id;
 
       DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);
@@ -466,6 +469,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
       Object_ID oid;
       oid.id = event[0].header.eid.id;
       oid.tid = event[0].header.eid.tid;
+      oid.pid = event[0].header.eid.pid;
       oid.queue_id = event[0].header.eid.queue_id;
 
       DSUI_EVENT_LOG (EC2_GROUP_FAM, ENTER_PROXY_PUSH_SUPPLIER, 0,  sizeof(Object_ID), (char*)&oid);

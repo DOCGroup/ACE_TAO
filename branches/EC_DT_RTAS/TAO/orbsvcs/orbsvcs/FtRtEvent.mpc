@@ -3,7 +3,7 @@
 
 project (FtRtEvent) : orbsvcslib, core, ftorbutils, rtevent, naming {
   sharedname   = TAO_FtRtEvent
-  idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h
+  idlflags     += -Wb,export_macro=TAO_FtRtEvent_Export -Wb,export_include=FtRtEvent/Utils/ftrtevent_export.h -I$(TAO_ROOT)/orbsvcs
   dynamicflags = TAO_FTRTEVENT_BUILD_DLL
   tagchecks    = FtRtEvent
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs
@@ -55,6 +55,7 @@ project (FTRT_EventChannel) :  orbsvcslib, ftrtevent, utils {
   dynamicflags = TAO_FTRTEC_BUILD_DLL
   tagchecks    = FTRT_EventChannel
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
+  idlflags    += -I$(TAO_ROOT)/orbsvcs
   after       += FTORB_Utils
 
   IDL_Files {
