@@ -6,7 +6,8 @@
 #include "tao/RTScheduling/RTScheduler.h"
 #include "../MIF_SchedulingC.h"
 #include "ace/Message_Queue.h"
-#include "ace/Atomic_Op.h"
+#include "ace/Null_Condition.h"
+#include "ace/Condition_Thread_Mutex.h"
 
 class DT : public ACE_Message_Block
 {
