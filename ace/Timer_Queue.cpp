@@ -4,6 +4,10 @@
 #define ACE_BUILD_DLL
 #include "ace/Timer_Queue.h"
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Timer_Queue.i"
+#endif /* __ACE_INLINE__ */
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Timer_Node)
 
 void
@@ -34,13 +38,17 @@ void
 ACE_Timer_Queue::dump (void) const
 {
   ACE_TRACE ("ACE_Timer_Queue::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+  this->timer_skew_.dump ();
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
 }
 
 // Create an empty queue.
 
 ACE_Timer_Queue::ACE_Timer_Queue (void)
   : head_ (0),
-    timer_id_ (0)
+    timer_id_ (0),
+    timer_skew_ (0, ACE_TIMER_SKEW)
 {
   ACE_TRACE ("ACE_Timer_Queue::ACE_Timer_Queue");
 }
