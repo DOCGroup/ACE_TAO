@@ -185,7 +185,7 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 	    }
 	}
 
-      delete[] value;
+      delete[] l_value;
     }  
 }
 
