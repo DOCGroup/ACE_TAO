@@ -188,10 +188,11 @@ be_visitor_union_cdr_op_ci::visit_union (be_union *node)
       os->decr_indent (0);
       *os << "default:" << be_nl;
       os->incr_indent ();
-      *os << "break;";
+      *os << "_tao_union._d (_tao_discriminant);" << be_idt_nl;
+      *os << "break;" << be_uidt << be_uidt_nl;
     }
 
-  *os << be_uidt_nl << "}" << be_nl
+  *os << "}" << be_nl
       << "return result;" << be_uidt_nl
       << "}\n\n";
 

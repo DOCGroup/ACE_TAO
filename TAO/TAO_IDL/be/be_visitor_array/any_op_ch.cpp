@@ -52,10 +52,10 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
 
   // generate the Any <<= and >>= operator declarations
   os->indent ();
-  *os << "void " << idl_global->stub_export_macro ()
+  *os << idl_global->stub_export_macro () << " void"
       << " operator<<= (CORBA::Any &, const " << node->name ()
       << "_forany &);" << be_nl;
-  *os << "CORBA::Boolean " << idl_global->stub_export_macro ()
+  *os << idl_global->stub_export_macro () << " CORBA::Boolean"
       << " operator>>= (const CORBA::Any &, "
       << node->name () << "_forany &);\n";
 
