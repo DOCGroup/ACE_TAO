@@ -56,7 +56,7 @@ Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
 
   PortableServer::POA_var child_poa
     = this->orb_manager_.child_poa ();
-  
+
   int return_val =
     this->naming_server_.init (orb.in (),
                                child_poa.in ());
@@ -64,7 +64,7 @@ Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Failed to initialize TAO_Naming_Server\n"),
                       -1);
-  
+
   // Register the object implementation with the POA.
   Notifier_var notifier_obj = this->notifier_i_._this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
@@ -81,7 +81,7 @@ Notifier_Input_Handler::init_naming_service (CORBA::Environment &ACE_TRY_ENV)
                               notifier_obj.in (),
                               ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
-    
+
   return 0;
 }
 
@@ -136,40 +136,40 @@ Notifier_Input_Handler::init (int argc,
                               CORBA::Environment &ACE_TRY_ENV)
 {
 
-  // Register our <Input_Handler> to handle STDIN events, which will
-  // trigger the <handle_input> method to process these events.
-
-  if (ACE_Event_Handler::register_stdin_handler
-      (this,
-       TAO_ORB_Core_instance ()->reactor (),
-       TAO_ORB_Core_instance ()->thr_mgr ()) == -1)
-       ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "register_stdin_handler"),
-		      -1);
-
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
 
-  if (this->orb_manager_.init_child_poa (argc,
-					 argv,
-					 "child_poa",
-					 ACE_TRY_ENV) == -1)
+  this->argc_ = argc;
+  this->argv_ = argv;
+
+  if (this->orb_manager_.init_child_poa (this->argc_,
+                                         this->argv_,
+                                         "child_poa",
+                                         ACE_TRY_ENV) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
   ACE_CHECK_RETURN (-1);
 
-  this->argc_ = argc;
-  this->argv_ = argv;
-
   int retval = this->parse_args ();
 
   if (retval != 0)
     return retval;
 
+  // Register our <Input_Handler> to handle STDIN events, which will
+  // trigger the <handle_input> method to process these events.
+
   CORBA::ORB_var orb = this->orb_manager_.orb ();
+
+  if (ACE_Event_Handler::register_stdin_handler
+      (this,
+       orb->orb_core ()->reactor (),
+       orb->orb_core ()->thr_mgr ()) == -1)
+       ACE_ERROR_RETURN ((LM_ERROR,
+		       "%p\n",
+		       "register_stdin_handler"),
+		      -1);
 
   // Stash our ORB pointer for later reference.
   this->notifier_i_.orb (orb.in ());
