@@ -2,8 +2,9 @@ Fri Feb 08 21:27:32 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Environment.cpp (exception_type):
 
-	  Corrected the POA prefix.  The PortableServer module is prefixed
-	  with "omg.org."  It was previously missing.
+	  Exceptions in the PortableServer module are user exceptions, not
+	  system exceptions.  Removed code that caused them to be
+	  considered system exceptions.
 
 Sat Feb  9 04:57:45 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 

@@ -139,7 +139,6 @@ CORBA::Environment::exception_type (void) const
 
   static char sysex_prefix [] = "IDL:omg.org/CORBA/";
   static char typecode_extra [] = "TypeCode/";
-  static char poa_prefix [] = "IDL:PortableServer/";
 
   if (!this->exception_)
     return CORBA::NO_EXCEPTION;
@@ -155,10 +154,7 @@ CORBA::Environment::exception_type (void) const
                         sizeof sysex_prefix - 1) == 0
        && ACE_OS::strncmp (id + sizeof sysex_prefix - 1,
                            typecode_extra,
-                           sizeof typecode_extra - 1) != 0)
-      || ACE_OS::strncmp (id,
-                          poa_prefix,
-                          sizeof poa_prefix - 1) == 0)
+                           sizeof typecode_extra - 1) != 0))
     return CORBA::SYSTEM_EXCEPTION;
   else
     return CORBA::USER_EXCEPTION;
