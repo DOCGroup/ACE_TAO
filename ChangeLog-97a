@@ -1,7 +1,9 @@
 Fri Jun 06 21:30:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Timer_{Hash,Wheel}_T.cpp:  added #includes of
-	  ace/High_Res_Timer.h.
+	  ace/High_Res_Timer.h.  Also, in Timer_Wheel_T.cpp (cancel),
+	  moved the declaration of "i" out of the loop because it's
+	  used in two different loops.
 
 Fri Jun 06 17:11:13 1997    <irfan@TWOSTEP>
 
