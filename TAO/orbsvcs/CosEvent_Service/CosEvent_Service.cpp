@@ -2,7 +2,6 @@
 
 #include "ace/Get_Opt.h"
 #include "CosEvent_Service.h"
-#include "orbsvcs/CosEC_Utility_Methods_T.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 CosEvent_Service::CosEvent_Service (void)
@@ -130,7 +129,7 @@ CosEvent_Service::startup (int argc, char *argv[],
 
   CORBA::Object_var obj =
     this->poa_->servant_to_reference (this,
-                                          ACE_TRY_ENV);
+                                      ACE_TRY_ENV);
   ACE_CHECK;
 
   CORBA::String_var str =
@@ -139,11 +138,13 @@ CosEvent_Service::startup (int argc, char *argv[],
   ACE_DEBUG ((LM_DEBUG,
               "The CosEC IOR is <%s>\n", str.in ()));
 
-  CosEC_Utility_Methods<CORBA::Object>::
-    bind (this->naming_.in (),
-          this->service_name,
-          obj,
-          ACE_TRY_ENV);
+  CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = CORBA::string_dup (this->service_name);
+
+  this->naming_->rebind (name,
+                         obj.in (),
+                         ACE_TRY_ENV);
   ACE_CHECK;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -172,12 +173,9 @@ CosEvent_Service::activate_rtec (CORBA::Environment &ACE_TRY_ENV)
     }
   else
     {
-      // try to locate a remote rtec.
-      this->rtec_ =
-        CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>::
-        locate (this->naming_.in (),
-                this->rt_service_name,
-                ACE_TRY_ENV);
+      // Try to locate a remote rtec.
+      this->locate_rtec (ACE_TRY_ENV);
+      ACE_CHECK;
 
       // Use the return value to check success.
       if (CORBA::is_nil (this->rtec_.in ()))
@@ -196,6 +194,25 @@ CosEvent_Service::deactivate_rtec (CORBA::Environment &ACE_TRY_ENV)
       CosEC_ServantBase::deactivate_rtec (ACE_TRY_ENV);
       ACE_CHECK;
     }
+}
+
+void
+CosEvent_Service::locate_rtec (CORBA::Environment &ACE_TRY_ENV)
+{
+  CosNaming::Name ref_name (1);
+  ref_name.length (1);
+  ref_name[0].id =
+    CORBA::string_dup (this->rt_service_name);
+
+  CORBA::Object_var obj =
+    this->naming_->resolve (ref_name,
+                            ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->rtec_ =
+    RtecEventChannelAdmin::EventChannel::_narrow (obj.in (),
+                                                  ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -230,12 +247,12 @@ CosEvent_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // Unbind from the naming service.
-  if (!CORBA::is_nil (this->naming_.in ()))
-  CosEC_Utility_Methods<CORBA::Object>::
-    unbind (this->naming_.in (),
-            this->service_name,
-            ACE_TRY_ENV);
-  ACE_CHECK;
+  CosNaming::Name name (1);
+  name.length (1);
+  name[0].id = CORBA::string_dup (this->service_name);
+
+  this->naming_->unbind (name,
+                         ACE_TRY_ENV);
 
   // shutdown the ORB.
   if (!CORBA::is_nil (this->orb_.in ()))
@@ -280,13 +297,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-template class CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>;
-
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
-#pragma instantiate CosEC_Utility_Methods<RtecEventChannelAdmin::EventChannel>
-
-#endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

@@ -3,7 +3,6 @@
 
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/CosEvent_Utilities.h"
-#include "orbsvcs/CosEC_Utility_Methods_T.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/POA.h"
 
@@ -151,11 +150,13 @@ TAO_CosEventChannelFactory_i::create (const char * channel_id,
       if (store_in_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
         {
-          CosEC_Utility_Methods<CORBA::Object>::
-            bind (this->naming_.in (),
-                  channel_id,
-                  obj.in(),
-                  ACE_TRY_ENV);
+          CosNaming::Name name (1);
+          name.length (1);
+          name[0].id = CORBA::string_dup (channel_id);
+
+          this->naming_->rebind (name,
+                                 obj.in (),
+                                 ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
 
@@ -240,10 +241,12 @@ TAO_CosEventChannelFactory_i::destroy
       if (unbind_from_naming_service &&
           !CORBA::is_nil (this->naming_.in ()))
         {
-          CosEC_Utility_Methods<CORBA::Object>::
-            unbind (this->naming_.in (),
-                    channel_id,
-                    ACE_TRY_ENV);
+          CosNaming::Name name (1);
+          name.length (1);
+          name[0].id = CORBA::string_dup (channel_id);
+
+          this->naming_->unbind (name,
+                                 ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
     }
@@ -333,13 +336,11 @@ TAO_CosEventChannelFactory_i::find_channel_id
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class CosEC_Utility_Methods<CORBA::Object>;
 template class auto_ptr <CosEC_ServantBase>;
 template class ACE_Auto_Basic_Ptr <CosEC_ServantBase>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate CosEC_Utility_Methods<CORBA::Object>
 #pragma instantiate auto_ptr <CosEC_ServantBase>
 #pragma instantiate  ACE_Auto_Basic_Ptr <CosEC_ServantBase>
 
