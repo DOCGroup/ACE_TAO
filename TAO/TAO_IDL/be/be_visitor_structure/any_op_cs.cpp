@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_structure.h"
 
@@ -60,7 +60,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "ACE_NEW (_any_val, " << node->name () << " (_tao_elem));" << be_nl
       << "TAO_TRY" << be_nl
       << "{" << be_idt_nl
-      << "_tao_any.replace (" << node->tc_name () 
+      << "_tao_any.replace (" << node->tc_name ()
       << ", _any_val, 1, TAO_TRY_ENV);" << " // copy the value" << be_nl
       << "TAO_CHECK_ENV;" << be_uidt_nl
       << "}" << be_nl
@@ -126,7 +126,8 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << "delete _tao_elem;" << be_nl
       << "return 0; " << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_nl
+      << "ACE_NOTREACHED (return 0);" << be_uidt_nl
       << "}\n\n";
 
 

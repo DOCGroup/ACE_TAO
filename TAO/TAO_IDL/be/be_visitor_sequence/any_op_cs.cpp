@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_sequence.h"
 
@@ -57,7 +57,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const " << node->name () << " &_tao_elem" << be_uidt_nl
       << ") // copying" << be_uidt_nl
       << "{" << be_idt_nl
-      << node->name () << " *_tao_any_val = new " << node->name () 
+      << node->name () << " *_tao_any_val = new " << node->name ()
       << " (_tao_elem);" << be_nl
       << "if (!_tao_any_val) return;" << be_nl
       << "TAO_TRY" << be_nl
@@ -130,7 +130,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "delete _tao_elem;" << be_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_nl
-      << "TAO_ENDTRY;" << be_uidt_nl
+      << "TAO_ENDTRY;" << be_nl
+      << "ACE_NOTREACHED (return 0);" << be_uidt_nl
       << "}\n\n";
 
   node->cli_stub_any_op_gen (1);
