@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *   Interface for the TAO pluggable protocol framework.
+ *  Interface for the TAO pluggable protocol framework.
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
@@ -26,6 +26,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Resource_Factory.h"
+#include "tao/Exception.h"
 
 #include "ace/SString.h"
 
