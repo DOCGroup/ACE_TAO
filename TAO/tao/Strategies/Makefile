@@ -2378,39 +2378,15 @@ CPPFLAGS += -I$(TAO_ROOT)
  UIOP_Endpoint.h UIOP_Endpoint.i \
  $(TAO_ROOT)/tao/Base_Connection_Property.h \
  $(TAO_ROOT)/tao/Base_Connection_Property.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.h \
- $(TAO_ROOT)/tao/GIOP_Message_Base.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.h \
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Pluggable_Messaging.i \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.h \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.h \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.h \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.h \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_10.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_11.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.h \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_12.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Generator_Parser_Impl.inl \
- $(TAO_ROOT)/tao/GIOP_Message_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/GIOP_Utils.h \
  $(TAO_ROOT)/tao/GIOP_Utils.i \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.h \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.h \
- $(TAO_ROOT)/tao/Tagged_Profile.h \
- $(TAO_ROOT)/tao/GIOPC.h \
- $(TAO_ROOT)/tao/Object_KeyC.h \
- $(TAO_ROOT)/tao/Object_KeyC.i \
- $(TAO_ROOT)/tao/GIOPC.i \
- $(TAO_ROOT)/tao/Tagged_Profile.i \
- $(TAO_ROOT)/tao/GIOP_Message_Headers.i \
- $(TAO_ROOT)/tao/GIOP_Message_Accept_State.i \
- $(TAO_ROOT)/tao/GIOP_Message_Acceptors.i \
- $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.h \
+ $(TAO_ROOT)/tao/GIOP_Message_State.i \
  $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
 .obj/UIOP_Endpoint.o .obj/UIOP_Endpoint.so .shobj/UIOP_Endpoint.o .shobj/UIOP_Endpoint.so: UIOP_Endpoint.cpp UIOP_Endpoint.h \
