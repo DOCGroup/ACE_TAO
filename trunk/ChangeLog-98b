@@ -1,3 +1,9 @@
+Thu Jul 30 19:03:12 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Connection/blocking/SPIPE-{connector,acceptor}.cpp:
+ 	  Added #include "ace/Proactor.h".  Thanks to Gonzo for reporting
+ 	  this.
+
 Thu Jul 30 17:54:14 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/test_config.h: Added /**/ between #include and <condefs.h>

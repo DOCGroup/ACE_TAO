@@ -3,9 +3,9 @@
 
 #define SPIPE_CONNECTOR_C
 
-
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"
+#include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
 #include "SPIPE-connector.h"
 

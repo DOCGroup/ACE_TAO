@@ -5,6 +5,7 @@
 
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
 #include "SPIPE-acceptor.h"
 
