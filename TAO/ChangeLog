@@ -1,3 +1,8 @@
+Fri Oct 31 07:36:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DynamicInterface/Makefile.bor:
+          Removed obsolete files.
+
 Fri Oct 31 07:34:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
