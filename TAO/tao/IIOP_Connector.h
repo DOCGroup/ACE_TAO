@@ -77,11 +77,9 @@ public:
   int preconnect (const char *preconnections);
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
-  typedef ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
-        TAO_NULL_ACTIVATION_STRATEGY;
+  virtual int check_prefix (const char *endpoint);
 
-  typedef ACE_NOOP_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
-        TAO_NULL_CREATION_STRATEGY;
+  virtual char object_key_delimiter (void) const;
 
 protected:
   // = More TAO_Connector methods, please check the documentation on
@@ -90,9 +88,12 @@ protected:
                              TAO_Profile *&,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
-  virtual int check_prefix (const char *endpoint);
+protected:
+  typedef ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
+        TAO_NULL_ACTIVATION_STRATEGY;
 
-  virtual char object_key_delimiter (void) const;
+  typedef ACE_NOOP_Creation_Strategy<TAO_IIOP_Client_Connection_Handler>
+        TAO_NULL_CREATION_STRATEGY;
 
 private:
   TAO_NULL_ACTIVATION_STRATEGY null_activation_strategy_;

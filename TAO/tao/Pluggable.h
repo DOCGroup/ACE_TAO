@@ -425,18 +425,18 @@ public:
   // Create a profile for this protocol and initialize it based on the
   // encapsulation in <cdr>
 
-protected:
-  virtual void make_profile (const char *endpoint,
-                             TAO_Profile *&,
-                             CORBA::Environment &ACE_TRY_ENV) = 0;
-  // Create a profile with a given endpoint.
-
   virtual int check_prefix (const char *endpoint) = 0;
   // Check that the prefix of the provided endpoint is valid for use
   // with a given pluggable protocol.
 
   virtual char object_key_delimiter (void) const = 0;
   // Return the object key delimiter to use or expect.
+
+protected:
+  virtual void make_profile (const char *endpoint,
+                             TAO_Profile *&,
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
+  // Create a profile with a given endpoint.
 
 private:
   CORBA::ULong tag_;
