@@ -1,3 +1,8 @@
+Fri May 30 14:11:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ciao/Version.h: Changed the version info to be 0.3.1 instead of
+	  0.1.1. We want it to go the way ACE+TAO go.
+
 Fri May 30 13:57:26 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* Makefile: A new top level Makefile which will have the needed
