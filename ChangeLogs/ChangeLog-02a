@@ -2,7 +2,8 @@ Thu Sep 27 06:12:21 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* ace/config-win32.h: Added a special-case for Borland C++ Builder,
 	  which must include vcl.h before windows.h.  Thanks to Chris
- 	  Kohloff for reporting this.
+ 	  Kohloff for reporting this.  This fixes Bug ID 899 for the time
+ 	  being.
 
 	* ace/Module.cpp (ACE_Module): The line 
 	
