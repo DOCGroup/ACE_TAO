@@ -1417,19 +1417,11 @@ template class TAO_Unbounded_Sequence<CORBA::ULong>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>;
 template class TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>;
 
-template class TAO_Object_Field_T<CORBA_Policy,CORBA_Policy_var>;
-//  template class TAO_Object_Field_T<CORBA_PolicyManager,CORBA_PolicyManager_var>;
-//  template class TAO_Object_Field_T<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::UShort>
 #pragma instantiate TAO_Unbounded_Sequence<CORBA::ULong>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Policy,CORBA_Policy_var>
 #pragma instantiate TAO_Object_Manager<CORBA_Policy,CORBA_Policy_var>
-
-#pragma instantiate TAO_Object_Field_T<CORBA_Policy,CORBA_Policy_var>
-//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyManager,CORBA_PolicyManager_var>
-//#  pragma instantiate TAO_Object_Field_T<CORBA_PolicyCurrent,CORBA_PolicyCurrent_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -2165,490 +2165,488 @@ TAO_Marshal_Smart_Proxy_Base::get_proxy (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
       defined (ACE_HAS_GNU_REPO)
-      template class TAO_Object_Field_T<Marshal,Marshal_var>;
-    template class TAO_Object_Manager<Marshal,Marshal_var>;
-  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-  #  pragma instantiate TAO_Object_Field_T<Marshal,Marshal_var>
-#  pragma instantiate TAO_Object_Manager<Marshal,Marshal_var>
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+      template class TAO_Object_Manager<Marshal,Marshal_var>;
+    #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+    #  pragma instantiate TAO_Object_Manager<Marshal,Marshal_var>
+  #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-void operator<<= (CORBA::Any &_tao_any, const Marshal::Marshal_Struct &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Marshal::_tc_Marshal_Struct,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-void operator<<= (CORBA::Any &_tao_any, Marshal::Marshal_Struct *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Marshal::_tc_Marshal_Struct,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Marshal::Marshal_Struct::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::Marshal_Struct *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const Marshal::Marshal_Struct*&,_tao_elem);
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Marshal::Marshal_Struct *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
+  void operator<<= (CORBA::Any &_tao_any, const Marshal::Marshal_Struct &_tao_elem) // copying
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Marshal::_tc_Marshal_Struct, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
-    {
-      _tao_elem = ACE_static_cast(
-          const Marshal::Marshal_Struct*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Marshal::Marshal_Struct *tmp;
-      ACE_NEW_RETURN (tmp, Marshal::Marshal_Struct, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
-      {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Marshal::_tc_Marshal_Struct,
-            1,
-            ACE_static_cast (void *, tmp),
-            Marshal::Marshal_Struct::_tao_any_destructor
-          );
-        _tao_elem = tmp;
-        return 1;
-      }
-      else
-      {
-        delete tmp;
-      }
-    }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (CORBA::Any &_tao_any, Marshal::discrim _tao_elem)
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Marshal::_tc_discrim,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::discrim &_tao_elem)
-{
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Marshal::_tc_discrim, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    TAO_InputCDR stream (
-        _tao_any._tao_get_cdr (),
-        _tao_any._tao_byte_order ()
-      );
-    if (stream >> _tao_elem)
-    {
-      return 1;
-    }
-  }
-  ACE_CATCHANY
-  {
-    return 0;
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const Marshal::Marshal_Union &_tao_elem
-  )
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
-  {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
     _tao_any._tao_replace (
-        Marshal::_tc_Marshal_Union,
+        Marshal::_tc_Marshal_Struct,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
   }
-}
 
-void operator<<= (
-    CORBA::Any &_tao_any,
-    Marshal::Marshal_Union *_tao_elem
-  )
-{
-  TAO_OutputCDR stream;
-  if (stream << *_tao_elem)
+  void operator<<= (CORBA::Any &_tao_any, Marshal::Marshal_Struct *_tao_elem) // non copying
   {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
     _tao_any._tao_replace (
-        Marshal::_tc_Marshal_Union,
+        Marshal::_tc_Marshal_Struct,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
         _tao_elem,
-        Marshal::Marshal_Union::_tao_any_destructor
+        Marshal::Marshal_Struct::_tao_any_destructor
       );
   }
-}
 
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    Marshal::Marshal_Union *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast(
-      const Marshal::Marshal_Union*&,
-      _tao_elem
-    );
-}
-
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const Marshal::Marshal_Union *&_tao_elem
-  )
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::Marshal_Struct *&_tao_elem)
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Marshal::_tc_Marshal_Union, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
+    return _tao_any >>= ACE_const_cast(const Marshal::Marshal_Struct*&,_tao_elem);
+  }
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Marshal::Marshal_Struct *&_tao_elem)
+  {
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
     {
-      _tao_elem = ACE_static_cast(
-          const Marshal::Marshal_Union*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Marshal::Marshal_Union *tmp;
-      ACE_NEW_RETURN (tmp, Marshal::Marshal_Union, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      
-      if (stream >> *tmp)
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Marshal::_tc_Marshal_Struct, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Marshal::_tc_Marshal_Union,
-            1,
-            ACE_static_cast (void *, tmp),
-            Marshal::Marshal_Union::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const Marshal::Marshal_Struct*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete  tmp;
+        Marshal::Marshal_Struct *tmp;
+        ACE_NEW_RETURN (tmp, Marshal::Marshal_Struct, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Marshal::_tc_Marshal_Struct,
+              1,
+              ACE_static_cast (void *, tmp),
+              Marshal::Marshal_Struct::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
       }
     }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
   }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
 
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const Marshal::AnySeq &_tao_elem
-  ) // copying
-{
-  TAO_OutputCDR stream;
-  if (stream << _tao_elem)
+  void operator<<= (CORBA::Any &_tao_any, Marshal::discrim _tao_elem)
   {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
     _tao_any._tao_replace (
-        Marshal::_tc_AnySeq,
+        Marshal::_tc_discrim,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin ()
       );
   }
-}
 
-void operator<<= (CORBA::Any &_tao_any, Marshal::AnySeq *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Marshal::_tc_AnySeq,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Marshal::AnySeq::_tao_any_destructor
-    );
-}
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::discrim &_tao_elem)
+  {
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Marshal::_tc_discrim, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      TAO_InputCDR stream (
+          _tao_any._tao_get_cdr (),
+          _tao_any._tao_byte_order ()
+        );
+      if (stream >> _tao_elem)
+      {
+        return 1;
+      }
+    }
+    ACE_CATCHANY
+    {
+      return 0;
+    }
+    ACE_ENDTRY;
+    return 0;
+  }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::AnySeq *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(
-      const Marshal::AnySeq*&,
-      _tao_elem
-    );
-}
+  void operator<<= (
+      CORBA::Any &_tao_any,
+      const Marshal::Marshal_Union &_tao_elem
+    )
+  {
+    TAO_OutputCDR stream;
+    if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          Marshal::_tc_Marshal_Union,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+  }
+
+  void operator<<= (
+      CORBA::Any &_tao_any,
+      Marshal::Marshal_Union *_tao_elem
+    )
+  {
+    TAO_OutputCDR stream;
+    if (stream << *_tao_elem)
+    {
+      _tao_any._tao_replace (
+          Marshal::_tc_Marshal_Union,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_elem,
+          Marshal::Marshal_Union::_tao_any_destructor
+        );
+    }
+  }
+
+  CORBA::Boolean operator>>= (
+      const CORBA::Any &_tao_any,
+      Marshal::Marshal_Union *&_tao_elem
+    )
+  {
+    return _tao_any >>= ACE_const_cast(
+        const Marshal::Marshal_Union*&,
+        _tao_elem
+      );
+  }
+
+CORBA::Boolean operator>>= (
+      const CORBA::Any &_tao_any,
+      const Marshal::Marshal_Union *&_tao_elem
+    )
+  {
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
+    {
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Marshal::_tc_Marshal_Union, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
+      {
+        _tao_elem = ACE_static_cast(
+            const Marshal::Marshal_Union*,
+            _tao_any.value ()
+          );
+        return 1;
+      }
+      else
+      {
+        Marshal::Marshal_Union *tmp;
+        ACE_NEW_RETURN (tmp, Marshal::Marshal_Union, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Marshal::_tc_Marshal_Union,
+              1,
+              ACE_static_cast (void *, tmp),
+              Marshal::Marshal_Union::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete  tmp;
+        }
+      }
+    }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
+  }
+
+    void operator<<= (
+      CORBA::Any &_tao_any,
+      const Marshal::AnySeq &_tao_elem
+    ) // copying
+  {
+    TAO_OutputCDR stream;
+    if (stream << _tao_elem)
+    {
+      _tao_any._tao_replace (
+          Marshal::_tc_AnySeq,
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin ()
+        );
+    }
+  }
+
+  void operator<<= (CORBA::Any &_tao_any, Marshal::AnySeq *_tao_elem) // non copying
+  {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Marshal::_tc_AnySeq,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        Marshal::AnySeq::_tao_any_destructor
+      );
+  }
+
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::AnySeq *&_tao_elem)
+  {
+    return _tao_any >>= ACE_const_cast(
+        const Marshal::AnySeq*&,
+        _tao_elem
+      );
+  }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Marshal::AnySeq *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Marshal::_tc_AnySeq, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
     {
-      _tao_elem = ACE_static_cast(
-          const Marshal::AnySeq*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Marshal::AnySeq *tmp;
-      ACE_NEW_RETURN (tmp, Marshal::AnySeq, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Marshal::_tc_AnySeq, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Marshal::_tc_AnySeq,
-            1,
-            ACE_static_cast (void *, tmp),
-            Marshal::AnySeq::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const Marshal::AnySeq*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete tmp;
+        Marshal::AnySeq *tmp;
+        ACE_NEW_RETURN (tmp, Marshal::AnySeq, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Marshal::_tc_AnySeq,
+              1,
+              ACE_static_cast (void *, tmp),
+              Marshal::AnySeq::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
       }
     }
+    ACE_CATCHANY
+    {
+    }
+    ACE_ENDTRY;
+    return 0;
   }
-  ACE_CATCHANY
+
+  void operator<<= (CORBA::Any &_tao_any, const Marshal::Marshal_Recursive &_tao_elem) // copying
   {
+    TAO_OutputCDR stream;
+    stream << _tao_elem;
+    _tao_any._tao_replace (
+        Marshal::_tc_Marshal_Recursive,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin ()
+      );
   }
-  ACE_ENDTRY;
-  return 0;
-}
 
-void operator<<= (CORBA::Any &_tao_any, const Marshal::Marshal_Recursive &_tao_elem) // copying
-{
-  TAO_OutputCDR stream;
-  stream << _tao_elem;
-  _tao_any._tao_replace (
-      Marshal::_tc_Marshal_Recursive,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin ()
-    );
-}
+  void operator<<= (CORBA::Any &_tao_any, Marshal::Marshal_Recursive *_tao_elem) // non copying
+  {
+    TAO_OutputCDR stream;
+    stream << *_tao_elem;
+    _tao_any._tao_replace (
+        Marshal::_tc_Marshal_Recursive,
+        TAO_ENCAP_BYTE_ORDER,
+        stream.begin (),
+        1,
+        _tao_elem,
+        Marshal::Marshal_Recursive::_tao_any_destructor
+      );
+  }
 
-void operator<<= (CORBA::Any &_tao_any, Marshal::Marshal_Recursive *_tao_elem) // non copying
-{
-  TAO_OutputCDR stream;
-  stream << *_tao_elem;
-  _tao_any._tao_replace (
-      Marshal::_tc_Marshal_Recursive,
-      TAO_ENCAP_BYTE_ORDER,
-      stream.begin (),
-      1,
-      _tao_elem,
-      Marshal::Marshal_Recursive::_tao_any_destructor
-    );
-}
-
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::Marshal_Recursive *&_tao_elem)
-{
-  return _tao_any >>= ACE_const_cast(const Marshal::Marshal_Recursive*&,_tao_elem);
-}
+  CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, Marshal::Marshal_Recursive *&_tao_elem)
+  {
+    return _tao_any >>= ACE_const_cast(const Marshal::Marshal_Recursive*&,_tao_elem);
+  }
 
 CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, const Marshal::Marshal_Recursive *&_tao_elem)
-{
-  _tao_elem = 0;
-  ACE_TRY_NEW_ENV
   {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    if (!type->equivalent (Marshal::_tc_Marshal_Recursive, ACE_TRY_ENV)) // not equal
-      {
-        return 0;
-      }
-    ACE_TRY_CHECK;
-    if (_tao_any.any_owns_data ())
+    _tao_elem = 0;
+    ACE_TRY_NEW_ENV
     {
-      _tao_elem = ACE_static_cast(
-          const Marshal::Marshal_Recursive*,
-          _tao_any.value ()
-        );
-      return 1;
-    }
-    else
-    {
-      Marshal::Marshal_Recursive *tmp;
-      ACE_NEW_RETURN (tmp, Marshal::Marshal_Recursive, 0);
-      TAO_InputCDR stream (
-          _tao_any._tao_get_cdr (),
-          _tao_any._tao_byte_order ()
-        );
-      if (stream >> *tmp)
+      CORBA::TypeCode_var type = _tao_any.type ();
+      if (!type->equivalent (Marshal::_tc_Marshal_Recursive, ACE_TRY_ENV)) // not equal
+        {
+          return 0;
+        }
+      ACE_TRY_CHECK;
+      if (_tao_any.any_owns_data ())
       {
-        ((CORBA::Any *)&_tao_any)->_tao_replace (
-            Marshal::_tc_Marshal_Recursive,
-            1,
-            ACE_static_cast (void *, tmp),
-            Marshal::Marshal_Recursive::_tao_any_destructor
+        _tao_elem = ACE_static_cast(
+            const Marshal::Marshal_Recursive*,
+            _tao_any.value ()
           );
-        _tao_elem = tmp;
         return 1;
       }
       else
       {
-        delete tmp;
+        Marshal::Marshal_Recursive *tmp;
+        ACE_NEW_RETURN (tmp, Marshal::Marshal_Recursive, 0);
+        TAO_InputCDR stream (
+            _tao_any._tao_get_cdr (),
+            _tao_any._tao_byte_order ()
+          );
+        if (stream >> *tmp)
+        {
+          ((CORBA::Any *)&_tao_any)->_tao_replace (
+              Marshal::_tc_Marshal_Recursive,
+              1,
+              ACE_static_cast (void *, tmp),
+              Marshal::Marshal_Recursive::_tao_any_destructor
+            );
+          _tao_elem = tmp;
+          return 1;
+        }
+        else
+        {
+          delete tmp;
+        }
       }
     }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  return 0;
-}
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Marshal::AnySeq &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
-  {
-    // encode all elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    ACE_CATCHANY
     {
-      _tao_marshal_flag = (strm << _tao_sequence[i]);
     }
-    return _tao_marshal_flag;
+    ACE_ENDTRY;
+    return 0;
   }
-  return 0; // error
-}
 
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Marshal::AnySeq &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
+  CORBA::Boolean operator<< (
+      TAO_OutputCDR &strm,
+      const Marshal::AnySeq &_tao_sequence
+    )
   {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
-      return 1;
-    // retrieve all the elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    if (strm << _tao_sequence.length ())
     {
-      _tao_marshal_flag = (strm >> _tao_sequence[i]);
+      // encode all elements
+      CORBA::Boolean _tao_marshal_flag = 1;
+      for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+      {
+        _tao_marshal_flag = (strm << _tao_sequence[i]);
+      }
+      return _tao_marshal_flag;
     }
-    return _tao_marshal_flag;
+    return 0; // error
   }
-  return 0; // error
-}
+
+  CORBA::Boolean operator>> (
+      TAO_InputCDR &strm,
+      Marshal::AnySeq &_tao_sequence
+    )
+  {
+    CORBA::ULong _tao_seq_len;
+    if (strm >> _tao_seq_len)
+    {
+      // set the length of the sequence
+      _tao_sequence.length (_tao_seq_len);
+      // If length is 0 we return true.
+      if (0 >= _tao_seq_len) 
+        return 1;
+      // retrieve all the elements
+      CORBA::Boolean _tao_marshal_flag = 1;
+      for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+      {
+        _tao_marshal_flag = (strm >> _tao_sequence[i]);
+      }
+      return _tao_marshal_flag;
+    }
+    return 0; // error
+  }
 
 
 #if !defined _TAO_CDR_OP_Marshal_Marshal_Recursive__tao_seq_Marshal_Recursive_CPP_
-#define _TAO_CDR_OP_Marshal_Marshal_Recursive__tao_seq_Marshal_Recursive_CPP_
+  #define _TAO_CDR_OP_Marshal_Marshal_Recursive__tao_seq_Marshal_Recursive_CPP_
 
 CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Marshal::Marshal_Recursive::_tao_seq_Marshal_Recursive &_tao_sequence
-  )
-{
-  if (strm << _tao_sequence.length ())
+      TAO_OutputCDR &strm,
+      const Marshal::Marshal_Recursive::_tao_seq_Marshal_Recursive &_tao_sequence
+    )
   {
-    // encode all elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    if (strm << _tao_sequence.length ())
     {
-      _tao_marshal_flag = (strm << _tao_sequence[i]);
+      // encode all elements
+      CORBA::Boolean _tao_marshal_flag = 1;
+      for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+      {
+        _tao_marshal_flag = (strm << _tao_sequence[i]);
+      }
+      return _tao_marshal_flag;
     }
-    return _tao_marshal_flag;
+    return 0; // error
   }
-  return 0; // error
-}
 
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Marshal::Marshal_Recursive::_tao_seq_Marshal_Recursive &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  if (strm >> _tao_seq_len)
+  CORBA::Boolean operator>> (
+      TAO_InputCDR &strm,
+      Marshal::Marshal_Recursive::_tao_seq_Marshal_Recursive &_tao_sequence
+    )
   {
-    // set the length of the sequence
-    _tao_sequence.length (_tao_seq_len);
-    // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
-      return 1;
-    // retrieve all the elements
-    CORBA::Boolean _tao_marshal_flag = 1;
-    for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+    CORBA::ULong _tao_seq_len;
+    if (strm >> _tao_seq_len)
     {
-      _tao_marshal_flag = (strm >> _tao_sequence[i]);
+      // set the length of the sequence
+      _tao_sequence.length (_tao_seq_len);
+      // If length is 0 we return true.
+      if (0 >= _tao_seq_len) 
+        return 1;
+      // retrieve all the elements
+      CORBA::Boolean _tao_marshal_flag = 1;
+      for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+      {
+        _tao_marshal_flag = (strm >> _tao_sequence[i]);
+      }
+      return _tao_marshal_flag;
     }
-    return _tao_marshal_flag;
+    return 0; // error
   }
-  return 0; // error
-}
 
 #endif /* _TAO_CDR_OP_Marshal_Marshal_Recursive__tao_seq_Marshal_Recursive_CPP_ */
 

@@ -20,7 +20,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 19:23:24 */
+/* starting time is 14:06:51 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /export/kelvar/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_Marshal_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -142,7 +142,7 @@ TAO_Marshal_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
     }
   return 0;
 }
-/* ending time is 19:23:24 */
+/* ending time is 14:06:51 */
 static TAO_Marshal_Perfect_Hash_OpTable tao_Marshal_optable;
 
 Marshal_ptr _TAO_collocation_POA_Marshal_Stub_Factory (

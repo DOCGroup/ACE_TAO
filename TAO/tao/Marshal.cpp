@@ -22,7 +22,6 @@
 // ============================================================================
 
 #include "tao/Marshal.h"
-#include "tao/singletons.h"
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 

@@ -220,7 +220,6 @@ TEMPLATE_FILES = \
   Sequence_T.cpp \
   TAOS_T.cpp \
   TimeBaseS_T.cpp \
-  varout.cpp
 else
 TEMPLATE_FILES =
 endif
@@ -367,9 +366,7 @@ HEADER_FILES = \
   poa_macros.h \
   qt_resource.h \
   rtcorbafwd.h \
-  singletons.h \
   try_macros.h \
-  varout.h \
   xt_resource.h
 
 INLINE_FILES = \
@@ -474,7 +471,6 @@ INLINE_FILES = \
   params.i \
   qt_resource.i \
   rtcorbafwd.i \
-  varout.i \
   xt_resource.i
 
 

@@ -40051,10 +40051,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_Contained_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_Contained,IR_Contained_var>;
   template class TAO_Object_Manager<IR_Contained,IR_Contained_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_Contained,IR_Contained_var>
 #  pragma instantiate TAO_Object_Manager<IR_Contained,IR_Contained_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -41867,10 +41865,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_Container_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_Container,IR_Container_var>;
   template class TAO_Object_Manager<IR_Container,IR_Container_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_Container,IR_Container_var>
 #  pragma instantiate TAO_Object_Manager<IR_Container,IR_Container_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42105,10 +42101,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_IDLType_ptr &_tao_ele
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_IDLType,IR_IDLType_var>;
   template class TAO_Object_Manager<IR_IDLType,IR_IDLType_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_IDLType,IR_IDLType_var>
 #  pragma instantiate TAO_Object_Manager<IR_IDLType,IR_IDLType_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42211,10 +42205,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_Repository_ptr &_tao_
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_Repository,IR_Repository_var>;
   template class TAO_Object_Manager<IR_Repository,IR_Repository_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_Repository,IR_Repository_var>
 #  pragma instantiate TAO_Object_Manager<IR_Repository,IR_Repository_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42279,10 +42271,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ComponentRepository_p
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ComponentRepository,IR_ComponentRepository_var>;
   template class TAO_Object_Manager<IR_ComponentRepository,IR_ComponentRepository_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ComponentRepository,IR_ComponentRepository_var>
 #  pragma instantiate TAO_Object_Manager<IR_ComponentRepository,IR_ComponentRepository_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42347,10 +42337,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ModuleDef_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ModuleDef,IR_ModuleDef_var>;
   template class TAO_Object_Manager<IR_ModuleDef,IR_ModuleDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ModuleDef,IR_ModuleDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ModuleDef,IR_ModuleDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42496,10 +42484,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ConstantDef_ptr &_tao
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ConstantDef,IR_ConstantDef_var>;
   template class TAO_Object_Manager<IR_ConstantDef,IR_ConstantDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ConstantDef,IR_ConstantDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ConstantDef,IR_ConstantDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42645,10 +42631,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_TypedefDef_ptr &_tao_
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_TypedefDef,IR_TypedefDef_var>;
   template class TAO_Object_Manager<IR_TypedefDef,IR_TypedefDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_TypedefDef,IR_TypedefDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_TypedefDef,IR_TypedefDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42794,10 +42778,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_StructDef_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_StructDef,IR_StructDef_var>;
   template class TAO_Object_Manager<IR_StructDef,IR_StructDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_StructDef,IR_StructDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_StructDef,IR_StructDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42862,10 +42844,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_UnionDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_UnionDef,IR_UnionDef_var>;
   template class TAO_Object_Manager<IR_UnionDef,IR_UnionDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_UnionDef,IR_UnionDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_UnionDef,IR_UnionDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42930,10 +42910,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_EnumDef_ptr &_tao_ele
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_EnumDef,IR_EnumDef_var>;
   template class TAO_Object_Manager<IR_EnumDef,IR_EnumDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_EnumDef,IR_EnumDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_EnumDef,IR_EnumDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -42998,10 +42976,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_AliasDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_AliasDef,IR_AliasDef_var>;
   template class TAO_Object_Manager<IR_AliasDef,IR_AliasDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_AliasDef,IR_AliasDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_AliasDef,IR_AliasDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43066,10 +43042,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_NativeDef_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_NativeDef,IR_NativeDef_var>;
   template class TAO_Object_Manager<IR_NativeDef,IR_NativeDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_NativeDef,IR_NativeDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_NativeDef,IR_NativeDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43134,10 +43108,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_PrimitiveDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_PrimitiveDef,IR_PrimitiveDef_var>;
   template class TAO_Object_Manager<IR_PrimitiveDef,IR_PrimitiveDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_PrimitiveDef,IR_PrimitiveDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_PrimitiveDef,IR_PrimitiveDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43202,10 +43174,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_StringDef_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_StringDef,IR_StringDef_var>;
   template class TAO_Object_Manager<IR_StringDef,IR_StringDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_StringDef,IR_StringDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_StringDef,IR_StringDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43270,10 +43240,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_WstringDef_ptr &_tao_
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_WstringDef,IR_WstringDef_var>;
   template class TAO_Object_Manager<IR_WstringDef,IR_WstringDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_WstringDef,IR_WstringDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_WstringDef,IR_WstringDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43338,10 +43306,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_FixedDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_FixedDef,IR_FixedDef_var>;
   template class TAO_Object_Manager<IR_FixedDef,IR_FixedDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_FixedDef,IR_FixedDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_FixedDef,IR_FixedDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43406,10 +43372,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_SequenceDef_ptr &_tao
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_SequenceDef,IR_SequenceDef_var>;
   template class TAO_Object_Manager<IR_SequenceDef,IR_SequenceDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_SequenceDef,IR_SequenceDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_SequenceDef,IR_SequenceDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43474,10 +43438,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ArrayDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ArrayDef,IR_ArrayDef_var>;
   template class TAO_Object_Manager<IR_ArrayDef,IR_ArrayDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ArrayDef,IR_ArrayDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ArrayDef,IR_ArrayDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43542,10 +43504,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ExceptionDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ExceptionDef,IR_ExceptionDef_var>;
   template class TAO_Object_Manager<IR_ExceptionDef,IR_ExceptionDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ExceptionDef,IR_ExceptionDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ExceptionDef,IR_ExceptionDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -43907,10 +43867,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_AttributeDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_AttributeDef,IR_AttributeDef_var>;
   template class TAO_Object_Manager<IR_AttributeDef,IR_AttributeDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_AttributeDef,IR_AttributeDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_AttributeDef,IR_AttributeDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -44391,10 +44349,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_OperationDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_OperationDef,IR_OperationDef_var>;
   template class TAO_Object_Manager<IR_OperationDef,IR_OperationDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_OperationDef,IR_OperationDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_OperationDef,IR_OperationDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -44807,10 +44763,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_InterfaceDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_InterfaceDef,IR_InterfaceDef_var>;
   template class TAO_Object_Manager<IR_InterfaceDef,IR_InterfaceDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_InterfaceDef,IR_InterfaceDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_InterfaceDef,IR_InterfaceDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -45126,10 +45080,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ValueMemberDef_ptr &_
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ValueMemberDef,IR_ValueMemberDef_var>;
   template class TAO_Object_Manager<IR_ValueMemberDef,IR_ValueMemberDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ValueMemberDef,IR_ValueMemberDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ValueMemberDef,IR_ValueMemberDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -45194,10 +45146,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ValueDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ValueDef,IR_ValueDef_var>;
   template class TAO_Object_Manager<IR_ValueDef,IR_ValueDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ValueDef,IR_ValueDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ValueDef,IR_ValueDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -45343,10 +45293,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ValueBoxDef_ptr &_tao
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ValueBoxDef,IR_ValueBoxDef_var>;
   template class TAO_Object_Manager<IR_ValueBoxDef,IR_ValueBoxDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ValueBoxDef,IR_ValueBoxDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ValueBoxDef,IR_ValueBoxDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -45411,10 +45359,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ProvidesDef_ptr &_tao
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ProvidesDef,IR_ProvidesDef_var>;
   template class TAO_Object_Manager<IR_ProvidesDef,IR_ProvidesDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ProvidesDef,IR_ProvidesDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ProvidesDef,IR_ProvidesDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -45560,10 +45506,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_UsesDef_ptr &_tao_ele
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_UsesDef,IR_UsesDef_var>;
   template class TAO_Object_Manager<IR_UsesDef,IR_UsesDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_UsesDef,IR_UsesDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_UsesDef,IR_UsesDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -45887,10 +45831,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_EventDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_EventDef,IR_EventDef_var>;
   template class TAO_Object_Manager<IR_EventDef,IR_EventDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_EventDef,IR_EventDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_EventDef,IR_EventDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46036,10 +45978,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_EmitsDef_ptr &_tao_el
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_EmitsDef,IR_EmitsDef_var>;
   template class TAO_Object_Manager<IR_EmitsDef,IR_EmitsDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_EmitsDef,IR_EmitsDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_EmitsDef,IR_EmitsDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46104,10 +46044,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_PublishesDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_PublishesDef,IR_PublishesDef_var>;
   template class TAO_Object_Manager<IR_PublishesDef,IR_PublishesDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_PublishesDef,IR_PublishesDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_PublishesDef,IR_PublishesDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46172,10 +46110,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ConsumesDef_ptr &_tao
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ConsumesDef,IR_ConsumesDef_var>;
   template class TAO_Object_Manager<IR_ConsumesDef,IR_ConsumesDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ConsumesDef,IR_ConsumesDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ConsumesDef,IR_ConsumesDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46240,10 +46176,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_ComponentDef_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_ComponentDef,IR_ComponentDef_var>;
   template class TAO_Object_Manager<IR_ComponentDef,IR_ComponentDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_ComponentDef,IR_ComponentDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_ComponentDef,IR_ComponentDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46389,10 +46323,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_PrimaryKeyDef_ptr &_t
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_PrimaryKeyDef,IR_PrimaryKeyDef_var>;
   template class TAO_Object_Manager<IR_PrimaryKeyDef,IR_PrimaryKeyDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_PrimaryKeyDef,IR_PrimaryKeyDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_PrimaryKeyDef,IR_PrimaryKeyDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46538,10 +46470,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_FactoryDef_ptr &_tao_
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_FactoryDef,IR_FactoryDef_var>;
   template class TAO_Object_Manager<IR_FactoryDef,IR_FactoryDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_FactoryDef,IR_FactoryDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_FactoryDef,IR_FactoryDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46606,10 +46536,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_FinderDef_ptr &_tao_e
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_FinderDef,IR_FinderDef_var>;
   template class TAO_Object_Manager<IR_FinderDef,IR_FinderDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_FinderDef,IR_FinderDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_FinderDef,IR_FinderDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46674,10 +46602,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, IR_HomeDef_ptr &_tao_ele
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<IR_HomeDef,IR_HomeDef_var>;
   template class TAO_Object_Manager<IR_HomeDef,IR_HomeDef_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<IR_HomeDef,IR_HomeDef_var>
 #  pragma instantiate TAO_Object_Manager<IR_HomeDef,IR_HomeDef_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46823,10 +46749,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::IRObject_ptr &_ta
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<CORBA::IRObject,CORBA::IRObject_var>;
   template class TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::IRObject,CORBA::IRObject_var>
 #  pragma instantiate TAO_Object_Manager<CORBA::IRObject,CORBA::IRObject_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
@@ -46891,10 +46815,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::TypeCodeFactory_p
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
-    template class TAO_Object_Field_T<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>;
   template class TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>
 #  pragma instantiate TAO_Object_Manager<CORBA::TypeCodeFactory,CORBA::TypeCodeFactory_var>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

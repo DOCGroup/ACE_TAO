@@ -10,7 +10,6 @@
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
-#include "tao/varout.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"
@@ -786,16 +785,10 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
 
 // ****************************************************************
 
-TAO_Object_Field::~TAO_Object_Field (void)
-{
-}
-
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_Object_Field_T<CORBA_Object,CORBA_Object_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_Object_Field_T<CORBA_Object,CORBA_Object_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

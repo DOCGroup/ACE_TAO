@@ -10,7 +10,6 @@
 #include "tao/Stub.h"
 #include "tao/Servant_Base.h"
 #include "tao/Request.h"
-#include "tao/varout.h"
 #include "tao/ORB_Core.h"
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"

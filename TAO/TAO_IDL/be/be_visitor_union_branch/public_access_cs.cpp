@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
+#include        "idl.h"
+#include        "idl_extern.h"
+#include        "be.h"
 
 #include "be_visitor_union_branch.h"
 
@@ -214,9 +214,8 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl
       << "ACE_NEW_RETURN (this->u_." << ub->local_name () << "_, "
-      << "(TAO_Object_Field_T<"
-      << bt->name () << ","
-      << bt->name () << "_var>), 0);" << be_uidt_nl
+      << "("
+      << bt->name () << "_var), 0);" << be_uidt_nl
       << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
   return 0;
@@ -280,7 +279,7 @@ be_visitor_union_branch_public_access_cs::visit_predefined_type (be_predefined_t
       break;
     case AST_PredefinedType::PT_any:
       *os << "if (alloc_flag)" << be_idt_nl
-          << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
+          << "ACE_NEW_RETURN (this->u_." << ub->local_name ()
           << "_, " << bt->name () << ", 0);" << be_uidt_nl
           << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
       break;
@@ -320,7 +319,7 @@ be_visitor_union_branch_public_access_cs::visit_sequence (be_sequence *node)
     }
   os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl
-      << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
+      << "ACE_NEW_RETURN (this->u_." << ub->local_name ()
       << "_, " << bt->name () << ", 0);" << be_uidt_nl
       << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
@@ -379,7 +378,7 @@ be_visitor_union_branch_public_access_cs::visit_structure (be_structure *node)
       || node->has_constructor ())
     {
       *os << "if (alloc_flag)" << be_idt_nl
-          << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
+          << "ACE_NEW_RETURN (this->u_." << ub->local_name ()
           << "_, " << bt->name () << ", 0);" << be_uidt_nl
           << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
     }
@@ -439,7 +438,7 @@ be_visitor_union_branch_public_access_cs::visit_union (be_union *node)
     }
   os = this->ctx_->stream ();
   *os << "if (alloc_flag)" << be_idt_nl
-      << "ACE_NEW_RETURN (this->u_." << ub->local_name () 
+      << "ACE_NEW_RETURN (this->u_." << ub->local_name ()
       << "_, " << bt->name () << ", 0);" << be_uidt_nl
       << "return this->u_." << ub->local_name () << "_;" << be_uidt_nl;
 
