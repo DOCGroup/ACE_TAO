@@ -331,7 +331,9 @@ CORBA_ORB::create_exception_list (CORBA::ExceptionList_ptr &list,
                                   CORBA_Environment &ACE_TRY_ENV)
 {
   TAO_Dynamic_Adapter *dynamic_adapter =
-    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance ("Dynamic_Adapter");
+    ACE_Dynamic_Service<TAO_Dynamic_Adapter>::instance (
+        TAO_ORB_Core::dynamic_adapter_name ()
+      );
 
   dynamic_adapter->create_exception_list (list,
                                           ACE_TRY_ENV);
