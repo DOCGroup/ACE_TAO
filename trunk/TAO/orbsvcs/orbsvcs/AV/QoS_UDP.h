@@ -125,18 +125,30 @@ public:
   virtual ACE_Event_Handler* event_handler (void){ return this; }
   virtual ACE_QoS_Session* qos_session (void);
   virtual void qos_session (ACE_QoS_Session *qos_session);
+
   int translate (ACE_Flow_Spec *ace_flow_spec,
 		 CosPropertyService::Properties &qos_params);
   int translate (CosPropertyService::Properties &qos_params,
 		 ACE_Flow_Spec *ace_flow_spec);
 
   void negotiator (AVStreams::Negotiator_ptr);
+
+  void endpoint (TAO_Base_StreamEndPoint *endpoint);
+  TAO_Base_StreamEndPoint* endpoint (void);
+
+  void flowspec_entry (TAO_FlowSpec_Entry *entry);
+  TAO_FlowSpec_Entry* flowspec_entry (void);
   
+  void av_core (TAO_AV_Core *avcore);
+  TAO_AV_Core* av_core (void);
+
 protected:
   TAO_AV_Core *av_core_;
   ACE_INET_Addr peer_addr_;
   ACE_SOCK_Dgram_Mcast_QoS qos_sock_dgram_;
   ACE_QoS_Session *qos_session_;
+  TAO_FlowSpec_Entry *entry_;  
+  TAO_Base_StreamEndPoint *endpoint_;
   AVStreams::Negotiator_ptr negotiator_;
 };
 
@@ -159,7 +171,7 @@ public:
   virtual int open_i (ACE_INET_Addr *address);
 
   virtual int close (void);
-  //  virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
+
   virtual int activate_svc_handler (TAO_AV_UDP_QoS_Flow_Handler *handler);
   
 
@@ -237,6 +249,28 @@ public:
                                                 TAO_Base_StreamEndPoint *endpoint,
                                                 TAO_AV_Flow_Handler *handler,
                                                 TAO_AV_Transport *transport);
+};
+
+/// Helper class to create qos sessions,
+/// activate qos handlers and set qos
+/// (For separation of concerns)
+class TAO_AV_UDP_QoS_Session_Helper
+{
+public:
+  TAO_AV_UDP_QoS_Session_Helper (void);
+  ~TAO_AV_UDP_QoS_Session_Helper (void);
+
+  /// Open a QoS Session with the specified address
+  ACE_QoS_Session* open_qos_session (TAO_AV_UDP_QoS_Flow_Handler *handler,
+				     ACE_INET_Addr &addr);
+  
+  /// Activate the QoS handler to receive QoS events
+  int activate_qos_handler (ACE_QoS_Session *qos_session,
+			    TAO_AV_UDP_QoS_Flow_Handler *handler);
+  
+  /// Set the required QoS for the session
+  int set_qos (ACE_Flow_Spec& ace_flow_spec,
+	       TAO_AV_UDP_QoS_Flow_Handler *handler);
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_AV_UDP_QoS_Flow_Factory)
