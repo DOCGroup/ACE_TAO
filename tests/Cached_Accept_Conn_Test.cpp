@@ -62,7 +62,7 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-static int debug = 0;
+int debug = 0;
 
 Client_Svc_Handler::Client_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
@@ -187,7 +187,7 @@ static int user_has_specified_iterations = 0;
 static size_t keep_handles_available = 100;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static int connection_accepted = 0;
+int connection_accepted = 0;
 
 // On Win32, the handle gobbling doesn't work.  Therefore, we need
 // more iterations to get to the handle limit.
@@ -283,7 +283,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
                     svc_handler->get_handle ()));
       return result;
     }
-  
+
   // If the error occured due to teh fact that the file descriptor
   // limit was exhausted, then purge the connection cache of some
   // entries.
@@ -430,12 +430,12 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
             ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("starting server at port %d\n"),
                         server_addr.get_port_number ()));
-      
+
       // Run the cached blocking test.
       int result = cached_connect (strategy_connector,
                                    server_addr);
       ACE_ASSERT (result != -1);
-      
+
       server ();
     }
 }
