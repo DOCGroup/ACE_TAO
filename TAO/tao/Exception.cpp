@@ -277,8 +277,8 @@ int
 CORBA_UnknownUserException::_is_a (const char* interface_id) const
 {
   return ((ACE_OS::strcmp (interface_id,
-                           "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
-          || CORBA_UserException::_is_a (interface_id));
+			   "IDL:omg.org/CORBA/UnknownUserException:1.0") == 0)
+	  || CORBA_UserException::_is_a (interface_id));
 }
 
 CORBA_UnknownUserException*
@@ -300,7 +300,7 @@ CORBA_UnknownUserException::_raise (void)
 
 void
 TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
-                                            CORBA::Environment &TAO_IN_ENV)
+					    CORBA::Environment &TAO_IN_ENV)
 {
   // Create the TypeCode for the CORBA_UnknownUserException
   TAO_OutputCDR stream;
@@ -316,9 +316,9 @@ TAO_Exceptions::make_unknown_user_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.write_ulong (1L) == 0
       || stream.write_string (field_name) == 0
       || stream.encode (CORBA::_tc_TypeCode,
-                        &CORBA::_tc_any, 0,
-                        TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE ());
+			&CORBA::_tc_any, 0,
+			TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
+    TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
 
   tcp = new CORBA::TypeCode (CORBA::tk_except,
                              stream.length (),
@@ -374,7 +374,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
       || stream.encode (CORBA::_tc_TypeCode,
                         &TC_completion_status, 0,
                         TAO_IN_ENV) != CORBA::TypeCode::TRAVERSE_CONTINUE)
-    TAO_THROW (CORBA_INITIALIZE ());
+    TAO_THROW (CORBA_INITIALIZE (CORBA::COMPLETED_NO));
 
   // OK, we stuffed the buffer we were given (or grew a bigger one;
   // hope to avoid that during initialization).  Now build and return
@@ -426,12 +426,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
     TAO_SYSTEM_EXCEPTION (DATA_CONVERSION) \
     TAO_SYSTEM_EXCEPTION (INV_POLICY) \
     TAO_SYSTEM_EXCEPTION (REBIND) \
-    TAO_SYSTEM_EXCEPTION (TIMEOUT) \
-    TAO_SYSTEM_EXCEPTION (TRANSACTION_UNAVAILABLE) \
-    TAO_SYSTEM_EXCEPTION (TRANSACTION_MODE) \
-    TAO_SYSTEM_EXCEPTION(TRANSACTION_REQUIRED) \
-    TAO_SYSTEM_EXCEPTION(TRANSACTION_ROLLEDBACK) \
-    TAO_SYSTEM_EXCEPTION(INVALID_TRANSACTION)
+    TAO_SYSTEM_EXCEPTION (TIMEOUT)
 
 // Declare static storage for these ... the buffer is "naturally"
 // aligned and overwritten.
@@ -466,12 +461,12 @@ TAO_Exceptions::init (CORBA::Environment &env)
 
   if (env.exception () == 0)
     TAO_Exceptions::make_unknown_user_typecode (CORBA::_tc_UnknownUserException,
-                                                env);
+						env);
 }
 
 CORBA_Exception*
 TAO_Exceptions::create_system_exception (const char* id,
-                                         CORBA::Environment& env)
+					 CORBA::Environment& env)
 {
 #define TAO_SYSTEM_EXCEPTION(name) \
   { \
@@ -531,8 +526,8 @@ STANDARD_EXCEPTION_LIST
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA_##name :: CORBA_##name (void) \
   :  CORBA_SystemException (CORBA::_tc_ ## name, \
-                            TAO_DEFAULT_MINOR_CODE, \
-                            CORBA::COMPLETED_NO) \
+			    0xffff0000L, \
+			    CORBA::COMPLETED_NO) \
 { \
 }
 STANDARD_EXCEPTION_LIST
@@ -542,7 +537,6 @@ STANDARD_EXCEPTION_LIST
 
 CORBA_ExceptionList::CORBA_ExceptionList (CORBA::ULong len,
                                           CORBA::TypeCode_ptr *tc_list)
-  : ref_count_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
     this->add (tc_list [i]);
@@ -555,7 +549,7 @@ CORBA_ExceptionList::~CORBA_ExceptionList (void)
     {
       CORBA::TypeCode_ptr *tc;
       if (this->tc_list_.get (tc, i) == -1)
-        return;
+	return;
       CORBA::release (*tc);
     }
 #endif
@@ -586,27 +580,11 @@ CORBA_ExceptionList::item (CORBA::ULong index,
       return CORBA::TypeCode::_duplicate (*tc);
     }
 }
-
 void
 CORBA_ExceptionList::remove (CORBA::ULong, CORBA::Environment &env)
 {
   // unimplemented
   env.clear ();
-}
-
-CORBA_ExceptionList_ptr
-CORBA_ExceptionList::_duplicate (void)
-{
-  ++this->ref_count_;
-  return this;
-}
-
-void
-CORBA_ExceptionList::_destroy (void)
-{
-  CORBA::ULong current = --this->ref_count_;
-  if (current == 0)
-    delete this;
 }
 
 #if defined (TAO_DONT_CATCH_DOT_DOT_DOT)
@@ -615,17 +593,11 @@ TAO_DONT_CATCH::TAO_DONT_CATCH ()
 #endif /* TAO_DONT_CATCH_DOT_DOT_DOT */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
 template class ACE_Node<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue<CORBA::TypeCode_ptr>;
 template class ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-
 #pragma instantiate ACE_Node<CORBA::TypeCode_ptr>
 #pragma instantiate ACE_Unbounded_Queue<CORBA::TypeCode_ptr>
 #pragma instantiate ACE_Unbounded_Queue_Iterator<CORBA::TypeCode_ptr>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::ULong>
-
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

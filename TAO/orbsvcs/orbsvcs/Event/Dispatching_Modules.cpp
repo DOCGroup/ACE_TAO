@@ -265,7 +265,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
         // Allocate a new dispatch queue.
         queues_[priority] = new ACE_ES_Dispatch_Queue (this, &notification_strategy_);
         if (queues_[priority] == 0)
-          TAO_THROW (CORBA::NO_MEMORY (0, ,
+          TAO_THROW (CORBA::NO_MEMORY (0, CORBA::COMPLETED_NO,
                                           "ACE_ES_Priority_Dispatching::connected"));
 
         // Initialize the dispatch queue corresponding to the
@@ -281,7 +281,7 @@ ACE_ES_Priority_Dispatching::connected (ACE_Push_Consumer_Proxy *consumer,
         // spawns the threads.
         if (queues_[priority]->open_queue (priority,
                                            threads_per_queue_) == -1)
-          TAO_THROW (DISPATCH_ERROR (0, ,
+          TAO_THROW (DISPATCH_ERROR (0, CORBA::COMPLETED_NO,
                                      "ACE_ES_Priority_Dispatching::connected:"
                                      "queue open failed.\n"));
 
@@ -382,7 +382,7 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                   " dropping event.\n", preemption_priority));
       return;
 #if 0
-      TAO_THROW (SYNC_ERROR (0, , "ACE_ES_Priority_Dispatching::push"));
+      TAO_THROW (SYNC_ERROR (0, CORBA::COMPLETED_NO, "ACE_ES_Priority_Dispatching::push"));
 #endif /* 0 */
     }
 
@@ -397,9 +397,9 @@ ACE_ES_Priority_Dispatching::push (ACE_ES_Dispatch_Request *request,
                     " release failed.\n"));
       if (errno != EPIPE)
         {
-          TAO_THROW (CORBA::NO_MEMORY ());
+          TAO_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
           // @@ Orbix parameters
-          // 0, ,
+          // 0, CORBA::COMPLETED_NO,
           // "ACE_ES_Priority_Dispatching::push enqueue failed"));
         }
       else
@@ -559,8 +559,8 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
     {
       // quick hack to test dynamic queue performance (to be replaced soon)
           ACE_ES_QUEUE *mq = 0;
-#if defined (TAO_USES_STRATEGY_SCHEDULER)
-#if defined (TAO_USES_EDF_SCHEDULING)
+      #if defined (TAO_USES_STRATEGY_SCHEDULER)
+        #if defined (TAO_USES_EDF_SCHEDULING)
 
           ACE_Deadline_Message_Strategy *adms = new ACE_Deadline_Message_Strategy;
 
@@ -569,7 +569,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
             mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*adms);
           }
 
-#elif defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
+        #elif defined (TAO_USES_MLF_SCHEDULING) || defined (TAO_USES_MUF_SCHEDULING)
 
           ACE_Laxity_Message_Strategy *alms = new ACE_Laxity_Message_Strategy;
 
@@ -578,13 +578,13 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period_t &period,
             mq = new ACE_Dynamic_Message_Queue<ACE_SYNCH> (*alms);
           }
 
-#else
+        #else
           mq = new ACE_ES_QUEUE;
-#endif
-#else
+        #endif
+      #else
         // Allocate a message queue that does not notify.
         mq = new ACE_ES_MQ;
-#endif
+      #endif
 
       if (mq == 0)
         ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",

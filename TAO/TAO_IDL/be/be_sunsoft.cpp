@@ -3,7 +3,7 @@
 #include	"idl.h"
 #include	"idl_extern.h"
 #include	"be.h"
-#include  "be_sunsoft.h"
+#include        "be_sunsoft.h"
 
 ACE_RCSID(be, be_sunsoft, "$Id$")
 
@@ -74,14 +74,10 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
           this->TAO_OutStream::print ("%ld", ev->u.ulval);
           break;
         case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
           this->TAO_OutStream::print ("%ld", ev->u.llval);
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
           break;
         case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
           this->TAO_OutStream::print ("%ld", ev->u.ullval);
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
           break;
         case AST_Expression::EV_float:
           this->TAO_OutStream::print ("%f", ev->u.fval);
@@ -118,16 +114,10 @@ TAO_SunSoft_OutStream::print (AST_Expression *expr)
                 case '\a':
                   this->TAO_OutStream::print ("'\\a'");
                   break;
-                case '\\':
-                  this->TAO_OutStream::print ("'\\'");
-                  break;
-                case '\?':
-                  this->TAO_OutStream::print ("'?'");
-                  break;
               default:
                 this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
               }
- 	        else 
+ 	        else
 	          this->TAO_OutStream::print ("'\\x%x'", ev->u.cval);
           break;
         case AST_Expression::EV_wchar:

@@ -64,8 +64,6 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, char ** argv)
                 this->client_connection_handler_ = MT_CLIENT_CONNECTION_HANDLER;
               else if (ACE_OS::strcasecmp (name, "ST") == 0)
                 this->client_connection_handler_ = ST_CLIENT_CONNECTION_HANDLER;
-              else if (ACE_OS::strcasecmp (name, "RW") == 0)
-                this->client_connection_handler_ = RW_CLIENT_CONNECTION_HANDLER;
             }
         }
     }
@@ -101,71 +99,15 @@ TAO_Default_Client_Strategy_Factory::create_client_creation_strategy (void)
                       TAO_ST_Connect_Creation_Strategy,
                       0);
     }
-  else if (this->client_connection_handler_ == MT_CLIENT_CONNECTION_HANDLER)
+  else
     {
       ACE_NEW_RETURN (client_creation_strategy,
                       TAO_MT_Connect_Creation_Strategy,
                       0);
     }
-  else if (this->client_connection_handler_ == RW_CLIENT_CONNECTION_HANDLER)
-    {
-      ACE_NEW_RETURN (client_creation_strategy,
-                      TAO_RW_Connect_Creation_Strategy,
-                      0);
-    }
 
   return client_creation_strategy;
 }
-
-// ****************************************************************
-
-TAO_ST_Connect_Creation_Strategy::TAO_ST_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_ST_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_ST_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
-// ****************************************************************
-
-TAO_MT_Connect_Creation_Strategy::TAO_MT_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_MT_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_MT_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
-// ****************************************************************
-
-TAO_RW_Connect_Creation_Strategy::TAO_RW_Connect_Creation_Strategy (ACE_Thread_Manager *t)
-  : ACE_Creation_Strategy<TAO_Client_Connection_Handler> (t)
-{
-}
-
-int
-TAO_RW_Connect_Creation_Strategy::make_svc_handler (TAO_Client_Connection_Handler *&sh)
-{
-  if (sh == 0)
-    ACE_NEW_RETURN (sh, TAO_RW_Client_Connection_Handler (this->thr_mgr_), -1);
-
-  return 0;
-}
-
-// ****************************************************************
 
 ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
 		       ASYS_TEXT ("Client_Strategy_Factory"),
@@ -173,4 +115,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Client_Strategy_Factory,
                        &ACE_SVC_NAME (TAO_Default_Client_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+ACE_STATIC_SVC_REQUIRE (TAO_Default_Client_Strategy_Factory)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Client_Strategy_Factory)

@@ -8,19 +8,6 @@
 
 #include "ace/Auto_Ptr.h"
 
-ACE_RCSID(tao, POA, "$Id$")
-
-////////////////////////////////////////////////////////////////////////////////
-
-TAO_Active_Object_Map::Map_Entry::Map_Entry (void)
-  : user_id_ (),
-    system_id_ (),
-    servant_ (0),
-    reference_count_ (1),
-    deactivated_ (0)
-{
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 
 /* static */
@@ -296,6 +283,218 @@ TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
   delete this->user_id_map_;
 }
 
+int
+TAO_Active_Object_Map::is_servant_in_map (PortableServer::Servant servant)
+{
+  return this->id_uniqueness_strategy_->is_servant_in_map (servant);
+}
+
+int
+TAO_Active_Object_Map::is_user_id_in_map (const PortableServer::ObjectId &user_id)
+{
+  Map_Entry *entry = 0;
+  int result = this->user_id_map_->find (user_id,
+                                         entry);
+  if (result == 0)
+    {
+      if (entry->servant_ == 0)
+        {
+          result = 0;
+        }
+      else
+        {
+          result = 1;
+        }
+    }
+  else
+    {
+      result = 0;
+    }
+
+  return result;
+}
+
+int
+TAO_Active_Object_Map::bind_using_system_id_returning_system_id (PortableServer::Servant servant,
+                                                                 PortableServer::ObjectId_out system_id)
+{
+  Map_Entry *entry = 0;
+
+  int result = this->id_assignment_strategy_->bind_using_system_id (servant,
+                                                                    entry);
+
+  if (result == 0)
+    {
+      result = this->id_hint_strategy_->system_id (system_id,
+                                                   *entry);
+    }
+
+  return result;
+}
+
+int
+TAO_Active_Object_Map::bind_using_system_id_returning_user_id (PortableServer::Servant servant,
+                                                               PortableServer::ObjectId_out user_id)
+{
+  Map_Entry *entry = 0;
+
+  int result = this->id_assignment_strategy_->bind_using_system_id (servant,
+                                                                    entry);
+
+  if (result == 0)
+    {
+      ACE_NEW_RETURN (user_id,
+                      PortableServer::ObjectId (entry->user_id_),
+                      -1);
+    }
+
+  return result;
+}
+
+int
+TAO_Active_Object_Map::bind_using_user_id (PortableServer::Servant servant,
+                                           const PortableServer::ObjectId &user_id)
+{
+  Map_Entry *entry = 0;
+  return this->id_uniqueness_strategy_->bind_using_user_id (servant,
+                                                            user_id,
+                                                            entry);
+}
+
+int
+TAO_Active_Object_Map::find_system_id_using_user_id (const PortableServer::ObjectId &user_id,
+                                                     PortableServer::ObjectId_out system_id)
+{
+  Map_Entry *entry = 0;
+  int result = this->id_uniqueness_strategy_->bind_using_user_id (0,
+                                                                  user_id,
+                                                                  entry);
+  if (result == 0)
+    {
+      result = this->id_hint_strategy_->system_id (system_id,
+                                                   *entry);
+    }
+
+  return result;
+}
+
+int
+TAO_Active_Object_Map::rebind_using_user_id_and_system_id (PortableServer::Servant servant,
+                                                           const PortableServer::ObjectId &user_id,
+                                                           const PortableServer::ObjectId &system_id)
+{
+  ACE_UNUSED_ARG (system_id);
+
+  Map_Entry *entry = 0;
+  return this->id_uniqueness_strategy_->bind_using_user_id (servant,
+                                                            user_id,
+                                                            entry);
+}
+
+int
+TAO_Active_Object_Map::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+{
+  return this->id_uniqueness_strategy_->unbind_using_user_id (user_id);
+}
+
+int
+TAO_Active_Object_Map::find_user_id_using_servant (PortableServer::Servant servant,
+                                                   PortableServer::ObjectId_out user_id)
+{
+  return this->id_uniqueness_strategy_->find_user_id_using_servant (servant,
+                                                                    user_id);
+}
+
+int
+TAO_Active_Object_Map::find_system_id_using_servant (PortableServer::Servant servant,
+                                                     PortableServer::ObjectId_out system_id)
+{
+  return this->id_uniqueness_strategy_->find_system_id_using_servant (servant,
+                                                                      system_id);
+}
+
+int
+TAO_Active_Object_Map::find_servant_using_user_id (const PortableServer::ObjectId &user_id,
+                                                   PortableServer::Servant &servant)
+{
+  Map_Entry *entry = 0;
+  int result = this->user_id_map_->find (user_id,
+                                         entry);
+  if (result == 0)
+    {
+      if (entry->servant_ == 0)
+        {
+          result = -1;
+        }
+      else
+        {
+          servant = entry->servant_;
+        }
+    }
+
+  return result;
+}
+
+int
+TAO_Active_Object_Map::find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                                                 PortableServer::Servant &servant,
+                                                                 PortableServer::ObjectId &user_id)
+{
+  return this->lifespan_strategy_->find_servant_and_user_id_using_system_id (system_id,
+                                                                             servant,
+                                                                             user_id);
+}
+
+int
+TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (const PortableServer::ObjectId &user_id,
+                                                                 PortableServer::Servant &servant,
+                                                                 PortableServer::ObjectId_out system_id)
+{
+  Map_Entry *entry = 0;
+  int result = this->user_id_map_->find (user_id,
+                                         entry);
+
+  if (result == 0)
+    {
+      if (entry->servant_ == 0)
+        {
+          result = -1;
+        }
+      else
+        {
+          servant = entry->servant_;
+          result = this->id_hint_strategy_->system_id (system_id,
+                                                       *entry);
+        }
+    }
+
+  return result;
+}
+
+int
+TAO_Active_Object_Map::find_user_id_using_system_id (const PortableServer::ObjectId &system_id,
+                                                     PortableServer::ObjectId_out user_id)
+{
+  PortableServer::ObjectId id;
+  int result = this->id_hint_strategy_->recover_key (system_id,
+                                                     id);
+
+  if (result == 0)
+    {
+      ACE_NEW_RETURN (user_id,
+                      PortableServer::ObjectId (id),
+                      -1);
+    }
+
+  return 0;
+}
+
+/* static */ size_t
+TAO_Active_Object_Map::system_id_size (void)
+{
+  return TAO_Active_Object_Map::system_id_size_;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
@@ -397,10 +596,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (const PortableServer::ObjectId &us
 
   if (result == 0)
     {
-      if (entry->servant_ != 0)
-        {
-          result = this->active_object_map_->servant_map_->unbind (entry->servant_);
-        }
+      result = this->active_object_map_->servant_map_->unbind (entry->servant_);
 
       if (result == 0)
         {
@@ -426,16 +622,9 @@ TAO_Unique_Id_Strategy::find_user_id_using_servant (PortableServer::Servant serv
 
   if (result == 0)
     {
-      if (entry->deactivated_)
-        {
-          result = -1;
-        }
-      else
-        {
-          ACE_NEW_RETURN (user_id,
-                          PortableServer::ObjectId (entry->user_id_),
-                          -1);
-        }
+      ACE_NEW_RETURN (user_id,
+                      PortableServer::ObjectId (entry->user_id_),
+                      -1);
     }
 
   return result;
@@ -451,25 +640,11 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (PortableServer::Servant se
 
   if (result == 0)
     {
-      if (entry->deactivated_)
-        {
-          result = -1;
-        }
-      else
-        {
-          result = this->active_object_map_->id_hint_strategy_->system_id (system_id,
-                                                                           *entry);
-        }
+      result = this->active_object_map_->id_hint_strategy_->system_id (system_id,
+                                                                       *entry);
     }
 
   return result;
-}
-
-CORBA::Boolean
-TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
-{
-  // Since servant are always unique here, return false.
-  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -560,28 +735,6 @@ TAO_Multiple_Id_Strategy::find_system_id_using_servant (PortableServer::Servant 
   return -1;
 }
 
-CORBA::Boolean
-TAO_Multiple_Id_Strategy::remaining_activations (PortableServer::Servant servant)
-{
-  TAO_Active_Object_Map::user_id_map::iterator end
-    = this->active_object_map_->user_id_map_->end ();
-
-  for (TAO_Active_Object_Map::user_id_map::iterator iter
-         = this->active_object_map_->user_id_map_->begin ();
-       iter != end;
-       ++iter)
-    {
-      TAO_Active_Object_Map::user_id_map::value_type map_pair = *iter;
-      TAO_Active_Object_Map::Map_Entry *entry = map_pair.second ();
-
-      if (entry->servant_ == servant)
-        {
-          return 1;
-        }
-    }
-  return 0;
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 
 TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy (void)
@@ -597,45 +750,43 @@ TAO_Lifespan_Strategy::set_active_object_map (TAO_Active_Object_Map *active_obje
 ////////////////////////////////////////////////////////////////////////////////
 
 int
-TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                  const PortableServer::ObjectId &user_id,
+TAO_Transient_Strategy::find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                                                   PortableServer::Servant &servant,
-                                                                  TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                  PortableServer::ObjectId &user_id)
 {
-  int result = this->active_object_map_->id_hint_strategy_->find (system_id,
-                                                                  entry);
+  int result = this->active_object_map_->id_hint_strategy_->recover_key (system_id,
+                                                                         user_id);
+
   if (result == 0)
     {
-      if (entry->deactivated_)
-        {
-          result = -1;
-        }
-      else if (entry->servant_ == 0)
-        {
-          result = -1;
-        }
-      else
-        {
-          servant = entry->servant_;
-        }
-    }
-  else
-    {
-      result = this->active_object_map_->user_id_map_->find (user_id,
-                                                             entry);
+      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      result = this->active_object_map_->id_hint_strategy_->find (system_id,
+                                                                  entry);
       if (result == 0)
         {
-          if (entry->deactivated_)
-            {
-              result = -1;
-            }
-          else if (entry->servant_ == 0)
+          if (entry->servant_ == 0)
             {
               result = -1;
             }
           else
             {
               servant = entry->servant_;
+            }
+        }
+      else
+        {
+          result = this->active_object_map_->user_id_map_->find (user_id,
+                                                                 entry);
+          if (result == 0)
+            {
+              if (entry->servant_ == 0)
+                {
+                  result = -1;
+                }
+              else
+                {
+                  servant = entry->servant_;
+                }
             }
         }
     }
@@ -646,46 +797,44 @@ TAO_Transient_Strategy::find_servant_using_system_id_and_user_id (const Portable
 ////////////////////////////////////////////////////////////////////////////////
 
 int
-TAO_Persistent_Strategy::find_servant_using_system_id_and_user_id (const PortableServer::ObjectId &system_id,
-                                                                   const PortableServer::ObjectId &user_id,
+TAO_Persistent_Strategy::find_servant_and_user_id_using_system_id (const PortableServer::ObjectId &system_id,
                                                                    PortableServer::Servant &servant,
-                                                                   TAO_Active_Object_Map::Map_Entry *&entry)
+                                                                   PortableServer::ObjectId &user_id)
 {
-  int result = this->active_object_map_->id_hint_strategy_->find (system_id,
+  int result = this->active_object_map_->id_hint_strategy_->recover_key (system_id,
+                                                                         user_id);
+
+  if (result == 0)
+    {
+      TAO_Active_Object_Map::Map_Entry *entry = 0;
+      result = this->active_object_map_->id_hint_strategy_->find (system_id,
                                                                   entry);
-  if (result == 0 &&
-      user_id == entry->user_id_)
-    {
-      if (entry->deactivated_)
+      if (result == 0 &&
+          user_id == entry->user_id_)
         {
-          result = -1;
-        }
-      else if (entry->servant_ == 0)
-        {
-          result = -1;
-        }
-      else
-        {
-          servant = entry->servant_;
-        }
-    }
-  else
-    {
-      result = this->active_object_map_->user_id_map_->find (user_id,
-                                                             entry);
-      if (result == 0)
-        {
-          if (entry->deactivated_)
-            {
-              result = -1;
-            }
-          else if (entry->servant_ == 0)
+          if (entry->servant_ == 0)
             {
               result = -1;
             }
           else
             {
               servant = entry->servant_;
+            }
+        }
+      else
+        {
+          result = this->active_object_map_->user_id_map_->find (user_id,
+                                                                 entry);
+          if (result == 0)
+            {
+              if (entry->servant_ == 0)
+                {
+                  result = -1;
+                }
+              else
+                {
+                  servant = entry->servant_;
+                }
             }
         }
     }
@@ -775,6 +924,7 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (PortableServer::S
                                                                         entry->user_id_);
   if (result == 0)
     {
+      entry->system_id_ = entry->user_id_;
       entry->servant_ = servant;
 
       result = this->active_object_map_->id_hint_strategy_->bind (*entry);
@@ -944,8 +1094,6 @@ typedef TAO_ObjectId_Hash id_hash;
 typedef TAO_Servant_Hash servant_hash;
 typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
 
-template class ACE_Noop_Key_Generator<servant>;
-
 // Common
 template class ACE_Reference_Pair<const id, value>;
 template class ACE_Reference_Pair<const servant, value>;
@@ -1044,8 +1192,6 @@ typedef ACE_Equal_To<servant> servant_compare_keys;
 typedef TAO_ObjectId_Hash id_hash;
 typedef TAO_Servant_Hash servant_hash;
 typedef ACE_Noop_Key_Generator<servant> noop_servant_key_generator;
-
-#pragma instantiate ACE_Noop_Key_Generator<servant>
 
 // Common
 #pragma instantiate ACE_Reference_Pair<const id, value>

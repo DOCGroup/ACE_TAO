@@ -596,124 +596,100 @@ TAO_POA::root_key_type_length (void)
   return sizeof (char);
 }
 
-ACE_INLINE CORBA::ULong
-TAO_POA::outstanding_requests (void) const
-{
-  return this->outstanding_requests_;
-}
-
 ACE_INLINE void
-TAO_POA::outstanding_requests (CORBA::ULong new_outstanding_requests)
+TAO_POA_Current::clear (void)
 {
-  this->outstanding_requests_ = new_outstanding_requests;
-}
+  this->poa_impl_ = 0;
+  this->object_id_.length (0);
+  this->object_key_ = 0;
 
-ACE_INLINE CORBA::ULong
-TAO_POA::increment_outstanding_requests (void)
-{
-  return ++this->outstanding_requests_;
-}
-
-ACE_INLINE CORBA::ULong
-TAO_POA::decrement_outstanding_requests (void)
-{
-  return --this->outstanding_requests_;
-}
-
-ACE_INLINE void
-TAO_POA::establish_servant_lock (PortableServer::Servant servant)
-{
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
-    {
-      servant->_increment_single_threaded_poa_lock_count ();
-    }
+
+  this->cookie_ = 0;
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
+
+  this->orb_core_ = 0;
+  this->previous_current_ = 0;
+  this->servant_ = 0;
 }
 
-ACE_INLINE void
-TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
+ACE_INLINE int
+TAO_POA_Current::context_is_valid (void)
 {
-#if !defined (TAO_HAS_MINIMUM_CORBA)
-  if (this->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
-    {
-      servant->_decrement_single_threaded_poa_lock_count ();
-    }
-#endif /* TAO_HAS_MINIMUM_CORBA */
+  return
+    this->poa_impl_ != 0 &&
+    this->object_id_.length () != 0 &&
+    this->servant_ != 0 &&
+    this->object_key_ != 0;
 }
 
 ACE_INLINE void
-TAO_POA_Current_Impl::POA_impl (TAO_POA *impl)
+TAO_POA_Current::POA_impl (TAO_POA *impl)
 {
   this->poa_impl_ = impl;
 }
 
 ACE_INLINE TAO_POA *
-TAO_POA_Current_Impl::POA_impl (void) const
+TAO_POA_Current::POA_impl (void) const
 {
   return this->poa_impl_;
 }
 
 ACE_INLINE void
-TAO_POA_Current_Impl::object_id (const PortableServer::ObjectId &id)
+TAO_POA_Current::object_id (const PortableServer::ObjectId &id)
 {
   this->object_id_ = id;
 }
 
 ACE_INLINE const PortableServer::ObjectId &
-TAO_POA_Current_Impl::object_id (void) const
+TAO_POA_Current::object_id (void) const
 {
   return this->object_id_;
 }
 
 ACE_INLINE void
-TAO_POA_Current_Impl::object_key (const TAO_ObjectKey &key)
+TAO_POA_Current::object_key (const TAO_ObjectKey &key)
 {
   this->object_key_ = &key;
 }
 
 ACE_INLINE const TAO_ObjectKey &
-TAO_POA_Current_Impl::object_key (void) const
+TAO_POA_Current::object_key (void) const
 {
   return *this->object_key_;
 }
 
 ACE_INLINE void
-TAO_POA_Current_Impl::servant (PortableServer::Servant servant)
+TAO_POA_Current::servant (PortableServer::Servant servant)
 {
   this->servant_ = servant;
 }
 
 ACE_INLINE PortableServer::Servant
-TAO_POA_Current_Impl::servant (void) const
+TAO_POA_Current::servant (void) const
 {
   return this->servant_;
+}
+
+ACE_INLINE int
+TAO_POA_Current::in_upcall (void) const
+{
+  return (this->servant_ != 0);
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
 ACE_INLINE PortableServer::ServantLocator::Cookie
-TAO_POA_Current_Impl::locator_cookie (void) const
+TAO_POA_Current::locator_cookie (void) const
 {
   return this->cookie_;
 }
 
 ACE_INLINE void
-TAO_POA_Current_Impl::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
+TAO_POA_Current::locator_cookie (PortableServer::ServantLocator::Cookie cookie)
 {
   this->cookie_ = cookie;
 }
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
-
-ACE_INLINE void
-TAO_POA_Current_Impl::active_object_map_entry (TAO_Active_Object_Map::Map_Entry *entry)
-{
-  this->active_object_map_entry_ = entry;
-}
-
-ACE_INLINE TAO_Active_Object_Map::Map_Entry *
-TAO_POA_Current_Impl::active_object_map_entry (void) const
-{
-  return this->active_object_map_entry_;
-}

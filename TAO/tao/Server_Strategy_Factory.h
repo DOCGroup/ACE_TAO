@@ -24,7 +24,6 @@
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
-class TAO_ORB_Core;
 
 class TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
@@ -80,7 +79,7 @@ public:
   virtual ~TAO_Server_Strategy_Factory(void);
   // Destructor.
 
-  virtual int open (TAO_ORB_Core* orb_core);
+  virtual int open (void);
   // Call <open> on various strategies.  This is not performed in
   // <init> so that the other portions of the ORB have a chance to
   // "settle" in their initialization since the streategies herein
@@ -110,8 +109,8 @@ public:
   virtual SCHEDULING_STRATEGY *scheduling_strategy (void);
   // Return the scheduling strategy used.
 
-  virtual int enable_poa_locking (void);
-  // Enable POA locking?
+  virtual ACE_Lock *create_poa_lock (void);
+  // Return a new lock for use in locking the POA.
 
   virtual ACE_Lock *create_servant_lock (void);
   // Return a new lock for use in locking the servant.

@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.
-2550 Garcia Avenue
+SunSoft, Inc.  
+2550 Garcia Avenue 
 Mountain View, California  94043
 
 NOTE:
@@ -85,7 +85,7 @@ ACE_RCSID(ast, ast_expression, "$Id$")
 void
 AST_Expression::fill_definition_details()
 {
-  pd_defined_in = idl_global->scopes()->depth() > 0
+  pd_defined_in = idl_global->scopes()->depth() > 0 
     ? idl_global->scopes()->top()
     : 0 ;
   pd_line       = idl_global->lineno();
@@ -227,6 +227,40 @@ AST_Expression::AST_Expression(unsigned long ulv)
 }
 
 /*
+ * An AST_Expression denoting an long long integer
+ */
+AST_Expression::AST_Expression(ACE_CDR::LongLong llv)
+        : pd_ec(EC_none),
+    pd_ev(NULL),
+    pd_v1(NULL),
+    pd_v2(NULL),
+    pd_n(NULL)
+{
+  fill_definition_details();
+
+  pd_ev = new AST_ExprValue;
+  pd_ev->et = EV_longlong;
+  pd_ev->u.llval = llv;
+}
+
+/*
+ * An AST_Expression denoting an unsigned long long integer
+ */
+AST_Expression::AST_Expression(ACE_CDR::ULongLong ullv)
+        : pd_ec(EC_none),
+    pd_ev(NULL),
+    pd_v1(NULL),
+    pd_v2(NULL),
+    pd_n(NULL)
+{
+  fill_definition_details();
+
+  pd_ev = new AST_ExprValue;
+  pd_ev->et = EV_ulonglong;
+  pd_ev->u.ullval = ullv;
+}
+
+/* 
  * An AST_Expression denoting a 32-bit floating point number
  */
 AST_Expression::AST_Expression(float fv)
@@ -363,25 +397,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_short;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-      if (ev->u.llval > (ACE_CDR::LongLong) SHRT_MAX || ev->u.llval < (ACE_CDR::LongLong) - (SHRT_MAX))
+      if (ev->u.llval > (ACE_CDR::LongLong) SHRT_MAX || ev->u.llval < (ACE_CDR::LongLong) -(SHRT_MAX))
 	      return NULL;
       ev->u.sval = (short) ev->u.llval;
       ev->et = AST_Expression::EV_short;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) SHRT_MAX)
 	      return NULL;
       ev->u.sval = (short) ev->u.ullval;
       ev->et = AST_Expression::EV_short;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.sval = (short) ev->u.bval;
       ev->et = AST_Expression::EV_short;
@@ -443,25 +469,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_ushort;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval > (ACE_CDR::LongLong) USHRT_MAX || ev->u.llval < 0)
 	      return NULL;
       ev->u.usval = (unsigned short) ev->u.llval;
       ev->et = AST_Expression::EV_ushort;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) USHRT_MAX)
 	      return NULL;
       ev->u.usval = (unsigned short) ev->u.ullval;
       ev->et = AST_Expression::EV_ushort;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.usval = (unsigned short) ev->u.bval;
       ev->et = AST_Expression::EV_ushort;
@@ -521,25 +539,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_long;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval > (ACE_CDR::LongLong) LONG_MAX || ev->u.llval < (ACE_CDR::LongLong) -(LONG_MAX))
 	      return NULL;
       ev->u.lval = (long) ev->u.llval;
       ev->et = AST_Expression::EV_long;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) LONG_MAX)
 	      return NULL;
       ev->u.lval = (long) ev->u.ullval;
       ev->et = AST_Expression::EV_long;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.lval = (long) ev->u.bval;
       ev->et = AST_Expression::EV_long;
@@ -599,25 +609,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
     case AST_Expression::EV_ulong:
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval > (ACE_CDR::LongLong) ULONG_MAX || ev->u.llval < 0)
 	      return NULL;
       ev->u.ulval = (unsigned long) ev->u.llval;
       ev->et = AST_Expression::EV_ulong;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) ULONG_MAX)
 	      return NULL;
       ev->u.ulval = (unsigned long) ev->u.ullval;
       ev->et = AST_Expression::EV_ulong;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.ulval = (unsigned long) ev->u.bval;
       ev->et = AST_Expression::EV_ulong;
@@ -657,7 +659,6 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       return NULL;
     }
   case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
     switch (ev->et) {
     case AST_Expression::EV_short:
       ev->u.llval = (ACE_CDR::LongLong) ev->u.sval;
@@ -677,8 +678,9 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       return ev;
     case AST_Expression::EV_longlong:
       return ev;
+      return ev;
     case AST_Expression::EV_ulonglong:
-      if (ev->u.ullval > ACE_INT64_MAX)
+      if (ev->u.ullval > LL_MAX)
 	      return NULL;
       ev->u.llval = (ACE_CDR::LongLong) ev->u.ullval;
       ev->et = AST_Expression::EV_longlong;
@@ -688,15 +690,13 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_longlong;
       return ev;
     case AST_Expression::EV_float:
-      if (ev->u.fval > (float) ACE_INT64_MAX
-          || ev->u.fval < (float) ACE_INT64_MIN)
+      if (ev->u.fval > (float) LL_MAX || ev->u.fval < (float) -(LL_MAX))
 	      return NULL;
       ev->u.llval = (ACE_CDR::LongLong) ev->u.fval;
       ev->et = AST_Expression::EV_longlong;
       return ev;
     case AST_Expression::EV_double:
-      if (ev->u.dval > (double) ACE_INT64_MAX
-          || ev->u.dval < (double) ACE_INT64_MIN)
+      if (ev->u.dval > (double) ULL_MAX || ev->u.dval < (double) -(LL_MAX))
 	      return NULL;
       ev->u.llval = (ACE_CDR::LongLong) ev->u.dval;
       ev->et = AST_Expression::EV_longlong;
@@ -721,11 +721,7 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
     case AST_Expression::EV_none:
       return NULL;
     }
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
     switch (ev->et) {
     case AST_Expression::EV_short:
       if (ev->u.sval < 0)
@@ -760,13 +756,13 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_ulonglong;
       return ev;
     case AST_Expression::EV_float:
-      if (ev->u.fval < 0.0 || ev->u.fval > (float) ACE_UINT64_MAX)
+      if (ev->u.fval < 0.0 || ev->u.fval > (float) ULL_MAX)
 	      return NULL;
       ev->u.ullval = (ACE_CDR::ULongLong) ev->u.fval;
       ev->et = AST_Expression::EV_ulonglong;
       return ev;
     case AST_Expression::EV_double:
-      if (ev->u.dval < 0.0 || ev->u.dval > (double) ACE_UINT64_MAX)
+      if (ev->u.dval < 0.0 || ev->u.dval > (double) ULL_MAX)
 	      return NULL;
       ev->u.ullval = (ACE_CDR::ULongLong) ev->u.dval;
       ev->et = AST_Expression::EV_ulonglong;
@@ -793,9 +789,6 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
     case AST_Expression::EV_none:
       return NULL;
     }
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case AST_Expression::EV_bool:
     switch (ev->et) {
     case AST_Expression::EV_short:
@@ -815,21 +808,13 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_bool;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       ev->u.bval = (ev->u.llval == 0) ? I_FALSE : I_TRUE;
       ev->et = AST_Expression::EV_bool;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-   case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
+    case AST_Expression::EV_ulonglong:
       ev->u.bval = (ev->u.ullval == 0) ? I_FALSE : I_TRUE;
       ev->et = AST_Expression::EV_bool;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       return ev;
     case AST_Expression::EV_float:
@@ -879,28 +864,19 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_float;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval > FLT_MAX || ev->u.llval < -(FLT_MAX))
        return NULL;
       ev->u.fval = (float) ev->u.llval;
       ev->et = AST_Expression::EV_float;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       // Some compilers don't implement unsigned 64-bit to float conversions,
       // so we are stuck with the signed 64-bit max value.
-      if (ev->u.ullval > ACE_UINT64_MAX
-          || (ACE_CDR::LongLong) ev->u.ullval > ACE_FLT_MAX)
+      if (ev->u.ullval > LL_MAX || (ACE_CDR::LongLong) ev->u.ullval > FLT_MAX)
        return NULL;
       ev->u.fval = (float) ((ACE_CDR::LongLong) ev->u.ullval);
       ev->et = AST_Expression::EV_float;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.fval = (float) ((ev->u.bval == I_TRUE) ? 1.0 : 0.0);
       ev->et = AST_Expression::EV_float;
@@ -952,25 +928,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_double;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       ev->u.dval = (double) ev->u.llval;
       ev->et = AST_Expression::EV_double;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-      // Some compilers don't implement unsigned 64-bit to double
+      // Some compilers don't implement unsigned 64-bit to double 
       // conversions, so we are stuck with the signed 64-bit max value.
-      if (ev->u.ullval > ACE_INT64_MAX)
+      if (ev->u.ullval > LL_MAX)
         return NULL;
       ev->u.dval = (double) ((ACE_CDR::LongLong) ev->u.ullval);
       ev->et = AST_Expression::EV_double;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.dval = (ev->u.bval == I_TRUE) ? 1.0 : 0.0;
       ev->et = AST_Expression::EV_double;
@@ -1028,25 +996,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_char;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval > (ACE_CDR::LongLong) MAXCHAR || ev->u.llval < (ACE_CDR::LongLong) -(MAXCHAR))
 	      return NULL;
       ev->u.cval = (char) ev->u.llval;
       ev->et = AST_Expression::EV_char;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) MAXCHAR)
 	      return NULL;
       ev->u.cval = (char) ev->u.ullval;
       ev->et = AST_Expression::EV_char;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.cval = (char) ev->u.bval;
       ev->et = AST_Expression::EV_char;
@@ -1108,25 +1068,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_wchar;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval > (ACE_CDR::LongLong) ULONG_MAX || ev->u.llval < 0)
 	      return NULL;
       ev->u.wcval = (ACE_CDR::WChar) ev->u.llval;
       ev->et = AST_Expression::EV_wchar;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) ULONG_MAX)
 	      return NULL;
       ev->u.wcval = (ACE_CDR::WChar) ev->u.ullval;
       ev->et = AST_Expression::EV_wchar;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.wcval = (ACE_CDR::WChar) ev->u.bval;
       ev->et = AST_Expression::EV_wchar;
@@ -1190,25 +1142,17 @@ coerce_value(AST_Expression::AST_ExprValue *ev, AST_Expression::ExprType t)
       ev->et = AST_Expression::EV_octet;
       return ev;
     case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.llval < 0 || ev->u.llval > (ACE_CDR::LongLong) (MAXCHAR << 1))
 	      return NULL;
       ev->u.oval = (unsigned char) ev->u.llval;
       ev->et = AST_Expression::EV_octet;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
       if (ev->u.ullval > (ACE_CDR::ULongLong) (MAXCHAR << 1))
 	      return NULL;
       ev->u.oval = (unsigned char) ev->u.ullval;
       ev->et = AST_Expression::EV_octet;
       return ev;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-      return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
     case AST_Expression::EV_bool:
       ev->u.oval = (ev->u.bval == I_FALSE) ? 1 : 0;
       ev->et = AST_Expression::EV_octet;
@@ -1542,7 +1486,9 @@ AST_Expression::coerce(AST_Expression::ExprType t)
 
   copy->et = pd_ev->et;
   switch (pd_ev->et) {
+  case EV_longlong:
   case EV_longdouble:
+  case EV_wchar:
   case EV_wstring:
   case EV_void:
   case EV_none:
@@ -1560,20 +1506,9 @@ AST_Expression::coerce(AST_Expression::ExprType t)
   case EV_ulong:
     copy->u.ulval = pd_ev->u.ulval;
     break;
-  case EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-    copy->u.llval = pd_ev->u.llval;
-    break;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
     copy->u.ullval = pd_ev->u.ullval;
     break;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return NULL;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case EV_bool:
     copy->u.bval = pd_ev->u.bval;
     break;
@@ -1585,9 +1520,6 @@ AST_Expression::coerce(AST_Expression::ExprType t)
     break;
   case EV_char:
     copy->u.cval = pd_ev->u.cval;
-    break;
-  case EV_wchar:
-    copy->u.wcval = pd_ev->u.wcval;
     break;
   case EV_octet:
     copy->u.oval = pd_ev->u.oval;
@@ -1705,37 +1637,24 @@ AST_Expression::operator==(AST_Expression *vc)
     return (pd_ev->u.dval == vc->ev()->u.dval) ? I_TRUE : I_FALSE;
   case EV_char:
     return (pd_ev->u.cval == vc->ev()->u.cval) ? I_TRUE : I_FALSE;
-  case EV_wchar:
-    return (pd_ev->u.wcval == vc->ev()->u.wcval) ? I_TRUE : I_FALSE;
   case EV_octet:
     return (pd_ev->u.oval == vc->ev()->u.oval) ? I_TRUE : I_FALSE;
   case EV_bool:
     return (pd_ev->u.lval == vc->ev()->u.lval) ? I_TRUE : I_FALSE;
   case EV_string:
-    if (pd_ev->u.strval == NULL) 
-      {
-        if (vc->ev()->u.strval == NULL)
-	        return I_TRUE;
-        else
-	        return I_FALSE;
-      } 
-    else if (vc->ev()->u.strval == NULL)
+    if (pd_ev->u.strval == NULL) {
+      if (vc->ev()->u.strval == NULL)
+	return I_TRUE;
+      else
+	return I_FALSE;
+    } else if (vc->ev()->u.strval == NULL)
       return I_FALSE;
     else
       return (pd_ev->u.strval == vc->ev()->u.strval) ? I_TRUE : I_FALSE;
   case EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-    return (pd_ev->u.llval == vc->ev()->u.llval) ? I_TRUE : I_FALSE;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return I_FALSE;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-    return (pd_ev->u.ullval == vc->ev()->u.ullval) ? I_TRUE : I_FALSE;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return I_FALSE;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case EV_longdouble:
+  case EV_wchar:
   case EV_wstring:
   case EV_any:
   case EV_void:
@@ -1771,8 +1690,6 @@ AST_Expression::compare(AST_Expression *vc)
     return (pd_ev->u.dval == vc->ev()->u.dval) ? I_TRUE : I_FALSE;
   case EV_char:
     return (pd_ev->u.cval == vc->ev()->u.cval) ? I_TRUE : I_FALSE;
-  case EV_wchar:
-    return (pd_ev->u.wcval == vc->ev()->u.wcval) ? I_TRUE : I_FALSE;
   case EV_octet:
     return (pd_ev->u.oval == vc->ev()->u.oval) ? I_TRUE : I_FALSE;
   case EV_bool:
@@ -1788,18 +1705,9 @@ AST_Expression::compare(AST_Expression *vc)
     else
       return (pd_ev->u.strval == vc->ev()->u.strval) ? I_TRUE : I_FALSE;
   case EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-    return (pd_ev->u.llval == vc->ev()->u.llval) ? I_TRUE : I_FALSE;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return I_FALSE;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-    return (pd_ev->u.ullval == vc->ev()->u.ullval) ? I_TRUE : I_FALSE;
-#else /* ! defined (ACE_LACKS_LONGLONG_T) */
-    return I_FALSE;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
   case EV_longdouble:
+  case EV_wchar:
   case EV_wstring:
   case EV_any:
   case EV_void:
@@ -1866,9 +1774,6 @@ dump_expr_val(ostream &o, AST_Expression::AST_ExprValue *ev)
   case AST_Expression::EV_char:
     o << ev->u.cval;
     break;
-  case AST_Expression::EV_wchar:
-    o << ev->u.wcval;
-    break;
   case AST_Expression::EV_octet:
     o << ev->u.oval;
     break;
@@ -1879,16 +1784,9 @@ dump_expr_val(ostream &o, AST_Expression::AST_ExprValue *ev)
     if (ev->u.strval != NULL)
       ev->u.strval->dump(o);
   case AST_Expression::EV_longlong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-//    o << ev->u.llval;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-    break;
   case AST_Expression::EV_ulonglong:
-#if ! defined (ACE_LACKS_LONGLONG_T)
-//    o << ev->u.ullval;
-#endif /* ! defined (ACE_LACKS_LONGLONG_T) */
-    break;
   case AST_Expression::EV_longdouble:
+  case AST_Expression::EV_wchar:
   case AST_Expression::EV_wstring:
   case AST_Expression::EV_any:
   case AST_Expression::EV_none:
@@ -1968,7 +1866,7 @@ AST_Expression::dump(ostream &o)
   case EC_none:
     break;
   default:
-    o << GTDEVEL("unsupported dump mode for expression with ec == ")
+    o << GTDEVEL("unsupported dump mode for expression with ec == ") 
       << (int) pd_ec ;
     break;
   }

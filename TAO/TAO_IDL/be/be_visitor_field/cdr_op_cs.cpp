@@ -18,9 +18,9 @@
 //
 // ============================================================================
 
-#include        "idl.h"
-#include        "idl_extern.h"
-#include        "be.h"
+#include	"idl.h"
+#include	"idl_extern.h"
+#include	"be.h"
 
 #include "be_visitor_field.h"
 
@@ -99,7 +99,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
       // for anonymous arrays ...
       // we have to generate a name for us that has an underscore
       // prepended to our local name. This needs to be inserted after
-      // the parents's name
+      // the parents's name 
 
       if (node->is_nested ())
         {
@@ -367,19 +367,19 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       // is a psuedo obj
       if (node->pt () == AST_PredefinedType::PT_pseudo)
         *os << "(strm >> _tao_aggregate." << f->local_name ()
-            << ".out ())";
+	    << ".out ())";
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "(strm >> CORBA::Any::to_char (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_wchar)
         *os << "(strm >> CORBA::Any::to_wchar (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_octet)
         *os << "(strm >> CORBA::Any::to_octet (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_boolean)
         *os << "(strm >> CORBA::Any::to_boolean (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else
         *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
       break;
@@ -389,16 +389,16 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
         *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
       else if (node->pt () == AST_PredefinedType::PT_char)
         *os << "(strm << CORBA::Any::from_char (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_wchar)
         *os << "(strm << CORBA::Any::from_wchar (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_octet)
         *os << "(strm << CORBA::Any::from_octet (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else if (node->pt () == AST_PredefinedType::PT_boolean)
         *os << "(strm << CORBA::Any::from_boolean (_tao_aggregate."
-            << f->local_name () << "))";
+	    << f->local_name () << "))";
       else
         *os << "(strm << _tao_aggregate." << f->local_name () << ")";
       break;
@@ -621,7 +621,7 @@ be_visitor_field_cdr_op_cs::visit_typedef (be_typedef *node)
   if (!bt || (bt->accept (this) == -1))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_field_cdr_op_cs::"
+                         "(%N:%l) be_visitor_union_branch_public_ci::"
                          "visit_typedef - "
                          "Bad primitive type\n"
                          ), -1);
@@ -819,27 +819,4 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
                          ), -1);
     }
   ACE_NOTREACHED (return 0);
-}
-
-
-// visit typedef type
-int
-be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)
-{
-  this->ctx_->alias (node); // save the typedef node for use in code generation
-                           // as we visit the base type
-
-  // the node to be visited in the base primitve type that gets typedefed
-  be_type *bt = node->primitive_base_type ();
-  if (!bt || (bt->accept (this) == -1))
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_cdr_op_field_decl::"
-                         "visit_typedef - "
-                         "Bad primitive type\n"
-                         ), -1);
-    }
-
-  this->ctx_->alias (0);
-  return 0;
 }

@@ -1,36 +1,30 @@
 #----------------------------------------------------------------------------
-#       $Id$
+#	$Id$
 #
-#       Top-level Makefile for the SFP test of the TAO ORB
+#	Top-level Makefile for the SFP test of the TAO ORB
 #
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#       Local macros
+#	Local macros
 #----------------------------------------------------------------------------
 
-LDLIBS    =  -lorbsvcs -lTAO -lACE
+LDLIBS     =  -lorbsvcs -lTAO -lACE
 
-PROG_SRCS =  client.cpp server.cpp
+PROG_SRCS =  client.cpp server.cpp 
 
 LSRC = $(PROG_SRCS)
 
-AVStreams_SERVER_OBJS = server.o
-AVStreams_CLIENT_OBJS = client.o
+AVStreams_SERVER_OBJS = server.o 
+AVStreams_CLIENT_OBJS = client.o 
 
+BIN = client server
+
+BUILD = $(BIN)
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-BIN2 = client server
-
-#### If the TAO orbsvcs library wasn't built with sufficient components,
-#### don't try to build here.
-TAO_ORBSVCS := $(shell $(ACE_ROOT)/bin/ace_components --orbsvcs)
-ifeq (AV,$(findstring AV,$(TAO_ORBSVCS)))
-  BIN = $(BIN2)
-endif # AV
-
 #----------------------------------------------------------------------------
-#       Include macros and targets
+#	Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -41,7 +35,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
 ifndef TAO_ROOT
-  TAO_ROOT = $(ACE_ROOT)/TAO
+TAO_ROOT = $(ACE_ROOT)/TAO
 endif
 
 DCFLAGS = -g
@@ -54,15 +48,13 @@ server:$(addprefix $(VDIR),$(AVStreams_SERVER_OBJS))
 client:$(addprefix $(VDIR),$(AVStreams_CLIENT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@@ $^ $(VLDLIBS)
 
-#main: $(addprefix $(VDIR), $(COSPROPERTY_OBJS))
-#	$(LINK.cc) $(LDFAGS) -o $@@ $^ $(VLDLIBS)
+#main: $(addprefix $(VDIR), $(COSPROPERTY_OBJS))	
+#	$(LINK.cc) $(LDFAGS) -o $@@ $^ $(VLDLIBS) 
 
-# realclean: clean
-#	-$(RM)
 
-#----------------------------------------------------------------------------
-#       Dependencies
-#----------------------------------------------------------------------------
+realclean: clean
+	-/bin/rm -rf 
+
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

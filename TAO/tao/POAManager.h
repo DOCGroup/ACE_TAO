@@ -34,53 +34,53 @@ class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
 
 public:
 
-  void activate (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual void activate (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  void hold_requests (CORBA::Boolean wait_for_completion,
-                      CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual void hold_requests (CORBA::Boolean wait_for_completion,
+                              CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  void discard_requests (CORBA::Boolean wait_for_completion,
-                         CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual void discard_requests (CORBA::Boolean wait_for_completion,
+                                 CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
-  void deactivate (CORBA::Boolean etherealize_objects,
-                   CORBA::Boolean wait_for_completion,
-                   CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual void deactivate (CORBA::Boolean etherealize_objects,
+                           CORBA::Boolean wait_for_completion,
+                           CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
+  virtual PortableServer::POAManager::State get_state (CORBA_Environment &ACE_TRY_ENV = CORBA::default_environment ());
 
   TAO_POA_Manager (ACE_Lock &lock);
 
-  ~TAO_POA_Manager (void);
+  virtual ~TAO_POA_Manager (void);
 
 protected:
 
-  void activate_i (CORBA_Environment &ACE_TRY_ENV);
+  virtual void activate_i (CORBA_Environment &ACE_TRY_ENV);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  void hold_requests_i (CORBA::Boolean wait_for_completion,
-                        CORBA_Environment &ACE_TRY_ENV);
+  virtual void hold_requests_i (CORBA::Boolean wait_for_completion,
+                                CORBA_Environment &ACE_TRY_ENV);
 
-  void discard_requests_i (CORBA::Boolean wait_for_completion,
-                           CORBA_Environment &ACE_TRY_ENV);
+  virtual void discard_requests_i (CORBA::Boolean wait_for_completion,
+                                   CORBA_Environment &ACE_TRY_ENV);
 
-  void deactivate_i (CORBA::Boolean etherealize_objects,
-                     CORBA::Boolean wait_for_completion,
-                     CORBA_Environment &ACE_TRY_ENV);
+  virtual void deactivate_i (CORBA::Boolean etherealize_objects,
+                             CORBA::Boolean wait_for_completion,
+                             CORBA_Environment &ACE_TRY_ENV);
+
+  virtual PortableServer::POAManager::State get_state_i ();
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  PortableServer::POAManager::State get_state_i ();
+  virtual ACE_Lock &lock (void);
 
-  ACE_Lock &lock (void);
+  virtual int remove_poa (TAO_POA *poa);
 
-  int remove_poa (TAO_POA *poa);
-
-  int register_poa (TAO_POA *poa);
+  virtual int register_poa (TAO_POA *poa);
 
   PortableServer::POAManager::State state_;
 

@@ -1,9 +1,9 @@
 // $Id$
 
-#include "tao/POAManager.h"
-#include "tao/POA.h"
+#include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/poa_macros.h"
+#include "tao/POAManager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/POAManager.i"
@@ -141,9 +141,15 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
        ++iterator)
     {
       TAO_POA *poa = *iterator;
-      poa->deactivate_all_objects_i (etherealize_objects,
-                                     ACE_TRY_ENV);
+      poa->destroy (etherealize_objects,
+                    wait_for_completion,
+                    ACE_TRY_ENV);
       ACE_CHECK;
+
+      // poa->etherealize_servants (etherealize_objects,
+      //                            wait_for_completion,
+      //                            ACE_TRY_ENV);
+      // ACE_CHECK;
     }
 
   // If the wait_for_completion parameter is FALSE, this operation

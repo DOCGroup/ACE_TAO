@@ -45,17 +45,28 @@ TAO_Default_Server_Strategy_Factory::concurrency_strategy (void)
     return this->concurrency_strategy_;
 }
 
-int
-TAO_Default_Server_Strategy_Factory::enable_poa_locking (void)
+ACE_Lock *
+TAO_Default_Server_Strategy_Factory::create_poa_lock (void)
 {
+  ACE_Lock *the_lock = 0;
+
   switch (this->poa_lock_type_)
     {
-    case TAO_NULL_LOCK:
-      return 0;
     case TAO_THREAD_LOCK:
+#if defined (ACE_HAS_THREADS)
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> (),
+                      0);
+      break;
+#endif /* ACE_HAS_THREADS */
     default:
-      return 1;
+      ACE_NEW_RETURN (the_lock,
+                      ACE_Lock_Adapter<ACE_Null_Mutex> (),
+                      0);
+      break;
     }
+
+  return the_lock;
 }
 
 ACE_Lock *
@@ -162,8 +173,10 @@ TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 }
 
 int
-TAO_Default_Server_Strategy_Factory::open (TAO_ORB_Core* orb_core)
+TAO_Default_Server_Strategy_Factory::open (void)
 {
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
+
   if (reactive_strategy_.open (orb_core->reactor ()) == 0
       && threaded_strategy_.open (orb_core->thr_mgr (),
                                   this->thread_flags_) == 0)
@@ -303,8 +316,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
 
             if (ACE_OS::strcasecmp (name, "dynamic") == 0)
               this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_DYNAMIC_HASH;
-            else if (ACE_OS::strcasecmp (name, "linear") == 0)
-              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_LINEAR;
+            else if (ACE_OS::strcasecmp (name, "user") == 0)
+              this->active_object_map_creation_parameters_.reverse_object_lookup_strategy_for_unique_id_policy_ = TAO_USER_DEFINED;
           }
       }
     else if (ACE_OS::strcmp (argv[curarg], "-ORBdemuxstrategy") == 0)
@@ -415,4 +428,5 @@ ACE_STATIC_SVC_DEFINE (TAO_Default_Server_Strategy_Factory,
                        &ACE_SVC_NAME (TAO_Default_Server_Strategy_Factory),
 		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                        0)
+ACE_STATIC_SVC_REQUIRE (TAO_Default_Server_Strategy_Factory)
 ACE_FACTORY_DEFINE (TAO, TAO_Default_Server_Strategy_Factory)

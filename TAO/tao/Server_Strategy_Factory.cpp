@@ -14,7 +14,7 @@ TAO_Server_Strategy_Factory::~TAO_Server_Strategy_Factory(void)
 }
 
 int
-TAO_Server_Strategy_Factory::open (TAO_ORB_Core*)
+TAO_Server_Strategy_Factory::open (void)
 {
   return 0;
 }
@@ -43,10 +43,10 @@ TAO_Server_Strategy_Factory::scheduling_strategy (void)
   return 0;
 }
 
-int
-TAO_Server_Strategy_Factory::enable_poa_locking (void)
+ACE_Lock *
+TAO_Server_Strategy_Factory::create_poa_lock (void)
 {
-  return -1;
+  return 0;
 }
 
 ACE_Lock *

@@ -24,15 +24,9 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 
-#if defined(_MSC_VER)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 class TAO_CosEC_PushSupplierWrapper;
 
-class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushConsumer_i :
-  public virtual POA_CosEventChannelAdmin::ProxyPushConsumer,
-  public virtual PortableServer::RefCountServantBase
+class TAO_ORBSVCS_Export TAO_CosEC_ProxyPushConsumer_i : public POA_CosEventChannelAdmin::ProxyPushConsumer
 {
   // = TITLE
   //   class TAO_CosEC_ProxyPushConsumer_i implements the ProxyPushConsumer
@@ -57,14 +51,14 @@ public:
   // Destructor.
 
   virtual void push (const CORBA::Any &data,
-                     CORBA::Environment &ACE_TRY_ENV);
+                     CORBA::Environment &TAO_IN_ENV);
   // Suppliers call this method to pass data to connected consumers.
 
-  virtual void disconnect_push_consumer (CORBA::Environment &ACE_TRY_ENV);
+  virtual void disconnect_push_consumer (CORBA::Environment &TAO_IN_ENV);
   // Disconnects the supplier from the event communication.
 
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier,
-                                     CORBA::Environment &ACE_TRY_ENV);
+                                     CORBA::Environment &TAO_IN_ENV);
   // Connects a push supplier.
 
 private:
@@ -81,9 +75,5 @@ private:
   TAO_CosEC_PushSupplierWrapper *wrapper_;
   // The Rtec PushSupplier wrapper used by the Rtec ProxyPushConsumer.
 };
-
-#if defined(_MSC_VER)
-#pragma warning(default:4250)
-#endif /* _MSC_VER */
 
 #endif /* _PROXYPUSHCONSUMER_I_H */

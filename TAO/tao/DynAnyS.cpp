@@ -30,8 +30,6 @@
 #include "tao/Servant_Base.h"
 #include "tao/POAC.h"
 
-ACE_RCSID(tao, DynAnyS, "$Id$")
-
 // constructor
 POA_CORBA::DynAny::DynAny (void)
 {
@@ -858,7 +856,7 @@ POA_CORBA::_tao_collocated_DynStruct::current_member_kind (
   );
 }
 
-CORBA::NameValuePairSeq *
+NameValuePairSeq *
 POA_CORBA::_tao_collocated_DynStruct::get_members (
     CORBA::Environment &_tao_environment
    )
@@ -870,7 +868,7 @@ POA_CORBA::_tao_collocated_DynStruct::get_members (
 
 void
 POA_CORBA::_tao_collocated_DynStruct::set_members (
-    const CORBA::NameValuePairSeq & value,
+    const NameValuePairSeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -1198,7 +1196,7 @@ POA_CORBA::_tao_collocated_DynSequence::length (
   );
 }
 
-CORBA_AnySeq *
+AnySeq *
 POA_CORBA::_tao_collocated_DynSequence::get_elements (
     CORBA::Environment &_tao_environment
    )
@@ -1210,7 +1208,7 @@ POA_CORBA::_tao_collocated_DynSequence::get_elements (
 
 void
 POA_CORBA::_tao_collocated_DynSequence::set_elements (
-    const CORBA_AnySeq & value,
+    const AnySeq & value,
     CORBA::Environment &_tao_environment
    )
 {
@@ -1326,7 +1324,7 @@ CORBA::Boolean POA_CORBA::_tao_collocated_DynArray::_is_a (
     );
 }
 
-CORBA_AnySeq *
+AnySeq *
 POA_CORBA::_tao_collocated_DynArray::get_elements (
     CORBA::Environment &_tao_environment
    )
@@ -1338,7 +1336,7 @@ POA_CORBA::_tao_collocated_DynArray::get_elements (
 
 void
 POA_CORBA::_tao_collocated_DynArray::set_elements (
-    const CORBA_AnySeq & value,
+    const AnySeq & value,
     CORBA::Environment &_tao_environment
    )
 {
