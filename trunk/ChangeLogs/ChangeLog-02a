@@ -1,3 +1,27 @@
+Thu Jan 25 19:16:48 2001  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-linux.h:
+
+	  Only define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS and
+	  ACE_LACKS_THREAD_STACK_SIZE for glibc < 2.1.  glibc 2.1+ has the
+	  netdb reentrant functions (albeit with funky signatures), and it
+	  has pthread_attr_setstacksize().
+
+	* ace/OS.h:
+
+	  Removed trailing whitespace.
+
+	* ace/OS.i (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
+	  gethostbyname_r, getservbyname_r):
+
+	  Added glibc-specific calls to these functions.  This allows us
+	  to avoid grabbing a lock! Thanks to Ben Strong
+	  <bstrong@bluelark.com> for providing the patch.
+
+	* THANKS:
+
+	  Added Ben Strong to list of contributors.
+
 Thu Jan 25 20:10:24 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* include/makeinclude/platform_irix6.x_sgic++.GNU: 

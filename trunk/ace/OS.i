@@ -6063,6 +6063,15 @@ ACE_OS::getprotobyname_r (const char *name,
     return result;
   else
     return 0;
+# elif defined (__GLIBC__)  // GNU C library has a different signature
+  if (::getprotobyname_r (name,
+                          result,
+                          buffer,
+                          sizeof (ACE_PROTOENT_DATA),
+                          &result) == 0)
+    return result;
+  else
+    return 0;
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
@@ -6117,6 +6126,15 @@ ACE_OS::getprotobynumber_r (int proto,
 #elif defined (ACE_HAS_REENTRANT_FUNCTIONS) && !defined (UNIXWARE)
 # if defined (AIX) || defined (DIGITAL_UNIX) || defined (HPUX_10)
   if (::getprotobynumber_r (proto, result, (struct protoent_data *) buffer) == 0)
+    return result;
+  else
+    return 0;
+# elif defined (__GLIBC__)  // GNU C library has a different signature
+  if (::getprotobynumber_r (proto,
+                            result,
+                            buffer,
+                            sizeof (ACE_PROTOENT_DATA),
+                            &result) == 0)
     return result;
   else
     return 0;
@@ -6712,6 +6730,20 @@ ACE_OS::gethostbyaddr_r (const char *addr,
       *h_errnop = h_errno;
       return (struct hostent *) 0;
     }
+# elif defined (__GLIBC__)  // GNU C library has a different signature
+  ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
+
+  if (::gethostbyaddr_r ((char *) addr,
+                         length,
+                         type,
+                         result,
+                         buffer,
+                         sizeof (ACE_HOSTENT_DATA),
+                         &result,
+                         h_errnop) == 0)
+    return result;
+  else
+    return (struct hostent *) 0;
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
@@ -6781,6 +6813,18 @@ ACE_OS::gethostbyname_r (const char *name,
       *h_errnop = h_errno;
       return (struct hostent *) 0;
     }
+# elif defined (__GLIBC__)  // GNU C library has a different signature
+  ::memset (buffer, 0, sizeof (ACE_HOSTENT_DATA));
+
+  if (::gethostbyname_r (name,
+                         result,
+                         buffer,
+                         sizeof (ACE_HOSTENT_DATA),
+                         &result,
+                         h_errnop) == 0)
+    return result;
+  else
+    return (struct hostent *) 0;
 #   else
 #     if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   ACE_UNUSED_ARG (result);
@@ -6846,6 +6890,18 @@ ACE_OS::getservbyname_r (const char *svc,
   ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
 
   if (::getservbyname_r (svc, proto, result, (struct servent_data *) buf) == 0)
+    return result;
+  else
+    return (struct servent *) 0;
+# elif defined (__GLIBC__)  // GNU C library has a different signature
+  ::memset (buf, 0, sizeof (ACE_SERVENT_DATA));
+
+  if (::getservbyname_r (svc,
+                         proto,
+                         result,
+                         buf,
+                         sizeof (ACE_SERVENT_DATA),
+                         &result) == 0)
     return result;
   else
     return (struct servent *) 0;
