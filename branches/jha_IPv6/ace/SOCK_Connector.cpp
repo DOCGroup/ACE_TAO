@@ -148,6 +148,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
+# if defined (ACE_HAS_IPV6)
+  if(remote_sap.get_type() == AF_INET6)
+    protocol_family = PF_INET6;
+#endif
   if (this->shared_open (new_stream,
                          protocol_family,
                          protocol,
@@ -183,6 +187,10 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
                              int protocol)
 {
   ACE_TRACE ("ACE_SOCK_Connector::connect");
+#if defined (ACE_HAS_IPV6)
+  if(remote_sap.get_type() == AF_INET6)
+    protocol_family = PF_INET6;
+#endif
   if (this->shared_open (new_stream,
                          protocol_family,
                          protocol,
