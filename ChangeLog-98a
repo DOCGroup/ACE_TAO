@@ -1,9 +1,9 @@
 Mon Dec 29 13:57:43 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* ace/XtReactor.cpp: 
+	* ace/XtReactor.cpp:
 	  Fixed syntax error, apparently some kind of typo.
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	  The ACE_*_cast() macros had (IMHO) surprizing priority, added
 	  some parenthesis to make them behave as the new cast operators
 	  are supposed to do.
@@ -27,6 +27,12 @@ Mon Dec 29 08:59:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_linux.GNU: enabled compiler warnings
           by replacing -w with -Wall -Wpointer-arith in CFLAGS.
+
+        * ace/ACE.cpp (count_interface,get_handle,get_ip_interfaces): use
+          same code for LynxOS as for __unix.
+
+        * ace/OS.h: on LynxOS, redefine NSIG to be greater than the
+          highest-numbered signal.
 
 Mon Dec 29 08:35:17 1997  Steve Huston  <shuston@riverace.com>
 
