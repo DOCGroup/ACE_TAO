@@ -1,3 +1,10 @@
+Wed Jun 30 11:27:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tests/NestedUpcall/MT_Client_Test/client.cpp:
+	* tests/Multiple_Inheritance/client.cpp:
+	* tests/Multiple_Inheritance/server.cpp:
+	  More exception handling fixes.
+
 Wed Jun 30 11:09:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Time/TAO_Time_Service_Clerk.cpp:
