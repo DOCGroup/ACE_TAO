@@ -992,7 +992,7 @@ void operator<<= (CORBA::Any &any, const CORBA_##name &ex) \
     { \
       TAO_OutputCDR stream; \
       ex._tao_encode (stream, ACE_TRY_ENV); \
-      ACE_CHECK; \
+      ACE_TRY_CHECK; \
       any._tao_replace (ex._type (), \
                         TAO_ENCAP_BYTE_ORDER, \
                         stream.begin ()); \
@@ -1018,7 +1018,7 @@ void operator<<= (CORBA::Any &any, CORBA_##name *ex) \
     { \
       TAO_OutputCDR stream; \
       ex->_tao_encode (stream, ACE_TRY_ENV); \
-      ACE_CHECK; \
+      ACE_TRY_CHECK; \
       any._tao_replace (ex->_type (), \
                         TAO_ENCAP_BYTE_ORDER, \
                         stream.begin (), \
