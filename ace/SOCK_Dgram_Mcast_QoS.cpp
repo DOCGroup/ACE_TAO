@@ -236,14 +236,14 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe (const ACE_INET_Addr &mcast_addr,
         // Subscribe to the QoS session.
         if (this->qos_manager_.join_qos_session (qos_session) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to join QoS Session\n"),
+                             ACE_TEXT("Unable to join QoS Session\n")),
                             -1);
       } 
       else
         {
           if (this->close () != 0)
             ACE_ERROR ((LM_ERROR,
-                        "Unable to close socket\n"));
+                        ACE_TEXT("Unable to close socket\n")));
           
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Dest Addr in the QoS Session does")
