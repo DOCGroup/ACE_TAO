@@ -51,6 +51,7 @@ TESTS = \
 	Priority_Buffer_Test \
 	Priority_Reactor_Test \
 	Priority_Task_Test \
+	Process_Manager_Test \
 	Process_Mutex_Test \
 	Process_Strategy_Test \
 	RB_Tree_Test \

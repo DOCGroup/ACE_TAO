@@ -1,3 +1,10 @@
+Wed Mar  8 01:33:21 2000  Christopher Kohlhoff <chris@kohlhoff.com> 
+
+        * TAO/Makefile.bor: Added support for 3 different "levels" of
+	  build: minimal, typical and all.
+
+	* TAO/orbsvcs/orbsvcs/Makefile.bor: Added new files.
+
 Tue Mar 07 15:42:41 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/interceptors.html: Fixed some html tag problems.  Thanks to
