@@ -960,10 +960,13 @@ Gateway_Initializer::handle_timeout (const ACE_Time_Value &,
         ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
 
-      scheduler->recompute_scheduling (min_os_priority,
-                                       max_os_priority,
-                                       anomalies.out()
-                                       ACE_ENV_ARG_PARAMETER);
+      scheduler->compute_scheduling (min_os_priority,
+                                     max_os_priority,
+                                     infos.out (),
+                                     dependencies.out (),
+                                     configs.out (),
+                                     anomalies.out ()
+                                     ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       std::stringstream sched_out;
