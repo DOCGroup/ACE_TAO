@@ -1,10 +1,17 @@
-Thu May  9 03:33:20 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+Thu May  9 08:16:11 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/Simple_Naming/run_test.pl:
+
+          Reordered the individual tests and added a sleep between
+          instances of the Naming_Service (for Windows only).
+
+Thu May  9 03:33:20 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/receiver.cpp:
 	* orbsvcs/tests/AVStreams/Component_Switching/distributer.cpp:
 	  Get rid of call to Connection_Manager::destroy() method.
 
-Wed May  8 22:03:48 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+Wed May  8 22:03:48 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* orbsvcs/tests/AVStreams/Component_Switching/*:  Memory management
 	  fixes.

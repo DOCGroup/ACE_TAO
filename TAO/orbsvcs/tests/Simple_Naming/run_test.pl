@@ -66,33 +66,38 @@ sub client
     }
 }
 
+## The options below have been reordered due to a
+## initialization problem (within the Naming_Service)
+## that has only been seen on Windows XP.
+
 # Options for all simple tests recognized by the 'client' program.
 @opts = ("-s -ORBInitRef NameService=file://$iorfile",
+         "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
+         "-p $file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
          "-s -ORBInitRef NameService=mcast://:$ns_multicast_port\::/NameService",
          "-t -ORBInitRef NameService=file://$iorfile",
          "-i -ORBInitRef NameService=file://$iorfile",
          "-e -ORBInitRef NameService=file://$iorfile",
          "-y -ORBInitRef NameService=file://$iorfile",
-         "-p $persistent_ior_file -ORBInitRef NameService=file://$iorfile",
          "-c file://$persistent_ior_file -ORBInitRef NameService=file://$iorfile",
-         "-p $file_persistent_ior_file -ORBInitRef NameService=file://$iorfile",
          "-c file://$file_persistent_ior_file -ORBInitRef NameService=file://$iorfile");
 
-@server_opts = ("", "", "", "", "", "",
-                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
+@server_opts = ("",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .",
+                "", "", "", "", "",
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -f $persistent_log_file",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port -u .");
 
 @comments = ("Simple Test: \n",
+             "mmap() Persistent Test (Part 1): \n",
+             "Flat File Persistent Test (Part 1): \n",
              "Simple Test (using multicast to locate the server): \n",
              "Tree Test: \n",
              "Iterator Test: \n",
              "Exceptions Test: \n",
              "Destroy Test: \n",
-             "mmap() Persistent Test (Part 1): \n",
              "mmap() Persistent Test (Part 2): \n",
-             "Flat File Persistent Test (Part 1): \n",
              "Flat File Persistent Test (Part 2): \n");
 
 $test_number = 0;
@@ -110,6 +115,14 @@ foreach $o (@opts) {
     client ($o);
 
     $NS->Kill ();
+
+    ## For some reason, only on Windows XP, we need to
+    ## wait before starting another Naming_Service when
+    ## the mmap persistence option is used
+    if ($^O eq "MSWin32") {
+      sleep(1);
+    }
+
     $test_number++;
 }
 
