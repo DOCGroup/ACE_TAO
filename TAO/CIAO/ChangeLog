@@ -1,4 +1,15 @@
-Mon Mar 01 18:30:25 2005  Gan Deng  <gan.deng@vanderbilt.edu>
+Wed Mar 02 11:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+
+        * DAnCE/Config_Handlers/Config_Handlers.mpc
+        * DAnCE/RepositoryManager/RepositoryManager.mpc
+        * performance-tests/Protocols/Controller/Controller.mpc
+        * performance-tests/Protocols/Receiver/Receiver.mpc
+        * performance-tests/Protocols/Sender/Sender.mpc
+        * tests/RTCCM/DiffServ/Controller/Controller.mpc
+          Use exceptions as base project instead of requires exceptions
+
+Mon Mar 02 18:30:25 2005  Gan Deng  <gan.deng@vanderbilt.edu>
 
 	* examples/Hello/step-by-step.html
 	* DAnCE/examples/Hello/step-by-step.html
@@ -27,15 +38,15 @@ Sat Feb 26 14:38:46 2005  Arvind S. Krishna  <arvindk@tango.dre.vanderbilt.edu>
 	  Replaced all occurances of "dummy" with "dummy_label"
 
 	* bin/replace_dummy_with_dummylabel.sh:
-	  
+
 	  Shell script that can be used to do this. In case people find it
-	  useful. 
-	
+	  useful.
+
 
 Tue Feb 22 09:55:51 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/TypeNameEmitter.cpp:
-        
+
           Fixed typos in code generation that were omitting a space
           between the type name and '_ciao_extract_val' for enums,
           structs and unions when used as component or home attributes.
