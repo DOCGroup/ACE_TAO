@@ -16,9 +16,10 @@ CPPFLAGS	+= -D_SGI_MP_SOURCE
 CCFLAGS		+= -O
 CCFLAGS		+= +pp
 CCFLAGS		+= -woff 3203,3209,3161,3262,3665
-# Instantiate everything; without this, apps/Gateway/Gateway/gatewayd might
-# not build due to missing template instantiations.
-CCFLAGS		+= -ptall
+# Instantiate no templates automatically, do not run prelinker
+CCFLAGS		+= -ptnone -no_prelink
+# Turn on exceptions
+CCFLAGS		+= -exceptions -ptv
 # Instantiate used templates, plus prelinking instantiation
 # CCFLAGS	+= -ptused -prelink
 # Unknown version of SGI CC, -n32 mode

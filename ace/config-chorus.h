@@ -16,6 +16,7 @@
 #undef linux
 #endif
 
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_LACKS_UNIX_SIGNALS
 #define ACE_HAS_IP_MULTICAST
 #define ACE_LACKS_MPROTECT

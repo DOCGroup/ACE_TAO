@@ -50,6 +50,38 @@ public:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
+#if defined (ACE_REACTOR_HAS_DEADLOCK_DETECTION)
+#include "ace/Local_Tokens.h"
+typedef ACE_Local_Mutex ACE_REACTOR_MUTEX;
+#else 
+typedef ACE_Token ACE_REACTOR_MUTEX;
+#endif /* ACE_REACTOR_HAS_DEADLOCK_DETECTION */
+ 
+class ACE_Export ACE_Reactor_Token : public ACE_REACTOR_MUTEX
+  // = TITLE
+  //     Used as a synchronization mechanism to coordinate concurrent
+  //     access to a Reactor object.
+{
+public:
+  ACE_Reactor_Token (ACE_Reactor &r);
+
+  virtual void sleep_hook (void);
+  // Called just before the ACE_Event_Handler goes to sleep.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+private:
+  ACE_Reactor &reactor_;
+};
+#else
+// If we're non-MT safe then this is just a no-op...
+typedef ACE_Null_Mutex ACE_Reactor_Token;
+#endif /* ACE_MT_SAFE */    
+
 // The following two classes have to be moved out here to keep the SGI
 // C++ compiler happy (it doesn't like nested classes).
 
@@ -109,38 +141,6 @@ private:
   // HANDLE that threads wanting the attention of the Reactor will
   // write to.
 };
-
-#if defined (ACE_REACTOR_HAS_DEADLOCK_DETECTION)
-#include "ace/Local_Tokens.h"
-typedef ACE_Local_Mutex ACE_REACTOR_MUTEX;
-#else 
-typedef ACE_Token ACE_REACTOR_MUTEX;
-#endif /* ACE_REACTOR_HAS_DEADLOCK_DETECTION */
- 
-class ACE_Export ACE_Reactor_Token : public ACE_REACTOR_MUTEX
-  // = TITLE
-  //     Used as a synchronization mechanism to coordinate concurrent
-  //     access to a Reactor object.
-{
-public:
-  ACE_Reactor_Token (ACE_Reactor &r);
-
-  virtual void sleep_hook (void);
-  // Called just before the ACE_Event_Handler goes to sleep.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-  ACE_Reactor &reactor_;
-};
-#else
-// If we're non-MT safe then this is just a no-op...
-typedef ACE_Null_Mutex ACE_Reactor_Token;
-#endif /* ACE_MT_SAFE */    
 
 class ACE_Export ACE_Reactor_Handler_Repository
   // = TITLE
@@ -540,7 +540,6 @@ public:
   // else will wait until the relative time specified in *<timeout>
   // elapses).
 
-  // 
   void requeue_position (int);
   // Set position that the main ACE_Reactor thread is requeued in the
   // list of waiters during a notify() callback.

@@ -590,6 +590,8 @@ ACE_Reactor_Token::sleep_hook (void)
     ACE_ERROR ((LM_ERROR, "%p\n", "sleep_hook failed"));
 }
 
+#endif /* ACE_MT_SAFE */
+
 void
 ACE_Reactor_Notify::dump (void) const
 {
@@ -748,7 +750,6 @@ ACE_Reactor_Notify::handle_input (ACE_HANDLE handle)
   this->reactor_->renew ();
   return number_dispatched;
 }
-#endif /* ACE_MT_SAFE */
 
 int
 ACE_Reactor::notify (ACE_Event_Handler *eh,
@@ -759,17 +760,11 @@ ACE_Reactor::notify (ACE_Event_Handler *eh,
 
   ssize_t n = 0;
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // Pass over both the Event_Handler *and* the mask to allow the
   // caller to dictate which Event_Handler method the receiver
   // invokes.  Note that this call can timeout.
 
   n = this->notify_handler_.notify (eh, mask, timeout);
-#else
-  ACE_UNUSED_ARG (eh);
-  ACE_UNUSED_ARG (mask);
-  ACE_UNUSED_ARG (timeout);
-#endif /* ACE_MT_SAFE */
   return n == -1 ? -1 : 0;
 }
 
