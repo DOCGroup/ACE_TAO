@@ -20,5 +20,5 @@
 
 // SunOS 5.6 does support sched_get_priority_{min,max}
 #undef ACE_THR_PRI_FIFO_DEF
-
+#define ACE_THREAD_POSIX_SEM
 #endif /* ACE_CONFIG_H */

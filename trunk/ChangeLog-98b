@@ -1,3 +1,9 @@
+Mon May 18 08:34:35 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-sunos5.6.h: Added an #define for
+ 	  ACE_THREAD_POSIX_SEM.  Thanks to Ki-hyun Yoon
+ 	  <abird@nextware.co.kr> for reporting this.
+
 Sun May 17 23:14:32 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Wince/*.dsp: Disabled precompiled headers.  They ate up
