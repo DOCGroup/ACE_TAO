@@ -1334,7 +1334,8 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
   // routine does).
   //
   // NOTE:  we still "just" assume that native floating point is IEEE.
-  if (sizeof (CORBA::Short) != 2
+  if (sizeof (CORBA::Boolean) != 1
+      || sizeof (CORBA::Short) != 2
       || sizeof (CORBA::Long) != 4
       || sizeof (CORBA::LongLong) != 8
       || sizeof (CORBA::Float) != 4
@@ -1343,10 +1344,11 @@ CORBA::ORB::init_orb_globals (ACE_ENV_SINGLE_ARG_DECL)
       || sizeof (CORBA::WChar) < 2
       || sizeof (void *) != ACE_SIZEOF_VOID_P)
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "%N; ERROR: unexpected basic type size; "
-                  "s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
+                  "b:%d s:%d l:%d ll:%d f:%d d:%d ld:%d wc:%d v:%d\n"
                   "please reconfigure TAO\n",
+                  sizeof (CORBA::Boolean),
                   sizeof (CORBA::Short),
                   sizeof (CORBA::Long),
                   sizeof (CORBA::LongLong),
