@@ -1,3 +1,13 @@
+Fri Nov 14 10:20:18 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
+
+	* examples/OEP/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+	* examples/OEP/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/OEP/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+	* examples/OEP/BasicSP/EC/EC_exec.cpp:
+	* examples/OEP/BasicSP/EC/client.cpp:
+	* examples/OEP/BasicSP/EC/controller.cpp: Adopted the use of
+	  CIAO::debug_level according to the guidelines.
+
 Fri Nov 14 00:07:00 2003  Nanbor Wang  <nanbor@cse.wustl.edu>
 
 	* ciao/CIAO_common.h:  Added guideline for checking
