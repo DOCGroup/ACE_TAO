@@ -83,7 +83,9 @@ AST_Type::AST_Type (void)
     ifr_fwd_added_ (0),
     size_type_ (AST_Type::SIZE_UNKNOWN),
     has_constructor_ (0),
-    nested_type_name_ (0)
+    nested_type_name_ (0),
+    seq_cdr_hdr_gen_ (I_FALSE),
+    seq_cdr_body_gen_ (I_FALSE)
 {
 }
 
@@ -95,7 +97,9 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
     ifr_fwd_added_ (0),
     size_type_ (AST_Type::SIZE_UNKNOWN),
     has_constructor_ (0),
-    nested_type_name_ (0)
+    nested_type_name_ (0),
+    seq_cdr_hdr_gen_ (I_FALSE),
+    seq_cdr_body_gen_ (I_FALSE)
 {
 }
 
@@ -493,6 +497,30 @@ AST_Type::nested_name (const char* local_name,
     }
 
   return this->nested_type_name_;
+}
+
+idl_bool
+AST_Type::seq_cdr_hdr_gen (void) const
+{
+  return this->seq_cdr_hdr_gen_;
+}
+
+void
+AST_Type::seq_cdr_hdr_gen (idl_bool val)
+{
+  this->seq_cdr_hdr_gen_ = val;
+}
+
+idl_bool
+AST_Type::seq_cdr_body_gen (void) const
+{
+  return this->seq_cdr_body_gen_;
+}
+
+void
+AST_Type::seq_cdr_body_gen (idl_bool val)
+{
+  this->seq_cdr_body_gen_ = val;
 }
 
 int

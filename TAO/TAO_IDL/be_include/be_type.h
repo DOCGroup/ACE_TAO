@@ -25,6 +25,8 @@
 #include "be_decl.h"
 #include "ast_type.h"
 
+#include "ace/SString.h"
+
 class TAO_OutStream;
 
 class be_type : public virtual AST_Type,
@@ -52,6 +54,9 @@ public:
   // Type name of a node used when generating declarations for smart
   // proxies.
 
+  const char *fwd_helper_name (void) const;
+  // Accessor to the member.
+
   virtual AST_Decl::NodeType base_node_type (void) const;
   // Typedefs are tricky to handle, in many points their mapping
   // depend on base type they are aliasing.  Since typedefs can be
@@ -74,6 +79,9 @@ protected:
 
   UTL_ScopedName *tc_name_;
   // Typecode name.
+
+  ACE_CString fwd_helper_name_;
+  // Calculate this in one place.
 };
 
 #endif // end of if !defined

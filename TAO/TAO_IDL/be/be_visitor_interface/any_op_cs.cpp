@@ -95,17 +95,20 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_nl << be_nl
-      << "template<>" << be_nl
-      << "CORBA::Boolean" << be_nl
-      << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
-      << be_idt <<  be_idt_nl
-      << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
-      << ") const" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
-      << "return 1;" << be_uidt_nl
-      << "}";
+  if (! node->is_abstract ())
+    {
+      *os << be_nl << be_nl
+          << "template<>" << be_nl
+          << "CORBA::Boolean" << be_nl
+          << "TAO::Any_Impl_T<" << node->name () << ">::to_object ("
+          << be_idt <<  be_idt_nl
+          << "CORBA::Object_ptr &_tao_elem" << be_uidt_nl
+          << ") const" << be_uidt_nl
+          << "{" << be_idt_nl
+          << "_tao_elem = CORBA::Object::_duplicate (this->value_);" << be_nl
+          << "return 1;" << be_uidt_nl
+          << "}";
+    }
 
   if (node->is_abstract () || node->has_mixed_parentage ())
     {

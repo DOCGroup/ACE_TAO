@@ -182,9 +182,22 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
         {
           if (node->unbounded ())
             {
+              *os << be_nl << be_nl
+                  << "typedef TAO_Unbounded_Array_Sequence<"
+                  << be_idt << be_idt_nl
+                  << bt->name () << "," << be_nl
+                  << bt->fwd_helper_name () << "_life" << be_uidt_nl
+                  << "> " << node->local_name () << ";" << be_uidt;
             }
           else
             {
+              *os << be_nl << be_nl
+                  << "typedef TAO_Bounded_Array_Sequence<"
+                  << be_idt << be_idt_nl
+                  << bt->name () << "," << be_nl
+                  << bt->fwd_helper_name () << "_life," << be_nl
+                  << node->max_size ()->ev ()->u.ulval << be_uidt_nl
+                  << "> " << node->local_name () << ";" << be_uidt;
             }
         }
       else

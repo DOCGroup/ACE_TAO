@@ -1027,6 +1027,10 @@ SOURCE=.\arg_shifter.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Array_VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Asynch_Invocation.h
 # End Source File
 # Begin Source File
@@ -1855,6 +1859,10 @@ SOURCE=.\varbase.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\VarOut_T.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Wait_On_Leader_Follower.h
 # End Source File
 # Begin Source File
@@ -1900,6 +1908,10 @@ SOURCE=.\any.i
 # Begin Source File
 
 SOURCE=.\Any_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Array_VarOut_T.inl
 # End Source File
 # Begin Source File
 
@@ -2445,6 +2457,10 @@ SOURCE=.\ValueFactory.i
 
 SOURCE=.\ValueFactory_Map.i
 # End Source File
+# Begin Source File
+
+SOURCE=.\VarOut_T.inl
+# End Source File
 # End Group
 # Begin Group "Resource files"
 
@@ -2460,6 +2476,11 @@ SOURCE=.\tao.rc
 # Begin Source File
 
 SOURCE=.\Any_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Array_VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File
@@ -2485,6 +2506,11 @@ SOURCE=.\Sequence_T.cpp
 # Begin Source File
 
 SOURCE=.\Value_VarOut_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\VarOut_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group

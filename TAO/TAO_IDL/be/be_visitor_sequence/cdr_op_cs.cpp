@@ -63,6 +63,11 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
                         -1);
     }
 
+  if (bt->seq_cdr_body_gen () == I_TRUE)
+    {
+      return 0;
+    }
+
   // If our base type is anonymous sequence,
   // generate code for the base type sequence here.
 
@@ -241,6 +246,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
     }
 
   node->cli_stub_cdr_op_gen (1);
+  bt->seq_cdr_body_gen (I_TRUE);
   return 0;
 }
 
