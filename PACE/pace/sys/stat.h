@@ -37,11 +37,11 @@ extern "C" {
 #endif /* PACE_HAS_POSIX_FA_UOF */
 
 #if (PACE_HAS_POSIX_NONUOF_FUNCS)
-  PACE_INLINE int pace_fchmod (int fildes, pace_mode_t mode);
+  PACE_INLINE int pace_fchmod (PACE_HANDLE fildes, pace_mode_t mode);
 #endif /* PACE_HAS_POSIX_NONUOF_FUNCS */
 
 #if (PACE_HAS_POSIX_FS_UOF)
-  PACE_INLINE int pace_fstat (int fildes, pace_stat_s * buf);
+  PACE_INLINE int pace_fstat (PACE_HANDLE fildes, pace_stat_s * buf);
 #endif /* PACE_HAS_POSIX_FS_UOF */
 
 #if (PACE_HAS_POSIX_FS_UOF)
