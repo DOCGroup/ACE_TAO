@@ -1,3 +1,17 @@
+Sat Jan  8 14:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/Thread_Per_Connection/Thread_Per_Conn.mpc:
+        * performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/DSI/DSI.mpc:
+        * performance-tests/Sequence_Latency/DII/DII.mpc:
+        * performance-tests/Sequence_Latency/Deferred/Deferred.mpc:
+        * performance-tests/Sequence_Latency/AMI/ami.mpc:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded/Single_Threaded.mpc:
+        * performance-tests/Sequence_Latency/Thread_Pool/Thread_Pool.mpc:
+        * tests/Bug_1330_Regression/Bug_1330_Regression.mpc:
+          Use taoserver instead of server as base project and use taoclient
+          for the client
+
 Fri Jan  7 22:46:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:
