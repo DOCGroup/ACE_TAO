@@ -1,3 +1,9 @@
+Tue Feb 22 11:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/ImR_Client/ServerObject{C,A,S}.{h,cpp,inl}:
+        * tao/ImR_Client/ImplRepo{C,A,S}.{h,cpp,inl}:
+          Regenerated
+
 Tue Feb 22 11:01:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Operation_Table.h:
