@@ -10,11 +10,11 @@ Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
 
 Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\CDR_Base (NonNative LongLong and LongDouble): 
+	* ace/CDR_Base (NonNative LongLong and LongDouble): 
 
 	  Added assignment operators for these two types. 
 
-	* ace\CDR_Stream.cpp (read_16): 
+	* ace/CDR_Stream.cpp (read_16): 
 
 	  The function for reading a longdouble was adjusting and aligning
 	  the buffer to longlong size rather than to longdouble size.
