@@ -1,3 +1,11 @@
+Wed Mar  7 12:41:05 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Select_Reactor_T.h,
+	* ace/Reactor_Impl.h,
+	* ace/WFMO_Reactor.h,
+	* ace/Reactor.h: Updated the comments to be more accurate.  Thanks
+	  to Craig Rodrigues for reporting this.
+
 Wed Mar  7 08:57:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Asynch_IO.h:
