@@ -1,3 +1,8 @@
+1998-10-14  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
+
+	* ace/Synch_T.cpp : Changed ACE_mutex_t to ACE_cond_t for CHORUS
+	in ACE_Condition constructor.
+
 1998-10-13  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* ace/Synch.i (ACE_Mutex::remove): Added a #else for non-chorus
