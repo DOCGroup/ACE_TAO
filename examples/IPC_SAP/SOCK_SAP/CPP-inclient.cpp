@@ -25,24 +25,28 @@ int main (int argc, char *argv[])
   ACE_DEBUG ((LM_DEBUG, "starting connect\n"));
 
   if (con.connect (cli_stream, remote_addr) == -1)
-    // Initiate timed, non-blocking connection with server.
-    ACE_DEBUG ((LM_DEBUG, "starting non-blocking connect\n"));
-
-  if (con.connect (cli_stream, remote_addr, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
     {
-      if (errno != EWOULDBLOCK)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection failed"), 1);
+      // Initiate timed, non-blocking connection with server.
+      ACE_DEBUG ((LM_DEBUG, "starting non-blocking connect\n"));
 
-      ACE_DEBUG ((LM_DEBUG, "starting timed connect\n"));
+      if (con.connect (cli_stream, remote_addr, (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+	{
+	  if (errno != EWOULDBLOCK)
+	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connection failed"), 1);
 
-      // Check if non-blocking connection is in progress, 
-      // and wait up to timeout seconds for it to complete.
+	  ACE_DEBUG ((LM_DEBUG, "starting timed connect\n"));
 
-      if (con.complete (cli_stream, &remote_addr, &timeout) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "complete failed"), 1);
-      else
-	ACE_DEBUG ((LM_DEBUG, "connected to %s\n", remote_addr.get_host_name ()));
+	  // Check if non-blocking connection is in progress, 
+	  // and wait up to timeout seconds for it to complete.
+	  
+	  if (con.complete (cli_stream, &remote_addr, &timeout) == -1)
+	    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "complete failed"), 1);
+	  else
+	    ACE_DEBUG ((LM_DEBUG, "connected to %s\n", remote_addr.get_host_name ()));
+	}
     }
+  else
+    ACE_DEBUG ((LM_DEBUG, "connected to %s\n", remote_addr.get_host_name ()));    
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "disable"), 1);    
