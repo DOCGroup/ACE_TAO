@@ -40,7 +40,8 @@ Auto_Functor<Client,Functor>::~Auto_Functor ()
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY {
     Functor functor;
-    functor (this->client_ ACE_ENV_SINGLE_ARG_PARAMETER);
+    functor (this->client_
+             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
   } ACE_CATCHANY {
     // @@ TODO This event should be logged. Cannot throw because that
