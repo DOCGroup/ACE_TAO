@@ -45,7 +45,7 @@ class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
 public:
   SYNCHRONIZER (int initial_value)
     : ACE_SV_Semaphore_Simple ((const char *) 0,
-                               ACE_SV_Semaphore_Complex::ACE_CREATE,
+                               ACE_SV_Semaphore_Simple::ACE_CREATE,
                                initial_value)
   {}
 };
