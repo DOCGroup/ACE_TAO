@@ -51,16 +51,16 @@ public:
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param);
   // Register an object (or array) for cleanup at process termination.
-  // "cleanup_hook" points to a (global, or static member) function that
-  // is called for the object or array when it to be destroyed.  It may
-  // perform any necessary cleanup specific for that object or its class.
-  // "param" is passed as the second parameter to the "cleanup_hook"
-  // function; the first parameter is the object (or array) to be destroyed.
-  // "cleanup_hook", for example, may delete the object (or array).
-  // For OS's that do not have processes, this function is the same
-  // as at_thread_exit ().
-  // Returns 0 on success, non-zero on failure: -1 if virtual memory is
-  // exhausted or 1 if the object (or arrayt) had already been registered.
+  // "cleanup_hook" points to a (global, or static member) function
+  // that is called for the object or array when it to be destroyed.
+  // It may perform any necessary cleanup specific for that object or
+  // its class.  "param" is passed as the second parameter to the
+  // "cleanup_hook" function; the first parameter is the object (or
+  // array) to be destroyed.  "cleanup_hook", for example, may delete
+  // the object (or array).  For OS's that do not have processes, this
+  // function is the same as at_thread_exit ().  Returns 0 on success,
+  // non-zero on failure: -1 if virtual memory is exhausted or 1 if
+  // the object (or arrayt) had already been registered.
 
 #if 0 /* not implemented yet */
   static int at_thread_exit (void *object,
@@ -71,20 +71,22 @@ public:
 #endif /* 0 */
 
 private:
-  // not currently used:
   // typedef void (*ACE_CONSTRUCT_FUNC)(void *object, void *param);
+  // not currently used:
 
   static ACE_Object_Manager *instance_;
   // Singleton pointer.
 
-public:  // For template instantiation, with some compilers that need the
-         // struct definition to be public.
+public:  
+  // For template instantiation, with some compilers that need the
+  // struct definition to be public.
   typedef struct object_info
   {
     void *object_;
     ACE_CLEANUP_FUNC cleanup_hook_;
     void *param_;
   } object_info_t;
+
 private:
 
   ACE_Unbounded_Queue<object_info_t> registered_objects_;
@@ -94,12 +96,13 @@ private:
   // Register an object or array for deletion at program termination.
   // See description of static version above for return values.
 
+  // = Make these private to prevent explicit instantiation.
   ACE_Object_Manager (void);
   ~ACE_Object_Manager (void);
 
   static ACE_Object_Manager *instance (void);
-  // Accessor to singleton instance.  Because static member functions are
-  // provided in the interface, this does not need to be public.
+  // Accessor to singleton instance.  Because static member functions
+  // are provided in the interface, this does not need to be public.
 
   friend class ACE_Object_Manager_Destroyer;
 
