@@ -122,7 +122,7 @@ Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 
   #define setup_entry(x,t) \
     { \
-      TAO_IIOP_Interpreter::table_ [t].size = sizeof (x); \
+      TAO_IIOP_Interpreter::table_ [t].size_ = sizeof (x); \
       TAO_IIOP_Interpreter::table_ [t].alignment_ = 1; \
     }
 #else  /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
@@ -137,8 +137,8 @@ Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 
   #define setup_entry(x,t) \
     { \
-      align_struct_ ## t       align; \
-      TAO_IIOP_Interpreter::table_ [t].size = sizeof (x); \
+      align_struct_ ## t align; \
+      TAO_IIOP_Interpreter::table_ [t].size_ = sizeof (x); \
       TAO_IIOP_Interpreter::table_ [t].alignment_ = \
       (char *) &align.two - (char *) &align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE; \
     }
@@ -196,7 +196,7 @@ TAO_IIOP_Interpreter::init_table (void)
 
   // XXX workaround for G++ 2.6.3 bug
   // setup_entry (generic_enum, CORBA::tk_enum);
-  CORBA_TypeCode::table_ [CORBA::tk_enum].size = sizeof (generic_enum);
+  CORBA_TypeCode::table_ [CORBA::tk_enum].size_ = sizeof (generic_enum);
   CORBA_TypeCode::table_ [CORBA::tk_enum].alignment_ = sizeof (generic_enum);
 
   setup_entry (CORBA::String, tk_string);
@@ -323,9 +323,9 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   // lists that affect the size and alignment of "top level" memory
   // needed to hold an instance of this type.
 
-  if (TAO_IIOP_Interpreter::table_[kind].calc != 0)
+  if (TAO_IIOP_Interpreter::table_[kind].calc_ != 0)
     {
-      assert (TAO_IIOP_Interpreter::table_[kind].size == 0);
+      assert (TAO_IIOP_Interpreter::table_[kind].size_ == 0);
 
       // Pull encapsulation length out of the stream.
       if (stream->get_ulong (temp) == CORBA::B_FALSE)
@@ -352,7 +352,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
       assert (temp <= UINT_MAX);
       sub_encapsulation.setup_encapsulation (stream->buffer(), temp);
-      size = TAO_IIOP_Interpreter::table_[kind].calc (&sub_encapsulation, alignment, env);
+      size = TAO_IIOP_Interpreter::table_[kind].calc_ (&sub_encapsulation, alignment, env);
 
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
@@ -365,7 +365,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
         }
       return size;
     }
-  assert (TAO_IIOP_Interpreter::table_[kind].size != 0);              // fixed size data type
+  assert (TAO_IIOP_Interpreter::table_[kind].size_ != 0);              // fixed size data type
 
   // Reinitialize the TypeCode if requested; this consumes any
   // TypeCode parameters in the stream.  They only exist for TCKind
@@ -381,7 +381,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       switch (kind)
         {
         default:
-          assert (TAO_IIOP_Interpreter::table_[kind].skipper == 0);
+          assert (TAO_IIOP_Interpreter::table_[kind].skipper_ == 0);
           break;
 
         case CORBA::tk_string:
@@ -413,8 +413,8 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
       // Otherwise, consume any parameters without stuffing them into
       // a temporary TypeCode.
     }
-  else if (TAO_IIOP_Interpreter::table_[kind].skipper != 0
-           && TAO_IIOP_Interpreter::table_[kind].skipper (stream) == CORBA::B_FALSE)
+  else if (TAO_IIOP_Interpreter::table_[kind].skipper_ != 0
+           && TAO_IIOP_Interpreter::table_[kind].skipper_ (stream) == CORBA::B_FALSE)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -422,7 +422,7 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
   // Return statically known values.
   alignment = TAO_IIOP_Interpreter::table_[kind].alignment_;
-  return TAO_IIOP_Interpreter::table_[kind].size;
+  return TAO_IIOP_Interpreter::table_[kind].size_;
 }
 
 // Given typecode bytes for a structure (or exception), figure out its

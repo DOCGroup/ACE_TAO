@@ -754,8 +754,8 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 {
   env.clear ();
 
-  // for unions the repoID and names are optional. However, if provided, we
-  // must compare them
+  // For unions the repoID and names are optional. However, if
+  // provided, we must compare them.
   const char *my_id = this->id (env);
   if (env.exception ())
     return 0;
