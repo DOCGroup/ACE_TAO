@@ -1,3 +1,9 @@
+Sun Oct 31 15:51:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+          Changed isalpha to ACE_OS::is_alpha, this is already used in another
+          place in this file and fixes the compile problems on Tru64
+
 Sat Oct 30 15:28:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/tests/Trading/TT_Info.cpp:
