@@ -35,6 +35,7 @@
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
 #include "ace/OS_NS_sys_wait.h"
+#include "ace/OS_NS_unistd.h"
 
 ACE_RCSID(tests, Priority_Reactor_Test, "$Id$")
 
