@@ -1,3 +1,11 @@
+Tue Sep  7 16:38:59 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Typecode.cpp: Fixed a bug that was a result of the
+	  duplication of the returned typecodes in the member_type ()
+	  method in the TypeCode class. Thanks to Nanbor for reporting
+	  that there was a bug and helping me to identify the problem with
+	  the Purify output.
+
 Tue Sep  7 11:25:04 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/ntp-time.h: 
