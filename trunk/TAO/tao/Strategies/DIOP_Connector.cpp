@@ -43,8 +43,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<ACE_INET_Addr, TAO_DIOP_Connecti
 #pragma instantiate ACE_Map_Manager<int, ACE_Svc_Tuple<TAO_DIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator_Base<int, ACE_Svc_Tuple<TAO_DIOP_Connection_Handler> *, TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Entry<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*>
-
-#pragma instantiate ACE_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>;
+#pragma instantiate ACE_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>
 
 #pragma instantiate ACE_Map_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Reverse_Iterator<int,ACE_Svc_Tuple<TAO_DIOP_Connection_Handler>*,TAO_SYNCH_RW_MUTEX>
