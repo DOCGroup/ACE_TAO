@@ -159,7 +159,7 @@ IR_Helper::read_ir_ior (CORBA_Environment &_env)
 
 
 void
-IR_Helper::notify_startup (CORBA_Environment &_env)
+IR_Helper::notify_startup (CORBA_Environment &TAO_IN_ENV)
 {
   // Get our host and port and convert it to something we can use.
   ACE_INET_Addr my_addr = TAO_ORB_Core_instance ()->orb_params ()->addr ();
@@ -186,7 +186,7 @@ IR_Helper::notify_startup (CORBA_Environment &_env)
 
 // Notify the IR that the server has been shut down.
 void
-IR_Helper::notify_shutdown (CORBA_Environment &_env)
+IR_Helper::notify_shutdown (CORBA_Environment &TAO_IN_ENV)
 {
   TAO_TRY
     {

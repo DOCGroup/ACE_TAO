@@ -1,5 +1,9 @@
 Wed Feb 10 10:39:09 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
+	* orbsvcs/Time_Service/IR_Helper.cpp: 
+	  To use TAO_RETHROW the methods must use TAO_IN_ENV as the
+	  incoming CORBA_Environment argument.
+
 	* tao/Typecode.i: 
 	  Removed unused argument in kind()
 
