@@ -1,3 +1,10 @@
+Wed Oct 20 15:41:24 MST 2004  Trevor Fields  <fields_t@ociweb.com>
+
+        * orbsvcs/examples/ImR/Combined_Service/ImR_Combined_Service.mpc:
+
+          Changed the projects so the ones using test.idl will not be compiled
+          in parallel.
+
 Wed Oct 20 14:25:59 2004  Iliyan Jeliazkov  <jeliazkov_i@ociweb.com>
 
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
