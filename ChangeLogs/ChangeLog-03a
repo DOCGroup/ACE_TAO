@@ -1,3 +1,9 @@
+Wed May  3 12:31:32 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile.am (INLINE_FILES):
+
+	  Removed deprecated inline files from the list.
+
 Wed May  3 11:59:14 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * include/makeinclude/macros.GNU:
