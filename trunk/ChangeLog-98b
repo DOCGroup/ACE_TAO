@@ -1,3 +1,19 @@
+Tue Dec 01 12:59:57 1998  James CE Johnson <jcej@lads.com>
+
+        * ace/IOStream_T.i (recv,recv_n): set errno to ESUCCESS
+          because it was never being set to ETIME when the read timed
+          out.  (Before entering the peer_->recv/recv_n, errno was
+          ENOENT from previous activities and was the same after in
+          both positive & negative tests until I did the reset.)
+          (eof): cleaned up a bit.
+
+          I tested against IOStream_Test for both positive and
+          negative. For the positive test, I changed the sleep() at
+          line 363 to a much larger value.  The client worked fine.
+          For the negative test, I replaced the spleep() with a
+          close() & return() pair.  The client saw the closure and
+          exited as expected.
+
 Tue Dec  1 08:55:48 PST 1998  James Hu  <jxh@entera.com>
 
         * ace/Memory_Pool.cpp:  Since type key_t might be something
@@ -8,10 +24,10 @@ Tue Dec 01 10:49:00 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * tests/Win32clerk.conf
           tests/Win32server.conf
-          tests/Win32tokens.conf: removed explicit path for netsvcs dll, as 
-	  this dll is now being moved to ACE_wrappers/bin after it is built
-	  and the explicit path was causing dlopen to fail rather than 
-	  searching the path on NT, which caused Time_Service_Test to fail.
+          tests/Win32tokens.conf: removed explicit path for netsvcs dll, as
+          this dll is now being moved to ACE_wrappers/bin after it is built
+          and the explicit path was causing dlopen to fail rather than
+          searching the path on NT, which caused Time_Service_Test to fail.
 
 Tue Dec 01 10:07:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -19,8 +35,8 @@ Tue Dec 01 10:07:48 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Dec  1 00:07:05 PST 1998  James Hu  <jxh@entera.com>
 
-	* ace/Containers_T.h:
-	* ace/Containers_T.i:
+        * ace/Containers_T.h:
+        * ace/Containers_T.i:
           Fixed a bug introduced when someone genericized the creation
           strategy for ACE_DLList.  The removal routing had not been
           similarly genericized.  Thanks goes to Martin Krumpolec
@@ -29,30 +45,30 @@ Tue Dec  1 00:07:05 PST 1998  James Hu  <jxh@entera.com>
 
 Mon Nov 30 19:10:23 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/DLL/Makefile:
-	* examples/DLL/Makefile.Today:
-	* examples/DLL/Makefile.Newsweek:
+        * examples/DLL/Makefile:
+        * examples/DLL/Makefile.Today:
+        * examples/DLL/Makefile.Newsweek:
 
-	  Added the above makefiles. Makefile internally uses
-	  Makefile.Today and Makefile.Newsweek to build the libraries
-	  seperately. 
-	
+          Added the above makefiles. Makefile internally uses
+          Makefile.Today and Makefile.Newsweek to build the libraries
+          seperately.
+
 Mon Nov 30 13:54:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_input): There
- 	  was a friggin' bug in this code that is a violation of Reactor
- 	  framework design rule #2, i.e., we were returning a non-0 value
- 	  from handle_input(), which is a no-no...  Thanks to Steve Huston
- 	  for reporting this.
+        * netsvcs/lib/Server_Logging_Handler_T.cpp (handle_input): There
+          was a friggin' bug in this code that is a violation of Reactor
+          framework design rule #2, i.e., we were returning a non-0 value
+          from handle_input(), which is a no-no...  Thanks to Steve Huston
+          for reporting this.
 
 Mon Nov 29 13:16:53 EST 1998  James CE Johnson  <jcej@lads.com>
 
-	* docs/tutorials/001/logger.h: 
-	* docs/tutorials/001/page04.html: 
-	* docs/tutorials/003/client.cpp:
-	* docs/tutorials/003/page01.html: 
-	Added a blurb about the additional parameters to the recv(),
-	recv_n(), send() and send_n() method calls of ACE_SOCK_Stream.
+        * docs/tutorials/001/logger.h:
+        * docs/tutorials/001/page04.html:
+        * docs/tutorials/003/client.cpp:
+        * docs/tutorials/003/page01.html:
+        Added a blurb about the additional parameters to the recv(),
+        recv_n(), send() and send_n() method calls of ACE_SOCK_Stream.
 
 Sun Nov 29 22:14:32 1998  David L. Levine  <levine@cs.wustl.edu>
 
