@@ -321,7 +321,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static InvalidName* _narrow (CORBA_Exception *ex);
+    static InvalidName* _downcast (CORBA_Exception *ex);
     // = TAO extension
     static CORBA::Exception *_alloc (void);
   };

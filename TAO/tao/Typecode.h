@@ -79,7 +79,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static Bounds* _narrow (CORBA_Exception *ex);
+    static Bounds* _downcast (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 
@@ -95,7 +95,7 @@ public:
     virtual void _tao_decode (TAO_InputCDR &cdr,
                               CORBA::Environment &);
 
-    static BadKind* _narrow (CORBA_Exception *ex);
+    static BadKind* _downcast (CORBA_Exception *ex);
     virtual int _is_a (const char* interface_id) const;
   };
 

@@ -223,7 +223,7 @@ CORBA::Environment::print_exception (const char *info,
                   info));
 
       CORBA::SystemException *x2 =
-        CORBA_SystemException::_narrow (this->exception_);
+        CORBA_SystemException::_downcast (this->exception_);
 
       if (x2 != 0)
         x2->_tao_print_system_exception ();

@@ -218,7 +218,7 @@ TAO_GIOP_ServerRequest::set_exception (const CORBA::Any &value,
             // and <<= operators for base exceptions (yet).
             CORBA_Exception* x = (CORBA_Exception*)value.value ();
 
-            if (CORBA_SystemException::_narrow (x) != 0)
+            if (CORBA_SystemException::_downcast (x) != 0)
               {
                 this->exception_type_ = TAO_GIOP_SYSTEM_EXCEPTION;
               }

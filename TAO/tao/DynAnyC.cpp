@@ -106,7 +106,7 @@ CORBA_DynAny::Invalid::operator= (const CORBA_DynAny::Invalid &_tao_excp)
 
 // narrow
 CORBA_DynAny::Invalid *
-CORBA_DynAny::Invalid::_narrow (CORBA::Exception *exc)
+CORBA_DynAny::Invalid::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/Invalid:1.0",
                        exc->_id ())) // same type
@@ -205,7 +205,7 @@ CORBA_DynAny::InvalidValue::operator= (
 
 // narrow
 CORBA_DynAny::InvalidValue *
-CORBA_DynAny::InvalidValue::_narrow (CORBA::Exception *exc)
+CORBA_DynAny::InvalidValue::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/InvalidValue:1.0",
                        exc->_id ())) // same type
@@ -308,7 +308,7 @@ CORBA_DynAny::TypeMismatch::operator= (
 
 // narrow
 CORBA_DynAny::TypeMismatch *
-CORBA_DynAny::TypeMismatch::_narrow (CORBA::Exception *exc)
+CORBA_DynAny::TypeMismatch::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/TypeMismatch:1.0",
                        exc->_id ())) // same type
@@ -410,7 +410,7 @@ CORBA_DynAny::InvalidSeq::operator= (
 
 // narrow
 CORBA_DynAny::InvalidSeq *
-CORBA_DynAny::InvalidSeq::_narrow (CORBA::Exception *exc)
+CORBA_DynAny::InvalidSeq::_downcast (CORBA::Exception *exc)
 {
   if (!ACE_OS::strcmp ("IDL:/CORBA_DynAny/InvalidSeq:1.0",
                        exc->_id ())) // same type

@@ -62,7 +62,7 @@ public:
   virtual void _raise (void) = 0;
 
   // = The static narrow operation.
-  static CORBA_Exception *_narrow (CORBA_Exception *x);
+  static CORBA_Exception *_downcast (CORBA_Exception *x);
 
   // = These are TAO-specific extensions.
 
@@ -139,7 +139,7 @@ public:
   CORBA_UserException &operator= (const CORBA_UserException &src);
   // Assignment operator.
 
-  static CORBA_UserException *_narrow (CORBA_Exception *exception);
+  static CORBA_UserException *_downcast (CORBA_Exception *exception);
   // The narrow operation.
 
   // = TAO specific extension.
@@ -190,13 +190,13 @@ public:
   void completed (CORBA::CompletionStatus c);
   // Set the operation completion status.
 
-  static CORBA_SystemException *_narrow (CORBA_Exception *exception);
+  static CORBA_SystemException *_downcast (CORBA_Exception *exception);
   // Narrow to a SystemException.
 
   // = TAO-specific extension.
 
   virtual int _is_a (const char *type_id) const;
-  // Helper for the _narrow operation.
+  // Helper for the _downcast operation.
 
   void _tao_print_system_exception (FILE *f = stdout) const;
   // Print the system exception <ex> to output determined by f.  This
@@ -246,7 +246,7 @@ public: \
                   CORBA::CompletionStatus completed) \
     : CORBA_SystemException (CORBA::_tc_ ## name, code, completed) \
     { } \
-  static CORBA_##name * _narrow (CORBA_Exception* exception); \
+  static CORBA_##name * _downcast (CORBA_Exception* exception); \
   virtual int _is_a (const char* type_id) const; \
   virtual void _raise (void); \
 }
@@ -325,13 +325,13 @@ public:
   virtual void _tao_decode (TAO_InputCDR &cdr,
                             CORBA::Environment &);
 
-  static CORBA_UnknownUserException *_narrow (CORBA_Exception *ex);
+  static CORBA_UnknownUserException *_downcast (CORBA_Exception *ex);
   // Narrow to an UnknowUserException
 
   // = TAO specific extension.
 
   virtual int _is_a (const char *type_id) const;
-  // Helper method to implement _narrow.
+  // Helper method to implement _downcast.
 
 private:
   CORBA_Any *exception_;

@@ -50,7 +50,7 @@ void CORBA_TypeCode::Bounds::_tao_decode (TAO_InputCDR &,
 }
 
 CORBA_TypeCode::Bounds*
-CORBA_TypeCode::Bounds::_narrow (CORBA_Exception *ex)
+CORBA_TypeCode::Bounds::_downcast (CORBA_Exception *ex)
 {
   if (ex->_is_a ("IDL:omg.orb/CORBA/TypeCode/Bounds:1.0"))
     return ACE_dynamic_cast (CORBA_TypeCode::Bounds*, ex);
@@ -90,7 +90,7 @@ void CORBA_TypeCode::BadKind::_tao_decode (TAO_InputCDR &,
 }
 
 CORBA_TypeCode::BadKind*
-CORBA_TypeCode::BadKind::_narrow (CORBA_Exception *ex)
+CORBA_TypeCode::BadKind::_downcast (CORBA_Exception *ex)
 {
   if (ex->_is_a ("IDL:omg.orb/CORBA/TypeCode/BadKind:1.0"))
     return ACE_dynamic_cast (CORBA_TypeCode::BadKind*, ex);

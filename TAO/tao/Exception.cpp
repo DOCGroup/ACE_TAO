@@ -111,7 +111,7 @@ ACE_CString
 CORBA_Exception::_info (void) const
 {
   CORBA::SystemException *system_exception =
-    CORBA_SystemException::_narrow (ACE_const_cast (CORBA_Exception *,
+    CORBA_SystemException::_downcast (ACE_const_cast (CORBA_Exception *,
                                                     this));
 
   if (system_exception != 0)
@@ -206,7 +206,7 @@ CORBA_UserException::_is_a (const char* interface_id) const
 }
 
 CORBA_UserException*
-CORBA_UserException::_narrow (CORBA_Exception* exception)
+CORBA_UserException::_downcast (CORBA_Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/UserException:1.0"))
     return ACE_dynamic_cast (CORBA_UserException *,
@@ -258,7 +258,7 @@ CORBA_SystemException::_is_a (const char* interface_id) const
 }
 
 CORBA_SystemException*
-CORBA_SystemException::_narrow (CORBA_Exception* exception)
+CORBA_SystemException::_downcast (CORBA_Exception* exception)
 {
   if (exception->_is_a ("IDL:omg.org/CORBA/SystemException:1.0"))
     return ACE_dynamic_cast (CORBA_SystemException *,
@@ -595,7 +595,7 @@ CORBA_UnknownUserException::_is_a (const char *interface_id) const
 }
 
 CORBA_UnknownUserException*
-CORBA_UnknownUserException::_narrow (CORBA_Exception *ex)
+CORBA_UnknownUserException::_downcast (CORBA_Exception *ex)
 {
   if (ex->_is_a ("IDL:omg.org/CORBA/UnknownUserException:1.0"))
     return ACE_dynamic_cast (CORBA_UnknownUserException *,
@@ -903,7 +903,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA_##name * \
-CORBA_##name ::_narrow (CORBA_Exception* exception) \
+CORBA_##name ::_downcast (CORBA_Exception* exception) \
 { \
   if (exception->_is_a ("IDL:omg.org/CORBA/" #name ":1.0")) \
     return ACE_dynamic_cast (CORBA_##name *, exception); \

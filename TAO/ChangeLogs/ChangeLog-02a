@@ -1,3 +1,40 @@
+Mon May 15 14:43:23 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* TAO_IDL/be/be_visitor_exception/exception_ch.cpp
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp
+	* tao/BoundsC.cpp
+	* tao/BoundsC.h
+	* tao/DynAnyC.cpp
+	* tao/DynAnyC.h	
+	* tao/Environment.cpp
+	* tao/Exception.cpp
+	* tao/Exception.h
+	* tao/Exception.i
+	* tao/GIOP_Message_Acceptors.cpp
+	* tao/GIOP_Message_Lite.cpp
+	* tao/GIOP_Server_Request.cpp
+	* tao/IORC.cpp
+	* tao/IORC.h
+	* tao/ImplRepoC.cpp
+	* tao/ImplRepoC.h
+	* tao/InconsistentTypeCodeC.cpp
+	* tao/InconsistentTypeCodeC.h
+	* tao/ORB.cpp
+	* tao/ORB.h
+	* tao/POAC.cpp
+	* tao/POAC.h
+	* tao/PolicyC.cpp
+	* tao/PolicyC.h
+	* tao/PollableC.cpp
+	* tao/PollableC.h
+	* tao/Typecode.cpp
+	* tao/Typecode.h
+	* tao/WrongTransactionC.cpp
+	* tao/WrongTransactionC.h
+	  Added support for Exception::_downcast (). Changed _narrow () to
+	  _downcast () in all these files. Thanks to William Horn
+	<whorn1984@my-deja.com>
+	
 Mon May 15 16:26:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:

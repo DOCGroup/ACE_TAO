@@ -93,7 +93,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           << "CORBA::Environment &);" << be_uidt << be_uidt << "\n"
           << be_nl
           << "static " << node->local_name ()
-          << " *_narrow (CORBA::Exception *);\n\n";
+          << " *_downcast (CORBA::Exception *);\n\n";
 
       // generate constructor that takes each member as a parameter. We need a
       // new state. Such a constructor exists if we have members

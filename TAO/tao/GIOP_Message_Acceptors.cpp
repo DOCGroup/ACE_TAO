@@ -64,7 +64,7 @@ TAO_GIOP_Message_Acceptors::write_reply_header (TAO_OutputCDR &output,
   this->accept_state_->write_reply_header (output,
                                            params,
                                            ACE_TRY_ENV);
-  
+
   return 0;
 }
 
@@ -186,7 +186,7 @@ TAO_GIOP_Message_Acceptors::
       // Make the GIOP header and Reply header
       this->write_reply_header (*this->output_,
                                 reply_params);
-      
+
       CORBA::Object_ptr object_ptr =
         forward_request.forward_reference.in();
 
@@ -535,18 +535,18 @@ TAO_GIOP_Message_Acceptors::
       CORBA::exception_type extype =
         CORBA::USER_EXCEPTION;
 
-      if (CORBA::SystemException::_narrow (x) != 0)
+      if (CORBA::SystemException::_downcast (x) != 0)
         extype = CORBA::SYSTEM_EXCEPTION;
 
       // write the reply_status
-      reply_params.reply_status_ = 
+      reply_params.reply_status_ =
         TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype);
 
 
       // Make the GIOP & reply header. They are version specific.
       this->write_reply_header (output,
                                 reply_params);
-      
+
       // @@ Any way to implement this without interpretive
       //    marshaling???
       x->_tao_encode (output, ACE_TRY_ENV);
