@@ -161,7 +161,10 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 
   qos.deadline_ = sched_param->deadline;
   qos.importance_ = sched_param->importance;
-
+  qos.id = tmp.id;
+  qos.pid = tmp.pid;
+  qos.tid = tmp.tid;
+  qos.task_id = tmp.task_id;
   kokyu_dispatcher_->schedule (guid, qos);
 
   DSUI_EVENT_LOG (EDF_SCHED_FAM, END_NEW_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
@@ -237,6 +240,10 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 
   qos.deadline_ = sched_param->deadline;
   qos.importance_ = sched_param->importance;
+  qos.id = tmp.id;
+  qos.pid = tmp.pid;
+  qos.tid = tmp.tid;
+  qos.task_id = tmp.task_id;
 
   kokyu_dispatcher_->update_schedule (guid, qos);
   DSUI_EVENT_LOG (EDF_SCHED_FAM, END_UPDATE_SCHED_SEGMENT, 0, sizeof(Object_ID), (char*)&tmp);
@@ -521,7 +528,7 @@ EDF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
   qos.importance_ = importance;
   qos.deadline_ = deadline;
   qos.period_ = period;
-  qos.task_id_ = task_id;
+  qos.task_id = task_id;
   qos.id = tmp.id;
   qos.tid = tmp.tid;
   qos.pid = tmp.pid;
@@ -731,6 +738,8 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
   CORBA::Long importance;
   TimeBase::TimeT deadline;
+  unsigned int id, pid, task_id;
+  long long tid;
 
   if (sc.ptr () == 0)
     {
@@ -739,6 +748,10 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
       ACE_Time_Value deadline_tv = ACE_OS::gettimeofday () + ACE_Time_Value (24*60*60,0);
       deadline = deadline_tv.sec ()*1000000 + deadline_tv.usec ()*10; //100s of nanoseconds for TimeBase::TimeT
       importance = 0;
+      id = 0;
+      pid = 0;
+      tid = 0;
+      task_id = 0;
     }
   else
     {
@@ -756,6 +769,10 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
 
       deadline  = sc_qos_ptr->deadline;
       importance = sc_qos_ptr->importance;
+      id = sc_qos_ptr->id;
+      pid = sc_qos_ptr->pid;
+      tid = sc_qos_ptr->tid;
+      task_id = sc_qos_ptr->task_id;
 
       guid.length (sc_qos_ptr->guid.length ());
       guid_copy (guid, sc_qos_ptr->guid);
@@ -772,10 +789,18 @@ EDF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
   EDF_Scheduler_Traits::QoSDescriptor_t qos;
   qos.importance_ = importance;
   qos.deadline_ = deadline;
+  qos.id = id;
+  qos.pid = pid;
+  qos.tid = tid;
+  qos.task_id = task_id;
   this->kokyu_dispatcher_->schedule (guid, qos);
 
   Object_ID tmp;
   tmp.guid = int_guid;
+  tmp.id = id;
+  tmp.pid = pid;
+  tmp.tid = tid;
+  tmp.task_id = task_id;
   DSUI_EVENT_LOG (EDF_SCHED_FAM, EXIT_RECEIVE_REPLY, 0, sizeof(Object_ID), (char*)&tmp);
 }
 
