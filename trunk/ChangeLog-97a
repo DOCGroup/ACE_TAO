@@ -1,3 +1,10 @@
+Tue Apr 08 22:08:12 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++_4.1.GNU: removed
+	  "rm -f $@" from AR command so that archive won't be removed
+	  during incremental updates.  Thanks to Chuck Gehr
+	  <gehr@sweng.stortek.com> for reporting this.
+
 Tue Apr  8 00:04:22 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-hpux-10.x[-g++].h: Added #define
