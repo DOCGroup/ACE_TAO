@@ -653,6 +653,16 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   if (con->connect (this->handler_,
                     *server_addr_p) == -1)
     {
+      // Give users a clue to the problem.
+      ACE_DEBUG ((LM_ERROR, "(%P|%t) %s:%u, connection to "
+                            "%s (%s):%hu failed (%p)\n",
+                  __FILE__,
+                  __LINE__,
+                  server_addr_p->get_host_name (),
+                  server_addr_p->get_host_addr (),
+                  server_addr_p->get_port_number (),
+                  "errno"));
+
       // There might be a better exception to set, but it's unclear
       // which one should be used.  This one applies, even if it's
       // vague.
