@@ -1,31 +1,36 @@
+Sat Nov 11 07:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.cpp: Propagated the fixes
+	  that was done other protocols.
+
 Fri Nov 10 18:24:53 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tests/RTCORBA/Server_Declared/server.conf: 
-	* tests/RTCORBA/Client_Protocol/svc.conf: 
-	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf: 
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
-	* tests/RTCORBA/Server_Protocol/server_reverse.conf: 
-	* tests/RTCORBA/Server_Protocol/server_shmiop.conf: 
-	* tests/RTCORBA/Server_Protocol/server_uiop.conf: 
-	* tests/RTCORBA/Server_Protocol/server.conf: 
-	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf: 
+	* tests/RTCORBA/Server_Declared/server.conf:
+	* tests/RTCORBA/Client_Protocol/svc.conf:
+	* tests/RTCORBA/Server_Protocol/server_reverse_nt.conf:
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf:
+	* tests/RTCORBA/Server_Protocol/server_reverse.conf:
+	* tests/RTCORBA/Server_Protocol/server_shmiop.conf:
+	* tests/RTCORBA/Server_Protocol/server_uiop.conf:
+	* tests/RTCORBA/Server_Protocol/server.conf:
+	* tests/RTCORBA/MT_Client_Protocol_Priority/server.conf:
 
-	  Updated to load the advanced startegies dynamically.
-	
-	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile: 
-	* tests/RTCORBA/Server_Protocol/Makefile: 
-	* tests/RTCORBA/Server_Declared/Makefile : 
-	* tests/RTCORBA/Client_Propagated/Makefile : 
-	* tests/RTCORBA/Client_Protocol/Makefile: 
+	  Updated to load the advanced strategies dynamically.
+
+	* tests/RTCORBA/MT_Client_Protocol_Priority/Makefile:
+	* tests/RTCORBA/Server_Protocol/Makefile:
+	* tests/RTCORBA/Server_Declared/Makefile :
+	* tests/RTCORBA/Client_Propagated/Makefile :
+	* tests/RTCORBA/Client_Protocol/Makefile:
 	  Updated to link TAO_Strategies.
-	
+
 Fri Nov 10 17:28:50 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connect.cpp:
 	* tao/Strategies/UIOP_Connect.cpp:
 	* tao/IIOP_Connect.cpp: Fixed a problem with thread-per-connection
 	  case. The event handler was getting destroyed before the ORB
-	  shuts down the Cache. This lead to cache  shutdown problem. 
+	  shuts down the Cache. This lead to cache  shutdown problem.
 
 Fri Nov 10 13:06:27 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -50,7 +55,7 @@ Fri Nov 10 12:41:32 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/ImplRepo_Service/Locator.cpp: (added)
         * orbsvcs/ImplRepo_Service/Locator.h: (added)
         * orbsvcs/ImplRepo_Service/Makefile:
-        * orbsvcs/ImplRepo_Service/Makefile.am: 
+        * orbsvcs/ImplRepo_Service/Makefile.am:
         * orbsvcs/ImplRepo_Service/NT_ImplRepo_Server.cpp: (removed)
         * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.cpp: (removed)
         * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.h: (removed)
@@ -66,9 +71,9 @@ Fri Nov 10 12:41:32 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
         * orbsvcs/ImplRepo_Service/tao_imr_i.h:
 
-          First split up the ImplRepo_Service into separate files, 
-          around one per class.  Also doxygenated the ImplRepo 
-          documentation.  Finally, merged the two 
+          First split up the ImplRepo_Service into separate files,
+          around one per class.  Also doxygenated the ImplRepo
+          documentation.  Finally, merged the two
 
         * orbsvcs/tests/ImplRepo/airplane_client_i.h:
         * orbsvcs/tests/ImplRepo/airplane_i.h:
@@ -86,26 +91,26 @@ Fri Nov 10 12:41:32 2000  Darrell Brunsch <brunsch@uci.edu>
           Changed the NT_Service test around a bit.  The executable
           changed and started running things from the bin directory,
           so when it runs as a service it automatically finds the
-          DLL's it needs. 
+          DLL's it needs.
 
         * TAOACE.dsw:
         * orbsvcs/ImplRepo_Service/NT_ImplRepo_Service.dsp: (removed)
         * orbsvcs/ImplRepo_Service/ImplRepo.dsw:
         * orbsvcs/tests/ImplRepo/ImplRepo.dsw:
 
-          Removed NT_ImplRepo_Service.dsp, since the functionality was 
+          Removed NT_ImplRepo_Service.dsp, since the functionality was
           moved into ImplRepo_Service itself.
 
 Fri Nov 10 12:06:42 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* performance-tests/Latency/Makefile : 
-	* performance-tests/Latency/st_client.conf: 
-	* performance-tests/Latency/client-st-exclusive.conf: 
-	* performance-tests/Latency/client-mt-exclusive.conf: 
-	* performance-tests/Latency/st_server.conf: 
+	* performance-tests/Latency/Makefile :
+	* performance-tests/Latency/st_client.conf:
+	* performance-tests/Latency/client-st-exclusive.conf:
+	* performance-tests/Latency/client-mt-exclusive.conf:
+	* performance-tests/Latency/st_server.conf:
 	  Linked TAO_Startegies and dynamically loaded the Advanced
 	  Resource Factory in the service conf files.
-	
+
 Fri Nov 10 11:54:11 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/NestedUpcall/Simple/client.cpp:
@@ -120,7 +125,7 @@ Fri Nov 10 12:49:51 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 Fri Nov 10 10:14:50 2000  Priyanka Gontla <pgontla@ece.uci.edu>
 
       	* TAO/tests/RTCORBA/server_protocol/run_test.pl
-	  Modified the options to not load UIOP and SHMIOP in the case 
+	  Modified the options to not load UIOP and SHMIOP in the case
           where no config file is used.
 
 	* TAO/tests/Leader_Followers/client.dsp :
