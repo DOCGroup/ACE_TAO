@@ -217,8 +217,17 @@ template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &,
                                   const CHAR *);
 template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR> operator + (const CHAR* ,
+ACE_String_Base<CHAR> operator + (const CHAR *,
                                   const ACE_String_Base<CHAR> &);
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base<CHAR> operator + (const ACE_String_Base<CHAR> &t,
+                                  const CHAR c);
+
+template <class CHAR> ACE_INLINE
+ACE_String_Base<CHAR> operator + (const CHAR c,
+                                  const ACE_String_Base<CHAR> &t);
+
 #if defined (__ACE_INLINE__)
 #include "ace/String_Base.i"
 #endif /* __ACE_INLINE__ */

@@ -1,3 +1,9 @@
+Sun Feb 17 11:52:36 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp (Subscribe): Initialize
+	  done_ to 0.  Thanks to Markus Wild <markus.wild@homag.de> for
+ 	  reporting this.
+
 Mon Feb 18 08:37:26 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
