@@ -1,5 +1,9 @@
 Sun Nov 23 13:32:02 1997  David L. Levine  <levine@cs.wustl.edu>
 
+        * ace/IOStream.h: removed DIGITAL_UNIX from #include decision,
+          so now it just depends on DEC_CXX and its version.  Thanks to
+          Dani Flexer <danif@ivory-sw.com> for this fix.
+
         * netsvcs/lib/Server_Logging_Handler.cpp: updated template
           instantiations to match recent change to Server_Logging_Handler_T.h.
 
