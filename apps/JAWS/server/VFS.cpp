@@ -5,9 +5,6 @@
 // Maintain a table of files which are opened.
 // Return a handle to the file, and provide I/O mechanisms for it.
 
-#if !defined (VFS_CPP)
-#define VFS_CPP
-
 #include "JAWS/server/VFS.h"
 #include "JAWS/server/HTTP_Helpers.h"
 
@@ -249,38 +246,6 @@ JAWS_VFS_Node_List::JAWS_VFS_Node_List (int sz)
 {
 }
 
-template <class LOCK>
-JAWS_VFS_Node_Bucket<LOCK>::JAWS_VFS_Node_Bucket (int size) 
-  : bucket_ (size) 
-{
-}
-
-template <class LOCK>
-JAWS_VFS_Node *
-JAWS_VFS_Node_Bucket<LOCK>::find (char *URI)
-{
-  ACE_Guard<LOCK> g (this->lock_);
-  int found = -1;
-  
-  if (! this->bucket_.IsEmpty ())
-    for (int i = 0; i < this->bucket_.Size (); i++) {
-      if (ACE_OS::strcmp (URI, this->bucket_[i]->URI ()) != 0) continue;
-      found = i;
-      break;
-    }
-  
-  if (found == -1) 
-    {
-      JAWS_VFS_Node *new_node = new JAWS_VFS_Node (URI);
-      if (new_node == 0)
-	ACE_ERROR ((LM_ERROR, "%p.\n", "JAWS_VFS_Node"));
-      this->bucket_.Insert (new_node);
-      found = this->bucket_.Size () - 1;
-    }
-  
-  return this->bucket_[found];
-}
-
 JAWS_VFS_Hash_Table::JAWS_VFS_Hash_Table ()
 { 
   ht_ = new JAWS_VFS_Node_Bucket<ACE_Thread_Mutex>[256]; 
@@ -327,8 +292,6 @@ JAWS_VFS::close (JAWS_VFS_Node * &handle)
   return 0;
 }
 
-
-
 #if 0
 inline void
 JAWS_VFS_Node::map_read (void)
@@ -365,4 +328,3 @@ JAWS_VFS_Node::map_read (void)
 }
 #endif /* 0 */
 
-#endif /* VFS_CPP */
