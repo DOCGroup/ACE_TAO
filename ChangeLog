@@ -1,3 +1,12 @@
+Mon Dec 22 19:25:59 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tests/Bound_Ptr_Test.h:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/NonBlocking_Conn_Test.h:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Svc_Handler_Test.cpp:
+          Fixed fuzz errors by removing unneeded #include of Synch.h.
+
 Mon Dec 22 10:31:41 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/README:
