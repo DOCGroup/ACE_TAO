@@ -11,6 +11,7 @@
 BIN     = basic_perf \
 	  childbirth_time \
 	  context_switch_time \
+	  preempt \
 	  test_mutex \
 	  test_singleton \
 	  test_naming
