@@ -17,7 +17,7 @@ class Thread_Handler : public ACE_Event_Handler
   //   ACE_Reactor's notification mechanism. 
 {
 public:
-  Thread_Handler (int delay, int interval, int n_threads);
+  Thread_Handler (int delay, int interval, size_t n_threads);
   Thread_Handler (size_t id): id_ (id) {}
 
   virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
@@ -71,7 +71,7 @@ ACE_Time_Value Thread_Handler::interval_;
 
 Thread_Handler::Thread_Handler (int delay, 
 				int interval,
-				int n_threads)
+				size_t n_threads)
 {
   delay_.set (delay);
   interval_.set (interval);
