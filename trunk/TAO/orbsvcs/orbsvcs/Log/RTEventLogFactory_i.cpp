@@ -15,6 +15,7 @@
 #include "orbsvcs/Event/Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
+#include "ace/Auto_Ptr.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_ConsumerAdmin.i"

@@ -14,7 +14,7 @@
 #define TAO_CONDITION_H
 #include "ace/pre.h"
 #include "orbconf.h"
-
+#include "ace/Synch_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

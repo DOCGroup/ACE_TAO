@@ -16,6 +16,7 @@ ACE_RCSID(RT_Notify, TAO_NS_ConsumerAdmin, "$Id$")
 #include "EventChannel.h"
 #include "EventChannelFactory.h"
 #include "Notify_Service.h"
+#include "Properties.h"
 
 TAO_NS_ConsumerAdmin::TAO_NS_ConsumerAdmin (void)
 :TAO_NS_Admin (TAO_NS_Admin::CONSUMER_ADMIN)

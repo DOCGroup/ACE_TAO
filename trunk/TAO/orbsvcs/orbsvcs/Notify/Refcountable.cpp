@@ -4,6 +4,7 @@
 #include "Destroy_Callback.h"
 
 #include "tao/debug.h"
+#include "ace/Log_Msg.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "Refcountable.inl"

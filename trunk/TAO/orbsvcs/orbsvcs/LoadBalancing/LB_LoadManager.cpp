@@ -10,9 +10,9 @@
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
 #include "tao/Messaging/Messaging.h"
-
 #include "tao/debug.h"
 
+#include "ace/Reactor.h"
 
 ACE_RCSID (LoadBalancing,
            LB_LoadManager,

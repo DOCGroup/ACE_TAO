@@ -20,6 +20,7 @@
 
 #include "CEC_SupplierControl.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
+#include "ace/Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

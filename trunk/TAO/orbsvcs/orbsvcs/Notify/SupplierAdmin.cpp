@@ -16,6 +16,7 @@ ACE_RCSID(RT_Notify, TAO_NS_SupplierAdmin, "$Id$")
 #include "EventChannelFactory.h"
 #include "Notify_Service.h"
 #include "Subscription_Change_Worker.h"
+#include "Properties.h"
 
 TAO_NS_SupplierAdmin::TAO_NS_SupplierAdmin (void)
 :TAO_NS_Admin (TAO_NS_Admin::SUPPLIER_ADMIN)

@@ -4,6 +4,7 @@
 // Refcounted_Auto_Ptr.i
 
 #include "Synch_T.h"
+#include "ace/Log_Msg.h"
 
 template <class X, class ACE_LOCK> inline int
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count (void) const

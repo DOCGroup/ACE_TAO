@@ -19,6 +19,7 @@
 #include "orbsvcs/AV/AV_export.h"
 
 #include "ace/Singleton.h"
+#include "ace/Unbounded_Set.h"
 
 class TAO_Base_StreamEndPoint;
 class TAO_AV_Connector_Registry;
@@ -30,6 +31,7 @@ class TAO_AV_Transport_Item;
 class TAO_AV_Transport_Factory;
 class TAO_AV_Flow_Protocol_Item;
 class TAO_AV_Flow_Protocol_Factory;
+class ACE_Reactor;
 
 typedef ACE_Unbounded_Set <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSet;
 typedef ACE_Unbounded_Set_Iterator <TAO_FlowSpec_Entry*> TAO_AV_FlowSpecSetItor;
