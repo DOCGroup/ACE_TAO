@@ -1,3 +1,14 @@
+Sat Jul 29 16:46:31 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tests/DynAny_Test/test_dynarray.cpp:
+	* tests/DynAny_Test/test_dynenum.cpp:
+	* tests/DynAny_Test/test_dynsequence.cpp:
+	* tests/DynAny_Test/test_dynstruct.cpp:
+	* tests/DynAny_Test/test_dynunion.cpp:
+
+	  Added some missing .in()s to calls using newly
+	  added _vars.
+
 Fri Jul 28 11:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynStruct_i.cpp:
