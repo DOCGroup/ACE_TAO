@@ -535,12 +535,11 @@ public:
 
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> &
   file_prefixes (void);
-  // Accessor for the IDL keyword container.
+  // Accessor for the IDL file prefix container.
   
-  void create_uses_multiple_stuff (AST_Component *c,
-                                   AST_Component::port_description &pd);
-  // We must do this in the front end since the executor
-  // mapping IDL will have these data types.
+  idl_bool pass_orb_idl (void) const;
+  void pass_orb_idl (idl_bool val);
+  // Accessor for the pass_orb_idl_ member.
   
   int check_gperf (void);
   // Currently called only from IDL backend, but could be useful elsewhere.
@@ -630,6 +629,9 @@ private:
 
   ACE_Hash_Map_Manager<ACE_CString, char *, ACE_Null_Mutex> file_prefixes_;
   // Associates a prefix with a file.
+  
+  idl_bool pass_orb_idl_;
+  // Treat orb.idl like any other included IDL file.
 };
 
 

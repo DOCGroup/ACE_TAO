@@ -83,7 +83,8 @@ BE_GlobalData::BE_GlobalData (void)
     lookup_strategy_ (TAO_PERFECT_HASH),
     void_type_ (0),
     ccmobject_ (0),
-    gen_anyop_files_ (I_FALSE)
+    gen_anyop_files_ (I_FALSE),
+    do_ccm_preproc_ (I_TRUE)
 {
 }
 
@@ -992,6 +993,18 @@ BE_GlobalData::gen_anyop_files (idl_bool val)
   this->gen_anyop_files_ = val;
 }
 
+idl_bool
+BE_GlobalData::do_ccm_preproc (void) const
+{
+  return this->do_ccm_preproc_;
+}
+
+void
+BE_GlobalData::do_ccm_preproc (idl_bool val)
+{
+  this->do_ccm_preproc_ = val;
+}
+
 ACE_CString
 BE_GlobalData::spawn_options (void)
 {
@@ -1443,24 +1456,24 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == 'a')
           {
             // suppress Any support
-            be_global->any_support (0);
+            be_global->any_support (I_FALSE);
           }
         else if (av[i][2] == 't')
           {
             // suppress typecode support
             // Anys must be suppressed as well
-            be_global->tc_support (0);
-            be_global->any_support (0);
+            be_global->tc_support (I_FALSE);
+            be_global->any_support (I_FALSE);
           }
         else if (av[i][2] == 'p')
           {
             // suppress generating Thru_POA collocated stubs
-            be_global->gen_thru_poa_collocation (0);
+            be_global->gen_thru_poa_collocation (I_FALSE);
           }
         else if (av[i][2] == 'd')
           {
             // suppress generating Direct collocated stubs
-            be_global->gen_direct_collocation (0);
+            be_global->gen_direct_collocation (I_FALSE);
           }
         else if (av[i][2] == 'c')
           {
@@ -1470,7 +1483,12 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 'v')
           {
             // disable OBV (Valuetype) support
-            idl_global->obv_support (0);
+            idl_global->obv_support (I_FALSE);
+          }
+        else if (av[i][2] == 'm')
+          {
+            // disable IDL3 to IDL2 preprocessing.
+            be_global->do_ccm_preproc (I_FALSE);
           }
         else
           {
@@ -1837,6 +1855,11 @@ BE_GlobalData::usage (void) const
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Sv\t\t\tdisable OBV (Valuetype) support")
+      ACE_TEXT (" (enabled by default)\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Sm\t\t\tdisable IDL3 equivalent IDL preprocessing")
       ACE_TEXT (" (enabled by default)\n")
     ));
 }
