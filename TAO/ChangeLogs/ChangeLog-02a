@@ -1,3 +1,9 @@
+Fri Jan 4 17:30:21 2002  Jaiganesh Balasubramanian  <jai@kelvar.ece.uci.edu>
+
+	* docs/tutorials/Quoter/RT_Event_Service/index.html:
+	  Corrected some broken links. The errors were pointed out thanks
+	  to Eric Peters <egpeters@u.washington.edu>.
+
 Fri Jan  4 19:02:41 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ChangeLogs/ChangeLog-01c: A new file after splitting from this
