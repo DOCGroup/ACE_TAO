@@ -1,3 +1,90 @@
+Thu Feb 26 19:29:33 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
+
+        * orbscvs/orbsvcs/Trader/Admin.cpp:
+        * orbsvcs/orbsvcs/Trader/Admin.h:
+        * orbsvcs/orbsvcs/Trader/Attributes.cpp:
+        * orbsvcs/orbsvcs/Trader/Attributes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Evaluator.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Evaluator.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Tokens.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Validator.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_Validator.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_Visitor.h:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/orbsvcs/Trader/Dynamic_Property.cpp:
+        * orbsvcs/orbsvcs/Trader/Dynamic_Property.h:
+        * orbsvcs/orbsvcs/Trader/Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Link.cpp:
+        * orbsvcs/orbsvcs/Trader/Link.h:
+        * orbsvcs/orbsvcs/Trader/Lookup.cpp:
+        * orbsvcs/orbsvcs/Trader/Lookup.h:
+        * orbsvcs/orbsvcs/Trader/Monitor.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Filter.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Filter.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Id_Iterator.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Id_Iterator.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterator.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Iterator.h:
+        * orbsvcs/orbsvcs/Trader/Offer_Modifier.cpp:
+        * orbsvcs/orbsvcs/Trader/Offer_Modifier.h:
+        * orbsvcs/orbsvcs/Trader/Policies.cpp:
+        * orbsvcs/orbsvcs/Trader/Policies.h:
+        * orbsvcs/orbsvcs/Trader/Policy_Manager.cpp:
+        * orbsvcs/orbsvcs/Trader/Policy_Manager.h:
+        * orbsvcs/orbsvcs/Trader/Preference_Interpreter.cpp:
+        * orbsvcs/orbsvcs/Trader/Preference_Interpreter.h:
+        * orbsvcs/orbsvcs/Trader/Property_Evaluator.cpp:
+        * orbsvcs/orbsvcs/Trader/Property_Evaluator.h:
+        * orbsvcs/orbsvcs/Trader/Property_Filter.cpp:
+        * orbsvcs/orbsvcs/Trader/Property_Filter.h:
+        * orbsvcs/orbsvcs/Trader/Proxy.cpp:
+        * orbsvcs/orbsvcs/Trader/Proxy.h:
+        * orbsvcs/orbsvcs/Trader/Query_Only_Offer_Iterator.cpp:
+        * orbsvcs/orbsvcs/Trader/Query_Only_Offer_Iterator.h:
+        * orbsvcs/orbsvcs/Trader/README:
+        * orbsvcs/orbsvcs/Trader/Register.cpp:
+        * orbsvcs/orbsvcs/Trader/Register.h:
+        * orbsvcs/orbsvcs/Trader/Register_Offer_Iterator.cpp:
+        * orbsvcs/orbsvcs/Trader/Register_Offer_Iterator.h:
+        * orbsvcs/orbsvcs/Trader/Sequences.idl:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Map.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Map.h:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.h:
+        * orbsvcs/orbsvcs/Trader/Trader.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/orbsvcs/Trader/Trader_Base.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Base.h:
+        * orbsvcs/orbsvcs/Trader/constraint.l:
+        * orbsvcs/orbsvcs/Trader/constraint.y:
+	* orbsvcs/orbsvcs/CosTrading.idl:
+ 	* orbsvcs/Trading_Service/Makefile:
+ 	* orbsvcs/Trading_Service/trader.cpp:
+
+	The Trading Service has a new home and a new orb. I've migrated
+	the VisiBroker implementation of the Trading Service to TAO by
+	having the interfaces inherit from the POA_CosTrading skeletons,
+	replacing the the C++ exception handling with the TAO_* macro
+	exception handling and CORBA::Environment passing, and prefixing
+	all top level classes with 'TAO_'. Because the tao_idl generated
+	code from CosTrading.idl was having some trouble, nothing here has 
+	been compiled since the port. The README file contains additions
+	to the Makefile necessary to accommodate the Trading Service's
+	reliance on STL.
+
+	The orbsvcs/Trading_Service/trader.cpp is a server that activates
+	the supported interfaces of our Trading Service. At this point our 
+	Trader adheres to the Stand Alone Trader designation of
+	conformance as described in the specification. 
+
 Thu Feb 26 18:38:56 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp (TAO_Naming_Server):
