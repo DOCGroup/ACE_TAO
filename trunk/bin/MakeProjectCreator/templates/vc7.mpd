@@ -65,7 +65,7 @@
 <%else%>
 				Name="VCLinkerTool"
 <%if(type_is_binary)%>
-				AdditionalDependencies="<%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>"
+				AdditionalDependencies="<%foreach(pure_libs)%><%pure_lib%> <%endfor%><%foreach(lit_libs)%><%lit_lib%>.lib <%endfor%><%foreach(libs)%><%lib%><%lib_modifier%>.lib<%fornotlast(" ")%><%endfor%>"
 <%endif%>
 <%if(exename || sharedname || staticname)%>
 				OutputFile="$(OutDir)/<%if(type_is_dynamic)%><%sharedname%><%lib_modifier%>.dll<%else%><%exename%>.exe<%endif%>"
