@@ -1,3 +1,8 @@
+Tue Aug 31 09:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Options.html:
+          Removed trailing " which was incorrect
+
 Mon Aug 30 23:03:48 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:
