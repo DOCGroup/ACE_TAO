@@ -303,6 +303,12 @@ public:
    */
   CORBA::Boolean any_owns_data (void) const;
 
+  /// Reports whether the Any contains (at some level) a local type.
+  CORBA::Boolean contains_local (void) const;
+
+  /// Set the member contains_local_.
+  void contains_local (CORBA::Boolean val);
+
   /// Message block accessor.
   /// Get the byte order inside the CDR stream.
   ACE_Message_Block* _tao_get_cdr (void) const;
@@ -366,6 +372,10 @@ private:
 
   /// Flag that indicates the ORB is responsible for deleting the data.
   CORBA::Boolean any_owns_data_;
+
+  /// Flag that indicates the Any contains (at some level) a locality-
+  // constrained type, and so cannot be marshaled.
+  CORBA::Boolean contains_local_;
 
   /// Value for the <Any>.
   void *value_;

@@ -9,6 +9,18 @@ CORBA_Any::any_owns_data (void) const
   return (this->any_owns_data_ != 0 && this->value_ != 0);
 }
 
+ACE_INLINE CORBA::Boolean
+CORBA_Any::contains_local (void) const
+{
+  return this->contains_local_;
+}
+
+ACE_INLINE void
+CORBA_Any::contains_local (CORBA::Boolean val)
+{
+  this->contains_local_ = val;
+}
+
 ACE_INLINE ACE_Message_Block*
 CORBA_Any::_tao_get_cdr (void) const
 {
