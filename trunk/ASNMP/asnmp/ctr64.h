@@ -49,7 +49,7 @@ class ASNMP_Export Counter64: public  SnmpSyntax
   //     This class implements RFC 1902 64 bit Counter Object.
 {
 public:
-  Counter64( unsigned long long llw = 0);
+  Counter64( ACE_UINT64 llw = 0);
   // default constructor
 
   Counter64( unsigned long hiparm, unsigned long loparm);
@@ -82,7 +82,7 @@ public:
   void set_low( const unsigned long l);
   // set the low part
 
-  Counter64& operator=( const unsigned long long rhs);
+  Counter64& operator=( const ACE_UINT64 rhs);
   // overloaded assignment
 
   Counter64& operator=( const Counter64 &rhs);
@@ -100,8 +100,8 @@ public:
   int valid() const;
   // general validity test, always true
 
-  operator unsigned long long();
-  // otherwise, behave like an unsigned long long
+  operator ACE_UINT64();
+  // otherwise, behave like an ACE_UINT64
 
 protected:
   char output_buffer[CTR64OUTBUF];

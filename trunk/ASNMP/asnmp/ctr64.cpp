@@ -53,7 +53,7 @@ Counter64::Counter64( unsigned long hiparm, unsigned long loparm)
 }
 
 //------------------[ constructor with low value only ]------------------
-Counter64::Counter64( unsigned long long llw )
+Counter64::Counter64( ACE_UINT64 llw )
 {
   smival.syntax = sNMP_SYNTAX_CNTR64;
   smival.value.hNumber.hipart = (unsigned long) (llw >> 32);
@@ -162,7 +162,7 @@ SnmpSyntax& Counter64::operator=( SnmpSyntax &val)
 }
 
 // overloaded assignment
-Counter64& Counter64::operator=( const unsigned long long rhs)
+Counter64& Counter64::operator=( const ACE_UINT64 rhs)
 {
    smival.value.hNumber.hipart =  (unsigned long) (rhs >> 32);
    smival.value.hNumber.lopart = (unsigned long) rhs;
@@ -178,9 +178,9 @@ Counter64& Counter64::operator=( const Counter64 &rhs)
 }
 
 // otherwise, behave like an unsigned long int
-Counter64::operator unsigned long long()
+Counter64::operator ACE_UINT64()
 {
-  unsigned long long val = smival.value.hNumber.hipart;
+  ACE_UINT64 val = smival.value.hNumber.hipart;
   val = val << 32; // shift right 4 bytes
   val |= smival.value.hNumber.lopart;
   return val;
