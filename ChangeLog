@@ -1,3 +1,10 @@
+Wed Dec 18 15:03:03 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/Get_Opt.cpp (long_option): For MSVC 7.x compiler, we need to
+          make sure that the argument passed to "isalnum" is legal, i.e.,
+          between 0 and 0xff, otherwise, it will crash the process.  Added
+          a special case for MSVC 7.x and above to prevent this.
+
 Wed Dec 18 13:36:49 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.mwc: Workspace definition file for ACE and it's immediate
@@ -12,13 +19,13 @@ Wed Dec 18 13:36:49 2002  Steve Huston  <shuston@riverace.com>
 
 Wed Dec 18 11:38:39 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32-msvc-7.h: Added pragma prefix to disable
-	  warning of using Microsoft extension.
+        * ace/config-win32-msvc-7.h: Added pragma prefix to disable
+          warning of using Microsoft extension.
 
-	* ace/Timeprobe.h: Removed MSVC specific disabling and re-enabling
-	  of warning of using Microsoft entension.  We already do this
-	  through all the MSVC config files and there's no point of doing
-	  this again here.
+        * ace/Timeprobe.h: Removed MSVC specific disabling and re-enabling
+          of warning of using Microsoft entension.  We already do this
+          through all the MSVC config files and there's no point of doing
+          this again here.
 
 Mon Dec 16 16:34:23 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
