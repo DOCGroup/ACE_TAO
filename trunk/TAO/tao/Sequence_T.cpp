@@ -343,14 +343,14 @@ TAO_Pseudo_Object_Manager<T,T_var>::operator=(T* p)
 }
 
 template <class T, class T_var> TAO_Pseudo_Object_Manager<T,T_var> &
-TAO_Pseudo_Object_Manager<T,T_var>::operator=(T_var &p)
+TAO_Pseudo_Object_Manager<T,T_var>::operator=(const T_var &p)
 {
   if (this->release_)
     {
       // The semantics of the elements of a sequence are the same as
-      // that of a var variable.  Therefore we will not duplicate the
-      // user provided pointer before assigning it to the internal
-      // variable.  However, we will release it.
+      // that of a var variable.  Therefore we duplicate p's
+      // pointer before assigning it to the internal
+      // variable.
       CORBA::release (*this->ptr_);
       *this->ptr_ = T::_duplicate (p.in ());
     }
