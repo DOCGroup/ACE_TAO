@@ -20,6 +20,7 @@ BIN =   Aio_Platform_Test \
 	Env_Value_Test \
 	Future_Test \
 	Handle_Set_Test \
+	High_Res_Timer_Test \
 	OrdMultiSet_Test \
 	Hash_Map_Manager_Test \
 	IOStream_Test \
