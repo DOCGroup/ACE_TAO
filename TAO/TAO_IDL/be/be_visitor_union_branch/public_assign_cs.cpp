@@ -255,12 +255,12 @@ be_visitor_union_branch_public_assign_cs::visit_interface (be_interface *node)
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
       *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
-          << ub->local_name () << "_);" << be_nl;
+          << ub->local_name () << "_->ptr ());" << be_nl;
       *os << "// make a copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
-          << "::_duplicate (u.u_." << ub->local_name () << "_);" << be_nl;
+          << "::_duplicate (u.u_." << ub->local_name () << "_->ptr ());" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->u_." << ub->local_name () << "_ = "
+      *os << "*this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
@@ -306,12 +306,12 @@ be_visitor_union_branch_public_assign_cs::visit_interface_fwd (be_interface_fwd 
       *os << "// store current val in a _var so as to free it on an assignment"
           << be_nl;
       *os << bt->name () << "_var " << ub->local_name () << "_var (this->u_."
-          << ub->local_name () << "_);" << be_nl;
+          << ub->local_name () << "_->ptr ());" << be_nl;
       *os << "// make a copy" << be_nl;
       *os << ub->local_name () << "_var = " << bt->name ()
-          << "::_duplicate (u.u_." << ub->local_name () << "_);" << be_nl;
+          << "::_duplicate (u.u_." << ub->local_name () << "_->ptr ());" << be_nl;
       *os << "// the _var gives up ownership" << be_nl;
-      *os << "this->u_." << ub->local_name () << "_ = "
+      *os << "*this->u_." << ub->local_name () << "_ = "
           << ub->local_name () << "_var._retn ();" << be_uidt_nl;
     }
   else
