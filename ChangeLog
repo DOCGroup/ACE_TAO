@@ -1,3 +1,11 @@
+Fri Feb 20 17:12:14 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* bin/tao_other_tests.lst: 
+
+	  Modified script to run Pluggable and Simple_Two_Stage tests with
+	  SCTP_SEQ transport protocol only when the SCTP config flag is
+	  set.
+
 Fri Feb 20 21:18:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* Static_Performance.dsw:
