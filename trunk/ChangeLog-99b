@@ -3,7 +3,9 @@ Fri Jun 25 21:46:46 1999  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.h,ace/Signal.h,ace/config-psos-tm.h
           (ACE_DONT_INCLUDE_ACE_SIGNAL_H): added this interlock
           diagnostic to inform the user when ace/Signal.h get #included
-          instead of signal.h.
+          instead of signal.h.  Thanks to Dale Wood <Dale_Wood@Mitel.com>
+          and Timothy Canham <Timothy.Canham@jpl.nasa.gov> for tripping
+          over it, on the same day, and reporting it.
 
 Fri Jun 25 17:22:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
