@@ -1,25 +1,33 @@
+Tue Jul 14 12:30:45 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test):
+          removed dependence on local context_switch on platforms that don't
+          have ACE_HAS_PRUSAGE_T and ACE_HAS_GETRUSAGE.  Thanks to
+          Arturo Montes" <mitosys@colomsat.net.co> for reporting this.  Also,
+          removed csw on those platforms, because it was no longer being used.
+
 Tue Jul 14 11:48:23 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB_Core.{h,cpp} (arl_same_port_connect):  Added the new
-	  member function to ORB_Core to check if we want the client to
-	  initiate a connection using the same local port number as
-	  server's.  
+        * tao/ORB_Core.{h,cpp} (arl_same_port_connect):  Added the new
+          member function to ORB_Core to check if we want the client to
+          initiate a connection using the same local port number as
+          server's.
 
-	* tao/Invocation.cpp (start): Added code to specify the following:
-	
-	  This change is only for ARL only and to enable the feature, you
-	  must add
-	
-	     #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
+        * tao/Invocation.cpp (start): Added code to specify the following:
 
-	  to your $ACE_ROOT/ace/config.h.  Add the command line option
-	  
-	     -ORBarlsameportconnect yes
+          This change is only for ARL only and to enable the feature, you
+          must add
 
-	  when starting the client.
+             #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
 
-	  *** This is not for the general audience of TAO.  Don't use
-	  it. *** 
+          to your $ACE_ROOT/ace/config.h.  Add the command line option
+
+             -ORBarlsameportconnect yes
+
+          when starting the client.
+
+          *** This is not for the general audience of TAO.  Don't use
+          it. ***
 
 Tue Jul 14 11:34:02 1998  David L. Levine  <levine@cs.wustl.edu>
 
