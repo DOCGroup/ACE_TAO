@@ -1,3 +1,10 @@
+Thu Jun 19 07:01:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/config-lynxos.h: Since LynxOS lacks sys/select.h and
+	  dlfcn.h header files, config file needs ACE_LACKS_DLFCN_H
+	  and ACE_LACKS_SYS_SELECT_H to be defined. Thanks to  Olli Savia
+	  <ops@iki.fi> for the patch.
+
 Thu Jun 19 06:35:26 2003  John Michael Zorko <j.zorko@att.net>
 
 	* ace/config-macosx.h: Patches to get ACE building on OSX10.2
