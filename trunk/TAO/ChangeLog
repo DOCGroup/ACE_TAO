@@ -17,6 +17,7 @@ Sun Oct 27 01:04:09 2002  Pradeep Gore  <pradeep@oomworks.com>
 
         Added Files:
         * orbsvcs/orbsvcs/NotifyExt.idl:
+	* orbsvcs/orbsvcs/Notify_Forwarder.idl:	
         * orbsvcs/orbsvcs/Notify/Admin.cpp :
         * orbsvcs/orbsvcs/Notify/Admin.h :
         * orbsvcs/orbsvcs/Notify/Admin.inl:
