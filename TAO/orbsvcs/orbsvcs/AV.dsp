@@ -188,6 +188,10 @@ SOURCE=.\AV\MCast.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\md5.c
+# End Source File
+# Begin Source File
+
 SOURCE=".\AV\media-timer.cpp"
 # End Source File
 # Begin Source File
@@ -216,6 +220,14 @@ SOURCE=.\AV\RTCP.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\RTCP_Channel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\RTCP_Packet.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\RTP.cpp
 # End Source File
 # Begin Source File
@@ -229,10 +241,6 @@ SOURCE=.\sfpC.cpp
 # Begin Source File
 
 SOURCE=.\sfpS.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\source.cpp
 # End Source File
 # Begin Source File
 
@@ -296,7 +304,15 @@ SOURCE=.\AV\FlowSpec_Entry.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\global.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\MCast.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\md5.h
 # End Source File
 # Begin Source File
 
@@ -328,6 +344,14 @@ SOURCE=.\AV\RTCP.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\AV\RTCP_Channel.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\AV\RTCP_Packet.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AV\RTP.h
 # End Source File
 # Begin Source File
@@ -341,10 +365,6 @@ SOURCE=.\sfpC.h
 # Begin Source File
 
 SOURCE=.\sfpS.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\AV\source.h
 # End Source File
 # Begin Source File
 
