@@ -12,6 +12,7 @@
 // Use BSD 4.4 socket definitions
 #define _BSD 44
 
+#define ACE_HAS_EXCEPTIONS
 #define ACE_HAS_AIX_BROKEN_SOCKET_HEADER
 #define ACE_HAS_AIX_HI_RES_TIMER
 #define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
