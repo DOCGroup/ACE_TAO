@@ -549,6 +549,10 @@ AC_CHECK_HEADER([sys/systeminfo.h],[],[])
 
 ACE_CHECK_HAS_HEADERS(sys/filio.h)
 
+ACE_CHECK_HAS_HEADERS(sys/loadavg.h)
+
+ACE_CHECK_HAS_HEADERS(sys/pstat.h)
+
 ACE_CHECK_LACKS_HEADERS(sys/uio.h)
 
 ACE_CHECK_HAS_HEADERS(sys/ioctl.h)

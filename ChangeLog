@@ -1,3 +1,9 @@
+Wed Aug 25 01:19:03 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add checks for ACE_HAS_SYS_PSTAT_H and ACE_HAS_SYS_LOADAVG_H.
+
 Wed Aug 25 08:17:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
