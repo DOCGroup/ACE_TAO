@@ -1,3 +1,10 @@
+Mon Jul 23 17:38:46 2001  Ossama Othman  <ossama@uci.edu>
+
+	* etc/tao_security.doxygen:
+	* etc/tao_ssliop.doxygen:
+
+	  New Doxygen files for TAO's CORBA security libraries.
+
 Mon Jul 23 13:48:26 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/MEM_Connector.cpp (connect):
