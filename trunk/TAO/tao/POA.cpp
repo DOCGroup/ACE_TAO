@@ -1273,7 +1273,7 @@ TAO_POA::destroy_i (CORBA::Boolean etherealize_objects,
                 break;
 
               PortableServer::Servant servant = 0;
-              PortableServer::ObjectId id ((*iterator).ext_id_);
+              PortableServer::ObjectId id ((*iterator).id_);
 
               int result = this->active_object_map ().unbind (id, servant);
               if (result != 0)

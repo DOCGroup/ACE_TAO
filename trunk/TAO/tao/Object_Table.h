@@ -15,9 +15,17 @@
 // ============================================================================
 
 #if !defined (TAO_OBJTABLE_H)
-#  define TAO_OBJTABLE_H
+#define TAO_OBJTABLE_H
 
-typedef ACE_Map_Entry<PortableServer::ObjectId, PortableServer::Servant> TAO_Object_Table_Entry;
+struct TAO_Object_Table_Entry
+{
+  TAO_Object_Table_Entry (void);
+
+  PortableServer::ObjectId id_;
+  CORBA::ULong generation_;
+  PortableServer::Servant servant_;
+  int is_free_;
+};
 
 class TAO_Export TAO_Object_Table_Iterator_Impl
 {
