@@ -18,16 +18,17 @@ CC_Client::CC_Client (void)
 
 CC_Client::~CC_Client (void)
 {
-  // Free resources
-  // Close the ior files
+  // Free resources and close the ior files.
   if (this->cc_factory_ior_file_)
     ACE_OS::fclose (this->cc_factory_ior_file_);
+
   if (this->f_handle_ != ACE_INVALID_HANDLE)
     ACE_OS::close (this->f_handle_);
 
   if (this->cc_factory_key_ != 0)
     ACE_OS::free (this->cc_factory_key_);
-  if(naming_service_!=0)
+
+  if (naming_service_!=0)
     delete naming_service_;
 }
 
@@ -71,7 +72,7 @@ CC_Client::parse_args (void)
         break;
       case 'e':  // debug flag
         run_extended_tests_ = 1;
-        this->extended_tests_params_ = ACE_OS::strdup(get_opts.optarg);
+        this->extended_tests_params_ = ACE_OS::strdup (get_opts.optarg);
         break;
       case 'd':  // debug flag
         TAO_debug_level++;
@@ -96,8 +97,8 @@ CC_Client::parse_args (void)
         break;
       case 'h':
       default:
-        print_usage();
-        ACE_ERROR_RETURN((LM_ERROR, ""), -1);
+        print_usage ();
+        ACE_ERROR_RETURN ((LM_ERROR, ""), -1);
       }
 
   // Indicates successful parsing of command line.
@@ -111,108 +112,111 @@ CC_Client::run (void)
 {
   int tests_run = 0;
   // Tells whether any tests have been run
+
   int success = CC_SUCCESS;
   // Did test succeed?
 
-  if(this->run_basic_tests_ && success==CC_SUCCESS) 
+  if (this->run_basic_tests_ && success == CC_SUCCESS) 
     {
-      success = run_basic_tests();
+      success = run_basic_tests ();
       tests_run = 1;
     }
 
-  if(this->run_extended_tests_ && success==CC_SUCCESS) 
+  if (this->run_extended_tests_ && success == CC_SUCCESS) 
     {
-      success = run_extended_tests(this->extended_tests_params_);
+      success = run_extended_tests (this->extended_tests_params_);
       tests_run = 1;
     }
 
   // Other tests go here
-  // if(other_test_flag && success==CC_SUCCESS) ...
+  // if (other_test_flag && success == CC_SUCCESS) ...
 
   if (this->shutdown_)
-    {
-      // @@TAO is this needed??
-    }
+    // @@TAO is this needed??
 
-  if (tests_run==0)
+  if (tests_run == 0)
     {
-      print_usage();
-      ACE_ERROR_RETURN((LM_ERROR, "No tests given\n"), -1);
+      print_usage ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "No tests given\n"),
+                        -1);
     }
 
   return success;
 }
 
-
 // This function runs basic tests concerned with only one lock set
+
 int
-CC_Client::run_basic_tests(void)
+CC_Client::run_basic_tests (void)
 {
   int success = CC_FAIL;
 
-  Test_Single_Lock_With_Mode t1(naming_service_,
-                                CosConcurrencyControl::read);
-  Test_Single_Lock_With_Mode t2(naming_service_,
-                                CosConcurrencyControl::write);
-  Test_Single_Lock_With_Mode t3(naming_service_,
-                                CosConcurrencyControl::upgrade);
-  Test_Single_Lock_With_Mode t4(naming_service_,
-                                CosConcurrencyControl::intention_read);
-  Test_Single_Lock_With_Mode t5(naming_service_,
-                                CosConcurrencyControl::intention_write);
-  if( t1.run() == CC_SUCCESS &&
-      t2.run() == CC_SUCCESS &&
-      t3.run() == CC_SUCCESS &&
-      t4.run() == CC_SUCCESS &&
-      t5.run() == CC_SUCCESS )
+  Test_Single_Lock_With_Mode t1 (naming_service_,
+                                 CosConcurrencyControl::read);
+  Test_Single_Lock_With_Mode t2 (naming_service_,
+                                 CosConcurrencyControl::write);
+  Test_Single_Lock_With_Mode t3 (naming_service_,
+                                 CosConcurrencyControl::upgrade);
+  Test_Single_Lock_With_Mode t4 (naming_service_,
+                                 CosConcurrencyControl::intention_read);
+  Test_Single_Lock_With_Mode t5 (naming_service_,
+                                 CosConcurrencyControl::intention_write);
+  if (t1.run () == CC_SUCCESS &&
+      t2.run () == CC_SUCCESS &&
+      t3.run () == CC_SUCCESS &&
+      t4.run () == CC_SUCCESS &&
+      t5.run () == CC_SUCCESS)
     return CC_SUCCESS;
   else
     return CC_FAIL;
 }
 
 int 
-CC_Client::run_extended_tests(char *params)
+CC_Client::run_extended_tests (char *params)
 {
   char *test;
   int success = CC_FAIL;
 
-  ACE_DEBUG((LM_DEBUG, "Params: %s\n", params));
+  ACE_DEBUG ((LM_DEBUG,
+              "Params: %s\n",
+              params));
 
-  char *cmd  = strtok(params, ";");
-  char *arg1 = strtok(NULL, ";");
-  char *arg2 = strtok(NULL, ";");
+  char *cmd  = ACE_OS::strtok (params, ";");
+  char *arg1 = ACE_OS::strtok (NULL, ";");
+  char *arg2 = ACE_OS::strtok (NULL, ";");
 
-  // A possible scenario using test 1,2, and 3
-  // Create and lock the lock set with the name 'Name'
+  // A possible scenario using test 1,2, and 3 Create and lock the
+  // lock set with the name 'Name'
   // ./CC_client -e '1;Name'
   // Try to lock the same lock set. The process will hang
   // ./CC_client -e '2:Name'
   // Unlocks the lock set. Now test 2 will continue.
   // ./CC_client -e '3:Name'
 
-  if(strcmp(cmd, "1")==0)
+  if (ACE_OS::strcmp (cmd, "1") == 0)
     {
-      Test_Setup_LockSet t1(naming_service_, arg1);
-      success = t1.run();
+      Test_Setup_LockSet t1 (naming_service_, arg1);
+      success = t1.run ();
     }
 
-  if(strcmp(cmd, "2")==0)
+  if (ACE_OS::strcmp (cmd, "2") == 0)
     {
-      Test_Use_Already_Created_LockSet t2(naming_service_, arg1);
-      success = t2.run();
+      Test_Use_Already_Created_LockSet t2 (naming_service_, arg1);
+      success = t2.run ();
     }
 
-  if(strcmp(cmd, "3")==0)
+  if (ACE_OS::strcmp (cmd, "3") == 0)
     {
-      Test_Unlock_Already_Created_LockSet t3(naming_service_, arg1);
-      success = t3.run();
+      Test_Unlock_Already_Created_LockSet t3 (naming_service_, arg1);
+      success = t3.run ();
     }
 
   return success;
 }
 
 void
-CC_Client::print_usage(void)
+CC_Client::print_usage (void)
 {
   ACE_ERROR ((LM_ERROR,
               "usage:  %s"
@@ -229,8 +233,9 @@ CC_Client::print_usage(void)
 int
 CC_Client::init_naming_service (void)
 {
-  naming_service_ = new CC_naming_service(this->orb_);
-
+  ACE_NEW_RETURN (naming_service_,
+                  CC_naming_service (this->orb_),
+                  -1);
   return 0;
 }
 
@@ -274,20 +279,23 @@ CC_Client::init (int argc, char **argv)
                                           TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
-          /* The test cannot currently run without the naming service
-                      this->factory_ =
+#if 0
+          // The test cannot currently run without the naming service.
+          this->factory_ =
             CosConcurrencyControl::LockSetFactory::_narrow
-              (factory_object.in(), TAO_TRY_ENV);
+            (factory_object.in (), TAO_TRY_ENV);
           TAO_CHECK_ENV;
 
           if (CORBA::is_nil (this->factory_.in ()))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "invalid factory key <%s>\n",
                                this->cc_factory_key_),
-                              -1);*/
+                              -1);
+#endif /* 0 */
         }
 
-      ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Factory received OK\n"));
 
     }
   TAO_CATCHANY
@@ -312,12 +320,14 @@ main (int argc, char **argv)
 
   if (cc_client.init (argc, argv) == -1)
     {
-        ACE_DEBUG((LM_DEBUG, "Did not initialize correctly\n"));
-        return 1;
+      ACE_DEBUG ((LM_DEBUG,
+                  "Did not initialize correctly\n"));
+      return 1;
     }
   else
     {
-      ACE_DEBUG((LM_DEBUG, "Running the test\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Running the test\n"));
       return cc_client.run ();
     }
 }
