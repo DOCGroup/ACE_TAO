@@ -1,3 +1,54 @@
+Wed Nov 21 09:07:37 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.h: Updated the ACE_GUARD_ACTION macro and added a new
+	  ACE_GUARD_REACTION macro.  Then, reimplemented the ACE_GUARD and
+ 	  ACE_GUARD_RETURN macros in terms of these new macros.  Thanks to
+ 	  Don Hinton for contributing these.
+
+	* ace/Log_Msg_Callback.h: Improved the comments to explain why
+	  ACE_Log_Msg_Callback isn't inherited.  Thanks to 
+	  Alexey Chalimov <alexey@allcharge.com> for motivating this.
+
+Tue Nov 20 15:36:52 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ACE-INSTALL.html: Pointed out that on Solaris with g++ you may
+	  need to use GNU as instead of /usr/ccs/bin/as, if you want
+ 	  -gstabs+ and -pipe support.  Thanks to C Chan
+ 	  <CChan@md.aacisd.com> for reporting this.
+
+Mon Nov 19 07:24:05 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* examples/Synch/proc_sema.cpp: Added the ACE_TEXT macro so that
+	  ACE_Get_Opt works correctly.  Thanks to Johnny Willemsen for
+	  contributing this.
+
+	* tests/Aio_Platform_Test.cpp (main): Fixed the code so that it
+	  compiles when ACE_USES_WCHAR.  Thanks to Johnny Willemsen for
+ 	  reporting this.
+
+	* docs/ACE-categories.html: Updated the Doxygen URLs to use the
+	  new format.  Thanks to Peter J. Mason <peter.mason@retriever.com.au> 
+	  for reporting the problem.
+
+Fri Nov 16 10:39:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* docs: Moved minimumTAO.html from $TAO_ROOT/docs/ to
+ 	  $ACE_ROOT/docs.
+
+	* ace/OS.h: Added two new macros ACE_GUARD_ACTION and
+	  ACE_GUARD_ACTION_RETURN.  Thanks to Boris Kaminer
+ 	  <boris.kaminer@orcsoftware.com> for suggesting these.
+
+	* ace/NT_Service.cpp (state): Fixed a bug where calling
+	  ACE_NT_Service::state(x,x) while the service is stopped was
+ 	  causing the internal status variables of ACE_NT_Service to
+ 	  become corrupt.  If the control_mask is set to
+ 	  SERVICE_ACCEPT_STOP in the constructor, the call to state will
+ 	  cause this mask to be reset (if the service is not running).
+  	  This ultimately results in an NT Service that can be started but
+ 	  not stopped.  Thanks to Kyle Brost <Kyle.Brost@quest.com> for
+ 	  providing this fix.
+
 Wed Nov 21 10:00:20 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-irix6.x-common.h:
@@ -58,18 +109,19 @@ Tue Nov 20 13:30:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Mon Nov 19 20:35:44 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
-        * ace/SOCK_Dgram_Mcast.cpp:
-          This class allow application to subscribe a single socket to
-          many multicast groups.  However, the unsubscribe operation
-          failed to work with more than one group.  For some strange
-          reason it was storing the first multicast group subscription in
-          a class member and using that member in all the paths for the
-          unsubscribe methods.
-          We have changed the unsubscribe(const ACE_INET_Addr&,...) method
-          to work as adversited, i.e. unsubscribe the *given* multicast
-          address, not the stored one, as an added benefit the method is
-          now re-entrant.  The unsubscribe(void) method works as before.
-          The code has been re-factored to minimize duplication.
+	* ace/SOCK_Dgram_Mcast.cpp:
+	  This class allow application to subscribe a single socket to
+ 	  many multicast groups.  However, the unsubscribe operation
+ 	  failed to work with more than one group.  For some strange
+ 	  reason it was storing the first multicast group subscription in
+ 	  a class member and using that member in all the paths for the
+ 	  unsubscribe methods.	
+  
+	  We have changed the unsubscribe(const ACE_INET_Addr&,...) method
+ 	  to work as adversited, i.e. unsubscribe the *given* multicast
+ 	  address, not the stored one, as an added benefit the method is
+ 	  now re-entrant.  The unsubscribe(void) method works as before.
+  	  The code has been re-factored to minimize duplication.
 
 Mon Nov 19 11:03:07 2001  Ossama Othman  <ossama@uci.edu>
 
@@ -158,9 +210,9 @@ Sun Nov 11 09:50:52 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
           char to ACE_TCHAR.  Thanks to Johnny Willemsen for reporting
           this.
 
-        * tests/Aio_Platform_Test.cpp: The argv parameter of main() should
-          be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
-          reporting this.
+	* tests/Aio_Platform_Test.cpp: The argv parameter of main() should
+	  be ACE_TCHAR rather than char.  Thanks to Johnny Willemsen for
+ 	  reporting this.
 
 Thu Nov 15 15:43:20 2001  Craig Rodrigues  <crodrigu@bbn.com>
 

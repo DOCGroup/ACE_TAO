@@ -166,7 +166,7 @@ have_asynchio (void)
 int
 main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST ("Aio_Platform_Test");
+  ACE_START_TEST (ACE_TEXT ("Aio_Platform_Test"));
   
   // Test the #defined and constants and runtime values.
   errno = 0;
