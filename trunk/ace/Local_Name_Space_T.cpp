@@ -860,15 +860,13 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK>::dump (void) const
     (ACE_Local_Name_Space<ACE_MEM_POOL_2, LOCK> *) this;
   ACE_UNUSED_ARG (fake_this);
 
-  int result = 0;
   ACE_SEH_TRY 
     {
-      result = ->dump_i ();
+      this->dump_i ();
     }
   ACE_SEH_EXCEPT (fake_this->remap (GetExceptionInformation ())) 
     {
     }
-  return result;
 }
 
 #endif /* ACE_LOCAL_NAME_SPACE_T_C */
