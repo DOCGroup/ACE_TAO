@@ -196,6 +196,20 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
   this->set (sa);
 }
 
+int
+ACE_INET_Addr::set (u_short port_number,
+                    ACE_UINT32 ip_addr,
+                    int encode)
+{
+  ACE_UNUSED_ARG (port_number);
+  ACE_UNUSED_ARG (ip_addr);
+  ACE_UNUSED_ARG (encode);
+  
+  // XXXXX
+  printf("Error: set not defined for 32 bit addresses with IPv6 defined\n");
+  return -1;
+}
+
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and an Internet
 // address.
 
@@ -411,7 +425,16 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 }
 #endif /* ACE_HAS_WCHAR */
 
+#if defined ACE_HAS_IPV6
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
+int
+ACE_INET_Addr::set (const sockaddr_in *addr, int len)
+{
+  /* XXX not supported yet */
+  printf("Error: set (const sockaddr_in *addr, int len) not implemented for IPv6\n");
+  return -1;
+}
+#endif
 
 int
 ACE_INET_Addr::set (const ace_sockaddr_in_t *addr, int len)
@@ -434,15 +457,12 @@ ACE_INET_Addr::set_addr (void *addr, int len)
                   (void *) addr, len);
 }
 
-#if !defined (ACE_HAS_IPV6)
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
 ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
   this->set (addr, len);
 }
-
-#endif /* ACE_HAS_IPV6 */
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and an Internet address.
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
@@ -651,8 +671,15 @@ ACE_INET_Addr::set_port_number (u_short port_number,
 #endif
 }
 
-// Return the dotted Internet address.
+const char *
+ACE_INET_Addr::get_host_addr (char *, int) const
+{
+  // XXXXX
+  printf("Error: get_host_addr not defined yet for IPv6 addresses\n");
+  return 0;
+}
 
+// Return the dotted Internet address.
 const char *
 ACE_INET_Addr::get_host_addr (void) const
 {
