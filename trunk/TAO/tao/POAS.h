@@ -1205,8 +1205,8 @@ TAO_NAMESPACE POA_PortableServer
 #endif // end #if !defined
 
 
-};
-
+}
+TAO_NAMESPACE_CLOSE
 
 #if defined (__ACE_INLINE__)
 #include "POAS.i"

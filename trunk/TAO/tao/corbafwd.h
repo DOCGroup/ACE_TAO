@@ -1628,7 +1628,8 @@ TAO_NAMESPACE CORBA
   // Obtain the thread-specific default environment.
   // This is obsolete and only left here for backwards compatibility.
 
-};  // end of class (namespace) CORBA
+}
+TAO_NAMESPACE_CLOSE  // end of class (namespace) CORBA
 
 // ****************************************************************
 

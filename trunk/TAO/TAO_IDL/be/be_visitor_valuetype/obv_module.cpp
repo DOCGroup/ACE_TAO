@@ -84,7 +84,7 @@ be_visitor_obv_module::visit_module (be_module *node)
       if (this->ctx_->state () == TAO_CodeGen::TAO_MODULE_OBV_CH)
         {
           os->decr_indent ();
-          *os << "};\n\n";
+          *os << "}\nTAO_NAMESPACE_CLOSE\n\n";
         }
     }
   return 0;

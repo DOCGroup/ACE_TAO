@@ -219,7 +219,8 @@ private:
 
 #endif /* ACE_HAS_USING_KEYWORD */
 
-};
+}
+TAO_NAMESPACE_CLOSE
 
 #include "PollableS_T.h"
 #endif /* 0 */

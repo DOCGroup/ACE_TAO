@@ -1,4 +1,3 @@
-//
 // $Id$
 //
 // ================================================================
@@ -324,7 +323,8 @@ TAO_NAMESPACE  CONV_FRAME
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CodeSetContext;
 
 
-}; // module CONV_FRAME
+}
+TAO_NAMESPACE_CLOSE // module CONV_FRAME
 
 void TAO_Export operator<<= (CORBA::Any &, const CONV_FRAME::CodeSetComponent &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, CONV_FRAME::CodeSetComponent*); // noncopying version
