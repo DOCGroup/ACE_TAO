@@ -14,7 +14,7 @@
 #define ACE_SSTRING_H
 #include "ace/pre.h"
 
-#include "ace/String_Base.h"
+#include "ace/Utils/Templates/String_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -472,7 +472,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/SString.i"
+#include "ace/Utils/SString.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

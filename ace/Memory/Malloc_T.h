@@ -20,10 +20,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-#include "ace/Malloc.h"               /* Need ACE_Control_Block */
-#include "ace/Malloc_Allocator.h"
-#include "ace/Free_List.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Memory/Malloc.h"               /* Need ACE_Control_Block */
+#include "ace/Memory/Malloc_Allocator.h"
+#include "ace/Utils/Templates/Free_List.h"
 
 /**
  * @class ACE_Cached_Mem_Pool_Node
@@ -715,11 +715,11 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc_T.i"
+#include "ace/Memory/Malloc_T.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Malloc_T.cpp"
+#include "ace/Memory/Malloc_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

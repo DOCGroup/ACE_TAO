@@ -1,7 +1,7 @@
 // $Id$
 
 // #include "ace/OS.h"
-#include "ace/Arg_Shifter.h"
+#include "ace/Utils/Arg_Shifter.h"
 
 ACE_RCSID(ace, Arg_Shifter, "$Id$")
 

@@ -30,7 +30,7 @@
 #define ACE_FUNCTOR_T_H
 #include "ace/pre.h"
 
-#include "ace/Functor.h"
+#include "ace/Utils/Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -136,12 +136,12 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor_T.i"
+#include "ace/Utils/Functor_T.i"
 #endif /* __ACE_INLINE__ */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Functor_T.cpp"
+#include "ace/Utils/Functor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -14,7 +14,7 @@
 #define ACE_SV_SEMAPHORE_COMPLEX_H
 #include "ace/pre.h"
 
-#include "ace/SV_Semaphore_Simple.h"
+#include "ace/IPC/SV_Semaphore_Simple.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -148,7 +148,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SV_Semaphore_Complex.i"
+#include "ace/IPC/SV_Semaphore_Complex.i"
 #endif
 
 #include "ace/post.h"

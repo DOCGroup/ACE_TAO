@@ -4,14 +4,14 @@
 #ifndef ACE_MALLOC_T_C
 #define ACE_MALLOC_T_C
 
-#include "ace/Malloc_T.h"
+#include "ace/Memory/Malloc_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc_T.i"
+#include "ace/Memory/Malloc_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Malloc_T, "$Id$")

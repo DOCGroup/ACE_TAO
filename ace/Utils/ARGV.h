@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Queue.h"
+#include "ace/Utils/Unbounded_Queue.h"
 
 /**
  * @class ACE_ARGV
@@ -162,7 +162,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/ARGV.i"
+#include "ace/Utils/ARGV.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

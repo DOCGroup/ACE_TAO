@@ -4,10 +4,10 @@
 #if !defined (ACE_AUTO_PTR_C)
 #define ACE_AUTO_PTR_C
 
-#include "ace/Auto_Ptr.h"
+#include "ace/Utils/Templates/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Auto_Ptr.i"
+#include "ace/Utils/Templates/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Auto_Ptr, "$Id$")

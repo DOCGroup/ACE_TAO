@@ -16,7 +16,7 @@
 #include "ace/pre.h"
 
 #include "ace/ACE.h"
-#include "ace/String_Base_Const.h"
+#include "ace/Utils/String_Base_Const.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -220,11 +220,11 @@ template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR> operator + (const CHAR* ,
                                   const ACE_String_Base<CHAR> &);
 #if defined (__ACE_INLINE__)
-#include "ace/String_Base.i"
+#include "ace/Utils/Templates/String_Base.i"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/String_Base.cpp"
+#include "ace/Utils/Templates/String_Base.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -3,15 +3,15 @@
 #ifndef ACE_ARRAY_BASE_C
 #define ACE_ARRAY_BASE_C
 
-#include "ace/Array_Base.h"
-#include "ace/Malloc_Base.h"
+#include "ace/Utils/Templates/Array_Base.h"
+#include "ace/Memory/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Array_Base.inl"
+#include "ace/Utils/Templates/Array_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Array_Base, "$Id$")

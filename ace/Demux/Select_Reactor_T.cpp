@@ -3,21 +3,24 @@
 #ifndef ACE_SELECT_REACTOR_T_C
 #define ACE_SELECT_REACTOR_T_C
 
-#include "ace/Select_Reactor_T.h"
+#include "ace/Demux/Select_Reactor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
-#include "ace/Thread.h"
-#include "ace/Timer_Heap.h"
+#endif
+
+#include "ace/Threads/Thread.h"
+#include "ace/Timer/Timer_Heap.h"
 
 // @@ The latest version of SunCC can't grok the code if we put inline
 // function here.  Therefore, we temporarily disable the code here.
 // We shall turn this back on once we know the problem gets fixed.
 #if 1 // !defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_T.i"
+#include "ace/Demux/Select_Reactor_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Select_Reactor_T, "$Id$")

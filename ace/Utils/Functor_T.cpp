@@ -4,14 +4,14 @@
 #ifndef ACE_FUNCTOR_T_C
 #define ACE_FUNCTOR_T_C
 
-#include "ace/Functor_T.h"
+#include "ace/Utils/Functor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Functor_T.i"
+#include "ace/Utils/Functor_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Functor_T, "$Id$")

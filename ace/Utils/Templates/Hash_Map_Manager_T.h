@@ -14,9 +14,12 @@
 #define ACE_HASH_MAP_MANAGER_T_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Functor.h"
-#include "ace/Log_Msg.h"
+#include "ace/OS/OS.h"
+#include "ace/Utils/Functor.h"
+
+#ifdef ACE_SUBSET_0
+#include "ace/Logging/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -898,12 +901,12 @@ public:
 // This nonsense is necessary since SunCC (version 4.2) cannot inline
 // the code in ace/Hash_Map_Manager_T.i (with the fast option).
 # if !(defined (__SUNPRO_CC) && (__SUNPRO_CC == 0x420))
-#  include "ace/Hash_Map_Manager_T.i"
+#  include "ace/Utils/Templates/Hash_Map_Manager_T.i"
 # endif /* ! __SUNPRO_CC */
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Hash_Map_Manager_T.cpp"
+#include "ace/Utils/Templates/Hash_Map_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

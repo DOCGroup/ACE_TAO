@@ -3,17 +3,21 @@
 
 // Transforms a string BUF into an ARGV-style vector of strings.
 
-#include "ace/ARGV.h"
+#include "ace/Utils/ARGV.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ARGV.i"
+#include "ace/Utils/ARGV.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, ARGV, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ARGV)
 
+#ifdef ACE_SUBSET_0
 void
 ACE_ARGV::dump (void) const
 {
@@ -34,6 +38,7 @@ ACE_ARGV::dump (void) const
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 // Creates this->argv_ out of this->buf_.  New memory is allocated for
 // each element of the array.  This is used by the array-to-string
@@ -78,10 +83,14 @@ ACE_ARGV::ACE_ARGV (const ACE_TCHAR buf[],
   ACE_OS::strcpy (this->buf_, buf);
 
   // Create this->argv_.
+#ifdef ACE_SUBSET_0
   if (this->string_to_argv () == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("string_to_argv")));
+#else
+  this->string_to_argv ();
+#endif
 }
 
 ACE_ARGV::ACE_ARGV (ACE_TCHAR *argv[],
@@ -231,9 +240,11 @@ ACE_ARGV::add (const ACE_TCHAR *next_arg)
 
   // Put the new argument at the end of the queue.
   if (this->queue_.enqueue_tail ((ACE_TCHAR *) next_arg) == -1)
+#ifdef ACE_SUBSET_0
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("Can't add more to ARGV queue")),
                       -1);
+#endif
 
   this->length_ += ACE_OS::strlen (next_arg);
 

@@ -37,7 +37,7 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 
 // Forward declaration.
 class ACE_Select_Reactor_Impl;
-/
+
 /**
  * @class ACE_Select_Reactor_Handle_Set
  *

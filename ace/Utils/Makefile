@@ -1,29 +1,20 @@
 # $Id$
 
 #----------------------------------------------------------------------------
-#       Makefile for the libACE_Utils
+#       Makefile for the libACE_OS
 #----------------------------------------------------------------------------
 
 MAKEFILE = Makefile
-LIBOS   = libACE_Utils
-LIB      = $(LIBOS).a
-SHLIB    = $(LIBOS).$(SOEXT)
+LIBNAME   = libACE_Utils
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 
-#----------------------------------------------------------------------------
-#       Include macros and targets
-#----------------------------------------------------------------------------
 
-include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-
-####
-#### ACE_COMPONENTS support.
-####
-FILES += \
-	ACE \
+FILES = \
+	ARGV\
 	Active_Map_Manager\
 	Active_Map_Manager_T\
 	Arg_Shifter\
-	ARGV\
 	Capabilities\
 	Configuration\
 	Configuration_Import_Export\
@@ -39,10 +30,10 @@ FILES += \
 	Future\
 	Future_Set\
 	Get_Opt\
-	Hashable\
 	Hash_Map_Manager\
-	Init_ACE\
+	Hashable\
 	IO_Cntl_Msg\
+	Init_ACE\
 	Lib_Find\
 	Map\
 	Message_Block\
@@ -54,14 +45,23 @@ FILES += \
 	Recyclable\
 	Refcountable\
 	Registry\
-	Sample_History\
 	SString\
+	Sample_History\
 	Stats\
 	String_Base_Const\
 	Test_and_Set\
 	Unbounded_Queue\
 	Unbounded_Set
 
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+####
+#### ACE_COMPONENTS support.
+####
 
 LSRC  = $(addsuffix .cpp,$(FILES))
 
@@ -74,7 +74,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 INSTALL =
 
 clean:
-	$(RM) -f $(LIBOS).a $(LIBOS).so
+	$(RM) -f $(LIBNAME).a $(LIBNAME).so
 
 #----------------------------------------------------------------------------
 #       Local targets
@@ -87,3 +87,6 @@ clean:
 #----------------------------------------------------------------------------
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+

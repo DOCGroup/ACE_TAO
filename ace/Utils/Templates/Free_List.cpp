@@ -3,7 +3,7 @@
 #ifndef ACE_FREE_LIST_C
 #define ACE_FREE_LIST_C
 
-#include "ace/Free_List.h"
+#include "ace/Utils/Templates/Free_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

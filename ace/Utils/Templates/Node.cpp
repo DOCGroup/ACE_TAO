@@ -3,7 +3,7 @@
 #ifndef ACE_NODE_C
 #define ACE_NODE_C
 
-#include "ace/Node.h"
+#include "ace/Utils/Templates/Node.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -14,7 +14,7 @@
 #define ACE_UNBOUNDED_SET_H
 #include "ace/pre.h"
 
-#include "ace/Node.h"
+#include "ace/Utils/Templates/Node.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -242,11 +242,11 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Unbounded_Set.inl"
+#include "ace/Utils/Unbounded_Set.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Unbounded_Set.cpp"
+#include "ace/Utils/Unbounded_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

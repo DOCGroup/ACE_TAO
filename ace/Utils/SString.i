@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Malloc_Base.h"
+#include "ace/Memory/Malloc_Base.h"
 
 ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (ACE_Allocator *alloc)

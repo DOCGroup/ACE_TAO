@@ -20,14 +20,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if defined (ACE_HAS_MALLOC_STATS)
 #if defined (ACE_HAS_THREADS)
-#include "ace/Process_Mutex.h"
+#include "ace/Threads/Process_Mutex.h"
 #define ACE_PROCESS_MUTEX ACE_Process_Mutex
 #else
-#include "ace/SV_Semaphore_Simple.h"
+#include "ace/IPC/SV_Semaphore_Simple.h"
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
 
@@ -403,12 +405,12 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc.i"
+#include "ace/Memory/Malloc.i"
 #endif /* __ACE_INLINE__ */
 
 // Include the ACE_Malloc templates and ACE_Memory_Pool classes at this point.
-#include "ace/Malloc_T.h"
-#include "ace/Memory_Pool.h"
+#include "ace/Memory/Malloc_T.h"
+#include "ace/Memory/Memory_Pool.h"
 
 #include "ace/post.h"
 #endif /* ACE_MALLOC_H */

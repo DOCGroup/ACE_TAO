@@ -207,7 +207,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Mem_Map.i"
+#include "ace/Memory/Mem_Map.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

@@ -151,7 +151,7 @@ protected:
 };
 
 #if !defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/SV_Semaphore_Simple.i"
+#include "ace/IPC/SV_Semaphore_Simple.i"
 #endif
 
 #include "ace/post.h"

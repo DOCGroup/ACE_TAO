@@ -14,13 +14,13 @@
 #define ACE_SERVICE_OBJECT_H
 #include "ace/pre.h"
 
-#include "ace/Shared_Object.h"
+#include "ace/Svcconf/Shared_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
+#include "ace/Demux/Event_Handler.h"
 
 #define ACE_Component ACE_Service_Object
 /**
@@ -157,7 +157,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Object.i"
+#include "ace/Svcconf/Service_Object.i"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/post.h"

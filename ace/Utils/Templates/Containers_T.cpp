@@ -3,17 +3,20 @@
 #ifndef ACE_CONTAINERS_T_C
 #define ACE_CONTAINERS_T_C
 
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
-#include "ace/Malloc_Base.h"
+#endif
+
+#include "ace/Memory/Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers.h"
+#include "ace/Utils/Containers.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Containers_T.i"
+#include "ace/Utils/Templates/Containers_T.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(ace, Containers_T, "$Id$")

@@ -16,14 +16,14 @@
 #ifndef ACE_HASH_MAP_MANAGER_T_CPP
 #define ACE_HASH_MAP_MANAGER_T_CPP
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Utils/Templates/Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Hash_Map_Manager_T.i"
+# include "ace/Utils/Templates/Hash_Map_Manager_T.i"
 #elif defined (__SUNPRO_CC) && (__SUNPRO_CC == 0x420)
 // If ACE_INLINE is on and we are on SunCC, undefine ACE_INLINE,
 // include ace/Hash_Map_Manager_T.i, and then redefine ACE_INLINE.
@@ -31,14 +31,14 @@
 // the code in ace/Hash_Map_Manager_T.i (with the fast option).
 # undef ACE_INLINE
 # define ACE_INLINE
-# include "ace/Hash_Map_Manager_T.i"
+# include "ace/Utils/Templates/Hash_Map_Manager_T.i"
 # undef ACE_INLINE
 # define ACE_INLINE inline
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch.h"
-#include "ace/Service_Config.h"
-#include "ace/Malloc.h"
+#include "ace/Threads/Synch.h"
+#include "ace/Svcconf/Service_Config.h"
+#include "ace/Memory/Malloc.h"
 
 ACE_RCSID(ace, Hash_Map_Manager_T, "$Id$")
 
@@ -69,6 +69,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry (void)
 }
 # endif /* ! defined (ACE_HAS_BROKEN_NOOP_DTORS) */
 
+#ifdef ACE_SUBSET_0
 template <class EXT_ID, class INT_ID> void
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 {
@@ -88,6 +89,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump 
   this->lock_.dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif /* ACE_SUBSET_0 */
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_buckets (size_t size)
@@ -372,6 +374,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Hash_Map_Iterator_Base_Ex)
 
+#ifdef ACE_SUBSET_0
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump_i (void) const
 {
@@ -382,6 +385,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
   ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("next_ = %x"), this->next_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif /* ACE_SUBSET_0 */
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::forward_i (void)

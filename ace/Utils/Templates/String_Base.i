@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Malloc_Base.h"
+#include "ace/Memory/Malloc_Base.h"
 
 // Default constructor.
 

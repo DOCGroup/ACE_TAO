@@ -3,8 +3,11 @@
 #ifndef ACE_TIMER_HEAP_T_C
 #define ACE_TIMER_HEAP_T_C
 
-#include "ace/Timer_Heap_T.h"
+#include "ace/Timer/Timer_Heap_T.h"
+
+#ifdef ACE_SUBSET_0
 #include "ace/Log_Msg.h"
+#endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -292,6 +295,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::earliest_time (void) const
   return this->heap_[0]->get_timer_value ();
 }
 
+#ifdef ACE_SUBSET_0
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 {
@@ -326,6 +330,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+#endif
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::copy (int slot,
