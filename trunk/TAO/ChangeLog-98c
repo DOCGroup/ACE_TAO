@@ -1,3 +1,9 @@
+Tue Nov  3 19:57:03 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/Callback_Quoter/README: 
+	  Added this file which explains the Callback Quoter example and 
+	  the way the execute it.
+
 Tue Nov  3 17:14:35 1998  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/server_discovery/Trader_Client.{h,cpp}: 
