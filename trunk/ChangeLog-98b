@@ -1,8 +1,11 @@
 Sun Nov 15 16:34:11 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1-4.0.h,config-linux-common.h:  added
-          ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR.  Thanks to James
-          Johnson for reporting that it is necessary.
+          ACE_HAS_BROKEN_EXPLICIT_DESTRUCTOR #define.  Thanks to
+          James Johnson for reporting that it is necessary.
+
+        * ace/config-kcc-common.h: removed commented-out
+          ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR #define.
 
 Sun Nov 15 12:40:35 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
