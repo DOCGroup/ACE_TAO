@@ -1,3 +1,8 @@
+Mon Apr 10 17:37:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/config-freebsd-pthread.h: Addplied John Aughey
+	  <ajh4@cec.wustl.edu>'s patch for FreeBSD 4.0.
+
 Mon Apr 10 07:30:22 2000  John Rodgers <jrrodgers@acm.org>
 
         * ace/OS.{h,cpp},Thread_Manager.cpp (instance,~ACE_Thread_Exit):
