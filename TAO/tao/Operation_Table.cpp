@@ -28,7 +28,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
 						    CORBA::ULong dbsize,
 						    CORBA::ULong hashtblsize,
                                                     ACE_Allocator *alloc)
-  : hash_ (hashtblsize, alloc);
+  : hash_ (hashtblsize, alloc)
 {
   // The job of the constructor is to go thru each entry of the
   // database and bind the operation name to its corresponding
