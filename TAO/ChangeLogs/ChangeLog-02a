@@ -2,6 +2,7 @@ Mon Jan 14 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableServer/PortableServerC.i
 	  (tao_PortableServer_IdUniquenessPolicy_narrow):
+	* tao/diffs/PortableServerC.i.diff:
 
 	  Fixed incorrect use of TAO_ENV_ARG_PARAMETER where
 	  TAO_ENV_ARG_DECL was expected.
