@@ -1,3 +1,28 @@
+Tue Mar 20 21:53:17 2001  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
+
+	  Added user exception that is thrown when no security attributes
+	  are available for the current upcall.
+
+	  The baz() test method raises this exception.
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.h (baz):
+
+	  Updated exception specification to include the newly added user
+	  exception.
+
+	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp (baz):
+
+	  Throw an exception if no security attributes are available for
+	  the current upcall.  The exception indicates problem with the
+	  underlying security mechanism in use.
+
+	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+
+	  Increased timeout for server IOR file.  It wasn't long enough
+	  for some slow machines.
+
 Tue Mar 20 20:01:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp (make_idle):
