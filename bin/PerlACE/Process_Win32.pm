@@ -197,9 +197,9 @@ sub Spawn ()
         $executable = $self->Executable ();
         $cmdline = $self->CommandLine ();
 
-        # Generate a script to delete the log files for this program on the
-        # remote device, copy the test down to the device, run it, then
-        # copy the log file(s) back to the log directory.
+        # Generate a script to copy the test down to the device, run it,
+        # copy the log file(s) back to the log directory, then delete the
+        # program and log files on the remote device.
         unless (open (SCRIPT, ">start_test.cmd")) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> failed to create start_test.cmd\n";

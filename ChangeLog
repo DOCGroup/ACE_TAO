@@ -1,3 +1,14 @@
+Tue May  6 18:06:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* ace/Basic_Types.h: Add typedef of ptrdiff_t for WinCE 3. Follow-up:
+	  Tue May  6 13:39:27 2003  Steve Huston <shuston@riverace.com>
+
+	* tests/FIFO_Test.cpp: Changed main() to ACE_TMAIN() to fix WinCE
+	  (wide char) build error.
+
+	* bin/PerlACE/Process_Win32.pm: Corrected comments about what the
+	  PocketPC script is doing.
+
 Tue May  6 13:39:27 2003  Steve Huston <shuston@riverace.com>
 
 	* ace/Functor.i (ACE_Hash<void*>::operator()):
