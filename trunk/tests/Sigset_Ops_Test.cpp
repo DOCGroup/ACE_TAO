@@ -25,12 +25,12 @@
 ACE_RCSID(tests, Sigset_Ops_Test, "$Id$")
 
 void
-siglistset (sigset_t x, int *sigset)
+siglistset (sigset_t x, int *sigset, int can_miss = 0)
 {
   int empty = 1 ;
   int result = 0 ;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal (s) in the set = %08x:\n    "), x)) ;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal (s) in the set = %08x:\n"), x)) ;
 
   for (int i = 1; i < ACE_NSIG; i++) 
     {
@@ -38,10 +38,16 @@ siglistset (sigset_t x, int *sigset)
 
       if (result > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %d"), i)) ;
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" %d\n"), i)) ;
           empty = 0 ;
         }
-
+      else if (can_miss)
+	{
+	  ACE_DEBUG ((LM_DEBUG,
+		      ACE_TEXT ("Be careful... Signal %d is not valid\n"),
+		      i));
+	  result = 1;
+	}
       ACE_ASSERT ((sigset [i] ? result > 0 : result <= 0)) ;
     }
 
@@ -79,7 +85,13 @@ run_main (int, ACE_TCHAR *[])
   for (i = 0 ; i < ACE_NSIG ; i++) 
     sigset [i] = 1 ;
 
-  siglistset (x, sigset) ;
+  // There's no guarantee that the valid signals are sequential without
+  // missed spots. For example, Red Hat Enterprise Linux 3 (any version
+  // with NPTL) does not include signal 32 in sigfillset() since it's
+  // reserved for kernel/nptl use. So, allow a miss in this check, but
+  // be prepared to check the log file for misses if signal capability seems
+  // odd if the test passes.
+  siglistset (x, sigset, 1) ;
 
   // testing sigemptyset
   ACE_OS::sigemptyset (&x) ;
