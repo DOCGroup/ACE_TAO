@@ -58,10 +58,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
-  TAO_ENV_DECLARE_NEW_ENV
-
-  // @@ Comments in lcient.cpp apply here..
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       // Initialize the ORB
       CORBA::ORB_var orb =
