@@ -1,3 +1,16 @@
+Tue Jan 19 01:31:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Added a quick
+	  hack to open the tmp_file in the "correct" status on Win32 so
+	  the tmp_file will get removed automatically.
+
+	  We need to reimplement ACE_OS::fopen to make it behave the same
+	  as on other platforms at some later point.
+
+	  (DRV_copy_input): Changed to use ACE_OS::f* functions.  It
+	  doesn't really make any difference here because the temp file
+	  get closed before unlink.
+
 Mon Jan 18 22:57:31 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp:
