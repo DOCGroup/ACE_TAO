@@ -12,7 +12,7 @@ TAO_IORInterceptor_Adapter_Factory_Impl::~TAO_IORInterceptor_Adapter_Factory_Imp
 }
 
 TAO_IORInterceptor_Adapter * TAO_IORInterceptor_Adapter_Factory_Impl::create (
-    ACE_ENV_SINGLE_ARG_DECL
+    ACE_ENV_SINGLE_ARG_DECL_NOT_USED
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
