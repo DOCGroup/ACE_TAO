@@ -235,24 +235,34 @@ Cubit_Task::initialize_orb (void)
 
       if (GLOBALS::instance ()->use_name_service == 0)
         return 0;
+      /*
+	CORBA::Object_var naming_obj =
+	this->orb_->resolve_initial_references ("NameService");
+	if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+	" (%P|%t) Unable to resolve the Name Service.\n"),
+	-1);
 
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
-
-      this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
+	this->naming_context_ =
+	CosNaming::NamingContext::_narrow (naming_obj.in (),
                                            TAO_TRY_ENV);
 
       // Check the environment and return 1 if exception occurred or
       // nil pointer.
       if (TAO_TRY_ENV.exception () != 0 ||
-          CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
-        return -1;
+      CORBA::is_nil (this->naming_context_.in ())==CORBA::B_TRUE )
+      return -1;
+      */
 
+      // Initialize the naming services
+      // Init should be able to be passed the command line arguments,
+      // but it isn't possible here, so use dummy values
+      if (my_name_client_.init (orb_, 0, 0) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
+      
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
@@ -261,7 +271,7 @@ Cubit_Task::initialize_orb (void)
 
       TAO_TRY_ENV.clear ();
       CORBA::Object_var objref =
-        this->naming_context_->bind_new_context (cubit_context_name,
+        this->my_name_client_->bind_new_context (cubit_context_name,
                                                  TAO_TRY_ENV);
 
       if (TAO_TRY_ENV.exception() != 0)
@@ -271,7 +281,7 @@ Cubit_Task::initialize_orb (void)
           if (ex != 0)
             {
               TAO_TRY_ENV.clear ();
-              objref = this->naming_context_->resolve (cubit_context_name,
+              objref = this->my_name_client_->resolve (cubit_context_name,
                                                        TAO_TRY_ENV);
               printf("NamingContext::AlreadyBound\n");
             }
@@ -442,16 +452,25 @@ int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
                         Task_State *ts)
 {
+  ACE_NEW_RETURN (low_thread_args,
+                  char[arg_len + 1],
+                  -1);
 
-  /*DONE*/// @@ Naga, can you please explain why you need to do all of this?
-  /*DONE*/// i.e, we need some comments here!  In particular, what is args1
-  /*DONE*/// being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
-  /*DONE*/// is an appropriate size?  It seems to me that we should either (1)
-  /*DONE*/// add an accessor on ACE_ARGV to determine what this size ought to
-  /*DONE*/// be or (2) we should try to use/add a method on ACE_ARGV that
-  /*DONE*/// converts the argv back into a char * buffer or something!  At any
-  /*DONE*/// rate, this code should be cleaned up and abstracted better.
+  ACE_OS::strcpy (low_thread_args,
+                  arg_buf);
+  char *args1;
 
+  // @@ Naga, can you please explain why you need to do all of this?
+  // i.e, we need some comments here!  In particular, what is args1
+  // being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
+  // is an appropriate size?  It seems to me that we should either (1)
+  // add an accessor on ACE_ARGV to determine what this size ought to
+  // be or (2) we should try to use/add a method on ACE_ARGV that
+  // converts the argv back into a char * buffer or something!  At any
+  // rate, this code should be cleaned up and abstracted better.
+  ACE_NEW_RETURN (args1,
+                  char[ACE_DEFAULT_ARGV_BUFSIZ],
+                  -1);
   int i;
 
   for (i = 0; i < this->argc_ ; i++)

@@ -11,7 +11,7 @@ ACE_RCSID(IDL_Cubit, client_i, "$Id$")
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *Cubit_Client_Timeprobe_Description[] =
+  static const char *Cubit_Client_Timeprobe_Description[] =
 {
   "Cubit_Client::cube_oneway - start",
   "Cubit_Client::cube_oneway - end",
@@ -162,7 +162,7 @@ Cubit_Client::parse_args (void)
                              "Unable to read ior from %s : %p\n",
                              get_opts.optarg),
                             -1);
-            break;
+	break;
       case 'k': // read the cubit IOR from the command-line.
         this->cubit_factory_key_ =
           ACE_OS::strdup (get_opts.optarg);
@@ -357,7 +357,7 @@ Cubit_Client::cube_octet (int i)
 {
   CORBA::Octet arg_octet = this->func (i);
 
-   // Cube an octet.
+  // Cube an octet.
   CORBA::Octet ret_octet;
   {
     ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_OCTET_START);
@@ -637,11 +637,11 @@ Cubit_Client::print_stats (const char *call_name,
                   "system_time\t= %0.06f ms\n"
                   "\t%0.00f calls/second\n",
                   elapsed_time.real_time < 0.0 ? 0.0
-                    : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
+		  : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
                   elapsed_time.user_time < 0.0 ? 0.0
-                    : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
+		  : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
                   elapsed_time.system_time < 0.0 ? 0.0
-                    : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
+		  : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
                   calls_per_sec < 0.0 ? 0.0 : calls_per_sec));
 #endif /* ! ACE_LACKS_FLOATING_POINT */
     }
@@ -920,21 +920,31 @@ Cubit_Client::init_naming_service (void)
 {
   TAO_TRY
     {
-      // @@ This code should use the new TAO_Naming_Client helper
-      // class.
-      CORBA::Object_var naming_obj =
+      /*
+	// @@ This code should use the new TAO_Naming_Client helper
+	// class.
+	CORBA::Object_var naming_obj =
         this->orb_->resolve_initial_references ("NameService");
-
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the NameService.\n"),
-                          -1);
-
-      CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
+	
+	if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+	" (%P|%t) Unable to resolve the NameService.\n"),
+	-1);
+	
+	CosNaming::NamingContext_var naming_context =
+	CosNaming::NamingContext::_narrow (naming_obj.in (),
+	TAO_TRY_ENV);
+	TAO_CHECK_ENV;
+	
+      */
+      
+      // Initialize the naming services
+      if (my_name_client_.init (orb_, argc_, argv_) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
+      
       CosNaming::Name cubit_factory_name (2);
       cubit_factory_name.length (2);
       cubit_factory_name[0].id =
@@ -942,8 +952,8 @@ Cubit_Client::init_naming_service (void)
       cubit_factory_name[1].id =
         CORBA::string_dup ("cubit_factory");
       CORBA::Object_var factory_obj =
-        naming_context->resolve (cubit_factory_name,
-                                 TAO_TRY_ENV);
+        my_name_client_->resolve (cubit_factory_name,
+				  TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
       this->factory_ =
@@ -955,7 +965,7 @@ Cubit_Client::init_naming_service (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " could not resolve cubit factory in Naming service <%s>\n"),
                           -1);
-   }
+    }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Cubit::init_naming_service");
