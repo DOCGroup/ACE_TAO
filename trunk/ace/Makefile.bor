@@ -132,9 +132,6 @@ OBJFILES = \
 	$(OBJDIR)\Process.obj \
 	$(OBJDIR)\Process_Manager.obj \
 	$(OBJDIR)\Profile_Timer.obj \
-	$(OBJDIR)\QoS_Manager.obj \
-	$(OBJDIR)\QoS_Session_Factory.obj \
-	$(OBJDIR)\QoS_Session_Impl.obj \
 	$(OBJDIR)\Reactor.obj \
 	$(OBJDIR)\Read_Buffer.obj \
 	$(OBJDIR)\Registry.obj \
@@ -162,7 +159,6 @@ OBJFILES = \
 	$(OBJDIR)\SOCK_Dgram.obj \
 	$(OBJDIR)\SOCK_Dgram_Bcast.obj \
 	$(OBJDIR)\SOCK_Dgram_Mcast.obj \
-	$(OBJDIR)\SOCK_Dgram_Mcast_QoS.obj \
 	$(OBJDIR)\SOCK_IO.obj \
 	$(OBJDIR)\SOCK_Stream.obj \
 	$(OBJDIR)\SPIPE.obj \
