@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+// $Id$
 
 template <class STREAM> ssize_t
 ACE_Streambuf_T<STREAM>::send (char *buf, ssize_t len)
@@ -21,6 +22,8 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
                                ACE_Time_Value * tv)
 {
   ssize_t rval = peer_->recv (buf, len, flags, tv);
+  if (errno == ETIME)
+    this->timeout_ = 1;
   return rval;
 }
 
@@ -30,7 +33,9 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
                                  int flags,
                                  ACE_Time_Value *tv)
 {
-  ssize_t rval =  peer_->recv_n (buf, len, flags, tv);
+  ssize_t rval = peer_->recv_n (buf, len, flags, tv);
+  if (errno == ETIME) 
+    this->timeout_ = 1;
   return rval;
 }
 

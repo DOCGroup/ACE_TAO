@@ -1,5 +1,10 @@
 Fri May  1 13:52:32 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/IOStream_T.i (recv_n): ACE_IOStream<STREAM>::eof (void) had
+ 	  a subtle bug if it is called when a get operation (>>) has not
+ 	  failed.  Thanks to James CE Johnson <ace-users@lads.com> for
+	  reporting this bug.
+
 	* examples/Connection/misc/Connection_Handler.cpp: Make sure to
  	  activate() each active object using THR_DETACHED so we don't run
  	  out of threading resources.  Thanks to Brad Walton
