@@ -1,3 +1,11 @@
+Tue Oct 19 15:29:19 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Message_Block.cpp (ACE_Data_Block::clone()): When copying data
+	  from the original block to the cloned, only copy cur_size_ bytes.
+	  Preserves the "has been written" boundary in the new block and avoids
+	  a possible "uninitialized read" diagnostic from Purify, et al.
+	  Thanks to Kelly F. Hickel <kfh@mqsoftware.com> for reporting this.
+
 Tue Oct 19 17:58:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-dmc.h:
