@@ -13,7 +13,32 @@
 # 4) Create a symlink to the "log" directory create in step 1) above.
 # 5) ./run_tests.sh <target_hostname>
 
-usage="usage: $0 <target>"
+usage="usage: $0 [-p] <target>
+       -p: purify tests"
+
+purify=0
+purify_with_old_gcc=0
+
+####
+#### Interpret command arguments.
+####
+for arg in "$@"; do
+  case $arg in
+     -p )  purify=1
+           shift
+           ;;
+
+     -'?' ) echo $usage
+           exit 0
+           ;;
+
+     -*) echo $0: unknown option $arg
+         echo $usage
+         exit 1
+         ;;
+  esac
+done
+
 IFS="|"
 tmp=/tmp
 compilation_log="log/compilations.log"
@@ -28,6 +53,12 @@ fi
 if [ -x /bin/uname -a `uname -s` = 'AIX' ]; then
   LIBPATH=$ACE_ROOT/ace:${LIBPATH:-/usr/lib:/lib}
   export LIBPATH
+fi
+
+if [ $purify -eq 1 ]; then
+  if echo $PWD | egrep 'gcc|g++'; then
+    purify_with_old_gcc=1
+  fi
 fi
 
 ####
@@ -188,8 +219,13 @@ fi
 test $TOKEN && (test $chorus || test $Unicos || run Tokens_Test) # tests ACE_Token
 
 run Cache_Map_Manager_Test              # tests ACE_Cache_Map_Manager and ACE_Hash_Cache_Manager and caching features.
-run Cached_Conn_Test                   # tests connection management features (with OneShot Acceptor).
-run Cached_Accept_Conn_Test            # tests connection management features (with regular Acceptor).
+
+# These two tests are known to leak memory when compiled with gcc
+if [ $purify_with_old_gcc -ne 1 ]; then
+  run Cached_Conn_Test                  # tests connection management features (with OneShot Acceptor).
+  run Cached_Accept_Conn_Test           # tests connection management features (with regular Acceptor).
+fi
+
 run Map_Manager_Test                    # tests ACE_Map Manager and ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Hash_Map_Manager_Test               # tests ACE_Hash_Map_Manager + Forward and Reverse Map Iterators.
 run Hash_Map_Bucket_Iterator_Test       # tests ACE_Hash Map Bucket iterator.
