@@ -117,6 +117,12 @@ public:
    */
   int fini (ACE_ENV_SINGLE_ARG_DECL);
 
+  /**
+   * Idle-time activity.  
+   *
+   * @param result is set to process return code if return value is non-zero.
+   * @return zero to continue; nonzero to exit
+   */
   int idle(int & result);
 
 
@@ -190,6 +196,11 @@ public:
   // Implementation methods
 private:
   /**
+   * Find or allocate an ID for a new detector
+   */
+  CORBA::ULong allocateId();
+
+  /**
    * Write this factory's IOR to a file
    */
   int write_IOR ();
@@ -255,15 +266,20 @@ private:
 
   /**
    * A vector of FaultDetectors.  Note that the FaultDetector ID
-   * is an index into this vector.  Vector slots are not reused.
+   * is an index into this vector.  
    */
   DetectorVec detectors_;
 
   /**
-   * count of entries in detectors_ that have been deleted.
-   * Used to determine when the factory is idle.
+   * count of empty entries in detectors_ 
+   * Used to determine when the factory is idle, and to avoid 
+   * fruitless searches for empty slots.
    */
-  size_t removed_;
+  size_t emptySlots_;
+
+  /**
+   * boolean: starts false.  Set to true when it's time to quit.
+   */
   int quitRequested_;
 };
 

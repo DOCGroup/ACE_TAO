@@ -1,3 +1,12 @@
+Fri Sep 19 16:29:42 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
+        * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+          Reuse fault detector IDs.  Previously the vector of detectors was
+          allowed to grow indefinately.  Now unused slots are located and reused.
+
+        These changes were made in the oci_haft branch.
+
 Fri Sep 19 13:50:09 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.cpp

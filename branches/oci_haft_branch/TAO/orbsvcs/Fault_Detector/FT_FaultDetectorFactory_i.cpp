@@ -49,7 +49,7 @@ FT_FaultDetectorFactory_i::FT_FaultDetectorFactory_i ()
   : ior_output_file_(0)
   , nsName_(0)
   , quitOnIdle_(0)
-  , removed_(0)
+  , emptySlots_(0)
   , quitRequested_(0)
 {
 }
@@ -151,7 +151,7 @@ int FT_FaultDetectorFactory_i::idle (int & result)
 {
   ACE_UNUSED_ARG (result);
   int quit = quitRequested_;
-  if (quit == 0 && detectors_.size() == removed_)
+  if (quit == 0 && detectors_.size() == emptySlots_)
   {
     ACE_ERROR (( LM_ERROR,
       "FaultDetectorFactory is idle.\n"
@@ -239,6 +239,27 @@ int FT_FaultDetectorFactory_i::init (TAO_ORB_Manager & orbManager
   return result;
 }
 
+CORBA::ULong FT_FaultDetectorFactory_i::allocateId()
+{
+  CORBA::ULong id = detectors_.size();
+  if (emptySlots_ != 0)
+  {
+    for(CORBA::ULong pos = 0; pos < id; ++pos)
+    {
+      if (detectors_[pos] == 0)
+      {
+        id = pos;
+      }
+    }
+  }
+  else
+  {
+    detectors_.push_back(0);
+    emptySlots_ += 1;
+  }
+  return id;
+}
+
 void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i * detector)
 {
   InternalGuard guard (internals_);
@@ -248,7 +269,7 @@ void FT_FaultDetectorFactory_i::removeDetector(CORBA::ULong id, Fault_Detector_i
     {
       delete detectors_[id];
       detectors_[id] = 0;
-      removed_ += 1;
+      emptySlots_ += 1;
     }
     else
     {
@@ -348,8 +369,6 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
   int missingParameter = 0;
   const char * missingParameterName = 0;
 
-  CORBA::ULong detectorId = detectors_.size();
-
   FT::FaultNotifier_ptr notifier;
   if (! ::TAO_PG::find (decoder, ::FT::FT_NOTIFIER, notifier) )
   {
@@ -415,6 +434,8 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
     ACE_THROW ( PortableGroup::InvalidCriteria() );
   }
 
+  CORBA::ULong detectorId = allocateId();
+
   // NOTE: ACE_NEW is incompatable with ACE_Auto_Basic_Ptr
   // so create a bare pointer first.
   Fault_Detector_i * pFD = 0;
@@ -451,7 +472,8 @@ CORBA::Object_ptr FT_FaultDetectorFactory_i::create_object (
 
   (*detector).start(threadManager_);
 
-  detectors_.push_back(detector.release());
+  detectors_[detectorId] = detector.release();
+  emptySlots_ -= 1;
 
   // since FaultDetector is not a CORBA object (it does not implement
   // an interface.) we always return NIL;
