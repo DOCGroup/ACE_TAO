@@ -1,3 +1,12 @@
+Tue Sep 14 20:43:31 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Context_Impl_Base.h:
+        * DAnCE/ciao/Context_Impl_Base.h:
+        
+          Moved a sufficiently substantial included file above the
+          #pragma once directive, so that some compilers will not
+          complain that it's obsolete.
+
 Tue Sep 14 15:02:24 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * DAnCE/ciao/Context_Impl_Base.cpp:
