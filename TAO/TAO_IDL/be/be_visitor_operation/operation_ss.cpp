@@ -187,8 +187,15 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
       << "ACE_CHECK;" << be_nl
       << "PortableInterceptor::Cookies _tao_cookies;" << be_nl
       << "CORBA::NVList_var _tao_interceptor_args;" << be_nl
-      << "_tao_server_request.orb ()->create_list (0, _tao_interceptor_args.inout (), ACE_TRY_ENV);\n"
+      << "CORBA::Object_var _tao_objref;" << be_nl
+      << "if (_tao_vfr.valid ())" << be_idt_nl
+      << "{" << be_idt_nl
+      << "_tao_server_request.orb ()->create_list "
+      << "(0, _tao_interceptor_args.inout (), ACE_TRY_ENV);"
       << be_nl << "ACE_CHECK;\n" << be_nl
+      << "_tao_objref = "
+      << "_tao_server_request.objref (ACE_TRY_ENV);" << be_nl
+      << "ACE_CHECK;" << be_uidt_nl << "}\n" << be_uidt_nl
       << "ACE_TRY" << be_idt_nl
       << "{" << be_idt_nl
       << "_tao_vfr.preinvoke (_tao_server_request.request_id (), ";
@@ -196,7 +203,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     *os << "0";
   else
     *os << "1";
-  *os << ", 0, " << this->compute_operation_name (node)
+  *os << ", _tao_objref.in (), " << this->compute_operation_name (node)
       << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "TAO_INTERCEPTOR_CHECK;\n";
@@ -262,7 +269,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     *os << "0";
   else
     *os << "1";
-  *os << ", 0, " << this->compute_operation_name (node)
+  *os << ", _tao_objref.in (), " << this->compute_operation_name (node)
       << ", _tao_server_request.service_info (), _tao_interceptor_args.inout (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "TAO_INTERCEPTOR_CHECK;" << be_uidt_nl
@@ -274,7 +281,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
     *os << "0";
   else
     *os << "1";
-  *os << ", 0, " << this->compute_operation_name (node)
+  *os << ", _tao_objref.in (), " << this->compute_operation_name (node)
       << ", "// _tao_server_request.service_info (), "
       << "_tao_cookies, ACE_TRY_ENV);" << be_nl
       << "ACE_RETHROW;" << be_uidt_nl
