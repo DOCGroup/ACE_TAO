@@ -461,7 +461,7 @@ public:
   // Returns true if Reactor has been successfully initialized, else
   // false.
 
-  virtual size_t size (void);
+  virtual size_t size (void) const;
   // Returns the current size of the Reactor's internal descriptor
   // table.
 
@@ -516,7 +516,7 @@ public:
                          int ops);
   // GET/SET/ADD/CLR the ready "bit" bound with the <handle> and <mask>.
 
-  virtual ACE_Reactor_Impl *implementation (void);
+  virtual ACE_Reactor_Impl *implementation (void) const;
   // Get the implementation class
 
   virtual int current_info (ACE_HANDLE handle,

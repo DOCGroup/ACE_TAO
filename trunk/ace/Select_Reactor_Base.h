@@ -255,7 +255,7 @@ public:
   int handle_in_range (ACE_HANDLE handle);
 
   // = Accessors.
-  size_t size (void);
+  size_t size (void) const;
   // Returns the current table size.
 
   size_t max_handlep1 (void);
