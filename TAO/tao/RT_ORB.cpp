@@ -211,7 +211,30 @@ TAO_Named_RT_Mutex_Manager::open_named_mutex (const char *name,
 #endif /* TAO_HAS_NAMED_RT_MUTEXES */
 }
 
-////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+RTCORBA::TCPProtocolProperties_ptr
+TAO_RT_ORB::create_tcp_protocol_properties (CORBA::Long send_buffer_size,
+                                            CORBA::Long recv_buffer_size,
+                                            CORBA::Boolean keep_alive,
+                                            CORBA::Boolean dont_route,
+                                            CORBA::Boolean no_delay,
+                                            CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException ))
+{
+  TAO_TCP_Properties *tmp;
+  ACE_NEW_THROW_EX (tmp,
+                    TAO_TCP_Properties (send_buffer_size,
+                                        recv_buffer_size,
+                                        keep_alive,
+                                        dont_route,
+                                        no_delay),
+                    CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (RTCORBA::TCPProtocolProperties::_nil ());
+
+  return tmp;
+}
 
 RTCORBA::ThreadpoolId
 TAO_RT_ORB::create_threadpool (CORBA::ULong /*stacksize*/,

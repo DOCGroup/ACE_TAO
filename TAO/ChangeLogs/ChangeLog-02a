@@ -1,3 +1,28 @@
+Sun Mar  4 13:29:09 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/RTCORBA.pidl:
+	* tao/IOP.pidl:
+	* tao/RTPOA.pidl:
+	  Updated to CORBA v2.4.2 (February 2001) versions.  Only comments
+	  were changed in IOP.pidl and RTPOA.pidl.  In RTCORBA.pidl, all
+	  of the PolicyTypes were changed from TAO specific numbers to OMG
+	  assigned numbers.  Also, the create_tcp_protocol_properties
+	  factor method was added to RTORB, so that users can now
+	  instantiate instances of TCPProtocolProperties.
+
+	* tao/RT_ORB.{h,cpp} (create_tcp_protocol_properties):
+	  Added implementation to return a new TCPProtocolProperties
+	  instance.
+
+	* tao/RTCORBAC.{cpp,h,i}:
+	* tao/RTCORBAS.{cpp,h,i}:
+	* tao/RTCORBAS_T.{cpp,h,i}:
+	* tao/diffs/RTCORBAC.cpp.diff:
+	* tao/diffs/RTCORBAC.h.diff:
+	* tao/diffs/RTCORBAS.cpp.diff:
+	* tao/diffs/RTCORBAS.h.diff:
+	  Updated all the files generated from RTCORBA.pidl.
+
 Sun Mar 04 08:10:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* Changed the following files to correctly use the
@@ -29,7 +54,7 @@ Sun Mar 04 08:10:04 2001  Irfan Pyarali  <irfan@cs.wustl.edu>
 	  - Destruction/Destruction.cpp
 	  - Identity/Identity.cpp
 	  - Non_Servant_Upcalls/Non_Servant_Upcalls.cpp
-	  - wait_for_completion/wait_for_completion.cpp	
+	  - wait_for_completion/wait_for_completion.cpp
 
 Sun Mar 04 10:11:07 2001  Ossama Othman  <ossama@uci.edu>
 
