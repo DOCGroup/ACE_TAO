@@ -36,6 +36,10 @@ Requirements:
 	  It is used to switch from the Visibroker environment to the JDK 1.2
 	  envrionment. So don't worry about it, you won't need it.
 
+	- the file ss has been moved one level up and it got
+	  renamed to "start_services". So use it to start the 
+	  naming, scheduling and event service.
+
 
 Parts of the Demo:
 
@@ -49,8 +53,6 @@ Parts of the Demo:
 
 Files:
 	Common:
-        ss   - restart Naming Service, connect the Event Service and
-               Scheduling service with this Naming Service
         NavWeap.idl - IDL definition of the Weapons and Navigation struct
         README - this readme file
 
@@ -143,6 +145,9 @@ Starting:
 		* Naming Service
 		* Scheduling Service
 		* Event Service
+
+		You can use "start_services" on Unix machines. The
+		script is located in $TAO_ROOT/orbsvcs/tests.
 
 	Supplier:
 		Event_Sup -ORBport 10040 -f MLF.dat -m 1000
