@@ -1,3 +1,12 @@
+Sun Dec 05 16:44:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Select_Reactor_T.cpp (dispatch_notification_handlers):
+
+	  Decrement the number_of_active_handles after a successful
+	  dispatch. This seems to cause Reactor_Notify_Test to fail on
+	  Win32. The reason why this does not show up in *nix is left as
+	  an exercise to the reader!
+
 Sat Dec  4 20:39:20 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * THANKS: Added the 1,900th contributor to the THANKS file!!
