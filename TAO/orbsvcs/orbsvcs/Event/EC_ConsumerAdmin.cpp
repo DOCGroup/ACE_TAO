@@ -90,11 +90,13 @@ TAO_EC_ConsumerAdmin::_default_POA (CORBA::Environment&)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Node<TAO_EC_ProxyPushSupplier*>;
 template class ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>;
 template class ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate ACE_Node<TAO_EC_ProxyPushSupplier*>
 #pragma instantiate ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>
 #pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>
 
