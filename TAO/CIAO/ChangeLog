@@ -1,3 +1,28 @@
+Tue Aug  3 18:36:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/schema/README.html:	
+
+	  File explaining what these new descriptors mean. 
+	
+ 	* docs/schema/Basic_Deployment_Data.xsd:
+	* docs/schema/Deployment.xsd:
+	* docs/schema/Modified_Deployment.xsd:
+	* docs/schema/Spec_Defined_Deployment.xsd:
+	* docs/schema/Spec_Defined_XMI.xsd:
+	* docs/schema/ccd.xsd:
+	* docs/schema/cdd.xsd:
+	* docs/schema/cdp.xsd:
+	* docs/schema/cid.xsd:
+	* docs/schema/cpd.xsd:
+	* docs/schema/iad.xsd:
+	* docs/schema/pcd.xsd:
+	* docs/schema/toplevel.xsd:
+	* docs/schema/unused_elements.xsd:
+
+	  Sets of schemata that will be used in DAnCE. The meaning of
+	  these different schemata have been documented in the
+	  README.html. 
+
 Sun Aug  1 09:30:37 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ChangeLogs:
