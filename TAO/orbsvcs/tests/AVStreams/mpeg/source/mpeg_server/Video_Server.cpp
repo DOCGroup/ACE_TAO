@@ -238,12 +238,12 @@ CORBA::Boolean
 Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &the_spec,  
                                                           CORBA::Environment &env) 
 {
-  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_StreamEndPoint::handle_connection_requested:() %s \n",
-              the_spec[0]));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) Video_Server_StreamEndPoint::handle_connection_requested:()  \n"));
   
   char *server_string;
 
   server_string = CORBA::string_dup ((const char *) the_spec [0]);
+  ACE_DEBUG ((LM_DEBUG, server_string));
   CORBA::Boolean result;
   result = VIDEO_CONTROL_I::instance ()->set_peer (server_string,env);
   // Get media control from my vdev and call set_peer on that.
@@ -256,13 +256,13 @@ Video_Server_StreamEndPoint::handle_connection_requested (AVStreams::flowSpec &t
                    server_string);
   
   TAO_Reverse_FlowSpec_Entry server_entry ("video",
-                              "OUT",
-                              "MIME:video/mpeg",
-                              "UDP",
-                              server_addr);
-     
+                                           "OUT",
+                                           "MIME:video/mpeg",
+                                           "UDP",
+                                           server_addr);
+  
   ACE_DEBUG ((LM_DEBUG,"\nServer Entry = %s\n", server_entry.entry_to_string ()));
-
+  
   the_spec.length (1);
   
   the_spec [0]= server_entry.entry_to_string ();
