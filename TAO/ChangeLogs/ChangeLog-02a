@@ -1,3 +1,19 @@
+Mon Mar 18 18:37:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Messaging/Messaging.h: 
+	* tao/Messaging/MessagingC.h: Prevent users from including
+	  MessaginC.h directly. Users should include only Messaging.h,
+	  else the static initializer for the Messaging library will not
+	  be compiled in. If that is not compiled in the Messaging library
+	  will not be linked into the excutable. 
+
+	* tao/Messaging/MessagingC.cpp:
+	* tao/Messaging/MessagingS.h:
+	* tao/Messaging/Messaging_Policy_i.h: Included Messaging.h. The
+	  generated code needs regeneration. I am going to ask Jai to do
+	  it, as I had spent lots of time trying to chase a bug because of
+	  the problem. 
+
 Mon Mar 18 11:57:28 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp: 
