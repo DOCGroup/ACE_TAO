@@ -118,7 +118,7 @@ namespace Kokyu
       int dont_delete_;
     };
 
-  class non_copyable
+  class Kokyu_Export non_copyable
   {
   protected:
     non_copyable (void);

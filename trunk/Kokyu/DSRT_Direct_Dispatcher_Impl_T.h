@@ -64,7 +64,21 @@ namespace Kokyu
        */
       int operator ()
         (const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item1,
-         const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item2);
+         const DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>& item2)
+      {
+        int rc = qos_comparator_ (item1->qos (), item2->qos ());
+
+        //more eligible
+        if (rc == 1)
+          return 1;
+
+        //if equally eligible, then resolve tie with the creation time of
+        //the item
+        if (rc == 0 && item1->insertion_time () < item2->insertion_time ())
+          return 1;
+
+        return 0;
+      }
 
     private:
       QoSComparator_t qos_comparator_;
@@ -122,7 +136,7 @@ namespace Kokyu
     typedef Sched_Ready_Queue<DSRT_Scheduler_Traits,
                               Queue_Item_Comparator_t,
                               ACE_SYNCH_NULL_MUTEX>
-    DSRT_Sched_Queue;
+    DSRT_Sched_Queue_t;
 
     typedef ACE_SYNCH_MUTEX cond_lock_t;
     typedef ACE_SYNCH_CONDITION cond_t;
@@ -135,7 +149,7 @@ namespace Kokyu
     Priority_t active_prio_;
     ACE_hthread_t curr_scheduled_thr_handle_;
     Guid_t curr_scheduled_guid_;
-    DSRT_Sched_Queue ready_queue_;
+    DSRT_Sched_Queue_t ready_queue_;
     u_int sched_queue_modified_;
     cond_lock_t sched_queue_modified_cond_lock_;
     cond_t sched_queue_modified_cond_;

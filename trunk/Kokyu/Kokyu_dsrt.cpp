@@ -6,7 +6,7 @@
 #include "DSRT_Direct_Dispatcher_Impl_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "Kokyu.i"
+#include "Kokyu_dsrt.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Kokyu, Kokyu, "$Id$")

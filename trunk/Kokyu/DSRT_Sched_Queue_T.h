@@ -144,7 +144,11 @@ namespace Kokyu
     {
     public:
       /// Returns hash value.
-      u_long operator () (const Guid_t &id);
+      u_long operator () (const Guid_t &id)
+      {
+        typename DSRT_Scheduler_Traits::Guid_Hash guid_hash;
+        return guid_hash(id);
+      }
     };
 
     // RB_Tree related typedefs
