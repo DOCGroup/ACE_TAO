@@ -4,17 +4,17 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    typecode.h
 //
 // = DESCRIPTION
-//     
+//
 //    Header file for Win32 C/C++/COM interface to CORBA's "TypeCode" type.
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems, Inc.
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_TYPECODE_H)
@@ -37,7 +37,7 @@ struct CDR;
 // classes are really to be defined inside the TypeCode class
 
 //extern CORBA::TypeCode_ptr CORBA::_tc_Bounds;
-class CORBA_Bounds : public CORBA_UserException 
+class CORBA_Bounds : public CORBA_UserException
 {
 public:
   CORBA_Bounds (void)
@@ -45,10 +45,10 @@ public:
 };
 
 //extern CORBA::TypeCode_ptr CORBA::_tc_BadKind;
-class CORBA_BadKind : public CORBA_UserException 
+class CORBA_BadKind : public CORBA_UserException
 {
 public:
-  CORBA_BadKind (void) 
+  CORBA_BadKind (void)
     : CORBA_UserException (CORBA::_tc_BadKind) {}
 };
 
@@ -142,7 +142,7 @@ public:
   // Deprecated, CORBA 1.2, not fully usable. Returns the number of
   // parameters that the typecode takes.
 
-  CORBA::ULong ulong_param (CORBA::ULong n, 
+  CORBA::ULong ulong_param (CORBA::ULong n,
                             CORBA::Environment &) const;
 
   CORBA::TypeCode_ptr typecode_param (CORBA::ULong n,
@@ -186,10 +186,10 @@ public:
   virtual ~CORBA_TypeCode (void);
   // destructor
 
-  enum traverse_status 
-  { 
+  enum traverse_status
+  {
     TRAVERSE_STOP,
-    TRAVERSE_CONTINUE 
+    TRAVERSE_CONTINUE
   };
   // these are used to indicate the status of marshaling
 
@@ -231,7 +231,7 @@ public:
   // directly, and have that decide whether to use the typecode
   // interpereter's knowledge of data structure layout through mutual
   // recursion.
-    
+
   size_t size (CORBA::Environment &env);
   // returns the size. Used by the IIOP marshaling engine.
 
@@ -246,7 +246,7 @@ public:
                                     void **ppv);
   // private:
   //
-  // = The guts of the typecode implementation class 
+  // = The guts of the typecode implementation class
 
   // This is implemented as a counted set of bytes, in marshaled CDR
   // format.
@@ -288,12 +288,12 @@ private:
   // tk_union, tk_enum, tk_alias, and tk_except.
 
   CORBA::TypeCode_ptr private_member_type (CORBA::ULong index,
-                                           CORBA::Environment &) const; 
+                                           CORBA::Environment &) const;
   // returns member_type (...), raises (BadKind, Bounds); Useful for
   // tk_struct, tk_union, and tk_except
 
   //  CORBA::TypeCode_ptr private_member_label (CORBA::ULong index,
-  //                                  CORBA::Environment &) const; 
+  //                                  CORBA::Environment &) const;
   // returns member_label (...), raises (BadKind, Bounds); Useful for tk_union
 
   CORBA::Any_ptr private_member_label (CORBA::ULong n,
@@ -365,7 +365,7 @@ private:
 
 class ACE_Svc_Export TC_Private_State
   // = TITLE
-  //   Private state of the TypeCode. 
+  //   Private state of the TypeCode.
   //
   // = DESCRIPTION
   //   Used to store precomputed values

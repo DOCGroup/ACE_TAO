@@ -20,7 +20,7 @@
 
 // @@ This is a botch...
 // @@ Can you please explain why?
-size_t 
+size_t
 calc_key_union_attributes (CDR *stream,
 			   size_t &alignment,
 			   size_t &size_with_pad,
@@ -58,7 +58,7 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
   // currently a priority to ensure the allocated code is freed.
 
 #if 0
-  if ((((ptr_arith_t) buffer) & 0x03) != 0) 
+  if ((((ptr_arith_t) buffer) & 0x03) != 0)
     {
       ptr_arith_t temp;
 
@@ -72,18 +72,19 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
     }
 #endif /* 0 */
 
-  // TAO comments: 
+  // TAO comments:
 
   // For free standing typecodes, we choose to always make a copy of
   // the buffer passed in. That way, our destructor doesn't have to
   // deal with the case where the buffer was either allocated in which
   // case it must be freed or the case where our buffer just points to
   // the buffer passed in.
+
   if (!parent_)
     {
       // No parent. We are free standing.
       ptr_arith_t temp;
-      
+
       // Allocate a buffer to hold the encapsulated stream. We
       // allocate extra space since we need a buffer that is aligned
       // on a 4 byte word boundary. As a result, it is quite possible
@@ -92,17 +93,18 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // during destruction, we do not want part of the allocated heap
       // to remain dangling. Hence we save a handle to the original
       // allocated buffer.
+
       non_aligned_buffer_ = new CORBA::Octet [length + 4];
-      
+
       temp = (ptr_arith_t) non_aligned_buffer_;
       temp += 3;
       temp &= ~0x03;
       buffer_ = (CORBA::Octet *) temp;
-      
+
       (void) ACE_OS::memcpy (buffer_, buffer, (size_t) length);
 
       // The ORB does not own this typecode.
-      _orb_owns = CORBA::B_FALSE;  
+      _orb_owns = CORBA::B_FALSE;
     }
   else
     {
@@ -135,16 +137,16 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
       // precomputation logic. We should delete ourselves and the
       // subtree below us only if our parent was in the process of
       // deleteing itself
-      if (parent_->_delete_flag) 
+      if (parent_->_delete_flag)
         // Parent is deleteing, so we have to go.
 	{
           // Set our delete flag to TRUE so that our children (if any)
           // will know that we have initiated our destruction
-	  _delete_flag = CORBA::B_TRUE; 
+	  _delete_flag = CORBA::B_TRUE;
 
           // Delete any private state we have and thus free up the
           // children.
-	  delete private_state_; 
+	  delete private_state_;
 
 	  // We share the buffer octets of our parent. Hence we don't
 	  // deallocate it.
@@ -158,13 +160,13 @@ CORBA_TypeCode::~CORBA_TypeCode (void)
       // We are free standing (IDL compiler generated code) and are to
       // be deleted.  We indicate to our children that we are getting
       // deleted.
-      _delete_flag = CORBA::B_TRUE; 
+      _delete_flag = CORBA::B_TRUE;
 
       // Free up our children.
-      delete private_state_; 
+      delete private_state_;
 
       // Delete the original, possibly nonaligned, buffer.
-      delete [] non_aligned_buffer_; 
+      delete [] non_aligned_buffer_;
       buffer_ = 0;
     }
 }
@@ -230,13 +232,13 @@ CORBA_TypeCode::Release (void)
       ACE_MT (this->lock_.release ());
 
       if (result == 0)
-	delete this;
+        delete this;
 
       return result;
     }
 
   ACE_MT (this->lock_.release ());
-  return result; 
+  return result;
 }
 
 // constructor for the private state
@@ -283,19 +285,19 @@ TC_Private_State::~TC_Private_State (void)
     case CORBA::tk_struct:
     case CORBA::tk_except:
       {
-	// free up member type list
-	for (CORBA::ULong i = 0; 
-	     i < tc_member_count_;
-	     i++)
-	  {
-	    // free up the memory allocated for the typecode
-	    delete tc_member_type_list_[i];
-	  }
-	// now free up the array
-	delete [] tc_member_type_list_;
-	tc_member_count_ = 0;
-	break;
+        // free up member type list
+        for (CORBA::ULong i = 0;
+             i < tc_member_count_;
+             i++)
+          {
+            // free up the memory allocated for the typecode
+            delete tc_member_type_list_[i];
+          }
+        // now free up the array
+        delete [] tc_member_type_list_;
+        tc_member_count_ = 0;
       }
+      break;
     case CORBA::tk_sequence:
     case CORBA::tk_array:
     case CORBA::tk_alias:
@@ -305,35 +307,35 @@ TC_Private_State::~TC_Private_State (void)
     case CORBA::tk_union:
       {
         // Free up type list, label list, and finally the discriminator
-	if (tc_member_type_list_known_)
-	  {
-	    for (CORBA::ULong i = 0; 
-		 i < tc_member_count_;
-		 i++)
-	      {
-		// free up the memory allocated for the typecode
-		delete tc_member_type_list_[i];
-	      }
-	    // now free up the array
-	    delete [] tc_member_type_list_;
-	  }
-	if (tc_member_label_list_known_)
-	  {
-	    for (CORBA::ULong i = 0; 
-		 i < tc_member_count_;
-		 i++)
-	      {
-		// free up the label (Any_ptr)
-		delete tc_member_label_list_[i];
-	      }
-	    delete [] tc_member_label_list_;
-	  }
-	tc_member_count_ = 0;
+        if (tc_member_type_list_known_)
+          {
+            for (CORBA::ULong i = 0;
+                 i < tc_member_count_;
+                 i++)
+              {
+                // free up the memory allocated for the typecode
+                delete tc_member_type_list_[i];
+              }
+            // now free up the array
+            delete [] tc_member_type_list_;
+          }
+        if (tc_member_label_list_known_)
+          {
+            for (CORBA::ULong i = 0;
+                 i < tc_member_count_;
+                 i++)
+              {
+                // free up the label (Any_ptr)
+                delete tc_member_label_list_[i];
+              }
+            delete [] tc_member_label_list_;
+          }
+        tc_member_count_ = 0;
         // Discriminator must come last b/c it will be inside the Any
         // in each element of the label list.
-	delete tc_discriminator_type_;
+        delete tc_discriminator_type_;
       }
-    break;
+      break;
     default:
       // nothing to do
       break;
@@ -422,7 +424,7 @@ CORBA_TypeCode::private_id (CORBA::Environment &env) const
 {
   env.clear ();
 
-  switch (kind_) 
+  switch (kind_)
     {
       // These are all complex typecodes, which have as their first
       // parameter (number zero) a repository/type ID string encoded
@@ -439,8 +441,8 @@ CORBA_TypeCode::private_id (CORBA::Environment &env) const
 	private_state_->tc_id_known_ = CORBA::B_TRUE;
 	private_state_->tc_id_ = (CORBA::String) (buffer_
 						 + 4	// skip byte order flag
-							// and padding 
-						 + 4);	// skip (strlen + 1) 
+							// and padding
+						 + 4);	// skip (strlen + 1)
 	return private_state_->tc_id_; // this is OK because the strings in the
 				       // CDR stream are NULL terminated
       }
@@ -457,7 +459,7 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
 {
   env.clear ();
 
-  switch (kind_) 
+  switch (kind_)
     {
       // These are all complex typecodes, which have as their second
       // parameter (number one) a name string encoded
@@ -479,9 +481,9 @@ CORBA_TypeCode::private_name (CORBA::Environment &env) const
 	if (stream.skip_string ())  // ID
 	  {
 	    private_state_->tc_name_known_ = CORBA::B_TRUE;
-	    
+
 	    // skip past the length field.
-	    private_state_->tc_name_ = (CORBA::String) (stream.next + CDR::LONG_SIZE);  
+	    private_state_->tc_name_ = (CORBA::String) (stream.next + CDR::LONG_SIZE);
 
 	    return private_state_->tc_name_;
 	  }
@@ -508,7 +510,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
 {
   env.clear ();
 
-  switch (kind_) 
+  switch (kind_)
     {
     case CORBA::tk_alias:
       //      tc_member_count_known_ = CORBA::B_TRUE;
@@ -528,7 +530,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
 	// number of struct members
 	if (!stream.skip_string ()	    	    // ID
 	    || !stream.skip_string ()  	    // struct name
-	    || !stream.get_ulong (members)) 
+	    || !stream.get_ulong (members))
 	  {
 	    env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	    return 0;
@@ -571,7 +573,7 @@ CORBA_TypeCode::private_member_count (CORBA::Environment &env) const
 
 // Return the name for the nth member
 // Applicable only to CORBA::tk_struct, CORBA::tk_union, and CORBA::tk_except
-TAO_CONST CORBA::String 
+TAO_CONST CORBA::String
 CORBA_TypeCode::member_name (CORBA::ULong,
 			     CORBA::Environment &) const
 {
@@ -588,7 +590,7 @@ CORBA_TypeCode::member_name (CORBA::ULong,
 //
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::private_member_type (CORBA::ULong index, 
+CORBA_TypeCode::private_member_type (CORBA::ULong index,
 				     CORBA::Environment &env) const
 {
   CORBA::ULong temp, mcount;
@@ -601,7 +603,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
-  switch (kind_) 
+  switch (kind_)
     {
     case CORBA::tk_except:
     case CORBA::tk_struct:		// index from 0
@@ -609,7 +611,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
       if (env.exception () == 0)
 	{
 	  // the first time in. Precompute and store types of all members
-	  
+
 	  // Allocate a list to hold the member typecodes
 	  private_state_->tc_member_type_list_ = new CORBA::TypeCode_ptr [mcount];
 
@@ -619,15 +621,15 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 	      if (!stream.skip_string ()	// type ID, hidden
 		  || !stream.skip_string ()	// typedef name
 		  || !stream.get_ulong (temp))  // member count
-		{ 
+		{
 		  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 		  return (CORBA::TypeCode_ptr)0;
-		} 
-	      else 
+		}
+	      else
 		{
 		  // compute the typecodes for all the members and
 		  // return the required one.
-		  for (CORBA::ULong i = 0; i < mcount; i++) 
+		  for (CORBA::ULong i = 0; i < mcount; i++)
 		    {
 		      // the ith entry will have the typecode of the ith guy
 		      if (!stream.skip_string ()  // skip the name
@@ -643,7 +645,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 						   // case where the 3rd
 						   // parameter is used in a
 						   // decode method
-					    env) != CORBA::TypeCode::TRAVERSE_CONTINUE) 
+					    env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
 			{
 			  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 			  return 0;
@@ -684,17 +686,17 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 	      if (!stream.skip_string ()	// type ID, hidden
 		  || !stream.skip_string ()	// typedef name
 		  || !skip_typecode (stream))   // skip typecode for discriminant
-		{ 
+		{
 		  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 		  return (CORBA::TypeCode_ptr)0;
-		} 
+		}
 	      else if (!stream.get_ulong (temp)	    // default used
 		       || !stream.get_ulong (temp)) // member count
 		{
 		  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 		  return 0;
 		}
-	      else  
+	      else
 		{
 		  CORBA::Long scratch; // always big enough because labels can
 				      // only be of a few different types of
@@ -705,7 +707,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 		  // compute the typecodes for all the members and return the
 		  // required one
 
-		  for (CORBA::ULong i = 0; i < mcount; i++) 
+		  for (CORBA::ULong i = 0; i < mcount; i++)
 		    {
 		      // the ith entry will have the typecode of the ith guy
 		      if (stream.decode (tc, &scratch, this,  env) // member label
@@ -713,7 +715,7 @@ CORBA_TypeCode::private_member_type (CORBA::ULong index,
 			  || !stream.skip_string ()  // skip the name
 			  || stream.decode (CORBA::_tc_TypeCode,  // get the typecode
 					    &private_state_->tc_member_type_list_[i],
-					    this, 
+					    this,
 					    env) !=
 			  CORBA::TypeCode::TRAVERSE_CONTINUE)
 			{
@@ -794,7 +796,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 	{
 	  tc = discriminator_type (env); // retrieve the discriminator type as
 					 // this decides what the label is
-	  for (CORBA::ULong i = 0; i < member_count; i++) 
+	  for (CORBA::ULong i = 0; i < member_count; i++)
 	    {
 	      // allocate buffer to hold the member label value
 	      void *buf = new CORBA::Octet [tc->size (env)];
@@ -812,7 +814,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 	      else
 		{
 		  private_state_->tc_member_label_list_[i] = new CORBA::Any (tc,
-									    buf, CORBA::B_TRUE); 
+									    buf, CORBA::B_TRUE);
 		}
 	    }
 	}
@@ -826,7 +828,7 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
 
       // If caller asked for the label for a nonexistent member, they get
       // an error report!
-      if (n >= member_count)  
+      if (n >= member_count)
 	{
 	  env.exception (new CORBA::TypeCode::Bounds ());
 	  return 0;
@@ -841,20 +843,20 @@ CORBA_TypeCode::private_member_label (CORBA::ULong n,
     }
 }
 
-CORBA::TypeCode_ptr 
+CORBA::TypeCode_ptr
 CORBA_TypeCode::private_discriminator_type (CORBA::Environment &env) const
 {
   CDR stream;
-  
+
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
   // skip ID and name, and then get the discriminant TC
-  
+
   if (!stream.skip_string ()		// type ID, hidden
       || !stream.skip_string ()	        // typedef name
       || stream.decode (CORBA::_tc_TypeCode,
 			&private_state_->tc_discriminator_type_, this,  env) !=
-      CORBA::TypeCode::TRAVERSE_CONTINUE) 
+      CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -874,12 +876,12 @@ CORBA_TypeCode::private_default_index (CORBA::Environment &env) const
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
   // skip ID and name, and then get the discriminant TC
-  
+
   if (!stream.skip_string ()		// type ID, hidden
       || !stream.skip_string ()	        // typedef name
       || !skip_typecode (stream)        // skip discriminant
       || !stream.get_long (private_state_->tc_default_index_used_))
-      
+
     {
       env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
       return 0;
@@ -895,7 +897,7 @@ CORBA::Long
 CORBA_TypeCode::privatelength_ (CORBA::Environment &env) const
 {
   CDR stream;
-#if defined(TAO_NEEDS_UNUSED_VARIABLES)  
+#if defined(TAO_NEEDS_UNUSED_VARIABLES)
   CORBA::TypeCode_ptr tc = 0;
 #endif /* TAO_NEEDS_UNUSED_VARIABLES */
 
@@ -951,7 +953,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
       {
 	// retrieve the content type
 	if (stream.decode (CORBA::_tc_TypeCode, &private_state_->tc_content_type_,
-			   this,  env) != 
+			   this,  env) !=
 	    CORBA::TypeCode::TRAVERSE_CONTINUE) // element type
 	  {
 	    env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
@@ -967,7 +969,7 @@ CORBA_TypeCode::private_content_type (CORBA::Environment &env) const
 	  if (!stream.skip_string ()  // typeID
 	      || !stream.skip_string () // name
 	      || stream.decode (CORBA::_tc_TypeCode,
-				&private_state_->tc_content_type_, this,  env) != 
+				&private_state_->tc_content_type_, this,  env) !=
 	      CORBA::TypeCode::TRAVERSE_CONTINUE)
 	    {
 	      env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
@@ -1021,7 +1023,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 {
   env.clear ();
 
-  switch (kind_) 
+  switch (kind_)
     {
     default:
       return 0;
@@ -1050,7 +1052,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 	// number of struct members
 	if (!stream.skip_string ()	    	    // ID
 	    || !stream.skip_string ()  	    // struct name
-	    || !stream.get_ulong (members)) 
+	    || !stream.get_ulong (members))
 	  {
 	    env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	    return 0;
@@ -1069,7 +1071,7 @@ CORBA_TypeCode::param_count (CORBA::Environment &env) const
 	// number of struct members
 	if (!stream.skip_string ()			// ID
 	    || !stream.skip_string ()		// typedef name
-	    || !stream.get_ulong (members)) 
+	    || !stream.get_ulong (members))
 	  {
 	    env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	    return 0;
@@ -1116,7 +1118,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
   if (env.exception ())
     return 0;
 
-  if (temp < n) 
+  if (temp < n)
     {
       env.exception (new CORBA::TypeCode::Bounds);
       return 0;
@@ -1124,7 +1126,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
 
   // Get parameters for non-empty typecodes; their parameter lists are
   // encapsulated CDR (for complex ones) or inlined (for simple ones).
-  switch (kind_) 
+  switch (kind_)
     {
     default:				// most have no long params
       break;
@@ -1132,7 +1134,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
       // Array, sequence ... complex parameter lists
     case CORBA::tk_array:		// param 1 is an integer
     case CORBA::tk_sequence:		// ... identical content
-      { 
+      {
 	if (n == 0)
 	  break;
 
@@ -1141,7 +1143,7 @@ CORBA_TypeCode::ulong_param (CORBA::ULong n,
 	CDR stream;
 
 	stream.setup_encapsulation (buffer_, (size_t) length_);
-	if (!skip_typecode (stream)) 
+	if (!skip_typecode (stream))
 	  {
 	    env.exception (new CORBA::BAD_PARAM (CORBA::COMPLETED_NO));
 	    return 0;
@@ -1183,7 +1185,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
   if (env.exception ())
     return 0;
 
-  if (temp < n) 
+  if (temp < n)
     {
       env.exception (new CORBA::TypeCode::Bounds);
       return 0;
@@ -1198,7 +1200,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
-  switch (kind_) 
+  switch (kind_)
     {
     default:				// most have no tc params
       break;
@@ -1210,7 +1212,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       if (stream.decode (CORBA::_tc_TypeCode,
 			 &tc,
 			 this,
-			 env) != CORBA::TypeCode::TRAVERSE_CONTINUE) 
+			 env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
 	{
 	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	  return 0;
@@ -1223,7 +1225,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
       if (!stream.skip_string ()		// type ID, hidden
 	  || !stream.skip_string ()	// typedef name
 	  || stream.decode (CORBA::_tc_TypeCode, &tc, this,  env)
-	  != CORBA::TypeCode::TRAVERSE_CONTINUE) 
+	  != CORBA::TypeCode::TRAVERSE_CONTINUE)
 	{
 	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	  return 0;
@@ -1232,7 +1234,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
     case CORBA::tk_except:
     case CORBA::tk_struct:		// #5 and up are tc, index from 0
-      if (n < 4 || n & 0x1) 
+      if (n < 4 || n & 0x1)
 	{	// tc is at odd number of param list
 	  env.exception (new CORBA::TypeCode::Bounds);
 	  return 0;
@@ -1240,21 +1242,21 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
       if (!stream.skip_string ()		// type ID, hidden
 	  || !stream.skip_string ()	// typedef name
-	  || !stream.get_ulong (temp)) 
+	  || !stream.get_ulong (temp))
 	{ 	// member count
 	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	  return 0;
-	} 
-      else 
+	}
+      else
 	{
 	  temp = (n - 3) / 2;
 
 	  // skip member pairs to the one we want
-	  for (CORBA::ULong i = 0; i < temp; i++) 
+	  for (CORBA::ULong i = 0; i < temp; i++)
 	    {
 	      // skip to the member being asked
 	      if (!stream.skip_string ()	// member name
-		  || !skip_typecode (stream)) 
+		  || !skip_typecode (stream))
 		{
 		  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 		  return 0;
@@ -1262,8 +1264,8 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 	    }
 
 	  if (!stream.skip_string ()
-	      || stream.decode (CORBA::_tc_TypeCode, &tc, this, 
-			       env)!= CORBA::TypeCode::TRAVERSE_CONTINUE) 
+	      || stream.decode (CORBA::_tc_TypeCode, &tc, this,
+			       env)!= CORBA::TypeCode::TRAVERSE_CONTINUE)
 	    {
 	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	      return 0;
@@ -1272,7 +1274,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 	}
 
     case CORBA::tk_union:            // #6 and up are tc, index from 0
-      if (n != 2 && (n < 7 || (n - 7) % 3)) 
+      if (n != 2 && (n < 7 || (n - 7) % 3))
 	{
 	  env.exception (new CORBA::TypeCode::Bounds);
 	  return 0;
@@ -1286,7 +1288,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 	{
 	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	  return 0;
-	} 
+	}
       else if (!stream.get_ulong (temp)	// default used
 		 || !stream.get_ulong (temp))	// member count
 	{
@@ -1304,12 +1306,12 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
       CORBA::Long scratch;		// always big enough
 
-      for (CORBA::ULong i = 0; i < temp; i++) 
+      for (CORBA::ULong i = 0; i < temp; i++)
 	{
 	  if (stream.decode (tc, &scratch, this,  env) // member label
 	      != CORBA::TypeCode::TRAVERSE_CONTINUE
 	      || !stream.skip_string ()		// member name
-	      || !skip_typecode (stream)) 
+	      || !skip_typecode (stream))
 	    {	// member typecode
 	      tc->Release ();
 	      env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
@@ -1318,7 +1320,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 	}
 
       // member label
-      if (stream.decode (tc, 
+      if (stream.decode (tc,
 			&scratch, this,
 			 env) != CORBA::TypeCode::TRAVERSE_CONTINUE
 	  || !stream.skip_string ())		// member name
@@ -1331,7 +1333,7 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
       if (stream.decode (CORBA::_tc_TypeCode,
 			&tc, this,
-			 env) != CORBA::TypeCode::TRAVERSE_CONTINUE) 
+			 env) != CORBA::TypeCode::TRAVERSE_CONTINUE)
 	{
 	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
 	  return 0;
@@ -1345,17 +1347,17 @@ CORBA_TypeCode::typecode_param (CORBA::ULong n,
 
 // skip a typecode encoding in a given CDR stream
 // This is just a helper function
-CORBA::Boolean 
+CORBA::Boolean
 CORBA_TypeCode::skip_typecode (CDR &stream)
 {
   CORBA::ULong kind;
   CORBA::ULong temp;
 
-  if (stream.get_ulong (kind) 
+  if (stream.get_ulong (kind)
       && (kind < CORBA::TC_KIND_COUNT || kind == ~CORBA::ULong(0)))
     {
 
-      switch (kind) 
+      switch (kind)
 	{
 	  // Most TypeCodes have empty parameter lists, nothing to skip
 	default:
@@ -1410,10 +1412,10 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind)
 // Applicable only to struct, union, and except
 
 CORBA::TypeCode_ptr
-CORBA_TypeCode::member_type (CORBA::ULong index, 
+CORBA_TypeCode::member_type (CORBA::ULong index,
 			     CORBA::Environment &env) const
 {
-  if (private_state_->tc_member_count_known_ 
+  if (private_state_->tc_member_count_known_
       && private_state_->tc_member_type_list_known_)
     {
       if (index < private_state_->tc_member_count_)
@@ -1433,7 +1435,7 @@ CORBA::Any_ptr
 CORBA_TypeCode::member_label (CORBA::ULong index,
                               CORBA::Environment &env) const
 {
-  if (private_state_->tc_member_count_known_ 
+  if (private_state_->tc_member_count_known_
       && private_state_->tc_member_label_list_known_)
     {
       if (index < private_state_->tc_member_count_)
@@ -1489,9 +1491,9 @@ CORBA::ULong
 CORBA_TypeCode::length (CORBA::Environment &env) const
 {
   // a switch stmt, unfortunately, doesn't get inlined
-  if (kind_ == CORBA::tk_sequence 
-      || kind_ == CORBA::tk_array 
-      || kind_ == CORBA::tk_string 
+  if (kind_ == CORBA::tk_sequence
+      || kind_ == CORBA::tk_array
+      || kind_ == CORBA::tk_string
       || kind_ == CORBA::tk_wstring)
     {
       if (private_state_->tc_length_known_)
@@ -1510,8 +1512,8 @@ CORBA_TypeCode::length (CORBA::Environment &env) const
 CORBA::TypeCode_ptr
 CORBA_TypeCode::content_type (CORBA::Environment &env) const
 {
-  if (kind_ == CORBA::tk_sequence 
-      || kind_ == CORBA::tk_array 
+  if (kind_ == CORBA::tk_sequence
+      || kind_ == CORBA::tk_array
       || kind_ == CORBA::tk_alias)
     {
       if (private_state_->tc_content_type_known_)
@@ -1543,5 +1545,3 @@ CORBA_TypeCode::TAO_discrim_pad_size (CORBA::Environment &env)
       return 0;
     }
 }
-
-

@@ -6,7 +6,6 @@ IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
 
 ACE_INLINE
 IIOP::Profile::Profile (void)
-  : host (0)
 {}
 
 ACE_INLINE
@@ -80,4 +79,3 @@ IIOP_Object::fwd_profile_lock (void)
 {
   return fwd_profile_lock_;
 }
-

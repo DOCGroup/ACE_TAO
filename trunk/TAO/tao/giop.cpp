@@ -63,7 +63,7 @@ start_message (TAO_GIOP_MsgType type,
 
   msg.next [4] = MY_MAJOR;
   msg.next [5] = MY_MINOR;
-  msg.next [6] = MY_BYTE_SEX;
+  msg.next [6] = TAO_ENCAP_BYTE_ORDER;
   msg.next [7] = (u_char) type;
 
   msg.skip_bytes (TAO_GIOP_HEADER_LEN);
@@ -93,7 +93,7 @@ dump_msg (const char *label,
       ACE_DEBUG ((LM_DEBUG, "%s GIOP v%c.%c msg, %d data bytes, %s endian, %s\n",
                   label, digits[ptr[4]], digits[ptr[5]],
                   len - TAO_GIOP_HEADER_LEN,
-                  (ptr[6] == MY_BYTE_SEX) ? "my" : "other",
+                  (ptr[6] == TAO_ENCAP_BYTE_ORDER) ? "my" : "other",
                   (ptr[7] <= TAO_GIOP_MessageError) ? names [ptr[7]] : "UNKNOWN TYPE"));
 
       if (TAO_debug_level >= 4)
@@ -215,7 +215,7 @@ close_message [TAO_GIOP_HEADER_LEN] =
   'G', 'I', 'O', 'P',
   MY_MAJOR,
   MY_MINOR,
-  MY_BYTE_SEX,
+  TAO_ENCAP_BYTE_ORDER,
   TAO_GIOP_CloseConnection,
   0, 0, 0, 0
 };
@@ -253,7 +253,7 @@ error_message [TAO_GIOP_HEADER_LEN] =
   'G', 'I', 'O', 'P',
   MY_MAJOR,
   MY_MINOR,
-  MY_BYTE_SEX,
+  TAO_ENCAP_BYTE_ORDER,
   TAO_GIOP_MessageError,
   0, 0, 0, 0
 };
@@ -400,7 +400,7 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
   // Make sure byteswapping is done if needed, and then read the
   // message size (appropriately byteswapped).
 
-  msg.do_byteswap = (msg.buffer [6] != MY_BYTE_SEX);
+  msg.do_byteswap = (msg.buffer [6] != TAO_ENCAP_BYTE_ORDER);
   msg.get_ulong (message_size);
 
   // Make sure we have the full length in memory, growing the buffer
@@ -512,7 +512,7 @@ TAO_GIOP_Invocation::~TAO_GIOP_Invocation (void)
 
 static const CORBA::Long _oc_opaque [] =
 {	// CDR typecode octets
-  1,				// native endian + padding; "tricky"
+  TAO_ENCAP_BYTE_ORDER,				// native endian + padding; "tricky"
   10,				// ... (sequence of) octets
   0				// ... unbounded
 };
@@ -537,7 +537,7 @@ TC_opaque (CORBA::tk_sequence,
 static const CORBA::Long _oc_svc_ctx_list [] =
 {
   // START bytes of encapsulation 0
-  1, // native endian + padding; "tricky"
+  TAO_ENCAP_BYTE_ORDER, // native endian + padding; "tricky"
 
   //
   // FIRST sequence param:  typecode for struct is complex,
@@ -1122,16 +1122,16 @@ TAO_GIOP_RequestHeader::init (CDR &msg,
 
   hdr_status = msg.decode (&TC_ServiceContextList,
                            &this->service_info,
-                           0, 
+                           0,
                            env);
 
   // Get the rest of the request header ...
 
   hdr_status = hdr_status && msg.get_ulong (this->request_id);
   hdr_status = hdr_status && msg.get_boolean (this->response_expected);
-  hdr_status = hdr_status && msg.decode (&TC_opaque, 
+  hdr_status = hdr_status && msg.decode (&TC_opaque,
                                          &this->object_key,
-                                         0, 
+                                         0,
                                          env);
   hdr_status = hdr_status && msg.decode (CORBA::_tc_string,
                                          &this->operation,
@@ -1160,7 +1160,7 @@ TAO_GIOP::start_message (TAO_GIOP_MsgType type, CDR &msg)
 
   msg.next [4] = MY_MAJOR;
   msg.next [5] = MY_MINOR;
-  msg.next [6] = MY_BYTE_SEX;
+  msg.next [6] = TAO_ENCAP_BYTE_ORDER;
   msg.next [7] = (u_char) type;
 
   msg.skip_bytes (TAO_GIOP_HEADER_LEN);

@@ -4,7 +4,7 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    iiopobj.h
 //
@@ -17,22 +17,22 @@
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_IIOPOBJ_H)
 #  define TAO_IIOPOBJ_H
 
-class ACE_Svc_Export IIOP 
+class ACE_Svc_Export IIOP
   // = TITLE
   //   This class provides a namespace.
-{			
+{
 public:
   // IIOP Protocol version is distinct from GIOP version.
-  enum 
-  { 
+  enum
+  {
     MY_MAJOR = 1,
-    MY_MINOR = 0 
+    MY_MINOR = 0
   };
 
   struct Version
@@ -44,21 +44,21 @@ public:
   };
 
   struct Profile
-    // = TITLE 
+    // = TITLE
     // IOR support ... Profile is encapsulated in an IIOP profile
     // entry within an IOR.
   {
     Version iiop_version;
-    CORBA::String host;
+    char *host;
     CORBA::UShort port;
     TAO_opaque object_key;
 
     Profile (void);
 
     Profile (const Profile &src);
-    Profile (const Version &v, 
-		 const CORBA::String h,
-		 const CORBA::UShort p, 
+    Profile (const Version &v,
+		 const char *h,
+		 const CORBA::UShort p,
 		 const TAO_opaque &object_key);
 
     ~Profile (void);
@@ -120,7 +120,7 @@ public:
   // = Thread-safe accessors for the forwarding profile
   IIOP::Profile *fwd_profile (void);
   // THREAD-SAFE.  Returns the current forwarding profile.
-  
+
   IIOP::Profile *fwd_profile (IIOP::Profile *new_profile);
   // THREAD-SAFE.  Sets a new value for the forwarding profile and
   // returns the current value.
@@ -128,33 +128,46 @@ public:
   // = Non-thread-safe accessors for the forwarding profile
   ACE_SYNCH_MUTEX &fwd_profile_lock (void);
   // Gives reference to the lock guarding the forwarding profile.
-  
+
   IIOP::Profile *fwd_profile_i (void);
   // THREAD-SAFE.  Returns the current forwarding profile.
-  
+
   IIOP::Profile *fwd_profile_i (IIOP::Profile *new_profile);
   // THREAD-SAFE.  Sets a new value for the forwarding profile and
   // returns the current value.
 
   // = Construction
   IIOP_Object (char *repository_id);
+  // construct from a repository (type) ID
+
   IIOP_Object (char *repository_id,
                const IIOP::Profile &profile);
+  // construct from a repository ID and a profile ID
+
+  IIOP_Object (const char *host = "localhost", const CORBA::UShort p =
+               TAO_DEFAULT_SERVER_PORT, const char *objkey = "0",
+               char *repository_id = 0);
+  // this constructor will usually be used by a _bind call on the client side
+
+  IIOP_Object (char *repository_id, const ACE_INET_Addr &addr, const
+               char *objkey = "0");
+  // constructor used typically by the server side
 
   // = COM stuff
   ULONG __stdcall AddRef (void);
   ULONG __stdcall Release (void);
-  HRESULT __stdcall QueryInterface (REFIID type_id, 
+  HRESULT __stdcall QueryInterface (REFIID type_id,
 				    void **ppv);
 
-  virtual CORBA::String _get_name (CORBA::Environment &env);
+  virtual const char *_get_name (CORBA::Environment &env);
+  // get the underlying key
 
 private:
   CORBA::Object base;
 
   ACE_SYNCH_MUTEX IUnknown_lock_;
   // Mutex to protect <IUnknown>-related stuff.
-  
+
   u_int refcount_;
   // Number of outstanding references to this object.
 

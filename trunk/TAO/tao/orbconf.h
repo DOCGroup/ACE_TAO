@@ -53,6 +53,11 @@
 #define TAO_DEFAULT_SERVER_PORT 10015
 #endif /* TAO_DEFAULT_SERVER_PORT */
 
+// TAO's max buffer size
+#if !defined (TAO_MAXBUFSIZE)
+#define TAO_MAXBUFSIZE 1024
+#endif /* TAO_MAXBUFSIZE */
+
 // This controls the alignment for TAO structs.
 #define TAO_ALIGNMENT_MAGIC_NUMBER 64
 
@@ -69,8 +74,12 @@
 // Define if your processor stores words with the most significant
 // byte first (like Motorola and SPARC, unlike Intel and VAX).
 #if defined (i386) || defined (__i386) || defined (_M_IX86) || defined (vax)
+#  define TAO_ENCAP_BYTE_ORDER 1  /* little endian encapsulation byte order has
+                                     the value = 1 */
 #else
 #  define TAO_WORDS_BIGENDIAN 1
+#  define TAO_ENCAP_BYTE_ORDER 0  /* big endian encapsulation byte order has
+                                     the value = 1 */
 #endif
 
 #if UINT_MAX == 65535UL

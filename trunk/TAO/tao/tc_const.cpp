@@ -78,10 +78,10 @@ ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_char = &tc_char;
 static CORBA::TypeCode tc_wchar (CORBA::tk_wchar);
 ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_wchar = &tc_wchar;
 
-// a string/wstring have a simple parameter list that indicates the length 
-static const CORBA::Long _oc_string [] = 
+// a string/wstring have a simple parameter list that indicates the length
+static const CORBA::Long _oc_string [] =
 {	// CDR typecode octets
-  1,				// native endian + padding; "tricky"
+  TAO_ENCAP_BYTE_ORDER,				// native endian + padding; "tricky"
   0				// ... unbounded string
 };
 static CORBA::TypeCode tc_string (CORBA::tk_string,
@@ -92,7 +92,7 @@ ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_string = &tc_string;
 
 static const CORBA::Long _oc_wstring [] =
 {	// CDR typecode octets
-  1,				// native endian + padding; "tricky"
+  TAO_ENCAP_BYTE_ORDER,				// native endian + padding; "tricky"
   0				// ... unbounded string
 };
 static CORBA::TypeCode tc_wstring (CORBA::tk_wstring,
@@ -118,8 +118,8 @@ ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_Principal = &tc_principal;
 //
 // NOTE:  Must be four-byte aligned
 
-static const u_char oc_objref [] = 
-{ 
+static const u_char oc_objref [] =
+{
   0, 0, 0, 0,			// big endian encoding (+ padding)
   0, 0, 0, 29,                  // 29 char string + 3 pad bytes
   'I', 'D', 'L', ':',
@@ -141,4 +141,3 @@ static CORBA::TypeCode tc_objref (CORBA::tk_objref,
 				 CORBA::B_FALSE);
 
 ACE_Svc_Export CORBA::TypeCode_ptr CORBA::_tc_Object = &tc_objref;
-

@@ -17,7 +17,7 @@ IIOP::Profile::Profile (const IIOP::Profile &src)
   assert (src.iiop_version.major == MY_MAJOR);
   assert (src.iiop_version.minor == MY_MINOR);
 
-  host = ACE_OS::strdup (src.host);
+  ACE_OS::strcpy (host, src.host);
 
   object_key.length = src.object_key.length;
   object_key.maximum = src.object_key.length;
@@ -31,7 +31,7 @@ IIOP::Profile::Profile (const IIOP::Profile &src)
 }
 
 IIOP::Profile::Profile (const IIOP::Version &v,
-                        const CORBA::String h,
+                        const char *h,
                         const CORBA::UShort p,
                         const TAO_opaque &key)
   : iiop_version (v),
@@ -41,12 +41,11 @@ IIOP::Profile::Profile (const IIOP::Version &v,
   object_key.length = key.length;
   object_key.maximum = key.length;
 
-  //  object_key.buffer = (CORBA::Octet *) ACE_OS::malloc (object_key.maximum);
   object_key.buffer = new CORBA::Octet [object_key.maximum];
 
- (void) ACE_OS::memcpy (object_key.buffer,
-                        key.buffer,
-                        object_key.length);
+  (void) ACE_OS::memcpy (object_key.buffer,
+                         key.buffer,
+                         object_key.length);
 }
 
 // Quick'n'dirty hash of objref data, for partitioning objrefs into sets
@@ -68,12 +67,12 @@ IIOP_Object::hash (CORBA::ULong max,
   hashval = profile.object_key.length * profile.port;
   hashval += profile.iiop_version.minor;
 
-  if (profile.object_key.length >= 4) 
+  if (profile.object_key.length >= 4)
     {
       hashval += profile.object_key.buffer [1];
       hashval += profile.object_key.buffer [3];
     }
-    
+
   return hashval % max;
 }
 
@@ -111,7 +110,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
                        body2->object_key.buffer,
                        (size_t) body->object_key.length) == 0
     && body->port == body2->port
-    && ACE_OS::strcmp ((char *) body->host, (char *) body2->host) == 0
+    && ACE_OS::strcmp (body->host, body2->host) == 0
     && body->iiop_version.minor == body2->iiop_version.minor
     && body->iiop_version.major == body2->iiop_version.major;
 }
@@ -177,7 +176,66 @@ IIOP_Object::QueryInterface (REFIID riid,
 }
 
 //TAO extensions
-CORBA::String IIOP_Object::_get_name (CORBA::Environment &)
+const char *IIOP_Object::_get_name (CORBA::Environment &)
 {
-  return (CORBA::String) this->profile.object_key.buffer;
+  char name [TAO_MAXBUFSIZE];
+
+  ACE_OS::memset (name, '\0', TAO_MAXBUFSIZE);
+  ACE_OS::memcpy (name, this->profile.object_key.buffer,
+                  this->profile.object_key.length);
+  return name;
+}
+
+// Constructor
+// It will usually be used by the _bind call
+IIOP_Object::IIOP_Object (const char *host, const CORBA::UShort port,
+                          const char *objkey, char *repository_id)
+  : STUB_Object (repository_id),
+    base (this),
+    refcount_ (1),
+    fwd_profile_ (0)
+{
+  // If the repository ID (typeID) is NULL,
+  // it will make narrowing rather expensive, though it does ensure that
+  // type-safe narrowing code gets thoroughly excercised/debugged!
+  // Without a typeID, the _narrow will be required to make an expensive remote
+  // "is_a" call.
+
+  // we set this to use IIOP version 1.0
+  this->profile.iiop_version.major = IIOP::MY_MAJOR;
+  this->profile.iiop_version.minor = IIOP::MY_MINOR;
+
+  // set the profile information
+  this->profile.host = ACE_OS::strdup (host);
+  this->profile.port = port;
+
+  // set the obj key in the profile info
+  this->profile.object_key.buffer = (u_char *) CORBA::string_copy (objkey);
+  this->profile.object_key.length = ACE_OS::strlen (objkey);
+  this->profile.object_key.maximum = this->profile.object_key.length;
+}
+
+// Constructor
+// It will usually be used by the server side
+IIOP_Object::IIOP_Object (char *repository_id, const ACE_INET_Addr &addr, const
+                          char *objkey)
+  : STUB_Object (repository_id),
+    base (this),
+    refcount_ (1),
+    fwd_profile_ (0)
+{
+  // set up an IIOP object
+  char tempname [MAXHOSTNAMELEN]; // to hold the host name
+
+  // setup the profile information
+  this->profile.iiop_version.major = IIOP::MY_MAJOR;
+  this->profile.iiop_version.minor = IIOP::MY_MINOR;
+  ACE_OS::memset (tempname, '\0', MAXHOSTNAMELEN);
+  (void) addr.get_host_name (tempname, MAXHOSTNAMELEN); // retrieve the host
+                                                        // name
+  this->profile.host = ACE_OS::strdup (tempname);
+  this->profile.port = addr.get_port_number ();
+  this->profile.object_key.length = ACE_OS::strlen (objkey);
+  this->profile.object_key.maximum = this->profile.object_key.length;
+  this->profile.object_key.buffer = (u_char *) CORBA::string_copy (objkey);
 }
