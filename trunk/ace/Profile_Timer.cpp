@@ -230,6 +230,13 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
 
 #else
 
+void
+ACE_Profile_Timer::dump (void) const
+{
+  ACE_TRACE ("ACE_Profile_Timer::dump");
+  timer_.dump ();
+}
+
 ACE_Profile_Timer::ACE_Profile_Timer (void)
   : timer_ ()
 {
