@@ -34,10 +34,10 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc,
                               CORBA::Environment &ACE_TRY_ENV)
 {
   // Check to see if it's a simple type.
-  int tk = TAO_DynAnyFactory::unalias (tc, ACE_TRY_ENV);
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc, ACE_TRY_ENV);
   ACE_CHECK;
   switch (tk)
-    {
+  {
     case CORBA::tk_null:
     case CORBA::tk_void:
     case CORBA::tk_short:
@@ -60,18 +60,88 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc,
       break;
     default:
       ACE_THROW (DynamicAny::DynAnyFactory::InconsistentTypeCode ());
-    }
+  }
+}
+
+void
+TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (tc, ACE_TRY_ENV);
+  ACE_CHECK;
+  switch (tk)
+  {
+    case CORBA::tk_null:
+    case CORBA::tk_void:
+      break;
+    case CORBA::tk_short:
+      this->any_ <<= ACE_static_cast (CORBA::Short, 0);
+      break;
+    case CORBA::tk_long:
+      this->any_ <<= ACE_static_cast (CORBA::Long, 0);
+      break;
+    case CORBA::tk_longlong:
+      this->any_ <<= ACE_static_cast (CORBA::LongLong, 0);
+      break;
+    case CORBA::tk_ushort:
+      this->any_ <<= ACE_static_cast (CORBA::UShort, 0);
+      break;
+    case CORBA::tk_ulong:
+      this->any_ <<= ACE_static_cast (CORBA::ULong, 0);
+      break;
+    case CORBA::tk_ulonglong:
+      this->any_ <<= ACE_static_cast (CORBA::ULongLong, 0);
+      break;
+    case CORBA::tk_boolean:
+      this->any_ <<= CORBA::Any::from_boolean (0);
+      break;
+    case CORBA::tk_octet:
+      this->any_ <<= CORBA::Any::from_octet (0);
+      break;
+    case CORBA::tk_char:
+      this->any_ <<= CORBA::Any::from_char (0);
+      break;
+    case CORBA::tk_wchar:
+      this->any_ <<= CORBA::Any::from_wchar (0);
+      break;
+    case CORBA::tk_float:
+      this->any_ <<= ACE_static_cast (CORBA::Float, 0);
+      break;
+    case CORBA::tk_double:
+      this->any_ <<= ACE_static_cast (CORBA::Double, 0);
+      break;
+    case CORBA::tk_any:
+      this->any_ <<= CORBA::Any (CORBA::_tc_null);
+      break;
+    case CORBA::tk_TypeCode:
+      this->any_ <<= &CORBA::TypeCode (CORBA::tk_null);
+      break;
+    case CORBA::tk_objref:
+      this->any_ <<= CORBA::Object::_nil ();
+      break;
+    case CORBA::tk_string:
+      this->any_ <<= "";
+      break;
+    case CORBA::tk_wstring:
+      this->any_ <<= L"";
+      break;
+    default:
+      // Should never get here - check_typecode() has already been called.
+      break;
+  }
 }
 
 void
 TAO_DynAny_i::init (CORBA_TypeCode_ptr tc,
                     CORBA::Environment &ACE_TRY_ENV)
 {
-  this->check_typecode (tc, ACE_TRY_ENV);
+  this->check_typecode (tc, 
+                        ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->any_ = CORBA::Any (CORBA::TypeCode::_duplicate (tc));
-
+  this->set_to_default_value (tc,
+                              ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
@@ -79,7 +149,8 @@ TAO_DynAny_i::init (const CORBA_Any& any,
                     CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::TypeCode_var tc = any.type ();
-  this->check_typecode (tc.in (), ACE_TRY_ENV);
+  this->check_typecode (tc.in (), 
+                        ACE_TRY_ENV);
   ACE_CHECK;
 
   this->any_ = any;

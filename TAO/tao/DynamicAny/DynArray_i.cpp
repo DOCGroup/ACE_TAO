@@ -107,12 +107,20 @@ TAO_DynArray_i::init (CORBA_TypeCode_ptr tc,
   CORBA::ULong numfields = this->get_arg_length (tc,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
+
   // Resize the array.
   this->da_members_.size (numfields);
 
+  CORBA::TypeCode_var elemtype = tc->content_type (ACE_TRY_ENV);
+  ACE_CHECK;
+
   for (CORBA::ULong i = 0; i < numfields; i++)
-    // With a typecode arg, we just create the top level.
-    this->da_members_[i] = 0;
+    {
+      // Initialize each element.
+      this->da_members_[i] = TAO_DynAnyFactory::make_dyn_any (elemtype.in (),
+                                                              ACE_TRY_ENV);
+      ACE_CHECK;
+    }
 }
 
 CORBA::TypeCode_ptr
