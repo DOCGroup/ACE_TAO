@@ -537,7 +537,10 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-CORBA::TypeCode_ptr CORBA::_tc_UnknownUserException = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_UnknownUserException, 0)
+TAO_NAMESPACE_END
 
 //    static CORBA::TypeCode tc_std_ ## name (CORBA::tk_except);
 //    CORBA::TypeCode_ptr CORBA::_tc_ ## name = &tc_std_ ## name;

@@ -642,6 +642,12 @@ TAO_POA::teardown_servant_lock (PortableServer::Servant servant)
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
+ACE_INLINE TAO_ORB_Core &
+TAO_POA::orb_core (void) const
+{
+  return this->orb_core_;
+}
+
 ACE_INLINE void
 TAO_POA_Current_Impl::POA_impl (TAO_POA *impl)
 {
@@ -652,6 +658,12 @@ ACE_INLINE TAO_POA *
 TAO_POA_Current_Impl::POA_impl (void) const
 {
   return this->poa_impl_;
+}
+
+ACE_INLINE TAO_ORB_Core &
+TAO_POA_Current_Impl::orb_core (void) const
+{
+  return this->orb_core_;
 }
 
 ACE_INLINE void

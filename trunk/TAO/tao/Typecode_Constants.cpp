@@ -48,86 +48,256 @@ ACE_RCSID(tao, Typecode_Constants, "$Id$")
 // Declare all the standard typecodes owned by the ORB
 
 // Null and void
-CORBA::TypeCode_ptr CORBA::_tc_null = 0;
-CORBA::TypeCode_ptr CORBA::_tc_void = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_null, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_void, 0)
+TAO_NAMESPACE_END
+
 // Basic numeric types:  short, long, longlong, and unsigned variants
-CORBA::TypeCode_ptr CORBA::_tc_short = 0;
-CORBA::TypeCode_ptr CORBA::_tc_long = 0;
-CORBA::TypeCode_ptr CORBA::_tc_longlong = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ushort = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ulong = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ulonglong = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_short, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_long, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_longlong, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ushort, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ulong, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ulonglong, 0)
+TAO_NAMESPACE_END
+
 // Floating point types: single, double, quad precision
-CORBA::TypeCode_ptr CORBA::_tc_float = 0;
-CORBA::TypeCode_ptr CORBA::_tc_double = 0;
-CORBA::TypeCode_ptr CORBA::_tc_longdouble = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_float, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_double, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_longdouble, 0)
+TAO_NAMESPACE_END
+
 // Various simple quantities.
-CORBA::TypeCode_ptr CORBA::_tc_boolean = 0;
-CORBA::TypeCode_ptr CORBA::_tc_octet = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_boolean, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_octet, 0)
+TAO_NAMESPACE_END
+
 // Internationalization-related data types: ISO Latin/1 and "wide"
 // characters, and strings of each.  "wchar" is probably Unicode 1.1,
 // "wstring" being null-terminated sets thereof.
-CORBA::TypeCode_ptr CORBA::_tc_char = 0;
-CORBA::TypeCode_ptr CORBA::_tc_wchar = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_char, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_wchar, 0)
+TAO_NAMESPACE_END
+
 // a string/wstring have a simple parameter list that indicates the length
-CORBA::TypeCode_ptr CORBA::_tc_string = 0;
-CORBA::TypeCode_ptr CORBA::_tc_wstring = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_string, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_wstring, 0)
+TAO_NAMESPACE_END
+
 //
 // Various things that can be passed as "general" parameters:
 // Any, TypeCode_ptr, Principal_ptr, Object_ptr
 //
-CORBA::TypeCode_ptr CORBA::_tc_any = 0;
-CORBA::TypeCode_ptr CORBA::_tc_TypeCode = 0;
-CORBA::TypeCode_ptr CORBA::_tc_Principal = 0;
-CORBA::TypeCode_ptr CORBA::_tc_Object = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_any, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TypeCode, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Principal, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Object, 0)
+TAO_NAMESPACE_END
 // Two typecodes for exceptions
 CORBA::TypeCode_ptr CORBA::TypeCode::_tc_Bounds = 0;
 CORBA::TypeCode_ptr CORBA::TypeCode::_tc_BadKind = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_exception_type, 0)
+TAO_NAMESPACE_END
+
 // Some more typecodes in the CORBA namespace. We keep adding
 // to this list as we find more and more things being introduced
 // to the CORBA namespace.
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Current, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Identifier, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RepositoryId, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ORBid, 0)
+TAO_NAMESPACE_END
 
-CORBA::TypeCode_ptr CORBA::_tc_Current = 0;
-CORBA::TypeCode_ptr CORBA::_tc_Identifier = 0;
-CORBA::TypeCode_ptr CORBA::_tc_RepositoryId = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ORBid = 0;
 CORBA::TypeCode_ptr CORBA_ORB::_tc_ObjectId = 0;
 
 #if !defined(TAO_HAS_MINIMUM_CORBA)
+
 CORBA::TypeCode_ptr CORBA_ORB::_tc_InconsistentTypeCode = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ConstructionPolicy = 0;
-CORBA::TypeCode_ptr CORBA::_tc_NamedValue = 0;
-CORBA::TypeCode_ptr CORBA::_tc_WrongTransaction = 0;
-CORBA::TypeCode_ptr CORBA::_tc_AnySeq = 0;
-CORBA::TypeCode_ptr CORBA::_tc_FieldName = 0;
-CORBA::TypeCode_ptr CORBA::_tc_NameValuePair = 0;
-CORBA::TypeCode_ptr CORBA::_tc_NameValuePairSeq = 0;
+
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ConstructionPolicy, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NamedValue, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_WrongTransaction, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_AnySeq, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_FieldName, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NameValuePair, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_NameValuePairSeq, 0)
+TAO_NAMESPACE_END
+
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-CORBA::TypeCode_ptr CORBA::_tc_PolicyErrorCode = 0;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyError = 0;
-CORBA::TypeCode_ptr CORBA::_tc_InvalidPolicies = 0;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyType = 0;
-CORBA::TypeCode_ptr CORBA::_tc_Policy = 0;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyList = 0;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyTypeSeq = 0;
-CORBA::TypeCode_ptr CORBA::_tc_SetOverrideType = 0;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyManager = 0;
-CORBA::TypeCode_ptr CORBA::_tc_PolicyCurrent = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyErrorCode, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyError, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_InvalidPolicies, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyType, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Policy, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyList, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyTypeSeq, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_SetOverrideType, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyManager, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PolicyCurrent, 0)
+TAO_NAMESPACE_END
 
-CORBA::TypeCode_ptr CORBA::_tc_DomainManager = 0;
-CORBA::TypeCode_ptr CORBA::_tc_DomainManagerList = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DomainManager, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DomainManagerList, 0)
+TAO_NAMESPACE_END
 
-CORBA::TypeCode_ptr CORBA::_tc_PollableSet = 0;
-CORBA::TypeCode_ptr CORBA::_tc_Pollable = 0;
-CORBA::TypeCode_ptr CORBA::_tc_DIIPollable = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_PollableSet, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Pollable, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_DIIPollable, 0)
+TAO_NAMESPACE_END
 
 // Service definitions
-CORBA::TypeCode_ptr CORBA::_tc_ServiceType = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ServiceOption = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ServiceDetailType = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ServiceDetail = 0;
-CORBA::TypeCode_ptr CORBA::_tc_ServiceInformation = 0;
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceType, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceOption, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceDetailType, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceDetail, 0)
+TAO_NAMESPACE_END
+TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
+TAO_NAMESPACE_BEGIN (CORBA)
+TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServiceInformation, 0)
+TAO_NAMESPACE_END
 
 // Internal to TAO ORB
 CORBA::TypeCode_ptr TC_opaque = 0;

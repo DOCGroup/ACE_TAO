@@ -84,9 +84,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
 // Count of the number of ORBs.
 int CORBA_ORB::orb_init_count_ = 0;
 
-// Pointer to the "default ORB."
-CORBA::ORB_ptr CORBA::instance_ = 0;
-
 // ****************************************************************
 
 CORBA_ORB::InvalidName::InvalidName (void)
@@ -136,9 +133,6 @@ CORBA_ORB::CORBA_ORB (TAO_ORB_Core *orb_core)
     ACE_OS::NULL_thread;
   ACE_NEW (this->cond_become_leader_,
            ACE_SYNCH_CONDITION (leader_follower_info_.leader_follower_lock_));
-
-  if (CORBA::instance_ == 0)
-    CORBA::instance_ = this;
 }
 
 CORBA_ORB::~CORBA_ORB (void)
@@ -156,11 +150,6 @@ CORBA_ORB::~CORBA_ORB (void)
 
       // free up all the ORB owned TypeCodes
       TAO_TypeCodes::fini ();
-
-      // @@ Note that we shouldn't need to actually delete this
-      // instance since it'll be handled by the destruction of the
-      // instance via another mechanism.
-      CORBA::instance_ = 0;
     }
 
   delete this->shutdown_lock_;
@@ -1336,11 +1325,6 @@ CORBA::ORB_init (int &argc,
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
     }
 
-  // @@ We may only want to set this if ORB_init() has 0 argc/argv
-  // parameters.
-  if (CORBA::instance_ == 0)
-    CORBA::instance_ = oc->orb ();
-
   // Before returning remember to store the ORB into the table...
   if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
@@ -1796,38 +1780,6 @@ CORBA_ORB::_tao_find_in_IOR_table (const ACE_CString &object_id,
   obj = this->string_to_object (ior.c_str ());
 
   return 0;
-}
-
-// ****************************************************************
-
-CORBA::ORB_ptr
-CORBA::instance (void)
-{
-  if (CORBA::instance_ == 0)
-    {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                                *ACE_Static_Object_Lock::instance (), 0));
-      if (CORBA::instance_ == 0)
-        {
-          int argc = 0;
-          char **argv = 0;
-
-          // Note that CORBA::ORB_init() will also acquire the static
-          // lock, but that's ok since it's a recursive lock.
-          CORBA::Environment ACE_TRY_ENV;
-          CORBA::instance_ = CORBA::ORB_init (argc, argv, "default_orb",
-                                              ACE_TRY_ENV);
-        }
-    }
-  return CORBA::instance_;
-}
-
-void
-CORBA::instance (CORBA::ORB_ptr orb)
-{
-  ACE_MT (ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard,
-                     *ACE_Static_Object_Lock::instance ()));
-  CORBA::instance_ = orb;
 }
 
 // *************************************************************

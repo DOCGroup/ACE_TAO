@@ -35,6 +35,7 @@ public:
   friend class TAO_POA;
   friend class TAO_Object_Adapter;
   friend class CORBA_Object;
+  friend class TAO_Local_ServantBase;
 
   virtual ~TAO_ServantBase (void);
   // Destructor.

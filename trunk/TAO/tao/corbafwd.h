@@ -61,6 +61,14 @@
 # endif
 #endif /* _MSC_VER */
 
+#if defined (TAO_EXPORT_MACRO)
+#undef TAO_EXPORT_MACRO
+#endif
+#define TAO_EXPORT_MACRO TAO_Export
+#if defined(_MSC_VER)
+#pragma warning(disable:4250)
+#endif /* _MSC_VER */
+
 // Forward declarations of some data types are needed.
 
 class CORBA_Any;
@@ -342,7 +350,7 @@ typedef void (*TAO_Skeleton)(
 template <class T> class TAO_Unbounded_Sequence;
 template <class T> class TAO_Unbounded_Object_Sequence;
 
-class TAO_Export CORBA
+TAO_NAMESPACE CORBA
 {
   // = TITLE
   //    Provides the CORBA namespace.
@@ -350,7 +358,6 @@ class TAO_Export CORBA
   // = DESCRIPTION
   //    This class allows the use of CORBA::Foo, as well as CORBA_Foo
   //    for all standard types Foo.
-public:
 
   typedef ACE_CDR::Boolean Boolean;
   typedef Boolean &Boolean_out;
@@ -393,11 +400,11 @@ public:
   typedef Char *String;
 
   // = String memory management.
-  static Char* string_alloc (ULong len);
-  static Char* string_dup (const Char *);
-  static void string_free (Char *);
+  TAO_NAMESPACE_STORAGE_CLASS Char* string_alloc (ULong len);
+  TAO_NAMESPACE_STORAGE_CLASS Char* string_dup (const Char *);
+  TAO_NAMESPACE_STORAGE_CLASS void string_free (Char *);
   // This is a TAO extension and must go away....
-  static Char* string_copy (const Char *);
+  TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
 
   typedef CORBA_String_var String_var;
   typedef CORBA_String_out String_out;
@@ -409,9 +416,9 @@ public:
   // Out type for WChar.
 
   // = String memory management routines.
-  static WChar* wstring_alloc (ULong len);
-  static WChar* wstring_dup (const WChar *const);
-  static void wstring_free (WChar *const);
+  TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_alloc (ULong len);
+  TAO_NAMESPACE_STORAGE_CLASS WChar* wstring_dup (const WChar *const);
+  TAO_NAMESPACE_STORAGE_CLASS void wstring_free (WChar *const);
 
   typedef CORBA_WString_var WString_var;
   typedef CORBA_WString_out WString_out;
@@ -511,12 +518,12 @@ public:
   typedef CORBA_ValueBase ValueBase;
   typedef CORBA_ValueFactoryBase ValueFactoryBase;
   typedef CORBA_ValueFactoryBase *ValueFactory;
-          // as CORBA 2.3a C++ map. 20.17.10 says
+  // as CORBA 2.3a C++ map. 20.17.10 says
   typedef CORBA_ValueFactoryBase *ValueFactory_ptr;
-          // own invention, more readable
+  // own invention, more readable
   typedef CORBA_DefaultValueRefCountBase  DefaultValueRefCountBase;
-  static void add_ref (ValueBase *);
-  static void remove_ref (ValueBase *);
+  TAO_NAMESPACE_STORAGE_CLASS void add_ref (ValueBase *);
+  TAO_NAMESPACE_STORAGE_CLASS void remove_ref (ValueBase *);
 #endif /* TAO_HAS_VALUETYPE */
 
   // enum values defined in nvlist.hh, bitwise ORed.
@@ -540,47 +547,47 @@ public:
     SYSTEM_EXCEPTION
   };
 
-  CORBA::TypeCode_ptr _tc_exception_type;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_exception_type;
 
   // all the system exception classes
 #define TAO_SYSTEM_EXCEPTION(name) \
   typedef CORBA_ ## name      name
-TAO_SYSTEM_EXCEPTION_LIST
+  TAO_SYSTEM_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
-  typedef CORBA_UnknownUserException UnknownUserException;
+    typedef CORBA_UnknownUserException UnknownUserException;
 
   // = all the CORBA::is_nil methods.
-  static Boolean is_nil (Object_ptr);
-  static Boolean is_nil (Environment_ptr);
-  static Boolean is_nil (TypeCode_ptr);
-  static Boolean is_nil (ORB_ptr);
-  static Boolean is_nil (Principal_ptr);
-  static Boolean is_nil (ServerRequest_ptr req);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Object_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Environment_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (TypeCode_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ORB_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Principal_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (ServerRequest_ptr req);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  static Boolean is_nil (Request_ptr);
-  static Boolean is_nil (NamedValue_ptr);
-  static Boolean is_nil (NVList_ptr);
-  static Boolean is_nil (Context_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (NamedValue_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (NVList_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS Boolean is_nil (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   // = all the CORBA release methods.
-  static void release (Object_ptr);
-  static void release (Environment_ptr);
-  static void release (Principal_ptr);
-  static void release (TypeCode_ptr);
-  static void release (ORB_ptr);
-  static void release (ServerRequest_ptr req);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Object_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Environment_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Principal_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (TypeCode_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (ORB_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (ServerRequest_ptr req);
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
-  static void release (Request_ptr);
-  static void release (NamedValue_ptr);
-  static void release (NVList_ptr);
-  static void release (Context_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Request_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (NamedValue_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (NVList_ptr);
+  TAO_NAMESPACE_STORAGE_CLASS void release (Context_ptr);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -633,40 +640,40 @@ TAO_SYSTEM_EXCEPTION_LIST
   };
 
   // All the typecode constants
-  static TypeCode_ptr _tc_null;
-  static TypeCode_ptr _tc_void;
-  static TypeCode_ptr _tc_short;
-  static TypeCode_ptr _tc_long;
-  static TypeCode_ptr _tc_ushort;
-  static TypeCode_ptr _tc_ulong;
-  static TypeCode_ptr _tc_float;
-  static TypeCode_ptr _tc_double;
-  static TypeCode_ptr _tc_boolean;
-  static TypeCode_ptr _tc_char;
-  static TypeCode_ptr _tc_octet;
-  static TypeCode_ptr _tc_any;
-  static TypeCode_ptr _tc_TypeCode;
-  static TypeCode_ptr _tc_Principal;
-  static TypeCode_ptr _tc_Object;
-  static TypeCode_ptr _tc_string;
-  static TypeCode_ptr _tc_longlong;
-  static TypeCode_ptr _tc_ulonglong;
-  static TypeCode_ptr _tc_longdouble;
-  static TypeCode_ptr _tc_wchar;
-  static TypeCode_ptr _tc_wstring;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_null;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_void;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_short;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_long;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_ushort;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_ulong;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_float;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_double;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_boolean;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_char;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_octet;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_any;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_TypeCode;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Principal;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Object;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_string;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_longlong;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_ulonglong;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_longdouble;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_wchar;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_wstring;
 
   // = Typecode constants for system exceptions.
 #define TAO_SYSTEM_EXCEPTION(name) \
-  static TypeCode_ptr          _tc_ ## name
-TAO_SYSTEM_EXCEPTION_LIST
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_ ## name
+  TAO_SYSTEM_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
-  static TypeCode_ptr _tc_UnknownUserException;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_UnknownUserException;
 
-  static CORBA::TypeCode_ptr _tc_Current;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_Current;
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
-  static CORBA::TypeCode_ptr _tc_NamedValue;
+  TAO_NAMESPACE_STORAGE_CLASS TypeCode_ptr _tc_NamedValue;
 #endif /* End of Minimum CORBA */
   enum
   {
@@ -691,87 +698,87 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef char *ORBid;
   typedef CORBA::String_var ORBid_var;
   typedef CORBA::String_out ORBid_out;
-  static CORBA::TypeCode_ptr _tc_ORBid;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ORBid;
 
   typedef char *Identifier;
   typedef CORBA::String_var Identifier_var;
   typedef CORBA::String_out Identifier_out;
-  static CORBA::TypeCode_ptr _tc_Identifier;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Identifier;
 
   typedef char *RepositoryId;
   typedef CORBA::String_var RepositoryId_var;
   typedef CORBA::String_out RepositoryId_out;
-  static CORBA::TypeCode_ptr _tc_RepositoryId;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_RepositoryId;
 
   typedef CORBA::Short PolicyErrorCode;
   typedef CORBA::Short_out PolicyErrorCode_out;
-  static CORBA::TypeCode_ptr _tc_PolicyErrorCode;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyErrorCode;
 
-  static const PolicyErrorCode BAD_POLICY;
-  static const PolicyErrorCode UNSUPPORTED_POLICY;
-  static const PolicyErrorCode BAD_POLICY_TYPE;
-  static const PolicyErrorCode BAD_POLICY_VALUE;
-  static const PolicyErrorCode UNSUPPORTED_POLICY_VALUE;
+  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode BAD_POLICY;
+  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode UNSUPPORTED_POLICY;
+  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode BAD_POLICY_TYPE;
+  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode BAD_POLICY_VALUE;
+  TAO_NAMESPACE_STORAGE_CLASS const PolicyErrorCode UNSUPPORTED_POLICY_VALUE;
 
   typedef CORBA_PolicyError PolicyError;
   typedef CORBA_PolicyError *PolicyError_ptr;
-  static CORBA::TypeCode_ptr _tc_PolicyError;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyError;
 
   typedef CORBA_InvalidPolicies InvalidPolicies;
   typedef CORBA_InvalidPolicies* InvalidPolicies_ptr;
-  static CORBA::TypeCode_ptr _tc_InvalidPolicies;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidPolicies;
 
   typedef CORBA::ULong PolicyType;
   typedef CORBA::ULong_out PolicyType_out;
-  static CORBA::TypeCode_ptr _tc_PolicyType;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyType;
 
   typedef CORBA_Policy Policy;
   typedef CORBA_Policy *Policy_ptr;
   typedef CORBA_Policy_var Policy_var;
   typedef CORBA_Policy_out Policy_out;
-  static CORBA::TypeCode_ptr _tc_Policy;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Policy;
 
   typedef CORBA_PolicyList PolicyList;
   typedef CORBA_PolicyList_var PolicyList_var;
   typedef CORBA_PolicyList_out PolicyList_out;
-  static CORBA::TypeCode_ptr _tc_PolicyList;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyList;
 
   // = Service definitions
   typedef CORBA::UShort ServiceType;
   typedef ServiceType CORBA_ServiceType;
   typedef CORBA::UShort_out ServiceType_out;
   typedef ServiceType_out CORBA_ServiceType_out;
-  static CORBA::TypeCode_ptr _tc_ServiceType;
-  static const ServiceType Security;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceType;
+  TAO_NAMESPACE_STORAGE_CLASS const ServiceType Security;
 
   typedef CORBA::ULong ServiceOption;
   typedef ServiceOption CORBA_ServiceOption;
   typedef CORBA::ULong_out ServiceOption_out;
   typedef ServiceOption_out CORBA_ServiceOption_out;
-  static  CORBA::TypeCode_ptr _tc_ServiceOption;
+  TAO_NAMESPACE_STORAGE_CLASS  CORBA::TypeCode_ptr _tc_ServiceOption;
 
   typedef CORBA::ULong ServiceDetailType;
   typedef ServiceDetailType CORBA_ServiceDetailType;
   typedef CORBA::ULong_out ServiceDetailType_out;
   typedef ServiceDetailType_out CORBA_ServiceDetailType_out;
-  static  CORBA::TypeCode_ptr _tc_ServiceDetailType;
+  TAO_NAMESPACE_STORAGE_CLASS  CORBA::TypeCode_ptr _tc_ServiceDetailType;
 
   typedef CORBA_ServiceDetail ServiceDetail;
   typedef CORBA_ServiceDetail_var ServiceDetail_var;
   typedef CORBA_ServiceDetail_out ServiceDetail_out;
   typedef CORBA_ServiceDetail *ServiceDetail_ptr;
-  static CORBA::TypeCode_ptr _tc_ServiceDetail;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceDetail;
 
   typedef CORBA_ServiceInformation ServiceInformation;
   typedef CORBA_ServiceInformation_var ServiceInformation_var;
   typedef CORBA_ServiceInformation_out ServiceInformation_out;
   typedef CORBA_ServiceInformation *ServiceInformation_ptr;
-  static CORBA::TypeCode_ptr _tc_ServiceInformation;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServiceInformation;
 
   typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
   typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
   typedef CORBA_PolicyTypeSeq_out PolicyTypeSeq_out;
-  static CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyTypeSeq;
 
   enum SetOverrideType
   {
@@ -779,67 +786,67 @@ TAO_SYSTEM_EXCEPTION_LIST
     ADD_OVERRIDE
   };
   typedef SetOverrideType &SetOverrideType_out;
-  static CORBA::TypeCode_ptr _tc_SetOverrideType;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SetOverrideType;
 
   typedef CORBA_PolicyManager PolicyManager;
   typedef CORBA_PolicyManager_var PolicyManager_var;
   typedef CORBA_PolicyManager_out PolicyManager_out;
   typedef CORBA_PolicyManager *PolicyManager_ptr;
-  static CORBA::TypeCode_ptr _tc_PolicyManager;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyManager;
 
   typedef CORBA_PolicyCurrent PolicyCurrent;
   typedef CORBA_PolicyCurrent_var PolicyCurrent_var;
   typedef CORBA_PolicyCurrent_out PolicyCurrent_out;
   typedef CORBA_PolicyCurrent *PolicyCurrent_ptr;
-  static CORBA::TypeCode_ptr _tc_PolicyCurrent;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PolicyCurrent;
 
   typedef CORBA_DomainManager DomainManager;
   typedef CORBA_DomainManager *DomainManager_ptr;
   typedef CORBA_DomainManager_var DomainManager_var;
   typedef CORBA_DomainManager_out DomainManager_out;
-  static CORBA::TypeCode_ptr _tc_DomainManager;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DomainManager;
 
   typedef CORBA_DomainManagerList DomainManagerList;
   typedef CORBA_DomainManagerList *DomainManagerList_ptr;
   typedef CORBA_DomainManagerList_var DomainManagerList_var;
   typedef CORBA_DomainManagerList_out DomainManagerList_out;
-  static CORBA::TypeCode_ptr _tc_DomainManagerList;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DomainManagerList;
 
-  static const PolicyType SecConstruction;
+  TAO_NAMESPACE_STORAGE_CLASS const PolicyType SecConstruction;
 
 #if ! defined (TAO_HAS_MINIMUM_CORBA)
   typedef CORBA_ConstructionPolicy ConstructionPolicy;
   typedef CORBA_ConstructionPolicy *ConstructionPolicy_ptr;
   typedef CORBA_ConstructionPolicy_var ConstructionPolicy_var;
   typedef CORBA_ConstructionPolicy_out ConstructionPolicy_out;
-  static CORBA::TypeCode_ptr _tc_ConstructionPolicy;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConstructionPolicy;
 
   typedef CORBA_WrongTransaction WrongTransaction;
   typedef WrongTransaction *WrongTransaction_ptr;
-  static CORBA::TypeCode_ptr _tc_WrongTransaction;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_WrongTransaction;
 
   typedef CORBA_AnySeq AnySeq;
   typedef CORBA_AnySeq *AnySeq_ptr;
   typedef CORBA_AnySeq_var AnySeq_var;
   typedef CORBA_AnySeq_out AnySeq_out;
-  static CORBA::TypeCode_ptr _tc_AnySeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AnySeq;
 
   typedef CORBA_FieldName FieldName;
   typedef CORBA_FieldName_var FieldName_var;
   typedef CORBA_FieldName_out FieldName_out;
-  static CORBA::TypeCode_ptr _tc_FieldName;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FieldName;
 
   typedef CORBA_NameValuePair NameValuePair;
   typedef CORBA_NameValuePair *NameValuePair_ptr;
   typedef CORBA_NameValuePair_var NameValuePair_var;
   typedef CORBA_NameValuePair_out NameValuePair_out;
-  static CORBA::TypeCode_ptr _tc_NameValuePair;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePair;
 
   typedef CORBA_NameValuePairSeq NameValuePairSeq;
   typedef CORBA_NameValuePairSeq *NameValuePairSeq_ptr;
   typedef CORBA_NameValuePairSeq_var NameValuePairSeq_var;
   typedef CORBA_NameValuePairSeq_out NameValuePairSeq_out;
-  static CORBA::TypeCode_ptr _tc_NameValuePairSeq;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NameValuePairSeq;
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */
 
@@ -849,50 +856,39 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_PollableSet_var PollableSet_var;
   typedef CORBA_PollableSet_out PollableSet_out;
   typedef CORBA_PollableSet_ptr PollableSet_ptr;
-  static CORBA::TypeCode_ptr _tc_PollableSet;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PollableSet;
 
   typedef CORBA_Pollable Pollable;
   typedef CORBA_Pollable_var Pollable_var;
   typedef CORBA_Pollable_out Pollable_out;
   typedef CORBA_Pollable_ptr Pollable_ptr;
-  static CORBA::TypeCode_ptr _tc_Pollable;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Pollable;
 
   typedef CORBA_DIIPollable DIIPollable;
   typedef CORBA_DIIPollable_var DIIPollable_var;
   typedef CORBA_DIIPollable_out DIIPollable_out;
   typedef CORBA_DIIPollable_ptr DIIPollable_ptr;
-  static CORBA::TypeCode_ptr _tc_DIIPollable;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_DIIPollable;
 
   // ****************************************************************
 
   // There could be a single version of these methods, but g++ 2.7.2
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
-  static ORB_ptr ORB_init (int &argc,
-                           char *argv[],
-                           const char *orb_name = 0);
-  static ORB_ptr ORB_init (int &argc,
-                           char *argv[],
-                           const char *orb_name,
-                           CORBA_Environment &TAO_IN_ENV);
+  TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
+                                                char *argv[],
+                                                const char *orb_name = 0);
+  TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
+                                                char *argv[],
+                                                const char *orb_name,
+                                                CORBA_Environment &TAO_IN_ENV);
   // ORB initialisation
 
   // = TAO extensions...
 
-  static CORBA_Environment& default_environment (void);
+  TAO_NAMESPACE_STORAGE_CLASS CORBA_Environment& default_environment (void);
   // Obtain the thread-specific default environment.
 
-  // = The following two methods are TAO-specific extensions.
-  static ORB_ptr instance (void);
-  // Returns a pointer to the "default ORB."
-
-  static void instance (ORB_ptr);
-  // Sets a pointer to the "default ORB."
-
-private:
-  friend class CORBA_ORB;
-  static ORB_ptr instance_;
-  // Points to the "default ORB."
 };  // end of class (namespace) CORBA
 
 // ****************************************************************

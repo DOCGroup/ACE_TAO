@@ -1,19 +1,19 @@
 // $Id$
 
-ACE_INLINE TAO_Export CORBA::String
+ACE_INLINE CORBA::String
 CORBA::string_alloc (CORBA::ULong len)
 {
   // Allocate 1 + strlen to accomodate the null terminating character.
   return new CORBA::Char[size_t (len + 1)];
 }
 
-ACE_INLINE TAO_Export void
+ACE_INLINE void
 CORBA::string_free (CORBA::Char *str)
 {
   delete [] str;
 }
 
-ACE_INLINE TAO_Export CORBA::String
+ACE_INLINE CORBA::String
 CORBA::string_dup (const CORBA::Char *str)
 {
   if (!str)
@@ -32,19 +32,19 @@ CORBA::string_dup (const CORBA::Char *str)
 // Wide strings
 // ----------------------------------------------------------------------
 
-ACE_INLINE TAO_Export CORBA::WChar*
+ACE_INLINE CORBA::WChar*
 CORBA::wstring_alloc (CORBA::ULong len)
 {
   return new CORBA::WChar [(size_t) (len + 1)];
 }
 
-ACE_INLINE TAO_Export void
+ACE_INLINE void
 CORBA::wstring_free (CORBA::WChar *const str)
 {
   delete [] str;
 }
 
-ACE_INLINE TAO_Export CORBA::WChar*
+ACE_INLINE CORBA::WChar*
 CORBA::wstring_dup (const WChar *const str)
 {
   if (!str)
@@ -53,4 +53,3 @@ CORBA::wstring_dup (const WChar *const str)
   CORBA::WChar* retval = CORBA::wstring_alloc (ACE_OS::wslen (str));
   return ACE_OS::wscpy (retval, str);
 }
-
