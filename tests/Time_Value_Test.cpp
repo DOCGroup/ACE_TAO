@@ -116,6 +116,11 @@ main (int, char *[])
 
   ACE_START_TEST ("Time_Value_Test");
 
+  ACE_DEBUG ((LM_DEBUG, "This is ACE Version %u.%u.%u\n",
+              ACE::major_version (),
+              ACE::minor_version(),
+              ACE::beta_version()));
+
   ACE_Time_Value tv1;
   ACE_Time_Value tv2 (2);
   ACE_Time_Value tv3 (100);
