@@ -2,6 +2,7 @@
 
 #include <openssl/x509.h>
 
+#include "ace/OS_NS_string.h"
 #include "Foo_i.h"
 
 ACE_RCSID (Secure_Invocation,

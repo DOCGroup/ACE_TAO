@@ -1,6 +1,7 @@
 // -*- C++ -*-
 
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
 #include "Foo_i.h"
 
 ACE_RCSID (Secure_Invocation,
@@ -97,7 +98,7 @@ main (int argc, char *argv[])
                                  ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
-	// @@ A better thing would be to print out an error statement. 
+	// @@ A better thing would be to print out an error statement.
         ACE_ASSERT (!equivalent);
 
 	ACE_UNUSED_ARG (equivalent);
