@@ -11249,6 +11249,29 @@ NODEP_CPP_TOKEN_R=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\TP_Reactor.cpp
+
+!IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE dynamic library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Trace.cpp
 
 !IF  "$(CFG)" == "ACE dynamic library - Win32 Debug"
