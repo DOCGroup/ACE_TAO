@@ -485,26 +485,6 @@ extern "C" void ace_mutex_lock_cleanup_adapter (void *args);
 #define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
 #endif /* VXWORKS */
 
-#if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
-// The following two macros ensure that system calls are properly
-// restarted (if necessary) when interrupts occur.
-#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) \
-  do \
-    RESULT = (TYPE) OP; \
-  while (RESULT == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ())
-#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) \
-  do { \
-    TYPE ace_result_; \
-    do \
-      ace_result_ = (TYPE) OP; \
-    while (ace_result_ == FAILVALUE && errno == EINTR && ACE_LOG_MSG->restart ()); \
-    return ace_result_; \
-  } while (0)
-#else
-#define ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE) do { TYPE ace_result_ = FAILVALUE; ace_result_ = ace_result_; return OP; } while (0)
-#define ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT) do { RESULT = (TYPE) OP; } while (0)
-#endif /* ACE_HAS_SIGNAL_SAFE_OS_CALLS */
-
 ACE_INLINE int 
 ACE_OS::chdir (const char *path)
 {
@@ -5098,7 +5078,7 @@ ACE_OS::alarm (u_int delay)
 }
 
 ACE_INLINE int 
-ACE_OS::dlclose (void *handle)
+ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 {
   // ACE_TRACE ("ACE_OS::dlclose");
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
@@ -5114,7 +5094,13 @@ ACE_OS::dlclose (void *handle)
 #endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
   ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary ((HMODULE) handle), ace_result_), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
+#elif defined (__hpux)
+# if __cplusplus >= 199707L
+  ACE_OSCALL_RETURN (::shl_unload(handle), int, -1);
+# else
+  ACE_OSCALL_RETURN (::cxxshl_unload(handle), int, -1);
+# endif  /* aC++ vs. Hp C++ */
 #else
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
@@ -5127,12 +5113,14 @@ ACE_OS::dlerror (void)
   // ACE_TRACE ("ACE_OS::dlerror");
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   ACE_OSCALL_RETURN (::dlerror (), char *, 0);
+#elif defined (__hpux)
+  ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 
-ACE_INLINE void *
+ACE_INLINE ACE_SHLIB_HANDLE
 ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 {
   // ACE_TRACE ("ACE_OS::dlopen");
@@ -5154,7 +5142,15 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 #elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (mode);
 	
-  ACE_OSCALL_RETURN (::LoadLibraryA (filename), void *, 0);
+  ACE_OSCALL_RETURN (::LoadLibraryA (filename), ACE_SHLIB_HANDLE, 0);
+#elif defined (__hpux)
+
+# if __cplusplus >= 199707L
+  ACE_OSCALL_RETURN (::shl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
+# else
+  ACE_OSCALL_RETURN (::cxxshl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
+# endif  /* aC++ vs. Hp C++ */
+
 #else
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -5163,7 +5159,7 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
 }
 
 ACE_INLINE void *
-ACE_OS::dlsym (void *handle, ACE_DL_TYPE symbolname)
+ACE_OS::dlsym (ACE_SHLIB_HANDLE handle, ACE_DL_TYPE symbolname)
 {
   // ACE_TRACE ("ACE_OS::dlsym");
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
@@ -5180,7 +5176,15 @@ ACE_OS::dlsym (void *handle, ACE_DL_TYPE symbolname)
   ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
 #endif /* ACE_LACKS_POSIX_PROTO */
 #elif defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::GetProcAddress ((HMODULE) handle, symbolname), void *, 0);
+  ACE_OSCALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
+#elif defined (__hpux)
+
+  void *value;
+  int status;
+  shl_t _handle = handle;
+  ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
+  return status == 0 ? value : NULL;
+
 #else
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (symbolname);
