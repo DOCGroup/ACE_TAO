@@ -80,6 +80,8 @@ struct ACE_Export ACE_Malloc_Stats
 
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
 
+class ACE_Malloc_Header;
+class ACE_Name_Node;
 typedef ACE_Based_Pointer<ACE_Malloc_Header> ACE_MALLOC_HEADER_PTR;
 typedef ACE_Based_Pointer<ACE_Name_Node> ACE_NAME_NODE_PTR;
 typedef ACE_Based_Pointer_Basic<char> ACE_CHAR_PTR;

@@ -1,3 +1,9 @@
+Wed Aug  4 12:26:53 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Malloc.h:
+	  Added more forward declarations for the compilations that
+	  enabled PIM.
+
 Wed Aug  4 11:59:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Malloc.h:
