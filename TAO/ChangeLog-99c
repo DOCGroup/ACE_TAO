@@ -1,3 +1,24 @@
+Sat Jan  9 22:50:35 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
+
+	* orbsvcs/Time_Service/Server_i.cpp : Added the Implementation
+	repository related functions. Made changes to incorporate the
+	additional functionality required by the IR.
+
+	* orbsvcs/Time_Service/Server_i.h : Addded member variables and
+	functions required by the IR.
+
+	The following files are required by the server. These files
+	would have to be removed from here once the IR stabilizes and
+	these files are put in a particular directory.
+
+	* orbsvcs/Time_Service/IR_Helper.cpp
+	* orbsvcs/Time_Service/IR_Helper.h
+	* orbsvcs/Time_Service/implrepo.conf
+
+	* orbsvcs/Time_Service/Makefile : Changed the Makefile to link
+	in the IR_Helper and other objects required by the Implementation
+	Repository.
+
 Sat Jan  9 22:06:09 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
