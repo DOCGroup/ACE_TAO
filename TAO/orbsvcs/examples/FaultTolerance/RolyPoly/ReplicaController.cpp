@@ -211,7 +211,7 @@ resolve_poa (PortableInterceptor::AdapterName const&)
 }
 
 
-void* ReplicaController::
+ACE_THR_FUNC_RETURN ReplicaController::
 listener_thunk (void* p)
 {
   ReplicaController* obj = reinterpret_cast<ReplicaController*> (p);
