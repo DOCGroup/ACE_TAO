@@ -1009,7 +1009,7 @@ SOURCE=.\Based_Pointer_Repository.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Based_Pointer_Repository_T.h
+SOURCE=.\Base_Pointer_T.h
 # End Source File
 # Begin Source File
 
@@ -2513,7 +2513,7 @@ SOURCE=.\Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Based_Pointer_Repository_T.cpp
+SOURCE=.\Base_Pointer_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

@@ -4734,7 +4734,7 @@ SOURCE=.\Based_Pointer_Repository.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Based_Pointer_Repository_T.h
+SOURCE=.\Base_Pointer_T.h
 # End Source File
 # Begin Source File
 
@@ -6414,7 +6414,7 @@ SOURCE=.\Auto_Ptr.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Based_Pointer_Repository_T.cpp
+SOURCE=.\Base_Pointer_T.cpp
 
 !IF  "$(CFG)" == "ACE LIB - Win32 Debug"
 
