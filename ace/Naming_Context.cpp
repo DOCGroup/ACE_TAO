@@ -97,12 +97,20 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 }
 
 int
-ACE_Naming_Context::close (void)
+ACE_Naming_Context::close_down (void)
 {
-  ACE_TRACE ("ACE_Naming_Context::close");
+  ACE_TRACE ("ACE_Naming_Context::close_down");
 
   delete this->name_options_;
   this->name_options_ = 0;
+
+  return this->close ();
+}
+
+int
+ACE_Naming_Context::close (void)
+{
+  ACE_TRACE ("ACE_Naming_Context::close");
 
   delete this->name_space_;
   this->name_space_ = 0;
@@ -326,7 +334,7 @@ ACE_Naming_Context::~ACE_Naming_Context (void)
 {
   ACE_TRACE ("ACE_Naming_Context::~ACE_Naming_Context");
 
-  this->close ();
+  this->close_down ();
 }
 
 void
@@ -349,7 +357,7 @@ ACE_Naming_Context::fini (void)
 {
   ACE_DEBUG ((LM_DEBUG, "ACE_Naming_Context::fini\n"));
 
-  this->close ();
+  this->close_down ();
 
   return 0;
 }
