@@ -1,3 +1,12 @@
+Sun Dec  7 08:49:47 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/Kokyu_dsrt_schedulers/FP_SchedulingC.h.diff:
+	* examples/Kokyu_dsrt_schedulers/Kokyu_qosC.h.diff:
+	* examples/Kokyu_dsrt_schedulers/MIF_SchedulingC.h.diff:
+	* examples/Kokyu_dsrt_schedulers/MUF_SchedulingC.h.diff:
+
+	  These diff files are not required anymore.
+
 Sun Dec  7 14:29:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Sequence_Latency/Single_Threaded/client.dsp:
