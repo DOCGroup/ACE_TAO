@@ -1,3 +1,29 @@
+Mon Nov  4 14:21:18 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1020_Regression: Another test that has the capability
+	  of stressing things a bit more for this bug to show up. This
+	  test is structured in such a manner that multipel Multi-threaded
+	  clients can connect to a server. The clients crash at periodic
+	  intervals. This is a slightly improvised form of the basic
+	  test. Thanks to Carlos O'Ryan for donating this test.
+	
+	* tests/Bug_1020_Regression/client.cpp:
+	* tests/Bug_1020_Regression/Echo_Callback.cpp:
+	* tests/Bug_1020_Regression/Echo_Callback.h:
+	* tests/Bug_1020_Regression/Echo.cpp:
+	* tests/Bug_1020_Regression/Echo.h:
+	* tests/Bug_1020_Regression/Makefile:
+	* tests/Bug_1020_Regression/ORB_Task.cpp:
+	* tests/Bug_1020_Regression/ORB_Task.h:
+	* tests/Bug_1020_Regression/run_test.pl:
+	* tests/Bug_1020_Regression/server.cpp:
+	* tests/Bug_1020_Regression/Server.cpp:
+	* tests/Bug_1020_Regression/Server.h:
+	* tests/Bug_1020_Regression/Server_Task.cpp:
+	* tests/Bug_1020_Regression/Server_Task.h:
+	* tests/Bug_1020_Regression/Test.idl: Files for this test.
+
+
 Mon Nov  4 14:18:15 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/Bug_1020_Basic_Regression/README: Added information about
