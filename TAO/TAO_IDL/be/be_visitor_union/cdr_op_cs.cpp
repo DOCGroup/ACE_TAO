@@ -99,9 +99,9 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     }
 
   *os << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "CORBA::Boolean result = 1;" << be_nl << be_nl
+      << "CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_union._d ())" << be_nl
       << "{" << be_idt;
 
@@ -169,9 +169,9 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     }
 
   *os << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "CORBA::Boolean result = 1;" << be_nl << be_nl
+      << "CORBA::Boolean result = true;" << be_nl << be_nl
       << "switch (_tao_discriminant)" << be_nl
       << "{" << be_idt;
 
