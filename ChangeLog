@@ -1,8 +1,15 @@
+Mon Jul  8 17:26:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/Task.cpp (svc_run): Borland complains about reinterpret_cast from
+          int to unsigned long, so change the cast to ACE_THR_FUNC_RETURN to
+          a static_cast for that compiler. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for this fix.
+
 Fri Jul  5 10:30:44 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	 * ace/Array_Base.cpp: Swapped the order of includes so that
-	   Array_Base.h comes after Malloc_Base.h.  Thanks to Al Pariante
-           <Albert.Pariante@axcelis.com> for reporting this.
+        * ace/Array_Base.cpp: Swapped the order of includes so that
+          Array_Base.h comes after Malloc_Base.h.  Thanks to Al Pariante
+          <Albert.Pariante@axcelis.com> for reporting this.
 
 Thu Jul  4 11:27:05 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 

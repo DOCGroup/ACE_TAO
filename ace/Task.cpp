@@ -200,8 +200,14 @@ ACE_Task_Base::svc_run (void *args)
 #endif /* ACE_HAS_SIG_C_FUNC */
 
   // Call the Task's svc() hook method.
-  ACE_THR_FUNC_RETURN status =
-    ACE_reinterpret_cast(ACE_THR_FUNC_RETURN, t->svc ());
+  int svc_status = t->svc ();
+  ACE_THR_FUNC_RETURN status;
+#if defined (__BORLANDC__)
+  // C++Builder complains about reinterpret_cast from int to unsigned long...
+  status = ACE_static_cast (ACE_THR_FUNC_RETURN, svc_status);
+#else
+  status = ACE_reinterpret_cast(ACE_THR_FUNC_RETURN, svc_status);
+#endif /* __BORLANDC__ */
 
 // If we changed this zero change the other if in OS.cpp Thread_Adapter::invoke
 #if 1
