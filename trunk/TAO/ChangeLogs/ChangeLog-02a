@@ -1,3 +1,16 @@
+Thu Aug 24 11:18:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_expression.cpp:
+
+	  Some changes I evidently made (but don't remember making)
+	  to the coerce() function broke it. I must have been up
+	  way too late. Undid those changes.
+
+	* TAO_IDL/be/be_sunsoft.cpp:
+
+	  My changes on Aug 21 to this file somehow got lost in the
+	  big IDL checkin yesterday. Re-entered those changes.
+
 Thu Aug 24 09:22:53 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl_static.dsp:
