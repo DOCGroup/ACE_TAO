@@ -1,3 +1,11 @@
+Mon Feb 16 17:38:15 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* tao/iioporb.cpp: Made sure to count separators when allocating
+ 	space for the IOR.  This corrected ABW errors in purify.
+
+	* tao/connect.cpp: Explicitly set the buffer when being purified
+ 	to avoid complaints.
+
 Mon Feb 16 17:22:15 1998  Nagarajan Surendran  <naga@tango.cs.wustl.edu>
 
 	* tests/Cubit/TAO/IDL_Cubit/Makefile: Changed LDFLAGS to link orbsvcs

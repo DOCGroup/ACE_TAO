@@ -101,8 +101,11 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
 
       u_int buflen = (ACE_OS::strlen (iiop_prefix) +
                       1 /* major # */ + 1 /* minor # */ +
+                      2 /* double-slash separator */ +
                       ACE_OS::strlen (obj2->profile.host) +
+                      1 /* colon separator */ +
                       5 /* port number */ +
+                      1 /* slash separator */ +
                       ACE_OS::strlen (key) +
                       1 /* zero terminator */);
       CORBA::String buf = CORBA::string_alloc (buflen);
