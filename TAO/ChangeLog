@@ -1,3 +1,14 @@
+Fri Jan 16 15:34:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orsbvcs/Notify_Service/Notify_Service.{h,cpp}:
+	  Parse the notify service arguments before initialising the ORB so
+	  that the -ORBRunThreads option is consumed before we let the ORB
+	  parse the arguments, because else the ORB will throw an exception
+	  about a unknown -ORB option. The argc argument of the parse_args
+	  function is now by reference, so that it is updated because this
+	  method consumes the arguments. Thanks to Olli Savia <ops@iki.fi>
+	  for reporting this and also testing the changes.
+
 Fri Jan 16 14:16:49 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Advanced/ch_8_and_10/icp.cpp:
