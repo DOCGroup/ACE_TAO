@@ -1,3 +1,5 @@
+// -*- C++ -*-
+//
 // $Id$
 
 template<typename T_slice, typename T_forany> 

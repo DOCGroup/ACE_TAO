@@ -1,4 +1,40 @@
-Tue Jun 8 15:35:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Tue Jun  8 17:00:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Any_Array_Impl_T.h (extract):
+	* tao/Any_Array_Impl_T.cpp (extract):
+
+	  Made slice parameter non-const.  Part of a work-around for
+	  MSVC++ 6 issues involving conversion of non-const
+	  multidimensional arrays to const ones (e.g. int*[3][10] ->
+	  const int*[3][10]).
+
+	* tao/Any_Array_Impl_T.inl:
+
+	  Added an Emacs C++ mode comment.
+
+	* tao/Array_VarOut_T.h:
+
+	  No need to use CORBA::Boolean typedef.  The standard C++ bool
+	  type is fine for this case since this code is used internally
+	  within TAO.
+
+	* tao/Array_VarOut_T.inl (in):
+
+	  MSVC++ 6 can't handle the const_cast<> in the multi-dimensional
+	  array case so reinterpret_cast<> cast instead.  It's not clear
+	  if this is really the right thing to do but the code won't
+	  compile with MSVC++ 6 without it.  We use a reinterpret_cast<>
+	  instead of a C-style "sledgehammer" cast to make it obvious that
+	  this code may have unresolved issues, and also to make it easier
+	  for others to find this code.
+
+	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
+
+	  Removed const_cast<> from CORBA::any extraction operator for
+	  CORBA IDL arrays.  It is no longer necessary, nor did it have
+	  the desired effect with broken MSVC++ 6.
+
+Tue Jun  8 15:35:20 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_array/any_op_cs.cpp (visit_array):
 
