@@ -45,8 +45,7 @@ namespace CIAO
     NodeApplication_Callback_Impl (CORBA::ORB_ptr o,
                                    PortableServer::POA_ptr p,
                                    Deployment::NodeApplicationManager_ptr s,
-                                   const Deployment::Properties &properties
-                                   ACE_ENV_ARG_DECL)
+                                   const Deployment::Properties &properties)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     // @@ (OO) Since this class is reference counted, please make this
