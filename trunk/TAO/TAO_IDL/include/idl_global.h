@@ -437,7 +437,7 @@ public:
   UTL_ScopedName *string_to_scoped_name (char *s);
   // Parses a string with double colons.
 
-  long seen_include_file_before(UTL_String *);
+  long seen_include_file_before (char *);
   // Seen this include before?
 
   long last_seen_index (void) const;
@@ -522,9 +522,6 @@ private:
 
   ACE_Unbounded_Stack<char *> pragma_prefixes_;
   // Container for all the #pragma prefix declarations.
-
-  ACE_Hash_Map_Manager<ACE_CString, ACE_CString, ACE_Null_Mutex> file_prefixes_;
-  // Remembers the prefixes associated with files, if any.
 
   long last_seen_index_;
   // The index (not zero-based!) of the last seen included file.

@@ -1,3 +1,14 @@
+Fri Jan  3 14:43:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/include/idl_global.h:
+
+	  Changes to the management of the IDL compiler's stack of prefixes,
+	  to address a problem that appeared when there is a chain of 
+	  included IDL files. Thanks to Adee Ran <adeeran@yahoo.com> for
+	  reporting the problem and supplying example IDL files to 
+	  reproduce it.
+
 Fri Jan 03 14:22:14 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs/Notify_Service/Notify_Server.cpp:
