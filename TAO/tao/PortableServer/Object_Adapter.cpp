@@ -116,8 +116,8 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     reverse_lock_ (*lock_),
     non_servant_upcall_condition_ (thread_lock_),
     non_servant_upcall_in_progress_ (0),
-    non_servant_upcall_thread_ (ACE_OS::NULL_thread)
-  , root_ (0)
+    non_servant_upcall_thread_ (ACE_OS::NULL_thread),
+    root_ (0)
 {
   TAO_Object_Adapter::set_transient_poa_name_size (creation_parameters);
 
@@ -354,9 +354,6 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   iteratable_poa_name::iterator end = ipn.end ();
 
   TAO_POA *parent = this->root_;
-  // @@ PPOA: this->orb_core_.root_poa (ACE_TRY_ENV);
-  // @@ PPOA: ACE_CHECK_RETURN (-1);
-
   if (parent->name () != *iterator)
     ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                       -1);
@@ -419,8 +416,6 @@ TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
   if (root)
     {
       poa = this->root_;
-      // @@ PPOA: this->orb_core_.root_poa (ACE_TRY_ENV);
-      // @@ PPOA: ACE_CHECK_RETURN (-1);
     }
   else
     {
@@ -565,8 +560,8 @@ TAO_Object_Adapter::open (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   // The Object_Adapter will keep a reference to the Root POA so that
-  // on its destruction, it can check whether the Root POA has
-  // been destroyed yet or not.
+  // on its destruction, it can check whether the Root POA has been
+  // destroyed yet or not.
   this->root_->_add_ref ();
 
   // Release the POA_Manager_var since we got here without error.  The
@@ -1064,7 +1059,6 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
     this->object_adapter_.non_servant_upcall_condition_.broadcast ();
 }
 
-// @@ PPOA TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_Object_Adapter &object_adapter)
 TAO_Object_Adapter::Servant_Upcall::Servant_Upcall (TAO_ORB_Core *oc)
   : object_adapter_ (0),
     poa_ (0),
@@ -1173,7 +1167,7 @@ TAO_Object_Adapter::Servant_Upcall::prepare_for_upcall (const TAO_ObjectKey &key
   // use.
   this->state_ = OBJECT_ADAPTER_LOCK_RELEASED;
 
-  // Lock servant (if appropriate).
+  // Serialize servants (if appropriate).
   this->single_threaded_poa_setup (ACE_TRY_ENV);
   ACE_CHECK_RETURN (TAO_Adapter::DS_FAILED);
 
@@ -1286,15 +1280,6 @@ TAO_Object_Adapter::Servant_Upcall::servant_locator_cleanup (void)
 
   if (this->using_servant_locator_)
     {
-      // If we are a single threaded POA, teardown the appropriate
-      // locking in the servant.
-      //
-      // Note that teardown of the servant lock must happen before the
-      // post_invoke() call since that might end up deleting the
-      // servant.
-      //
-      this->poa_->teardown_servant_lock (this->servant_);
-
       ACE_DECLARE_NEW_CORBA_ENV;
       ACE_TRY
         {
@@ -1320,8 +1305,7 @@ void
 TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environment &ACE_TRY_ENV)
 {
 #if (TAO_HAS_MINIMUM_POA == 0)
-
-  // Lock servant (if necessary).
+  // Serialize servants (if necessary).
   //
   // Note that this lock must be acquired *after* the object adapter
   // lock has been released.  This is necessary since we cannot block
@@ -1331,7 +1315,7 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
   // lock.
   if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
     {
-      int result = this->servant_->_single_threaded_poa_lock ().acquire ();
+      int result = this->poa_->single_threaded_lock ().acquire ();
 
       if (result == -1)
         // Locking error.
@@ -1345,10 +1329,10 @@ TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_setup (CORBA::Environmen
 void
 TAO_Object_Adapter::Servant_Upcall::single_threaded_poa_cleanup (void)
 {
-  // Since the servant lock was acquired, we must release it.
 #if (TAO_HAS_MINIMUM_POA == 0)
+  // Since the servant lock was acquired, we must release it.
   if (this->poa_->policies ().thread () == PortableServer::SINGLE_THREAD_MODEL)
-    this->servant_->_single_threaded_poa_lock ().release ();
+    this->poa_->single_threaded_lock ().release ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 }
 
