@@ -12,7 +12,7 @@ unshift @INC, '../../../bin';
 require Process;
 #require Uniqueid;
 
-$nsiorfile = "theior";
+$nsiorfile = "ns.ior";
 
 # number of threads to use for multithreaded clients or servers
 
@@ -27,22 +27,12 @@ $sleeptime = 2;
 $status = 0;
 $n = 1;
 $leave = 1;
-$ior = 0;
 $debug = "";
 $cm = "";
 $sm = "";
 $other = "";
 $c_conf = "client.conf";
 $s_conf = "server.conf";
-
-sub read_nsior
-{
-  open (FH, "<$nsiorfile");
-
-  read (FH, $ior, 255);
-
-  close (FH);
-}
 
 sub name_server
 {
@@ -56,8 +46,7 @@ sub name_server
 
 sub lifecycle_server
 {
-  my $args = "$other -ORBnameserviceior ".
-             "$ior -ORBsvcconf svc.conf";
+  my $args = "$other -ORBInitRef NameService=file://$nsiorfile -ORBsvcconf svc.conf";
   my $prog = "..$DIR_SEPARATOR..$DIR_SEPARATOR"."orbsvcs$DIR_SEPARATOR".
              "LifeCycle_Service$DIR_SEPARATOR".
              "LifeCycle_Service$EXE_EXT";
@@ -68,23 +57,21 @@ sub lifecycle_server
 sub server
 {
   my $args = "$other $debug $sm ".
-             "-ORBnameserviceior $ior -ORBsvcconf $s_conf";
+             "-ORBInitRef NameService=file://$nsiorfile -ORBsvcconf $s_conf";
 
   $SV = Process::Create ("server$EXE_EXT", $args);
 }
 
 sub factory_finder
 {
-  my $args = "$other -ORBnameserviceior ".
-             "$ior -ORBsvcconf svc.conf";
+  my $args = "$other -ORBInitRef NameService=file://$nsiorfile -ORBsvcconf svc.conf";
 
   $FF = Process::Create ("Factory_Finder".$EXE_EXT, $args);
 }
 
 sub generic_factory
 {
-  my $args = "$other -l -ORBnameserviceior ".
-             "$ior -ORBsvcconf svc.conf";
+  my $args = "$other -l -ORBInitRef NameService=file://$nsiorfile -ORBsvcconf svc.conf";
 
   $GF = Process::Create ("Generic_Factory".$EXE_EXT, $args);
 }
@@ -93,7 +80,7 @@ sub client
 {
   my $exe = $EXEPREFIX."client$EXE_EXT";
   my $args2 = "$other -l $debug $cm ".
-            "-ORBnameserviceior $ior -ORBsvcconf $c_conf";
+            "-ORBInitRef NameService=file://$nsiorfile -ORBsvcconf $c_conf";
   for ($j = 0; $j < $n; $j++)
   {
     $client_ = Process::Create($exe, $args2);
@@ -168,25 +155,21 @@ for ($i = 0; $i <= $#ARGV; $i++)
     }
     if ($ARGV[$i] eq "-sv")
     {
-      read_nsior ();
       server ();
       exit;
     }
     if ($ARGV[$i] eq "-ff")
     {
-      read_nsior ();
       factory_finder ();
       exit;
     }
     if ($ARGV[$i] eq "-gf")
     {
-      read_nsior ();
       generic_factory ();
       exit;
     }
     if ($ARGV[$i] eq "-cl")
     {
-      read_nsior ();
       client ();
       exit;
     }
@@ -220,7 +203,6 @@ for ($i = 0; $i <= $#ARGV; $i++)
 
 name_server ();
 sleep $sleeptime;
-read_nsior ();
 lifecycle_server ();
 sleep $sleeptime;
 

@@ -29,20 +29,20 @@ if (ACE::waitforfile_timed ($ns_ior, 5) == -1) {
 
 $N = Process::Create (".".$DIR_SEPARATOR.
 		      "notifier".$EXE_EXT,
-		      " -ORBNameServiceIOR file://$ns_ior ");
+		      " -ORBInitRef NameService=file://$ns_ior ");
 
 sleep 5;
 
 $C = Process::Create (".".$DIR_SEPARATOR.
 		      "consumer".$EXE_EXT,
-		      " -ORBNameServiceIOR file://$ns_ior "
+		      " -ORBInitRef NameService=file://$ns_ior "
 		      . " -t 12 -a TAO");
 
 sleep 5;
 
 $S = Process::Create (".".$DIR_SEPARATOR.
 		      "supplier".$EXE_EXT,
-		      " -ORBNameServiceIOR file://$ns_ior "
+		      " -ORBInitRef NameService=file://$ns_ior "
 		      . " -iexample.stocks");
 
 if ($S->TimedWait (60) == -1) {
