@@ -31,31 +31,45 @@ namespace CIAO_GLUE
   class SERVANT_Export <component name>_Context :
     public virtual CCM_<component name>_Context
   // @@ The following line is causing compiler to barf, what gives?
+  //    It looks like we need to overwrite _repository_id and
+  //    _tao_QueryInterface operations here.
   //  , public virtual ::Components::SessionContext
   {
   public:
+    // We will allow the the servant glue code we generate to access
+    // our states.
+    friend class <component name>_Servant;
+
     // Ctor.
-    CIAO_<component name>_Context ();
+    <component name>_Context ();
 
     // Dtor.
-    virtual ~CIAO_<component name>_Context ();
+    virtual ~<component name>_Context ();
+
+    // We need to overwrite the following method to avoid ambiguity
+    // This is strange, but thankfully, this is generated code so it's
+    // okay (?) to mess with this.
+
+    virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+    virtual const char* _interface_repository_id (void) const;
 
     // Operations for <component name> event source, and
     // receptacles defined in CCM_<component name>_Context.
 
-# foreach <receptacle name> with <uses type> in (list of all 'uses' interfaces) generate:
-#   if <receptacle name> is a simplex receptacle ('uses')
+#foreach <receptacle name> with <uses type> in (list of all 'uses' interfaces) generate:
+# if <receptacle name> is a simplex receptacle ('uses')
     <uses type> get_connection_<receptacle name> ();
-#   else (<receptacle name> is a multiplex ('uses multiple') receptacle)
+# else (<receptacle name> is a multiplex ('uses multiple') receptacle)
     // <receptacle name>Connections typedef'ed as a sequence of
     // struct <receptacle name>Connection.
     <receptacle name>Connections get_connections_<receptacle name> ();
-#   endif <receptacle name>
-# end foreach <receptacle name> with <uses type>
+# endif <receptacle name>
+#end foreach <receptacle name> with <uses type>
 
-# foreach <event name> with <eventtype> in (list of all event sources) generate:
+#foreach <event name> with <eventtype> in (list of all event sources) generate:
     void push_<event name> (in <eventtype> ev);
-# end foreach <event name> with <eventtype>
+#end foreach <event name> with <eventtype>
 
     // Operations for ::Components::CCMContext
     virtual ::Components::Principal_ptr get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -75,32 +89,62 @@ namespace CIAO_GLUE
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
 
-
     // Operations for ::Components::SessionContext interface
     virtual CORBA::Object_ptr get_CCM_object (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::IllegalState));
+  protected:
+    // We need to generate, in protected section, stuff that manage
+    // connections and consumers of this component.
+
+#foreach <receptacle name> with <uses type> in (list of all 'uses' interfaces) generate:
+# if <receptacle name> is a simplex receptacle ('uses')
+    // Simplex <receptacle name> connection management operations
+    void connect_<receptacle name> (in <uses type> c)
+      raises (::Components::AlreadyConnected,
+              ::Components::InvalidConnection);
+    <uses type> disconnect_<receptacle name> ()
+      raises (::Components::NoConnection);
+
+    // Simplex <receptacle name> connection
+    <uses type>_var ciao_uses_<receptacle name>_;
+
+# else (<receptacle name> is a multiplex ('uses multiple') receptacle)
+    // Multiplex <receptacle name> connection management operations
+    ::Components::Cookie connect_<receptacle name> (in <uses type> c)
+      raises (::Components::ExceedConnectionLimit,
+              ::Components::InvalidConnection);
+    <uses type> disconnect_<receptacle name> (in ::Components::Cookie ck)
+      raises (::Components::InvalidConnection);
+
+    // Multiplex <receptacle name> connections
+
+    // @@ TO-DO: Need a fast and simple connection caching mechanism
+    // which also allow fast indexing thru "cookie".  I will also need
+    // a cookie base class in CIAO core.
+# endif <receptacle name>
+#end foreach <receptacle name> with <uses type>
+
+    // Other CCMContext specific operations seem quite straightforward
+    // to me.  Well, so far.
   };
 
-class HELLO_SERVANT_Export CIAO_HelloWorld_Servant
-  : public virtual POA_HelloWorld,
-  // @@ Perhaps we could implement a common component servant class
-  //    which provide common functionality for operations defined in
-  //    Navigation/Events/Receptacles interfaces.
-    public virtual PortableServer::RefCountServantBase
-{
-public:
-  // Ctor.
-  CIAO_HelloWorld_Servant (CCM_HelloWorld_ptr executor_);
+  class SERVANT_Export <component name>_Servant
+    : public virtual POA_<component name>, // full skeleton name here
+      public virtual PortableServer::RefCountServantBase
+  {
+  public:
+    // Ctor.
+    <component name>_Servant (CCM_<component name>_ptr executor_);
 
-  // Dtor.
-  ~CIAO_HelloWorld_Servant (void);
+    // Dtor.
+    ~<component name>_Servant (void);
 
-  // Operations for supported interfaces.
-  // Explicit opereations and attribute operations.
-  virtual char * sayhello (const char * username
-                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException));
+#foreach <operation> in all supported interfaces of own component and all inherited components
+
+    // Generate the <operation> here.
+
+#end
 
   // Operations for provides interfaces.
 
@@ -224,24 +268,25 @@ public:
 
 protected:
   // My Executor.
-  CCM_HelloWorld_var executor_;
+  CCM_<component name>_var executor_;
 
   // My Run-time Context.
-  CCM_HelloWorld_Context_var context_;
+  CCM_<component name>_Context_var context_;
 };
 
 
-class HELLO_SERVANT_Export CIAO_HelloHome_Servant :
-  public virtual POA_HelloHome,
+  // Foreach component home
+class SERVANT_Export <home name>_Servant :
+  public virtual POA_<home name>, // full skeleton name here
   public virtual PortableServer::RefCountServantBase
 {
 public:
   // Ctor.
-  CIAO_HelloHome_Servant (CCM_HelloHome_ptr exe,
-                          CIAO::Session_Container *c);
+  <home anem>_Servant (CCM_<home name>_ptr exe,
+                       CIAO::Session_Container *c);
 
   // Dtor.
-  ~CIAO_HelloHome_Servant (void);
+  ~<home name>_Servant (void);
 
   // User defined and inherited operations
   // (Factories, Finders, and explicit operations.)
@@ -252,7 +297,7 @@ public:
                      Components::CreateFailure));
 
   // Operations for Implicit Home interface
-  virtual ::HelloWorld_ptr create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual <component name>_ptr create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::CreateFailure));
 
@@ -268,13 +313,16 @@ public:
 
 protected:
   // My Executor.
-  CCM_HelloHome_var executor_;
+  CCM_<home name>_var executor_;
 
   // My Container
   CIAO::Session_Container *container_;
 };
 
-extern "C" HELLO_SERVANT_Export ::PortableServer::Servant
-createHelloHome_Servant (::Components::HomeExecutorBase_ptr p,
-                         CIAO::Session_Container *c
-                         ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+extern "C" SERVANT_Export ::PortableServer::Servant
+create<home name>_Servant (::Components::HomeExecutorBase_ptr p,
+                          CIAO::Session_Container *c
+                          ACE_ENV_ARG_DECL_WITH_DEFAULTS);
+#if there are module definitions, preserve them all
+};
+#endif
