@@ -1,3 +1,11 @@
+Wed Oct 01 19:08:26 1997  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/rules.bin.GNU: correctly builds programs
+	  with multiple object modules.
+
+	* examples/ASX/CCM_App/Makefile: needed some adjustment to work with 
+	  new rules.bin.GNU, above.
+
 Wed Oct 01 14:11:03 1997    <nw1@CHA-CHA>
 
 	* ace/Remote_Name_Space.cpp (resolve): We need to allocate one more
