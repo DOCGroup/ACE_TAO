@@ -97,7 +97,7 @@ Task_Test
 Thread_Manager_Test: !Unicos
 Thread_Mutex_Test: !chorus
 Thread_Pool_Reactor_Test
-Thread_Pool_Reactor_Resume_Test
+Thread_Pool_Reactor_Resume_Test: !ST
 Thread_Pool_Test: !LynxOS
 Timer_Queue_Test
 Timeprobe_Test
