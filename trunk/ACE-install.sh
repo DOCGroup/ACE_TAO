@@ -96,7 +96,7 @@
 #
 #########################################################################
 #
-ACE_ERRORFILE=/tmp/myacemaker.err
+ACE_ERRFILE=/tmp/myacemaker.err
 OLD_ACE_TAR_FILE=oldACE.tar
 OLD_ACE_GZIPPED_TAR_FILE=oldACE.tar.gz
 USAGE="<Usage> : myacemaker [ auto ]"
@@ -109,7 +109,7 @@ USAGE="<Usage> : myacemaker [ auto ]"
 
 # Directory where ACE-x.x.xx.tar.gz is located
 
-MY_ACEDIR=~/aceconfig
+MY_ACEDIR=${HOME}/aceconfig
 
 #######################################################
 # Platform specific config file in ${WRAPPER_ROOT}/ace/
@@ -243,7 +243,7 @@ echo ""
 
 cd ${WRAPPER_ROOT}/ace
 
-if [ ! $MY_ACE_CONFIG ]
+if [ ${MY_ACE_CONFIG:-undefined} = undefined ]
 then
 
   if [ $AUTO -eq 1 ]
@@ -286,7 +286,7 @@ echo ""
 
 cd ${WRAPPER_ROOT}/include/makeinclude
 
-if [ !  $MY_ACE_GNU_MACROS ]
+if [ ${MY_ACE_GNU_MACROS:-undefined} = undefined ]
 then
 
   if [ $AUTO -eq 1 ]

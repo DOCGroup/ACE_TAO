@@ -32,6 +32,16 @@ Thu Feb 27 17:06:12 1997    <harrison@samba.cs.wustl.edu>
 	  ACE_OS::gethrtime and converts to an ACE_Time_Value based on the
 	  global_static_factor.
 
+Wed Feb 26 18:28:35 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ACE-install.sh: Added some fixes for the ACE-install.sh script.
+  	  Thanks to Eugene R. Somdahl <gene@endo.com> for reporting these.
+
+	* ace/Connector.cpp (handle_close): Added a test to see if the
+ 	  reactor_ is NULL and if it is, don't bother trying to use it to
+ 	  clean up.  Thanks to Paul Han <phan@CCGATE.HAC.COM> for this
+ 	  suggestion.
+
 Tue Feb 25 21:19:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/OS.h,config-sunos*.h: default ACE_TIMER_SKEW to 0,

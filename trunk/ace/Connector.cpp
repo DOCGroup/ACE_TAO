@@ -441,28 +441,32 @@ template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_close");
-  // Remove all timer objects from the Reactor's Timer_Queue.
-  this->reactor_->cancel_timer (this);
 
-  MAP_ITERATOR mi (this->handler_map_);
-
-  // Iterate through the map and shut down all the pending handlers.
-
-  for (MAP_ENTRY *me = 0;
-       mi.next (me) != 0; 
-       mi.advance ())
+  if (this->reactor_ != 0)
     {
-      this->reactor_->remove_handler (me->ext_id_, 
-				      mask | ACE_Event_Handler::DONT_CALL);
+      // Remove all timer objects from the Reactor's Timer_Queue.
+      this->reactor_->cancel_timer (this);
 
-      AST *ast = 0;
-      this->cleanup_AST (me->ext_id_, ast);
-      ACE_ASSERT (ast == me->int_id_);
-      delete me->int_id_;
+      MAP_ITERATOR mi (this->handler_map_);
+
+      // Iterate through the map and shut down all the pending handlers.
+
+      for (MAP_ENTRY *me = 0;
+	   mi.next (me) != 0; 
+	   mi.advance ())
+	{
+	  this->reactor_->remove_handler (me->ext_id_, 
+					  mask | ACE_Event_Handler::DONT_CALL);
+
+	  AST *ast = 0;
+	  this->cleanup_AST (me->ext_id_, ast);
+	  ACE_ASSERT (ast == me->int_id_);
+	  delete me->int_id_;
+	}
     }
+
   return 0;
 }
-
 template <class SH, PR_CO_1> int
 ACE_Connector<SH, PR_CO_2>::fini (void)
 {
