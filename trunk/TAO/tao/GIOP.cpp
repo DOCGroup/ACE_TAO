@@ -170,13 +170,13 @@ operator>>(TAO_InputCDR& cdr, TAO_GIOP_ServiceContextList& x)
 // all the code to write a Message_Block chain could be encapsulated
 // in ACE.
 static ssize_t
-writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
+writev_n (ACE_HANDLE h, iovec *iov, int iovcnt)
 {
   ssize_t writelen = 0;
   int s = 0;
   while (s < iovcnt)
     {
-      ssize_t n = ACE_OS::writev (h, iov + s, iovcnt - s);
+      ssize_t n = ACE_OS::sendv (h, iov + s, iovcnt - s);
 
       if (n == -1)
         {
@@ -185,22 +185,23 @@ writev_n (ACE_HANDLE h, ACE_IO_Vector *iov, int iovcnt)
       else
         {
           writelen += n;
-          while (s < iovcnt && n >= iov[s].length ())
+          while (s < iovcnt && n >= iov[s].iov_len)
             {
               n -= iov[s].length ();
               s++;
             }
           if (n != 0)
             {
-              char* base = ACE_reinterpret_cast (char*, iov[s].buffer ());
+              char* base = ACE_reinterpret_cast (char*, iov[s].iov_base);
 
-              iov[s].buffer (base + n);
-              iov[s].length (iov[s].length () - n);
+              iov[s].iov_base = base + n;
+              iov[s].iov_len = iov[s].length () - n;
             }
         }
     }
   return writelen;
 }
+
 
 CORBA::Boolean
 TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
@@ -261,14 +262,14 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *handler,
   TAO_SOCK_Stream &peer = handler->peer ();
 
   const int TAO_WRITEV_MAX = 16;
-  ACE_IO_Vector iov[TAO_WRITEV_MAX];
+  iovec iov[TAO_WRITEV_MAX];
   int iovcnt = 0;
   for (const ACE_Message_Block* i = stream.begin ();
        i != stream.end ();
        i = i->cont ())
     {
-      iov[iovcnt].buffer (i->rd_ptr ());
-      iov[iovcnt].length (i->length ());
+      iov[iovcnt].iov_base = i->rd_ptr ();
+      iov[iovcnt].iov_len  = i->length ();
       iovcnt++;
 
       // The buffer is full make a OS call.

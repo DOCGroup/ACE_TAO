@@ -195,15 +195,15 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       // @@ TODO In the future we may need to allocate some memory
       // from the heap.
       const int TAO_WRITEV_MAX = 128;
-      ACE_IO_Vector iov[TAO_WRITEV_MAX];
+      iovec iov[TAO_WRITEV_MAX];
 
       int iovcnt = 0;
       for (const ACE_Message_Block* b = cdr.begin ();
            b != cdr.end () && iovcnt < TAO_WRITEV_MAX;
            b = b->cont ())
         {
-          iov[iovcnt].buffer (b->rd_ptr ());
-          iov[iovcnt].length (b->length ());
+          iov[iovcnt].iov_base = b->rd_ptr ();
+          iov[iovcnt].iov_len =  b->length ();
           iovcnt++;
         }
 
@@ -212,7 +212,7 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events,
       // ACE_DEBUG ((LM_DEBUG, "sending to (%d,%u)\n",
       // udp_addr.port, udp_addr.ipaddr));
 
-      ssize_t n = this->dgram_->send ((const ACE_IO_Vector_Base *) iov,
+      ssize_t n = this->dgram_->send (iov,
                                       iovcnt,
                                       inet_addr);
       if (n == -1)

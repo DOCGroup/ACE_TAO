@@ -1,3 +1,13 @@
+Thu Sep 17 18:52:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp: 
+	* tao/GIOP.cpp: 
+	  We now use the iovec structure becauce ACE_IO_Vector has been
+	  deprecated.
+
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
+	  Removed some debug messages.
+
 Thu Sep 17 14:18:19 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 	* TAO/tests/DynAny_Test/README.txt
