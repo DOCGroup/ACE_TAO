@@ -1,3 +1,16 @@
+Tue May 15 14:36:50 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/include/utl_string.h:
+        * TAO_IDL/util/utl_string.cpp:
+
+          Changed allocations for this class' two char*
+          members to always use ACE_OS::strdup. Previously,
+          there was a mixture of ACE_OS::strdup and new.
+          Also removed an unused constructor, an unused class
+          member, and an extra iteration over the string when
+          computing the canonical (all uppercase) member from
+          the regular member.
+
 Tue May 15 13:26:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
