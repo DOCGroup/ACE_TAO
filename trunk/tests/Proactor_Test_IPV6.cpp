@@ -374,7 +374,7 @@ public:
   void report (void);
 
 private:
-  struct
+  struct Local_Stats
   {
     // Track number of sessions that report start, and those that report
     // their end (and stats).
