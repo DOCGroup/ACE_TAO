@@ -445,16 +445,16 @@ CORBA_Policy::_nil (void)
 }
 
 ////////////////////////////////////////////////////////////////
-//        Serializatio Support Methods
+//        Serialization Support Methods
 //
 CORBA::Boolean 
-CORBA_Policy::_tao_encode(TAO_OutputCDR &out_cdr)
+CORBA_Policy::_tao_encode (TAO_OutputCDR &)
 {
   return 0;
 }
 
 CORBA::Boolean 
-CORBA_Policy::_tao_decode(TAO_InputCDR &in_cdr)
+CORBA_Policy::_tao_decode (TAO_InputCDR &)
 {
   return 0;
 }
