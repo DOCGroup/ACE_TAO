@@ -171,18 +171,6 @@ TAO_SSLIOP_Profile::decode (TAO_InputCDR& cdr)
     }
 }
 
-int
-TAO_SSLIOP_Profile::encode_endpoints (void)
-{
-  int r = -1;
-  r = this->encode_endpoints ();
-
-  if (r != 1)
-    return r;
-
-  return this->TAO_IIOP_Profile::encode_endpoints ();
-}
-
 CORBA::Boolean
 TAO_SSLIOP_Profile::is_equivalent (const TAO_Profile *other_profile)
 {
@@ -275,7 +263,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
       tagged_components_.set_component (tagged_component);
     }
 
-  return  1;
+  return this->TAO_IIOP_Profile::encode_endpoints ();
 }
 
 int
