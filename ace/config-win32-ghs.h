@@ -22,7 +22,6 @@
 #define ACE_HAS_DLL 0
 #define TAO_HAS_DLL 0
 #undef _DLL
-#define ACE_OS_HAS_DLL 0
 
 //Green Hills Native x86 does not support structural exceptions
 # undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
