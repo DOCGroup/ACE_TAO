@@ -22,13 +22,13 @@ TAO_NamingContext::TAO_NamingContext (PortableServer::POA_ptr poa,
                                       const char *poa_id,
                                       size_t default_hash_table_size,
                                       int root)
-  : root_ (root),
+  : context_ (0),
+    root_ (root),
     lock_ (0),
     poa_ (PortableServer::POA::_duplicate (poa)),
     counter_ (0),
     hash_table_size_ (default_hash_table_size),
-    poa_id_ (poa_id),
-    context_ (0)
+    poa_id_ (poa_id)
 {
   ACE_NEW (context_,
            HASH_MAP (hash_table_size_));
