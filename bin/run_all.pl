@@ -30,7 +30,7 @@ $minimum_corba = 0;
 $dont_run = 0;
 $report_success = 0;
 $debug = 0;
-
+$ami=0
 @ARGS = ();
 while ($#ARGV >= 0) {
   if (!($ARGV[0] =~ m/-/)) {
@@ -42,6 +42,9 @@ while ($#ARGV >= 0) {
   } elsif ($ARGV[0] eq "-minimum_corba") {
     $minimum_corba = 1;
     shift;
+  } elsif ($ARGV[0] eq "-ami") {
+      $ami = 1;
+      shift;
   } elsif ($ARGV[0] eq "-report_success") {
     $report_success = 1;
     shift;
@@ -149,6 +152,8 @@ if ($dont_run == 0) {
     @LIST = @SINGLE_THREADED_LIST;
   } elsif ($minimum_corba) {
     @LIST = @MINIMUM_CORBA_LIST;
+  } elsif ($ami) {
+    @LIST = @AMI_CORBA_LIST;
   }
 
   $DIR = $ENV{'PWD'};
