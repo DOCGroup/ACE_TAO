@@ -118,9 +118,5 @@ public:
   virtual void create (TAO_NS_SequenceProxyPushSupplier*& proxy ACE_ENV_ARG_DECL) = 0;
 };
 
-#if defined (__ACE_INLINE__)
-#include "Factory.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/post.h"
 #endif /* TAO_NS_FACTORY_H */

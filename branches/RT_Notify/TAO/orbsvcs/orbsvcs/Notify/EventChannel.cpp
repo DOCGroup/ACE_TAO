@@ -19,6 +19,21 @@
 
 ACE_RCSID(RT_Notify, TAO_NS_EventChannel, "$Id$")
 
+typedef TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin
+                             , CosNotifyChannelAdmin::ConsumerAdmin
+                             , CosNotifyChannelAdmin::ConsumerAdmin_ptr
+                             , CosNotifyChannelAdmin::AdminNotFound>
+TAO_NS_ConsumerAdmin_Find_Worker;
+
+typedef TAO_NS_Find_Worker_T<TAO_NS_SupplierAdmin
+                             , CosNotifyChannelAdmin::SupplierAdmin
+                             , CosNotifyChannelAdmin::SupplierAdmin_ptr
+                             , CosNotifyChannelAdmin::AdminNotFound>
+TAO_NS_SupplierAdmin_Find_Worker;
+
+typedef TAO_NS_Seq_Worker_T<TAO_NS_ConsumerAdmin> TAO_NS_ConsumerAdmin_Seq_Worker;
+typedef TAO_NS_Seq_Worker_T<TAO_NS_SupplierAdmin> TAO_NS_SupplierAdmin_Seq_Worker;
+
 TAO_NS_EventChannel::TAO_NS_EventChannel (void)
   : ecf_ (0)
   , ca_container_ (0)
@@ -255,10 +270,7 @@ TAO_NS_EventChannel::get_consumeradmin (CosNotifyChannelAdmin::AdminID id ACE_EN
                    , CosNotifyChannelAdmin::AdminNotFound
                    ))
 {
-  TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin
-    , CosNotifyChannelAdmin::ConsumerAdmin
-    , CosNotifyChannelAdmin::ConsumerAdmin_ptr
-    , CosNotifyChannelAdmin::AdminNotFound> find_worker;
+  TAO_NS_ConsumerAdmin_Find_Worker find_worker;
 
   return find_worker.resolve (id, *this->ca_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -270,10 +282,7 @@ TAO_NS_EventChannel::get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_EN
                    , CosNotifyChannelAdmin::AdminNotFound
                    ))
 {
-  TAO_NS_Find_Worker_T<TAO_NS_SupplierAdmin
-    , CosNotifyChannelAdmin::SupplierAdmin
-    , CosNotifyChannelAdmin::SupplierAdmin_ptr
-    , CosNotifyChannelAdmin::AdminNotFound> find_worker;
+  TAO_NS_SupplierAdmin_Find_Worker find_worker;
 
   return find_worker.resolve (id, *this->sa_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -284,7 +293,7 @@ TAO_NS_EventChannel::get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  TAO_NS_Seq_Worker_T<TAO_NS_ConsumerAdmin> seq_worker;
+  TAO_NS_ConsumerAdmin_Seq_Worker seq_worker;
 
   return seq_worker.create (*this->ca_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -295,7 +304,7 @@ TAO_NS_EventChannel::get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
-  TAO_NS_Seq_Worker_T<TAO_NS_SupplierAdmin> seq_worker;
+  TAO_NS_SupplierAdmin_Seq_Worker seq_worker;
 
   return seq_worker.create (*this->sa_container_ ACE_ENV_ARG_PARAMETER);
 }
@@ -360,19 +369,35 @@ TAO_NS_EventChannel::validate_qos (const CosNotification::QoSProperties & /*requ
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin>;
-template class TAO_NS_Find_Worker_T<TAO_NS_SupplierAdmin>;
+template class TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin
+                                    , CosNotifyChannelAdmin::ConsumerAdmin
+                                    , CosNotifyChannelAdmin::ConsumerAdmin_ptr
+                                    , CosNotifyChannelAdmin::AdminNotFound>;
+template class TAO_NS_Find_Worker_T<TAO_NS_SupplierAdmin
+                                    , CosNotifyChannelAdmin::SupplierAdmin
+                                    , CosNotifyChannelAdmin::SupplierAdmin_ptr
+                                    , CosNotifyChannelAdmin::AdminNotFound>;
+
 template class TAO_NS_Seq_Worker_T<TAO_NS_ConsumerAdmin>;
 template class TAO_NS_Seq_Worker_T<TAO_NS_SupplierAdmin>;
+
 template class TAO_NS_Container_T <TAO_NS_ConsumerAdmin>;
 template class TAO_NS_Container_T <TAO_NS_SupplierAdmin>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin>
-#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_SupplierAdmin>
+#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_ConsumerAdmin
+                                    , CosNotifyChannelAdmin::ConsumerAdmin
+                                    , CosNotifyChannelAdmin::ConsumerAdmin_ptr
+                                    , CosNotifyChannelAdmin::AdminNotFound>
+#pragma instantiate TAO_NS_Find_Worker_T<TAO_NS_SupplierAdmin
+                                    , CosNotifyChannelAdmin::SupplierAdmin
+                                    , CosNotifyChannelAdmin::SupplierAdmin_ptr
+                                    , CosNotifyChannelAdmin::AdminNotFound>
+
 #pragma instantiate TAO_NS_Seq_Worker_T<TAO_NS_ConsumerAdmin>
 #pragma instantiate TAO_NS_Seq_Worker_T<TAO_NS_SupplierAdmin>
+
 #pragma instantiate TAO_NS_Container_T <TAO_NS_ConsumerAdmin>
 #pragma instantiate TAO_NS_Container_T <TAO_NS_SupplierAdmin>
 

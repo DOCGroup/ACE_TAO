@@ -10,10 +10,11 @@
 #include "ace/Argv_Type_Converter.h"
 #include "tao/ORB_Core.h"
 #include "ace/Dynamic_Service.h"
+#include "../orbsvcs/Notify/Service.h"
 
 TAO_Notify_Service::TAO_Notify_Service (void)
   : notify_service_ (0),
-	bootstrap_ (0),
+        bootstrap_ (0),
     use_name_svc_ (1),
     ior_output_file_ (0),
     notify_factory_name_ (NOTIFY_KEY),
@@ -43,77 +44,14 @@ TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
                                 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
-  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance ("TAO_NS_Service");
+  this->notify_service_ = ACE_Dynamic_Service<TAO_NS_Service>::instance (TAO_NS_NOTIFICATION_SERVICE_NAME);
 
   if (this->notify_service_ == 0)
   {
-	  ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
+          ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
       return -1;
   }
 
-  ACE_Sched_Params::Policy sched_policy;
-  long thr_sched_policy = orb_->orb_core ()->orb_params ()->sched_policy ();
-
-  long thr_scope_policy = orb_->orb_core ()->orb_params ()->scope_policy ();
-
-  if (thr_sched_policy == THR_SCHED_FIFO)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
-
-      sched_policy = ACE_SCHED_FIFO;
-    }
-  else if (thr_sched_policy == THR_SCHED_RR)
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
-
-      sched_policy = ACE_SCHED_RR;
-    }
-  else
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
-
-      sched_policy = ACE_SCHED_OTHER;
-    }
-
-  // == sched stuff
-  /// Check sched.
-  int min_priority = ACE_Sched_Params::priority_min (sched_policy);
-  int max_priority = ACE_Sched_Params::priority_max (sched_policy);
-
-   if (TAO_debug_level > 0)
-    {
-      ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-                  max_priority, min_priority));
-
-      if (max_priority == min_priority)
-        {
-          ACE_DEBUG ((LM_DEBUG,"Detected max_priority == min_priority\n"));
-        }
-    }
-
-  // Set the main thread to min priority...
-    int priority = min_priority;
-    
-    if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy ,
-						priority,
-						ACE_SCOPE_PROCESS)) != 0)
-      {
-	if (ACE_OS::last_error () == EPERM)
-	  {
-	    ACE_DEBUG ((LM_DEBUG,
-			"(%P|%t): user is not superuser, "
-			"test runs in time-shared class\n"));
-	  }
-	else
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "(%P|%t): sched_params failed\n"),-1);
-      }
-    
-    // == sched stuff
-  
   CORBA::Object_var object =
     this->orb_->resolve_initial_references("RootPOA"
                                            ACE_ENV_ARG_PARAMETER);
@@ -126,13 +64,13 @@ TAO_Notify_Service::init_ORB (int& argc, ACE_TCHAR *argv []
 
   this->poa_ =
     PortableServer::POA::_narrow (object.in ()
-				  ACE_ENV_ARG_PARAMETER);
+                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
-  
+
   poa_manager->activate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
@@ -354,8 +292,8 @@ TAO_Notify_Service::run (ACE_ENV_SINGLE_ARG_DECL)
     }
 
   this->orb_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  
+  ACE_CHECK_RETURN (-1);
+
   return 0;
 }
 
