@@ -16,9 +16,11 @@ ACE_RCSID (TAO_CodecFactory,
 
 
 TAO_CDR_Encaps_Codec::TAO_CDR_Encaps_Codec (CORBA::Octet major,
-                                            CORBA::Octet minor)
+                                            CORBA::Octet minor,
+                                            TAO_ORB_Core * orb_core)
   : major_ (major),
-    minor_ (minor)
+    minor_ (minor),
+    orb_core_ (orb_core)
 {
 }
 
@@ -38,7 +40,15 @@ TAO_CDR_Encaps_Codec::encode (const CORBA::Any & data
 
   // ----------------------------------------------------------------
 
-  TAO_OutputCDR cdr;
+  TAO_OutputCDR cdr ((size_t) 0,            // size
+                     (int) ACE_CDR_BYTE_ORDER,
+                     (ACE_Allocator *) 0,   // buffer_allocator
+                     (ACE_Allocator *) 0,   // data_block_allocator
+                     (ACE_Allocator *) 0,   // message_block_allocator
+                     0,                     // memcpy_tradeoff
+                     this->major_,
+                     this->minor_);
+
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       && (cdr << data))
     {
@@ -89,7 +99,11 @@ TAO_CDR_Encaps_Codec::decode (const CORBA::OctetSeq & data
 
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                           data.get_buffer ()),
-                    data.length ());
+                    data.length (),
+                    ACE_CDR_BYTE_ORDER,
+                    this->major_,
+                    this->minor_,
+                    this->orb_core_);
 
   CORBA::Boolean byte_order;
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -126,7 +140,14 @@ TAO_CDR_Encaps_Codec::encode_value (const CORBA::Any & data
   ACE_CHECK_RETURN (0);
 
   // ----------------------------------------------------------------
-  TAO_OutputCDR cdr;
+  TAO_OutputCDR cdr ((size_t) 0,            // size
+                     (int) ACE_CDR_BYTE_ORDER,
+                     (ACE_Allocator *) 0,   // buffer_allocator
+                     (ACE_Allocator *) 0,   // data_block_allocator
+                     (ACE_Allocator *) 0,   // message_block_allocator
+                     0,                     // memcpy_tradeoff
+                     this->major_,
+                     this->minor_);
 
   if ((cdr << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
     {
@@ -198,7 +219,11 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
   CORBA::ULong sequence_length = data.length ();
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                           data.get_buffer ()),
-                    sequence_length);
+                    sequence_length,
+                    ACE_CDR_BYTE_ORDER,
+                    this->major_,
+                    this->minor_,
+                    this->orb_core_);
 
   CORBA::Boolean byte_order;
   if (cdr >> TAO_InputCDR::to_boolean (byte_order))
@@ -215,7 +240,9 @@ TAO_CDR_Encaps_Codec::decode_value (const CORBA::OctetSeq & data,
 
       // Skip over the next argument.
       CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_skip (tc, &cdr ACE_ENV_ARG_PARAMETER);
+        TAO_Marshal_Object::perform_skip (tc,
+                                          &cdr
+                                          ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);  // @@ Should we throw a
                              //    IOP::Codec::TypeMismatch exception
                              //    here if this fails?

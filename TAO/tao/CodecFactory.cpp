@@ -9,7 +9,8 @@ ACE_RCSID (TAO_CodecFactory,
            CodecFactory,
            "$Id$")
 
-TAO_CodecFactory::TAO_CodecFactory (void)
+TAO_CodecFactory::TAO_CodecFactory (TAO_ORB_Core * orb_core)
+  : orb_core_ (orb_core)
 {
 }
 
@@ -48,7 +49,8 @@ TAO_CodecFactory::create_codec (const IOP::Encoding & enc
 
       ACE_NEW_THROW_EX (codec,
                         TAO_CDR_Encaps_Codec (enc.major_version,
-                                              enc.minor_version),
+                                              enc.minor_version,
+                                              this->orb_core_),
                         CORBA::NO_MEMORY (
                           CORBA_SystemException::_tao_minor_code (
                             TAO_DEFAULT_MINOR_CODE,

@@ -1,3 +1,55 @@
+Fri Mar 22 12:17:04 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CDR_Encaps_Codec.h (TAO_CDR_Encaps_Codec):
+
+	  The constructor now accepts a pointer to the ORB Core which with
+	  the CDR encapsulation Codec is associated.
+
+	  Cache a pointer to the ORB Core.  To be used when decoding value
+	  from a CDR stream.
+
+	* tao/CDR_Encaps_Codec.cpp (encode, encode_value):
+
+	  Do not instantiate the TAO_OutputCDR object with the default
+	  GIOP version supported by the ORB.  Each CDR Encapsulation Codec
+	  instance is meant to handle a specific GIOP version.  Use that
+	  version instead.
+
+	  (decode, decode_value):
+
+	  Instantiate the TAO_InputCDR object with the ORB Core with which
+	  the Codec is associated.  It will be needed when extracting
+	  object references and using codesets.
+
+	  Do not instantiate the TAO_InputCDR object with the default GIOP
+	  version supported by the ORB.  Each CDR Encapsulation Codec
+	  instance is meant to handle a specific GIOP version.  Use that
+	  version instead.
+
+	* tao/CodecFactory.h:
+
+	  Cache a pointer to the ORB Core.  Some Codec implementations may
+	  need access to the ORB Core which they are associated.
+
+	* tao/CodecFactory.cpp (create_codec):
+
+	  When creating a CDR encapsulation Codec, pass the cached
+	  TAO_ORB_Core pointer to its constructor.  The CDR encapsulation
+	  Codec can use it.
+
+	* tao/CodecFactory_ORBInitializer.h:
+	* tao/CodecFactory_ORBInitializer.cpp:
+	* tao/ORBInitInfo.cpp (codec_factory):
+
+	  A single shared instance of the CodecFactory no longer exists.
+	  Instead, each ORB will have its own CodecFactory.  Certain
+	  Codecs require access to the ORB with which they are associated,
+	  thus requiring ORB-specific CodecFactorys.
+
+	* tao/Any.cpp:
+
+	  Nuked trailing whitespace.
+
 Fri Mar 22 09:38:14 2002  Ossama Othman  <ossama@uci.edu>
 
 	* tao/MCAST_Parser.cpp (multicast_query):
