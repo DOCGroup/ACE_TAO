@@ -23,7 +23,7 @@ ACE_Auto_Basic_Ptr<X>::operator= (ACE_Auto_Basic_Ptr<X> &rhs)
   ACE_TRACE ("ACE_Auto_Basic_Ptr<X>::operator=");
   if (this != &rhs)
     {
-      this->reset (a.release ());
+      this->reset (rhs.release ());
     }
   return *this;
 }
