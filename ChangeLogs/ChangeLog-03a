@@ -1,3 +1,16 @@
+Wed May  8 00:11:54 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/Parse_Node.cpp:
+	* ace/Parse_Node.h:
+	* ace/Service_Config.cpp:
+	* ace/Service_Config.h:
+	* ace/Svc_Conf.h:
+	* ace/Svc_Conf_Lexer_Guard.cpp:
+	* ace/Svc_Conf_l.cpp:
+	* ace/Svc_Conf_y.cpp:
+	* tests/Service_Config_DLL.cpp: Simplified the macro check.
+
 Fri May  3 15:48:11 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Service_Config.h:

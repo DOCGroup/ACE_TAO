@@ -227,7 +227,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#if ! defined (ACE_USES_CLASSIC_SVC_CONF) || (ACE_USES_CLASSIC_SVC_CONF == 0)
+#if (ACE_USES_CLASSIC_SVC_CONF == 0)
 ACE_Service_Type *
 ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
                                           ACE_Service_Type_Impl *o,
@@ -281,7 +281,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
   return stp;
 
 }
-#endif /* !ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 0 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 // Initialize and activate a statically linked service.
 
 int
@@ -355,7 +355,7 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
     }
 }
 
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
 int
 ACE_Service_Config::process_directives_i (ACE_Svc_Conf_Param *param)
 {
@@ -408,14 +408,14 @@ ACE_Service_Config::get_xml_svc_conf (ACE_DLL &xmldll)
 
   return factory ();
 }
-#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 int
 ACE_Service_Config::process_file (const ACE_TCHAR file[])
 {
   ACE_TRACE ("ACE_Service_Config::process_file");
 
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
   int result = 0;
 
   FILE *fp = ACE_OS::fopen (file,
@@ -452,7 +452,7 @@ ACE_Service_Config::process_file (const ACE_TCHAR file[])
     return -1;
 
   return xml_svc_conf->parse_file (file);
-#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 }
 
 int
@@ -465,7 +465,7 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
                 ACE_LIB_TEXT ("Service_Config::process_directive - %s\n"),
                 directive));
 
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
   ACE_UNUSED_ARG (directive);
 
   ACE_Svc_Conf_Param d (directive);
@@ -482,7 +482,7 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
     return -1;
 
   return xml_svc_conf->parse_string (directive);
-#endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
+#endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 }
 
 // Process service configuration requests as indicated in the queue of

@@ -42,7 +42,7 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
                   argv[1]));
 
       ACE_OS::sprintf (this->directive_[0],
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
                        ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
 #else
                        ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' type='service_object'> <initializer init='_make_Service_Config_DLL' path='Service_Config_DLL' params='Test_Object_%s'/> </dynamic>"),
@@ -51,7 +51,7 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
                        argv[0]);
 
       ACE_OS::sprintf (this->directive_[1],
-#if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
+#if (ACE_USES_CLASSIC_SVC_CONF == 1)
                        ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
 #else
                        ACE_TEXT ("<?xml version='1.0'?> <dynamic id='Test_Object_%s' type='service_object'> <initializer init='_make_Service_Config_DLL' path='Service_Config_DLL' params='Test_Object_%s'/> </dynamic>"),
