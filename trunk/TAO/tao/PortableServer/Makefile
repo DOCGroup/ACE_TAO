@@ -1458,8 +1458,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/PortableInterceptor.h \
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
- $(TAO_ROOT)/tao/BiDirPolicyC.i \
- $(ACE_ROOT)/ace/Auto_Ptr.h \
+ $(TAO_ROOT)/tao/BiDirPolicyC.i ServerRequestInfo.h \
+ ServerRequestInfo.inl $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
  $(TAO_ROOT)/tao/Timeprobe.h \
@@ -3942,9 +3942,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/DomainC.i Collocated_Object.h \
  Collocated_Object.i ServerRequestInfo.h \
  $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i DomainS_T.h \
- DomainS_T.i DomainS_T.cpp DomainS.i Object_Adapter.h Key_Adapters.h \
- $(ACE_ROOT)/ace/Map.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i ServerRequestInfo.inl \
+ DomainS_T.h DomainS_T.i DomainS_T.cpp DomainS.i Object_Adapter.h \
+ Key_Adapters.h $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \
@@ -3967,7 +3967,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Tagged_Profile.i \
  $(TAO_ROOT)/tao/TAO_Server_Request.i \
  $(TAO_ROOT)/tao/PortableInterceptor.h \
- $(TAO_ROOT)/tao/PortableInterceptor.i
+ $(TAO_ROOT)/tao/PortableInterceptor.i \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/PolicyS.o .obj/PolicyS.so .shobj/PolicyS.o .shobj/PolicyS.so: PolicyS.cpp POA_CORBA.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -4600,7 +4601,17 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/OctetSeqC.h \
  $(TAO_ROOT)/tao/OctetSeqC.i \
- portableserver_export.h
+ portableserver_export.h ServerRequestInfo.inl \
+ $(TAO_ROOT)/tao/TAO_Server_Request.h \
+ $(TAO_ROOT)/tao/Tagged_Profile.h \
+ $(TAO_ROOT)/tao/GIOPC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.h \
+ $(TAO_ROOT)/tao/Object_KeyC.i \
+ $(TAO_ROOT)/tao/GIOPC.i \
+ $(TAO_ROOT)/tao/Tagged_Profile.i \
+ $(TAO_ROOT)/tao/Service_Context.h \
+ $(TAO_ROOT)/tao/Service_Context.inl \
+ $(TAO_ROOT)/tao/TAO_Server_Request.i
 
 .obj/ImplRepoC.o .obj/ImplRepoC.so .shobj/ImplRepoC.o .shobj/ImplRepoC.so: ImplRepoC.cpp ImplRepoC.h \
  $(ACE_ROOT)/ace/pre.h portableserver_export.h \
@@ -5506,9 +5517,11 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/StringSeqC.h \
  $(TAO_ROOT)/tao/StringSeqC.i \
  $(TAO_ROOT)/tao/OctetSeqC.h \
- $(TAO_ROOT)/tao/OctetSeqC.i MessagingS_T.h \
- MessagingS_T.i MessagingS_T.cpp MessagingS.i Operation_Table.h \
- Object_Adapter.h Key_Adapters.h $(ACE_ROOT)/ace/Map.h \
+ $(TAO_ROOT)/tao/OctetSeqC.i \
+ $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.inl \
+ MessagingS_T.h MessagingS_T.i MessagingS_T.cpp MessagingS.i \
+ Operation_Table.h Object_Adapter.h Key_Adapters.h \
+ $(ACE_ROOT)/ace/Map.h \
  $(ACE_ROOT)/ace/Map_T.h \
  $(ACE_ROOT)/ace/Pair.h \
  $(ACE_ROOT)/ace/Pair_T.h \

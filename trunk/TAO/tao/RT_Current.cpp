@@ -32,7 +32,11 @@ TAO_RT_Current::the_priority (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTCORBA::Priority priority;
-  if (this->orb_core_->get_thread_priority (priority) == -1)
+  if (this->orb_core_->get_protocols_hooks ()->
+      get_thread_priority (this->orb_core_,
+                           priority,
+                           ACE_TRY_ENV) 
+      == -1)
     ACE_THROW_RETURN (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO), -1);
 
   return priority;
@@ -43,7 +47,11 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority,
                               CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  if (this->orb_core_->set_thread_priority (the_priority) == -1)
+  if (this->orb_core_->get_protocols_hooks ()
+      ->set_thread_priority (this->orb_core_,
+                             the_priority,
+                             ACE_TRY_ENV) 
+      == -1)
     ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 }
 

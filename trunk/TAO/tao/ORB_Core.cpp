@@ -17,11 +17,6 @@
 #include "Connector_Registry.h"
 #include "Acceptor_Registry.h"
 
-#include "RT_ORB.h"
-#include "Priority_Mapping_Manager.h"
-#include "RT_Current.h"
-#include "RT_Policy_i.h"
-
 #include "Sync_Strategies.h"
 
 #include "Object_Loader.h"
@@ -63,6 +58,7 @@ TAO_default_environment ()
 
 TAO_ORB_Core::Timeout_Hook TAO_ORB_Core::timeout_hook_ = 0;
 TAO_ORB_Core::Sync_Scope_Hook TAO_ORB_Core::sync_scope_hook_ = 0;
+CORBA::Object_ptr TAO_ORB_Core::priority_mapping_manager_ = 0;
 const char * TAO_ORB_Core::resource_factory_name_ = "Resource_Factory";
 const char *TAO_ORB_Core::protocols_hooks_name_ = "Protocols_Hooks";
 const char * TAO_ORB_Core::dynamic_adapter_name_ = "Dynamic_Adapter";
@@ -141,7 +137,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
     client_priority_policy_selector_ (0),
     rt_orb_ (0),
     rt_current_ (0),
-    priority_mapping_manager_ (0),
+    //    priority_mapping_manager_ (0),
 #endif /* TAO_HAS_RT_CORBA == 1 */
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
     eager_buffering_sync_strategy_ (0),
@@ -206,19 +202,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
   ACE_NEW (this->client_priority_policy_selector_,
            TAO_Client_Priority_Policy_Selector);
 
-#if (TAO_HAS_RT_CORBA == 1)
-
-  ACE_NEW (this->rt_orb_,
-           TAO_RT_ORB);
-
-  ACE_NEW (this->rt_current_,
-           TAO_RT_Current (this));
-
-  ACE_NEW (this->priority_mapping_manager_,
-           TAO_Priority_Mapping_Manager);
-
-#endif /* TAO_HAS_RT_CORBA == 1 */
-
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_NEW (this->default_endpoint_selector_,
@@ -262,9 +245,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   delete this->priority_protocol_selector_;
   delete this->bands_protocol_selector_;
   delete this->client_priority_policy_selector_;
-  delete this->rt_orb_;
-  delete this->rt_current_;
-  delete this->priority_mapping_manager_;
+  // delete this->rt_orb_;
+  // delete this->rt_current_;
+  //  delete this->priority_mapping_manager_;
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
@@ -929,7 +912,11 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   this->reactor_registry_->open (this);
 
 #if (TAO_HAS_RT_CORBA == 1)
-  this->priority_mapping_manager_->mapping (trf->get_priority_mapping ());
+  this->get_protocols_hooks()->set_priority_mapping (this,
+                                                     trf,
+                                                     ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
 #endif /* TAO_HAS_RT_CORBA == 1 */
 
   // @@ ????
@@ -1056,7 +1043,7 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // registries!
 
   // Set ORB-level policy defaults.
-  if (this->set_default_policies () != 0)
+  if (this->get_protocols_hooks ()->set_default_policies (this) != 0)
     ACE_THROW_RETURN (CORBA::INITIALIZE (
                         CORBA::SystemException::_tao_minor_code (
                           TAO_ORB_CORE_INIT_LOCATION_CODE,
@@ -1939,61 +1926,37 @@ TAO_ORB_Core::open (CORBA::Environment &ACE_TRY_ENV)
   return 0;
 }
 
-int
-TAO_ORB_Core::set_default_policies (void)
-{
 #if (TAO_HAS_RT_CORBA == 1)
-  // Set RTCORBA policy defaults.
-  // Set RTCORBA::ServerProtocolPolicy and
-  // RTCORBA::ClientProtocolPolicy defaults to include all protocols
-  // that were loaded into this ORB.
-  // First, create a protocol list.
 
-  TAO_ProtocolFactorySet *pfs = this->protocol_factories ();
+void
+TAO_ORB_Core::resolve_rt_orb_i (CORBA::Environment &ACE_TRY_ENV)
+{
+  // @@
+  TAO_Object_Loader *loader = 
+    ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
 
-  RTCORBA::ProtocolList protocols;
-  protocols.length (pfs->size ());
-
-  int i = 0;
-  for (TAO_ProtocolFactorySetItor factory = pfs->begin ();
-       factory != pfs->end ();
-       ++factory, ++i)
+  if (loader == 0)
     {
-      CORBA::ULong protocol_type = (*factory)->factory ()->tag ();
-      protocols[i].protocol_type = protocol_type;
-      protocols[i].orb_protocol_properties =
-        RTCORBA::ProtocolProperties::_nil ();
-      // @@ Later, we will likely migrate to using RTCORBA protocol
-      // policies for configuration of protocols in nonRT use cases.
-      // Then, the code below will change to each protocol factory
-      // being responsible for creation of its own default protocol
-      // properties.
-      protocols[i].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property
-        (protocol_type);
+      // The Loader has not been statically configured, try to
+      // dynamically load it...
+      ACE_Service_Config::process_directive (
+                                             "dynamic RT_ORB_Loader Service_Object *"
+                                             "TAO:_make_TAO_RT_ORB_Loader()"
+                                             );
+
+      loader =
+        ACE_Dynamic_Service<TAO_Object_Loader>::instance ("RT_ORB_Loader");
+      if (loader == 0)
+        ACE_THROW (CORBA::ORB::InvalidName ());
     }
 
-  // Set ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocol_policy = 0;
-  ACE_NEW_RETURN (server_protocol_policy,
-                  TAO_ServerProtocolPolicy (protocols),
-                  -1);
-  this->default_policies_->server_protocol (server_protocol_policy);
-
-  // Set ClientProtocolPolicy.
-  // NOTE: ClientProtocolPolicy default is used ONLY for protocol
-  // configuration (not protocol preference) IF there is no ORB-level
-  // override.  It is not used when computing effective policy value
-  // for preferencing protocols.
-  TAO_ClientProtocolPolicy *client_protocol_policy = 0;
-  ACE_NEW_RETURN (client_protocol_policy,
-                  TAO_ClientProtocolPolicy (protocols),
-                  -1);
-  this->default_policies_->client_protocol (client_protocol_policy);
+  /// Create RT_ORB object.
+  this->rt_orb_ =
+    loader->create_object (this->orb_.in (), 0, 0, ACE_TRY_ENV);
+  
+}
 
 #endif /* TAO_HAS_RT_CORBA == 1 */
-  return 0;
-}
 
 void
 TAO_ORB_Core::resolve_typecodefactory_i (CORBA::Environment &ACE_TRY_ENV)
@@ -2421,63 +2384,6 @@ TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
   return this->reactor_;
 }
 
-int
-TAO_ORB_Core::get_thread_priority (CORBA::Short &priority)
-{
-#if (TAO_HAS_RT_CORBA == 0)
-  priority = 0;
-  return 0;
-#else
-  ACE_hthread_t current;
-  ACE_Thread::self (current);
-
-  int native_priority;
-  if (ACE_Thread::getprio (current, native_priority) == -1)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - ORB_Core::get_thread_priority: ")
-                  ACE_TEXT (" ACE_Thread::get_prio\n")));
-      return -1;
-    }
-
-  TAO_Priority_Mapping *priority_mapping =
-    this->priority_mapping_manager ()->mapping ();
-
-  if (priority_mapping->to_CORBA (native_priority, priority) == 0)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - ORB_Core::get_thread_priority: ")
-                  ACE_TEXT (" Priority_Mapping::to_CORBA\n")));
-      return -1;
-    }
-
-  return 0;
-#endif /* TAO_HAS_RT_CORBA == 0 */
-}
-
-int
-TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
-{
-#if (TAO_HAS_RT_CORBA == 0)
-  ACE_UNUSED_ARG (priority);
-  return 0;
-#else
-  TAO_Priority_Mapping *priority_mapping =
-    this->priority_mapping_manager ()->mapping ();
-
-  CORBA::Short native_priority;
-  if (priority_mapping->to_native (priority, native_priority) == 0)
-    return -1;
-  ACE_hthread_t current;
-  ACE_Thread::self (current);
-
-  if (ACE_Thread::setprio (current, native_priority) == -1)
-    return -1;
-
-  return 0;
-#endif /* TAO_HAS_RT_CORBA == 0 */
-}
-
 CORBA::Object_ptr
 TAO_ORB_Core::implrepo_service (void)
 {
@@ -2635,7 +2541,23 @@ TAO_ORB_Core::stubless_relative_roundtrip_timeout (void)
 
 }
 
-#if (TAO_HAS_RT_CORBA == 1)
+#if (TAO_HAS_RT_CORBA==1)
+
+CORBA::Object_ptr
+TAO_ORB_Core::priority_mapping_manager (void)
+{
+  if (CORBA::is_nil (TAO_ORB_Core::priority_mapping_manager_))
+    return TAO_ORB_Core::priority_mapping_manager_;
+  else
+    return CORBA::Object::_nil ();
+}
+
+void
+TAO_ORB_Core::priority_mapping_manager (CORBA::Object_ptr manager)
+{
+  TAO_ORB_Core::priority_mapping_manager_ = 
+    CORBA::Object::_duplicate (manager);
+}
 
 CORBA::Policy *
 TAO_ORB_Core::threadpool (void)

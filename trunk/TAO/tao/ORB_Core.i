@@ -589,6 +589,12 @@ TAO_ORB_Core::poa_current (CORBA::Object_ptr current)
     CORBA::Object::_duplicate (current);
 }
 
+ACE_INLINE  TAO_Policy_Manager_Impl *
+TAO_ORB_Core::get_default_policies (void)
+{
+  return this->default_policies_;
+}
+
 ACE_INLINE CORBA_Environment *
 TAO_ORB_Core::default_environment (void) const
 {
@@ -651,22 +657,28 @@ TAO_ORB_Core::client_priority_policy_selector (void)
   return this->client_priority_policy_selector_;
 }
 
-ACE_INLINE TAO_Priority_Mapping_Manager *
-TAO_ORB_Core::priority_mapping_manager (void)
+ACE_INLINE CORBA::Object_ptr
+TAO_ORB_Core::rt_orb (CORBA::Environment &ACE_TRY_ENV)
 {
-  return this->priority_mapping_manager_;
+if (CORBA::is_nil (this->rt_orb_))
+    {
+      this->resolve_rt_orb_i (ACE_TRY_ENV);
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+    }
+  return CORBA::Object::_duplicate (this->rt_orb_);
 }
 
-ACE_INLINE TAO_RT_ORB *
-TAO_ORB_Core::rt_orb (void)
-{
-  return this->rt_orb_;
-}
-
-ACE_INLINE TAO_RT_Current *
+ACE_INLINE CORBA::Object_ptr
 TAO_ORB_Core::rt_current (void)
 {
-  return this->rt_current_;
+  return CORBA::Object::_duplicate (this->rt_current_);
+}
+
+ACE_INLINE void
+TAO_ORB_Core::rt_current (CORBA::Object_ptr current)
+{
+  this->rt_current_ =
+    CORBA::Object::_duplicate (current);
 }
 
 #endif /* TAO_HAS_RT_CORBA == 1 */

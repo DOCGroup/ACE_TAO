@@ -80,15 +80,6 @@ TAO_Protocols_Hooks:: get_selector_bands_policy_hook (
   return;
 }
 
-void
-TAO_Protocols_Hooks::select_endpoint_hook (TAO_GIOP_Invocation *,
-                                           CORBA::Policy *,
-                                           TAO_Profile *&,
-                                           CORBA::Environment &)
-{
-  return;
-}
-
 CORBA::Policy *
 TAO_Protocols_Hooks::effective_priority_banded_connection_hook (CORBA::Policy *,
                                                                 CORBA::Policy *,
@@ -103,6 +94,36 @@ TAO_Protocols_Hooks::effective_client_protocol_hook (CORBA::Policy *,
                                                      CORBA::Environment &)
 {
    return CORBA::Policy::_nil ();
+}
+
+int
+TAO_Protocols_Hooks::get_thread_priority (TAO_ORB_Core *,
+                                          CORBA::Short &,
+                                          CORBA::Environment &)
+{
+  return 0;
+}
+
+int
+TAO_Protocols_Hooks::set_thread_priority (TAO_ORB_Core *,
+                                          CORBA::Short,
+                                          CORBA::Environment &)
+{
+  return 0;
+}
+
+void
+TAO_Protocols_Hooks::set_priority_mapping (TAO_ORB_Core *,
+                                           TAO_Resource_Factory *,
+                                           CORBA::Environment &)
+{
+  return;
+}
+
+int 
+TAO_Protocols_Hooks::set_default_policies (TAO_ORB_Core *)
+{
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

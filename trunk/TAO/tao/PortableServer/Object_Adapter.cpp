@@ -1441,13 +1441,18 @@ TAO_Object_Adapter::Servant_Upcall::poa_cleanup (void)
 TAO_Object_Adapter::Priority_Model_Processing::~Priority_Model_Processing
 (void)
 {
+  ACE_DECLARE_NEW_CORBA_ENV;
+
   if (this->state_ == PRIORITY_RESET_REQUIRED)
     {
       this->state_ = NO_ACTION_REQUIRED;
 
       // Reset the priority of the current thread back to its original
       // value.
-      if (poa_.orb_core ().set_thread_priority (this->original_priority_)
+      if (poa_.orb_core ().get_protocols_hooks ()->
+          set_thread_priority (&poa_.orb_core (),
+                               this->original_priority_,
+                               ACE_TRY_ENV)
           == -1)
         // At this point we cannot throw an exception.  Just log the
         // error.
@@ -1471,7 +1476,10 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
       != TAO_INVALID_PRIORITY)
     {
       // Remember current thread's priority.
-      if (poa_.orb_core ().get_thread_priority (this->original_priority_)
+      if (poa_.orb_core ().get_protocols_hooks ()->
+          get_thread_priority (&poa_.orb_core (),
+                               this->original_priority_,
+                               ACE_TRY_ENV)
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1,
                                            CORBA::COMPLETED_NO));
@@ -1523,7 +1531,11 @@ TAO_Object_Adapter::Priority_Model_Processing::pre_invoke (
                         ACE_TEXT (" temporarily changed to %d\n"),
                         original_priority_, target_priority));
 
-          if (poa_.orb_core ().set_thread_priority (target_priority) == -1)
+          if (poa_.orb_core ().get_protocols_hooks ()->
+              set_thread_priority (&poa_.orb_core (),
+                                   target_priority,
+                                   ACE_TRY_ENV) 
+              == -1)
             ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
 
           this->state_ = PRIORITY_RESET_REQUIRED;
@@ -1547,7 +1559,10 @@ TAO_Object_Adapter::Priority_Model_Processing::post_invoke (
 
       // Reset the priority of the current thread back to its original
       // value.
-      if (poa_.orb_core ().set_thread_priority (this->original_priority_)
+      if (poa_.orb_core ().get_protocols_hooks ()->
+          set_thread_priority (&poa_.orb_core (),
+                               this->original_priority_,
+                               ACE_TRY_ENV)
           == -1)
         ACE_THROW (CORBA::DATA_CONVERSION (1, CORBA::COMPLETED_NO));
     }
