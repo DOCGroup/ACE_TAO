@@ -1233,9 +1233,6 @@ TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
 void
 TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_factory)
 {
-  // @@Marek, I would as well like this to be stored in per-orb TSS
-  // instead of globasl TSS. Please see TAO_ORB_Core_TSS_Resources in
-  // ORB_Core.h for details.
   if (TAO_TSS_RESOURCES::instance ()->gui_resource_factory_ != 0)
     {
 
