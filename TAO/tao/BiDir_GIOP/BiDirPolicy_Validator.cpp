@@ -18,7 +18,9 @@ TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies
                                           ACE_ENV_ARG_DECL)
 {
   CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP);
+    policies.get_cached_policy (TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP
+                                ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
   if (policy.in () == 0)
     return;
