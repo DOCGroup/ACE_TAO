@@ -31,11 +31,13 @@
 #include "tao/IIOP_Connect.h"
 #include "tao/Resource_Factory.h"
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
 #if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
 #endif /* __GNUC__ */
 
 #include "ace/Cached_Connect_Strategy_T.h"
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 typedef ACE_Strategy_Connector<TAO_IIOP_Client_Connection_Handler,
                                ACE_SOCK_CONNECTOR>
@@ -96,8 +98,10 @@ public:
 
   virtual char object_key_delimiter (void) const;
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int purge_connections (void);
   // Purge "old" connections.
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 protected:
   // = More TAO_Connector methods, please check the documentation on
@@ -106,13 +110,16 @@ protected:
                              TAO_Profile *&,
                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   virtual int make_caching_strategy (void);
   // According to the option specified, create the appropriate caching
   // strategy used for purging unused connections from the connection
   // cache.
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
 public:
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   // = Connection Caching Strategy.
   typedef size_t TAO_ATTRIBUTES;
   typedef ACE_Pair<TAO_IIOP_Client_Connection_Handler *,
@@ -165,6 +172,7 @@ public:
                                          TAO_ATTRIBUTES,
                                          TAO_Cached_Connector_Lock>
           TAO_CACHED_CONNECT_STRATEGY;
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
 
   typedef ACE_NOOP_Concurrency_Strategy<TAO_IIOP_Client_Connection_Handler>
         TAO_NULL_ACTIVATION_STRATEGY;
@@ -182,12 +190,15 @@ private:
   TAO_ORB_Core *orb_core_;
   // ORB Core.
 
+#if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
   TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy_;
   // Cached connect strategy.
 
   TAO_CACHING_STRATEGY *caching_strategy_;
   // Caching strategy which decides the order of removal of entries
   // from the connection cache.
+#endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
 };
 
 #endif  /* TAO_IIOP_CONNECTOR_H */
