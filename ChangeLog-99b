@@ -1,3 +1,36 @@
+Mon Oct 18 21:32:29 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	Updates that remove need to use _GNU_SOURCE macro on Linux/glibc
+	systems [Bug 167]:
+	
+	* ace/OS.i:
+
+	  Return ACE_static_cast (off_t, -1), instead of just -1 in
+	  ACE_OS::lseek().  (not related to _GNU_SOURCE updates)
+
+	  Only enable lseek64() on Linux/glibc systems if
+	  _LARGEFILE64_SOURCE is defined.
+
+	  Don't use cuserid() on Linux/glibc systems.  It was dropped
+	  from POSIX.1 back in 1990. Instead, extract the user name from
+	  getpwuid(geteuid()), as suggested by the glibc cuserid() man
+	  pages and Stevens' Advanced programming in the UNIX
+	  Environment.
+
+	* ace/Handle_Set.cpp:
+
+	  XPG4.2 declares an fds_bit member in the fd_set structure.
+	  Since _GNU_SOURCE is being disabled in ACE, use the __fds_bits
+	  member.  It's not pretty, but it works.
+
+	* ace/config-linux-common.h:
+	
+	  strptime() is an XOPEN function.  It is only enabled if
+	  _XOPEN_SOURCE or _GNU_SOURCE is defined (_GNU_SOURCE causes
+	  _XOPEN_SOURCE to be defined on Linux/glibc systems).  If
+	  _XOPEN_SOURCE is not defined, create an external declaration for
+	  it.
+
 Mon Oct 18 18:41:38 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/OS.h: Add #include <dce/cma_sigwait.h> for HP-UX 10.x, and...
