@@ -22,10 +22,8 @@ arriving order.
 
 To start:
 
-%server_A -o server1 -ORBport 10045
+%server_A -o server1
 %
-%server_B -o server2 -ORBport 10046
+%server_B -o server2
 %
-%initiator -f server1 -g server2 -ORBport 10047
-
- 
+%initiator -f server1 -g server2

@@ -36,8 +36,7 @@ client if you don't want to use the naming service.
 server:
 -------
 
-% server [-d] [-s] [-ORBhost <serverhost>] [-ORBport <portnum>]
- 	   [-o <ior_output_file>] 
+% server [-d] [-s] [-o <ior_output_file>] 
 
 Options:
 -------

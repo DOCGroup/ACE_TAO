@@ -3,11 +3,6 @@
 # $Id$
 #
 
-if [ -z "$NameServicePort" ]; then
-  NameServicePort=0
-  export NameServicePort
-fi
-
 MSG_COUNT=500
 # The number of messages to send.
 
@@ -25,13 +20,13 @@ for s in $HP_SUPPLIERS; do
   for c in $HP_CONSUMERS; do
     for i in $HP_INTERVALS; do
       echo echo Supplier = $s Consumer = $c Interval = $i
-      ../../Naming_Service/Naming_Service -ORBport $NameServicePort \
+      ../../Naming_Service/Naming_Service \
         -o NameService.ior -p NameService.pid >/dev/null 2>&1 &
       sleep 2
       NameService=`cat NameService.ior`
       export NameService
 
-      ./EC_Multiple -ORBport 0 -l ECM1 -p ECM1.pid -s runtime \
+      ./EC_Multiple -l ECM1 -p ECM1.pid -s runtime \
         -h ${s},${c},0,${i},${MSG_COUNT},1,2,1,2 > \
         THR.LCL.S${s}.C${c}.I${i}.log 2>&1
       kill `cat NameService.pid`

@@ -64,15 +64,11 @@ echo // Initializing the log file
 
 echo // Logfile for the script which startes Name and Event Service  > /tmp/logfile_$login
 
-nameserviceport=0
-schedulerserviceport=0
-eventserviceport=0
-
 cd $TAO_ROOT/orbsvcs/Naming_Service
-echo $ ./Naming_Service -ORBport $nameserviceport \
+echo $ ./Naming_Service \
        -o /tmp/nameserviceior_$login \
        -p /tmp/nameservicepid_$login >> /tmp/logfile_$login
-./Naming_Service -ORBport $nameserviceport \
+./Naming_Service \
        -o /tmp/nameserviceior_$login \
        -p /tmp/nameservicepid_$login > /tmp/logfile_Naming_Service_$login 2>&1  &
 
@@ -85,16 +81,16 @@ echo // The IOR of the Naming Service: $IOR
 echo // Started Naming Service on port $nameserviceport
 
 # cd $TAO_ROOT/orbsvcs/Scheduling_Service
-#echo $ ./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  >> /tmp/logfile_$login
-#./Scheduling_Service -ORBnameserviceior $IOR -ORBport $schedulerserviceport  > /tmp/logfile_Scheduling_Service_$login  2>&1 &
+#echo $ ./Scheduling_Service -ORBnameserviceior $IOR  >> /tmp/logfile_$login
+#./Scheduling_Service -ORBnameserviceior $IOR > /tmp/logfile_Scheduling_Service_$login  2>&1 &
 
 # sleep 5
 
 # echo // Started Scheduling Service on port $schedulerserviceport
 
 cd $TAO_ROOT/orbsvcs/Event_Service
-echo $ ./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport >> /tmp/logfile_$login
-./Event_Service -ORBnameserviceior $IOR -ORBport $eventserviceport > /tmp/logfile_Event_Service_$login 2>&1 &
+echo $ ./Event_Service -ORBnameserviceior $IOR >> /tmp/logfile_$login
+./Event_Service -ORBnameserviceior $IOR > /tmp/logfile_Event_Service_$login 2>&1 &
 
 echo // Started Event Service on port $eventserviceport
 

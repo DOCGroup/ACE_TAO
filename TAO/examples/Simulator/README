@@ -211,21 +211,21 @@ Starting:
                 script is located in $TAO_ROOT/orbsvcs/tests.
 
         Event Supplier (simulation data):
-                Event_Sup -ORBport 10040 -f MLF.dat -m 1000
+                Event_Sup -f MLF.dat -m 1000
 
                 // -m 1000 for 1000 events sent by the supplier
                 // -f MLF.dat to read scheduling data from this file as input
 
 
         Logging Supplier (live latency and latency jitter data):
-                Logging_Sup -ORBport 10040 -f MLF.dat -m 1000
+                Logging_Sup -f MLF.dat -m 1000
 
                 // -m 1000 for 1000 events sent by the supplier
                 // -f MLF.dat to read operation names from this file as input
 
 
         Dual EC Supplier (live latency and jitter data over two channels):
-                DualEC_Sup -ORBport 10040 -f MLF.dat -m 1000
+                DualEC_Sup -f MLF.dat -m 1000
 
                 // -m 1000 for 1000 events sent by the supplier
                 // -f MLF.dat to read operation names from this file as input
@@ -248,7 +248,7 @@ Starting:
 
 
         DOVE MIB:
-                DOVEMIB -ORBport 10041 -f myfile -m 100
+                DOVEMIB -f myfile -m 100
 
                 // -m 100 for storing the next 100 events
                 // -f <name of the file in which it will be stored>

@@ -7,11 +7,8 @@ ACE_RCSID(mpeg_client, Command_Handler, "$Id$")
 
   static int temp_argc = 5;
 static char *temp_argv [] = {"Command_Handler",
-                              "-ORBobjrefstyle",
-                              "url",
-                         "-ORBport",
-                         "0"
-  };
+                             "-ORBobjrefstyle", "url"
+};
 
 Command_Handler::Command_Handler (ACE_HANDLE command_handle)
   :command_suspended_ (UNSUSPENDED),
@@ -46,7 +43,7 @@ Command_Handler::parse_args (int argc,char **argv)
 {
   ACE_Get_Opt get_opts (argc,argv,"h:");
   int c;
-  
+
   while ((c= get_opts ()) != -1)
     switch (c)
       {
@@ -82,7 +79,7 @@ Command_Handler::init (int argc,
 {
   this->argc_ = temp_argc;
   this->argv_ = temp_argv;
-  
+
   // Increase the debug_level so that we can see the output
   this->parse_args (argc, argv);
   TAO_debug_level++;
@@ -101,10 +98,10 @@ Command_Handler::init (int argc,
 
       // Initialize the naming services
       if (my_name_client_.init (orb_manager_.orb ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
 
       char receiver_file[BUFSIZ];
 
@@ -118,7 +115,7 @@ Command_Handler::init (int argc,
           ACE_OS::fprintf (fp,"%s",ior.in ());
           ACE_OS::fclose (fp);
         }
-      
+
       // initialize the client signal handler.
       if (this->client_sig_handler_.register_handler () < 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -296,18 +293,18 @@ Command_Handler::handle_input (ACE_HANDLE fd)
     {
       // Weird hack coming up:
       if (fd == cmdSocket)
-	{
-	  val = OurCmdRead ((char*)&cmd, 1);
-	  this->busy_ = 1;
-	  this->client_sig_handler_.TimerProcessing ();
-	}
+        {
+          val = OurCmdRead ((char*)&cmd, 1);
+          this->busy_ = 1;
+          this->client_sig_handler_.TimerProcessing ();
+        }
       //  ACE_DEBUG ((LM_DEBUG, "val: %d, cmd: %d\n", val, cmd));
       // if we get an interrupt while reading we go back to the event loop
       if (val == 1)
-	{
-	  this->busy_ = 0;
+        {
+          this->busy_ = 0;
           return 0;
-	}
+        }
 
       //      fprintf(stderr, "CTR: cmd received - %d\n", cmd);
       TAO_TRY
@@ -741,8 +738,8 @@ Command_Handler::init_audio_channel (char *audiofile)
 
     /*
     fprintf(stderr, "AF Audio para: encode %d, ch %d, sps %d, bps %d.\n",
-	    para.para.encodeType, para.para.channels,
-	    para.para.samplesPerSecond, para.para.bytesPerSample);
+            para.para.encodeType, para.para.channels,
+            para.para.samplesPerSecond, para.para.bytesPerSample);
      */
     {
       int flag = 1;
@@ -756,8 +753,8 @@ Command_Handler::init_audio_channel (char *audiofile)
       shared->totalSamples = reply->totalSamples;
 
       fprintf(stderr, "Audio: samples %d, sps %d, bps %d\n",
-	      shared->totalSamples, shared->AFPara.samplesPerSecond,
-	      shared->AFPara.bytesPerSample);
+              shared->totalSamples, shared->AFPara.samplesPerSecond,
+              shared->AFPara.bytesPerSample);
 
       SetAudioParameter(&shared->audioPara);
     }
@@ -830,8 +827,8 @@ Command_Handler::set_mmdevice (CORBA::Object_ptr audio_mmdevice,
   TAO_TRY
     {
       audio_mmdevice_ior =
-	this->orb_manager_.orb ()->object_to_string (audio_mmdevice,
-						     TAO_TRY_ENV);
+        this->orb_manager_.orb ()->object_to_string (audio_mmdevice,
+                                                     TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,"audio_mmdevice ior is %s\n",audio_mmdevice_ior));
       video_mmdevice_ior =
@@ -1023,7 +1020,7 @@ Command_Handler::init_video_channel (char *videofile)
              ACE_OS::perror ("CTR error on open CTR-VB socketpair");
               ACE_OS::exit (1);
             }
-    
+
       if (VBpid == -1)
         {
           switch (VBpid = ACE_OS::fork ())
@@ -1248,7 +1245,7 @@ Command_Handler::fast_forward (void)
           shared->patternSize;
 
         shared->VStimeAdvance =
-	  max(shared->config.VStimeAdvance, DEFAULT_VStimeAdvance) * 1000;
+          max(shared->config.VStimeAdvance, DEFAULT_VStimeAdvance) * 1000;
         if (shared->VStimeAdvance < shared->usecPerFrame)
           shared->VStimeAdvance = shared->usecPerFrame;
 
@@ -1304,14 +1301,14 @@ Command_Handler::fast_backward (void)
       NewCmd(CmdFB);
       shared->needHeader = 0;
       shared->framesPerSecond = shared->config.fbFPS /
-			     shared->patternSize;
+                             shared->patternSize;
       shared->usecPerFrame = (int)(1000000.0 / (float)shared->config.fbFPS) *
-			     shared->patternSize;
+                             shared->patternSize;
 
       shared->VStimeAdvance =
-	  max(shared->config.VStimeAdvance, DEFAULT_VStimeAdvance) * 1000;
+          max(shared->config.VStimeAdvance, DEFAULT_VStimeAdvance) * 1000;
       if (shared->VStimeAdvance < shared->usecPerFrame)
-	shared->VStimeAdvance = shared->usecPerFrame;
+        shared->VStimeAdvance = shared->usecPerFrame;
 
       para->VStimeAdvance = shared->VStimeAdvance;
       para->sn = shared->cmdsn;
@@ -1564,10 +1561,10 @@ Command_Handler::play (int auto_exp,
         fbstate = 1;
         fb_startup = 1;
 
-    
+
           fprintf (stderr, "CTR init frate: %f minupf %d, shared->upf %d\n",
           frate, minupf, shared->usecPerFrame);
-    
+
       }
     }
 
@@ -1792,7 +1789,7 @@ Command_Handler::stop (void)
 
   if (shared->live && videoSocket >= 0) {
     Fprintf(stderr, "CTR live video stat: average disp frame rate: %5.2f fps\n",
-	    shared->pictureRate * displayedFrames / shared->nextFrame);
+            shared->pictureRate * displayedFrames / shared->nextFrame);
   }
   unsigned char tmp = CmdDONE;
   //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) command_handler::Stop :nextFrame=%d\n",shared->nextFrame));
@@ -1899,7 +1896,7 @@ Command_Handler::connect_to_video_server (void)
   ACE_NEW_RETURN (this->video_client_mmdevice_,
                   TAO_MMDevice (this->video_reactive_strategy_),
                   -1);
-  
+
   this->orb_manager_.activate_under_child_poa ("Video_Client_MMDevice",
                                                this->video_client_mmdevice_,
                                                TAO_TRY_ENV);
@@ -2000,7 +1997,7 @@ Decode_Notification_Handler::get_handle (void) const
 }
 
 int
-Decode_Notification_Handler::handle_input (ACE_HANDLE fd) 
+Decode_Notification_Handler::handle_input (ACE_HANDLE fd)
 {
   ACE_DEBUG ((LM_DEBUG,"Decode_Notification_Handler::handle_input \n"));
   char message[BUFSIZ];

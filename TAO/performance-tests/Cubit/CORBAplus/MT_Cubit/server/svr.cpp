@@ -1,10 +1,10 @@
 // $Id$
 
-// @(#)svr.cpp	05/14/97
+// @(#)svr.cpp  05/14/97
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// TEST:	simple IIOP server for "cubit.idl" interface.
+// TEST:        simple IIOP server for "cubit.idl" interface.
 //
 // Starts up, builds an objref, prints its string in debug mode,
 // listens for messages, responds to them.
@@ -74,18 +74,18 @@ Cubit_Task::svc (void)
 
   try {
     // Initialize the ORB pointer
-    orb_ptr = XpsORB::init (argc, argv); 
-    
+    orb_ptr = XpsORB::init (argc, argv);
+
     // Initialize the Object Adapter
     oa_ptr = XpsBOA::init (argc, argv);
-    
+
     if (CORBA::is_nil(orb_ptr) || CORBA::is_nil(oa_ptr))
       {
-	ACE_ERROR_RETURN ((LM_ERROR, 
-			   " (%P|%t) Unable to initialize the ORB and/or the BOA\n"),
-			  1);
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize the ORB and/or the BOA\n"),
+                          1);
       }
-    
+
   // Create implementation object with user specified key.
   Cubit_i_ptr *my_cubit = new Cubit_i_ptr[num_of_objs_];
 
@@ -104,9 +104,9 @@ Cubit_Task::svc (void)
 
       if (my_cubit[i] == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to create implementation object&d\n",
-			   i),
-			  2);
+                           " (%P|%t) Unable to create implementation object&d\n",
+                           i),
+                          2);
 
       //CORBA::OctetSeq obj_key;
       //obj_key.buffer = (CORBA::Octet *) obj_str;
@@ -128,7 +128,7 @@ Cubit_Task::svc (void)
 
       //  str = orb_ptr->object_to_string (obj);
       str = orb_ptr->object_to_url (my_cubit[i]);
-      
+
       ACE_DEBUG ((LM_DEBUG, "listening as object '%s'\n", str));
       CORBA_string_free (str);
 
@@ -137,7 +137,7 @@ Cubit_Task::svc (void)
 
       if (env.exception () != 0)
         {
-	  //          env.print_exception ("object2string");
+          //          env.print_exception ("object2string");
           return 1;
         }
 
@@ -171,21 +171,21 @@ Cubit_Task::svc (void)
   }
   catch(const CORBA::SystemException& exc)
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "CORBA::SystemException caught: %s (minor: %d): svr.cpp\n\n",
-		  exc._repository_id (),
-		  exc.minor ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "CORBA::SystemException caught: %s (minor: %d): svr.cpp\n\n",
+                  exc._repository_id (),
+                  exc.minor ()));
     }
   catch(const CORBA::UserException& exc)
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "CORBA::UserException caught: %s: svr.cpp\n\n",
-		  exc._repository_id ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "CORBA::UserException caught: %s: svr.cpp\n\n",
+                  exc._repository_id ()));
     }
   catch(...)
     {
-      ACE_DEBUG ((LM_DEBUG, 
-		  "Exception caught: svr.cpp\n\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exception caught: svr.cpp\n\n"));
     }
 
   return 0;
@@ -211,19 +211,19 @@ parse_args (int argc, char *argv[])
         hostname = opts.optarg;
         break;
       case 'p':
-	base_port = ACE_OS::atoi (opts.optarg);
-	break;
+        base_port = ACE_OS::atoi (opts.optarg);
+        break;
       case 'n':
-	num_of_objs = ACE_OS::atoi (opts.optarg);
-	break;
+        num_of_objs = ACE_OS::atoi (opts.optarg);
+        break;
       case '?':
       default:
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "usage:  %s"
-			   " -p port"
-			   " -h my_hostname"
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s"
+                           " -p port"
+                           " -h my_hostname"
                            " -n num_objects"
-			   "\n", argv [0]), 1);
+                           "\n", argv [0]), 1);
       }
 
   return 0;  // Indicates successful parsing of command line
@@ -238,22 +238,22 @@ main (int argc, char *argv[])
 #if 0
   parse_args (argc, argv);
 
-  if ((hostname == NULL) || (base_port == 0)) 
+  if ((hostname == NULL) || (base_port == 0))
     {
-      ACE_ERROR_RETURN ((LM_ERROR, 
-			 "usage: %s "
-			 " -p port -h my_hostname"
-			 "\n",argv [0]), 1);
-      
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "usage: %s "
+                         " -p port -h my_hostname"
+                         "\n",argv [0]), 1);
+
     }
 #endif
-  
+
   const size_t arg_size =
-    strlen("rate20 -ORBport %d -ORBhost %s")
+    strlen("rate20")
     + 5 /* port number */
     + MAXHOSTNAMELEN /* hostname */
     + 1 /* zero terminator */;
-  
+
   char *args1 = 0;
   ACE_NEW_RETURN (args1, char[arg_size], -1);
 
@@ -264,7 +264,7 @@ main (int argc, char *argv[])
   priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, ACE_SCOPE_THREAD) + 6;
 #else
   priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO, ACE_SCOPE_THREAD);
-#endif  
+#endif
   ACE_DEBUG ((LM_DEBUG, "Creating servant with high priority\n"));
   task1.activate (THR_BOUND, 1, 0, priority);
 
@@ -283,6 +283,6 @@ main (int argc, char *argv[])
 
   delete [] args1;
   delete [] args2;
-  
+
   return 0;
 }

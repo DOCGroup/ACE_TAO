@@ -28,23 +28,23 @@ ACE_RCSID(benchmark, server, "$Id$")
 
 //     if (TAO_ORB_Core_instance ()->reactor ()->register_handler
 //         (this, ACE_Event_Handler::NULL_MASK) == -1)
-//       ACE_ERROR_RETURN ((LM_ERROR, 
-//                          "%p\n", 
+//       ACE_ERROR_RETURN ((LM_ERROR,
+//                          "%p\n",
 //                          "register_handler"),
 //                         -1);
 
 //    // handles these signals.
 //     //   this->sig_set.fill_set ();
-//  //     this->sig_set.sig_add (SIGCHLD);  
-//  //     this->sig_set.sig_add (SIGBUS); 
-//  //     this->sig_set.sig_add (SIGINT); 
+//  //     this->sig_set.sig_add (SIGCHLD);
+//  //     this->sig_set.sig_add (SIGBUS);
+//  //     this->sig_set.sig_add (SIGINT);
 //  //     this->sig_set.sig_add (SIGTERM);
-   
+
 //    // Register the signal handler object to catch the signals.  if
-//  //    if (TAO_ORB_Core_instance ()->reactor ()->register_handler 
+//  //    if (TAO_ORB_Core_instance ()->reactor ()->register_handler
 //  //        (this->sig_set, this) == -1)
-//  //      ACE_ERROR_RETURN ((LM_ERROR, 
-//  //                         "%p\n", 
+//  //      ACE_ERROR_RETURN ((LM_ERROR,
+//  //                         "%p\n",
 //  //                         "register_handler"),
 //  //                      -1);
 //    return 0;
@@ -57,14 +57,14 @@ ACE_RCSID(benchmark, server, "$Id$")
 //    return this->handle_;
 //  }
 
-//  int 
+//  int
 //  AV_Server_Sig_Handler::handle_input (ACE_HANDLE)
 //  {
 //    ACE_DEBUG ((LM_DEBUG, "(%t) handling asynchonrous input...\n"));
 //    return 0;
 //  }
 
-//  int 
+//  int
 //  AV_Server_Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 //  {
 //    ACE_DEBUG ((LM_DEBUG, "(%t) closing down Sig_Handler...\n"));
@@ -75,11 +75,11 @@ ACE_RCSID(benchmark, server, "$Id$")
 //  // object.  In our simple example, we are simply catching SIGALRM,
 //  // SIGINT, and SIGQUIT.  Anything else is logged and ignored.
 //  //
-//  // There are several advantages to using this approach.  First, 
+//  // There are several advantages to using this approach.  First,
 //  // the behavior triggered by the signal is handled in the main event
-//  // loop, rather than in the signal handler.  Second, the ACE_Reactor's 
-//  // signal handling mechanism eliminates the need to use global signal 
-//  // handler functions and data. 
+//  // loop, rather than in the signal handler.  Second, the ACE_Reactor's
+//  // signal handling mechanism eliminates the need to use global signal
+//  // handler functions and data.
 
 //  //  int
 //  //  AV_Server_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
@@ -121,7 +121,7 @@ Server::Server (void)
 {
 }
 
-        
+
 // Initializes the mpeg server
 int
 Server::init (int argc,
@@ -135,11 +135,11 @@ Server::init (int argc,
                                      env);
   TAO_CHECK_ENV_RETURN (env,
                         -1);
-  
-  CORBA::ORB_var orb = 
+
+  CORBA::ORB_var orb =
     this->orb_manager_.orb ();
 
-  PortableServer::POA_var child_poa = 
+  PortableServer::POA_var child_poa =
     this->orb_manager_.child_poa ();
 
 
@@ -150,10 +150,10 @@ Server::init (int argc,
 
   if (my_name_client_.init (orb.in ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to initialize "
-		       "the TAO_Naming_Client. \n"),
-		      -1);  
-  
+                       " (%P|%t) Unable to initialize "
+                       "the TAO_Naming_Client. \n"),
+                      -1);
+
   // Register the video mmdevice object with the ORB
   switch (this->strategy_)
     {
@@ -181,7 +181,7 @@ Server::init (int argc,
   CosNaming::Name server_mmdevice_name (1);
   server_mmdevice_name.length (1);
   server_mmdevice_name [0].id = CORBA::string_dup ("Bench_Server_MMDevice");
-  
+
   // Register the video control object with the naming server.
   this->my_name_client_->bind (server_mmdevice_name,
                                this->mmdevice_->_this (env),
@@ -232,7 +232,7 @@ Server::parse_args (int argc,char **argv)
           break;
         }
     }
-  ACE_OS::sprintf (buf,"%s -ORBport 0 -ORBobjrefstyle url",child_name);
+  ACE_OS::sprintf (buf,"%s -ORBobjrefstyle url",child_name);
   this->process_options_.command_line (buf);
   return 0;
 }
@@ -256,7 +256,7 @@ Server::run (CORBA::Environment& env)
               "event loop %p\n",
               "run_event_loop"));
   return 0;
-  
+
 }
 
 Server::~Server (void)
@@ -266,7 +266,7 @@ Server::~Server (void)
 
   if (this->mmdevice_ != 0)
     delete this->mmdevice_;
-  
+
 }
 
 
@@ -289,7 +289,7 @@ main (int argc, char **argv)
       return -1;
     }
   TAO_ENDTRY;
-  
+
   return 0;
 }
 

@@ -9,8 +9,7 @@ the client or open a separate window for the client and server.
 server:
 -------
 
-% server [-d] [-ORBhost <serverhost>] [-ORBport <portnum>]
-              [-n <number-of-cubit-objects>]
+% server [-d] [-n <number-of-cubit-objects>]
 
 The server cubit factory maintained num_of_cubit objects (default =
 1). They are assigned keys that look like "key0", "key1", ...
