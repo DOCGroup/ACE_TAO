@@ -1,3 +1,12 @@
+Wed Mar  3 03:23:35 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/modules/GNUACEProjectCreator.pm:
+          Add a reverseclean target that only has a realclean dependency,
+          so that callers expecting a reverseclean target will get still
+          work.  Since reverseclean is not implemented in normal
+          makefiles, just in top level ones, this target must be handled
+          explicitly.  A lot of autobuilds still call reverseclean.
+
 Tue Mar  2 18:59:53 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/StringProcessor.pm:
