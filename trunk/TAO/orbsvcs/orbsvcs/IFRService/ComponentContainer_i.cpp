@@ -380,7 +380,7 @@ TAO_ComponentContainer_i::create_event_i (
                                           this->repo_,
                                           CORBA::dk_Value
                                           ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (path);
+      ACE_CHECK_RETURN (CORBA::ComponentIR::EventDef::_nil ());
           
       ACE_TString base_value_id;
       this->repo_->config ()->get_string_value (TAO_IFR_Service_Utils::tmp_key_,
