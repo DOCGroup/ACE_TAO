@@ -2480,13 +2480,38 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                 result),
               int, -1, result);
 #   elif defined (ACE_PSOS) && defined (ACE_PSOS_HAS_COND_T)
-  ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
-                                ? ::cv_wait (*cv, *external_mutex, 0)
-                                : ::cv_wait (*cv,
-                                             *external_mutex,
-                                             timeout->msec ()),
-                                result),
-              int, -1, result);
+  // pSOS condition value timeout is expressed in ticks. If the
+  // cv_wait times out, the mutex is unlocked upon return.
+  if (timeout == 0)
+    {
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::cv_wait (*cv, *external_mutex, 0),
+                                    result),
+                  int, -1, result);
+    }
+  else
+    {
+      // Need to convert the passed absolute time to relative time
+      // expressed in ticks.
+      ACE_Time_Value relative_time (*timeout - ACE_OS::gettimeofday ());
+      int ticks = (relative_time.sec () * KC_TICKS2SEC) +
+                  (relative_time.usec () * KC_TICKS2SEC /
+                   ACE_ONE_SECOND_IN_USECS);
+      if (ticks <= 0)
+        ticks = 1;    // Don't wait forever
+      ACE_OSCALL (ACE_ADAPT_RETVAL (::cv_wait (*cv, *external_mutex, ticks),
+                                    result),
+                  int, -1, result);
+      if (result == -1 && errno == 1)
+        {
+          // cv timed out and returned pSOS timeout error 0x01, which
+          // ACE_ADAPT_RETVAL stored in errno.
+          ::mu_lock (*external_mutex, MU_WAIT, 0);
+          errno = ETIME;
+        }
+    }
+
+  return result;
+
 #   endif /* ACE_HAS_STHREADS */
   if (timeout != 0)
     timeout->set (ts); // Update the time value before returning.
