@@ -1,3 +1,9 @@
+Thu Apr 29 06:46:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Makefile: changed SRC to PSRC (for make depend).
+          Thanks to Sandeep <sagoyal@hss.hns.com> for reporting
+          that the Makefile was broken.
+
 Mon Dec 28 22:03:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * agent/main.cpp: added #include "ace/inc_user_config.h", for
