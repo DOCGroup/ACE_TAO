@@ -1,3 +1,27 @@
+Wed Oct 28 20:44:27 1998  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao/Any.cpp:
+          Modified >>= (to_string) to get rid of a leak found with Purify.
+        * tao/DynAnyC.h:
+        * tao/POA_CORBA.h:
+          Added 'TAO_Export' to some classes I missed.
+        * tao/DynAny_i.cpp:
+        * tao/DynArray_i.cpp:
+        * tao/DynEnum_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+          Fixed memory leaks.
+        * TAO/tests/DynAny_Test/data.cpp:
+        * TAO/tests/DynAny_Test/test_dynany.{h,cpp}:
+        * TAO/tests/DynAny_Test/test_dynarray.{h,cpp}:
+        * TAO/tests/DynAny_Test/test_dynenum.{h,cpp}:
+        * TAO/tests/DynAny_Test/test_dynsequence.{h,cpp}:
+        * TAO/tests/DynAny_Test/test_dynstruct.{h,cpp}:
+        * TAO/tests/DynAny_Test/test_dynunion.{h,cpp}:
+          Cleaned up dependencies, fixed leaks and added a few more
+          test cases.
+
 Wed Oct 28 07:35:20 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
