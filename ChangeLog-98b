@@ -1,3 +1,11 @@
+Mon Nov 23 17:14:40 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/test_proactor.cpp (open): It is even
+	more neat to do this for faking the result.
+       // <complete> for Accept would have already moved the <wr_ptr>
+      // forward. Update it to the beginning position.
+      duplicate.wr_ptr (duplicate.wr_ptr () - bytes_transferred);
+
 Mon Nov 23 17:16:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.h: Set the value of ACE_SHLIB_INVALID_HANDLE to 0 for HP.
