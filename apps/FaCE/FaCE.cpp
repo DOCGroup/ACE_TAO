@@ -239,9 +239,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance, ACE_TCHAR* szWindowClass)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-    HWND    hWnd = NULL;
-    TCHAR   szTitle[MAX_LOADSTRING];            // The title bar text
-    TCHAR   szWindowClass[MAX_LOADSTRING];      // The window class name
+    HWND hWnd = NULL;
+
+    ACE_TCHAR szTitle[MAX_LOADSTRING];            // The title bar text
+    ACE_TCHAR szWindowClass[MAX_LOADSTRING];      // The window class name
 
     g_hInst = hInstance;        // Store instance handle in our global variable
     // Initialize global strings
