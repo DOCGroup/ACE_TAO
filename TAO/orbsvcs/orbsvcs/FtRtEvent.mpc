@@ -50,13 +50,12 @@ project (FTRT_ClientORB) :  messaging, orbsvcslib, core {
   }
 }
 
-project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils {
+project (FTRT_EventChannel) :  orbsvcslib, core, ftrtevent, utils, corba_messaging {
   sharedname   = TAO_FTRT_EventChannel
   dynamicflags = TAO_FTRTEC_BUILD_DLL
   tagchecks    = FTRT_EventChannel
   includes    += $(TAO_ROOT)/orbsvcs/orbsvcs/FtRtEvent/EventChannel
   after       += FTORB_Utils
-  requires    += corba_messaging
 
   IDL_Files {
   }
