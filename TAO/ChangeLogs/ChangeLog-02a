@@ -1,3 +1,9 @@
+Fri Jan 25 13:26:40 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tests/OBV/Any/AnyS_impl.cpp (magic):
+
+	  Removed unsed global variable.
+
 Fri Jan 25 11:34:35 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/ast/ast_operation.cpp:
