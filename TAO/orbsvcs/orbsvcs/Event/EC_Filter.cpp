@@ -18,32 +18,6 @@ TAO_EC_Filter::adopt_child (TAO_EC_Filter* child)
   child->parent_ = this;
 }
 
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Filter::begin (void) const
-{
-  return 0;
-}
-
-TAO_EC_Filter::ChildrenIterator
-TAO_EC_Filter::end (void) const
-{
-  return 0;
-}
-
-int
-TAO_EC_Filter::size (void) const
-{
-  return 0;
-}
-
-void
-TAO_EC_Filter::get_qos_info (TAO_EC_QOS_Info&,
-                             CORBA::Environment &ACE_TRY_ENV)
-{
-  ACE_THROW (CORBA::NO_IMPLEMENT (TAO_DEFAULT_MINOR_CODE,
-                                  CORBA::COMPLETED_NO));
-}
-
 // ****************************************************************
 
 int
@@ -95,32 +69,26 @@ TAO_EC_Null_Filter::clear (void)
 CORBA::ULong
 TAO_EC_Null_Filter::max_event_size (void) const
 {
-  // @@ Is there a better way to express this?
   return 0;
 }
 
-int
-TAO_EC_Null_Filter::can_match (const RtecEventComm::EventHeader&) const
+void
+TAO_EC_Null_Filter::event_ids(TAO_EC_Filter::Headers& headers)
 {
-  // @@ This method should be correctly so we can implement null
-  // filtering at the consumers but real filtering on the suppliers.
-  return 1;
-}
-
-int
-TAO_EC_Null_Filter::add_dependencies (
-      const RtecEventComm::EventHeader &,
-      const TAO_EC_QOS_Info &,
-      CORBA::Environment &)
-
-{
-  return 0;
+  // @@ TODO maybe we should add the AnyType/AnySource header?
+  // right now we do nothing...
 }
 
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex>;
+template class ACE_RB_Tree<RtecEventComm::EventHeader,int>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<RtecEventComm::EventHeader,int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

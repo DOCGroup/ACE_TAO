@@ -108,8 +108,10 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 		       "be_visitor_interface_ss::visit_interface - "
 		       " copy ctor generation failed\n"), -1);
   *os << "  TAO_ServantBase (rhs)" << be_uidt_nl
-      << "{}\n" << be_nl;
+      << "{}\n";
 
+  // destructor
+  os->indent ();
   *os << "// skeleton destructor" << be_nl;
 
   if (!node->is_nested ())
@@ -125,7 +127,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         " (void)" << be_nl;
     }
   *os << "{\n";
-  *os << "}\n\n";
+  *os << "}\n";
 
 
   // generate code for elements in the scope (e.g., operations)
@@ -144,46 +146,45 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_is_a_skel (" << be_idt << be_idt_nl
       << "CORBA::ServerRequest &_tao_server_request, " << be_nl
       << "void * _tao_object_reference," << be_nl
-      << "void * /* context */," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "void * /*context*/," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
       << ")" << be_uidt_nl;
+  *os << "{\n";
+  os->incr_indent ();
+  *os << "static const TAO_Param_Data_Skel " << node->flatname ()
+      << "_is_a_paramdata [] = " << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
-  *os << node->full_skel_name () << " *_tao_impl = ("
-      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
-  *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
-  *os << "CORBA::String_var value;" << be_nl;
-  *os << "if (!((_tao_in >> value.out ())))" << be_idt_nl;
-  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
-  *os << "_tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_CHECK;" << be_nl << be_nl;
-  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_CHECK;" << be_nl;
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-  *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
-  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
-  *os << "}\n\n";
-
-
-  // generate code for the _non_existent skeleton
-  os->indent ();
-  *os << "void " << node->full_skel_name ()
-      << "::_non_existent_skel (" << be_idt << be_idt_nl
-      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
-      << "void * _tao_object_reference," << be_nl
-      << "void * /* context */," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt_nl;
-  *os << "{" << be_idt_nl;
-  *os << node->full_skel_name () << " *_tao_impl = ("
-      << node->full_skel_name () << " *) _tao_object_reference;" << be_nl;
-  *os << "CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_CHECK;" << be_nl << be_nl;
-  *os << "_tao_server_request.init_reply (ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_CHECK;" << be_nl;
-  *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
-  *os << "if (!((_tao_out << CORBA::Any::from_boolean (_tao_retval))))" << be_idt_nl;
-  *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+  *os << "{CORBA::_tc_boolean, 0, 0}," << be_nl;
+  *os << "{CORBA::_tc_string, CORBA::ARG_IN, 0}" << be_uidt_nl;
+  *os << "};" << be_nl;
+  *os << "static const TAO_Call_Data_Skel " << node->flatname ()
+      << "_is_a_calldata = " << be_nl;
+  *os << "{\"_is_a\", 1, 2, " << node->flatname () << "_is_a_paramdata};"
+      << be_nl;
+  //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  *os << node->full_skel_name () << "_ptr  _tao_impl = ("
+      << node->full_skel_name () << "_ptr) _tao_object_reference;"
+      << be_nl;
+  *os << "CORBA::Boolean _tao_retval;" << be_nl;
+  *os << "CORBA::String_var _tao_value;" << be_nl;
+  *os << "_tao_server_request.demarshal (" << be_idt_nl
+      << "_tao_environment, " << be_nl
+      << "&" << node->flatname () << "_is_a_calldata, " << be_nl
+      << "&_tao_retval, " << be_nl
+      << "&_tao_value.inout ()" << be_uidt_nl
+      << ");" << be_nl;
+  *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);" << be_nl;
+  *os << "_tao_retval = _tao_impl->_is_a (_tao_value.in (), "
+      << "_tao_environment);" << be_nl;
+  *os << "TAO_CHECK_ENV_RETURN_VOID (_tao_environment);" << be_nl;
+  *os << "_tao_server_request.marshal (" << be_idt_nl
+      << "_tao_environment, " << be_nl
+    //      << "_tao_skel_environment," << be_nl
+      << "&" << node->flatname () << "_is_a_calldata, " << be_nl
+      << "&_tao_retval, " << be_nl
+      << "&_tao_value.inout ()" << be_uidt_nl
+      << ");" << be_uidt_nl;
+  //  *os << "CORBA::string_free (_tao_value);" << be_uidt_nl;
   *os << "}\n\n";
 
 
@@ -191,7 +192,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "CORBA::Boolean " << node->full_skel_name ()
       << "::_is_a (" << be_idt << be_idt_nl
       << "const char* value," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "if (\n" << be_idt;
@@ -206,11 +207,40 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   os->indent ();
   *os << "(!ACE_OS::strcmp ((char *)value, "
-      << "CORBA::_tc_Object->id (ACE_TRY_ENV))))"
+      << "CORBA::_tc_Object->id (_tao_environment))))"
       << be_idt_nl << "return 1;" << be_uidt_nl
       << "else" << be_idt_nl
       << "return 0;" << be_uidt << be_uidt << be_uidt_nl
       << "}\n\n";
+
+  // generate code for the _non_existent skeleton
+  os->indent ();
+  *os << "void " << node->full_skel_name ()
+      << "::_non_existent_skel (" << be_idt << be_idt_nl
+      << "CORBA::ServerRequest &_tao_server_request, " << be_nl
+      << "void * /* _tao_object_reference */ ," << be_nl
+      << "void * /*context*/," << be_nl
+      << "CORBA::Environment &_tao_environment" << be_uidt_nl
+      << ")" << be_uidt_nl;
+  *os << "{" << be_idt_nl;
+  *os << "static const TAO_Param_Data_Skel " << node->flatname ()
+      << "_non_existent_paramdata [] = " << be_nl
+      << "{" << be_idt_nl
+      << "{CORBA::_tc_boolean, 0, 0}" << be_uidt_nl
+      << "};" << be_nl;
+  *os << "static const TAO_Call_Data_Skel " << node->flatname ()
+      << "_non_existent_calldata = " << be_nl
+      << "{\"_non_existent\", 1, 1, " << node->flatname ()
+      << "_non_existent_paramdata};" << be_nl;
+  //  *os << "CORBA::Environment _tao_skel_environment;" << be_nl;
+  *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
+  *os << "_tao_server_request.marshal (" << be_idt_nl
+      << "_tao_environment, " << be_nl
+    //      << "_tao_skel_environment," << be_nl
+      << "&" << node->flatname () << "_non_existent_calldata, " << be_nl
+      << "&_tao_retval " << be_uidt_nl
+      << ");" << be_uidt_nl;
+  *os << "}\n\n";
 
   os->indent ();
   *os << "void* " << node->full_skel_name ()
@@ -241,23 +271,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->indent ();
   *os << "void " << node->full_skel_name () <<
     "::_dispatch (CORBA::ServerRequest &req, " <<
-    "void *context, CORBA::Environment &ACE_TRY_ENV)" << be_nl;
+    "void *context, CORBA::Environment &env)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "TAO_Skeleton skel; // pointer to skeleton for operation" << be_nl;
   *os << "const char *opname = req.operation (); // retrieve operation name"
       << be_nl;
   *os << "// find the skeleton corresponding to this opname" << be_nl;
-  *os << "if (this->_find (opname, skel, req.operation_length ()) == -1)" << be_nl;
+  *os << "if (this->_find (opname, skel) == -1)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
-  *os << "ACE_THROW (CORBA_BAD_OPERATION ());"
-    //<< "ACE_TRY_ENV);" << be_uidt_nl;
-      << be_uidt_nl;
-    //  *os << "env.exception (new CORBA_BAD_OPERATION ());" << be_nl;
+  *os << "TAO_THROW_ENV (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO), "
+      << "env);" << be_uidt_nl;
+    //  *os << "env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));" << be_nl;
   *os << "}" << be_nl;
   *os << "else" << be_idt_nl;
-  *os << "skel (req, this, context, ACE_TRY_ENV);" << be_uidt << be_uidt_nl;
+  *os << "skel (req, this, context, env);" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();
@@ -268,22 +297,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   os->incr_indent ();
   *os << "return \"" << node->repoID () << "\";\n";
   os->decr_indent ();
-  *os << "}\n\n";
-
-  *os << "\n";
-
-  // the _this () operation
-  *os << node->name () << "*" << be_nl
-      << node->full_skel_name ()
-      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
-      << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
-      << "ACE_CHECK_RETURN (0);" << be_nl
-    //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
-    //      << "return 0;" << be_uidt_nl
-      << "return new " << node->full_coll_name ()
-      << " (this, stub);" << be_uidt << be_nl;
-
   *os << "}\n\n";
 
   // generate the collocated class impl
@@ -309,7 +322,21 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     }
   delete visitor;
 
-  *os << "\n\n";
+  *os << "\n";
 
-  return 0;
+  // the _this () operation
+  *os << node->name () << "*" << be_nl
+      << node->full_skel_name ()
+      << "::_this (CORBA_Environment &ACE_TRY_ENV)" << be_nl
+      << "{" << be_idt_nl
+      << "STUB_Object *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
+      << "TAO_CHECK_ENV_RETURN (ACE_TRY_ENV, 0);" << be_nl
+    //      << "if (ACE_TRY_ENV.exception () != 0)" << be_idt_nl
+    //      << "return 0;" << be_uidt_nl
+      << "return new " << node->full_coll_name ()
+      << " (this, stub);" << be_uidt << be_nl;
+
+  *os << "}\n\n";
+
+   return 0;
 }

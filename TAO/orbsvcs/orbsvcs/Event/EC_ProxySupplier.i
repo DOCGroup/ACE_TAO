@@ -27,7 +27,7 @@ TAO_EC_ProxyPushSupplier::consumer (void) const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
-  return this->consumer_.in ();
+  return this->consumer_;
 }
 
 ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&

@@ -30,7 +30,7 @@ MyFooServantActivator::MyFooServantActivator (CORBA::ORB_ptr orb)
 PortableServer::Servant
 MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
                                   PortableServer::POA_ptr poa,
-                                  CORBA::Environment &ACE_TRY_ENV)
+                                  CORBA::Environment &env)
 {
   // Convert ObjectId to String.
 
@@ -43,23 +43,26 @@ MyFooServantActivator::incarnate (const PortableServer::ObjectId &oid,
     return new MyFooServant (this->orb_.in (), poa, 27);
   else
     {
-      ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (), 0);
-      //CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST ();
-      //env.exception (exception);
-      //return 0;
+      CORBA::Exception *exception = new CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO);
+      env.exception (exception);
+      return 0;
     }
 }
 
 
 void
-MyFooServantActivator::etherealize (const PortableServer::ObjectId &,
-                                    PortableServer::POA_ptr ,
+MyFooServantActivator::etherealize (const PortableServer::ObjectId &oid,
+                                    PortableServer::POA_ptr poa,
                                     PortableServer::Servant servant,
-                                    CORBA::Boolean ,
+                                    CORBA::Boolean cleanup_in_progress,
                                     CORBA::Boolean remaining_activations,
-                                    CORBA::Environment &)
+                                    CORBA::Environment &env)
 {
-  
+  ACE_UNUSED_ARG (oid);
+  ACE_UNUSED_ARG (poa);
+  ACE_UNUSED_ARG (cleanup_in_progress);
+  ACE_UNUSED_ARG (env);
+
   // If there are no remaining activations i.e ObjectIds associated
   // with MyFooServant delete it.
 

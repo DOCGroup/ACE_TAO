@@ -39,17 +39,19 @@ Test_ULongLong::opname (void) const
 }
 
 void
-Test_ULongLong::dii_req_invoke (CORBA::Request *req,
-                                CORBA::Environment &ACE_TRY_ENV)
+Test_ULongLong::dii_req_invoke (CORBA::Request *req)
 {
-  req->invoke (ACE_TRY_ENV);
+  req->invoke ();
 }
 
 int
-Test_ULongLong::init_parameters (Param_Test_ptr ,
-                                CORBA::Environment &)
+Test_ULongLong::init_parameters (Param_Test_ptr objref,
+                                CORBA::Environment &env)
 {
   Generator *gen = GENERATOR::instance (); // value generator
+
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
 
   this->in_ = gen->gen_long ();
   this->inout_ =  0;
@@ -67,20 +69,20 @@ Test_ULongLong::reset_parameters (void)
 
 int
 Test_ULongLong::run_sii_test (Param_Test_ptr objref,
-                              CORBA::Environment &ACE_TRY_ENV)
+                          CORBA::Environment &env)
 {
   this->ret_ = objref->test_ulonglong (this->in_,
                                        this->inout_,
                                        this->out_,
-                                       ACE_TRY_ENV);
+                                       env);
 
-  return (ACE_TRY_ENV.exception () ? -1:0);
+  return (env.exception () ? -1:0);
 }
 
 int
 Test_ULongLong::add_args (CORBA::NVList_ptr param_list,
-                          CORBA::NVList_ptr retval,
-                          CORBA::Environment &ACE_TRY_ENV)
+                      CORBA::NVList_ptr retval,
+                      CORBA::Environment &env)
 {
   // we provide top level memory to the ORB to retrieve the data
   CORBA::Any in_arg (CORBA::_tc_ulonglong,
@@ -99,24 +101,24 @@ Test_ULongLong::add_args (CORBA::NVList_ptr param_list,
   param_list->add_value ("s1",
                          in_arg,
                          CORBA::ARG_IN,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s2",
                          inout_arg,
                          CORBA::ARG_INOUT,
-                         ACE_TRY_ENV);
+                         env);
 
   param_list->add_value ("s3",
                          out_arg,
                          CORBA::ARG_OUT,
-                         ACE_TRY_ENV);
+                         env);
 
   // add return value. Let the ORB allocate storage. We simply tell the ORB
   // what type we are expecting.
-  retval->item (0, ACE_TRY_ENV)->value ()->replace (CORBA::_tc_ulonglong,
+  retval->item (0, env)->value ()->replace (CORBA::_tc_ulonglong,
                                             &this->ret_,
                                             0, // does not own
-                                            ACE_TRY_ENV);
+                                            env);
   return 0;
 }
 
@@ -132,8 +134,9 @@ Test_ULongLong::check_validity (void)
 }
 
 CORBA::Boolean
-Test_ULongLong::check_validity (CORBA::Request_ptr )
+Test_ULongLong::check_validity (CORBA::Request_ptr req)
 {
+  ACE_UNUSED_ARG (req);
   return this->check_validity ();
 }
 

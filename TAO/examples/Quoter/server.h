@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/examples/Quoter
+//    TAO/tests/Quoter
 //
 // = FILENAME
 //    quoter_server.h
@@ -55,8 +55,8 @@ public:
   int init (int argc, char *argv[], CORBA::Environment& env);
   // Initialize the Quoter_Server state - parsing arguments and ...
 
-  int run (CORBA::Environment &ACE_TRY_ENV);
-  // Run the server.
+  int run (CORBA::Environment& env);
+  // Run the orb
 
 private:
   int parse_args (void);

@@ -47,19 +47,19 @@ Cubit_Server::parse_args (void)
 int
 Cubit_Server::init (int argc,
                     char** argv,
-                    CORBA::Environment& ACE_TRY_ENV)
+                    CORBA::Environment& env)
 {
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create a child POA under the root POA.
   if (this->orb_manager_.init_child_poa (argc,
                                          argv,
                                          "child_poa",
-                                         ACE_TRY_ENV) == -1)
+                                         env) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
                        "init_child_poa"),
                       -1);
-  ACE_CHECK_RETURN (-1);
+  TAO_CHECK_ENV_RETURN (env,-1);
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -72,21 +72,19 @@ Cubit_Server::init (int argc,
   // Now create the implementations
   this->factory_impl_ = new Cubit_Factory_i (orb.in ());
 
-  this->factory_id_ =
+  CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("factory",
                                                  this->factory_impl_,
-                                                 ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
+                                                 env);
   ACE_DEBUG ((LM_DEBUG,
               "The IOR is: <%s>\n",
-              this->factory_id_.in ()));
+              str.in ()));
 
   if (this->ior_output_file_)
     {
       ACE_OS::fprintf (this->ior_output_file_,
                        "%s",
-                       this->factory_id_.in ());
+                       str.in ());
       ACE_OS::fclose (this->ior_output_file_);
     }
 
@@ -105,8 +103,5 @@ Cubit_Server::run (CORBA::Environment& env)
 
 Cubit_Server::~Cubit_Server (void)
 {
-  if (this->factory_id_.in ())
-    this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());
-
   delete this->factory_impl_;
 }

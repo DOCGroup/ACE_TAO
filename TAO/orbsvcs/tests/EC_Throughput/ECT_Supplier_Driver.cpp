@@ -28,8 +28,8 @@ ECT_Supplier_Driver::ECT_Supplier_Driver (void)
     burst_size_ (100),
     event_size_ (128),
     burst_pause_ (100),
-    type_start_ (ACE_ES_EVENT_UNDEFINED),
-    type_count_ (1),
+    event_a_ (ACE_ES_EVENT_UNDEFINED),
+    event_b_ (ACE_ES_EVENT_UNDEFINED + 1),
     pid_file_name_ (0)
 {
 }
@@ -77,9 +77,9 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                   "  burst count = <%d>\n"
                   "  burst size = <%d>\n"
                   "  event size = <%d>\n"
-                  "  burst pause = <%d>\n"
-                  "  type start = <%d>\n"
-                  "  type count = <%d>\n"
+                  "  burst size = <%d>\n"
+                  "  supplier Event A = <%d>\n"
+                  "  supplier Event B = <%d>\n"
                   "  pid file name = <%s>\n",
 
                   this->n_suppliers_,
@@ -87,8 +87,8 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
                   this->burst_size_,
                   this->event_size_,
                   this->burst_pause_,
-                  this->type_start_,
-                  this->type_count_,
+                  this->event_a_,
+                  this->event_b_,
 
                   this->pid_file_name_?this->pid_file_name_:"nil") );
 
@@ -145,7 +145,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       TAO_CHECK_ENV;
       if (CORBA::is_nil (sched_obj.in ()))
         return 1;
-      RtecScheduler::Scheduler_var scheduler =
+      RtecScheduler::Scheduler_var scheduler = 
         RtecScheduler::Scheduler::_narrow (sched_obj.in (),
                                            TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -168,7 +168,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
-      this->connect_suppliers (scheduler.in (),
+      this->connect_suppliers (scheduler.in (), 
                                channel.in (),
                                TAO_TRY_ENV);
       TAO_CHECK_ENV;
@@ -227,8 +227,8 @@ ECT_Supplier_Driver::connect_suppliers
                                     this->burst_size_,
                                     this->event_size_,
                                     this->burst_pause_,
-                                    this->type_start_,
-                                    this->type_count_,
+                                    this->event_a_,
+                                    this->event_b_,
                                     channel,
                                     TAO_IN_ENV);
       TAO_CHECK_ENV_RETURN_VOID (TAO_IN_ENV);
@@ -257,16 +257,13 @@ ECT_Supplier_Driver::disconnect_suppliers (CORBA::Environment &TAO_IN_ENV)
 void
 ECT_Supplier_Driver::dump_results (void)
 {
-  ECT_Driver::Throughput_Stats throughput;
   for (int i = 0; i < this->n_suppliers_; ++i)
     {
       char buf[BUFSIZ];
       ACE_OS::sprintf (buf, "supplier_%02.2d", i);
 
       this->suppliers_[i]->dump_results (buf);
-      this->suppliers_[i]->accumulate (throughput);
     }
-  throughput.dump_results ("ECT_Supplier", "accumulated");
 }
 
 int
@@ -304,9 +301,9 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
             char* aux;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
-            this->type_start_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
+            this->event_a_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
                 arg = ACE_OS::strtok_r (0, ",", &aux);
-            this->type_count_ = ACE_OS::atoi (arg);
+            this->event_b_ = ACE_ES_EVENT_UNDEFINED + ACE_OS::atoi (arg);
           }
           break;
 
@@ -323,8 +320,8 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
                       "-u <burst count> "
                       "-n <burst size> "
                       "-b <event payload size> "
-                      "-t <burst pause (usecs)> "
-                      "-h <type_start,type_count> "
+                      "-T <burst pause (usecs)> "
+                      "-h <eventa,eventb> "
                       "-p <pid file name> "
                       "\n",
                       argv[0]));
@@ -365,7 +362,7 @@ ECT_Supplier_Driver::parse_args (int argc, char *argv [])
   if (this->n_suppliers_ <= 0)
     {
       this->n_suppliers_ = 1;
-      ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_ERROR_RETURN ((LM_DEBUG,
                          "%s: number of suppliers out of range, "
                          "reset to default (%d)\n",
                          argv[0], 1), -1);

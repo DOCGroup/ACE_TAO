@@ -85,23 +85,17 @@ protected:
                      void *buffer);
   // Assume ownership and set length to 0.
 
-  // = orbos/98-01-11 proposed extensions.
-  CORBA::Boolean release (void) const;
-  // Returns the state of the sequence release flag.
-
-public:
-
-  // = The following two functions should be protected but we made it
-  // public because it breaks some compilers.
-
   TAO_Base_Sequence (const TAO_Base_Sequence &rhs);
   TAO_Base_Sequence &operator= (const TAO_Base_Sequence &rhs);
   // Copy constructor and assignment operator are protected, the
   // derived classes must provided the right semantics for the buffer
   // copy, only the static fields are actually copy.
 
-protected:
+  // = orbos/98-01-11 proposed extensions.
+  CORBA::Boolean release (void) const;
+  // Returns the state of the sequence release flag.
 
+protected:
   CORBA::ULong maximum_;
   // The maximum number of elements the buffer can contain.
 
@@ -314,9 +308,9 @@ public:
   // reference elements, which are freed using release(). The freebuf
   // function will ignore null pointers passed to it.
 
-  // = Fast buffer accessors.
-  char **get_buffer (CORBA::Boolean orphan = 0);
-  const char **get_buffer (void) const;
+  // = orbos/98-01-11 proposed extensions.
+  char* *get_buffer (CORBA::Boolean orphan = 0);
+  const char* *get_buffer (void) const;
 
   virtual void _allocate_buffer (CORBA::ULong length);
   virtual void _deallocate_buffer (void);
@@ -387,10 +381,9 @@ public:
   // Implement the methods for all the sequence, please seee
   // TAO_Base_Sequence.
 
-  // = Fast buffer accessors.
+  // = orbos/98-01-11 proposed extensions.
   CORBA::Octet *get_buffer (CORBA::Boolean orphan = 0);
   const CORBA::Octet *get_buffer (void) const;
-
   // NOTE: This last two methods can be rendered useless in certain
   // cases, see below.
   void replace (CORBA::ULong max,
@@ -432,12 +425,7 @@ private:
 
 // ****************************************************************
 
-// Comparison of octet sequence.
-extern TAO_Export int operator== (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
-                                  const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
-extern TAO_Export int operator!= (const TAO_Unbounded_Sequence<CORBA::Octet> &l,
-                                  const TAO_Unbounded_Sequence<CORBA::Octet> &r);
 
 // ****************************************************************
 

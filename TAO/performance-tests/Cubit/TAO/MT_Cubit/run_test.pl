@@ -1,11 +1,10 @@
+# $Id$
+# -*- perl -*-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
-# -*- perl -*-
-
-$usage = "run_tests.pl [-l suppress -ORBgioplite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
+$usage = "run_tests.pl [-l suppress -ORBiioplite] [-n iterations] [-r, for thread-per-rate] [-t low priority threads]\n";
 
 unshift @INC, '../../../../../bin';
 require Process;
@@ -13,7 +12,7 @@ require Process;
 $server_port = 0;
 $iorfile = "theior";
 $sleeptime = 3;
-$gioplite = '-ORBgioplite';
+$iiop_lite = '-ORBiioplite';
 $iterations = 1000;
 $low_priority_threads = 1;
 $thread_per_rate = '';
@@ -23,7 +22,7 @@ $thread_per_rate = '';
 ####
 while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
     if ($ARGV[0] eq '-l') {
-        $gioplite = '';
+        $iiop_lite = '';
     } elsif ($ARGV[0] eq '-n') {
         if ($ARGV[1] =~ /^[\da-zA-Z]+$/) {
             $iterations = $ARGV[1]; shift;
@@ -54,12 +53,12 @@ $threads = $low_priority_threads + 1;
 
 $SV = Process::Create ('.' . $DIR_SEPARATOR . "server" . $Process::EXE_EXT,
                        " -ORBport " . $server_port .
-                       " $gioplite $thread_per_rate -f $iorfile -t $threads");
+                       " $iiop_lite $thread_per_rate -f $iorfile -t $threads");
 
 sleep $sleeptime;
 
 $status = system ('.' . $DIR_SEPARATOR . "client" . $Process::EXE_EXT .
-                  " $gioplite $thread_per_rate " .
+                  " $iiop_lite $thread_per_rate " .
                   "-f $iorfile -n $iterations -t $threads");
 
 

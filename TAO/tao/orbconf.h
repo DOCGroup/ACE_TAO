@@ -60,28 +60,22 @@
 // without timestamps, transient and persistent POA cannot be
 // distinguished
 
-//#define TAO_USE_DOTTED_DECIMAL_ADDRESSES
-//
-// If set the ORB will use dotted decimal addresses in the IORs it
-// exports, this is useful for platforms or environments that cannot
-// depend on a DNS beign available.
-
 // The default arguments of the resource factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_RESOURCE_FACTORY_ARGS)
-#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS "static Resource_Factory \"-ORBresources tss -ORBreactorlock null\""
+#define TAO_DEFAULT_RESOURCE_FACTORY_ARGS "static TAO_Resource_Factory \"-ORBresources tss -ORBreactorlock null\""
 #endif /* TAO_DEFAULT_RESOURCE_FACTORY_ARGS */
 
 // The default arguments of the client strategy factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS)
-#define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS "static Client_Strategy_Factory \"\""
+#define TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS "static TAO_Default_Client_Strategy_Factory \"\""
 #endif /* TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS */
 
 // The default arguments of the server strategy factory for the fake service
 // configurator
 #if !defined (TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS)
-#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS  "static Server_Strategy_Factory \"-ORBconcurrency reactive -ORBsystemidpolicydemuxstrategy dynamic -ORBtablesize 128\""
+#define TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS  "static TAO_Default_Server_Strategy_Factory \"-ORBconcurrency reactive -ORBdemuxstrategy dynamic -ORBtablesize 128\""
 #endif /* TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS */
 
 // The default size of TAO's server active object map.
@@ -96,11 +90,6 @@
 #  define TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE 64
 # endif /* TAO_DEFAULT_SERVER_OBJECT_TABLE_SIZE */
 #endif /* ! TAO_DEFAULT_SERVER_ACTIVE_OBJECT_MAP_SIZE */
-
-// The default size of TAO's server poa map.
-#if !defined (TAO_DEFAULT_SERVER_POA_MAP_SIZE)
-#  define TAO_DEFAULT_SERVER_POA_MAP_SIZE 24
-#endif /* ! TAO_DEFAULT_SERVER_POA_MAP_SIZE */
 
 // The default UDP multicast port number for locating the TAO Naming
 // Service.
@@ -127,9 +116,9 @@
 #endif /* TAO_DEFAULT_NAME_SERVER_REPLY_PORT */
 
 // The default timeout receiving the location request to the TAO
-// Naming, Trading and other servicesService.
+// Naming Service and Trading Service.
 #if !defined (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
-#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 4
+#define TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT 1
 #endif /* TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT */
 
 // The default starting port number for TAO servers.
@@ -242,34 +231,6 @@
 #define TAO_CONST
 #endif /* TAO_CONST */
 
-// The IDL compiler can generate the classes corresponding to IDL
-// sequences in two ways:
-// + Use the TAO templates for sequences,
-//   i.e. TAO_{Unb,B}ounded_Sequence<>
-// + Explicitly generate code for the sequence.
-//
-// The first approach can (potentially) produce smaller code, because
-// the code for a sequence over a particular type (say sequence<long>)
-// can be shared across multiple IDL files.
-// Unfortunately it is hard to manage the template instantiations on
-// platforms that do not automatically generate them, mainly because
-// it is hard to decide on which generated file are the templates
-// instantiated.  Thus the second approach is more convenient for most
-// applications.
-//
-// On platforms that support automatic template instantiation we use
-// the first approach.
-// On platforms that require explicit template instantiations we use
-// explicitly generated code for sequences if the platform does not.
-// If the application requires it (such as embedded systems) the
-// default can be changed, but then the application developer is
-// responsible for instantiating the templates.
-//
-#if !defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) && \
-    defined (ACE_HAS_TEMPLATE_SPECIALIZATION)
-#define TAO_USE_SEQUENCE_TEMPLATES
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
 // ObjectIds recognized by CORBA_ORB::resolve_initial_references ()...
 // of course, no guarantees are made that the call will return
 // something useful.
@@ -278,43 +239,8 @@
 #define TAO_OBJID_ROOTPOA          "RootPOA"
 #define TAO_OBJID_POACURRENT       "POACurrent"
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
-#define TAO_OBJID_POLICYMANAGER    "ORBPolicyManager"
-#define TAO_OBJID_POLICYCURRENT    "PolicyCurrent"
 
 // The Root POA default name.
 #define TAO_DEFAULT_ROOTPOA_NAME   ""
-
-// OBV is in experimental stage
-#define TAO_HAS_VALUETYPE
-
-// Minimum CORBA
-// #define TAO_HAS_MINIMUM_CORBA
-
-// CORBA Messaging
-#if defined(ACE_WIN32)
-// In other platforms this is defined in the command-line
-#define TAO_HAS_CORBA_MESSAGING
-#endif /* ACE_WIN32 */
-
-// The maximum value for an standard PolicyType, we use this trick to
-// pack the standard policies and the TAO extension in a single
-// array.
-// The motivation for such a low-level optimization is that policies
-// can be set on a per-object level, allocating a complex data
-// structure (such as a hash map) or a big array for each object is
-// not feasible.
-#define TAO_MAX_STANDARD_POLICIES 64
-
-// The number of TAO specific policies
-#define TAO_POLICIES_COUNT 32
-
-// The size of the Policy array, the number of policies supported in
-// TAO is limited by this number.
-#define TAO_MAX_POLICIES (TAO_MAX_STANDARD_POLICIES+TAO_POLICIES_COUNT)
-
-// TAO may define its own policies, they are defined in a range far
-// from the standard policies.
-#define TAO_MIN_PROPIETARY_POLICY 1024
-#define TAO_MAX_PROPIETARY_POLICY (TAO_MIN_PROPIETARY_POLICY+TAO_POLICIES_COUNT)
 
 #endif  /* TAO_ORB_CONFIG_H */

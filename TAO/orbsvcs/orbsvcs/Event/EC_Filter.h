@@ -12,6 +12,19 @@
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
+// = DESCRIPTION
+//   The per-consumer filtering mechanisms.
+//   The EC needs to filter data passed to the consumers, so it can
+//   correctly satisfy its subscription requirements.
+//   This filtering can include correlations, sequences, timeouts,
+//   etc. each consumer can request different filtering criteria.
+//
+//   Different filtering objects are associated with each consumer,
+//   the filters are organized in a hierarchical structure,
+//   corresponding to the subscription "expression" that the events
+//   must satisfy.
+//   The hierarchy is constructed using the "Builder" pattern.
+//
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
 //   and other members of the DOC group.
@@ -25,31 +38,23 @@
 #ifndef TAO_EC_FILTER_H
 #define TAO_EC_FILTER_H
 
-#include "orbsvcs/RtecEventCommC.h"
+#include "ace/RB_Tree.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "orbsvcs/RtecEventCommC.h"
+
 class TAO_EC_QOS_Info;
 
-class TAO_ORBSVCS_Export TAO_EC_Filter
+class TAO_EC_Filter
 {
   // = TITLE
   //   Abstract base class for the filter hierarchy.
   //
   // = DESCRIPTION
-  //   The per-consumer filtering mechanisms.
-  //   The EC needs to filter data passed to the consumers, so it can
-  //   correctly satisfy its subscription requirements.
-  //   This filtering can include correlations, sequences, timeouts,
-  //   etc. each consumer can request different filtering criteria.
-  //
-  //   Different filtering objects are associated with each consumer,
-  //   the filters are organized in a hierarchical structure,
-  //   corresponding to the subscription "expression" that the events
-  //   must satisfy.
-  //   The hierarchy is constructed using the "Builder" pattern.
+  //   Defines the filter interface.
   //
   // = MEMORY MANAGMENT
   //   It does *not* assume ownership of its parent.
@@ -71,18 +76,6 @@ public:
                       const RtecEventComm::EventHeader& lhs);
   // matches two event headers.
   // @@ TODO: strategize this...
-
-  typedef TAO_EC_Filter* value_type;
-  typedef TAO_EC_Filter* const const_value_type;
-  typedef const_value_type* ChildrenIterator;
-
-  virtual ChildrenIterator begin (void) const;
-  virtual ChildrenIterator end (void) const;
-  virtual int size (void) const;
-  // STL-like iterators
-  // Filters follow the Composite pattern. All filters expose the same
-  // interface as if they all had children, but for simple filters the
-  // iterators return an empty range.
 
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info,
@@ -113,33 +106,17 @@ public:
   virtual CORBA::ULong max_event_size (void) const = 0;
   // Returns the maximum size of the events pushed by this filter.
 
-  virtual int can_match (const RtecEventComm::EventHeader& header) const = 0;
-  // Returns 0 if an event with that header could never be accepted.
-  // This can used by the suppliers to filter out consumers that
-  // couldn't possibly be interested in their events.
-  // The rt_info and
+  struct Header_Compare {
+    int operator () (const RtecEventComm::EventHeader& lhs,
+                     const RtecEventComm::EventHeader& rhs) const;
+  };
 
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info& qos_info,
-                                CORBA::Environment &ACE_TRY_ENV) = 0;
-  // This is used for computing the scheduling dependencies:
-  //
-  // Leaf filters check if the header could be matched, similar to the
-  // can_match() method; if it does they return 1, and 0 otherwise.
-  // Intermediate nodes always return 0.
-  //
-  // This is used to build precise dependencies between the suppliers
-  // and the leaf of the filters that accept that event.  Notice that
-  // only the nodes doing scheduling recurse through the list, so in
-  // configurations that do no require scheduling the recursion stops
-  // fairly soon.
+  typedef ACE_RB_Tree<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> Headers;
+  typedef ACE_RB_Tree_Iterator<RtecEventComm::EventHeader,int,Header_Compare,ACE_Null_Mutex> HeadersIterator;
 
-  virtual void get_qos_info (TAO_EC_QOS_Info& qos_info,
-                             CORBA::Environment &ACE_TRY_ENV);
-  // Obtain the QOS information for this filter, the default
-  // implementation returns an invalid QOS.  Only the filters that
-  // support scheduling information implement this method.
-  // Returns 0 on success and -1 on failure
+  virtual void event_ids (Headers& headers) = 0;
+  // Compute the disjunction of all the event types that could be of
+  // interest for this filter (and its children).
 
 private:
   TAO_EC_Filter* parent_;
@@ -148,7 +125,7 @@ private:
 
 // ****************************************************************
 
-class TAO_ORBSVCS_Export TAO_EC_Null_Filter : public TAO_EC_Filter
+class TAO_EC_Null_Filter : public TAO_EC_Filter
 {
   // = TITLE
   //   A null filter
@@ -184,10 +161,7 @@ public:
                             CORBA::Environment& env);
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info,
-                                CORBA::Environment &ACE_TRY_ENV);
+  virtual void event_ids (TAO_EC_Filter::Headers& headers);
 };
 
 // ****************************************************************

@@ -49,13 +49,19 @@ if (status != OK)\
 #define SCHED_PRIORITY 30
 #elif defined (VXWORKS)
 #define SCHED_PRIORITY 6
-#elif defined (ACE_WIN32) || defined (__FreeBSD__)
+#elif defined (ACE_WIN32)
 #define SCHED_PRIORITY \
 ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
 #else
 #define SCHED_PRIORITY \
 ACE_THR_PRI_FIFO_DEF + 25
 #endif /* ! __Lynx__ */
+
+// Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+#define SCHED_PARAMS_FIFO \
+ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,\
+                                        SCHED_PRIORITY,\
+                                        ACE_SCOPE_PROCESS))
 
 #if defined (CHORUS)
 #define PCCTIMER_INIT {int pTime;/*Initialize the PCC timer chip */pccTimerInit ();\
@@ -92,6 +98,9 @@ argv = force_argv;
 #define TASK_ID_LEN 32
 // length of the task id ,used in vxworks.
 
+#define PRIORITY_INCR 25
+// added to ACE_THR_PRI_FIFO_DEF for non vxworks and non win32 platforms.
+
 #define TASKNAME_LEN 14
 // Length of the task name in the task control block for vxworks.
 
@@ -114,19 +123,7 @@ public:
   // parse the arguments.
 
   static int sched_fifo_init (void);
-  // Enables fifo scheduling eg., RT scheduling class on solaris.
-  // Returns 0 on success, 1 if insufficient permission, or -1
-  // for other failure.  As a side effect, sets thr_create_flags
-  // appropriately.
-
-  long thr_create_flags;
-  // Thread creation flags.  Must call sched_fifo_init () before
-  // accessing.
-
-  int default_priority;
-  // Default thread priority, used for the high thread priority.
-  // Must call sched_fifo_init () before accessing.
-
+  // enables fifo scheduling eg.RT scheduling class on solaris.
   char hostname[BUFSIZ];
   // hostname to be used for ORB_init.
 
@@ -156,7 +153,7 @@ public:
   ACE_SYNCH_MUTEX ready_mtx_;
   // mutex for the condition variable.
 
-  ACE_Condition <ACE_SYNCH_MUTEX> ready_cnd_;
+  ACE_Condition<ACE_SYNCH_MUTEX> ready_cnd_;
   // condition variable for the low priority threads to wait
   //until the high priority thread is done with the arguments parsing.
 

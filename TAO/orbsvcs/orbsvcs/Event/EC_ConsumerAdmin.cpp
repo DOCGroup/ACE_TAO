@@ -1,10 +1,9 @@
 // $Id$
 
+#include "orbsvcs/RtecEventChannelAdminC.h"
 #include "EC_ConsumerAdmin.h"
 #include "EC_ProxySupplier.h"
-#include "EC_ProxyConsumer.h"
 #include "EC_Event_Channel.h"
-#include "EC_Command.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_ConsumerAdmin.i"
@@ -12,118 +11,73 @@
 
 ACE_RCSID(Event, EC_ConsumerAdmin, "$Id$")
 
-TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec,
-                                            TAO_EC_ProxyPushSupplier_Set* ss)
-  :  event_channel_ (ec),
-     supplier_set_ (ss)
+TAO_EC_ConsumerAdmin::TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel *ec)
+  :  event_channel_ (ec)
 {
-  if (this->supplier_set_ == 0)
-    {
-      this->supplier_set_ =
-        this->event_channel_->create_proxy_push_supplier_set ();
-      this->supplier_set_->busy_hwm (this->event_channel_->busy_hwm ());
-      this->supplier_set_->max_write_delay (this->event_channel_->max_write_delay ());
-    }
-  this->default_POA_ =
-    this->event_channel_->consumer_poa ();
 }
 
 TAO_EC_ConsumerAdmin::~TAO_EC_ConsumerAdmin (void)
 {
-  this->event_channel_->destroy_proxy_push_supplier_set (this->supplier_set_);
-  this->supplier_set_ = 0;
+}
+
+void
+TAO_EC_ConsumerAdmin::set_default_POA (PortableServer::POA_ptr poa)
+{
+  this->default_POA_ = 
+    PortableServer::POA::_duplicate (poa);
 }
 
 void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushConsumer *consumer,
-                                 CORBA::Environment &ACE_TRY_ENV)
+				 CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
-
   SupplierSetIterator end = this->end ();
   for (SupplierSetIterator i = this->begin ();
        i != end;
        ++i)
     {
       (*i)->connected (consumer, ACE_TRY_ENV);
-      ACE_CHECK;
-      consumer->connected (*i, ACE_TRY_ENV);
-      ACE_CHECK;
     }
 }
 
 void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
-                                    CORBA::Environment &ACE_TRY_ENV)
+				    CORBA::Environment &ACE_TRY_ENV)
 {
-  ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-  ACE_CHECK;
-
   SupplierSetIterator end = this->end ();
   for (SupplierSetIterator i = this->begin ();
        i != end;
        ++i)
     {
       (*i)->disconnected (consumer, ACE_TRY_ENV);
-      ACE_CHECK;
-      consumer->disconnected (*i, ACE_TRY_ENV);
-      ACE_CHECK;
     }
 }
 
 void
 TAO_EC_ConsumerAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
-                                 CORBA::Environment &ACE_TRY_ENV)
+				 CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->connected (supplier, ACE_TRY_ENV);
+  if (this->all_suppliers_.insert (supplier) != 0)
+    ACE_THROW (CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
 }
 
 void
 TAO_EC_ConsumerAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
-                                    CORBA::Environment &ACE_TRY_ENV)
+				    CORBA::Environment &ACE_TRY_ENV)
 {
-  this->supplier_set_->disconnected (supplier, ACE_TRY_ENV);
-}
-
-void
-TAO_EC_ConsumerAdmin::shutdown (CORBA::Environment &ACE_TRY_ENV)
-{
-  {
-    ACE_GUARD_THROW_EX (TAO_EC_ConsumerAdmin::Busy_Lock,
-      ace_mon, this->busy_lock (),
-      RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    SupplierSetIterator end = this->end ();
-    for (SupplierSetIterator i = this->begin ();
-         i != end;
-         ++i)
-      {
-        ACE_TRY
-          {
-            (*i)->shutdown (ACE_TRY_ENV);
-            ACE_TRY_CHECK;
-          }
-        ACE_CATCHANY
-          {
-            /* ignore all exceptions */
-          }
-        ACE_ENDTRY;
-      }
-  }
-  this->supplier_set_->shutdown (ACE_TRY_ENV);
+  if (this->all_suppliers_.remove (supplier) != 0)
+    ACE_THROW (RtecEventChannelAdmin::EventChannel::SUBSCRIPTION_ERROR ());
 }
 
 RtecEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_EC_ConsumerAdmin::obtain_push_supplier (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_ProxyPushSupplier* supplier =
+  TAO_EC_ProxyPushSupplier* supplier = 
     this->event_channel_->create_proxy_push_supplier ();
+
+  PortableServer::POA_var poa =
+    this->event_channel_->supplier_poa (ACE_TRY_ENV);
+  supplier->set_default_POA (poa.in ());
 
   return supplier->_this (ACE_TRY_ENV);
 }
@@ -136,6 +90,14 @@ TAO_EC_ConsumerAdmin::_default_POA (CORBA::Environment&)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
+template class ACE_Node<TAO_EC_ProxyPushSupplier*>;
+template class ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>;
+template class ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>;
+
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Node<TAO_EC_ProxyPushSupplier*>
+#pragma instantiate ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*>
+#pragma instantiate ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

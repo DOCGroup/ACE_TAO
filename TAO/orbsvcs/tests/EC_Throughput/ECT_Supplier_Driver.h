@@ -4,8 +4,9 @@
 // ============================================================================
 //
 // = DESCRIPTION
-//   This is a helper class for the throughput tests of the Event
-//   Channel.
+//   This test to measure how many events per minute can the EC
+//   process, it also serves as an example how how to encode complex
+//   data types in a octet sequence.
 //
 // ============================================================================
 
@@ -81,8 +82,8 @@ private:
   int burst_pause_;
   // The time between each event burst, in microseconds.
 
-  int type_start_;
-  int type_count_;
+  int event_a_;
+  int event_b_;
   // We send two types of events, with different contents.
 
   const char* pid_file_name_;

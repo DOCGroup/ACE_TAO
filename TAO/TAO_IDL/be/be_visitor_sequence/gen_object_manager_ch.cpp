@@ -111,10 +111,6 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
   pt->accept (visitor); 
   *os << " *p);" << be_nl;
 
-  // operator -> @@Bala
-  pt->accept (visitor); 
-  *os << "* operator-> (void) const;" << be_nl;
-
   //  cast operator
   *os << "operator const "; 
   pt->accept (visitor); 
@@ -125,9 +121,8 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
   pt->accept (visitor); 
   *os << " *&(); // Cast." << be_nl;
   
-  // @@Bala
   // in method
-  //*os << "const "; 
+  *os << "const "; 
   pt->accept (visitor); 
   *os << " *in (void) const; // in " << be_nl;
                                            
@@ -162,5 +157,4 @@ be_visitor_sequence_ch::gen_object_manager (be_sequence *node)
   delete visitor;
   return 0;
 }
-
 
