@@ -1,0 +1,19 @@
+//$Id$
+#include <RTScheduler.pidl>
+#include <RTCORBA.pidl>
+
+module MIF_Scheduling
+{
+  local interface SegmentSchedulingParameterPolicy
+  : CORBA::Policy
+  {
+    attribute short importance;
+  };
+
+  local interface MIF_Scheduler : RTScheduling::Scheduler
+  {
+    SegmentSchedulingParameterPolicy
+      create_segment_scheduling_parameter
+        (in short segment_importance);
+  };
+};
