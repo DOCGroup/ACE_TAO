@@ -363,7 +363,7 @@ ACE_Refcounted_Hash_Recyclable<T>::hash_i (void) const
 template <class T> ASYS_INLINE int
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
 {
-  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE ||
+  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE &&
       this->state () != ACE_Recyclable::IDLE_BUT_NOT_PURGABLE)
     return 0;
   else
@@ -373,7 +373,7 @@ ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recycla
 template <class T> ASYS_INLINE int
 ACE_Refcounted_Hash_Recyclable<T>::operator== (const T &rhs) const
 {
-  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE ||
+  if (this->state () != ACE_Recyclable::IDLE_AND_PURGABLE &&
       this->state () != ACE_Recyclable::IDLE_BUT_NOT_PURGABLE)
     return 0;
   else
