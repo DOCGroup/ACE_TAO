@@ -40,7 +40,7 @@ public:
   virtual void create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_ARG_DECL);
 };
 
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_RT_Factory)
+ACE_FACTORY_DECLARE (TAO_RT_Notify, TAO_NS_RT_Factory)
 
 #if defined (__ACE_INLINE__)
 #include "RT_Factory.inl"
