@@ -82,11 +82,11 @@ main (int argc, char *argv[])
                                          0,
                                          ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       TAO_IOP::TAO_IOR_Manipulation_ptr iorm =
         TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       TAO_IOP::TAO_IOR_Manipulation::IORList iors (2);
       iors.length(2);
       iors [0] = object_primary;
@@ -94,12 +94,12 @@ main (int argc, char *argv[])
 
       CORBA_Object_var merged = iorm->merge_iors (iors, ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // Combined IOR stuff
       Simple_Server_var server =
         Simple_Server::_narrow (merged.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -129,7 +129,7 @@ void run_test (Simple_Server_ptr server,
           // Make a remote call
           server->remote_call (ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          
+
           /*ACE_DEBUG ((LM_DEBUG,
                       "Kill  the primary . . . "));
           ACE_OS::sleep (25);
@@ -137,7 +137,7 @@ void run_test (Simple_Server_ptr server,
           ACE_DEBUG ((LM_DEBUG,
                       "I am going to shutdown \n"));
           server->shutdown (ACE_TRY_ENV);
-	  ACE_TRY_CHECK;
+          ACE_TRY_CHECK;
           ACE_OS::sleep (25);
         }
       ACE_CATCH (CORBA::TRANSIENT, t)
@@ -165,7 +165,7 @@ void run_test (Simple_Server_ptr server,
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "Unexpected exception");
-          ACE_RETHROW;
+          ACE_RE_THROW;
         }
       ACE_ENDTRY;
       ACE_CHECK;

@@ -286,7 +286,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   if (idl_global->use_raw_throw ())
     *os << "throw;" << be_uidt_nl;
   else
-    *os << "ACE_RETHROW;" << be_uidt_nl;
+    *os << "ACE_RE_THROW;" << be_uidt_nl;
 
   *os << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl;
@@ -571,7 +571,7 @@ be_visitor_operation_ss::gen_raise_exception (be_type *,
 }
 
 int
-be_visitor_operation_ss::gen_check_exception (be_type *, 
+be_visitor_operation_ss::gen_check_exception (be_type *,
                                               const char * /* env */)
 {
   TAO_OutStream *os = this->ctx_->stream ();

@@ -220,7 +220,7 @@ perform_queries_with_policies (const TAO_Policy_Creator& policies,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Importer::perform_queries");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }
@@ -296,7 +296,7 @@ TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "TAO_Offer_Importer::display_results");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }

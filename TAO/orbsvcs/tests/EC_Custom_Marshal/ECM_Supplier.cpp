@@ -478,7 +478,7 @@ Test_Supplier::disconnect (CORBA::Environment &ACE_TRY_ENV)
     }
   ACE_CATCHANY
     {
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 }

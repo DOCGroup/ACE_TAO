@@ -1243,7 +1243,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                         }
                       ACE_CATCHANY
                         {
-                          ACE_RETHROW;
+                          ACE_RE_THROW_EX (producer_check);
                         }
                       ACE_ENDTRY;
                       ACE_CHECK_RETURN (0);

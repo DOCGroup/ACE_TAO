@@ -98,10 +98,10 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"ping", 	&POA_ImplementationRepository::ServerObject::ping_skel},
+      {"ping",  &POA_ImplementationRepository::ServerObject::ping_skel},
       {"_is_a",  &POA_ImplementationRepository::ServerObject::_is_a_skel},
       {"",0},{"",0},
-      {"shutdown", 	&POA_ImplementationRepository::ServerObject::shutdown_skel},
+      {"shutdown",      &POA_ImplementationRepository::ServerObject::shutdown_skel},
       {"",0},{"",0},{"",0},{"",0},
       {"_non_existent",  &POA_ImplementationRepository::ServerObject::_non_existent_skel},
     };
@@ -247,7 +247,7 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -326,7 +326,7 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -642,27 +642,27 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"list", 	&POA_ImplementationRepository::Administration::list_skel},
+      {"list",  &POA_ImplementationRepository::Administration::list_skel},
       {"",0},{"",0},{"",0},{"",0},
-      {"find", 	&POA_ImplementationRepository::Administration::find_skel},
+      {"find",  &POA_ImplementationRepository::Administration::find_skel},
       {"",0},{"",0},{"",0},
-      {"remove_server", 	&POA_ImplementationRepository::Administration::remove_server_skel},
+      {"remove_server",         &POA_ImplementationRepository::Administration::remove_server_skel},
       {"",0},
-      {"register_server", 	&POA_ImplementationRepository::Administration::register_server_skel},
+      {"register_server",       &POA_ImplementationRepository::Administration::register_server_skel},
       {"",0},
-      {"reregister_server", 	&POA_ImplementationRepository::Administration::reregister_server_skel},
+      {"reregister_server",     &POA_ImplementationRepository::Administration::reregister_server_skel},
       {"",0},{"",0},
-      {"shutdown_server", 	&POA_ImplementationRepository::Administration::shutdown_server_skel},
+      {"shutdown_server",       &POA_ImplementationRepository::Administration::shutdown_server_skel},
       {"",0},
-      {"server_is_running", 	&POA_ImplementationRepository::Administration::server_is_running_skel},
+      {"server_is_running",     &POA_ImplementationRepository::Administration::server_is_running_skel},
       {"",0},{"",0},
-      {"activate_server", 	&POA_ImplementationRepository::Administration::activate_server_skel},
+      {"activate_server",       &POA_ImplementationRepository::Administration::activate_server_skel},
       {"",0},{"",0},
       {"_non_existent",  &POA_ImplementationRepository::Administration::_non_existent_skel},
       {"",0},
       {"_is_a",  &POA_ImplementationRepository::Administration::_is_a_skel},
       {"",0},{"",0},
-      {"server_is_shutting_down", 	&POA_ImplementationRepository::Administration::server_is_shutting_down_skel},
+      {"server_is_shutting_down",       &POA_ImplementationRepository::Administration::server_is_shutting_down_skel},
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -814,7 +814,7 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -904,7 +904,7 @@ void POA_ImplementationRepository::Administration::register_server_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -994,7 +994,7 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1081,7 +1081,7 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1168,7 +1168,7 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1262,7 +1262,7 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1355,7 +1355,7 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1444,7 +1444,7 @@ void POA_ImplementationRepository::Administration::find_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -1541,7 +1541,7 @@ void POA_ImplementationRepository::Administration::list_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -2096,8 +2096,8 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
     {
       {"",0},{"",0},{"",0},{"",0},{"",0},
       {"_is_a",  &POA_ImplementationRepository::ServerInformationIterator::_is_a_skel},
-      {"next_n", 	&POA_ImplementationRepository::ServerInformationIterator::next_n_skel},
-      {"destroy", 	&POA_ImplementationRepository::ServerInformationIterator::destroy_skel},
+      {"next_n",        &POA_ImplementationRepository::ServerInformationIterator::next_n_skel},
+      {"destroy",       &POA_ImplementationRepository::ServerInformationIterator::destroy_skel},
       {"",0},{"",0},{"",0},{"",0},{"",0},
       {"_non_existent",  &POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel},
     };
@@ -2254,7 +2254,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;
@@ -2340,7 +2340,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
           _tao_cookies,
           ACE_TRY_ENV
         );
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
   ACE_CHECK;

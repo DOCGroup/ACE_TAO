@@ -93,13 +93,13 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       // Get the POA_Manager.
       this->poa_manager_ = root_poa->the_POAManager (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       // We now need to create a POA with the persistent and user_id policies,
       // since they are need for use with the Implementation Repository.
-      
+
       CORBA::PolicyList policies (2);
       policies.length (2);
-    
+
       policies[0] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID,
                                                ACE_TRY_ENV);
@@ -129,8 +129,8 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
       this->poa_manager_->activate (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_NEW_RETURN (this->server_impl_, 
-                      Airplane_i, 
+      ACE_NEW_RETURN (this->server_impl_,
+                      Airplane_i,
                       -1);
 
       PortableServer::ObjectId_var server_id =
@@ -168,7 +168,7 @@ Airplane_Server_i::init (int argc, char** argv, CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_i::init");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
@@ -188,7 +188,7 @@ Airplane_Server_i::run (CORBA::Environment &ACE_TRY_ENV)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Airplane_Server_i::run");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 

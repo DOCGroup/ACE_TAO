@@ -63,7 +63,7 @@ Demux_Test_Server::init (int argc, char *argv [],
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "ORB_init");
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (GET_ORB);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -93,7 +93,7 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "PortableServer::POA::_narrow");
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (GET_ROOT_POA);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -110,7 +110,7 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "RootPOA->the_POAManager");
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (GET_POA_MGR);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -187,7 +187,7 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "creating policy");
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (POLICY);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);
@@ -236,7 +236,7 @@ Demux_Test_Server::init (int argc, char *argv [],
         {
           ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                "create_POA");
-          ACE_RETHROW;
+          ACE_RE_THROW_EX (CREATE_POA);
         }
       ACE_ENDTRY;
       ACE_CHECK_RETURN (-1);
@@ -264,7 +264,7 @@ Demux_Test_Server::init (int argc, char *argv [],
                 {
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "poa->activate_obj");
-                  ACE_RETHROW;
+                  ACE_RE_THROW_EX (ACTIVATE_OBJ);
                 }
               ACE_ENDTRY;
               ACE_CHECK_RETURN (-1);
@@ -287,7 +287,7 @@ Demux_Test_Server::init (int argc, char *argv [],
                 {
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "object_to_string");
-                  ACE_RETHROW;
+                  ACE_RE_THROW_EX (IOR);
                 }
               ACE_ENDTRY;
               ACE_CHECK_RETURN (-1);
@@ -338,7 +338,7 @@ Demux_Test_Server::init (int argc, char *argv [],
                 {
                   ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                                        "object_to_string");
-                  ACE_RETHROW;
+                  ACE_RE_THROW;
                 }
               ACE_ENDTRY;
               ACE_CHECK_RETURN (-1);
@@ -366,7 +366,7 @@ Demux_Test_Server::init (int argc, char *argv [],
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "poa_mgr->activate");
-      ACE_RETHROW;
+      ACE_RE_THROW_EX (ACTIVATE);
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (-1);

@@ -140,7 +140,7 @@ Quoter_Server::init (int argc,
     {
       ACE_ERROR ((LM_ERROR, "Quote_Server::init - %s\n", exception_message));
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Exception");
-      ACE_RETHROW;
+      ACE_RE_THROW;
     }
   ACE_ENDTRY;
 
