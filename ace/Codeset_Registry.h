@@ -27,6 +27,7 @@
 #include /**/ "ace/pre.h"
 #include "ace/SString.h"
 #include "ace/CDR_Base.h"
+#include "ace/Codeset_Symbols.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
