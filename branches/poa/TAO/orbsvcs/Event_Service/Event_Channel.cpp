@@ -2749,7 +2749,7 @@ ACE_ES_Consumer_Name (const RtecEventChannelAdmin::ConsumerQOS &qos)
       return "no-name";
     }
   TAO_ENDTRY;
-  ACE_NOTREACHED (return "no-name");
+  return "no-name";
 }
 
 // ************************************************************
@@ -2780,19 +2780,6 @@ dump_sequence (const ACE_CORBA_Sequence<ACE_ES_Event> &seq)
 // ************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-
-#if defined (ACE_ES_LACKS_ORB)
-//template class ACE_CORBA_Sequence<RtecEventComm::Event>;
-// template class ACE_CORBA_Sequence<RtecEventComm::Event_var>;
-template class ACE_CORBA_Sequence<RtecEventChannelAdmin::Dependency>;
-template class ACE_CORBA_Sequence<ACE_ES_Publication>;
-// For ACE_ES_Event_Container_var.
-template class ACE_CORBA_var<ACE_ES_Event_Container>;
-
-// Used in Event_Channel.cpp.
-template void operator+=(ACE_CORBA_Sequence<ACE_ES_Event> &,
-			 ACE_ES_Event const &);
-#endif /* ACE_ES_LACKS_ORB */
 
 template class ACE_Atomic_Op<ACE_ES_MUTEX, int>;
 template class ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>;
@@ -2830,5 +2817,38 @@ template class ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>;
 
 template class ACE_CORBA_var<ACE_ES_Event_Container>;
 
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Atomic_Op<ACE_ES_MUTEX, int>
+#pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT>
+#pragma instantiate ACE_Map_Entry<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Reverse_Iterator<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Manager<ACE_ES_Subscription_Info::EXT, ACE_ES_Subscription_Info::INT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Map_Manager<ACE_ES_Subscription_Info::sEXT, ACE_ES_Subscription_Info::sINT, ACE_ES_Subscription_Info::SYNCH>
+#pragma instantiate ACE_Node<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Node<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Node<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Unbounded_Set<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Unbounded_Set<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Consumer_Proxy *>
+#pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Push_Supplier_Proxy *>
+#pragma instantiate ACE_Cached_Allocator<ACE_ES_Event_Container_Chunk, ACE_Null_Mutex>
+#pragma instantiate ACE_Cached_Allocator<ACE_ES_Dispatch_Request_Chunk, ACE_Null_Mutex>
+#pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>
+#pragma instantiate ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>
+#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk>, ACE_Null_Mutex>
+#pragma instantiate ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk>, ACE_Null_Mutex>
+#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Event_Container_Chunk> >
+#pragma instantiate ACE_Free_List<ACE_Cached_Mem_Pool_Node<ACE_ES_Dispatch_Request_Chunk> >
+#pragma instantiate ACE_ES_Array_Iterator<ACE_ES_Consumer_Rep *>
+#pragma instantiate ACE_ES_Simple_Array<ACE_ES_Consumer_Rep *, 100>
+#pragma instantiate ACE_CORBA_var<ACE_ES_Event_Container>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -23,13 +23,13 @@ NS_IntId::NS_IntId (CORBA::Object_ptr obj,
 		    CosNaming::BindingType type)
   : type_ (type)
 {
-  ref_ = obj->_duplicate (obj);
+  ref_ = CORBA::Object::_duplicate (obj);
 }
 
 NS_IntId::NS_IntId (const NS_IntId &rhs)
 {
   type_ = rhs.type_;
-  ref_ =  rhs.ref_->_duplicate (rhs.ref_);
+  ref_ = CORBA::Object::_duplicate (rhs.ref_);
 }
 
 NS_IntId::~NS_IntId (void)
@@ -47,7 +47,7 @@ NS_IntId::operator= (const NS_IntId &rhs)
   type_ = rhs.type_;
   
   CORBA::release (ref_);
-  ref_ =  rhs.ref_->_duplicate (rhs.ref_);
+  ref_ = CORBA::Object::_duplicate (rhs.ref_);
 }
 
 NS_ExtId::NS_ExtId (void)

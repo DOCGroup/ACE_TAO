@@ -53,18 +53,19 @@ endif
 LDFLAGS += -L$(TAO_ROOT)/tao
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/tao/compat -I$(TAO_ROOT)/orbsvcs $(TSS_ORB_FLAG)#-H
 
-# @@ Commented out until no more hand-crafting is needed, right now the
-# main problem is the ACE_Export macros for NT.
-
+.PRECIOUS: CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h
 CosNamingC.cpp CosNamingS.cpp CosNamingC.h CosNamingS.h: CosNaming.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
+.PRECIOUS: RtecSchedulerC.cpp RtecSchedulerS.cpp RtecSchedulerC.h RtecSchedulerS.h
 RtecSchedulerC.cpp RtecSchedulerS.cpp RtecSchedulerC.h RtecSchedulerS.h: RtecScheduler.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
+.PRECIOUS: RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h
 RtecEventCommC.cpp RtecEventCommS.cpp RtecEventCommC.h RtecEventCommS.h: RtecEventComm.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 
+.PRECIOUS: RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h
 RtecEventChannelAdminC.cpp RtecEventChannelAdminS.cpp RtecEventChannelAdminC.h RtecEventChannelAdminS.h: RtecEventChannelAdmin.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl $^
 

@@ -1,3 +1,8 @@
+Sat Jan 10 16:57:42 1998    <coryan@MILONGA>
+
+	* Merged changes from tag main_to_poa_merge_6 and
+	  main_to_poa_merge_7.
+
 Fri Jan  9 17:58:43 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_array.cpp: 

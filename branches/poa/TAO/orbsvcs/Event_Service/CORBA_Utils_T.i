@@ -68,3 +68,8 @@ ACE_ES_Array_Iterator<ITEM>::advance (void)
   return index_ < size_;
 }
 
+template<class ITEM> ACE_INLINE int
+ACE_ES_Array_Iterator<ITEM>::done (void) const
+{
+  return index_ < size_;
+}
