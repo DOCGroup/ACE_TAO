@@ -147,7 +147,12 @@ Logger_Client::init (int argc, char **argv)
 
       if (TAO_TRY_ENV.exception ())
 	{
-	  TAO_TRY_ENV.print_exception ("Negative test case for name not found succeeded\n");
+	  CosNaming::NamingContext::NotFound_ptr ex;
+	  ex = CosNaming::NamingContext::NotFound::_narrow (TAO_TRY_ENV.exception ());
+	  if (ex != 0)
+	    TAO_TRY_ENV.print_exception ("Negative test case for name not found, succeeded\n");
+	  else
+	    TAO_TRY_ENV.print_exception ("Negative test case for name not found, FAILED!\n");
 	}
 
       if (CORBA::is_nil (factory_ref.in ()))
