@@ -1,3 +1,14 @@
+Wed May 26 20:21:18 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Pluggable.cpp:
+	  A variable declared in a loop (like for(int i;;)), was declared
+	  again in another loop, this is not a problem in ANSI C++, but
+	  some compilers don't know this yet.
+
+	* tao/TAO.dsp:
+	* tao/TAO_Static.dsp:
+	  Added the new files (from the branch) into the project files.
+
 Wed May 26 18:51:39 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/*:
