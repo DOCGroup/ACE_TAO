@@ -128,7 +128,7 @@ Test_Any::reset_parameters (void)
         for (size_t i = 0; i < Param_Test::DIM1; i++)
           array[i] = i;
         if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "Setting Fixed_Array\n"));
+          ACE_DEBUG ((LM_DEBUG, "Setting Fixed_Array\n"));
         this->in_ <<= Param_Test::Fixed_Array_forany (array);
         this->inout_ <<= Param_Test::Fixed_Array_forany (array);
       }
@@ -157,7 +157,7 @@ Test_Any::reset_parameters (void)
 
 int
 Test_Any::run_sii_test (Param_Test_ptr objref,
-                          CORBA::Environment &env)
+                        CORBA::Environment &env)
 {
   CORBA::Any_out out (this->out_.out ());
   this->ret_ = objref->test_any (this->in_,
@@ -196,9 +196,9 @@ Test_Any::add_args (CORBA::NVList_ptr param_list,
                          env);
 
   param_list->add_value ("o3",
-                          out_arg,
-                          CORBA::ARG_OUT,
-                          env);
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
 
   // add return value
   retval->item (0, env)->value ()->replace (CORBA::_tc_any,
