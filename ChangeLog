@@ -1,3 +1,10 @@
+Fri Feb  7 15:27:40 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/config-aix-4.x.h: Restored the defining of
+          ACE_TEMPLATES_REQUIRE_SOURCE for AIX VisualAge 5,
+          which is needed for building TAO.  Thanks to Trevor
+          Fields <fields_t@ociweb.com> for this fix.
+
 Fri Feb  7 13:04:51 2003  Steve Huston  <shuston@riverace.com>
 
         * ace/ace_wchar.h: Added a new macro, ACE_TEXT_ALWAYS_WCHAR(STRING).
