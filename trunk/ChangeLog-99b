@@ -1,3 +1,23 @@
+Fri Apr  2 12:41:09 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* ace/Containers_T.h (all of the classes listed below):
+	* ace/Containers_T.i (ACE_Array): 
+	* ace/Containers_T.i (ACE_DLList): 
+	* ace/Containers_T.cpp (ACE_Bounded_Stack):
+	* ace/Containers_T.cpp (ACE_Fixed_Stack):
+	* ace/Containers_T.cpp (ACE_Unbounded_Stack):
+	* ace/Containers_T.cpp (ACE_Unbounded_Queue):
+	* ace/Containers_T.cpp (ACE_Double_Linked_List):
+	* ace/Containers_T.cpp (ACE_Fixed_Set):
+	* ace/Containers_T.cpp (ACE_Bounded_Set):
+	* ace/Containers_T.cpp (ACE_Unbounded_Set):
+	* ace/Containers_T.cpp (ACE_Ordered_MultiSet):
+	* ace/Handle_Set.h (ACE_Handle_Set): 
+	* ace/Handle_Set.i (ACE_Handle_Set): 
+	
+	  Changed assignment operators (operator=) to return a reference
+	  to `*this' so that assignments may be chained.
+
 Thu Apr  1 23:41:56 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* ace/CDR_Stream.cpp:
