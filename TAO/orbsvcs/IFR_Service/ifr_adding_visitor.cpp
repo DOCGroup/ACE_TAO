@@ -2478,53 +2478,41 @@ ifr_adding_visitor::visit_typedef (AST_Typedef *node)
 int
 ifr_adding_visitor::visit_root (AST_Root *node)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
+  if (be_global->ifr_scopes ().push (be_global->repository ()) != 0)
     {
-      if (be_global->ifr_scopes ().push (be_global->repository ()) != 0)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
-              ACE_TEXT (" scope push failed\n")
-            ),
-            -1
-          );
-        }
-
-      if (this->visit_scope (node) == -1)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
-              ACE_TEXT (" visit_scope failed\n")
-            ),
-            -1
-          );
-        }
-
-      CORBA::Container_ptr tmp =
-        CORBA::Container::_nil ();
-
-      if (be_global->ifr_scopes ().pop (tmp) != 0)
-        {
-          ACE_ERROR_RETURN ((
-              LM_ERROR,
-              ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
-              ACE_TEXT (" scope pop failed\n")
-            ),
-            -1
-          );
-        }
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
+          ACE_TEXT (" scope push failed\n")
+        ),
+        -1
+      );
     }
-  ACE_CATCHANY
+  
+  if (this->visit_scope (node) == -1)
     {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           ACE_TEXT ("visit_root"));
-
-      return -1;
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
+          ACE_TEXT (" visit_scope failed\n")
+        ),
+        -1
+      );
     }
-  ACE_ENDTRY;
+
+  CORBA::Container_ptr tmp =
+    CORBA::Container::_nil ();
+
+  if (be_global->ifr_scopes ().pop (tmp) != 0)
+    {
+      ACE_ERROR_RETURN ((
+          LM_ERROR,
+          ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_root -")
+          ACE_TEXT (" scope pop failed\n")
+        ),
+        -1
+      );
+    }
 
   return 0;
 }
@@ -3787,7 +3775,7 @@ ifr_adding_visitor::fill_base_home (CORBA::ComponentIR::HomeDef_ptr &result,
       (void) base_home->ast_accept (this);
       this->fill_base_home (result,
                             node
-                            ACE_ENV_ARG_DECL);
+                            ACE_ENV_ARG_PARAMETER);
     }
 }
 
@@ -3824,7 +3812,7 @@ ifr_adding_visitor::fill_managed_component (
       (void) managed_component->ast_accept (this);
       this->fill_managed_component (result,
                                     node
-                                    ACE_ENV_ARG_DECL);
+                                    ACE_ENV_ARG_PARAMETER);
     }
 }
 
@@ -3859,7 +3847,7 @@ ifr_adding_visitor::fill_primary_key (CORBA::ValueDef_ptr &result,
       (void) primary_key->ast_accept (this);
       this->fill_primary_key (result,
                               node
-                              ACE_ENV_ARG_DECL);
+                              ACE_ENV_ARG_PARAMETER);
     }
 }
 
@@ -3986,7 +3974,7 @@ ifr_adding_visitor::fill_interfaces (CORBA::InterfaceDefSeq &result,
 void 
 ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
                                        AST_ValueType *node
-                                       ACE_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL_NOT_USED)
 {
   result.length (0);
   AST_Decl *item = 0;
@@ -4191,8 +4179,7 @@ ifr_adding_visitor::fill_params (CORBA::ParDescriptionSeq &result,
       (void) arg->ast_accept (this);
 
       result[index].type_def =
-        CORBA::IDLType::_duplicate (this->ir_current_.in ()
-                                    ACE_ENV_ARG_PARAMETER);
+        CORBA::IDLType::_duplicate (this->ir_current_.in ());
       ACE_CHECK;
 
       result[index].mode = CORBA::PARAM_IN;

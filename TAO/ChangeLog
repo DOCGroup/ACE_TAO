@@ -1,3 +1,10 @@
+Mon Aug 11 12:36:19 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+          Fixed warnings and errors on when exceptions=0 by changing or
+          removing several ACE_ENV_ARG_* macros. 
+
 Mon Aug 11 02:31:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * TAO/orbsvcs/tests/Redundant_Naming/Makefile:
