@@ -11677,6 +11677,13 @@ ACE_INLINE int
 ACE_OS::sigsuspend (const sigset_t *sigset)
 {
 #if defined (ACE_HAS_SIGSUSPEND)
+  sigset_t s;
+
+  if (sigset == 0)
+    {
+      sigset = &s;
+      ACE_OS::sigemptyset (sigset);
+    }
   ACE_OSCALL_RETURN (::sigsuspend (sigset), int, -1);
 #else
   ACE_UNUSED_ARG (sigset);
