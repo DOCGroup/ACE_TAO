@@ -149,8 +149,9 @@ run_test (int write_file,
                   filename,
                   ACE_CDR_BYTE_ORDER ? "little" : "big"));
 	
-      if (file.send (output_mb->rd_ptr (),
-                     output_mb->length ()) != output_mb->length())
+      ssize_t n = file.send (output_mb->rd_ptr (),
+                             output_mb->length ());
+      if (n != (ssize_t) output_mb->length())
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("send failed on %p\n"),
                            filename),
@@ -222,7 +223,7 @@ run_test (int write_file,
 // Main function
 
 int 
-main (int argc, char **argv)
+main (int, ASYS_TCHAR *argv[])
 {
   ACE_START_TEST (ASYS_TEXT ("CDR_File_Test"));
 

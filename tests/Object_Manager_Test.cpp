@@ -39,8 +39,9 @@ hook2 (void * /* object */, void *param)
   // But NOT in an ACE_OS::atexit () hook!  However, the ACE_END_TEST
   // invocation in main () will prevent this from being output to the
   // log stream.
-  ACE_DEBUG ((LM_DEBUG, "hook2: %d\n", *paramp));
-
+  ACE_DEBUG ((LM_DEBUG,
+              "hook2: %d\n",
+              *paramp));
   delete paramp;
 }
 
@@ -54,10 +55,14 @@ main (int, ASYS_TCHAR *[])
   u_int errors = 0;
 
   // If hook1 never gets called, this will show up as a memory leak.
-  ACE_NEW_RETURN (ip, u_int, -1);
+  ACE_NEW_RETURN (ip,
+                  u_int,
+                  -1);
 
-  const int starting_up = ACE_Object_Manager::instance ()->starting_up ();
-  const int shutting_down = ACE_Object_Manager::instance ()->shutting_down ();
+  const int starting_up =
+    ACE_Object_Manager::instance ()->starting_up ();
+  const int shutting_down =
+    ACE_Object_Manager::instance ()->shutting_down ();
 
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("starting_up: %d, shutting_down: %d\n"),
@@ -73,7 +78,7 @@ main (int, ASYS_TCHAR *[])
                   ASYS_TEXT (" be 0!!!!")));
     }
 
-  if (ACE_OS::atexit (hook1))
+  if (ACE_OS::atexit (hook1) != 0)
     {
       ++errors;
       ACE_ERROR ((LM_ERROR,
@@ -84,13 +89,17 @@ main (int, ASYS_TCHAR *[])
   for (u_int i = 0; i < 10; ++i)
     {
       u_int *paramp;
-      ACE_NEW_RETURN (paramp, u_int, -1);
+      ACE_NEW_RETURN (paramp,
+                      u_int,
+                      -1);
       *paramp = i;
 
       // The first paramp argument is only used to distinguish the
       // at_exit entries.  The ACE_Object_Manager only allows one
       // at_exit per object.  It's not used in the hook.
-      if (ACE_Object_Manager::instance ()->at_exit (paramp, hook2, paramp))
+      if (ACE_Object_Manager::instance ()->at_exit (paramp,
+                                                    hook2,
+                                                    paramp))
         {
           ++errors;
           ACE_ERROR ((LM_ERROR,
@@ -101,8 +110,6 @@ main (int, ASYS_TCHAR *[])
     }
 
   ACE_END_TEST;
-
   ACE::fini ();
-
-  return errors == 0  ?  0  :  1;
+  return errors == 0 ? 0 : 1;
 }
