@@ -1,17 +1,23 @@
 // $Id$
+
 // ============================================================================
 //
 // = FILENAME
 //    quoter.idl
 //
 // = DESCRIPTION
-//    Quoter example uses the POA and CosLifeCycle interfaces
+//    Quoter example that illustrate the use of the global POA and
+//    the CosLifeCycle service.
 //
 // = AUTHOR
 //    Darrell Brunsch (brunsch@cs.wustl.edu)
 //    Michael Kircher (mk1@cs.wustl.edu)
 //
+// ============================================================================
 
+// @@ Is there a way to get TAO's IDL compiler to accept "relative
+// names" via the use of a command-line option?  It seems wrong to
+// hard-code the pathname here.
 #include "../../orbsvcs/orbsvcs/CosLifeCycle.idl"
 
 module Stock
@@ -20,51 +26,52 @@ module Stock
   exception Invalid_Quoter {};
 
   interface Quoter : CosLifeCycle::LifeCycleObject
-  {
-    // = TITLE
-    //   Access Stock information.
+    {
+      // = TITLE
+      //   Access Stock information.
 
-    long get_quote (in string stock_name) 
-      raises (Invalid_Stock, Invalid_Quoter);
-    // Returns the current stock value or throws and exception.
+      long get_quote (in string stock_name) 
+        raises (Invalid_Stock, Invalid_Quoter);
+      // Returns the current stock value or throws and exception.
 
-    void destroy ();
-    // Destroy a Quoter session and release resources.
+      void destroy ();
+      // Destroy a Quoter session and release resources.
 
-    // LifeCycleObject copy(in FactoryFinder there, 
-		// 	   in Criteria the_criteria)
-    //     raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
-    // copies this object to a location "there" using the "the_criteria"
+      // LifeCycleObject copy(in FactoryFinder there, 
+      // 	   in Criteria the_criteria)
+      //     raises(NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
+      // copies this object to a location "there" using the "the_criteria"
   
-    // void move(in FactoryFinder there, 
-	  //     in Criteria the_criteria)
-    //     raises(NoFactory, NotMovable, InvalidCriteria,  CannotMeetCriteria);
-    // moves this object to a location "there" using the "the_criteria"
+      // void move(in FactoryFinder there, 
+      //     in Criteria the_criteria)
+      //     raises(NoFactory, NotMovable, InvalidCriteria,  CannotMeetCriteria);
+      // moves this object to a location "there" using the "the_criteria"
    
-    // void remove()
-    //     raises(NotRemovable);
-    // removes/deletes this object
+      // void remove()
+      //     raises(NotRemovable);
+      // removes/deletes this object
 
-  };
+    };
   
   interface Quoter_Factory 
-  {
-    // = TITLE
-    //   Manage the lifecycle of a Quoter object.
-    Quoter create_quoter (in string name)
-      raises (Invalid_Quoter);
-    // Returns a new Quoter selected by name e.g., "Dow Jones,"
-    // "Reuters,", etc
-  };
+    {
+      // = TITLE
+      //   Manage the lifecycle of a Quoter object.
+
+      Quoter create_quoter (in string name)
+        raises (Invalid_Quoter);
+      // Returns a new Quoter selected by name e.g., "Dow Jones,"
+      // "Reuters,", etc
+    };
 
 
   interface QuoterFactoryFinder : CosLifeCycle::FactoryFinder
-  {
-    // = TITLE 
-    //   Wrapper for the CosLifeCycle FactoryFinder
-    //
-    // inherits: 
-    // Factories find_factories(in Key factory_key) raises(NoFactory);
-  };
+    {
+      // = TITLE 
+      //   Wrapper for the CosLifeCycle FactoryFinder
+      //
+      // inherits: 
+      // Factories find_factories(in Key factory_key) raises(NoFactory);
+    };
 };
 

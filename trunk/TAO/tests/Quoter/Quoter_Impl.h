@@ -44,18 +44,15 @@ public:
   
   virtual void destroy (CORBA_Environment &env);
 
-  virtual CosLifeCycle::LifeCycleObject_ptr copy (
-        CosLifeCycle::FactoryFinder_ptr there,
-        const CosLifeCycle::Criteria & the_criteria,
-        CORBA::Environment &_tao_environment);
+  virtual CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
+                                                  const CosLifeCycle::Criteria &the_criteria,
+                                                  CORBA::Environment &_tao_environment);
 
-  virtual void move (
-        CosLifeCycle::FactoryFinder_ptr there,
-        const CosLifeCycle::Criteria & the_criteria,
-        CORBA::Environment &_tao_environment);
+  virtual void move (CosLifeCycle::FactoryFinder_ptr there,
+                     const CosLifeCycle::Criteria &the_criteria,
+                     CORBA::Environment &_tao_environment);
 
-  virtual void remove (
-        CORBA::Environment &_tao_environment);
+  virtual void remove (CORBA::Environment &_tao_environment);
 };
 
 class Quoter_Factory_Impl;
@@ -68,7 +65,7 @@ class Quoter_Factory_Impl: public POA_Stock::Quoter_Factory
   //   Quoter_Factory_Impl
   //
   // = DESCRIPTION
-  //   Factory object returning the quoter_impl objrefs
+  //   Factory object returning the quoter_impl objrefs.
 public:
   Quoter_Factory_Impl (void);
   // Constructor.
@@ -78,10 +75,11 @@ public:
 
   virtual Stock::Quoter_ptr  create_quoter (const char *name,  
                                             CORBA::Environment &env);
-  // Return the quoter by the id <name>
+  // Return the quoter by the id <name>.
 
 private:
   Quoter_Impl my_quoter_;
+  // @@ Do we just want one of these?!
 };
 
 #endif /* QUOTER_IMPL_H */

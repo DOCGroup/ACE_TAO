@@ -28,8 +28,6 @@
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "tao/tao.h"
 
-
-
 class Quoter_Server : public TAO_ORB_Manager
 {
   // =TITLE

@@ -2,12 +2,13 @@
 
 //#include "ace/Profile_Timer.h"
 //#include "ace/Env_Value_T.h"
+
 #include "ace/Read_Buffer.h"
 #include "quoter_client.h"
 #include "orbsvcs/CosNamingC.h"
 
 Quoter_Task::Quoter_Task (int argc, char **argv)
-  : argc_(argc), argv_(argv)
+  : argc_ (argc), argv_ (argv)
 {
   // Nothing
 }
@@ -26,10 +27,12 @@ Quoter_Task::svc (void)
   {
     CORBA::Object_var naming_obj =
 	  this->orb_->resolve_initial_references ("NameService");
+
     if (CORBA::is_nil (naming_obj.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
                         " (%P|%t) Unable to resolve the Name Service.\n"),
                         -1);
+
     CosNaming::NamingContext_var naming_context = 
     CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
 
@@ -39,12 +42,15 @@ Quoter_Task::svc (void)
     quoter_factory_name.length (2);
     quoter_factory_name[0].id = CORBA::string_dup ("Quoter");
     quoter_factory_name[1].id = CORBA::string_dup ("quoter_factory");
+
     CORBA::Object_var factory_obj =
-      naming_context->resolve (quoter_factory_name,TAO_TRY_ENV);
+      naming_context->resolve (quoter_factory_name, TAO_TRY_ENV);
+
     TAO_CHECK_ENV;
     
     Stock::Quoter_Factory_var factory_ =
-      Stock::Quoter_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
+      Stock::Quoter_Factory::_narrow (factory_obj.in (),
+      TAO_TRY_ENV);
     
     TAO_CHECK_ENV;
     
@@ -208,7 +214,7 @@ Quoter_Client::init_naming_service (void)
 {
   TAO_TRY
   {
-    CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance()->orb();
+    CORBA::ORB_ptr orb_ptr = TAO_ORB_Core_instance ()->orb ();
     TAO_CHECK_ENV;
 
     CORBA::Object_var naming_obj = 
@@ -225,12 +231,15 @@ Quoter_Client::init_naming_service (void)
     quoter_factory_name.length (2);
     quoter_factory_name[0].id = CORBA::string_dup ("IDL_Quoter");
     quoter_factory_name[1].id = CORBA::string_dup ("quoter_factory");
+
     CORBA::Object_var factory_obj =
-      naming_context->resolve (quoter_factory_name,TAO_TRY_ENV);
+      naming_context->resolve (quoter_factory_name,
+                               TAO_TRY_ENV);
     TAO_CHECK_ENV;
     
     this->factory_ =
-      Stock::Quoter_Factory::_narrow (factory_obj.in (),TAO_TRY_ENV);
+      Stock::Quoter_Factory::_narrow (factory_obj.in (), 
+                                      TAO_TRY_ENV);
     TAO_CHECK_ENV;
     
     if (CORBA::is_nil (this->factory_.in ()))
@@ -256,68 +265,68 @@ Quoter_Client::init (int argc, char **argv)
   this->argv_ = argv;
   
   TAO_TRY
-  {
-    // Retrieve the ORB.
-    this->orb_ = CORBA::ORB_init (this->argc_,
-      this->argv_,
-      "internet",
-      TAO_TRY_ENV);
-    TAO_CHECK_ENV;
-    
-    // Parse command line and verify parameters.
-    if (this->parse_args () == -1)
-      return -1;
-    
-    if (this->use_naming_service_) {
-      naming_result = this->init_naming_service ();
-      if (naming_result < 0)
-        return naming_result;
-    }
-    else 
     {
-      if (this->quoter_factory_key_ == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-        "%s: no quoter factory key specified\n",
-        this->argv_[0]),
-        -1);
-      
-      
-      CORBA::Object_var factory_object = 
-        this->orb_->string_to_object (this->quoter_factory_key_,
-        TAO_TRY_ENV);
+      // Retrieve the ORB.
+      this->orb_ = CORBA::ORB_init (this->argc_,
+                                    this->argv_,
+                                    "internet",
+                                    TAO_TRY_ENV);
       TAO_CHECK_ENV;
+    
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+        return -1;
+    
+      if (this->use_naming_service_) 
+        {
+          naming_result = this->init_naming_service ();
+          if (naming_result == -1)
+            return naming_result;
+        }
+      else if (this->quoter_factory_key_ == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%s: no quoter factory key specified\n",
+                             this->argv_[0]),
+                            -1);
       
-      this->factory_ = 
-        Stock::Quoter_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
+      
+          CORBA::Object_var factory_object = 
+            this->orb_->string_to_object (this->quoter_factory_key_,
+                                          TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+      
+          this->factory_ = 
+            Stock::Quoter_Factory::_narrow (factory_object.in (), TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+      
+          if (CORBA::is_nil (this->factory_.in ()))
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "invalid factory key <%s>\n",
+                               this->quoter_factory_key_),
+                              -1);
+        }
+    
+      ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
+    
+      // Now retrieve the Quoter obj ref corresponding to the key.
+      this->quoter_ =
+        this->factory_->create_quoter (this->quoter_key_,
+                                       TAO_TRY_ENV);
+    
       TAO_CHECK_ENV;
-      
-      if (CORBA::is_nil (this->factory_.in ()))
+      ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
+    
+      if (CORBA::is_nil (this->quoter_))
         ACE_ERROR_RETURN ((LM_ERROR,
-        "invalid factory key <%s>\n",
-        this->quoter_factory_key_),
-        -1);
+                           "null quoter objref returned by factory\n"),
+                          -1);
     }
-    
-    ACE_DEBUG ((LM_DEBUG, "Factory received OK\n"));
-    
-    // Now retrieve the Quoter obj ref corresponding to the key.
-    this->quoter_ =
-      this->factory_->create_quoter (this->quoter_key_,
-      TAO_TRY_ENV);
-    
-    TAO_CHECK_ENV;
-    ACE_DEBUG ((LM_DEBUG, "Quoter Created\n"));
-    
-    if (CORBA::is_nil (this->quoter_))
-      ACE_ERROR_RETURN ((LM_ERROR,
-      "null quoter objref returned by factory\n"),
-      -1);
-  }
   TAO_CATCHANY
-  {
-    TAO_TRY_ENV.print_exception ("Quoter::init");
-    return -1;
-  }
+    {
+      TAO_TRY_ENV.print_exception ("Quoter::init");
+      return -1;
+    }
   TAO_ENDTRY;
   
   return 0;
@@ -361,7 +370,7 @@ Quoter_Client::init (int argc, char **argv)
       TAO_CHECK_ENV;
       
       this->factory_ = 
-        Stock::Quoter_Factory::_narrow (factory_object.in(), TAO_TRY_ENV);
+        Stock::Quoter_Factory::_narrow (factory_object.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
       
       if (CORBA::is_nil (this->factory_.in ()))
