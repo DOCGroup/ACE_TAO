@@ -16,9 +16,9 @@
 #ifndef TAO_DSI_GATEWAY_TEST_DSI_H
 #define TAO_DSI_GATEWAY_TEST_DSI_H
 
-#include "tao/ORB.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include "tao/ORB.h"
 
 class DSI_Simple_Server : public TAO_DynamicImplementation
 {

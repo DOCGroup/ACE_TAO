@@ -23,6 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Basic_Types.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -35,6 +36,14 @@ namespace CORBA
 
   extern TAO_Valuetype_Export void add_ref (ValueBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueBase *);
+
+  class AbstractBase;
+  typedef AbstractBase *AbstractBase_ptr;
+
+  extern TAO_Valuetype_Export Boolean is_nil (AbstractBase_ptr);
+  extern TAO_Valuetype_Export void release (AbstractBase_ptr);
+
+
 }
 
 #include /**/ "ace/post.h"

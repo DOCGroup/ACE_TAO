@@ -1,8 +1,10 @@
 // $Id$
 
+#include "tao/DynamicInterface/Request.h"  /* This must come first for
+                                              G++ 3.4 or better */
+
 #include "TestC.h"
 
-#include "tao/DynamicInterface/Request.h"
 #include "tao/TC_Constants_Forward.h"
 
 #include "tao/Strategies/advanced_resource.h"
@@ -15,7 +17,9 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-ACE_RCSID(Deferred_Latency, client, "$Id$")
+ACE_RCSID (Deferred_Latency,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 1000;

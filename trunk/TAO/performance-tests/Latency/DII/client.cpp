@@ -1,5 +1,9 @@
 // $Id$
 
+#include "tao/DynamicInterface/Request.h"
+#include "tao/Strategies/advanced_resource.h"
+#include "tao/TC_Constants_Forward.h"
+
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
@@ -7,11 +11,9 @@
 #include "ace/Sample_History.h"
 #include "ace/OS_NS_errno.h"
 
-#include "tao/Strategies/advanced_resource.h"
-#include "tao/TC_Constants_Forward.h"
-#include "tao/DynamicInterface/Request.h"
-
-ACE_RCSID(DII_Latency, client, "$Id$")
+ACE_RCSID (DII_Latency,
+           client,
+           "$Id$")
 
 const char *ior = "file://test.ior";
 int niterations = 100;

@@ -1,3 +1,42 @@
+Tue Apr 27 13:37:38 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp:
+
+	  Reordered generated includes so that the Valuetype headers are
+	  included prior to the ORB core headers.  This forces names that
+	  are potentially used as non-dependent names
+	  (e.g. CORBA::add_ref()) in templates
+	  (e.g. TAO_Pseudo_{Var,Out}_T) to be parsed prior to those
+	  templates.  Fixes GNU g++ 3.4 errors.  GNU g++ 3.4 requires that
+	  all required non-dependent names be parsed prior to the
+	  template.
+
+	* tao/DynamicInterface/DII_CORBA_methods.h:
+	* tao/DynamicInterface/Request.h:
+	* tao/Valuetype/AbstractBase.h:
+	* tao/Valuetype/Value_CORBA_methods.h:
+
+	  Moved prototypes in the CORBA namespace used as non-dependent
+	  names in the TAO_Pseudo_{Var,Out}_T template to the
+	  "*_CORBA_methods.h" forward declaration header so that they may
+	  be parsed before the templates.  Fixes some GNU g++ 3.4
+	  compile-time errors.
+	
+	* tests/DSI_Gateway/test_dsi.h:
+	* tests/Param_Test/client.cpp:
+	* tests/Param_Test/client.h:
+	* tests/Param_Test/driver.cpp:
+	* orbsvcs/examples/ORT/Gateway_i.h:
+	* orbsvcs/tests/InterfaceRepo/Application_Test/ifr_dii_client.h:
+	* performance-tests/Latency/DII/client.cpp:
+	* performance-tests/Latency/Deferred/client.cpp:
+	* performance-tests/Sequence_Latency/DII/client.cpp:
+	* performance-tests/Sequence_Latency/Deferred/client.cpp:
+
+	  Reordered includes so that all non-dependent names are parsed
+	  before the templates that use them.  Fixes some GNU g++ 3.4
+	  compile-time errors.
+
 Tue Apr 27 12:07:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/Discarding/Sequence_Consumer.cpp (main):
