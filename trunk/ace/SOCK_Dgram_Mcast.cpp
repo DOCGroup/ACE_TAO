@@ -68,25 +68,19 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_Addr &mcast_addr,
         return -1;
 #endif /* SO_REUSEPORT */
 
-#if defined (ACE_WIN32)
-
       // Create an address to bind the socket to.
       ACE_INET_Addr local;
- 
+
+#if defined (linux)
+      local = this->mcast_addr_;
+#else /* linux */
       if (local.set (this->mcast_addr_.get_port_number ()) == -1)
         return -1;
-      else if (ACE_SOCK_Dgram::shared_open (local,
-                                            protocol_family) == -1)
-        return -1;
+#endif /* linux */
 
-#else /* ACE_WIN32 */
-
-      // Create an address to bind the socket to.
-      if (ACE_SOCK_Dgram::shared_open (this->mcast_addr_,
+      if (ACE_SOCK_Dgram::shared_open (local,
                                        protocol_family) == -1)
         return -1;
-
-#endif /* ACE_WIN32 */
     }
 
   return 0;
