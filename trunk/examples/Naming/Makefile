@@ -14,7 +14,7 @@ BIN = test_non_existent \
 
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 
-SRC=$(addsuffix .cpp,$(BIN))
+PSRC    = $(addsuffix .cpp,$(BIN))
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
@@ -22,13 +22,12 @@ SRC=$(addsuffix .cpp,$(BIN))
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-#### If ACE_COMPONENTS is set and doesn't contain Other, don't
-#### try to build any of the clients.
-ifdef ACE_COMPONENTS
-  ifeq (,$(findstring Other,$(ACE_COMPONENTS)))
-    BIN =
-  endif # ! Other
-endif # ACE_COMPONENTS
+#### If the ACE library wasn't built with the Other component, don't
+#### try to build the clients.
+ACE_BUILD_COMPONENTS := $(shell $(ACE_ROOT)/bin/ace_components --ace)
+ifeq (,$(findstring Other,$(ACE_BUILD_COMPONENTS)))
+  BIN =
+endif # ! Other
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
