@@ -812,11 +812,14 @@ ACE_Thread_Manager::wait_grp (int grp_id)
   
   // Now to do the actual work
   int result = 0;
-  for (int i = 0; i < copy_count && result != -1; i++)
+
+  for (int i = 0;
+       i < copy_count && result != -1;
+       i++)
     if (ACE_Thread::join (copy_table[i].thr_handle_) == -1)
       result = -1;
   
-  delete []copy_table;
+  delete [] copy_table;
 
   return result;
 }
