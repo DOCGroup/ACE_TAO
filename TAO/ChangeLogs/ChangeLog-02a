@@ -1,3 +1,26 @@
+Sun Mar 04 13:55:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * examples/AMI/FL_Callback/peer.cpp:
+        * examples/AMI/FL_Callback/progress.cpp:
+        * tests/DSI_Gateway/gateway.cpp:
+        * tests/DSI_Gateway/server.cpp:
+        * tests/Endpoint_Per_Priority/client.cpp:
+        * tests/Endpoint_Per_Priority/server.cpp:
+        * tests/FL_Cube/server.cpp:
+        * tests/Faults/client.cpp:
+        * tests/Faults/middle.cpp:
+        * tests/Faults/server.cpp:
+        * tests/LongUpcalls/ami_client.cpp:
+        * tests/LongUpcalls/ami_server.cpp:
+        * tests/LongUpcalls/blocking_client.cpp:
+        * tests/LongUpcalls/blocking_server.cpp:
+        * tests/LongWrites/client.cpp:
+        * tests/LongWrites/server.cpp:
+        * tests/MT_Client/server.cpp:
+        * tests/MT_Server/server.cpp:
+          More calls to resolve_initial_references() with a missing
+          ACE_TRY_ENV
+
 Sun Mar 04 13:14:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/PP_Memory_Management.txt:
