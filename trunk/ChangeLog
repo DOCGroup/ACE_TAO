@@ -1,3 +1,9 @@
+Mon May 24 12:16:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Corrected comments in the pthread_rwlock-related
+	  checks. They had cut/paste errors and said signinfo_t. Thanks to
+	  J.T. Conklin <jtc@acorntoolworks.com> for this fix.
+
 Fri May 21 16:44:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.mpc: Removed the pch
