@@ -2101,14 +2101,15 @@ ACE_OS::cleanup_tss (const u_int main_thread)
 #endif /* ! ACE_HAS_TSS_EMULATION  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-#if !defined (ACE_HAS_TSS_EMULATION)
-      // Don't do this with TSS_Emulation, because the
-      // ACE_TSS_Cleanup::in_use_key_ initialization isn't
-      // thread safe, yet.
+#if defined (ACE_WIN32)
+      // Don't do this with TSS_Emulation, because the the
+      // ACE_TSS_Cleanup::instance () has already exited ().  We can't
+      // safely access the TSS values that were created by the main
+      // thread.
 
       // Remove all TSS_Info table entries.
       ACE_TSS_Cleanup::instance ()->free_all_keys_left ();
-#endif /* ! ACE_HAS_TSS_EMULATION) */
+#endif /* ACE_WIN32 */
 
       // Finally, free up the ACE_TSS_Cleanup instance.  This method gets
       // called by the ACE_Object_Manager.
