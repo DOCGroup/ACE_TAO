@@ -16,7 +16,8 @@ Tue Mar 12 17:43:32 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* ace/CDR_Base.cpp (consolidate): If the incoming message block
 	  does not have a chain of message blocks, there is no need to do
 	  a deep copy, a refcount increment on the incoming datablock
-	  would do. 
+	  would do.  Thanks to Lothar Werzinger
+	  <Werzinger.Lothar@krones.de> for the patches. 
 
 Tue Mar 12 15:32:46 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
