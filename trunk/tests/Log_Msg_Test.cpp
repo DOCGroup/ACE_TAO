@@ -211,9 +211,12 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   const char *badname = "badname";
 
+  // We use the DEBUG messages instead of error messages. This is to
+  // help the scripts. If we print out error messages the scripts
+  // start catching them as errors.
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR,
+    ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("%n: (%x), can't open %s%r\n"),
                 10000,
                 badname,
@@ -358,7 +361,7 @@ test_ostream (void)
   // when the process exits.Ignore error returns in case this operation
   // is not supported.
   ACE_OS::unlink(filename);
- 
+
   ACE_FILE_Info info;
   if (file.get_info (info) == -1)
     {
