@@ -3,6 +3,38 @@
 #include "..\Supports_Test_impl.h"
 
 const char * ior = "file://test.ior";
+int num_trials = 1;
+int id = 0;
+
+int
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opts (argc, argv, "t:i:");
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    switch (c)
+      {
+      case 't':
+        num_trials = atoi (get_opts.optarg);
+        break;
+
+      case 'i':
+        id = atoi (get_opts.optarg);
+        break;
+
+      case '?':
+      default:
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "usage:  %s "
+                           "-t <trials> "
+                           "\n",
+                           argv [0]),
+                          -1);
+      }
+  // Indicates sucessful parsing of the command line
+  return 0;
+}
 
 int
 main (int argc, char *argv[])
@@ -13,6 +45,9 @@ main (int argc, char *argv[])
 
 		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "" ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
+
+    if (parse_args (argc, argv) != 0)
+      return 1;
 
 		CORBA::Object_var poa_object = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
@@ -81,66 +116,81 @@ main (int argc, char *argv[])
 
 	  if (CORBA::is_nil (my_test.in ())) ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::test obj ref <%s>\n", ior), 1);
 
-	
+	  my_test->start ();
+
 		/* Perform test */
 
+    for (int i = 0; i < num_trials; i++)
+    {
+
+    // Create a vt_graph_impl instance and store the reference as a
+    // vt_graph_var. Then register the instance with the POA to obtain an
+    // object reference, stored as a graph_var. Increment the reference count
+    // of the vt_graph_impl instance.
 		vt_graph_impl * the_vt_graph = 0;
 		ACE_NEW_RETURN (the_vt_graph, vt_graph_impl (3), 1);
 		Supports_Test::vt_graph_var test_vt_graph = the_vt_graph;
 
-    vt_graph_impl * the_vt_graph2 = 0;
-		ACE_NEW_RETURN (the_vt_graph2, vt_graph_impl (4), 1);
-    Supports_Test::graph_var test_graph = the_vt_graph2->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    Supports_Test::graph_var test_graph = the_vt_graph->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		if (CORBA::is_nil (test_graph.in ())) ACE_ERROR_RETURN ((LM_DEBUG, "Nil Supports_Test::graph obj ref\n"), 1);
+    the_vt_graph->DefaultValueRefCountBase::_add_ref ();
 
+    // At this point, test_vt_graph and test_graph refer to the same object.
 		ACE_ASSERT (test_vt_graph->size () == 3);
 		my_test->pass_vt_graph_in (test_vt_graph.in () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_vt_graph->size () == 3);
 
-		ACE_ASSERT (test_graph->size () == 4);
+		ACE_ASSERT (test_graph->size () == 3);
 		my_test->pass_obj_graph_in (test_graph.in () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
-		ACE_ASSERT (test_graph->size () == 5);
+		ACE_ASSERT (test_graph->size () == 4);
 
-    test_vt_graph->add_node ("NEW1");
+    test_vt_graph->add_node ("NEW2");
 
-    test_graph->add_node ("NEW2");
+    test_graph->add_node ("NEW3");
 
-    ACE_ASSERT (test_vt_graph->size () == 4);
+    // After the 'pass_vt_graph_out' call returns, test_vt_graph will refer to
+    // a new object.
+    ACE_ASSERT (test_vt_graph->size () == 6);
     my_test->pass_vt_graph_out (test_vt_graph.out () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
-		ACE_ASSERT (test_vt_graph->size () == 4);
+		ACE_ASSERT (test_vt_graph->size () == 5);
 
+    // 'test_graph' still refers to the original object, but after the
+    // 'pass_obj_graph_out' call returns, it will refer to a new object,
+    // residing on the server.
 		ACE_ASSERT (test_graph->size () == 6);
 		my_test->pass_obj_graph_out (test_graph.out () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_graph->size () == 5);
 
+    // test_vt_graph and test_graph now refer to different objects.
     test_vt_graph->add_node ("NEW2");
 
     test_graph->add_node ("NEW2");
 
-    ACE_ASSERT (test_vt_graph->size () == 5);
+    ACE_ASSERT (test_vt_graph->size () == 6);
     my_test->pass_vt_graph_inout (test_vt_graph.inout () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
-		ACE_ASSERT (test_vt_graph->size () == 6);
+		ACE_ASSERT (test_vt_graph->size () == 7);
 
 		ACE_ASSERT (test_graph->size () == 6);
 		my_test->pass_obj_graph_inout (test_graph.inout () ACE_ENV_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 		ACE_ASSERT (test_graph->size () == 7);
 
-		/* Shut down */
+    }
 
-		my_test->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    my_test->finish ();
+
+    /* Shut down */
 
 	  orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
 		ACE_TRY_CHECK;
 
-    ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client test finished\n"));
+    ACE_DEBUG ((LM_DEBUG, "Client (%P.%t) completed test successfully\n", id));
 
 	}
 	ACE_CATCHANY

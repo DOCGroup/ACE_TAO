@@ -4,7 +4,14 @@
 #define TAO_SUPPORTS_TEST_IMPL_H
 
 #include "Supports_TestS.h"
+#include "ace/Synch.h"
+#include "ace/Get_Opt.h"
 
+/**
+ * \class node_impl
+ *
+ * 
+ */
 class node_impl :
   public virtual OBV_Supports_Test::Node,
   public virtual CORBA::DefaultValueRefCountBase
@@ -71,12 +78,15 @@ public:
 };
 
 class test_impl :
-  public virtual POA_Supports_Test::test
+  public virtual POA_Supports_Test::test,
+  public virtual PortableServer::RefCountServantBase
 {
 
 public:
 
   test_impl (CORBA::ORB_ptr orb);
+
+  virtual ~test_impl (void);
 
 	virtual void pass_obj_graph_in (Supports_Test::graph * graph_param
                                ACE_ENV_ARG_DECL)
@@ -102,12 +112,19 @@ public:
                               ACE_ENV_ARG_DECL)
                               ACE_THROW_SPEC ((CORBA::SystemException));
 
-	virtual void shutdown (ACE_ENV_SINGLE_ARG_DECL)
+	virtual void start (ACE_ENV_SINGLE_ARG_DECL)
+                         ACE_THROW_SPEC ((CORBA::SystemException));
+
+	virtual void finish (ACE_ENV_SINGLE_ARG_DECL)
                          ACE_THROW_SPEC ((CORBA::SystemException));
 
 private:
 
   CORBA::ORB_var orb_;
+
+  int num_clients_;
+
+  ACE_Thread_Mutex lock_;
 
 };
 

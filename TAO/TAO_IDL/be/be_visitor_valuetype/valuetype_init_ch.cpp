@@ -85,10 +85,6 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       os << node->local_name () << "_init (void);" << be_nl;
     }
 
-  // Virtual destructor.
-  os << "virtual ~" << node->local_name () << "_init (void);";
-
-
   if (this->visit_valuetype_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,7 +95,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
     }
 
   // Generate _downcast method.
-  os << be_nl << be_nl
+  os << be_nl
      << "static " << node->local_name () << "_init* "
      << "_downcast (CORBA::ValueFactoryBase *);";
 
@@ -134,6 +130,10 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
          << "protected:" << be_idt_nl;
       os << node->local_name () << "_init (void);";
     }
+
+  // Protected virtual destructor.
+  os << be_uidt_nl << be_nl << "protected:" << be_idt_nl;
+  os << "virtual ~" << node->local_name () << "_init (void);";
 
   os << be_uidt_nl << "};";
 

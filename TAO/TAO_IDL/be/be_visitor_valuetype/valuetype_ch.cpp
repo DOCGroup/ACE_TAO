@@ -427,10 +427,10 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   this->ctx_->node (node); // save the node
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  // Every operation is declared virtual in the client code.
-  *os << "virtual ";
+  // Every operation is declared public and virtual in the client code.
+  *os << be_uidt_nl << "public:" << be_idt_nl << "virtual ";
 
   // STEP I: Generate the return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
@@ -533,13 +533,6 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                                             be_interface *base,
                                             TAO_OutStream *os)
 {
-  // We inherit from abstract supported interfaces, so no need
-  // to declare their pure virtual operations again in our scope.
-  /*if (base->is_abstract ())
-    {
-      return 0;
-    }
-   */
 
   AST_Decl *d = 0;
   be_visitor_context ctx;

@@ -1,5 +1,25 @@
 // $Id$
 
+///////////////////////////////////////////////////////////////////////////////
+/**
+ * \file Supports_Test.idl
+ *
+ * \author George Thomas Edwards <g.edwards@vanderbilt.edu>
+ *
+ * This file contain definitions of the valuetypes and interfaces of
+ * Supports_Test, a test of TAO's OBV capabilities. Specifically, Supports_Test
+ * checks proper operation of the following features:
+ *
+ * -Valuetypes that support concrete interfaces:
+ *    Using the same valuetype implementation, Supports_Test creates both
+ *    valuetypes and object references, passes them as parameters, and
+ *    invokes both local and remote calls.
+ * -ORB::register_value_factory () return values:
+ *    Supports_Test checks the return values of register_value_factory () to
+ *    ensure compliance with the spec.
+ */
+///////////////////////////////////////////////////////////////////////////////
+
 module Supports_Test
 {
 
@@ -7,6 +27,12 @@ module Supports_Test
 
 	typedef sequence<Node> Node_List;
 
+  /**
+   *
+   * This valuetype is the basic building block of the vt_graph valuetype,
+   * defined below. Some of these operations and state members are not
+   * currently used in the test.
+   */
 	valuetype Node
 	{
 
@@ -25,6 +51,14 @@ module Supports_Test
 
 	};
 
+  /**
+   * \interface graph
+   *
+   * This interface contains the operations we will invoke on vt_graph
+   * valuetypes as well as graph object references. The implementations of
+   * these operations will be defined in vt_graph. All graph object refs will
+   * be vt_graphs under the hood.
+   */
 	interface graph
 	{
 
@@ -37,22 +71,26 @@ module Supports_Test
 	valuetype vt_graph supports graph
 	{
 
-		public Node_List nodes_;
+		private Node_List nodes_;
 		factory create ();
 
 	};
 
+  /**
+   * \interface test
+   *
+   * This interface contains the operations that will perform the tests.
+   */
 	interface test
 	{
-
 		void pass_vt_graph_in (in vt_graph vt_graph_param);
 		void pass_obj_graph_in (in graph graph_param);
     void pass_vt_graph_out (out vt_graph vt_graph_param);
 		void pass_obj_graph_out (out graph graph_param);
 		void pass_vt_graph_inout (inout vt_graph vt_graph_param);
 		void pass_obj_graph_inout (inout graph graph_param);
-		oneway void shutdown ();
-
+    void start ();
+    oneway void finish ();
 	};
 
 };
