@@ -1,3 +1,12 @@
+Wed Oct 11 17:58:35 2000  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
+
+	* examples/Simple/time-date/svc.conf: Added the CORBA LOC
+	  and CORBA NAME parsers to be loaded explicitly before
+	  the ORB is loaded dynamically. This is necessary to avoid
+	  having the ORB call process_directive () on the Service
+	  Configurator and prohibiting further processing of the
+	  svc.conf during startup.
+
 Wed Oct 11 16:14:35 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Fault_Tolerance.dsp:
@@ -141,6 +150,7 @@ Tue Oct 10 16:59:18 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  files.  Many of these static project configurations were
 	  completely broken.
 
+>>>>>>> 1.1678
 Tue Oct 10 14:52:16 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
