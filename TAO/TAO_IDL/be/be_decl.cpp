@@ -808,7 +808,16 @@ be_decl::compute_prefix (void)
         }
       else
         {
-          this->prefix_ = ACE::strnew (scope->decl()->prefix ());
+          be_decl *d = scope->decl ();
+
+          if (d != 0)
+            {
+              this->prefix_ = ACE::strnew (d->prefix ());
+            }
+          else
+            {
+              this->prefix_ = ACE::strnew ("");
+            }
         }
     }
 }
