@@ -1,3 +1,12 @@
+Tue Sep 08 18:54:28 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS.h: Removed definitions of PTHREAD_DETACHED, PTHREAD_FLOAT,
+	  PTHREAD_INHERIT_SCHED from the ACE_HAS_PTHREADS_DRAFT6 section of
+	  mapping draft 6 names into the pthreads standard names.  The first
+	  two aren't used anywhere and the third is already defined on the
+	  known draft 6 platforms.  Thanks to Chuck Gehr and Arturo Montes for
+	  helping to straighten this out.
+
 Tue Sep  8 15:10:42 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * tests/Makefile:
