@@ -1,0 +1,118 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+The Recv implementation is nearly as simple as Xmit.  There's
+opportunity for error when we get the message size and we have to
+manage the lifetime of the tickler but other than that it's pretty
+basic stuff.
+<HR>
+<PRE>
+
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>Recv.h</font>"
+<font color=blue>#include</font> "<A HREF="../../../ace/SOCK_Stream.h">ace/SOCK_Stream.h</A>"
+
+<font color=red>/* Construct the object with the peer reference and other appropriate
+   initializations.
+*/</font>
+<font color=#008888>Recv::Recv</font>( ACE_SOCK_Stream & _peer )
+        : Protocol_Task(), peer_(_peer), error_(0)
+{
+     <font color=red>// Create the tickler that get() will use to trigger recv()</font>
+     <font color=red>// through the baseclass.  Since we're single-threaded this is</font>
+     <font color=red>// probably overkill but it makes multi-threading easier if we</font>
+     <font color=red>// choose to do that.</font>
+    tickler_ = new ACE_Message_Block(1);
+}
+
+<font color=red>/* Be sure we manage the lifetime of the tickler to prevent a memory
+   leak.
+*/</font>
+<font color=#008888>Recv::~Recv</font>(void)
+{
+    tickler_->release();
+}
+
+<font color=red>/* By putting the tickler to ourselves we cause things to happen in
+   the baseclass that will invoke recv().  If we know we're single
+   threaded we could directly call recv() and be done with it but then
+   we'd have to do something else if we're multi-threaded.  Just let
+   the baseclass worry about those things!
+*/</font>
+int <font color=#008888>Recv::get</font>(void)
+{
+    return this->put( tickler_, 0 );
+}
+
+int <font color=#008888>Recv::recv</font>(ACE_Message_Block * message, ACE_Time_Value *timeout)
+{
+    int rval;
+
+        <font color=red>/* Xmit will send us the message length in clear-text.  I
+           assume that will be less than 32-bytes!
+        */</font>
+    char msize[32];
+    int b = 0;
+
+        <font color=red>/* Read from the socket one byte at a time until we see then
+           end-of-string NULL character.  Since the OS layers (at least
+           in Unix) will provide some buffering this isn't as bad as
+           it may seem at first.
+
+           The byte-at-a-time recv breaks horribly on Win32 where the
+           WFMO_Reactor is used.  This is because the socket has been
+           placed into non-blocking mode and only the recv() of the
+           first byte will block.  The solution is to use
+           ACE_Select_Reactor which doesn't change the socket
+           characteristics.  We did that back in main(), so we should
+           be in good shape now.
+        */</font>
+    do
+    {
+        rval = this->peer().recv( &msize[b], 1, timeout );
+        if( rval == -1 )
+        {
+            error_ = 1;
+            ACE_ERROR_RETURN ((LM_ERROR, "<font color=green>%p\n</font>", "<font color=green><font color=#008888>Recv::recv</font>() Failed to get message size.</font>"), -1);
+        }
+    }
+    while( msize[b++] != 0 );
+
+    int size = <font color=#008888>ACE_OS::atoi</font>(msize);
+
+        <font color=red>// Make a block big enough to contain the data we'll read</font>
+    message = new ACE_Message_Block( size );
+
+        <font color=red>// Read the actual message data into our new message block</font>
+    rval = this->peer().recv_n( message->wr_ptr(), size, 0, timeout );
+
+        <font color=red>// If we got the data correctly then send it on upstream.</font>
+    if( rval > 0 )
+    {
+        message->wr_ptr( rval );
+        return( this->put_next( message ) );
+    }
+
+        <font color=red>// Something bad happend on the recv_n().  Set an error flag</font>
+        <font color=red>// and return error.</font>
+    error_ = 1;
+
+    return( -1 );
+}
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page18.html">Continue This Tutorial</A>]</CENTER>
+
