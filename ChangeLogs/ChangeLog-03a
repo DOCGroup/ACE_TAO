@@ -1,3 +1,10 @@
+Wed Sep  5 16:50:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* THANKS: Added Peter Phillips <pphillip@opentext.com> to the hall
+	  of fame.
+
+	* ace/OS_String.cpp: Fixed a warning in TRU64 builds.
+
 Wed Sep  5 11:29:59 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/SOCK_Dgram.h:
