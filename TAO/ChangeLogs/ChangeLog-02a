@@ -1,3 +1,38 @@
+Thu Sep  7 23:03:27 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tao/Acceptor_Filter.h:
+
+	  Replaced <evaluate> method with a more powerful
+	  <fill_mprofile>.  TAO_Acceptor_Filter class has now more
+	  control/responsibility over mprofile creation: rather than just
+	  approving/disapproving individual endpoints, it does all the
+	  work of populating mprofile.
+
+	  Added class documentation.
+
+	* tao/Acceptor_Registry.h
+	* tao/Acceptor_Registry.cpp (create_mprofile):
+
+	  Delegated most of the work of creating mprofile to <filter>.
+
+	* tao/PortableServer/POA.cpp:
+
+	  - Renamed TAO_Server_Policy_Acceptor_Filter class to
+	  TAO_Server_Protocol_Acceptor_Filter.
+
+	 - Reimplemented the class in accordance with the changes in
+	  Acceptor_Filter.h above.  This fixes incorrect profile ordering
+	  with ServerProtocolPolicy bug introduced with separation of
+	  PortableServer.
+
+	 - Added new concrete filter class, TAO_Default_Acceptor_Filter,
+	  which implements the default strategy of including all endpoints
+	  into mprofile.
+
+	* tao/ORB_Core.cpp (create_stub_object):
+
+	  Added a check that mprofile contains at least one profile.
+
 Thu Sep  7 16:09:30 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.cpp (string_copy):

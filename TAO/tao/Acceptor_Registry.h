@@ -78,15 +78,10 @@ public:
 
   int make_mprofile (const TAO_ObjectKey& object_key,
                      TAO_MProfile &mprofile,
-                     TAO_Acceptor_Filter *filter = 0);
-  // Add profiles to the <mprofile> object for all open endpoints.
-  // <poa> parameter is passed because the POA may contain some
-  // information affecting how/which profiles get created.
-  // Currently, this information is the ServerProtocolPolicy in
-  // RTCORBA.
-  // @@ With forthcoming RTCORBA threadpool changes, this parameter
-  // may become unnecessary if each acceptor registry is associated
-  // with a poa.
+                     TAO_Acceptor_Filter *filter);
+  // Use <filter> to populate <mprofile> object with profiles.
+  // Different filters implement different strategies for selection
+  // of endpoints to be included into <mprofile>.
 
   int is_collocated (const TAO_MProfile& mprofile);
   // Check if there is at least one profile in <mprofile> that

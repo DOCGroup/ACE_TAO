@@ -1699,7 +1699,9 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
   // Create a profile container and have Acceptor_Registry populate it
   // with profiles as appropriate.
   TAO_MProfile mp (0);
-  if (this->acceptor_registry ()->make_mprofile (key, mp, filter) == -1)
+  if (this->acceptor_registry ()->make_mprofile (key, mp, filter)
+      == -1
+      || mp.profile_count () == 0)
   {
     ACE_THROW_RETURN (CORBA::INTERNAL (
                         CORBA::SystemException::_tao_minor_code (
@@ -1726,7 +1728,7 @@ TAO_ORB_Core::create_stub_object (const TAO_ObjectKey &key,
       for (CORBA::ULong i = 0; i < mp.profile_count (); ++i)
         {
           // Get the ith profile
-          profile = mp.get_next ();
+          profile = mp.get_profile (i);
           profile->the_stub (stub);
           profile->policies (policy_list);
         }
