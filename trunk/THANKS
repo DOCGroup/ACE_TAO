@@ -1111,6 +1111,7 @@ Bogdan Jeram <bjeram@eso.org>
 Sebastian Schubert <sschuber@et.htwk-leipzig.de>
 Li Zhou <lizhou@doc.ece.uci.edu>
 Shivakumar Patil <shivakumar.patil@stdc.com>
+McGanahan Skjellifetti <cmeier@concentus-tech.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that

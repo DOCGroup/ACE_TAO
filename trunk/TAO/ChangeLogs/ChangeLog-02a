@@ -9,6 +9,9 @@ Mon Jan  8 17:27:29 2001  Darrell Brunsch <brunsch@uci.edu>
 
           statement in TAO_Policy_Manager_Impl::set_policy_overrides.
 
+          Thanks to McGanahan Skjellifetti <cmeier@concentus-tech.com>
+          for submitting a bug report about this.  
+
         * orbsvcs/orbsvcs/AV/sfp.cpp:
 
           Fixed some unused argument warnings.
