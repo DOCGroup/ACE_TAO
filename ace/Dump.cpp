@@ -53,18 +53,15 @@ ACE_ODB::instance (void)
 {
   ACE_TRACE ("ACE_ODB::instance");
 
-  if (ACE_ODB::instantiated_ == 0)
+  if (ACE_ODB::instance_ == 0)
     {
       ACE_MT (ACE_Thread_Mutex *lock =
         ACE_Managed_Object<ACE_Thread_Mutex>::get_preallocated_object
           (ACE_Object_Manager::ACE_DUMP_LOCK);
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, 0));
 
-      if (ACE_ODB::instantiated_ == 0)
-        {
-          ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);
-          ACE_ODB::instantiated_ = -1;
-        }
+      if (ACE_ODB::instance_ == 0)
+        ACE_NEW_RETURN (ACE_ODB::instance_, ACE_ODB, 0);
     }
 
   return ACE_ODB::instance_;
@@ -132,7 +129,6 @@ ACE_ODB::remove_object (const void *this_ptr)
 }
 
 ACE_ODB *ACE_ODB::instance_ = 0;
-int ACE_ODB::instantiated_ = 0;
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 ACE_MT (template class ACE_Guard<ACE_Thread_Mutex>);

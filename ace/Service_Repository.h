@@ -115,9 +115,6 @@ private:
   static ACE_Service_Repository *svc_rep_;
   // Pointer to a process-wide <ACE_Service_Repository>.
 
-  static int instantiated_;
-  // Flag indicating whether the singleton has been instantiated or not.
-
   static int delete_svc_rep_;
   // Must delete the <svc_rep_> if non-0.
 

@@ -324,9 +324,6 @@ private:
   static ACE_Proactor *proactor_;
   // Pointer to a process-wide <ACE_Proactor>.
 
-  static int instantiated_;
-  // Flags indicating whether <proactor_> has been instantiated or not.
-
   static int delete_proactor_;
   // Must delete the <proactor_> if non-0.
 
