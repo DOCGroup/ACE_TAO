@@ -21,8 +21,9 @@
 #ifndef TODAY_H
 #define TODAY_H
 
-#include "Magazine.h"
 #include "ace/os_include/os_stddef.h"
+#include "ace/OS_Memory.h"
+#include "Magazine.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -46,6 +47,10 @@ public:
   // created/deleted using the memory allocator associated with the
   // DLL/SO.
   void *operator new (size_t bytes);
+#if defined (ACE_HAS_NEW_NOTHROW)
+  // Overloaded new operator, nothrow_t variant.
+  void *operator new (size_t bytes, const ACE_nothrow_t&);
+#endif
   void operator delete (void *ptr);
 };
 
