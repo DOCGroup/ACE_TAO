@@ -1,3 +1,8 @@
+Tue Feb 24 18:13:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* performance-tests/Synch-Benchmarks/Base_Test/Baseline_Test{h,cpp}:
+          Fixed compile problems in wchar builds
+
 Tue Feb 24 17:58:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Hash_Map_Manager_T.{h,i}:
