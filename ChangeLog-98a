@@ -1,3 +1,13 @@
+Tue Dec 02 00:18:04 1997    <irfan@TWOSTEP>
+
+	* ace/Memory_Pool.cpp (handle_signal): If guess_on_fault_ is true,
+ 	  then we cannot call remap(0).  This will always put the address
+ 	  out of range.  Therefore, we will shoot in the dark (user has
+ 	  instructed us to do so as guess_on_fault_ is true) and try to
+ 	  remap the file.  If the user does not want this behavior, the
+ 	  guess_on_fault_ flag should be turned off.  Thanks to Jon
+ 	  Prettyman <jonp@als.ameritech.com> for pointing this out.
+	  
 Mon Dec 01 16:13:06 1997    <irfan@TWOSTEP>
 
 	* ace/config-win32-common.h: Added back ACE_LACKS_ACE_IOSTREAM to
