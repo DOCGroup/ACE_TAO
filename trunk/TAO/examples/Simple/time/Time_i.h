@@ -4,7 +4,7 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO/tests/Simple/time
+//    TAO/examples/Simple/time
 //
 // = FILENAME
 //    Time_i.h
