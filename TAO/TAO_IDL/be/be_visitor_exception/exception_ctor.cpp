@@ -42,11 +42,12 @@ be_visitor_exception_ctor::~be_visitor_exception_ctor (void)
 }
 
 int
-be_visitor_exception_ctor::post_process (void)
+be_visitor_exception_ctor::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
 
-  *os << ",\n";
+  if (!this->last_node (bd))
+    *os << ",\n";
   return 0;
 }
 

@@ -21,22 +21,6 @@
 #if !defined (TAO_BE_FACTORY_H)
 #define TAO_BE_FACTORY_H
 
-class TAO_Visitor_Factory
-{
-  // =TITLE
-  //   TAO_Visitor_Factory
-  //
-  // =DESCRIPTION
-  //   Abstract factory that creates visitors
-public:
-  virtual ~TAO_Visitor_Factory (void);
-  // destructor
-
-  virtual be_visitor *make_visitor (be_visitor_context *) = 0;
-  // create the right visitor
-
-};
-
 class TAO_OutStream_Factory
 {
   // =TITLE

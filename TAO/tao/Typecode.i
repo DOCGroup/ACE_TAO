@@ -226,12 +226,12 @@ CORBA_TypeCode_out::CORBA_TypeCode_out (CORBA_TypeCode_var &p)
 }
 
 ACE_INLINE
-CORBA_TypeCode_out::CORBA_TypeCode_out (CORBA_TypeCode_out &p)
+CORBA_TypeCode_out::CORBA_TypeCode_out (const CORBA_TypeCode_out &p)
   : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE CORBA_TypeCode_out &
-CORBA_TypeCode_out::operator= (CORBA_TypeCode_out &p)
+CORBA_TypeCode_out::operator= (const CORBA_TypeCode_out &p)
 {
   this->ptr_ = p.ptr_;
   return *this;

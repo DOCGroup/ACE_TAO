@@ -404,10 +404,10 @@ public:
   CORBA_Any_out (CORBA_Any_var &p);
   // construction from a var
 
-  CORBA_Any_out (CORBA_Any_out &s);
+  CORBA_Any_out (const CORBA_Any_out &s);
   // copy constructor
 
-  CORBA_Any_out &operator= (CORBA_Any_out &s);
+  CORBA_Any_out &operator= (const CORBA_Any_out &s);
   // assignment from a CORBA_Any_out
 
   CORBA_Any_out &operator= (CORBA_Any *p);

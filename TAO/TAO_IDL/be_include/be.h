@@ -118,9 +118,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include        "be_helper.h"           // helper functions
 #include        "be_codegen.h"          // code generator
-#include        "be_factory.h"          // factory
+#include        "be_stream_factory.h"   // output stream factory
 
 #include 	"be_visitor.h"          // abstract visitor
+#include        "be_visitor_factory.h"  // visitor factory
 #include        "be_visitor_context.h"  // visitor context
 
 #endif           // _BE_BE_HH

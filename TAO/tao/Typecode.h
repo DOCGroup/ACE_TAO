@@ -452,8 +452,8 @@ class TAO_Export CORBA_TypeCode_out
 public:
   CORBA_TypeCode_out (CORBA_TypeCode_ptr &);
   CORBA_TypeCode_out (CORBA_TypeCode_var &);
-  CORBA_TypeCode_out (CORBA_TypeCode_out &);
-  CORBA_TypeCode_out &operator= (CORBA_TypeCode_out &);
+  CORBA_TypeCode_out (const CORBA_TypeCode_out &);
+  CORBA_TypeCode_out &operator= (const CORBA_TypeCode_out &);
   CORBA_TypeCode_out &operator= (const CORBA_TypeCode_var &);
   CORBA_TypeCode_out &operator= (CORBA_TypeCode_ptr);
   operator CORBA_TypeCode_ptr &();

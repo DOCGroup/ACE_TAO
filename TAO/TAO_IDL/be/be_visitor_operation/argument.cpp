@@ -43,19 +43,23 @@ be_visitor_operation_argument::~be_visitor_operation_argument (void)
 }
 
 int
-be_visitor_operation_argument::post_process (void)
+be_visitor_operation_argument::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  switch (this->ctx_->state ())
+  
+  if (!this->last_node (bd))
     {
-    case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
-    case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
-    case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
-    case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
-      *os << ",\n";
-      break;
-    default:
-      break;
+      switch (this->ctx_->state ())
+        {
+        case TAO_CodeGen::TAO_OPERATION_ARG_UPCALL_SS:
+        case TAO_CodeGen::TAO_OPERATION_COLLOCATED_ARG_UPCALL_SS:
+        case TAO_CodeGen::TAO_OPERATION_ARG_DEMARSHAL_SS:
+        case TAO_CodeGen::TAO_OPERATION_ARG_MARSHAL_SS:
+          *os << ",\n";
+          break;
+        default:
+          break;
+        }
     }
   return 0;
 }
@@ -117,14 +121,14 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
 
   switch (this->ctx_->state ())
     {
-    case TAO_CodeGen::TAO_OPERATION_ARG_PRE_DOCALL_CS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_PRE_DOCALL_CS);
+    case TAO_CodeGen::TAO_OPERATION_ARG_PRE_INVOKE_CS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_PRE_INVOKE_CS);
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARG_DOCALL_CS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_DOCALL_CS);
+    case TAO_CodeGen::TAO_OPERATION_ARG_INVOKE_CS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_INVOKE_CS);
       break;
-    case TAO_CodeGen::TAO_OPERATION_ARG_POST_DOCALL_CS:
-      ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_DOCALL_CS);
+    case TAO_CodeGen::TAO_OPERATION_ARG_POST_INVOKE_CS:
+      ctx.state (TAO_CodeGen::TAO_ARGUMENT_POST_INVOKE_CS);
       break;
     case TAO_CodeGen::TAO_OPERATION_ARG_DECL_SS:
       ctx.state (TAO_CodeGen::TAO_ARGUMENT_VARDECL_SS);

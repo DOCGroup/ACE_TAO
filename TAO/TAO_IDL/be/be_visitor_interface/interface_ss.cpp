@@ -278,16 +278,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << be_nl;
   *os << "// find the skeleton corresponding to this opname" << be_nl;
   *os << "if (this->_find (opname, skel) == -1)" << be_nl;
-  *os << "{\n";
-  os->incr_indent ();
-  *os << "env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));"
-      << be_nl;
-  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));\n";
-  os->decr_indent ();
-  *os << "}\n";
-  *os << "else" << be_nl;
-  *os << "  skel (req, this, context, env);\n";
-  os->decr_indent ();
+  *os << "{" << be_idt_nl;
+  *os << "ACE_ERROR ((LM_ERROR, \"Bad operation <%s>\\n\", opname));" << be_nl;
+  *os << "TAO_THROW_ENV (CORBA_BAD_OPERATION (CORBA::COMPLETED_NO), "
+      << "env);" << be_uidt_nl;
+    //  *os << "env.exception (new CORBA_BAD_OPERATION (CORBA::COMPLETED_NO));" << be_nl;
+  *os << "}" << be_nl;
+  *os << "else" << be_idt_nl;
+  *os << "skel (req, this, context, env);" << be_uidt << be_uidt_nl;
   *os << "}\n\n";
 
   os->indent ();
@@ -331,8 +329,9 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "::_this (CORBA_Environment &_env)" << be_nl
       << "{" << be_idt_nl
       << "STUB_Object *stub = this->_create_stub (_env);" << be_nl
-      << "if (_env.exception () != 0)" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "TAO_CHECK_ENV_RETURN (_env, 0);" << be_nl
+    //      << "if (_env.exception () != 0)" << be_idt_nl
+    //      << "return 0;" << be_uidt_nl
       << "return new " << node->full_coll_name ()
       << " (this, stub);" << be_uidt << be_nl;
 

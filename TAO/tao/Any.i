@@ -284,13 +284,13 @@ CORBA_Any_out::CORBA_Any_out (CORBA_Any_var &s)
 }
 
 ACE_INLINE
-CORBA_Any_out::CORBA_Any_out (CORBA_Any_out &s)
+CORBA_Any_out::CORBA_Any_out (const CORBA_Any_out &s)
   : ptr_ (s.ptr_)
 {
 }
 
 ACE_INLINE CORBA_Any_out &
-CORBA_Any_out::operator= (CORBA_Any_out &s)
+CORBA_Any_out::operator= (const CORBA_Any_out &s)
 {
   this->ptr_ = s.ptr_;
   return *this;

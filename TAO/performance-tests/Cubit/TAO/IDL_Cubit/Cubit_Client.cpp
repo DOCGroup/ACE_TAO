@@ -793,6 +793,8 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_struct", elapsed_time);
 
+#if 0 /* ASG - temporarily commented out since <<, >> operators for unions are
+         not supported yet */
   // UNION
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -802,6 +804,7 @@ Cubit_Client::run (int testing_collocation)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_union_stub call", elapsed_time);
+#endif /* ASG */
 
   // SMALL LONG SEQUENCES
   this->call_count_ = 0;
@@ -857,6 +860,8 @@ Cubit_Client::run (int testing_collocation)
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube mixin (short/octet/long)", elapsed_time);
 
+#if 0 /* ASG - temporarily commented out since <<, >> operators for unions are
+         not supported yet */
   // RTI
   this->call_count_ = 0;
   this->error_count_ = 0;
@@ -866,6 +871,7 @@ Cubit_Client::run (int testing_collocation)
   timer.stop ();
   timer.elapsed_time (elapsed_time);
   this->print_stats ("cube_rti_data", elapsed_time);
+#endif /* ASG */
 
   // ONEWAY
   this->call_count_ = 0;
