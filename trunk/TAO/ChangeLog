@@ -13,7 +13,12 @@ Fri Apr  9 12:28:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
           Moved the check for the repo id having been
           already set with 'typeid' earlier, before the
-          call to replace the repo id itself.
+          call to replace the repo id itself. The previous logic,
+          coupled with the recent change to compute repository
+          IDs in the IDL compiler eagerly, led to bogus errors
+          when a #pragma ID directive is encountered in an IDL
+          file. Thanks to Mehrdad Nazari <mehrdad.nazari@excite.com>
+          for reporting the bug.
 
         * TAO_IDL/include/utl_err.h (id_reset_error):
         * TAO_IDL/util/utl_err.cpp (id_reset_error):
