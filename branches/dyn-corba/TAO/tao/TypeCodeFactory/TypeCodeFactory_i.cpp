@@ -537,7 +537,7 @@ TAO_TypeCodeFactory_i::create_native_tc (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_recursive_tc (
     const char *id
-    ACE_ENV_ARG_DECL_NOT_USED
+    ACE_ENV_ARG_DECL
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
