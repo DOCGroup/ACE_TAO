@@ -1,5 +1,5 @@
 # Microsoft Developer Studio Project File - Name="ORB Services Static" - Package Owner=<4>
-# Microsoft Developer Studio Generated Build File, Format Version 5.00
+# Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Static Library" 0x0104
@@ -41,7 +41,8 @@ CPP=cl.exe
 # PROP Intermediate_Dir "Release\Static"
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D TAO_HAS_DLL=0 /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /YX /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O2 /I "..\\" /I "..\..\\" /I "..\..\..\\" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D ACE_HAS_DLL=0 /D TAO_HAS_DLL=0 /D __ACE_INLINE__=0 /FD /c
+# SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
