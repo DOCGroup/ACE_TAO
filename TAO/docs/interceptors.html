@@ -356,6 +356,38 @@ module PortableInterceptor
       <CODE>IOP::TaggedComponent</CODE>.  This means that it could
       compliment the IOR interceptor support, and the service context
       manipulation support found in request interceptors.
+  <li>Implemented the
+      <CODE>PortableInterceptor::ServerRequestInfo::object_id</CODE>,
+      <CODE>PortableInterceptor::ServerRequestInfo::adapter_id</CODE>
+      and
+      <CODE>PortableServer::POA::id</CODE> methods.
+  <li>Greatly improved the speed of the
+      <CODE>PortableInterceptor::RequestInfo::arguments</CODE> method
+      for the case when a given target method has more than one
+      parameter.
+  <li>Corrected the <CODE>Dynamic::Parameter</CODE> IDL.  It now
+      correctly uses the <CODE>CORBA::ParameterMode</CODE> enumeration
+      in place of the <CODE>Dynamic::ParameterMode</CODE>
+      enumeration.  The latter has been removed since it was not a
+      standard type.
+  <li>The
+      <CODE>PortableInterceptor::ClientRequestInterceptor::send_request</CODE>
+      interception point now occurs before a connection attempt to the
+      target is ever made.  This greatly improves the speed of client
+      request interceptor initiated <CODE>LOCATION_FORWARD</CODE>s, in
+      addition to making it possible to prevent connection attempts
+      from occuring by throwing an exception, for example.
+  <li>Corrected <CODE>PortableIntercptor::ForwardRequest</CODE>
+      support.  It is longer possible to throw a
+      <CODE>PortableInterceptor::ForwardRequest</CODE> exception in
+      application code (i.e. not an interceptor) and expect it to be
+      converted to a <CODE>LOCATION_FORWARD</CODE>.  A
+      <CODE>PortableInterceptor::ForwardRequest</CODE> exception will
+      now only be treated as a <CODE>LOCATION_FORWARD</CODE> if it is
+      thrown from an interception point capable of raising that
+      exception.  Otherwise it will be propagated to the client.  This
+      change also has the added benefit of reducing the stub/skeleton
+      footprint, particularly for IDL with many interfaces.
 </ul>
 
 <hr><P>
