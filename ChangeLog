@@ -1,3 +1,8 @@
+Mon Sep 13 09:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-icc-common.h:
+          Added ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+
 Mon Sep 13 09:31:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * configure.ac:
