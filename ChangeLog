@@ -1,3 +1,8 @@
+Wed Jun 16 12:05:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/ACE-porting.html:
+          Updated, we now require C++ namespace and ANSI casts.
+
 Wed Jun 16 10:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_ctype.{h,inl}:
