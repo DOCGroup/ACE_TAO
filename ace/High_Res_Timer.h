@@ -5,13 +5,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    High_Res_Timer.h
 //
 // = AUTHOR
-//    Doug Schmidt 
-// 
+//    Doug Schmidt
+//
 // ============================================================================
 
 #if !defined (ACE_HIGH_RES_TIMER_H)
@@ -23,22 +23,26 @@ class ACE_Export ACE_High_Res_Timer
   // = TITLE
   //     A high resolution timer class wrapper that encapsulates
   //     OS-specific high-resolution timers, such as those found on
-  //     Solaris, AIX, Win32, and VxWorks.
+  //     Solaris, AIX, Win32/Pentium, and VxWorks.
   //
   // = DESCRIPTION
-  //     Many of the member functions return -1 if the OS does not
-  //     provide high-resolution time support.  On success, these functions
-  //     return other than -1, but not any number in particular (they don't
-  //     return 0 in order to maximize performance as much as possible,
-  //     while still providing a -1 return value on unsupported platforms).
+  //     Most of the member functions don't return values.  The only
+  //     reason that one would fail is if high-resolution time isn't
+  //     supported on the platform.  To avoid impacting performance and
+  //     complicating the interface, the "supported ()" member function was
+  //     added.  It returns 1 if high-resolution time (ACE_OS::gethrtime ())
+  //     is supported on the platform, and 0 if not.
   //
   //     NOTE:  the elapsed time calculations in the print methods use
-  //     hrtime_t values.  If hrtime_t is not a 64-bit type
+  //     ACE_hrtime_t values.  If ACE_hrtime_t is not a 64-bit type
   //     (ACE_HAS_LONGLONG_T), then those calculations are more susceptible
   //     to overflow.  Those methods do _not_ check for overflow!
 {
 public:
   // = Initialization method.
+
+  static int supported ();
+  // Returns 1 if high-resolution time is supported on the platform, 0 if not.
 
   ACE_High_Res_Timer (void);
   // Initialize the timer.
@@ -46,13 +50,11 @@ public:
   void reset (void);
   // Reinitialize the timer.
 
-  int start (void);
-  // Start timing.  Returns -1 if high resolution timers are
-  // not implemented on the platform.
+  void start (void);
+  // Start timing.
 
-  int stop (void);
-  // Stop timing.  Returns -1 if high resolution timers are
-  // not implemented on the platform.
+  void stop (void);
+  // Stop timing.
 
   void elapsed_time (ACE_Time_Value &tv);
   // Set <tv> to the number of microseconds elapsed.
@@ -62,16 +64,14 @@ public:
   // returns the elapsed (stop - start) time in a timespec_t (sec, nsec)
 #endif /* ACE_HAS_POSIX_TIME */
 
-  void elapsed_microseconds (hrtime_t &usecs) const;
+  void elapsed_microseconds (ACE_hrtime_t &usecs) const;
   // Sets <usecs> to the elapsed (stop - start) time in microseconds.
 
-  int start_incr (void);
-  // Start incremental timing.  Returns -1 if high resolution timers are
-  // not implemented on the platform.
+  void start_incr (void);
+  // Start incremental timing.
 
-  int stop_incr (void);
-  // Stop incremental timing.  Returns -1 if high resolution timers are
-  // not implemented on the platform.
+  void stop_incr (void);
+  // Stop incremental timing.
 
   void elapsed_time_incr (ACE_Time_Value &tv);
   // Set <tv> to the number of microseconds elapsed between all
@@ -95,16 +95,16 @@ public:
   // Declare the dynamic allocation hooks.
 
 private:
-  hrtime_t start_;
+  ACE_hrtime_t start_;
   // Starting time.
 
-  hrtime_t end_;
+  ACE_hrtime_t end_;
   // Ending time.
 
-  hrtime_t total_;
+  ACE_hrtime_t total_;
   // Total elapsed time.
 
-  hrtime_t start_incr_;
+  ACE_hrtime_t start_incr_;
   // Start time of incremental timing.
 };
 

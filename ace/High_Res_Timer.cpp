@@ -20,7 +20,7 @@ ACE_High_Res_Timer::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-void 
+void
 ACE_High_Res_Timer::reset (void)
 {
   ACE_TRACE ("ACE_High_Res_Timer::reset");
@@ -30,18 +30,18 @@ ACE_High_Res_Timer::reset (void)
   (void) ACE_OS::memset (&this->start_incr_, 0, sizeof this->start_incr_);
 }
 
-void 
+void
 ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
-  hrtime_t total       = this->end_ - this->start_;
-  hrtime_t total_secs  = total / (1000 * 1000 * 1000);
-  u_long extra_nsecs = total - (total_secs * (1000 * 1000 * 1000));
+  ACE_hrtime_t total       = this->end_ - this->start_;
+  ACE_hrtime_t total_secs  = total / (1000 * 1000 * 1000);
+  u_long extra_nsecs = total % (1000 * 1000 * 1000);
 
   char buf[100];
   if (count > 1)
     {
-      hrtime_t avg_nsecs = total / count;
+      ACE_hrtime_t avg_nsecs = total / count;
       ACE_OS::sprintf (buf, " count = %d, total (secs %lld, usecs %lu), avg usecs = %lld\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
              (avg_nsecs + 500) / 1000);
@@ -54,17 +54,17 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
   ACE_OS::write (handle, buf, strlen (buf));
 }
 
-void 
+void
 ACE_High_Res_Timer::print_total (const char *str, const int count, ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
-  hrtime_t total_secs  = this->total_ / (1000 * 1000 * 1000);
-  u_long extra_nsecs = this->total_ - (total_secs * (1000 * 1000 * 1000));
+  ACE_hrtime_t total_secs  = this->total_ / (1000 * 1000 * 1000);
+  u_long extra_nsecs = this->total_ % (1000 * 1000 * 1000);
 
   char buf[100];
   if (count > 1)
     {
-      hrtime_t avg_nsecs   = this->total_ / count;
+      ACE_hrtime_t avg_nsecs   = this->total_ / count;
       ACE_OS::sprintf (buf, " count = %d, total (secs %lld, usecs %lu), avg usecs = %lld\n",
              count, total_secs, (extra_nsecs + 500) / 1000,
              (avg_nsecs + 500) / 1000);
