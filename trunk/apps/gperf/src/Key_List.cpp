@@ -185,8 +185,8 @@ Key_List::output_types (void)
       else
         {
           // Yow, we've got a user-defined type...
-          int struct_tag_length = ACE_OS::strcspn (array_type_,
-                                                   "{\n\0");
+          size_t struct_tag_length = ACE_OS::strcspn (array_type_,
+                                                      "{\n\0");
           if (option[POINTER])      // And it must return a pointer...
             {
               ACE_NEW_RETURN (return_type,
@@ -249,8 +249,9 @@ Key_List::read_keys (void)
           const char *delimiter = option.delimiter ();
           ACE_NEW_RETURN (this->head,
                           List_Node (buffer,
-                                     ACE_OS::strcspn (buffer,
-                                                      delimiter)),
+                                     ACE_static_cast (int,
+                                       ACE_OS::strcspn (buffer,
+                                                        delimiter))),
                           -1);
           for (temp = this->head;
                (buffer = input.read ('\n'))
@@ -259,8 +260,9 @@ Key_List::read_keys (void)
             {
               ACE_NEW_RETURN (temp->next,
                               List_Node (buffer,
-                                         ACE_OS::strcspn (buffer,
-                                                          delimiter)),
+                                         ACE_static_cast (int,
+                                           ACE_OS::strcspn (buffer,
+                                                            delimiter))),
                               -1);
               this->total_keys++;
             }
@@ -1862,10 +1864,10 @@ Key_List::dump (void)
 
   u_int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig")
     ? option.max_keysig_size ()
-    : ACE_OS::strlen ("keysig");
+    : ACE_static_cast (u_int, ACE_OS::strlen ("keysig"));
 
-  u_int key_length = this->max_key_length ();
-  u_int keyword_width = key_length > ACE_OS::strlen ("keysig")
+  size_t key_length = this->max_key_length ();
+  size_t keyword_width = key_length > ACE_OS::strlen ("keysig")
     ? key_length
     : ACE_OS::strlen ("keysig");
 

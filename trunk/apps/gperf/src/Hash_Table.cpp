@@ -52,7 +52,7 @@ Hash_Table::~Hash_Table (void)
 {
   if (option[DEBUGGING])
     {
-      u_int keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
+      size_t keysig_width = option.max_keysig_size () > ACE_OS::strlen ("keysig") 
         ? option.max_keysig_size () 
         : ACE_OS::strlen ("keysig");
 
@@ -65,7 +65,7 @@ Hash_Table::~Hash_Table (void)
                   keysig_width,
                   "keysig"));
 
-      for (int i = this->size_ - 1; i >= 0; i--)
+      for (int i = ACE_static_cast (int, this->size_ - 1); i >= 0; i--)
         if (this->table_[i])
           ACE_DEBUG ((LM_DEBUG,
                       "%8d, %*s, %s\n",
@@ -88,12 +88,12 @@ List_Node *
 Hash_Table::find (List_Node *item,
                   int ignore_length)
 {
-  u_int hash_val = ACE::hash_pjw (item->keysig);
+  size_t hash_val = ACE::hash_pjw (item->keysig);
   // The following works since the hash table size_ is always a power
   // of 2...
   size_t size = this->size_ - 1;
-  int probe;
-  int increment = (hash_val ^ (ignore_length == 0 ? item->length : 0) | 1) & size;
+  size_t probe;
+  size_t increment = (hash_val ^ (ignore_length == 0 ? item->length : 0) | 1) & size;
 
   for (probe = hash_val & size;
        this->table_[probe]
