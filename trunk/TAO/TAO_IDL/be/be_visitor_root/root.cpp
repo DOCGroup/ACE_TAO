@@ -301,6 +301,8 @@ int be_visitor_root::visit_root (be_root *node)
           (void) tao_cg->end_server_template_inline ();
         }
 
+      *os << "\n\n";
+
       return 0;
     case TAO_CodeGen::TAO_ROOT_SS:
       if (be_global->gen_tie_classes ())
@@ -366,7 +368,6 @@ int be_visitor_root::visit_root (be_root *node)
       }
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_IH:
-    case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
     case TAO_CodeGen::TAO_ROOT_IS:
     case TAO_CodeGen::TAO_ROOT_TIE_SH:
@@ -398,7 +399,6 @@ int be_visitor_root::visit_root (be_root *node)
       break;
     case TAO_CodeGen::TAO_ROOT_CI:
     case TAO_CodeGen::TAO_ROOT_CS:
-    case TAO_CodeGen::TAO_ROOT_SI:
       *os << "\n\n";
       break;
     default:
