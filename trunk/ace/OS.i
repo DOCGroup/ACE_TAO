@@ -11308,6 +11308,12 @@ ACE_Countdown_Time::start (void)
 }
 
 ACE_INLINE int
+ACE_Countdown_Time::stopped (void) const
+{
+  return stopped_;
+}
+
+ACE_INLINE int
 ACE_Countdown_Time::stop (void)
 {
   if (this->max_wait_time_ != 0 && this->stopped_ == 0)
