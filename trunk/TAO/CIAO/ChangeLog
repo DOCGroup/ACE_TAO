@@ -1,3 +1,47 @@
+Wed Jun  2 23:21:37 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/ciao/CCM_Base.idl:
+	* DnC/ciao/CCM_Component.idl:
+	* DnC/ciao/CCM_Container.idl:
+	* DnC/ciao/CCM_Container_Ex.idl:
+	* DnC/ciao/CCM_Core.mpc:
+	* DnC/ciao/CCM_Event.idl:
+	* DnC/ciao/CCM_Transaction.idl:
+	* DnC/ciao/CIAO_Client_Export.h:
+	* DnC/ciao/CIAO_Container_Export.h:
+	* DnC/ciao/CIAO_Server_Export.h:
+	* DnC/ciao/CIAO_Value.idl:
+	* DnC/ciao/CIAO_common.h:
+	* DnC/ciao/CVS:
+	* DnC/ciao/Client_init.cpp:
+	* DnC/ciao/Client_init.h:
+	* DnC/ciao/Components.idl:
+	* DnC/ciao/ComponentsC.h:
+	* DnC/ciao/ComponentsS.h:
+	* DnC/ciao/Container_Base.cpp:
+	* DnC/ciao/Container_Base.h:
+	* DnC/ciao/Container_Base.inl:
+	* DnC/ciao/Container_Base.pidl:
+	* DnC/ciao/Cookies.cpp:
+	* DnC/ciao/Cookies.h:
+	* DnC/ciao/Cookies.inl:
+	* DnC/ciao/CosPersistentState.idl:
+	* DnC/ciao/Deployment.idl:
+	* DnC/ciao/Deployment_Core.idl:
+	* DnC/ciao/Deployment_stub_export.h:
+	* DnC/ciao/Deployment_svnt_export.h:
+	* DnC/ciao/NodeApp_CB_Impl.cpp:
+	* DnC/ciao/NodeApp_CB_Impl.h:
+	* DnC/ciao/NodeApplication_CallBack.idl:
+	* DnC/ciao/NodeApplication_Impl.cpp:
+	* DnC/ciao/NodeApplication_Impl.h:
+	* DnC/ciao/NodeApplication_Impl.inl:
+	* DnC/ciao/Server_init.cpp:
+	* DnC/ciao/Server_init.h:
+	* DnC/ciao/Version.h:
+
+	  Added these files to replace the files in the old DnC/Core directory.
+
 Wed Jun  2 22:55:57 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* DnC/Core/CCM_Base.idl:

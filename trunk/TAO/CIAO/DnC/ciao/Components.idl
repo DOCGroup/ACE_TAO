@@ -1,0 +1,15 @@
+// $Id$
+
+/**
+ * @@ This file is included in the generated executor
+ *    mapping IDL file, and for now just includes
+ *    CCM_Container.idl.
+ */
+
+#if !defined (CIAO_COMPONENTS_IDL)
+#define CIAO_COMPONENTS_IDL
+
+#include "CCM_Container.idl"
+
+#endif /* CIAO_COMPONENTS_IDL */
+
