@@ -1,3 +1,17 @@
+Thu Jun 10 20:29:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.h: Made constructors for iterator base class protected
+	  instead of protected, so the the base class can only be constructed
+          by the derived forward and reverse iterator classes.  Thanks to
+          Matt Braun for pointing this out.
+	
+        * tests/RB_Tree_Test.cpp: Major overhaul of the test to use a
+          test class template that encapsulates the test details and
+          makes the code much more readable.  Then, the main program merely
+          instantiates a test for each of the four possible combinations of
+	  key/item type parameterization over int and const char *, and calls
+          the run_test () method of each test instance.
+
 Thu Jun 10 12:44:22 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/UPIPE_SAP_Test.cpp: Disable for Win32 if !ACE_HAS_WINNT4.
