@@ -1,3 +1,8 @@
+Fri Apr  4 07:05:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/Bug_1482_Regression/srver.bor: Fixed a typo. Thanks to
+	  Johnny for reporting the problem.
+
 Thu Apr 03 13:31:17 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	Added RT_Notification service and tests implementation -
