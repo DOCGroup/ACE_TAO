@@ -9,11 +9,15 @@
 
 pace_mqd_t mqdes;
 
-void msg_handler()
+void
+msg_handler (int handler_arg)
 {
   char buf[1024];
   unsigned int priority;
   int len = pace_mq_receive(mqdes, buf, sizeof buf, &priority);
+
+  PACE_UNUSED_ARG (handler_arg);
+
   if (len < 0)
   {
     perror("mq_receive");
@@ -23,9 +27,15 @@ void msg_handler()
 
 #define QUEUE_NAME "/testmsg1"
 
-int main (int argc, char** argv)
+int
+main (int argc, char** argv)
 {
-# if !(PACE_LYNXOS)
+#if PACE_LYNXOS
+  pace_printf ("No errors, have occurred. On the other hand no operations have been performed either. Take what you can get I guess.\n");
+  PACE_UNUSED_ARG (argc);
+  PACE_UNUSED_ARG (argv);
+  return EXIT_SUCCESS;
+#else  /* ! PACE_LYNXOS */
   char buf[1024];
   int choice, len;
   unsigned int priority;
@@ -37,7 +47,7 @@ int main (int argc, char** argv)
   if (mqdes == (pace_mqd_t)-1)
   {
     perror("mq_open");
-    return 1;
+    return EXIT_FAILURE;
   }
 
   notification.sigev_notify = SIGEV_SIGNAL;
@@ -57,7 +67,7 @@ int main (int argc, char** argv)
            "> ");
     if (!pace_fgets(buf, sizeof buf, stdin))
     {
-      return 1;
+      return EXIT_FAILURE;
     }
     if (pace_sscanf(buf, "%d", &choice) != 1)
     {
@@ -77,7 +87,7 @@ int main (int argc, char** argv)
       if (pace_mq_send(mqdes, buf, pace_strlen(buf)+1, priority) == -1)
       {
         perror("mq_send");
-        return 1;
+        return EXIT_FAILURE;
       }
       break;
     case 2:
@@ -94,22 +104,17 @@ int main (int argc, char** argv)
       break;
     case 4:
       pace_mq_close(mqdes);
-      return 0;
+      return EXIT_SUCCESS;
     case 5:
       pace_mq_close(mqdes);
       pace_mq_unlink(QUEUE_NAME);
-      return 0;
+      return EXIT_SUCCESS;
     default:
       pace_printf("Please select 1..5\n");
     }
   }
   PACE_UNUSED_ARG (argc);
   PACE_UNUSED_ARG (argv);
-  return (EXIT_SUCCESS);
-#else
-  pace_printf ("No errors, have occurred. On the other hand no operations have been performed either. Take what you can get I guess.\n");
-  PACE_UNUSED_ARG (argc);
-  PACE_UNUSED_ARG (argv);
-  return (EXIT_SUCCESS);
-#endif LYNXOS
+  return EXIT_SUCCESS;
+#endif /* ! PACE_LYNXOS */
 }
