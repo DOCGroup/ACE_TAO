@@ -884,10 +884,10 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   u_int refcount_;
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> open_called_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> open_called_;
   // Flag which denotes that the open method was called.
 
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> should_shutdown_;
+  ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int> should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should
   // return.
 

@@ -689,7 +689,7 @@ template class ACE_Dynamic_Service<TAO_Server_Strategy_Factory>;
 template class ACE_Dynamic_Service<TAO_Client_Strategy_Factory>;
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>;
-template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean>;
+template class ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>;
 template class ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>;
 template class ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Hash_Map_Iterator_Base<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>;
@@ -705,7 +705,7 @@ template class ACE_Hash_Map_Reverse_Iterator<TAO_HASH_ADDR, TAO_Client_Connectio
 #pragma instantiate ACE_Dynamic_Service<TAO_Client_Strategy_Factory>
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Cached_Connect_Strategy<TAO_Client_Connection_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_NULL_MUTEX>
-#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean>
+#pragma instantiate ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_int>
 //#pragma instantiate TAO_HASH_ADDR
 #pragma instantiate ACE_Hash_Map_Entry<TAO_HASH_ADDR, TAO_Client_Connection_Handler *>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_HASH_ADDR, TAO_Client_Connection_Handler *, ACE_SYNCH_RW_MUTEX>
