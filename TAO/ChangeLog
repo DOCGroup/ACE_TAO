@@ -1,3 +1,29 @@
+Mon Dec 23 15:50:54 2002  Boris S Kolpackov  <boris@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test.dsw:
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Client.dsp:
+	* orbsvcs/tests/Security/Crash_Test/Crash_Test_Server.dsp:
+	* orbsvcs/tests/Security/Crash_Test/Makefile:
+	* orbsvcs/tests/Security/Crash_Test/README:
+	* orbsvcs/tests/Security/Crash_Test/cacert.pem:
+	* orbsvcs/tests/Security/Crash_Test/client.conf:
+	* orbsvcs/tests/Security/Crash_Test/client.cpp:
+	* orbsvcs/tests/Security/Crash_Test/client_cert.pem:
+	* orbsvcs/tests/Security/Crash_Test/client_key.pem:
+	* orbsvcs/tests/Security/Crash_Test/run_test.pl:
+	* orbsvcs/tests/Security/Crash_Test/server.conf:
+	* orbsvcs/tests/Security/Crash_Test/server.cpp:
+	* orbsvcs/tests/Security/Crash_Test/server.ior:
+	* orbsvcs/tests/Security/Crash_Test/server_cert.pem:
+	* orbsvcs/tests/Security/Crash_Test/server_key.pem:
+	* orbsvcs/tests/Security/Crash_Test/test.idl:
+	* orbsvcs/tests/Security/Crash_Test/test_i.cpp:
+	* orbsvcs/tests/Security/Crash_Test/test_i.h:
+	* orbsvcs/tests/Security/Crash_Test/test_i.i:
+	  Added a new test to verifies that the ORB's connection
+	  management mechanism is functioning properly in conjunction
+	  with SSLIOP. For more information please refer to README.
+
 Mon Dec 23 15:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Notify/Basic/AdminProperties.cpp:
@@ -7,7 +33,7 @@ Mon Dec 23 15:08:22 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 Mon Dec 23 15:16:21 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/RTPortableServer/RT_Object_Adapter_Factory.cpp: Moved the
-	  setting of the <collocation_resolver_name_> from the constructor 
+	  setting of the <collocation_resolver_name_> from the constructor
 	  to create (), since it is not required immediately on loading
 	  the RT_PortableServer. This should fix a problem with GCC 2.95
 	  builds on Solaris where the static initializations are all
@@ -53,38 +79,38 @@ Sun Dec 22 20:22:50 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* performance-tests/Latency/Thread_Per_Connection/svc.conf: Used
 	  the blocked connect strategy instead of the default
 	  strategy. This is needed to work around the problem outlined in
-	  BUG 1408. 
+	  BUG 1408.
 
 Sun Dec 22 11:26:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
-	Fix for Bug 1276. Please see 
+	Fix for Bug 1276. Please see
 
 	http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1276 for more
         details on this bug. The gist of the fix is this
 
 	  - If a follower thread timesout, it first tries to unbind the
 	    dispatcher from the table
-	 
+
 	  - If unbinding is succesfull it throws a TIMEOUT exception to
-	    the client. 
+	    the client.
 
 	  - If unbinding is unsuccesful, it waits on a condition variable
 	    in the reply dispatcher
 
-	  - Once the reply is available it dispatches the reply. 
+	  - Once the reply is available it dispatches the reply.
 
 	  - This helps avoid the race conditions that are documented in
-	    1276. 
+	    1276.
 
 	None of the above code should be executed when timeouts are not
         enabled in the ORB ie. for the default path.
-	
+
 	* tao/Bind_Dispatcher_Guard.cpp:
 	* tao/Bind_Dispatcher_Guard.h:
 	* tao/Bind_Dispatcher_Guard.i: Added method unbind_dispatcher ()
 	  which unbinds the dispatcher from the Transport_Mux_Strategy and
 	  status (), which allows to set the status of the dispatcher
-	  guard. 
+	  guard.
 
 	* tao/Transport_Mux_Strategy.h
 	* tao/Exclusive_TMS.cpp:
@@ -99,18 +125,18 @@ Sun Dec 22 11:26:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* tao/Reply_Dispatcher.h:
 	* tao/Reply_Dispatcher.i: Added a mutex and a condition variable
 	  for the follower to wait on when a leader thread is within the
-	  Reply_Dispatcher. Methods to wait on the CV and to mark the 
+	  Reply_Dispatcher. Methods to wait on the CV and to mark the
 	  reply_dispatcher as being used and free have been added. These
 	  methods are essentially no-ops if timeouts are not set.
-	
-	* tao/Invocation.cpp: 
+
+	* tao/Invocation.cpp:
 	* tao/Invocation.h: If the invocation thread gets a timeout, it
 	  first unbinds its reply dispatcher from the Mux_Strategy. If the
 	  unbind fails (this means that another thread has aleardy
 	  collected the reply from the transport) , it waits on the
 	  reply_dispatcher to collect the reply instead of just throwing a
 	  TIMEOUT exception.
-	
+
 Fri Dec 20 13:47:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/tests/Security/Big_Request/Makefile:
@@ -119,7 +145,7 @@ Fri Dec 20 13:47:33 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* orbsvcs/tests/Security/Secure_Invocation/Makefile:
 	* orbsvcs/tests/Security/SecurityLevel1/Makefile: Too much of cut
 	  and paste. Fixed places where BIN was assigned something
-	  arbitrary. 
+	  arbitrary.
 
 Thu Dec 19 13:45:50 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -158,7 +184,7 @@ Wed Dec 18 19:45:45 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
 	  check catches attempts to use constants, enum values,
 	  attributes, and operations as IDL sequence elements, and
 	  outputs an error instead of crashing. Thanks to Petr
-	  Ferschmann <pferschmann@kerio.com> for pointing out the 
+	  Ferschmann <pferschmann@kerio.com> for pointing out the
 	  problem with enum values.
 
 Wed Dec 18 14:48:32 2002  Jeff Parsons <j.parsons@vanderbilt.edu>
@@ -185,12 +211,12 @@ Wed Dec 18 08:22:39 2002  Ossama Othman  <ossama@uci.edu>
 
 Tue Dec 17 09:53:02 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 
-	* tao/Transport_Cache_Manager.*: 
+	* tao/Transport_Cache_Manager.*:
 
-	  Fixed deadlock that can occur when trying to gain reactor token 
+	  Fixed deadlock that can occur when trying to gain reactor token
 	  and transport cache manager lock while purging cache entries.
 	  Unfortunately , the classic solution to the classic
-	  deadlock-- which is typically caused by an ordering problem, and is 
+	  deadlock-- which is typically caused by an ordering problem, and is
 	  solved by re-ordering--doesn't apply.  We simply don't have
 	  control of the order due to the fact that we have two frameworks
 	  interacting, and the offending bodies of code don't have
@@ -212,11 +238,11 @@ Tue Dec 17 09:53:02 2002  Chris Cleeland  <cleeland_c@ociweb.com>
 	    call the remove_handler on each transport.
 	  - Note that the transports whose pointers are stuck in the stack
 	    are properly reference counted using
-	    TAO_Transport::_duplicate/release.  
+	    TAO_Transport::_duplicate/release.
 
 	  Thanks to Raytheon in San Diego for providing the environment to
 	  find this!
-		
+
 Tue Dec 17 08:14:35 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * utils/nslist/nslist.mpc:
