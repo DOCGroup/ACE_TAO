@@ -79,7 +79,7 @@ public:
   CORBA::ULong endpoint_count (void);
   // return the number of profiles this will generate
 
-  typedef TAO_Acceptor_Impl<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
+  typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> TAO_UIOP_CONCURRENCY_STRATEGY;
 
