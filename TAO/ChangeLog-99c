@@ -1,6 +1,6 @@
 Fri Mar 05 12:51:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * rules.tao.GNU: replace -Wno-used for g++, but just for
+        * rules.tao.GNU: replaced -Wno-used for g++, but just for
           pre-2.8.  It has many complaints about unused parameters
           in generated code.
 
