@@ -1,3 +1,34 @@
+Sat Apr  7 20:52:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Transport.cpp (close_connection):
+          The ORB was dead-locking if the write() operation failed.
+          To make a long story short: the invocation class called
+          close_connection() that acquires the transport mutex, then
+          called handle_close on its underlying event handler, that turned
+          around and tried to call connection_handler_closing(), but that
+          tries to acquire the mutex again.
+
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/README:
+        * tests/Crash_On_Write/README:
+        * tests/Crash_On_Write/Makefile:
+        * tests/Crash_On_Write/Makefile.bor:
+        * tests/Crash_On_Write/client.bor:
+        * tests/Crash_On_Write/server.bor:
+        * tests/Crash_On_Write/run_test.pl:
+        * tests/Crash_On_Write/Test.idl:
+        * tests/Crash_On_Write/Crash_Task.h:
+        * tests/Crash_On_Write/Crash_Task.cpp:
+        * tests/Crash_On_Write/Oneway_Receiver.h:
+        * tests/Crash_On_Write/Oneway_Receiver.cpp:
+        * tests/Crash_On_Write/client.cpp:
+        * tests/Crash_On_Write/server.cpp:
+          New regression test to reproduce the previous problem.  The
+          server crashes using abort() on a dedicated thread.
+          Meanwhile the client is sending oneway calls to force a write()
+          operation to fail. The test deadlocked when the server crashed.
+
 Sat Apr  7 19:35:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/IIOP_Connector.cpp:
