@@ -37,13 +37,14 @@ public:
   Grid_Client_i (void);
   // Constructor
 
-  virtual  ~Grid_Client_i (void);
+  virtual ~Grid_Client_i (void);
   // Destructor
 
-  virtual int run (int, char** );
-  // Execute the methods
+  virtual int run (int, char *[]);
+  // Execute the methods.
 
   virtual int parse_args (int argc, char**argv);
+
 private:
   Client<Grid_Factory, Grid_Factory_var> client;
   // Instantiate the client object.
@@ -62,7 +63,6 @@ private:
 
   CORBA::Long value_;
   // The value that needs to be stored in the cell.
-  
 };
 
 #endif /* TIME_CLIENT_I_H */

@@ -4,6 +4,7 @@
 #include "tao/corba.h"
 
 // Default constructor.
+
 Grid_i::Grid_i (void)
   : width_ (0),
     height_ (0),
@@ -13,6 +14,7 @@ Grid_i::Grid_i (void)
 }
 
 //  Constructor.
+
 Grid_i::Grid_i (CORBA::Short x,
                 CORBA::Short y,
                 CORBA::Environment &TAO_IN_ENV)
@@ -105,6 +107,7 @@ void
 Grid_i::destroy (CORBA::Environment &TAO_IN_ENV)
 {
   // Delete the array.
+
   for (int i = 0; i < height_; i++)
       delete [] array_[i];
 
@@ -137,17 +140,21 @@ Grid_Factory_i::shutdown (CORBA::Environment &)
 }
 
 // Constructor
+
 Grid_Factory_i::Grid_Factory_i (void)
 {
   // no-op
 }
 
 // Copy Constructor
+
 Grid_Factory_i::Grid_Factory_i (Grid_Factory_i &)
 {
   // no-op
 }
+
 // Destructor
+
 Grid_Factory_i::~Grid_Factory_i (void)
 {
   // no-op
