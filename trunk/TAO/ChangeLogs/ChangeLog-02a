@@ -1,3 +1,16 @@
+Mon Jan 15 16:02:59 2001  Christopher Kohlhoff <chris@kohlhoff.com>
+
+        * tao/Makefile.bor:
+          Added missing file GIOP_Message_Handler.cpp.
+
+        * tao/PortableServer/Makefile.bor:
+          Updated list of installed header files to include *.inl.
+
+        * orbsvcs/IFR_Service/Makefile.bor:
+        * orbsvcs/IFR_Service/tao_ifr.bor:
+        * orbsvcs/IFR_Service/TAO_IFR_BE_DLL.bor:
+          Added makefiles for IFR service utilities.
+
 Mon Jan 15 14:04:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
