@@ -509,14 +509,14 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
 	close(cfd);
 	return -1;
       }
-      /*
+      
       fprintf(stderr, "ComOpenConnPair local UDP socket: addr - %s, port - %u.\n",
 	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
-      */
-      /*
+      
+      
       fprintf(stderr, "ComOpenConnPair UDP port %d (should be > 0)\n",
 	      ntohs(addressIn.sin_port));
-      */
+      
       /*
       i = sizeof(addressIn);
       if (getsockname(cfd, (struct sockaddr *)&addressIn, &i) == -1) {
@@ -538,10 +538,10 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
 	close(cfd);
 	return -1;
       }
-      /*
+      
       fprintf(stderr, "ComOpenConnPair TCP cfd socket: addr - %s, port - %u.\n",
 	      inet_ntoa(addressIn.sin_addr), ntohs(addressIn.sin_port));
-      */
+      
       if (time_read_bytes(cfd, (char *)&addressIn.sin_port, sizeof(short)) == -1 ||
 	  time_read_bytes(cfd, (char *)&addressIn.sin_addr.s_addr, sizeof(int)) == -1) {
 	fprintf(stderr,
@@ -562,11 +562,11 @@ int ComOpenConnPair(char * address, int *ctr_fd, int *data_fd, int *max_pkt_size
 	close(dfd);
 	return -1;
       }
-      /*
+      
       fprintf(stderr, "ComOpenConnPair UDP dfd connects to host-%s (port %u)\n",
   	      inet_ntoa(addressIn.sin_addr),
 	      ntohs(addressIn.sin_port));
-      */
+      
 #ifndef LINUX
       /* adjust the dfd REVBUF size */
       {
