@@ -13,8 +13,7 @@
 DIRS  = Cubit \
 	POA \
 	Pluggable \
-	Thruput \
-	Latency
+	Thruput
 
 # The following tests have not been updated yet
 # 	Demux
@@ -24,6 +23,14 @@ DIRS  = Cubit \
 #----------------------------------------------------------------------------
 
 include	$(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifndef minimum_corba
+
+# No non_existent() in Minimum CORBA
+  DIRS += Latency
+
+endif # minimum_corba
+
 include	$(ACE_ROOT)/include/makeinclude/macros.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nested.GNU

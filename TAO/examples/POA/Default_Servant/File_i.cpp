@@ -68,7 +68,7 @@ FileImpl::System::open (const char *file_name,
   // convert ACE_HANDLE to a string
   ACE_OS::sprintf (file_descriptor_buffer,
                    "%ld",
-                   CORBA::Long(file_descriptor));
+                   (long int) file_descriptor);
 
   //Create an objectID from the ACE_HANDLE string
   PortableServer::ObjectId_var oid =
