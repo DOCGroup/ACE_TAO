@@ -68,34 +68,40 @@ TAO_Transport::send_buffered_messages (const ACE_Time_Value *max_wait_time)
   ACE_ASSERT (result != -1);
 
   // Actual network send.
+  size_t bytes_transferred = 0;
   result = this->send (queued_message,
-                       max_wait_time);
+                       max_wait_time,
+		       &bytes_transferred);
 
-  // Cannot send.
+  // Cannot send completely: timed out.
+  if (result == -1 &&
+      errno == ETIME)
+    {
+      if (bytes_transferred > 0)
+	{
+	  // If successful in sending some or all of the data, reset
+	  // the queue appropriately.
+	  this->reset_queued_message (queued_message,
+				      bytes_transferred);
+
+	  // Indicate some success.
+	  return bytes_transferred;
+	}
+
+      // Since we queue up the message, this is not an error.  We can
+      // try next time around.
+      return 1;
+    }
+  
+  // EOF or other errors.
   if (result == -1 ||
       result == 0)
     {
-      // Timeout.
-      if (errno == ETIME)
-        {
-          // Since we queue up the message, this is not an error.  We
-          // can try next time around.
-          return 1;
-        }
-      // Non-timeout error.
-      else
-        {
-          this->dequeue_all ();
-          return -1;
-        }
+      this->dequeue_all ();
+      return -1;
     }
 
-  // If successful in sending some or all of the data, reset the queue
-  // appropriately.
-  this->reset_queued_message (queued_message,
-                              result);
-
-  // Indicate success.
+  // Everything was successfully delivered.
   return result;
 }
 
