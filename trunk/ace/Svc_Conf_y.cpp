@@ -865,7 +865,7 @@ case 30:
       u_int flags
         = ACE_Service_Type::DELETE_THIS
         | (ace_yyvsp[-1].location_node_->dispose () == 0 ? 0 : ACE_Service_Type::DELETE_OBJ);
-      ACE_Service_Object_Exterminator gobbler;
+      ACE_Service_Object_Exterminator gobbler = 0;
       void *sym = ace_yyvsp[-1].location_node_->symbol (&gobbler);
 
       if (sym != 0)
