@@ -381,12 +381,8 @@ ECB_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
 void
 ECB_Supplier::disconnect (CORBA::Environment& ACE_TRY_ENV)
 {
-  if (CORBA::is_nil (this->consumer_proxy_.in ())
-      || CORBA::is_nil (this->supplier_admin_.in ()))
+  if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
-
-  this->supplier_admin_ =
-    RtecEventChannelAdmin::SupplierAdmin::_nil ();
 
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
     this->consumer_proxy_._retn ();
@@ -396,6 +392,12 @@ ECB_Supplier::disconnect (CORBA::Environment& ACE_TRY_ENV)
 void
 ECB_Supplier::close (CORBA::Environment &ACE_TRY_ENV)
 {
+  if (CORBA::is_nil (this->supplier_admin_.in ()))
+    return;
+
+  this->supplier_admin_ =
+    RtecEventChannelAdmin::SupplierAdmin::_nil ();
+
   this->disconnect (ACE_TRY_ENV);
 }
 

@@ -1,3 +1,10 @@
+Thu Aug  5 19:13:36 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/EC_Basic/EC_Basic.cpp:
+	  Fixed the test, it was crashing because the disconnect() call
+	  was effectively disabling any chance of reconnecting the
+	  suppliers. This fixes [BUGID:209]
+
 Thu Aug  5 17:19:43 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Xt_Stopwatch/README: Updated the file to add some info
