@@ -1,3 +1,14 @@
+Tue Jan 27 17:41:38 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/OctetSeqA.h:
+        * tao/OctetSeqC.h:
+        
+          Moved the declaration of Any operators and type code from
+          OctetSeqA.h to OctetSeqC.h, so the operators can be seen
+          in generated code if CORBA::OctetSeq is used there. Thanks
+          to Jeff Mirwaisi <jeff_mirwaisi@yahoo.com> for reporting
+          the bug and for sending in an example IDL file.
+
 Mon Jan 26 17:46:18 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
