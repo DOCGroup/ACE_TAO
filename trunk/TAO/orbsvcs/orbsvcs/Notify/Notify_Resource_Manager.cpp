@@ -6,8 +6,10 @@
 #include "Notify_ConsumerAdmin_i.h"
 #include "Notify_SupplierAdmin_i.h"
 #include "Notify_StructuredProxyPushSupplier_i.h"
+#include "Notify_SequenceProxyPushSupplier_i.h"
 #include "Notify_ProxyPushSupplier_i.h"
 #include "Notify_StructuredProxyPushConsumer_i.h"
+#include "Notify_SequenceProxyPushConsumer_i.h"
 #include "Notify_ProxyPushConsumer_i.h"
 
 TAO_Notify_Resource_Manager::TAO_Notify_Resource_Manager (PortableServer::POA_ptr default_POA)
@@ -100,6 +102,16 @@ TAO_Notify_Resource_Manager::create_struct_proxy_pushsupplier (TAO_Notify_Consum
   return proxy;
 }
 
+TAO_Notify_SequenceProxyPushSupplier_i*
+TAO_Notify_Resource_Manager::create_seq_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Notify_SequenceProxyPushSupplier_i* proxy;
+  ACE_NEW_THROW_EX (proxy,
+                    TAO_Notify_SequenceProxyPushSupplier_i (parent, this),
+                    CORBA::NO_MEMORY ());
+  return proxy;
+}
+
 TAO_Notify_ProxyPushSupplier_i*
 TAO_Notify_Resource_Manager::create_proxy_pushsupplier (TAO_Notify_ConsumerAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV)
 {
@@ -116,6 +128,16 @@ TAO_Notify_Resource_Manager::create_struct_proxy_pushconsumer (TAO_Notify_Suppli
   TAO_Notify_StructuredProxyPushConsumer_i* proxy;
   ACE_NEW_THROW_EX (proxy,
                     TAO_Notify_StructuredProxyPushConsumer_i (parent, this),
+                    CORBA::NO_MEMORY ());
+  return proxy;
+}
+
+TAO_Notify_SequenceProxyPushConsumer_i*
+TAO_Notify_Resource_Manager::create_seq_proxy_pushconsumer (TAO_Notify_SupplierAdmin_i* parent, CORBA::Environment &ACE_TRY_ENV)
+{
+  TAO_Notify_SequenceProxyPushConsumer_i* proxy;
+  ACE_NEW_THROW_EX (proxy,
+                    TAO_Notify_SequenceProxyPushConsumer_i (parent, this),
                     CORBA::NO_MEMORY ());
   return proxy;
 }
@@ -192,7 +214,7 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr 
   CORBA::Long poa_id = this->poa_ids_.get ();
 
   ACE_OS::sprintf (child_poa_name, "%d", poa_id);
-  ACE_DEBUG ((LM_DEBUG, "child_poa_name = %s\n", child_poa_name));
+
   // Create the child POA.
   PortableServer::POA_var poa_ret = poa->create_POA (child_poa_name,
                                                      manager,
@@ -203,7 +225,9 @@ TAO_Notify_Resource_Manager::create_generic_childPOA_i (PortableServer::POA_ptr 
 
   ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
+#if 0
   ACE_DEBUG ((LM_DEBUG, "created child poa %s", child_poa_name));
+#endif
   this->poa_ids_.next (); // commit this id to the active list
 
   return poa_ret._retn ();
@@ -316,4 +340,10 @@ TAO_Notify_Resource_Manager::deactivate_object (PortableServer::Servant servant,
   ACE_CHECK;
   poa->deactivate_object (id.in (), ACE_TRY_ENV);
   ACE_CHECK;
+}
+
+CORBA::Boolean
+TAO_Notify_Resource_Manager::default_subscription_enabled (void)
+{
+  return 1; // @@ true for now, make this a user option
 }

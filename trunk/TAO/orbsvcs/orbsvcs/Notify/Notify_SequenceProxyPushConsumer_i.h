@@ -6,10 +6,10 @@
 //   orbsvcs
 //
 // = FILENAME
-//   TAO_Notify_StructuredProxyPushConsumer_i.h
+//   TAO_Notify_SequenceProxyPushConsumer_i.h
 //
 // = DESCRIPTION
-//   Implements the CosNotifyChannelAdmin::StructuredProxyPushConsumer
+//   Implements the CosNotifyChannelAdmin::SequenceProxyPushConsumer
 //   interface.
 //
 // = AUTHOR
@@ -17,8 +17,8 @@
 //
 // ==========================================================================
 
-#ifndef TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
-#define TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H
+#ifndef TAO_NOTIFY_SEQUENCEPROXYPUSHCONSUMER_I_H
+#define TAO_NOTIFY_SEQUENCEPROXYPUSHCONSUMER_I_H
 
 #include "Notify_ProxyConsumer_T.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
@@ -33,25 +33,25 @@ class TAO_Notify_Resource_Manager;
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-class TAO_ORBSVCS_Export TAO_Notify_StructuredProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>, public PortableServer::RefCountServantBase
+class TAO_ORBSVCS_Export TAO_Notify_SequenceProxyPushConsumer_i : public TAO_Notify_ProxyConsumer <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>, public PortableServer::RefCountServantBase
 {
   // = TITLE
-  //   TAO_Notify_StructuredProxyPushConsumer_i
+  //   TAO_Notify_SequenceProxyPushConsumer_i
   //
   // = DESCRIPTION
-  //   Implements CosNotifyChannelAdmin::StructuredProxyPushConsumer
+  //   Implements CosNotifyChannelAdmin::SequenceProxyPushConsumer
   //
 
 public:
-  TAO_Notify_StructuredProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager);
+  TAO_Notify_SequenceProxyPushConsumer_i (TAO_Notify_SupplierAdmin_i* consumeradmin, TAO_Notify_Resource_Manager* resource_manager);
   // Constructor
 
-  virtual ~TAO_Notify_StructuredProxyPushConsumer_i (void);
+  virtual ~TAO_Notify_SequenceProxyPushConsumer_i (void);
   // Destructor
 
   // = interface methods
-  virtual void connect_structured_push_supplier (
-    CosNotifyComm::StructuredPushSupplier_ptr push_supplier,
+  virtual void connect_sequence_push_supplier (
+    CosNotifyComm::SequencePushSupplier_ptr push_supplier,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -59,8 +59,8 @@ public:
     CosEventChannelAdmin::AlreadyConnected
   ));
 
-virtual void push_structured_event (
-    const CosNotification::StructuredEvent & notification,
+virtual void push_structured_events (
+    const CosNotification::EventBatch & notifications,
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -68,7 +68,7 @@ virtual void push_structured_event (
     CosEventComm::Disconnected
   ));
 
-  virtual void disconnect_structured_push_consumer (
+  virtual void disconnect_sequence_push_consumer (
     CORBA::Environment &ACE_TRY_ENV
   )
   ACE_THROW_SPEC ((
@@ -76,15 +76,15 @@ virtual void push_structured_event (
   ));
 
 protected:
-  // = Helper methods
  virtual void dispatch_update_i (CosNotification::EventTypeSeq added, CosNotification::EventTypeSeq removed, CORBA::Environment &ACE_TRY_ENV);
-  // dispatch updates to the supplier.
+  // Sends updates to the supplier.
 
+  // = Helper methods
   void cleanup_i (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ());
   // Cleanup all resources used by this object.
 
   // = Data members
-  CosNotifyComm::StructuredPushSupplier_ptr push_supplier_;
+  CosNotifyComm::SequencePushSupplier_ptr push_supplier_;
   // The supplier that we're connected to.
 };
 
@@ -92,4 +92,4 @@ protected:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#endif /* TAO_NOTIFY_STRUCTUREDPROXYPUSHCONSUMER_I_H */
+#endif /* TAO_NOTIFY_SEQUENCEPROXYPUSHCONSUMER_I_H */
