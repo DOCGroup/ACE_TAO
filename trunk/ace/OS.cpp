@@ -269,8 +269,14 @@ ACE_OS::uname (struct utsname *name)
                      vinfo.dwBuildNumber,
                      vinfo.szCSDVersion);
 
-    TCHAR processor[10] = __TEXT ("Unknown");
-    TCHAR subtype[10] = __TEXT ("Unknown");
+    // We have to make sure that the size of (processor + subtype) is
+    // not greater than the size of name->machine.  So we give half
+    // the space to the processor and half the space to subtype.  The
+    // -1 is necessary for because of the space between processor and
+    // subtype in the machine name.
+    const int bufsize = ((sizeof (name->machine) / sizeof (TCHAR)) / 2) - 1;
+    TCHAR processor[bufsize] = __TEXT ("Unknown");
+    TCHAR subtype[bufsize] = __TEXT ("Unknown");
 
 #if defined (__BORLANDC__)
     // Some changes should be made in winbase.h...
