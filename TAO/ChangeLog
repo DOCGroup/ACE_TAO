@@ -1,3 +1,10 @@
+Sat Jan 25 18:30:27 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL: A multi-threaded stress test
+	  for IIOP_SSL which basically provides a insecure path for
+	  communication incase an SSL connection cannot be setup. This
+	  will also serve as a stress test for BUG 1421.
+
 Sat Jan 25 18:06:51 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Transport_Cache_Manager.h:
