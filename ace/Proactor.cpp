@@ -107,12 +107,12 @@ ACE_Proactor_Timer_Handler::svc (void)
 	  absolute_time =
             this->proactor_.timer_queue ()->earliest_time () -
             this->proactor_.timer_queue ()->gettimeofday ();
-          // #if 0
+#if 0
           ACE_DEBUG ((LM_DEBUG,
                       "%N%l:(%t):Earliest Time %d sec, %d msec time\n",
                       absolute_time.sec (),
                       absolute_time.msec ()));
-          // #endif
+#endif
           // Make it zero if it is negative.
           if (absolute_time < ACE_Time_Value::zero)
             absolute_time = ACE_Time_Value::zero;
@@ -230,8 +230,8 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 // *********************************************************************
 
 ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
-                            TIMER_QUEUE *tq,
-                            int delete_implementation)
+                            int delete_implementation,
+                            TIMER_QUEUE *tq)
   : implementation_ (0),
     delete_implementation_ (delete_implementation),
     timer_handler_ (0),
