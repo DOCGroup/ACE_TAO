@@ -1,3 +1,8 @@
+Sat Sep 23 00:47:16 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/MProfile.h:
+	* tao/MProfile.i: Added ACE_MT to <mutex_>'s decl and reference.
+
 Fri Sep 22 17:40:09 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Security.idl:
@@ -38,13 +43,13 @@ Fri Sep 22 14:21:26 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* docs/implrepo/usersguide.html:
 
-	  Added section on running the Implementation 
+	  Added section on running the Implementation
 	  Repository as an NT service.
 
 Fri Sep 22 11:32:25 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo.dsw:
-        
+
           Removed tao_ifr project (it doesn't seem to exist).
 
         * orbsvcs/FT_Service/FT_CORBA_ServiceC.h:
@@ -83,7 +88,7 @@ Thu Sep 21 19:27:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	  Recently some cleanup code was added at the end of
 	  the method BE_produce(). This code is now abstracted
-	  into a method BE_cleanup(), which is called at the 
+	  into a method BE_cleanup(), which is called at the
 	  end of BE_produce, and also by BE_abort(), so that the
 	  cleanup can be executed even if code generation is not
 	  completed.

@@ -114,7 +114,7 @@ public:
   const TAO_Profile* get_profile (CORBA::ULong slot) const;
   // Return the profile at position <slot>.  If <slot> is out of range
   // it returns 0.
-  
+
   void rewind (void);
   // Sets the current slot back to 0.
 
@@ -166,7 +166,7 @@ public:
   void policy_list (CORBA::PolicyList *policy_list);
   // Sets the policies list associated with the profiles
   // owned by the TAO_MProfile.
-  
+
   CORBA::PolicyList * policy_list (void);
   // Gets the policies list associated with the profiles
   // owned by the TAO_MProfile.
@@ -178,7 +178,7 @@ protected:
 
   CORBA::Boolean is_policy_list_initialized_;
 
-  ACE_Recursive_Thread_Mutex mutex_;
+  ACE_MT (ACE_Recursive_Thread_Mutex mutex_;)
   // Mutex used to make sure that only one policy list
   // is created.
 
