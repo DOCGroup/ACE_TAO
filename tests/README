@@ -45,15 +45,6 @@ Notes:
    and Win32clerk.conf). 
 
 
-On VxWorks, there currently is no batch file for running all of the
-tests.  If you would like to contribute one, that would be great.
-The straightforward approach of loading a test program, running it
-by calling ace_main, and then unloading it doesn't work, because
-the unload often fails.  If the program is run by spawning a new
-task (-> sp ace_main), then the unload will succeed.  However, then
-we need a way to tell when the test is done.  OS::thr_join () could
-probably be used, but it first has to be implemented for VxWorks.
-
 As of ACE 4.3, all of the tests on g++ 2.7.2/VxWorks 5.3.1 pass, with
 these exceptions:
 
@@ -61,18 +52,20 @@ these exceptions:
     Conn_Test                               unknown
     MM_Shared_Memory_Test                   ENOTSUP: unknown
     Mem_Map_Test                            ENOTSUP: unknown (mmap)
+    Mutex_Test                              ENOTSUP: unknown
     Naming_Test                             failed: (uses mmap?)
     Pipe_Test                               failed: requires fork
     Process_Mutex_Test                      failed: requires fork
     Process_Strategy_Test                   failed: /tmp/ace_temp_file not founc
+    Reactors_Test                           failed: problem with test?
     Reactor_Notify_Test                     unknown
     Service_Config_Test                     failed: page fault
     Time_Service_Test                       failed: requires fork
     Tokens_Test                             failed: unknown
 
-If you are able to determine the cause of failure of Conn_Test or
-Reactor_Test, please let us know!  The other tests need to be fixed
-so that they fail gracefully on VxWorks.
+If you are able to determine the cause of failure of Conn_Test,
+Mutex_Test, or Reactors_Test, please let us know!  The other tests
+need to be fixed so that they fail gracefully on VxWorks.
 
 
 If you have any questions/suggestions, please send email to
