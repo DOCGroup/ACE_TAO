@@ -231,7 +231,10 @@ namespace CIAO
     PH_States state_;
 
     ACE_CString characters_;
-  };
+
+    /// Temporary holder when building registration information
+    Assembly_Placement::componentinstantiation::Register_Info comp_register_info_;
+ };
 
   /**
    * @class Connections_Handler

@@ -80,8 +80,6 @@ namespace CIAO
 
       /// Usage information.
       ACE_CString usagename_;
-
-
     };
 
     /**
@@ -118,6 +116,28 @@ namespace CIAO
     class componentinstantiation : public Node
     {
     public:
+      typedef enum _if_register_type
+        {
+          COMPONENT,
+          PROVIDESID,
+          CONSUMESID
+        } IF_Register_Type;
+
+      typedef struct _register_info
+      {
+        IF_Register_Type type_;
+
+        ACE_CString port_id_;
+        ACE_CString name_;
+
+        void reset ()
+        {
+          type_ = COMPONENT;
+          port_id_.clear ();
+          name_.clear ();
+        }
+      } Register_Info;
+
       componentinstantiation (const char *id);
 
 
@@ -125,6 +145,8 @@ namespace CIAO
       virtual int accept (Visitor &v);
 
       virtual ~componentinstantiation ();
+
+      ACE_Unbounded_Queue <Register_Info> register_info_;
 
     protected:
     };
@@ -135,6 +157,22 @@ namespace CIAO
     class homeplacement : public Container
     {
     public:
+      typedef enum _register_method
+        {
+          HOMEFINDER,
+          NAMING,
+          TRADER                // No implementation for trader yet.
+        } Register_Method;
+
+      typedef struct _register_info
+      {
+        /// Register_Method
+        Register_Method type_;
+
+        /// Name to be registered with the finder/namingservice
+        ACE_CString name_;
+      } Register_Info;
+
       homeplacement (const char *id,
                      unsigned long cardinality = 1);
       /// Accepting a visitor.
@@ -147,6 +185,8 @@ namespace CIAO
       void componentfileref (const char *file);
       const char *componentfileref (void) const;
       //@}
+
+      ACE_Unbounded_Queue <Register_Info> register_info_;
 
     protected:
       // idref to component implementation file.

@@ -1,3 +1,11 @@
+Thu Apr 03 13:11:49 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/XML_Helpers/Assembly_Spec.h:
+	* tools/XML_Helpers/Assembly_Handlers.h:
+	* tools/XML_Helpers/Assembly_Handlers.cpp: Added support for parsing
+	  component and home registering info.  Otherwise, it'd be hard to
+	  use a composed application.
+
 Wed Apr 02 17:08:00 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tools/XML_Helpers/Assembly_Handlers.cpp:
