@@ -11,7 +11,8 @@
 SHLIB   = libSLD.$(SOEXT)
 FILES   = SLD \
           Logging_Acceptor \
-          Logging_Event_Handler
+          Logging_Event_Handler \
+          Logging_Handler
 LSRC    = $(addsuffix .cpp,$(FILES))
 
 LIBS   += $(ACELIB)
