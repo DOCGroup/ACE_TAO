@@ -2,9 +2,6 @@
 
 # platform_linux_borland.GNU
 
-# debug = 1
-# optimize = 1
-
 ifndef BCB
 BCB = /usr/local/kylix3
 endif
@@ -83,7 +80,7 @@ DCFLAGS = -DNDEBUG
 DCCFLAGS =
 endif
 
-kylix_build = 1
+kylix = 1
 INCLUDEPATH = $(BCB)/include/stlport:$(BCB)/include:$(BCB)/include/vcl:/usr/include:$(ACE_ROOT)
 LIBPATH = $(BCB)/lib/obj:$(BCB)/lib:/usr/lib:/lib:/usr/X11R6/lib:$(BCB)/bin
 ACELIBPATH = $(ACE_ROOT)/ace:./
@@ -102,18 +99,16 @@ CFLAGS = $(WARNINGS_CFLAGS) -q -VP -Vx -a8 -b- -k $(DCFLAGS) \
 
 CPPFLAGS += #$(CFLAGS)
 CCFLAGS += $(CFLAGS)
-BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v -L$(LIBPATH):$(ACELIBPATH)
+BORLDFLAGS = -c -L$(LIBPATH):$(ACELIBPATH) -x -Gn -v
 BORINITOBJ = borinitso.o borinit.o crt1.o
 BORSHAREDOBJ += libborcrtl.so libborstl.so libborunwind.so libc.so libm.so libdl.so
 
 PRELINK=
-SOFLAGS= $(BORSHAREDOBJ) borinitso.o -Tpd
-#ACELIB= libACE.so
-#TAO_IDL_FE_LIB= libTAO_IDL_FE_DLL.so
+SOFLAGS= -Tpd
 
-SOLINK.cc = $(LD) $(BORINITOBJ) -Tpd
+SOLINK.cc = $(LD) -Tpd
 LINK.cc = override
-LINK.cc.override = $(LD) $(LDFLAGS) $(VLDLIBS) $(BORINITOBJ) $(BORSHAREDOBJ) $(BORLDFLAGS) $(POSTLINK)
+LINK.cc.override = $(LD) $(LDFLAGS) $(BORINITOBJ) $(BORSHAREDOBJ) $(BORLDFLAGS) $(POSTLINK)
 
 SONAME=
 SOVERSION=

@@ -49,8 +49,8 @@ public:
 
   struct Active_Object_Map_Creation_Parameters
   {
+    /// Constructor.
     Active_Object_Map_Creation_Parameters (void);
-    // Constructor.
 
     CORBA::ULong active_object_map_size_;
     // Default size of object lookup table.

@@ -30,6 +30,9 @@ endif # ! optimize
 ifndef rtti
   rtti = 0
 endif # ! rtti
+ifndef with_ld
+  with_ld = vxworks
+endif # ! with_ld
 
 shared_libs =
 static_libs = 1
@@ -39,11 +42,7 @@ static_libs = 1
 # they are welcome to check the instantiation problem. Overriding it to be
 # explicit.
 #
-templates = "explicit"
-
-# Test for template instantiation.
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+templates = explicit
 
 ifeq (,$(WIND_BASE))
   default:
@@ -97,7 +96,7 @@ endif # default GCC Version
 
 # These variables may be set on the command line if a different ACE_VXWORKS
 # flag is desired.
-                                               
+
 ifeq ($(VXWORKS_VERSION_FLAG),)
    ifeq ($(GCC_VERSION),gcc-2.96)
        VXWORKS_VERSION_FLAG = -DACE_VXWORKS=0x542
@@ -106,7 +105,7 @@ ifeq ($(VXWORKS_VERSION_FLAG),)
        VXWORKS_STDINC_FLAG = -nostdinc
    endif # GCC_VERSION
 endif # VXWORKS_VERSION_FLAG
-   
+
 
 
 ifeq ($(CPU),SH7700)
@@ -177,12 +176,12 @@ else
 ifeq ($(CPU),PENTIUMPRO)
   BINXSYM_NAME = xsymDec
   CFLAGS += -DCPU=PENTIUMPRO
-  TOOLENV = 386
+  TOOLENV = pentium
 else
 ifeq ($(CPU),PENTIUM)
   BINXSYM_NAME = xsymDec
   CFLAGS += -DCPU=PENTIUM
-  TOOLENV = 386
+  TOOLENV = pentium
 else
 ifeq ($(CPU),I80486)
   #### Note: -fno-implicit-templates doesn't seem to work well with g++
@@ -279,6 +278,10 @@ else
 endif # simso
 endif # x86-win32
 
+# Test for template instantiation.
+#
+include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
 ifeq ($(shared_libs),1)
   SHARED_LIBS = 1
 endif
@@ -289,7 +292,7 @@ endif
 ifeq ($(SHARED_LIBS),1)
   ACELIB = -L./
   #### There's no difference between non-shared and shared object code.
-  VSHDIR = .obj/
+  VSHDIR = $(VDIR)
 endif # shared_libs
 
 ifeq ($(static_libs),1)

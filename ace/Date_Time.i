@@ -34,6 +34,13 @@ ACE_Date_Time::ACE_Date_Time (void)
   this->update ();
 }
 
+ASYS_INLINE
+ACE_Date_Time::ACE_Date_Time (const ACE_Time_Value& timevalue)
+{
+  ACE_TRACE ("ACE_Date_Time::ACE_Date_Time: timevalue");
+  this->update (timevalue);
+}
+
 // Constructor with init values, no check for validy
 ASYS_INLINE
 ACE_Date_Time::ACE_Date_Time (long day,

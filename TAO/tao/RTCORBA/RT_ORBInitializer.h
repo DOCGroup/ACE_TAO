@@ -42,7 +42,7 @@ class TAO_RTCORBA_Export TAO_RT_ORBInitializer :
   public virtual TAO_Local_RefCounted_Object
 {
 public:
-  // Priority mapping types
+  /// Priority mapping types
   enum
   {
     TAO_PRIORITY_MAPPING_CONTINUOUS,
@@ -90,7 +90,7 @@ private:
 
   /** Scheduling policy.  This value is passed to ACE_OS::thr_setprio().
     * For POSIX pthreads, it maps directly to the pthread_setschedparam() policy
-    * parameter.  Legal values are ACE_SCHED_RR, ACE_SCHED_FIFO, 
+    * parameter.  Legal values are ACE_SCHED_RR, ACE_SCHED_FIFO,
     * ACE_SCHED_OTHER, ACE_SCHED_*, etc.
     */
   long sched_policy_;

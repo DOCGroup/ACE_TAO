@@ -223,7 +223,9 @@ TAO_EC_Basic_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
     CORBA::ORB_init (argc, argv, "");
   // Hard-coded rate to 10 times a second
   ACE_Time_Value rate (0, 100000);
-  return new TAO_EC_Reactive_ConsumerControl (rate, ec, orb.in ());
+  // Hard-coded polling-timeout to 10 msec
+  ACE_Time_Value timeout (0, TAO_EC_DEFAULT_CONSUMER_CONTROL_TIMEOUT);
+  return new TAO_EC_Reactive_ConsumerControl (rate, timeout, ec, orb.in ());
 }
 
 void
@@ -241,7 +243,9 @@ TAO_EC_Basic_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
     CORBA::ORB_init (argc, argv, "");
   // Hard-coded rate to 10 times a second
   ACE_Time_Value rate (0, 100000);
-  return new TAO_EC_Reactive_SupplierControl (rate, ec, orb.in ());
+  // Hard-coded polling-timeout to 10 msec
+  ACE_Time_Value timeout (0, TAO_EC_DEFAULT_SUPPLIER_CONTROL_TIMEOUT);
+  return new TAO_EC_Reactive_SupplierControl (rate, timeout, ec, orb.in ());
 }
 
 void

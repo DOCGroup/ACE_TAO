@@ -1,0 +1,10 @@
+#
+# $Id$
+#
+
+MAKEFILES = \
+        EC_Simple_Service.bor \
+        EC_Simple_Consumer.bor \
+        EC_Simple_Supplier.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -57,6 +57,12 @@ endif
 realclean: clean
 	-$(RM) $(foreach ext, $(IDL_EXT), Test$(ext))
 
+ifeq ($(shared_libs),1)
+  ifneq ($(SHLIB),)
+    CPPFLAGS     += -DTEST_SERVER_MODULE_BUILD_DLL
+  endif
+endif
+
 #----------------------------------------------------------------------------
 #       Dependencies
 #----------------------------------------------------------------------------

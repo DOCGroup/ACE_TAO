@@ -64,7 +64,7 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /**
-   * Acquire the lock, but only wait up to <max_wait> time.  Note
+   * Acquire the lock, but only wait up to @a max_wait time.  Note
    * that this operation may not be available on all OS platforms, so
    * if you're interested in writing maximally portable programs avoid
    * using this operation in your program designs.
@@ -88,7 +88,6 @@ protected:
  * @brief Extension to TAO_RT_Mutex to support named mutexes.
  *
  */
-
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {
 public:

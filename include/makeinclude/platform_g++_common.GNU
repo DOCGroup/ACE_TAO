@@ -50,8 +50,10 @@ ifneq ($(SONAME),)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
-    ifneq ($(with_ld),aix)
-      SOFLAGS += -Wl,-h -Wl,$(SONAME)
+    ifneq ($(with_ld),vxworks)
+      ifneq ($(with_ld),aix)
+        SOFLAGS += -Wl,-h -Wl,$(SONAME)
+      endif
     endif
   endif
 endif

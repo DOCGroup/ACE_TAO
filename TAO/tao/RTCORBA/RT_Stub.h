@@ -35,7 +35,8 @@ class TAO_PrivateConnectionPolicy;
 /**
  * @class TAO_RT_Stub
  *
- * This class reprent a stub with extended functionality, which are needed for RTCORBA.
+ * This class represent a stub with extended functionality, which are needed
+ * for RTCORBA.
  */
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {

@@ -123,13 +123,13 @@ public:
   /// Wait for threads to exit.
   void wait (void);
 
-  // Does <mprofile> belong to us?
+  /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create the static threads - only called once.
   int create_static_threads (void);
 
-  /// Create <number_of_threads> of dynamic threads.  Can be called
+  /// Create @a number_of_threads of dynamic threads.  Can be called
   /// multiple times.
   int create_dynamic_threads (CORBA::ULong number_of_threads);
 
@@ -232,7 +232,7 @@ public:
   /// Wait for threads to exit.
   void wait (void);
 
-  // Does <mprofile> belong to us?
+  /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create the static threads - only called once.
@@ -303,7 +303,7 @@ public:
   /// Wait for threads to exit.
   void wait (void);
 
-  // Does <mprofile> belong to us?
+  /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create a threadpool without lanes.

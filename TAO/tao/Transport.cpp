@@ -1704,7 +1704,7 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
     }
 
   // If the queue did not have a complete message put this piece of
-  // message in the queue. We kow it did not have a complete
+  // message in the queue. We know it did not have a complete
   // message. That is why we are here.
   size_t n =
     this->incoming_message_queue_.copy_tail (incoming);
@@ -1712,8 +1712,8 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                  "copied [%d] bytes to the tail \n",
+                  "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
+                  "copied [%d] bytes to the tail\n",
                   this->id (),
                   n));
     }
@@ -1725,14 +1725,14 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
   if (TAO_debug_level > 6)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                  "missing [%d] bytes in the tail messahe \n",
+                  "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
+                  "missing [%d] bytes in the tail message\n",
                   this->id (),
                   missing_data));
     }
 
   // Move the read pointer of the <incoming> message block to the end
-  // of the copied message  and process the remaining portion...
+  // of the copied message and process the remaining portion...
   incoming.rd_ptr (n);
 
   // If we have some more information left in the message block..
@@ -1802,8 +1802,8 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                    " trying recv, again \n",
+                    "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
+                    "trying recv, again\n",
                     this->id ()));
 
       // Try to do a read again. If we have some luck it would be
@@ -1814,8 +1814,8 @@ TAO_Transport::consolidate_message_queue (ACE_Message_Block &incoming,
 
       if (TAO_debug_level > 5)
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) TAO_Transport[%d]::consolidate_message_queue",
-                    " recv retval [%d] \n",
+                    "TAO (%P|%t) - Transport[%d]::consolidate_message_queue, "
+                    "recv retval [%d]\n",
                     this->id (),
                     n));
       // Error...

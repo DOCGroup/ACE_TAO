@@ -153,4 +153,8 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_ORB_Core *, AC
 #pragma instantiate ACE_Hash_Map_Iterator_Ex<const char *, TAO_ORB_Core *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<const char *, TAO_ORB_Core *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex>
 
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
+
+template TAO_Singleton<TAO_ORB_Table,TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ORB_Table,TAO_SYNCH_MUTEX>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

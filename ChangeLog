@@ -1,7 +1,110 @@
+Wed Apr  9 17:11:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl
+
+        List of changed gathered the last weeks by Mark Drijver
+        <mdrijver@remedy.nl> and me. Improves VxWorks 5.5, MingW, Cygwin
+        and Kylix support.
+
+        * ACE-INSTALL.html:
+          Updated for VxWorks 5.5 and documented how to use BCB with SSL.
+
+        * Makefile.bor:
+          Removed build variable nightlybuild because we don't need it
+          anymore.
+
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Dynamic.cpp:
+          For VxWorks also explicit instantiate static template member. This
+          fixes unresolved externals when using implicit templates.
+
+        * ace/Event_Handler_T.i (get_handle ):
+          In case of an error, return ACE_INVALID_HANDLE and not -1 because
+          -1 causes problems with MingW and is not portable.
+
+        * ace/Log_Msg_NT_Event_Log.cpp:
+        * ace/Log_Msg_NT_Event_Log.h:
+        * ace/README:
+        * ace/config-doxygen.h:
+        * ace/config-win32-common.h:
+          For the WinNT event log backend added a new define called
+          ACE_HAS_LOG_MSG_NT_EVENT_LOG. This is set in the doxygen file to
+          generate documentation for it. This makes it possible to generate
+          the documentation and to better specify to use the WinNT event log
+          backend or not.
+
+        * ace/Date_Time.{h,i}:
+          Added a constructor to initialize an ACE_Date_Time with an
+          ACE_Time_Value.
+
+        * ace/Module.h:
+          Improved doxygen documentation.
+
+        * ace/config-win32-mingw.h:
+          Require win32api version 2.0 or later and removed Win32 API
+          definitions because older versions of win32api lacked these.
+
+        * apps/drwho/Makefile:
+          Don't build drwho with MingW and Cygwin.
+
+        * examples/Reactor/Misc/test_event_handler_t.cpp (signal_handler):
+          Signum should be an int instead of an ACE_HANDLE.
+
+        * examples/Reactor/Ntalker/ntalker.cpp:
+          Changed argument interface to a_interface because interface is a
+          macro with MinGW.
+
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Client.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/MQ_Server.cpp:
+        * examples/System_V_IPC/SV_Message_Queues/TMQ_Server.cpp:
+        * examples/System_V_IPC/SV_Shared_Memory/SV_Shared_Memory_Test.cpp:
+          Modified code so that when SystemV IPC isn't supported this is
+          printed, else the code is build normally. Fixes Cygwin and MinGW
+          compile problems.
+
+        * include/makeinclude/platform_cygwin32.GNU:
+        * include/makeinclude/platform_mingw32.GNU:
+          Disable auto import warnings. There is a bug in the MinGW/Cygwin
+          compiler and until that is fixed the warnings are wrong so we
+          disable. See these files for the link to the MinGW bugentry.
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Make sure that unrecognized compiler options are not set with
+          VxWorks 5.5. Fixes bugzilla entry [1452]. Thanks to Thomas Lockhart
+          <Thomas.Lockhart@jpl.nasa.gov> for reporting this and sending the
+          fix.
+
+        * include/makeinclude/platform_linux_borland.GNU:
+          Improved this file so that we better support the Kylix3 compiler. We
+          don't support it 100% but we can now build the ACE tests without
+          problems. Several also run but also several still have problems.
+
+        * include/makeinclude/platform_sunos5_ghs.GNU:
+        * include/makeinclude/platform_sunos5_kcc.GNU:
+          Use explicit without double quotes to match other files.
+
+        * include/makeinclude/platform_vxworks5.x_diab.GNU:
+          Set VSHDIR to $(VDIR) to make it possible to override it.
+
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:
+          Set VSHDIR to $(VDIR) to make it possible to override it. Moved
+          include of platform_g++_common.GNU after the place where CXX is set
+          to resolve compiler problems. Also use explicit with double quotes
+          to match the other files, the result is that explicit template
+          instantiation is again the default to use.
+
+        * include/makeinclude/rules.bin.GNU:
+        * include/makeinclude/rules.lib.GNU:
+        * include/makeinclude/wrapper_macros.GNU:
+          Improved and extended Kylix specific rules. For Kylix we strip the
+          -l in from of each shared library passed to the linker and prefix
+          with lib and postfix with .so.
+
+        * tests/Time_Value_Test.cpp:
+          Test assignment operator of ACE_Time_Value.
+
 Wed Apr  9 15:51:32 UTC 2003  Don Hinton  <dhinton@dresystems.com>
-        
+
         * ace/Malloc_Allocator.{i,cpp}:
-        
+
           Uninlined ACE_New_Allocator::{malloc, calloc, free} () to
           avoid the multiple heap problem on systems like Windows.
           Thanks to Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>

@@ -22,7 +22,7 @@ ifeq (1,$(using_aix_vacpp))
 $(BIN): %: %.icc $(SRC)
 	vacbld_r $< -severitylevel=warning
 else
-ifdef kylix_build
+ifdef kylix
 $(BIN): %: $(VDIR)%.$(OBJEXT) $(VOBJS)
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(POSTLINK) $^, $@,,
 else

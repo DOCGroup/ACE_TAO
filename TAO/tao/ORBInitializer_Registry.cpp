@@ -121,4 +121,7 @@ template class ACE_Array_Base<PortableInterceptor::ORBInitializer_var>;
 #pragma instantiate TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Array_Base<PortableInterceptor::ORBInitializer_var>
 
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
+template TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX> * TAO_Singleton<TAO_ORBInitializer_Registry, TAO_SYNCH_MUTEX>::singleton_;
+
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

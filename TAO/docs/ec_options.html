@@ -313,7 +313,29 @@ static EC_Factory "-ECFiltering basic ....."
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECProxyPushConsumerCollection"> -->
+        <!-- <TR NAME="ECConsumerControlTimeout"> -->
+        <TR>
+          <TD><CODE>-ECConsumerControlTimeout</CODE>
+            <EM>timeout</EM>
+          </TD>
+          <TD>Set the timeout period (in microseconds) used by the reactive
+            consumer control policy to detect a timeout when polling the state
+						of the consumers.
+          </TD>
+        </TR>
+
+        <!-- <TR NAME="ECSupplierControlTimeout"> -->
+        <TR>
+          <TD><CODE>-ECSupplierControlTimeout</CODE>
+            <EM>timeout</EM>
+          </TD>
+          <TD>Set the timeout period (in microseconds) used by the reactive
+            supplier control policy to detect a timeout when polling the state
+						of the suppliers.
+          </TD>
+        </TR>
+
+				<!-- <TR NAME="ECProxyPushConsumerCollection"> -->
         <TR>
           <TD><CODE>-ECProxyPushConsumerCollection</CODE>
             <EM>flag[:flags]</EM>

@@ -19,9 +19,11 @@ ACE_RCSID(Event, EC_Reactive_ConsumerControl, "$Id$")
 
 TAO_EC_Reactive_ConsumerControl::
      TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
+                                      const ACE_Time_Value &timeout,
                                       TAO_EC_Event_Channel *ec,
                                       CORBA::ORB_ptr orb)
   : rate_ (rate),
+    timeout_ (timeout),
     adapter_ (this),
     event_channel_ (ec),
     orb_ (CORBA::ORB::_duplicate (orb))
@@ -110,10 +112,8 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
                                         ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      // Pre-compute the policy list to the set the right timeout
-      // value...
-      // @@ TODO It is currently hard-coded to 10 milliseconds
-      TimeBase::TimeT timeout = 10 * 10000;
+      // Timeout for polling state (default = 10 msec)
+      TimeBase::TimeT timeout = timeout_.usec() * 10;
       CORBA::Any any;
       any <<= timeout;
 

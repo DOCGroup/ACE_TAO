@@ -36,7 +36,7 @@ ACE_Dynamic::instance (void)
     #pragma instantiate ACE_TSS<ACE_Dynamic>
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 
-#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux))
+#elif defined (__GNUC__) && (defined (_AIX) || defined (__hpux) || defined (VXWORKS))
 template ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex> *
   ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>::singleton_;
 

@@ -681,7 +681,7 @@ TAO_GIOP_Synch_Invocation::invoke_i (CORBA::Boolean is_locate_request
       CORBA::ULong msecs = this->max_wait_time_->msec ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) Synch_Invocation::invoke_i, "
+                  "TAO (%P|%t) - Synch_Invocation::invoke_i, "
                   "timeout after recv is <%u> status <%d>\n",
                   msecs,
                   reply_error));

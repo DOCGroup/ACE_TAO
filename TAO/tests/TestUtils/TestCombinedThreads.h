@@ -20,12 +20,11 @@
 
 #include "ace/OS.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/SString.h"
 
 // *******************************************************************
 // Typedefs, forward declarations and defines
 // *******************************************************************
-
-class ACE_CString;
 
 typedef int (*TEST_MAIN_TYPE_FUNC)(int, char**);
 #define TEST_MAIN_FUNC_DECLARE(X) int X(int argc, char** argv)

@@ -2,7 +2,7 @@
 
 #include "ace/config-all.h"
 
-#if defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_HAS_LOG_MSG_NT_EVENT_LOG)
 
 #include "ace/Log_Msg_NT_Event_Log.h"
 #include "ace/Log_Msg.h"
@@ -150,4 +150,4 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
     return 0;
 }
 
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE && !ACE_HAS_PHARLAP */
+#endif /* ACE_HAS_LOG_MSG_NT_EVENT_LOG */
