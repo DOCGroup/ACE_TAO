@@ -494,13 +494,5 @@ ACE_Recursive_Thread_Mutex::set_thread_id (ACE_thread_t t)
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::set_thread_id");
   this->owner_id_ = t;
 }
-
-ACE_INLINE void     
-ACE_Recursive_Thread_Mutex::set_nesting_level (int d)
-{
-// ACE_TRACE ("ACE_Recursive_Thread_Mutex::set_nesting_level");
-  this->nesting_level_ = d;
-}
-
 #endif /* ACE_HAS_THREADS */
 

@@ -16,7 +16,7 @@ LSRC   	= $(addsuffix .cpp,$(FILES))
 LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
 SHOBJ	= $(addsuffix .so,$(FILES))
 
-LDLIBS 	= -lnet_svcs
+LDLIBS 	= -lnetsvcs
  
 VLDLIBS = $(LDLIBS:%=%$(VAR))
 

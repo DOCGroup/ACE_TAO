@@ -373,12 +373,12 @@ public:
   // register the thread with the Thread_Manager.
 
   ~ACE_Thread_Control (void);
-  // Implicitly kill the thread on exit and remove it from its
-  // associated ThreadManager.
+  // Remove the thread from its associated <Thread_Manager> and exit
+  // the thread if <do_thr_exit> is enabled.
 
-  void *exit (void *status);
-  // Explicitly kill the thread on exit and remove it from its
-  // associated <Thread_Manager>.
+  void *exit (void *status, int do_thr_exit);
+  // Remove this thread from its associated <Thread_Manager> and exit
+  // the thread if <do_thr_exit> is enabled.
 
   int insert (ACE_Thread_Manager *tm);
   // Store the <Thread_Manager> and use it to register ourselves for

@@ -247,7 +247,7 @@ Scheduler::name_i (void)
 {
   char *the_name;
 
-  the_name = new char[ACE_OS::strlen (this->name_) + 1];
+  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], 0);
   ACE_OS::strcpy (the_name, this->name_);
 
   return the_name;
@@ -302,15 +302,15 @@ main (int, char *[])
   // Create active objects..  
   // @@ Should "open" be subsumed within the constructor of
   // Scheduler()?
-  andres = new Scheduler ("andres");
+  ACE_NEW_RETURN (andres, Scheduler ("andres"), -1);
   andres->open ();
-  peter = new Scheduler ("peter");
+  ACE_NEW_RETURN (peter, Scheduler ("peter"), -1);
   peter->open ();
-  helmut = new Scheduler ("helmut");
+  ACE_NEW_RETURN (helmut, Scheduler ("helmut"), -1);
   helmut->open ();
 
   // Matias passes all asynchronous method calls on to Andres...
-  matias = new Scheduler ("matias", andres);
+  ACE_NEW_RETURN (matias, Scheduler ("matias", andres), -1);
   matias->open ();
 
   for (int i = 0; i < n_loops; i++) 
@@ -371,10 +371,10 @@ main (int, char *[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-		  (u_long) task_count,
-		  (u_long) future_count,
-		  (u_long) capsule_count,
-		  (u_long) methodobject_count));
+		  (int) task_count,
+		  (int) future_count,
+		  (int) capsule_count,
+		  (int) methodobject_count));
     }
 
   // Close things down.
@@ -387,10 +387,10 @@ main (int, char *[])
   
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) task_count %d future_count %d capsule_count %d methodobject_count %d\n",
-	      (u_long) task_count,
-	      (u_long) future_count,
-	      (u_long) capsule_count,
-	      (u_long) methodobject_count));
+	      (int) task_count,
+	      (int) future_count,
+	      (int) capsule_count,
+	      (int) methodobject_count));
 
   ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
 

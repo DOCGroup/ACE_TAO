@@ -23,7 +23,7 @@ private:
 };
 
 int
-main (int argc, char *argv[])
+main (int, char *[])
 {
   ACE_Timer_Queue tq;
   Example_Handler eh;

@@ -71,7 +71,7 @@ public:
   int unbind (ACE_HANDLE, ACE_Reactor_Mask mask);
   // Remove the binding of <ACE_HANDLE> in accordance with the <mask>.
 
-  int unbind_all (void);
+  void unbind_all (void);
   // Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
 
   // = Sanity checking.
@@ -80,14 +80,25 @@ public:
   // within the range of legal handles (i.e., >= 0 && < max_size_).
   int invalid_handle (ACE_HANDLE handle);
 
-  // Check the <handle> to make sure it's a valid ACE_HANDLE that
-  // within the range of currently registered handles (i.e., >= 0 && <
-  // max_handlep1_).
-  int handle_in_range (ACE_HANDLE handle);
+  // Check the <index> to make sure it's within the range of currently
+  // registered HANDLEs (i.e., >= 0 && < max_handlep1_).
+  int handle_in_range (size_t handle);
 
   // = Accessors.
-  size_t max_handlep1 (void);
+  size_t max_handlep1 (void) const;
   // Maximum ACE_HANDLE value, plus 1.
+
+  ACE_HANDLE *handles (void) const;
+  // Pointer to the beginning of the current array of <ACE_HANDLE>
+  // *'s.
+
+  int remove_handler (size_t index,
+		      ACE_Reactor_Mask mask = 0);
+  // Removes the <ACE_Event_Handler> at <index> from the ReactorEx.
+  // Note that the ReactorEx will call the <get_handle> method of <eh>
+  // to extract the underlying I/O handle.  If <mask> ==
+  // ACE_Event_Handler::DONT_CALL then the <handle_close> method of
+  // the <eh> is not invoked.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -208,13 +219,13 @@ public:
 
   // = Initialization and termination methods.
 
-  ACE_ReactorEx (ACE_Sig_Handler * = 0
+  ACE_ReactorEx (ACE_Sig_Handler * = 0,
 		 ACE_Timer_Queue * = 0);
   // Initialize <ACE_ReactorEx> with the default size.
 
   ACE_ReactorEx (size_t size, 
 		 int unused = 0,
-		 ACE_Sig_Handler * = 0
+		 ACE_Sig_Handler * = 0,
 		 ACE_Timer_Queue * = 0);
   // Initialize <ACE_ReactorEx> with size <size>.
 
@@ -223,7 +234,6 @@ public:
 		    ACE_Sig_Handler * = 0,
 		    ACE_Timer_Queue * = 0);
   // Initialize <ACE_ReactorEx> with size <size>.
-
 
   virtual int close (void);
   // Close down the ReactorEx and release all of its resources.
@@ -322,7 +332,7 @@ public:
 
   int notify (ACE_Event_Handler * = 0, 
 	      ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
-	      ACE_Time_Value *);
+	      ACE_Time_Value * = 0);
   // Wakeup <ACE_ReactorEx> if it is currently blocked in
   // <WaitForMultipleObjects>.  The <ACE_Time_Value> indicates how
   // long to blocking trying to notify the <Reactor>.  If <timeout> ==
@@ -342,7 +352,9 @@ protected:
 					int alertable);
   // Wait for timer and I/O events to occur.
 
-  virtual dispatch (int number_of_active_handles, 
+  virtual dispatch (int wait_status,
+		    int wait_all,
+		    ACE_Event_Handler *wait_all_callback,
 		    ACE_ReactorEx_Handle_Set &dispatch_set);
   // Dispatches the timers and I/O handlers.
 

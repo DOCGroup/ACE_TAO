@@ -150,7 +150,6 @@ ACE::ldfind (const char filename[],
   
   char tempcopy[MAXPATHLEN];
   char searchpathname[MAXPATHLEN];
-  char tempfilename[MAXPATHLEN];
   char searchfilename[MAXPATHLEN];
 
   // Create a copy of filename to work with.
@@ -177,11 +176,11 @@ ACE::ldfind (const char filename[],
   if (separator_ptr == 0)
     {
       searchpathname[0] = '\0';
-      ACE_OS::strcpy (tempfilename, tempcopy);
+      ACE_OS::strcpy (searchfilename, tempcopy);
     } 
   else // This is an absolute path.
     {
-      ACE_OS::strcpy (tempfilename, separator_ptr + 1);
+      ACE_OS::strcpy (searchfilename, separator_ptr + 1);
       separator_ptr[1] = '\0';
       ACE_OS::strcpy (searchpathname, tempcopy);
     }
@@ -190,7 +189,7 @@ ACE::ldfind (const char filename[],
 
   // Check to see if this has an appropriate DLL suffix for the OS
   // platform.
-  char *s = ACE_OS::strrchr (tempfilename, '.');
+  char *s = ACE_OS::strrchr (searchfilename, '.');
 
   if (s != 0)
     {
@@ -203,8 +202,8 @@ ACE::ldfind (const char filename[],
 		    s));
     }
 
-  // Make sure we've got enough space in tempfilename.
-  if (ACE_OS::strlen (tempfilename) + 
+  // Make sure we've got enough space in searchfilename.
+  if (ACE_OS::strlen (searchfilename) + 
       ACE_OS::strlen (ACE_DLL_PREFIX) + 
       got_suffix ? 0 : ACE_OS::strlen (ACE_DLL_SUFFIX) >= sizeof searchfilename) 
     {
@@ -231,7 +230,7 @@ ACE::ldfind (const char filename[],
 	  // prefix.
 	  ::sprintf (pathname, "%s%s%s",
 		     searchpathname,
-		     tempfilename, 
+		     searchfilename, 
 		     got_suffix ? "" : ACE_DLL_SUFFIX);
 	  if (ACE_OS::access (pathname, F_OK) == 0)
 	    return 0;
@@ -240,7 +239,7 @@ ACE::ldfind (const char filename[],
 	  ::sprintf (pathname, "%s%s%s%s", 
 		     searchpathname,
 		     ACE_DLL_PREFIX,
-		     tempfilename, 
+		     searchfilename, 
 		     got_suffix ? "" : ACE_DLL_SUFFIX);
 	  if (ACE_OS::access (pathname, F_OK) == 0)
 	    return 0;

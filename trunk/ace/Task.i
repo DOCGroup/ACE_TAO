@@ -98,11 +98,17 @@ ACE_Task_Base::grp_id (void) const
 }
 
 // Set the current group id.
+
 ACE_INLINE void
 ACE_Task_Base::grp_id (int id)
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
+
+  // Cache the group id in the task and then set it in the
+  // Thread_Manager, if there is one.
   this->grp_id_ = id;
+  if (this->thr_mgr ())
+    this->thr_mgr ()->set_grp (this, id);
 }
 

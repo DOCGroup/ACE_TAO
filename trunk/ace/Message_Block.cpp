@@ -12,6 +12,22 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Message_Block)
 
 typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> > ACE_NEW_MALLOC;
 
+void
+ACE_Message_Block::data_block (ACE_Data_Block *db)
+{
+  ACE_TRACE ("ACE_Data_Block::data_block");
+  if (this->data_block_ != 0)
+    this->data_block_->release ();
+
+  this->data_block_ = db;
+  // Should we increment the reference count of <db>?
+
+  // Set the read and write pointers in the <Message_Block> to point
+  // to the buffer in the <ACE_Data_Block>.
+  this->rd_ptr (this->data_block ()->base ());
+  this->wr_ptr (this->data_block ()->base ());
+}
+
 int
 ACE_Message_Block::copy (const char *buf, size_t n)
 {
@@ -147,6 +163,7 @@ ACE_Message_Block::size (size_t length)
       // ... and use them to initialize the new deltas.
       this->rd_ptr_ = this->data_block ()->base () + r_delta;
       this->wr_ptr_ = this->data_block ()->base () + w_delta;
+      return 0;
     }
 }
 
@@ -362,10 +379,10 @@ ACE_Message_Block::init_i (size_t size,
 				  flags),
 		  -1);
 
-  // Set the read and write pointers in the new <Message_Block>.
+  // Set the read and write pointers in the new <Message_Block> to
+  // point to the buffer in the <ACE_Data_Block>.
   this->rd_ptr (this->data_block ()->base ());
   this->wr_ptr (this->data_block ()->base ());
-
   return 0;
 }
 
@@ -436,7 +453,7 @@ ACE_Message_Block::release (ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Message_Block::release");
 
-  if (mb)
+  if (mb != 0)
     return mb->release ();
   else
     return 0;

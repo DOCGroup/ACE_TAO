@@ -116,7 +116,7 @@ Test_Task::handle_input (ACE_HANDLE)
       done_count--;
       ACE_DEBUG ((LM_DEBUG, 
 		  "(%t) handle_input, handled_ = %d, done_count = %d\n",
-		  this->handled_, (u_long) done_count));
+		  this->handled_, (int) done_count));
     }
 
   ACE_OS::thr_yield ();

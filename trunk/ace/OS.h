@@ -1758,6 +1758,12 @@ union semun
 };
 #endif /* !ACE_HAS_SEMUN */
 
+// Max size of an ACE Log Record data buffer.  This can be reset in
+// the config.h file if you'd like to increase or decrease the size.
+#if !defined (ACE_MAXLOGMSGLEN)
+#define ACE_MAXLOGMSGLEN 4 * 1024
+#endif /* ACE_MAXLOGMSGLEN */
+
 // Max size of an ACE Token.
 #define ACE_MAXTOKENNAMELEN 40
 

@@ -976,7 +976,6 @@ public:
 
 private:
   // These methods should *not* be public (they hold no locks...)
-  void set_nesting_level (int d);
   void set_thread_id (ACE_thread_t t);
 
   ACE_Thread_Mutex nesting_mutex_; 

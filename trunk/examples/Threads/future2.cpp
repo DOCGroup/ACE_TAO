@@ -250,7 +250,7 @@ Scheduler::name_i (void)
 {
   char *the_name;
 
-  the_name = new char[ACE_OS::strlen (this->name_) + 1];
+  ACE_NEW_RETURN (the_name, char[ACE_OS::strlen (this->name_) + 1], 0);
   ACE_OS::strcpy (the_name, this->name_);
 
   return the_name;
@@ -315,7 +315,9 @@ determine_iterations (void)
   int n_iterations;
 
   ACE_DEBUG ((LM_DEBUG," (%t) determining the number of iterations...\n"));
-  Scheduler *worker_a = new Scheduler ("worker A");
+  Scheduler *worker_a;
+  
+  ACE_NEW_RETURN (worker_a, Scheduler ("worker A"), -1);
 
   ACE_Time_Value tstart (ACE_OS::gettimeofday ());
   ACE_Time_Value tend (ACE_OS::gettimeofday ());
@@ -335,7 +337,7 @@ determine_iterations (void)
     }
 
   ACE_DEBUG ((LM_DEBUG," (%t) n_iterations %d\n", 
-	      (u_long) n_iterations));
+	      (int) n_iterations));
 
   worker_a->end ();
   // @@ Can we safely delete worker_a here?
@@ -349,11 +351,14 @@ test_active_object (int n_iterations)
   // A simple example for the use of the active object pattern and
   // futures to return values from an active object.
 
-  Scheduler *worker_a = new Scheduler ("worker A");
-  Scheduler *worker_b = new Scheduler ("worker B");
+  Scheduler *worker_a;
+  Scheduler *worker_b; 
+  Scheduler *worker_c;
 
+  ACE_NEW (worker_a, Scheduler ("worker A"));
+  ACE_NEW (worker_b, Scheduler ("worker B"));
   // Have worker_c delegate his work to worker_a.
-  Scheduler *worker_c = new Scheduler ("worker C", worker_a);
+  ACE_NEW (worker_c, Scheduler ("worker C", worker_a));
 
   // loop 0:
   // test the Schedulers when they are not active.
@@ -410,19 +415,19 @@ test_active_object (int n_iterations)
     }
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d before end ()\n",
-	      (u_long) scheduler_open_count));
+	      (int) scheduler_open_count));
 
   worker_a->end ();
   worker_b->end ();
   worker_c->end ();
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d immediately after end ()\n",
-	      (u_long) scheduler_open_count));
+	      (int) scheduler_open_count));
 
   ACE_OS::sleep (2);
 
   ACE_DEBUG ((LM_DEBUG, " (%t) scheduler_open_count %d after waiting\n",
-	      (u_long) scheduler_open_count));
+	      (int) scheduler_open_count));
   // @@ Can we safely delete worker_a, worker_b, and worker_c?
 }
 
@@ -433,7 +438,8 @@ test_cancellation (int n_iterations)
 
   // Now test the cancelling a future.
 
-  Scheduler *worker_a = new Scheduler ("worker A");
+  Scheduler *worker_a;
+  ACE_NEW (worker_a, Scheduler ("worker A"));
   worker_a->open ();
 
   ACE_Future<double> fresulta = worker_a->work (0.01, n_iterations);
@@ -467,13 +473,15 @@ static void
 test_timeout (int n_iterations)
 {
   ACE_DEBUG ((LM_DEBUG," (%t) testing timeout on waiting for the result...\n"));
-  Scheduler *worker_a = new Scheduler ("worker A");
+  Scheduler *worker_a;
+  ACE_NEW (worker_a, Scheduler ("worker A"));
   worker_a->open ();
 
   ACE_Future<double> fresulta = worker_a->work (0.01, 2 * n_iterations);
 
   // Should immediately return... and we should see an error...
-  ACE_Time_Value *delay = new ACE_Time_Value (1);
+  ACE_Time_Value *delay;
+  ACE_NEW (delay, ACE_Time_Value (1));
 
   double resulta;
   fresulta.get (resulta, delay);
