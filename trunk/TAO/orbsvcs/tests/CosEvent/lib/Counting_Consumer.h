@@ -25,6 +25,7 @@
 
 #include "orbsvcs/CosEventCommS.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
+#include "ace/Task.h"
 
 class CEC_Test_Export CEC_Counting_Consumer : public POA_CosEventComm::PushConsumer
 {
@@ -68,6 +69,87 @@ protected:
 
   const char* name_;
   // The name
+};
+
+// ****************************************************************
+
+class CEC_Test_Export CEC_Pull_Counting_Consumer : public POA_CosEventComm::PullConsumer
+{
+  // = TITLE
+  //   Simple consumer object to implement EC tests.
+  //
+  // = DESCRIPTION
+  //   This is a simple consumer that counts the events it receives.
+  //
+public:
+  CEC_Pull_Counting_Consumer (const char* name);
+  // Constructor
+
+  void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
+                CORBA::Environment &ACE_TRY_ENV);
+  void disconnect (CORBA::Environment &ACE_TRY_ENV);
+  // Simple connect/disconnect methods..
+
+  void dump_results (int expected_count, int tolerance);
+  // Print out an error message if the event count is too far from the
+  // expected count.
+
+  CORBA::Any *pull (CORBA::Environment &ACE_TRY_ENV);
+  CORBA::Any *try_pull (CORBA::Boolean_out has_event,
+                        CORBA::Environment &ACE_TRY_ENV);
+
+  // = The CosEventComm::PullConsumer methods
+  virtual void disconnect_pull_consumer (CORBA::Environment &)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // The skeleton methods.
+
+  CORBA::ULong event_count;
+  // Keep track of the number of events received.
+
+  CORBA::ULong disconnect_count;
+  // Keep track of the number of disconnect calls received.
+
+protected:
+  CosEventChannelAdmin::ProxyPullSupplier_var supplier_proxy_;
+  // The proxy
+
+  const char* name_;
+  // The name
+};
+
+// ****************************************************************
+
+class CEC_Test_Export CEC_Counting_Consumer_Task : public ACE_Task_Base
+{
+public:
+  CEC_Counting_Consumer_Task (CEC_Pull_Counting_Consumer *consumer,
+                              int milliseconds = 0);
+  // Create the task...
+
+  // = Check the ACE_Task_Base documentation.
+  int svc (void);
+
+  void stop (void);
+  CORBA::ULong pull_count (void);
+
+  void run (CORBA::Environment &ACE_TRY_ENV);
+  // Run a single iteration of the test
+
+private:
+  CEC_Pull_Counting_Consumer *consumer_;
+  // The consumer we are turning into an active object
+
+  int stop_flag_;
+  // Set to 1 when the test must stop
+
+  CORBA::ULong pull_count_;
+  // Count the number of pull() calls
+
+  int milliseconds_;
+  // If not zero then pause for <milliseconds> before sending each
+  // event.
+
+  ACE_SYNCH_MUTEX lock_;
 };
 
 #endif /* ECT_CONSUMER_H */

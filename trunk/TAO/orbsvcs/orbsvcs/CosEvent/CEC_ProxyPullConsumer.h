@@ -7,15 +7,15 @@
 //   ORBSVCS Cos Event Channel
 //
 // = FILENAME
-//   CEC_ProxyPushConsumer
+//   CEC_ProxyPullConsumer
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
 // ============================================================================
 
-#ifndef TAO_CEC_PROXYPUSHCONSUMER_H
-#define TAO_CEC_PROXYPUSHCONSUMER_H
+#ifndef TAO_CEC_PROXYPULLCONSUMER_H
+#define TAO_CEC_PROXYPULLCONSUMER_H
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 
@@ -27,36 +27,41 @@
 
 class TAO_CEC_EventChannel;
 class TAO_CEC_Dispatching;
-class TAO_CEC_ProxyPushSupplier;
+class TAO_CEC_ProxyPullSupplier;
 
-class TAO_ORBSVCS_Export TAO_CEC_ProxyPushConsumer : public POA_CosEventChannelAdmin::ProxyPushConsumer
+class TAO_ORBSVCS_Export TAO_CEC_ProxyPullConsumer : public POA_CosEventChannelAdmin::ProxyPullConsumer
 {
   // = TITLE
-  //   ProxyPushConsumer
+  //   ProxyPullConsumer
   //
   // = DESCRIPTION
-  //   Implement the CosEventChannelAdmin::ProxyPushConsumer interface,
+  //   Implement the CosEventChannelAdmin::ProxyPullConsumer interface,
   //   remember that this class is used to communicate with a
-  //   PushSupplier, so, in effect, this is the ambassador for a
+  //   PullSupplier, so, in effect, this is the ambassador for a
   //   supplier inside the event channel.
   //
   // = MEMORY MANAGMENT
-  //   The object commits suicide when disconnect_push_consumer() is
+  //   The object commits suicide when disconnect_pull_consumer() is
   //   called.
   //
 public:
-  TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel);
   // constructor...
 
-  virtual ~TAO_CEC_ProxyPushConsumer (void);
+  virtual ~TAO_CEC_ProxyPullConsumer (void);
   // destructor...
 
   CORBA::Boolean is_connected (void) const;
   // Return 0 if no supplier is connected...
 
-  CosEventComm::PushSupplier_ptr supplier (void) const;
+  CosEventComm::PullSupplier_ptr supplier (void) const;
   // Return the consumer object reference. It returns nil() if it has
   // not connected yet.
+
+  CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event,
+                                      CORBA::Environment &env);
+  CORBA::Any* pull_from_supplier (CORBA::Environment &env);
+  // Pulls from the supplier, verifies that it is connected.
 
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected,
                                         CORBA::Environment &ACE_TRY_ENV);
@@ -71,16 +76,13 @@ public:
   CORBA::ULong _decr_refcnt (void);
   // Increment and decrement the reference count.
 
-  // = The CosEventChannelAdmin::ProxyPushConsumer methods...
-  virtual void connect_push_supplier (
-                CosEventComm::PushSupplier_ptr push_supplier,
+  // = The CosEventChannelAdmin::ProxyPullConsumer methods...
+  virtual void connect_pull_supplier (
+                CosEventComm::PullSupplier_ptr pull_supplier,
                 CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected));
-  virtual void push (const CORBA::Any& event,
-                     CORBA::Environment &)
-      ACE_THROW_SPEC ((CORBA::SystemException));
-  virtual void disconnect_push_consumer (CORBA::Environment &)
+  virtual void disconnect_pull_consumer (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   // = The Servant methods
@@ -91,8 +93,8 @@ public:
                                 TAO_default_environment ());
 
 protected:
-  void supplier (CosEventComm::PushSupplier_ptr supplier);
-  void supplier_i (CosEventComm::PushSupplier_ptr supplier);
+  void supplier (CosEventComm::PullSupplier_ptr supplier);
+  void supplier_i (CosEventComm::PullSupplier_ptr supplier);
   // Set the supplier, used by some implementations to change the
   // policies used when invoking operations on the supplier.
 
@@ -115,7 +117,7 @@ private:
   CORBA::ULong refcount_;
   // The reference count.
 
-  CosEventComm::PushSupplier_var supplier_;
+  CosEventComm::PullSupplier_var supplier_;
   // The supplier....
 
   PortableServer::POA_var default_POA_;
@@ -123,7 +125,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "CEC_ProxyPushConsumer.i"
+#include "CEC_ProxyPullConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_CEC_PROXYPUSHCONSUMER_H */
+#endif /* TAO_CEC_PROXYPULLCONSUMER_H */

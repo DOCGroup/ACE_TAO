@@ -1,20 +1,20 @@
 // $Id$
 
-#include "CEC_ProxyPushConsumer.h"
+#include "CEC_ProxyPullConsumer.h"
 #include "CEC_EventChannel.h"
 #include "CEC_ConsumerAdmin.h"
-#include "CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPullSupplier.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "CEC_ProxyPushConsumer.i"
+#include "CEC_ProxyPullConsumer.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(CosEvent, CEC_ProxyPushConsumer, "$Id$")
+ACE_RCSID(CosEvent, CEC_ProxyPullConsumer, "$Id$")
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
-TAO_CEC_ProxyPushConsumer::
-    TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec)
+TAO_CEC_ProxyPullConsumer::
+    TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* ec)
   : event_channel_ (ec),
     refcount_ (1)
 {
@@ -25,13 +25,94 @@ TAO_CEC_ProxyPushConsumer::
     this->event_channel_->consumer_poa ();
 }
 
-TAO_CEC_ProxyPushConsumer::~TAO_CEC_ProxyPushConsumer (void)
+TAO_CEC_ProxyPullConsumer::~TAO_CEC_ProxyPullConsumer (void)
 {
   this->event_channel_->destroy_consumer_lock (this->lock_);
 }
 
+// NOTE: There is some amount of duplicated code here, but it is
+// intentional. Mainly we want to avoid locking overhead when
+// possible, thus the code flow is optimized for that case more than
+// for small code.
+
+CORBA::Any*
+TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
+    CORBA::Boolean_out has_event,
+    CORBA::Environment& ACE_TRY_ENV)
+{
+  has_event = 0;
+  CosEventComm::PullSupplier_var supplier;
+  {
+    ACE_GUARD_THROW_EX (
+            ACE_Lock, ace_mon, *this->lock_,
+            CORBA::INTERNAL ());
+    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK;
+
+    if (this->is_connected_i () == 0)
+      return 0; // ACE_THROW (CosEventComm::Disconnected ());????
+
+    supplier =
+      CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
+
+    // The refcount cannot be zero, because we have at least two
+    // references,
+  }
+
+  CORBA::Any_var any;
+  ACE_TRY
+    {
+      any = supplier->try_pull (has_event, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // @@ This is where the policies for misbehaving suppliers
+      //    should kick in.... for the moment just ignore them.
+    }
+  ACE_ENDTRY;
+  return any._retn ();
+}
+
+CORBA::Any*
+TAO_CEC_ProxyPullConsumer::pull_from_supplier (
+    CORBA::Environment& ACE_TRY_ENV)
+{
+  CosEventComm::PullSupplier_var supplier;
+  {
+    ACE_GUARD_THROW_EX (
+            ACE_Lock, ace_mon, *this->lock_,
+            CORBA::INTERNAL ());
+    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
+    ACE_CHECK_RETURN (0);
+
+    if (this->is_connected_i () == 0)
+      return 0; // ACE_THROW (CosEventComm::Disconnected ());????
+
+    supplier =
+      CosEventComm::PullSupplier::_duplicate (this->supplier_.in ());
+
+    // The refcount cannot be zero, because we have at least two
+    // references,
+  }
+
+  CORBA::Any_var any;
+  ACE_TRY
+    {
+      any = supplier->pull (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      // @@ This is where the policies for misbehaving suppliers
+      //    should kick in.... for the moment just ignore them.
+    }
+  ACE_ENDTRY;
+  return any._retn ();
+}
+
 CORBA::Boolean
-TAO_CEC_ProxyPushConsumer::supplier_non_existent (
+TAO_CEC_ProxyPullConsumer::supplier_non_existent (
       CORBA::Boolean_out disconnected,
       CORBA::Environment &ACE_TRY_ENV)
 {
@@ -56,9 +137,9 @@ TAO_CEC_ProxyPushConsumer::supplier_non_existent (
 }
 
 void
-TAO_CEC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_ProxyPullConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
-  CosEventComm::PushSupplier_var supplier;
+  CosEventComm::PullSupplier_var supplier;
 
   {
     ACE_GUARD_THROW_EX (
@@ -80,7 +161,7 @@ TAO_CEC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_TRY
     {
-      supplier->disconnect_push_supplier (ACE_TRY_ENV);
+      supplier->disconnect_pull_supplier (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -92,14 +173,14 @@ TAO_CEC_ProxyPushConsumer::shutdown (CORBA::Environment &ACE_TRY_ENV)
 }
 
 void
-TAO_CEC_ProxyPushConsumer::cleanup_i (void)
+TAO_CEC_ProxyPullConsumer::cleanup_i (void)
 {
   this->supplier_ =
-    CosEventComm::PushSupplier::_nil ();
+    CosEventComm::PullSupplier::_nil ();
 }
 
 void
-TAO_CEC_ProxyPushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
+TAO_CEC_ProxyPullConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
 {
   PortableServer::POA_var poa =
     this->_default_POA (ACE_TRY_ENV);
@@ -112,14 +193,14 @@ TAO_CEC_ProxyPushConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushConsumer::_incr_refcnt (void)
+TAO_CEC_ProxyPullConsumer::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushConsumer::_decr_refcnt (void)
+TAO_CEC_ProxyPullConsumer::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -129,13 +210,13 @@ TAO_CEC_ProxyPushConsumer::_decr_refcnt (void)
   }
 
   // Notify the event channel
-  this->event_channel_->destroy_proxy_push_consumer (this);
+  this->event_channel_->destroy_proxy_pull_consumer (this);
   return 0;
 }
 
 void
-TAO_CEC_ProxyPushConsumer::connect_push_supplier (
-      CosEventComm::PushSupplier_ptr push_supplier,
+TAO_CEC_ProxyPullConsumer::connect_pull_supplier (
+      CosEventComm::PullSupplier_ptr pull_supplier,
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CosEventChannelAdmin::AlreadyConnected))
@@ -156,7 +237,7 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
         // consumer...
         this->cleanup_i ();
 
-        // @@ Please read the comments in CEC_ProxyPushSupplier about
+        // @@ Please read the comments in CEC_ProxyPullSupplier about
         //     possible race conditions in this area...
         TAO_CEC_Unlock reverse_lock (*this->lock_);
 
@@ -176,7 +257,7 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
           return;
       }
     this->supplier_ =
-      CosEventComm::PushSupplier::_duplicate (push_supplier);
+      CosEventComm::PullSupplier::_duplicate (pull_supplier);
   }
 
   // Notify the event channel...
@@ -184,51 +265,11 @@ TAO_CEC_ProxyPushConsumer::connect_push_supplier (
 }
 
 void
-TAO_CEC_ProxyPushConsumer::push (const CORBA::Any& event,
-                                 CORBA::Environment &ACE_TRY_ENV)
-    ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // @@ The following code is not exception safe, must fix, but the
-  // canonical tricks don't work: the destroy_push_consumer () method
-  // must be invoked only once the mutex is released, but after the
-  // refcount get to zero, seems hard...
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    if (this->is_connected_i () == 0)
-      return; // @@ THROW something???
-
-    this->refcount_++;
-  }
-
-  this->event_channel_->consumer_admin ()->push (event,
-                                                 ACE_TRY_ENV);
-  ACE_CHECK;
-
-  {
-    ACE_GUARD_THROW_EX (
-        ACE_Lock, ace_mon, *this->lock_,
-        CORBA::INTERNAL ());
-    // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return;
-  }
-  this->event_channel_->destroy_proxy_push_consumer (this);
-}
-
-void
-TAO_CEC_ProxyPushConsumer::disconnect_push_consumer (
+TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer (
       CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CosEventComm::PushSupplier_var supplier;
+  CosEventComm::PullSupplier_var supplier;
 
   {
     ACE_GUARD_THROW_EX (
@@ -256,7 +297,7 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer (
     {
       ACE_TRY
         {
-          supplier->disconnect_push_supplier (ACE_TRY_ENV);
+          supplier->disconnect_pull_supplier (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }
       ACE_CATCHANY
@@ -271,19 +312,19 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer (
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPushConsumer::_default_POA (CORBA::Environment&)
+TAO_CEC_ProxyPullConsumer::_default_POA (CORBA::Environment&)
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPushConsumer::_add_ref (CORBA::Environment &)
+TAO_CEC_ProxyPullConsumer::_add_ref (CORBA::Environment &)
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPushConsumer::_remove_ref (CORBA::Environment &)
+TAO_CEC_ProxyPullConsumer::_remove_ref (CORBA::Environment &)
 {
   this->_decr_refcnt ();
 }

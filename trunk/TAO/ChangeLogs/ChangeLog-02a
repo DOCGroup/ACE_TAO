@@ -1,3 +1,114 @@
+Thu Feb 17 14:44:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+          Add support for the pull model.  The architecture is very
+          simple, the SupplierAdmin keeps two collections, of
+          ProxyPushConsumer and ProxyPullSupplier objects.
+          Somehow the Pulling_Strategy obtains events from the
+          PullSuppliers connected to the EventChannel and pushes them into
+          the ConsumerAdmin implementation.
+          The ProxyPushConsumer objects also propagate their events to the
+          ConsumerAdmin object.
+          The ConsumerAdmin implementation propagates the events to its
+          two collections, the ProxyPushSuppliers and the
+          ProxyPullSuppliers.
+          The former use the Dispatching strategy to select a thread that
+          will finally deliver the event to the PushConsumer client
+          object.
+          In contrast the ProxyPullSupplier object queues the event until
+          the application invokes pull() or try_pull.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Defaults.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Add support in the Factory class for the new pull-related
+          components.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+          Implement the CosEventChannelAdmin::ProxyPullConsumer
+          interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+          Implement the CosEventChannelAdmin::ProxyPullSupplier
+          interface.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+          Removed all the connected/reconnected/disconnected methods,
+          since they are only relevant for filtering Event Channels.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.cpp:
+          PullSuppliers must be polled to get the events they have (if
+          any).  There are many strategies to do that, for example,
+          periodically poll all the suppliers, have dedicated threads
+          blocked on pull(), one of each supplier, and there may be other
+          variations too.
+          This class defines the interface for the Pulling strategy.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+          A simple implementation of the Pulling strategy.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.cpp:
+          Add support for the ProxyPullSupplier objects.
+          New push() method to propagate an event to all the connected
+          consumers.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.cpp:
+          Add support for the ProxyPullConsumer objects.
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.i:
+        * orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.cpp:
+          Removed all the connected/reconnected/disconnected methods,
+          since they are only relevant for filtering Event Channels.
+          Move the TAO_CEC_Push_Event worker into the CEC_ConsumerAdmin
+          files, because that's where it is used now.
+
+        * orbsvcs/tests/CosEvent/CosEvent.dsw:
+        * orbsvcs/tests/CosEvent/Basic/Makefile:
+        * orbsvcs/tests/CosEvent/Basic/Basic.dsw:
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Pull_Push_Event.dsp:
+        * orbsvcs/tests/CosEvent/Basic/run_test.pl:
+          New test for the pull-push model, currently disabled because the
+          CORBA::Any class is not thread safe (see [BUGID:430])
+
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.h:
+        * orbsvcs/tests/CosEvent/lib/Counting_Supplier.cpp:
+          Implement new helper classes for testing the Pull model.
+
+        * docs/cec_options.html:
+          Documented the options of the COS Event Channel Factory.
+
+        * utils/catior/catior.cpp:
+          Updated to understand the SHMIOP options.
+
+        * orbsvcs/tests/CosEvent/Basic/Push_Event.cpp:
+          Minor cosmetic fix.
+
+        * orbsvcs/orbsvcs/Makefile:
+          Updated dependencies with TAO_ORBSVCS="Naming Time Property
+          Sched Event CosEvent NativeCosEvent Event2 Notify Trader
+          LifeCycle Log Concurrency"
+
 Thu Feb 17 13:51:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:

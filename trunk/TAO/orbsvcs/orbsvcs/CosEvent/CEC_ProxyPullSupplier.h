@@ -14,8 +14,8 @@
 //
 // ============================================================================
 
-#ifndef TAO_CEC_PROXYPUSHSUPPLIER_H
-#define TAO_CEC_PROXYPUSHSUPPLIER_H
+#ifndef TAO_CEC_PROXYPULLSUPPLIER_H
+#define TAO_CEC_PROXYPULLSUPPLIER_H
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 
@@ -23,18 +23,20 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_CEC_EventChannel;
-class TAO_CEC_ProxyPushConsumer;
+#include "ace/Message_Queue.h"
 
-class TAO_ORBSVCS_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelAdmin::ProxyPushSupplier
+class TAO_CEC_EventChannel;
+class TAO_CEC_ProxyPullConsumer;
+
+class TAO_ORBSVCS_Export TAO_CEC_ProxyPullSupplier : public POA_CosEventChannelAdmin::ProxyPullSupplier
 {
   // = TITLE
-  //   ProxyPushSupplier
+  //   ProxyPullSupplier
   //
   // = DESCRIPTION
-  //   Implement the CosEventChannelAdmin::ProxyPushSupplier interface,
+  //   Implement the CosEventChannelAdmin::ProxyPullSupplier interface,
   //   remember that this class is used to communicate with a
-  //   PushConsumer, so, in effect, this is the ambassador for a
+  //   PullConsumer, so, in effect, this is the ambassador for a
   //   consumer inside the event channel.
   //
   // = MEMORY MANAGMENT
@@ -47,16 +49,16 @@ class TAO_ORBSVCS_Export TAO_CEC_ProxyPushSupplier : public POA_CosEventChannelA
   //   the locking strategies.
   //
 public:
-  TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* event_channel);
+  TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel);
   // constructor...
 
-  virtual ~TAO_CEC_ProxyPushSupplier (void);
+  virtual ~TAO_CEC_ProxyPullSupplier (void);
   // destructor...
 
   CORBA::Boolean is_connected (void) const;
   // Return 0 if no consumer is connected...
 
-  CosEventComm::PushConsumer_ptr consumer (void) const;
+  CosEventComm::PullConsumer_ptr consumer (void) const;
   // Return the consumer object reference. It returns nil() if it has
   // not connected yet.
   // NOTE: This method does not return a new reference!!! Doing so
@@ -65,32 +67,29 @@ public:
   virtual void shutdown (CORBA::Environment &env);
   // The event channel is shutting down
 
-  virtual void push (const CORBA::Any &event,
-                     CORBA::Environment &ACE_TRY_ENV);
-  virtual void push_nocopy (CORBA::Any &event,
-                            CORBA::Environment &ACE_TRY_ENV);
-  // Internal methods to push an event to each consumer.
-
-  void push_to_consumer (const CORBA::Any &event,
-                         CORBA::Environment &env);
-  void reactive_push_to_consumer (const CORBA::Any &event,
-                                  CORBA::Environment &env);
-  // Pushes to the consumer, verifies that it is connected.
-
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected,
                                         CORBA::Environment &ACE_TRY_ENV);
   // Invoke the _non_existent() pseudo-operation on the consumer. If
   // it is disconnected then it returns true and sets the
   // <disconnected> flag.
 
-  // = The CosEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
-                CosEventComm::PushConsumer_ptr push_consumer,
+  void push (const CORBA::Any &event,
+             CORBA::Environment &ACE_TRY_ENV);
+  // Push an event into the queue.
+
+  // = The CosEventChannelAdmin::ProxyPullSupplier methods...
+  virtual void connect_pull_consumer (
+                CosEventComm::PullConsumer_ptr pull_consumer,
                 CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        CosEventChannelAdmin::AlreadyConnected,
                        CosEventChannelAdmin::TypeError));
-  virtual void disconnect_push_supplier (CORBA::Environment &)
+  virtual CORBA::Any * pull (CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
+  virtual CORBA::Any * try_pull (CORBA::Boolean_out has_event,
+                                 CORBA::Environment &)
+      ACE_THROW_SPEC ((CORBA::SystemException,CosEventComm::Disconnected));
+  virtual void disconnect_pull_supplier (CORBA::Environment &)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
   CORBA::ULong _incr_refcnt (void);
@@ -103,8 +102,8 @@ public:
   virtual void _remove_ref (CORBA_Environment &ACE_TRY_ENV);
 
 protected:
-  void consumer (CosEventComm::PushConsumer_ptr consumer);
-  void consumer_i (CosEventComm::PushConsumer_ptr consumer);
+  void consumer (CosEventComm::PullConsumer_ptr consumer);
+  void consumer_i (CosEventComm::PullConsumer_ptr consumer);
   // Set the consumer, used by some implementations to change the
   // policies used when invoking operations on the consumer.
 
@@ -127,15 +126,20 @@ private:
   CORBA::ULong refcount_;
   // The reference count.
 
-  CosEventComm::PushConsumer_var consumer_;
+  CosEventComm::PullConsumer_var consumer_;
   // The consumer....
 
   PortableServer::POA_var default_POA_;
   // Store the default POA.
+
+  ACE_SYNCH_MUTEX queue_lock_;
+  ACE_SYNCH_CONDITION wait_not_empty_;
+  ACE_Unbounded_Queue<CORBA::Any> queue_;
+  // Use a message queue to pass the
 };
 
 #if defined (__ACE_INLINE__)
-#include "CEC_ProxyPushSupplier.i"
+#include "CEC_ProxyPullSupplier.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* TAO_CEC_PROXYPUSHSUPPLIER_H */
+#endif /* TAO_CEC_PROXYPULLSUPPLIER_H */
