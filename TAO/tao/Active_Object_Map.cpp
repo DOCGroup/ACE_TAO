@@ -10,6 +10,16 @@ ACE_RCSID(tao, Active_Object_Map, "$Id$")
 # include "tao/Active_Object_Map.i"
 #endif /* ! __ACE_INLINE__ */
 
+TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
+                                              int unique_id_policy)
+  : unique_id_policy_ (unique_id_policy)
+{
+  this->impl_ = 
+    TAO_ORB_Core_instance ()->server_factory ()->create_active_object_map (user_id_policy);
+  this->reverse_impl_ = 
+    TAO_ORB_Core_instance ()->server_factory ()->create_reverse_active_object_map (unique_id_policy);
+}
+
 int
 TAO_Active_Object_Map_Impl::find (const PortableServer::Servant servant,
                                   PortableServer::ObjectId &id)

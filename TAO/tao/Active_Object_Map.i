@@ -102,17 +102,6 @@ operator!= (const TAO_Active_Object_Map_Iterator &l,
   return !(l == r);
 }
 
-ACE_INLINE 
-TAO_Active_Object_Map::TAO_Active_Object_Map (int user_id_policy,
-                                              int unique_id_policy)
-  : unique_id_policy_ (unique_id_policy)
-{
-  this->impl_ = 
-    TAO_ORB_Core_instance ()->server_factory ()->create_active_object_map (user_id_policy);
-  this->reverse_impl_ = 
-    TAO_ORB_Core_instance ()->server_factory ()->create_reverse_active_object_map (unique_id_policy);
-}
-
 ACE_INLINE
 TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
 {
