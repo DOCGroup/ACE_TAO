@@ -19,11 +19,11 @@
 #include "ace/Timer_Queue.h"
 
 // Forward declaration
-template <class TYPE, class FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
 class ACE_Timer_Wheel_T;
 
-template <class TYPE, class FUNCTOR>
-class ACE_Timer_Wheel_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
+class ACE_Timer_Wheel_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNCTOR, LOCK>
   // = TITLE
   //     Iterates over an <ACE_Timer_Wheel>.
   //
@@ -32,10 +32,10 @@ class ACE_Timer_Wheel_Iterator_T : public ACE_Timer_Queue_Iterator_T <TYPE, FUNC
   //     the head of the timer queue up by one every time.
 {
 public:
-  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
+  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &);
   // Constructor.
 
-  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR> *&timer_node, 
+  virtual int next (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *&timer_node, 
                     const ACE_Time_Value &cur_time);
   // Pass back the next <timer_node> that hasn't been seen yet, if its
   // <time_value_> <= <cur_time>.  In addition, moves the timer queue
@@ -46,7 +46,7 @@ public:
   // Resets the iterator
 
 protected:
-  ACE_Timer_Wheel_T<TYPE, FUNCTOR> &timer_wheel_;
+  ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &timer_wheel_;
   // Pointer to the <ACE_Timer_List> that we are iterating over.
 
 private:
@@ -54,8 +54,8 @@ private:
   ACE_Time_Value time_; // Corresponding time of <pos_>
 };
 
-template <class TYPE, class FUNCTOR>
-class ACE_Timer_Wheel_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR>
+template <class TYPE, class FUNCTOR, class LOCK>
+class ACE_Timer_Wheel_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK>
   // = TITLE 
   //      Provides a Timing Wheel version of Timer Queue
   //
@@ -72,13 +72,13 @@ class ACE_Timer_Wheel_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR>
   //        
 {
 public: 
-  typedef ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR> WHEEL_ITERATOR;
+  typedef ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK> WHEEL_ITERATOR;
   // Type of iterator
 
-  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR>;
+  friend class ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK>;
   // Iterator is a friend.
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR> INHERITED;
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, LOCK> INHERITED;
   // Type inherited from.
 
   // = Initialization and termination methods.
@@ -137,24 +137,24 @@ public:
   // Dump the state of an object.
 
 protected:
-  virtual ACE_Timer_Node_T<TYPE, FUNCTOR> *alloc_node (void);
+  virtual ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *alloc_node (void);
   // Factory method that allocates a new node (uses operator new).
 
-  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
+  virtual void free_node (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
   // Factory method that frees a previously allocated node (uses
   // operator delete).
 
 private:
-  ACE_Timer_Node_T<TYPE, FUNCTOR> *remove (void);
+  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *remove (void);
   // Removes the earliest node and returns a pointer to it.
 
-  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR> *);
+  virtual void reschedule (ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *);
   // Reschedule an "interval" node
 
-  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, LOCK> &iter (void);
   // Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR> **wheel_;
+  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> **wheel_;
   // Timing Wheel.
 
   size_t wheel_size_;
@@ -172,15 +172,15 @@ private:
   long size_;
   // Keeps track of the size of the queue
 
-  ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR> iterator_;
+  ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, LOCK> iterator_;
   // Iterator used to expire timers.
 
-  ACE_Timer_Node_T<TYPE, FUNCTOR> *freelist_;
-  // Pointer to the freelist of <ACE_Timer_Node_T<TYPE, FUNCTOR>>.
+  ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK> *freelist_;
+  // Pointer to the freelist of <ACE_Timer_Node_T<TYPE, FUNCTOR, LOCK>>.
 
   // = Don't allow these operations for now.
-  ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
-  void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR> &);
+  ACE_Timer_Wheel_T (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &);
+  void operator= (const ACE_Timer_Wheel_T<TYPE, FUNCTOR, LOCK> &);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

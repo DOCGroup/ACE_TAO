@@ -10,10 +10,10 @@
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
 int
-ACE_Event_Handler_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
-						      ACE_Event_Handler *handler,
-						      const void *act,
-						      const ACE_Time_Value &cur_time)
+ACE_Event_Handler_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
+						  ACE_Event_Handler *handler,
+						  const void *act,
+						  const ACE_Time_Value &cur_time)
 {
   // Upcall to the <handler>s handle_timeout method
   if (handler->handle_timeout (cur_time, act) == -1)
@@ -24,8 +24,8 @@ ACE_Event_Handler_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
 
 
 int
-ACE_Event_Handler_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
-						      ACE_Event_Handler *handler)
+ACE_Event_Handler_Handle_Timeout_Upcall::cancellation (TIMER_QUEUE &timer_queue,
+						       ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
 
@@ -36,16 +36,16 @@ ACE_Event_Handler_Handle_Timeout_Upcall::operator () (TIMER_QUEUE &timer_queue,
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
-template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall> *>;
-template class ACE_Node<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall> *>;
-template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall> *>;
-template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_List_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_List_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_Wheel_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
-template class ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall>;
+template class ACE_Unbounded_Set<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX> *>;
+template class ACE_Node<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX> *>;
+template class ACE_Unbounded_Set_Iterator<ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX> *>;
+template class ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_Node_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_List_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_List_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_Queue_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_Wheel_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
+template class ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_SYNCH_RECURSIVE_MUTEX>;
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
