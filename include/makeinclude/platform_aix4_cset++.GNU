@@ -25,14 +25,24 @@ endif
 ifeq (,$(optimize))
   optimize = 0
 endif
+ifeq (,$(threads))
+  threads = 1
+endif
 
 # In case anything here or in the config depends on OS version number,
 # grab it here and pass it all to the compiler as well.
 AIX_MAJOR_VERS := $(shell uname -v)
 AIX_MINOR_VERS := $(shell uname -r)
 
+ifeq ($(threads),1)
 CC	    = xlc_r
 CXX	    = xlC_r
+DLD	    = makeC++SharedLib_r
+else
+CC          = xlc
+CXX         = xlC
+DLD	    = makeC++SharedLib
+endif
 
 # -qextchk is handy, but produces false type mismatches when linking
 # netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
@@ -59,7 +69,6 @@ CPPFLAGS    += -qlanglvl=ansi -DACE_AIX_MAJOR_VERS=$(AIX_MAJOR_VERS) -DACE_AIX_M
 # Process_Strategy_Test went CPU bound in ostream, so I removed it (S. Huston)
 DCFLAGS     += -g -qcheck=nobounds:div:null
 
-DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
 
 ifeq ($(shared_libs),1)
@@ -83,7 +92,7 @@ LDFLAGS	    += -bI:/lib/pse.exp
 # OCCFLAGS is not used by default.  To used it, set optimize=1
 # either in this file or on the command line.
 #OCCFLAGS    += -qarch=ppc -qtune=604
-OCCFLAGS    += -qarch=com 
+OCCFLAGS    += -O2 -qarch=com 
 RANLIB	    = ranlib
 SOFLAGS	    = -p 0
 TEMPINCDIR  = tempinc

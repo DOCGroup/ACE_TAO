@@ -30,6 +30,10 @@
 #  if defined (__xlC__)
 #    define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 #    define ACE_TEMPLATES_REQUIRE_PRAGMA
+     // If compiling without thread support, turn off ACE's thread capability.
+#    if !defined (_THREAD_SAFE)
+#      define ACE_HAS_THREADS 0
+#    endif /* _THREAD_SAFE */
 #  endif
 
    // These are for Visual Age C++ only
@@ -140,12 +144,15 @@
 #define ACE_LACKS_TIMESPEC_T
 #define ACE_HAS_SELECT_H
 
+#define ACE_HAS_REENTRANT_FUNCTIONS
+
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 #if (ACE_AIX_MINOR_VERS >= 2)
 #  define ACE_HAS_SIGINFO_T
 #  define ACE_LACKS_SIGINFO_H
 #endif /* ACE_AIX_MINOR_VERS >=2 */
+#define ACE_HAS_SIGWAIT
 
 #define ACE_HAS_SIN_LEN
 #define ACE_HAS_STRBUF_T
@@ -211,38 +218,45 @@
 // the tid_t (kernel thread ID) if called from a thread.
 // Thanks very much to Chris Lahey for straightening this out.
 
-#define ACE_HAS_THREADS
-#if !defined (ACE_MT_SAFE)
-#define ACE_MT_SAFE 1
+// Unless threads are specifically turned off, build with them enabled.
+#if !defined (ACE_HAS_THREADS)
+#  define ACE_HAS_THREADS 1
 #endif
 
-#define ACE_HAS_PTHREADS
+#if (ACE_HAS_THREADS != 0)
+#  if !defined (ACE_MT_SAFE)
+#    define ACE_MT_SAFE 1
+#  endif
+
+#  define ACE_HAS_PTHREADS
 // 4.3 and up has 1003.1c standard; 4.2 has draft 7
-#if (ACE_AIX_MINOR_VERS >= 3)
-#  define ACE_HAS_PTHREADS_STD
-#  define ACE_HAS_PTHREADS_UNIX98_EXT
+#  if (ACE_AIX_MINOR_VERS >= 3)
+#    define ACE_HAS_PTHREADS_STD
+#    define ACE_HAS_PTHREADS_UNIX98_EXT
 // ACE_LACKS_SETSCHED should not be needed, but the OS.* doesn't fine tune
 // this enough - it's too overloaded. Fix after ACE 5 is done.
-#  define ACE_LACKS_SETSCHED
-#else
-#  define ACE_HAS_PTHREADS_DRAFT7
-#  define ACE_LACKS_RWLOCK_T
-#  define ACE_LACKS_THREAD_STACK_ADDR
+#    define ACE_LACKS_SETSCHED
+#  else
+#    define ACE_HAS_PTHREADS_DRAFT7
+#    define ACE_LACKS_RWLOCK_T
+#    define ACE_LACKS_THREAD_STACK_ADDR
 // If ACE doesn't compile due to the lack of these methods, please
 // send email to ace-users@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
-#  define ACE_LACKS_SETSCHED
-#endif /* ACE_AIX_MINOR_VERS >= 3 */
+#    define ACE_LACKS_SETSCHED
+#  endif /* ACE_AIX_MINOR_VERS >= 3 */
 
-#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#define ACE_HAS_REENTRANT_FUNCTIONS
-#define ACE_HAS_SIGTHREADMASK
-#define ACE_HAS_SIGWAIT
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#  define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+#  define ACE_HAS_SIGTHREADMASK
+#  define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+#  define ACE_LACKS_THREAD_PROCESS_SCOPING
+#else
+#  undef ACE_HAS_THREADS
+#endif /* ACE_HAS_THREADS != 0 */
+
 #define ACE_MALLOC_ALIGN 8
-
-#define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 // By default, tracing code is not compiled.  To compile it in, cause
 // ACE_NTRACE to not be defined, and rebuild ACE.
