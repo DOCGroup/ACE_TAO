@@ -8,7 +8,8 @@
 template <class Servant>
 Server<Servant>::Server (void)
     : ior_output_file_ (0),
-      naming_ (0)
+      naming_ (0),
+      ins_ (0)
 {
   // no-op.
 }
@@ -25,7 +26,7 @@ Server<Servant>::~Server (void)
 template <class Servant> int 
 Server<Servant>::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:n");
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, "do:ni:");
   int c = 0;
   
   while ((c = get_opts ()) != -1)
@@ -41,10 +42,13 @@ Server<Servant>::parse_args (void)
                              "Unable to open %s for writing: %p\n",
                              get_opts.optarg), -1);
         break;
-
+	
       case 'n': //Use naming service
         this->naming_ = 1;
         break;
+      case 'i': // For Testing the InterOperable Naming Service.
+	this->ins_ = CORBA::string_dup (get_opts.optarg);
+	break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,6 +62,35 @@ Server<Servant>::parse_args (void)
       }
   
   // Indicates successful parsing of command line.
+  return 0;
+}
+
+// Add the ObjectID:IOR mapping to the IOR table of 
+// the ORB. Ignore this method if you are not testing for
+// the InterOperable Naming Service.
+
+template <class Servant> int
+Server<Servant>::test_for_ins (CORBA::String_var ior)
+{
+  
+  CORBA::Object_ptr bank_servant =
+    this->orb_manager_.orb ()->string_to_object (ior.in());
+  
+  // Add a KEY:IOR mapping to the ORB table.
+  ACE_CString object_id (this->ins_);
+  
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG,
+		"Adding (KEY:IOR) %s:%s\n",
+		object_id.c_str (),
+		ior.in ()));
+  
+  if (this->orb_manager_.orb ()->_tao_add_to_IOR_table (object_id, 
+							bank_servant) != 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "Simple_Util : Unable to add IOR to table\n"),
+		      -1);
+  
   return 0;
 }
 
@@ -104,10 +137,12 @@ Server<Servant>::init (const char *servant_name,
       if (this->register_name () == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\n Naming Service\n"),-1);
+
       return 0;
     }
+  
   // Activate the servant in its own child POA.
-
+  
   // Make sure that you check for failures here via the ACE_TRY
   // macros?!
   ACE_TRY
@@ -117,18 +152,25 @@ Server<Servant>::init (const char *servant_name,
                                                      &this->servant_,
                                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-     ACE_DEBUG ((LM_DEBUG,
+      
+      ACE_DEBUG ((LM_DEBUG,
                   "The IOR is: <%s>\n",
                   str.in ()));
-     if (this->ior_output_file_)
-       {
-         ACE_OS::fprintf (this->ior_output_file_,
-                          "%s",
-                          str.in ());
-         ACE_OS::fclose (this->ior_output_file_);
-       }
 
+      if (this->ins_)
+	if (this->test_for_ins (str) != 0)
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "test_for_ins (): failed\n"),
+			    -1);
+      
+      if (this->ior_output_file_)
+	{
+	  ACE_OS::fprintf (this->ior_output_file_,
+			   "%s",
+			   str.in ());
+	  ACE_OS::fclose (this->ior_output_file_);
+	}
+      
     }
   ACE_CATCHANY
     {
@@ -173,6 +215,14 @@ Server<Servant>::register_name (void)
                             object.in(),       
                             ACE_TRY_ENV);
       ACE_TRY_CHECK;  
+
+      // Test for INS.
+      if (this->ins_)
+	if (this->test_for_ins (this->orb_manager_.orb ()
+				->object_to_string (object.in ())) != 0)
+	  ACE_ERROR_RETURN ((LM_ERROR,
+			     "test_for_ins (): failed\n"),
+			    -1);
     }
   ACE_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
     {

@@ -59,6 +59,10 @@ public:
   int run (CORBA::Environment &env);
   // Run the orb.
 
+  int test_for_ins (CORBA::String_var ior);
+  // Ignore this method if you are not testing the InterOperable
+  // Naming Service.
+
 protected:
   Servant servant_;
   // Servant class
@@ -81,6 +85,9 @@ protected:
 
   int naming_;
   // Flag to indicate whether naming service could be used
+       
+  char * ins_;
+  // Used test the INS.
 
   int argc_;
   // Number of command line arguments.
