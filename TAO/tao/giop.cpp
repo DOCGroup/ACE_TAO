@@ -638,6 +638,8 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
   // connection.
   ACE_INET_Addr server_addr;
     
+  // @@ We can probably remove the lock for this since it's in the
+  // same thread as the connection manager? 
   if (data_->fwd_profile != 0)
     {
       key = &data_->fwd_profile->object_key;
