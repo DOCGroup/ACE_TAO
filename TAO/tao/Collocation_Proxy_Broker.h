@@ -12,6 +12,7 @@
 //=============================================================================
 #ifndef TAO_COLLOCATION_PROXY_BROKER_H
 #define TAO_COLLOCATION_PROXY_BROKER_H
+
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
@@ -30,21 +31,20 @@ namespace TAO
 
   public:
 
-    virtual Collocation_Strategy get_strategy (CORBA::Object *obj
+    virtual Collocation_Strategy get_strategy (CORBA::Object_ptr obj
                                                ACE_ENV_ARG_DECL) = 0;
 
-    virtual void dispatch (CORBA::Object *obj,
+    virtual void dispatch (CORBA::Object_ptr obj,
                            CORBA::Object_out forward_obj,
-                           Argument **arg,
+                           Argument ** args,
                            int num_args,
-                           const char *op,
-                           int op_len,
+                           const char * op,
+                           size_t op_len,
                            Collocation_Strategy strategy
                            ACE_ENV_ARG_DECL) = 0;
-  private:
   };
 }
 
-
 #include "ace/post.h"
+
 #endif /*TAO_COLLOCATION_PROXY_BROKER_H */
