@@ -86,9 +86,9 @@ run_main (int, ACE_TCHAR *[])
 
 #if !defined(ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Notification queue disabled, "
-                        "small test version, "
-                        "which is of no practical use\n")));
+              ACE_TEXT ("Notification queue disabled, ")
+              ACE_TEXT ("small test version, ")
+              ACE_TEXT ("which is of no practical use\n")));
 
   int max_notifications = 16;
 #else
@@ -162,8 +162,8 @@ Event_Handler::run (void)
   if(!done())
   {
     ACE_ERROR ((LM_ERROR,
-               ACE_TEXT ("Test %s failed due to timeout "
-                         " sent=%d,recv=%d \n"),
+               ACE_TEXT ("Test %s failed due to timeout ")
+               ACE_TEXT (" sent=%d,recv=%d \n"),
                test_name_,
                notifications_sent_,
                notifications_recv_));
