@@ -215,7 +215,7 @@ main (int argc, char* argv[])
                                token_stream.end (),
                                parser.start ());
 
-    if (dout.error_count () != 0) return -1;
+    if (dout.error_count () != 0) return 1;
 
     // Generate executor mapping.
     {
@@ -245,6 +245,8 @@ main (int argc, char* argv[])
     {
       desc_gen.generate (cl, tu);
     }
+    
+    return 0;
   }
   catch (std::bad_cast const&)
   {
@@ -257,6 +259,7 @@ main (int argc, char* argv[])
   catch (...)
   {
     cerr << "caught unknown exception" << endl;
-    return -1;
   }
+  
+  return 1;
 }
