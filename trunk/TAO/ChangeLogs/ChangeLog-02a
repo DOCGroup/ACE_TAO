@@ -1,3 +1,8 @@
+Fri Feb 16 09:41:54 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* tests/IDL_Test: Added a new Makefile.bor.  Thanks to 
+	  Johnny Willemsen for this.
+
 Fri Feb 16 02:28:19 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tests/Exposed_Policies/Policy_Verifier.h:
