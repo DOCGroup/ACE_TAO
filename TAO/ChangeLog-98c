@@ -1,44 +1,50 @@
+Thu Sep 10 09:49:39 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Cubit/TAO/IDL_Cubit/run_test.pl: set default
+          $exepref to '.' . $DIR_SEPARATOR, so that the user
+          need not have '.' in their PATH.
+
 Wed Sep 09 22:33:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Don't warn about
- 	  undefined ACE_ROOT on Win32 at all.  It is not used and we don't
- 	  use gperf on NT for now.
+        * TAO_IDL/util/utl_global.cpp (IDL_GlobalData): Don't warn about
+          undefined ACE_ROOT on Win32 at all.  It is not used and we don't
+          use gperf on NT for now.
 
 Wed Sep  9 15:28:24 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/Connect.cpp:
-	* tao/GIOP.cpp:
-	* tao/Invocation.cpp:
-	  Added ORBdebug functionality to several debug messages
+        * tao/Connect.cpp:
+        * tao/GIOP.cpp:
+        * tao/Invocation.cpp:
+          Added ORBdebug functionality to several debug messages
 
 Wed Sep  9 15:00:16 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
-	* TAO/tests/DynAny_Test/server.dsp:
-	* TAO/tests/DynAny_Test/client.dsp:
-	* TAO/tests/DynAny_Test/DynAny_Test.dsw:
-	* TAO/tests/DynAny_Test/driver.cpp:
-	* TAO/tests/DynAny_Test/DynAny.idl:
-	* TAO/tests/DynAny_Test/tckind.idl:
-	* TAO/tests/DynAny_Test/da_tests.idl:
-	* TAO/tests/DynAny_Test/DynAny_i.{h,cpp}:
-	* TAO/tests/DynAny_Test/DynArray_i.{h,cpp}:
-	* TAO/tests/DynAny_Test/DynStruct_i.{h,cpp}:
-	* TAO/tests/DynAny_Test/DynEnum_i.{h,cpp}:
-	* TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
-	* TAO/tests/DynAny_Test/DynSequence_i.{h,cpp}:
-	  All the DynAny stuff so far. DynUnion isn't finished yet.
-	  The client project is just a repository for the idl files
-	  and driver.cpp has nothing in it. IDL-generated files need
-	  to be modified before this will compile. These files have
-	  been committed so Carlos can start moving stuff into TAO
-	  while I work on class assignments and modifications to 
-	  TypeCode.cpp and Any.cpp in order to finish DynUnion.
+        * TAO/tests/DynAny_Test/server.dsp:
+        * TAO/tests/DynAny_Test/client.dsp:
+        * TAO/tests/DynAny_Test/DynAny_Test.dsw:
+        * TAO/tests/DynAny_Test/driver.cpp:
+        * TAO/tests/DynAny_Test/DynAny.idl:
+        * TAO/tests/DynAny_Test/tckind.idl:
+        * TAO/tests/DynAny_Test/da_tests.idl:
+        * TAO/tests/DynAny_Test/DynAny_i.{h,cpp}:
+        * TAO/tests/DynAny_Test/DynArray_i.{h,cpp}:
+        * TAO/tests/DynAny_Test/DynStruct_i.{h,cpp}:
+        * TAO/tests/DynAny_Test/DynEnum_i.{h,cpp}:
+        * TAO/tests/DynAny_Test/DynUnion_i.{h,cpp}:
+        * TAO/tests/DynAny_Test/DynSequence_i.{h,cpp}:
+          All the DynAny stuff so far. DynUnion isn't finished yet.
+          The client project is just a repository for the idl files
+          and driver.cpp has nothing in it. IDL-generated files need
+          to be modified before this will compile. These files have
+          been committed so Carlos can start moving stuff into TAO
+          while I work on class assignments and modifications to
+          TypeCode.cpp and Any.cpp in order to finish DynUnion.
 
 Wed Sep  9 13:03:20 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Adapted the behavior to use the new
-	  ACE::debug () instead of sending -d to the Service
-	  Configurator.
+        * tao/ORB_Core.cpp: Adapted the behavior to use the new
+          ACE::debug () instead of sending -d to the Service
+          Configurator.
 
 Wed Sep 09 07:01:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
