@@ -33,9 +33,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ValueBase.h"
 #include "tao/Exception.h"
 #include "tao/Any_T.h"
+#include "tao/Valuetype/ValueBase.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
