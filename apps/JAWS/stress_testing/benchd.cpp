@@ -13,7 +13,7 @@
 #if defined (ACE_HAS_IP_MULTICAST)
 // network interface to subscribe to
 //   this is hardware specific.
-//   use netstat(1M) to find whether your interface
+//   use netstat (1M) to find whether your interface
 //   is le0 or ie0
 
 // Maximum number of arguments supported for a request
@@ -42,7 +42,7 @@ public:
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
 private:
-  int serve(char *buf);
+  int serve (char *buf);
   ACE_SOCK_Dgram_Mcast mcast_;
   ACE_Handle_Set handle_set_;
 };
@@ -83,7 +83,7 @@ Handle_Events::handle_input (ACE_HANDLE h)
             << " on port " << remote_addr.get_port_number () 
             << " bytes = " << retcode << endl;
             */
-          serve(buf);
+          serve (buf);
 	  return 0;
 	}
 
@@ -128,7 +128,7 @@ Handle_Events::Handle_Events (u_short udp_port,
   //  if (this->mcast_.set_option (IP_MULTICAST_LOOP, 0) == -1 )
   //    ACE_OS::perror (" can't disable loopbacks " ), ACE_OS::exit (1);
 
-  if(!QUIET) {
+  if (!QUIET) {
     this->handle_set_.set_bit (0);
   }
   this->handle_set_.set_bit (this->mcast_.get_handle ());
@@ -146,14 +146,15 @@ Handle_Events::Handle_Events (u_short udp_port,
 // command (arguments)
 
 
-// currently only one is supported (and indeed needed :-))
-// http_tester arguments
+// currently only one is supported (and indeed needed :-)) http_tester
+// arguments
 
 int
-Handle_Events::serve(char *buf)
+Handle_Events::serve (char *buf)
 {
-  ACE_ARGV arguments(buf);
-  if(ACE_OS::strcmp(arguments[0],TESTER) == 0)
+  ACE_ARGV arguments (buf);
+
+  if (ACE_OS::strcmp (arguments[0], TESTER) == 0)
     {
       ACE_Process_Options po;
       ACE_Process p;
@@ -162,13 +163,10 @@ Handle_Events::serve(char *buf)
       po.command_line (arguments.argv ());
 
       p.spawn (po);
-      
       return 0;
     }
   else
-    {
-      return -1;
-    }
+    return -1;
 }
 
 static void
@@ -208,13 +206,13 @@ int
 main (int argc, char *argv[])
 {
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
-  ACE_OS::signal(SIGCLD, SIG_IGN);
+  ACE_OS::signal (SIGCLD, SIG_IGN);
   ACE_UNUSED_ARG (sa);
 
   parse_args (argc, argv);
   
-  OUTPUT_FILE = ACE_OS::open(OUTPUT_FILE_NAME, O_CREAT | O_WRONLY, 0644);
-  if(OUTPUT_FILE == 0) 
+  OUTPUT_FILE = ACE_OS::open (OUTPUT_FILE_NAME, O_CREAT | O_WRONLY, 0644);
+  if (OUTPUT_FILE == 0) 
     return 1;
 
   ACE_Reactor reactor;
@@ -225,7 +223,7 @@ main (int argc, char *argv[])
   while (!done)
     reactor.handle_events ();
 
-  ACE_OS::close(OUTPUT_FILE);
+  ACE_OS::close (OUTPUT_FILE);
   cout << "\nbenchd done.\n";
   return 0;
 }

@@ -26,7 +26,7 @@ ACE_ARGV::buf (void)
   ACE_TRACE ("ACE_ARGV::buf");
 
   if (this->buf_ == 0 && this->state_ == ITERATIVE) 
-    this->create_buf_from_queue();
+    this->create_buf_from_queue ();
 
   return (const ASYS_TCHAR *)this->buf_;
 }
