@@ -112,7 +112,8 @@ Server_i::create_server (void)
 
       // Generate IOR of the <TimeService Server> and register with
       // POA.
-      this->time_service_server_ = time_service_server_impl_->_this ();
+      this->time_service_server_ =
+        time_service_server_impl_->_this ();
 
       // Convert the server reference to a string.
       CORBA::String_var objref_server =
@@ -152,7 +153,6 @@ Server_i::register_server (void)
 {
   TAO_TRY
     {
-
       CosNaming::Name server_context_name;
       server_context_name.length (1);
       server_context_name[0].id = CORBA::string_dup ("ServerContext");
@@ -167,7 +167,9 @@ Server_i::register_server (void)
 	  TAO_TRY_ENV.clear ();
 
 	  // Get context.
-	  server_context = this->my_name_server_->new_context (TAO_TRY_ENV);
+	  server_context = 
+            this->my_name_server_->new_context (TAO_TRY_ENV);
+	  TAO_CHECK_ENV;
 
 	  // Bind.
 	  this->my_name_server_->rebind_context (server_context_name,
@@ -181,7 +183,7 @@ Server_i::register_server (void)
       char server_mc_name[MAXHOSTNAMELEN];
       ACE_OS::hostname (host_name,MAXHOSTNAMELEN);
 
-      CosNaming::Name server_name(server_context_name);
+      CosNaming::Name server_name (server_context_name);
 
       server_name.length (2);
       strcpy (server_mc_name, "Server:");
@@ -199,7 +201,7 @@ Server_i::register_server (void)
     }
   // TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
   //     {
-  //       Vishal, please make sure to do the right thing here...
+  //       @@ Vishal, please make sure to do the right thing here...
   //  }
   TAO_CATCHANY
     {
