@@ -29,6 +29,9 @@ operator>> (TAO_InputCDR& cdr, ECT_Data& x)
   CORBA::ULong count;
   cdr >> x.description.out ()
       >> count;
+
+  // ACE_DEBUG ((LM_DEBUG, "Decoding <%d> elements\n", count));
+
   for (CORBA::ULong i = 0; i < count && cdr.good_bit (); ++i)
     {
       CORBA::ULong ext_id;
@@ -37,6 +40,9 @@ operator>> (TAO_InputCDR& cdr, ECT_Data& x)
 	  >> int_id;
       if (cdr.good_bit ())
 	x.inventory.bind (ext_id, int_id);
+
+      // ACE_DEBUG ((LM_DEBUG, "Boung <%d,%f>\n", ext_id, int_id));
+
     }
   return cdr;
 }

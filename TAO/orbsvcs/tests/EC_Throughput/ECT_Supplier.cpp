@@ -206,9 +206,13 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
           other.inventory.bind (j, j + 1);
         }
 
+      ACE_DEBUG ((LM_DEBUG,
+		  "The inventory contains (%d) elements\n",
+		  other.inventory.current_size ()));
+
       // We have to make it big enough so we get a contiguous block,
       // otherwise the octet sequence will not work correctly.
-      TAO_OutputCDR cdr (n * 16 + CDR::DEFAULT_BUFSIZE);
+      TAO_OutputCDR cdr (n * 40 + CDR::DEFAULT_BUFSIZE);
 
       CORBA::Boolean byte_order = TAO_ENCAP_BYTE_ORDER;
       cdr << byte_order;
@@ -222,6 +226,9 @@ ECTS_Driver::supplier_task (Test_Supplier *supplier,
 
       // Here we marshall a non-IDL type.
       cdr << other;
+
+      if (!cdr.good_bit ())
+	ACE_ERROR ((LM_ERROR, "Problem marshalling C++ data\n"));
 
       const ACE_Message_Block* mb = cdr.begin ();
       CORBA::ULong mblen = cdr.length ();
