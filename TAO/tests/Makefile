@@ -21,7 +21,6 @@ DIRS  = CDR \
 	FL_Cube \
 	POA \
 	IORManipulation \
-	Timeout \
 	Connection_Purging \
 	ORB_init \
 	Smart_Proxies
@@ -56,6 +55,13 @@ ifeq ($(ami_callback),1)
   DIRS += AMI
 
 endif # ami_callback
+
+ifeq ($(corba_messaging),1)
+
+# Requires CORBA Messaging
+  DIRS += Timeout
+
+endif # corba_messaging
 
 include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU

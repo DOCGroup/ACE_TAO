@@ -1,3 +1,10 @@
+Mon Dec 27 17:36:29 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Makefile: The Timeout test requires CORBA messaging.
+
+	* tao/Stub.cpp: We only need template instantiations for
+	  auto_ptr<TAO_Policy_Manager_Impl> when we have corba messaging.
+
 Mon Dec 27 15:55:06 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp: reverted this change:
