@@ -482,6 +482,12 @@ INSTALL =
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DACE_BUILD_DLL -DACE_OS_BUILD_DLL
+endif
+endif
+
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
