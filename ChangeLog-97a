@@ -1,3 +1,8 @@
+Tue May 13 15:22:01 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
+
+	* ace/Process.cpp (spawn): The check for a null environment argv
+	  was incorrect.  Thanks to Nanbor for finding this.
+
 Mon May 12 18:59:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/config-mvs.h: conditionally use ACE_HAS_UCONTEXT_T or
