@@ -10,11 +10,12 @@ Mon Mar 18 18:37:07 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Messaging/MessagingC.h: Prevent users from including
 	  MessagingC.h directly. Users should include only Messaging.h,
 	  else the static initializer for the Messaging library will not
-	  be compiled in. This would mean that the symbols from the
-	  Messaging library will not be linked into the executable. If
-	  they dont get linked into the executable, the Messaging library
-	  will not be registered with the ORB and all bad things start
-	  happening. 
+	  be included. This would mean that the symbols from the Messaging
+	  library will not be linked into the executable in static
+	  builds. If they dont get linked into the executable, the
+	  Messaging library will not be registered with the ORB and all
+	  bad things start happening. Builds with dynamic libraries dont
+	  have this problem.
 
 	* tao/Messaging/MessagingC.cpp:
 	* tao/Messaging/MessagingS.h:
