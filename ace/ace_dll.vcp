@@ -80117,6 +80117,333 @@ NODEP_CPP_STATS=\
 # End Source File
 # Begin Source File
 
+SOURCE=.\String_Base_Const.cpp
+
+!IF  "$(CFG)" == "ace - Win32 (WCE MIPS) Release"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE MIPS) Debug"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Release"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH4) Debug"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Release"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE SH3) Debug"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Release"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE ARM) Debug"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Release"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ELSEIF  "$(CFG)" == "ace - Win32 (WCE x86em) Debug"
+
+DEP_CPP_STRIN=\
+	".\ACE_export.h"\
+	".\ace_wchar.h"\
+	".\ace_wchar.inl"\
+	".\config-all.h"\
+	".\config-cygwin32-common.h"\
+	".\config-cygwin32.h"\
+	".\config-g++-common.h"\
+	".\config-ghs-common.h"\
+	".\config-win32-borland.h"\
+	".\config-win32-common.h"\
+	".\config-win32-ghs.h"\
+	".\config-win32-mingw.h"\
+	".\config-win32-msvc-5.h"\
+	".\config-win32-msvc-6.h"\
+	".\config-win32-msvc-7.h"\
+	".\config-win32-msvc.h"\
+	".\config-win32-visualage.h"\
+	".\config-win32.h"\
+	".\config-WinCE.h"\
+	".\config.h"\
+	".\OS_Errno.h"\
+	".\OS_Errno.inl"\
+	".\OS_Export.h"\
+	".\post.h"\
+	".\pre.h"\
+	".\String_Base_Const.h"\
+	".\svc_export.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=.\Svc_Conf_l.cpp
 
 !IF  "$(CFG)" == "ace - Win32 (WCE MIPS) Release"
@@ -100810,6 +101137,10 @@ SOURCE=.\Refcountable.h
 # Begin Source File
 
 SOURCE=.\Refcountable.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\String_Base_Const.h
 # End Source File
 # Begin Source File
 
