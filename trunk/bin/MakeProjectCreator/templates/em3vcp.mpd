@@ -2,11 +2,11 @@
 # Microsoft eMbedded Visual Tools Generated Build File, Format Version 6.02
 # ** DO NOT EDIT **
 
-<%foreach(platform_longs)%>
-# TARGTYPE "<%platform("Win32")%> (<%platform_long%>) <%type_description("Dynamic-Link Library")%>" <%type_code%>
+<%foreach(platforms)%>
+# TARGTYPE "<%operating_system("Win32")%> (<%platform%>) <%type_description("Dynamic-Link Library")%>" <%type_code%>
 <%endfor%>
 
-CFG=<%project_name%> - <%platform("Win32")%> (<%default_platform_long%>) <%default_configuration%>
+CFG=<%project_name%> - <%operating_system("Win32")%> (<%default_platform%>) <%default_configuration%>
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE run the tool that generated this project file and specify the
 !MESSAGE nmake output type.  You can then use the following command:
@@ -16,13 +16,13 @@ CFG=<%project_name%> - <%platform("Win32")%> (<%default_platform_long%>) <%defau
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE
-!MESSAGE NMAKE /f "<%make_file_name%>" CFG="<%project_name%> - <%platform%> (<%default_platform_long%>) <%default_configuration%>"
+!MESSAGE NMAKE /f "<%make_file_name%>" CFG="<%project_name%> - <%operating_system%> (<%default_platform%>) <%default_configuration%>"
 !MESSAGE
 !MESSAGE Possible choices for configuration are:
 !MESSAGE
-<%foreach(platform_longs)%>
+<%foreach(platforms)%>
 <%foreach(configurations)%>
-!MESSAGE "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>" (based on "<%platform%> (<%platform_long%>) <%type_description%>")
+!MESSAGE "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>" (based on "<%operating_system%> (<%platform%>) <%type_description%>")
 <%endfor%>
 <%endfor%>
 !MESSAGE
@@ -33,9 +33,9 @@ CFG=<%project_name%> - <%platform("Win32")%> (<%default_platform_long%>) <%defau
 # PROP Scc_LocalPath ""
 # PROP ATL_Project <%atl_project("2")%>
 
-<%foreach(platform_longs)%>
+<%foreach(platforms)%>
 <%foreach(configurations)%>
-!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
 
 # PROP Use_MFC <%use_mfc("0")%>
 # PROP Use_Debug_Libraries <%use_debug_libraries("1")%>
@@ -86,9 +86,9 @@ LIB32=link.exe -lib
 
 # Begin Target
 
-<%foreach(platform_longs)%>
+<%foreach(platforms)%>
 <%foreach(configurations)%>
-# Name "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+# Name "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
 <%endfor%>
 <%endfor%>
 <%if(exename || sharedname || staticname)%>
@@ -204,9 +204,9 @@ SOURCE="<%resource_file%>"
 
 SOURCE="<%custom_type->input_file%>"
 
-<%foreach(platform_longs)%>
+<%foreach(platforms)%>
 <%foreach(configurations)%>
-!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%platform%> (<%platform_long%>) <%configuration%>"
+!<%fornotfirst("ELSE")%>IF  "$(CFG)" == "<%project_name%> - <%operating_system%> (<%platform%>) <%configuration%>"
 
 USERDEP__<%basenoextension(custom_type->input_file)%>=<%custom_type->command%>.exe
 # PROP Ignore_Default_Tool 1

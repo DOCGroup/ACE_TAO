@@ -39,6 +39,7 @@ my(%keywords) = ('if'              => 1,
                  'marker'          => 1,
                  'uc'              => 1,
                  'lc'              => 1,
+                 'ucw'             => 1,
                 );
 
 # ************************************************************
@@ -304,6 +305,7 @@ sub get_value_with_default {
   else {
     $value = $self->{'defaults'}->{$name};
     if (!defined $value) {
+      #$self->warning("$name defaulting to empty string.");
       $value = '';
     }
     else {
@@ -686,6 +688,22 @@ sub handle_lc {
 }
 
 
+sub handle_ucw {
+  my($self) = shift;
+  my($name) = shift;
+
+  if (!$self->{'if_skip'}) {
+    my($val) = $self->get_value_with_default($name);
+    substr($val, 0, 1) = uc(substr($val, 0, 1));
+    while($val =~ /[_\s]([a-z])/) {
+      my($uc) = uc($1);
+      $val =~ s/(_|\s)([a-z])/$1$uc/;
+    }
+    $self->append_current($val);
+  }
+}
+
+
 sub handle_noextension {
   my($self) = shift;
   my($name) = shift;
@@ -827,6 +845,9 @@ sub process_name {
       }
       elsif ($name eq 'lc') {
         $self->handle_lc($val);
+      }
+      elsif ($name eq 'ucw') {
+        $self->handle_ucw($val);
       }
       elsif ($name eq 'noextension') {
         $self->handle_noextension($val);

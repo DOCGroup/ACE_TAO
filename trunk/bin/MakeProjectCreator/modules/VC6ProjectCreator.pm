@@ -84,12 +84,6 @@ sub fill_value {
 }
 
 
-sub separate_static_project {
-  #my($self) = shift;
-  return 1;
-}
-
-
 sub project_file_name {
   my($self) = shift;
   return $self->get_modified_project_file_name($self->project_name(),

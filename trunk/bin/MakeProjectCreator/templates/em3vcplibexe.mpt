@@ -4,9 +4,9 @@
 conditional_include "common"
 
 type_description      = Application
-platform_longs        = "WCE ARM" "WCE x86" "WCE emulator"
+platforms             = "WCE ARM" "WCE x86" "WCE emulator"
 default_configuration = "Static Debug"
-default_platform_long = "WCE ARM"
+default_platform      = "WCE ARM"
 configurations        = "Static Release" "Static Debug"
 type_is_binary        = 1
 common_defines        = UNICODE _UNICODE

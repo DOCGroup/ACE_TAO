@@ -1,142 +1,176 @@
+Mon Feb 23 07:03:11 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/USAGE:
+        * bin/MakeProjectCreator/templates/html.mpd:
+        * bin/MakeProjectCreator/modules/HTMLProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/HTMLWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/modules/TemplateParser.pm:
+        * bin/MakeProjectCreator/modules/MPC.pm:
+        * bin/MakeProjectCreator/modules/MWC.pm:
+
+          Added Justin Michel's HTML workspace and project creator and put
+          in many enhancements including an inheritance hierarchy display
+          and information from the MPC templates (when used with the -ti
+          option).
+
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+
+          Provide the full file names to the base projects and let the
+          individual project creators deal with that.
+
+        * bin/MakeProjectCreator/modules/VA4ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+
+          Removed the unused separate_static_project() method.
+
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/em3vcpdll.mpt:
+        * bin/MakeProjectCreator/templates/em3vcpdllexe.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplib.mpt:
+        * bin/MakeProjectCreator/templates/em3vcplibexe.mpt:
+
+          Renamed some temple variables.
+
 Sat Feb 21 14:24:20 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* include/makeinclude/platform_macosx_panther.GNU:
+        * include/makeinclude/platform_macosx_panther.GNU:
 
-	  Added -mpcpu=G3 and -mtune=G4 to OCFLAGS. Mac OS X 10.3 requires
-	  a PowerPC G3 chip and hence this isn't adding any restrictions
-	  to ACE/TAO that the target platform doesn't already have for
-	  itself.  Thanks to Thomas Costa <oohrah@mac.com> for the
-	  patches. 
+          Added -mpcpu=G3 and -mtune=G4 to OCFLAGS. Mac OS X 10.3 requires
+          a PowerPC G3 chip and hence this isn't adding any restrictions
+          to ACE/TAO that the target platform doesn't already have for
+          itself.  Thanks to Thomas Costa <oohrah@mac.com> for the
+          patches.
 
 Sat Feb 21 19:56:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
-	  Added some more project files that must be build first when doing
-	  at full static build.
+        * bin/msvc_static_order.lst:
+          Added some more project files that must be build first when doing
+          at full static build.
 
 Sat Feb 21 19:49:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
-	  Build FaultTolerance.dsp after FTORB_Utils and PortableGroup
+        * bin/msvc_static_order.lst:
+          Build FaultTolerance.dsp after FTORB_Utils and PortableGroup
 
 Sat Feb 21 15:14:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* Kokyu/tests/EDF/test.cpp:
-	  Fixed compile problem in wchar build.
+        * Kokyu/tests/EDF/test.cpp:
+          Fixed compile problem in wchar build.
 
 Sat Feb 21 15:08:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* performance-tests/Synch-Benchmarks/synch_driver.cpp:
-	  Fixed compile problem in wchar build.
+        * performance-tests/Synch-Benchmarks/synch_driver.cpp:
+          Fixed compile problem in wchar build.
 
 Sat Feb 21 08:33:55 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/DEV_IO.i (recv_n):
+        * ace/DEV_IO.i (recv_n):
 
-	  Using ACE::recv_n () created problems on Win32 serial port
-	  code. Now we call recv_n () on all platform on all platforms but
-	  Win32. On Win32 we call read_n () which works. Thanks to
-	  <pwmiller@sarnoff.com> for reporting the problem.
+          Using ACE::recv_n () created problems on Win32 serial port
+          code. Now we call recv_n () on all platform on all platforms but
+          Win32. On Win32 we call read_n () which works. Thanks to
+          <pwmiller@sarnoff.com> for reporting the problem.
 
 Sat Feb 21 08:30:53 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/CDR_Base.h:
-	* ace/CDR_Base.cpp:
-	  Reverted this change "Fri Feb 20 17:14:46 2004  Irfan Pyarali
-	  <irfan@oomworks.com>" as I work aout a way to handle
-	  this.
+        * ace/CDR_Base.h:
+        * ace/CDR_Base.cpp:
+          Reverted this change "Fri Feb 20 17:14:46 2004  Irfan Pyarali
+          <irfan@oomworks.com>" as I work aout a way to handle
+          this.
 
 Fri Feb 20 18:21:39 2004  Steve Huston  <shuston@riverace.com>
 
-	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
-	  AC_Input_Handler::close() should accept a u_long, not u_int, to
-	  properly override ACE_Svc_Handler::close().
-	  AC_CLD_Connector::connect_svc_handler() first arg is a
-	  ACE_Svc_Handler*&, not ACE_Svc_Handler*, to properly override
-	  ACE_Connector::connect_svc_handler().
-	  Thanks to Johnny Willemsen for pointing these out.
+        * examples/C++NPv2/AC_Client_Logging_Daemon.cpp:
+          AC_Input_Handler::close() should accept a u_long, not u_int, to
+          properly override ACE_Svc_Handler::close().
+          AC_CLD_Connector::connect_svc_handler() first arg is a
+          ACE_Svc_Handler*&, not ACE_Svc_Handler*, to properly override
+          ACE_Connector::connect_svc_handler().
+          Thanks to Johnny Willemsen for pointing these out.
 
 Fri Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/CDR_Base.{h,cpp} (NonNative LongLong and LongDouble):
+        * ace/CDR_Base.{h,cpp} (NonNative LongLong and LongDouble):
 
-	  Added assignment operators for these two types.
+          Added assignment operators for these two types.
 
-	* ace/CDR_Stream.cpp (read_16):
+        * ace/CDR_Stream.cpp (read_16):
 
-	  The function for reading a longdouble was adjusting and aligning
-	  the buffer to longlong size rather than to longdouble size.
+          The function for reading a longdouble was adjusting and aligning
+          the buffer to longlong size rather than to longdouble size.
 
 Fri Feb 20 17:12:14 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* bin/tao_other_tests.lst:
+        * bin/tao_other_tests.lst:
 
-	  Modified script to run Pluggable and Simple_Two_Stage tests with
-	  SCTP_SEQ transport protocol only when the SCTP config flag is
-	  set.
+          Modified script to run Pluggable and Simple_Two_Stage tests with
+          SCTP_SEQ transport protocol only when the SCTP config flag is
+          set.
 
 Fri Feb 20 21:18:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* Static_Performance.dsw:
-	* netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
-	* examples/Service_Configurator/IPC-tests/server/Server_static.dsp:
-	* examples/ASX/CCM_App/CCM_App_static.dsp:
-	  Removed these static msvc6 project files. Use MPC to generate these
-	  if you need them. These are outdated and should have gone before 1.4
-	  was released.
+        * Static_Performance.dsw:
+        * netsvcs/clients/Naming/Dump_Restore/Dump_Restore_static.dsp:
+        * examples/Service_Configurator/IPC-tests/server/Server_static.dsp:
+        * examples/ASX/CCM_App/CCM_App_static.dsp:
+          Removed these static msvc6 project files. Use MPC to generate these
+          if you need them. These are outdated and should have gone before 1.4
+          was released.
 
 Fri Feb 20 18:47:26 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* bin/msvc_static_order.lst:
-	  Added FaultTolerance.dsp, RTCosScheduling and FtRtEvent.dsp to this
-	  file, so that they are build first with all other needed libs in the
-	  static builds.
+        * bin/msvc_static_order.lst:
+          Added FaultTolerance.dsp, RTCosScheduling and FtRtEvent.dsp to this
+          file, so that they are build first with all other needed libs in the
+          static builds.
 
 Fri Feb 20 16:40:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* apps/mkcsregdb/mkcsregdb.cpp:
-	  Fixed warning in BCB builds about comparing signed and unsigned
-	  values
+        * apps/mkcsregdb/mkcsregdb.cpp:
+          Fixed warning in BCB builds about comparing signed and unsigned
+          values
 
 Fri Feb 20 07:51:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* etc/ace.doxygen:
+        * etc/ace.doxygen:
 
-	  Reverted the change "Sun Dec 28 15:09:34 UTC 2003  Don Hinton
-	  <dhinton@dresystems.com>" since it broke stuff in
-	  ACE-categories.html. Don seems to have a better fix. Till
-	  then. This reversal will create problems for folks who untar
-	  doxygen documentation on platfroms where the path length could
-	  be an issue.
+          Reverted the change "Sun Dec 28 15:09:34 UTC 2003  Don Hinton
+          <dhinton@dresystems.com>" since it broke stuff in
+          ACE-categories.html. Don seems to have a better fix. Till
+          then. This reversal will create problems for folks who untar
+          doxygen documentation on platfroms where the path length could
+          be an issue.
 
 Thu Feb 19 15:22:49 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Template_Instantiations.cpp: Add a block to keep HP aC++ from
-	  issuing a warning about an empty translation unit.
+        * ace/Template_Instantiations.cpp: Add a block to keep HP aC++ from
+          issuing a warning about an empty translation unit.
 
-	* ace/Global_Macros.h: Added #include "ace/config-lite.h" because
-	  this file checks on config options.
+        * ace/Global_Macros.h: Added #include "ace/config-lite.h" because
+          this file checks on config options.
 
-	* ace/config-all.h: No need to include "ace/Global_Macros.h" from here.
+        * ace/config-all.h: No need to include "ace/Global_Macros.h" from here.
 
-	* ace/MEM_Addr.cpp (same_host): To account for IPv4/IPv6 differences,
-	  use ACE_INET_Addr::operator==. Because that method takes the port
-	  number into account when comparing, and we don't care about the
-	  port number, copy the two addresses to new ACE_INET_Addr objects
-	  and set their port numbers to 0, then compare.
+        * ace/MEM_Addr.cpp (same_host): To account for IPv4/IPv6 differences,
+          use ACE_INET_Addr::operator==. Because that method takes the port
+          number into account when comparing, and we don't care about the
+          port number, copy the two addresses to new ACE_INET_Addr objects
+          and set their port numbers to 0, then compare.
 
-	* tests/Multicast_Test_IPV6.cpp:
-	* tests/Proactor_Test_IPV6.cpp: Corrected name of log file so
-	  the test script can find it.
+        * tests/Multicast_Test_IPV6.cpp:
+        * tests/Proactor_Test_IPV6.cpp: Corrected name of log file so
+          the test script can find it.
 
 Thu Feb 19 08:06:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* ace/OS_NS_sys_stat.inl (lstat): Removed the ACE_WIN32
-	  branch since Windows doesn't support _lstat().  Thanks to
-	  Johnny Willemsen for this.
+        * ace/OS_NS_sys_stat.inl (lstat): Removed the ACE_WIN32
+          branch since Windows doesn't support _lstat().  Thanks to
+          Johnny Willemsen for this.
 
-	* ace/config-win32-common.h: Added ACE_LACKS_LSTAT.  Thanks to
-	  Johnny Willemsen for this.
+        * ace/config-win32-common.h: Added ACE_LACKS_LSTAT.  Thanks to
+          Johnny Willemsen for this.
 
 Thu Feb 19 11:40:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -556,16 +590,16 @@ Fri Feb  6 09:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           at it fix the compile time options properly.
 
 <<<<<<< ChangeLog
-	  Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
-	  Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
-	  problems.
+          Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
+          Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
+          problems.
 
-	* ace/config-sunos5.5.h:
+        * ace/config-sunos5.5.h:
 
-	  Added ACE_LACKS_SWAB. This is a lie. There are signatures
-	  mismatch and adding compile time options that get the right
-	  signatures messes things up a lot. Someone needs to take a look
-	  at it fix the compile time options properly.
+          Added ACE_LACKS_SWAB. This is a lie. There are signatures
+          mismatch and adding compile time options that get the right
+          signatures messes things up a lot. Someone needs to take a look
+          at it fix the compile time options properly.
 
 Fri Feb  6 09:35:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
