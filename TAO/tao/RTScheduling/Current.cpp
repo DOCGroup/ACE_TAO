@@ -728,16 +728,9 @@ TAO_RTScheduler_Current_i::name (void)
   return CORBA::string_dup (this->name_.in ());
 }
 
-#if defined (__Lynx__)
-
-// LynxOS uses macro THREAD_CANCELLED internally, so it must
-// be undefined to avoid compilation errors
-#if defined (THREAD_CANCELLED)
+#if defined (ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO)
 #undef THREAD_CANCELLED
-#endif /* THREAD_CANCELLED */
-
-#endif /*__Lynx__ */
-
+#endif /* ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO */
 
 void
 TAO_RTScheduler_Current_i::cancel_thread (ACE_ENV_SINGLE_ARG_DECL)

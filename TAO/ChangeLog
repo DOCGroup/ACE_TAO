@@ -1,8 +1,20 @@
+Sat Dec 18 09:56:04 2004  Olli Savia  <ops@iki.fi>
+
+        * tao/Exception.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/SystemException.h:
+        * tao/SystemException.cpp:
+        * tests/RTScheduling/Scheduling_Interceptor/test_client.cpp:
+        * tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+          Replaced __Lynx__ macro with ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO
+          macro. This makes code maintenace easier across different
+          LynxOS versions.
+
 Sat Dec 18 01:08:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* Release:
+        * Release:
 
-	  Added missing tabs.
+          Added missing tabs.
 
 Fri Dec 17 13:03:03 2004  Chad Elliott  <elliott_c@ociweb.com>
 
