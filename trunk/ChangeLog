@@ -1,3 +1,10 @@
+Tue Jun 20 14:55:26 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+        * ace/OS.cpp: Applied patches for ACE_BEGINTHREADEX and
+          ACE_ENDTHREADEX for using IBM VisualAge C++ 4.0 on NT.  Thanks
+          to Boris Kaminer <kaminer.boris@cherus.msk.ru> for providing the
+          patches.
+
 Tue Jun 20 12:04:24 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ace/Makefile (ssl):
