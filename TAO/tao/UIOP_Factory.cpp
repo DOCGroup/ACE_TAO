@@ -1,9 +1,10 @@
 // -*- C++ -*-
 // $Id$
 
+#include "tao/UIOP_Factory.h"
+
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/UIOP_Factory.h"
 #include "tao/UIOP_Acceptor.h"
 #include "tao/UIOP_Connector.h"
 #include "ace/Dynamic_Service.h"
