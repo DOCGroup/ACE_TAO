@@ -12,14 +12,14 @@ main (int argc, char **argv)
     = orb->resolve_initial_references ("RootPOA");
   
   PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj);
+    = PortableServer::POA::_narrow (obj.in ());
   
   PortableServer::POAManager_var mgr
     = poa->the_POAManager ();
   
   mgr->activate ();
   
-   if (bench_child.init (argc,argv, orb, poa) == -1)
+   if (bench_child.init (argc,argv, orb.in (), poa.in ()) == -1)
      return 1;
    if (bench_child.run () == -1)
      return 2;

@@ -253,7 +253,7 @@ main (int argc,
     = orb->resolve_initial_references ("RootPOA");
   
   PortableServer::POA_var poa
-    = PortableServer::POA::_narrow (obj);
+    = PortableServer::POA::_narrow (obj.in ());
   
   ACE_DECLARE_NEW_CORBA_ENV;
   
