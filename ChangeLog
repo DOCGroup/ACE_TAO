@@ -1,3 +1,17 @@
+Tue Nov  4 09:50:47 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tests/Makefile.am
+	  (MT_Reference_Counted_Event_Handler_Test_SOURCES):
+	  (MT_Reference_Counted_Notify_Test_SOURCES):
+	  (NonBlocking_Conn_Test_SOURCES):
+	  (Reactor_Registration_Test_SOURCES):
+	  (Reference_Counted_Event_Handler_Test_SOURCES):
+	  (Timer_Cancellation_Test_SOURCES):
+	  (Timer_Queue_Reference_Counting_Test_SOURCES):
+	  (WFMO_Reactor_Test_SOURCES):
+
+	  Added these missing test source declarations.
+
 Tue Nov  4 09:15:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/OS_NS_stdlib.inl:
