@@ -102,14 +102,6 @@ SOURCE=.\FIFO_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_NonReactive_Base.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Handler.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\LFU_Connection_Purging_Strategy.cpp
 # End Source File
 # Begin Source File
@@ -195,14 +187,6 @@ SOURCE=.\UIOP_Transport.cpp
 # Begin Source File
 
 SOURCE=.\advanced_resource.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Base.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\GIOP_Message_NonReactive_Handler.h
 # End Source File
 # Begin Source File
 

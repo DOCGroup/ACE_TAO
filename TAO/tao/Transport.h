@@ -599,10 +599,10 @@ protected:
 
   int check_message_integrity (ACE_Message_Block &message_block);
 
-  int consolidate_message (ACE_Message_Block &incoming,
-                           ssize_t missing_data,
-                           TAO_Resume_Handle &rh,
-                           ACE_Time_Value *max_wait_time);
+  virtual int consolidate_message (ACE_Message_Block &incoming,
+                                   ssize_t missing_data,
+                                   TAO_Resume_Handle &rh,
+                                   ACE_Time_Value *max_wait_time);
 
   int consolidate_message_queue (ACE_Message_Block &incoming,
                                  ssize_t missing_data,
@@ -613,7 +613,7 @@ protected:
                                   TAO_Resume_Handle &rh);
 
   /// @@ Bala: Documentation
-  virtual int process_parsed_messages (TAO_Queued_Data *qd);
+  int process_parsed_messages (TAO_Queued_Data *qd);
 
 public:
   /// Method for the connection handler to signify that it
