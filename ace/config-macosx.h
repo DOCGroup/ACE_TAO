@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// This configuration file is designed to work with the MacOS X operating system.
+// This configuration file is designed to work with the MacOS X operating system, version 10.2 (Jaguar).
 
 #ifndef ACE_CONFIG_MACOSX_H
 #define ACE_CONFIG_MACOSX_H
@@ -36,6 +36,8 @@
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_WCHAR_H
+
+#define ACE_SYS_SELECT_NEEDS_UNISTD_H
 
 //
 // Compiler/platform defines the sig_atomic_t typedef.
