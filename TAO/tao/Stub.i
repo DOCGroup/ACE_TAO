@@ -259,3 +259,29 @@ STUB_Object::add_forward_profiles (TAO_MProfile *mprofiles)
   forward_profiles_->rewind ();
 
 }
+
+ACE_INLINE
+CORBA::Boolean
+STUB_Object::next_profile_retry (void)
+{
+  ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
+                            guard,
+                            *this->profile_lock_ptr_,
+                            0));
+
+  if (profile_success_ && forward_profiles_)
+    {
+      reset_profiles_i ();
+      return 1;
+    }
+  else if (next_profile_i ())
+    {
+      return 1;
+    }
+  else
+    {
+      reset_profiles_i ();
+      return 0;
+    }
+}
+  
