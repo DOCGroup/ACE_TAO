@@ -1,3 +1,8 @@
+Tue Apr  3 12:23:55 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: Fixed a typo in
+	  ACE_TRY_ENV.  
+
 Tue Apr  3 12:21:40 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/LoadBalancing/Hash_Replica_i.cpp: Fuzz warnings. 
