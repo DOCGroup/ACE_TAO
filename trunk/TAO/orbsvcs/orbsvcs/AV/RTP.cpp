@@ -348,7 +348,7 @@ TAO_AV_RTP_Flow_Factory::control_flow_factory (void)
   return "RTCP";
 }
 
-ACE_FACTORY_DEFINE (AV, TAO_AV_RTP_Flow_Factory)
+ACE_FACTORY_DEFINE (TAO_AV, TAO_AV_RTP_Flow_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_AV_RTP_Flow_Factory,
                        ACE_TEXT ("RTP_Flow_Factory"),
                        ACE_SVC_OBJ_T,
