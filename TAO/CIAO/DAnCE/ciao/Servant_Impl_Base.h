@@ -27,6 +27,7 @@
 
 #include "CCM_EventC.h"
 #include "CIAO_Server_Export.h"
+#include "CCM_ComponentS.h"
 
 namespace CIAO
 {
@@ -46,6 +47,21 @@ namespace CIAO
     Servant_Impl_Base (Session_Container * c);
 
     virtual ~Servant_Impl_Base (void);
+
+    /// Operation to set attributes on the component.
+    virtual void set_attributes (
+        const Components::ConfigValues &descr
+        ACE_ENV_ARG_DECL) = 0;
+
+    //Creates and returns the StandardConfigurator for the component
+    virtual Components::StandardConfigurator*
+        get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL);
+
+        /// Override that returns the (passed-in) default POA of our member
+    /// component's container, to ensure that we get registered
+    /// to that POA when _this() is called.
+    virtual PortableServer::POA_ptr _default_POA (
+          ACE_ENV_SINGLE_ARG_DECL);
 
   protected:
     void add_facet (const char *port_name,

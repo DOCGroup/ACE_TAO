@@ -32,7 +32,7 @@
 namespace CIAO
 {
   class Session_Container;
-  
+
   /**
    * @class Servant_Impl_Base
    *
@@ -45,18 +45,19 @@ namespace CIAO
   {
   public:
     Servant_Impl_Base (Session_Container * c);
-    
+
     virtual ~Servant_Impl_Base (void);
 
-	   /// Operation to set attributes on the component.
+    /// Operation to set attributes on the component.
     virtual void set_attributes (
         const Components::ConfigValues &descr
         ACE_ENV_ARG_DECL) = 0;
 
-	//Creates and returns the StandardConfigurator for the component
-	virtual Components::StandardConfigurator* get_standard_configurator();
+    //Creates and returns the StandardConfigurator for the component
+    virtual Components::StandardConfigurator*
+        get_standard_configurator (ACE_ENV_SINGLE_ARG_DECL);
 
-	/// Override that returns the (passed-in) default POA of our member
+        /// Override that returns the (passed-in) default POA of our member
     /// component's container, to ensure that we get registered
     /// to that POA when _this() is called.
     virtual PortableServer::POA_ptr _default_POA (
@@ -65,7 +66,7 @@ namespace CIAO
   protected:
     void add_facet (const char *port_name,
                     CORBA::Object_ptr port_ref);
-                    
+
     void add_consumer (const char *port_name,
                        ::Components::EventConsumerBase_ptr port_ref);
 
@@ -83,9 +84,9 @@ namespace CIAO
                                     ACE_Equal_To<const char *>,
                                     ACE_Null_Mutex>
        ConsumerTable;
-       
-    FacetTable facet_table_;    
-    ConsumerTable consumer_table_;      
+
+    FacetTable facet_table_;
+    ConsumerTable consumer_table_;
     Session_Container * container_;
   };
 }
@@ -93,4 +94,3 @@ namespace CIAO
 #include /**/ "ace/post.h"
 
 #endif /* CIAO_SERVANT_IMPL_T_H */
-
