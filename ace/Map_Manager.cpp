@@ -322,6 +322,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
   ACE_TRACE ("ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i");
 
   int first_free = -1;
+  // We need to save errno since <shared_find> may set errno to
+  // ENOENT.
+  int error = errno;
   int index = this->shared_find (ext_id, first_free);
 
   if (index >= 0)
@@ -329,8 +332,12 @@ ACE_Map_Manager<EXT_ID, INT_ID, LOCK>::bind_i (const EXT_ID &ext_id,
     return 1;
 
   else
-    // We didn't find it, so let's bind it!
-    return this->shared_bind (ext_id, int_id, first_free);
+    {
+      // Restore errno.
+      errno = error;
+      // We didn't find it, so let's bind it!
+      return this->shared_bind (ext_id, int_id, first_free);
+    }
 }
 
 // Associate <ext_id> with <int_id>.  If <ext_id> is not in the
