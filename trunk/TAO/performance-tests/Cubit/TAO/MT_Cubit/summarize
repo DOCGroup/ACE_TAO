@@ -15,25 +15,26 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 @files = glob 'client-*.log';
-@low_priority_threads = ();
+@total_threads = ();
 
 foreach $file (@files) {
-  ($l = $file) =~ s/client-(\d+).log/$1/;
-  push @low_priority_threads, $l - 1;
+  my ($i);
+  ($i = $file) =~ s/client-(\d+).log/$1/;
+  push @total_threads, $i;
 }
 
 print "                          Round-trip, usec\n";
 print "Low-priority      High-priority         Low-priority\n";
 print "   threads      Latency    Jitter    Latency    Jitter\n";
 
-foreach $low (sort {$a <=> $b} @low_priority_threads) {
+foreach $total_threads (sort {$a <=> $b} @total_threads) {
   undef $high_latency;
   undef $high_jitter;
   undef $low_latency;
   undef $low_jitter;
 
-  open (FILE, "client-${low}.log")  ||
-    die "$0: unable to open \"client-${low}.log\"\n";
+  open (FILE, "client-${total_threads}.log")  ||
+    die "$0: unable to open \"client-${total_threads}.log\"\n";
   while (<FILE>) {
     if (/^High priority client latency : ([\d\.]+).*jitter: ([\d\.]+)/) {
       $high_latency = $1 * 1000;
@@ -47,5 +48,5 @@ foreach $low (sort {$a <=> $b} @low_priority_threads) {
   close FILE;
 
   printf "    %3d      %8d   %8d  %8d   %8d\n",
-    $low, $high_latency, $high_jitter, $low_latency, $low_jitter;
+    $total_threads - 1, $high_latency, $high_jitter, $low_latency, $low_jitter;
 }
