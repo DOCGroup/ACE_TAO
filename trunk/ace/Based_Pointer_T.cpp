@@ -13,7 +13,7 @@
 #include "ace/Based_Pointer_T.i"
 #endif /* __ACE_INLINE__ */
 
-template <class CONCRETE> 
+template <class CONCRETE>
 ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer");
@@ -39,6 +39,13 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (CONCRETE *initial)
 }
 
 template <class CONCRETE>
+ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const void* base_addr, int)
+  : ACE_Based_Pointer_Basic<CONCRETE> (base_addr, 0)
+{
+  ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
+}
+
+template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (void)
   : target_ (0),
     base_offset_ (0)
@@ -49,8 +56,17 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (void)
   // Find the base address associated with our <this> pointer.  Note
   // that it's ok for <find> to return 0, which simply indicates that
   // the address is not in memory-mapped virtual address space.
-  ACE_BASED_POINTER_REPOSITORY::instance ()->find (this, 
+  ACE_BASED_POINTER_REPOSITORY::instance ()->find (this,
                                                    base_addr);
+  this->base_offset_ = (char *) this - (char *) base_addr;
+}
+
+template <class CONCRETE>
+ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_addr, int)
+  : target_ (0),
+    base_offset_ (0)
+{
+  ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
   this->base_offset_ = (char *) this - (char *) base_addr;
 }
 

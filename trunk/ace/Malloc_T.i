@@ -203,7 +203,7 @@ template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE void
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::init_malloc_header_ptr (void* ptr)
 {
 #if defined (ACE_HAS_POSITION_INDEPENDENT_MALLOC)
-  new (ptr) ACE_MALLOC_HEADER_PTR;
+  new (ptr) ACE_MALLOC_HEADER_PTR (this->cb_ptr_, 0);
 #else
   ACE_UNUSED_ARG (ptr);
 #endif /* ACE_HAS_POSITION_INDEPENDENT_MALLOC */
