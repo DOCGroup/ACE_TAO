@@ -20,9 +20,6 @@ KNOWN PROBLEMS
 ==============
 
 Interoperability between the C++ client and the Java server
-implementation is fine.  However, interoperability between the C++
-server and the Java client doesn't work right now.  I believek that
-it's due to the C++ server taking a naive approach and expecting to be
-able to read an entire C/C++ structure at once, and the Java client
-can't support that.  Thus, the only "fix" I can envision is to rework
-the C++ server.
+implementation is fine.  Interoperability between the C++ server and
+the Java client seems to work right now.  See the CVS information on
+LoggingClient.java for details.
