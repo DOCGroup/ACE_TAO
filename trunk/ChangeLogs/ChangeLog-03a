@@ -1,10 +1,15 @@
+Sat May  6 19:33:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_freebsd.GNU: Removed definition
+	  BIN_TRUE.  It's no longer used.
+
 Thu May  4 14:53:45 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-all.h:
         * ace/config-win32-common.h:
         * bin/generate_export_file.pl:
 
-          Changed the ACE_EXPORT_SINGLETON_DECLARE and 
+          Changed the ACE_EXPORT_SINGLETON_DECLARE and
           ACE_IMPORT_SINGLETON_DECLARE to take in arguments, but
           this time it takes in 3, the singleton type, the class,
           and then the lock.  So we have:
@@ -16,9 +21,9 @@ Thu May  4 13:59:58 2000  Darrell Brunsch <brunsch@uci.edu>
         * ace/config-all.h:
         * ace/config-win32-common.h:
 
-          Added two new macros, ACE_EXPORT_SINGLETON_DECLARE and 
+          Added two new macros, ACE_EXPORT_SINGLETON_DECLARE and
           ACE_IMPORT_SINGLETON_DECLARE.  They do the same thing as the
-          *_DECLARATION macros except they do not take arguments.  
+          *_DECLARATION macros except they do not take arguments.
 
           So instead of
           ACE_EXPORT_SINGLETON_DECLARATION (foo);
