@@ -117,6 +117,27 @@ be_visitor_interface_is::visit_interface (be_interface *node)
                         -1);
     }
   
+   if (node->n_inherits () > 0)
+    {
+      // this interface inherits from other interfaces
+      be_interface *intf; // inherited interface
+
+      for (int i = 0; i < node->n_inherits (); i++)
+	{
+	  intf = be_interface::narrow_from_decl (node->inherits ()[i]);
+	  // generate code for elements in the scope (e.g., operations)
+	  if (this->visit_scope (intf) ==  -1)
+	    {
+	      ACE_ERROR_RETURN ((LM_ERROR,
+				 "be_visitor_interface_ih::"
+				 "visit_interface - "
+			     "codegen for scope failed\n"),
+				-1);
+	    }
+	}
+      
+    }
+ 
 
    return 0;
 }
