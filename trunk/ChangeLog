@@ -1,3 +1,16 @@
+Sun Jan 28 08:32:07 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Message_Queue_T.h: Make sure the lock() forwarding method
+	  forwards to queue_.lock().
+
+	* ace/Message_Queue_T.{h,i,cpp}: There's no reason to dynamically 
+	  allocate the implementation of ACE_Message_Queue_Ex -- instead
+ 	  it can be simply an instance of ACE_Message_Queue.
+
+	* ace/Message_Queue_T.h: Make sure that the methods on
+	  ACE_Message_Queue_Ex are properly virtual.  Thanks to Kitty for
+ 	  pointing this out.
+
 Sat Jan 27 19:40:36 2001  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:

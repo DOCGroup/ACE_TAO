@@ -283,7 +283,7 @@ public:
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   /// Returns a reference to the lock used by the <ACE_Message_Queue>.
-  ACE_SYNCH_MUTEX_T &lock (void)
+  virtual ACE_SYNCH_MUTEX_T &lock (void)
     {
       // The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
       // header file      (j.russell.noseworthy@objectsciences.com)
@@ -821,15 +821,15 @@ public:
    * can enqueue new messages, which can minimize the "silly window
    * syndrome."
    */
-  int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
-            size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-            ACE_Notification_Strategy * = 0);
+  virtual int open (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
+                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
+                    ACE_Notification_Strategy * = 0);
 
   /// Close down the message queue and release all resources.
-  int close (void);
+  virtual int close (void);
 
   /// Close down the message queue and release all resources.
-  ~ACE_Message_Queue_Ex (void);
+  virtual ~ACE_Message_Queue_Ex (void);
 
   // = Enqueue and dequeue methods.
 
@@ -849,8 +849,8 @@ public:
    * Otherwise, returns -1 on failure, else the number of items still
    * on the queue.
    */
-  int peek_dequeue_head (ACE_MESSAGE_TYPE *&first_item,
-                         ACE_Time_Value *timeout = 0);
+  virtual int peek_dequeue_head (ACE_MESSAGE_TYPE *&first_item,
+                                 ACE_Time_Value *timeout = 0);
 
   /**
    * Enqueue an <ACE_Message_Block *> into the <Message_Queue> in
@@ -863,8 +863,8 @@ public:
    * <errno> is set to <ESHUTDOWN>.  Otherwise, returns -1 on failure,
    * else the number of items still on the queue.
    */
-  int enqueue_prio (ACE_MESSAGE_TYPE *new_item,
-                    ACE_Time_Value *timeout = 0);
+  virtual int enqueue_prio (ACE_MESSAGE_TYPE *new_item,
+                            ACE_Time_Value *timeout = 0);
 
   /**
    * This is an alias for <enqueue_prio>.  It's only here for
@@ -872,8 +872,8 @@ public:
    * Please use <enqueue_prio> instead.  Note that <timeout> uses
    * <{absolute}> time rather than <{relative}> time.
    */
-  int enqueue (ACE_MESSAGE_TYPE *new_item,
-               ACE_Time_Value *timeout = 0);
+  virtual int enqueue (ACE_MESSAGE_TYPE *new_item,
+                       ACE_Time_Value *timeout = 0);
 
   /**
    * Enqueue an <ACE_Message_Block *> at the end of the queue.  Note
@@ -884,8 +884,8 @@ public:
    * Otherwise, returns -1 on failure, else the number of items still
    * on the queue.
    */
-  int enqueue_tail (ACE_MESSAGE_TYPE *new_item,
-                    ACE_Time_Value *timeout = 0);
+  virtual int enqueue_tail (ACE_MESSAGE_TYPE *new_item,
+                            ACE_Time_Value *timeout = 0);
 
   /**
    * Enqueue an <ACE_Message_Block *> at the head of the queue.  Note
@@ -896,12 +896,12 @@ public:
    * Otherwise, returns -1 on failure, else the number of items still
    * on the queue.
    */
-  int enqueue_head (ACE_MESSAGE_TYPE *new_item,
-                    ACE_Time_Value *timeout = 0);
+  virtual int enqueue_head (ACE_MESSAGE_TYPE *new_item,
+                            ACE_Time_Value *timeout = 0);
 
   /// This method is an alias for the following <dequeue_head> method.
-  int dequeue (ACE_MESSAGE_TYPE *&first_item,
-               ACE_Time_Value *timeout = 0);
+  virtual int dequeue (ACE_MESSAGE_TYPE *&first_item,
+                       ACE_Time_Value *timeout = 0);
   // This method is an alias for the following <dequeue_head> method.
 
   /**
@@ -913,14 +913,14 @@ public:
    * <ESHUTDOWN>.  Otherwise, returns -1 on failure, else the number
    * of items still on the queue.
    */
-  int dequeue_head (ACE_MESSAGE_TYPE *&first_item,
-                    ACE_Time_Value *timeout = 0);
+  virtual int dequeue_head (ACE_MESSAGE_TYPE *&first_item,
+                            ACE_Time_Value *timeout = 0);
 
   // = Check if queue is full/empty.
   /// True if queue is full, else false.
-  int is_full (void);
+  virtual int is_full (void);
   /// True if queue is empty, else false.
-  int is_empty (void);
+  virtual int is_empty (void);
 
 
   // = Queue statistic methods.
@@ -928,16 +928,16 @@ public:
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
    */
-  size_t message_bytes (void);
+  virtual size_t message_bytes (void);
   /**
    * Number of total length on the queue, i.e., sum of the message
    * block lengths.
    */
-  size_t message_length (void);
+  virtual size_t message_length (void);
   /**
    * Number of total messages on the queue.
    */
-  size_t message_count (void);
+  virtual size_t message_count (void);
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -984,7 +984,7 @@ public:
    * ESHUTDOWN.  Returns WAS_INACTIVE if queue was inactive before the
    * call and WAS_ACTIVE if queue was active before the call.
    */
-  int deactivate (void);
+  virtual int deactivate (void);
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
@@ -992,11 +992,11 @@ public:
    * before the call and WAS_ACTIVE if queue was active before the
    * call.
    */
-  int activate (void);
+  virtual int activate (void);
 
   /// Returns true if <deactivated_> is enabled.
-  int deactivated (void);
-
+  virtual int deactivated (void);
+  
   // = Notification hook.
 
   /**
@@ -1009,29 +1009,29 @@ public:
    * guarantee that the queue will be still be non-empty by the time
    * the notification occurs.
    */
-  int notify (void);
-
+  virtual int notify (void);
+  
   /// Get/set the notification strategy for the <Message_Queue>
-  ACE_Notification_Strategy *notification_strategy (void);
-  void notification_strategy (ACE_Notification_Strategy *s);
+  virtual ACE_Notification_Strategy *notification_strategy (void);
+  virtual void notification_strategy (ACE_Notification_Strategy *s);
 
   /// Returns a reference to the lock used by the <ACE_Message_Queue_Ex>.
-  ACE_SYNCH_MUTEX_T &lock (void)
+  virtual ACE_SYNCH_MUTEX_T &lock (void)
     {
       // The Sun Forte 6 (CC 5.1) compiler is only happy if this is in the
       // header file      (j.russell.noseworthy@objectsciences.com)
-      return this->lock_;
+      return this->queue_.lock ();
     }
 
   /// Dump the state of an object.
-  void dump (void) const;
+  virtual void dump (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Implement this via an <ACE_Message_Queue>.
-  ACE_Message_Queue<ACE_SYNCH> *queue_;
+  ACE_Message_Queue<ACE_SYNCH> queue_;
 };
 
 #if defined (__ACE_INLINE__)
