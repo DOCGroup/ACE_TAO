@@ -1,4 +1,7 @@
-Fri May 28 04:11:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri May 28 04:41:30 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/compiler.html: Added documentation for -Gv flag (to
+	  generate code that supports OBV.)
 
 	* TAO_IDL/ast/ast_module.cpp (AST_Module): Symbols in module CORBA
 	  should only be added to the table once.
