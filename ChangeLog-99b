@@ -1,12 +1,29 @@
+Thu Oct 14 14:30:06 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Process_Manager_Test.cpp: use u_int instead of
+          bool.  Make ~Exit_Handler () public so that g++ doesn't
+          complain about a private destructor with no friends.
+          Commented out unused local variable child7.
+
+Thu Oct 14 14:25:44 1999  Dave Madden <dhm@mersenne.com>
+
+        * tests/Process_Manager_Test.cpp: fixed the memory leaks, and
+          most of the "unused variable" warnings should be gone.
+          I've added, but left commented out, ASSERTs for the child
+          process' exit codes.  The reason is that, on Unix, the exit
+          code contains extra information (exited, traced, stopped,
+          signaled, etc.) that causes the exit code from wait() to be
+          different from what the child's main() returned.
+
 Wed Oct 13 20:23:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-WinCE.h: Added ACE_LACKS_ACE_TOKEN and
-	  ACE_LACKS_ACE_OTHER to reduce CE dll's footprint.
+        * ace/config-WinCE.h: Added ACE_LACKS_ACE_TOKEN and
+          ACE_LACKS_ACE_OTHER to reduce CE dll's footprint.
 
-	* ace/Memory_Pool.cpp (ACE_Pagefile_Memory_Pool::map): The
-	  SECURITY_DESCRIPTOR and its management routines are only
-	  supported on NT.  Changed to pass a NULL security attribute on
-	  non-NT platforms (95, 98, CE.)
+        * ace/Memory_Pool.cpp (ACE_Pagefile_Memory_Pool::map): The
+          SECURITY_DESCRIPTOR and its management routines are only
+          supported on NT.  Changed to pass a NULL security attribute on
+          non-NT platforms (95, 98, CE.)
 
 Wed Oct 13 10:50:39 1999  David L. Levine  <levine@cs.wustl.edu>
 
