@@ -27,17 +27,6 @@ operation.  CIAO accepts the following feature names:<p>
     <th>Remarks</th>
   </tr>
   <tr>
-    <td>CIAO-RTORB</td>
-    <td>boolean</td>
-    <td>
-        Optional
-    </td>
-    <td>
-        Designate whether the component server requires a RT-ORB or
-        not.  By default, a component server uses a non-RT ORB.
-    </td>
-  </tr>
-  <tr>
     <td>CIAO-svcconf-id</td>
     <td>string</td>
     <td>
@@ -65,6 +54,56 @@ operation.  CIAO accepts the following feature names:<p>
   </tr>
 </table>
 
+<h2>RTComponentServer (Real-time ComponentServer)</h2>
+
+Like a regular <code>ComponentServer</code>, the
+<code>ConfigValues</code> for a <code>RTComponentServer</code> are
+passed in via <code>ServerActivator::create_component_server</code>
+operation.  On top of the <code>ConfigValues</code> accepted by the
+regular <code>ComponentServer</code>, a real-time ComponentServer also
+accepts the following feature names:<p>
+
+<table border="3" spacing="2" cellpadding="3">
+  <tr>
+    <th>FeatureName</th>
+    <th>type</th>
+    <th>Requirement</th>
+    <th>Remarks</th>
+  </tr>
+  <tr>
+    <td>CIAO-RTresources</td>
+    <td><code>CIAO::RTConfiguration::RTORB_Resources_Info</code></td>
+    <td>
+        Optional
+    </td>
+    <td>
+        <code>CIAO::RTConfiguration::RTORB_Resources_Info</code> as
+        defined in
+        <code>$CIAO_ROOT/tools/XML_Helpers/RTConfiguration.idl</code>
+        defines the system wise resources an RT ORB should allocate.
+        These resources then can be used to define the RT policies in
+        the RTPolicySet described subsequently.
+    </td>
+  </tr>
+  <tr>
+    <td>CIAO-RTPolicySets</td>
+    <td><code>CIAO::RTConfiguration::Policy_Sets</code></td>
+    <td>
+        Optional
+    </td>
+    <td>
+        <code>CIAO::RTConfiguration::Policy_Sets</code>, also
+        defined in
+        <code>$CIAO_ROOT/tools/XML_Helpers/RTConfiguration.idl</code>,
+        defines a list of policy sets, which are named sequences of
+        policies.  These policies often refer to the global resources
+        defined in the previous CIAO-RTresource via names.  Likewise,
+        an <b>RT-container</b> also specifies the RTPolicySet its POA
+        uses via the name defined here.
+    </td>
+  </tr>
+</table>
+
 <h2>Container</h2>
 The <code>ConfigValues</code> for a <code>Container</code> are
 passed in via <code>ComponentServer::create_container</code>
@@ -85,7 +124,7 @@ operation.  CIAO accepts the following feature names:<p>
         <code>string</code>
     </td>
     <td>
-        Required
+        currently not supported.
     </td>
     <td>
         Possible value: <code>session</code>, <code>rt-session</code>,
@@ -101,7 +140,7 @@ operation.  CIAO accepts the following feature names:<p>
         <code>CORBA::PolicyList</code>
     </td>
     <td>
-        Optional
+        Currently not supported.
     </td>
     <td>
         Must not conflict with CIAO-Container-Type setting.
@@ -111,17 +150,17 @@ operation.  CIAO accepts the following feature names:<p>
 
   <tr>
     <td>
-        CIAO-RTPOAPolicies
+        CIAO-RTPoliciesSet
     </td>
     <td>
-        <code>CORBA::PolicyList</code>
+        <code>string</code>
     </td>
     <td>
         Optional
     </td>
     <td>
-        Must not conflict with both container and regular POA
-        policies.
+        Name, as defined in RTCompoenentServer's CIAO-RTPolicySets, of
+        the PolicySet this container uses.
     </td>
   </tr>
 </table>

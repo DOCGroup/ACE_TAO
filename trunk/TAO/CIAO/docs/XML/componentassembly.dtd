@@ -11,12 +11,6 @@
          href CDATA #REQUIRED
 " >
 
-<!-- If file not available locally, then download via codebase link -->
-<!ELEMENT codebase EMPTY >
-<!ATTLIST codebase
-    filename CDATA #IMPLIED
-    %simple-link-attributes; >
-
 <!ELEMENT componentassembly
     ( description?
     , componentfiles
@@ -27,6 +21,12 @@
 <!ATTLIST componentassembly
     id          ID #REQUIRED
     derivedfrom CDATA #IMPLIED >
+
+<!-- If file not available locally, then download via codebase link -->
+<!ELEMENT codebase EMPTY >
+<!ATTLIST codebase
+    filename CDATA #IMPLIED
+    %simple-link-attributes; >
 
 <!ELEMENT componentfile
     ( fileinarchive
