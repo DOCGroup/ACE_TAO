@@ -153,6 +153,10 @@ ACE_INLINE int
 ACE_Mutex::acquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_read");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_lock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
@@ -160,6 +164,10 @@ ACE_INLINE int
 ACE_Mutex::acquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire_write");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_lock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
@@ -167,6 +175,10 @@ ACE_INLINE int
 ACE_Mutex::tryacquire_read (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_read");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_trylock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
@@ -174,6 +186,10 @@ ACE_INLINE const ACE_mutex_t &
 ACE_Mutex::lock (void) const
 {
 // ACE_TRACE ("ACE_Mutex::lock");
+#if defined (CHORUS)
+  if (this->process_lock_) 
+    return *this->process_lock_;
+#endif /* CHORUS */
   return this->lock_;
 }
 
@@ -181,6 +197,10 @@ ACE_INLINE int
 ACE_Mutex::tryacquire_write (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire_write");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_trylock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
@@ -188,6 +208,10 @@ ACE_INLINE int
 ACE_Mutex::acquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::acquire");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_lock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_lock (&this->lock_);
 }
 
@@ -195,6 +219,10 @@ ACE_INLINE int
 ACE_Mutex::tryacquire (void)
 {
 // ACE_TRACE ("ACE_Mutex::tryacquire");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_trylock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
@@ -202,6 +230,10 @@ ACE_INLINE int
 ACE_Mutex::release (void)
 {
 // ACE_TRACE ("ACE_Mutex::release");
+#if defined (CHORUS)
+   if (this->process_lock_) 
+     return ACE_OS::mutex_unlock (this->process_lock_);
+#endif /* CHORUS */
   return ACE_OS::mutex_unlock (&this->lock_);
 }
 
@@ -209,6 +241,28 @@ ACE_INLINE int
 ACE_Mutex::remove (void)
 {
 // ACE_TRACE ("ACE_Mutex::remove");
+#if defined (CHORUS)
+   int result = -1;
+   // Are we the owner?
+   if (this->process_lock_ && this->lockname_) 
+     {
+       // Only destroy the lock if we're the ones who initialized it.
+       result = ACE_OS::mutex_destroy (this->process_lock_);
+       ACE_OS::munmap (this->process_lock_,
+                       sizeof (ACE_mutex_t));
+       ACE_OS::shm_unlink (this->lockname_);
+       ACE_OS::free (ACE_static_cast (void *,
+                                      ACE_const_cast (LPTSTR,
+                                                      this->lockname_)));
+     }
+   else if (this->process_lock_)
+     {
+       ACE_OS::munmap (this->process_lock_,
+                       sizeof (ACE_mutex_t));
+       result = 0;
+     }
+   return result;
+#endif /* */
   return ACE_OS::mutex_destroy (&this->lock_);
 }
 
