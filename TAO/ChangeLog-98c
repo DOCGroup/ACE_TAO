@@ -1,9 +1,15 @@
+Fri Oct 23 11:17:00 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/CDR.i (operator<<): wrapped several final return statements
+          with ACE_NOTREACHED to avoid unreachable statement warnings from
+          DEC cxx.
+
 Fri Oct 23 10:25:49 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* TAO_IDL/be/be_codegen.cpp : Fixed the
-	problem with getting the suffix for a #include'd idl file. Use
-	strrchr instead of strstr. Thanks to Ron Barack
-	<r.barack@inobis.de> for tracking this down.  
+        * TAO_IDL/be/be_codegen.cpp : Fixed the
+        problem with getting the suffix for a #include'd idl file. Use
+        strrchr instead of strstr. Thanks to Ron Barack
+        <r.barack@inobis.de> for tracking this down.
 
 Fri Oct 23 00:40:14 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -15,8 +21,8 @@ Thu Oct 22 23:28:52 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Oct 22 21:35:17 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* TAO-INSTALL.html: Since we've been successfully using MSVC 6.0
-	  for a while, might as well mention it here in the documentation,
+        * TAO-INSTALL.html: Since we've been successfully using MSVC 6.0
+          for a while, might as well mention it here in the documentation,
 
 Thu Oct 22 20:43:06 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
@@ -26,12 +32,12 @@ Thu Oct 22 20:43:06 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
 Thu Oct 22 14:09:12 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* TAO_IDL/fe/fe_lookup.cpp:
-	  TAO_IDL/Makefile:
-	  
-	  Since GPERF had issued a warning indicating collision of keys, I
-	  used an additional -k1,2,$ option to GPERF. Thanks to Doug
-	  Schmidt for suggesting this. The collisions are now resolved.
+        * TAO_IDL/fe/fe_lookup.cpp:
+          TAO_IDL/Makefile:
+
+          Since GPERF had issued a warning indicating collision of keys, I
+          used an additional -k1,2,$ option to GPERF. Thanks to Doug
+          Schmidt for suggesting this. The collisions are now resolved.
 
 Thu Oct 22 11:01:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
