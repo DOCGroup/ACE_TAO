@@ -37,8 +37,10 @@ $end_work = 401;
 $work_step = 10;
 $run_time = 60;                 # run for $run_time sec.
 
+## Controlling test behavior
 $test_deploy = 0;
 $no_daemon = 0;
+$reverse_call_order = 0;
 
 # Parse command line argument
 while ( $#ARGV >= 0)
@@ -60,6 +62,9 @@ while ( $#ARGV >= 0)
         if ($#ARGV >= 0) {
             $work_step = $ARGV[0];
         }
+    }
+    elsif ($ARGV[0] =~ m/^-reverse_call_order/i) {
+        $reverse_call_order = 1;
     }
     else {
         die "Invalid flag: $ARGV[0]\n";
@@ -145,9 +150,16 @@ for ($work = $start_work; $work < $end_work; $work += $work_step)
 ## detect this.
     sleep ($run_time);
 
+    if ($reverse_call_order == 0) {
+        $all_iors = "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior";
+    }
+    else {
+        $all_iors = "-k file://$c75_ior -k file://$c50_ior -k file://$c25_ior";
+    }
+
 #Start the client to send the trigger message
     $CL = new PerlACE::Process ("../Controllers/client",
-                                "-k file://$c25_ior -k file://$c50_ior -k file://$c75_ior -f");
+                                "$all_iors -f");
     $CL->SpawnWaitKill(60);
 ## Now teardown the application
     $AD = new PerlACE::Process("$CIAO_ROOT/tools/Assembly_Deployer/Assembly_Deployer",
