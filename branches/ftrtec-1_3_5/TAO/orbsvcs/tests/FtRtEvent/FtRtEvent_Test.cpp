@@ -31,7 +31,7 @@ FtRtEvent_Test_Base::~FtRtEvent_Test_Base()
 int 
 FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
 {
-    ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:hi:k:nt:?"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_LIB_TEXT("d:f:hi:k:n?"));
     int opt;
 
     while ((opt = get_opt ()) != EOF)
@@ -57,7 +57,7 @@ FtRtEvent_Test_Base::parse_args(int argc, ACE_TCHAR** argv ACE_ENV_ARG_DECL)
       case 'n':
         use_gateway_ = 0;
         break;
-      case 't':
+      case 'f':
         timer_interval_.set(1.0/ACE_OS::atoi(get_opt.opt_arg ()));
       case 'h':
       case '?':
