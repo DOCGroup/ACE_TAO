@@ -215,3 +215,28 @@ FILE                    linux   lynxos  sunos   win32
   tcsendbreak()                                 x
   tcsetattr()                                   x
 .............................................................  
+<timel.h>
+  asctime()                                     -N
+  asctime_r()                                   x
+  clock()                                       -N
+  difftime()                                    -N
+  clock_getres()                                x
+  clock_gettime()                               x
+  clock_settime()                               x
+  ctime()                                       -N
+  ctimer_r()                                    x
+  gmtime()                                      -N
+  gmtime_r()                                    x
+  localtime()                                   -N
+  localtime_r()                                 x
+  mktime()                                      -N
+  nanosleep()                                   x
+  strftime()                                    -N
+  time()                                        -N
+  timer_create()                                x
+  timer_delete()                                x
+  timer_getoverrun()                            x
+  timer_gettime()                               x
+  timer_settime()                               x
+  tzset()                                       x
+.............................................................
