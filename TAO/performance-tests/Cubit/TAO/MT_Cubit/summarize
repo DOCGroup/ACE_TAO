@@ -37,16 +37,16 @@ foreach $total_threads (sort {$a <=> $b} @total_threads) {
     die "$0: unable to open \"client-${total_threads}.log\"\n";
   while (<FILE>) {
     if (/^High priority client latency : ([\d\.]+).*jitter: ([\d\.]+)/) {
-      $high_latency = $1 ;
-      $high_jitter = $2 ;
+      $high_latency = $1 * 1000;
+      $high_jitter = $2 * 1000;
     } elsif (/^Low priority client latency : ([\d\.]+).*jitter: ([\d\.]+)/) {
-      $low_latency = $1 ;
-      $low_jitter = $2 ;
+      $low_latency = $1 * 1000;
+      $low_jitter = $2 * 1000;
         last;
     }
   }
   close FILE;
 
-  printf "    %3d     %8.3f   %8.3f  %8.3f   %8.3f\n",
+  printf "    %3d      %8d   %8d  %8d   %8d\n",
     $total_threads - 1, $high_latency, $high_jitter, $low_latency, $low_jitter;
 }
