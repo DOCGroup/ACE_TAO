@@ -146,6 +146,20 @@ endif !BUILD_USES_WCHAR
 
 if !BUILD_USES_WCHAR
 
+BUILT_SOURCES += \
+  iout2_gen/idl.cpp
+
+CLEANFILES += \
+  iout2_gen/idl.cpp \
+  iout2_gen/idl-stamp
+
+iout2_gen/idl.cpp: iout2_gen/idl-stamp
+
+iout2_gen/idl-stamp: $(srcdir)/idl.gperf
+	mkdir -p iout2_gen
+	../src/gperf -m -M -c -C -D -E -T -a -o -p $(srcdir)/idl.gperf > iout2_gen/idl.cpp
+	@touch $@
+
 noinst_PROGRAMS += iout2
 
 iout2_CPPFLAGS = \
@@ -153,7 +167,7 @@ iout2_CPPFLAGS = \
   -I$(ACE_BUILDDIR)
 
 iout2_SOURCES = \
-  idl.cpp \
+  iout2_gen/idl.cpp \
   test.cpp
 
 iout2_LDADD = \

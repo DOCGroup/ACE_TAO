@@ -1,3 +1,12 @@
+Thu Dec  2 11:09:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* apps/gperf/tests/Makefile.am:
+
+	  Revert my previous change.  Fixed orignal problem by putting the
+	  stamp file in the same directory as the output file.  Thanks to
+	  Chad Elliott for letting me know that the gperf options for the
+	  two invocations of gperf on idl.gperf were different.
+
 Thu Dec 2 16:42:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_vxworks5.5.x.GNU:
