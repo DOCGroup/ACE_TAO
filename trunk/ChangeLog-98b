@@ -1,3 +1,9 @@
+Tue Jun 16 15:43:55 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Changed to instruct users to #include
+ 	  "ace/config-win32.h" instead of "config-win32.h" directly.
+  	  Thanks to Gonzo <gonzo@ing.puc.cl> for noticing this.
+
 Tue Jun 16 10:33:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * os-patches/linux-patches.html: added RedHat 5.1 success
