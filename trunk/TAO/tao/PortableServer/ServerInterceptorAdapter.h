@@ -21,7 +21,7 @@
 
 #include "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,7 +43,7 @@ class TAO_ServerRequestInfo;
  * A convenient helper class to invoke registered server request
  * interceptor(s) in tao_idl generated code.
  */
-class TAO_Export TAO_ServerRequestInterceptor_Adapter
+class TAO_PortableServer_Export TAO_ServerRequestInterceptor_Adapter
 {
 
 public:
