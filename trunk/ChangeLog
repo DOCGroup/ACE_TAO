@@ -1,3 +1,13 @@
+Sat Dec 18 10:03:41 2004  Olli Savia  <ops@iki.fi>
+
+        * ace/README:
+          Added ACE_HAS_PREDEFINED_THREAD_CANCELLED_MACRO.
+
+        * tests/Malloc_Test.cpp:
+          There is no reason not to compile this test on LynxOS. It doesn't
+          work but there are now better chances that it will be fixed some
+          day.
+
 Fri Dec 17 13:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.inl:
@@ -146,7 +156,7 @@ Thu Dec 16 10:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           Removed setting of PACE root, we don't use this anymore
 
         Thanks to Pete McCann <mccap@lucent.com> for reporting these
-	problems.
+        problems.
 
 Wed Dec 15 17:05:22 2004  Steve Huston  <shuston@riverace.com>
 
