@@ -1,3 +1,9 @@
+Mon Mar 13 22:18:20 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/create_ace_build: default $directory_mode to 0777,
+          because it gets modified by the umask anyways.  Thanks
+          to Dave Meyer <dmeyer@std.saic.com> for suggesting this.
+
 Mon Mar 13 10:16:53 2000  Bala  <bala@cs.wustl.edu>
 
         * ACE version 5.0.16 released.
