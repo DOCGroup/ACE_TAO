@@ -659,12 +659,6 @@ typedef ACE_UINT16 ACE_USHORT16;
   typedef int ssize_t;
 #endif /* ACE_HAS_SSIZE_T */
 
-// This doesn't belong here, but the bigger fix isn't ready to commit.
-#   if !defined (ENOMEM)
-#     define ENOMEM       12       /* Not enough core                       */
-#   endif /* ENOMEM */
-
-
 # if defined (__ACE_INLINE__)
 #   include "ace/Basic_Types.i"
 # endif /* __ACE_INLINE__ */

@@ -1,3 +1,9 @@
+Fri Apr 12 18:00:41 UTC 2002  Don Hinton  <dhinton@ieee.org>
+
+	* ace/Log_Msg.h:  Added missing includes.
+
+	* ace/Basic_Types.h:  Removed erroneous ENOMEM definition.
+
 Fri Apr 12 10:02:58 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* ace/Based_Pointer_T.h: 
