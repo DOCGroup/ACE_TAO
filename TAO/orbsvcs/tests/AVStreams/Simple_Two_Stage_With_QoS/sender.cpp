@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 
-static ulong peak_bandwidth = 18400;
+static u_long peak_bandwidth = 18400;
 
 typedef ACE_Singleton<Sender, ACE_Null_Mutex> SENDER;
 // Create a singleton instance of the Sender.
