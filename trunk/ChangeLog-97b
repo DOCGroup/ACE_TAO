@@ -1,12 +1,7 @@
-Wed Oct 29 20:30:55 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+Wed Oct 29 21:12:55 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.i (strlen): Moved it earlier so that it would be declared
-	  inline before use.
-
-	* ace/OS.i (strcasecmp): Removed spurious semi-colons (how did
-	  they get in there?).
-
-Wed Oct 29 19:30:07 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+	* ace/OS: Changed the tolower() method to to_lower() so that it
+ 	  won't conflict if there's a macro with the same name.
 
 	* ace/OS.h: #include <unistd.h> before ACE_Time_Value as long as
  	  ACE_LACKS_UNISTD_H is false.  Added this flag to the VxWorks and
@@ -37,6 +32,14 @@ Wed Oct 29 19:30:07 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
           ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
           Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
           this.
+
+Wed Oct 29 20:30:55 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* ace/OS.i (strlen): Moved it earlier so that it would be declared
+	  inline before use.
+
+	* ace/OS.i (strcasecmp): Removed spurious semi-colons (how did
+	  they get in there?).
 
 Wed Oct 29 18:51:12 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
