@@ -44,8 +44,8 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
               if (TAO_debug_level > 3)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              ACE_LIB_TEXT ("(%P|%t) Skipping validator [0x%x] ")
-                              ACE_LIB_TEXT ("since it would create a circular list\n"),
+                              ACE_TEXT ("(%P|%t) Skipping validator [0x%x] ")
+                              ACE_TEXT ("since it would create a circular list\n"),
                               validator));
                 }
 

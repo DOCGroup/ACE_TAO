@@ -48,8 +48,8 @@ TAO_Condition<MUTEX>::~TAO_Condition (void)
 {
   if (this->remove () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p\n"),
-                ACE_LIB_TEXT ("TAO_Condition::~TAO_Condition")));
+                ACE_TEXT ("%p\n"),
+                ACE_TEXT ("TAO_Condition::~TAO_Condition")));
 
   delete this->cond_;
 

@@ -164,8 +164,8 @@ CORBA::Exception::_tao_print_exception (const char *user_provided_info,
                                         FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
-              ACE_LIB_TEXT ("(%P|%t) EXCEPTION, %s\n")
-              ACE_LIB_TEXT ("%s\n"),
+              ACE_TEXT ("(%P|%t) EXCEPTION, %s\n")
+              ACE_TEXT ("%s\n"),
               ACE_TEXT_CHAR_TO_TCHAR (user_provided_info),
               ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
 }
@@ -473,7 +473,7 @@ void
 CORBA::SystemException::_tao_print_system_exception (FILE *) const
 {
   ACE_DEBUG ((LM_ERROR,
-              ACE_LIB_TEXT("(%P|%t) system exception, ID '%s'\n"),
+              ACE_TEXT("(%P|%t) system exception, ID '%s'\n"),
               ACE_TEXT_CHAR_TO_TCHAR (this->_info ().c_str ())));
 }
 

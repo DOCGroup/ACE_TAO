@@ -694,8 +694,8 @@ TAO_RT_Protocols_Hooks::set_thread_native_priority (
   if (ACE_Thread::setprio (current, native_priority) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("(%N,%l) Error setting thread ")
-                         ACE_LIB_TEXT ("priority to %d, errno %d %m\n"),
+                         ACE_TEXT ("(%N,%l) Error setting thread ")
+                         ACE_TEXT ("priority to %d, errno %d %m\n"),
                          native_priority,
                          errno ),
                        -1);

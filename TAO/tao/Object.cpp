@@ -684,9 +684,9 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_LIB_TEXT ("TAO (%P|%t) - Object::tao_object_initialize ")
-                      ACE_LIB_TEXT ("WARNING: extracting object from ")
-                      ACE_LIB_TEXT ("default ORB_Core\n")));
+                      ACE_TEXT ("TAO (%P|%t) - Object::tao_object_initialize ")
+                      ACE_TEXT ("WARNING: extracting object from ")
+                      ACE_TEXT ("default ORB_Core\n")));
         }
     }
 
@@ -730,10 +730,10 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
           // @@ This occurs when profile creation fails when decoding the
           //    profile from the IOR.
           ACE_ERROR ((LM_ERROR,
-                      ACE_LIB_TEXT ("TAO (%P|%t) ERROR: XXXXX Could not create all ")
-                      ACE_LIB_TEXT ("profiles while extracting object\n")
-                      ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
-                      ACE_LIB_TEXT ("CDR stream.\n")));
+                      ACE_TEXT ("TAO (%P|%t) ERROR: XXXXX Could not create all ")
+                      ACE_TEXT ("profiles while extracting object\n")
+                      ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
+                      ACE_TEXT ("CDR stream.\n")));
         }
 
 
@@ -747,9 +747,9 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
     {
       if (TAO_debug_level > 0)
         ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                             ACE_LIB_TEXT ("TAO (%P|%t) ERROR creating stub ")
-                             ACE_LIB_TEXT ("object when demarshaling object ")
-                             ACE_LIB_TEXT ("reference.\n"));
+                             ACE_TEXT ("TAO (%P|%t) ERROR creating stub ")
+                             ACE_TEXT ("object when demarshaling object ")
+                             ACE_TEXT ("reference.\n"));
 
       return;
     }
@@ -795,8 +795,8 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_WARNING,
-                      ACE_LIB_TEXT ("TAO (%P|%t) WARNING: extracting object from ")
-                      ACE_LIB_TEXT ("default ORB_Core\n")));
+                      ACE_TEXT ("TAO (%P|%t) WARNING: extracting object from ")
+                      ACE_TEXT ("default ORB_Core\n")));
         }
     }
   else
@@ -834,9 +834,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_WARNING,
-                          ACE_LIB_TEXT ("TAO (%P|%t) - Object::tao_object_initialize ")
-                          ACE_LIB_TEXT ("WARNING: extracting object from ")
-                          ACE_LIB_TEXT ("default ORB_Core\n")));
+                          ACE_TEXT ("TAO (%P|%t) - Object::tao_object_initialize ")
+                          ACE_TEXT ("WARNING: extracting object from ")
+                          ACE_TEXT ("default ORB_Core\n")));
             }
         }
 
@@ -866,10 +866,10 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               // @@ This occurs when profile creation fails when decoding the
               //    profile from the IOR.
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
-                                 ACE_LIB_TEXT ("profiles while extracting object\n")
-                                 ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
-                                 ACE_LIB_TEXT ("CDR stream.\n")),
+                                 ACE_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
+                                 ACE_TEXT ("profiles while extracting object\n")
+                                 ACE_TEXT ("TAO (%P|%t) ERROR: reference from the ")
+                                 ACE_TEXT ("CDR stream.\n")),
                                 0);
             }
 
@@ -883,9 +883,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
         {
           if (TAO_debug_level > 0)
             ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                 ACE_LIB_TEXT ("TAO (%P|%t) ERROR creating stub ")
-                                 ACE_LIB_TEXT ("object when demarshaling object ")
-                                 ACE_LIB_TEXT ("reference.\n"));
+                                 ACE_TEXT ("TAO (%P|%t) ERROR creating stub ")
+                                 ACE_TEXT ("object when demarshaling object ")
+                                 ACE_TEXT ("reference.\n"));
 
           return 0;
         }

@@ -185,7 +185,7 @@ CORBA::ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
+                  ACE_TEXT ("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (this->orb_core ()->orbid ())));
     }
 
@@ -1677,7 +1677,7 @@ CORBA::ORB_init (int &argc,
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
+                  ACE_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (orbid_string.c_str ())));
     }
 
