@@ -384,7 +384,7 @@ if (open(STATUS, '>'.$DEST_DIR.'/status.txt')) {
 }
 
 if ($pre_realclean) {
-  foreach $i (@BUILD_LIST) {
+  foreach $i (reverse(@BUILD_LIST)) {
     $date = localtime;
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make realclean in $i started at ", $date, "\n";
@@ -548,7 +548,7 @@ if ($dont_run == 0) {
 }
 
 if ($post_realclean) {
-  foreach $i (@BUILD_LIST) {
+  foreach $i (reverse(@BUILD_LIST)) {
     $date = localtime;
     print LOG "$CMD: =============================================\n";
     print LOG "$CMD: make realclean in $i started at ", $date, "\n";
