@@ -1,3 +1,8 @@
+Tue May 28 21:54:44 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* bin/nightlybuilds/builds.lst: Move Debian_NoInline and Debian_GCC_3.0.4
+	  builds to new scoreboard.
+
 Tue May 28 21:32:42 UTC 2002  Don Hinton  <dhinton@ieee.org>
 
 	* ace/DLL.cpp:
@@ -14,7 +19,7 @@ Tue May 28 18:35:46 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	  instead of ::wcstok.
 	* ace/OS_String.inl (strtok): If ACE_HAS_XPG4_MULTIBYTE_CHAR is defined,
 	  call 3 parameter version of wcstok, else call 2 parameter version.
-	* config-linux-common.h: Only define ACE_LACKS_WCSTOK and 
+	* ace/config-linux-common.h: Only define ACE_LACKS_WCSTOK and 
 	  ACE_LACKS_WCSDUP_PROTOTYPE for glibc versions less than 2.  Define
 	  ACE_HAS_XPG4_MULTIBYTE_CHAR for glibc 2 and higher.
 	* tests/OS_Test.cpp: Add test for wchar_t version of strtok.
