@@ -35,7 +35,6 @@ Conn_Test
 SPIPE_Test
 SString_Test
 SV_Shared_Memory_Test
-Service_Config_Test
 TSS_Test
 Task_Test
 Thread_Manager_Test
@@ -47,5 +46,6 @@ Tokens_Test
 UPIPE_SAP_Test
 Reactors_Test
 Enum_Interfaces_Test
+Hash_Map_Manager_Test
 
 @echo Tests complete...
