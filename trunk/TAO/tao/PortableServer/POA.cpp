@@ -2966,7 +2966,7 @@ TAO_POA::locate_servant_i (const char *operation,
           // for later use.
           servant_upcall.state (TAO_Object_Adapter::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
-          PortableServer::ServantLocator::Cookie cookie;
+          PortableServer::ServantLocator::Cookie cookie = 0;
           PortableServer::Servant servant =
             this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                                this,

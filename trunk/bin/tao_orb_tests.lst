@@ -15,6 +15,7 @@ TAO/tests/AMI/run_test.pl: !MINIMUM
 TAO/tests/AMI_Timeouts/run_test.pl: !MINIMUM !ST
 TAO/tests/AMH_Exceptions/run_test.pl: !MINIMUM
 TAO/tests/Collocation_Tests/run_test.pl: !ST
+TAO/tests/Collocation_Opportunities/run_test.pl: !ST
 TAO/tests/OctetSeq/run_test.pl
 TAO/tests/OctetSeq/run_test1.pl: !STATIC
 TAO/tests/OctetSeq/run_test2.pl: !STATIC
