@@ -57,14 +57,20 @@ CORBA::Any *
 TAO_ClientRequest_Info::received_exception (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  // The spec says that if it is a user exception which cant be inserted
+  // then the UNKNOWN exception needs to be thrown with minor code TBD_U.
+  this->any_exception_ <<= *this->caught_exception_;
+  return &this->any_exception_;
 }
   
 char *  
 TAO_ClientRequest_Info::received_exception_id (CORBA::Environment &)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  // constness had to be casted since <_id> which is a TAO-specific
+  // extension of CORBA::Exception returns a const char *.
+  return ACE_const_cast (char *, 
+                         this->caught_exception_->_id ());
 }
 
 IOP::TaggedComponent *  
@@ -101,7 +107,7 @@ CORBA::ULong
 TAO_ClientRequest_Info::request_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  return this->request_id_;
 }
 
 char * 
@@ -214,6 +220,19 @@ TAO_ClientRequest_Info::get_reply_service_context (IOP::ServiceId id,
       }
 return 0;
 }
+
+void
+TAO_ClientRequest_Info::exception (CORBA::Exception *exception)
+{
+  this->caught_exception_ = exception;
+}
+
+void
+TAO_ClientRequest_Info::request_id (CORBA::ULong request_id)
+{
+  this->request_id_ = request_id;
+}
+
 //****************************************************************               
 
 /* 
@@ -246,7 +265,7 @@ CORBA::ULong
 TAO_ServerRequest_Info::request_id (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  return this->request_id_;
 }
 
 char * 
@@ -360,10 +379,13 @@ TAO_ServerRequest_Info::get_reply_service_context (IOP::ServiceId id,
 }
 
 CORBA::Any * 
-TAO_ServerRequest_Info::sending_exception (CORBA::Environment &)
+TAO_ServerRequest_Info::sending_exception (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return 0;
+  // The spec says that if it is a user exception which cant be inserted
+  // then the UNKNOWN exception needs to be thrown with minor code TBD_U.
+  this->any_exception_ <<= *this->caught_exception_;
+  return &this->any_exception_;
 }
   
 PortableInterceptor::OctetSeq * 
@@ -425,4 +447,15 @@ TAO_ServerRequest_Info::add_reply_service_context (const IOP::ServiceContext & s
   // Hey the service context is passe dby ref, do i haveto worry?
   service_context_list_[length] = service_context;
 
+}
+void
+TAO_ServerRequest_Info::exception (CORBA::Exception *exception)
+{
+  this->caught_exception_ = exception;
+}
+
+void
+TAO_ServerRequest_Info::request_id (CORBA::ULong request_id)
+{
+  this->request_id_ = request_id;
 }
