@@ -2201,9 +2201,9 @@ extern "C" int sigwait (sigset_t *set);
 /* Also define a default 'mode' for loading a library - the names and values */
 /* differ between OSes, so if you write code that uses the mode, be careful */
 /* of the platform differences. */
-#if !defined(RTLD_LAZY)
+#if !defined(RTLD_LAZY) && !defined(AIX)
 # define RTLD_LAZY 1
-#endif /* !RTLD_LAZY */
+#endif /* !RTLD_LAZY && !AIX */
 #if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 # include /**/ <dlfcn.h>
   typedef void *ACE_SHLIB_HANDLE;
