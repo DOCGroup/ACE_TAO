@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/008'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    515 -rw-rw-r-- hdr
 #     59 -rw-rw-r-- bodies
-#   2769 -rw-rw-r-- page01.pre
+#   2767 -rw-rw-r-- page01.pre
 #    416 -rw-rw-r-- page02.pre
 #    345 -rw-rw-r-- page03.pre
 #    481 -rw-rw-r-- page04.pre
@@ -67,7 +67,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04873; then
+if mkdir _sh32494; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -97,7 +97,7 @@ X
 <HR WIDTH="100%">
 X
 SHAR_EOF
-  $shar_touch -am 0121153899 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -190,7 +190,7 @@ no solid connection is made. On the recv() itself the server obtains the
 address of the remote client and then communicates with it.
 <P>
 Thus, we get a fair glimpse of using another means of communication via
-datagrams.  
+datagrams.
 </UL>
 <P><FONT SIZE=-1>*&nbsp;Actually, the servers <I>might</I> hear the datagram.&nbsp;
 Datagrams are rather unreliable.&nbsp; (Sort of like some operating systems
@@ -199,19 +199,19 @@ get through.&nbsp; Your clients can always send out more queries if there
 aren't any responses in a timely fashion.</FONT>
 X
 SHAR_EOF
-  $shar_touch -am 0121155099 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-829e35e4a7b8e8c75e38abf492033395  page01.pre
+0773df98f89130f72767715ed27516b6  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2769 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2769,' 'current size' "$shar_count!"
+    test 2767 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2767,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -230,7 +230,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121153899 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -261,7 +261,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0121153899 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -292,7 +292,7 @@ X
 <P>I've only commented the parts that are different from the directed_client.
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124144899 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -334,7 +334,7 @@ X
 <A HREF="Makefile">Makefile</A></LI>
 </UL>
 SHAR_EOF
-  $shar_touch -am 0121153799 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -371,7 +371,7 @@ send 100k and can only do so 1k at a time, you'll have to worry about retransmis
 Remember:&nbsp; datagrams are unreliable!&nbsp; Don't try to make 'em do
 something they werent' designed for!
 SHAR_EOF
-  $shar_touch -am 0121153899 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -401,7 +401,7 @@ host address on your network but that's not a very nice thing to do.&nbsp;
 On the next page, we'll find out the right approach...
 X
 SHAR_EOF
-  $shar_touch -am 0121153899 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -446,7 +446,7 @@ one of them.
 </blockquote>
 X
 SHAR_EOF
-  $shar_touch -am 0126194899 'page04.pst' &&
+  $shar_touch -am 03191459100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -461,5 +461,5 @@ SHAR_EOF
     $echo 'page04.pst:' 'original size' '1173,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04873
+rm -fr _sh32494
 exit 0

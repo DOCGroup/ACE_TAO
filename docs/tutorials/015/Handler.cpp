@@ -107,7 +107,7 @@ int Handler::close (u_long)
     return 0;
 }
 
-int Handler::handle_close(ACE_HANDLE, ACE_Reactor_Mask _mask)
+int Handler::handle_close(ACE_HANDLE, ACE_Reactor_Mask)
 {
     this->destroy();
     return 0;

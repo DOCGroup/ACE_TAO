@@ -25,21 +25,21 @@ one page.
 Kirthika says, "Here's an one paragraph abstract for a one page client app:"
 
 <UL>
-				The server is an Stream object of ACE_SOCK_Stream type. The
-				ACE_Sock_Connector does the job of actively making a connection with the
-				listening server. It does so using the server_host_address and port
-				number which are stored in the ACE_INET_Addr object.Once the
-				connection has been established, the client begins its interaction
-				with the server and bombards it with messages.
-				Note: send_n() call is used since this call sees to the issues of
-				network buffering and reliably gets the data across to the server.
-				Also, a timeout value is set to provide fault tolerance if the server
-				ever dies before the transaction is completed. The server calls a
-				close() method
-				once it reads in zero bytes during the Event_Handler::handle_input()
-				call. This
-				proves that the client has severed its connection. The server then
-				shuts down.
+        The server is an Stream object of ACE_SOCK_Stream type. The
+        ACE_Sock_Connector does the job of actively making a connection with the
+        listening server. It does so using the server_host_address and port
+        number which are stored in the ACE_INET_Addr object.Once the
+        connection has been established, the client begins its interaction
+        with the server and bombards it with messages.
+        Note: send_n() call is used since this call sees to the issues of
+        network buffering and reliably gets the data across to the server.
+        Also, a timeout value is set to provide fault tolerance if the server
+        ever dies before the transaction is completed. The server calls a
+        close() method
+        once it reads in zero bytes during the Event_Handler::handle_input()
+        call. This
+        proves that the client has severed its connection. The server then
+        shuts down.
 </UL>
 <HR WIDTH="100%">
 <PRE>
@@ -157,3 +157,4 @@ settings</A>.
 <P>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>
+

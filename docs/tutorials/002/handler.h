@@ -145,6 +145,8 @@ protected:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
   {
+    ACE_UNUSED_ARG(tv);
+    ACE_UNUSED_ARG(arg);
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) handling timeout from this = %u\n",
                 this));

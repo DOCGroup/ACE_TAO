@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/006'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,16 +13,16 @@
 # ------ ---------- ------------------------------------------
 #    605 -rw-rw-r-- hdr
 #     72 -rw-rw-r-- bodies
-#   1974 -rw-rw-r-- page01.pre
+#   1971 -rw-rw-r-- page01.pre
 #    252 -rw-rw-r-- page02.pre
 #    507 -rw-rw-r-- page03.pre
 #    227 -rw-rw-r-- page04.pre
-#    231 -rw-rw-r-- page05.pre
+#    225 -rw-rw-r-- page05.pre
 #    697 -rw-rw-r-- page06.pre
 #     89 -rw-rw-r-- page02.pst
 #    168 -rw-rw-r-- page03.pst
 #    175 -rw-rw-r-- page04.pst
-#   1420 -rw-rw-r-- page05.pst
+#   1418 -rw-rw-r-- page05.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -69,7 +69,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04795; then
+if mkdir _sh32413; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -99,7 +99,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0118202399 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -166,10 +166,10 @@ The ACE_Acceptor inherits form the ACE_Acceptor_Base class which
 facilitates us to implement various different concurrency strategies
 depending on whether the server is single-threaded or the server creates
 a new thread per connection. This also allows us to extend the
-capabilities of the server in the future by implementing a different 
+capabilities of the server in the future by implementing a different
 strategy.
 <p>
-This information is passed on to the Client_Handler 
+This information is passed on to the Client_Handler
 (remember ACE_Acceptor < Client_Handler, ACE_SOCK_ACCEPTOR > ?).
 The Client_Handler is an ACE_Svc_Handler as the Svc_Handler is a
 derivative of the Event_Handler and is associated with
@@ -186,23 +186,23 @@ reponsible for that client connection now takes up the job of the
 reactor and handles future events.
 <p>
 Thus a simple, thread-per-connection server has been built which doesnt
-delve too deeply into mutli-threading issues. 
+delve too deeply into mutli-threading issues.
 </ul>
 <font size=-1>* Abstract by Kirthika as always</font>
 SHAR_EOF
-  $shar_touch -am 0118203099 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-b66014851d6db1c8d89a07d024be2ecb  page01.pre
+e9c9068f1265c1668c44f382786e1422  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1974 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1974,' 'current size' "$shar_count!"
+    test 1971 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1971,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -218,7 +218,7 @@ X
 <P>
 <HR WIDTH="100%"><FONT FACE="Arial,Helvetica"></FONT>
 SHAR_EOF
-  $shar_touch -am 0118202399 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -250,7 +250,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0118202399 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -279,7 +279,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0118202399 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -307,19 +307,19 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0118202399 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-08278c0477a109e107b680424bf70a9d  page05.pre
+fe144564cd75e806b825ce878a09bfe3  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 231 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '231,' 'current size' "$shar_count!"
+    test 225 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '225,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page06.pre ==============
@@ -355,7 +355,7 @@ X
 <A HREF="fix.Makefile">fix.Makefile</A></LI>
 </UL>
 SHAR_EOF
-  $shar_touch -am 0118202399 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -382,7 +382,7 @@ X
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0118202399 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -410,7 +410,7 @@ Let's move on to the Client_Handler and see if it has changed any.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0118202399 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -438,7 +438,7 @@ Let's move on to the object definition and see what all the fuss is about.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0118202399 'page04.pst' &&
+  $shar_touch -am 03191459100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -464,17 +464,17 @@ else
 X      Did you notice the <i>THR_DETACHED</i> flag on the call to
 X      <i>activate()</i>?  Threads, like any system resource, are a
 X      limited resource.  Unless we intend to <i>join()</i> or
-X      <i>wait()</i> for the new thread later, we want use THR_DETACHED 
+X      <i>wait()</i> for the new thread later, we want use THR_DETACHED
 X      so that we don't cause a leak.  In fact, in most cases, you'll
 X      want to specify THR_DETACHED because it's just easier.
 <p>
 X      Another handy flag for use with <i>activate()</i> is
 X      <i>THR_NEW_LWP</i>.  That's short for <i>Light Weight
-X	Process</i>.  If you've got a multiprocessor, this flag will
-X      allocate a new schedulable process and decrease the odds of your 
+X  Process</i>.  If you've got a multiprocessor, this flag will
+X      allocate a new schedulable process and decrease the odds of your
 X      threads all fighting for the same process.  Of course, if you
 X      have a uni-processor, it will neither help nor hurt.  Since I
-X      developed these on a uni-processor, I've been a bit inconsistent 
+X      developed these on a uni-processor, I've been a bit inconsistent
 X      in the use of <i>THR_NEW_LWP</i>.
 X
 <P>Well, that's it!&nbsp; After all the talk &amp; the hype, you would
@@ -489,20 +489,20 @@ X
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0921222699 'page05.pst' &&
+  $shar_touch -am 03191459100 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pst:' 'MD5 check failed'
-fab2e03eb2f115f89a58d70be291e87e  page05.pst
+0589bdf4e09c3c1671f64fd98e8e7747  page05.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
-    test 1420 -eq "$shar_count" ||
-    $echo 'page05.pst:' 'original size' '1420,' 'current size' "$shar_count!"
+    test 1418 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '1418,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04795
+rm -fr _sh32413
 exit 0

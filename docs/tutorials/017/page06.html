@@ -80,7 +80,7 @@ int <font color=#008888>Test::open</font>(void * _unused)
 
         <font color=red>// One thing about the barrier:  You have to tell it how many</font>
         <font color=red>// threads it will be synching.  The threads() mutator on my</font>
-        <font color=red>// Barrier class lets you do that and hides the implementation </font>
+        <font color=red>// Barrier class lets you do that and hides the implementation</font>
         <font color=red>// details at the same time.</font>
     barrier_.threads(threads_);
 
@@ -121,7 +121,7 @@ int <font color=#008888>Test::svc</font>(void)
     int delay;
 
         <font color=red>// We'll arbitrarily choose the first activated thread to be</font>
-        <font color=red>// the controller.  After it sleeps a few seconds, it will add </font>
+        <font color=red>// the controller.  After it sleeps a few seconds, it will add</font>
         <font color=red>// five threads.</font>
     if( me == 1 )
     {
@@ -145,7 +145,7 @@ int <font color=#008888>Test::svc</font>(void)
     }
 
         <font color=red>// This for() loop represents an "<font color=green>infinite</font>" work loop in an</font>
-        <font color=red>// application. The theory is that the threads are dividing up </font>
+        <font color=red>// application. The theory is that the threads are dividing up</font>
         <font color=red>// some work but need to "<font color=green>recalibrate</font>" if more threads are</font>
         <font color=red>// added.  I'll just do five iterations so that the test</font>
         <font color=red>// doesn't run forever.</font>
@@ -158,7 +158,7 @@ int <font color=#008888>Test::svc</font>(void)
 
         ACE_DEBUG(( LM_INFO, "<font color=green>(%P|%t|%T)\tThread %.2d of %.2d iteration %.2d\n</font>", me, threads_, i ));
 
-            <font color=red>// If the local threads_ variable doesn't match the number </font>
+            <font color=red>// If the local threads_ variable doesn't match the number</font>
             <font color=red>// in the barrier, then the controller must have changed</font>
             <font color=red>// the thread count.  We'll wait() for everyone and then</font>
             <font color=red>// recalibrate ourselves before continuing.</font>
@@ -203,3 +203,4 @@ int main(int, char**)
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] </CENTER>
+

@@ -44,6 +44,9 @@ things more difficult if something has to change in their interaction.
  */</font>
 int <font color=#008888>Compressor::send</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Compressor::send</font>() compressing (%s)\n</font>", message->rd_ptr() ));
 
         <font color=red>// Create a block to hold the compressed data.  I belive libz</font>
@@ -52,7 +55,7 @@ int <font color=#008888>Compressor::send</font>(ACE_Message_Block *message, ACE_
     ACE_Message_Block * compressed = new ACE_Message_Block( message->size() );
 
         <font color=red>// Perform a bogus compression algorithm.  'CD' just tells me</font>
-        <font color=red>// that this is compressed data and when we "<font color=green>decompress</font>" we'll </font>
+        <font color=red>// that this is compressed data and when we "<font color=green>decompress</font>" we'll</font>
         <font color=red>// look for this signature to validate the data received.</font>
     <font color=#008888>ACE_OS::sprintf</font>( compressed->wr_ptr(), "<font color=green>CD:%s</font>", message->rd_ptr() );
     compressed->wr_ptr( strlen(compressed->wr_ptr())+1 );
@@ -73,12 +76,15 @@ int <font color=#008888>Compressor::send</font>(ACE_Message_Block *message, ACE_
  */</font>
 int <font color=#008888>Compressor::recv</font>(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "<font color=green>(%P|%t) <font color=#008888>Compress::recv</font>() decompressing (%s)\n</font>", message->rd_ptr() ));
 
         <font color=red>// Room for the decompressed data.  In the real world you</font>
         <font color=red>// would probably want to send the original (uncompressed)</font>
         <font color=red>// data size in the message.  You can predict the maximum</font>
-        <font color=red>// possible decompression size but it's cheap and easy just to </font>
+        <font color=red>// possible decompression size but it's cheap and easy just to</font>
         <font color=red>// send that along.  Look again at how I do exacly that</font>
         <font color=red>// between Xmit and Recv.</font>
     ACE_Message_Block * decompressed = new ACE_Message_Block( message->size() );
@@ -97,7 +103,7 @@ int <font color=#008888>Compressor::recv</font>(ACE_Message_Block *message, ACE_
         <font color=red>// Skip past the signature before going any further.</font>
     message->rd_ptr( 3 );
 
-        <font color=red>// Perform a bogus decompression algorithm.  This is where you </font>
+        <font color=red>// Perform a bogus decompression algorithm.  This is where you</font>
         <font color=red>// would feed to libz or your favorite decompressor.  (It's</font>
         <font color=red>// costly but you could invoke popen() on gzip!)</font>
     <font color=#008888>ACE_OS::sprintf</font>( decompressed->wr_ptr(), "<font color=green>%s</font>", message->rd_ptr() );
@@ -115,3 +121,4 @@ int <font color=#008888>Compressor::recv</font>(ACE_Message_Block *message, ACE_
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page20.html">Continue This Tutorial</A>]</CENTER>
+

@@ -269,7 +269,8 @@ Client_Handler::process (char *rdbuf,
 
     On the other hand, if we got some data then we can display it in a
     debug message for everyone to see.  */
-  switch (this->peer ().recv (rdbuf, rdbuf_len))
+  ssize_t bytes_read;
+  switch ( (bytes_read = this->peer ().recv (rdbuf, rdbuf_len)) )
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -282,6 +283,7 @@ Client_Handler::process (char *rdbuf,
                          this->get_handle ()),
                         -1);
     default:
+      rdbuf[bytes_read] = 0;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) from client: %s",
                   rdbuf));

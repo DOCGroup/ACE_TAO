@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/005'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -14,7 +14,7 @@
 #    598 -rw-rw-r-- hdr
 #     97 -rw-rw-r-- bodies
 #    628 -rw-rw-r-- page01.pre
-#    516 -rw-rw-r-- page02.pre
+#    515 -rw-rw-r-- page02.pre
 #    685 -rw-rw-r-- page03.pre
 #    464 -rw-rw-r-- page04.pre
 #    218 -rw-rw-r-- page05.pre
@@ -67,7 +67,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04765; then
+if mkdir _sh32383; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -97,7 +97,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117143899 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -162,7 +162,7 @@ script I've added.
 X
 <P>
 SHAR_EOF
-  $shar_touch -am 0117143899 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -193,26 +193,26 @@ X cleaner code (for instance: use of destroy() to delete objects and
 process() which does the task of reading in data from the client).
 <P>
 We again enroll the services of the ACE_Reactor to handle events. Everything
-occurs in a single thread. 
+occurs in a single thread.
 <P>
 This tutorial is a stepping stone towards a mutithreaded server model.
 </ul>
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124115599 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-c81f5251d4ec6de954b9d2f5a026525b  page02.pre
+94844c847ed36aa6bc7c7b98aafb7bbc  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 516 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '516,' 'current size' "$shar_count!"
+    test 515 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '515,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -236,7 +236,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124115699 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -270,7 +270,7 @@ X
 <HR WIDTH="100%">
 X
 SHAR_EOF
-  $shar_touch -am 0117143899 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -299,7 +299,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117143899 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -326,7 +326,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117143899 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -354,7 +354,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0117144099 'page07.pre' &&
+  $shar_touch -am 03191459100 'page07.pre' &&
   chmod 0664 'page07.pre' ||
   $echo 'restore of' 'page07.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -404,7 +404,7 @@ X
 </UL>
 &nbsp;
 SHAR_EOF
-  $shar_touch -am 0117143899 'page08.pre' &&
+  $shar_touch -am 03191459100 'page08.pre' &&
   chmod 0664 'page08.pre' ||
   $echo 'restore of' 'page08.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -419,5 +419,5 @@ SHAR_EOF
     $echo 'page08.pre:' 'original size' '715,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04765
+rm -fr _sh32383
 exit 0

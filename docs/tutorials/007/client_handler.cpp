@@ -10,7 +10,7 @@
 /* We're going to be registering and unregistering a couple of times.
    To make sure that we use the same flags every time, I've created
    these handy macros.  */
-#define	REGISTER_MASK ACE_Event_Handler::READ_MASK
+#define REGISTER_MASK ACE_Event_Handler::READ_MASK
 #define REMOVE_MASK (ACE_Event_Handler::READ_MASK | ACE_Event_Handler::DONT_CALL)
 
 /* Our constructor still doesn't really do anything.  We simply
@@ -88,6 +88,8 @@ Client_Handler::destroy (void)
 int
 Client_Handler::close (u_long flags)
 {
+  ACE_UNUSED_ARG(flags);
+
   /*
     We use the destroy() method to clean up after ourselves.
     That will take care of removing us from the reactor and then
@@ -140,7 +142,7 @@ Client_Handler::handle_input (ACE_HANDLE handle)
     {
       if (ACE_OS::thr_equal (ACE_Thread::self(),
                              creator_))
-	{
+    {
           /* Remove ourselves from the reactor and ask to be put into
             the thread pool's queue of work.  (You should be able to
             use suspend_handler() but I've had problems with that.)
@@ -152,7 +154,7 @@ Client_Handler::handle_input (ACE_HANDLE handle)
             and we don't want that to happen.  */
           this->reactor ()->remove_handler (this, REMOVE_MASK);
           return this->thread_pool ()->enqueue (this);
-	}
+    }
     }
 
   /* Any strategy other than thread-per-connection will eventually get
@@ -207,7 +209,8 @@ int
 Client_Handler::process (char *rdbuf,
                          int rdbuf_len)
 {
-  switch (this->peer ().recv (rdbuf, rdbuf_len))
+  ssize_t bytes_read;
+  switch ( (bytes_read = this->peer ().recv (rdbuf, rdbuf_len)) )
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -220,6 +223,7 @@ Client_Handler::process (char *rdbuf,
                          this->get_handle ()),
                         -1);
     default:
+      rdbuf[bytes_read] = 0;
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) from client: %s",
                   rdbuf));

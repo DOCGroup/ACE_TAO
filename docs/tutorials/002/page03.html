@@ -169,6 +169,8 @@ protected:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg)
   {
+    ACE_UNUSED_ARG(tv);
+    ACE_UNUSED_ARG(arg);
     ACE_DEBUG ((LM_DEBUG,
                 "<font color=green>(%P|%t) handling timeout from this = %u\n</font>",
                 this));
@@ -190,3 +192,4 @@ protected:
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
+

@@ -23,6 +23,9 @@ Compressor::~Compressor(void)
  */
 int Compressor::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "(%P|%t) Compressor::send() compressing (%s)\n", message->rd_ptr() ));
 
         // Create a block to hold the compressed data.  I belive libz
@@ -52,6 +55,9 @@ int Compressor::send(ACE_Message_Block *message, ACE_Time_Value *timeout)
  */
 int Compressor::recv(ACE_Message_Block *message, ACE_Time_Value *timeout)
 {
+    ACE_UNUSED_ARG(message);
+    ACE_UNUSED_ARG(timeout);
+
     ACE_DEBUG ((LM_INFO, "(%P|%t) Compress::recv() decompressing (%s)\n", message->rd_ptr() ));
 
         // Room for the decompressed data.  In the real world you

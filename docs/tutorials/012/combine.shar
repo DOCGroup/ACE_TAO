@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/012'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,16 +13,16 @@
 # ------ ---------- ------------------------------------------
 #    430 -rw-rw-r-- hdr
 #     56 -rw-rw-r-- bodies
-#   1093 -rw-rw-r-- page01.pre
-#    263 -rw-rw-r-- page02.pre
-#    397 -rw-rw-r-- page03.pre
+#   1090 -rw-rw-r-- page01.pre
+#    262 -rw-rw-r-- page02.pre
+#    395 -rw-rw-r-- page03.pre
 #    154 -rw-rw-r-- page04.pre
-#    183 -rw-rw-r-- page05.pre
+#    182 -rw-rw-r-- page05.pre
 #    448 -rw-rw-r-- page06.pre
-#    395 -rw-rw-r-- page02.pst
-#    399 -rw-rw-r-- page03.pst
+#    393 -rw-rw-r-- page02.pst
+#    398 -rw-rw-r-- page03.pst
 #    162 -rw-rw-r-- page04.pst
-#    449 -rw-rw-r-- page05.pst
+#    447 -rw-rw-r-- page05.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -69,7 +69,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh04999; then
+if mkdir _sh32620; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -97,7 +97,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124160599 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -147,13 +147,13 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
 <P>
 Last time around we put an object into a message queue by using the
-copy() method to create a duplicate of the object.  That's probably OK 
+copy() method to create a duplicate of the object.  That's probably OK
 for simple objects that aren't very large.  However, if you have an
 object that contains pointers or tons of data then that approach is
 going to cause problems.
 <P>
-What we'll do in this tutorial is specialize the ACE_Message_Block 
-object so that it can carry our data more efficiently.  As you'll see, 
+What we'll do in this tutorial is specialize the ACE_Message_Block
+object so that it can carry our data more efficiently.  As you'll see,
 this isn't very difficult at all.
 <P>
 Kirthika's abstract:
@@ -172,19 +172,19 @@ Thus a message queue can be used to accomplish a variety of tasks by
 storing a object pointer in the blocks.
 </UL>
 SHAR_EOF
-  $shar_touch -am 0126201599 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-5e7f58b50e75c303325b71866a2a4a4a  page01.pre
+c9933ac2153b0a56043967ea9c7eb0c9  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1093 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1093,' 'current size' "$shar_count!"
+    test 1090 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '1090,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -195,24 +195,24 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page02.pre' &&
 We normally start by looking at main() and work our way out from
 there.  This time, I want to start by showing you the ACE_Message_Block
-derivative but before that, I have to introduce you to the Work object 
+derivative but before that, I have to introduce you to the Work object
 and it's baseclass Unit_Of_Work
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124160599 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-67c405a8085b9ad581912c2aec135ed4  page02.pre
+91f6bbd4cdf687d420bd52bf6685e2d2  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 263 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '263,' 'current size' "$shar_count!"
+    test 262 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '262,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -223,28 +223,28 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
 <P>
 In the previous tutorial we moved our complex data into the queue by
-copy()ing it directly into the message block's data area.  I hope that 
+copy()ing it directly into the message block's data area.  I hope that
 most readers got a queasy feeling when I did that.  It just isn't a
 good idea...
 <P>
-A better idea would be to teach the message queue about our data types 
+A better idea would be to teach the message queue about our data types
 (or at least a baseclass) so that it can more efficiently handle things:
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124160599 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-d8f77e8098d5086c71c164de8a78c29c  page03.pre
+134a60947715be2de3ca2589a3e652e2  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 397 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '397,' 'current size' "$shar_count!"
+    test 395 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '395,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -259,7 +259,7 @@ important to lay some of that groundwork before getting here.
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124160599 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -281,25 +281,25 @@ else
   $echo 'x -' extracting 'page05.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pre' &&
 <P>
-The Task is the only object we've not been through yet.  I'll go ahead 
+The Task is the only object we've not been through yet.  I'll go ahead
 and show both the header and cpp on this one page since the header
 isn't very large.
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 0124160599 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pre:' 'MD5 check failed'
-499934db529597846d10ca45610bc52e  page05.pre
+ed1b82e232cc376efa7b78f391c893bd  page05.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pre'`"
-    test 183 -eq "$shar_count" ||
-    $echo 'page05.pre:' 'original size' '183,' 'current size' "$shar_count!"
+    test 182 -eq "$shar_count" ||
+    $echo 'page05.pre:' 'original size' '182,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page06.pre ==============
@@ -322,7 +322,7 @@ of complexity and erorr potential from our previous implementation.
 </UL>
 <P>
 SHAR_EOF
-  $shar_touch -am 0124160599 'page06.pre' &&
+  $shar_touch -am 03191459100 'page06.pre' &&
   chmod 0664 'page06.pre' ||
   $echo 'restore of' 'page06.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -346,27 +346,27 @@ else
 <HR WIDTH="100%">
 <P>
 This is basically the same as the <i>DataBase</i> in the previous
-tutorial but I've changed the name to be more generic.  The feeling is 
+tutorial but I've changed the name to be more generic.  The feeling is
 that a <i>Data</i> object would be a C struct but an <i>Work</i>
 object would be a class with methods.
 <P>
-Now that you know what we'll be putting into the queue, lets go to the 
+Now that you know what we'll be putting into the queue, lets go to the
 next page where I specialize the ACE_Message_Block.
 <P>
 SHAR_EOF
-  $shar_touch -am 0124160599 'page02.pst' &&
+  $shar_touch -am 03191459100 'page02.pst' &&
   chmod 0664 'page02.pst' ||
   $echo 'restore of' 'page02.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pst:' 'MD5 check failed'
-961a6ad181e25a24b2500abe013b5379  page02.pst
+ab34347fca8c20953552cf0ecebd394f  page02.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pst'`"
-    test 395 -eq "$shar_count" ||
-    $echo 'page02.pst:' 'original size' '395,' 'current size' "$shar_count!"
+    test 393 -eq "$shar_count" ||
+    $echo 'page02.pst:' 'original size' '393,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pst ==============
@@ -383,23 +383,23 @@ carry our data along.  When our application is done with the message
 block and release()es it, we know that our work object will also be
 taken care of.
 <P>
-Let's now go to main() and see what we had to change there to use this 
+Let's now go to main() and see what we had to change there to use this
 specialization.
 <P>
 SHAR_EOF
-  $shar_touch -am 0124160599 'page03.pst' &&
+  $shar_touch -am 03191459100 'page03.pst' &&
   chmod 0664 'page03.pst' ||
   $echo 'restore of' 'page03.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pst:' 'MD5 check failed'
-282e52e360c416f48db0dc454354bfda  page03.pst
+01e400b5683e0e1c3dfa25cc8120bfa6  page03.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pst'`"
-    test 399 -eq "$shar_count" ||
-    $echo 'page03.pst:' 'original size' '399,' 'current size' "$shar_count!"
+    test 398 -eq "$shar_count" ||
+    $echo 'page03.pst:' 'original size' '398,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pst ==============
@@ -414,7 +414,7 @@ That certainly looks cleaner than the previous approach!  If you
 blink, you'll miss the part where the Work object goes into the Queue.
 <P>
 SHAR_EOF
-  $shar_touch -am 0124160599 'page04.pst' &&
+  $shar_touch -am 03191459100 'page04.pst' &&
   chmod 0664 'page04.pst' ||
   $echo 'restore of' 'page04.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -437,30 +437,30 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
 <HR WIDTH="100%">
 <P>
-Like main() this is actually simpler than the previous tutorial.  It's 
+Like main() this is actually simpler than the previous tutorial.  It's
 much cleaner to carry around a pointer to the object we're working
 with than to try copying data.
 <P>
 The only complication is the new ACE_Barrier.  It's a pretty simple
 object that makes it easy for you to synch threads in this way.  You
-could do some fancy tricks with mutexes, counters & semaphores but why 
+could do some fancy tricks with mutexes, counters & semaphores but why
 bother when the Barrier already exists.
 <P>
 SHAR_EOF
-  $shar_touch -am 0124160599 'page05.pst' &&
+  $shar_touch -am 03191459100 'page05.pst' &&
   chmod 0664 'page05.pst' ||
   $echo 'restore of' 'page05.pst' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page05.pst:' 'MD5 check failed'
-1db9b33059c7da0ee0b30f0d077bd443  page05.pst
+a7f519237d11a25b28af7aa33f5aaf30  page05.pst
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
-    test 449 -eq "$shar_count" ||
-    $echo 'page05.pst:' 'original size' '449,' 'current size' "$shar_count!"
+    test 447 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '447,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh04999
+rm -fr _sh32620
 exit 0

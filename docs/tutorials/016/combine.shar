@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-09-21 22:49 EDT by <jcej@chiroptera.tragus.org>.
+# Made on 2000-03-19 15:00 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/home/jcej/projects/ACE_wrappers/docs/tutorials/016'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,9 +13,9 @@
 # ------ ---------- ------------------------------------------
 #    422 -rw-rw-r-- hdr
 #     51 -rw-rw-r-- bodies
-#   2917 -rw-rw-r-- page01.pre
-#   1351 -rw-rw-r-- page02.pre
-#    248 -rw-rw-r-- page03.pre
+#   2905 -rw-rw-r-- page01.pre
+#   1349 -rw-rw-r-- page02.pre
+#    247 -rw-rw-r-- page03.pre
 #    310 -rw-rw-r-- page04.pre
 #    606 -rw-rw-r-- page05.pre
 #
@@ -64,7 +64,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh05153; then
+if mkdir _sh00306; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -91,7 +91,7 @@ X
 <P>
 <HR WIDTH="100%">
 SHAR_EOF
-  $shar_touch -am 1029153498 'hdr' &&
+  $shar_touch -am 03191459100 'hdr' &&
   chmod 0664 'hdr' ||
   $echo 'restore of' 'hdr' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -139,17 +139,17 @@ else
   $echo 'x -' extracting 'page01.pre' '(text)'
   sed 's/^X//' << 'SHAR_EOF' > 'page01.pre' &&
 The ACE framework has quite a few objects for syncronizing your
-threads and even processes.  We've mentioned a few in passing already: 
+threads and even processes.  We've mentioned a few in passing already:
 X ACE_Thread_Mutex and ACE_Barrier for instance.
 <P>
 Another interesting one is the ACE_Condition template.  By using an
-ACE_Condition you can have your code wait for an arbitrary condition 
+ACE_Condition you can have your code wait for an arbitrary condition
 to occur.  That condition is "embodied" in a variable of your choice.
 That variable can, in turn, be any data type you wish.  This makes
 ACE_Condition much more flexible than a simple mutex, barrier or
 semaphore.
 <P>
-In this tutorial, I'll create a wrapper class around the ACE_Condition 
+In this tutorial, I'll create a wrapper class around the ACE_Condition
 and the assorted housekeeping items necessary to make it work.  I'll
 use a simple integer as the condition variable but keep in mind that
 you can use any data type you want.
@@ -159,11 +159,11 @@ Kirthika's abstract:
 An ACE_Condition class is a synchronisation mechanism employed in
 situations where one or more threads cannot access the shared resource
 unless some 'condition' becomes true. The ACE_Condition is associated
-with a Mutex-lock which is released before blocking internally in the 
-wait call. Once the blocked thread is signaled to wake up again it 
-internally re-acquires the lock before checking the condition. 
-Unless the condition is true and it has the lock, it cant go ahead. 
-Once the shared resource is freed, a signal is sent to the waiting 
+with a Mutex-lock which is released before blocking internally in the
+wait call. Once the blocked thread is signaled to wake up again it
+internally re-acquires the lock before checking the condition.
+Unless the condition is true and it has the lock, it cant go ahead.
+Once the shared resource is freed, a signal is sent to the waiting
 threads which can now contend for the lock and access the resource.
 <P>
 Pizza-delivery metaphor: (courtesy Dr.Schmidt)
@@ -179,15 +179,15 @@ unavailable, the boys go to sleep. When the van returns and the keys
 are returned, the current user of the van nudges the other sleeping boys
 to wake up and fight for the keys. Once the keys are obtained and the
 pizza
-is ready and out of the kitchen, the boy with the pizza and the keys can 
+is ready and out of the kitchen, the boy with the pizza and the keys can
 now deliver it.
 </ul>
 <P>
-This tutorial makes use of  a wrapper class around the ACE_Condition and 
+This tutorial makes use of  a wrapper class around the ACE_Condition and
 uses a integer value as the condition. The four kinds of condition
 implemented
 are: !=, >=, <=, == by using C++ operator overloading. Guards are used
-within 
+within
 the methods to make sure that the method is thread-safe. Once the thread
 completes
 its job, it broadcasts to the waiting on it.
@@ -199,7 +199,7 @@ Five threads are spwaned which in turn increment the condition
 variable, which is initialised to 1 by 2. Remember that you are waiting
 on
 the <= condition. So once 3 threads have been thru it, the value becomes
-6 
+6
 and the condition becomes true!
 <P>
 This simple example shows us how to program and use the Condition
@@ -207,19 +207,19 @@ variable for
 synchronisation.
 </ul>
 SHAR_EOF
-  $shar_touch -am 0214140699 'page01.pre' &&
+  $shar_touch -am 03191459100 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-37032e8a180a426e2677f3c2848162bb  page01.pre
+a6fd2e6607a2b96c93d8a829a1fb53cc  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 2917 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '2917,' 'current size' "$shar_count!"
+    test 2905 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2905,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -245,11 +245,11 @@ variable
 <PRE>
 the_mutex.acquire();
 while( the_variable != some_desired_state_or_value )
-X	the_condition.wait();
+X  the_condition.wait();
 the_mutex.release();
 </PRE>
 Note that when <i>the_condition</i> is created, it must be given a
-reference to the mutex.  That's because the wait() method will release 
+reference to the mutex.  That's because the wait() method will release
 the mutex before waiting and reacquire it after being signaled.
 </UL>
 <P>
@@ -268,25 +268,25 @@ the locking, waiting and signaling.  Even if I remember it all
 correctly it just makes my application code more complex than it
 should be.
 <P>
-To help out with that, I've created the class below to encapsulate the 
+To help out with that, I've created the class below to encapsulate the
 three elements necessary for the condition to work.  I've then added
-methods for manipulation of the condition variable and waiting for the 
+methods for manipulation of the condition variable and waiting for the
 condition to occur.
 <HR>
 SHAR_EOF
-  $shar_touch -am 1029191498 'page02.pre' &&
+  $shar_touch -am 03191459100 'page02.pre' &&
   chmod 0664 'page02.pre' ||
   $echo 'restore of' 'page02.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page02.pre:' 'MD5 check failed'
-d3230a58558843154d2363ce940dbb9b  page02.pre
+6c1b6e8f9597666558619d52c87be915  page02.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page02.pre'`"
-    test 1351 -eq "$shar_count" ||
-    $echo 'page02.pre:' 'original size' '1351,' 'current size' "$shar_count!"
+    test 1349 -eq "$shar_count" ||
+    $echo 'page02.pre:' 'original size' '1349,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page03.pre ==============
@@ -297,23 +297,23 @@ else
   sed 's/^X//' << 'SHAR_EOF' > 'page03.pre' &&
 Ok, now we'll take a look at the definition of the class.  You already
 know how to use an ACE_Condition & it's not really that difficult.
-Still, imagine how much more cluttered your code would be if it had to 
+Still, imagine how much more cluttered your code would be if it had to
 include the mess I've got below!
 <HR>
 SHAR_EOF
-  $shar_touch -am 1029162998 'page03.pre' &&
+  $shar_touch -am 03191459100 'page03.pre' &&
   chmod 0664 'page03.pre' ||
   $echo 'restore of' 'page03.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page03.pre:' 'MD5 check failed'
-51c4ebc7f5c67e072fed8f76bd7be62d  page03.pre
+bdf2bed6845300288a14d1a41f6ef8a6  page03.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page03.pre'`"
-    test 248 -eq "$shar_count" ||
-    $echo 'page03.pre:' 'original size' '248,' 'current size' "$shar_count!"
+    test 247 -eq "$shar_count" ||
+    $echo 'page03.pre:' 'original size' '247,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page04.pre ==============
@@ -329,7 +329,7 @@ integrate a Condition into the application without keeping track of
 three related member variables.
 <HR>
 SHAR_EOF
-  $shar_touch -am 1029185698 'page04.pre' &&
+  $shar_touch -am 03191459100 'page04.pre' &&
   chmod 0664 'page04.pre' ||
   $echo 'restore of' 'page04.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -366,7 +366,7 @@ create a more useful class for your application.
 <LI><A HREF="Makefile">Makefile</A>
 </UL>
 SHAR_EOF
-  $shar_touch -am 1029192198 'page05.pre' &&
+  $shar_touch -am 03191459100 'page05.pre' &&
   chmod 0664 'page05.pre' ||
   $echo 'restore of' 'page05.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
@@ -381,5 +381,5 @@ SHAR_EOF
     $echo 'page05.pre:' 'original size' '606,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh05153
+rm -fr _sh00306
 exit 0

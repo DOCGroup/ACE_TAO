@@ -33,46 +33,46 @@ require "<font color=green>getopts.pl</font>";
 $opt_f = "<font color=green>Makefile</font>" if( ! $opt_f );
 $opt_o = "<font color=green>.depend</font>"  if( ! $opt_o );
 
-	# Open the Makefile that has been mangled by 'make depend'
-	# and suck it into a perl array.
+  # Open the Makefile that has been mangled by 'make depend'
+  # and suck it into a perl array.
 open(IF,"<font color=green>&lt;$opt_f</font>") || die;
 @makefile = &lt;IF>;
 close(IF);
 
-	# Now open our .depend file and a temporary Makefile.
-	# We'll split the original Makefile between these two.
+  # Now open our .depend file and a temporary Makefile.
+  # We'll split the original Makefile between these two.
 open(DF,"<font color=green>>$opt_o</font>") || die;
 open(MF,"<font color=green>>$opt_f.tmp</font>") || die;
 
-	# For each line we read out of the original file...
+  # For each line we read out of the original file...
 foreach (@makefile) {
 
-	# If we're into the dependency section, write the line
-	# into the .depend file.
-	#
-	if( $depend ) {
-		print DF $_;
-	}
-	else {
-		# If we haven't gotten to the dependency section yet
-		# then see if the current line is the separator that
-		# "<font color=green>make depend</font>" causes to be inserted.
-		#
-		if( m/^\Q# DO NOT DELETE THIS LINE -- g++dep uses it.\E/ ) {
+  # If we're into the dependency section, write the line
+  # into the .depend file.
+  #
+  if( $depend ) {
+    print DF $_;
+  }
+  else {
+    # If we haven't gotten to the dependency section yet
+    # then see if the current line is the separator that
+    # "<font color=green>make depend</font>" causes to be inserted.
+    #
+    if( m/^\Q# DO NOT DELETE THIS LINE -- g++dep uses it.\E/ ) {
 
-			# If so, change our "<font color=green>mode</font>" and skip this line.
-			++$depend;
-			next;
-		}
+      # If so, change our "<font color=green>mode</font>" and skip this line.
+      ++$depend;
+      next;
+    }
 
-		# Also skip the "<font color=green>include .depend</font>" that we insert.  If we
-		# don't do this, it is possible to have a bunch of these
-		# inserted into the output when we read an unmangled Makefile
-		next if( m/^include $opt_o/ );
+    # Also skip the "<font color=green>include .depend</font>" that we insert.  If we
+    # don't do this, it is possible to have a bunch of these
+    # inserted into the output when we read an unmangled Makefile
+    next if( m/^include $opt_o/ );
 
-		# Print the non-dependency info to the temporary Makefile
-		print MF $_;
-	}
+    # Print the non-dependency info to the temporary Makefile
+    print MF $_;
+  }
 }
 
 # Tell our new Makefile to include the dependency file
@@ -94,3 +94,4 @@ exit(0);
 </PRE>
 <P><HR WIDTH="100%">
 <CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page08.html">Continue This Tutorial</A>]</CENTER>
+

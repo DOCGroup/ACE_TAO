@@ -8,6 +8,9 @@ static const u_short PORT = ACE_DEFAULT_SERVER_PORT;
 int
 main (int argc,char *argv[])
 {
+  ACE_UNUSED_ARG(argc);
+  ACE_UNUSED_ARG(argv);
+
   ACE_INET_Addr local ((u_short) 0);
 
   /* Instead of creating the ACE_SOCK_Dgram we created last time,
