@@ -1,3 +1,8 @@
+Wed Aug  4 15:57:38 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+	  Fixed warnings under IRIX/MIPSPro
+
 Wed Aug  4 15:40:40 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Makefile:
