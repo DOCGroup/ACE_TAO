@@ -4098,6 +4098,9 @@ TAO_POA::ORT_adapter_factory (void)
 TAO::ORT_Adapter *
 TAO_POA::ORT_adapter_i (void)
 {
+  if (this->ort_adapter_ != 0)
+    return this->ort_adapter_;
+
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
