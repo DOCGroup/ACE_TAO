@@ -1,3 +1,11 @@
+Wed Oct 22 23:23:29 1997  Nanbor Wang    <nw1@COYOTE>
+
+	* ace/ACE_Library.*, ace_lib.dsp: Made naming convention uniform
+ 	  for some less used ACE library.  They are called:  aced.dll,
+	  ace.dll, aceud.dll, aceu.dll, acesd.lib, aces.lib, aceusd.lib
+	  and aceus.lib.  If you are using ACE on NT, you know what they
+	  mean.  ;-)
+
 Wed Oct 22 21:22:35 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Object_Manager.{h,cpp}: Added support for ACE_RW_Thread_Mutex
