@@ -1,3 +1,9 @@
+Sun Jan 19 11:40:10 2003  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (spawn): Cleanup dynamically allocated
+	  memory if the spawn() fails.  Thanks to Kobi Cohen-Arazi
+ 	  <kobi@mivzak.com> for this fix.
+
 Sun Jan 19 15:03:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * websvcs/lib/Makefile:
