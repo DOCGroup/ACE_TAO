@@ -26,7 +26,10 @@
 #if defined (ACE_HAS_PACE)
 # include /**/ "pace/stdlib.h"
 #endif /* ACE_HAS_PACE */
-#include /**/ <stddef.h>
+
+#ifndef ACE_HAS_WINCE
+#include <stddef.h>
+#endif  // ACE_HAS_WINCE
 
 # if !defined (ACE_MALLOC_ALIGN)
 #   define ACE_MALLOC_ALIGN ((int) sizeof (long))
