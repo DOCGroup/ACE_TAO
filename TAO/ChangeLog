@@ -1,3 +1,32 @@
+Tue Jul 23 11:23:28 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Monitor.h:
+
+	  CPU load monitor implementation.  Currently a placeholder.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h:
+
+	  AMI reply handler used when the LoadManager issues load alerts
+	  asynchronously.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ORBInitializer.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ORBInitializer.h:
+
+	  ORBInitializer that creates and registers a LoadManager instance
+	  with the ORB.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp:
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h:
+
+	  Utility interceptor that servers may use to add load shedding
+	  capabilities.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_conf.h:
+
+	  No need to include "orbsvcs/CosLoadBalancingC.h".
+
 Mon Jul 22 21:42:20 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/fe/idl.ll:

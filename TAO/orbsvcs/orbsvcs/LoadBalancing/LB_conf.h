@@ -22,8 +22,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosLoadBalancingC.h"
-
 
 #ifndef TAO_LB_PULL_HANDLER_INTERVAL
 /// The interval in seconds the load balancer queries registered load
