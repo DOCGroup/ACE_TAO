@@ -95,7 +95,7 @@ sub Build_Custom ()
     print STDERR "Building Custom\n";
     print "Building Custom directories specified\n";# if ($verbose == 1);
 
-    print "Build \n" if ($verbose);
+    print "Build " if ($verbose);
     print "Debug " if ($verbose) && ($Build_Debug);
     print "Release " if ($verbose) && ($Build_Release);
     print "\n" if ($verbose);
