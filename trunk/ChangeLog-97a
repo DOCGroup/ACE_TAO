@@ -1,3 +1,20 @@
+Tue Feb 18 19:02:53 1997    <irfan@cha-cha.cs.wustl.edu>
+
+	* ace/ReactorEx: 
+
+	(a) Made wakeup_all_threads() public. Thanks to Hamutal Yanay
+ 	    <Hamutal_Yanay@mail.icomverse.com> for suggesting this.
+
+	(b) Change closed_for_business_ to open_for_business_. Also made
+ 	    sure that open and close can potentially be called multiple
+ 	    times from multiple threads.
+
+	(c) Changed unbind and unbind_all such that they iterate through
+ 	    all the handles.
+
+	(d) Added a check to see if the handle has been scheduled for
+ 	    deletion before dispatching it.
+
 Tue Feb 18 21:24:57 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/IOStream.h,README: replaced ACE_WIN32 conditional with
