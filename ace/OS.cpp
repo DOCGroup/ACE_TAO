@@ -25,7 +25,9 @@
 // This is lock defines a monitor that is shared by all threads
 // calling certain ACE_OS methods.
 static ACE_Thread_Mutex ace_os_monitor_lock;
-static u_int ace_tss_cleanup_lock = ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK;
+#if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
+  static u_int ace_tss_cleanup_lock = ACE_Object_Manager::ACE_TSS_CLEANUP_LOCK;
+#endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
 int 
@@ -188,34 +190,6 @@ ACE_U_LongLong::output (FILE *file) const
     ACE_OS::fprintf (file, "0x%lx", lo_);
 }
 #endif /* !ACE_WIN32 && ! ACE_HAS_LONGLONG_T */
-
-#if defined (ACE_HAS_PENTIUM) && defined (__GNUC__)
-ACE_hrtime_t 
-ACE_OS::gethrtime (void)
-{
-  // ACE_TRACE ("ACE_OS::gethrtime");
-
-  // See comments for ACE_WIN32 version of ACE_OS::gethrtime () in OS.i.
-  //
-  // This function can't be inline because it depends on the location
-  // of the following variables on the stack.
-  //
-  // Moreover, the GCC compiler with -Wall will flag these as
-  // potentially being used without being initialized, but the
-  // assembly code insures that they ARE initialized.  So, that
-  // warning can be ignored.
-  volatile u_long least, most;
-
-  asm ("rdtsc");
-  asm ("movl %eax, -4(%ebp)");  // least
-  asm ("movl %edx, -8(%ebp)");  // most
-
-  // This code relies on the subtle semantics of operator precedence,
-  // but David Levine wants it this way to encourage C++ programmers
-  // to learn their precedence rules.
-  return (ACE_hrtime_t) most << 32  |  least;
-}
-#endif /* ACE_HAS_PENTIUM && __GNUC__ */
 
 #if defined (ACE_HAS_POWERPC) && defined (ghs)
 void
