@@ -1,3 +1,17 @@
+Sat Aug  1 20:35:32 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace:
+	  include/makeinclude:
+	  Added new config/platform files for SCO.  These files enable the
+	  following:
+
+	  - TAO_IDL work newly in SCO OpenServer.
+	  - Fixed a compilation problem with EventService in TAO.
+	  - Fixed a problem with ACE and TAO shared libraries.
+	  - Some test with TSS_Emulation and recent changes in Thread_Manager.
+
+	  Thanks to Arturo for these changes.
+
 Sat Aug 01 13:34:12 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/OS.i (flock_wrlock): LockFileEx() and UnLockFileEx() are not
