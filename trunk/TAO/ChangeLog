@@ -1,3 +1,11 @@
+Mon May 26 17:04:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/ORB.cpp (register_value_factory): Changed to make sure we
+	  don't return the newly registered value factory as the
+	  previously registered value factory if none exist.  Otherwise,
+	  we would simply register the valuefactory and then destroy it
+	  immediately.
+
 Mon May 26 17:29:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/UIOP_Lite_Factory.h:
@@ -236,22 +244,22 @@ Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Thread_Per_Connection_Handler.h:
 	* tao/Thread_Per_Connection_Handler.cpp: The new
-	  thread-per-connection handler class. 
+	  thread-per-connection handler class.
 
 	* tao/Acceptor_Impl.cpp (activate_svc_handler): If
 	  thread-per-connection is enabled, create a thread-per-connection
-	  handler object and pass the protocol specific handler to it. 
+	  handler object and pass the protocol specific handler to it.
 
 	* tao/Connection_Handler.cpp (svc_i): Remove reference counting
 	  since this is now performed by the thread-per-connection
-	  handler. 
+	  handler.
 
 	* tao/Transport.h: Provide privileged access to the
 	  thread-per-connection-handler.
 
 	* tao/Connection_Handler.h: Added a pure virtual open_handler ()
 	  method which would serve as a hook for the protocol specific
-	  handler's open () call. 
+	  handler's open () call.
 
 	* tao/IIOP_Connection_Handler.h:
 	* tao/IIOP_Connection_Handler.cpp:
@@ -268,16 +276,16 @@ Fri May 23 05:31:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  open_handler () hook method. Removed the svc () and activate ()
 	  calls since they should be taken care by the new
 	  thread-per-connection-handler class. This also removes a bunch
-	  of code duplication from within these classes. 
-	
-	* tao/ObjectKey_Table.cpp (unbind_i): Removed a wrong comment. 
+	  of code duplication from within these classes.
+
+	* tao/ObjectKey_Table.cpp (unbind_i): Removed a wrong comment.
 
 	* tao/TAO.dsp:
 	* tao/Makefile.tao:
-	* tao/Makefile.bor: Added the new files for building. 
+	* tao/Makefile.bor: Added the new files for building.
 
 	  Thanks to Ira Burton <imburton@micron.com> for reporting the
-	  problem. 
+	  problem.
 
 Thu May 22 14:06:19 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -311,27 +319,27 @@ Thu May 22 10:51:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  created and housed by its LoadManager object.  An actual
 	  ObjectGroup object does not exist.  It is a logical entity
 	  exposed to clients to allow them to invoke methods transparently
-	  on members of that object group. 
-	  
+	  on members of that object group.
+
 	  Hence returning a null-object would break the
 	  LoadBalancer. Thanks to Ossama for reporting and explaining the
 	  source of the problem.
 
 Thu May 22 10:38:53 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ObjectKey_Table.cpp (ObjectKey_Table): 
+	* tao/ObjectKey_Table.cpp (ObjectKey_Table):
 	* tao/ObjectKey_Table.h: The hash value that was used as an key
 	  did not scale. We got collissions which broke down the whole
 	  model. Instead of using the hash value as the key, we now use
 	  the ObjectKey itself as the key. This turns out to be more
-	  efficient than the previous scheme and avoid collisions. 
+	  efficient than the previous scheme and avoid collisions.
 
 	  The other problem that came up because of the above change, is
 	  the requirement of a operator < for the ObjectKey. This was
 	  solved by the addition of a class TAO::Less_Than_ObjectKey which
 	  acts as a comparative operator. Ideally this should have been a
 	  template specialization of the parametric class ACE_Less_Than<>,
-	  but this wouldnt work so easily without breaking builds. 
+	  but this wouldnt work so easily without breaking builds.
 
 Wed May 21 19:57:31 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
