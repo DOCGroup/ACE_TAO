@@ -308,6 +308,7 @@ public:
   ssize_t log (ACE_Log_Priority priority, const ASYS_TCHAR *format, ...);
   // Format a message to the thread-safe ACE logging mechanism.  Valid
   // options (prefixed by '%', as in printf format strings) include:
+//   'A': print an ACE_timer_t value (which could be either double or ACE_UINT32.)
   // 'a': exit the program at this point (var-argument is the exit status!)
   // 'c': print a character
   // 'i', 'd': print a decimal number

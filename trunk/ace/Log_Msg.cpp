@@ -564,6 +564,7 @@ ACE_Log_Msg::open (const ASYS_TCHAR *prog_name,
 }
 
 // Valid Options (prefixed by '%', as in printf format strings) include:
+//   'A': print an ACE_timer_t value
 //   'a': exit the program at this point (var-argument is the exit status!)
 //   'c': print a character
 //   'i', 'd': print a decimal number
@@ -687,6 +688,18 @@ ACE_Log_Msg::log (const ASYS_TCHAR *format_str,
             {
               switch (*format++)
                 {
+                case 'A':
+                  type = SKIP_SPRINTF;
+                  {
+#if defined (ACE_LACKS_FLOATING_POINT)
+                    ACE_UINT32 value = va_arg (argp, ACE_UINT32);
+                    ACE_OS::sprintf (bp, ASYS_TEXT ("%ld"), value);
+#else
+                    double value = va_arg (argp, double);
+                    ACE_OS::sprintf (bp, ASYS_TEXT ("%f"), value);
+#endif /* ACE_LACKS_FLOATING_POINT */
+                  }
+                  break;
                 case 'a': // Abort program after handling all of format string.
                   type = SKIP_SPRINTF;
                   abort_prog = 1;
