@@ -1,5 +1,5 @@
 eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
-    & eval 'exec perl -S $0 $argv:q'
+    & eval 'exec perl -w -S $0 $argv:q'
     if 0;
 
 # $Id$
@@ -12,16 +12,16 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 $usage="usage: $0 [-?] [-k <kit>] [-n] [-t <type>] " .
-         "[-c <controlled files>] [-r <release files>] " .
-         "[-l <release lib files]\n";
+  "[-c <controlled files>] [-r <release files>] " .
+  "[-l <release lib files] [-u]\n";
 $long_usage="   -? option prints this message\n" .
-            "   -k <kit>, where <kit> is ace, tao, or ace+tao\n" .
-            "   -n option prints what would be done, but doesn't do it\n" .
-            "   -t <type>, where <type> is major, minor, or beta (default)\n" .
-            "   -c <controlled files> lists the CVS-controlled files\n" .
-            "   -r <release files> lists the files to be released\n" .
-            "   -l <release lib files> list the files to put in the lib kit\n";
-
+  "   -k <kit>, where <kit> is ace, tao, or ace+tao\n" .
+  "   -n option prints what would be done, but doesn't do it\n" .
+  "   -t <type>, where <type> is major, minor, or beta (default)\n" .
+  "   -c <controlled files> lists the CVS-controlled files\n" .
+  "   -r <release files> lists the files to be released\n" .
+  "   -l <release lib files> list the files to put in the lib kit\n" .
+  "   -u to update versions\n";
 
 ########
 ######## Configuration parameters.
@@ -43,6 +43,7 @@ $release_files = '';
 $release_filter = '\\( -name CVS -o -name build \\) -prune -o ' .
                   '! -name \'.\#*\' ! -name \'\#*\' ! -name \'*~\' ' .
                   '! -name \'*.MAK\' -print';
+$update_versions = 0;
 
 
 ########
@@ -90,6 +91,8 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
       print STDERR "$0:  must provide argument for -l option\n";
       die "$usage$long_usage";
     }
+  } elsif ($ARGV[0] eq '-u') {
+    $update_versions = 1;
   } elsif ($ARGV[0] eq '-?') {
     print "$usage$long_usage";
     exit;
@@ -101,13 +104,10 @@ while ($#ARGV >= $[  &&  $ARGV[0] =~ /^-/) {
 }
 
 die "must specify a -k option\n" unless "$kit";
-$update_versions = 0;
 if ($kit eq 'ace') {
   $KIT = 'ACE';
-  $update_versions = (`pwd` eq "/project/adaptive/ACE_wrappers\n");
 } elsif ($kit eq 'tao') {
   $KIT = 'TAO';
-  $update_versions = (`pwd` eq "/project/adaptive/ACE_wrappers/TAO\n");
 } else {
   #### Creating combined ACE+TAO kit.  Don't use $KIT.
 };
@@ -181,10 +181,12 @@ sub check_workspace () {
   }
 
   my @out_of_date = ();
-  open (CVS, "$cvs -nq checkout -P $module |")  ||
+  open (CVS, "$cvs -nq checkout -P $module 2>&1 |")  ||
     die "$0: unable to open $cvs\n";
   while (<CVS>) {
     next if m%^U %;    #### Allow others to update the repository.
+    next if m%^cvs checkout: New directory `.*' -- ignored$%;  #### empty dirs.
+
     push (@out_of_date, $_) if "$_";
   }
   close CVS;

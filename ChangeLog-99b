@@ -1,3 +1,11 @@
+Thu Jul 15 12:19:44 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release: added -u option, to allow updating the
+          version stamps from any directory.  Also, added suppression
+          of cvs checkout warning about empty ("New") directories.
+
+        * Makefile: added -u to make_release invocations.
+
 Thu Jul 15 11:39:44 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.45 released.

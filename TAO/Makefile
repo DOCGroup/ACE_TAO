@@ -104,5 +104,5 @@ CHECK =
 #### Then, make releasetao is invoked to actually create the kit.
 release: INSTALL
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k tao -t $(REL) \
-	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)"  &&  \
+	   -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" -u  &&  \
 	 cd ..  &&  $(MAKE) releasetao
