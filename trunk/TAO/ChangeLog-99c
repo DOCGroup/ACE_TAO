@@ -1,3 +1,9 @@
+Thu May 20 17:11:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Typecode_Constants.cpp:
+	  Added _tc_Pollable, _tc_DIIPollable, and
+	  _tc_PollableSet to fini().
+
 Thu May 20 15:22:49 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/default_resource.cpp (get_reactor): The problem was that
