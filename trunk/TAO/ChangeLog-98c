@@ -1,3 +1,21 @@
+Wed Nov  5 19:37:25 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL compiler:
+
+	files be_array.cpp, be_interface.cpp, be_sequence.cpp,
+	be_structure.cpp, be_union.cpp, be_enum.cpp - Added MY_BYTE_SEX to
+	the typecode generation methods.
+
+	be_operation.cpp, be_argument.cpp, be_state.cpp, be_codegen.* -
+	Modified to deal with _out parameters that are passed to the
+	actual upcalls in the server-side skeleton.
+
+	Some minor changes involving removing commented-out code in the
+	constructors of some classes.
+
+	* tests/Thruput_test: Some modifications. Still needs more work
+	get it to run.
+
 Wed Nov 05 19:26:44 1997    <nw1@COYOTE>
 
 	* tests/Cubit/TAO/DII_Cubit/DII_Cubit.dsp:
@@ -14,7 +32,7 @@ Wed Nov 05 13:39:19 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Nov 05 12:53:53 1997    <irfan@TWOSTEP>
 
-	* tao/interp.cpp: 
+	* tao/interp.cpp:
 
 	  - Win32 does not use "fixed" byte alignment.  Fixed the
  	    setup_entry macro to take this into account.
