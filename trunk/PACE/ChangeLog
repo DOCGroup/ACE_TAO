@@ -1,3 +1,10 @@
+Wed Jul 12 14:26:10 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/aio.inl:
+
+	  PACE_ERRNO_NO_SUPPORT_RETURN (-1);
+	  Emulate support for these latter.
+
 Wed Jul 12 14:15:10 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/win32/signal.h: 
