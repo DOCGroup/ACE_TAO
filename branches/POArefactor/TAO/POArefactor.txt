@@ -1,3 +1,17 @@
+Tue Sep 14 08:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/GOA*:
+          Zapped these files
+
+        * tao/orbsvcs/orbsvcs/PortableGroup.idl:
+          Added GOA interface here
+
+        * tao/orbsvcs/orbsvcs/GOA.{h,cpp,inl}:
+          Moved the GOA to this place, implementation has to be made correct,
+          POA hook is not needed anymore, must be loadable by service
+          configurator. By moving this now I can cleanup some more stuff in
+          the ORB.
+
 Mon Sep 13 12:11:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA_ThreadPolicy.h:
