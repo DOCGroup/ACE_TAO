@@ -227,13 +227,6 @@ namespace CORBA
      * tao_. But we have deviated from that principle.
      */
 
-    //@{
-    /// Address of this variable used in _unchecked_narrow().
-    static int _tao_class_id;
-
-    static CORBA::Object_ptr _unchecked_narrow (Object_ptr obj
-                                                ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
     static CORBA::Boolean marshal (Object_ptr obj,
@@ -259,10 +252,6 @@ namespace CORBA
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
     virtual TAO::ObjectKey *_key (ACE_ENV_SINGLE_ARG_DECL);
-
-    /// Downcasting this object pointer to some other derived class.
-    /// This QueryInterface stuff only work for local object.
-    virtual void * _tao_QueryInterface (ptrdiff_t type);
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -380,16 +369,31 @@ namespace CORBA
   };
 }   // End CORBA namespace.
 
-/// Used in generated code if CORBA::Object is an argument or return type.
 namespace TAO
 {
-  template<>
+  ACE_TEMPLATE_SPECIALIZATION
   class TAO_Export Arg_Traits<CORBA::Object>
     : public Object_Arg_Traits_T<CORBA::Object_ptr,
                                  CORBA::Object_var,
                                  CORBA::Object_out,
                                  TAO::Objref_Traits<CORBA::Object> >
   {
+  };
+
+  ACE_TEMPLATE_SPECIALIZATION
+  struct TAO_Export Objref_Traits<CORBA::Object>
+  {
+    static CORBA::Object_ptr tao_duplicate (
+        CORBA::Object_ptr
+      );
+    static void tao_release (
+        CORBA::Object_ptr
+      );
+    static CORBA::Object_ptr tao_nil (void);
+    static CORBA::Boolean tao_marshal (
+        CORBA::Object_ptr p,
+        TAO_OutputCDR & cdr
+      );
   };
 };
 

@@ -27,7 +27,40 @@ ACE_RCSID (tao,
            Object,
            "$Id$")
 
-int CORBA::Object::_tao_class_id = 0;
+// Traits specializations for CORBA::Object.
+
+CORBA::Object_ptr
+TAO::Objref_Traits<CORBA::Object>::tao_duplicate (
+    CORBA::Object_ptr p
+  )
+{
+  return CORBA::Object::_duplicate (p);
+}
+
+void
+TAO::Objref_Traits<CORBA::Object>::tao_release (
+    CORBA::Object_ptr p
+  )
+{
+  CORBA::release (p);
+}
+
+CORBA::Object_ptr
+TAO::Objref_Traits<CORBA::Object>::tao_nil (void)
+{
+  return CORBA::Object::_nil ();
+}
+
+CORBA::Boolean
+TAO::Objref_Traits<CORBA::Object>::tao_marshal (
+    CORBA::Object_ptr p,
+    TAO_OutputCDR & cdr
+  )
+{
+  return p->marshal (cdr);
+}
+
+// =========================================================
 
 CORBA::Object::~Object (void)
 {
@@ -107,34 +140,6 @@ if (!this->is_evaluated_) \
     if (!this->is_evaluated_) \
       CORBA::Object::tao_object_initialize (this); \
   }
-
-CORBA::Object_ptr
-CORBA::Object::_unchecked_narrow (CORBA::Object_ptr obj
-                                  ACE_ENV_ARG_DECL_NOT_USED)
-{
-  if (CORBA::is_nil (obj))
-    {
-      return CORBA::Object::_nil ();
-    }
-
-  if (obj->is_local_)
-    {
-    return
-      ACE_reinterpret_cast (
-          CORBA::Object_ptr,
-          obj->_tao_QueryInterface (
-                   ACE_reinterpret_cast (
-                       ptrdiff_t,
-                       &CORBA::Object::_tao_class_id
-                     )
-                 )
-        );
-    }
-  else
-    {
-      return CORBA::Object::_duplicate (obj);
-    }
-}
 
 void
 CORBA::Object::_add_ref (void)
@@ -339,21 +344,6 @@ CORBA::Object::_key (ACE_ENV_SINGLE_ARG_DECL)
                         EINVAL),
                       CORBA::COMPLETED_NO),
                     0);
-}
-
-void *
-CORBA::Object::_tao_QueryInterface (ptrdiff_t type)
-{
-  void *retv = 0;
-
-  if (type == ACE_reinterpret_cast (ptrdiff_t,
-                                    &CORBA::Object::_tao_class_id))
-    retv = ACE_reinterpret_cast (void *, this);
-
-  if (retv)
-    this->_add_ref ();
-
-  return retv;
 }
 
 void

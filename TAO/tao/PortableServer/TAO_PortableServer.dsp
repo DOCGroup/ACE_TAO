@@ -164,10 +164,6 @@ SOURCE=.\AMH_Response_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocated_Object.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Default_Acceptor_Filter.cpp
 # End Source File
 # Begin Source File
@@ -353,10 +349,6 @@ SOURCE=.\AMH_Response_Handler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Collocated_Object.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\Default_Acceptor_Filter.h
 # End Source File
 # Begin Source File
@@ -526,10 +518,6 @@ SOURCE=.\Upcall_Wrapper.h
 # Begin Source File
 
 SOURCE=.\Active_Object_Map.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Collocated_Object.i
 # End Source File
 # Begin Source File
 

@@ -637,6 +637,7 @@ SOURCE=.\LF_Strategy_Complete.cpp
 # Begin Source File
 
 SOURCE=.\LocalObject.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -741,6 +742,7 @@ SOURCE=.\ORBInitializer_Registry.cpp
 # Begin Source File
 
 SOURCE=.\ORBInitInfo.cpp
+# ADD CPP /GR
 # End Source File
 # Begin Source File
 
@@ -1690,6 +1692,10 @@ SOURCE=.\Object_Ref_Table.h
 # Begin Source File
 
 SOURCE=.\Object_SArgument_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_T.h
 # End Source File
 # Begin Source File
 
@@ -2933,6 +2939,11 @@ SOURCE=.\Object_Argument_T.cpp
 # Begin Source File
 
 SOURCE=.\Object_SArgument_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Object_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

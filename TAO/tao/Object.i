@@ -69,10 +69,9 @@ CORBA::Object::_nil (void)
 ACE_INLINE
 CORBA::Object_ptr
 CORBA::Object::_narrow (CORBA::Object_ptr obj
-                        ACE_ENV_ARG_DECL)
+                        ACE_ENV_ARG_DECL_NOT_USED)
 {
-  return CORBA::Object::_unchecked_narrow (obj
-                                           ACE_ENV_ARG_PARAMETER);
+  return CORBA::Object::_duplicate (obj);
 }
 
 ACE_INLINE

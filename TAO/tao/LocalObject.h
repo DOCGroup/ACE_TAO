@@ -66,12 +66,6 @@ namespace CORBA
     static LocalObject_ptr _narrow (CORBA::Object_ptr obj
                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-    /// No-op it is just here to simplify some templates.
-    static LocalObject_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        ACE_ENV_ARG_DECL_WITH_DEFAULTS
-      );
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     /// Always returns false.
