@@ -13,10 +13,10 @@ main (int argc, char* argv [])
                              argv,
                              ""
                              ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-  
+      ACE_TRY_CHECK;
+
       test_ptr foo_i;
-  
+
       ACE_NEW_RETURN (foo_i,
                       test_impl,
                       -1);
@@ -28,13 +28,12 @@ main (int argc, char* argv [])
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
-      
+
       orb->shutdown ();
       orb->destroy ();
       return 0;
     }
-  ACE_ENDTRY; 
+  ACE_ENDTRY;
 
   return 0;
 }
-

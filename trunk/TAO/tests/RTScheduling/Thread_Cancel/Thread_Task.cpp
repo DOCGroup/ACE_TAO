@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 #include "Thread_Task.h"
 #include "ace/Atomic_Op.h"
@@ -23,19 +23,19 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
       ACE_NEW_RETURN (lock_,
                       ACE_Lock_Adapter <TAO_SYNCH_MUTEX>,
                       -1);
-   
+
       this->orb_ = CORBA::ORB::_duplicate (orb);
-  
+
       CORBA::Object_ptr current_obj = this->orb_->resolve_initial_references ("RTScheduler_Current");
-  
+
       this->current_ = RTScheduling::Current::_narrow (current_obj
                                                        ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK;
-    }  
+      ACE_TRY_CHECK;
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-			   "Exception:");
+                           "Exception:");
     }
   ACE_ENDTRY;
 
@@ -57,74 +57,74 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 int
 Thread_Task::svc (void)
 {
-  ACE_TRY
+  ACE_TRY_NEW_ENV
     {
       const char * name = 0;
       CORBA::Policy_ptr sched_param = 0;
       CORBA::Policy_ptr implicit_sched_param = 0;
-      
-      //Start - Nested Scheduling Segment      
+
+      //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Chamber of Secrets",
-						sched_param,
-						implicit_sched_param
-						ACE_ENV_ARG_PARAMETER);
+                                                sched_param,
+                                                implicit_sched_param
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
-  
+
       int count ;
       ACE_OS::memcpy (&count,
-		      current_->id ()->get_buffer (),
-		      current_->id ()->length ());
+                      current_->id ()->get_buffer (),
+                      current_->id ()->length ());
 
 
       this->current_->begin_scheduling_segment ("Potter",
-						sched_param,
-						implicit_sched_param
-						ACE_ENV_ARG_PARAMETER);
+                                                sched_param,
+                                                implicit_sched_param
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       this->guid_[guid_index++] = *(this->current_->id ());
-      
+
       //Start - Nested Scheduling Segment
       this->current_->begin_scheduling_segment ("Harry",
-						sched_param,
-						implicit_sched_param
-						ACE_ENV_ARG_PARAMETER);
+                                                sched_param,
+                                                implicit_sched_param
+                                                ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
       {
-	ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1); 	  
-	RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_ARG_PARAMETER);
-	ACE_TRY_CHECK;
-	
-	ACE_DEBUG ((LM_DEBUG,
-		    "Scheduling Segments for DT %d :\n",
-		    count));
+        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
+        RTScheduling::Current::NameList* name_list = this->current_->current_scheduling_segment_names (ACE_ENV_SINGLE_ARG_PARAMETER);
+        ACE_TRY_CHECK;
 
-	for (unsigned int i = 0; i < name_list->length ();++i)
-	  {
-	    ACE_DEBUG ((LM_DEBUG,
-			"Scheduling Segment Name - %s\n",
-			(*name_list) [i].in ()));
-	  }
+        ACE_DEBUG ((LM_DEBUG,
+                    "Scheduling Segments for DT %d :\n",
+                    count));
+
+        for (unsigned int i = 0; i < name_list->length ();++i)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Scheduling Segment Name - %s\n",
+                        (*name_list) [i].in ()));
+          }
       }
-      
+
       ACE_OS::sleep (50);
 
       this->current_->end_scheduling_segment (name
-					      ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       //  End - Nested Scheduling Segment
 
-      
-      
+
+
       this->current_->end_scheduling_segment (name
-					      ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       //  End - Nested Scheduling Segment
 
       this->current_->end_scheduling_segment (name
-					      ACE_ENV_ARG_PARAMETER);
+                                              ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
 
@@ -134,11 +134,11 @@ Thread_Task::svc (void)
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
                            "Caught exception:");
       {
-	ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1); 
-	--active_thread_count_;
-	if (active_thread_count_ == 0)
-	  orb_->shutdown ();
-	return 0;
+        ACE_GUARD_RETURN (ACE_Lock, ace_mon, *shutdown_lock_,-1);
+        --active_thread_count_;
+        if (active_thread_count_ == 0)
+          orb_->shutdown ();
+        return 0;
       }
 
       return 1;
@@ -146,7 +146,3 @@ Thread_Task::svc (void)
   ACE_ENDTRY;
   return 0;
 }
-
-
-
-
