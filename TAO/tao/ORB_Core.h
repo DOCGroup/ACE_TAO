@@ -217,18 +217,18 @@ private:
   // Returns -1 in case of error, or the number of connections
   // actually established.
 
+  void create_and_set_root_poa (const char *adapter_name,
+                                TAO_POA_Manager *poa_manager,
+                                const TAO_POA_Policies *policies,
+                                TAO_Object_Table *active_object_map);
+  // Initialize the root POA.
+
   // = Data members.
   ACE_Reactor *reactor_;
   // Used for responding to I/O reactively
 
   ACE_Thread_Manager *thr_mgr_;
   // Used to manage threads within the ORB
-
-  void create_and_set_root_poa (const char *adapter_name,
-                                TAO_POA_Manager *poa_manager,
-                                const TAO_POA_Policies *policies,
-                                TAO_Object_Table *active_object_map);
-  // Initialize the root POA.
 
   TAO_CONNECTOR *connector_;
   // The connector actively initiating connection requests.
