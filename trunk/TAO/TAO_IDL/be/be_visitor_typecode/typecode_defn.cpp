@@ -1809,7 +1809,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
               ACE_ERROR_RETURN ((LM_DEBUG,
                                  "be_union_branch: (%N:%l) Label value "
                                  "type (%d) is invalid\n", ev->et), -1);
-              break;
+              ACE_NOTREACHED (break;)
             }
 
           *os << ", // union case label (evaluated value)" << be_nl;
@@ -1880,7 +1880,7 @@ be_visitor_typecode_defn::gen_encapsulation (be_union_branch *node)
                                  "be_union_branch: (%N:%l) Label value "
                                  "type (%d) is invalid\n", ub->udisc_type ()), 
                                 -1);
-              break;
+              ACE_NOTREACHED (break;)
             }
 
           *os << ", // union default label (evaluated value)" << be_nl;        

@@ -83,19 +83,19 @@ client (void *arg)
 
   iovec iov[5];
 
-  iov[0].iov_base = ACE_static_cast(char *, &buff[0]);
+  iov[0].iov_base = ACE_reinterpret_cast (char *, &buff[0]);
   iov[0].iov_len = 50;
 
-  iov[1].iov_base = ACE_static_cast(char *, &buff[50]);
+  iov[1].iov_base = ACE_reinterpret_cast (char *, &buff[50]);
   iov[1].iov_len = 25;
 
-  iov[2].iov_base = ACE_static_cast(char *, &buff[75]);
+  iov[2].iov_base = ACE_reinterpret_cast (char *, &buff[75]);
   iov[2].iov_len = 150;
 
-  iov[3].iov_base = ACE_static_cast(char *, &buff[225]);
+  iov[3].iov_base = ACE_reinterpret_cast (char *, &buff[225]);
   iov[3].iov_len = 29;
 
-  iov[4].iov_base = ACE_static_cast(char *, &buff[254]);
+  iov[4].iov_base = ACE_reinterpret_cast (char *, &buff[254]);
   iov[4].iov_len = 1;
 
   len = cli_stream.sendv (iov, 5);
@@ -161,13 +161,13 @@ server (void *arg)
   ssize_t len;
   int i;
 
-  iov[0].iov_base = ACE_static_cast(char *, &buff[0]);
+  iov[0].iov_base = ACE_reinterpret_cast (char *, &buff[0]);
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = ACE_static_cast(char *, &buff[75]);
+  iov[1].iov_base = ACE_reinterpret_cast (char *, &buff[75]);
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = ACE_static_cast(char *, &buff[175]);
+  iov[2].iov_base = ACE_reinterpret_cast (char *, &buff[175]);
   iov[2].iov_len = 80;
   
   len = sock_str.recvv_n (iov, 3);
