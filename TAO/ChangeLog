@@ -186,7 +186,7 @@ Wed Feb 11 09:23:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * TAOACE_WinCE.vcw:
         * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859.vcp:
         * tests/CodeSets/libs/IBM1047_ISO8859/IBM1047_ISO8859_Static.vcp:
-          Removed these project files from the repo. If you want embedded
+          Removed these procect files from the repo. If you want embedded
           Visual C++ project files generate them with MPC. These files where
           just not maintained after the first checkin.
 
