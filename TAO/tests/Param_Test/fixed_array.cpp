@@ -84,8 +84,8 @@ Test_Fixed_Array::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Fixed_Array::add_args (CORBA::NVList_ptr &param_list,
-                            CORBA::NVList_ptr &retval,
+Test_Fixed_Array::add_args (CORBA::NVList_ptr param_list,
+                            CORBA::NVList_ptr retval,
                             CORBA::Environment &env)
 {
   // We provide the top level memory

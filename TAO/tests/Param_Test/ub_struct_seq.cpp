@@ -91,8 +91,8 @@ Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
 }
 
 int
-Test_Struct_Sequence::add_args (CORBA::NVList_ptr &param_list,
-                                CORBA::NVList_ptr &retval,
+Test_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
+                                CORBA::NVList_ptr retval,
                                 CORBA::Environment &env)
 {
   CORBA::Any in_arg (Param_Test::_tc_StructSeq, (void *) &this->in_, 0);

@@ -159,6 +159,7 @@ CORBA_Any::operator= (const CORBA_Any &src)
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
 	  // delete this->value_;
+	  this->value_ = 0;
         }
 
       if (this->type_ != 0)
@@ -245,6 +246,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
 	  // this I'm afraid we will have to leave with a memory leak
 	  // (coryan).
 	  // delete this->value_;
+	  this->value_ = 0;
         }
     }
 
@@ -254,7 +256,7 @@ CORBA_Any::replace (CORBA::TypeCode_ptr tc,
   CORBA::release (this->type_);
   this->type_ = tmp;
 
-  this->value_ = (void *) value;
+  this->value_ = ACE_const_cast(void *, value);
   this->any_owns_data_ = any_owns_data;
   this->cdr_ = 0;
 

@@ -16,16 +16,6 @@ CORBA_Object::~CORBA_Object (void)
   this->protocol_proxy_->_decr_refcnt ();
 }
 
-CORBA_Object_var::~CORBA_Object_var (void) // destructor
-{
-  CORBA::release (this->ptr_);
-}
-
-CORBA_Object_var::CORBA_Object_var (void) // default constructor
-        : ptr_ (CORBA_Object::_nil ())
-{
-}
-
 CORBA_Object::CORBA_Object (STUB_Object *protocol_proxy,
                             TAO_ServantBase *servant,
                             CORBA_Boolean collocated)
