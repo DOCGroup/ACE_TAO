@@ -1,3 +1,8 @@
+Wed Apr 18 23:00:07 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tests/Collocation/Collocation.bor: Changed main.obj to
+	  Collocation.obj.
+
 Wed Apr 18 21:57:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
