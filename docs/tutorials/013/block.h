@@ -53,17 +53,12 @@ public:
       Lock (void);
      ~Lock (void);
 
-    // When the Data_Block is destroyed, the Message_Block is
-    // holding a lock with this object.  If we were to destroy
-    // the Lock with the Data_Block, we would have a
-    // segfault.  Instead, the Data_Block invokes destroy() to
-    // mark the object as un-needed so that when the
-    // Message_Block invokes release() to drop the lock, the
-    // Lock can delete itself.
+    // destroy() will be called to explicitly delete the
+    // lock when we no longer need it.  The method will then
+    // cleanup to prevent any memory leaks.
     int destroy (void);
-    int release (void);
+ 
 protected:
-    int destroy_;
       MLD;
   };
 };

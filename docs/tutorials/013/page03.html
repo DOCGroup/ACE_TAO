@@ -43,66 +43,82 @@ Simple, cheap, effective.
 <P>
 <HR WIDTH="100%">
 <PRE>
-#include "ace/Synch.h"
-#include "ace/Singleton.h"
+<HR width=50%><P><center>mld.h</center><HR width=50%>
 
-/*
-  This is a cheap memory leak detector.  Each class I want to watch
-  over contains an mld object.  The mld object's ctor increments a
-  global counter while the dtor decrements it.  If the counter is
-  non-zero when the program is ready to exit then there may be a leak.
-*/
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>MLD_H</font>
+<font color=blue>#define</font> <font color=purple>MLD_H</font>
+
+<font color=blue>#include</font> "<font color=green>ace/Synch.h</font>"
+
+<font color=blue>#if !defined</font> (<font color=purple>ACE_LACKS_PRAGMA_ONCE</font>)
+# pragma once
+<font color=blue>#endif</font> <font color=red>/* ACE_LACKS_PRAGMA_ONCE */</font>
+
+<font color=blue>#include</font> "<font color=green>ace/Singleton.h</font>"
+
+<font color=red>/*
+   This is a cheap memory leak detector.  Each class I want to watch over
+   contains an mld object.  The mld object's ctor increments a global counter
+   while the dtor decrements it.  If the counter is non-zero when the program
+   is ready to exit then there may be a leak.
+ */</font>
 
 class mld
 {
 public:
-    mld(void);
-    ~mld(void);
+  mld (void);
+   ~mld (void);
 
-    static int value(void);
-        
+  static int value (void);
+
 protected:
-    static ACE_Atomic_Op<ACE_Mutex,int> counter_;
+  static ACE_Atomic_Op &lt; ACE_Mutex, int >counter_;
 };
 
+<font color=red>// ================================================</font>
 
-/*
-  Just drop 'MLD' anywhere in your class definition to get cheap
-  memory leak detection for your class.
- */
-#define MLD            mld mld_
+<font color=red>/*
+   Just drop 'MLD' anywhere in your class definition to get cheap memory leak
+   detection for your class.
+ */</font>
+<font color=blue>#define</font> <font color=purple>MLD</font>            mld mld_
 
-/*
-  Use 'MLD_COUNTER' in main() to see if things are OK.
-*/
-#define MLD_COUNTER    mld::value()
+<font color=red>/*
+   Use 'MLD_COUNTER' in main() to see if things are OK.
+ */</font>
+<font color=blue>#define</font> <font color=purple>MLD_COUNTER</font>    <font color=#008888>mld::value</font>()
 
-<HR WIDTH="50%">
-<i>In the cpp file we have this:</i>
+<font color=red>// ================================================</font>
 
-ACE_Atomic_Op<ACE_Mutex,int> mld::counter_(0);
-
-// Increment the counter when a new mld is created...
-mld::mld(void)
-{
-    ++counter_;
-}
-
-// and decrement it when the object is destructed.
-mld::~mld(void)
-{
-    --counter_;
-}
-
-int mld::value(void)
-{
-    return counter_.value();
-}
-
+<font color=blue>#endif</font>
 </PRE>
-<HR WIDTH="100%">
-<CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page04.html">Continue
-This Tutorial</A>]</CENTER>
+<PRE>
+<HR width=50%><P><center>mld.cpp</center><HR width=50%>
 
-</BODY>
-</HTML>
+<font color=red>// $Id$</font>
+
+<font color=blue>#include</font> "<font color=green>mld.h</font>"
+
+ACE_Atomic_Op &lt; ACE_Mutex, int ><font color=#008888>mld::counter_</font> (0);
+
+<font color=red>// Increment the counter when a new mld is created...</font>
+<font color=#008888>mld::mld</font> (void)
+{
+  ++counter_;
+}
+
+<font color=red>// and decrement it when the object is destructed.</font>
+<font color=#008888>mld::~mld</font> (void)
+{
+  --counter_;
+}
+
+int <font color=#008888>mld::value</font> (void)
+{
+  return counter_.value ();
+}
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page04.html">Continue This Tutorial</A>]</CENTER>
