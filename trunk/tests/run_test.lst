@@ -151,7 +151,6 @@ Proactor_Test_IPV6
 SOCK_Send_Recv_Test_IPV6
 SOCK_Dgram_Test
 SOCK_Dgram_Bcast_Test
-SOCK_SEQPACK_SCTP_Test: !MSVC
 SOCK_Test_IPv6
 Process_Strategy_Test: !chorus !LynxOS !VxWorks
 Recursive_Condition_Bug_Test: !ST
