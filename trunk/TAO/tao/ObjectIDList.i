@@ -18,133 +18,133 @@
 // *************************************************************
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_var::ObjectIdList_var (void) // default constructor
+CORBA_ORB_ObjectIdList_var::CORBA_ORB_ObjectIdList_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_var::ObjectIdList_var (CORBA::ORB::ObjectIdList *p)
+CORBA_ORB_ObjectIdList_var::CORBA_ORB_ObjectIdList_var (CORBA_ORB_ObjectIdList *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_var::ObjectIdList_var (const CORBA::ORB::ObjectIdList_var &p) // copy constructor
+CORBA_ORB_ObjectIdList_var::CORBA_ORB_ObjectIdList_var (const CORBA_ORB_ObjectIdList_var &p) // copy constructor
 {
   if (p.ptr_)
-    this->ptr_ = new CORBA::ORB::ObjectIdList(*p.ptr_);
+    this->ptr_ = new CORBA_ORB_ObjectIdList(*p.ptr_);
   else
     this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_var::~ObjectIdList_var (void) // destructor
+CORBA_ORB_ObjectIdList_var::~CORBA_ORB_ObjectIdList_var (void) // destructor
 {
   delete this->ptr_;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList_var &
-CORBA::ORB::ObjectIdList_var::operator= (CORBA::ORB::ObjectIdList *p)
+ACE_INLINE CORBA_ORB_ObjectIdList_var &
+CORBA_ORB_ObjectIdList_var::operator= (CORBA_ORB_ObjectIdList *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList_var &
-CORBA::ORB::ObjectIdList_var::operator= (const CORBA::ORB::ObjectIdList_var &p) // deep copy
+ACE_INLINE CORBA_ORB_ObjectIdList_var &
+CORBA_ORB_ObjectIdList_var::operator= (const CORBA_ORB_ObjectIdList_var &p) // deep copy
 {
   if (this != &p)
   {
     delete this->ptr_;
-    this->ptr_ = new CORBA::ORB::ObjectIdList (*p.ptr_);
+    this->ptr_ = new CORBA_ORB_ObjectIdList (*p.ptr_);
   }
   return *this;
 }
 
-ACE_INLINE const CORBA::ORB::ObjectIdList *
-CORBA::ORB::ObjectIdList_var::operator-> (void) const
+ACE_INLINE const CORBA_ORB_ObjectIdList *
+CORBA_ORB_ObjectIdList_var::operator-> (void) const
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList *
-CORBA::ORB::ObjectIdList_var::operator-> (void)
+ACE_INLINE CORBA_ORB_ObjectIdList *
+CORBA_ORB_ObjectIdList_var::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE 
-CORBA::ORB::ObjectIdList_var::operator const CORBA::ORB::ObjectIdList &() const // cast
+CORBA_ORB_ObjectIdList_var::operator const CORBA_ORB_ObjectIdList &() const // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA::ORB::ObjectIdList_var::operator CORBA::ORB::ObjectIdList &() // cast 
+CORBA_ORB_ObjectIdList_var::operator CORBA_ORB_ObjectIdList &() // cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE 
-CORBA::ORB::ObjectIdList_var::operator CORBA::ORB::ObjectIdList &() const// cast 
+CORBA_ORB_ObjectIdList_var::operator CORBA_ORB_ObjectIdList &() const// cast 
 {
   return *this->ptr_;
 }
 
 ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA::ORB::ObjectIdList_var::operator[] (CORBA::ULong index)
+CORBA_ORB_ObjectIdList_var::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
 
-ACE_INLINE const CORBA::ORB::ObjectIdList &
-CORBA::ORB::ObjectIdList_var::in (void) const
+ACE_INLINE const CORBA_ORB_ObjectIdList &
+CORBA_ORB_ObjectIdList_var::in (void) const
 {
   return *this->ptr_;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList &
-CORBA::ORB::ObjectIdList_var::inout (void)
+ACE_INLINE CORBA_ORB_ObjectIdList &
+CORBA_ORB_ObjectIdList_var::inout (void)
 {
   return *this->ptr_;
 }
 
 // mapping for variable size 
-ACE_INLINE CORBA::ORB::ObjectIdList *&
-CORBA::ORB::ObjectIdList_var::out (void)
+ACE_INLINE CORBA_ORB_ObjectIdList *&
+CORBA_ORB_ObjectIdList_var::out (void)
 {
   delete this->ptr_;
   this->ptr_ = 0;
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList *
-CORBA::ORB::ObjectIdList_var::_retn (void)
+ACE_INLINE CORBA_ORB_ObjectIdList *
+CORBA_ORB_ObjectIdList_var::_retn (void)
 {
-  CORBA::ORB::ObjectIdList *tmp = this->ptr_;
+  CORBA_ORB_ObjectIdList *tmp = this->ptr_;
   this->ptr_ = 0;
   return tmp;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList *
-CORBA::ORB::ObjectIdList_var::ptr (void) const
+ACE_INLINE CORBA_ORB_ObjectIdList *
+CORBA_ORB_ObjectIdList_var::ptr (void) const
 {
   return this->ptr_;
 }
 
 // *************************************************************
-// Inline operations for class CORBA::ORB::ObjectIdList_out
+// Inline operations for class CORBA_ORB_ObjectIdList_out
 // *************************************************************
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_out::ObjectIdList_out (CORBA::ORB::ObjectIdList *&p)
+CORBA_ORB_ObjectIdList_out::CORBA_ORB_ObjectIdList_out (CORBA_ORB_ObjectIdList *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_out::ObjectIdList_out (CORBA::ORB::ObjectIdList_var &p) // constructor from _var
+CORBA_ORB_ObjectIdList_out::CORBA_ORB_ObjectIdList_out (CORBA_ORB_ObjectIdList_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -152,44 +152,44 @@ CORBA::ORB::ObjectIdList_out::ObjectIdList_out (CORBA::ORB::ObjectIdList_var &p)
 }
 
 ACE_INLINE
-CORBA::ORB::ObjectIdList_out::ObjectIdList_out (const CORBA::ORB::ObjectIdList_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (CORBA::ORB::ObjectIdList_out&,p).ptr_)
+CORBA_ORB_ObjectIdList_out::CORBA_ORB_ObjectIdList_out (const CORBA_ORB_ObjectIdList_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (CORBA_ORB_ObjectIdList_out&,p).ptr_)
 {}
 
-ACE_INLINE CORBA::ORB::ObjectIdList_out &
-CORBA::ORB::ObjectIdList_out::operator= (const CORBA::ORB::ObjectIdList_out &p)
+ACE_INLINE CORBA_ORB_ObjectIdList_out &
+CORBA_ORB_ObjectIdList_out::operator= (const CORBA_ORB_ObjectIdList_out &p)
 {
-  this->ptr_ = ACE_const_cast (CORBA::ORB::ObjectIdList_out&,p).ptr_;
+  this->ptr_ = ACE_const_cast (CORBA_ORB_ObjectIdList_out&,p).ptr_;
   return *this;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList_out &
-CORBA::ORB::ObjectIdList_out::operator= (CORBA::ORB::ObjectIdList *p)
+ACE_INLINE CORBA_ORB_ObjectIdList_out &
+CORBA_ORB_ObjectIdList_out::operator= (CORBA_ORB_ObjectIdList *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
 ACE_INLINE 
-CORBA::ORB::ObjectIdList_out::operator CORBA::ORB::ObjectIdList *&() // cast
+CORBA_ORB_ObjectIdList_out::operator CORBA_ORB_ObjectIdList *&() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList *&
-CORBA::ORB::ObjectIdList_out::ptr (void) // ptr
+ACE_INLINE CORBA_ORB_ObjectIdList *&
+CORBA_ORB_ObjectIdList_out::ptr (void) // ptr
 {
   return this->ptr_;
 }
 
-ACE_INLINE CORBA::ORB::ObjectIdList *
-CORBA::ORB::ObjectIdList_out::operator-> (void)
+ACE_INLINE CORBA_ORB_ObjectIdList *
+CORBA_ORB_ObjectIdList_out::operator-> (void)
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_SeqElem_String_Manager 
-CORBA::ORB::ObjectIdList_out::operator[] (CORBA::ULong index)
+CORBA_ORB_ObjectIdList_out::operator[] (CORBA::ULong index)
 {
   return this->ptr_->operator[] (index);
 }
@@ -210,7 +210,7 @@ operator>> (
 
 ACE_INLINE CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
-    const CORBA::ORB::ObjectIdList &_tao_sequence
+    const CORBA_ORB_ObjectIdList &_tao_sequence
   )
 {
   if (strm << _tao_sequence.length ())
@@ -224,7 +224,7 @@ ACE_INLINE CORBA::Boolean operator<< (
   return 0; // error
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA::ORB::ObjectIdList &_tao_sequence)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, CORBA_ORB_ObjectIdList &_tao_sequence)
 {
   CORBA::ULong _tao_seq_len;
   if (strm >> _tao_seq_len)

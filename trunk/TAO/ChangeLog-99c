@@ -1,3 +1,16 @@
+Wed May 12 08:56:40 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* tao/corbafwd.h
+	  tao/ORB.h
+	  tao/ObjectIDList.{h, i, cpp}:
+
+	  Fixed a number of compile errors with the newly added
+	  ObjectIdList class. We now use the same trick that we use for
+	  classes defined in the CORBA namespace. Thus, we define the
+	  ObjectIdList class as CORBA_ORB_ObjectIdList and then typedef it
+	  inside class CORBA_ORB. We needed some forward declarations in
+	  corbafwd.h. 
+
 Wed May 12 02:38:52 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	  Code review changes and additions for the CosEC Factory.
