@@ -159,9 +159,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
 #if defined (TAO_ARL_USES_SAME_CONNECTOR_PORT)
   if (TAO_ORB_Core_instance ()->arl_same_port_connect ())
     {
-      ACE_INET_Addr local_addr;
-      local_addr.set (server_addr_p->get_port_number (),
-                      *(ACE_UINT32 *) TAO_ORB_Core_instance ()->orb_params ()->addr ().get_addr ());
+      ACE_INET_Addr local_addr (TAO_ORB_Core_instance ()->orb_params ()->addr ());
+      local_addr.set_port_number (server_addr_p->get_port_number ());
+
       // Set the local port number to use.
 
       if (con->connect (this->handler_,
