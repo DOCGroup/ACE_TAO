@@ -47,14 +47,16 @@ ACE_Client_Logging_Handler::open (void *)
 
   // Register ourselves to receive SIGPIPE so we can attempt
   // reconnections.
+#if !defined (ACE_WIN32)
   if (ACE_Service_Config::reactor ()->register_handler (SIGPIPE, this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%n: %p\n", 
 		       "register_handler (SIGPIPE)"), -1);
+#endif /* ACE_WIN32 */
 
   // Figure out what remote port we're really bound to.
-  else if (this->peer ().get_remote_addr (server_addr) == -1)
+  if (this->peer ().get_remote_addr (server_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
-
+  
   ACE_DEBUG ((LM_DEBUG, 
 	      "starting up Client Logging Daemon, "
 	      "connected to port %d on handle %d\n",
