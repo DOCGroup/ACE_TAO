@@ -1,10 +1,11 @@
 // $Id$
-project(NavDisplayGUI_exec) : ciao_server {
+project(NavDisplayGUI_exec) : ciao_server, qt_moc {
   depends   += NavDisplay_exec
   sharedname = NavDisplayGUI_exec
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
   libpaths  += .. ../NavDisplay $(QTDIR)/lib
-  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL QT_THREAD_SUPPORT
+  dllflags   = NAVDISPLAY_EXEC_BUILD_DLL QT_DLL
+  macros    += QT_THREAD_SUPPORT
   includes  += ../NavDisplay $(QTDIR)/include
   idlflags  +=  -I ../NavDisplay -Wb,export_macro=NAVDISPLAY_EXEC_Export -Wb,export_include=NavDisplay_exec_export.h
   idlgendir = ./
@@ -37,14 +38,6 @@ project(NavDisplayGUI_exec) : ciao_server {
         NavDisplayGUI_exec.cpp
   }
 
-  Define_Custom(MOC) {
-    automatic = 0
-    command = $(QTDIR)/bin/moc
-    output_option = -o
-    inputext = .h
-    pre_extension = _moc
-    source_outputext = .cpp
-  }
   MOC_Files {
     DetailView.h
     MapView.h
