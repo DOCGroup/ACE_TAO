@@ -1,3 +1,21 @@
+Thu Jan 16 15:51:16 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* Dump.cpp (register_object): initialized "slot" so that g++ doesn't
+	  complain about uninitialized use
+
+	* Reactor.cpp (initialized): use ACE_GUARD_RETURN instead of
+	  ACE_GUARD because the function returns a value;
+	  (find): initialize "i" if handle is out of range so that g++
+	  doesn't complain about uninitialized use
+
+	* Service_Repository.cpp (remove): removed unused variable "handle"
+
+	* Thread_Manager.h: made destructor virtual now that spawn_i () is
+	  virtual
+
+	* Timer_Heap.cpp: changed some int loop indicies to size_t to
+	  make sure that comparisons are consistently signed or unsigned
+
 Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_Queue.cpp (expire): Changed a line of code from
