@@ -1,3 +1,10 @@
+Wed Mar 31 09:12:00 2004  David Smith  <dts@prismtechnologies.com>
+
+        * orbsvcs/orbsvcs/Makefile:
+
+          Added dependency to avoid some HPUX compile errors. Thanks
+          to Kris Dekeyser <Kris.Dekeyser@lms.be> for suggesting this.
+
 Tue Mar 30 08:48:06 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/TAO_Tests.dsw:
