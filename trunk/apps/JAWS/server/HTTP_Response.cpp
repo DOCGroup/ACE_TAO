@@ -320,7 +320,7 @@ HTTP_Response::build_headers (void)
     }
   else
     {
-      HTTP_HEADER = new char[BUFSIZ * 4];
+      // HTTP_HEADER = new char[BUFSIZ * 4];
       // We assume that at this point everything is OK
 
       if (! this->request_.cgi ())

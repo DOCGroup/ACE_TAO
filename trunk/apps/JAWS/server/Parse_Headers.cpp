@@ -183,7 +183,7 @@ Headers_Map::Map_Item::operator const char * (void) const
 Headers_Map::Map_Item &
 Headers_Map::Map_Item::operator= (char * value)
 {
-  ACE_OS::free ((void *)this->value_);
+  ACE_OS::free ((void *) this->value_);
   this->value_ = ACE_OS::strdup (value);
   return *this;
 }
@@ -191,7 +191,7 @@ Headers_Map::Map_Item::operator= (char * value)
 Headers_Map::Map_Item &
 Headers_Map::Map_Item::operator= (const char * value)
 {
-  ACE_OS::free ((void *)this->value_);
+  ACE_OS::free ((void *) this->value_);
   this->value_ = ACE_OS::strdup (value);
   return *this;
 }
@@ -199,7 +199,7 @@ Headers_Map::Map_Item::operator= (const char * value)
 Headers_Map::Map_Item &
 Headers_Map::Map_Item::operator= (const Headers_Map::Map_Item & mi)
 {
-  ACE_OS::free ((void *)this->value_);
+  ACE_OS::free ((void *) this->value_);
   this->value_ = ACE_OS::strdup (mi.value_);
   return *this;
 }
@@ -257,13 +257,26 @@ Headers_Map::find (const char * const header) const
 Headers_Map::Map_Item *
 Headers_Map::place (const char *const header)
 {
+  ACE_OS::free ((void *) this->map_[this->num_headers_++].header_);
   this->map_[this->num_headers_++].header_ = ACE_OS::strdup(header);
-  ::qsort (this->map_,
-	   this->num_headers_,
-	   sizeof (Headers_Map::Map_Item),
-	   Headers_Map::compare);
 
-  return this->find (header);
+  int i = this->num_headers_-1;
+  Headers_Map::Map_Item temp_item;
+
+  while (i > 0)
+    {
+      if (Headers_Map::compare (&(this->map_[i]), &(this->map_[i-1])) > 0)
+        break;
+      ACE_OS::memcpy (temp_item, this->map_[i-1],
+                      sizeof (Headers_Map::Map_Item));
+      ACE_OS::memcpy (this->map_[i-1], this->map_[i],
+                      sizeof (Headers_Map::Map_Item));
+      ACE_OS::memcpy (this->map_[i], temp_item,
+                      sizeof (Headers_Map::Map_Item));
+      i--;
+    }
+
+  return &(this->map_[i]);
 }
 
 int
@@ -275,6 +288,6 @@ Headers_Map::compare (const void *item1,
   a = (Headers_Map::Map_Item *) item1;
   b = (Headers_Map::Map_Item *) item2;
 
-  return ACE_OS::strcasecmp (a->header_,
-			     b->header_);
+  return ACE_OS::strcasecmp (a->header_ ? a->header_ : "",
+			     b->header_ ? a->header_ : "");
 }
