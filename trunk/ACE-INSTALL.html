@@ -49,7 +49,7 @@ process</A>, as well.<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 2.5 and 2.6, Windows NT (MSVC++ 4.x, 5.0, and 6.0),
+    <td>Solaris 2.5, 2.6, and 7, Windows NT (MSVC++ 4.x, 5.0, and 6.0),
         DEC Alpha Windows NT (MSVC++ 5.0), Linux/Intel,
         Linux/Alpha, VxWorks, LynxOS, Digital UNIX 4.0,
         HP/UX, AIX
@@ -105,11 +105,11 @@ try to help you fix the problems.
       up-to-date information about ACE on CE.  ACE can only be built as
       DLL library now.<p>
 
-  <LI><B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x) using Sun CC 3.0.1, Sun
-      C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x. </B> <P>
+  <LI><B> Sun OS 5.x/4.x (a.k.a. Solaris 2.x/1.x, Solaris 7) using Sun
+      CC 3.0.1, Sun C++ 4.0.x, Centerline C++ 2.x, and GNU gcc 2.7.x.</B><P>
 
       All the source code and tests should build and run without
-      any problems on Solaris 2.5.1 and 2.6 platforms using the
+      any problems on Solaris 2.5.1, 2.6 and 7 platforms using the
       Sun C++ compiler.  We use this version/patchlevel of
       Sun C++:<p>
       <pre>
@@ -137,6 +137,16 @@ try to help you fix the problems.
       To disable ACE thread support completely, build with the
       <code>threads=0</code> make flag.  See the <a href="#flags">Makefile
       Flags</a> section below for more information on make flags.<p>
+
+      If you use g++ or egcs on Solaris 7, you might need to rebuild
+      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++ and egcs
+      provide replacements for system header files.  The replacements on
+      older SunOS systems are not compatible with the SunOS 5.7 system
+      headers.  See <a
+      href="http://www.cs.wustl.edu/~levine/Hints.html">David Levine's
+      Hints page</a>
+      for instructions on how to build egcs on a SunOS 5.7 host, using
+      a g++ or egcs that was built on an older SunOS host.<p>
 
   <LI><B> Sun OS 4.1.x using Centerline C++ 2.x, Sun CC 3.x, and Lucid
       Energize 3.2. </B> <P>
