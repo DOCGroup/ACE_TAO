@@ -1,3 +1,20 @@
+Wed Jul 23 23:47:52 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/os_include/os_dlfcn.h:
+          Changed ACE_DEFAULT_SHLIB_MODE to be RTLD_LAZY|RTLD_GLOBAL on Linux
+          in order to enable dynamic_cast'ing in shared libraries loaded by
+          ACE_DLL.
+
+        * include/makeinclude/platform_linux.GNU:
+          Added -Wl,-E to LDFLAGS to add all symbols to the dynamic symbol
+          table in order to enable dynamic_cast'ing in shared libraries
+          loaded by ACE_DLL.
+
+        * tests/DLL_Test.cpp:
+        * tests/DLL_Test.h:
+        * tests/DLL_Test_Impl.cpp:
+          Added a dynamic_cast test to the existing DLL_Test.
+
 Wed Jul 23 12:43:48 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/UUID.cpp:

@@ -40,6 +40,9 @@ ACE_RCSID(tests, DLL_Test, "$Id$")
 // Declare the type of the symbol:
 typedef Hello *(*Hello_Factory)(void);
 
+// for dynamic_cast_test
+typedef int ( *PFN )( Parent* );
+
 int handle_test (ACE_DLL &dll)
 {
   // Test the get/set_handle methods.
@@ -119,6 +122,35 @@ int basic_test (ACE_DLL &dll)
   return 0;
 }
 
+int dynamic_cast_test (ACE_DLL &dll)
+{
+  Child child;
+  child.test();
+
+  Parent *parent = &child;
+
+  void *foo;
+
+  foo = dll.symbol (ACE_TEXT ("dynamic_cast_test"));
+
+  // Cast the void* to long first.
+  ptrdiff_t tmp = ACE_reinterpret_cast (ptrdiff_t, foo);
+  PFN pfnAcquire = ACE_reinterpret_cast (PFN, tmp);
+  if (pfnAcquire == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       dll.error ()),
+                      -1);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %x %x\n"), 
+              &child,  dynamic_cast<Child*>( parent )));
+
+  if (pfnAcquire( &child ) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dyanmic_cast failed.\n")), -1);
+
+  return 0;
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -133,6 +165,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_DLL dll;
 
   retval += basic_test (dll);
+
+  retval += dynamic_cast_test (dll);
 
   retval += handle_test (dll);
 

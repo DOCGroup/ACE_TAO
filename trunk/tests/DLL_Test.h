@@ -53,4 +53,29 @@ public:
   //@}
 };
 
+// These classes are used to test dynamic_cast in shared libraries.
+class Parent
+{
+public:
+   Parent() {};
+   virtual ~Parent() {};
+
+   virtual void test()
+   {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parent called\n")));
+   }
+};
+
+class Child : public Parent
+{
+ public:
+   Child() {};
+   virtual~ Child() {};
+
+   virtual void test()
+   {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
+   }
+};
+
 #endif /* ACE_TESTS_DLL_TEST_H */
