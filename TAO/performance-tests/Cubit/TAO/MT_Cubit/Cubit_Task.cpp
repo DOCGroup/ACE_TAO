@@ -45,7 +45,7 @@ Cubit_Task::svc (void)
 
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "ORB initialization failed.\n"),
+                       "%p\n", "ORB initialization failed"),
                       -1);
   result = this->create_servants ();
   if (result == -1)
@@ -116,11 +116,11 @@ Cubit_Task::initialize_orb (void)
         return 0;
       // Initialize the TAO_Naming_Client.
       if (my_name_client_.init (orb_.in ()) != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   " (%P|%t) Unable to initialize "
-			   "the TAO_Naming_Client. \n"),
-			  -1);
-      
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           " (%P|%t) Unable to initialize "
+                           "the TAO_Naming_Client. \n"),
+                          -1);
+
       // Register the servant with the Naming Context....
       CosNaming::Name cubit_context_name (1);
       cubit_context_name.length (1);
@@ -135,18 +135,18 @@ Cubit_Task::initialize_orb (void)
       if (TAO_TRY_ENV.exception() != 0)
         {
           CosNaming::NamingContext::AlreadyBound_ptr ex =
-            CosNaming::NamingContext::AlreadyBound::_narrow 
+            CosNaming::NamingContext::AlreadyBound::_narrow
             (TAO_TRY_ENV.exception());
           if (ex != 0)
             {
               TAO_TRY_ENV.clear ();
-              objref = this->my_name_client_->resolve 
+              objref = this->my_name_client_->resolve
                 (cubit_context_name, TAO_TRY_ENV);
               ACE_DEBUG ((LM_DEBUG,
                           "NamingContext::AlreadyBound\n"));
             }
           else
-            TAO_TRY_ENV.print_exception 
+            TAO_TRY_ENV.print_exception
               ("bind() Cubit context object\n");
         }
       TAO_CHECK_ENV;
@@ -221,7 +221,7 @@ Cubit_Task::create_servants (void)
                                i),
                               2);
 
-          this->orb_manager_.activate_under_child_poa 
+          this->orb_manager_.activate_under_child_poa
             (buffer,
              this->servants_[i],
              TAO_TRY_ENV);
@@ -254,7 +254,7 @@ Cubit_Task::create_servants (void)
                                              cubit.in (),
                                              TAO_TRY_ENV);
               if (TAO_TRY_ENV.exception () != 0)
-                TAO_TRY_ENV.print_exception 
+                TAO_TRY_ENV.print_exception
                   ("Attempt to bind() a cubit object to the name service Failed!\n");
               else
                 ACE_DEBUG ((LM_DEBUG,
