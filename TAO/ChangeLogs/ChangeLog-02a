@@ -13,6 +13,7 @@ Mon Jul  1 19:09:43 2002  Jeff Parsons <parsons@cs.wustl.edu>
 Mon Jul  1 18:22:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/orbsvcs/FT_CORBA.idl:
 
           Added leading underscore to all occurrences of the
           identifier 'TypeId', since it is an IDL3 keyword.
