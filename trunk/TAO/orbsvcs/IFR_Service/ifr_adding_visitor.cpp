@@ -1524,12 +1524,12 @@ ifr_adding_visitor::load_any (AST_Expression::AST_ExprValue *ev,
     case AST_Expression::EV_wstring:
       {
         char *str = ev->u.wstrval;
-        int len = ACE_OS::strlen (str);
+        size_t len = ACE_OS::strlen (str);
         CORBA::WChar *wstr = 0;
         ACE_NEW (wstr,
                  CORBA::WChar[len + 1]);
 
-        for (int i = 0; i < len; ++i)
+        for (size_t i = 0; i < len; ++i)
           {
             wstr[i] = ACE_static_cast (CORBA::WChar, str[i]);
           }
