@@ -6,7 +6,7 @@ NAME = Collocation
 
 OBJFILES = \
 	$(OBJDIR)\Coll_Tester.obj \
-	$(OBJDIR)\main.obj
+	$(OBJDIR)\Collocation.obj
 
 CFLAGS = \
 	$(ACE_CFLAGS) \
