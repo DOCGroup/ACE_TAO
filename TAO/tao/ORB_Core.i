@@ -1,8 +1,7 @@
 // -*- C++ -*-
+//
 // $Id$
 
-
-#include "ace/Dynamic_Service.h"
 
 ACE_INLINE CORBA::ULong
 TAO_ORB_Core::_incr_refcnt (void)
@@ -516,16 +515,3 @@ TAO_ORB_Core_Auto_Ptr::operator *() const
   return *this->get ();
 }
 
-// ****************************************************************
-
-ACE_INLINE TAO_ORB_Table *
-TAO_ORB_Table::instance (void)
-{
-  return TAO_Singleton<TAO_ORB_Table, ACE_SYNCH_MUTEX>::instance ();
-}
-
-ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Table::first_orb (void)
-{
-  return this->first_orb_;
-}

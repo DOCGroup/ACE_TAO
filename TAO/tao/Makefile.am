@@ -115,6 +115,7 @@ ORB_CORE_FILES = \
   Asynch_Invocation.cpp \
   DII_Invocation.cpp \
   ORB_Core.cpp \
+  ORB_Table.cpp \
   Leader_Follower.cpp \
   Reactor_Registry.cpp \
   Single_Reactor.cpp \
@@ -308,6 +309,7 @@ HEADER_FILES = \
   NVList.h \
   ORB.h \
   ORB_Core.h \
+  ORB_Table.h \
   Object.h \
   ObjectIDList.h \
   Object_Adapter.h \
@@ -443,6 +445,7 @@ INLINE_FILES = \
   NVList.i \
   ORB.i \
   ORB_Core.i \
+  ORB_Table.inl \
   Object.i \
   ObjectIDList.i \
   Object_Adapter.i \

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/ORB.h"
+#include "tao/ORB_Table.h"
 #include "tao/Connector_Registry.h"
 
 #include "ace/Dynamic_Service.h"
