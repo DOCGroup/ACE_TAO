@@ -175,7 +175,7 @@ be_visitor_sequence_ci::gen_object_manager (be_sequence *node)
 *os << "ACE_INLINE " << full_object_manager << " &" << be_nl
       << full_object_manager << "::operator= ("; 
   pt->accept (visitor); 
-  *os << "_var p)" << be_nl
+  *os << "_var &p)" << be_nl
       << "// Assignment from "; 
   pt->accept (visitor); 
   *os << "_var ." << be_nl

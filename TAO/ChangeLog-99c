@@ -1,5 +1,7 @@
 Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	
+
 	* tao/Sequence_T.cpp	 
 	* tao/Sequence_T.h
 	* tao/Sequence_T.i: Added an operator= (T_var) in
@@ -21,6 +23,19 @@ Wed Jun  9 22:18:10 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 	The changes in these files were done to reflect the changes that
 	were made in the classes above.  They had to be done keep in sync
 	with the new template class declarations.
+
+	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ch.cpp
+	* TAO_IDL/be/be_visitor_sequence/gen_object_manager_ci.cpp 
+	* TAO_IDL/be/be_visitor_sequence/sequence_base.cpp 
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp
+	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp
+	* TAO_IDL/be_include/be_visitor_sequence/sequence_base.h: Changes
+	to the IDL compiler to reflect the above change that was
+	made. Thanks to Jake Hamby <jehamby@anobject.com> for pointing out
+	the need for the assignment operator and also in helping us out
+	with a sample solution.
+
 
 Wed Jun  9 21:13:00 1999  Chris Gill <cdgill@cs.wustl.edu>
 
