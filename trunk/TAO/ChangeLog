@@ -1,3 +1,9 @@
+Fri Jan  7 17:49:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Event/Event_Channel.h:
+          Include ace/Unbounded_Set.h, not Unbound_Set_Ex.h because that
+          one has been removed
+
 Fri Jan  7 14:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/orb.idl:
