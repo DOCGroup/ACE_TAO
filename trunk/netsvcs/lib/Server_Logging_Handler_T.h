@@ -27,6 +27,8 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
 #include "ace/SString.h"
+#include "ace/Atomic_Op.h"
+
 
 #if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) && !defined (__GNUG__)
 #include "Base_Optimizer.h"
