@@ -76,7 +76,7 @@
         <componentinstantiationref idref="a_BMDisplay"/>
       </consumesport>
       <publishesport>
-        <publishesidentifier>in_avail</publishesidentifier>
+        <publishesidentifier>out_avail</publishesidentifier>
         <componentinstantiationref idref="a_BMClosedED"/>
       </publishesport>
     </connectevent>
