@@ -22,6 +22,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Typecode.h"
+#include "tao/Any.h"
 #include "tao/ORB.h"
 
 class TAO_OutputCDR;
