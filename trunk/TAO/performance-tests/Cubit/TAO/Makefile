@@ -8,6 +8,8 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
+.NOTPARALLEL:
+
 # Currently, IDL_Cubit *must* come before the IDL_Cubit tests.
 DIRS  = IDL_Cubit \
         MT_Cubit \
