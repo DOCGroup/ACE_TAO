@@ -34,7 +34,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
     ACE_NOTSUP_RETURN (-1);
 
   const int bytes_sent = ::SSL_write (this->ssl_,
-                                      ACE_static_cast (const char *, buf),
+                                      static_cast<const char *> (buf),
                                       n);
 
   switch (::SSL_get_error (this->ssl_, bytes_sent))
@@ -127,7 +127,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
     {
       if (ACE_BIT_ENABLED (flags, MSG_PEEK))
         bytes_read = ::SSL_peek (this->ssl_,
-                                 ACE_static_cast (char *, buf),
+                                 static_cast<char *> (buf),
                                  n);
       else
         ACE_NOTSUP_RETURN (-1);
@@ -135,7 +135,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   else
     {
       bytes_read = ::SSL_read (this->ssl_,
-                               ACE_static_cast (char *, buf),
+                               static_cast<char *> (buf),
                                n);
     }
 

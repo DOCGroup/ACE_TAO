@@ -331,8 +331,7 @@ ACE_Log_Msg::instance (void)
 
   // Get the tss_log_msg from thread-specific storage.
   if (ACE_Thread::getspecific (*(log_msg_tss_key ()),
-                               ACE_reinterpret_cast (void **,
-                                                     &tss_log_msg)) == -1)
+                               reinterpret_cast<void **> (&tss_log_msg)) == -1)
     return 0; // This should not happen!
 
   // Check to see if this is the first time in for this thread.
@@ -355,8 +354,8 @@ ACE_Log_Msg::instance (void)
         // when the thread terminates.
 
         if (ACE_Thread::setspecific (*(log_msg_tss_key()),
-                                     ACE_reinterpret_cast (void *,
-                                                           tss_log_msg)) != 0)
+                                     reinterpret_cast<void *> (tss_log_msg))
+            != 0)
           return 0; // Major problems, this should *never* happen!
       }
     }
@@ -471,9 +470,9 @@ ACE_Log_Msg::close (void)
      if (key_created_ == 1)
        {
          ACE_thread_mutex_t *lock =
-           ACE_reinterpret_cast (ACE_thread_mutex_t *,
-                                 ACE_OS_Object_Manager::preallocated_object
-                                 [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
+           reinterpret_cast<ACE_thread_mutex_t *> (
+             ACE_OS_Object_Manager::preallocated_object
+             [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
          ACE_OS::thread_mutex_lock (lock);
 
          if (key_created_ == 1)
@@ -991,10 +990,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                              this->getpid ());
   // bp is pointer to where to put next part of logged message.
   // bspace is the number of characters remaining in msg_.
-  ACE_TCHAR *bp = ACE_const_cast (ACE_TCHAR *, this->msg ());
+  ACE_TCHAR *bp = const_cast<ACE_TCHAR *> (this->msg ());
   size_t bspace = ACE_Log_Record::MAXLOGMSGLEN;  // Leave room for Nul term.
   if (this->msg_off_ <= ACE_Log_Record::MAXLOGMSGLEN)
-    bspace -= ACE_static_cast (size_t, this->msg_off_);
+    bspace -= static_cast<size_t> (this->msg_off_);
 
   // If this platform has snprintf() capability to prevent overrunning the
   // output buffer, use it. To avoid adding a maintenance-hassle compile-
@@ -1015,11 +1014,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
         {
           for (const ACE_TCHAR *s = ACE_Log_Msg::program_name_;
                bspace > 1 && (*bp = *s) != '\0';
-               s++, bspace--)
+               ++s, --bspace)
             bp++;
 
           *bp++ = '|';
-          bspace--;
+          --bspace;
         }
     }
 
@@ -1039,11 +1038,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
         s = day_and_time;
      }
 
-     for (; bspace > 1 && (*bp = *s) != '\0'; s++, bspace--)
-        bp++;
+     for (; bspace > 1 && (*bp = *s) != '\0'; ++s, --bspace)
+       ++bp;
 
      *bp++ = '|';
-     bspace--;
+     --bspace;
   }
 
   while (*format_str != '\0' && bspace > 0)
@@ -1054,13 +1053,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
       if (*format_str != '%')
         {
           *bp++ = *format_str++;
-          bspace--;
+          --bspace;
         }
       else if (format_str[1] == '%') // An "escaped" '%' (just print one '%').
         {
           *bp++ = *format_str++;    // Store first %
-          format_str++;             // but skip second %
-          bspace--;
+          ++format_str;             // but skip second %
+          --bspace;
         }
       else
         {
@@ -1212,10 +1211,10 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   if (can_check)
                     this_len = ACE_OS::snprintf
                       (bp, bspace, format,
-                       ACE_static_cast (int, this->getpid ()));
+                       static_cast<int> (this->getpid ()));
                   else
                     this_len = ACE_OS::sprintf
-                      (bp, format, ACE_static_cast (int, this->getpid ()));
+                      (bp, format, static_cast<int> (this->getpid ()));
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
@@ -1229,7 +1228,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         && errno < sys_nerr
 #  endif  /* !__GLIBC__ */
                         )
-                      {                      
+                      {
                         ACE_OS::strcpy (fp, ACE_LIB_TEXT ("s: %s"));
                         if (can_check)
                           this_len = ACE_OS::snprintf
@@ -1448,7 +1447,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case '$': // insert a newline, then indent the next line
                           // according to %I
                   *bp++ = '\n';
-                  bspace--;
+                  --bspace;
                   /* fallthrough */
 
                 case 'I': // Indent with nesting_depth*width spaces
@@ -1466,7 +1465,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     wp = static_cast<int> (bspace);
                   for (tmp_indent = wp;
                        tmp_indent;
-                       tmp_indent--)
+                       --tmp_indent)
                     *bp++ = ' ';
 
                   *bp = '\0';
@@ -1483,7 +1482,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         bspace > 1)
                       {
                         *bp++ = '{';
-                        bspace--;
+                        --bspace;
                       }
                     ACE_Log_Msg::msg_off_ =  bp - this->msg_;
 
@@ -1807,7 +1806,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         if (wchar_t_str == 0)
                           break;
 
-                        for (size_t i = 0; i < len; i++)
+                        for (size_t i = 0; i < len; ++i)
                           {
                             wchar_t_str[i] = wchar_str[i];
                           }
@@ -1934,23 +1933,23 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   while (start_format != format_str && bspace > 0)
                     {
                       *bp++ = *start_format++;
-                      bspace--;
+                      --bspace;
                     }
                   if (bspace > 0)
                     {
                       *bp++ = *format_str;
-                      bspace--;
+                      --bspace;
                     }
                   break;
                 }
 
               // Bump to the next char in the caller's format_str
-              format_str++;
+              ++format_str;
             }
 
           if (!skip_nul_locate)
             while (*bp != '\0') // Locate end of bp.
-              bp++;
+              ++bp;
         }
     }
 
