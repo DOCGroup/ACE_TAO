@@ -224,6 +224,45 @@ operator>>(TAO_InputCDR &cdr,
 }
 
 CORBA::Boolean
+TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
+                         TAO_OutputCDR &msg,
+                         TAO_ORB_Core* orb_core)
+{
+  if (orb_core->orb_params ()->use_lite_protocol ())
+    return TAO_GIOP::start_message_lite (type, msg);
+  else
+    return TAO_GIOP::start_message_std (type, msg);
+}
+
+CORBA::Boolean
+TAO_GIOP::write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
+                                CORBA::ULong request_id,
+                                CORBA::Boolean is_roundtrip,
+                                const TAO_opaque& key,
+                                const char* opname,
+                                CORBA::Principal_ptr principal,
+                                TAO_OutputCDR &msg,
+                                TAO_ORB_Core *orb_core)
+{
+  if (orb_core->orb_params ()->use_lite_protocol ())
+    return TAO_GIOP::write_request_header_lite (svc_ctx,
+                                                request_id,
+                                                is_roundtrip,
+                                                key,
+                                                opname,
+                                                principal,
+                                                msg);
+  else
+    return TAO_GIOP::write_request_header_std (svc_ctx,
+                                               request_id,
+                                               is_roundtrip,
+                                               key,
+                                               opname,
+                                               principal,
+                                               msg);
+}
+
+CORBA::Boolean
 TAO_GIOP::send_message (TAO_Transport *transport,
                         TAO_OutputCDR &stream,
                         TAO_ORB_Core *orb_core)
@@ -460,95 +499,6 @@ TAO_GIOP::read_buffer (TAO_Transport *transport,
   return bytes_read;
 }
 
-int
-TAO_GIOP::parse_header_std (ACE_Message_Block *payload,
-                            TAO_GIOP_MessageHeader &header)
-{
-  char *buf = payload->rd_ptr ();
-
-  // The values are hard-coded to support non-ASCII platforms
-  if (!(buf [0] == 0x47    // 'G'
-        && buf [1] == 0x49 // 'I'
-        && buf [2] == 0x4f // 'O'
-        && buf [3] == 0x50 // 'P'
-        ))
-    {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) bad header, magic word [%c%c%c%c]\n",
-                    buf[0], buf[1], buf[2], buf[3]));
-      return -1;
-    }
-
-#if 0
-  // @@ Nobody uses this magic number, no sense in wasting time here.
-  header.magic[0] = 0x47;
-  header.magic[1] = 0x49;
-  header.magic[2] = 0x4f;
-  header.magic[3] = 0x50;
-#endif /* 0 */
-  header.giop_version.major = buf[4];
-  header.giop_version.minor = buf[5];
-  header.byte_order = buf[6];
-  header.message_type = buf[7];
-
-  TAO_InputCDR cdr (payload,
-                    ACE_static_cast(int,header.byte_order));
-
-  cdr.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
-  cdr.read_ulong (header.message_size);
-
-  if (TAO_debug_level > 2)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n",
-                  header.giop_version.major,
-                  header.giop_version.minor,
-                  header.byte_order,
-                  header.message_type,
-                  header.message_size));
-    }
-  return 0;
-}
-
-int
-TAO_GIOP::parse_header_lite (ACE_Message_Block *payload,
-                             TAO_GIOP_MessageHeader& header)
-{
-  char *buf = payload->rd_ptr ();
-
-#if 0
-  // @@ Nobody uses this magic number, no sense in wasting time here.
-  header.magic[0] = 0x47;
-  header.magic[1] = 0x49;
-  header.magic[2] = 0x4f;
-  header.magic[3] = 0x50;
-#endif /* 0 */
-  header.giop_version.major = 1;
-  header.giop_version.minor = 0;
-  header.byte_order = TAO_ENCAP_BYTE_ORDER;
-  header.message_type = buf[4];
-
-  TAO_InputCDR cdr (payload,
-                    ACE_static_cast(int,header.byte_order));
-
-  cdr.read_ulong (header.message_size);
-  return 0;
-}
-
-int
-TAO_GIOP::parse_header (TAO_ORB_Core *orb_core,
-                        ACE_Message_Block *payload,
-                        TAO_GIOP_MessageHeader& header)
-{
-  if (orb_core->orb_params ()->use_lite_protocol ())
-    return TAO_GIOP::parse_header_lite (payload,
-                                        header);
-  else
-    return TAO_GIOP::parse_header_std (payload,
-                                       header);
-}
-
 CORBA::Boolean
 TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
                                     CORBA::Environment &)
@@ -557,65 +507,6 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
 
   return (msg.read_ulong (this->request_id)
           && (msg >> this->object_key) != 0);
-}
-
-CORBA::Boolean
-TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
-                             TAO_OutputCDR &msg)
-{
-  msg.reset ();
-
-  // if (msg.size () < TAO_GIOP_HEADER_LEN)
-  // return 0;
-
-  static CORBA::Octet header[] =
-  {
-    // 'G', 'I', 'O', 'P',
-    0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
-    TAO_GIOP_MessageHeader::MY_MAJOR,
-    TAO_GIOP_MessageHeader::MY_MINOR,
-    TAO_ENCAP_BYTE_ORDER
-  };
-
-  static int header_size =
-    sizeof(header)/sizeof(header[0]);
-  msg.write_octet_array (header,
-                         header_size);
-  msg.write_octet (type);
-
-  // Write a dummy <size> later it is set to the right value...
-  // @@ TODO Maybe we should store the OutputCDR status in
-  CORBA::ULong size = 0;
-  msg.write_ulong (size);
-
-  return 1;
-}
-
-CORBA::Boolean
-TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
-                              TAO_OutputCDR &msg)
-{
-  msg.reset ();
-
-  // Write a dummy <size> later it is set to the right value...
-  // @@ TODO Maybe we should store the OutputCDR status in
-  CORBA::ULong size = 0;
-  msg.write_ulong (size);
-
-  msg.write_octet (type);
-
-  return 1;
-}
-
-CORBA::Boolean
-TAO_GIOP::start_message (TAO_GIOP::Message_Type type,
-                         TAO_OutputCDR &msg,
-                         TAO_ORB_Core* orb_core)
-{
-  if (orb_core->orb_params ()->use_lite_protocol ())
-    return TAO_GIOP::start_message_lite (type, msg);
-  else
-    return TAO_GIOP::start_message_std (type, msg);
 }
 
 const char *
@@ -1332,6 +1223,177 @@ TAO_GIOP::send_reply_exception (TAO_Transport *transport,
   ACE_ENDTRY;
 
   return TAO_GIOP::send_message (transport, output, orb_core);
+}
+
+CORBA::Boolean
+TAO_GIOP::start_message_std (TAO_GIOP::Message_Type type,
+                             TAO_OutputCDR &msg)
+{
+  msg.reset ();
+
+  // if (msg.size () < TAO_GIOP_HEADER_LEN)
+  // return 0;
+
+  static CORBA::Octet header[] =
+  {
+    // 'G', 'I', 'O', 'P',
+    0x47, 0x49, 0x4f, 0x50, // work on non-ASCII platforms...
+    TAO_GIOP_MessageHeader::MY_MAJOR,
+    TAO_GIOP_MessageHeader::MY_MINOR,
+    TAO_ENCAP_BYTE_ORDER
+  };
+
+  static int header_size =
+    sizeof(header)/sizeof(header[0]);
+  msg.write_octet_array (header,
+                         header_size);
+  msg.write_octet (type);
+
+  // Write a dummy <size> later it is set to the right value...
+  // @@ TODO Maybe we should store the OutputCDR status in
+  CORBA::ULong size = 0;
+  msg.write_ulong (size);
+
+  return 1;
+}
+
+CORBA::Boolean
+TAO_GIOP::start_message_lite (TAO_GIOP::Message_Type type,
+                              TAO_OutputCDR &msg)
+{
+  msg.reset ();
+
+  // Write a dummy <size> later it is set to the right value...
+  // @@ TODO Maybe we should store the OutputCDR status in
+  CORBA::ULong size = 0;
+  msg.write_ulong (size);
+
+  msg.write_octet (type);
+
+  return 1;
+}
+
+CORBA::Boolean
+TAO_GIOP::write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
+                                    CORBA::ULong request_id,
+                                    CORBA::Boolean is_roundtrip,
+                                    const TAO_opaque& key,
+                                    const char* opname,
+                                    CORBA::Principal_ptr principal,
+                                    TAO_OutputCDR &out_stream)
+{
+  out_stream << svc_ctx;
+  out_stream << request_id;
+  out_stream << CORBA::Any::from_boolean (is_roundtrip);
+  out_stream << key;
+  out_stream << opname;
+  out_stream << principal;
+  return 1;
+}
+
+CORBA::Boolean
+TAO_GIOP::write_request_header_lite (const TAO_GIOP_ServiceContextList&,
+                                     CORBA::ULong request_id,
+                                     CORBA::Boolean is_roundtrip,
+                                     const TAO_opaque& key,
+                                     const char* opname,
+                                     CORBA::Principal_ptr,
+                                     TAO_OutputCDR &out_stream)
+{
+  out_stream << request_id;
+  out_stream << CORBA::Any::from_boolean (is_roundtrip);
+  out_stream << key;
+  out_stream << opname;
+  return 1;
+}
+
+int
+TAO_GIOP::parse_header (TAO_ORB_Core *orb_core,
+                        ACE_Message_Block *payload,
+                        TAO_GIOP_MessageHeader& header)
+{
+  if (orb_core->orb_params ()->use_lite_protocol ())
+    return TAO_GIOP::parse_header_lite (payload,
+                                        header);
+  else
+    return TAO_GIOP::parse_header_std (payload,
+                                       header);
+}
+
+int
+TAO_GIOP::parse_header_std (ACE_Message_Block *payload,
+                            TAO_GIOP_MessageHeader &header)
+{
+  char *buf = payload->rd_ptr ();
+
+  // The values are hard-coded to support non-ASCII platforms
+  if (!(buf [0] == 0x47    // 'G'
+        && buf [1] == 0x49 // 'I'
+        && buf [2] == 0x4f // 'O'
+        && buf [3] == 0x50 // 'P'
+        ))
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) bad header, magic word [%c%c%c%c]\n",
+                    buf[0], buf[1], buf[2], buf[3]));
+      return -1;
+    }
+
+#if 0
+  // @@ Nobody uses this magic number, no sense in wasting time here.
+  header.magic[0] = 0x47;
+  header.magic[1] = 0x49;
+  header.magic[2] = 0x4f;
+  header.magic[3] = 0x50;
+#endif /* 0 */
+  header.giop_version.major = buf[4];
+  header.giop_version.minor = buf[5];
+  header.byte_order = buf[6];
+  header.message_type = buf[7];
+
+  TAO_InputCDR cdr (payload,
+                    ACE_static_cast(int,header.byte_order));
+
+  cdr.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
+  cdr.read_ulong (header.message_size);
+
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n",
+                  header.giop_version.major,
+                  header.giop_version.minor,
+                  header.byte_order,
+                  header.message_type,
+                  header.message_size));
+    }
+  return 0;
+}
+
+int
+TAO_GIOP::parse_header_lite (ACE_Message_Block *payload,
+                             TAO_GIOP_MessageHeader& header)
+{
+  char *buf = payload->rd_ptr ();
+
+#if 0
+  // @@ Nobody uses this magic number, no sense in wasting time here.
+  header.magic[0] = 0x47;
+  header.magic[1] = 0x49;
+  header.magic[2] = 0x4f;
+  header.magic[3] = 0x50;
+#endif /* 0 */
+  header.giop_version.major = 1;
+  header.giop_version.minor = 0;
+  header.byte_order = TAO_ENCAP_BYTE_ORDER;
+  header.message_type = buf[4];
+
+  TAO_InputCDR cdr (payload,
+                    ACE_static_cast(int,header.byte_order));
+
+  cdr.read_ulong (header.message_size);
+  return 0;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

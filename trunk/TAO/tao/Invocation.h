@@ -117,34 +117,6 @@ protected:
   // profiles.
   // It returns TAO_INVOKE_RESTART unless an exception is raised.
 
-private:
-
-  CORBA::Boolean
-  write_request_header (const TAO_GIOP_ServiceContextList& svc_ctx,
-                        CORBA::ULong request_id,
-                        CORBA::Boolean is_roundtrip,
-                        const TAO_opaque& key,
-                        const char* opname,
-                        CORBA::Principal_ptr principal);
-  CORBA::Boolean
-  write_request_header_std (const TAO_GIOP_ServiceContextList& svc_ctx,
-                            CORBA::ULong request_id,
-                            CORBA::Boolean is_roundtrip,
-                            const TAO_opaque& key,
-                            const char* opname,
-                            CORBA::Principal_ptr principal);
-  CORBA::Boolean
-  write_request_header_lite (const TAO_GIOP_ServiceContextList& svc_ctx,
-                             CORBA::ULong request_id,
-                             CORBA::Boolean is_roundtrip,
-                             const TAO_opaque& key,
-                             const char* opname,
-                             CORBA::Principal_ptr principal);
-  // Encode the header for the Request, assuming that the GIOP header
-  // is already there.
-  // TAO support either the standard IIOP request header or a lighter
-  // weight version.
-
 protected:
   TAO_Stub *stub_;
   // The object on which this invocation is going.
