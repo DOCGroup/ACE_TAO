@@ -545,5 +545,5 @@ ACE_SOCK_Dgram::set_nic (const char *option_value)
   return this->ACE_SOCK::set_option (IPPROTO_IP,
                                      IP_MULTICAST_IF,
                                      &multicast_address.imr_interface.s_addr,
-    c	                                 sizeof (struct in_addr));
+                                     sizeof (struct in_addr));
 }
