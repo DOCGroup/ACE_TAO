@@ -10,6 +10,10 @@ ACE_RCSID(ace, OS_NS_strings, "$Id$")
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #if defined (ACE_LACKS_STRCASECMP)
+#  include "ace/OS_NS_ctype.h"
+#endif /* ACE_LACKS_STRCASECMP */
+
+#if defined (ACE_LACKS_STRCASECMP)
 int
 ACE_OS::strcasecmp_emulation (const char *s, const char *t)
 {

@@ -120,6 +120,9 @@
 #define ACE_LACKS_INET_ATON
 #define ACE_LACKS_DLFCN_H
 #define ACE_LACKS_SYS_SELECT_H
+#define ACE_LACKS_WCHAR_H
+#define ACE_LACKS_REGEX_H
+#define ACE_LACKS_TCP_NODELAY
 #define ACE_MALLOC_ALIGN 8
 #define ACE_HAS_TYPENAME_KEYWORD
 // Don't use MAP_FIXED, at least for now.

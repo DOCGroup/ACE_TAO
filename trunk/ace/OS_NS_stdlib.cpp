@@ -11,6 +11,11 @@ ACE_RCSID(ace, OS_NS_stdlib, "$Id$")
 
 #include "ace/OS_Memory.h"
 
+#if defined (ACE_LACKS_MKTEMP)
+#  include "ace/OS_NS_stdio.h"
+#  include "ace/OS_NS_sys_stat.h"
+#endif /* ACE_LACKS_MKTEMP */
+
 ACE_EXIT_HOOK ACE_OS::exit_hook_ = 0;
 
 void *
