@@ -287,7 +287,7 @@ main (int argc, char *argv[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template ACE_Vector<ACE_CString>;
+  template class ACE_Vector<ACE_CString>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 # pragma instantiate ACE_Vector<ACE_CString>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

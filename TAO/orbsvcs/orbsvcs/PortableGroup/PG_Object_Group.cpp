@@ -573,6 +573,8 @@ void TAO::PG_Object_Group::create_member (
           ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
+    // @@ what if factory_type != type_id != this->type_id_
+
     int created = 0; // bool
     CORBA::ULong factory_count = factories->length ();
     for (CORBA::ULong factory_pos = 0;
@@ -584,18 +586,17 @@ void TAO::PG_Object_Group::create_member (
       {
         PortableGroup::GenericFactory::FactoryCreationId_var fcid;
         CORBA::Object_var member = factory_info.the_factory->create_object (
-          this->type_id_.in (),
+          type_id,
           factory_info.the_criteria,
           fcid. out()
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-
         // convert the new member to a stringified IOR to avoid contamination with group info
-        CORBA::String_var member_ior_string = orb_->object_to_string (member ACE_ENV_ARG_PARAMETER);
+        CORBA::String_var member_ior_string = orb_->object_to_string (member.in () ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
-        PortableGroup::ObjectGroup_var new_reference = this->add_member_to_iogr (member
+        PortableGroup::ObjectGroup_var new_reference = this->add_member_to_iogr (member.in ()
           ACE_ENV_ARG_PARAMETER);
         ACE_CHECK;
 
@@ -679,10 +680,10 @@ void TAO::PG_Object_Group::create_members (size_t count ACE_ENV_ARG_DECL)
           ACE_TRY_CHECK;
 
           // convert the new member to a stringified IOR to avoid contamination with group info
-          CORBA::String_var member_ior_string = orb_->object_to_string (member ACE_ENV_ARG_PARAMETER);
+          CORBA::String_var member_ior_string = orb_->object_to_string (member.in () ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          PortableGroup::ObjectGroup_var new_reference = this->add_member_to_iogr (member
+          PortableGroup::ObjectGroup_var new_reference = this->add_member_to_iogr (member.in ()
             ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
