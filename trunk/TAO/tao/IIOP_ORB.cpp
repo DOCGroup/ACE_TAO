@@ -252,12 +252,12 @@ iioploc_string_to_object (const char *string,
   // Count the No. of profiles in the given list.
   int profile_count = 1;
   
-  for (int i = 0;
+  for (size_t i = 0;
        i < list_of_profiles.length ();
        i++)
     {
       if (list_of_profiles[i] == ',')
-	profile_count++;
+      profile_count++;
     }
 
   // Allocate a Multiple Profile with the given no. of profiles.  
@@ -448,7 +448,7 @@ IIOP_ORB::_tao_add_to_IOR_table (ACE_CString object_id, CORBA::Object_ptr obj)
   CORBA::String_var string =
     this->object_to_string (obj);
   
-  if (string.in () == 0 || string[0] == '\0')
+  if (string.in () == 0 || string.in ()[0] == '\0')
     return -1;
 
   ACE_CString ior (string.in ());
