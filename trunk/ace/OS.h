@@ -5351,6 +5351,10 @@ public:
   static int sigprocmask (int how,
                           const sigset_t *nsp,
                           sigset_t *osp);
+  
+  static int pthread_sigmask (int how,
+                              const sigset_t *nsp,
+                              sigset_t *osp);
 
   // = A set of wrappers for sockets.
   static ACE_HANDLE accept (ACE_HANDLE handle,
