@@ -14,9 +14,9 @@ Sun May  2 13:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Sat May  1 22:36:22 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* Makefile:
-	* GNUMakefile:
+	* GNUmakefile:
 
-	  Renamed "Makefile" to "GNUMakefile" to make it obvious to
+	  Renamed "Makefile" to "GNUmakefile" to make it obvious to
 	  users that GNU Make is required to parse the file.
 
 Sat May  1 22:05:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
