@@ -7,7 +7,7 @@
 #ifndef __ACE_SSL_CLIENT_H
 #define __ACE_SSL_CLIENT_H
 
-#include "ace/BArrier.h"
+#include "ace/Barrier.h"
 #include "ace/Time_Value.h"
 
 #include "ace/SSL/SSL_SOCK_Stream.h"
