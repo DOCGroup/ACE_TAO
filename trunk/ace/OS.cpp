@@ -6271,8 +6271,9 @@ ACE_CE_Bridge::ACE_CE_Bridge (void)
 {
 }
 
+#  if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
 ACE_CE_Bridge::ACE_CE_Bridge (CWnd *w, int n, int i)
-  : text_output_ (w),
+  : text_output_ (w->m_hWnd),
     notification_ (n),
     idc_ (i)
 {
@@ -6280,6 +6281,22 @@ ACE_CE_Bridge::ACE_CE_Bridge (CWnd *w, int n, int i)
 
 void
 ACE_CE_Bridge::set_window (CWnd *w, int n, int i)
+{
+  this->text_output_ = w->m_hWnd;
+  this->notification_ = n;
+  this->idc_ = i;
+}
+#   endif /* ACE_HAS_MFC && ACE_HAS_MFC != 0 */
+
+ACE_CE_Bridge::ACE_CE_Bridge (HWND w, int n, int i)
+  : text_output_ (w),
+    notification_ (n),
+    idc_ (i)
+{
+}
+
+void
+ACE_CE_Bridge::set_window (HWND w, int n, int i)
 {
   this->text_output_ = w;
   this->notification_ = n;
@@ -6310,7 +6327,7 @@ ACE_CE_Bridge::idc (void)
   return this->idc_;
 }
 
-CWnd *
+HWND
 ACE_CE_Bridge::window (void)
 {
   return this->text_output_;
@@ -6325,18 +6342,26 @@ ACE_CE_Bridge::get_default_winbridge (void)
 int
 ACE_CE_Bridge::write_msg (LPCTSTR str)
 {
-  return this->write_msg (new CString (str));
+  LPTSTR s = ACE_OS::strdup (str);
+  return PostMessage (this->text_output_,
+                      WM_COMMAND,
+                      MAKEWORD (this->idc_,
+                                this->notification_),
+                      (long)((void *) s));
 }
 
+#if 0
 int
 ACE_CE_Bridge::write_msg (CString *s)
 {
   // Don't ask!
-  return this->text_output_->PostMessage (WM_COMMAND,
-                                          MAKEWORD (this->idc_,
-                                                    this->notification_),
-                                          (long)((void *) s));
+  return PostMessage (this->text_output_,
+                      WM_COMMAND,
+                      MAKEWORD (this->idc_,
+                                this->notification_),
+                      (long)((void *) s));
 }
+#endif /* 0 */
 
 //          **** Warning ****
 // You should not use the following function under CE at all.  This

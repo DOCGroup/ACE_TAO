@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "WindozeCE.h"
 #include "WindozeCEDlg.h"
-#include "ace/ARGV.h" 
+#include "ace/ARGV.h"
 #include "ACEApp.h"
 
 #ifdef _DEBUG
@@ -47,8 +47,8 @@ UINT worker (void * arg)
   //     }
   //   return 0;
 }
-                 
-  
+
+
 /////////////////////////////////////////////////////////////////////////////
 // CWindozeCEDlg dialog
 
@@ -88,8 +88,8 @@ BEGIN_MESSAGE_MAP(CWindozeCEDlg, CDialog)
   //  when the application's main window is not a dialog
   SetIcon(m_hIcon, TRUE);			// Set big icon
   SetIcon(m_hIcon, FALSE);		// Set small icon
-	
-  this->SetDlgItemText (IDC_PROGRAM_OUTPUT, 
+
+  this->SetDlgItemText (IDC_PROGRAM_OUTPUT,
                         TEXT ("Fill in the command line arguments you want to pass to the program below:"));
   CenterWindow(GetDesktopWindow());	// center to the hpc screen
 
@@ -99,7 +99,7 @@ BEGIN_MESSAGE_MAP(CWindozeCEDlg, CDialog)
   return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-BOOL CWindozeCEDlg::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CWindozeCEDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 {
   static BOOL got_cmd = FALSE;
   int notify = HIBYTE (wParam);
@@ -107,8 +107,7 @@ BOOL CWindozeCEDlg::OnCommand(WPARAM wParam, LPARAM lParam)
 
   if (notify == NC_ACE_NOTIFY && id == INC_ACE_LOGMSG)
     {
-      CString *msg = (CString *) lParam ;
-      LPTSTR head = (LPTSTR) ((LPCTSTR) *msg);
+      LPTSTR head = (LPTSTR) lParam ;
       CString newbuf;
 
       LPTSTR newline;
@@ -122,26 +121,26 @@ BOOL CWindozeCEDlg::OnCommand(WPARAM wParam, LPARAM lParam)
         }
 
       newbuf += head;
-      
+
       CEdit *editor = (CEdit *) GetDlgItem (IDC_PROGRAM_OUTPUT);
       editor -> ReplaceSel (newbuf);
 
-      delete msg;
+      ACE_OS::free (head);
       return TRUE;
     }
   return CDialog::OnCommand(wParam, lParam);
 }
 
-void CWindozeCEDlg::OnTimer(UINT nIDEvent) 
+void CWindozeCEDlg::OnTimer(UINT nIDEvent)
 {
   //   CWnd *text = this->GetDlgItem (IDC_TEXT_DISP);
   //   text->ModifyStyle (WS_VISIBLE, SS_CENTER, 0);
   //   this->UpdateWindow ();
-	
+
   CDialog::OnTimer(nIDEvent);
 }
 
-void CWindozeCEDlg::OnStart() 
+void CWindozeCEDlg::OnStart()
 {
   static BOOL once = FALSE;
 
