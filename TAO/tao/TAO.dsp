@@ -2874,25 +2874,6 @@ SOURCE=.\skip.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Smart_Proxies.cpp
-
-!IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Alpha Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringSeqC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 Alpha Release"
@@ -3576,10 +3557,6 @@ SOURCE=.\GIOP_Message_Base.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Connectors.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\GIOP_Message_Generator_Parser.h
 # End Source File
 # Begin Source File
@@ -3988,10 +3965,6 @@ SOURCE=.\singletons.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Smart_Proxies.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StringSeqC.h
 # End Source File
 # Begin Source File
@@ -4184,10 +4157,6 @@ SOURCE=.\Connection_Handler.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connector_Impl.inl
-# End Source File
-# Begin Source File
-
 SOURCE=.\CONV_FRAMEC.i
 # End Source File
 # Begin Source File
@@ -4296,7 +4265,11 @@ SOURCE=.\GIOP_Message_Generator_Parser_Impl.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\GIOP_Message_Headers.i
+SOURCE=.\GIOP_Message_Lite.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\GIOP_Message_Locate_Header.i
 # End Source File
 # Begin Source File
 
@@ -4324,7 +4297,7 @@ SOURCE=.\IIOP_Acceptor.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\IIOP_Connect.i
+SOURCE=.\IIOP_Connection_Handler.i
 # End Source File
 # Begin Source File
 
@@ -4581,10 +4554,6 @@ SOURCE=.\Services.i
 # Begin Source File
 
 SOURCE=.\Single_Reactor.i
-# End Source File
-# Begin Source File
-
-SOURCE=.\Smart_Proxies.i
 # End Source File
 # Begin Source File
 
