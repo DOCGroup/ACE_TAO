@@ -225,14 +225,12 @@ IpAddress::IpAddress(const IpAddress &ipaddr)
   smival.value.string.len =IPV4LEN;
   smival.value.string.ptr = address_buffer;
 
-  iv_friendly_name[0]=0;
-  iv_friendly_name_status=0;  
+  iv_friendly_name_[0] = 0;
+  iv_friendly_name_status_ = 0;  
   valid_flag = ipaddr.valid_flag; 
   if (valid_flag) {
-    // copy the address data    
     ACE_OS::memcpy(address_buffer, ipaddr.address_buffer,IPV4LEN);
-    // and the friendly name
-    ACE_OS::strcpy( iv_friendly_name, ipaddr.iv_friendly_name);
+    ACE_OS::strcpy( iv_friendly_name_, ipaddr.iv_friendly_name_);
   }
 
   IpAddress::format_output();
@@ -240,7 +238,7 @@ IpAddress::IpAddress(const IpAddress &ipaddr)
 
 
 //-------[ default construct, an IP address with a string ]---------------------
-IpAddress::IpAddress( const char *inaddr):Address()
+IpAddress::IpAddress( const char *inaddr): Address()
 { 
   // always initialize what type this object is
   smival.syntax = sNMP_SYNTAX_IPADDR;
@@ -250,13 +248,13 @@ IpAddress::IpAddress( const char *inaddr):Address()
   if (ACE_OS::strlen(inaddr) == 0) {
 
     valid_flag = FALSE; 
-    iv_friendly_name[0]=0; 
-    iv_friendly_name_status=0; 
+    iv_friendly_name_[0] = 0; 
+    iv_friendly_name_status_ = 0; 
     IpAddress::format_output();
     return;
   }
 
-  // parse_address initializes valid, address_buffer & iv_friendly_name
+  // parse_address initializes valid, address_buffer & iv_friendly_name_
   valid_flag = parse_address(inaddr); 
   IpAddress::format_output();
 }
@@ -271,8 +269,8 @@ IpAddress::IpAddress( const GenAddress &genaddr)
   smival.value.string.ptr = address_buffer;
 
   valid_flag = FALSE;
-  iv_friendly_name[0] = 0;
-  iv_friendly_name_status = 0;
+  iv_friendly_name_[0] = 0;
+  iv_friendly_name_status_ = 0;
   // allow use of an ip or udp genaddress
   if (genaddr.get_type() == type_ip) {
     valid_flag = genaddr.valid();
@@ -338,6 +336,7 @@ int IpAddress::is_private() const
   return FALSE; 
 }
 
+
 // convert address into octet string format in network byte order
 void IpAddress::to_octet(OctetStr& octet) const
 {
@@ -361,7 +360,7 @@ SnmpSyntax& IpAddress::operator=( SnmpSyntax &val)
     return *this;
 
   valid_flag = 0;	// will get set TRUE if really valid
-  iv_friendly_name[0]=0;  
+  iv_friendly_name_[0]=0;  
 
   if (val.valid()) {
     switch (val.get_syntax()) {
@@ -390,11 +389,11 @@ IpAddress& IpAddress::operator=( const IpAddress &ipaddress)
     return *this;
 
   valid_flag = ipaddress.valid_flag; 
-  iv_friendly_name[0]=0;  
+  iv_friendly_name_[0]=0;  
 
   if (valid_flag) {
     ACE_OS::memcpy(address_buffer, ipaddress.address_buffer, IPV4LEN);
-    ACE_OS::strcpy(iv_friendly_name, ipaddress.iv_friendly_name);
+    ACE_OS::strcpy(iv_friendly_name_, ipaddress.iv_friendly_name_);
   }
   IpAddress::format_output();
   return *this;
@@ -407,13 +406,13 @@ SnmpSyntax *IpAddress::clone() const
   return (SnmpSyntax *) new IpAddress(*this); 
 }
 
-//-------[ return the friendly name ]----------------------------------
-char *IpAddress::friendly_name(int &status)
+//-------[ return the Fully Qualified Domain Name ]----------------------
+char *IpAddress::resolve_hostname(int &status)
 {  
-  if ((iv_friendly_name[0]==0) && (valid_flag))
-    this->addr_to_friendly();
-  status = iv_friendly_name_status;
-  return iv_friendly_name; 
+  if ((iv_friendly_name_[0] == 0) && valid_flag)
+    addr_to_friendly();
+  status = iv_friendly_name_status_;
+  return iv_friendly_name_; 
 }
 
 // parse a dotted string
@@ -495,31 +494,19 @@ int IpAddress::parse_address( const char *inaddr)
   char	   *namePtr = NULL;
   char ds[MAXHOSTNAMELEN +1];
 
-
   // intialize the friendly_name member variable
-  iv_friendly_name[0] = 0;
-  iv_friendly_name_status = 0;
+  iv_friendly_name_[0] = 0;
+  iv_friendly_name_status_ = 0;
 
   // is this a dotted IP notation string or
   // a friendly name
   if ( parse_dotted_ipstring( inaddr)) {
 
     // since this is a valid dotted string
-    // don't do any DNS
+    // don't do any DNS (Performance!)
     return TRUE;
   }
   else {
-    // not a dotted string, try to resolve it via DNS
-    // if its an ipx or a mac then get out 
-    // and don't do DNS
-    IpxAddress ipxtest( inaddr);
-    if ( ipxtest.valid())
-      return FALSE;
-
-    MacAddress mactest( inaddr);
-    if ( mactest.valid())
-      return FALSE;
-
     int rc;
     if ((rc = resolve_to_address(inaddr, ipAddr)) == 0) {
 
@@ -530,12 +517,12 @@ int IpAddress::parse_address( const char *inaddr)
 	  return FALSE;
 
 	// save the friendly name
-	ACE_OS::strcpy( iv_friendly_name, inaddr);
+	ACE_OS::strcpy( iv_friendly_name_, inaddr);
 	return TRUE;
 
     }	 // end if lookup result
     else {
-      iv_friendly_name_status = rc;
+      iv_friendly_name_status_ = rc;
       return FALSE;
     }
   }  // end else not a dotted string
@@ -547,29 +534,16 @@ int IpAddress::parse_address( const char *inaddr)
 int IpAddress::addr_to_friendly()
 {
   in_addr ipAddr;
-  char  *namePtr = NULL;
-  char  ds[MAXHOSTNAMELEN + 1];
+  if ((ipAddr.s_addr = ACE_OS::inet_addr(to_string())) == -1)
+    return -1;    // expected a dotted quad!
 
-  // can't look up an invalid address
-  if ( !valid_flag) 
-     return -1;
-
- // otherwise lets look it up
- // lets try and get the friendly name
- // from the DNS
- ACE_OS::strncpy( ds, IpAddress::to_string(), MAXHOSTNAMELEN);
-
- if ((ipAddr.s_addr = ACE_OS::inet_addr((char *) ds)) == -1)
-   return -1;    // bad address
-
- // if we found the name, then update the
- // iv friendly name
- if (resolve_to_hostname(ipAddr, iv_friendly_name) == 0) {
+  // set iv_friendly_name_ from ipAddr
+ if (resolve_to_hostname(ipAddr, iv_friendly_name_) == 0) {
     return 0;
  }
  else {
-   iv_friendly_name_status = h_errno;
-   return iv_friendly_name_status;
+   iv_friendly_name_status_ = h_errno;
+   return iv_friendly_name_status_;
  }
 }
 
@@ -582,12 +556,23 @@ int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
   ACE_OS::memset(&lookupResult, 0, sizeof(struct hostent));
   ACE_OS::memset(&buffer, 0, sizeof(ACE_HOSTENT_DATA));
 
+  // reverse lookup (requires in-addr.arpa to be setup in DNS
   if (ACE_OS::gethostbyaddr_r((const char *)&quad_addr.s_addr, IPV4LEN, 
                           AF_INET, &lookupResult, buffer, &loc_errno)) {
-    ACE_OS::strcpy( hostname, lookupResult.h_name); 
-    return 0;
-  }
 
+    // verify right type of record
+    if (lookupResult.h_addrtype == AF_INET && 
+	lookupResult.h_length == IPV4LEN) {
+      ACE_OS::strcpy( hostname, lookupResult.h_name); 
+      // setup multiple entries
+      return 0;
+    }
+    else {
+      ACE_ASSERT(0);		// todo add trace and debug and dump
+      return -1;		// wrong resource record type
+    }
+  }
+    
   return loc_errno;
 }
 
@@ -599,8 +584,9 @@ int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
    ACE_OS::memset(&buffer, 0, sizeof(ACE_HOSTENT_DATA));
    ACE_OS::memset(&lookupResult, 0, sizeof(struct hostent));
    int loc_errno = 0;
-   if (ACE_OS::gethostbyname_r ( hostname, &lookupResult, buffer, &loc_errno)) {
-     if (lookupResult.h_length == sizeof(in_addr)) {
+   if (ACE_OS::gethostbyname_r( hostname, &lookupResult, buffer, &loc_errno)) {
+     if (lookupResult.h_length == sizeof(in_addr) && 
+	 lookupResult.h_addrtype == AF_INET) {
         ACE_OS::memcpy((void *) &quad_addr,
                        (void *) lookupResult.h_addr_list[0], sizeof(in_addr));
         return 0; 
@@ -616,6 +602,7 @@ IpAddress::operator const char *() const
 {
   return (char *)output_buffer;
 }
+
 //----[ IP address get char representation ]--------------------------
 char * IpAddress::to_string()
 {
@@ -654,6 +641,68 @@ void IpAddress::mask( const IpAddress& ipaddr)
  
 }
 
+//=======================================================================
+//========== DNS Iterator Implementation ================================
+//=======================================================================
+
+
+Address_Iter::Address_Iter(const char *hostname): valid_(FALSE), count_(0), 
+  entry_(0)
+{
+   ACE_OS::memset(&buffer_, 0, sizeof(ACE_HOSTENT_DATA));
+   ACE_OS::memset(&lookupResult_, 0, sizeof(struct hostent));
+   if (ACE_OS::inet_addr(hostname) == -1)
+     valid_ = query_dns(hostname);
+   else {
+     ACE_ASSERT(0);		// don't support dot-quad lookup yet
+   }
+
+   // count number of hostnames
+   int n;
+   char **pc;
+   for (n = 0, pc = lookupResult_.h_addr_list; *pc != NULL; ++n, ++pc);
+   count_ = n;		// plus first one 
+   entry_ = lookupResult_.h_addr_list;
+}
+
+int Address_Iter::valid() const
+{
+  return (valid_ == TRUE);
+}
+
+int Address_Iter::how_many_addresses()
+{
+  return count_;
+}
+
+// return next entry, rc = 0, if entry is null return 0
+int Address_Iter::next(IpAddress& addr)
+{
+  if (!entry_ || *entry_ == 0)
+    return 1;
+
+  IpAddress tmp(*entry_++); // return data
+  addr = tmp;
+  if (*entry_ = NULL)
+    return 1;
+  return 0;
+}
+
+//  query DNS here
+int Address_Iter::query_dns(const char *hostname)
+{
+  int loc_errno = 0;
+  if (ACE_OS::gethostbyname_r( hostname, &lookupResult_, buffer_, 
+				&loc_errno)) {
+    if (lookupResult_.h_length == sizeof(IPV4LEN) && 
+	lookupResult_.h_addrtype == AF_INET) {
+      return 0; 
+    }
+    else
+      return -1;  // wrong address size
+  }
+  return loc_errno;
+}
 
 //=======================================================================
 //========== Udp Address Implementation =================================
@@ -781,8 +830,8 @@ SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
     case sNMP_SYNTAX_OCTETS:
       if (((UdpAddress &)val).smival.value.string.len == UDPIPV4LEN){
          ACE_OS::memcpy(address_buffer,
-		 ((UdpAddress &)val).smival.value.string.ptr,UDPIPV4LEN);
-         iv_friendly_name[0] = 0;
+		 ((UdpAddress &)val).smival.value.string.ptr, UDPIPV4LEN);
+         iv_friendly_name_[0] = 0;
          valid_flag = 1;
       }
     break;
