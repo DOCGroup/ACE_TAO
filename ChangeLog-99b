@@ -8,7 +8,7 @@ Tue Jul 27 23:25:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (open): Updated a
 	  comment to point out that we use a thread-per-connection
  	  concurrency model.  Thanks to Raghu Nambiath
- 	  <raghun@wipinfo.soft.net> for reporting this.	  
+ 	  <raghun@wipinfo.soft.net> for reporting this.
 
 Tue Jul 27 21:05:23 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -24,6 +24,126 @@ Tue Jul 27 16:58:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           <rcarter@pinyon.org> for sending in a patch for FreeBSD. These
           bug fixes are for: $ACE_ROOT/tests/
           Cached_Conn_Test  and  Cached_Accept_Conn_Test.
+
+Tue Jul 27 16:55:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_kcc.GNU (MATHLIB): KCC needs
+	  to have this defined.
+
+Tue Jul 27 16:18:21 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: updated note about shared libraries
+          on VxWorks.  In particular, they don't provide copies
+          of global (static) variables in the library.  So, "programs"
+          that share a library will also share the static variables in
+          the library.
+
+Tue Jul 27 14:26:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/SOCK_Dgram: Removed the QoS_Params from open() and
+	  ACE_SOCK_Dgram since they don't appear to be useful.  Thanks to
+ 	  Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
+ 	  this.
+
+Tue Jul 27 14:41:26 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/Codeset_IBM1047.cpp: Added a static variable only for HP aC++
+          to make it stop warning of an empty translation unit.
+
+Tue Jul 27 14:16:55 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (cancel_thr): This method should return
+	  the result of thread cancel operation if async_cancel is used.
+	  Thanks to Peter Mueller <pmueller@decrc.abb.de> for suggesting
+	  the fix.
+
+Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Addded a new pair of priority() fields as place
+	  holders for the forthcoming DiffServ QoS features.  Thanks to
+ 	  Vidya Narayanan <CVN065@lmpsil02.comm.mot.com> for suggesting
+ 	  this.
+
+Tue Jul 27 13:28:48 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.i (getuid): removed extra ACE_TRACE with
+          ACE_WIN32 or CHORUS.  Thanks to Jerry D. De Master
+          <jdemaste@ipdinc.com> for reporting this.
+
+Tue Jul 27 11:10:39 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/System_V_IPC/Makefile: on VxWorks only, fixed
+          so that make all, etc., work properly (by just printing
+          the message that these examples aren't used on VxWorks).
+
+Tue Jul 27 10:25:41 1999  Steve Huston  <shuston@riverace.com>
+
+        * ACE-INSTALL.html: Added a note about required HP-UX 10.20
+          patch. Updated aC++ versions.
+
+        * ace/Process.{h cpp} (ACE_Process_Options::command_line): Added
+          'const' to make the entire array and contents const. Restores
+          ability for users of pre-5.0 to still pass char **. Thanks to
+          Bill Tovrea <gwtovrea@west.raytheon.com> for reporting this.
+
+        * examples/Connection/non_blocking/Makefile: Re-added LIBS += $(ACELIB)
+          (see ChangeLog, 23-Jul-1999) but did it in the section for AIX
+          C Set++ and IBM C/C++ only (ifdef TEMPINCDIR). This is needed to
+          generate the shared library (libConn) using those compilers.
+
+Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Future.h: Moved the static methods until the bottom
+          of the ACE_Future_Rep class (again) to workaround a bug with
+          Borland's C++ Builder.  Thanks to Christopher Kohlhoff
+          <chris@kohlhoff.com> for reporting this (again).
+
+Mon Jul 26 20:59:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * websvcs/README:
+          Added a brief description of the directory and its current
+          contents.  Thanks to Will Skunk <willskunk@homemail.com>
+          for motivating this.
+
+Mon Jul 26 20:50:37 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+        * ace/Log_Msg.cpp: Added support for the 'W' (UNICODE) option for
+          Win32.  Thanks to Valery Arkhangorodsky
+          <valerya@servicesoft.com> for contributing this.
+
+Mon Jul 26 20:58:35 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+        * ace/POSIX_Asynch_IO.cpp:
+        * ace/WIN32_Asynch_IO.cpp: Fixed the double deletion problem of
+          the result classes. Thanks to David Digby
+          <DWD15274@glaxowellcome.co.uk> and Timothy Schimke
+          <Schimke.Timothy@LittonDSD.com> for reporting this.
+
+Mon Jul 26 18:09:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+        * tests/run_tests.sh (Cached_Conn_Test and
+          Cached_Accept_Conn_Test): These two tests are known to leak
+          memory when compiled with old gcc (g++).  Therefore, we skip
+          these tests when using purify and old gcc (g++).  A -p option
+          was added to the script to indicate that we want to run with
+          purify.
+
+Mon Jul 26 17:09:09 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Object_Manager.{h,cpp},Makefile: don't create the
+          ACE_TOKEN_MANAGER_CREATION_LOCK and
+          ACE_TOKEN_INVARIANTS_CREATION_LOCK preallocated objects
+          if the Token component isn't build.  This gets rid of
+          unresolved references to the ACE_Token_Proxy compoents
+          on VxWorks/g++ when Token isn't built.  Thanks to
+          Stephane Chatre <schatre@oresis.com> for reporting this.
+
+Mon Jul 26 17:02:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/wrapper_macros.GNU: don't override
+          OBJDIRS on VxWorks with shared libs.  This allows
+          make realclean to work properly on VxWorks, when shared
+          lib builds are enabled.
 
 Mon Jul 26 15:06:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
