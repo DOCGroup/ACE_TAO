@@ -1077,7 +1077,7 @@ static CORBA::ULong array_sz =
 
 static char *repo_id_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-                  "IDL:omg.org/CORBA/" #name ":1.0",
+                  (char *) "IDL:omg.org/CORBA/" #name ":1.0",
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
       0
@@ -1099,7 +1099,7 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
 
   char *name_array [] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
-                        # name,
+                        (char *) # name,
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
       0
