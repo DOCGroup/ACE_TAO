@@ -244,6 +244,12 @@ INArgTypeNameEmitter::traverse (StringDeclPtr const&)
 }
 
 void
+INArgTypeNameEmitter::traverse (TypedefDeclPtr const &, StringDeclPtr const&)
+{
+  os << "const char *";
+}
+
+void
 INArgTypeNameEmitter::traverse (WstringDeclPtr const&)
 {
   os << "const ::CORBA::WChar *";
@@ -520,4 +526,3 @@ OUTArgTypeNameEmitter::traverse (SequenceDeclPtr const& s)
 {
   os << s->name () << "_out";
 }
-

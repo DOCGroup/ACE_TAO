@@ -13,6 +13,7 @@ $(call include, $(UTILITY_ROOT)/BuildRules/Executable.pre.rules)
 cxx_translation_units := DescriptorGenerator.cpp      \
                          ExecutorMappingGenerator.cpp \
                          RepositoryIdGenerator.cpp    \
+			 SizeTypeCalculator.cpp       \
                          ServantGenerator.cpp         \
                          ServantHeaderGenerator.cpp   \
                          ServantSourceGenerator.cpp   \

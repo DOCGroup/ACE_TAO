@@ -51,7 +51,7 @@ namespace CCF
         virtual void
         dispatch (SyntaxTree::NodePtr const& n);
 
-      protected:
+      public:
 
         class Ambiguous {};
 

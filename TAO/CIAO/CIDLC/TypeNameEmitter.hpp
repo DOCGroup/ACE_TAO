@@ -99,6 +99,7 @@ public:
   virtual void traverse (FloatDeclPtr const&);
   virtual void traverse (DoubleDeclPtr const&);
   virtual void traverse (StringDeclPtr const&);
+  virtual void traverse (TypedefDeclPtr const&, StringDeclPtr const&);
   virtual void traverse (WstringDeclPtr const&);
   virtual void traverse (ObjectDeclPtr const&);
   virtual void traverse (ValueBaseDeclPtr const&);
