@@ -59,7 +59,7 @@ bgcolor="#ffffff">
       libraries (if it proves necessary).
     </P>
 
-    <P>The complete list of directories is (so far):</P>
+    <P>The complete list of directories is:</P>
 
     <P>
     <TABLE BORDER="2"
@@ -69,44 +69,43 @@ bgcolor="#ffffff">
 	<TH>Service</TH>
 	<TH>Implementation Sub-directory</TH></TR>
       <TR>
-	<TD>Naming Service</TD><TD><CODE>orbsvcs/Naming</CODE></TD></TR>
-      <TR>
-	<TD>Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
-      <TR>
-	<TD>Scheduling Service</TD><TD><CODE>orbsvcs/Sched</CODE></TD></TR>
-      <TR>
-	<TD>Trading Service</TD><TD><CODE>orbsvcs/Trader</CODE></TD></TR>
-      <TR>
-	<TD>Property Service</TD><TD><CODE>orbsvcs/Property</CODE></TD></TR>
-      <TR>
 	<TD>A/V Streams Service</TD><TD><CODE>orbsvcs/AV</CODE></TD></TR>
       <TR>
 	<TD>Concurrency Service</TD><TD><CODE>orbsvcs/Concurrency</CODE></TD></TR>
       <TR>
+	<TD>Event Service</TD><TD><CODE>orbsvcs/Event</CODE></TD></TR>
+      <TR>
+	<TD>LifeCycle Service</TD><TD><CODE>orbsvcs/LifeCycle</CODE></TD></TR>
+      <TR>
 	<TD>Logging Service</TD><TD><CODE>orbsvcs/Log</CODE></TD></TR>
       <TR>
-	<TD>LifeCycle Service</TD><TD><CODE>LifeCycle_Service</CODE></TD></TR>
+	<TD>Naming Service</TD><TD><CODE>orbsvcs/Naming</CODE></TD></TR>
+      <TR>
+	<TD>Property Service</TD><TD><CODE>orbsvcs/Property</CODE></TD></TR>
+      <TR>
+	<TD>Scheduling Service</TD><TD><CODE>orbsvcs/Sched</CODE></TD></TR>
+      <TR>
+	<TD>Trading Service</TD><TD><CODE>orbsvcs/Trader</CODE></TD></TR>
     </TABLE>
     </P>
 
-    <P>Please note that in this revision we still have standalone
-      binaries for some of the services,
-      though many applications may want to control what process
-      implements a particular service it has proved useful for
-      debugging purposes to keep the most used services separated;
-      the binaries in question are located in
+    <P>Note that in the current version of TAO we still have standalone
+      binaries for some of the services.  However, some applications
+      may want to control what process implements a particular service.
+      Therefore, it has proved useful for
+      debugging purposes to keep the most used services separated.
+      The binaries in question are located in
       <CODE>$TAO_ROOT/orbsvcs</CODE>, and the list includes:
     </P>
 
     <UL>
       <LI>Concurrenty_Service</LI>
+      <LI>Dump_Schedule</LI>
+      <LI>LifeCycle_Service</LI>	  
       <LI>Event_Service</LI>
       <LI>Naming_Service</LI>
       <LI>Scheduling_Service</LI>
       <LI>Trading_Service</LI>
-      <LI>LifeCycle_Service</LI>	  
-      <LI>Dump_Schedule</LI>, though this is a simple utility to dump
-    the results of a schedule.
     </UL>
 
     <P>In the future we plan to use a single binary and ACE Service
@@ -127,38 +126,45 @@ bgcolor="#ffffff">
 	<TH>Test directory</TH>
 	<TH>Purpose</TH></TR>
       <TR>
-	<TD><CODE>Simple_Naming</CODE></TD>
-	<TD>A very simple Naming Service test</TD></TR>
+	<TD><CODE>AVStreams</CODE></TD>
+	<TD>A complete A/V server and client.</TD></TR>
       <TR>
-	<TD><CODE>Naming</CODE></TD>
-	<TD>A more advanced test of the Naming Service test</TD></TR>
+	<TD><CODE>Concurrency</CODE></TD>
+	<TD>Test the Concurrency Service.</TD></TR>
       <TR>
-	<TD><CODE>Logger</CODE></TD>
-	<TD>An example logging service using the Naming Service to
-	  locate a factory</TD></TR>
+	<TD><CODE>CosPropertyService</CODE></TD>
+	<TD>A test of the Property Service.</TD></TR>
       <TR>
 	<TD><CODE>Event_Latency</CODE></TD>
 	<TD>Test the Event Service and measure end-to-end latency,
-	it also uses the Scheduling and Naming services</TD></TR>
+	it also uses the Scheduling and Naming services.</TD></TR>
       <TR>
 	<TD><CODE>EC_Multiple</CODE></TD>
 	<TD>Connect two Event Channels using the
 	  <CODE>EC_Gateway</CODE>,
-	  measure latency, utilization and minimum spacing</TD></TR>
+	  measure latency, utilization and minimum spacing.</TD></TR>
       <TR>
-	<TD><CODE>AVStreams</CODE></TD>
-	<TD>A complete A/V server and client</TD></TR>
+	<TD><CODE>Logger</CODE></TD>
+	<TD>An example logging service using the Naming Service to
+	  locate a factory.</TD></TR>
       <TR>
-	<TD><CODE>Concurrency</CODE></TD>
-	<TD>Test the Concurrency Service</TD></TR>
+	<TD><CODE>Naming</CODE></TD>
+	<TD>An advanced test of the Naming Service.</TD></TR>
       <TR>
-	<TD><CODE>CosPropertyService</CODE></TD>
-	<TD>A simple test of the Property Service</TD></TR>
+	<TD><CODE>Sched</CODE></TD>
+	<TD>A test of the Scheduling Service.</TD></TR>
+      <TR>
+	<TD><CODE>Simple_Naming</CODE></TD>
+	<TD>A very simple Naming Service test.</TD></TR>
       <TR>
 	<TD><CODE>Simulator</CODE></TD>
-	<TD>Prototyp implementation of DOVE (DOVE Agent, DOVE Browser, DOVE MIB, DOVE Application)
-            The DOVE Agent consists of the Event Channel, which is then connected to 
-            a DOVE Browser implemented in Java.</TD></TR>
+	<TD>Prototype implementation of DOVE (DOVE Agent, DOVE
+            Browser, DOVE MIB, DOVE Application).  The DOVE Agent
+            consists of the Event Channel, which is then connected to
+            a DOVE Browser implemented in Java.</TD></TR> 
+      <TR>
+	<TD><CODE>Trading_Service</CODE></TD>
+	<TD>Implementation of the Trading Service.</TD></TR>
     </TABLE>
     </P>
 
