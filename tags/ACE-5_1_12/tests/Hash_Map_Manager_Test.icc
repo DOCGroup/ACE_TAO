@@ -1,0 +1,15 @@
+// $Id$
+
+include "vacpp_setup.icc"
+option
+    link(libSearchPath, platformLibSearchPath),
+    incl(searchPath, ".."),
+    link(linkWithMultiThreadLib,yes),
+    link(debug)
+    {
+	target type (exe) "Hash_Map_Manager_Test"
+	{
+	   source type (cpp) "Hash_Map_Manager_Test.cpp"
+	   source platformLinkLibs
+	}
+    }

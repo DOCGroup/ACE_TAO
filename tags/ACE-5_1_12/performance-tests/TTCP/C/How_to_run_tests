@@ -1,0 +1,30 @@
+// C version
+//
+//
+
+// HOSTNAMES:
+// for our tests, enatm0-tango.cs.wustl.edu was the receiver hostname used for atm transfers
+//                tango.cs.wustl.edu was the receiver hostname used for ethernet transfers
+// substitute the proper receiver hostname for your system.
+
+// Results:
+// These examples show the result files being stored in a /results directory off
+// the current path.  This can be set to whatever you like.
+
+// ATM with 32k receiver buffers
+Receiver_Host: repeat 100 server -r -s -fm -p 10002 -b 65536
+Sender_Host: run_test 64 encip1-tango.cs.wustl.edu ./results/ace.atm.64 10002
+	 or: client -fm -s -t -l 1048576 -n 100 -h encip1-tango.cs.wustl.edu -L ./results/ace.atm.64 -p 10002
+
+// ATM with 8k receiver buffers
+Receiver_Host: repeat 100 new-ttcp -r -s -fm -p 10002
+Sender_Host: run_test 64 enatm0-tango.cs.wustl.edu ./results/c.atm.8 10002
+
+// ETHERNET with 64k receiver buffers
+Receiver_Host: repeat 100 new-ttcp -r -s -fm -p 10002 -b 65536
+Sender_Host: run_test 64 tango.cs.wustl.edu ./results/c.ethernet.64 10002
+
+// ETHERNET with 8k receiver buffers
+Receiver_Host: repeat 100 new-ttcp -r -s -fm -p 10002
+Sender_Host: run_test 64 tango.cs.wustl.edu ./results/c.ethernet.8 10002
+
