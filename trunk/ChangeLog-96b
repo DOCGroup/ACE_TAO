@@ -1,13 +1,19 @@
 Wed Dec  4 09:09:56 1996  David L. Levine  <levine@cs.wustl.edu>
-	* ace/Log_Msg.cpp:  added printout to stderr before call
- 	  to exit() in ACE_Log_Msg::log().  Silent calls to exit()
- 	  are bad :-}
+	* ace/Log_Msg.cpp (log):  added printout to stderr before call
+ 	  to exit().  Silent calls to exit() are bad :-}
 
 	* ace/config-vxworks*.h: added ACE_LACKS_MPROTECT and
           ACE_HAS_STRERROR
 
 	* include/makeinclude/platform_vxworks*: removed INCLDIRS and
  	  added indlib.o to GreenHills LIBS
+
+	* performance-tests/Synch-Benchmarks/Options.cpp (print_results):
+ 	  only use rusage if ACE_HAS_PRUSAGE_T is #defined
+
+	* examples/IPC_SAP/SOCK_SAP/CPP-in{client,server}.cpp:
+ 	  use blocking connect on VxWorks, and hard code server hostname
+ 	  in client
 
 Wed Dec  4 00:27:07 1996  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
