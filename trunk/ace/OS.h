@@ -3764,7 +3764,8 @@ public:
 		     const char *t);
   static char *strcpy (char *s,
 		       const char *t);
-  static char *strpbrk (const char *s1, const char *s2);
+  static char *strpbrk (const char *s1,
+			const char *s2);
   static size_t strspn(const char *s1,
 		       const char *s2);
   static char *strstr (const char *s,
@@ -3807,6 +3808,8 @@ public:
 		     const wchar_t *t);
   static wchar_t *strcpy (wchar_t *s,
 			  const wchar_t *t);
+  static wchar_t *strpbrk (const wchar_t *s1,
+			   const wchar_t *s2);
   static size_t strlen (const wchar_t *s);
   static int strncmp (const wchar_t *s,
 		      const wchar_t *t,

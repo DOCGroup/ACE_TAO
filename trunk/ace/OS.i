@@ -7253,6 +7253,14 @@ ACE_Str_Buf::ACE_Str_Buf (strbuf &sb)
 #if defined (ACE_HAS_UNICODE)
 
 ACE_INLINE wchar_t *
+ACE_OS::wcspbrk (wchar_t *s, const wchar_t *t)
+{
+  // ACE_TRACE ("ACE_OS::wcspbrk");
+  return ::wcspbrk (s, t);
+}
+
+
+ACE_INLINE wchar_t *
 ACE_OS::strcat (wchar_t *s, const wchar_t *t)
 {
   // ACE_TRACE ("ACE_OS::strcat");
