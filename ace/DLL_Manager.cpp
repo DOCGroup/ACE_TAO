@@ -9,6 +9,7 @@
 
 #include "ace/OS.h"
 #include "ace/Lib_Find.h"
+#include "ace/Object_Manager.h"
 
 ACE_RCSID(ace, DLL, "$Id$")
 
@@ -107,7 +108,8 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::open: Invalid handle: %s\n"), this->error ()->c_str ()),
+                                 ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::open: Invalid handle: %s\n"), 
+                                 this->error ()->c_str ()),
                                 -1);
             }
         }
@@ -227,36 +229,73 @@ ACE_DLL_Handle::error (void)
 
 /******************************************************************/
 
-ACE_DLL_Manager_Ex::ACE_DLL_Manager_Ex (int size)
+// Pointer to the Singleton instance.
+ACE_DLL_Manager *ACE_DLL_Manager::instance_ = 0;
+
+
+ACE_DLL_Manager *
+ACE_DLL_Manager::instance (int size)
+{
+  ACE_TRACE ("ACE_DLL_Manager::instance");
+
+  if (ACE_DLL_Manager::instance_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
+                                *ACE_Static_Object_Lock::instance (), 0));
+      if (ACE_DLL_Manager::instance_ == 0)
+        {
+          ACE_NEW_RETURN (ACE_DLL_Manager::instance_,
+                          ACE_DLL_Manager (size),
+                          0);
+        }
+    }
+
+  return ACE_DLL_Manager::instance_;
+}
+
+void
+ACE_DLL_Manager::close_singleton (void)
+{
+  ACE_TRACE ("ACE_DLL_Manager::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
+                     *ACE_Static_Object_Lock::instance ()));
+
+  delete ACE_DLL_Manager::instance_;
+  ACE_DLL_Manager::instance_ = 0;
+}
+
+ACE_DLL_Manager::ACE_DLL_Manager (int size)
   : handle_vector_ (0),
     current_size_ (0),
     total_size_ (0),
     unload_policy_ (ACE_DLL_UNLOAD_POLICY_PER_DLL)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::ACE_DLL_Manager_Ex");
+  ACE_TRACE ("ACE_DLL_Manager::ACE_DLL_Manager");
 
   if (this->open (size) != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_DLL_Manager_Ex ctor failed to allocate ")
+                ACE_LIB_TEXT ("ACE_DLL_Manager ctor failed to allocate ")
                 ACE_LIB_TEXT ("handle_vector_.\n")));
 }
 
-ACE_DLL_Manager_Ex::~ACE_DLL_Manager_Ex (void)
+ACE_DLL_Manager::~ACE_DLL_Manager (void)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::~ACE_DLL_Manager_Ex");
+  ACE_TRACE ("ACE_DLL_Manager::~ACE_DLL_Manager");
 
   if (this->close () != 0)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("ACE_DLL_Manager_Ex dtor failed to close ")
+                ACE_LIB_TEXT ("ACE_DLL_Manager dtor failed to close ")
                 ACE_LIB_TEXT ("properly.\n")));
 }
 
 ACE_DLL_Handle *
-ACE_DLL_Manager_Ex::open_dll (const ACE_TCHAR *dll_name,
-                              int open_mode,
-                              ACE_SHLIB_HANDLE handle)
+ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
+                           int open_mode,
+                           ACE_SHLIB_HANDLE handle)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::open_dll");
+  ACE_TRACE ("ACE_DLL_Manager::open_dll");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   ACE_DLL_Handle *dll_handle = this->find_dll (dll_name);
@@ -289,9 +328,9 @@ ACE_DLL_Manager_Ex::open_dll (const ACE_TCHAR *dll_name,
 }
 
 int
-ACE_DLL_Manager_Ex::close_dll (const ACE_TCHAR *dll_name)
+ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::close_dll");
+  ACE_TRACE ("ACE_DLL_Manager::close_dll");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   ACE_DLL_Handle *handle = this->find_dll (dll_name);
@@ -304,16 +343,16 @@ ACE_DLL_Manager_Ex::close_dll (const ACE_TCHAR *dll_name)
 }
 
 u_long
-ACE_DLL_Manager_Ex::unload_policy (void) const
+ACE_DLL_Manager::unload_policy (void) const
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_policy");
+  ACE_TRACE ("ACE_DLL_Manager::unload_policy");
   return this->unload_policy_;
 }
 
 void
-ACE_DLL_Manager_Ex::unload_policy (u_long unload_policy)
+ACE_DLL_Manager::unload_policy (u_long unload_policy)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_policy");
+  ACE_TRACE ("ACE_DLL_Manager::unload_policy");
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
 
   u_long old_policy = this->unload_policy_;
@@ -339,9 +378,9 @@ ACE_DLL_Manager_Ex::unload_policy (u_long unload_policy)
 }
 
 int
-ACE_DLL_Manager_Ex::open (int size)
+ACE_DLL_Manager::open (int size)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::open");
+  ACE_TRACE ("ACE_DLL_Manager::open");
 
   ACE_DLL_Handle **temp;
 
@@ -355,9 +394,9 @@ ACE_DLL_Manager_Ex::open (int size)
 }
 
 int
-ACE_DLL_Manager_Ex::close (void)
+ACE_DLL_Manager::close (void)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::close");
+  ACE_TRACE ("ACE_DLL_Manager::close");
 
   int force_close = 1;
 
@@ -384,9 +423,9 @@ ACE_DLL_Manager_Ex::close (void)
 }
 
 ACE_DLL_Handle *
-ACE_DLL_Manager_Ex::find_dll (const ACE_TCHAR *dll_name) const
+ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::find_dll");
+  ACE_TRACE ("ACE_DLL_Manager::find_dll");
 
   int i;
   for (i = 0; i < this->current_size_; i++)
@@ -400,9 +439,9 @@ ACE_DLL_Manager_Ex::find_dll (const ACE_TCHAR *dll_name) const
 }
 
 int
-ACE_DLL_Manager_Ex::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
+ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 {
-  ACE_TRACE ("ACE_DLL_Manager_Ex::unload_dll");
+  ACE_TRACE ("ACE_DLL_Manager::unload_dll");
 
   if (dll_handle)
     {
@@ -438,20 +477,15 @@ ACE_DLL_Manager_Ex::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 
       if (dll_handle->close (unload) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::unload error.\n")),
+                           ACE_LIB_TEXT ("ACE_DLL_Manager::unload error.\n")),
                           -1);
     }
   else
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_LIB_TEXT ("ACE_DLL_Manager_Ex::unload_dll called with ")
+                       ACE_LIB_TEXT ("ACE_DLL_Manager::unload_dll called with ")
                        ACE_LIB_TEXT ("null pointer.\n")),
                       -1);
 
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Unmanaged_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Unmanaged_Singleton< ACE_DLL_Manager_Ex, ACE_SYNCH_MUTEX >
-#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
