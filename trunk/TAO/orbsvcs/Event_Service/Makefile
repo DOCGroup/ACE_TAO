@@ -37,7 +37,7 @@ endif # probe
 
 
 Event_Service: $(addprefix $(VDIR),$(ES_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
 #	Dependencies

@@ -44,10 +44,10 @@ LDFLAGS    += -L../../proto/lib
 CPPFLAGS   += -I../../proto/include -DUSE_ACE_EVENT_HANDLING -DDEBUG #-DONEWAY
 
 server:	$(addprefix $(VDIR),$(TTCP_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 
 

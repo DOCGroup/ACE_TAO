@@ -55,10 +55,10 @@ $(IDL_SRC): ttcp.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl ttcp.idl
 
 server:	$(addprefix $(VDIR),$(TTCP_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/rm -rf ttcpC.* ttcpS.*

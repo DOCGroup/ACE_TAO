@@ -58,10 +58,10 @@ endif
 CPPFLAGS += -I$(TAO_ROOT)/Benchmark
 
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(SERVER_LIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(SERVER_LIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(MARSHAL_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(CLIENT_LIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(CLIENT_LIBS) $(POSTLINK)
 
 marshal.h marshalC.cpp marshalS.cpp: marshal.idl
 	$(IDL) $(IDLFLAGS) $< 

@@ -47,10 +47,10 @@ endif
 
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/Benchmark -I$(TAO_ROOT)/tao/compat
 server:	$(addprefix $(VDIR),$(MARSHAL_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(MARSHAL_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
 	rm -f core *.o *~ client server

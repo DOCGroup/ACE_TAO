@@ -45,10 +45,10 @@ DCFLAGS = -g
 .PRECIOUS: FileC.h FileC.i FileC.cpp FileS.h FileS.i FileS.cpp
 
 server:	$(addprefix $(VDIR),$(FILE_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 client:	$(addprefix $(VDIR),$(FILE_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 realclean: clean
 	-/bin/rm -rf FileC.* FileS.*

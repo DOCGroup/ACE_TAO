@@ -54,13 +54,13 @@ $(IDL_SRC): ttcp.idl
 	-/bin/mv ttcp_s.C ttcp_s.cpp
 
 server:	$(addprefix $(VDIR),$(TTCP_SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/iiop_s.o $(VLDLIBS) $(POSTLINK)
 #patch on the previous line to allow reading from an environment variable
 #the host (interface) I would like the server to bind to. 
 #The patch is "$(PBHOME)/lib/iiop_s.o"
 
 client:	$(addprefix $(VDIR),$(TTCP_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clean:
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state

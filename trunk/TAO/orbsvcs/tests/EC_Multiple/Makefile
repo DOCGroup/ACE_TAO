@@ -59,7 +59,7 @@ ifeq ($(probe),1)
 endif # probe
 
 EC_Multiple: $(addprefix $(VDIR),$(EC_MULTIPLE_OBJS) $(EC_MULTIPLE_CONFIG_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 #----------------------------------------------------------------------------
 #	Dependencies

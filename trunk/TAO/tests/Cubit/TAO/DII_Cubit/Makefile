@@ -50,16 +50,16 @@ DCFLAGS = -g
 OCFLAGS = 
 
 svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 clnt:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 test1_svr:	$(addprefix $(VDIR),$(BASIC_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 test1_clnt:	$(addprefix $(VDIR),$(BASIC_CLT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
 
 ########
 # Sanity check builds by running basic functionality tests.
@@ -93,24 +93,24 @@ ifdef LOCALRULES
 ########
 # CUBIT test
 svr:		svr.o cubit.o
-	$(LINK.cc) -o svr svr.o cubit.o $(LDLIBS)
+	$(LINK.cc) -o svr svr.o cubit.o $(LDLIBS) $(POSTLINK)
 clnt:		cubit.o clnt.o
-	$(LINK.cc) -o clnt clnt.o cubit.o $(LDLIBS)
+	$(LINK.cc) -o clnt clnt.o cubit.o $(LDLIBS) $(POSTLINK)
 
 ########
 # BASIC DATATYPES test
 test1_clnt:	test1.o test1_clnt.o
-	$(LINK.cc) -o test1_clnt test1_clnt.o test1.o $(LDLIBS)
+	$(LINK.cc) -o test1_clnt test1_clnt.o test1.o $(LDLIBS) $(POSTLINK)
 test1_svr:	test1.o test1_svr.o
-	$(LINK.cc) -o test1_svr test1_svr.o test1.o $(LDLIBS)
+	$(LINK.cc) -o test1_svr test1_svr.o test1.o $(LDLIBS) $(POSTLINK)
 
 ########
 # ECHO test ... "test1" where the operation semantics are violated;
 # this aids some porting work, but is a less rigorous test
 echo_clnt:	test1.o echo_clnt.o
-	$(LINK.cc) -o echo_clnt echo_clnt.o test1.o $(LDLIBS)
+	$(LINK.cc) -o echo_clnt echo_clnt.o test1.o $(LDLIBS) $(POSTLINK)
 echo_svr:	test1.o echo_svr.o
-	$(LINK.cc) -o echo_svr echo_svr.o test1.o $(LDLIBS)
+	$(LINK.cc) -o echo_svr echo_svr.o test1.o $(LDLIBS) $(POSTLINK)
 endif
 
 	-rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state

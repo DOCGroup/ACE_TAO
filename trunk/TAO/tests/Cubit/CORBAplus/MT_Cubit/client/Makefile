@@ -48,7 +48,7 @@ $(IDL_SRC): cubit.idl
 	-/bin/mv cubit.C cubit.cpp
 
 client:	$(addprefix $(VDIR),$(CUBIT_CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/mtiiop_s.o $(VLDLIBS)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(PBHOME)/lib/mtiiop_s.o $(VLDLIBS) $(POSTLINK)
 
 clean:	
 	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
