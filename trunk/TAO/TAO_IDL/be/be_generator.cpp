@@ -164,6 +164,7 @@ be_generator::create_module (UTL_Scope *s,
               // Get m's previous_ member, plus all it's decls,
               // into the new modules's previous_ member.
               retval->add_to_previous (m);
+              retval->prefix (ACE_const_cast (char *, m->prefix ()));
             }
         }
     }
