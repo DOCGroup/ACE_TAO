@@ -1,3 +1,16 @@
+Thu Jul 29 18:19:17 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/config-irix6.x-common.h:
+	* ace/config-irix6.x-g++.h:
+	* ace/config-irix6.x-kcc.h:
+	* ace/config-irix6.x-sgic++-nothreads.h:
+	* ace/config-irix6.x-sgic++.h:
+
+	  IRIX configuration updates that address compile- and run-time
+	  errors.  Thanks to Kitty and Brian Waltersdorf
+	  <brian dot j dot waltersdorf at boeing dot com> for supplying
+	  the necessary changes and patch.
+
 Wed Jul 28 00:09:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/IPC_SAP/SSL_SAP/SSL-server-fancy.cpp (handle_events):

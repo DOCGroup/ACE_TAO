@@ -9,38 +9,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/config-kcc-common.h"
-
-
-// Platform supports the very odd IRIX 6.2 threads...
-#define ACE_HAS_THREADS
-#if !defined (ACE_MT_SAFE)
-# define ACE_MT_SAFE 1
-#endif /* !ACE_MT_SAFE */
-#define ACE_HAS_IRIX62_THREADS
-
-// IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
-#define ACE_HAS_PTHREADS
-#define ACE_HAS_PTHREADS_STD
-
 #include "ace/config-irix6.x-common.h"
-
-// Needed for the threading stuff?
-#include /**/ <sched.h>
-#include /**/ <task.h>
-
-#define PTHREAD_MIN_PRIORITY PX_PRIO_MIN
-#define PTHREAD_MAX_PRIORITY PX_PRIO_MAX
-
-// Compiler/platform has thread-specific storage
-#define ACE_HAS_THREAD_SPECIFIC_STORAGE
-
-// The pthread_cond_timedwait call does not reset the timer.
-#define ACE_LACKS_COND_TIMEDWAIT_RESET 1
-
-#define ACE_HAS_STRING_CLASS
-#ifndef IRIX6
-# define IRIX6
-#endif
 
 // Denotes that GNU has cstring.h as standard
 // which redefines memchr()

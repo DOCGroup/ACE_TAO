@@ -5,14 +5,29 @@
 // This file contains the common configuration options for both
 // SGI/MIPSPro C++ and g++ under IRIX 6.X
 //
+// For IRIX 6.2 there are several patches that should be applied to
+// get reliable operation with multi-threading and exceptions.
+// Specifically you should get a reasonable current IRIX, Compiler
+// and POSIX patch-sets.
+
+// For IRIX 6.[34] it's less critical, but it's still recommended
+// that you apply the applicable patch-sets (IRIX and Compiler I believe).
+
+// These patches are updated frequently, so you should ask your support
+// contact or search SGI's web site (http://www.sgi.com) for the latest
+// version.
+
+// Use this file for IRIX 6.[234] if you have the pthreads patches
+// installed.
+
 #ifndef ACE_CONFIG_IRIX6X_COMMON_H
 
-#if !(defined(ACE_CONFIG_H) || defined(ACE_CONFIG_IRIX6X_NTHR_H))
-#error "This file may only be included via config.h or config-irix6.x-nothreads.h"
+#ifndef IRIX6
+# define IRIX6
 #endif
 
-#if (defined(ACE_CONFIG_H) && defined(ACE_CONFIG_IRIX6X_NTHR_H))
-#error "May only be included via config.h *OR* config-irix6.x-nothreads.h, not both!"
+#if ! defined(ACE_CONFIG_H)
+#error "This file may only be included by config-irix6.x-sgic++.h, config-irix6.x-kcc.h or config-irix6.x-g++.h"
 #endif
 
 // The Irix 6.x float.h doesn't allow us to distinguish between a
@@ -20,8 +35,8 @@
 // to Bob Laferriere <laferrie@gsao.med.ge.com> for figuring it out.
 #if defined (_MIPS_SIM)             /* 6.X System */
 # include <sgidefs.h>
-# if defined (__GNUC__) /* GNU Compiler reports long doubles as 8 bytes */
-#   define ACE_SIZEOF_LONG_DOUBLE 8
+# if defined (__GNUC__)
+#   define ACE_SIZEOF_LONG_DOUBLE 16
 # elif defined (_MIPS_SIM_NABI32) && (_MIPS_SIM == _MIPS_SIM_NABI32)
 #   define ACE_SIZEOF_LONG_DOUBLE 16
 # elif defined (_MIPS_SIM_ABI32) && (_MIPS_SIM == _MIPS_SIM_ABI32)
@@ -61,6 +76,9 @@
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYSCALL_H
+
+// Compiler/platform supports snprintf
+#define ACE_HAS_SNPRINTF
 
 // Compiler/platform supports alloca()
 // Although ACE does have alloca() on this compiler/platform combination, it is
@@ -147,7 +165,7 @@
 // IRIX 6.4 and below do not support reentrant netdb functions
 // (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r,
 // gethostbyname_r, getservbyname_r).
-#if ACE_IRIX_VERS <= 64 && !defined (ACE_HAS_NETDB_REENTRANT_FUNCTIONS)
+#if (ACE_IRIX_VERS <= 64) && !defined (ACE_HAS_NETDB_REENTRANT_FUNCTIONS)
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #endif /* ACE_HAS_NETDB_REENTRANT_FUNCTIONS */
 
@@ -171,5 +189,86 @@
 // IRIX 6.5 supports AIO
 #define ACE_HAS_AIO_CALLS
 #define ACE_POSIX_AIOCB_PROACTOR
+#define ACE_HAS_SGIDLADD
+#define ACE_HAS_P_READ_WRITE
+#define ACE_LACKS_LINEBUFFERED_STREAMBUF
+#define ACE_LACKS_STDINT_H
+#define ACE_HAS_SETOWN
+#define ACE_HAS_SYSENT_H
+#define ACE_HAS_SYSINFO
+
+// Platform has support for multi-byte character support compliant
+// with the XPG4 Worldwide Portability Interface wide-character
+// classification.
+#define ACE_HAS_XPG4_MULTIBYTE_CHAR
+
+// We need to setup a very high address or Naming_Test won't run.
+#define ACE_DEFAULT_BASE_ADDR ((char *) (1024U * 1024 * 1024))
+
+#define ACE_LACKS_SIGNED_CHAR
+
+// Platform supports reentrant functions (i.e., all the POSIX *_r
+// functions).
+#define ACE_HAS_REENTRANT_FUNCTIONS
+
+// Optimize ACE_Handle_Set for select().
+#define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
+
+// Platform has terminal ioctl flags like TCGETS and TCSETS.
+#define ACE_HAS_TERM_IOCTLS
+
+// Platform does not support reentrant password file accessor functiions.
+#define ACE_LACKS_PWD_REENTRANT_FUNCTIONS
+
+// uses ctime_r & asctime_r with only two parameters vs. three
+#define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+
+// Prototypes for both signal() and struct sigaction are consistent.
+#define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
+
+#define ACE_HAS_UALARM
+
+// Scheduling functions are declared in <sched.h>
+#define ACE_NEEDS_SCHED_H
+
+// Compile using multi-thread libraries by default
+#if !defined (ACE_MT_SAFE)
+  #define ACE_MT_SAFE 1
+#endif /* ACE_MT_SAFE */
+
+#if (ACE_MT_SAFE != 0)
+
+// Add threading support
+
+#define ACE_HAS_IRIX62_THREADS
+
+// Needed for the threading stuff?
+#include /**/ <task.h>
+#define PTHREAD_MIN_PRIORITY PX_PRIO_MIN
+#define PTHREAD_MAX_PRIORITY PX_PRIO_MAX
+
+// ACE supports threads.
+#define ACE_HAS_THREADS
+
+// Platform has no implementation of pthread_condattr_setpshared(),
+// even though it supports pthreads! (like Irix 6.2)
+#define ACE_LACKS_CONDATTR_PSHARED
+#define ACE_LACKS_MUTEXATTR_PSHARED
+
+// IRIX 6.2 supports a variant of POSIX Pthreads, supposedly POSIX 1c
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_PTHREADS_STD
+
+// Compiler/platform has thread-specific storage
+#define ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+// The pthread_cond_timedwait call does not reset the timer.
+#define ACE_LACKS_COND_TIMEDWAIT_RESET 1
+
+// When threads are enabled READDIR_R is supported on IRIX.
+#undef ACE_LACKS_READDIR_R
+
+#endif /* (ACE_MT_SAFE == 0) */
+
 
 #endif /* ACE_CONFIG_IRIX6X_COMMON_H */
