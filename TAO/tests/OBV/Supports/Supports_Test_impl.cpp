@@ -64,7 +64,8 @@ Supports_Test::vt_graph * vt_graph_init_impl::create (ACE_ENV_SINGLE_ARG_DECL)
   return ret_val;
 }
 
-CORBA::ValueBase * vt_graph_init_impl::create_for_unmarshal (void)
+CORBA::ValueBase * vt_graph_init_impl::create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
@@ -203,7 +204,8 @@ node_impl::node_impl (const char * name)
 }
 
 // Add an edge from this node to neighbor.
-void node_impl::add_edge (Supports_Test::Node * neighbor)
+void node_impl::add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	degree_ (degree_ () + 1);
 	neighbors_ ().length (neighbors_ ().length () + 1);
@@ -213,7 +215,8 @@ void node_impl::add_edge (Supports_Test::Node * neighbor)
 }
 
 // Remove the edge from this node to neighbor.
-void node_impl::remove_edge (Supports_Test::Node * neighbor)
+void node_impl::remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   for (unsigned int i = 0; i < neighbors_ ().length (); i++)
     if (neighbors_ ()[i] == neighbor)
@@ -224,12 +227,14 @@ void node_impl::remove_edge (Supports_Test::Node * neighbor)
       }
 }
 
-void node_impl::change_weight (CORBA::Long new_weight)
+void node_impl::change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	weight_ (new_weight);
 }
 
-void node_impl::print (void)
+void node_impl::print (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   cout << "  Name: " << name_ () << endl;
   cout << "    Weight: " << weight_ () << endl;
