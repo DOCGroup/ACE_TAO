@@ -23,8 +23,6 @@ TAO_Messaging_PolicyFactory::create_policy (
 {
   TAO_ENV_ARG_DEFN;
 
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
-
   switch (type)
     {
 

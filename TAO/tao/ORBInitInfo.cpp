@@ -46,7 +46,7 @@ TAO_ORBInitInfo::orb_id (CORBA::Environment &)
 void
 TAO_ORBInitInfo::register_initial_reference (
     const char * id,
-    CORBA::Object_ptr obj,
+    CORBA::Object_ptr /* obj */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::InvalidName))
@@ -110,7 +110,7 @@ TAO_ORBInitInfo::add_server_request_interceptor (
 
 void
 TAO_ORBInitInfo::add_ior_interceptor (
-    PortableInterceptor::IORInterceptor_ptr interceptor,
+    PortableInterceptor::IORInterceptor_ptr /* interceptor */,
     CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableInterceptor::ORBInitInfo::DuplicateName))

@@ -1,3 +1,11 @@
+Mon Oct 23 14:58:34 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Messaging_PolicyFactory.cpp (create_policy):
+	* tao/ORBInitInfo.cpp
+	  (register_initial_reference, add_ior_interceptor):
+
+	  Fixed unused argument warnings.
+
 Mon Oct 23 14:46:57 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tao/DomainC.cpp:
