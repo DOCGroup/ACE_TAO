@@ -276,6 +276,10 @@ ifdef static_libs_only
   override static_libs = 1
 endif # static_libs_only
 
+#### We need to set VBIN here, because it's used in the BUILD
+#### definitions below.
+VBIN = $(BIN:%=%$(VAR))
+
 ifdef shared_libs
   ifdef static_libs
     #### Build both shared and static libs.
