@@ -13,7 +13,7 @@ use Cwd;
 $cwd = getcwd();
 ACE::checkForTarget($cwd);
 
-print STDERR "\n\n==== Running interceptor test\n";
+print STDERR "\n\n==== Running interceptor Dynamic test\n";
 
 $file = "$cwd$DIR_SEPARATOR" . "test.ior";
 

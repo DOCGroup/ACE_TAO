@@ -43,7 +43,7 @@ Echo_Client_Request_Interceptor::name (CORBA::Environment &)
  
 void 
 Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri,
-                                               CORBA::Environment &ACE_TRY_ENV)
+                                               CORBA::Environment &)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableInterceptor::ForwardRequest))
 {
@@ -69,15 +69,6 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, 0);
- 
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
-    {
-      /*      Dynamic::ParameterList_var paramlist = ri->arguments ();
-      CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
-      
-      cout << "the arg is " << param <<endl;*/
-      }
 }
 
 void 
@@ -91,7 +82,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
               this->orb_->object_to_string (ri->target ())));
 
   // ACE_CHECK;
-  // ServiceID? is hacked and set to 1 for now
+
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext * sc = ri->get_reply_service_context (id);
 
@@ -102,15 +93,6 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
   ACE_DEBUG ((LM_DEBUG,
               "  Received reply service context: %s\n",
               buf));
-   if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
-    {
-      /*Dynamic::ParameterList_var paramlist = ri->arguments ();
-      CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
-      
-      cout << "the arg is " << param <<endl;
-      */ }
-
 }
 
 void 
@@ -124,7 +106,7 @@ Echo_Client_Request_Interceptor::receive_exception (PortableInterceptor::ClientR
               "Echo_Client_Request_Interceptor::received_exception from \"%s\" on object: %s\n",
               ri->operation (ACE_TRY_ENV),
               this->orb_->object_to_string (ri->target ())));
-  //  ACE_CHECK;
+  ACE_CHECK;
 
 }
 
@@ -170,8 +152,6 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
               "Echo_Server_Request_Interceptor::receive_request from \"%s\"",
               ri->operation ()));
   
-
-  // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = request_ctx_id;
   IOP::ServiceContext *sc = ri->get_request_service_context (id);
 
@@ -183,7 +163,7 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
               "  Received service context: %s\n",
               buf));
 
-  // MAke the context to send the context to the client
+  // Make the context to send the context to the client
   IOP::ServiceContext scc;
 
   scc.context_id = reply_ctx_id;
@@ -199,16 +179,6 @@ Echo_Server_Request_Interceptor::receive_request (PortableInterceptor::ServerReq
 
   // Add this context to the service context list.
   ri->add_reply_service_context (scc, 0);
-  
-  
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
-    {/*
-      Dynamic::ParameterList_var paramlist = ri->arguments ();
-      CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
-      
-      cout << "the arg is " << param <<endl;
-     */ }
    
 }
 
@@ -222,7 +192,6 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
               "Echo_Server_Request_Interceptor::send_reply from \"%s\"",
               ri->operation ()));
 
- // ServiceID? is hacked and set to 1 for now
   IOP::ServiceId id = reply_ctx_id;
   IOP::ServiceContext *sc = ri->get_reply_service_context (id); 
  
@@ -234,16 +203,6 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
   ACE_DEBUG ((LM_DEBUG,
               "  Replying service context: %s\n",
               buf));
-
- 
-  if (ACE_OS::strcmp (ri->operation (), "normal") == 0)
-    {
-      /* Dynamic::ParameterList_var paramlist = ri->arguments ();
-      CORBA::Long param;
-      (*paramlist)[0].argument >>= param;
-      
-      cout << "the arg is " << param <<endl;
-      */  }
 }
 
 void 

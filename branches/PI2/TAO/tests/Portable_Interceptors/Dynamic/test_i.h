@@ -18,8 +18,6 @@
 
 #include "testS.h"
 
-
-
 class Visual_i : public POA_Test_Interceptors::Visual
 {
   // = DESCRIPTION
@@ -33,7 +31,10 @@ public:
                CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void nothing (CORBA::Environment&)
+  CORBA::Long calculate (
+                         CORBA::Long one, 
+                         CORBA::Long two,
+                         CORBA::Environment&)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   void user (CORBA::Environment&)
