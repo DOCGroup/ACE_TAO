@@ -1,3 +1,36 @@
+Thu Apr  4 12:49:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/MT_BiDir/client.cpp:
+	* tests/MT_BiDir/Client_Task.cpp:
+	* tests/MT_BiDir/Client_Task.h:
+	* tests/MT_BiDir/Receiver_i.cpp:
+	* tests/MT_BiDir/Receiver.idl:
+	* tests/MT_BiDir/Receiver_i.h:
+	* tests/MT_BiDir/Sender_i.cpp:
+	* tests/MT_BiDir/Sender.idl:
+	* tests/MT_BiDir/Sender_i.h:
+	* tests/MT_BiDir/server.conf:
+	* tests/MT_BiDir/server.cpp:
+	* tests/MT_BiDir/Server_Task.cpp:
+	* tests/MT_BiDir/Server_Task.h:
+	* tests/MT_BiDir/Makefile:
+	* tests/MT_BiDir/Makefile.bor:
+	* tests/MT_BiDir/server.bor:
+	* tests/MT_BiDir/client.bor:
+	* tests/MT_BiDir/README: A new test that exercises multiple
+	  threads for a BiDir GIOP connections. The problem such a
+	  scenario faced before was the extra connections that were being
+	  created from the server end when trying to callback the client. 
+
+	  With the new policy that has been added to TAO, it is easier to
+	  control the number of connections opened by the server
+	  end. Making that 1, would prevent the multi-threaded server from
+	  opening up more connections to the client and the server threads
+	  will wait for the available connection to be released. 
+
+	  This test exercises this feature and is a rigourous test for MT
+	  bidirectional connection.
+
 Wed Apr 03 23:38:50 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Condition.h: Added a comment
