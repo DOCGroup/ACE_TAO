@@ -13,10 +13,15 @@
 //
 // ============================================================================
 
-#if !defined (ACE_HASH_MAP_MANAGER_C)
+#ifndef ACE_HASH_MAP_MANAGER_C
 #define ACE_HASH_MAP_MANAGER_C
 
 #include "ace/Hash_Map_Manager.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Service_Config.h"
 #include "ace/Malloc.h"
 

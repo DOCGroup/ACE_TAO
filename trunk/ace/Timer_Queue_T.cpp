@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (ACE_TIMER_QUEUE_T_C)
+#ifndef ACE_TIMER_QUEUE_T_C
 #define ACE_TIMER_QUEUE_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Synch.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Signal.h"
 #include "ace/Timer_Queue_T.h"
 
@@ -28,24 +33,24 @@ ACE_Timer_Node_T<TYPE>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class TYPE> 
+template <class TYPE>
 ACE_Timer_Node_T<TYPE>::ACE_Timer_Node_T (void)
 {
   ACE_TRACE ("ACE_Timer_Node_T::ACE_Timer_Node_T");
 }
 
-template <class TYPE> 
+template <class TYPE>
 ACE_Timer_Node_T<TYPE>::~ACE_Timer_Node_T (void)
 {
   ACE_TRACE ("ACE_Timer_Node_T::~ACE_Timer_Node_T");
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_Iterator_T (void)
 {
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Queue_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Queue_Iterator_T (void)
 {
 }
@@ -63,10 +68,10 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, max_wait_time));
-  
+
   if (this->is_empty ())
     // Nothing on the Timer_Queue, so use whatever the caller gave us.
-    return max_wait_time; 
+    return max_wait_time;
   else
     {
       ACE_Time_Value cur_time = this->gettimeofday ();
@@ -84,7 +89,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
           else
             return max_wait_time;
         }
-      else        
+      else
         {
           // The earliest item on the Timer_Queue is now in the past.
           // Therefore, we've got to "poll" the Reactor, i.e., it must
@@ -100,7 +105,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
                                                            ACE_Time_Value *the_timeout)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::calculate_timeout");
-  
+
   if (the_timeout == 0)
     return 0;
 
@@ -127,7 +132,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::calculate_timeout (ACE_Time_Value *m
           if (!(max_wait_time == 0 || *max_wait_time > *the_timeout))
             *the_timeout = *max_wait_time;
         }
-      else        
+      else
         {
           // The earliest item on the Timer_Queue is now in the past.
           // Therefore, we've got to "poll" the Reactor, i.e., it must
@@ -145,11 +150,11 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->timeout_.dump ();
   this->timer_skew_.dump ();
-  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));    
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> 
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor, 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor,
                                                            ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : free_list_ (freelist == 0 ? new ACE_Locked_Free_List<ACE_Timer_Node_T <TYPE>, ACE_Null_Mutex> : freelist),
     gettimeofday_ (ACE_OS::gettimeofday),
@@ -161,7 +166,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Queue_T (FUNCTOR *upcall_f
   ACE_TRACE ("ACE_Timer_Queue_T::ACE_Timer_Queue_T");
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> 
+template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Queue_T (void)
 {
   ACE_TRACE ("ACE_Timer_Queue_T::~ACE_Timer_Queue_T");
@@ -180,7 +185,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::alloc_node (void)
   return this->free_list_->remove ();
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> void 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::free_node (ACE_Timer_Node_T<TYPE> *node)
 {
   this->free_list_->add (node);
@@ -217,7 +222,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
       TYPE &type = expired->get_type ();
       const void *act = expired->get_act ();
       int reclaim = 1;
-      
+
       // Check if this is an interval timer.
       if (expired->get_interval () > ACE_Time_Value::zero)
         {
@@ -232,14 +237,14 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
           this->reschedule (expired);
           reclaim = 0;
         }
-      
+
       // call the functor
       this->upcall (type, act, cur_time);
-      
+
       if (reclaim)
         // Call the factory method to free up the node.
         this->free_node (expired);
-      
+
       number_of_timers_expired++;
 
       if (this->is_empty ())
@@ -250,7 +255,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
 }
 
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK> void 
+template <class TYPE, class FUNCTOR, class ACE_LOCK> void
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK>::return_node (ACE_Timer_Node_T<TYPE> *node)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
@@ -269,8 +274,8 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::~ACE_Event_Handler_Handle_Tim
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                                                            ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<ACE_Event_Handler *,
+                                                            ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
                                                             ACE_LOCK> &timer_queue,
                                                             ACE_Event_Handler *handler,
                                                             const void *act,
@@ -278,28 +283,28 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::timeout (ACE_Timer_Queue_T<AC
 {
   // Upcall to the <handler>s handle_timeout method
   if (handler->handle_timeout (cur_time, act) == -1)
-    timer_queue.cancel (handler, 0); // 0 means "call handle_close()".    
-  
+    timer_queue.cancel (handler, 0); // 0 means "call handle_close()".
+
   return 0;
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                                                                 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::cancellation (ACE_Timer_Queue_T<ACE_Event_Handler *,
+                                                                 ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
                                                                  ACE_LOCK> &timer_queue,
                                                                  ACE_Event_Handler *handler)
 {
   ACE_UNUSED_ARG (timer_queue);
 
   // Upcall to the <handler>s handle_close method
-  handler->handle_close (ACE_INVALID_HANDLE, 
+  handler->handle_close (ACE_INVALID_HANDLE,
                          ACE_Event_Handler::TIMER_MASK);
   return 0;
 }
 
 template <class ACE_LOCK> int
-ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *, 
-                                                             ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>, 
+ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (ACE_Timer_Queue_T<ACE_Event_Handler *,
+                                                             ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>,
                                                              ACE_LOCK> &timer_queue,
                                                              ACE_Event_Handler *handler,
                                                              const void *arg)
@@ -309,7 +314,7 @@ ACE_Event_Handler_Handle_Timeout_Upcall<ACE_LOCK>::deletion (ACE_Timer_Queue_T<A
   ACE_UNUSED_ARG (arg);
 
   // Does nothing
-  
+
   return 0;
 }
 

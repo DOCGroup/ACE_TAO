@@ -2,10 +2,14 @@
 
 // RB_Tree.cpp
 
-#if !defined (ACE_RB_TREE_C)
+#ifndef ACE_RB_TREE_C
 #define ACE_RB_TREE_C
 
 #include "ace/RB_Tree.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/RB_Tree.i"
@@ -60,7 +64,7 @@ ACE_RB_Tree<KEY, T>::ACE_RB_Tree (
     less_than_functor_ (less_than_functor),
     free_functor_ (free_functor)
 {
-  if (less_than_functor_ == 0) 
+  if (less_than_functor_ == 0)
     {
       less_than_functor_ = new ACE_Less_Than_Functor<KEY, KEY>;
       free_functor_ = 1;
@@ -140,7 +144,7 @@ ACE_RB_Tree<KEY, T>::lessthan (const KEY &k1, const KEY &k2)
   if (less_than_functor_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("\nNull comparison functor pointer.\n")), 
+                         ASYS_TEXT ("\nNull comparison functor pointer.\n")),
                         0);
     }
   else
@@ -215,8 +219,8 @@ ACE_RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
         current->right (new ACE_RB_Tree_Node<KEY, T> (k, t));
         if (current->right ())
         {
-          // If the node was successfully inserted, set its parent, rebalance 
-          // the tree, color the root black, and return a pointer to the 
+          // If the node was successfully inserted, set its parent, rebalance
+          // the tree, color the root black, and return a pointer to the
           // inserted item.
           T *item = &(current->right ()->item ());
           current->right ()->parent (current);
@@ -250,7 +254,7 @@ ACE_RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
         if (current->left ())
         {
           // If the node was successfully inserted, set its parent, rebalance
-          // the tree, color the root black, and return a pointer to the 
+          // the tree, color the root black, and return a pointer to the
           // inserted item.
           T *item = &(current->left ()->item ());
           current->left ()->parent (current);
@@ -302,7 +306,7 @@ ACE_RB_Tree<KEY, T>::remove (const KEY &k)
 {
   // Find a matching node, if there is one.
   ACE_RB_Tree_Node<KEY, T> *x, *z;
-  
+
   z = find_node (k);
 
   if ((z) && (! this->lessthan (z->key (), k))
@@ -327,9 +331,9 @@ ACE_RB_Tree<KEY, T>::remove (const KEY &k)
       x = y->right ();
     }
     if (x)
-	{
-	  x->parent (y->parent ());
-	}
+        {
+          x->parent (y->parent ());
+        }
     if (y->parent ())
     {
       if (y == y->parent ()->left ())
@@ -693,7 +697,7 @@ ACE_RB_Tree<KEY, T>::RB_tree_successor (ACE_RB_Tree_Node<KEY, T> *x) const
   return y;
 }
 
- 
+
 // Method to find the predecessor node of the given node in the tree.
 
 template <class KEY, class T> ACE_RB_Tree_Node<KEY, T> *

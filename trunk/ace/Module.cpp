@@ -1,11 +1,16 @@
 // Module.cpp
 // $Id$
 
-#if !defined (ACE_MODULE_C)
+#ifndef ACE_MODULE_C
 #define ACE_MODULE_C
 
 #define ACE_BUILD_DLL
 #include "ace/Module.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
@@ -23,9 +28,9 @@ ACE_Module<ACE_SYNCH_USE>::dump (void) const
 }
 
 template <ACE_SYNCH_DECL> void
-ACE_Module<ACE_SYNCH_USE>::writer (ACE_Task<ACE_SYNCH_USE> *q, 
-				 int flags /* = M_DELETE_WRITER */) 
-{ 
+ACE_Module<ACE_SYNCH_USE>::writer (ACE_Task<ACE_SYNCH_USE> *q,
+                                 int flags /* = M_DELETE_WRITER */)
+{
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::writer");
 
   // Close and maybe delete old writer
@@ -45,8 +50,8 @@ ACE_Module<ACE_SYNCH_USE>::writer (ACE_Task<ACE_SYNCH_USE> *q,
 }
 
 template <ACE_SYNCH_DECL> void
-ACE_Module<ACE_SYNCH_USE>::reader (ACE_Task<ACE_SYNCH_USE> *q, 
-				 int flags /* = M_DELETE_READER */)
+ACE_Module<ACE_SYNCH_USE>::reader (ACE_Task<ACE_SYNCH_USE> *q,
+                                 int flags /* = M_DELETE_READER */)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::reader");
 
@@ -61,7 +66,7 @@ ACE_Module<ACE_SYNCH_USE>::reader (ACE_Task<ACE_SYNCH_USE> *q,
       // Set the q's module pointer to point to us.
       q->mod_ = this;
     }
-	
+
   // don't allow the caller to change the reader status
   ACE_SET_BITS (flags_, (flags & M_DELETE_READER));
 }
@@ -78,11 +83,11 @@ ACE_Module<ACE_SYNCH_USE>::link (ACE_Module<ACE_SYNCH_USE> *m)
 }
 
 template <ACE_SYNCH_DECL> int
-ACE_Module<ACE_SYNCH_USE>::open (const ASYS_TCHAR *mod_name, 
-			       ACE_Task<ACE_SYNCH_USE> *writer_q, 
-			       ACE_Task<ACE_SYNCH_USE> *reader_q, 
-			       void *arg,
-			       int flags /* = M_DELETE */)
+ACE_Module<ACE_SYNCH_USE>::open (const ASYS_TCHAR *mod_name,
+                               ACE_Task<ACE_SYNCH_USE> *writer_q,
+                               ACE_Task<ACE_SYNCH_USE> *reader_q,
+                               void *arg,
+                               int flags /* = M_DELETE */)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::open");
   this->name (mod_name);
@@ -95,13 +100,13 @@ ACE_Module<ACE_SYNCH_USE>::open (const ASYS_TCHAR *mod_name,
   if (this->writer ())
     this->close_i (1, M_DELETE_WRITER);
 
-  if (writer_q == 0) 
+  if (writer_q == 0)
     {
       writer_q = new ACE_Thru_Task<ACE_SYNCH_USE>;
       ACE_SET_BITS (flags, M_DELETE_WRITER);
     }
 
-  if (reader_q == 0) 
+  if (reader_q == 0)
     {
       reader_q = new ACE_Thru_Task<ACE_SYNCH_USE>;
       ACE_SET_BITS (flags, M_DELETE_READER);
@@ -170,10 +175,10 @@ ACE_Module<ACE_SYNCH_USE>::~ACE_Module (void)
 
 template <ACE_SYNCH_DECL>
 ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ASYS_TCHAR *mod_name,
-				     ACE_Task<ACE_SYNCH_USE> *writer_q, 
-				     ACE_Task<ACE_SYNCH_USE> *reader_q, 
-				     void *args,
-				     int flags /* = M_DELETE */) 
+                                     ACE_Task<ACE_SYNCH_USE> *writer_q,
+                                     ACE_Task<ACE_SYNCH_USE> *reader_q,
+                                     void *args,
+                                     int flags /* = M_DELETE */)
   : flags_ (0)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
@@ -184,7 +189,7 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ASYS_TCHAR *mod_name,
   if (this->open (mod_name, writer_q, reader_q, args, flags) == -1)
     ACE_ERROR ((LM_ERROR,  ASYS_TEXT ("%p\n"),  ASYS_TEXT ("ACE_Module")));
 }
-		
+
 template <ACE_SYNCH_DECL> int
 ACE_Module<ACE_SYNCH_USE>::close (int flags /* = M_DELETE_NONE */)
 {
@@ -205,7 +210,7 @@ ACE_Module<ACE_SYNCH_USE>::close (int flags /* = M_DELETE_NONE */)
 
 template <ACE_SYNCH_DECL> int
 ACE_Module<ACE_SYNCH_USE>::close_i (int which,
-				  int flags)
+                                  int flags)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::close_i");
 
@@ -228,7 +233,7 @@ ACE_Module<ACE_SYNCH_USE>::close_i (int which,
   task->next (0);
 
   // Should we also delete it ?
-  if (flags != M_DELETE_NONE 
+  if (flags != M_DELETE_NONE
       && ACE_BIT_ENABLED (flags_, which + 1))
     {
       // Only delete the Tasks if there aren't any more threads

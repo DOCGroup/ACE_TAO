@@ -2,10 +2,14 @@
 
 #define ACE_BUILD_DLL
 
-#if !defined (ACE_MANAGED_OBJECT_CPP)
+#ifndef ACE_MANAGED_OBJECT_CPP
 #define ACE_MANAGED_OBJECT_CPP
 
 #include "ace/Managed_Object.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Managed_Object.i"

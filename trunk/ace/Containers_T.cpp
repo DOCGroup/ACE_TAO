@@ -1,11 +1,16 @@
 // $Id$
 
-#if !defined (ACE_CONTAINERS_T_C)
+#ifndef ACE_CONTAINERS_T_C
 #define ACE_CONTAINERS_T_C
 
 #define ACE_BUILD_DLL
 
 #include "ace/Malloc.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Containers.h"
 
 #if !defined (__ACE_INLINE__)
@@ -2302,7 +2307,7 @@ ACE_Array<T>::get (T &item, size_t index) const
      return -1;
 }
 
-template<class T> int 
+template<class T> int
 ACE_Array<T>::size (size_t new_size)
 {
   if (new_size >= this->max_size_)
@@ -2310,7 +2315,7 @@ ACE_Array<T>::size (size_t new_size)
       // @@ We should use auto_ptr<>!
       T* tmp;
       ACE_NEW_RETURN (tmp, T[new_size], -1);
-      
+
       for (size_t i = 0; i < this->cur_size_; ++i)
         tmp[i] = this->array_[i];
       delete[] this->array_;

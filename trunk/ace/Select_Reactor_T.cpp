@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (ACE_SELECT_REACTOR_T_C)
+#ifndef ACE_SELECT_REACTOR_T_C
 #define ACE_SELECT_REACTOR_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Select_Reactor_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Thread.h"
 #include "ace/Timer_Heap.h"
 
@@ -28,7 +33,7 @@ ACE_RCSID(ace, Select_Reactor_T, "$Id$")
 #endif /* ACE_WIN32 */
 
   template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready
   (ACE_Select_Reactor_Handle_Set &wait_set)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::fill_in_ready");
@@ -163,7 +168,7 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::dump (void) const
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX>
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T 
+ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::ACE_Select_Reactor_Token_T
   (ACE_Select_Reactor_Impl &r)
     : select_reactor_ (&r)
 {
@@ -190,7 +195,7 @@ ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::select_reactor (void)
 }
 
 template <class ACE_SELECT_REACTOR_MUTEX> void
-ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::select_reactor 
+ACE_Select_Reactor_Token_T<ACE_SELECT_REACTOR_MUTEX>::select_reactor
   (ACE_Select_Reactor_Impl &select_reactor)
 {
   this->select_reactor_ = &select_reactor;
@@ -274,7 +279,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
   (ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
 {
@@ -284,7 +289,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
   (ACE_HANDLE handle,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
@@ -295,7 +300,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
   (const ACE_Handle_Set &handles,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
@@ -306,7 +311,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask,
    ACE_Event_Handler **handler)
@@ -317,7 +322,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   (const ACE_Handle_Set &handles,
    ACE_Reactor_Mask mask)
 {
@@ -327,7 +332,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   (ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
 {
@@ -337,7 +342,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask)
 {
@@ -349,7 +354,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
 // Performs operations on the "ready" bits.
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask,
    int ops)
@@ -363,7 +368,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ready_ops
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
   (size_t size,
    int restart,
    ACE_Sig_Handler *sh,
@@ -443,7 +448,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_sig_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_sig_handler
   (ACE_Sig_Handler *signal_handler)
 {
   if (this->signal_handler_ != 0 && this->delete_signal_handler_ != 0)
@@ -454,7 +459,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_sig_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_timer_queue 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_timer_queue
   (ACE_Timer_Queue *timer_queue)
 {
   if (this->timer_queue_ != 0 && this->delete_timer_queue_ != 0)
@@ -465,7 +470,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_timer_queue
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN>
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
   (ACE_Sig_Handler *sh,
    ACE_Timer_Queue *tq,
    int disable_notify_pipe,
@@ -490,7 +495,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
 // Initialize ACE_Select_Reactor_T.
 
 template <class ACE_SELECT_REACTOR_TOKEN>
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
   (size_t size,
    int rs,
    ACE_Sig_Handler *sh,
@@ -555,7 +560,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::current_info 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::current_info
   (ACE_HANDLE, size_t &)
 {
   return -1;
@@ -569,7 +574,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::~ACE_Select_Reactor_T (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
   (const ACE_Handle_Set &handles,
    ACE_Reactor_Mask mask)
 {
@@ -586,7 +591,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
   (const ACE_Handle_Set &handles,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
@@ -603,7 +608,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
   (const ACE_Sig_Set &sigset,
    ACE_Event_Handler *new_sh,
    ACE_Sig_Action *new_disp)
@@ -627,7 +632,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
   (const ACE_Sig_Set &sigset)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler");
@@ -648,7 +653,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
 // Note the queue handles its own locking.
 
 template <class ACE_SELECT_REACTOR_TOKEN> long
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
    const void *arg,
    const ACE_Time_Value &delta_time,
@@ -665,7 +670,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
 // returning (will return earlier if I/O or signal events occur).
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   (ACE_Time_Value &max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
@@ -694,7 +699,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> void
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask,
    ACE_Handle_Set &ready_mask,
@@ -727,7 +732,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
 // Returns the original mask.
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask,
    int ops)
@@ -742,7 +747,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops
 // Must be called with locks held.
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask,
    ACE_Event_Handler **handler)
@@ -828,7 +833,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
 // Must be called with locks held
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
   (ACE_HANDLE handle,
    ACE_Event_Handler *event_handler,
    ACE_Reactor_Mask mask)
@@ -841,7 +846,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
   (ACE_HANDLE handle,
    ACE_Reactor_Mask mask)
 {
@@ -854,7 +859,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 // Must be called with lock held.
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
   (ACE_Select_Reactor_Handle_Set &dispatch_set,
    ACE_Time_Value *max_wait_time)
 {
@@ -906,7 +911,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_timer_handlers 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_timer_handlers
   (int &number_of_handlers_dispatched)
 {
   number_of_handlers_dispatched += this->timer_queue_->expire ();
@@ -917,7 +922,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_timer_handlers
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
   (ACE_Select_Reactor_Handle_Set &dispatch_set,
    int &number_of_active_handles,
    int &number_of_handlers_dispatched)
@@ -941,7 +946,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
   (int number_of_active_handles,
    int &number_of_handlers_dispatched,
    int mask,
@@ -973,7 +978,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_set
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_handlers 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_handlers
   (ACE_Select_Reactor_Handle_Set &dispatch_set,
    int &number_of_active_handles,
    int &number_of_handlers_dispatched)
@@ -1023,7 +1028,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_io_handlers
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
   (int active_handle_count,
    ACE_Select_Reactor_Handle_Set &dispatch_set)
 {
@@ -1087,22 +1092,22 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // Check to see if there are no more I/O handles left to
       // dispatch AFTER we've handled the timers...
       else if (active_handle_count == 0)
-        return io_handlers_dispatched 
-          + other_handlers_dispatched 
+        return io_handlers_dispatched
+          + other_handlers_dispatched
           + signal_occurred;
 
       // Next dispatch the notification handlers (if there are any to
       // dispatch).  These are required to handle multi-threads that
       // are trying to update the <Reactor>.
 
-      else if (this->dispatch_notification_handlers 
+      else if (this->dispatch_notification_handlers
                (dispatch_set,
                 active_handle_count,
                 other_handlers_dispatched) == -1)
         break; // State has changed, exit loop.
 
       // Finally, dispatch the I/O handlers.
-      else if (this->dispatch_io_handlers 
+      else if (this->dispatch_io_handlers
                (dispatch_set,
                 active_handle_count,
                 io_handlers_dispatched) == -1)
@@ -1126,7 +1131,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::release_token (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
   (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
@@ -1150,12 +1155,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i 
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i
   (ACE_Time_Value *max_wait_time)
 {
   int result = -1;
 
-  ACE_SEH_TRY 
+  ACE_SEH_TRY
     {
       ACE_Select_Reactor_Handle_Set dispatch_set;
 
@@ -1166,7 +1171,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events_i
       result = this->dispatch (number_of_active_handles,
                                dispatch_set);
     }
-  ACE_SEH_EXCEPT (this->release_token ()) 
+  ACE_SEH_EXCEPT (this->release_token ())
     {
       // As it stands now, we catch and then rethrow all Win32
       // structured exceptions so that we can make sure to release the

@@ -1,11 +1,15 @@
 // $Id$
 
-#if !defined (ACE_TIMER_HEAP_T_C)
+#ifndef ACE_TIMER_HEAP_T_C
 #define ACE_TIMER_HEAP_T_C
 
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_Heap_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Timer_Heap_T, "$Id$")
 

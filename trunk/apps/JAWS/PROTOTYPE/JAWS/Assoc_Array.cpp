@@ -1,9 +1,14 @@
 // $Id$
 
-#if !defined (JAWS_ASSOC_ARRAY_CPP)
+#ifndef JAWS_ASSOC_ARRAY_CPP
 #define JAWS_ASSOC_ARRAY_CPP
 
 #include "ace/inc_user_config.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "JAWS/Assoc_Array.h"
 
 ACE_RCSID(JAWS, Assoc_Array, "$Id$")

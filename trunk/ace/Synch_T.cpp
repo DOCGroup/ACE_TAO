@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (ACE_SYNCH_T_C)
+#ifndef ACE_SYNCH_T_C
 #define ACE_SYNCH_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Thread.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Synch_T.h"
 #include "ace/Log_Msg.h"
 

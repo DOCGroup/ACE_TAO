@@ -1,10 +1,15 @@
 // $Id$
 
-#if !defined (ACE_SVC_HANDLER_C)
+#ifndef ACE_SVC_HANDLER_C
 #define ACE_SVC_HANDLER_C
 
 #define ACE_BUILD_DLL
 #include "ace/Svc_Handler.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Object_Manager.h"
 #include "ace/Strategies.h"
 
@@ -167,7 +172,7 @@ template <PR_ST_1, ACE_SYNCH_DECL> void
 ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::cleanup_hint (void)
 {
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::shutdown");
-  
+
   // Remove as hint.
   if (this->recycler ())
     this->recycler ()->cleanup_hint (this->recycling_act_);

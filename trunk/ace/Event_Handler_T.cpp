@@ -1,11 +1,15 @@
 // Event_Handler_T.cpp
 // $Id$
 
-#if !defined (EVENT_HANDLER_T_C)
+#ifndef EVENT_HANDLER_T_C
 #define EVENT_HANDLER_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Event_Handler_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Event_Handler_T, "$Id$")
 
@@ -33,14 +37,14 @@ ACE_Event_Handler_T<T>::~ACE_Event_Handler_T (void)
 
 template <class T>
 ACE_Event_Handler_T<T>::ACE_Event_Handler_T (T *op_handler, int delete_handler,
-					     GET_HANDLE get_handle,
-					     IO_HANDLER input_h,
-					     CL_HANDLER close_h,
-					     SIG_HANDLER sig_h,
-					     TO_HANDLER timeout_h,
-					     IO_HANDLER output_h,
-					     SET_HANDLE set_handle,
-					     IO_HANDLER except_h)
+                                             GET_HANDLE get_handle,
+                                             IO_HANDLER input_h,
+                                             CL_HANDLER close_h,
+                                             SIG_HANDLER sig_h,
+                                             TO_HANDLER timeout_h,
+                                             IO_HANDLER output_h,
+                                             SET_HANDLE set_handle,
+                                             IO_HANDLER except_h)
   : op_handler_ (op_handler),
     input_handler_ (input_h),
     output_handler_ (output_h),

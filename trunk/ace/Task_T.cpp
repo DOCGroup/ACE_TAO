@@ -1,11 +1,16 @@
 // Task.cpp
 // $Id$
 
-#if !defined (ACE_TASK_T_C)
+#ifndef ACE_TASK_T_C
 #define ACE_TASK_T_C
 
 #define ACE_BUILD_DLL
 #include "ace/Task_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Module.h"
 #include "ace/Service_Config.h"
 
@@ -39,9 +44,9 @@ ACE_Task<ACE_SYNCH_USE>::dump (void) const
 // allocate one dynamically.  Otherwise, we'll use the one they give.
 
 template<ACE_SYNCH_DECL>
-ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man, 
+ACE_Task<ACE_SYNCH_USE>::ACE_Task (ACE_Thread_Manager *thr_man,
                                    ACE_Message_Queue<ACE_SYNCH_USE> *mq)
-  : ACE_Task_Base (thr_man), 
+  : ACE_Task_Base (thr_man),
     msg_queue_ (0),
     delete_msg_queue_ (0),
     mod_ (0),

@@ -13,7 +13,7 @@
 //    Irfan Pyarali <irfan@cs.wustl.edu>
 // ============================================================================
 
-#if !defined (TAO_OFFER_ITERATORS_T_C)
+#ifndef TAO_OFFER_ITERATORS_T_C
 #define  TAO_OFFER_ITERATORS_T_C
 
 #include "Offer_Iterators_T.h"

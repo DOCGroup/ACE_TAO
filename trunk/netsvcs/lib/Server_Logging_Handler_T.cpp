@@ -1,11 +1,16 @@
 // $Id$
 
-#if !defined (ACE_SERVER_LOGGING_HANDLERT_C)
+#ifndef ACE_SERVER_LOGGING_HANDLERT_C
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/OS.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/Get_Opt.h"
 #include "Server_Logging_Handler_T.h"
 

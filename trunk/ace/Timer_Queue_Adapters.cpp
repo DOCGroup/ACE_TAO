@@ -3,7 +3,11 @@
 #define ACE_BUILD_DLL
 #include "ace/Timer_Queue_Adapters.h"
 
-#if !defined (ACE_TIMER_QUEUE_ADAPTERS_C)
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#ifndef ACE_TIMER_QUEUE_ADAPTERS_C
 # define ACE_TIMER_QUEUE_ADAPTERS_C
 
 ACE_RCSID(ace, Timer_Queue_Adapters, "$Id$")
@@ -261,16 +265,16 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::svc (void)
 
 // Enqueues a command object for execution just before waiting on the next
 // timer event. This allows deferred execution of commands that cannot
-// be performed in the timer event handler context, such as registering 
+// be performed in the timer event handler context, such as registering
 // or cancelling timers on platforms where the timer queue mutex is not
 // recursive.
 
 template<class TQ> int
-ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd, 
+ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd,
                                                      COMMAND_ENQUEUE_POSITION pos)
-{  
+{
   // Serialize access to the command queue.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, 
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                     this->command_mutex_, -1);
 
   if (pos == ACE_Thread_Timer_Queue_Adapter<TQ>::TAIL)
@@ -284,14 +288,14 @@ ACE_Thread_Timer_Queue_Adapter<TQ>::enqueue_command (ACE_Command_Base *cmd,
 }
 
 
-// Dispatches all command objects enqueued in the most 
+// Dispatches all command objects enqueued in the most
 // recent event handler context.
 
 template<class TQ> int
 ACE_Thread_Timer_Queue_Adapter<TQ>::dispatch_commands (void)
 {
   // Serialize access to the command queue.
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, 
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
                     this->command_mutex_, -1);
 
   // loop through the enqueued commands

@@ -1,11 +1,16 @@
 // $Id$
 
-#if !defined (ACE_TIMER_WHEEL_T_C)
+#ifndef ACE_TIMER_WHEEL_T_C
 #define ACE_TIMER_WHEEL_T_C
 
 #define ACE_BUILD_DLL
 
 #include "ace/Timer_Wheel_T.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 #include "ace/High_Res_Timer.h"
 
 ACE_RCSID(ace, Timer_Wheel_T, "$Id$")
@@ -566,7 +571,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value &cur_ti
         }
 
       while (this->wheel_[earliest]->get_next () != this->wheel_[earliest]
-		     && this->wheel_[earliest]->get_next ()->get_timer_value () <= next_earliest_time)
+                     && this->wheel_[earliest]->get_next ()->get_timer_value () <= next_earliest_time)
         {
           // Remove the first node in the earliest position
           ACE_Timer_Node_T<TYPE> *expired = this->wheel_[earliest]->get_next ();

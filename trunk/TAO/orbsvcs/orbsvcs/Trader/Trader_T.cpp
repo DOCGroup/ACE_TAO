@@ -1,9 +1,9 @@
 // ============================================================================
 // $Id$
-// 
+//
 // = LIBRARY
 //    orbsvcs
-// 
+//
 // = FILENAME
 //    Trader.cpp
 //
@@ -11,10 +11,10 @@
 //    Marina Spivak <marina@cs.wustl.edu>
 //    Seth Widoff <sbw1@cs.wustl.edu>
 //    Irfan Pyarali <irfan@cs.wustl.edu>
-// 
+//
 // ============================================================================
 
-#if !defined (TAO_TRADER_C)
+#ifndef TAO_TRADER_C
 #define TAO_TRADER_C
 
 #include "Trader_T.h"
@@ -26,14 +26,14 @@ ACE_RCSID(Trader, Trader_T, "$Id$")
   // TAO_Trader
   // *************************************************************
 
-template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 TAO_Trader (TAO_Trader_Base::Trader_Components components)
 {
   CORBA::Environment env;
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     this->ifs_[i] = 0;
-  
+
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
       TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup =
@@ -65,13 +65,13 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
   if (ACE_BIT_ENABLED (components, LINK))
     {
       TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link =
-	new TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
+        new TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().link_if (link->_this (env));
       this->ifs_[LINK_IF] = link;
     }
 }
 
-template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
+template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 {
   // Remove Trading Components from POA
@@ -83,30 +83,30 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
     {
       if (this->ifs_[i] != 0)
-	{
-	  TAO_TRY
-	    {
-	      PortableServer::POA_var poa =
-		this->ifs_[i]->_default_POA (TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
-	      PortableServer::ObjectId_var id =
-		poa->servant_to_id (this->ifs_[i], TAO_TRY_ENV);
-	      TAO_CHECK_ENV;
-	      poa->deactivate_object (id.in (), TAO_TRY_ENV);
-	    }
-	  TAO_CATCHANY
-	    {      
-	    }
-	  TAO_ENDTRY;
-	  
-	  delete this->ifs_[i];	  
-	}
+        {
+          TAO_TRY
+            {
+              PortableServer::POA_var poa =
+                this->ifs_[i]->_default_POA (TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+              PortableServer::ObjectId_var id =
+                poa->servant_to_id (this->ifs_[i], TAO_TRY_ENV);
+              TAO_CHECK_ENV;
+              poa->deactivate_object (id.in (), TAO_TRY_ENV);
+            }
+          TAO_CATCHANY
+            {
+            }
+          TAO_ENDTRY;
+
+          delete this->ifs_[i];
+        }
     }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Offer_Database<MAP_LOCK_TYPE>&
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::offer_database (void) 
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::offer_database (void)
 {
   return this->offer_database_;
 }
@@ -123,7 +123,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock (void)
 
 template <class IF>
 TAO_Trader_Components<IF>::
-TAO_Trader_Components (const TAO_Trading_Components_i& comps) 
+TAO_Trader_Components (const TAO_Trading_Components_i& comps)
   : comps_ (comps)
 {
 }
@@ -157,131 +157,131 @@ TAO_Trader_Components<IF>::proxy_if (CORBA::Environment& _env)
 }
 
 template <class IF> CosTrading::Link_ptr
-TAO_Trader_Components<IF>::link_if (CORBA::Environment& _env) 
+TAO_Trader_Components<IF>::link_if (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::Link::_duplicate (this->comps_.link_if ());
 }
-template <class IF> 
+template <class IF>
 TAO_Support_Attributes<IF>::
-TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs) 
+TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs)
   : attrs_ (attrs)
 {
 }
 
-template <class IF> CORBA::Boolean 
+template <class IF> CORBA::Boolean
 TAO_Support_Attributes<IF>::supports_modifiable_properties (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.supports_modifiable_properties ();
 }
 
-template <class IF> CORBA::Boolean 
+template <class IF> CORBA::Boolean
 TAO_Support_Attributes<IF>::supports_dynamic_properties (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.supports_dynamic_properties ();
 }
 
-template <class IF> CORBA::Boolean 
+template <class IF> CORBA::Boolean
 TAO_Support_Attributes<IF>::supports_proxy_offers (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.supports_proxy_offers ();
 }
 
-template <class IF> CosTrading::TypeRepository_ptr 
+template <class IF> CosTrading::TypeRepository_ptr
 TAO_Support_Attributes<IF>::type_repos (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return CosTrading::TypeRepository::_duplicate (this->attrs_.type_repos ());
 }
 
-template <class IF> 
+template <class IF>
 TAO_Import_Attributes<IF>::
 TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs)
   : attrs_ (attrs)
 {
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::def_search_card (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_search_card ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::max_search_card (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_search_card ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::def_match_card (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_match_card ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::max_match_card (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_match_card ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::def_return_card (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_return_card ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::max_return_card (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_return_card ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::max_list (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_list ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::def_hop_count (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_hop_count ();
 }
 
-template <class IF> CORBA::ULong 
+template <class IF> CORBA::ULong
 TAO_Import_Attributes<IF>::max_hop_count (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_hop_count ();
 }
 
-template <class IF> CosTrading::FollowOption 
+template <class IF> CosTrading::FollowOption
 TAO_Import_Attributes<IF>::def_follow_policy (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.def_follow_policy ();
 }
 
-template <class IF> CosTrading::FollowOption 
+template <class IF> CosTrading::FollowOption
 TAO_Import_Attributes<IF>::max_follow_policy (CORBA::Environment& _env)
   TAO_THROW_SPEC ((CORBA::SystemException))
 {
   return this->attrs_.max_follow_policy ();
 }
 
-template <class IF> 
+template <class IF>
 TAO_Link_Attributes<IF>::
 TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs)
   : attrs_ (attrs)
@@ -312,7 +312,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
       CORBA::TCKind kind_1 =
         TAO_Sequence_Extracter_Base::sequence_type (any_type.in (), TAO_TRY_ENV);
       TAO_CHECK_ENV;
-      
+
       CORBA::TCKind kind_2 =
         TAO_Sequence_Extracter_Base::sequence_type (this->typecode_.in (),
                                                     TAO_TRY_ENV);
@@ -332,7 +332,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
                 (stream.decode (this->typecode_.in (), seq, 0, TAO_TRY_ENV) ==
                  CORBA::TypeCode::TRAVERSE_CONTINUE);
               TAO_CHECK_ENV;
-              
+
               if (decode_succeded)
                 {
                   CORBA::TypeCode_var type = any_value.type ();
@@ -346,7 +346,7 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
               else
                 delete seq;
             }
-          else 
+          else
             {
               seq = (SEQ_TYPE*) any_value.value ();
               return_value = 1;
@@ -358,8 +358,8 @@ extract (const CORBA::Any& any_value, SEQ_TYPE *& seq)
       if (seq != 0)
         delete seq;
     }
-  TAO_ENDTRY;  
-  
+  TAO_ENDTRY;
+
   return return_value;
 }
 
@@ -374,10 +374,10 @@ TAO_find (const SEQ& sequence, const OPERAND_TYPE element)
     {
       OPERAND_TYPE sequence_element = sequence[i];
       if (sequence_element == element)
-	{	  
-	  return_value = 1;
-	  break;
-	}
+        {
+          return_value = 1;
+          break;
+        }
     }
 
   return (CORBA::Boolean) return_value;

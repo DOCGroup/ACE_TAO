@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (TAO_SEQUENCE_T_C)
+#ifndef TAO_SEQUENCE_T_C
 #define TAO_SEQUENCE_T_C
 
 #include "tao/Sequence_T.h"
@@ -372,11 +372,11 @@ TAO_Unbounded_Object_Sequence<T>::_shrink_buffer (CORBA::ULong nl,
 
 template <class T> void
 TAO_Unbounded_Object_Sequence<T>::_downcast (void* target,
-					     CORBA_Object* src,
-					     CORBA_Environment &env)
+                                             CORBA_Object* src,
+                                             CORBA_Environment &env)
 {
   T **tmp = ACE_static_cast (T**, target);
-  
+
   *tmp = T::_narrow (src, env);
 }
 
@@ -384,7 +384,7 @@ template <class T> CORBA_Object*
 TAO_Unbounded_Object_Sequence<T>::_upcast (void* src) const
 {
   T **tmp = ACE_static_cast (T**, src);
-  
+
   return *tmp;
 }
 
@@ -509,11 +509,11 @@ TAO_Bounded_Object_Sequence<T, MAX>::_shrink_buffer (CORBA::ULong nl,
 
 template <class T, CORBA::ULong MAX> void
 TAO_Bounded_Object_Sequence<T, MAX>::_downcast (void* target,
-						  CORBA_Object* src,
-						  CORBA_Environment &env)
+                                                  CORBA_Object* src,
+                                                  CORBA_Environment &env)
 {
   T **tmp = ACE_static_cast (T**, target);
-  
+
   *tmp = T::_narrow (src, env);
 }
 
@@ -521,7 +521,7 @@ template <class T, CORBA::ULong MAX> CORBA_Object*
 TAO_Bounded_Object_Sequence<T, MAX>::_upcast (void* src) const
 {
   T **tmp = ACE_static_cast (T**, src);
-  
+
   return *tmp;
 }
 

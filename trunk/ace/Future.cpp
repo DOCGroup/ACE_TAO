@@ -3,10 +3,14 @@
 
 #define ACE_BUILD_DLL
 
-#if !defined (ACE_FUTURE_CPP)
+#ifndef ACE_FUTURE_CPP
 #define ACE_FUTURE_CPP
 
 #include "ace/Future.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 ACE_RCSID(ace, Future, "$Id$")
 
