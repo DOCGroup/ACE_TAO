@@ -5,10 +5,6 @@
 
 #include "ESF_Worker.h"
 
-#if ! defined (__ACE_INLINE__)
-#include "ESF_Worker.i"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID(ESF, ESF_Worker, "$Id$")
 
 template<class Object>
