@@ -7,8 +7,8 @@
 # Jan Rychter <jwr@icm.edu.pl>
 
 CC              = gcc
-CXX		= $(CC)
-CFLAGS          += -w -I. -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+CXX		= g++
+CFLAGS          += -w -fno-strict-prototypes -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS         += $(CFLAGS)
 DLD             = $(CXX)
 LD		= $(CXX) 
