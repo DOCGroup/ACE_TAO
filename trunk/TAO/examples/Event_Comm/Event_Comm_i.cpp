@@ -438,17 +438,13 @@ template class ACE_Map_Reverse_Iterator<Event_Comm::Consumer *,
   Consumer_Entry *, ACE_Null_Mutex>;
 template class ACE_Map_Iterator_Base<Event_Comm::Consumer *,
   Consumer_Entry *, ACE_Null_Mutex>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate template class ACE_Map_Manager<Event_Comm::Consumer *,
-  Consumer_Entry *, ACE_Null_Mutex>;
-#pragma instantiate template class ACE_Map_Iterator<Event_Comm::Consumer *,
- Consumer_Entry *, ACE_Null_Mutex>;
-#pragma instantiate template class ACE_Map_Entry<Event_Comm::Consumer *,
-  Consumer_Entry *>;
-#pragma instantiate template class ACE_Map_Reverse_Iterator<Event_Comm::Consumer *,
-  Consumer_Entry *, ACE_Null_Mutex>;
-#pragma instantiate ACE_Map_Iterator_Base<Event_Comm::Consumer *,
-  Consumer_Entry *, ACE_Null_Mutex>;
+#pragma instantiate ACE_Map_Manager<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Entry<Event_Comm::Consumer *, Consumer_Entry *>
+#pragma instantiate ACE_Map_Reverse_Iterator<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<Event_Comm::Consumer *, Consumer_Entry *, ACE_Null_Mutex>
 
 #endif /* ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA */

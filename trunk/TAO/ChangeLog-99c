@@ -1,3 +1,14 @@
+Sat Jan 30 10:08:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/POA/Generic_Servant/Makefile: 
+	  The definition for the static library target was missing (LIB=)
+	  Thanks to Robert V. Head <rhead@virtc.com> for pointing this
+	  out.
+
+	* examples/Event_Comm/Event_Comm_i.cpp: 
+	  Fixed the instantiation pragmas. Thanks to Robert V. Head
+	  <rhead@virtc.com> for pointing this out.
+
 Fri Jan 29 20:16:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
         * tao/NVList.cpp:
