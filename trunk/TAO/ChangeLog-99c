@@ -1,3 +1,12 @@
+Fri Feb  5 15:56:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/tests/Property/client.cpp:
+	* orbsvcs/tests/Property/server.cpp:
+	Added the fixes suggested by jaehrig@desys.com regarding
+	CORBA::Any scopes to all the from_* and to_* methods of Any
+	variables. 
+	* orbsvcs/tests/Property/README: Added this file
+
 Fri Feb 05 15:55:00 1999 Chris Gill <cdgill@cs.wustl.edu>
 
         * TAO/orbsvcs/tests/Simulator/Event_Supplier/DualEC_Sup.{cpp, h}:
