@@ -152,6 +152,8 @@ $(<%custom_type%>_<%forcount(custom_type->input_files)%>): <%custom_type->input_
 
 all: $(<%custom_type%>_<%forcount(custom_type->input_files)%>)
 
+$(OBJFILES): $(<%custom_type%>_<%forcount(custom_type->input_files)%>)
+
 customclean_<%custom_type%>_<%forcount(custom_type->input_files)%>:
 	@del $(<%custom_type%>_<%forcount(custom_type->input_files)%>) 2>nul
 
