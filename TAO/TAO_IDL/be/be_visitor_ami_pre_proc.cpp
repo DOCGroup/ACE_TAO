@@ -683,10 +683,6 @@ be_visitor_ami_pre_proc::create_raise_operation (
   operation->set_name (op_name);
   operation->set_defined_in (excep_holder);
 
-// @@@ (JP) I don't think valuetype operations can throw any kind of
-// CORBA exception, since they're just local calls, so I'm commenting
-// this out for now.
-/*
   if (operation_kind == NORMAL)
     {
       if (orig_op)
@@ -699,7 +695,7 @@ be_visitor_ami_pre_proc::create_raise_operation (
             }
         }
     }
-*/
+
   // Set the proper strategy.
   be_operation_ami_exception_holder_raise_strategy *boaehrs = 0;
   ACE_NEW_RETURN (boaehrs,
