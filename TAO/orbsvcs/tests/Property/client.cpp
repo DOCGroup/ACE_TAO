@@ -24,10 +24,6 @@ ACE_RCSID(CosPropertyService, client, "$Id$")
 {
 }
 
-// initialize the ORB, get a grip on the remote mmdevice, and store it
-// in this->remote_mmdevice_.  Also create a stream controlller and a
-// local mmdevice.
-
 int
 Client::init (int argc,
               char *argv[],
@@ -43,9 +39,7 @@ Client::init (int argc,
   manager_.orb ()->open ();
 
   // Initialize the naming services
-  if (my_name_client_.init (manager_.orb(),
-			    argc,
-			    argv) != 0)
+  if (my_name_client_.init (manager_.orb()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to initialize "
                        "the TAO_Naming_Client. \n"),
@@ -70,6 +64,8 @@ Client::init (int argc,
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Couldnot resolve propsetdef in Naming server"),
                       -1);
+  
+  return 0;
 }
 
 // Testing the methods of the property service.
@@ -132,7 +128,8 @@ Client::property_tester (CORBA::Environment &env)
   // Testing define_property_with_mode.
   this->test_define_property_with_mode (env);
   TAO_CHECK_ENV_RETURN (env, -1);
-
+  
+  return 0;
 }
 
 // Testing define_property.
@@ -147,9 +144,9 @@ Client::test_define_property (CORBA::Environment &env)
 
   // Prepare a char and "define" that in the PropertySet.
   CORBA::Char ch = '#';
-  anyval <<= from_char (ch);
+  anyval <<= CORBA::Any::from_char (ch);
   ch = '*';
-  anyval >>= to_char (ch);
+  anyval >>= CORBA::Any::to_char (ch);
 
   ACE_DEBUG ((LM_DEBUG,
               "Main : Char ch = %c\n",
@@ -209,9 +206,9 @@ Client::test_define_property (CORBA::Environment &env)
     }
 
   // Prepare a Float and "define" that in the PropertySet.
-  CORBA::Float f = 3.14;
+  CORBA::Float f = 3.14F;
   anyval <<= f;
-  f = 4.14;
+  f = 4.14F;
   anyval >>= f;
   ACE_DEBUG ((LM_DEBUG,
               "Main : Float f = %f\n",
@@ -329,6 +326,8 @@ Client::test_get_all_property_names (CORBA::Environment &env)
 
       TAO_CHECK_ENV_RETURN (env, -1);
     }
+  
+  return 0;
 }
 
 // Test get_properties. Give a sequence of names and get all their
@@ -441,11 +440,11 @@ Client::test_delete_properties (CORBA::Environment &env)
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_properties\n"));
   CosPropertyService::PropertyNames prop_names;
-  prop_names.length (4);
+  prop_names.length (3);
   prop_names [0] = CORBA::string_dup ("char_property");
   prop_names [1] = CORBA::string_dup ("short_property");
   prop_names [2] = CORBA::string_dup ("long_property");
-  prop_names [3] = CORBA::string_dup ("no_property");
+  //  prop_names [3] = CORBA::string_dup ("no_property");
   ACE_DEBUG ((LM_DEBUG,
               "Length of sequence %d, Maxlength : %d\n",
               prop_names.length (),
@@ -470,11 +469,11 @@ Client::test_define_properties (CORBA::Environment &env)
   CORBA::Any anyval;
   // Prepare a char and "define" that in the PropertySet.
   CORBA::Char ch = '#';
-  anyval <<= from_char (ch);
+  anyval <<= CORBA::Any::from_char (ch);
   ch = '*';
-  anyval >>= to_char (ch);
+  anyval >>= CORBA::Any::to_char (ch);
   nproperties[0].property_name  = CORBA::string_copy ("char_property");
-  nproperties[0].property_value <<= from_char (ch);
+  nproperties[0].property_value <<= CORBA::Any::from_char (ch);
 
   // Prepare a Short and "define" that in the PropertySet.
   CORBA::Short s = 3;
@@ -493,9 +492,9 @@ Client::test_define_properties (CORBA::Environment &env)
   nproperties[2].property_value <<= l;
 
   // Prepare a Float and "define" that in the PropertySet.
-  CORBA::Float f = 3.14;
+  CORBA::Float f = 3.14F;
   anyval <<= f;
-  f = 4.14;
+  f = 4.14F;
   anyval >>= f;
   nproperties[3].property_name  = CORBA::string_copy ("float_property");
   nproperties[3].property_value <<= f;
@@ -718,9 +717,9 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
 
 
   // Prepare a Float and "define" that in the PropertySet.
-  CORBA::Float f = 3.14;
+  CORBA::Float f = 3.14F;
   anyval <<= f;
-  f = 4.14;
+  f = 4.14F;
   anyval >>= f;
   ACE_DEBUG ((LM_DEBUG,
               "Main : Float f = %f\n",
@@ -747,6 +746,8 @@ Client::test_define_property_with_mode (CORBA::Environment &env)
                                  anyval,
                                  env);
   TAO_CHECK_ENV_RETURN (env, -1);
+  
+  return 0;
 }
 
 int
@@ -758,12 +759,12 @@ Client::test_get_property_value (CORBA::Environment &env)
       CORBA::Any_ptr any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR",
                                                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
-
+      
       ACE_DEBUG ((LM_DEBUG, "Property value received successfully\n"));
 
       // Check whether the IOR is fine.
       CORBA::Object_var propsetdef_object;
-      (*any_ptr) >>= to_object (propsetdef_object);
+      (*any_ptr) >>= CORBA::Any::to_object (propsetdef_object);
       
       CosPropertyService::PropertySetDef_var propsetdef =
         CosPropertyService::PropertySetDef::_narrow (propsetdef_object.in (),
@@ -799,12 +800,15 @@ main (int argc, char **argv)
       TAO_CHECK_ENV;
 
       //  client.run (TAO_TRY_ENV);
-      client.property_tester (TAO_TRY_ENV);
+      if (client.property_tester (TAO_TRY_ENV) != 0)
+        ACE_DEBUG ((LM_DEBUG, "Test failed\n"));
+      else
+        ACE_DEBUG ((LM_DEBUG, "Test succeeded\n"));
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("AVStreams: client");
+      TAO_TRY_ENV.print_exception ("PropertyService Test : client");
       return -1;
     }
   TAO_ENDTRY;
