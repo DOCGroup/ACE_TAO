@@ -131,7 +131,7 @@ main (int argc, char *argv[])
 
 
       Components::Deployment::ServerActivator_var activator;
-      Components::ConfigValues_var config;
+      Components::ConfigValues_var config = new Components::ConfigValues;
 
       if (use_callback)
         {
@@ -154,7 +154,7 @@ main (int argc, char *argv[])
         }
 
       comserv_servant->set_objref (activator.in (),
-                                   config.in (),
+                                   config,
                                    comserv_obj.in ()
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
