@@ -27,7 +27,7 @@
 #define ACE_LACKS_UNISTD_H
 #define ACE_LACKS_RLIMIT
 
-#if defined ACE_HAS_ANSI_CASTS && (ACE_HAS_ANSI_CASTS == 0)
+#if defined (ACE_HAS_ANSI_CASTS) && (ACE_HAS_ANSI_CASTS == 0)
 #undef  ACE_HAS_ANSI_CASTS
 #endif /* ACE_HAS_ANSI_CASTS && ACE_HAS_ANSI_CASTS == 0 */
 

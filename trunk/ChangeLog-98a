@@ -1,3 +1,9 @@
+Thu Dec 25 17:17:16 1997    <nw1@JIG>
+
+	* ace/config-win32.h: * ace/config-win32-common.h: Added macro
+ 	  definitions not to use C++-styled castings on Win32 by default
+	  so that we don't depend on the RTTI support.
+
 Thu Dec 25 16:18:03 1997    <irfan@PACHANGA>
 
 	* ace/SString.h (ACE_CString and ACE_WString): Added c_str() to
