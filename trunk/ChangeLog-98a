@@ -50,6 +50,23 @@ Thu Jan 01 08:50:55 1998  David L. Levine  <levine@cs.wustl.edu>
           trouble with its inline template member functions, especially
           if __ACE_INLINE__ is disabled.
 
+Thu Jan 01 00:28:46 1998  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer.dsp: Added a new file "Options.cpp" into
+ 	  this project.	
+	
+	* tests/Env_Value_Test.cpp (main): Changed variable name: 'environ'
+ 	  to 'envp'.  Real OSes don't understand what the word means
+ 	  and Access Violations will occur.
+
+	* tests/run_tests.bat: Added Env_Value_Test.
+
+	* tests/version_tests/version_tests.dsw:
+	* tests/tests.dsw: Added Env_Value_Test.dsp.
+	
+	* tests/version_tests/Env_Value_Test.dsp:
+	* tests/Env_Value_Test.dsp:  New file.
+
 Thu Jan  1 00:00:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* Happy New Year!  Here's a thought for the new year, courtesy of
