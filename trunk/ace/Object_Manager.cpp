@@ -21,7 +21,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 {
   object_info_t info;
 
-  // Delete all registered objects and arrays.
+  // Call all registered cleanup hooks, in reverse order
+  // of registration.
   while (registered_objects_.dequeue_head (info) != -1)
     {
       (*info.cleanup_hook_) (info.object_, info.param_);
@@ -45,17 +46,10 @@ ACE_Object_Manager::instance (void)
 }
 
 int
-ACE_Object_Manager::cleanup_i (void *object,
+ACE_Object_Manager::at_exit_i (void *object,
                                ACE_CLEANUP_FUNC cleanup_hook,
-                               void *param,
-                               int thread_lifetime)
+                               void *param)
 {
-  // Only process-wide cleanup is currently implemented.
-  if (thread_lifetime)
-    {
-      ACE_NOTSUP_RETURN (-1);
-    }
-
   // Check for already in queue, and return 1 if so.
   object_info_t *info = 0;
   for (ACE_Unbounded_Queue_Iterator<object_info_t> iter (registered_objects_);

@@ -45,28 +45,30 @@ class ACE_Export ACE_Object_Manager
   //     is likely to change, without providing backward capability.
 {
 public:
-  typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param);
+  typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 
-  static int cleanup (void *object,
+  static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
-                      void *param,
-                      int thread_lifetime = 0);
-  // Register an object (or array) for cleanup at program or thread
-  // termination.
+                      void *param);
+  // Register an object (or array) for cleanup at process termination.
   // "cleanup_hook" points to a (global, or static member) function that
-  // is called for the object or array when it to be deleted.  It may
+  // is called for the object or array when it to be destroyed.  It may
   // perform any necessary cleanup specific for that object or its class.
   // "param" is passed as the second parameter to the "cleanup_hook"
-  // function; the first parameter is the object (or array) to be deleted.
-  // "cleanup_hook", for example, may delete the object (or array), and then
-  // it may set the object (or array) address to 0.
-  // If "thread_lifetime" is non-zero, then cleanup is registered for
-  // termination of the current thread.  If "thread_lifetime" is 0, then the
-  // registration is for termination of the process.
-  // For OS's that do not have processes, this parameter is ignored;
-  // i.e., cleanup is registered for termination of the current thread.
+  // function; the first parameter is the object (or array) to be destroyed.
+  // "cleanup_hook", for example, may delete the object (or array).
+  // For OS's that do not have processes, this function is the same
+  // as at_thread_exit ().
   // Returns 0 on success, non-zero on failure: -1 if virtual memory is
   // exhausted or 1 if the object (or arrayt) had already been registered.
+
+#if 0 /* not implemented yet */
+  static int at_thread_exit (void *object,
+                             ACE_CLEANUP_FUNC cleanup_hook,
+                             void *param);
+  // Similar to at_exit (), except that the cleanup_hook is called
+  // when the current thread exits instead of when the program terminates.
+#endif /* 0 */
 
 private:
   // not currently used:
@@ -88,8 +90,7 @@ private:
   ACE_Unbounded_Queue<object_info_t> registered_objects_;
   // Keeps track of all the register objects.
 
-  int cleanup_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param,
-                 int thread_lifetime = 0);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param);
   // Register an object or array for deletion at program termination.
   // See description of static version above for return values.
 
