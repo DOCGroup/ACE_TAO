@@ -13,13 +13,27 @@ ACE_DEV_Addr::set (LPCTSTR devname)
 }
 
 // Transform the current address into string format.
-
+#if defined (UNICODE)
 ACE_INLINE int
-ACE_DEV_Addr::addr_to_string (LPTSTR s, size_t len) const
+ACE_DEV_Addr::addr_to_string (wchar_t *s, size_t len) const
 {
   ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
 
   ACE_OS::strncpy (s, this->devname_, len);
+  return 0;
+}
+#endif /* UNICODE */
+
+// Transform the current address into string format.
+
+ACE_INLINE int
+ACE_DEV_Addr::addr_to_string (char *s, size_t len) const
+{
+  ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
+
+  ACE_OS::strncpy (s, 
+		   ACE_MULTIBYTE_STRING (this->devname_), 
+		   len);
   return 0;
 }
 

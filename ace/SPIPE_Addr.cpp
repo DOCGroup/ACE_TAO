@@ -38,10 +38,18 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (void)
 
 // Transform the string into the current addressing format.
 
+#if defined (UNICODE)
 int
-ACE_SPIPE_Addr::string_to_addr (LPCTSTR addr)
+ACE_SPIPE_Addr::string_to_addr (const wchar_t *addr)
 {
   return this->set (addr);
+}
+#endif /* UNICODE */
+
+int
+ACE_SPIPE_Addr::string_to_addr (const char *addr)
+{
+  return this->set (ACE_WIDE_STRING (addr));
 }
 
 /* Copy constructor. */

@@ -128,11 +128,13 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
 
   if (this->acceptor ().get_local_addr (addr) == -1)
     return -1;
-  else if (addr.addr_to_string (addr_str, sizeof addr) == -1)
+  else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
-
+  
   ACE_OS::sprintf (buf, "%s\t %s %s", 
-		   "ACE_Acceptor", addr_str, "# acceptor factory\n");
+		   "ACE_Acceptor", 
+		   addr_str, 
+		   "# acceptor factory\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -619,7 +621,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_signal (int, sig
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp, 
-					  size_t length) const
+							       size_t length) const
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::info");
   char buf[BUFSIZ];
@@ -628,7 +630,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
 
   if (this->acceptor ().get_local_addr (addr) == -1)
     return -1;
-  else if (addr.addr_to_string (service_addr_str, sizeof addr) == -1)
+  else if (addr.addr_to_string (service_addr_str, sizeof service_addr_str) == -1)
     return -1;
 
   // @@ Should add the protocol in...
@@ -933,15 +935,17 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::info (char **strp,
   char buf[BUFSIZ];
   char addr_str[BUFSIZ];
   ACE_PEER_ACCEPTOR_ADDR addr;
-
+  
   if (this->peer_acceptor_.get_local_addr (addr) == -1)
     return -1;
-  else if (addr.addr_to_string (addr_str, sizeof addr) == -1)
+  else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
 
-  ACE_OS::sprintf (buf, "%s\t %s %s", "ACE_Oneshot_Acceptor", 
-	     addr_str, "#oneshot acceptor factory\n");
-
+  ACE_OS::sprintf (buf, "%s\t %s %s", 
+		   "ACE_Oneshot_Acceptor", 
+		   addr_str, 
+		   "#oneshot acceptor factory\n");
+  
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
   else
