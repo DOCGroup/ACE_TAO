@@ -23,12 +23,15 @@
 #if !defined (_COMPONENTS_NAMELIST_CI_)
 #define _COMPONENTS_NAMELIST_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::NameList_var
 // *************************************************************
 
 ACE_INLINE
-Components::NameList_var::NameList_var (void) // default constructor
+Components::NameList_var::NameList_var (void)
   : ptr_ (0)
 {}
 
@@ -38,7 +41,7 @@ Components::NameList_var::NameList_var (NameList *p)
 {}
 
 ACE_INLINE
-Components::NameList_var::NameList_var (const ::Components::NameList_var &p) // copy constructor
+Components::NameList_var::NameList_var (const ::Components::NameList_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::NameList (*p.ptr_));
@@ -47,7 +50,7 @@ Components::NameList_var::NameList_var (const ::Components::NameList_var &p) // 
 }
 
 ACE_INLINE
-Components::NameList_var::~NameList_var (void) // destructor
+Components::NameList_var::~NameList_var (void)
 {
   delete this->ptr_;
 }
@@ -166,6 +169,9 @@ Components::NameList_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::NameList_out
 // *************************************************************
@@ -231,12 +237,15 @@ Components::NameList_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::Cookie::Cookie () // default constructor
+Components::Cookie::Cookie (void)
 {}
 
 ACE_INLINE
-Components::Cookie::~Cookie () // destructor
+Components::Cookie::~Cookie (void)
 {}
 
 ACE_INLINE const char* 
@@ -245,12 +254,15 @@ Components::Cookie::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/Cookie:1.0";
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::PortDescription::PortDescription () // default constructor
+Components::PortDescription::PortDescription (void)
 {}
 
 ACE_INLINE
-Components::PortDescription::~PortDescription () // destructor
+Components::PortDescription::~PortDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -259,12 +271,15 @@ Components::PortDescription::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/PortDescription:1.0";
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::FacetDescription::FacetDescription () // default constructor
+Components::FacetDescription::FacetDescription (void)
 {}
 
 ACE_INLINE
-Components::FacetDescription::~FacetDescription () // destructor
+Components::FacetDescription::~FacetDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -272,6 +287,9 @@ Components::FacetDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/FacetDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -444,12 +462,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_FacetDescriptions::get_
 #if !defined (_COMPONENTS_FACETDESCRIPTIONS_CI_)
 #define _COMPONENTS_FACETDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::FacetDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::FacetDescriptions_var::FacetDescriptions_var (void) // default constructor
+Components::FacetDescriptions_var::FacetDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -459,7 +480,7 @@ Components::FacetDescriptions_var::FacetDescriptions_var (FacetDescriptions *p)
 {}
 
 ACE_INLINE
-Components::FacetDescriptions_var::FacetDescriptions_var (const ::Components::FacetDescriptions_var &p) // copy constructor
+Components::FacetDescriptions_var::FacetDescriptions_var (const ::Components::FacetDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::FacetDescriptions (*p.ptr_));
@@ -468,7 +489,7 @@ Components::FacetDescriptions_var::FacetDescriptions_var (const ::Components::Fa
 }
 
 ACE_INLINE
-Components::FacetDescriptions_var::~FacetDescriptions_var (void) // destructor
+Components::FacetDescriptions_var::~FacetDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -586,6 +607,9 @@ Components::FacetDescriptions_var::ptr (void) const
 {
   return this->ptr_;
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
 
 // *************************************************************
 // Inline operations for class Components::FacetDescriptions_out
@@ -724,6 +748,8 @@ Components::FacetDescriptions_out::operator[] (CORBA::ULong index)
 // Inline operations for exception Components::IllegalState
 // *************************************************************
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_NAVIGATION___CI_)
 #define _COMPONENTS_NAVIGATION___CI_
@@ -742,12 +768,15 @@ Components::Navigation::Navigation (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::ConnectionDescription::ConnectionDescription () // default constructor
+Components::ConnectionDescription::ConnectionDescription (void)
 {}
 
 ACE_INLINE
-Components::ConnectionDescription::~ConnectionDescription () // destructor
+Components::ConnectionDescription::~ConnectionDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -755,6 +784,9 @@ Components::ConnectionDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/ConnectionDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -927,12 +959,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_ConnectionDescriptions:
 #if !defined (_COMPONENTS_CONNECTIONDESCRIPTIONS_CI_)
 #define _COMPONENTS_CONNECTIONDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::ConnectionDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::ConnectionDescriptions_var::ConnectionDescriptions_var (void) // default constructor
+Components::ConnectionDescriptions_var::ConnectionDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -942,7 +977,7 @@ Components::ConnectionDescriptions_var::ConnectionDescriptions_var (ConnectionDe
 {}
 
 ACE_INLINE
-Components::ConnectionDescriptions_var::ConnectionDescriptions_var (const ::Components::ConnectionDescriptions_var &p) // copy constructor
+Components::ConnectionDescriptions_var::ConnectionDescriptions_var (const ::Components::ConnectionDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::ConnectionDescriptions (*p.ptr_));
@@ -951,7 +986,7 @@ Components::ConnectionDescriptions_var::ConnectionDescriptions_var (const ::Comp
 }
 
 ACE_INLINE
-Components::ConnectionDescriptions_var::~ConnectionDescriptions_var (void) // destructor
+Components::ConnectionDescriptions_var::~ConnectionDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -1070,6 +1105,9 @@ Components::ConnectionDescriptions_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::ConnectionDescriptions_out
 // *************************************************************
@@ -1135,12 +1173,15 @@ Components::ConnectionDescriptions_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::ReceptacleDescription::ReceptacleDescription () // default constructor
+Components::ReceptacleDescription::ReceptacleDescription (void)
 {}
 
 ACE_INLINE
-Components::ReceptacleDescription::~ReceptacleDescription () // destructor
+Components::ReceptacleDescription::~ReceptacleDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -1148,6 +1189,9 @@ Components::ReceptacleDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/ReceptacleDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -1320,12 +1364,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_ReceptacleDescriptions:
 #if !defined (_COMPONENTS_RECEPTACLEDESCRIPTIONS_CI_)
 #define _COMPONENTS_RECEPTACLEDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::ReceptacleDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::ReceptacleDescriptions_var::ReceptacleDescriptions_var (void) // default constructor
+Components::ReceptacleDescriptions_var::ReceptacleDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -1335,7 +1382,7 @@ Components::ReceptacleDescriptions_var::ReceptacleDescriptions_var (ReceptacleDe
 {}
 
 ACE_INLINE
-Components::ReceptacleDescriptions_var::ReceptacleDescriptions_var (const ::Components::ReceptacleDescriptions_var &p) // copy constructor
+Components::ReceptacleDescriptions_var::ReceptacleDescriptions_var (const ::Components::ReceptacleDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::ReceptacleDescriptions (*p.ptr_));
@@ -1344,7 +1391,7 @@ Components::ReceptacleDescriptions_var::ReceptacleDescriptions_var (const ::Comp
 }
 
 ACE_INLINE
-Components::ReceptacleDescriptions_var::~ReceptacleDescriptions_var (void) // destructor
+Components::ReceptacleDescriptions_var::~ReceptacleDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -1463,6 +1510,9 @@ Components::ReceptacleDescriptions_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::ReceptacleDescriptions_out
 // *************************************************************
@@ -1528,6 +1578,8 @@ Components::ReceptacleDescriptions_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_RECEPTACLES___CI_)
 #define _COMPONENTS_RECEPTACLES___CI_
@@ -1546,12 +1598,15 @@ Components::Receptacles::Receptacles (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::EventBase::EventBase () // default constructor
+Components::EventBase::EventBase (void)
 {}
 
 ACE_INLINE
-Components::EventBase::~EventBase () // destructor
+Components::EventBase::~EventBase (void)
 {}
 
 ACE_INLINE const char* 
@@ -1560,6 +1615,8 @@ Components::EventBase::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/EventBase:1.0";
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_EVENTCONSUMERBASE___CI_)
 #define _COMPONENTS_EVENTCONSUMERBASE___CI_
@@ -1578,12 +1635,15 @@ Components::EventConsumerBase::EventConsumerBase (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::ConsumerDescription::ConsumerDescription () // default constructor
+Components::ConsumerDescription::ConsumerDescription (void)
 {}
 
 ACE_INLINE
-Components::ConsumerDescription::~ConsumerDescription () // destructor
+Components::ConsumerDescription::~ConsumerDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -1591,6 +1651,9 @@ Components::ConsumerDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/ConsumerDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -1763,12 +1826,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_ConsumerDescriptions::g
 #if !defined (_COMPONENTS_CONSUMERDESCRIPTIONS_CI_)
 #define _COMPONENTS_CONSUMERDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::ConsumerDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::ConsumerDescriptions_var::ConsumerDescriptions_var (void) // default constructor
+Components::ConsumerDescriptions_var::ConsumerDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -1778,7 +1844,7 @@ Components::ConsumerDescriptions_var::ConsumerDescriptions_var (ConsumerDescript
 {}
 
 ACE_INLINE
-Components::ConsumerDescriptions_var::ConsumerDescriptions_var (const ::Components::ConsumerDescriptions_var &p) // copy constructor
+Components::ConsumerDescriptions_var::ConsumerDescriptions_var (const ::Components::ConsumerDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::ConsumerDescriptions (*p.ptr_));
@@ -1787,7 +1853,7 @@ Components::ConsumerDescriptions_var::ConsumerDescriptions_var (const ::Componen
 }
 
 ACE_INLINE
-Components::ConsumerDescriptions_var::~ConsumerDescriptions_var (void) // destructor
+Components::ConsumerDescriptions_var::~ConsumerDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -1906,6 +1972,9 @@ Components::ConsumerDescriptions_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::ConsumerDescriptions_out
 // *************************************************************
@@ -1971,12 +2040,15 @@ Components::ConsumerDescriptions_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::EmitterDescription::EmitterDescription () // default constructor
+Components::EmitterDescription::EmitterDescription (void)
 {}
 
 ACE_INLINE
-Components::EmitterDescription::~EmitterDescription () // destructor
+Components::EmitterDescription::~EmitterDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -1984,6 +2056,9 @@ Components::EmitterDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/EmitterDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -2156,12 +2231,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_EmitterDescriptions::ge
 #if !defined (_COMPONENTS_EMITTERDESCRIPTIONS_CI_)
 #define _COMPONENTS_EMITTERDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::EmitterDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::EmitterDescriptions_var::EmitterDescriptions_var (void) // default constructor
+Components::EmitterDescriptions_var::EmitterDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -2171,7 +2249,7 @@ Components::EmitterDescriptions_var::EmitterDescriptions_var (EmitterDescription
 {}
 
 ACE_INLINE
-Components::EmitterDescriptions_var::EmitterDescriptions_var (const ::Components::EmitterDescriptions_var &p) // copy constructor
+Components::EmitterDescriptions_var::EmitterDescriptions_var (const ::Components::EmitterDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::EmitterDescriptions (*p.ptr_));
@@ -2180,7 +2258,7 @@ Components::EmitterDescriptions_var::EmitterDescriptions_var (const ::Components
 }
 
 ACE_INLINE
-Components::EmitterDescriptions_var::~EmitterDescriptions_var (void) // destructor
+Components::EmitterDescriptions_var::~EmitterDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -2299,6 +2377,9 @@ Components::EmitterDescriptions_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::EmitterDescriptions_out
 // *************************************************************
@@ -2364,12 +2445,15 @@ Components::EmitterDescriptions_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::SubscriberDescription::SubscriberDescription () // default constructor
+Components::SubscriberDescription::SubscriberDescription (void)
 {}
 
 ACE_INLINE
-Components::SubscriberDescription::~SubscriberDescription () // destructor
+Components::SubscriberDescription::~SubscriberDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -2377,6 +2461,9 @@ Components::SubscriberDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/SubscriberDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -2549,12 +2636,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_SubscriberDescriptions:
 #if !defined (_COMPONENTS_SUBSCRIBERDESCRIPTIONS_CI_)
 #define _COMPONENTS_SUBSCRIBERDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::SubscriberDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::SubscriberDescriptions_var::SubscriberDescriptions_var (void) // default constructor
+Components::SubscriberDescriptions_var::SubscriberDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -2564,7 +2654,7 @@ Components::SubscriberDescriptions_var::SubscriberDescriptions_var (SubscriberDe
 {}
 
 ACE_INLINE
-Components::SubscriberDescriptions_var::SubscriberDescriptions_var (const ::Components::SubscriberDescriptions_var &p) // copy constructor
+Components::SubscriberDescriptions_var::SubscriberDescriptions_var (const ::Components::SubscriberDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::SubscriberDescriptions (*p.ptr_));
@@ -2573,7 +2663,7 @@ Components::SubscriberDescriptions_var::SubscriberDescriptions_var (const ::Comp
 }
 
 ACE_INLINE
-Components::SubscriberDescriptions_var::~SubscriberDescriptions_var (void) // destructor
+Components::SubscriberDescriptions_var::~SubscriberDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -2692,6 +2782,9 @@ Components::SubscriberDescriptions_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::SubscriberDescriptions_out
 // *************************************************************
@@ -2757,12 +2850,15 @@ Components::SubscriberDescriptions_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::PublisherDescription::PublisherDescription () // default constructor
+Components::PublisherDescription::PublisherDescription (void)
 {}
 
 ACE_INLINE
-Components::PublisherDescription::~PublisherDescription () // destructor
+Components::PublisherDescription::~PublisherDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -2770,6 +2866,9 @@ Components::PublisherDescription::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/PublisherDescription:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -2942,12 +3041,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_PublisherDescriptions::
 #if !defined (_COMPONENTS_PUBLISHERDESCRIPTIONS_CI_)
 #define _COMPONENTS_PUBLISHERDESCRIPTIONS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::PublisherDescriptions_var
 // *************************************************************
 
 ACE_INLINE
-Components::PublisherDescriptions_var::PublisherDescriptions_var (void) // default constructor
+Components::PublisherDescriptions_var::PublisherDescriptions_var (void)
   : ptr_ (0)
 {}
 
@@ -2957,7 +3059,7 @@ Components::PublisherDescriptions_var::PublisherDescriptions_var (PublisherDescr
 {}
 
 ACE_INLINE
-Components::PublisherDescriptions_var::PublisherDescriptions_var (const ::Components::PublisherDescriptions_var &p) // copy constructor
+Components::PublisherDescriptions_var::PublisherDescriptions_var (const ::Components::PublisherDescriptions_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::PublisherDescriptions (*p.ptr_));
@@ -2966,7 +3068,7 @@ Components::PublisherDescriptions_var::PublisherDescriptions_var (const ::Compon
 }
 
 ACE_INLINE
-Components::PublisherDescriptions_var::~PublisherDescriptions_var (void) // destructor
+Components::PublisherDescriptions_var::~PublisherDescriptions_var (void)
 {
   delete this->ptr_;
 }
@@ -3085,6 +3187,9 @@ Components::PublisherDescriptions_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::PublisherDescriptions_out
 // *************************************************************
@@ -3150,6 +3255,8 @@ Components::PublisherDescriptions_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_EVENTS___CI_)
 #define _COMPONENTS_EVENTS___CI_
@@ -3168,12 +3275,15 @@ Components::Events::Events (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::PrimaryKeyBase::PrimaryKeyBase () // default constructor
+Components::PrimaryKeyBase::PrimaryKeyBase (void)
 {}
 
 ACE_INLINE
-Components::PrimaryKeyBase::~PrimaryKeyBase () // destructor
+Components::PrimaryKeyBase::~PrimaryKeyBase (void)
 {}
 
 ACE_INLINE const char* 
@@ -3182,6 +3292,8 @@ Components::PrimaryKeyBase::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/PrimaryKeyBase:1.0";
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_CCMHOME___CI_)
 #define _COMPONENTS_CCMHOME___CI_
@@ -3199,6 +3311,9 @@ Components::CCMHome::CCMHome (
 
 
 #endif /* end #if !defined */
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -3366,12 +3481,15 @@ Components::_TAO_Unbounded_Object_Sequence_Components_CCMHomes::get_buffer (void
 #if !defined (_COMPONENTS_CCMHOMES_CI_)
 #define _COMPONENTS_CCMHOMES_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::CCMHomes_var
 // *************************************************************
 
 ACE_INLINE
-Components::CCMHomes_var::CCMHomes_var (void) // default constructor
+Components::CCMHomes_var::CCMHomes_var (void)
   : ptr_ (0)
 {}
 
@@ -3381,7 +3499,7 @@ Components::CCMHomes_var::CCMHomes_var (CCMHomes *p)
 {}
 
 ACE_INLINE
-Components::CCMHomes_var::CCMHomes_var (const ::Components::CCMHomes_var &p) // copy constructor
+Components::CCMHomes_var::CCMHomes_var (const ::Components::CCMHomes_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::CCMHomes (*p.ptr_));
@@ -3390,7 +3508,7 @@ Components::CCMHomes_var::CCMHomes_var (const ::Components::CCMHomes_var &p) // 
 }
 
 ACE_INLINE
-Components::CCMHomes_var::~CCMHomes_var (void) // destructor
+Components::CCMHomes_var::~CCMHomes_var (void)
 {
   delete this->ptr_;
 }
@@ -3509,6 +3627,9 @@ Components::CCMHomes_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::CCMHomes_out
 // *************************************************************
@@ -3574,6 +3695,8 @@ Components::CCMHomes_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_KEYLESSCCMHOME___CI_)
 #define _COMPONENTS_KEYLESSCCMHOME___CI_
@@ -3592,6 +3715,8 @@ Components::KeylessCCMHome::KeylessCCMHome (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_HOMEFINDER___CI_)
 #define _COMPONENTS_HOMEFINDER___CI_
@@ -3610,6 +3735,8 @@ Components::HomeFinder::HomeFinder (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_CONFIGURATOR___CI_)
 #define _COMPONENTS_CONFIGURATOR___CI_
@@ -3628,12 +3755,15 @@ Components::Configurator::Configurator (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::ConfigValue::ConfigValue () // default constructor
+Components::ConfigValue::ConfigValue (void)
 {}
 
 ACE_INLINE
-Components::ConfigValue::~ConfigValue () // destructor
+Components::ConfigValue::~ConfigValue (void)
 {}
 
 ACE_INLINE const char* 
@@ -3641,6 +3771,9 @@ Components::ConfigValue::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/ConfigValue:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -3813,12 +3946,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_ConfigValues::get_buffe
 #if !defined (_COMPONENTS_CONFIGVALUES_CI_)
 #define _COMPONENTS_CONFIGVALUES_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::ConfigValues_var
 // *************************************************************
 
 ACE_INLINE
-Components::ConfigValues_var::ConfigValues_var (void) // default constructor
+Components::ConfigValues_var::ConfigValues_var (void)
   : ptr_ (0)
 {}
 
@@ -3828,7 +3964,7 @@ Components::ConfigValues_var::ConfigValues_var (ConfigValues *p)
 {}
 
 ACE_INLINE
-Components::ConfigValues_var::ConfigValues_var (const ::Components::ConfigValues_var &p) // copy constructor
+Components::ConfigValues_var::ConfigValues_var (const ::Components::ConfigValues_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::ConfigValues (*p.ptr_));
@@ -3837,7 +3973,7 @@ Components::ConfigValues_var::ConfigValues_var (const ::Components::ConfigValues
 }
 
 ACE_INLINE
-Components::ConfigValues_var::~ConfigValues_var (void) // destructor
+Components::ConfigValues_var::~ConfigValues_var (void)
 {
   delete this->ptr_;
 }
@@ -3956,6 +4092,9 @@ Components::ConfigValues_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::ConfigValues_out
 // *************************************************************
@@ -4021,6 +4160,8 @@ Components::ConfigValues_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_STANDARDCONFIGURATOR___CI_)
 #define _COMPONENTS_STANDARDCONFIGURATOR___CI_
@@ -4039,6 +4180,8 @@ Components::StandardConfigurator::StandardConfigurator (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_HOMECONFIGURATION___CI_)
 #define _COMPONENTS_HOMECONFIGURATION___CI_
@@ -4057,12 +4200,15 @@ Components::HomeConfiguration::HomeConfiguration (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::ComponentPortDescription::ComponentPortDescription () // default constructor
+Components::ComponentPortDescription::ComponentPortDescription (void)
 {}
 
 ACE_INLINE
-Components::ComponentPortDescription::~ComponentPortDescription () // destructor
+Components::ComponentPortDescription::~ComponentPortDescription (void)
 {}
 
 ACE_INLINE const char* 
@@ -4071,6 +4217,8 @@ Components::ComponentPortDescription::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/ComponentPortDescription:1.0";
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_CCMOBJECT___CI_)
 #define _COMPONENTS_CCMOBJECT___CI_
@@ -4089,12 +4237,15 @@ Components::CCMObject::CCMObject (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::Enumeration::Enumeration () // default constructor
+Components::Enumeration::Enumeration (void)
 {}
 
 ACE_INLINE
-Components::Enumeration::~Enumeration () // destructor
+Components::Enumeration::~Enumeration (void)
 {}
 
 ACE_INLINE const char* 
@@ -4102,6 +4253,9 @@ Components::Enumeration::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/Enumeration:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -4269,12 +4423,15 @@ Components::_TAO_Unbounded_Object_Sequence_Components_CCMObjectSeq::get_buffer (
 #if !defined (_COMPONENTS_CCMOBJECTSEQ_CI_)
 #define _COMPONENTS_CCMOBJECTSEQ_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::CCMObjectSeq_var
 // *************************************************************
 
 ACE_INLINE
-Components::CCMObjectSeq_var::CCMObjectSeq_var (void) // default constructor
+Components::CCMObjectSeq_var::CCMObjectSeq_var (void)
   : ptr_ (0)
 {}
 
@@ -4284,7 +4441,7 @@ Components::CCMObjectSeq_var::CCMObjectSeq_var (CCMObjectSeq *p)
 {}
 
 ACE_INLINE
-Components::CCMObjectSeq_var::CCMObjectSeq_var (const ::Components::CCMObjectSeq_var &p) // copy constructor
+Components::CCMObjectSeq_var::CCMObjectSeq_var (const ::Components::CCMObjectSeq_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::CCMObjectSeq (*p.ptr_));
@@ -4293,7 +4450,7 @@ Components::CCMObjectSeq_var::CCMObjectSeq_var (const ::Components::CCMObjectSeq
 }
 
 ACE_INLINE
-Components::CCMObjectSeq_var::~CCMObjectSeq_var (void) // destructor
+Components::CCMObjectSeq_var::~CCMObjectSeq_var (void)
 {
   delete this->ptr_;
 }
@@ -4412,6 +4569,9 @@ Components::CCMObjectSeq_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::CCMObjectSeq_out
 // *************************************************************
@@ -4477,12 +4637,15 @@ Components::CCMObjectSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::DefaultEnumeration::DefaultEnumeration () // default constructor
+Components::DefaultEnumeration::DefaultEnumeration (void)
 {}
 
 ACE_INLINE
-Components::DefaultEnumeration::~DefaultEnumeration () // destructor
+Components::DefaultEnumeration::~DefaultEnumeration (void)
 {}
 
 ACE_INLINE const char* 
@@ -4495,12 +4658,15 @@ Components::DefaultEnumeration::_tao_obv_static_repository_id ()
 #if !defined (_COMPONENTS_TRANSACTION_TRANTOKEN_CI_)
 #define _COMPONENTS_TRANSACTION_TRANTOKEN_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::Transaction::TranToken_var
 // *************************************************************
 
 ACE_INLINE
-Components::Transaction::TranToken_var::TranToken_var (void) // default constructor
+Components::Transaction::TranToken_var::TranToken_var (void)
   : ptr_ (0)
 {}
 
@@ -4510,7 +4676,7 @@ Components::Transaction::TranToken_var::TranToken_var (TranToken *p)
 {}
 
 ACE_INLINE
-Components::Transaction::TranToken_var::TranToken_var (const ::Components::Transaction::TranToken_var &p) // copy constructor
+Components::Transaction::TranToken_var::TranToken_var (const ::Components::Transaction::TranToken_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::Transaction::TranToken (*p.ptr_));
@@ -4526,7 +4692,7 @@ Components::Transaction::TranToken_var::TranToken_var (const ::Components::Trans
 }
 
 ACE_INLINE
-Components::Transaction::TranToken_var::~TranToken_var (void) // destructor
+Components::Transaction::TranToken_var::~TranToken_var (void)
 {
   delete this->ptr_;
 }
@@ -4656,6 +4822,9 @@ Components::Transaction::TranToken_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::Transaction::TranToken_out
 // *************************************************************
@@ -4753,6 +4922,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 // Inline operations for exception Components::Transaction::InvalidToken
 // *************************************************************
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_TRANSACTION_USERTRANSACTION___CI_)
 #define _COMPONENTS_TRANSACTION_USERTRANSACTION___CI_
@@ -4760,6 +4931,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_CCMCONTEXT___CI_)
 #define _COMPONENTS_CCMCONTEXT___CI_
@@ -4771,6 +4944,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 // Inline operations for exception Components::CCMException
 // *************************************************************
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_ENTERPRISECOMPONENT___CI_)
 #define _COMPONENTS_ENTERPRISECOMPONENT___CI_
@@ -4778,6 +4953,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_SESSIONCONTEXT___CI_)
 #define _COMPONENTS_SESSIONCONTEXT___CI_
@@ -4785,6 +4962,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_SESSIONCOMPONENT___CI_)
 #define _COMPONENTS_SESSIONCOMPONENT___CI_
@@ -4792,6 +4971,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_SESSIONSYNCHRONIZATION___CI_)
 #define _COMPONENTS_SESSIONSYNCHRONIZATION___CI_
@@ -4799,6 +4980,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_ENTITYCONTEXT___CI_)
 #define _COMPONENTS_ENTITYCONTEXT___CI_
@@ -4806,6 +4989,8 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_ENTITYCOMPONENT___CI_)
 #define _COMPONENTS_ENTITYCOMPONENT___CI_
@@ -4817,12 +5002,15 @@ Components::Transaction::TranToken_out::operator[] (CORBA::ULong index)
 #if !defined (_COMPONENTS_IDDATA_CI_)
 #define _COMPONENTS_IDDATA_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::IdData_var
 // *************************************************************
 
 ACE_INLINE
-Components::IdData_var::IdData_var (void) // default constructor
+Components::IdData_var::IdData_var (void)
   : ptr_ (0)
 {}
 
@@ -4832,7 +5020,7 @@ Components::IdData_var::IdData_var (IdData *p)
 {}
 
 ACE_INLINE
-Components::IdData_var::IdData_var (const ::Components::IdData_var &p) // copy constructor
+Components::IdData_var::IdData_var (const ::Components::IdData_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::IdData (*p.ptr_));
@@ -4848,7 +5036,7 @@ Components::IdData_var::IdData_var (const ::Components::IdData &p)
 }
 
 ACE_INLINE
-Components::IdData_var::~IdData_var (void) // destructor
+Components::IdData_var::~IdData_var (void)
 {
   delete this->ptr_;
 }
@@ -4978,6 +5166,9 @@ Components::IdData_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::IdData_out
 // *************************************************************
@@ -5067,6 +5258,8 @@ Components::IdData_out::operator[] (CORBA::ULong index)
 // Inline operations for exception Components::InvalidStateIdData
 // *************************************************************
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_HOMEREGISTRATION___CI_)
 #define _COMPONENTS_HOMEREGISTRATION___CI_
@@ -5074,6 +5267,8 @@ Components::IdData_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_CCM2CONTEXT___CI_)
 #define _COMPONENTS_CCM2CONTEXT___CI_
@@ -5081,6 +5276,8 @@ Components::IdData_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_PROXYHOMEREGISTRATION___CI_)
 #define _COMPONENTS_PROXYHOMEREGISTRATION___CI_
@@ -5088,6 +5285,8 @@ Components::IdData_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_SESSION2CONTEXT___CI_)
 #define _COMPONENTS_SESSION2CONTEXT___CI_
@@ -5095,12 +5294,15 @@ Components::IdData_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::StateIdValue::StateIdValue () // default constructor
+Components::StateIdValue::StateIdValue (void)
 {}
 
 ACE_INLINE
-Components::StateIdValue::~StateIdValue () // destructor
+Components::StateIdValue::~StateIdValue (void)
 {}
 
 ACE_INLINE const char* 
@@ -5109,6 +5311,8 @@ Components::StateIdValue::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/StateIdValue:1.0";
 }
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_STATEIDFACTORY___CI_)
 #define _COMPONENTS_STATEIDFACTORY___CI_
@@ -5116,12 +5320,15 @@ Components::StateIdValue::_tao_obv_static_repository_id ()
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::PersistentIdValue::PersistentIdValue () // default constructor
+Components::PersistentIdValue::PersistentIdValue (void)
 {}
 
 ACE_INLINE
-Components::PersistentIdValue::~PersistentIdValue () // destructor
+Components::PersistentIdValue::~PersistentIdValue (void)
 {}
 
 ACE_INLINE const char* 
@@ -5130,12 +5337,15 @@ Components::PersistentIdValue::_tao_obv_static_repository_id ()
   return "IDL:omg.org/Components/PersistentIdValue:1.0";
 }
 
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:58
+
 ACE_INLINE
-Components::SegmentDescr::SegmentDescr () // default constructor
+Components::SegmentDescr::SegmentDescr (void)
 {}
 
 ACE_INLINE
-Components::SegmentDescr::~SegmentDescr () // destructor
+Components::SegmentDescr::~SegmentDescr (void)
 {}
 
 ACE_INLINE const char* 
@@ -5143,6 +5353,9 @@ Components::SegmentDescr::_tao_obv_static_repository_id ()
 {
   return "IDL:omg.org/Components/SegmentDescr:1.0";
 }
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -5315,12 +5528,15 @@ Components::_TAO_Unbounded_Valuetype_Sequence_Components_SegmentDescrSeq::get_bu
 #if !defined (_COMPONENTS_SEGMENTDESCRSEQ_CI_)
 #define _COMPONENTS_SEGMENTDESCRSEQ_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::SegmentDescrSeq_var
 // *************************************************************
 
 ACE_INLINE
-Components::SegmentDescrSeq_var::SegmentDescrSeq_var (void) // default constructor
+Components::SegmentDescrSeq_var::SegmentDescrSeq_var (void)
   : ptr_ (0)
 {}
 
@@ -5330,7 +5546,7 @@ Components::SegmentDescrSeq_var::SegmentDescrSeq_var (SegmentDescrSeq *p)
 {}
 
 ACE_INLINE
-Components::SegmentDescrSeq_var::SegmentDescrSeq_var (const ::Components::SegmentDescrSeq_var &p) // copy constructor
+Components::SegmentDescrSeq_var::SegmentDescrSeq_var (const ::Components::SegmentDescrSeq_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::SegmentDescrSeq (*p.ptr_));
@@ -5339,7 +5555,7 @@ Components::SegmentDescrSeq_var::SegmentDescrSeq_var (const ::Components::Segmen
 }
 
 ACE_INLINE
-Components::SegmentDescrSeq_var::~SegmentDescrSeq_var (void) // destructor
+Components::SegmentDescrSeq_var::~SegmentDescrSeq_var (void)
 {
   delete this->ptr_;
 }
@@ -5458,6 +5674,9 @@ Components::SegmentDescrSeq_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::SegmentDescrSeq_out
 // *************************************************************
@@ -5523,6 +5742,8 @@ Components::SegmentDescrSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_COMPONENTID___CI_)
 #define _COMPONENTS_COMPONENTID___CI_
@@ -5530,6 +5751,8 @@ Components::SegmentDescrSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_ENTITY2CONTEXT___CI_)
 #define _COMPONENTS_ENTITY2CONTEXT___CI_
@@ -5537,6 +5760,17 @@ Components::SegmentDescrSeq_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
+
+#if !defined (_COMPONENTS_EXECUTORLOCATOR___CI_)
+#define _COMPONENTS_EXECUTORLOCATOR___CI_
+
+
+#endif /* end #if !defined */
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_HOMEEXECUTORBASE___CI_)
 #define _COMPONENTS_HOMEEXECUTORBASE___CI_
@@ -5560,6 +5794,8 @@ Components::SegmentDescrSeq_out::operator[] (CORBA::ULong index)
 // Inline operations for exception Components::Deployment::InvalidAssembly
 // *************************************************************
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_DEPLOYMENT_COMPONENTINSTALLATION___CI_)
 #define _COMPONENTS_DEPLOYMENT_COMPONENTINSTALLATION___CI_
@@ -5578,6 +5814,8 @@ Components::Deployment::ComponentInstallation::ComponentInstallation (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_DEPLOYMENT_ASSEMBLY___CI_)
 #define _COMPONENTS_DEPLOYMENT_ASSEMBLY___CI_
@@ -5596,6 +5834,8 @@ Components::Deployment::Assembly::Assembly (
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_DEPLOYMENT_ASSEMBLYFACTORY___CI_)
 #define _COMPONENTS_DEPLOYMENT_ASSEMBLYFACTORY___CI_
@@ -5613,6 +5853,9 @@ Components::Deployment::AssemblyFactory::AssemblyFactory (
 
 
 #endif /* end #if !defined */
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -5780,12 +6023,15 @@ Components::Deployment::_TAO_Unbounded_Object_Sequence_Components_Deployment_Com
 #if !defined (_COMPONENTS_DEPLOYMENT_COMPONENTSERVERS_CI_)
 #define _COMPONENTS_DEPLOYMENT_COMPONENTSERVERS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::Deployment::ComponentServers_var
 // *************************************************************
 
 ACE_INLINE
-Components::Deployment::ComponentServers_var::ComponentServers_var (void) // default constructor
+Components::Deployment::ComponentServers_var::ComponentServers_var (void)
   : ptr_ (0)
 {}
 
@@ -5795,7 +6041,7 @@ Components::Deployment::ComponentServers_var::ComponentServers_var (ComponentSer
 {}
 
 ACE_INLINE
-Components::Deployment::ComponentServers_var::ComponentServers_var (const ::Components::Deployment::ComponentServers_var &p) // copy constructor
+Components::Deployment::ComponentServers_var::ComponentServers_var (const ::Components::Deployment::ComponentServers_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::Deployment::ComponentServers (*p.ptr_));
@@ -5804,7 +6050,7 @@ Components::Deployment::ComponentServers_var::ComponentServers_var (const ::Comp
 }
 
 ACE_INLINE
-Components::Deployment::ComponentServers_var::~ComponentServers_var (void) // destructor
+Components::Deployment::ComponentServers_var::~ComponentServers_var (void)
 {
   delete this->ptr_;
 }
@@ -5923,6 +6169,9 @@ Components::Deployment::ComponentServers_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::Deployment::ComponentServers_out
 // *************************************************************
@@ -5988,6 +6237,8 @@ Components::Deployment::ComponentServers_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_DEPLOYMENT_SERVERACTIVATOR___CI_)
 #define _COMPONENTS_DEPLOYMENT_SERVERACTIVATOR___CI_
@@ -6005,6 +6256,9 @@ Components::Deployment::ServerActivator::ServerActivator (
 
 
 #endif /* end #if !defined */
+
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:108
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
@@ -6172,12 +6426,15 @@ Components::Deployment::_TAO_Unbounded_Object_Sequence_Components_Deployment_Con
 #if !defined (_COMPONENTS_DEPLOYMENT_CONTAINERS_CI_)
 #define _COMPONENTS_DEPLOYMENT_CONTAINERS_CI_
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:229
+
 // *************************************************************
 // Inline operations for class Components::Deployment::Containers_var
 // *************************************************************
 
 ACE_INLINE
-Components::Deployment::Containers_var::Containers_var (void) // default constructor
+Components::Deployment::Containers_var::Containers_var (void)
   : ptr_ (0)
 {}
 
@@ -6187,7 +6444,7 @@ Components::Deployment::Containers_var::Containers_var (Containers *p)
 {}
 
 ACE_INLINE
-Components::Deployment::Containers_var::Containers_var (const ::Components::Deployment::Containers_var &p) // copy constructor
+Components::Deployment::Containers_var::Containers_var (const ::Components::Deployment::Containers_var &p)
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::Components::Deployment::Containers (*p.ptr_));
@@ -6196,7 +6453,7 @@ Components::Deployment::Containers_var::Containers_var (const ::Components::Depl
 }
 
 ACE_INLINE
-Components::Deployment::Containers_var::~Containers_var (void) // destructor
+Components::Deployment::Containers_var::~Containers_var (void)
 {
   delete this->ptr_;
 }
@@ -6315,6 +6572,9 @@ Components::Deployment::Containers_var::ptr (void) const
   return this->ptr_;
 }
 
+
+// TAO_IDL - Generated from W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_ci.cpp:557
+
 // *************************************************************
 // Inline operations for class Components::Deployment::Containers_out
 // *************************************************************
@@ -6380,6 +6640,8 @@ Components::Deployment::Containers_out::operator[] (CORBA::ULong index)
 
 #endif /* end #if !defined */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_DEPLOYMENT_COMPONENTSERVER___CI_)
 #define _COMPONENTS_DEPLOYMENT_COMPONENTSERVER___CI_
@@ -6402,6 +6664,8 @@ Components::Deployment::ComponentServer::ComponentServer (
 // Inline operations for exception Components::Deployment::ImplEntryPointNotFound
 // *************************************************************
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_ci.cpp:68
 
 #if !defined (_COMPONENTS_DEPLOYMENT_CONTAINER___CI_)
 #define _COMPONENTS_DEPLOYMENT_CONTAINER___CI_
@@ -6435,42 +6699,60 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_NameList_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::Cookie *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::Cookie *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::Cookie *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::Cookie *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::PortDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::PortDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::PortDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::PortDescription *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::FacetDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::FacetDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::FacetDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::FacetDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_FacetDescriptions_I_
 #define _TAO_CDR_OP_Components_FacetDescriptions_I_
@@ -6486,329 +6768,578 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_FacetDescriptions_I_ */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::InvalidName &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::InvalidName &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::InvalidName&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::InvalidConnection &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::InvalidConnection&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::ExceededConnectionLimit &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::ExceededConnectionLimit&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::AlreadyConnected &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::AlreadyConnected&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::NoConnection &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::NoConnection&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::CookieRequired &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::CookieRequired&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::CreateFailure &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason)
-    )
+    {
       return 1;
-    else
-      return 0;
-  }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::CreateFailure &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::InvalidName&
+  )
 {
-  // now marshal the members
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::InvalidConnection &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::InvalidConnection&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::ExceededConnectionLimit &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::ExceededConnectionLimit&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::AlreadyConnected &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::AlreadyConnected&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::NoConnection &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::NoConnection&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::CookieRequired &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::CookieRequired&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::CreateFailure &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason)
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::CreateFailure &_tao_aggregate
+  )
+{
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason)
   )
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::FinderFailure &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason)
-    )
+    {
       return 1;
-    else
-      return 0;
-  }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::FinderFailure &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::FinderFailure &_tao_aggregate
+  )
 {
-  // now marshal the members
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason)
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::FinderFailure &_tao_aggregate
+  )
+{
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason)
   )
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::RemoveFailure &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason)
-    )
+    {
       return 1;
-    else
-      return 0;
-  }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::RemoveFailure &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::RemoveFailure &_tao_aggregate
+  )
 {
-  // now marshal the members
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason)
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::RemoveFailure &_tao_aggregate
+  )
+{
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason)
   )
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::DuplicateKeyValue &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::DuplicateKeyValue&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::InvalidKey &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::InvalidKey&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::UnknownKeyValue &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::UnknownKeyValue&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::NoKeyAvailable &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::NoKeyAvailable&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::BadEventType &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.expected_event_type.in ())
-    )
+    {
       return 1;
-    else
-      return 0;
-  }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::BadEventType &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::DuplicateKeyValue &_tao_aggregate
+  )
 {
-  // now marshal the members
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::DuplicateKeyValue&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::InvalidKey &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::InvalidKey&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::UnknownKeyValue &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::UnknownKeyValue&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::NoKeyAvailable &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::NoKeyAvailable&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::BadEventType &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.expected_event_type.in ())
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::BadEventType &_tao_aggregate
+  )
+{
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.expected_event_type.out ())
   )
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::HomeNotFound &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::HomeNotFound&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::WrongComponentType &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::WrongComponentType&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::InvalidConfiguration &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason) &&
-      (strm << _tao_aggregate.name.in ())
-    )
+    {
       return 1;
-    else
-      return 0;
-  }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::InvalidConfiguration &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::HomeNotFound &_tao_aggregate
+  )
 {
-  // now marshal the members
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::HomeNotFound&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::WrongComponentType &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::WrongComponentType&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::InvalidConfiguration &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason) &&
+        (strm << _tao_aggregate.name.in ())
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::InvalidConfiguration &_tao_aggregate
+  )
+{
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason) &&
     (strm >> _tao_aggregate.name.out ())
   )
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::IllegalState &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::IllegalState &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::IllegalState&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::IllegalState&
+  )
 {
   return 1;
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -6820,18 +7351,24 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::IllegalState&)
     Components::Navigation_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::ConnectionDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::ConnectionDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::ConnectionDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::ConnectionDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_ConnectionDescriptions_I_
 #define _TAO_CDR_OP_Components_ConnectionDescriptions_I_
@@ -6847,18 +7384,24 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_ConnectionDescriptions_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::ReceptacleDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::ReceptacleDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::ReceptacleDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::ReceptacleDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_ReceptacleDescriptions_I_
 #define _TAO_CDR_OP_Components_ReceptacleDescriptions_I_
@@ -6874,6 +7417,9 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_ReceptacleDescriptions_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::Receptacles_ptr
@@ -6884,18 +7430,27 @@ CORBA::Boolean  operator>> (
     Components::Receptacles_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::EventBase *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::EventBase *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::EventBase *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::EventBase *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::EventConsumerBase_ptr
@@ -6906,18 +7461,24 @@ TAO_NAMESPACE_CLOSE
     Components::EventConsumerBase_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::ConsumerDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::ConsumerDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::ConsumerDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::ConsumerDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_ConsumerDescriptions_I_
 #define _TAO_CDR_OP_Components_ConsumerDescriptions_I_
@@ -6933,18 +7494,24 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_ConsumerDescriptions_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::EmitterDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::EmitterDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::EmitterDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::EmitterDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_EmitterDescriptions_I_
 #define _TAO_CDR_OP_Components_EmitterDescriptions_I_
@@ -6960,18 +7527,24 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_EmitterDescriptions_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::SubscriberDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::SubscriberDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::SubscriberDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::SubscriberDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_SubscriberDescriptions_I_
 #define _TAO_CDR_OP_Components_SubscriberDescriptions_I_
@@ -6987,18 +7560,24 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_SubscriberDescriptions_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::PublisherDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::PublisherDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::PublisherDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::PublisherDescription *&);
+
 
 #if !defined _TAO_CDR_OP_Components_PublisherDescriptions_I_
 #define _TAO_CDR_OP_Components_PublisherDescriptions_I_
@@ -7014,6 +7593,9 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_PublisherDescriptions_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::Events_ptr
@@ -7024,18 +7606,24 @@ CORBA::Boolean  operator>> (
     Components::Events_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::PrimaryKeyBase *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::PrimaryKeyBase *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::PrimaryKeyBase *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::PrimaryKeyBase *&);
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::CCMObject_ptr
@@ -7045,6 +7633,9 @@ TAO_NAMESPACE_CLOSE
     TAO_InputCDR &,
     Components::CCMObject_ptr &
   );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -7071,6 +7662,9 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_CCMHomes_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::KeylessCCMHome_ptr
@@ -7080,6 +7674,9 @@ CORBA::Boolean  operator>> (
     TAO_InputCDR &,
     Components::KeylessCCMHome_ptr &
   );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -7091,6 +7688,9 @@ CORBA::Boolean  operator>> (
     Components::HomeFinder_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::Configurator_ptr
@@ -7101,18 +7701,24 @@ CORBA::Boolean  operator>> (
     Components::Configurator_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::ConfigValue *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::ConfigValue *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::ConfigValue *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::ConfigValue *&);
+
 
 #if !defined _TAO_CDR_OP_Components_ConfigValues_I_
 #define _TAO_CDR_OP_Components_ConfigValues_I_
@@ -7128,6 +7734,9 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_ConfigValues_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::StandardConfigurator_ptr
@@ -7137,6 +7746,9 @@ CORBA::Boolean  operator>> (
     TAO_InputCDR &,
     Components::StandardConfigurator_ptr &
   );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -7148,30 +7760,42 @@ CORBA::Boolean  operator>> (
     Components::HomeConfiguration_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::ComponentPortDescription *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::ComponentPortDescription *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::ComponentPortDescription *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::ComponentPortDescription *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::Enumeration *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::Enumeration *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::Enumeration *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::Enumeration *&);
+
 
 #if !defined _TAO_CDR_OP_Components_CCMObjectSeq_I_
 #define _TAO_CDR_OP_Components_CCMObjectSeq_I_
@@ -7187,18 +7811,24 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_CCMObjectSeq_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::DefaultEnumeration *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::DefaultEnumeration *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::DefaultEnumeration *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::DefaultEnumeration *&);
+
 
 #if !defined _TAO_CDR_OP_Components_Transaction_TranToken_I_
 #define _TAO_CDR_OP_Components_Transaction_TranToken_I_
@@ -7214,114 +7844,210 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_Transaction_TranToken_I_ */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::NoTransaction &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::NoTransaction &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::NoTransaction&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::NoTransaction&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::NotSupported &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::NotSupported &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::NotSupported&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::NotSupported&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::SystemError &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::SystemError &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::SystemError&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::SystemError&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::RollbackError &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::RollbackError &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::RollbackError&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::RollbackError&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::HeuristicMixed &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::HeuristicMixed &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::HeuristicMixed&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::HeuristicMixed&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::HeuristicRollback &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::HeuristicRollback &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::HeuristicRollback&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::HeuristicRollback&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::Security &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::Security &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::Security&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::Security&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Transaction::InvalidToken &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Transaction::InvalidToken &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Transaction::InvalidToken&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Transaction::InvalidToken&
+  )
 {
   return 1;
 }
@@ -7364,32 +8090,50 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Components::CCMExcepti
   return _tao_result;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::CCMException &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::CCMException &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason)
-    )
-      return 1;
-    else
-      return 0;
-  }
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason)
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::CCMException &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::CCMException &_tao_aggregate
+  )
 {
-  // now marshal the members
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason)
   )
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::BadComponentReferenceReason &_tao_enumval)
@@ -7426,140 +8170,236 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_IdData_I_ */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::BadComponentReference &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::BadComponentReference &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason)
-    )
-      return 1;
-    else
-      return 0;
-  }
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason)
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::BadComponentReference &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::BadComponentReference &_tao_aggregate
+  )
 {
-  // now marshal the members
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason)
   )
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::PolicyMismatch &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::PolicyMismatch &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::PolicyMismatch&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::PolicyMismatch&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::PersistenceNotAvailable &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::PersistenceNotAvailable &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::PersistenceNotAvailable&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::PersistenceNotAvailable&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::UnknownActualHome &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::UnknownActualHome &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::UnknownActualHome&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::UnknownActualHome&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::ProxyHomeNotSupported &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::ProxyHomeNotSupported &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::ProxyHomeNotSupported&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::ProxyHomeNotSupported&
+  )
 {
   return 1;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::InvalidStateIdData &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::InvalidStateIdData &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::InvalidStateIdData&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::InvalidStateIdData&
+  )
 {
   return 1;
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
 
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::StateIdValue *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::StateIdValue *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::StateIdValue *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::StateIdValue *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::PersistentIdValue *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::PersistentIdValue *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::PersistentIdValue *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::PersistentIdValue *&);
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:714
+
 #if defined (__ACE_INLINE__)
-//@@ Boris: begin experimental
 TAO_NAMESPACE CORBA
 {
   TAO_NAMESPACE_STORAGE_CLASS void add_ref (Components::SegmentDescr *);
   TAO_NAMESPACE_STORAGE_CLASS void remove_ref (Components::SegmentDescr *);
 }
 TAO_NAMESPACE_CLOSE
-//@@ Boris: end experimental
 #endif /*__ACE_INLINE__*/
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+
  CORBA::Boolean operator<< (TAO_OutputCDR &, const Components::SegmentDescr *);
  CORBA::Boolean operator>> (TAO_InputCDR &, Components::SegmentDescr *&);
+
 
 #if !defined _TAO_CDR_OP_Components_SegmentDescrSeq_I_
 #define _TAO_CDR_OP_Components_SegmentDescrSeq_I_
@@ -7594,75 +8434,132 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, Components::Deployment
   return _tao_result;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Deployment::UnknownImplId &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Deployment::UnknownImplId &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Deployment::UnknownImplId&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Deployment::InvalidLocation &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-    return 1;
-  else
-    return 0;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Deployment::InvalidLocation&)
-{
-  return 1;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Deployment::InstallationFailure &_tao_aggregate)
-{
-  // first marshal the repository ID
-  if (strm << _tao_aggregate._rep_id ())
-  {
-    // now marshal the members (if any)
-    if (
-      (strm << _tao_aggregate.reason)
-    )
+    {
       return 1;
-    else
-      return 0;
-  }
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm,Components::Deployment::InstallationFailure &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Deployment::UnknownImplId&
+  )
 {
-  // now marshal the members
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Deployment::InvalidLocation &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Deployment::InvalidLocation&
+  )
+{
+  return 1;
+}
+
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Deployment::InstallationFailure &_tao_aggregate
+  )
+{
+  // First marshal the repository ID.
+  if (strm << _tao_aggregate._rep_id ())
+    {
+      // Now marshal the members (if any).
+      if (
+        (strm << _tao_aggregate.reason)
+       )
+        {
+          return 1;
+        }
+      else
+        {
+          return 0;
+        }
+    }
+  else
+    {
+      return 0;
+    }
+}
+
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &strm,
+    Components::Deployment::InstallationFailure &_tao_aggregate
+  )
+{
+  // Demarshal the members.
   if (
     (strm >> _tao_aggregate.reason)
   )
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Deployment::InvalidAssembly &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Deployment::InvalidAssembly &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Deployment::InvalidAssembly&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Deployment::InvalidAssembly&
+  )
 {
   return 1;
 }
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -7674,6 +8571,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Deployment::Inv
     Components::Deployment::ComponentInstallation_ptr &
   );
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::Deployment::Assembly_ptr
@@ -7683,6 +8583,9 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Deployment::Inv
     TAO_InputCDR &,
     Components::Deployment::Assembly_ptr &
   );
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
 
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
@@ -7719,6 +8622,9 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_Deployment_ComponentServers_I_ */
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/cdr_op_ci.cpp:72
+
  CORBA::Boolean operator<< (
     TAO_OutputCDR &,
     const Components::Deployment::ServerActivator_ptr
@@ -7754,16 +8660,28 @@ CORBA::Boolean  operator>> (
 
 #endif /* _TAO_CDR_OP_Components_Deployment_Containers_I_ */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const Components::Deployment::ImplEntryPointNotFound &_tao_aggregate)
+ACE_INLINE
+CORBA::Boolean operator<< (
+    TAO_OutputCDR &strm,
+    const Components::Deployment::ImplEntryPointNotFound &_tao_aggregate
+  )
 {
-  // first marshal the repository ID
+  // First marshal the repository ID.
   if (strm << _tao_aggregate._rep_id ())
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &,Components::Deployment::ImplEntryPointNotFound&)
+ACE_INLINE
+CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    Components::Deployment::ImplEntryPointNotFound&
+  )
 {
   return 1;
 }

@@ -19,6 +19,10 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:770
+
 #ifndef _TAO_IDL_COMPONENT_BASES_T_CPP_
 #define _TAO_IDL_COMPONENT_BASES_T_CPP_
 

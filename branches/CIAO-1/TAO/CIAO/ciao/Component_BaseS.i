@@ -19,6 +19,9 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::StandardConfigurator::configure_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -34,6 +37,9 @@ ACE_INLINE void POA_Components::StandardConfigurator::configure_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::HomeConfiguration::get_component_def_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -49,6 +55,9 @@ ACE_INLINE void POA_Components::HomeConfiguration::get_component_def_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::HomeConfiguration::get_home_def_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -64,6 +73,9 @@ ACE_INLINE void POA_Components::HomeConfiguration::get_home_def_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::HomeConfiguration::remove_component_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -79,6 +91,9 @@ ACE_INLINE void POA_Components::HomeConfiguration::remove_component_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::provide_facet_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -94,6 +109,9 @@ ACE_INLINE void POA_Components::CCMObject::provide_facet_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_all_facets_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -109,6 +127,9 @@ ACE_INLINE void POA_Components::CCMObject::get_all_facets_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_named_facets_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -124,6 +145,9 @@ ACE_INLINE void POA_Components::CCMObject::get_named_facets_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::same_component_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -139,6 +163,9 @@ ACE_INLINE void POA_Components::CCMObject::same_component_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::connect_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -154,6 +181,9 @@ ACE_INLINE void POA_Components::CCMObject::connect_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::disconnect_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -169,6 +199,9 @@ ACE_INLINE void POA_Components::CCMObject::disconnect_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_connections_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -184,6 +217,9 @@ ACE_INLINE void POA_Components::CCMObject::get_connections_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_all_receptacles_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -199,6 +235,9 @@ ACE_INLINE void POA_Components::CCMObject::get_all_receptacles_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_named_receptacles_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -214,6 +253,9 @@ ACE_INLINE void POA_Components::CCMObject::get_named_receptacles_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_consumer_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -229,6 +271,9 @@ ACE_INLINE void POA_Components::CCMObject::get_consumer_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::subscribe_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -244,6 +289,9 @@ ACE_INLINE void POA_Components::CCMObject::subscribe_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::unsubscribe_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -259,6 +307,9 @@ ACE_INLINE void POA_Components::CCMObject::unsubscribe_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::connect_consumer_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -274,6 +325,9 @@ ACE_INLINE void POA_Components::CCMObject::connect_consumer_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::disconnect_consumer_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -289,6 +343,9 @@ ACE_INLINE void POA_Components::CCMObject::disconnect_consumer_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_all_consumers_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -304,6 +361,9 @@ ACE_INLINE void POA_Components::CCMObject::get_all_consumers_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_named_consumers_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -319,6 +379,9 @@ ACE_INLINE void POA_Components::CCMObject::get_named_consumers_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_all_emitters_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -334,6 +397,9 @@ ACE_INLINE void POA_Components::CCMObject::get_all_emitters_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_named_emitters_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -349,6 +415,9 @@ ACE_INLINE void POA_Components::CCMObject::get_named_emitters_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_all_publishers_skel (
     TAO_ServerRequest &req,
     void *obj,
@@ -364,6 +433,9 @@ ACE_INLINE void POA_Components::CCMObject::get_all_publishers_skel (
       ACE_ENV_ARG_PARAMETER
     );
 }
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:2201
+
 ACE_INLINE void POA_Components::CCMObject::get_named_publishers_skel (
     TAO_ServerRequest &req,
     void *obj,
