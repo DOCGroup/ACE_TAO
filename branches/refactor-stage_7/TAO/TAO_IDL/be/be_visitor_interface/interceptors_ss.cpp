@@ -48,7 +48,8 @@ int be_visitor_interface_interceptors_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
+  *os << be_nl << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
   // Generate code for the interface definition by traversing thru the

@@ -152,10 +152,11 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // This method is defined in the header file to workaround old
   // g++ problems.
   *os << "static " << node->local_name () << "_ptr _nil (void)"
-      << be_idt_nl << "{" << be_idt_nl
+      << be_nl 
+      << "{" << be_idt_nl
       << "return (" << node->local_name ()
       << "_ptr)0;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl;
+      << "}" << be_nl << be_nl;
 
   if (node->is_abstract ())
     {
@@ -275,14 +276,19 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_abstract ())
         {
           *os << "// Concrete non-local interface only." << be_nl
-              << node->local_name () << " (IOP::IOR *ior," << be_nl
-              << "     TAO_ORB_Core *orb_core = 0);" << be_nl << be_nl;
+              << node->local_name () << " (" << be_idt << be_idt_nl
+              << "IOP::IOR *ior," << be_nl
+              << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
+              << ");" << be_uidt_nl << be_nl;
         }
 
-      *os << node->local_name () << " (TAO_Stub *objref, " << be_nl
-          << "     CORBA::Boolean _tao_collocated = 0," << be_nl
-          << "     TAO_Abstract_ServantBase *servant = 0," <<  be_nl
-          << "     TAO_ORB_Core *orb_core = 0);" << be_nl << be_nl;
+      *os << "// Non-local interface only." << be_nl
+          << node->local_name () << " (" << be_idt << be_idt_nl
+          << "TAO_Stub *objref," << be_nl
+          << "CORBA::Boolean _tao_collocated = 0," << be_nl
+          << "TAO_Abstract_ServantBase *servant = 0," <<  be_nl
+          << "TAO_ORB_Core *orb_core = 0" << be_uidt_nl
+          << ");" << be_uidt_nl << be_nl;
     }
 
   // Protected destructor.

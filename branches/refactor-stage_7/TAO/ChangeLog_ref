@@ -1,3 +1,33 @@
+Thu Oct  9 17:55:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/amh_rh_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/arglist.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_valuetype/arglist.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype.h:
+        * TAO_IDL/be_include/be_visitor_valuetype/valuetype_cs.h:
+
+ 	  Cosmetic changes to generated code, and some refactoring
+	  of the IDL compiler visitors utility functions.
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+	  Fixed a bug in generation of #includes for .pidl files.
+	  This closes [BUGID:1608].
+
 Wed Oct  8 23:50:54 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/RTCORBA/RTCORBAC.h:

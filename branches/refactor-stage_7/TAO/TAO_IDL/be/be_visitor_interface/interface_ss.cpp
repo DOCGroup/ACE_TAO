@@ -170,21 +170,29 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" << be_nl;
-  *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_servant;" << be_nl;
+  *os << "TAO_InputCDR &_tao_in = _tao_server_request.incoming ();" 
+  << be_nl << be_nl;
+
+  *os << full_skel_name << " *_tao_impl =" << be_idt_nl
+      << "(" << full_skel_name << " *) _tao_servant;" << be_uidt_nl << be_nl;
+
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl << be_nl;
-  *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
+
+  *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->use_raw_throw ())
     {
-      *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
+      *os << "throw CORBA::MARSHAL ();" ;
     }
   else
     {
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+      *os << "ACE_THROW (CORBA::MARSHAL ());";
     }
+
+  *os << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl;
 
   *os << "_tao_retval = _tao_impl->_is_a (value.in () ACE_ENV_ARG_PARAMETER);"
       << be_nl;
@@ -192,19 +200,23 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
+
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))"
-      << be_idt_nl;
+      << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->use_raw_throw ())
     {
-      *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+      *os << "throw CORBA::MARSHAL ();";
     }
   else
     {
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+      *os << "ACE_THROW (CORBA::MARSHAL ());";
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
 
   // Generate code for the _non_existent skeleton.
@@ -216,28 +228,34 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_servant;" << be_nl;
+  *os << full_skel_name << " *_tao_impl =" << be_idt_nl
+      << "(" << full_skel_name << " *) _tao_servant;" << be_uidt_nl << be_nl;
+
   *os << "CORBA::Boolean _tao_retval =" << be_idt_nl
       << "_tao_impl->_non_existent (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
+
   *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
+
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))"
-      << be_idt_nl;
+      << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->use_raw_throw ())
     {
-      *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+      *os << "throw CORBA::MARSHAL ();";
     }
   else
     {
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+      *os << "ACE_THROW (CORBA::MARSHAL ());";
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generate code for the _interface skeleton.
   *os << "void " << full_skel_name
@@ -248,10 +266,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_servant;" << be_nl
-      << "CORBA::InterfaceDef_ptr _tao_retval = 0;" << be_nl
-      << "CORBA::Boolean _tao_result = 0;" << be_nl << be_nl;
   *os << "TAO_IFR_Client_Adapter *_tao_adapter =" << be_idt_nl
       << "ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance ("
       << be_idt << be_idt_nl
@@ -261,26 +275,23 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl
       << "ACE_THROW (CORBA::INTF_REPOS ());" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
-  *os << "ACE_TRY" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_retval = " << be_idt_nl
+  *os << full_skel_name << " *_tao_impl =" << be_idt_nl
+      << "(" << full_skel_name << " *) _tao_servant;" << be_uidt_nl << be_nl;
+
+  *os << "CORBA::InterfaceDef_ptr _tao_retval = " << be_idt_nl
       << "_tao_impl->_get_interface (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_nl << be_nl
-      << "_tao_server_request.init_reply ();" << be_nl << be_nl
+      << "ACE_CHECK;" << be_nl << be_nl
+      << "_tao_server_request.init_reply ();" << be_nl
       << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl
-      << "_tao_result =" << be_idt_nl
+      << "CORBA::Boolean _tao_result =" << be_idt_nl
       << "_tao_adapter->interfacedef_cdr_insert (" << be_idt << be_idt_nl
       << "_tao_out," << be_nl
       << "_tao_retval" << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_CATCHALL" << be_idt_nl
-      << "{" << be_idt_nl
-      << "_tao_adapter->dispose (_tao_retval);" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_ENDTRY;" << be_nl << be_nl;
+      << ");" << be_uidt << be_uidt_nl << be_nl
+      << "_tao_adapter->dispose (_tao_retval);" << be_nl << be_nl;
+
   *os << "if (_tao_result == 0)" << be_idt_nl
       << "{" << be_idt_nl
       << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl
@@ -296,28 +307,34 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
       << ")" << be_uidt_nl;
   *os << "{" << be_idt_nl;
-  *os << full_skel_name << " *_tao_impl = ("
-      << full_skel_name << " *) _tao_object_reference;" << be_nl;
+  *os << full_skel_name << " *_tao_impl =" << be_idt_nl
+      << "(" << full_skel_name << " *) _tao_object_reference;" 
+      << be_uidt_nl << be_nl;
+
   *os << "CORBA::Object_var _tao_retval =" << be_idt_nl
       << "_tao_impl->_get_component (ACE_ENV_SINGLE_ARG_PARAMETER);"
       << be_uidt_nl;
   *os << "ACE_CHECK;" << be_nl << be_nl;
+
   *os << "_tao_server_request.init_reply ();" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();"
       << be_nl << be_nl;
-  *os << "if (!(_tao_out << _tao_retval._retn ()))"
-      << be_idt_nl;
+
+  *os << "if (!(_tao_out << _tao_retval.in ()))" << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->use_raw_throw ())
     {
-      *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
+      *os << "throw CORBA::MARSHAL ();";
     }
   else
     {
-      *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
+      *os << "ACE_THROW (CORBA::MARSHAL ());";
     }
 
-  *os << "}" << be_nl << be_nl;
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_nl << be_nl;
 
   // Generate code for the _is_a override.
 
@@ -383,7 +400,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "                    \"IDL:omg.org/CORBA/Object:1.0\") == 0)"
       << be_idt_nl
       << "{" << be_idt_nl
-      << "return ACE_static_cast(PortableServer::Servant, this);"
+      << "return ACE_static_cast (PortableServer::Servant, this);"
       << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
@@ -492,11 +509,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "{" << be_idt_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
-      << "CORBA::Object (" << be_idt << be_idt_nl
-      << "stub," << be_nl
-      << "1," << be_nl
-      << "this" << be_uidt_nl
-      << ")," << be_uidt_nl
+      << "CORBA::Object (stub, 1, this)," << be_nl
       << "0" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl
@@ -504,17 +517,13 @@ be_visitor_interface_ss::this_method (be_interface *node)
       << "{" << be_idt_nl
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
-      << "CORBA::Object (" << be_idt << be_idt_nl
-      << "stub," << be_nl
-      << "0," << be_nl
-      << "this" << be_uidt_nl
-      << ")," << be_uidt_nl
+      << "CORBA::Object (stub, 0, this)," << be_nl
       << "0" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
 
   *os << "CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl
+      << "(void) safe_stub.release ();" << be_nl << be_nl
       << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
       << "return" << be_idt_nl
       << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
@@ -611,7 +620,7 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
           << node->full_strategized_proxy_broker_name ()
           << "::" <<"the"
           << node->strategized_proxy_broker_name ()
-          << "();" << be_uidt << be_uidt_nl
+          << " ();" << be_uidt << be_uidt_nl
           << "}" << be_nl << be_nl;
 
       // Proxy Broker Function Pointer Initializer.

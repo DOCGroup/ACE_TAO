@@ -399,6 +399,10 @@ SOURCE=.\be\be_visitor_tmplinst.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\be\be_visitor_traits.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\be\be_visitor_typecode.cpp
 # End Source File
 # Begin Source File
@@ -724,6 +728,10 @@ SOURCE=.\be_include\be_visitor_structure_fwd.h
 # Begin Source File
 
 SOURCE=.\be_include\be_visitor_tmplinst.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\be_include\be_visitor_traits.h
 # End Source File
 # Begin Source File
 
