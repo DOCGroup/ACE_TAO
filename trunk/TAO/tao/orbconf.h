@@ -120,8 +120,9 @@
 #endif /* TAO_MAXIMUM_NATIVE_TYPE_SIZE */
 
 // This deals with platforms that support namespaces vs platforms that
-// don't.
-#if defined (ACE_HAS_USING_KEYWORD)
+// don't.  @@ MSVC's namespace implementation is somehow broken.
+// Statics sometime don't get initialized when using namespace.
+#if defined (ACE_HAS_USING_KEYWORD) || !defined (_MSC_VER)
 #define TAO_NAMESPACE namespace
 #else
 #define TAO_NAMESPACE struct TAO_EXPORT_MACRO
