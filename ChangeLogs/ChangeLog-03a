@@ -1,3 +1,16 @@
+Tue Feb  1 09:40:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tests/Pipe_Test.cpp (main):
+
+	  Exit with error if child exited with error.  Previously, the
+	  test returned successfully which was misleading.
+
+	* ltcf-cxx.sh:
+	* ltconfig:
+	* ltmain.sh:
+
+	  Updated from latest libtool multi-language branch sources.
+
 Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * Added the following changes for Borland C++Builder 4:
