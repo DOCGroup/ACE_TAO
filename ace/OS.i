@@ -4158,6 +4158,77 @@ ACE_OS::thr_getprio (ACE_hthread_t thr_id, int &prio)
 #endif /* ACE_HAS_THREADS */		     
 }
 
+
+# if defined (ACE_HAS_TSS_EMULATION)
+ACE_INLINE
+void **&
+ACE_TSS_Emulation::tss_base ()
+{
+#if defined (VXWORKS)
+  return ((void **) taskIdCurrent->spare4);
+#else
+  return tss_collection_ [ACE_OS::thr_self ()];
+#endif /* VXWORKS */
+}
+
+ACE_INLINE
+ACE_thread_key_t
+ACE_TSS_Emulation::total_keys ()
+{
+  return total_keys_;
+}
+
+ACE_INLINE
+ACE_thread_key_t
+ACE_TSS_Emulation::next_key ()
+{
+  return total_keys_ < ACE_TSS_THREAD_KEYS_MAX
+           ? ++total_keys_
+           : ACE_OS::NULL_key;
+}
+
+ACE_INLINE
+ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
+ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key)
+{
+  return tss_destructor_ [key];
+}
+
+ACE_INLINE
+void
+ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key,
+                                   ACE_TSS_DESTRUCTOR destructor)
+{
+  tss_destructor_ [key] = destructor;
+}
+
+ACE_INLINE
+void *&
+ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
+{
+  return tss_base ()[key - 1];
+}
+
+ACE_INLINE
+void
+ACE_TSS_Emulation::tss_allocate ()
+{
+  if (tss_base () == 0)
+    {
+      ACE_NEW (tss_base (), (void *)[ACE_TSS_THREAD_KEYS_MAX]);
+    }
+}
+
+ACE_INLINE
+void
+ACE_TSS_Emulation::tss_deallocate ()
+{
+  delete [] tss_base ();
+  tss_base () = 0;
+}
+
+#endif /* ACE_HAS_TSS_EMULATION */
+
 ACE_INLINE int 
 ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
 {
@@ -4172,10 +4243,8 @@ ACE_OS::thr_getspecific (ACE_thread_key_t key, void **data)
       }
     else
       {
-#   if defined (VXWORKS)
-        *data = ACE_TSS_OBJECT (key);
+        *data = ACE_TSS_Emulation::ts_object (key);
         return 0;
-#   endif /* VXWORKS */
       }
 # elif defined (ACE_HAS_STHREADS)
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), ace_result_), int, -1);
@@ -7628,4 +7697,3 @@ ACE_Thread_Adapter::entry_point (void)
 {
   return this->entry_point_;
 }
-

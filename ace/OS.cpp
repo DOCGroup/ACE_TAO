@@ -1047,7 +1047,7 @@ ACE_TSS_Cleanup::exit_cleanup_i (void)
 }
 
 void 
-ACE_TSS_Cleanup::exit (void *status)
+ACE_TSS_Cleanup::exit (void * /* status */)
 {
 // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
@@ -1134,32 +1134,6 @@ ACE_TSS_Cleanup::exit (void *status)
       this->exit_cleanup_i (); // remove thread id from reference list.
     }
   }
-
-#if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  // allow CWinThread-destructor to be invoked from AfxEndThread
-  // _endthreadex will be called from AfxEndThread so don't exit the
-  // thread now if we are running an MFC thread.
-  CWinThread *pThread = ::AfxGetThread ();
-  if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-#endif /* ACE_HAS_MFC */
-    {
-#if 0
-      ACE_hthread_t thr;
-      ACE_OS::thr_self (thr);
-      if (thr)
-	ACE_OS::close (thr);
-#endif
-#if defined (ACE_WIN32)
-      ::_endthreadex ((DWORD) status);
-#else
-      // _Do_not_ exit the thread if not on ACE_WIN32.  That will be
-      // done by other mechanisms.
-      status = 0;
-#endif /* ACE_WIN32 */
-    }
-#if 0 
-  ::ExitThread ((DWORD) status);
-#endif
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
@@ -1308,10 +1282,13 @@ ACE_TSS_Cleanup::dump (void)
 }
 
 # if defined (ACE_HAS_TSS_EMULATION)
-  ACE_thread_key_t ACE_TSS_Emulation::total_keys_ = 0;
+ACE_thread_key_t ACE_TSS_Emulation::total_keys_ = 0;
 
-  ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
-    ACE_TSS_Emulation::tss_destructor_ [THREAD_KEYS_MAX] = { 0 };
+ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
+ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_THREAD_KEYS_MAX] = { 0 };
+
+void **
+ACE_TSS_Emulation::tss_collection_ [ACE_TSS_THREADS_MAX] = { 0 };
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -1388,12 +1365,29 @@ ACE_Thread_Adapter::invoke (void)
   }
 
   // If dropped off end, call destructors for thread-specific storage.
-  // On ACE_WIN32, this will also exit the thread.
   ACE_TSS_Cleanup::instance ()->exit (status);
 
-#if defined (ACE_HAS_TSS_EMULATION)
-  ACE_TSS_Emulation::tss_deallocate ();
-#endif /* ACE_HAS_TSS_EMULATION */
+  // Exit the thread.
+# if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
+  // allow CWinThread-destructor to be invoked from AfxEndThread
+  // _endthreadex will be called from AfxEndThread so don't exit the
+  // thread now if we are running an MFC thread.
+  CWinThread *pThread = ::AfxGetThread ();
+  if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+#endif /* ACE_HAS_MFC */
+    {
+#if defined (ACE_WIN32)
+      ::_endthreadex ((DWORD) status);
+#else
+# if defined (ACE_HAS_TSS_EMULATION)
+      // Delete the thread's TSS.
+      ACE_TSS_Emulation::tss_deallocate ();
+# endif /* ACE_HAS_TSS_EMULATION */
+
+      status = 0;
+      ACE_OS::thr_exit (status);
+#endif /* ACE_WIN32 */
+    }
 
   return status;
 #else
@@ -2065,10 +2059,6 @@ ACE_OS::thr_exit (void *status)
 {
 // ACE_TRACE ("ACE_OS::thr_exit");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_WTHREADS)
-    // Cleanup the thread-specific resources.
-    ACE_TSS_Cleanup::instance ()->exit (status);
-# endif /* ACE_HAS_TSS_EMULATION && ! ACE_HAS_WTHREADS */
 # if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
     ::pthread_exit (status);
 # elif defined (ACE_HAS_STHREADS)
@@ -2101,11 +2091,9 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
       }
     else
       {
-#   if defined (VXWORKS)
-        ACE_TSS_OBJECT (key) = data;
+        ACE_TSS_Emulation::ts_object (key) = data;
         ACE_TSS_Cleanup::instance ()->key_used (key);
         return 0;
-#   endif /* VXWORKS */
       }
 # elif defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
 #   if defined (ACE_HAS_FSU_PTHREADS)
