@@ -38,7 +38,130 @@ public:
   // Dtor.
   ~CIAO_HelloWorld_Servant (void);
 
+  // Operations for supported interfaces.
+  virtual char * sayhello (const char * username
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // Operations for provides interfaces.
+
+  // Operations for receptacles interfaces.
+
+  // Operations for emits interfaces.
+
+  // Operations for consumers interfaces.
+
+  // Operations for publishes interfaces.
+
+  // Operations for Navigation interface
+  virtual CORBA::Object_ptr provide_facet (const char * name
+                                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException ,
+                     Components::InvalidName)) ;
+  virtual ::Components::FacetDescriptions * get_all_facets (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::FacetDescriptions * get_named_facets (const Components::NameList & names
+                                                              ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException ,
+                     Components::InvalidName));
+  virtual CORBA::Boolean same_component (CORBA::Object_ptr object_ref
+                                         ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  // Operations for Receptacles interface
+  virtual ::Components::Cookie * connect (const char * name,
+                                          CORBA::Object_ptr connection
+                                          ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName,
+                     Components::InvalidConnection,
+                     Components::AlreadyConnected,
+                     Components::ExceededConnectionLimit));
+  virtual void disconnect (const char * name,
+                           Components::Cookie * ck
+                           ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName,
+                     Components::InvalidConnection,
+                     Components::CookieRequired,
+                     Components::NoConnection));
+  virtual ::Components::ConnectionDescriptions * get_connections (const char * name
+                                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName));
+
+  virtual ::Components::ReceptacleDescriptions * get_all_receptacles (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::ReceptacleDescriptions * get_named_receptacles (const Components::NameList & names
+                                                                        ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName));
+
+  // Operations for Events interface
+  virtual ::Components::EventConsumerBase_ptr get_consumer (const char * sink_name
+                                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName));
+  virtual ::Components::Cookie * subscribe (const char * publisher_name,
+                                            Components::EventConsumerBase_ptr subscriber
+                                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName,
+                     Components::AlreadyConnected,
+                     Components::InvalidConnection));
+  virtual void unsubscribe (const char * publisher_name,
+                            Components::Cookie * ck
+                            ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName,
+                     Components::InvalidConnection));
+  virtual void connect_consumer (const char * emitter_name,
+                                 Components::EventConsumerBase_ptr consumer
+                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName,
+                     Components::AlreadyConnected,
+                     Components::InvalidConnection));
+  virtual ::Components::EventConsumerBase_ptr disconnect_consumer (const char * source_name
+                                                                   ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName,
+                     Components::NoConnection));
+  virtual ::Components::ConsumerDescriptions * get_all_consumers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::ConsumerDescriptions * get_named_consumers (const Components::NameList & names
+                                                                    ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName));
+  virtual ::Components::EmitterDescriptions * get_all_emitters (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::EmitterDescriptions * get_named_emitters (const Components::NameList & names
+                                                                  ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName));
+  virtual ::Components::PublisherDescriptions * get_all_publishers (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::PublisherDescriptions * get_named_publishers (const Components::NameList & names
+                                                                      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidName));
+
+  // Operations for CCMObject interface
+  virtual ::CORBA::IRObject_ptr get_component_def (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::CCMHome_ptr get_ccm_home (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual ::Components::PrimaryKeyBase * get_primary_key (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::NoKeyAvailable));
+  virtual void configuration_complete (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::InvalidConfiguration));
+  virtual void remove (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Components::RemoveFailure));
+  virtual ::Components::ComponentPortDescription * get_all_ports (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
 protected:
   // My Executor.
