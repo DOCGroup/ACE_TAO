@@ -3971,13 +3971,17 @@ ACE_OS::thr_sigsetmask (int how,
 {
   // ACE_TRACE ("ACE_OS::thr_sigsetmask");
 #if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS)
+#if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
+  // DCE threads and Solaris 2.4 have no such function.
+  ACE_UNUSED_ARG (osm);
+  ACE_UNUSED_ARG (nsm);
+  ACE_UNUSED_ARG (how);
+
+  ACE_NOTSUP_RETURN (-1);  
+#elif defined (ACE_HAS_STHREADS)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm), 
 				       ace_result_),
 		     int, -1);
-#elif defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-  // DCE threads have no such function.
-  ACE_NOTSUP_RETURN (-1);  
 #elif defined (ACE_HAS_PTHREADS_1003_DOT_1C)
   // PTHREADS_1003_DOT_1C is NOT a subcase of DCETHREADS!
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm), 
@@ -4023,7 +4027,7 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_UNUSED_ARG (nsm);
   ACE_UNUSED_ARG (osm);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_STHREADS */
+#endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
 #else
   ACE_UNUSED_ARG (how);
   ACE_UNUSED_ARG (nsm);
