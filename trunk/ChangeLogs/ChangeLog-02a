@@ -1,3 +1,11 @@
+Mon Sep 10 18:59:24 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* apps/Gateway/Peer/Peer.cpp (nonblk_put): 
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (nonblk_put): 
+	  Reverted Bala's changes below since the original code was
+ 	  correct.  Also, added comments to clarify things to prevent
+ 	  confusion in the future.
+
 Mon Sep 10 17:31:11 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ACE-INSTALL.html: Added a new platform to the list.

@@ -70,9 +70,20 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
 
   ssize_t n = this->send (event);
 
-
-  if (n == -1 && errno == EWOULDBLOCK) // Didn't manage to send everything.
+  if (n == -1)
     {
+      // -1 is returned only when things have really gone wrong (i.e.,
+      // not when flow control occurs).  Thus, let's try to close down
+      // and set up a new reconnection by calling handle_close().
+      this->state (Connection_Handler::FAILED);
+      this->handle_close ();
+      return -1;
+    }
+  eise if (errno == EWOULDBLOCK) 
+    {
+      // We didn't manage to send everything, so we need to queue
+      // things up.
+
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) queueing activated on handle %d to routing id %d\n",
                   this->get_handle (),
@@ -95,16 +106,8 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
                           -1);
       return 0;
     }
-  else if (n == -1)
-    {
-      // Things have gone wrong, let's try to close down and set up a
-      // new reconnection by calling handle_close().
-      this->state (Connection_Handler::FAILED);
-      this->handle_close ();
-      return -1;
-    }
-
-  return n;
+  else 
+    return n;
 }
 
 ssize_t

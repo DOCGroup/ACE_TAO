@@ -185,7 +185,11 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
 
   ssize_t n = this->send (mb);
 
-  if (n == -1 && errno == EWOULDBLOCK)
+  if (n == -1)
+    // -1 is returned only when things have really gone wrong (i.e.,
+    // not when flow control occurs).
+    return -1;
+  else if (errno == EWOULDBLOCK)
     {
       // We didn't manage to send everything, so requeue.
       ACE_DEBUG ((LM_DEBUG,
@@ -210,10 +214,8 @@ Peer_Handler::nonblk_put (ACE_Message_Block *mb)
                           -1);
       return 0;
     }
-  else if (n == -1)
-    return -1;
-
-  return n;
+  else 
+    return n;
 }
 
 // Finish sending a event when flow control conditions abate.  This
