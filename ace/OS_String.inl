@@ -4,6 +4,20 @@
 #include /**/ <stdlib.h>
 #include /**/ <ctype.h>
 
+ACE_INLINE int
+ACE_OS_String::to_lower (int c)
+{
+  return tolower (c);
+}
+
+#if defined (ACE_HAS_WCHAR)
+ACE_INLINE wint_t
+ACE_OS_String::to_lower (wint_t c)
+{
+  return ::towlower (c);
+}
+#endif /* ACE_HAS_WCHAR */
+
 ACE_INLINE char *
 ACE_OS_String::strcat (char *s, const char *t)
 {
@@ -674,20 +688,6 @@ ACE_INLINE double
 ACE_OS_String::strtod (const wchar_t *s, wchar_t **endptr)
 {
   return ::wcstod (s, endptr);
-}
-#endif /* ACE_HAS_WCHAR */
-
-ACE_INLINE int
-ACE_OS_String::to_lower (int c)
-{
-  return tolower (c);
-}
-
-#if defined (ACE_HAS_WCHAR)
-ACE_INLINE wint_t
-ACE_OS_String::to_lower (wint_t c)
-{
-  return ::towlower (c);
 }
 #endif /* ACE_HAS_WCHAR */
 

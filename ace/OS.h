@@ -6435,8 +6435,6 @@ public:
 # endif /* ACE_LACKS_NATIVE_STRPTIME */
 #endif /* ACE_HAS_STRPTIME */
 
-
-
 private:
   static ACE_EXIT_HOOK exit_hook_;
   // Function that is called by <ACE_OS::exit>, if non-null.
