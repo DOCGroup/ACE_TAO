@@ -37,7 +37,7 @@ int
 TAO_RT_ORB_Loader::init (int argc,
                          char* argv[])
 {
-  ACE_TRACE ("TAO_Advanced_Resource_Factory::init");
+  ACE_TRACE ("TAO_RT_ORB_Loader::init");
 
   int priority_mapping_type = TAO_PRIORITY_MAPPING_DIRECT;
   int sched_policy = ACE_SCHED_OTHER;
