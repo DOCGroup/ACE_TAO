@@ -615,7 +615,7 @@ ACE_Connector<SH, PR_CO_2>::close (void)
 }
 
 template <class SH, PR_CO_1> int
-ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
+ACE_Connector<SH, PR_CO_2>::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_TRACE ("ACE_Connector<SH, PR_CO_2>::handle_close");
 
