@@ -1,3 +1,16 @@
+Thu May 20 19:28:20 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/Core/CCM_Core.mpc
+	* DnC/Core/CCM_Deployment.idl
+	* DnC/Core/ComponentServer_Impl.cpp
+	* DnC/Core/ComponentServer_Impl.h
+	* DnC/Core/ComponentServer_Impl.inl
+	* DnC/Core/Container_Impl.cpp
+	* DnC/Core/Container_Impl.h
+
+	  Removed the ComponentInstallation interfaces.
+	  Now the CORE of new CIAO should be fixed.
+
 Thu May 20 18:54:01 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Deployment.idl:
