@@ -51,10 +51,13 @@ typedef ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MU
 typedef ACE_Hash_Map_Entry <TYPE, TYPE> HASH_ENTRY;
 typedef ACE_Active_Map_Manager <TYPE> ACTIVE_MAP_MANAGER;
 
-typedef ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
+typedef ACE_Hash_Map_Manager_Ex<TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
+        CACHE_MAP_IMPLEMENTATION;
+typedef ACE_Null_Caching_Strategy<TYPE, TYPE, CACHE_MAP_IMPLEMENTATION, int>
+        NULL_CACHING_STRATEGY;
+typedef ACE_Hash_Cache_Map_Manager<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, NULL_CACHING_STRATEGY, int>
         HASH_CACHE_MAP_MANAGER;
-
-typedef ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
+typedef ACE_Cache_Map_Manager<TYPE, TYPE, CACHE_MAP_IMPLEMENTATION, NULL_CACHING_STRATEGY, int>
         CACHE_MAP_MANAGER;
 
 static void
@@ -94,7 +97,7 @@ test_cache_map_manager (size_t table_size,
         ACE_ASSERT (i == iterations);
       }
 
-      
+
       {
         k = iterations - 1;
 
@@ -117,7 +120,7 @@ test_cache_map_manager (size_t table_size,
         ACE_ASSERT (k == -1);
       }
 
-     
+
       {
         i = 0;
 
@@ -140,7 +143,7 @@ test_cache_map_manager (size_t table_size,
         ACE_ASSERT (i == iterations);
       }
 
-      
+
       {
         k = iterations - 1;
 
@@ -163,7 +166,7 @@ test_cache_map_manager (size_t table_size,
         ACE_ASSERT (k == -1);
       }
 
-       
+
     }
 
   for (i = 0; i < iterations; ++i)
@@ -179,7 +182,7 @@ test_cache_map_manager (size_t table_size,
       --remaining_entries;
       ACE_ASSERT (map.current_size () == remaining_entries);
     }
-    
+
 }
 
 static void
@@ -219,7 +222,7 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_ASSERT (i == iterations);
       }
 
-      
+
       {
         k = iterations - 1;
 
@@ -242,7 +245,7 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_ASSERT (k == -1);
       }
 
-     
+
       {
         i = 0;
 
@@ -265,7 +268,7 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_ASSERT (i == iterations);
       }
 
-      
+
       {
         k = iterations - 1;
 
@@ -288,7 +291,7 @@ test_hash_cache_map_manager (size_t table_size,
         ACE_ASSERT (k == -1);
       }
 
-      
+
     }
 
   for (i = 0; i < iterations; ++i)
@@ -943,6 +946,6 @@ template class ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE,
 #pragma instantiate ACE_Map_Entry<ACE_Active_Map_Manager_Key, TYPE>
 #pragma instantiate ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >
 #pragma instantiate ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >
-#pragma instantiate ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
-#pragma instantiate ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int> 
+#pragma instantiate ACE_Hash_Cache_Map_Manager <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int>
+#pragma instantiate ACE_Cache_Map_Manager <TYPE, TYPE, ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, ACE_Null_Caching_Strategy <TYPE, TYPE,ACE_Hash_Map_Manager_Ex <TYPE, ACE_Pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX >, int  >, int>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
