@@ -1,9 +1,0 @@
-project(FTRT_Event_Service) : orbsvcsexe,  rtschedevent, ftrtevent, ftorbutils {
-  exename = ftrt_eventservice
-  includes += $(TAO_ROOT)/orbsvcs $(TAO_ROOT)/orbsvcs/FtRtEvent/Utils $(TAO_ROOT)/orbsvcs/FtRtEvent/EventChannel
-  after += FTRT_EventChannel
-  libs += TAO_Utils TAO_FTRT_EventChannel
-  specific(gnuace) {
-   lit_libs += TAO_Strategies
-  }
-} 
