@@ -29,39 +29,11 @@
 #if !defined (_BPR_DRIVERS_T_H_)
 #define _BPR_DRIVERS_T_H_
 
+#include "ace/Functor.h"
+
 // Forward declarations.
 class Input_Device_Wrapper_Base;
 class Output_Device_Wrapper_Base;
-
-template <class RECEIVER, class ACTION>
-class Command : public Command_Base
-{
-  // = TITLE
-  //    Defines an abstract class that allows us to invoke commands
-  //    without knowing anything about the implementation.  This class
-  //    is used in the <Bounded_Packet_Relay_Driver> to invoke
-  //    operations of the driver.
-  //
-  // = DESCRIPTION
-  //    This class declares an interface to execute operations,
-  //    binding a RECEIVER object with an ACTION.  The RECEIVER knows
-  //    how to implement the operation.  A class can invoke operations
-  //    without knowing anything about it, or how it was implemented.
-public:
-  Command (RECEIVER &recvr, ACTION action);
-  // Sets the <receiver_> of the Command to recvr, and the <action_>
-  // of the Command to <action>.
-
-  virtual int execute (void *arg);
-  // Invokes the method <action_> from the object <receiver_>.
-
-private:
-  RECEIVER &receiver_;
-  // Object where the method resides.
-
-  ACTION action_;
-  // Method that is going to be invoked.
-};
 
 template <class TQ>
 class Bounded_Packet_Relay_Driver
@@ -145,33 +117,33 @@ protected:
   TQ timer_queue_;
   // Timer queue for transmission timeouts.
 
-  // = Set of <Command>s to be executed.
+  // = Set of commands to be executed.
 
-  Command_Base *packet_count_cmd_;
+  ACE_Command_Base *packet_count_cmd_;
   // Set packet count command.
 
-  Command_Base *arrival_period_cmd_;
+  ACE_Command_Base *arrival_period_cmd_;
   // Set arrival period command.
 
-  Command_Base *transmit_period_cmd_;
+  ACE_Command_Base *transmit_period_cmd_;
   // Set transmit period command.
 
-  Command_Base *duration_limit_cmd_;
+  ACE_Command_Base *duration_limit_cmd_;
   // Set duration limit command.
 
-  Command_Base *logging_level_cmd_;
+  ACE_Command_Base *logging_level_cmd_;
   // Set logging level command.
 
-  Command_Base *run_transmission_cmd_;
+  ACE_Command_Base *run_transmission_cmd_;
   // Run transmission command.
 
-  Command_Base *cancel_transmission_cmd_;
+  ACE_Command_Base *cancel_transmission_cmd_;
   // Cancel transmission command.
 
-  Command_Base *report_stats_cmd_;
+  ACE_Command_Base *report_stats_cmd_;
   // Report statistics command.
 
-  Command_Base *shutdown_cmd_;
+  ACE_Command_Base *shutdown_cmd_;
   // Shut down the driver.
 
 private:
@@ -200,4 +172,3 @@ private:
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _BPR_DRIVERS_T_H_ */
-
