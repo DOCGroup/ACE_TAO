@@ -1,0 +1,13 @@
+#
+# Makefile for building the ACE IPC_SAP examples
+#
+
+DIRS = \
+        ATM_SAP \
+        FIFO_SAP \
+        FILE_SAP \
+        Sock_Sap \
+        SPIPE_SAP \
+        UPIPE_SAP
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

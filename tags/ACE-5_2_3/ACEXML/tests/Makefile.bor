@@ -1,0 +1,23 @@
+#
+# $Id$
+# Makefile for building the ACE XML tests
+#
+
+NAMES = \
+        NamespaceSupport_Test \
+        Transcoder_Test
+
+OBJFILES = $(OBJDIR)\$(NAME).obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(ACE_XML_CFLAGS)
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(ACE_XML_LIB)
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
