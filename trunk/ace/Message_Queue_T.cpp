@@ -478,9 +478,12 @@ ACE_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&first_item
 
   this->cur_count_--;
 
-  if (this->signal_enqueue_waiters () == -1)
+  // Only signal enqueueing threads if we've fallen below the low
+  // water mark.
+  if (this->cur_bytes_ <= this->low_water_mark_
+      && this->signal_enqueue_waiters () == -1)
     return -1;
-  else
+  else      
     return this->cur_count_;
 }
 
@@ -1329,18 +1332,20 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::dequeue_head_i (ACE_Message_Block *&fi
 
   this->cur_count_--;
 
-  if (this->signal_enqueue_waiters () == -1)
+  // Only signal enqueueing threads if we've fallen below the low
+  // water mark.
+  if (this->cur_bytes_ <= this->low_water_mark_
+      && this->signal_enqueue_waiters () == -1)
     return -1;
   else
     return this->cur_count_;
 }
-  // Dequeue and return the <ACE_Message_Block *> at the head of the
-  // logical queue.  Attempts first to dequeue from the pending
-  // portion of the queue, or if that is empty from the late portion,
-  // or if that is empty from the beyond late portion, or if that is
-  // empty just sets the passed pointer to zero and returns -1.
 
-
+// Dequeue and return the <ACE_Message_Block *> at the head of the
+// logical queue.  Attempts first to dequeue from the pending portion
+// of the queue, or if that is empty from the late portion, or if that
+// is empty from the beyond late portion, or if that is empty just
+// sets the passed pointer to zero and returns -1.
 
 template <ACE_SYNCH_DECL> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_queue (const ACE_Time_Value &current_time)
@@ -1350,15 +1355,13 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_queue (const ACE_Time_Value &c
   result = refresh_pending_queue (current_time);
 
   if (result != -1)
-  {
     result = refresh_late_queue (current_time);
-  }
 
   return result;
 }
-  // Refresh the queue using the strategy
-  // specific priority status function.
 
+// Refresh the queue using the strategy specific priority status
+// function.
 
 template <ACE_SYNCH_DECL> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_Value &current_time)
@@ -1367,141 +1370,121 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_pending_queue (const ACE_Time_
 
   // refresh priority status boundaries in the queue
   if (this->pending_head_)
-  {
-    current_status = message_strategy_.priority_status (*this->pending_head_, current_time);
-    switch (current_status)
     {
-      case ACE_Dynamic_Message_Strategy::BEYOND_LATE:
-
-        // make sure the head of the beyond late queue is set
-        // (there may not have been any beyond late messages previously)
-        this->beyond_late_head_ = this->head_;
-
-        // zero out the late queue pointers, and set them only if
-        // there turn out to be late messages in the pending sublist
-        this->late_head_ = 0;
-        this->late_tail_ = 0;
-
-        // advance through the beyond late messages in the pending queue
-        do
+      current_status = message_strategy_.priority_status (*this->pending_head_, current_time);
+      switch (current_status)
         {
-          this->pending_head_ = this->pending_head_->next ();
+        case ACE_Dynamic_Message_Strategy::BEYOND_LATE:
+          // Make sure the head of the beyond late queue is set (there
+          // may not have been any beyond late messages previously)
+          this->beyond_late_head_ = this->head_;
+
+          // Zero out the late queue pointers, and set them only if
+          // there turn out to be late messages in the pending sublist
+          this->late_head_ = 0;
+          this->late_tail_ = 0;
+
+          // Advance through the beyond late messages in the pending queue
+          do
+            {
+              this->pending_head_ = this->pending_head_->next ();
+
+              if (this->pending_head_)
+                current_status = message_strategy_.priority_status (*this->pending_head_,
+                                                                    current_time);
+              else
+                break;  // do while
+
+            } 
+          while (current_status == ACE_Dynamic_Message_Strategy::BEYOND_LATE);
 
           if (this->pending_head_)
-          {
-            current_status = message_strategy_.priority_status (*this->pending_head_,
-                                                                current_time);
-          }
-          else
-          {
-            break;  // do while
-          }
-
-        } while (current_status == ACE_Dynamic_Message_Strategy::BEYOND_LATE);
-
-        if (this->pending_head_)
-        {
-          // point tail of beyond late sublist to previous item
-          this->beyond_late_tail_ = this->pending_head_->prev ();
-
-          if (current_status == ACE_Dynamic_Message_Strategy::PENDING)
-          {
-            // there are no late messages left in the queue
-            break; // switch
-          }
-          else
-          {
-            if (current_status != ACE_Dynamic_Message_Strategy::LATE)
             {
-              // if we got here, something is *seriously* wrong with the queue
-              ACE_ERROR_RETURN((LM_ERROR,
-                                ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
-                                (int) current_status),
-                               -1);
+              // point tail of beyond late sublist to previous item
+              this->beyond_late_tail_ = this->pending_head_->prev ();
+
+              if (current_status == ACE_Dynamic_Message_Strategy::PENDING)
+                // there are no late messages left in the queue
+                break; // switch
+              else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
+                {
+                  // if we got here, something is *seriously* wrong with the queue
+                  ACE_ERROR_RETURN((LM_ERROR,
+                                    ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
+                                    (int) current_status),
+                                   -1);
+                }
+              /* FALLTHRU */
+            }
+          else
+            {
+              // There are no pending or late messages left in the
+              // queue.
+              this->beyond_late_tail_ = this->tail_;
+              this->pending_head_ = 0;
+              this->pending_tail_ = 0;
+              break; // switch
             }
 
-            // intentionally fall through to the next case
-          }
-        }
-        else
-        {
-          // there are no pending or late messages left in the queue
-          this->beyond_late_tail_ = this->tail_;
-          this->pending_head_ = 0;
-          this->pending_tail_ = 0;
+        case ACE_Dynamic_Message_Strategy::LATE:
+          // Make sure the head of the late queue is set (there may
+          // not have been any late messages previously, or they may
+          // have all become beyond late).
+          if (this->late_head_ == 0)
+            this->late_head_ = this->pending_head_;
 
-          break; // switch
-        }
+          // advance through the beyond late messages in the pending queue
+          do
+            {
+              this->pending_head_ = this->pending_head_->next ();
 
-      case ACE_Dynamic_Message_Strategy::LATE:
+              if (this->pending_head_)
+                current_status = message_strategy_.priority_status (*this->pending_head_,
+                                                                    current_time);
+              else
+                break;  // do while
 
-        // make sure the head of the late queue is set (there may not have been
-        // any late messages previously, or they may have all become beyond late)
-        if (this->late_head_ == 0)
-        {
-          this->late_head_ = this->pending_head_;
-        }
-
-        // advance through the beyond late messages in the pending queue
-        do
-        {
-          this->pending_head_ = this->pending_head_->next ();
+            } 
+          while (current_status == ACE_Dynamic_Message_Strategy::LATE);
 
           if (this->pending_head_)
-          {
-            current_status = message_strategy_.priority_status (*this->pending_head_,
-                                                                current_time);
-          }
+            {
+              if (current_status != ACE_Dynamic_Message_Strategy::PENDING)
+                // if we got here, something is *seriously* wrong with the queue
+                ACE_ERROR_RETURN((LM_ERROR,
+                                  ASYS_TEXT ("Unexpected message priority status [%d] (expected PENDING)"),
+                                  (int) current_status),
+                                 -1);
+
+              // Point tail of late sublist to previous item
+              this->late_tail_ = this->pending_head_->prev ();
+            }
           else
-          {
-            break;  // do while
-          }
+            {
+              // there are no pending messages left in the queue
+              this->late_tail_ = this->tail_;
+              this->pending_head_ = 0;
+              this->pending_tail_ = 0;
+            }
 
-        } while (current_status == ACE_Dynamic_Message_Strategy::LATE);
-
-        if (this->pending_head_)
-        {
-          if (current_status != ACE_Dynamic_Message_Strategy::PENDING)
-          {
-            // if we got here, something is *seriously* wrong with the queue
-            ACE_ERROR_RETURN((LM_ERROR,
-                              ASYS_TEXT ("Unexpected message priority status [%d] (expected PENDING)"),
-                              (int) current_status),
-                             -1);
-          }
-
-          // point tail of late sublist to previous item
-          this->late_tail_ = this->pending_head_->prev ();
+          break; // switch
+        case ACE_Dynamic_Message_Strategy::PENDING:
+          // do nothing - the pending queue is unchanged
+          break; // switch
+        default:
+          // if we got here, something is *seriously* wrong with the queue
+          ACE_ERROR_RETURN((LM_ERROR,
+                            ASYS_TEXT ("Unknown message priority status [%d]"),
+                            (int) current_status),
+                           -1);
         }
-        else
-        {
-          // there are no pending messages left in the queue
-          this->late_tail_ = this->tail_;
-          this->pending_head_ = 0;
-          this->pending_tail_ = 0;
-        }
-
-        break; // switch
-
-      case ACE_Dynamic_Message_Strategy::PENDING:
-
-        // do nothing - the pending queue is unchanged
-
-        break; // switch
-
-      default:
-        // if we got here, something is *seriously* wrong with the queue
-        ACE_ERROR_RETURN((LM_ERROR,
-                          ASYS_TEXT ("Unknown message priority status [%d]"),
-                          (int) current_status),
-                         -1);
     }
-  }
 
   return 0;
 }
-  // Refresh the pending queue using the strategy
-  // specific priority status function.
+
+// Refresh the pending queue using the strategy specific priority
+// status function.
 
 template <ACE_SYNCH_DECL> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Value &current_time)
@@ -1509,93 +1492,84 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::refresh_late_queue (const ACE_Time_Val
   ACE_Dynamic_Message_Strategy::Priority_Status current_status;
 
   if (this->late_head_)
-  {
-    current_status = message_strategy_.priority_status (*this->late_head_,
-                                                        current_time);
-    switch (current_status)
     {
-      case ACE_Dynamic_Message_Strategy::BEYOND_LATE:
-
-        // make sure the head of the beyond late queue is set
-        // (there may not have been any beyond late messages previously)
-        this->beyond_late_head_ = this->head_;
-
-        // advance through the beyond late messages in the late queue
-        do
+      current_status = message_strategy_.priority_status (*this->late_head_,
+                                                          current_time);
+      switch (current_status)
         {
-          this->late_head_ = this->late_head_->next ();
+        case ACE_Dynamic_Message_Strategy::BEYOND_LATE:
+
+          // make sure the head of the beyond late queue is set
+          // (there may not have been any beyond late messages previously)
+          this->beyond_late_head_ = this->head_;
+
+          // advance through the beyond late messages in the late queue
+          do
+            {
+              this->late_head_ = this->late_head_->next ();
+
+              if (this->late_head_)
+                current_status = message_strategy_.priority_status (*this->late_head_,
+                                                                    current_time);
+              else
+                break;  // do while
+
+            } 
+          while (current_status == ACE_Dynamic_Message_Strategy::BEYOND_LATE);
 
           if (this->late_head_)
-          {
-            current_status = message_strategy_.priority_status (*this->late_head_,
-                                                                current_time);
-          }
+            {
+              // point tail of beyond late sublist to previous item
+              this->beyond_late_tail_ = this->late_head_->prev ();
+
+              if (current_status == ACE_Dynamic_Message_Strategy::PENDING)
+                {
+                  // there are no late messages left in the queue
+                  this->late_head_ = 0;
+                  this->late_tail_ = 0;
+                }
+              else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
+                // if we got here, something is *seriously* wrong with the queue
+                ACE_ERROR_RETURN((LM_ERROR,
+                                  ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
+                                  (int) current_status),
+                                 -1);
+            }
           else
-          {
-            break;  // do while
-          }
+            {
+              // there are no late messages left in the queue
+              this->beyond_late_tail_ = this->tail_;
+              this->late_head_ = 0;
+              this->late_tail_ = 0;
+            }
 
-        } while (current_status == ACE_Dynamic_Message_Strategy::BEYOND_LATE);
+          break;  // switch
 
-        if (this->late_head_)
-        {
-          // point tail of beyond late sublist to previous item
-          this->beyond_late_tail_ = this->late_head_->prev ();
+        case ACE_Dynamic_Message_Strategy::LATE:
+          // do nothing - the late queue is unchanged
+          break; // switch
 
-          if (current_status == ACE_Dynamic_Message_Strategy::PENDING)
-          {
-            // there are no late messages left in the queue
-            this->late_head_ = 0;
-            this->late_tail_ = 0;
-          }
-          else if (current_status != ACE_Dynamic_Message_Strategy::LATE)
-          {
-            // if we got here, something is *seriously* wrong with the queue
-            ACE_ERROR_RETURN((LM_ERROR,
-                              ASYS_TEXT ("Unexpected message priority status [%d] (expected LATE)"),
-                              (int) current_status),
-                             -1);
-          }
+        case ACE_Dynamic_Message_Strategy::PENDING:
+          // if we got here, something is *seriously* wrong with the queue
+          ACE_ERROR_RETURN((LM_ERROR,
+                            ASYS_TEXT ("Unexpected message priority status "
+                                       "[%d] (expected LATE or BEYOND_LATE)"),
+                            (int) current_status),
+                           -1);
+        default:
+          // if we got here, something is *seriously* wrong with the queue
+          ACE_ERROR_RETURN((LM_ERROR,
+                            ASYS_TEXT ("Unknown message priority status [%d]"),
+                            (int) current_status),
+                           -1);
         }
-        else
-        {
-          // there are no late messages left in the queue
-          this->beyond_late_tail_ = this->tail_;
-          this->late_head_ = 0;
-          this->late_tail_ = 0;
-        }
-
-        break;  // switch
-
-      case ACE_Dynamic_Message_Strategy::LATE:
-
-        // do nothing - the late queue is unchanged
-
-        break; // switch
-
-      case ACE_Dynamic_Message_Strategy::PENDING:
-
-        // if we got here, something is *seriously* wrong with the queue
-        ACE_ERROR_RETURN((LM_ERROR,
-                          ASYS_TEXT ("Unexpected message priority status "
-                                     "[%d] (expected LATE or BEYOND_LATE)"),
-                          (int) current_status),
-                         -1);
-      default:
-
-        // if we got here, something is *seriously* wrong with the queue
-        ACE_ERROR_RETURN((LM_ERROR,
-                          ASYS_TEXT ("Unknown message priority status [%d]"),
-                          (int) current_status),
-                         -1);
     }
-  }
 
   return 0;
 }
-  // Refresh the late queue using the strategy
-  // specific priority status function.
 
+// Refresh the late queue using the strategy specific priority status
+// function.
 
 template <ACE_SYNCH_DECL> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (
@@ -1604,34 +1578,35 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (
 {
   return ACE_Message_Queue<ACE_SYNCH_USE>::peek_dequeue_head (first_item, timeout);
 }
-  // private method to hide public base class method: just calls base class method
+
+// Private method to hide public base class method: just calls base
+// class method.
 
 template <ACE_SYNCH_DECL> int
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (
-  ACE_Message_Block *new_item,
-  ACE_Time_Value *timeout)
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_tail (ACE_Message_Block *new_item,
+                                                        ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_tail");
   return this->enqueue_prio (new_item, timeout);
 }
-  // just call priority enqueue method: tail enqueue semantics for dynamic
-  // message queues are unstable: the message may or may not be where
-  // it was placed after the queue is refreshed prior to the next
-  // enqueue or dequeue operation.
+
+// Just call priority enqueue method: tail enqueue semantics for
+// dynamic message queues are unstable: the message may or may not be
+// where it was placed after the queue is refreshed prior to the next
+// enqueue or dequeue operation.
 
 template <ACE_SYNCH_DECL> int
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head (
-  ACE_Message_Block *new_item,
-  ACE_Time_Value *timeout)
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head (ACE_Message_Block *new_item,
+                                                        ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Dynamic_Message_Queue<ACE_SYNCH_USE>::enqueue_head");
   return this->enqueue_prio (new_item, timeout);
 }
-  // just call priority enqueue method: head enqueue semantics for dynamic
-  // message queues are unstable: the message may or may not be where
-  // it was placed after the queue is refreshed prior to the next
-  // enqueue or dequeue operation.
 
+// Just call priority enqueue method: head enqueue semantics for
+// dynamic message queues are unstable: the message may or may not be
+// where it was placed after the queue is refreshed prior to the next
+// enqueue or dequeue operation.
 
 /////////////////////////////////////
 // class ACE_Message_Queue_Factory //
@@ -1643,9 +1618,15 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_static_message_queue (size_t hw
                                                                        size_t lwm,
                                                                        ACE_Notification_Strategy *ns)
 {
-  return new ACE_Message_Queue<ACE_SYNCH_USE> (hwm, lwm, ns);
+  ACE_Message_Queue<ACE_SYNCH_USE> *tmp;
+
+  ACE_NEW_RETURN (tmp,
+                  ACE_Message_Queue<ACE_SYNCH_USE> (hwm, lwm, ns),
+                  0);
+  return tmp;
 }
-  // factory method for a statically prioritized ACE_Message_Queue
+
+// Factory method for a statically prioritized ACE_Message_Queue.
 
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
@@ -1666,10 +1647,15 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_deadline_message_queue (size_t 
                                                  dynamic_priority_offset),
                   0);
 
-  return new ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*adms, hwm, lwm, ns);
+  ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *tmp;
+  ACE_NEW_RETURN (tmp,
+                  ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*adms, hwm, lwm, ns),
+                  0);
+  return tmp;
 }
-  // factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
 
+// Factory method for a dynamically prioritized (by time to deadline)
+// ACE_Dynamic_Message_Queue.
 
 template <ACE_SYNCH_DECL>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
@@ -1690,11 +1676,15 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_laxity_message_queue (size_t hw
                                                dynamic_priority_offset),
                   0);
 
-
-  return new ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*alms, hwm, lwm, ns);
+  ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *tmp;
+  ACE_NEW_RETURN (tmp,
+                  ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> (*alms, hwm, lwm, ns),
+                  0);
+  return tmp;
 }
-  // factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
 
+// Factory method for a dynamically prioritized (by laxity)
+// <ACE_Dynamic_Message_Queue>.
 
 #if defined (VXWORKS)
 
@@ -1704,7 +1694,12 @@ ACE_Message_Queue_Factory<ACE_SYNCH_USE>::create_Vx_message_queue (size_t max_me
                                                                    size_t max_message_length,
                                                                    ACE_Notification_Strategy *ns)
 {
-  return new ACE_Message_Queue_Vx (max_messages, max_message_length, ns);
+  ACE_Message_Queue_Vx *tmp;
+
+  ACE_NEW_RETURN (tmp,
+                  ACE_Message_Queue_Vx (max_messages, max_message_length, ns),
+                  0);
+  return tmp;
 }
   // factory method for a wrapped VxWorks message queue
 

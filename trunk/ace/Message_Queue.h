@@ -38,11 +38,11 @@ public:
   // = Default high and low water marks.
   enum
   {
-    DEFAULT_LWM = 0,
-    // Default low watermark.
     DEFAULT_HWM = 16 * 1024,
     // Default high watermark (16 K).
-    WAS_ACTIVE   = 1,
+    DEFAULT_LWM = 16 * 1024,
+    // Default low watermark (same as high water mark).
+    WAS_ACTIVE = 1,
     // Message queue was active before activate() or deactivate().
     WAS_INACTIVE = 2
     // Message queue was inactive before activate() or deactivate().
