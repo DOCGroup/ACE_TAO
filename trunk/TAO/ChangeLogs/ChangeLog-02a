@@ -1,3 +1,21 @@
+Fri Jul 14 13:42:09 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* orbsvcs/IFR_Service/Contained_i.cpp:
+	* orbsvcs/IFR_Service/Contained_i.h:
+	* orbsvcs/IFR_Service/Container_i.h:
+	* orbsvcs/IFR_Service/IFR_Service.cpp:
+	* orbsvcs/IFR_Service/IFR_macro.h:
+	* orbsvcs/IFR_Service/Options.cpp:
+	* orbsvcs/IFR_Service/Options.h:
+	* orbsvcs/IFR_Service/Repository_i.cpp:
+
+	  Fixed errors from last night's checkin, and added
+	  locking option to Options.*.
+
+	* orbsvcs/IFR_Service/IFR_Service.dsp:
+
+	  Added IFR_macro.h to project file.
+
 Fri Jul 14 11:38:30 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV.dsp:
