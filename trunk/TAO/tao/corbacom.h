@@ -562,23 +562,23 @@ typedef void (*TAO_Skeleton)(CORBA::ServerRequest &,
 // signature of a skeleton for every operation of an interface
 
 // COM interface IIDs
-extern "C" const IID IID_CORBA_Any;
-extern "C" const IID IID_BOA;
-extern "C" const IID IID_CORBA_Exception;
-extern "C" const IID IID_CORBA_UserException;
-extern "C" const IID IID_CORBA_SystemException;
-extern "C" const IID IID_CORBA_Request;
-extern "C" const IID IID_CORBA_Object;
-extern "C" const IID IID_CORBA_ORB;
-extern "C" const IID IID_CORBA_NVList;
-extern "C" const IID IID_CORBA_Principal;
-extern "C" const IID IID_CORBA_TypeCode;
-extern "C" const IID IID_CORBA_ServerRequest;
-extern "C" const IID IID_IIOP_ServerRequest;
-extern "C" const IID IID_STUB_Object;
-extern "C" const IID IID_IIOP_Object;
-extern "C" const IID IID_IIOP_ORB;
-extern "C" const IID IID_ROA;
+extern "C" ACE_Svc_Export const IID IID_CORBA_Any;
+extern "C" ACE_Svc_Export const IID IID_BOA;
+extern "C" ACE_Svc_Export const IID IID_CORBA_Exception;
+extern "C" ACE_Svc_Export const IID IID_CORBA_UserException;
+extern "C" ACE_Svc_Export const IID IID_CORBA_SystemException;
+extern "C" ACE_Svc_Export const IID IID_CORBA_Request;
+extern "C" ACE_Svc_Export const IID IID_CORBA_Object;
+extern "C" ACE_Svc_Export const IID IID_CORBA_ORB;
+extern "C" ACE_Svc_Export const IID IID_CORBA_NVList;
+extern "C" ACE_Svc_Export const IID IID_CORBA_Principal;
+extern "C" ACE_Svc_Export const IID IID_CORBA_TypeCode;
+extern "C" ACE_Svc_Export const IID IID_CORBA_ServerRequest;
+extern "C" ACE_Svc_Export const IID IID_IIOP_ServerRequest;
+extern "C" ACE_Svc_Export const IID IID_STUB_Object;
+extern "C" ACE_Svc_Export const IID IID_IIOP_Object;
+extern "C" ACE_Svc_Export const IID IID_IIOP_ORB;
+extern "C" ACE_Svc_Export const IID IID_ROA;
 
 // NOTE: stub APIs are nonportable, and must be explicitly #included
 // by code emitted from an IDL compiler.
