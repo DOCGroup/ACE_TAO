@@ -1,19 +1,24 @@
+Thu Mar 26 06:29:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/Marshal.{h,cpp},ORB.*,Object.{h,cpp},corba.h:
+          #include the .i file in the .h/.cpp files instead of corba.h.
+
 Wed Mar 25 22:55:02 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Servant_Base.h: 
-	* tao/Object.cpp: 
-	  Collocated objects (even if their dynamic type is simply
-	  CORBA_Object) can use the servant to resolve the _is_a()
-	  calls.
+        * tao/Servant_Base.h:
+        * tao/Object.cpp:
+          Collocated objects (even if their dynamic type is simply
+          CORBA_Object) can use the servant to resolve the _is_a()
+          calls.
 
 Wed Mar 25 22:06:19 1998  Sumedh Mungee  <sumedh@macarena.cs.wustl.edu>
 
-	* tao/TAO.cpp: Added accessors for child/root poa.
+        * tao/TAO.cpp: Added accessors for child/root poa.
 
 Wed Mar 25 15:10:48 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/encode.cpp: In the encoding of exceptions, we were not
-	encoding its repository ID. This is now fixed.
+        * tao/encode.cpp: In the encoding of exceptions, we were not
+        encoding its repository ID. This is now fixed.
 
 Wed Mar 25 11:11:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -41,91 +46,91 @@ Wed Mar 25 11:11:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Mar 25 09:08:44 1998  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
-	* docs/releasenotes/index.html: Added comment to the concurrency
-	control service section. The implementation of the concurrency
-	control service is discontinued due to unclear specs.
+        * docs/releasenotes/index.html: Added comment to the concurrency
+        control service section. The implementation of the concurrency
+        control service is discontinued due to unclear specs.
 
 Wed Mar 25 02:36:06 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/NestedUpcall/server.cpp: Renamed tao_util.h to TAO.h.
+        * tests/NestedUpcall/server.cpp: Renamed tao_util.h to TAO.h.
 
 Tue Mar 24 19:13:35 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/Server_Request.cpp: There was a lot of messy code on the
-	outgoing path from skeleton to the wire. Specifically, we were
-	mixing system exceptions with user defined exceptions. This has
-	been fixed and is under testing.
+        * tao/Server_Request.cpp: There was a lot of messy code on the
+        outgoing path from skeleton to the wire. Specifically, we were
+        mixing system exceptions with user defined exceptions. This has
+        been fixed and is under testing.
 
-	* TAO_IDL/be/{be_visitor_exception, be_exception}.cpp: The generated
-	typecode for Exceptions erroneously had a "tk_struct" TypeCode
-	kind. This has been fixed to be "tk_except".
+        * TAO_IDL/be/{be_visitor_exception, be_exception}.cpp: The generated
+        typecode for Exceptions erroneously had a "tk_struct" TypeCode
+        kind. This has been fixed to be "tk_except".
 
-	* TAO_IDL/be/be_visitor_operation.cpp: Handling of oneway operations
-	in the server skeletons was buggy. It is now fixed.
+        * TAO_IDL/be/be_visitor_operation.cpp: Handling of oneway operations
+        in the server skeletons was buggy. It is now fixed.
 
-	* TAO_IDL/be/be_predefined_type.cpp: TypeCodes for pseudo objects
-	were not getting properly generated. This is now fixed.
+        * TAO_IDL/be/be_predefined_type.cpp: TypeCodes for pseudo objects
+        were not getting properly generated. This is now fixed.
 
 Tue Mar 24 14:51:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/be/be_interface.cpp (gen_server_skeletons): Changed
- 	  op_name() to operation ().
+        * TAO_IDL/be/be_interface.cpp (gen_server_skeletons): Changed
+          op_name() to operation ().
 
-	* TAO_IDL/be/be_visitor_operation.cpp (visit_operation): Added a
- 	  return statement.
+        * TAO_IDL/be/be_visitor_operation.cpp (visit_operation): Added a
+          return statement.
 
-	* tao/IIOP_Object.cpp: Initialze
- 	  TAO_Synchronous_Cancellation_Required::old_type_.
+        * tao/IIOP_Object.cpp: Initialze
+          TAO_Synchronous_Cancellation_Required::old_type_.
 
 Tue Mar 24 14:07:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
-	* tao/Server_Request.{h, i, cpp}: Made the class compliant with
-	the latest CORBA v2.2. Added some extensions. There were some
-	subtle bugs related to user defined exceptions that were not being
-	reported back to the caller. Modified the constructor to take a
-	GIOP_RequestHeader as a parameter.
+        * tao/Server_Request.{h, i, cpp}: Made the class compliant with
+        the latest CORBA v2.2. Added some extensions. There were some
+        subtle bugs related to user defined exceptions that were not being
+        reported back to the caller. Modified the constructor to take a
+        GIOP_RequestHeader as a parameter.
 
-	* tao/IIOP_Interpreter.{h, cpp}: Removed the "struct_traverse" and
-	"union_traverse" methods as they were no longer used.
+        * tao/IIOP_Interpreter.{h, cpp}: Removed the "struct_traverse" and
+        "union_traverse" methods as they were no longer used.
 
-	* tao/Typecode.{h, cpp}: Removed the original interpreter
-	"traverse" as it is no longer used since its logic is included in
-	the different encode and decode methods.
+        * tao/Typecode.{h, cpp}: Removed the original interpreter
+        "traverse" as it is no longer used since its logic is included in
+        the different encode and decode methods.
 
-	* tao/POA.cpp: changed the usage of "op_name" to "operation" since
-	that is the correct method name of the ServerRequest class
-	according to the CORBA v2.2 spec.
+        * tao/POA.cpp: changed the usage of "op_name" to "operation" since
+        that is the correct method name of the ServerRequest class
+        according to the CORBA v2.2 spec.
 
-	* tao/POAS.cpp: Massive changes made to use the new style of
-	skeleton code that the IDL compiler generates
+        * tao/POAS.cpp: Massive changes made to use the new style of
+        skeleton code that the IDL compiler generates
 
-	* tao/{Servant_Base, Operation_Table}.{h, cpp}: The "_find" and
-	"_bind" operations now take a "const char *opname" rather than
-	"CORBA::String  &opname".
+        * tao/{Servant_Base, Operation_Table}.{h, cpp}: The "_find" and
+        "_bind" operations now take a "const char *opname" rather than
+        "CORBA::String  &opname".
 
-	* tao/Connect.cpp: Server_Request creation now uses the modified
-	constructor.
+        * tao/Connect.cpp: Server_Request creation now uses the modified
+        constructor.
 
-	* TAO_IDL/be/{be_visitor_operation, be_interpretive}.cpp: Added
-	another visitor that generates the exceptionlist for the client
-	stub.
+        * TAO_IDL/be/{be_visitor_operation, be_interpretive}.cpp: Added
+        another visitor that generates the exceptionlist for the client
+        stub.
 
-	* TAO_IDL/be/be_visitor_interface.cpp: Change in generated code to
-	use the "operation" method on class Server_Request rather than the
-	non-compliant "op_name".
+        * TAO_IDL/be/be_visitor_interface.cpp: Change in generated code to
+        use the "operation" method on class Server_Request rather than the
+        non-compliant "op_name".
 
-	* TAO_IDL/be/be_visitor_sequence.cpp: Minor correction to get some
-	formatting in generated code correct.
+        * TAO_IDL/be/be_visitor_sequence.cpp: Minor correction to get some
+        formatting in generated code correct.
 
-	* TAO_IDL/be_include/be_codegen.h: Added a state for exception
-	list generation
+        * TAO_IDL/be_include/be_codegen.h: Added a state for exception
+        list generation
 
-	* TAO_IDL/be_include/be_visitor_operation.h: Added a new visitor
-	for exception list generation.
+        * TAO_IDL/be_include/be_visitor_operation.h: Added a new visitor
+        for exception list generation.
 
 Tue Mar 24 11:01:33 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/TAO.dsp:  Added Stub.cpp into the project.
+        * tao/TAO.dsp:  Added Stub.cpp into the project.
 
 Tue Mar 24 07:29:20 1998  David L. Levine  <levine@cs.wustl.edu>
 
