@@ -101,6 +101,7 @@ DIRS  = CDR \
 	Two_Objects \
 	Nested_Upcall_Crash \
 	RTScheduling \
+	Servant_To_Reference_Test \
 	UNKNOWN_Exception
 
 ifndef TAO_ROOT
