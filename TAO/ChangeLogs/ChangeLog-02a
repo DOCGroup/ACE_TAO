@@ -1,3 +1,11 @@
+Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+	New tests suplied by Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
+	* orbsvcs/tests/AVStreams/Bidirectional_Flows: Test bidirectional
+	  flows in the AV service. 
+	* orbsvcs/tests/AVStreams/Multiple_Flows:  Test multiple flows in
+	  the AV Service.
+
 Wed Nov 21 12:52:37 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* /orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp
