@@ -320,7 +320,7 @@ test_performance (ACE_Timer_Queue *tq,
 	      "time per call = %f usecs\n", 
 	      (et.user_time / double (max_iterations)) * 1000000));
   
-  delete times;
+  delete [] times;
 }
 
 struct Timer_Queue_List
