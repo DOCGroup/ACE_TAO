@@ -1,0 +1,48 @@
+// $Id$
+#include <Components.idl>
+#include "BMDevice.idl"
+
+module BasicSP
+{
+  local interface CCM_ReadData : ReadData
+  {
+  };
+
+};
+
+module BasicSP
+{
+  local interface CCM_BMDevice : ::Components::EnterpriseComponent
+  {
+    ::BasicSP::CCM_ReadData get_data_read ();
+    void push_timeout (in ::BasicSP::TimeOut ev);
+  };
+
+  local interface CCM_BMDevice_Context  : ::Components::SessionContext
+  {
+    void push_data_available (in ::BasicSP::DataAvailable ev);
+  };
+
+  local interface CCM_BMDeviceHomeExplicit : ::Components::HomeExecutorBase
+  {
+  };
+
+  local interface CCM_BMDeviceHomeImplicit
+  {
+    ::Components::EnterpriseComponent create () raises (::Components::CCMException);
+  };
+
+  local interface CCM_BMDeviceHome : CCM_BMDeviceHomeExplicit, CCM_BMDeviceHomeImplicit
+  {
+  };
+
+};
+
+module BMDevice_Impl
+{
+  local interface _Context : ::BasicSP::CCM_BMDevice_Context, ::Components::SessionContext
+  {
+  };
+
+};
+
