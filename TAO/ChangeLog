@@ -1,3 +1,23 @@
+Thu Aug 26 16:29:53 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        
+          Changed the check for generating _add_ref(), _remove_ref(),
+          and _tao_to_value() for valuetypes from support of
+          abstract interface(s) to support for any interface(s).
+          For the first two methods, the generation is done to avoid
+          their ambiguous inheritance. One source of inheritance
+          is CORBA::ValueBase, and the other could be CORBA::Object,
+          or CORBA::AbstractBase, or both. The third method is
+          generated to extract a valuetype from an abstract
+          interface, if it was passed by value. A valuetype could
+          support a concrete interface that inherits from an
+          abstract one, so again the method is necessary even if
+          the valuetype supports a concrete interface.
+
 Thu Aug 26 15:46:36 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_component.cpp:
