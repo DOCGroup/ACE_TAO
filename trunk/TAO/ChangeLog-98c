@@ -8,7 +8,8 @@ Tue Nov 10 17:53:42 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 	* orbsvcs/orbsvcs/Log/Logger_i.cpp
 	* orbsvcs/orbsvcs/Logger.idl
 	  Added new methods log2() and logv2(). They are twoway versions
-	  of the preexisting log() and logv() methods.
+	  of the preexisting log() and logv() methods.  Thanks to Sigg
+ 	  Pascal <pascal.sigg@zkb.ch> for reporting this.
 	
 Tue Nov 10 13:12:48 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
