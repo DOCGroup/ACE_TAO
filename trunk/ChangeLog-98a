@@ -6,7 +6,10 @@ Thu Apr 09 16:43:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
  	  compiled after Version.h changes (Version.h changes every time a
  	  new beta is produced).
 
-Thu Apr  9 13:39:48 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+Thu Apr  9 17:31:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Updated all the Makefile dependencies and also added the
+ 	  appropriate CVS strings to all Makefiles.
 
 	* examples/IPC_SAP/SOCK_SAP: Improved both the CPP-unserver.cpp
  	  and CPP-inserver.cpp programs so they work identically wrt

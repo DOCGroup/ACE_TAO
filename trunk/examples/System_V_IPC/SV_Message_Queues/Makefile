@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------------
-#	@(#)Makefile	1.1	10/18/96
+#	$Id: Makefile	1.1	10/18/96
 #
 #	Makefile for testing the typed and untyped Message Queue abstraction
 #----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
-.obj/MQ_Server.o .obj/MQ_Server. .shobj/MQ_Server.o .shobj/MQ_Server.: MQ_Server.cpp \
+.obj/MQ_Server.o .obj/MQ_Server.so .shobj/MQ_Server.o .shobj/MQ_Server.so: MQ_Server.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -52,24 +52,39 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/SV_Message.h \
- $(ACE_ROOT)/ace/SV_Message_Queue.i test.h
-.obj/MQ_Client.o .obj/MQ_Client. .shobj/MQ_Client.o .shobj/MQ_Client.: MQ_Client.cpp \
+ $(ACE_ROOT)/ace/SV_Message.i \
+ $(ACE_ROOT)/ace/SV_Message_Queue.i \
+ test.h
+.obj/MQ_Client.o .obj/MQ_Client.so .shobj/MQ_Client.o .shobj/MQ_Client.so: MQ_Client.cpp \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -77,16 +92,19 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Message.h \
- $(ACE_ROOT)/ace/SV_Message_Queue.i test.h
-.obj/TMQ_Server.o .obj/TMQ_Server. .shobj/TMQ_Server.o .shobj/TMQ_Server.: TMQ_Server.cpp \
+ $(ACE_ROOT)/ace/SV_Message.i \
+ $(ACE_ROOT)/ace/SV_Message_Queue.i \
+ test.h
+.obj/TMQ_Server.o .obj/TMQ_Server.so .shobj/TMQ_Server.o .shobj/TMQ_Server.so: TMQ_Server.cpp \
  $(ACE_ROOT)/ace/Signal.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -95,26 +113,43 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
  $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
  $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
  $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
  $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ $(ACE_ROOT)/ace/Signal.i \
+ $(ACE_ROOT)/ace/Object_Manager.h \
+ $(ACE_ROOT)/ace/Object_Manager.i \
+ $(ACE_ROOT)/ace/Managed_Object.h \
+ $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Typed_SV_Message_Queue.h \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/SV_Message.h \
+ $(ACE_ROOT)/ace/SV_Message.i \
  $(ACE_ROOT)/ace/SV_Message_Queue.i \
- $(ACE_ROOT)/ace/Typed_SV_Message.h test.h
-.obj/TMQ_Client.o .obj/TMQ_Client. .shobj/TMQ_Client.o .shobj/TMQ_Client.: TMQ_Client.cpp \
+ $(ACE_ROOT)/ace/Typed_SV_Message.h \
+ $(ACE_ROOT)/ace/Typed_SV_Message.i \
+ $(ACE_ROOT)/ace/Typed_SV_Message_Queue.i \
+ test.h
+.obj/TMQ_Client.o .obj/TMQ_Client.so .shobj/TMQ_Client.o .shobj/TMQ_Client.so: TMQ_Client.cpp \
  $(ACE_ROOT)/ace/Typed_SV_Message_Queue.h \
  $(ACE_ROOT)/ace/SV_Message_Queue.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -123,15 +158,20 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Version.h \
- $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/SV_Message.h \
+ $(ACE_ROOT)/ace/SV_Message.i \
  $(ACE_ROOT)/ace/SV_Message_Queue.i \
- $(ACE_ROOT)/ace/Typed_SV_Message.h test.h
+ $(ACE_ROOT)/ace/Typed_SV_Message.h \
+ $(ACE_ROOT)/ace/Typed_SV_Message.i \
+ $(ACE_ROOT)/ace/Typed_SV_Message_Queue.i \
+ test.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
