@@ -61,6 +61,20 @@ CIAO::RTResource_Config_Manager::init
           ACE_THROW (CORBA::INTERNAL ());
         }
     }
+
+  for (i = 0; i < info.pb_configs.length (); ++i)
+    {
+      RTCORBA::PriorityBands_var safebands = new RTCORBA::PriorityBands;
+
+      safebands = info.pb_configs[i].bands;
+
+      if (this->priority_bands_map_.bind (info.pb_configs[i].name.in (),
+                                          safebands) != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Error binding priority bands name: %s to map when initializing RTComponentServer resources.\n", info.pb_configs[i].name.in ()));
+          ACE_THROW (CORBA::INTERNAL ());
+        }
+    }
 }
 
 void
@@ -105,15 +119,32 @@ CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name
   return ret_id;
 }
 
-/*
-
 RTCORBA::PriorityBands *
 CIAO::RTResource_Config_Manager::find_priority_bands_by_name (const char *name
                                                               ACE_ENV_ARG_DECL)
-  // @@ THROW SPEC?
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  if (name == 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Invalid name string found in \"find_priority_bands_by_name\"\n"));
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
+
+  PB_MAP::ENTRY *entry;
+
+  if (this->priority_bands_map_.find (name, entry) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Unable to find a connection bands named %s\n",
+                  name));
+      ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
+    }
+
+  RTCORBA::PriorityBands_var retv = new RTCORBA::PriorityBands;
+  (*retv.ptr ()) = (*entry->int_id_.ptr ());
+  return retv._retn ();
 }
-*/
 
 void
 CIAO::RTPolicy_Set_Manager::init (const CIAO::RTConfiguration::Policy_Sets &sets
