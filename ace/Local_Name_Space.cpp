@@ -155,6 +155,7 @@ template class ACE_Hash_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mu
 template class ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal>;
 #else
 template class ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
+template class ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>;
 template class ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal>;
 #endif
@@ -174,6 +175,7 @@ template class ACE_Write_Guard<ACE_RW_Process_Mutex>;
 #pragma instantiate ACE_Hash_Map_Entry <ACE_NS_String, ACE_NS_Internal>
 #else
 #pragma instantiate ACE_Map_Manager<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
+#pragma instantiate ACE_Map_Iterator_Base<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Iterator<ACE_NS_String, ACE_NS_Internal, ACE_Null_Mutex>
 #pragma instantiate ACE_Map_Entry <ACE_NS_String, ACE_NS_Internal>
 #endif
