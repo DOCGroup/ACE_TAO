@@ -7,6 +7,7 @@ Tue Dec 19 08:53:51 2000  Jeff Parsons <parsons@cs.wustl.edu.edu>
           bound, for a zero value. An error is output if zero is found,
           because in the above cases, the value must be a positive integer.
 
+        * TAO_IDL/fe/y.tab.h:
         * TAO_IDL/fe/y.tab.cpp:
         * TAO_IDL/fe/y.tab.cpp.diff:
 
