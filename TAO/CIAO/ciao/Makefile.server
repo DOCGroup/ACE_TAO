@@ -11,23 +11,26 @@
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
+ifndef CIAO_ROOT
+  CIAO_ROOT = $(ACE_ROOT)/TAO/CIAO
+endif # ! CIAO_ROOT
 MAKEFILE = Makefile.server
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS += -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs \
-		-Wb,export_macro=CIAO_SERVER_Export \
-		-Wb,export_include=CIAO_SERVER_export.h \
-	 	-Wb,pre_include="ace/pre.h" \
-		-Wb,post_include="ace/post.h"
+override TAO_IDL_FLAGS += -Ge 1 -Sc -I$(TAO_ROOT) \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs \
+	-Wb,export_include=CIAO_SERVER_export.h \
+	-Wb,pre_include="ace/pre.h" \
+	-Wb,post_include="ace/post.h"
 
-LDLIBS = -lTAO
+LIBNAME = libCIAO_Server
+LIB = $(LIBNAME).a
+SHLIB = $(LIBNAME).$(SOEXT)
 ACE_SHLIBS = -lTAO -lACE
-SHLIB = libCIAO_Server.$(SOEXT)
-LIB = libCIAO_Server.a
 
-IDL_FILES = CIAO_Deployment
-IDL_SRC = CIAO_DeploymentC
+IDL_FILES = CCM_Deployment
+IDL_SRC = CCM_DeploymentC
 
 SHLIB_SRC = $(IDL_SRC)
 
@@ -49,10 +52,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-.PRECIOUS: CIAO_DeploymentC.h CIAO_DeploymentC.i CIAO_DeploymentC.cpp
+.PRECIOUS: CCM_DeploymentC.h CCM_DeploymentC.i CCM_DeploymentC.cpp
 
 realclean: clean
-	-$(RM) CIAO_DeploymentC.* CIAO_DeploymentS.*
+	-$(RM) CCM_DeploymentC.* CCM_DeploymentS.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

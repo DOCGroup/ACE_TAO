@@ -11,25 +11,30 @@
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
+ifndef CIAO_ROOT
+  CIAO_ROOT = $(ACE_ROOT)/TAO/CIAO
+endif # ! CIAO_ROOT
+
+
 MAKEFILE = Makefile.container
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS += -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs \
-		-Wb,export_macro=CIAO_CONTAINER_Export \
-		-Wb,export_include=CIAO_CONTAINER_export.h \
-	 	-Wb,pre_include="ace/pre.h" \
-		-Wb,post_include="ace/post.h"
+override TAO_IDL_FLAGS += -Ge 1 -Sc -I$(TAO_ROOT) \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs \
+        -Wb,export_include=CIAO_CONTAINER_export.h \
+        -Wb,pre_include="ace/pre.h" \
+        -Wb,post_include="ace/post.h"
 
-LDLIBS = -lTAO
+LIBNAME  = libCIAO_Client
+LIB = $(LIBNAME).a
+SHLIB = $(LIBNAME).$(SOEXT)
 ACE_SHLIBS = -lTAO -lACE
-SHLIB = libCIAO_Container.$(SOEXT)
-LIB = libCIAO_Container.a
 
-IDL_FILES = CIAO_Container CIAO_Container_Ex CIAO_Transaction CosPersistentState
-IDL_SRC = CIAO_ContainerC CIAO_Container_ExC CIAO_TransactionC CosPersistentStateC
+IDL_FILES = CCM_Container CCM_Container_Ex CCM_Transaction CosPersistentState
+IDL_SRC = CCM_ContainerC CCM_Container_ExC CCM_TransactionC CosPersistentStateC
 
-SHLIB_SRC = CIAO_BaseS CIAO_EventS CIAO_ComponentS Container_Base $(IDL_SRC)
+SHLIB_SRC = CCM_BaseS CCM_EventS CCM_ComponentS $(IDL_SRC)
 
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
@@ -49,13 +54,13 @@ include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
-.PRECIOUS: CIAO_ContainerC.h CIAO_ContainerC.i CIAO_ContainerC.cpp
-.PRECIOUS: CIAO_Container_ExC.h CIAO_Container_ExC.i CIAO_Container_ExC.cpp
-.PRECIOUS: CIAO_TransactionC.h CIAO_TransactionC.i CIAO_TransactionC.cpp
+.PRECIOUS: CCM_ContainerC.h CCM_ContainerC.i CCM_ContainerC.cpp
+.PRECIOUS: CCM_Container_ExC.h CCM_Container_ExC.i CCM_Container_ExC.cpp
+.PRECIOUS: CCM_TransactionC.h CCM_TransactionC.i CCM_TransactionC.cpp
 .PRECIOUS: CosPersistentStateC.h CosPersistentStateC.i CosPersistentStateC.cpp
 
 realclean: clean
-	-$(RM) CIAO_ContainerC.* CIAO_ContainerS.* CIAO_Container_ExC.* CIAO_Container_ExS.* CIAO_TransactionC.* CIAO_TransactionS.* CosPersistentStateC.* CosPersistentStateS.*
+	-$(RM) CCM_ContainerC.* CCM_ContainerS.* CCM_Container_ExC.* CCM_Container_ExS.* CCM_TransactionC.* CCM_TransactionS.* CosPersistentStateC.* CosPersistentStateS.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.

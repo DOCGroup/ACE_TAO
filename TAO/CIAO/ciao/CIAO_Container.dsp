@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib TAO_Security.lib  TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Container.dll" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
+# ADD LINK32 ace.lib tao.lib TAO_IFR_Client.lib TAO_Security.lib TAO_PortableServer.lib /nologo /dll /machine:I386 /out:"..\..\..\bin\CIAO_Container.dll" /libpath:"..\..\orbsvcs\orbsvcs" /libpath:"..\..\..\ace" /libpath:"..\..\tao" /libpath:"..\..\tao\IFR_Client" /libpath:"..\..\tao\PortableServer"
 
 !ELSEIF  "$(CFG)" == "CIAO_Container - Win32 Debug"
 
@@ -206,9 +206,8 @@ InputPath=.\CCM_Container.idl
 InputName=CCM_Container
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -229,9 +228,8 @@ InputPath=.\CCM_Container.idl
 InputName=CCM_Container
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -259,9 +257,8 @@ InputPath=.\CCM_Container_Ex.idl
 InputName=CCM_Container_Ex
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -282,9 +279,8 @@ InputPath=.\CCM_Container_Ex.idl
 InputName=CCM_Container_Ex
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -312,9 +308,8 @@ InputPath=.\CCM_Transaction.idl
 InputName=CCM_Transaction
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -335,9 +330,8 @@ InputPath=.\CCM_Transaction.idl
 InputName=CCM_Transaction
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -365,9 +359,8 @@ InputPath=.\CosPersistentState.idl
 InputName=CosPersistentState
 
 BuildCmds= \
-	..\..\..\bin\release\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\release\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -388,9 +381,8 @@ InputPath=.\CosPersistentState.idl
 InputName=CosPersistentState
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -Ge 1 -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
+	..\..\..\bin\tao_idl -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs -Wb,export_macro=CIAO_CONTAINER_Export -Wb,export_include=CIAO_CONTAINER_export.h -Wb,pre_include="ace/pre.h" -Wb,post_include="ace/post.h" $(InputName).idl \
 	del $(InputName)S.* \
-	del $(InputName)S_T.* \
 	
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"

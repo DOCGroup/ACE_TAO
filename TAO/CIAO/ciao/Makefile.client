@@ -11,27 +11,29 @@
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
+ifndef CIAO_ROOT
+  CIAO_ROOT = $(ACE_ROOT)/TAO/CIAO
+endif # ! CIAO_ROOT
 MAKEFILE = Makefile.client
 
 # On non-Windows environment, we should at least define
 # the export_include IDL flag.
-TAO_IDLFLAGS +=  -Ge 1 -Sc -I ../.. -I ../../orbsvcs/orbsvcs \
-		 -Wb,stub_export_macro=CIAO_CLIENT_Export \
-		 -Wb,stub_export_include=CIAO_CLIENT_export.h \
-		 -Wb,skel_export_macro=CIAO_CONTAINER_Export \
-		 -Wb,skel_export_include=CIAO_CONTAINER_export.h \
-	 	 -Wb,pre_include="ace/pre.h" \
-		 -Wb,post_include="ace/post.h"
+override TAO_IDL_FLAGS += -Ge 1 -Sc -I$(TAO_ROOT) \
+	-I$(TAO_ROOT)/orbsvcs/orbsvcs \
+        -Wb,stub_export_include=CIAO_CLIENT_export.h \
+        -Wb,skel_export_include=CIAO_CONTAINER_export.h \
+        -Wb,pre_include="ace/pre.h" \
+        -Wb,post_include="ace/post.h"
 
-LDLIBS = -lTAO
+LIBNAME = libCIAO_Client
+LIB = $(LIBNAME).a
+SHLIB = $(LIBNAME).$(SOEXT)
 ACE_SHLIBS = -lTAO -lACE
-SHLIB = libCIAO_Client.$(SOEXT)
-LIB = libCIAO_Client.a
 
-IDL_FILES = CIAO_Base CIAO_Event CIAO_Component
-IDL_SRC = CIAO_BaseC CIAO_EventC CIAO_ComponentC
+IDL_FILES = CCM_Base CCM_Event CCM_Component
+IDL_SRC = CCM_BaseC CCM_EventC CCM_ComponentC
 
-SHLIB_SRC = CIAO_Component_i $(IDL_SRC)
+SHLIB_SRC = CCM_Component_i $(IDL_SRC)
 
 LSRC = $(addsuffix .cpp,$(SHLIB_SRC))
 LOBJ = $(addsuffix .o,$(SHLIB_SRC))
@@ -52,10 +54,10 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 
-.PRECIOUS: CIAO_BaseC.h CIAO_BaseC.i CIAO_BaseC.cpp CIAO_EventC.h CIAO_EventC.i CIAO_EventC.cpp CIAO_ComponentC.h CIAO_ComponentC.i CIAO_ComponentC.cpp CIAO_BaseS.h CIAO_BaseS.i CIAO_BaseS.cpp CIAO_EventS.h CIAO_EventS.i CIAO_EventS.cpp CIAO_ComponentS.h CIAO_ComponentS.i CIAO_ComponentS.cpp
+.PRECIOUS: CCM_BaseC.h CCM_BaseC.i CCM_BaseC.cpp CCM_EventC.h CCM_EventC.i CCM_EventC.cpp CCM_ComponentC.h CCM_ComponentC.i CCM_ComponentC.cpp CCM_BaseS.h CCM_BaseS.i CCM_BaseS.cpp CCM_EventS.h CCM_EventS.i CCM_EventS.cpp CCM_ComponentS.h CCM_ComponentS.i CCM_ComponentS.cpp
 
 realclean: clean
-	-$(RM) CIAO_BaseC.* CIAO_BaseS.* CIAO_EventC.* CIAO_EventS.* CIAO_ComponentC.* CIAO_ComponentS.*
+	-$(RM) CCM_BaseC.* CCM_BaseS.* CCM_EventC.* CCM_EventS.* CCM_ComponentC.* CCM_ComponentS.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
