@@ -1,3 +1,11 @@
+Mon May 28 18:11:20 2001  Douglas C. Schmidt  <schmidt@enz.cs.wustl.edu>
+
+	* ace/OS.i (mutex_init): Using pthreads and passing attributes
+	  into mutex_init(), the function will always fail because the
+ 	  local variable result is initialized to -1 and then tested
+ 	  against 0.  Thanks to Brodie Thiesfield
+ 	  <brodie.thiesfield@activesky.com> for this fix.
+
 Tue May 29 13:08:33 2001  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	* ace/Process.i (handle_inheritence):
