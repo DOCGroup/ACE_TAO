@@ -1024,7 +1024,7 @@ ACE::get_temp_dir (char *buffer, size_t buffer_len)
 
   // On non-win32 platforms, check to see what the TMPDIR environment
   // variable is defined to be.  If it doesn't exist, just use /tmp
-  char *tmpdir = ACE_OS::getenv ("TMPDIR");
+  const char *tmpdir = ACE_OS::getenv ("TMPDIR");
 
   if (tmpdir == NULL)
     tmpdir = "/tmp";
