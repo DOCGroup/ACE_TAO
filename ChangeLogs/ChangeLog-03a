@@ -1,3 +1,9 @@
+Thu Dec  6 11:15:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h: 
+	* performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+	  Fixed Fuzz errors in these files.
+
 Thu Dec  6 07:39:07 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * Added two new static functions for VxWorks only.  spae() and
