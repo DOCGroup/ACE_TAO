@@ -1,3 +1,9 @@
+Fri Jul 12 13:02:51 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.{h i} (rfind): Changed pos argument from size_t to
+          ssize_t to make proper use of npos and avoid compile error for
+          g++ 2.95.2.
+
 Fri Jul 12 12:37:42 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/DLL_Manager.cpp:
