@@ -16,4 +16,9 @@ TAO_ESF_Worker<Object>::~TAO_ESF_Worker (void)
 {
 }
 
+template<class Object>
+void TAO_ESF_Worker<Object>::set_size (size_t)
+{
+}
+
 #endif /* TAO_ESF_WORKER_CPP */

@@ -11,6 +11,7 @@
 #ifndef TAO_UTILS_IMPLICIT_DEACTIVATOR_H
 #define TAO_UTILS_IMPLICIT_DEACTIVATOR_H
 #include /**/ "ace/pre.h"
+#include "utils_export.h"
 
 #include "Auto_Functor.h"
 
@@ -31,7 +32,7 @@ namespace TAO
      *
      * @brief Implements a functor for the Implicit_Deactivator class.
      */
-    struct Implicit_Deactivation_Functor
+    struct TAO_UTILS_Export Implicit_Deactivation_Functor
     {
       typedef PortableServer::ServantBase * argument;
 

@@ -35,6 +35,7 @@ TAO_ESF_Immediate_Changes<PROXY,C,ITERATOR,ACE_LOCK>::
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
+  worker->set_size(this->collection_.size());
   ITERATOR end = this->collection_.end ();
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
