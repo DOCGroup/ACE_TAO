@@ -1008,7 +1008,7 @@ protected:
   /// The cached object reference for the RTCORBA::RTORB.
   CORBA::Object_var rt_orb_;
 
-  /// The cached object reference for the RTCORBA::RTCurrent interface.
+  /// The cached object reference for the RTCORBA::Current interface.
   CORBA::Object_var rt_current_;
 
   /**
