@@ -34,6 +34,9 @@ public:
   virtual idl_bool in_recursion (be_type *node = 0);
   // check if we or the parameter node is in recursion
 
+  virtual void destroy (void);
+  // Cleanup function.
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 

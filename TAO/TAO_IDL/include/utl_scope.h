@@ -101,7 +101,7 @@ class Identifier;
 // Forward declaration of active iterator for UTL_Scope
 class UTL_ScopeActiveIterator;
 
-class   UTL_Scope : public virtual COMMON_Base
+class TAO_IDL_FE_Export UTL_Scope : public virtual COMMON_Base
 {
 public:
   // Enum to denote the kind of iteration desired
@@ -183,6 +183,9 @@ public:
   // be_generator::create_module().
   void                          add_to_scope(AST_Decl *e,
                                              AST_Decl *ex = 0);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
 protected:
   // UTL_Scope protected addition protocol. This protocol is
@@ -288,7 +291,8 @@ private:
 };
 
 // Active iterator for a UTL_Scope node
-class UTL_ScopeActiveIterator {
+class TAO_IDL_FE_Export UTL_ScopeActiveIterator 
+{
 public:
   // Operations
 

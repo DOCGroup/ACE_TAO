@@ -22,9 +22,8 @@
 
 ACE_RCSID(be, be_codegen, "$Id$")
 
-TAO_CodeGen *tao_cg = 0;
+TAO_IDL_BE_Export TAO_CodeGen *tao_cg = 0;
 
-/* BE global Data */
 TAO_CodeGen::TAO_CodeGen (void)
   : client_header_ (0),
     client_stubs_ (0),
@@ -40,8 +39,7 @@ TAO_CodeGen::TAO_CodeGen (void)
     gperf_input_stream_ (0),
     gperf_input_filename_ (0),
     curr_os_ (0),
-    visitor_factory_ (0),
-    strategy_ (TAO_PERFECT_HASH)
+    visitor_factory_ (0)
 {
 }
 
@@ -68,7 +66,7 @@ be_visitor *
 TAO_CodeGen::make_visitor (be_visitor_context *ctx)
 {
 
-  if (!this->visitor_factory_)
+  if (this->visitor_factory_ == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "TAO_CodeGen::make_visitor - "
@@ -79,14 +77,14 @@ TAO_CodeGen::make_visitor (be_visitor_context *ctx)
   return this->visitor_factory_->make_visitor (ctx);
 }
 
-// change the string to all upcase
+// Change the string to all upper case.
 const char *
 TAO_CodeGen::upcase (const char *str)
 {
   static char upcase_str [NAMEBUFSIZE];
 
   ACE_OS::memset (upcase_str, '\0', NAMEBUFSIZE);
-  // convert letters in str to upcase
+  // Convert letters in str to upper case.
   for (unsigned int i=0; i < ACE_OS::strlen (str); i++)
     {
       if (isalpha (str [i]))
@@ -95,14 +93,14 @@ TAO_CodeGen::upcase (const char *str)
         }
       else
         {
-          // copy it as it is
+          // Copy it as it is.
           upcase_str[i] = str[i];
         }
     }
   return upcase_str;
 }
 
-// set the client header stream
+// Set the client header stream.
 int
 TAO_CodeGen::start_client_header (const char *fname)
 {
@@ -110,21 +108,24 @@ TAO_CodeGen::start_client_header (const char *fname)
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
 
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->client_header_ = factory->make_outstream ();
+
   if (!this->client_header_)
     {
       return -1;
     }
 
   if (this->client_header_->open (fname, TAO_OutStream::TAO_CLI_HDR) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
-      // now generate the #if !defined clause
+      // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
@@ -141,7 +142,7 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
 
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-      // convert letters in fname to upcase
+      // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
         {
           if (isalpha (fname [i]))
@@ -154,35 +155,44 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       ACE_OS::strcat (macro_name, "_H_");
 
-      // generate the #ifndef ... #define statements
+      // Generate the #ifndef ... #define statements.
       this->client_header_->print ("#ifndef %s\n", macro_name);
       this->client_header_->print ("#define %s\n\n", macro_name);
-      if (idl_global->pre_include () != 0)
+
+      if (be_global->pre_include () != 0)
         {
           *this->client_header_ << "#include \""
-                                << idl_global->pre_include ()
+                                << be_global->pre_include ()
                                 << "\"\n";
         }
 
       // Including standard files
 
-      // switch between changing or non-changing standard include files
+      // Switch between changing or non-changing standard include files
       // include files, so that #include statements can be
       // generated with ""s or <>s respectively, for the standard include
-      // files (e.g. tao/corba.h)
+      // files (e.g. tao/corba.h).
       *this->client_header_ << "#include ";
 
-      if (idl_global->changing_standard_include_files () == 1)
-        *this->client_header_ << "\"";
+      if (be_global->changing_standard_include_files () == 1)
+        {
+          *this->client_header_ << "\"";
+        }
       else
-        *this->client_header_ << "<";
+        {
+          *this->client_header_ << "<";
+        }
 
       *this->client_header_ << "tao/corba.h";
 
-      if (idl_global->changing_standard_include_files () == 1)
-        *this->client_header_ << "\"\n";
+      if (be_global->changing_standard_include_files () == 1)
+        {
+          *this->client_header_ << "\"\n";
+        }
       else
-        *this->client_header_ << ">\n";
+        {
+          *this->client_header_ << ">\n";
+        }
 
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
@@ -192,45 +202,61 @@ TAO_CodeGen::start_client_header (const char *fname)
 
       // Other include files.
 
-      if (idl_global->stub_export_include () != 0)
+      if (be_global->stub_export_include () != 0)
         {
           *this->client_header_ << "#include \""
-                                << idl_global->stub_export_include ()
+                                << be_global->stub_export_include ()
                                 << "\"\n";
         }
 
       // Include the Messaging files if AMI is enabled.
-      if (idl_global->ami_call_back () == I_TRUE)
+      if (be_global->ami_call_back () == I_TRUE)
         {
           // Include Messaging skeleton file.
           *this->client_header_ << "#include ";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->client_header_ << "\"";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->client_header_ << "\"";
+            }
           else
-            *this->client_header_ << "<";
+            {
+              *this->client_header_ << "<";
+            }
 
           *this->client_header_ << "tao/MessagingS.h";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->client_header_ << "\"\n";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->client_header_ << "\"\n";
+            }
           else
-            *this->client_header_ << ">\n";
+            {
+              *this->client_header_ << ">\n";
+            }
 
           // Including Asynch Invocation file.
           *this->client_header_ << "#include ";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->client_header_ << "\"";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->client_header_ << "\"";
+            }
           else
-            *this->client_header_ << "<";
+            {
+              *this->client_header_ << "<";
+            }
 
           *this->client_header_ << "tao/Asynch_Invocation.h";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->client_header_ << "\"\n";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->client_header_ << "\"\n";
+            }
           else
-            *this->client_header_ << ">\n";
+            {
+              *this->client_header_ << ">\n";
+            }
         }
 
       // We must include all the skeleton headers corresponding to
@@ -254,7 +280,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
           // Get the clnt header from the IDL file name.
           const char* client_hdr =
-            IDL_GlobalData::be_get_client_hdr (&idl_name_str, 1);
+            BE_GlobalData::be_get_client_hdr (&idl_name_str, 1);
 
           // Sanity check and then print.
           if (client_hdr != 0)
@@ -271,22 +297,22 @@ TAO_CodeGen::start_client_header (const char *fname)
         }
       *this->client_header_ << "\n";
 
-      // generate the TAO_EXPORT_MACRO macro
+      // Generate the TAO_EXPORT_MACRO macro.
       *this->client_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
       *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
       *this->client_header_ << "#endif\n";
       *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                            << idl_global->stub_export_macro ()
+                            << be_global->stub_export_macro ()
                             << be_nl << be_nl;
 
-      // Generate export macro for nested classes
+      // Generate export macro for nested classes.
       *this->client_header_
         << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
         << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
         << "#    undef TAO_EXPORT_NESTED_MACRO\n"
         << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
         << "#  define TAO_EXPORT_NESTED_MACRO "
-        << idl_global->stub_export_macro ()
+        << be_global->stub_export_macro ()
         << be_nl
         << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n\n";
 
@@ -295,30 +321,34 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
                             << "#pragma warning(disable:4250)\n";
-      if (idl_global->use_raw_throw ())
-        *this->client_header_ << "#pragma warning(disable:4290)\n";
+      if (be_global->use_raw_throw ())
+        {
+          *this->client_header_ << "#pragma warning(disable:4290)\n";
+        }
+
       *this->client_header_ << "#endif /* _MSC_VER */\n\n";
 
       return 0;
     }
 }
 
-// get the client header stream
+// Get the client header stream.
 TAO_OutStream *
 TAO_CodeGen::client_header (void)
 {
   return this->client_header_;
 }
 
-// set the client stub stream
+// Set the client stub stream.
 int
 TAO_CodeGen::start_client_stubs (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->client_stubs_ = factory->make_outstream ();
+
   if (!this->client_stubs_)
     {
       return -1;
@@ -329,42 +359,48 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       return -1;
     }
 
-  // generate the include statement for the precompiled header file.
-  if (idl_global->pch_include ())
-    *this->client_stubs_ << "#include \""
-      << idl_global->pch_include () << "\"\n\n";
+  // Generate the include statement for the precompiled header file.
+  if (be_global->pch_include ())
+    {
+      *this->client_stubs_ << "#include \""
+                           << be_global->pch_include () 
+                           << "\"\n\n";
+    }
 
-  // generate the include statement for the client header. We just
+  // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
-  *this->client_stubs_ << "#include \"" <<
-    idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
+  *this->client_stubs_ << "#include \"" 
+                       << be_global->be_get_client_hdr_fname (1) 
+                       << "\"\n\n";
 
-  // generate the code that includes the inline file if not included in the
-  // header file
+  // Generate the code that includes the inline file if not included in the
+  // header file.
   *this->client_stubs_ << "#if !defined (__ACE_INLINE__)\n";
-  *this->client_stubs_ << "#include \"" <<
-    idl_global->be_get_client_inline_fname (1) << "\"\n";
+  *this->client_stubs_ << "#include \"" 
+                       << be_global->be_get_client_inline_fname (1) 
+                       << "\"\n";
   *this->client_stubs_ << "#endif /* !defined INLINE */\n\n";
 
   return 0;
 }
 
-// get the client stubs stream
+// Get the client stubs stream.
 TAO_OutStream *
 TAO_CodeGen::client_stubs (void)
 {
   return this->client_stubs_;
 }
 
-// set the client inline stream
+// Set the client inline stream.
 int
 TAO_CodeGen::start_client_inline (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->client_inline_ = factory->make_outstream ();
+
   if (!this->client_inline_)
     {
       return -1;
@@ -373,14 +409,14 @@ TAO_CodeGen::start_client_inline (const char *fname)
   return this->client_inline_->open (fname, TAO_OutStream::TAO_CLI_INL);
 }
 
-// get the client inline stream
+// Get the client inline stream.
 TAO_OutStream *
 TAO_CodeGen::client_inline (void)
 {
   return this->client_inline_;
 }
 
-// set the server header stream.
+// Set the server header stream.
 int
 TAO_CodeGen::start_server_header (const char *fname)
 {
@@ -388,89 +424,122 @@ TAO_CodeGen::start_server_header (const char *fname)
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
 
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->server_header_ = factory->make_outstream ();
+
   if (!this->server_header_)
     {
       return -1;
     }
 
   if (this->server_header_->open (fname, TAO_OutStream::TAO_SVR_HDR) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
-      // now generate the #if !defined clause
+      // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       const char *suffix = ACE_OS::strrchr (fname, '.');
+
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
           // as it is.
           if (fname == 0)
-            // bad file name
-            return -1;
+            {
+              // Bad file name.
+              return -1;
+            }
           else
-            suffix = fname;
+            {
+              suffix = fname;
+            }
         }
 
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-      // convert letters in fname to upcase
+      // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
-        if (isalpha (fname [i]))
-          macro_name[i+9] = (char) toupper (fname [i]);
-        else if (isdigit (fname [i]))
-          macro_name[i+9] = fname[i];
-        else
-          macro_name[i+9] = '_';
+        {
+          if (isalpha (fname [i]))
+            {
+              macro_name[i+9] = (char) toupper (fname [i]);
+            }
+          else if (isdigit (fname [i]))
+            {
+              macro_name[i+9] = fname[i];
+            }
+          else
+            {
+              macro_name[i+9] = '_';
+            }
+        }
 
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_header_->print ("#ifndef %s\n", macro_name);
       this->server_header_->print ("#define %s\n\n", macro_name);
-      if (idl_global->pre_include () != 0)
+
+      if (be_global->pre_include () != 0)
         {
           *this->server_header_ << "#include \""
-                                << idl_global->pre_include ()
+                                << be_global->pre_include ()
                                 << "\"\n";
         }
 
       // Include the Messaging files if AMI is enabled.
-      if (idl_global->ami_call_back () == I_TRUE)
+      if (be_global->ami_call_back () == I_TRUE)
         {
           // Include Messaging skeleton file.
           *this->server_header_ << "#include ";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->server_header_ << "\"";
+            }
           else
-            *this->server_header_ << "<";
+            {
+              *this->server_header_ << "<";
+            }
 
           *this->server_header_ << "tao/MessagingS.h";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"\n";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->server_header_ << "\"\n";
+            }
           else
-            *this->server_header_ << ">\n";
+            {
+              *this->server_header_ << ">\n";
+            }
 
           // Including Asynch Invocation file.
           *this->server_header_ << "#include ";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->server_header_ << "\"";
+            }
           else
-            *this->server_header_ << "<";
+            {
+              *this->server_header_ << "<";
+            }
 
           *this->server_header_ << "tao/Asynch_Invocation.h";
 
-          if (idl_global->changing_standard_include_files () == 1)
-            *this->server_header_ << "\"\n";
+          if (be_global->changing_standard_include_files () == 1)
+            {
+              *this->server_header_ << "\"\n";
+            }
           else
-            *this->server_header_ << ">\n";
+            {
+              *this->server_header_ << ">\n";
+            }
         }
 
       // We must include all the skeleton headers corresponding to
@@ -481,22 +550,24 @@ TAO_CodeGen::start_server_header (const char *fname)
       for (size_t j = 0;
            j < idl_global->n_included_idl_files ();
            ++j)
-            {
-              char* idl_name =
-                idl_global->included_idl_files ()[j];
+        {
+          char* idl_name =
+            idl_global->included_idl_files ()[j];
 
-              // String'ifying the name.
-              UTL_String idl_name_str (idl_name);
+          // String'ifying the name.
+          UTL_String idl_name_str (idl_name);
 
-              const char* server_hdr =
-                IDL_GlobalData::be_get_server_hdr (&idl_name_str, 1);
+          const char* server_hdr =
+            BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
 
-              this->server_header_->print ("#include \"%s\"\n",
-                                           server_hdr);
-            }
-      // the server header should include the client header
-      *this->server_header_ << "#include \"" <<
-        idl_global->be_get_client_hdr_fname (1) << "\"\n\n";
+          this->server_header_->print ("#include \"%s\"\n",
+                                       server_hdr);
+        }
+
+      // The server header should include the client header.
+      *this->server_header_ << "#include \"" 
+                            << be_global->be_get_client_hdr_fname (1) 
+                            << "\"\n\n";
 
       // Some compilers don't optimize the #ifndef header include
       // protection, but do optimize based on #pragma once.
@@ -509,32 +580,35 @@ TAO_CodeGen::start_server_header (const char *fname)
                             << "#pragma warning(push)\n"
                             << "#endif /* _MSC_VER >= 1200 */\n"
                             << "#pragma warning(disable:4250)\n";
-      if (idl_global->use_raw_throw ())
-        *this->server_header_ << "#pragma warning(disable:4290)\n";
+      if (be_global->use_raw_throw ())
+        {
+          *this->server_header_ << "#pragma warning(disable:4290)\n";
+        }
+
       *this->server_header_ << "#endif /* _MSC_VER */\n\n";
 
-      if (idl_global->skel_export_include () != 0)
+      if (be_global->skel_export_include () != 0)
         {
           *this->server_header_ << "#include \""
-                                << idl_global->skel_export_include ()
+                                << be_global->skel_export_include ()
                                 << "\"\n";
 
-          // generate the TAO_EXPORT_MACRO macro
+          // Generate the TAO_EXPORT_MACRO macro.
           *this->server_header_ << "#if defined (TAO_EXPORT_MACRO)\n";
           *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
           *this->server_header_ << "#endif\n";
           *this->server_header_ << "#define TAO_EXPORT_MACRO "
-                                << idl_global->skel_export_macro ()
+                                << be_global->skel_export_macro ()
                                 << be_nl;
 
-          // Generate export macro for nested classes
+          // Generate export macro for nested classes.
           *this->server_header_
             << "#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
             << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
             << "#    undef TAO_EXPORT_NESTED_MACRO\n"
             << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
             << "#  define TAO_EXPORT_NESTED_MACRO "
-            << idl_global->skel_export_macro ()
+            << be_global->skel_export_macro ()
             << be_nl
             << "#endif /* TAO_EXPORT_NESTED_CLASSES */\n";
         }
@@ -543,64 +617,84 @@ TAO_CodeGen::start_server_header (const char *fname)
     }
 }
 
-// get the server header stream
+// Get the server header stream.
 TAO_OutStream *
 TAO_CodeGen::server_header (void)
 {
   return this->server_header_;
 }
 
-// set the server header stream
+// Set the server header stream.
 int
 TAO_CodeGen::start_server_template_header (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->server_template_header_ = factory->make_outstream ();
+
   if (!this->server_template_header_)
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->server_template_header_->open (fname,
                                            TAO_OutStream::TAO_SVR_TMPL_HDR)
-      == -1)
-    return -1;
+        == -1)
+    {
+      return -1;
+    }
   else
     {
-      // now generate the #if !defined clause
+      // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       const char *suffix = ACE_OS::strrchr (fname, '.');
+
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
           // as it is.
           if (fname == 0)
-            // bad file name
-            return -1;
+            {
+              // Bad file name.
+              return -1;
+            }
           else
-            suffix = fname;
+            {
+              suffix = fname;
+            }
         }
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-      // convert letters in fname to upcase
+
+      // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
-        if (isalpha (fname [i]))
+        {
+          if (isalpha (fname [i]))
+            {
               macro_name[i+9] = (char) toupper (fname [i]);
-        else if (isdigit (fname [i]))
-          macro_name[i+9] = fname[i];
-        else
-          macro_name[i+9] = '_';
+            }
+          else if (isdigit (fname [i]))
+            {
+              macro_name[i+9] = fname[i];
+            }
+          else
+            {
+              macro_name[i+9] = '_';
+            }
+        }
 
       ACE_OS::strcat (macro_name, "_H_");
 
       this->server_template_header_->print ("#ifndef %s\n", macro_name);
       this->server_template_header_->print ("#define %s\n\n", macro_name);
-      if (idl_global->pre_include () != 0)
+
+      if (be_global->pre_include () != 0)
         {
           *this->server_template_header_ << "#include \""
-                                         << idl_global->pre_include ()
+                                         << be_global->pre_include ()
                                          << "\"\n";
         }
 
@@ -609,30 +703,35 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                                      << "#pragma warning(push)\n"
                                      << "#endif /* _MSC_VER >= 1200 */\n"
                                      << "#pragma warning(disable:4250)\n";
-      if (idl_global->use_raw_throw ())
-        *this->server_template_header_ << "#pragma warning(disable:4290)\n";
+
+      if (be_global->use_raw_throw ())
+        {
+          *this->server_template_header_ << "#pragma warning(disable:4290)\n";
+        }
+
       *this->server_template_header_ << "#endif /* _MSC_VER */\n\n";
 
       return 0;
     }
 }
 
-// get the server header stream
+// Get the server header stream.
 TAO_OutStream *
 TAO_CodeGen::server_template_header (void)
 {
   return this->server_template_header_;
 }
 
-// set the server skeletons stream
+// Set the server skeletons stream.
 int
 TAO_CodeGen::start_server_skeletons (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->server_skeletons_ = factory->make_outstream ();
+
   if (!this->server_skeletons_)
     {
       return -1;
@@ -643,20 +742,25 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  // generate the include statement for the precompiled header file.
-  if (idl_global->pch_include ())
-    *this->server_skeletons_ << "#include \""
-      << idl_global->pch_include () << "\"\n\n";
+  // Generate the include statement for the precompiled header file.
+  if (be_global->pch_include ())
+    {
+      *this->server_skeletons_ << "#include \""
+                               << be_global->pch_include () 
+                               << "\"\n\n";
+    }
 
-  // generate the include statement for the server header
-  *this->server_skeletons_ << "#include \"" <<
-    idl_global->be_get_server_hdr_fname (1) << "\"\n\n";
+  // Generate the include statement for the server header.
+  *this->server_skeletons_ << "#include \"" 
+                           << be_global->be_get_server_hdr_fname (1) 
+                           << "\"\n\n";
 
-  // generate the code that includes the inline file if not included in the
-  // header file
+  // Generate the code that includes the inline file if not included in the
+  // header file.
   *this->server_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
-  *this->server_skeletons_ << "#include \"" <<
-    idl_global->be_get_server_inline_fname (1) << "\"\n";
+  *this->server_skeletons_ << "#include \"" 
+                           << be_global->be_get_server_inline_fname (1) 
+                           << "\"\n";
   *this->server_skeletons_ << "#endif /* !defined INLINE */\n\n";
 
   return 0;
@@ -673,11 +777,12 @@ TAO_CodeGen::server_skeletons (void)
 int
 TAO_CodeGen::start_server_template_skeletons (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->server_template_skeletons_ = factory->make_outstream ();
+
   if (!this->server_template_skeletons_)
     {
       return -1;
@@ -685,72 +790,93 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
 
   if (this->server_template_skeletons_->open (fname,
                                               TAO_OutStream::TAO_SVR_TMPL_IMPL)
-      == -1)
-    return -1;
+        == -1)
+    {
+      return -1;
+    }
   else
     {
-      // now generate the #if !defined clause
+      // Now generate the #if !defined clause.
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       const char *suffix = ACE_OS::strrchr (fname, '.');
+
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
           // as it is.
           if (fname == 0)
-            // bad file name
-            return -1;
+            {
+              // Bad file name.
+              return -1;
+            }
           else
-            suffix = fname;
+            {
+              suffix = fname;
+            }
         }
 
       ACE_OS::sprintf (macro_name, "_TAO_IDL_");
-      // convert letters in fname to upcase
+
+      // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
-        if (isalpha (fname [i]))
-          macro_name[i+9] = (char) toupper (fname [i]);
-        else if (isdigit (fname [i]))
-          macro_name[i+9] = fname[i];
-        else
-          macro_name[i+9] = '_';
+        {
+          if (isalpha (fname [i]))
+            {
+              macro_name[i+9] = (char) toupper (fname [i]);
+            }
+          else if (isdigit (fname [i]))
+            {
+              macro_name[i+9] = fname[i];
+            }
+          else
+            {
+              macro_name[i+9] = '_';
+            }
+        }
 
       ACE_OS::strcat (macro_name, "_CPP_");
 
       this->server_template_skeletons_->print ("#ifndef %s\n", macro_name);
       this->server_template_skeletons_->print ("#define %s\n\n", macro_name);
 
-      // generate the include statement for the server header
-      *this->server_template_skeletons_ << "#include \"" <<
-        idl_global->be_get_server_template_hdr_fname (1) << "\"\n\n";
+      // Generate the include statement for the server header.
+      *this->server_template_skeletons_ 
+          << "#include \"" 
+          << be_global->be_get_server_template_hdr_fname (1) 
+          << "\"\n\n";
 
-      // generate the code that includes the inline file if not included in the
-      // header file
+      // Generate the code that includes the inline file if not included in the
+      // header file.
       *this->server_template_skeletons_ << "#if !defined (__ACE_INLINE__)\n";
-      *this->server_template_skeletons_ << "#include \"" <<
-        idl_global->be_get_server_template_inline_fname (1) << "\"\n";
+      *this->server_template_skeletons_ 
+          << "#include \"" 
+          << be_global->be_get_server_template_inline_fname (1) 
+          << "\"\n";
       *this->server_template_skeletons_ << "#endif /* !defined INLINE */\n\n";
 
       return 0;
     }
 }
 
-// get the server template skeletons stream
+// Get the server template skeletons stream.
 TAO_OutStream *
 TAO_CodeGen::server_template_skeletons (void)
 {
   return this->server_template_skeletons_;
 }
 
-// set the server inline stream
+// Set the server inline stream.
 int
 TAO_CodeGen::start_server_inline (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->server_inline_ = factory->make_outstream ();
+
   if (!this->server_inline_)
     {
       return -1;
@@ -759,22 +885,23 @@ TAO_CodeGen::start_server_inline (const char *fname)
   return this->server_inline_->open (fname, TAO_OutStream::TAO_SVR_INL);
 }
 
-// get the server inline stream
+// Get the server inline stream.
 TAO_OutStream *
 TAO_CodeGen::server_inline (void)
 {
   return this->server_inline_;
 }
 
-// set the server template inline stream
+// Set the server template inline stream.
 int
 TAO_CodeGen::start_server_template_inline (const char *fname)
 {
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->server_template_inline_ = factory->make_outstream ();
+
   if (!this->server_template_inline_)
     {
       return -1;
@@ -783,7 +910,7 @@ TAO_CodeGen::start_server_template_inline (const char *fname)
   return this->server_template_inline_->open (fname, TAO_OutStream::TAO_SVR_INL);
 }
 
-// get the server template inline stream
+// Get the server template inline stream.
 TAO_OutStream *
 TAO_CodeGen::server_template_inline (void)
 {
@@ -791,7 +918,7 @@ TAO_CodeGen::server_template_inline (void)
 }
 
 
-// set the server header stream.
+// Set the server header stream.
 int
 TAO_CodeGen::start_implementation_header (const char *fname)
 {
@@ -801,80 +928,71 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 
   idl_global->validate_included_idl_files ();
 
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->implementation_header_ = factory->make_outstream ();
+
   if (!this->implementation_header_)
     {
       return -1;
     }
 
-  if (this->implementation_header_->open (fname, TAO_OutStream::TAO_IMPL_HDR) == -1)
-    return -1;
+  if (this->implementation_header_->open (fname, 
+                                          TAO_OutStream::TAO_IMPL_HDR) 
+        == -1)
+    {
+      return -1;
+    }
   else
     {
-      // now generate the #ifndef clause
+      // Now generate the #ifndef clause.
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
       const char *suffix = ACE_OS::strrchr (fname, '.');
+
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
           // as it is.
           if (fname == 0)
-            // bad file name
-            return -1;
+            {
+              // Bad file name.
+              return -1;
+            }
           else
-            suffix = fname;
+            {
+              suffix = fname;
+            }
         }
 
       for (int i=0; i < (suffix - fname); i++)
-        if (isalpha (fname [i]))
-          macro_name[i] = (char) toupper (fname [i]);
-        else if (isdigit (fname [i]))
-          macro_name[i] = fname[i];
-      else
-      macro_name[i] = '_';
+        {
+          if (isalpha (fname [i]))
+            {
+              macro_name[i] = (char) toupper (fname [i]);
+            }
+          else if (isdigit (fname [i]))
+            {
+              macro_name[i] = fname[i];
+            }
+          else
+            {
+              macro_name[i] = '_';
+            }
+        }
 
       ACE_OS::strcat (macro_name, "_H_");
 
       this->implementation_header_->print ("#ifndef %s\n", macro_name);
       this->implementation_header_->print ("#define %s\n\n", macro_name);
 
-      // @@ (JP) I think the code below can be safely left out. It has
-      // been modified but not checked, so I'll leave it here for a
-      // while to make sure it's really safe to leave out. 2000/01/22
-#if 0
-      // We must include all the client headers corresponding to
-      // IDL files included by the current IDL file.
-      // We will use the included IDL file names as they appeared
-      // in the original main IDL file, not the ones which went
-      // thru CC preprocessor.
-      for (size_t j = 0;
-           j < idl_global->n_included_idl_files ();
-           ++j)
-            {
-              char* idl_name =
-                idl_global->included_idl_files ()[j];
-
-              // Stringifying the name.
-              UTL_String idl_name_str (idl_name);
-
-              const char* implementation_hdr =
-                IDL_GlobalData::be_get_client_hdr (&idl_name_str, 1);
-
-              this->implementation_header_->print ("#include \"%s\"\n",
-                                                   implementation_hdr);
-            }
-#endif
-
       const char* server_hdr =
-        IDL_GlobalData::be_get_server_hdr_fname (1);
+        BE_GlobalData::be_get_server_hdr_fname (1);
 
-      *this->implementation_header_<< "#include \""<<server_hdr<<"\"\n\n";
+      *this->implementation_header_<< "#include \"" << server_hdr <<"\"\n\n";
 
       *this->implementation_header_
         << "#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
@@ -886,7 +1004,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 }
 
 
-// get the implementation header stream
+// Get the implementation header stream.
 TAO_OutStream *
 TAO_CodeGen::implementation_header (void)
 {
@@ -894,7 +1012,7 @@ TAO_CodeGen::implementation_header (void)
 }
 
 
-// set the implementation skeleton stream.
+// Set the implementation skeleton stream.
 int
 TAO_CodeGen::start_implementation_skeleton (const char *fname)
 {
@@ -902,23 +1020,25 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
   // idl_global. We need to make sure the validity of those files.
   idl_global->validate_included_idl_files ();
 
-  // retrieve the singleton instance to the outstream factory
+  // Retrieve the singleton instance to the outstream factory.
   TAO_OutStream_Factory *factory = TAO_OUTSTREAM_FACTORY::instance ();
 
-  // retrieve a specialized instance
+  // Retrieve a specialized instance.
   this->implementation_skeleton_ = factory->make_outstream ();
+
   if (!this->implementation_skeleton_)
     {
       return -1;
     }
 
-  if (this->implementation_skeleton_->open (fname, TAO_OutStream::TAO_IMPL_SKEL) == -1)
-    return -1;
+  if (this->implementation_skeleton_->open (fname, 
+                                            TAO_OutStream::TAO_IMPL_SKEL) 
+        == -1)
+    {
+      return -1;
+    }
   else
     {
-
-
-
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
@@ -930,22 +1050,31 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
           // File seems to have no extension, so let us take the name
           // as it is.
           if (fname == 0)
-            // bad file name
-            return -1;
+            {
+              // Bad file name.
+              return -1;
+            }
           else
-            suffix = fname;
+            {
+              suffix = fname;
+            }
         }
 
-      // convert letters in fname to upcase
+      // Convert letters in fname to upper case.
       for (int i=0; i < (suffix - fname); i++)
-        if (isalpha (fname [i]))
-          macro_name[i] = fname [i];
-        else
-          macro_name[i] = fname[i];
-
+        {
+          if (isalpha (fname [i]))
+            {
+              macro_name[i] = fname [i];
+            }
+          else
+            {
+              macro_name[i] = fname[i];
+            }
+        }
 
       const char* impl_hdr =
-        IDL_GlobalData::be_get_implementation_hdr_fname ();
+        BE_GlobalData::be_get_implementation_hdr_fname ();
 
       this->implementation_skeleton_->print ("#include \"%s\"\n\n", impl_hdr);
 
@@ -954,37 +1083,40 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
 }
 
 
-// get the implementation header stream
+// Get the implementation header stream.
 TAO_OutStream *
 TAO_CodeGen::implementation_skeleton (void)
 {
   return this->implementation_skeleton_;
 }
 
-// put the last #endif in the client and server headers
+// Put the last #endif in the client and server headers.
 int
 TAO_CodeGen::end_client_header (void)
 {
-  // generate the <<= and >>= operators here
+  // Generate the <<= and >>= operators here.
 
-  // insert the code to include the inline file
+  // Insert the code to include the inline file.
   *this->client_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->client_header_ << "#include \"" <<
-    idl_global->be_get_client_inline_fname (1) << "\"\n";
+  *this->client_header_ << "#include \"" 
+                        << be_global->be_get_client_inline_fname (1) 
+                        << "\"\n";
   *this->client_header_ << "#endif /* defined INLINE */\n\n";
 
   *this->client_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */\n";
 
-  // code to put the last #endif
+  // Code to put the last #endif.
   *this->client_header_ << "\n";
-  if (idl_global->post_include () != 0)
+
+  if (be_global->post_include () != 0)
     {
       *this->client_header_ << "#include \""
-                            << idl_global->post_include ()
+                            << be_global->post_include ()
                             << "\"\n";
     }
+
   *this->client_header_ << "#endif /* ifndef */\n";
   return 0;
 }
@@ -992,32 +1124,35 @@ TAO_CodeGen::end_client_header (void)
 int
 TAO_CodeGen::end_server_header (void)
 {
-  // insert the template header
-  if (idl_global->gen_tie_classes ())
+  // Insert the template header.
+  if (be_global->gen_tie_classes ())
     {
       *this->server_header_ << "#include \""
-                            << idl_global->be_get_server_template_hdr_fname (1)
+                            << be_global->be_get_server_template_hdr_fname (1)
                             << "\"\n";
     }
 
-  // insert the code to include the inline file
+  // Insert the code to include the inline file.
   *this->server_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->server_header_ << "#include \"" <<
-    idl_global->be_get_server_inline_fname (1) << "\"\n";
+  *this->server_header_ << "#include \"" 
+                        << be_global->be_get_server_inline_fname (1) 
+                        << "\"\n";
   *this->server_header_ << "#endif /* defined INLINE */\n\n";
 
   *this->server_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                         << "#pragma warning(pop)\n"
                         << "#endif /* _MSC_VER */\n";
 
-  // code to put the last #endif
+  // Code to put the last #endif.
   *this->server_header_ << "\n";
-  if (idl_global->post_include () != 0)
+
+  if (be_global->post_include () != 0)
     {
       *this->server_header_ << "#include \""
-                            << idl_global->post_include ()
+                            << be_global->post_include ()
                             << "\"\n";
     }
+
   *this->server_header_ << "#endif /* ifndef */\n";
   return 0;
 }
@@ -1029,32 +1164,42 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 
   ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
   const char *suffix = ACE_OS::strrchr (fname, '.');
+
   if (suffix == 0)
     {
       // File seems to have no extension, so let us take the name
       // as it is.
       if (fname == 0)
-        // bad file name
-        return -1;
+        {
+          // Bad file name.
+          return -1;
+        }
       else
-        suffix = fname;
+        {
+          suffix = fname;
+        }
     }
 
-
-  // convert letters in fname to upcase
+  // Convert letters in fname to upper case.
   for (int i=0; i < (suffix - fname); i++)
-    if (isalpha (fname [i]))
-      macro_name[i] = (char) toupper (fname [i]);
-    else if (isdigit (fname [i]))
-      macro_name[i] = fname[i];
-    else
-      macro_name[i] = '_';
+    {
+      if (isalpha (fname [i]))
+        {
+          macro_name[i] = (char) toupper (fname [i]);
+        }
+      else if (isdigit (fname [i]))
+        {
+          macro_name[i] = fname[i];
+        }
+      else
+        {
+          macro_name[i] = '_';
+        }
+    }
 
   ACE_OS::strcat (macro_name, "_H_");
 
-
-  // code to put the last #endif
-  //*this->implementation_header_ << "\n#endif /* %s  */\n";
+  // Code to put the last #endif.
   this->implementation_header_->print ("\n#endif /* %s  */\n", macro_name);
   return 0;
 }
@@ -1062,38 +1207,46 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 int
 TAO_CodeGen::end_server_template_header (void)
 {
-  // insert the code to include the inline file
+  // Insert the code to include the inline file.
   *this->server_template_header_ << "\n#if defined (__ACE_INLINE__)\n";
-  *this->server_template_header_ << "#include \"" <<
-    idl_global->be_get_server_template_inline_fname (1) << "\"\n";
+  *this->server_template_header_ 
+      << "#include \"" 
+      << be_global->be_get_server_template_inline_fname (1) 
+      << "\"\n";
   *this->server_template_header_ << "#endif /* defined INLINE */\n\n";
 
-  // insert the code to include the template source file
+  // Insert the code to include the template source file.
   *this->server_template_header_
-    << "\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)\n";
-  *this->server_template_header_ << "#include \"" <<
-    idl_global->be_get_server_template_skeleton_fname (1) << "\"\n";
+      << "\n#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)\n";
+  *this->server_template_header_ 
+      << "#include \"" 
+      << be_global->be_get_server_template_skeleton_fname (1) 
+      << "\"\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED SOURCE */\n\n";
 
-  // insert the code to include the template pragma
+  // Insert the code to include the template pragma.
   *this->server_template_header_
-    << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
-  *this->server_template_header_ << "#pragma implementation (\"" <<
-    idl_global->be_get_server_template_skeleton_fname (1) << "\")\n";
+      << "\n#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)\n";
+  *this->server_template_header_ 
+      << "#pragma implementation (\"" 
+      << be_global->be_get_server_template_skeleton_fname (1) 
+      << "\")\n";
   *this->server_template_header_ << "#endif /* defined REQUIRED PRAGMA */\n\n";
 
   *this->server_template_header_ << "#if defined(_MSC_VER) && (_MSC_VER >= 1200)\n"
                                  << "#pragma warning(pop)\n"
                                  << "#endif /* _MSC_VER */\n";
 
-  // code to put the last #endif
+  // Code to put the last #endif.
   *this->server_template_header_ << "\n";
-  if (idl_global->post_include () != 0)
+
+  if (be_global->post_include () != 0)
     {
       *this->server_template_header_ << "#include \""
-                                     << idl_global->post_include ()
+                                     << be_global->post_include ()
                                      << "\"\n";
     }
+
   *this->server_template_header_ << "#endif /* ifndef */\n";
   return 0;
 }
@@ -1101,7 +1254,7 @@ TAO_CodeGen::end_server_template_header (void)
 int
 TAO_CodeGen::end_server_template_skeletons (void)
 {
-  // code to put the last #endif
+  // Code to put the last #endif.
   *this->server_template_skeletons_ << "\n#endif /* ifndef */\n";
   return 0;
 }
@@ -1130,7 +1283,7 @@ TAO_CodeGen::gperf_input_stream (void)
 void
 TAO_CodeGen::gperf_input_filename (char *filename)
 {
-  delete[] this->gperf_input_filename_;
+  delete  [] this->gperf_input_filename_;
   this->gperf_input_filename_ = ACE::strnew (filename);
 }
 
@@ -1170,18 +1323,6 @@ TAO_CodeGen::config_visitor_factory (void)
   // We have removed interpreted marshaling from TAO, so
   // TAO_INTERPRETIVE_VISITOR_FACTORY is no more.
   this->visitor_factory_ = TAO_COMPILED_VISITOR_FACTORY::instance ();
-}
-
-void
-TAO_CodeGen::lookup_strategy (LOOKUP_STRATEGY s)
-{
-  this->strategy_ = s;
-}
-
-TAO_CodeGen::LOOKUP_STRATEGY
-TAO_CodeGen::lookup_strategy (void) const
-{
-  return this->strategy_;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

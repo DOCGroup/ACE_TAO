@@ -89,13 +89,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-class   UTL_StrList : public UTL_List
+class TAO_IDL_FE_Export UTL_StrList : public UTL_List
 {
 public:
   // Operations
 
-  // Constructor(s)
+  // Constructor
   UTL_StrList(UTL_String *s, UTL_StrList *cdr);
+
+  // Destructor
+  virtual ~UTL_StrList (void);
 
   // AST Dumping
   virtual void          dump(ostream &o);
@@ -104,6 +107,9 @@ public:
 
   // Copy a list of strings
   virtual UTL_List      *copy();
+
+  // Cleanup method.
+  virtual void destroy (void);
 
   // Get list element
   UTL_String                *head();
@@ -120,7 +126,8 @@ private:
 };
 
 // Active iterator for  UTL_StrList
-class   UTL_StrlistActiveIterator : public UTL_ListActiveIterator
+class TAO_IDL_FE_Export UTL_StrlistActiveIterator 
+  : public UTL_ListActiveIterator
 {
 public:
   // Operations

@@ -143,7 +143,7 @@ A complete list of all modifications to TAO is available in the <a href="http://
 <a NAME="idl"></a>IDL Compiler</h3>
 Point of contact: <a href="mailto:parsons@cs.wustl.edu">
 Jeff Parsons</a>
-<p>Current status: (As of July 20, 2000.)
+<p>Current status: (As of August 23, 2000.)
 <ul>
 <li>
 Generated code closely follows the C++ Mapping specified in the latest
@@ -362,6 +362,36 @@ Removed generation of ostream operators for user exceptions, along with the
 command line option to suppress this generation. The ostream operator
 defined in the base class CORBA::Exception works fine and produces the same
 output.</li>
+
+<li>
+The TAO IDL compiler is no longer monolithic. It is composed of a top-level
+executable, a front end library and a back end library. This will enable
+different back ends to be plugged in for code generation in different
+languages, and for IfR administration. Different back ends may require
+a few changes to the executable (described below), but the front end
+library can remain unchanged. The chain of dependencies is as follows:
+<blockquote>
+FE : ACE<br>
+BE : FE<br>
+EXE : FE, BE<br>
+</blockquote>
+Executing the Makefile (or the TAO_IDL Compiler project in the MSVC 'tao_idl'
+workspace) will build whatever is required in the proper order, as before.
+Back end files, classes and functions required by the executable are as follows:
+<blockquote>
+be.h - file containing #includes of the major BE file headers.<br>
+TAO_Codegen - class, holds output stream references for the various generated files.<br>
+TAO_CODEGEN - ACE_Singleton typedef of the above class.<br>
+tao_cg - pointer to instance of TAO_CODEGEN.<br>
+be_generator - class, inherits from AST_Generator in FE and generates AST nodes.<br>
+void BE_produce (void) - global function, starts AST traversal for code generation.<br>
+BE_GlobalData - class, holds default/command line arg settings specific to BE.<br>
+be_global - pointer to instance of above class.<br>
+</blockquote>
+All the code in the executable that may need to be modified for different back
+ends in contained in the file drv_args.cpp. Code in this file processes the
+command line arguments, outputs a usage message, and performs other miscellaneous
+BE initiialization.</li>
 </ul>
 
 <p><br>Known bugs/unimplemented constructs:

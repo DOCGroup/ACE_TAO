@@ -169,6 +169,9 @@ protected:
   virtual void compute_prefix (void);
   // computes the prefix for the repoID
 
+  virtual void destroy ();
+  // Cleanup function.
+
   // variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.
   idl_bool cli_hdr_gen_;

@@ -107,7 +107,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
 
   // check if optimized typecodes are desired OR if the node is involved in
   // some form of recursion
-  if (idl_global->opt_tc () ||
+  if (be_global->opt_tc () ||
       node->in_recursion ())
     {
       if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -792,7 +792,7 @@ be_visitor_typecode_defn::gen_typecode (be_enum *node)
     }
   else
     {
-      if (idl_global->opt_tc ())
+      if (be_global->opt_tc ())
         {
           if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
             {
@@ -924,7 +924,7 @@ be_visitor_typecode_defn::gen_typecode (be_exception *node)
     }
   else
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -1072,7 +1072,7 @@ be_visitor_typecode_defn::gen_typecode (be_interface *node)
     }
   else
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -1243,7 +1243,7 @@ be_visitor_typecode_defn::gen_typecode (be_predefined_type *node)
                 }
               else
                 {
-                  if (idl_global->opt_tc () ||
+                  if (be_global->opt_tc () ||
                       node->in_recursion ())
                     {
                       if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -1469,7 +1469,7 @@ be_visitor_typecode_defn::gen_typecode (be_structure *node)
     }
   else
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -1584,7 +1584,7 @@ be_visitor_typecode_defn::gen_typecode (be_typedef *node)
     }
   else
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -1698,7 +1698,7 @@ be_visitor_typecode_defn::gen_typecode (be_union *node)
     }
   else
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->tc_queue_, node, this->tc_offset_) == 0)
@@ -2067,7 +2067,7 @@ be_visitor_typecode_defn::compute_tc_size (be_enum *node)
     }
   else 
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2177,7 +2177,7 @@ be_visitor_typecode_defn::compute_tc_size (be_exception *node)
     }
   else
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2304,7 +2304,7 @@ be_visitor_typecode_defn::compute_tc_size (be_interface *node)
     }
   else 
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2383,7 +2383,7 @@ be_visitor_typecode_defn::compute_tc_size (be_predefined_type *node)
       else 
         {
           
-          if (idl_global->opt_tc () ||
+          if (be_global->opt_tc () ||
               node->in_recursion ())
             {
               if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2516,7 +2516,7 @@ be_visitor_typecode_defn::compute_tc_size (be_structure *node)
   else 
     {
 
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2615,7 +2615,7 @@ be_visitor_typecode_defn::compute_tc_size (be_typedef *node)
   else 
     {
 
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2693,7 +2693,7 @@ be_visitor_typecode_defn::compute_tc_size (be_union *node)
     }
   else 
     {
-      if (idl_global->opt_tc () ||
+      if (be_global->opt_tc () ||
           node->in_recursion ())
         {
           if (this->queue_insert (this->compute_queue_, node, this->tc_offset_) == 0)
@@ -2833,7 +2833,7 @@ be_visitor_typecode_defn::gen_repoID (be_decl *node)
   // exception in which case it is mandatory to have the repository ID)
   // generate repoID
 
-  if (idl_global->opt_tc ())
+  if (be_global->opt_tc ())
     {
       switch (node->node_type ())
         {
@@ -2910,7 +2910,7 @@ be_visitor_typecode_defn::gen_name (be_decl *node)
   //    case. (Alex). 
 
   // Generate name.
-  if (idl_global->opt_tc ())
+  if (be_global->opt_tc ())
     {
       *os << "1, 0x0,";
       *os << " // name = " << node->local_name ();
@@ -2951,7 +2951,7 @@ be_visitor_typecode_defn::repoID_encap_len (be_decl *node)
   // exception in which case it is mandatory to have the repository ID)
   // generate repoID
 
-  if (idl_global->opt_tc ())
+  if (be_global->opt_tc ())
     {
       switch (node->node_type ())
         {
@@ -3002,7 +3002,7 @@ be_visitor_typecode_defn::repoID_encap_len (be_decl *node)
 ACE_CDR::ULong
 be_visitor_typecode_defn::name_encap_len (be_decl *node)
 {
-  if (idl_global->opt_tc ())
+  if (be_global->opt_tc ())
     {
       return 4 + 4;
     }

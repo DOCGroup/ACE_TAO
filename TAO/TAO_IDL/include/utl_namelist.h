@@ -89,7 +89,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-class   UTL_NameList : public UTL_List
+class TAO_IDL_FE_Export UTL_NameList : public UTL_List
 {
 public:
   // Operations

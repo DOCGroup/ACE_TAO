@@ -75,7 +75,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << " ()->get_collocation_strategy ())" << be_idt_nl
       << "{" << be_nl << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
 
-  if (idl_global->gen_thru_poa_collocation ())
+  if (be_global->gen_thru_poa_collocation ())
     *os << "{" << be_nl
         << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
@@ -91,7 +91,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
 
-  if (idl_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     *os << "if (obj->_servant () != 0)" << be_idt_nl
         << "{" << be_idt_nl
         << node->full_skel_name () << " *servant = ACE_reinterpret_cast ("
@@ -228,7 +228,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "CORBA::Boolean _tao_retval = 0;" << be_nl;
   *os << "CORBA::String_var value;" << be_nl;
   *os << "if (!(_tao_in >> value.out ()))" << be_idt_nl;
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << "throw CORBA::MARSHAL ();" << be_uidt_nl << be_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
@@ -238,7 +238,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "ACE_CHECK;" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
@@ -262,7 +262,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   *os << "ACE_CHECK;" << be_nl;
   *os << "TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();" << be_nl;
   *os << "if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))" << be_idt_nl;
-  if (idl_global->use_raw_throw ())
+  if (be_global->use_raw_throw ())
     *os << "throw CORBA::MARSHAL ();" << be_uidt << be_uidt_nl;
   else
     *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt << be_uidt_nl;
@@ -363,7 +363,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "case TAO_ORB_Core::THRU_POA:" << be_idt_nl;
 
       // Thru POA stub
-  if (idl_global->gen_thru_poa_collocation ())
+  if (be_global->gen_thru_poa_collocation ())
     *os << "{" << be_idt_nl
         << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
@@ -378,7 +378,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
       // Direct stub
   *os << "case TAO_ORB_Core::DIRECT:" << be_idt_nl;
-  if (idl_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     *os << "{" << be_idt_nl
         << "::" << node->full_name () << "_ptr retval = 0;" << be_nl
         << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
@@ -409,7 +409,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
   // generate the collocated class impl
-  if (idl_global->gen_thru_poa_collocation ())
+  if (be_global->gen_thru_poa_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_COLLOCATED_SS);
@@ -434,7 +434,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       delete visitor;
     }
 
-  if (idl_global->gen_direct_collocation ())
+  if (be_global->gen_direct_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS);

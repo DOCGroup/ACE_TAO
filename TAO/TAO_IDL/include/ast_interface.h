@@ -86,7 +86,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_decl.h"
 
 
-class   AST_Interface : public virtual AST_Type, public virtual UTL_Scope
+class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type, 
+                                        public virtual UTL_Scope
 {
 public:
   // Operations
@@ -142,6 +143,9 @@ public:
   // member's name, or if any parents' members' names
   // clash with each other.
   void inherited_name_clash (void);
+
+  // Cleanup function.
+  virtual void destroy (void);
 
   // Narrowing
   DEF_NARROW_METHODS2(AST_Interface, AST_Type, UTL_Scope);

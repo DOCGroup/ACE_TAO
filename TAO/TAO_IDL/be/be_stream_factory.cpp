@@ -1,25 +1,24 @@
 // $Id$
 
-#include	"idl.h"
-#include	"idl_extern.h"
-#include	"be.h"
-
-#include        "be_sunsoft.h"
+#include "idl.h"
+#include "idl_extern.h"
+#include "be.h"
+#include "be_sunsoft.h"
 
 ACE_RCSID(be, be_factory, "$Id$")
 
-// constructor
+// Constructor.
 TAO_OutStream_Factory::TAO_OutStream_Factory (void)
   : strm_type_ (TAO_OutStream_Factory::TAO_SUNSOFT)
 {
 }
 
-// destructor
+// Destructor.
 TAO_OutStream_Factory::~TAO_OutStream_Factory (void)
 {
 }
 
-// set the type of specialized o/p stream we want
+// Set the type of specialized output stream we want.
 int
 TAO_OutStream_Factory::set_stream_type
 (TAO_OutStream_Factory::TAO_OutStream_Type t)
@@ -28,7 +27,7 @@ TAO_OutStream_Factory::set_stream_type
   return 0;
 }
 
-// factory method
+// Factory method.
 TAO_OutStream *
 TAO_OutStream_Factory::make_outstream (void)
 {
@@ -37,7 +36,7 @@ TAO_OutStream_Factory::make_outstream (void)
     case TAO_OutStream_Factory::TAO_SUNSOFT:
       return new TAO_SunSoft_OutStream ();
     case TAO_OutStream_Factory::TAO_FLICK:
-      return (TAO_OutStream *)0;  // not implemented as yet
+      return (TAO_OutStream *)0;  // Not implemented as yet.
     default:
       return (TAO_OutStream *)0;
     }

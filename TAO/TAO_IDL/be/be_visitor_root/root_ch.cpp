@@ -44,8 +44,8 @@ int
 be_visitor_root_ch::init (void)
 {
   // first open the client-side header file for writing
-  if (tao_cg->start_client_header (idl_global->be_get_client_hdr_fname ())
-      == -1)
+  if (tao_cg->start_client_header (be_global->be_get_client_hdr_fname ())
+        == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_root_ch::init - "

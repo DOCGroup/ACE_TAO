@@ -179,7 +179,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << "{" << be_idt_nl
               << "if (cdr << *this)" << be_nl
               << "  return;" << be_nl;
-          if (idl_global->use_raw_throw ())
+          if (be_global->use_raw_throw ())
             *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
@@ -191,7 +191,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << "CORBA::Environment &ACE_TRY_ENV) const"
               << be_uidt << be_uidt_nl
               << "{" << be_idt_nl;
-          if (idl_global->use_raw_throw ())
+          if (be_global->use_raw_throw ())
             *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
@@ -211,7 +211,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << "{" << be_idt_nl
               << "if (cdr >> *this)" << be_nl
               << "  return;" << be_nl;
-          if (idl_global->use_raw_throw ())
+          if (be_global->use_raw_throw ())
             *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
@@ -223,7 +223,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
               << "CORBA::Environment &ACE_TRY_ENV)"
               << be_uidt << be_uidt_nl
               << "{" << be_idt_nl;
-          if (idl_global->use_raw_throw ())
+          if (be_global->use_raw_throw ())
             *os << "throw CORBA::MARSHAL ();" << be_uidt_nl;
           else
             *os << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl;
@@ -305,7 +305,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
             }
         }
 
-      if (!node->is_local () && idl_global->tc_support ())
+      if (!node->is_local () && be_global->tc_support ())
         {
           *os << "\n// TAO extension - the virtual _type method" << be_nl;
           *os << "CORBA::TypeCode_ptr " << node->name ()

@@ -59,7 +59,7 @@ be_visitor_operation_interceptors_arglist::visit_operation (be_operation *node)
     }
 
   // generate the CORBA::Environment parameter for the alternative mapping
-  if (!idl_global->exception_support ())
+  if (!be_global->exception_support ())
     {      
       os->indent ();
       switch (this->ctx_->state ())

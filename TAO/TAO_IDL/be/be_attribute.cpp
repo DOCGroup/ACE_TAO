@@ -25,13 +25,17 @@
 
 ACE_RCSID(be, be_attribute, "$Id$")
 
-/*
- * BE_Attribute
- */
 be_attribute::be_attribute (void)
-: get_strategy_ (new be_operation_default_strategy (0)),
-  set_strategy_ (new be_operation_default_strategy (0))
 {
+  be_operation_default_strategy *bods = 0;
+
+  ACE_NEW (bods,
+           be_operation_default_strategy (0));
+  this->get_strategy_ = bods;
+
+  ACE_NEW (bods,
+           be_operation_default_strategy (0));
+  this->set_strategy_ = bods;
 }
 
 be_attribute::be_attribute (idl_bool ro,
@@ -40,14 +44,31 @@ be_attribute::be_attribute (idl_bool ro,
                             UTL_StrList *p,
                             idl_bool local,
                             idl_bool abstract)
-  : AST_Attribute (ro, ft, n, p, local, abstract),
-    AST_Field (AST_Decl::NT_attr, ft, n, p),
-    AST_Decl (AST_Decl::NT_attr, n, p),
-    COMMON_Base (local, abstract),
-    get_strategy_ (new be_operation_default_strategy (0)),
-    set_strategy_ (new be_operation_default_strategy (0))
+  : AST_Attribute (ro, 
+                   ft, 
+                   n, 
+                   p, 
+                   local, 
+                   abstract),
+    AST_Field (AST_Decl::NT_attr, 
+               ft, 
+               n, 
+               p),
+    AST_Decl (AST_Decl::NT_attr, 
+              n, 
+              p),
+    COMMON_Base (local, 
+                 abstract)
 {
+  be_operation_default_strategy *bods = 0;
 
+  ACE_NEW (bods,
+           be_operation_default_strategy (0));
+  this->get_strategy_ = bods;
+
+  ACE_NEW (bods,
+           be_operation_default_strategy (0));
+  this->set_strategy_ = bods;
 }
 
 
@@ -65,7 +86,9 @@ be_attribute::set_set_strategy (be_operation_strategy *new_strategy)
   be_operation_strategy *old = this->set_strategy_;
 
   if (new_strategy != 0)
-    this->set_strategy_ = new_strategy;
+    {
+      this->set_strategy_ = new_strategy;
+    }
 
   return old;
 }
@@ -76,7 +99,9 @@ be_attribute::set_get_strategy (be_operation_strategy *new_strategy)
   be_operation_strategy *old = this->get_strategy_;
 
   if (new_strategy != 0)
-    this->get_strategy_ = new_strategy;
+    {
+      this->get_strategy_ = new_strategy;
+    }
 
   return old;
 }

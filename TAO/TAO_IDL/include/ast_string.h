@@ -77,7 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from ast.hh
 */
 
-class   AST_String : public virtual AST_ConcreteType
+class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:
   // Operations

@@ -1227,6 +1227,11 @@ AST_Interface::inherited_name_clash ()
     }
 }
 
+void
+AST_Interface::destroy (void)
+{
+}
+
 /*
  * Narrowing methods
  */

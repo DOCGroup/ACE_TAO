@@ -40,25 +40,16 @@ int
 be_visitor_root_is::init (void)
 {
   // first open the file for writing
-  if (tao_cg->start_implementation_skeleton (idl_global
-                                      ->be_get_implementation_skel_fname ())
+  if (tao_cg->start_implementation_skeleton (
+          be_global->be_get_implementation_skel_fname ()
+        )
       == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_is::init - "
                          "Error opening implementation skeletons file\n"), -1);
     }
-  /*
-  if (tao_cg->start_server_template_skeletons
-      (idl_global->be_get_server_template_skeleton_fname ())
-      == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_root_ss::init - "
-                         "Error opening server template skeleton file\n"),
-                        -1);
-    }
-  */
+
   // set stream
   this->ctx_->stream (tao_cg->implementation_skeleton ());
   return 0;

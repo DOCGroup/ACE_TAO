@@ -80,47 +80,54 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(fe, fe_extern, "$Id$")
 
-/*
- * yacc parser interface
- */
+// yacc parser interface
 
-extern int tao_yyparse();
-extern FILE * tao_yyin;
+extern int tao_yyparse ();
+extern FILE *tao_yyin;
 
 int
-FE_yyparse()
+FE_yyparse ()
 {
-  int result = tao_yyparse();
-  if (idl_global->err_count() == 0) {
-    idl_global->root()->call_add();
-  }
-  return result;
+  return tao_yyparse ();
 }
 
 void
-FE_set_yyin(File * f)
+FE_set_yyin (File *f)
 {
-  tao_yyin = ACE_reinterpret_cast(FILE*,f);
+  tao_yyin = ACE_reinterpret_cast (FILE *, f);
 }
 
-/*
- * constructor interfaces 
- */
+// constructor interfaces 
 
 UTL_Error *
-FE_new_UTL_Error()
+FE_new_UTL_Error (void)
 {
-  return new UTL_Error();
+  UTL_Error *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  UTL_Error,
+                  0);
+
+  return retval;
 }
 
 UTL_Indenter *
-FE_new_UTL_Indenter()
+FE_new_UTL_Indenter (void)
 {
-  return new UTL_Indenter();
+  UTL_Indenter *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  UTL_Indenter,
+                  0);
+
+  return retval;
 }
 
 UTL_String *
-FE_new_UTL_String(char * str)
+FE_new_UTL_String (char *str)
 {
-  return new UTL_String(str);
+  UTL_String *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  UTL_String,
+                  0);
+
+  return retval;
 }

@@ -87,7 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include        "ast_decl.h"
 
 
-class   AST_Field : public virtual AST_Decl
+class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {
 public:
   enum Visibility {vis_NA, vis_PUBLIC, vis_PRIVATE};

@@ -75,7 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 ** USE: Included from util.hh
 */
 
-class UTL_String
+class TAO_IDL_FE_Export UTL_String
 {
   // =TITLE
   //  UTL_String
@@ -118,6 +118,9 @@ public:
 
   virtual long compare_quiet (UTL_String *s);
   // Like the above but without error or warning message output.
+
+  virtual void destroy (void);
+  // Cleanup function.
 
 private:
   // Data

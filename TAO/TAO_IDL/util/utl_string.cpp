@@ -95,8 +95,8 @@ UTL_String::UTL_String (const char *str)
     {
       len = ACE_OS::strlen (str);
       alloced = len + 1;
-      p_str = new char [alloced];
-      c_str = new char [alloced];
+      p_str = ACE_OS::strdup (str);
+      c_str = ACE_OS::strdup (str);
       ACE_OS::strcpy (p_str, str);
       canonicalize ();
     }
@@ -143,17 +143,6 @@ UTL_String::UTL_String (UTL_String *s)
 
 UTL_String::~UTL_String (void)
 {
-  if (this->p_str)
-    {
-      delete [] this->p_str;
-      this->p_str = 0;
-    }
-
-  if (this->c_str)
-    {
-      delete [] this->c_str;
-      this->c_str = 0;
-    }
 }
 
 /*
@@ -228,23 +217,43 @@ UTL_String::compare_quiet (UTL_String *s)
   return result;
 }
 
+void
+UTL_String::destroy (void)
+{
+  if (this->p_str != 0)
+    {
+      ACE_OS::free (this->p_str);
+      this->p_str = 0;
+    }
+
+  if (this->c_str != 0)
+    {
+      ACE_OS::free (this->c_str);
+      this->c_str = 0;
+    }
+}
+
 // Get the char * from a String
 char *
 UTL_String::get_string (void)
 {
-  return p_str;
+  return this->p_str;
 }
 
 // Get the canonical representation from a String
 char *
 UTL_String::get_canonical_rep (void)
 {
-  if (c_str == NULL)
+  if (this->c_str == NULL)
     {
-      c_str = new char [alloced];
+      ACE_NEW_RETURN (this->c_str,
+                      char [this->alloced],
+                      0);
+
       canonicalize ();
     }
-  return c_str;
+
+  return this->c_str;
 }
 
 /*

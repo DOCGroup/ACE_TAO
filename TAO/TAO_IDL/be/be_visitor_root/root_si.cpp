@@ -44,18 +44,18 @@ int
 be_visitor_root_si::init (void)
 {
   // first open the file for writing
-  if (tao_cg->start_server_inline (idl_global->be_get_server_inline_fname ())
-      == -1)
+  if (tao_cg->start_server_inline (be_global->be_get_server_inline_fname ())
+        == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_root_si::init - "
                          "server inline open failed\n"), -1);
     }
 
-  if (idl_global->gen_tie_classes ())
+  if (be_global->gen_tie_classes ())
     {
       if (tao_cg->start_server_template_inline (
-              idl_global->be_get_server_template_inline_fname ()
+              be_global->be_get_server_template_inline_fname ()
             )
           == -1)
         {

@@ -55,7 +55,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
       *os << "struct " << node->local_name () << ";" << be_nl;
       *os << "class " << node->local_name () << "_var;" << be_nl << be_nl;
 
-      *os << "struct " << idl_global->stub_export_macro () << " "
+      *os << "struct " << be_global->stub_export_macro () << " "
           << node->local_name () << be_nl
           << "{" << be_idt << "\n\n";
 

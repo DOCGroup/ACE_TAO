@@ -286,7 +286,7 @@ be_visitor_array_ch::gen_var_defn (be_array *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << idl_global->stub_export_macro ()
+  *os << "class " << be_global->stub_export_macro ()
       << " " << varnamebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -384,7 +384,7 @@ be_visitor_array_ch::gen_out_defn (be_array *node)
   // generate the out definition (always in the client header)
   os->indent (); // start with whatever was our current indent level
 
-  *os << "class " << idl_global->stub_export_macro ()
+  *os << "class " << be_global->stub_export_macro ()
       << " " << outnamebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;
@@ -451,7 +451,7 @@ be_visitor_array_ch::gen_forany_defn (be_array *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << idl_global->stub_export_macro ()
+  *os << "class " << be_global->stub_export_macro ()
       << " " << foranyname << be_nl;
   *os << "{" << be_nl;
   *os << "public:" << be_idt_nl;

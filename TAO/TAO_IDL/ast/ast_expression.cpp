@@ -1658,7 +1658,9 @@ AST_Expression::eval_symbol(AST_Expression::EvalKind ek)
 AST_Expression::AST_ExprValue *
 AST_Expression::coerce(AST_Expression::ExprType t)
 {
-  AST_ExprValue *copy = 0;
+  // Holds result.
+  AST_ExprValue result;
+  AST_ExprValue *copy = &result;
 
   /*
    * Is it already of the right type?
@@ -1703,11 +1705,6 @@ AST_Expression::coerce(AST_Expression::ExprType t)
 
   if (pd_ev == NULL)
     return NULL;
-
-  /*
-   * Create a copy to contain coercion result
-   */
-  copy = new AST_ExprValue;
 
   copy->et = pd_ev->et;
   switch (pd_ev->et)
@@ -2138,7 +2135,7 @@ AST_Expression::dump(ostream &o)
   case EC_none:
     break;
   default:
-    o << GTDEVEL("unsupported dump mode for expression with ec == ")
+    o << ACE_TEXT ("unsupported dump mode for expression with ec == ")
       << (int) pd_ec ;
     break;
   }

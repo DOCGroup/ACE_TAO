@@ -25,19 +25,25 @@
 
 ACE_RCSID(be, be_argument, "$Id$")
 
-/*
- * BE_Argument
- */
-
 be_argument::be_argument (void)
 {
 }
 
-be_argument::be_argument (AST_Argument::Direction d, AST_Type *ft,
-                          UTL_ScopedName *n, UTL_StrList *p)
-  : AST_Argument (d, ft, n, p),
-    AST_Field (AST_Decl::NT_argument, ft, n, p),
-    AST_Decl (AST_Decl::NT_argument, n, p)
+be_argument::be_argument (AST_Argument::Direction d, 
+                          AST_Type *ft,
+                          UTL_ScopedName *n, 
+                          UTL_StrList *p)
+  : AST_Argument (d, 
+                  ft, 
+                  n, 
+                  p),
+    AST_Field (AST_Decl::NT_argument, 
+               ft, 
+               n, 
+               p),
+    AST_Decl (AST_Decl::NT_argument, 
+              n, 
+              p)
 {
 }
 

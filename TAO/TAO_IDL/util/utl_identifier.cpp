@@ -87,17 +87,12 @@ Identifier::Identifier (const char *s, long, long, long)
 
 Identifier::~Identifier () 
 {
-  if (this->pv_string != 0)
-    {
-      // The string was allocated using strdup, which uses malloc.
-      ACE_OS::free (this->pv_string);
-    }
 }
 
 // Operations
 
 char *
-Identifier::get_string ()
+Identifier::get_string (void)
 {
   return pv_string;
 }
@@ -106,7 +101,9 @@ void
 Identifier::replace_string (const char * s)
 {
   if (this->pv_string)
-    ACE_OS::free (this->pv_string);
+    {
+      ACE_OS::free (this->pv_string);
+    }
 
   pv_string = ACE_OS::strdup (s);
 }
@@ -128,7 +125,12 @@ Identifier::case_compare (Identifier *o)
   UTL_String member (this->pv_string);
   UTL_String other (o->get_string ());
 
-  return member.compare (&other);
+  long result = member.compare (&other);
+
+  member.destroy ();
+  other.destroy ();
+
+  return result;
 }
 
 // Report no error if the two identifiers differ only in case.
@@ -138,16 +140,44 @@ Identifier::case_compare_quiet (Identifier *o)
   UTL_String member (this->pv_string);
   UTL_String other (o->get_string ());
 
-  return member.compare_quiet (&other);
+  long result = member.compare_quiet (&other);
+
+  member.destroy ();
+  other.destroy ();
+
+  return result;
+}
+
+Identifier *
+Identifier::copy (void)
+{
+  Identifier *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  Identifier (this->pv_string,
+                              1,
+                              0,
+                              I_FALSE),
+                  0);
+
+  return retval;
 }
 
 // Dumping
-
 void
 Identifier::dump (ostream &o)
 {
   if (pv_string == NULL) return;
 
   o << get_string();
+}
+
+void
+Identifier::destroy (void)
+{
+  if (this->pv_string)
+    {
+      ACE_OS::free (this->pv_string);
+      this->pv_string = 0;
+    }
 }
 

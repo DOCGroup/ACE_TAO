@@ -834,8 +834,16 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
   // implementing all the classes for it.
   UTL_String arg (e->get_string ());
   UTL_String test ("fixed");
-  if (arg.compare (&test))
-    return NULL;
+
+  long equal = arg.compare (&test);
+
+  arg.destroy ();
+  test.destroy ();
+
+  if (equal)
+    {
+      return NULL;
+    }
 
   UTL_ScopeActiveIterator *i = 
     new UTL_ScopeActiveIterator (this,
@@ -1498,70 +1506,86 @@ UTL_Scope::referenced (AST_Decl *e,
   return I_FALSE;               // Not found
 }
 
-/*
- * Redefinition of inherited virtual operations
- */
+// Redefinition of inherited virtual operations
 
 // AST Dumping
 void
 UTL_Scope::dump (ostream &o)
 {
-  UTL_ScopeActiveIterator       *i;
-  AST_Decl                      *d;
+  UTL_ScopeActiveIterator *i;
+  AST_Decl *d;
 
-  if (idl_global->indent() == NULL)
-    idl_global->set_indent(new UTL_Indenter());
+  if (idl_global->indent () == 0)
+    idl_global->set_indent (new UTL_Indenter ());
 
-  idl_global->indent()->increase();
+  idl_global->indent ()->increase ();
 
-  if (pd_locals_used > 0) {
-    i = new UTL_ScopeActiveIterator(this, UTL_Scope::IK_localtypes);
+  if (pd_locals_used > 0) 
+    {
+      i = new UTL_ScopeActiveIterator (this, 
+                                       UTL_Scope::IK_localtypes);
 
-    o << GTDEVEL("\n/* Locally defined types: */\n");
-    while (!(i->is_done())) {
-      d = i->item();
-      if (!d->imported()) {
-        idl_global->indent()->skip_to(o);
-        d->dump(o);
-        o << "\n";
-      }
-      i->next();
+      o << ("\n/* Locally defined types: */\n");
+
+      while (!(i->is_done ())) 
+        {
+          d = i->item ();
+
+          if (!d->imported ()) 
+            {
+              idl_global->indent ()->skip_to (o);
+              d->dump (o);
+              o << "\n";
+            }
+
+          i->next ();
+        }
+
+      delete i;
     }
-    delete i;
-  }
 
-  if (pd_decls_used > 0) {
-    i = new UTL_ScopeActiveIterator(this, UTL_Scope::IK_decls);
+  if (pd_decls_used > 0) 
+    {
+      i = new UTL_ScopeActiveIterator (this, 
+                                       UTL_Scope::IK_decls);
 
-    o << GTDEVEL("\n/* Declarations: */\n");
-    while (!(i->is_done())) {
-      d = i->item();
-      if (!d->imported()) {
-        idl_global->indent()->skip_to(o);
-        d->dump(o);
-        o << ";\n";
-      }
-      i->next();
+      o << ACE_TEXT ("\n/* Declarations: */\n");
+
+      while (!(i->is_done ())) 
+        {
+          d = i->item ();
+
+          if (!d->imported ()) 
+            {
+              idl_global->indent ()->skip_to (o);
+              d->dump (o);
+              o << ";\n";
+            }
+
+          i->next ();
+        }
+
+      delete i;
     }
-    delete i;
-  }
 
-  idl_global->indent()->decrease();
+  idl_global->indent ()->decrease ();
 }
 
 // How many entries are defined?
 unsigned long
 UTL_Scope::nmembers()
 {
-   return pd_decls_used;
+  return pd_decls_used;
+}
+
+void
+UTL_Scope::destroy (void)
+{
 }
 
 // UTL_SCOPE_ACTIVE_ITERATOR
 
-/*
- * Constructor
- */
-
+// Constructor
 UTL_ScopeActiveIterator::UTL_ScopeActiveIterator(
                                        UTL_Scope *s,
                                        UTL_Scope::ScopeIterationKind i)
@@ -1574,13 +1598,7 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator(
 {
 }
 
-/*
- * Private operations
- */
-
-/*
- * Public operations
- */
+// Public operations
 
 // Advance to next iterm
 void

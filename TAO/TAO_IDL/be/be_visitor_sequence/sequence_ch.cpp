@@ -317,7 +317,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << be_nl << be_nl;
 
   // generate a typedef to a parametrized sequence
-  *os << "class " << idl_global->stub_export_macro ()
+  *os << "class " << be_global->stub_export_macro ()
       << " " << node->local_name () << " : public ";
 
   if (this->gen_base_sequence_class (node) == -1)
@@ -492,7 +492,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << idl_global->stub_export_macro ()
+  *os << "class " << be_global->stub_export_macro ()
       << " " << namebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:\n";
@@ -622,7 +622,7 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   // generate the out definition (always in the client header)
   os->indent (); // start with whatever was our current indent level
 
-  *os << "class " << idl_global->stub_export_macro () << " "
+  *os << "class " << be_global->stub_export_macro () << " "
       << namebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:\n";

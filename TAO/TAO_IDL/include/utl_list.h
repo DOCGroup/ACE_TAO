@@ -92,59 +92,61 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Forward declare active iterator for UTL_List
 class   UTL_ListActiveIterator;
 
-class   UTL_List
+class TAO_IDL_FE_Export UTL_List
 {
 public:
   // Operations
 
-  // Constructor(s)
-  UTL_List(UTL_List *c);
+  // Constructor
+  UTL_List (UTL_List *c);
+
+  // Destructor
+  virtual ~UTL_List (void);
 
   // Smash last cdr pointer in "this" with l
-  void                  nconc(UTL_List *l);
+  void nconc (UTL_List *l);
 
   // Copy the list starting at "this"
-  virtual UTL_List      *copy();
+  virtual UTL_List *copy ();
 
   // Get next list
-  UTL_List              *tail();
+  UTL_List *tail ();
 
   // Set next list
-  void                  set_tail(UTL_List *l);
+  void set_tail (UTL_List *l);
 
   // How long is this list?
-  long                  length();
+  long length ();
 
 private:
   // Data
-  UTL_List              *pd_cdr_data;   // The next list
+  UTL_List *pd_cdr_data;   // The next list
 
   // Operations
-  long                  list_length(long n); // How long is it?
+  long list_length (long n); // How long is it?
 
   // Friend class
-  friend class          UTL_ListActiveIterator; // Friend class
-
+  friend class UTL_ListActiveIterator; // Friend class
 };
 
 // Active iterator for lists
-class   UTL_ListActiveIterator
+class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
   // Operations
 
   // Constructor(s)
-  UTL_ListActiveIterator(UTL_List *s);
+  UTL_ListActiveIterator (UTL_List *s);
 
   // Get next list
-  virtual void          next();
+  virtual void next ();
 
   // Are we at the end of this list?
-  virtual long          is_done();
+  virtual long is_done ();
 
 protected:
   // Data
-  UTL_List              *source;                // On what to iterate?
+  UTL_List *source;                // On what to iterate?
 };
 
 #endif           // _UTL_LIST_UTL_LIST_HH

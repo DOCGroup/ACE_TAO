@@ -53,6 +53,9 @@ public:
   AST_String   *fe_add_string (AST_String *);
   AST_Array    *fe_add_array (AST_Array *);
 
+  virtual void destroy (void);
+  // Cleanup method.
+
   // Visiting
   virtual int accept (be_visitor *visitor);
 
