@@ -15,7 +15,8 @@
 //      are then dequeued by the consumer.
 //
 // = AUTHOR
-//    Prashant Jain and Doug Schmidt
+//    Prashant Jain <pjain@cs.wustl.edu> and 
+//    Douglas C. Schmidt <schmidt@cs.wustl.edu>
 //
 // ============================================================================
 

@@ -38,7 +38,6 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
   char *temp;
 
   this->flags_ = 0;
-  this->filename_ = ACE_DEFAULT_LOGFILE;
 
   ACE_Get_Opt get_opt (argc, argv, "f:s:", 0);
 
@@ -54,13 +53,25 @@ ACE_Logging_Strategy::parse_args (int argc, char *argv[])
 	case 's':
 	  // Ensure that the OSTREAM flag is set
 	  ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
-	  this->filename_ = get_opt.optarg;
+          ACE_OS::free ((void *) this->filename_);
+	  this->filename_ = ACE_OS::strdup (get_opt.optarg);
 	  break;
 	default:
 	  break;
 	}
     }
   return 0;
+}
+
+ACE_Logging_Strategy::ACE_Logging_Strategy (void)
+  : filename_ (ACE_OS::strdup (ACE_DEFAULT_LOGFILE))
+{
+}
+
+int
+ACE_Logging_Strategy::fini (void)
+{
+  ACE_OS::free ((void *) this->filename_);
 }
 
 int

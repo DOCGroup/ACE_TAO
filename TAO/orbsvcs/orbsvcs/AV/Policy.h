@@ -13,7 +13,6 @@
 // = AUTHOR
 //    Nagarajan Surendran <naga@cs.wustl.edu>
 //
-//
 // ============================================================================
 
 #ifndef TAO_AV_POLICY_H
@@ -55,8 +54,7 @@ protected:
   CORBA::ULong type_;
 };
 
-class TAO_AV_SSRC_Policy
-  :public TAO_AV_Policy
+class  TAO_AV_Export TAO_AV_SSRC_Policy : public TAO_AV_Policy
 {
 public:
   TAO_AV_SSRC_Policy (CORBA::ULong ssrc = 0);
@@ -66,8 +64,7 @@ protected:
   CORBA::ULong ssrc_;
 };
 
-class TAO_AV_Payload_Type_Policy
-  :public TAO_AV_Policy
+class  TAO_AV_Export TAO_AV_Payload_Type_Policy : public TAO_AV_Policy
 {
 public:
   TAO_AV_Payload_Type_Policy (int payload_type = -1);
@@ -77,9 +74,7 @@ protected:
   int payload_type_;
 };
 
-
-class TAO_AV_RTCP_Sdes_Policy
-  :public TAO_AV_Policy
+class TAO_AV_Export TAO_AV_RTCP_Sdes_Policy : public TAO_AV_Policy
 {
 public:
   TAO_AV_RTCP_Sdes_Policy (void);
@@ -89,7 +84,7 @@ protected:
   TAO_AV_RTCP_Sdes sdes_;
 };
 
-class TAO_AV_SFP_Credit_Policy : public TAO_AV_Policy
+class TAO_AV_Export TAO_AV_SFP_Credit_Policy : public TAO_AV_Policy
 {
 public:
   TAO_AV_SFP_Credit_Policy (void);
@@ -105,7 +100,7 @@ class TAO_AV_Protocol_Object;
 class TAO_AV_Transport;
 class TAO_AV_Flow_Handler;
 
-class TAO_AV_Callback
+class TAO_AV_Export TAO_AV_Callback
 {
   // = TITLE
   //     Callback class that the user will be implementing for receiving
