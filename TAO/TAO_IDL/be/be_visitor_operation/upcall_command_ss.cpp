@@ -153,11 +153,27 @@ be_visitor_operation_upcall_command_ss::visit (be_operation * node,
 
       if (be_global->gen_thru_poa_collocation ())
         {
-          os << "get_ret_arg< ";
+          os << "TAO::Portable_Server::get_ret_arg< ";
 
           this->gen_arg_template_param_name (node,
                                              node->return_type (),
                                              &os);
+
+          // ------
+          // Because of MSVC++ 6's lack of template typedef support,
+          // explicitly specify the return value type for the argument
+          // selection function template.
+          /**
+           * @todo Remove this code once we drop support for MSVC++ 6,
+           *       and update tao/PortableServer/get_arg.h"
+           *       accordingly.
+           */
+          os << ", TAO::SArg_Traits< ";
+          this->gen_arg_template_param_name (node,
+                                             node->return_type (),
+                                             &os);
+          os << ">::ret_arg_type";
+          // ------
 
           os << "> (" << be_idt_nl
              << "this->operation_details_," << be_nl
@@ -253,7 +269,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
 
       if (be_global->gen_thru_poa_collocation ())
         {
-          os << "get_";
+          os << "TAO::Portable_Server::get_";
 
           switch (arg->direction ())
             {
@@ -274,6 +290,38 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
           this->gen_arg_template_param_name (arg,
                                              arg->field_type (),
                                              &os);
+
+          // ------
+          // Because of MSVC++ 6's lack of template typedef support,
+          // explicitly specify the return value type for the argument
+          // selection function template.
+          /**
+           * @todo Remove this code once we drop support for MSVC++ 6,
+           *       and update tao/PortableServer/get_arg.h"
+           *       accordingly.
+           */
+          os << ", TAO::SArg_Traits< ";
+          this->gen_arg_template_param_name (arg,
+                                             arg->field_type (),
+                                             &os);
+          os << ">::";
+
+          switch (arg->direction ())
+            {
+            case AST_Argument::dir_IN:
+              os << "in";
+              break;
+            case AST_Argument::dir_INOUT:
+              os << "inout";
+              break;
+            case AST_Argument::dir_OUT:
+              os << "out";
+            default:
+              break;
+            }
+
+          os << "_arg_type";
+          // ------
 
           os << "> (" << be_idt_nl
              << "this->operation_details_," << be_nl
@@ -312,8 +360,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
 
     }
 
-
-
   if (!node->void_return_type ())
     {
       os << be_nl
@@ -332,51 +378,6 @@ be_visitor_operation_upcall_command_ss::gen_upcall (be_operation * node)
     os << "ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
   else
     os << "ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl;
-
-//   UTL_ScopeActiveIterator si (node,
-//                               UTL_Scope::IK_decls);
-
-//   if (si.is_done ())
-//     {
-//       os << be_nl
-//          << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
-//          << ");";
-
-//       return 0;
-//     }
-
-//   int index = 1;
-
-//   for (; !si.is_done (); si.next (), ++index)
-//     {
-//       AST_Argument * const arg =
-//         AST_Argument::narrow_from_decl (si.item ());
-
-//       os << (index == 1 ? "" : ",") << be_nl
-//          << "static_cast<TAO::SArg_Traits< ";
-
-//       this->gen_arg_template_param_name (arg,
-//                                          arg->field_type (),
-//                                          &os);
-
-//       os << ">::";
-
-//       switch (arg->direction ())
-//         {
-//         case AST_Argument::dir_IN:
-//           os << "in";
-//           break;
-//         case AST_Argument::dir_INOUT:
-//           os << "inout";
-//           break;
-//         case AST_Argument::dir_OUT:
-//           os << "out";
-//         default:
-//           break;
-//         }
-
-//       os << "_arg_val *> (this->args_[" << index << "])->arg ()";
-//     }
 
   return 0;
 }
