@@ -1,9 +1,11 @@
 Tue Nov  9 17:12:10 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/Endpoint_Per_Priority/client.dsp:
+	* tests/Endpoint_Per_Priority/server.dsp:
 	  I forgot to configure the compile settings for test.idl. It
 	  had been done only in the server project. Thanks to 
-	  Marina for pointing this out.
+	  Marina for pointing this out. Also set 'additional library
+	  paths' in both projects, thanks to Irfan's advice.
 
 Tue Nov  9 16:16:24 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
