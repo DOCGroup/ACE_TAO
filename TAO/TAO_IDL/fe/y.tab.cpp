@@ -4807,8 +4807,10 @@ tao_yyreduce:
           if (tao_yyvsp[-2].dcval != 0
               && AST_illegal_recursive_type (tao_yyvsp[-2].dcval))
             {
-            idl_global->err()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
-                                       tao_yyvsp[-2].dcval);
+              idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
+                                          tao_yyvsp[-2].dcval);
+                                          
+              tao_yyval.ffval = 0;
             }
           /*
            * Create a field in a union branch

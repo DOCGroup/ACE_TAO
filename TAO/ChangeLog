@@ -1,3 +1,13 @@
+Thu Feb 26 01:59:57 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_}IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        
+          Set the return token value to 0 if, when parsing a union
+          branch, we find that it is an illegal recursive type.
+          This prevents a crash on subsequent processing. Thanks to
+          Hans Bos for reporting the bug.
+
 Wed Feb 25 10:48:17 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/FTEC_Gateway.cpp:
