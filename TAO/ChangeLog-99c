@@ -1,3 +1,23 @@
+Thu Jan  7 21:24:43 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/CosEvent_Service/CosEvent_Service.cpp
+	  1. The parse_args method accepts Event and Source Ids from
+	     the command line.
+	  2. The scheduler has an option of being local or remote.
+	     (specifying remote does not work very well yet).
+	  3. added methods init_SupplierQOS  and init_ConsumerQOS.
+
+	created the CosEC_Multiple test, added all these files:
+	* orbsvcs/tests/CosEvent_Multiple.h
+	* orbsvcs/tests/CosEvent_Multiple.cpp
+	  Base class for test consumer and supplier implementation.
+	* orbsvcs/tests/CosECConsumer.h
+	* orbsvcs/tests/CosECConsumer.cpp
+	* orbsvcs/tests/CosECSupplier.h
+	* orbsvcs/tests/CosECSupplier.cpp
+	* orbsvcs/tests/Makefile
+	* orbsvcs/tests/README
+
 Thu Jan  7 19:07:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/try_macros.h (TAO_CATCHANY):  Don't treat the macro
