@@ -17,12 +17,12 @@ Task_State::Task_State (int argc, char **argv)
     shutdown_ (0),
     oneway_ (0),
     use_name_service_ (1),
+    one_to_n_test_ (0),
+    context_switch_test_ (0),
     ior_file_ (0),
     granularity_ (1),
     use_utilization_test_ (0),
-    high_priority_loop_count_ (0),
-    one_to_n_test_ (0),
-    context_switch_test_ (0)
+    high_priority_loop_count_ (0)
 {
   ACE_Get_Opt opts (argc, argv, "usn:t:d:rk:xof:g:1c");
   int c;
@@ -114,7 +114,7 @@ Task_State::Task_State (int argc, char **argv)
     {
       FILE *ior_file = ACE_OS::fopen (ior_file_, "r");
       char buf[BUFSIZ];
-      int i = 0;
+      u_int i = 0;
       int j = 0;
 
       while (ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0 && i < thread_count_)
@@ -148,7 +148,7 @@ Task_State::Task_State (int argc, char **argv)
     }
 
   ACE_NEW (semaphore_,
-	   ACE_Thread_Semaphore (0));
+           ACE_Thread_Semaphore (0));
   ACE_NEW (latency_,
            double [thread_count_]);
   ACE_NEW (global_jitter_array_,
@@ -298,8 +298,8 @@ Client::svc (void)
   // Add the argument.
   ACE_OS::strcat (tmp_buf,
                   " -ORBobjrefstyle url "
-		  " -ORBrcvsock 32768 "
-		  " -ORBsndsock 32768 ");
+                  " -ORBrcvsock 32768 "
+                  " -ORBsndsock 32768 ");
 
   // Convert back to argv vector style.
   ACE_ARGV tmp_args2 (tmp_buf);
@@ -393,7 +393,7 @@ Client::svc (void)
           {
             ACE_DEBUG ((LM_DEBUG,
                         " (%t) ----- Using the NameService resolve() method"
-			" to get cubit objects -----\n"));
+                        " to get cubit objects -----\n"));
 
             // Construct the key for the name service lookup.
             CosNaming::Name mt_cubit_context_name (1);
@@ -435,7 +435,7 @@ Client::svc (void)
                 ACE_DEBUG ((LM_DEBUG,
                             " (%t) resolve() returned nil\n"));
                 TAO_TRY_ENV.print_exception ("Attempt to resolve() a cubit object"
-					     "using the name service Failed!\n");
+                                             "using the name service Failed!\n");
               }
             else
               {
@@ -447,75 +447,75 @@ Client::svc (void)
           }
 
         if (naming_success == CORBA::B_FALSE)
-	  {
-	    if (ts_->factory_ior_ != 0)
-	      {
-		ACE_DEBUG ((LM_DEBUG,
-			    " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
+          {
+            if (ts_->factory_ior_ != 0)
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            " (%t) ----- Using the factory IOR method to get cubit objects -----\n"));
 
-		objref =
-		  orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
-		TAO_CHECK_ENV;
+                objref =
+                  orb->string_to_object (ts_->factory_ior_, TAO_TRY_ENV);
+                TAO_CHECK_ENV;
 
-		if (CORBA::is_nil (objref.in ()))
-		  ACE_ERROR_RETURN ((LM_ERROR,
-				     "%s:  must identify non-null target objref\n",
-				     ts_->argv_ [0]),
-				    1);
+                if (CORBA::is_nil (objref.in ()))
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "%s:  must identify non-null target objref\n",
+                                     ts_->argv_ [0]),
+                                    1);
 
-		// Narrow the CORBA::Object reference to the stub object,
-		// checking the type along the way using _is_a.
-		Cubit_Factory_var cb_factory =
-		  Cubit_Factory::_narrow (objref.in (),
-					  TAO_TRY_ENV);
-		TAO_CHECK_ENV;
+                // Narrow the CORBA::Object reference to the stub object,
+                // checking the type along the way using _is_a.
+                Cubit_Factory_var cb_factory =
+                  Cubit_Factory::_narrow (objref.in (),
+                                          TAO_TRY_ENV);
+                TAO_CHECK_ENV;
 
-		if (CORBA::is_nil (cb_factory.in ()))
-		  ACE_ERROR_RETURN ((LM_ERROR,
-				     "Create cubit factory failed\n"),
-				    1);
+                if (CORBA::is_nil (cb_factory.in ()))
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Create cubit factory failed\n"),
+                                    1);
 
-		ACE_DEBUG ((LM_DEBUG,
-			    "(%t) >>> Factory binding succeeded\n"));
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%t) >>> Factory binding succeeded\n"));
 
 
-		char * tmp_ior = cb_factory->create_cubit (this->id_,
-							   TAO_TRY_ENV);
-		TAO_CHECK_ENV;
+                char * tmp_ior = cb_factory->create_cubit (this->id_,
+                                                           TAO_TRY_ENV);
+                TAO_CHECK_ENV;
 
-		if (tmp_ior == 0)
-		  ACE_ERROR_RETURN ((LM_ERROR,
-				     "create_cubit() returned a null pointer!\n"),
-				    -1);
+                if (tmp_ior == 0)
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "create_cubit() returned a null pointer!\n"),
+                                    -1);
 
-		char *my_ior = ACE_OS::strdup (tmp_ior);
+                char *my_ior = ACE_OS::strdup (tmp_ior);
 
-		TAO_CHECK_ENV;
+                TAO_CHECK_ENV;
 
-		objref = orb->string_to_object (my_ior,
-						TAO_TRY_ENV);
-		TAO_CHECK_ENV;
-	      }
-	    else
-	      {
-		char *my_ior = ts_->iors_[this->id_];
+                objref = orb->string_to_object (my_ior,
+                                                TAO_TRY_ENV);
+                TAO_CHECK_ENV;
+              }
+            else
+              {
+                char *my_ior = ts_->iors_[this->id_];
 
-		// if we are running the "1 to n" test make sure all low
-		// priority clients use only 1 low priority servant.
-		if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
-		  my_ior = ts_->iors_[1];
+                // if we are running the "1 to n" test make sure all low
+                // priority clients use only 1 low priority servant.
+                if (this->id_ > 0 && ts_->one_to_n_test_ == 1)
+                  my_ior = ts_->iors_[1];
 
-		if (my_ior == 0)
-		  ACE_ERROR_RETURN ((LM_ERROR,
-				     "Must specify valid factory ior key with -k option,"
-				     " naming service, or ior filename\n"),
-				    -1);
+                if (my_ior == 0)
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Must specify valid factory ior key with -k option,"
+                                     " naming service, or ior filename\n"),
+                                    -1);
 
-		objref = orb->string_to_object (my_ior,
-						TAO_TRY_ENV);
-		TAO_CHECK_ENV;
-	      }
-	  }
+                objref = orb->string_to_object (my_ior,
+                                                TAO_TRY_ENV);
+                TAO_CHECK_ENV;
+              }
+          }
 
         if (CORBA::is_nil (objref.in ()))
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -571,7 +571,7 @@ Client::svc (void)
                                 ts_->loop_count_,
                                 this->id_,
                                 ts_->datatype_,
-				frequency);
+                                frequency);
 
   ts_->semaphore_->release ();
 
@@ -608,14 +608,14 @@ Client::run_tests (Cubit_ptr cb,
   u_int low_priority_client_count = ts_->thread_count_ - 1;
   double *my_jitter_array;
 
-  if (id_ == 0) 
+  if (id_ == 0)
     ACE_NEW_RETURN (my_jitter_array,
-		    double [(loop_count/ts_->granularity_)*3], // magic number, for now.
-		    -1);
+                    double [(loop_count/ts_->granularity_)*3], // magic number, for now.
+                    -1);
   else
     ACE_NEW_RETURN (my_jitter_array,
-		    double [loop_count/ts_->granularity_], // magic number, for now.
-		    -1);
+                    double [loop_count/ts_->granularity_], // magic number, for now.
+                    -1);
 
   double latency = 0;
   double sleep_time = (1 / frequency) * (1000 * 1000) * ts_->granularity_; // usec
@@ -631,7 +631,7 @@ Client::run_tests (Cubit_ptr cb,
   quantify_stop_recording_data();
   quantify_clear_data ();
 #endif /* USE_QUANTIFY */
-    
+
   ACE_High_Res_Timer timer_;
 
   // Make the calls in a loop.
@@ -657,9 +657,9 @@ Client::run_tests (Cubit_ptr cb,
 #if defined (CHORUS)
           pstartTime = pccTime1Get();
 #else /* CHORUS */
-//  	  ACE_NEW_RETURN (timer_,
-//  			  ACE_High_Res_Timer,
-//  			  -1);
+//        ACE_NEW_RETURN (timer_,
+//                        ACE_High_Res_Timer,
+//                        -1);
           timer_.start ();
 #endif /* !CHORUS */
         }
@@ -890,7 +890,7 @@ Client::run_tests (Cubit_ptr cb,
 
  real_time = tmp + tmp2 / (double)ACE_ONE_SECOND_IN_USECS;
  //          real_time = (double)delta_t.sec () + (double)delta_t.usec () / (double)ACE_ONE_SECOND_IN_USECS;
-	  
+
           real_time /= ts_->granularity_;
 
           delta = ((0.4 * fabs (real_time * (1000 * 1000))) + (0.6 * delta)); // pow(10,6)
@@ -903,17 +903,17 @@ Client::run_tests (Cubit_ptr cb,
       // if tryacquire() succeeded then a client must have done a
       // release () on it, thus we decrement the client counter.
       if (id_ == 0 && ts_->thread_count_ > 1)
-	{
-	  if (ts_->semaphore_->tryacquire () != -1)
-	    {
-	      low_priority_client_count --;
-	      // if all clients are done then break out of loop.
-	      if (low_priority_client_count <= 0)
-		break;
-	    }
-	}
+        {
+          if (ts_->semaphore_->tryacquire () != -1)
+            {
+              low_priority_client_count --;
+              // if all clients are done then break out of loop.
+              if (low_priority_client_count <= 0)
+                break;
+            }
+        }
     }
-  
+
   if (id_ == 0)
     ts_->high_priority_loop_count_ = call_count;
 
@@ -942,7 +942,7 @@ Client::run_tests (Cubit_ptr cb,
 #else
               ACE_DEBUG ((LM_DEBUG,
                           "(%P|%t) cube average call ACE_OS::time\t= %f msec, \t"
-			  "%f calls/second\n",
+                          "%f calls/second\n",
                           latency * 1000,
                           1 / latency));
 
