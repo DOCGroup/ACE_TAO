@@ -1,0 +1,3 @@
+This directory contains a series of benchmarks for evaluating the
+RealTime JVM performance, and a series of example that are intented
+to show how certain feature of the RT Java should be used.
