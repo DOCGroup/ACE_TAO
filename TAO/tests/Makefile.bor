@@ -16,8 +16,9 @@ DIRS = \
 	Endpoint_Per_Priority \
 	Explicit_Event_Loop \
         Exposed_Policies \
-        FL_Cube \
 	Faults \
+        FL_Cube \
+        Forwarding \
 	IDL_Test \
 	IORManipulation \
 	InterOp-Naming \
