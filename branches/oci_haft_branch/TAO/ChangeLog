@@ -1,3 +1,15 @@
+Tue Oct 14 11:33:13 2003  Dale Wilson  <wilson_d@ociweb.com>
+
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h
+          Add stub implementation for get_factory_registry
+
+        * orbsvcs/tests/FT_App/TAO_Object_Group_Creator.cpp:
+        * orbsvcs/tests/FT_App/run_test_registry.pl:
+          fix tabs and spaces warning from previous check in
+
+        These changes were made in the oci_haft branch.
+
 Tue Oct 14 10:22:13 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/FT_ReplicationManager.idl:

@@ -469,6 +469,19 @@ TAO::FT_ReplicationManager::get_fault_notifier (
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in());
 }
 
+
+/// TAO-specific find factory registry
+::PortableGroup::FactoryRegistry_ptr
+TAO::FT_ReplicationManager::get_factory_registry (
+  const PortableGroup::Criteria & selection_criteria
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ::PortableGroup::FactoryRegistry_var registry = ::PortableGroup::FactoryRegistry::_nil();
+  int todo_implement_factory_registry;
+  return registry;
+}
+
 /// TAO-specific shutdown operation.
 void TAO::FT_ReplicationManager::shutdown (
   ACE_ENV_SINGLE_ARG_DECL)
@@ -793,6 +806,7 @@ TAO::FT_ReplicationManager::delete_object (
   ACE_CHECK;
 }
 
+#if 0
 // Returns a dummy IOGR for unit tests
 CORBA::Object_ptr
 TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL)
@@ -888,6 +902,7 @@ TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL)
 
   return this->test_iogr_._retn();
 }
+#endif
 
 int TAO::FT_ReplicationManager::readIORFile (
   const char * filename,

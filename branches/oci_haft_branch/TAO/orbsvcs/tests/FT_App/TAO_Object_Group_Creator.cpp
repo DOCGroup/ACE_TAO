@@ -108,7 +108,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_var & orb ACE_ENV_ARG_DECL)
     // Try using the -f argument as an IOR
     ACE_TRY_NEW_ENV
     {
-      CORBA::Object_var registry_obj = this->orb_->string_to_object (this->registry_filename_  ACE_ENV_ARG_PARAMETER); 
+      CORBA::Object_var registry_obj = this->orb_->string_to_object (this->registry_filename_  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       this->registry_ = PortableGroup::FactoryRegistry::_narrow(registry_obj  ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
