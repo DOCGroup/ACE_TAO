@@ -56,10 +56,12 @@ Logging_Acceptor::handle_input (ACE_HANDLE)
 
   // Accept the connection from a client client daemon.
 
-  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p", "accept failed"), -1);
-  else if (svc_handler->open () == -1)
-    svc_handler->close ();
+  if (this->peer_acceptor_.accept (svc_handler->peer ()) == -1
+      || svc_handler->open () == -1)
+    {
+      svc_handler->close ();
+      ACE_ERROR_RETURN ((LM_ERROR, "%p", "accept/open failed"), -1);
+    }
 
   return 0;
 }
