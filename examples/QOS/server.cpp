@@ -298,46 +298,6 @@ main (int argc, char * argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "Setting QOS with ACE_OS::ioctl succeeds.\n"));
 
-
-  if (ACE_OS::ioctl (dgram_mcast.get_handle (),
-                     ACE_SIO_GET_QOS,
-                     ace_qos,
-                     &dwBytes) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "Error in Qos get ACE_OS::ioctl ()\n"
-                "Bytes Returned = %d\n",
-                dwBytes));
-  else
-    ACE_DEBUG ((LM_DEBUG,
-                "Getting QOS using ACE_OS::ioctl () succeeds.\n"));
-
-  ACE_DEBUG ((LM_DEBUG,
-              "\nReceiving Flowspec :\t\t\tSending Flowspec :\n\n"
-              "\tToken Rate = %d\t\t\tToken Rate = %d\n"
-              "\tToken Bucket Size = %d\t\t\tToken Bucket Size = %d\n"
-              "\tPeak Bandwidth = %d\t\t\tPeak Bandwidth = %d\n"
-              "\tLatency = %d\t\t\t\tLatency = %d\n"
-              "\tDelay Variation = %d\t\t\tDelay Variation = %d\n"
-              "\tService Type = %d\t\t\tService Type = %d\n"
-              "\tMax SDU Size = %d\t\t\tMax SDU Size = %d\n"
-              "\tMinimum Policed Size = %d\t\tMinimum Policed Size = %d\n\n",
-              ace_qos.receiving_flowspec ().token_rate (),
-              ace_qos.sending_flowspec ().token_rate (),
-              ace_qos.receiving_flowspec ().token_bucket_size (),
-              ace_qos.sending_flowspec ().token_bucket_size (),
-              ace_qos.receiving_flowspec ().peak_bandwidth (),
-              ace_qos.sending_flowspec ().peak_bandwidth (),
-              ace_qos.receiving_flowspec ().latency (),
-              ace_qos.sending_flowspec ().latency (),
-              ace_qos.receiving_flowspec ().delay_variation (),
-              ace_qos.sending_flowspec ().delay_variation (),
-              ace_qos.receiving_flowspec ().service_type (),
-              ace_qos.sending_flowspec ().service_type (),
-              ace_qos.receiving_flowspec ().max_sdu_size (),
-              ace_qos.sending_flowspec ().max_sdu_size (),
-              ace_qos.receiving_flowspec ().minimum_policed_size (),
-              ace_qos.sending_flowspec ().minimum_policed_size ()));
-  
   // Instantiate a QOS Event Handler and pass the Dgram_Mcast into it.
   ACE_QOS_Event_Handler qos_event_handler (dgram_mcast);
 	
