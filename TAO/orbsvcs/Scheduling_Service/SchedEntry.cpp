@@ -32,7 +32,7 @@
 // Euclid's greatest common divisor algorithm
 u_long gcd (u_long x, u_long y)
 {
-  if (y = 0)
+  if (y == 0)
   {
     return x;
   }
@@ -124,6 +124,9 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
       // prohibit two-way dispatches of a disjunction group,
       // and disjunctively merge its one-way dispatches.
+      // NOTE: one interpretation of disjunction for two-way calls
+      //       is that the caller calls one OR the other, but this
+      //       is problematic: how do we map the dispatches for this ?
       result = prohibit_dispatches (RtecScheduler::TWO_WAY_CALL);
       if (result == 0)
       {
@@ -136,6 +139,12 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
 
       // prohibit two-way dispatches of a conjunction group,
       // and conjunctively merge its one-way dispatches.
+      // NOTE: one interpretation of disjunction for two-way calls
+      //       is that the caller calls BOTH, so that there is a
+      //       disjunctive merge of each two-way, as for the OPERATION
+      //       (prohibit for now, as the additional complexity of allowing
+      //       conjunctions of two-ways, but not disjunctions does not
+      //       buy us anything, anyway).
       result = prohibit_dispatches (RtecScheduler::TWO_WAY_CALL);
       if (result == 0)
       {
@@ -557,9 +566,9 @@ Task_Entry_Link::Task_Entry_Link (
 Dispatch_Entry::Dispatch_Id Dispatch_Entry::next_id_ = 0;
 
 Dispatch_Entry::Dispatch_Entry (
-      Preemption_Priority priority,
       Time arrival,
       Time deadline,
+	  Preemption_Priority priority,
       Task_Entry &task_entry)
 
   : priority_ (priority)

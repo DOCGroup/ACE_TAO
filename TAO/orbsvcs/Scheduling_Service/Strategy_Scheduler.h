@@ -88,7 +88,7 @@ class ACE_Strategy_Scheduler_Factory
 {
 public:
 
-	static ACE_Strategy_Scheduler * create (ACE_Scheduler::Preemption_Priority minimum_critical_priority = 0);
+	static ACE_Strategy_Scheduler * create (ACE_Scheduler::Preemption_Priority minimum_critical_priority);
     // construct and return a scheduler strategized with
     // an instance of the the parameterized strategy type
 };
@@ -172,6 +172,10 @@ public:
   ACE_MUF_Scheduler_Strategy (ACE_Scheduler::Preemption_Priority minimum_critical_priority = 0);
     // ctor
 
+  virtual ~ACE_MUF_Scheduler_Strategy ();
+  // = virtual dtor
+
+
   static ACE_MUF_Scheduler_Strategy *instance ();
     // returns an instance of the strategy
   
@@ -189,9 +193,6 @@ public:
     // = determine the minimum critical priority number
 
 protected:
-
-  virtual ~ACE_MUF_Scheduler_Strategy ();
-    // = virtual dtor
 
   virtual int dynamic_subpriority_comp (
     const Dispatch_Entry &first_entry, 
@@ -220,10 +221,12 @@ class ACE_RMS_Scheduler_Strategy : public ACE_Scheduler_Strategy
 {
 public:
 
-	
   ACE_RMS_Scheduler_Strategy (ACE_Scheduler::Preemption_Priority minimum_critical_priority = 0);
     // ctor
 
+  virtual ~ACE_RMS_Scheduler_Strategy ();
+    // = virtual dtor
+	
   static ACE_RMS_Scheduler_Strategy *instance ();
     // returns an instance of the strategy
   
@@ -238,9 +241,6 @@ public:
     // = sort the dispatch entry link pointer array in descending RMS (rate) order
 
 protected:
-
-  virtual ~ACE_RMS_Scheduler_Strategy ();
-    // = virtual dtor
 
   virtual int dynamic_subpriority_comp
     (const Dispatch_Entry &first_entry, 
@@ -275,6 +275,9 @@ public:
   ACE_MLF_Scheduler_Strategy (ACE_Scheduler::Preemption_Priority minimum_critical_priority = 0);
     // = ctor
 
+  virtual ~ACE_MLF_Scheduler_Strategy ();
+    // = virtual dtor
+
   static ACE_MLF_Scheduler_Strategy *instance ();
     // returns an instance of the strategy
   
@@ -287,9 +290,6 @@ public:
     // = sort the dispatch entry link pointer array in ascending laxity order
 
 protected:
-
-  virtual ~ACE_MLF_Scheduler_Strategy ();
-    // = virtual dtor
 
   virtual int dynamic_subpriority_comp
     (const Dispatch_Entry &first_entry, 
@@ -322,6 +322,9 @@ public:
   ACE_EDF_Scheduler_Strategy (ACE_Scheduler::Preemption_Priority minimum_critical_priority = 0);
     // = default ctor
 
+  virtual ~ACE_EDF_Scheduler_Strategy ();
+    // = virtual dtor
+
   static ACE_EDF_Scheduler_Strategy *instance ();
     // returns an instance of the strategy
   
@@ -334,9 +337,6 @@ public:
     // = sort the dispatch entry link pointer array in ascending deadline (period) order
 
 protected:
-
-  virtual ~ACE_EDF_Scheduler_Strategy ();
-    // = virtual dtor
 
   virtual int dynamic_subpriority_comp
     (const Dispatch_Entry &first_entry, 
@@ -369,6 +369,9 @@ public:
   ACE_RMS_Dyn_Scheduler_Strategy (ACE_Scheduler::Preemption_Priority minimum_critical_priority = 0);
     // = ctor
 
+  virtual ~ACE_RMS_Dyn_Scheduler_Strategy ();
+    // = virtual dtor
+
   static ACE_RMS_Dyn_Scheduler_Strategy *instance ();
     // returns an instance of the strategy
   
@@ -383,9 +386,6 @@ public:
     // = sort the dispatch entry pointer array in descending priority order
 
 protected:
-
-  virtual ~ACE_RMS_Dyn_Scheduler_Strategy ();
-    // = virtual dtor
 
   virtual int dynamic_subpriority_comp
     (const Dispatch_Entry &first_entry, 

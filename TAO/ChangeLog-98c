@@ -1,3 +1,12 @@
+Tue Feb 10 17:39:13 1998  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/Scheduling_Service/SchedEntry.cpp
+	  orbsvcs/Scheduling_Service/DynSched.{cpp,h}
+	  orbsvcs/Scheduling_Service/Strategy_Scheduler.{cpp,h} :
+
+          fixes to priority assignment, timeline generation methods
+          (fourth cut - timelines being generated)
+
 Tue Feb 10 11:19:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/tests/EC_Multiple/EC_Multiple.cpp: 
