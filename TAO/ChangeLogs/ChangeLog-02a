@@ -19,17 +19,17 @@ Wed Dec 19 15:36:14 2001 Pradeep Gore  <pradeep@cs.wustl.edu>
 	* examples/RTCORBA/Activity/Makefile:
 	* examples/RTCORBA/Activity/README:
 
-	 An example to showcase RTCORBA priority preservation feature.
-	This example reads conf. files and generates a data file containing 
-	latency numbers. As the data output is in a 2 column format, 
-	gnuplot can be used to plot nice invocation graphs. See the README 
-	for further details.
+	  An example to showcase RTCORBA priority preservation
+	  feature. This example reads conf. files and generates a data 
+	  file containing latency numbers. As the data output is in a 2
+	  column format,  gnuplot can be used to plot nice invocation
+	  graphs. See the README  for further details.
 
 	* orbsvcs/tests/Notify/performance-tests/Throughput.{h,cpp}:
 	* orbsvcs/tests/Notify/performance-tests/README:
 
-	Added new commandline parameters - payload_size, expected_count 
-	  and channel name. 
+	  Added new commandline parameters - payload_size, expected_count
+	  and channel name.  
 
 Tue Dec 18 17:03:45 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
