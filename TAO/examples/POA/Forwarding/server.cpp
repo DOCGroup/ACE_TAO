@@ -42,7 +42,8 @@ read_ior (char *filename,
   if (f_handle_ == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for writing: %p\n",
-                       filename),
+                       filename,
+                       "ACE_OS::open"),
                        -1);
 
   ACE_Read_Buffer ior_buffer (f_handle_);
@@ -53,7 +54,8 @@ read_ior (char *filename,
 
       if (first_foo_forward_to_IOR_ == 0)
 	ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to allocate memory to read ior: %p\n"),
+                           "Unable to allocate memory to read ior: %p\n",
+                           "ACE_Read_Buffer::read"),
 			  -1);
     }
   else if (foo_number == 2)
@@ -62,7 +64,8 @@ read_ior (char *filename,
 
       if (second_foo_forward_to_IOR_ == 0)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to allocate memory to read ior: %p\n"),
+                           "Unable to allocate memory to read ior: %p\n",
+                           "ACE_Read_Buffer::read"),
                           -1);
     }
 
@@ -93,7 +96,8 @@ parse_args (int argc, char **argv)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
 			     "Unable to read ior from %s : %p\n",
-			     get_opts.optarg),
+			     get_opts.optarg,
+                             "read_ior"),
 			    -1);
         break;
       case 'g': // read the IOR from the file.
@@ -101,7 +105,8 @@ parse_args (int argc, char **argv)
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
 			     "Unable to read ior from %s : %p\n",
-			     get_opts.optarg),
+			     get_opts.optarg,
+                             "read_ior"),
 			    -1);
         break;
       case 'k':
@@ -115,14 +120,18 @@ parse_args (int argc, char **argv)
         if (first_foo_ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.optarg,
+                             "ACE_OS::fopen"),
+                            -1);
         break;
       case 'p': // output the IOR to a file.
         second_foo_ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
         if (second_foo_ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.optarg,
+                             "ACE_OS::fopen"),
+                            -1);
         break;
       case 'O':
         break;
