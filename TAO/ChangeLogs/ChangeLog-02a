@@ -1,3 +1,17 @@
+Tue Jul 10 00:45:00 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/RTCORBA/RT_ORB.cpp (TAO_RT_CORBA_Priority_Normalizer):
+
+	  Fixed busted code that did not check if the resolved
+	  PriorityMappingManager object reference was nil.  Since this
+	  check was missing, a seg fault would occur when attempting to
+	  invoke a method on that mapping manager.  Throw a
+	  CORBA::INTERNAL() exception if the reference is nil.  This at
+	  leasts lets us identify a problem without seg faulting.
+
+	  Fixed broken code that did not use emulated exceptions properly.
+	  The ACE_TRY/CATCH block was missing.
+
 Tue Jul 10 09:13:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * tao/orbsvcs/orbsvcs/security.bor
