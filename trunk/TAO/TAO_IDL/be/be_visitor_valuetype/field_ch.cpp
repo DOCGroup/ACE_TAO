@@ -63,7 +63,6 @@ be_visitor_valuetype_field_ch::visit_field (be_field *node)
                          "codegen failed\n"
                          ), -1);
     }
-  TAO_OutStream *os = this->ctx_->stream ();
 
   return 0;
 }

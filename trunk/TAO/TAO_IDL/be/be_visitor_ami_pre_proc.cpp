@@ -529,7 +529,7 @@ be_visitor_ami_pre_proc::create_raise_operation (be_decl *node,
   excep_holder->be_add_operation (operation);
 
   return 0;
-};
+}
 
 be_operation *
 be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node,
