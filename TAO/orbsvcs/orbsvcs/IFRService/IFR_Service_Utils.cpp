@@ -576,7 +576,7 @@ TAO_IFR_Service_Utils::valid_container (
 
   if (error_flag == 1)
     {
-      ACE_THROW (CORBA::BAD_PARAM (4,
+      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 4,
                                    CORBA::COMPLETED_NO));
     }
 }
@@ -616,7 +616,7 @@ TAO_IFR_Service_Utils::id_exists (const char *id,
                                          holder)
        == 0)
     {
-      ACE_THROW (CORBA::BAD_PARAM (2,
+      ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 2,
                                    CORBA::COMPLETED_NO));
     }
 }
@@ -663,7 +663,7 @@ TAO_IFR_Service_Utils::name_exists (
 
           if ((*checker) (member_name.fast_rep ()) != 0)
             {
-              ACE_THROW (CORBA::BAD_PARAM (3,
+              ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
                                            CORBA::COMPLETED_NO));
             }
         }
