@@ -16,9 +16,9 @@ exceptions = 1
 # -fexceptions, so it must be on both the compile AND link phase.
 #
 ifeq ($(exceptions),1)
-  CPPFLAGS += -fexceptions
+  CCFLAGS += -fexceptions
 else
-  CPPFLAGS += -fno-exceptions
+  CCLAGS += -fno-exceptions
 endif # ! exceptions
  
 CC      = gcc

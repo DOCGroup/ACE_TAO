@@ -1,3 +1,13 @@
+Mon Apr 16 16:18:57 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * ace/config-qnx-rtp.h:
+          Add support for gperf under QNX
+
+        * include/makeinclude/platform_qnx_rtp_gcc.GNU:
+          The -fexceptions flag has no place in the CPPFLAGS macros, it
+          should go in CCFLAGS (though I could be convinced to put it in
+          CFLAGS)
+
 Mon Apr 16 16:13:29 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Configuration.h (ACE_Configuration::root_section): Made this
@@ -26,31 +36,31 @@ Mon Apr 16 16:13:29 2001  Steve Huston  <shuston@riverace.com>
 
 Mon Apr 16 12:32:48 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/MEM_Stream_Test.cpp: Limited the concurrent connections
-	  used in the multithreaded test on platforms without POSIX or
-	  Win32 semaphores.  In this case, SysV semaphores are used and
-	  a user can only instantiate very limited number of them.  The
-	  test will also print out an INFO in this case as it implies
-	  there can only be one "multithreaded" connection in one host at
-	  any instance.  This fixed the test on some obsolete UNIX
-	  platforms.
+        * tests/MEM_Stream_Test.cpp: Limited the concurrent connections
+          used in the multithreaded test on platforms without POSIX or
+          Win32 semaphores.  In this case, SysV semaphores are used and
+          a user can only instantiate very limited number of them.  The
+          test will also print out an INFO in this case as it implies
+          there can only be one "multithreaded" connection in one host at
+          any instance.  This fixed the test on some obsolete UNIX
+          platforms.
 
 Mon Apr 16 09:58:23 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/Config_Test.cpp: Fixed a warning with g++ builds. The
-	  warning was  because of an unused function.
+        * tests/Config_Test.cpp: Fixed a warning with g++ builds. The
+          warning was  because of an unused function.
 
 Sun Apr 15 21:27:19 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/ace_dll.dsp:
-	* ace/ace_lib.dsp: Added new Configuration_Import_Export.{h,cpp}
-	  files.
+        * ace/ace_dll.dsp:
+        * ace/ace_lib.dsp: Added new Configuration_Import_Export.{h,cpp}
+          files.
 
 Sun Apr 15 19:33:19 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* ace/Configuration.cpp,
-  	* ace/Configuration_Import_Export.cpp: Fixed some warnings
-	  that show up with G++.  Thanks to Carlos for reporting this.
+        * ace/Configuration.cpp,
+        * ace/Configuration_Import_Export.cpp: Fixed some warnings
+          that show up with G++.  Thanks to Carlos for reporting this.
 
 Sun Apr 15 17:13:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
