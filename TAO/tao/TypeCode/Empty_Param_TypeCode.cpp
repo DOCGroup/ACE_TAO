@@ -21,7 +21,7 @@ TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &) const
 }
 
 void
-TAO::TypeCode::Empty_Param::tao_add_ref (void)
+TAO::TypeCode::Empty_Param::tao_duplicate (void)
 {
   // No-op since empty parameter TypeCodes are never created
   // dynamically, meaning there is no need to implement reference
@@ -29,7 +29,7 @@ TAO::TypeCode::Empty_Param::tao_add_ref (void)
 }
 
 void
-TAO::TypeCode::Empty_Param::tao_remove_ref (void)
+TAO::TypeCode::Empty_Param::tao_release (void)
 {
   // No-op since empty parameter TypeCodes are never created
   // dynamically, meaning there is no need to implement reference

@@ -62,8 +62,8 @@ namespace TAO
        */
       //@{
       virtual bool tao_marshal (TAO_OutputCDR & cdr) const;
-      virtual void tao_add_ref (void);
-      virtual void tao_remove_ref (void);
+      virtual void tao_duplicate (void);
+      virtual void tao_release (void);
       //@}
 
     protected:

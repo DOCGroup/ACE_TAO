@@ -13,7 +13,7 @@ ACE_INLINE void
 CORBA::release (CORBA::TypeCode_ptr obj)
 {
   if (obj)
-    obj->tao_remove_ref ();
+    obj->tao_release ();
 }
 
 // --------------------------------------------------------------
@@ -22,7 +22,7 @@ ACE_INLINE CORBA::TypeCode_ptr
 CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 {
   if (!CORBA::is_nil (tc))
-    tc->tao_add_ref ();
+    tc->tao_duplicate ();
 
   return tc;
 }
