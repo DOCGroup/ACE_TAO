@@ -91,25 +91,25 @@ main (int argc, char *argv[])
           tss = 1;
           break;
         case 'n':
-          iterations = ACE_OS::atoi (get_opt.optarg);
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'r':
-          repeat = ACE_OS::atoi (get_opt.optarg);
+          repeat = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'f':
-          max_fragments = ACE_OS::atoi (get_opt.optarg);
+          max_fragments = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'm':
-          max_fragment_size = ACE_OS::atoi (get_opt.optarg);
+          max_fragment_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 's':
-          seed = ACE_OS::atoi (get_opt.optarg);
+          seed = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'a':
-          max_arguments = ACE_OS::atoi (get_opt.optarg);
+          max_arguments = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'b':
-          max_argument_size = ACE_OS::atoi (get_opt.optarg);
+          max_argument_size = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'q':
           quiet = 1;

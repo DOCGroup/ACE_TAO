@@ -340,26 +340,26 @@ ECM_Driver::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'p':
-          this->pid_filename_ = get_opt.optarg;
+          this->pid_filename_ = get_opt.opt_arg ();
           break;
 
         case 'c':
-          this->config_filename_ = get_opt.optarg;
+          this->config_filename_ = get_opt.opt_arg ();
           break;
 
         case 't':
-          this->event_period_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_period_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'n':
-          this->event_count_ = ACE_OS::atoi (get_opt.optarg);
+          this->event_count_ = ACE_OS::atoi (get_opt.opt_arg ());
           break;
 
         case 'f':
           {
             char* aux;
             int i = 0;
-            for (char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
+            for (char* arg = ACE_OS::strtok_r (get_opt.opt_arg (), ",", &aux);
                  arg != 0 && i < ECM_Driver::MAX_LOCAL_FEDERATIONS;
                  arg = ACE_OS::strtok_r (0, ",", &aux), ++i)
               {

@@ -40,10 +40,10 @@ Identity_Client::parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'i': // ior of the <Object_Group_Factory> object.
-        this->group_factory_ior_ = get_opts.optarg;
+        this->group_factory_ior_ = get_opts.opt_arg ();
         break;
       case 'n': // number of times to make invocation on an <Identity> object.
-        this->number_of_invocations_ = ACE_OS::atoi (get_opts.optarg);
+        this->number_of_invocations_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'r': // flag signifying to obtain references to <Identity>
                 // objects from the random <Object_Group> rather than

@@ -260,15 +260,15 @@ Event_Service::parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.optarg;
+          this->service_name_ = get_opt.opt_arg ();
           break;
 
         case 'o':
-          this->ior_file_name_ = get_opt.optarg;
+          this->ior_file_name_ = get_opt.opt_arg ();
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.optarg;
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
 
         case 's':
@@ -276,11 +276,11 @@ Event_Service::parse_args (int argc, char *argv [])
           // argument, but this is consistent with the EC_Multiple
           // test and also allows for a runtime scheduling service.
 
-          if (ACE_OS::strcasecmp (get_opt.optarg, "global") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "global") == 0)
             {
               this->global_scheduler_ = 1;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "local") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "local") == 0)
             {
               this->global_scheduler_ = 0;
             }
@@ -289,21 +289,21 @@ Event_Service::parse_args (int argc, char *argv [])
               ACE_DEBUG ((LM_DEBUG,
                           "Unknown scheduling type <%s> "
                           "defaulting to local\n",
-                          get_opt.optarg));
+                          get_opt.opt_arg ()));
               this->global_scheduler_ = 0;
             }
           break;
 
         case 't':
-          if (ACE_OS::strcasecmp (get_opt.optarg, "NEW") == 0)
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), "NEW") == 0)
             {
               this->event_service_type_ = ES_NEW;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "OLD_REACTIVE") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OLD_REACTIVE") == 0)
             {
               this->event_service_type_ = ES_OLD_REACTIVE;
             }
-          else if (ACE_OS::strcasecmp (get_opt.optarg, "OLD_MT") == 0)
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), "OLD_MT") == 0)
             {
               this->event_service_type_ = ES_OLD_MT;
             }
@@ -312,7 +312,7 @@ Event_Service::parse_args (int argc, char *argv [])
               ACE_DEBUG ((LM_DEBUG,
                           "Unknown event service type <%s> "
                           "defaulting to REACTIVE\n",
-                          get_opt.optarg));
+                          get_opt.opt_arg ()));
               this->event_service_type_ = ES_NEW;
             }
           break;

@@ -392,14 +392,14 @@ Demux_Test_Server::parse_args (void)
         TAO_debug_level++;
         break;
       case 'f':
-        this->ior_fp_ = ACE_OS::fopen (get_opts.optarg, "w");
+        this->ior_fp_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
         if (this->ior_fp_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open %s for writing: %p\n",
-                             get_opts.optarg), -1);
+                             get_opts.opt_arg ()), -1);
         break;
       case 'o':
-        this->num_objs_ = ACE_OS::atoi (get_opts.optarg);
+        this->num_objs_ = ACE_OS::atoi (get_opts.opt_arg ());
         if (this->num_objs_ > TAO_DEMUX_TEST_MAX_OBJS)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -411,7 +411,7 @@ Demux_Test_Server::parse_args (void)
           }
         break;
       case 'p':
-        this->num_POAs_ = ACE_OS::atoi (get_opts.optarg);
+        this->num_POAs_ = ACE_OS::atoi (get_opts.opt_arg ());
         if (this->num_POAs_ > TAO_DEMUX_TEST_MAX_POAS)
           {
             ACE_ERROR_RETURN ((LM_ERROR,

@@ -122,19 +122,19 @@ PP_Test_Client::parse_args (void)
         break;
       case 'n':                 // loop count
         this->loop_count_ =
-          (u_int) ACE_OS::atoi (get_opts.optarg);
+          (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg);
+        result = this->read_ior (get_opts.opt_arg ());
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'k': // read the cubit IOR from the command-line.
         this->factory_key_ =
-          ACE_OS::strdup (get_opts.optarg);
+          ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'x':
         ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));

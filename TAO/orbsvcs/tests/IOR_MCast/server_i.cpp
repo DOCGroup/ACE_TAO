@@ -167,7 +167,7 @@ Server_i::parse_args (int argc, char *argv [])
     switch (c)
       {
       case 'a':
-        this->mcast_address_ = get_opts.optarg;
+        this->mcast_address_ = get_opts.opt_arg ();
         break;
 
       case '?':

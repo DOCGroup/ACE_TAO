@@ -59,11 +59,11 @@ CosNaming_Client::parse_args (void)
         break;
       case 'n':
         this->resolve_name_ = 1;
-        this->name_to_resolve_ = get_opts.optarg;
+        this->name_to_resolve_ = get_opts.opt_arg ();
         break;
       case 'c':
         this->resolve_name_ = 1;
-        this->context_to_resolve_ = get_opts.optarg;
+        this->context_to_resolve_ = get_opts.opt_arg ();
         break;
       case '?':
       default:

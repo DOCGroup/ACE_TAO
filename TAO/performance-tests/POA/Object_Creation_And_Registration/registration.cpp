@@ -87,7 +87,7 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 'i':
-        iterations = ACE_static_cast (u_long, ACE_OS::atoi (get_opts.optarg));
+        iterations = ACE_static_cast (u_long, ACE_OS::atoi (get_opts.opt_arg ()));
         break;
 
       case 'r':

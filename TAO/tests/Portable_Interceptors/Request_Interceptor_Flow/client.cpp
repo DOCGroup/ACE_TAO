@@ -27,7 +27,7 @@ parse_args (int argc, char *argv[])
       {
       case 'k':
         if (ior == 0)
-          ior = get_opts.optarg;
+          ior = get_opts.opt_arg ();
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,

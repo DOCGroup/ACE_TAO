@@ -79,20 +79,20 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'i':
-        ior_base = get_opts.optarg;
+        ior_base = get_opts.opt_arg ();
         break;
       case 't':
         if (nthreads < MAX_THREADS)
           {
-            priorities[nthreads] = ACE_OS::atoi (get_opts.optarg);
+            priorities[nthreads] = ACE_OS::atoi (get_opts.opt_arg ());
             nthreads++;
           }
         break;
       case 'n':
-        niterations = ACE_OS::atoi (get_opts.optarg);
+        niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'p':
-        period = ACE_OS::atoi (get_opts.optarg);
+        period = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

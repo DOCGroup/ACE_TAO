@@ -32,10 +32,10 @@ Persistent_Client_i::parse_args (int argc,
       switch (c)
       {
       case 'w':
-        this->width_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        this->width_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'h':
-        this->height_ = (u_int) ACE_OS::atoi (get_opts.optarg);
+        this->height_ = (u_int) ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'r':
         this->remove_ = 1;

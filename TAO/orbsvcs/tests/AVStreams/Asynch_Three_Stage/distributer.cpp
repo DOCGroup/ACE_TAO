@@ -137,10 +137,10 @@ Distributer::parse_args (int argc,
       switch (c)
         {
         case 's':
-          this->sender_name_ = opts.optarg;
+          this->sender_name_ = opts.opt_arg ();
           break;
         case 'r':
-          this->distributer_name_ = opts.optarg;
+          this->distributer_name_ = opts.opt_arg ();
           break;
         default:
           ACE_DEBUG ((LM_DEBUG,"Unknown Option\n"));

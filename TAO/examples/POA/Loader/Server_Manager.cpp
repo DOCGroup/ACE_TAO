@@ -28,7 +28,7 @@ Server_i::parse_args (int argc,
     switch (c)
       {
       case 'f':
-        ior_output_file_ = get_opts.optarg;
+        ior_output_file_ = get_opts.opt_arg ();
         break;
 
       case '?':

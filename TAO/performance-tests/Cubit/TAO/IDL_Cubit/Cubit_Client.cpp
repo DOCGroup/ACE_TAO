@@ -219,24 +219,24 @@ Cubit_Client::parse_args (void)
       {
       case 'b':
         // bytes in octet sequence
-        result = ACE_OS::atoi (get_opts.optarg);
+        result = ACE_OS::atoi (get_opts.opt_arg ());
 
         if (result <= 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Invalid number of bytes entered: <%s>\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         else
           this->bytes_in_octet_sequence_ = (u_int) result;
         break;
       case 't':
-        test_mask = this->opt_to_mask (get_opts.optarg);
+        test_mask = this->opt_to_mask (get_opts.opt_arg ());
         if (test_mask == 0)
           return -1;
         this->enable_test (test_mask);
         break;
       case 'z':
-        test_mask = this->opt_to_mask (get_opts.optarg);
+        test_mask = this->opt_to_mask (get_opts.opt_arg ());
         if (test_mask == 0)
           return -1;
         this->disable_test (test_mask);
@@ -259,28 +259,28 @@ Cubit_Client::parse_args (void)
         TAO_debug_level++;
         break;
       case 'n':                 // loop count
-        result = ACE_OS::atoi (get_opts.optarg);
+        result = ACE_OS::atoi (get_opts.opt_arg ());
 
         if (result <= 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Invalid number of iterations entered: <%s>\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         else
           this->loop_count_ = (u_int) result;
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg);
+        result = this->read_ior (get_opts.opt_arg ());
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from <%s> : %p\n",
-                             get_opts.optarg,
+                             get_opts.opt_arg (),
                              ""),
                             -1);
         break;
       case 'k': // read the cubit IOR from the command-line.
         this->cubit_factory_key_ =
-          ACE_OS::strdup (get_opts.optarg);
+          ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'x':
         ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));

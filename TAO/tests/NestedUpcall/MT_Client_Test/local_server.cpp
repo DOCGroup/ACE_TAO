@@ -95,12 +95,12 @@ MT_Server::parse_args (void)
         break;
       case 'h': // read the IOR from the file.
         int result;
-        result = this->read_ior (get_opts.optarg);
+        result = this->read_ior (get_opts.opt_arg ());
         // read IOR for MT Object
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'f':
@@ -108,7 +108,7 @@ MT_Server::parse_args (void)
       case 'i':
       case 'n':
         break;
-      case 's': this->iterations_ = atoi (get_opts.optarg);
+      case 's': this->iterations_ = atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

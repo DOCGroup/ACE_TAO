@@ -33,15 +33,15 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.optarg;
+        ior_output_file = get_opts.opt_arg ();
         break;
 
       case 'p':
-        n_peers = ACE_OS::atoi (get_opts.optarg);
+        n_peers = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        n_iterations = ACE_OS::atoi (get_opts.optarg);
+        n_iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

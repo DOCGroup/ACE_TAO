@@ -32,7 +32,7 @@ parse_args (int argc, char *argv [])
       switch (opt)
         {
         case 'n':
-          service_name = get_opt.optarg;
+          service_name = get_opt.opt_arg ();
           break;
         case '?':
         default:

@@ -191,15 +191,15 @@ TAO_Scheduling_Service::parse_args (int argc, char *argv[])
       switch (opt)
         {
         case 'n':
-          this->service_name_ = get_opt.optarg;
+          this->service_name_ = get_opt.opt_arg ();
           break;
 
         case 'p':
-          this->pid_file_name_ = get_opt.optarg;
+          this->pid_file_name_ = get_opt.opt_arg ();
           break;
 
         case 'o':
-          this->ior_file_name_ = get_opt.optarg;
+          this->ior_file_name_ = get_opt.opt_arg ();
           break;
 
 // The templatized method parameters needed by the reconfig scheduler
@@ -208,11 +208,11 @@ TAO_Scheduling_Service::parse_args (int argc, char *argv[])
 (__GNUC__ == 2 && defined (__GNUC_MINOR__) && __GNUC_MINOR__ >= 8)
 
         case 's':
-          if (ACE_OS::strcasecmp ("CONFIG", get_opt.optarg) == 0)
+          if (ACE_OS::strcasecmp ("CONFIG", get_opt.opt_arg ()) == 0)
             {
               this->scheduler_type_ = CONFIG;
             }
-          else if (ACE_OS::strcasecmp ("RECONFIG", get_opt.optarg) == 0)
+          else if (ACE_OS::strcasecmp ("RECONFIG", get_opt.opt_arg ()) == 0)
             {
               this->scheduler_type_ = RECONFIG;
             }

@@ -86,7 +86,7 @@ Client::parse_args (int argc,
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
       case '?':
       default:

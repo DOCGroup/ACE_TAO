@@ -153,7 +153,7 @@ parse_args (int argc,
       switch (c)
         {
         case 'f':
-          output_file_name = opts.optarg;
+          output_file_name = opts.opt_arg ();
           break;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,

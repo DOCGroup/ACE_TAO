@@ -251,15 +251,15 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'c':
-        consumer_count = ACE_OS::atoi (get_opts.optarg);
+        consumer_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case '?':

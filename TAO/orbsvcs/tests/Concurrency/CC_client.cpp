@@ -103,26 +103,26 @@ CC_Client::parse_args (void)
         break;
       case 'c':
         this->use_script_file_ = 1;
-        this->script_file_ = ACE_OS::strdup (get_opts.optarg);
+        this->script_file_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'd':  // debug flag
         TAO_debug_level++;
         break;
       case 'e':  // debug flag
         run_extended_tests_ = 1;
-        this->extended_tests_params_ = ACE_OS::strdup (get_opts.optarg);
+        this->extended_tests_params_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg);
+        result = this->read_ior (get_opts.opt_arg ());
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
             break;
       case 'k': // read the cubit IOR from the command-line.
         this->cc_factory_key_ =
-          ACE_OS::strdup (get_opts.optarg);
+          ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'x':
         this->shutdown_ = 1;

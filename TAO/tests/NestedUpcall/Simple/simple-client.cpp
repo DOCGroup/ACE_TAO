@@ -87,15 +87,15 @@ parse_args (int argc,
         break;
 
       case 'n':
-        call_count = ACE_OS::atoi (get_opts.optarg);
+        call_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        number_of_threads = ACE_OS::atoi (get_opts.optarg);
+        number_of_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case '?':

@@ -23,19 +23,19 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case 'b':
-        message_size = ACE_OS::atoi (get_opts.optarg);
+        message_size = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'i':
-        message_count = ACE_OS::atoi (get_opts.optarg);
+        message_count = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'n':
-        test_runs = ACE_OS::atoi (get_opts.optarg);
+        test_runs = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

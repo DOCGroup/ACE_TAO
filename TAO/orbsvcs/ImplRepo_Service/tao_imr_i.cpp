@@ -324,13 +324,13 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Add::setenv (ACE_TCHAR *optarg)
+TAO_IMR_Op_Add::setenv (ACE_TCHAR .opt_arg ())
 {
    CORBA::ULong length = this->environment_vars_.length ();
 
    // Increase the length of the sequence
    this->environment_vars_.length (length + 1);
-   ACE_TString tokens (optarg);
+   ACE_TString tokens .opt_arg ());
    int index = tokens.find ("=");
    // Insert at position length since that is our new element
    this->environment_vars_ [length].name =
@@ -359,27 +359,27 @@ TAO_IMR_Op_Add::parse (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'c':  // Command line arguments
-        this->command_line_ = get_opts.optarg;
+        this->command_line_ = get_opts.opt_arg ();
         break;
       case 'e':  // set environment variables
-        this->setenv( get_opts.optarg ) ;
+        this->setenv( get_opts.opt_arg () ) ;
         break;
       case 'w':  // Working Directory
-        this->working_dir_ = get_opts.optarg;
+        this->working_dir_ = get_opts.opt_arg ();
         break;
       case 'a':  // Activation Mode
-        if (ACE_OS::strcasecmp (get_opts.optarg, "NORMAL") == 0)
+        if (ACE_OS::strcasecmp (get_opts.opt_arg (), "NORMAL") == 0)
           this->activation_ = ImplementationRepository::NORMAL;
-        else if (ACE_OS::strcasecmp (get_opts.optarg, "MANUAL") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "MANUAL") == 0)
           this->activation_ = ImplementationRepository::MANUAL;
-        else if (ACE_OS::strcasecmp (get_opts.optarg, "PER_CLIENT") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "PER_CLIENT") == 0)
           this->activation_ = ImplementationRepository::PER_CLIENT;
-        else if (ACE_OS::strcasecmp (get_opts.optarg, "AUTO_START") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "AUTO_START") == 0)
           this->activation_ = ImplementationRepository::AUTO_START;
         else
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unknown Activation Mode <%s>!\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'h':  // display help
@@ -433,7 +433,7 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'f':  // File name
-        this->filename_ = get_opts.optarg;
+        this->filename_ = get_opts.opt_arg ();
         break;
       case 'h':  // display help
       default:
@@ -536,13 +536,13 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
 }
 
 void
-TAO_IMR_Op_Update::setenv (ACE_TCHAR *optarg)
+TAO_IMR_Op_Update::setenv (ACE_TCHAR .opt_arg ())
 {
    this->set_environment_vars_ = 1;
    CORBA::ULong length = this->environment_vars_.length ();
    // Increase the length of the sequence
    this->environment_vars_.length (length + 1);
-   ACE_TString tokens (optarg);
+   ACE_TString tokens .opt_arg ());
    int index = tokens.find ("=");
    // Insert at position length since that is our new element
    this->environment_vars_ [length].name =
@@ -572,29 +572,29 @@ TAO_IMR_Op_Update::parse (int argc, ACE_TCHAR **argv)
       {
       case 'c':  // Command line arguments
         this->set_command_line_ = 1;
-        this->command_line_ = get_opts.optarg;
+        this->command_line_ = get_opts.opt_arg ();
         break;
       case 'e':  // set environment variables
-        this->setenv( get_opts.optarg );
+        this->setenv( get_opts.opt_arg () );
         break;
       case 'w':  // Working Directory
         this->set_working_dir_ = 1;
-        this->working_dir_ = get_opts.optarg;
+        this->working_dir_ = get_opts.opt_arg ();
         break;
       case 'a':  // Activation Mode
         this->set_activation_ = 1;
-        if (ACE_OS::strcasecmp (get_opts.optarg, "NORMAL") == 0)
+        if (ACE_OS::strcasecmp (get_opts.opt_arg (), "NORMAL") == 0)
           this->activation_ = ImplementationRepository::NORMAL;
-        else if (ACE_OS::strcasecmp (get_opts.optarg, "MANUAL") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "MANUAL") == 0)
           this->activation_ = ImplementationRepository::MANUAL;
-        else if (ACE_OS::strcasecmp (get_opts.optarg, "PER_CLIENT") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "PER_CLIENT") == 0)
           this->activation_ = ImplementationRepository::PER_CLIENT;
-        else if (ACE_OS::strcasecmp (get_opts.optarg, "AUTO_START") == 0)
+        else if (ACE_OS::strcasecmp (get_opts.opt_arg (), "AUTO_START") == 0)
           this->activation_ = ImplementationRepository::AUTO_START;
         else
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unknown Activation Mode <%s>!\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
         break;
       case 'h':  // display help

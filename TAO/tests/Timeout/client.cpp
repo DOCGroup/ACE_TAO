@@ -21,15 +21,15 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
 
       case 'l':
-        min_timeout = ACE_OS::atoi (get_opts.optarg);
+        min_timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'h':
-        max_timeout = ACE_OS::atoi (get_opts.optarg);
+        max_timeout = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

@@ -84,21 +84,21 @@ Initiator_Server::parse_args (void)
         TAO_debug_level++;
         break;
       case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg,0);
+        result = this->read_ior (get_opts.opt_arg (),0);
         // read IOR for Object A
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
             break;
       case 'g': // read the IOR from the file.
-        result = this->read_ior (get_opts.optarg,1);
+        result = this->read_ior (get_opts.opt_arg (),1);
         // read IOR for Object A
         if (result < 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to read ior from %s : %p\n",
-                             get_opts.optarg),
+                             get_opts.opt_arg ()),
                             -1);
             break;
       case '?':

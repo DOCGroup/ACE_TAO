@@ -80,7 +80,7 @@ TAO_Naming_Service::parse_args (int argc,
       switch (c)
         {
         case 't':
-          time = ACE_OS::atoi (get_opts.optarg);
+          time = ACE_OS::atoi (get_opts.opt_arg ());
           if (time >= 0)
             this->time_ = time;
 

@@ -49,7 +49,7 @@ Quoter_Client::parse_args (void)
         // ignore it, it was handled already
         break;
       case 'd':  // debug flag.
-        this->debug_level_ = ACE_OS::atoi (get_opts.optarg);
+        this->debug_level_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'l':
         this->useLifeCycleService_ = 1;

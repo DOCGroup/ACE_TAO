@@ -30,11 +30,11 @@ Cubit_Server::parse_args (void)
         break;
 
       case 'f': // output the IOR to a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.optarg, "w");
+        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
         if (this->ior_output_file_ == 0)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Unable to open <%s> for writing: %p\n",
-                             get_opts.optarg,
+                             get_opts.opt_arg (),
                              ""),
                             -1);
         break;

@@ -90,11 +90,11 @@ parse_args (int argc,
         break;
 
       case 't':
-        number_of_threads = ACE_OS::atoi (get_opts.optarg);
+        number_of_threads = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'f':
-        ior_file = get_opts.optarg;
+        ior_file = get_opts.opt_arg ();
         break;
 
       case '?':

@@ -41,15 +41,15 @@ parse_args (int argc, char *argv[])
     switch (c)
       {
       case 'k':
-        server_ior = get_opts.optarg;
+        server_ior = get_opts.opt_arg ();
         break;
 
       case 'a':
-        admin_ior = get_opts.optarg;
+        admin_ior = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case 'c':

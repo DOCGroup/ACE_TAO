@@ -62,27 +62,27 @@ parse_args (int argc, char **argv)
         break;
 
       case 'k':
-        IOR = get_opts.optarg;
+        IOR = get_opts.opt_arg ();
         break;
 
       case 'i':
-        iterations = ::atoi (get_opts.optarg);
+        iterations = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'd':
-        data_bytes = ::atoi (get_opts.optarg);
+        data_bytes = ::atoi (get_opts.opt_arg ());
         break;
 
       case 't':
-        timeout = ::atoi (get_opts.optarg);
+        timeout = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'w':
-        work = ::atoi (get_opts.optarg);
+        work = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'z':
-        interval = ::atoi (get_opts.optarg);
+        interval = ::atoi (get_opts.opt_arg ());
         break;
 
       case 'x':

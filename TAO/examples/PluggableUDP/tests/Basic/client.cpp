@@ -49,13 +49,13 @@ parse_args (int argc, char *argv[])
         TAO_debug_level++;
         break;
       case 'k':
-        ior = get_opts.optarg;
+        ior = get_opts.opt_arg ();
         break;
       case 't':
-        msec = ACE_OS::atoi (get_opts.optarg);
+        msec = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.optarg);
+        iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:

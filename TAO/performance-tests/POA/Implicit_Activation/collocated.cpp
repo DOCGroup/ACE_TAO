@@ -27,7 +27,7 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'i':
-        niterations = ACE_OS::atoi (get_opts.optarg);
+        niterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
       case '?':

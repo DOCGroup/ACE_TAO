@@ -47,10 +47,10 @@ public class Time_Client
                 switch (ch)
                     {
                     case 'k':
-                        ior = getopt.optarg ();
+                        ior = getopt.opt_arg () ();
                         break;
                     case 'f':
-                        ior_file = getopt.optarg ();
+                        ior_file = getopt.opt_arg () ();
                         try
                             {
                                 java.io.FileInputStream file =
