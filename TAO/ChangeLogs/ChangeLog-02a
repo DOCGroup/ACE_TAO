@@ -1,3 +1,17 @@
+Mon Jun 25 15:05:48 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynCommon.cpp:
+        * tao/DynamicAny/DynCommon.h:
+        * tao/DynamicAny/DynStruct_i.cpp:
+        * tao/DynamicAny/DynUnion_i.cpp:
+
+          Made numerous fixes to unalias the class's member
+          type code before calling a type code method that cannot
+          be called by an aliased type code, plus a fix to the
+          insert_reference() function. Thanks to Philippe Merle
+          <Philippe.Merle@lifl.fr> for pointing out these problems.
+
 Mon Jun 25 14:51:39 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/examples/Log/test/BasicLog_Test.cpp:
