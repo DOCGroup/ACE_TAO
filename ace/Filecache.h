@@ -82,12 +82,12 @@ class ACE_Export ACE_Filecache_Handle
 public:
 
   ACE_Filecache_Handle (const char *filename);
-  // Query cache for file, and acquire it assumes the file is being
+  // Query cache for file, and acquire it.  Assumes the file is being
   // opened for reading.
 
   ACE_Filecache_Handle (const char *filename,
 		    int size);
-  // Create new entry, and acquire it presence of SIZE assumes the
+  // Create new entry, and acquire it.  Presence of SIZE assumes the
   // file is being opened for writing.
 
   ~ACE_Filecache_Handle (void);
@@ -112,6 +112,20 @@ protected:
 
   void init (void);
   // Common initializations for constructors.
+
+public:
+
+  // These come from ACE_Filecache_Object, which is an internal class.
+  enum 
+  {
+    SUCCESS = 0,
+    ACCESS_FAILED,
+    OPEN_FAILED,
+    COPY_FAILED,
+    STAT_FAILED,
+    MEMMAP_FAILED,
+    WRITE_FAILED 
+  };
 
 private:
   ACE_Filecache_Object *file_;
