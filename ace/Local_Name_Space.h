@@ -21,7 +21,6 @@
 #if !defined (ACE_LOCAL_NAME_SPACE_H)
 #define ACE_LOCAL_NAME_SPACE_H
 
-#include "ace/Service_Config.h"
 #include "ace/SString.h"
 #include "ace/Set.h"
 #include "ace/Malloc.h"
