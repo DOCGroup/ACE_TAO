@@ -1,3 +1,11 @@
+Mon Apr 21 11:31:16 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+ 	Removed some unnecessary explicit template instantiations.
+
+	* examples/Threads/barrier1.cpp (main): Explicitly converted
+ 	n_threads to int.
+
 Sun Apr 20 23:08:37 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/{Local,Remote}_Tokens.h: Added a private declarations of the
