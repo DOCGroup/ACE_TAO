@@ -205,3 +205,11 @@ main (int argc, char *argv[])
   ACE_Service_Config::run_reactor_event_loop ();
   return 0;
 }
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Event_Transceiver> *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Event_Transceiver> *, ACE_RW_Mutex>;
+template class ACE_Svc_Tuple<Event_Transceiver>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
