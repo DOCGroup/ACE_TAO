@@ -1,3 +1,7 @@
+Sat Sep 19 14:29:56 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/Bounded_Packet_Relay: Updated the coding style.
+
 Sat Sep 19 14:06:52 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* apps/JAWS/PROTOTYPE/JAWS/IO.cpp: Fixed typo.
