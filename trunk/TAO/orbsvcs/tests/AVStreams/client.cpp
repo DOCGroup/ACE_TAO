@@ -86,6 +86,7 @@ main (int argc, char **argv)
                                      TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
+
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("Cubit::init");
