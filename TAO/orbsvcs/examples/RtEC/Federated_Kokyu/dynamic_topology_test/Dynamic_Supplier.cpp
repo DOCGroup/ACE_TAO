@@ -44,6 +44,8 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) handle_service_start() DONE\n"));
     }
 
+  PushConsumer_Vector *proxies = 0;
+
   RtecEventComm::EventSet eventA (1);
   eventA.length (1);
   eventA[0].header.source = this->id_;
@@ -55,16 +57,22 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   eventA[0].header.ttl    = 1;
 
   switch (this->mode_) {
-  case NORMAL:
-    {
-      eventA[0].header.type   = this->norm_type_;
-      eventB[0].header.type   = this->norm_type2_;
-      break;
-    }
   case FAULT_TOLERANT:
     {
       eventA[0].header.type   = this->ft_type_;
       eventB[0].header.type   = this->ft_type2_;
+      //ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) setting header FT types: A = %d, B = %d\n",eventA[0].header.type,eventB[0].header.type));
+      //ACE_DEBUG((LM_DEBUG,"        From ft_type = %d, ft_type2 = %d\n",this->ft_type_,this->ft_type2_));
+      proxies = &(this->ft_consumer_proxies_);
+      break;
+    }
+  default: //NORMAL
+    {
+      eventA[0].header.type   = this->norm_type_;
+      eventB[0].header.type   = this->norm_type2_;
+      //ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (%P|%t) setting header types: A = %d, B = %d\n",eventA[0].header.type,eventB[0].header.type));
+      //ACE_DEBUG((LM_DEBUG,"        From norm_type = %d, norm_type2 = %d\n",this->norm_type_,this->norm_type2_));
+      proxies = &(this->normal_consumer_proxies_);
       break;
     }
   }
@@ -86,27 +94,27 @@ Dynamic_Supplier::timeout_occured (ACE_ENV_SINGLE_ARG_DECL)
   ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t ONE_WAY_CALL_START at %u\n",this->id_,ACE_OS::gettimeofday().msec()));
   oid.type = eventA[0].header.type;
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
-  //TODO: BUG! This code pushes eventA/B to ALL consumers!
-  for(PushConsumer_Vector::Iterator iter(this->consumer_proxy_);
+  //TODO: BUG? This code pushes eventA/B to ALL consumers!
+  for(PushConsumer_Vector::Iterator iter(*proxies);
       !iter.done(); iter.advance())
     {
       PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
       iter.next(proxy);
 
-      ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventA\n",this->id_));
+      ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventA %d\n",this->id_,eventA[0].header.type));
       (*proxy)->push (eventA ACE_ENV_ARG_PARAMETER);
     }
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);
 
   oid.type = eventB[0].header.type;
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_START, 0, sizeof(Object_ID), (char*)&oid);
-  for(PushConsumer_Vector::Iterator iter(this->consumer_proxy_);
+  for(PushConsumer_Vector::Iterator iter(*proxies);
       !iter.done(); iter.advance())
     {
       PushConsumer_Vector::TYPE *proxy; //would rather const to ensure we don't change it, but not supported!
       iter.next(proxy);
 
-      ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventB\n",this->id_));
+      ACE_DEBUG((LM_DEBUG,"Dynamic_Supplier (id %d) in thread %t pushing eventB %d\n",this->id_,eventB[0].header.type));
       (*proxy)->push (eventB ACE_ENV_ARG_PARAMETER);
     }
   DSTRM_EVENT (WORKER_GROUP_FAM, ONE_WAY_CALL_DONE, 0, sizeof(Object_ID), (char*)&oid);

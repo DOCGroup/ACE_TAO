@@ -232,7 +232,7 @@ public:
     this->handler_ = mode_handler;
     ACE_NEW(timeout_consumer_impl1_1,
             Timeout_Consumer(supplier_impl1_1));
-    ACE_Time_Value tv(0,200000); //period
+    ACE_Time_Value tv(10,200000); //period DEBUG: set to much longer period
     add_supplier_with_timeout(supplier_impl1_1,
                               "supplier1_1",
                               supp1_1_types,
@@ -307,7 +307,8 @@ main (int argc, char* argv[])
 
   //@BT
   //DSTRM_EVENT(MAIN_GROUP_FAM, START,1,0,NULL);
-  ACE_DEBUG((LM_DEBUG,"Supplier_EC thread %t START at %u\n",ACE_OS::gettimeofday().msec()));
+  ACE_Time_Value now(ACE_OS::gettimeofday());
+  ACE_OS::printf("Supplier_EC START at %isec %iusec\n",now.sec(),now.usec());
   DSTRM_EVENT(MAIN_GROUP_FAM, START,0,0,NULL);
 
   ACE_DECLARE_NEW_CORBA_ENV;
