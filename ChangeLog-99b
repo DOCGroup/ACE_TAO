@@ -1,3 +1,9 @@
+Thu Aug 19 13:03:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/ACE.cpp: Fixed a bug in ACE::dirname() that was causing problems
+	  if the pathname didn't have a delim character.  Thanks to Russ
+ 	  Noseworthy for reporting this and providing a fix.
+
 Thu Aug 19 12:59:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/Message_Block.i:
