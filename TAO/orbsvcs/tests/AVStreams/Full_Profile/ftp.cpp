@@ -87,11 +87,11 @@ FTP_Client_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
           this->count_++;
           if (this->count_ == 10)
             {
+              ACE_DECLARE_NEW_CORBA_ENV;
               ACE_DEBUG ((LM_DEBUG,"handle_timeout:End of file\n"));
               AVStreams::flowSpec stop_spec (1);
-              stop_spec.length (1);
-              ACE_DECLARE_NEW_CORBA_ENV;
-              stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
+//               stop_spec.length (1);
+//               stop_spec [0] = CORBA::string_dup (CLIENT::instance ()->flowname ());
               CLIENT::instance ()->streamctrl ()->stop (stop_spec,ACE_TRY_ENV);
               ACE_CHECK_RETURN (-1);
               return 0;
@@ -375,8 +375,8 @@ Client::run (void)
       if (result == 0)
         ACE_ERROR_RETURN ((LM_ERROR,"streamctrl::bind_devs failed\n"),-1);
       AVStreams::flowSpec start_spec (1);
-      start_spec.length (1);
-      start_spec [0] = CORBA::string_dup (this->flowname_);
+//       start_spec.length (1);
+//       start_spec [0] = CORBA::string_dup (this->flowname_);
       this->streamctrl_.start (start_spec,ACE_TRY_ENV);
       ACE_TRY_CHECK;
       // Schedule a timer for the for the flow handler.
