@@ -612,25 +612,25 @@ CORBA_TypeCode::private_equal (CORBA::TypeCode_ptr tc,
       // the kind_ field
       return CORBA::B_TRUE;
     case CORBA::tk_objref:
-      this->private_equal_objref (tc, env);
+      return this->private_equal_objref (tc, env);
     case CORBA::tk_struct:
-      this->private_equal_struct (tc, env);
+      return this->private_equal_struct (tc, env);
     case CORBA::tk_union:
-      this->private_equal_union (tc, env);
+      return this->private_equal_union (tc, env);
     case CORBA::tk_enum:
-      this->private_equal_enum (tc, env);
+      return this->private_equal_enum (tc, env);
     case CORBA::tk_string:
-      this->private_equal_string (tc, env);
+      return this->private_equal_string (tc, env);
     case CORBA::tk_wstring:
-      this->private_equal_wstring (tc, env);
+      return this->private_equal_wstring (tc, env);
     case CORBA::tk_sequence:
-      this->private_equal_sequence (tc, env);
+      return this->private_equal_sequence (tc, env);
     case CORBA::tk_array:
-      this->private_equal_array (tc, env);
+      return this->private_equal_array (tc, env);
     case CORBA::tk_alias:
-      this->private_equal_alias (tc, env);
+      return this->private_equal_alias (tc, env);
     case CORBA::tk_except:
-      this->private_equal_except (tc, env);
+      return this->private_equal_except (tc, env);
     case ~0: // indirection
       {
         // indirection offset must be same
