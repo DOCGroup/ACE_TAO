@@ -1,5 +1,9 @@
 Tue Aug 25 01:38:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* examples/Threads/task_three.cpp (main): Fixed this example so
+ 	  that it works portably with signals.  Thanks to Susan Liebeskind
+ 	  <susan.liebeskind@gtri.gatech.edu> for reporting this.
+
 	* tests/Aio_Platform_Test.cpp: Removed the forward decls
 	  so that don't conflict with the use of "static" later on.
 	  Thanks to David Levine for reporting this.
