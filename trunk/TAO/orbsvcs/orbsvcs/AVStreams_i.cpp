@@ -64,7 +64,7 @@ void
 TAO_Basic_StreamCtrl::push_event (const char *the_event,  
                                   CORBA::Environment &env)
 {
-  ACE_UNUSED_ARG (the_event);
+  ACE_UNUSUED_ARG (the_event);
   ACE_UNUSED_ARG (env);
 }
 
