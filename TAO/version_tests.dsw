@@ -2024,31 +2024,6 @@ Package=<4>
 
 ###############################################################################
 
-Project: "CC_client"=.\orbsvcs\tests\Concurrency\CC_client.dsp - Package Owner=<4>
-
-Package=<5>
-{{{
-}}}
-
-Package=<4>
-{{{
-    Begin Project Dependency
-    Project_Dep_Name gperf
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO DLL
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name TAO_IDL Compiler
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ORB Services DLL
-    End Project Dependency
-}}}
-
-
-###############################################################################
-
 Project: "Colocated_Test"=.\orbsvcs\tests\Trading\Colocated_Test.dsp - Package Owner=<4>
 
 Package=<5>
