@@ -11,6 +11,8 @@
 
 ACE_RCSID(blocking, SPIPE_acceptor, "$Id$")
 
+#if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+
 Svc_Handler::Svc_Handler (void)
   : mb_ (BUFSIZ + 1)
 {
@@ -70,7 +72,7 @@ IPC_Server::~IPC_Server (void)
 {
 }
 
-int 
+int
 IPC_Server::handle_signal (int,
                            siginfo_t *,
                            ucontext_t *)
@@ -171,7 +173,7 @@ IPC_Server::svc (void)
   while (this->shutdown_ == 0)
     {
       Svc_Handler sh;
-		
+
       // Create a new SH endpoint, which performs all processing in
       // its open() method (note no automatic restart if errno ==
       // EINTR).
@@ -180,7 +182,7 @@ IPC_Server::svc (void)
                            "%p\n",
                            "accept"),
                           1);
-		
+
       // SH's destructor closes the stream implicitly but the
       // listening endpoint stays open.
       else
@@ -188,7 +190,7 @@ IPC_Server::svc (void)
           // Run single-threaded.
           if (n_threads_ <= 1)
             run_reactor_event_loop (0);
-          else if (ACE_Thread_Manager::instance ()->spawn_n 
+          else if (ACE_Thread_Manager::instance ()->spawn_n
                    (n_threads_,
                     run_reactor_event_loop,
                     0,
@@ -198,14 +200,14 @@ IPC_Server::svc (void)
                                  "%p\n",
                                  "spawn_n"),
                                 1);
-				
+
               ACE_Thread_Manager::instance ()->wait ();
             }
-			
-          ACE_DEBUG ((LM_DEBUG, 
+
+          ACE_DEBUG ((LM_DEBUG,
                       "(%t) main thread exiting.\n"));
 
-          // Reset the Proactor so another accept will work.  
+          // Reset the Proactor so another accept will work.
           ACE_Proactor::reset_event_loop();
 
           // Must use some other method now to terminate this thing
@@ -215,12 +217,10 @@ IPC_Server::svc (void)
           // a handle_signal() hook, and catch the signal there?
         }
     }
-	
+
   /* NOTREACHED */
   return 0;
 }
-
-#endif /* SPIPE_ACCEPTOR_C */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
@@ -231,4 +231,7 @@ template class ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>;
 #pragma instantiate ACE_Concurrency_Strategy<Svc_Handler>
 #pragma instantiate ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
+#endif /* SPIPE_ACCEPTOR_C */
 

@@ -1,3 +1,18 @@
+Tue Oct 07 06:07:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-mingw.h:
+          Define ACE_HAS_SSIZE_T when building with MinGW version 3 or later
+
+        * examples/Connection/blocking/SPIPE-acceptor.cpp:
+        * examples/Connection/blocking/SPIPE-acceptor.h:
+        * Connection/blocking/test_spipe_acceptor.cpp:
+          This example uses AsynchIO, check for this when compiling and when
+          this is not available then just build a main saying this isn't
+          available. This fixes build problems in the Cygwin build.
+
+        * bin/MakeProjectCreator/templates/bor.mpd:
+          Generate NAME, else nothing happens when building with Borland.
+
 Fri Oct 03 22:41:20 2003  Chris Cleeland  <cleeland@ociweb.com>
 
         * ACE version 5.3.4 released.
