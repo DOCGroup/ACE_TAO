@@ -1,3 +1,11 @@
+Wed Mar 24 10:04:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp: 
+	  Removed definitions of inline functions for the T_var and T_out
+	  classes corresponding to a forward declaration. The classes will 
+	  be generated again for the interface.  This change should let us 
+	  use inline versions of T::_nil() and T::_duplicate().
+
 Wed Mar 24 09:00:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
