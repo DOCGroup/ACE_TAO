@@ -1,3 +1,13 @@
+Mon Jan  4 16:30:27 1999  Jeff Parsons <jp4@cs.wustl.edu>
+
+        * tao_idl/be/be_visitor_union_branch/private_ch.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_access_cs.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * tao_idl/be/be_visitor_union_branch/public_ci.cpp:
+          Implemented TAO_Object_Field_T<foo> in place of foo_ptr
+          for objects inside a union, so that _upcast() and
+          _downcast() will work.
+
 Mon Jan 04 16:08:49 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/CosEvent/Event_Channel_i.cpp (for_consumers):

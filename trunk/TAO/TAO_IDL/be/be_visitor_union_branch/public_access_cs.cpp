@@ -193,8 +193,8 @@ be_visitor_union_branch_public_access_cs::visit_interface (be_interface *node)
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "return (CORBA::Object_ptr *) &this->u_." << ub->local_name () << "_;"
-      << be_uidt_nl;
+  *os << "return (CORBA::Object_ptr *) &this->u_." << ub->local_name () 
+      << "_->inout ();" << be_uidt_nl;
 
   return 0;
 }
@@ -216,8 +216,8 @@ be_visitor_union_branch_public_access_cs::visit_interface_fwd (be_interface_fwd 
                          ), -1);
     }
   TAO_OutStream *os = this->ctx_->stream ();
-  *os << "return (CORBA::Object_ptr) &this->u_." << ub->local_name () << "_;"
-      << be_uidt_nl;
+  *os << "return (CORBA::Object_ptr) &this->u_." << ub->local_name ()
+      << "_->inout ();" << be_uidt_nl;
 
   return 0;
 }
