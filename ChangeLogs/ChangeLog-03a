@@ -1,3 +1,14 @@
+Thu Jun 22 15:16:31 2000  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS.cpp: Added pSOS implementation for ACE_OS::uname.
+          Added pSOS implementation for ACE_OS::inet_ntoa - this one is not
+          inlined, whereas all other platforms' ACE_OS::inet_ntoa are in
+          OS.i, inlined (if enabled). Thanks to Matt Emerson
+          <memerson@escient.com> for these.
+
+        * ace/OS.i (ACE_OS::inet_ntoa): Disabled this for pSOS - pSOS's version
+          is in OS.cpp now.
+
 Thu Jun 22 14:03:53 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* netsvcs/servers/svc.conf: Changed the library name where the
