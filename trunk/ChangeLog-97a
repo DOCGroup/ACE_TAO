@@ -1,3 +1,8 @@
+Mon May 05 21:01:42 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-linux*.h: added ACE_HAS_STRING_CLASS.  Thanks to
+	  Luis Lopes <llopes@tick.rcc.Ryerson.CA> for reporting this.
+
 Mon May 05 19:58:16 1997    <irfan@TWOSTEP>
 
 	* ace/Synch_T.h: Added ACE_SYNCH_RECURSIVE_MUTEX.
