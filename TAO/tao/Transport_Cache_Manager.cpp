@@ -306,7 +306,13 @@ TAO_Transport_Cache_Manager::update_entry (HASH_MAP_ENTRY *&entry)
                             guard,
                             *this->cache_lock_, -1));
 
-  (void) this->purging_strategy_->update_item (entry->int_id_.transport ());
+  if (entry != 0)
+    {
+      TAO_Connection_Purging_Strategy *st =
+        this->purging_strategy_;
+
+      (void) st->update_item (entry->int_id_.transport ());
+    }
 
   return 0;
 }
@@ -513,8 +519,8 @@ TAO_Transport_Cache_Manager::fill_set_i (DESCRIPTOR_SET& sorted_set)
 
 
 void
-TAO_Transport_Cache_Manager::close_entries(DESCRIPTOR_SET& sorted_set,
-                                           int sorted_size)
+TAO_Transport_Cache_Manager::close_entries (DESCRIPTOR_SET& sorted_set,
+                                            int sorted_size)
 {
   // Calculate the number of entries to purge
   const int amount = (sorted_size * this->percent_) / 100;
