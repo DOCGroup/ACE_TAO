@@ -1,4 +1,6 @@
-Mon Apr 19 23:15:01 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Mon Apr 19 23:50:25 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tests/Time_Service_Test.cpp (main): Fixed error message.
 
 	* ace/Connector.cpp (handle_close): Removed unused argument
 	  <mask>.
