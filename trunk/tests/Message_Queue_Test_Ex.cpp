@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //      This is:
-//      1) a simple test of the ACE_Message_Queue_Ex that 
+//      1) a simple test of the ACE_Message_Queue_Ex that
 //         executes a performance measurement test for both single-threaded
 //         (null synch) and thread-safe ACE_Message_Queue_Exs.
 //
@@ -72,6 +72,7 @@ struct Queue_Wrapper
 static int
 single_thread_performance_test (int queue_type = 0)
 {
+  ACE_UNUSED_ARG (queue_type);
   const char test_message[] =
     "ACE_Message_Queue_Ex Test Message";
   const ACE_TCHAR *message =
