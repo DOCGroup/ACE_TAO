@@ -9,7 +9,7 @@
 //     GIOP_Message_Acceptors.h
 //
 // = DESCRIPTION
-//   Interface for the different accept states     
+//   Interface for the different accept states
 //
 // = AUTHOR
 //     Balachandran Natarajan <bala@cs.wustl.edu>
@@ -34,6 +34,10 @@
 //    alone. Moreover, most of the protocols like HTTP-NG, HTTP have
 //    this server/client differentiation in their basic
 //    framework. Please let me know if I am wrong.
+// @@ OK, but then name the classes properly, 'FooServer' is better
+// @@ than 'FooAcceptor' because Acceptor is what we reserve for
+// @@ accepting connections, and Connector for establishing
+// @@ connections.
 
 //    Please think about designs that do not require separate state
 //    objects, a good side effect: that should reduce code size...
@@ -51,27 +55,27 @@ class TAO_GIOP_Message_Accept_State
   //   Strategy to determine which version of the GIOP request have we
   //   received. This is to aid the server in replying back to the
   //   client in the same version as that of the received request.
-  //  
+  //
 public:
 
   virtual int parse_request_header (TAO_GIOP_ServerRequest &) = 0;
   // Parse the Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
-  
+
   virtual CORBA::Boolean write_reply_header (TAO_OutputCDR &output,
                                              CORBA::ULong request_id) = 0;
   // Write the reply header in to <output>
 
-  virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &) = 0; 
+  virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &) = 0;
   // Parse the Loacte Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
- 
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   write_locate_reply_mesg (TAO_OutputCDR &output,
                            CORBA::ULong request_id,
                            TAO_GIOP_Locate_Status_Msg &status) = 0;
   // Writes the locate _reply message in to the <output>
-  
+
   virtual CORBA::Octet major_version (void) = 0;
   virtual CORBA::Octet minor_version (void) = 0;
   // Our versions
@@ -80,20 +84,29 @@ public:
 };
 
 
-/*****************************************************************/ 
+/*****************************************************************/
 // @@ Bala: a physical design issue: if the protocol is truly
 //    pluggable then you should be able to (and you should) put the
 //    classes for each protocol in separate files.
 // @@ Carlos: Only GIOP/GIOPlite is pluggable and not the
 //    implementation details I think. Does that answer your question?
- 
+// @@ I don't think so, are GIOP 1.0, GIOP 1.1, and GIOP 1.2 to be
+// different pluggable protocols?  If so they should be in separate
+// files.  Same deal to GIOPlite.   You may even have to put the
+// shared implementation details in yet another file.  The mindset is:
+//   Can i create a completely separate library for each protocol and
+//   then just add it to TAO?  Can TAO compile without the pluggable
+//   protocol (except for a couple of lines where the default protocol
+//   is set)?  I think it is OK if GIOP 1.1 depends on 1.0 (and 1.2
+//   depends on both), but not vice-versa....
+
 class TAO_GIOP_Message_Accept_State_10 : public TAO_GIOP_Message_Accept_State
 {
   // = TITLE
   //   TAO_GIOP_Message_Accept_State_10
   // = DESCRIPTION
-  //   
-  
+  //
+
 public:
   virtual int parse_request_header (TAO_GIOP_ServerRequest &);
   // Parse the Request Header from the incoming stream. This will do a
@@ -103,23 +116,23 @@ public:
   virtual CORBA::Boolean  write_reply_header (TAO_OutputCDR &output,
                                               CORBA::ULong request_id);
   // Write the version specific reply header in to <output>
-  
+
   virtual int parse_locate_header (TAO_GIOP_Locate_Request_Header &);
   // Parse the Loacte Request Header from the incoming stream. This will do a
   // version specific parsing of the incoming Request header
-  
-  virtual CORBA::Boolean 
+
+  virtual CORBA::Boolean
   write_locate_reply_mesg (TAO_OutputCDR &output,
                            CORBA::ULong request_id,
                            TAO_GIOP_Locate_Status_Msg &status);
   // Writes the locate reply message in to <output>
-  
+
   virtual CORBA::Octet major_version (void);
   virtual CORBA::Octet minor_version (void);
   // Our versions
 };
 
-/*****************************************************************/ 
+/*****************************************************************/
 class TAO_GIOP_Message_Accept_State_11: public TAO_GIOP_Message_Accept_State_10
 {
   // = TITLE
@@ -129,7 +142,7 @@ public:
   virtual CORBA::Octet minor_version (void);
 };
 
-/*****************************************************************/ 
+/*****************************************************************/
 
 class TAO_GIOP_Message_Accept_Impl
 {

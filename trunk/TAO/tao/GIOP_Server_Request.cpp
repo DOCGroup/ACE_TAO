@@ -1,6 +1,5 @@
 // $Id$
 
-
 // Implementation of the Dynamic Server Skeleton Interface  (for GIOP)
 
 #include "tao/GIOP_Server_Request.h"

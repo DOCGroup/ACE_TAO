@@ -15,7 +15,7 @@
 // = AUTHOR
 //     Chris Cleeland <cleeland@cs.wustl.edu>
 //     Carlos O' Ryan <coryan@uci.edu>
-//     
+//
 // ============================================================================
 
 #ifndef TAO_GIOP_MESSAGE_STATE_H
@@ -23,6 +23,8 @@
 #include "ace/pre.h"
 
 #include "tao/Pluggable_Messaging.h"
+
+// @@ Bala more missing #pragma once
 
 class TAO_Export TAO_GIOP_Version
 {
@@ -56,15 +58,23 @@ public:
   // Equality operator
 };
 
-class TAO_Export TAO_GIOP_Message_State: public TAO_Message_State_Factory
+// @@ Bala: do you see how these names are inconsistent! It is a
+// @@ message state factory for GIOP or is it a message state?
+class TAO_Export TAO_GIOP_Message_State : public TAO_Message_State_Factory
 {
   // = TITLE
-  //   Generic definitions for Message States.  
+  //   Generic definitions for Message States.
   //
   // = DESCRIPTION
-  //   This would represnt the state of the incoming message states.
+  //   @@ Bala: please don't write comments in conditional form.
+  //   @@ Don't say what the class could or would do, say what it
+  //   @@ *does*
+  //   @@ Bala: i remain unconvinced as to whether the base class here
+  //   @@ is any useful.
+  //
+  //   This would represent the state of the incoming message states.
   //   As the ORB processes incoming messages it need to keep track of
-  //   how much of the message has been read. if there are any
+  //   how much of the message has been read, if there are any
   //   fragments following this message etc. This class attempts to
   //   give a generic interface to all the messaging protocols message
   //   states so that the Transport layer does not really know with
@@ -75,11 +85,11 @@ public:
 
   ~TAO_GIOP_Message_State (void);
   // Dtor
-  
+
   void reset (int reset_contents = 1);
   //Reset the message header state and prepare it to receive the next
   // event.
-  
+
   CORBA::Boolean  header_received (void) const;
   // Has the header been received?
 
@@ -87,19 +97,19 @@ public:
   // Check if the current message is complete, adjusting the fragments
   // if required...
 
-  TAO_GIOP_Version giop_version; 
+  TAO_GIOP_Version giop_version;
   // Version info
 
-  CORBA::Octet byte_order;       
+  CORBA::Octet byte_order;
   // 0 = big, 1 = little
-  
-  CORBA::Octet more_fragments;   
+
+  CORBA::Octet more_fragments;
   // (Requests and Replys)
-  
-  CORBA::Octet message_type;     
+
+  CORBA::Octet message_type;
   // MsgType above
-  
-  CORBA::ULong message_size;     
+
+  CORBA::ULong message_size;
   // in byte_order!
 
   CORBA::ULong current_offset;
@@ -134,8 +144,8 @@ public:
   // the *complete* message (remember that the last message will be
   // fragment and the upper level needs to know if it is a request,
   // locate request or what).
-  
-  
+
+
 private:
   int append_fragment (ACE_Message_Block* current);
   // Append <current> to the list of fragments

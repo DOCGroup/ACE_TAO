@@ -31,7 +31,6 @@ TAO_GIOP_Message_Lite::TAO_GIOP_Message_Lite (TAO_ORB_Core *orb_core)
 
 TAO_GIOP_Message_Lite::~TAO_GIOP_Message_Lite (void)
 {
-  //no-op
 }
 
 CORBA::Boolean
@@ -39,17 +38,40 @@ TAO_GIOP_Message_Lite::
   write_protocol_header (TAO_Pluggable_Message_Type t,
                          TAO_OutputCDR &msg)
 {
-  // Reset the message type
+  // Reset the CDR stream, we are going to generate a completely new
+  // message.
   msg.reset ();
-  
+
+  // @@ Bala: this is something to think harder about:  right now we
+  // leave the space to store the length, and later we set it, but the
+  // way we do it is CDR specific...  Maybe the XXXStream classes
+  // should support a 'save your current position' method that returns
+  // a 'Mememto' (check the GoF book), later the CDR stream could be
+  // restored to that state, and the size written to it.
+  // @@ Then again, i don't know how would that work with fragments
+  // (eventually we may want TAO to generate fragments), or protocols
+  // based on chunking....
+  //
   // Write a dummy <size> later it is set to the right value...  @@
-  // TODO Maybe we should store the OutputCDR status in
   CORBA::ULong size = 0;
   msg.write_ulong (size);
-  
+
   TAO_GIOP_Message_Type type = TAO_GIOP_MESSAGERROR;
-  
-  // First convert the Pluggable type to the GIOP specific type. 
+
+  // First convert the Pluggable type to the GIOP specific type.
+  // @@ Bala: this looks like a such a waste of time.  There is no
+  // reason to have those 'generic' values if they will be transformed
+  // back an forth.  It makes more sense to have several methods:
+  //
+  // write_request_header()
+  // write_reply_header()
+  // write_..._header()
+  //
+  // exposed through the Pluggable_Messaging interface.  The
+  // write_protocol_header() should not be exposed through the generic
+  // interface, but it may be a private method used to implement the
+  // methods above....  Then you can use the GIOP types directly.
+  //
   switch (t)
     {
     case (TAO_PLUGGABLE_MESSAGE_REQUEST):
@@ -91,17 +113,25 @@ TAO_GIOP_Message_Lite::
                 TAO_Message_State_Factory &mesg_state,
                 ACE_Time_Value *max_wait_time)
 {
+  // @@ Bala: only the pluggable transport protocols can invoke the
+  // handle_input() method, but they must know what messaging protocol
+  // is in place already.  In consequence this method should not be
+  // part of the public interface for Pluggable_Messaging....
+
   TAO_GIOP_Message_State *state =
-    ACE_dynamic_cast (TAO_GIOP_Message_State *,
-                      &mesg_state);
-  
+    ACE_dynamic_cast (TAO_GIOP_Message_State *, &mesg_state);
+
+
+  // @@ Bala: can we eliminate fragments for GIOPLite? I think we can
+  // and then this code should be significantly simplified.
+
   if (state->header_received () == 0)
     {
-      int retval = 
+      int retval =
         TAO_GIOP_Utils::read_bytes_input (transport,
                                           state->cdr,
                                           TAO_GIOP_LITE_HEADER_LEN,
-                                          max_wait_time); 
+                                          max_wait_time);
       if (retval == -1 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -109,10 +139,10 @@ TAO_GIOP_Message_Lite::
                       ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input")));
           return -1;
         }
-      
+
       // After we read, we assume that everything is fine. We dont do
       // any sanity check of the incoming header.
-      
+
       // Read the rest of the stuff. That should be read by the
       // corresponding states
       if (this->parse_header (state) == -1)
@@ -123,7 +153,7 @@ TAO_GIOP_Message_Lite::
                           "TAO_GIOP_Message_Lite::handle_input"));
           return -1;
         }
-      
+
       if (state->cdr.grow (TAO_GIOP_LITE_HEADER_LEN +
                            state->message_size) == -1)
         {
@@ -133,7 +163,7 @@ TAO_GIOP_Message_Lite::
                         ASYS_TEXT ("ACE_CDR::grow")));
           return -1;
         }
-      
+
       // Growing the buffer may have reset the rd_ptr(), but we want
       // to leave it just after the GIOP header (that was parsed
       // already);
@@ -142,7 +172,7 @@ TAO_GIOP_Message_Lite::
 
   size_t missing_data =
     state->message_size - state->current_offset;
-    
+
   ssize_t n =
     TAO_GIOP_Utils::read_buffer (transport,
                                  state->cdr.rd_ptr () + state->current_offset,
@@ -153,7 +183,7 @@ TAO_GIOP_Message_Lite::
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
                     ASYS_TEXT ("TAO (%P|%t) - %p\n"),
-                    ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input, read_buffer[1]"))); 
+                    ASYS_TEXT ("TAO_GIOP_Message_Lite::handle_input, read_buffer[1]")));
       return -1;
     }
   else if (n == 0)
@@ -165,9 +195,9 @@ TAO_GIOP_Message_Lite::
       return -1;
     }
 
-  
+
   state->current_offset += n;
-  
+
   if (state->current_offset == state->message_size)
     {
       if (TAO_debug_level >= 4)
@@ -185,6 +215,7 @@ TAO_GIOP_Message_Lite::
                           msg_len);
         }
     }
+
   return state->is_complete ();
 }
 
@@ -197,6 +228,11 @@ TAO_GIOP_Message_Lite::
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &cdr)
 {
+  // @@ Bala: it is better to expose the methods directly, the
+  // higher level components in the ORB *know* if they want to send a
+  // request or a locate request.  The switch is just a waste of time
+  // and breaks type safety....
+
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
@@ -212,9 +248,9 @@ TAO_GIOP_Message_Lite::
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("(%P|%t|%N|%l) Wrong header type \n")),
                           0);
-      
+
     }
-  
+
   return 1;
 }
 
@@ -259,17 +295,17 @@ TAO_GIOP_Message_Lite::
                                            &bodylen),
                      buf + offset);
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
-  
+
   this->dump_msg ("send",
                   ACE_reinterpret_cast (u_char *,
                                         buf),
                   stream.length ());
-  
+
   return this->transport_message (transport,
                                   stream,
                                   two_way,
                                   stub,
-                                  max_wait_time); 
+                                  max_wait_time);
 }
 
 
@@ -279,16 +315,16 @@ TAO_GIOP_Message_Lite::
                TAO_Pluggable_Reply_Params &params)
 {
   // Cast to the GIOP Message state
-  TAO_GIOP_Message_State *state = 
+  TAO_GIOP_Message_State *state =
     ACE_dynamic_cast (TAO_GIOP_Message_State *,
                       &mesg_state);
-  
+
   switch (state->message_type)
     {
     case TAO_GIOP_REQUEST:
       // In GIOP 1.0 and GIOP 1.1 this is an error,
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ASYS_TEXT ("TAO (%P|%t) %N:%l TAO_GIOP_Message_Lite::parse_reply: ")  
+                         ASYS_TEXT ("TAO (%P|%t) %N:%l TAO_GIOP_Message_Lite::parse_reply: ")
                          ASYS_TEXT ("request.\n")),
                         -1);
 
@@ -319,7 +355,7 @@ TAO_GIOP_Message_Lite::
       // Never happens: why??
       break;
     }
-  
+
   // Read the request id
   if (!state->cdr.read_ulong (params.request_id_))
     {
@@ -350,12 +386,12 @@ TAO_GIOP_Message_Lite::
     case TAO_GIOP_NO_EXCEPTION:
       params.reply_status_ = TAO_PLUGGABLE_MESSAGE_NO_EXCEPTION;
       break;
-      
+
       // Request terminated with user exception
     case TAO_GIOP_USER_EXCEPTION:
       params.reply_status_ = TAO_PLUGGABLE_MESSAGE_USER_EXCEPTION;
       break;
-      // Request terminated with system exception        
+      // Request terminated with system exception
     case TAO_GIOP_SYSTEM_EXCEPTION:
       params.reply_status_ = TAO_PLUGGABLE_MESSAGE_SYSTEM_EXCEPTION;
       break;
@@ -394,7 +430,7 @@ TAO_GIOP_Message_Lite::
       this->process_client_locate (transport,
                                    orb_core,
                                    input);
-            
+
       break;
     case TAO_GIOP_MESSAGERROR:
     case TAO_GIOP_REPLY:
@@ -451,7 +487,7 @@ TAO_GIOP_Message_Lite::
   // key as the address disposition variable. But we do a sanity check
   // anyway.
   const TAO_ObjectKey *key = spec.object_key ();
-  
+
   if (key)
     {
       // Put in the object key
@@ -464,12 +500,12 @@ TAO_GIOP_Message_Lite::
                     ASYS_TEXT ("(%N |%l) Unable to handle this request \n")));
       return 0;
     }
-  
-  out_stream.write_string (opdetails.opname_len (), 
+
+  out_stream.write_string (opdetails.opname_len (),
                            opdetails.opname ());
 
   return 1;
-}                        
+}
 
 
 CORBA::Boolean
@@ -504,14 +540,14 @@ TAO_GIOP_Message_Lite::
 
 int
 TAO_GIOP_Message_Lite::
-  process_client_request (TAO_Transport *transport, 
+  process_client_request (TAO_Transport *transport,
                           TAO_ORB_Core* orb_core,
                           TAO_InputCDR &input)
 {
    // Get the revision info
   TAO_GIOP_Version version (TAO_DEF_GIOP_MAJOR,
                             TAO_DEF_GIOP_MINOR);
-                           
+
   // This will extract the request header, set <response_required>
   // and <sync_with_server> as appropriate.
   TAO_GIOP_ServerRequest request (this,
@@ -519,21 +555,21 @@ TAO_GIOP_Message_Lite::
                                   this->output_,
                                   orb_core,
                                   version);
-  
+
   CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ();
-  
+
   CORBA::ULong request_id = 0;
   CORBA::Boolean response_required = 0;
   CORBA::Boolean sync_with_server = 0;
   CORBA::Boolean location_forward = 0;
   int parse_error = 0;
-  
+
   ACE_TRY
     {
-      parse_error = 
+      parse_error =
         this->parse_request_header (request);
 
-      // Throw an exception if the 
+      // Throw an exception if the
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
@@ -541,11 +577,11 @@ TAO_GIOP_Message_Lite::
 
       response_required = request.response_expected ();
       sync_with_server = request.sync_with_server ();
-      
+
 #if (TAO_NO_IOR_TABLE == 0)
       const CORBA::Octet *object_key =
         request.object_key ().get_buffer ();
-      
+
       if (ACE_OS::memcmp (object_key,
                           &TAO_POA::objectkey_prefix[0],
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
@@ -555,7 +591,7 @@ TAO_GIOP_Message_Lite::
                                  request.object_key ().length (),
                                  0,
                                  0);
-          
+
           // @@ This debugging output should *NOT* be used since the
           //    object key string is not null terminated, nor can it
           //    be null terminated without copying.  No copying should
@@ -578,21 +614,21 @@ TAO_GIOP_Message_Lite::
 
           // If ObjectID not in table or reference is nil raise
           // OBJECT_NOT_EXIST.
-          
+
           if (status == -1 || CORBA::is_nil (object_reference.in ()))
             ACE_TRY_THROW (CORBA::OBJECT_NOT_EXIST ());
-          
+
           // ObjectID present in the table with an associated NON-NULL
           // reference.  Throw a forward request exception.
 
           //          CORBA::Object_ptr dup =
           // CORBA::Object::_duplicate (object_reference);
-          
+
           // @@ We could simply write the response at this point...
           ACE_TRY_THROW (PortableServer::ForwardRequest (object_reference.in ()));
         }
 #endif /* TAO_NO_IOR_TABLE */
-  
+
       // Do this before the reply is sent.
       orb_core->object_adapter ()->dispatch_servant (
                                                      request.object_key (),
@@ -609,7 +645,7 @@ TAO_GIOP_Message_Lite::
       // Make the GIOP header and Reply header
       this->make_reply (request_id,
                         this->output_);
-      
+
       this->output_.write_ulong (TAO_GIOP_LOCATION_FORWARD);
 
       CORBA::Object_ptr object_ptr =
@@ -718,7 +754,7 @@ TAO_GIOP_Message_Lite::
     {
       result = this->send_message (transport,
                                    this->output_);
-                                   
+
       if (result == -1)
         {
           if (TAO_debug_level > 0)
@@ -732,8 +768,8 @@ TAO_GIOP_Message_Lite::
         }
     }
 
-  return result;   
-   
+  return result;
+
 }
 
 int
@@ -745,7 +781,7 @@ TAO_GIOP_Message_Lite::
   // Get the revision info
   TAO_GIOP_Version version (TAO_DEF_GIOP_MAJOR,
                             TAO_DEF_GIOP_MINOR);
-  
+
   // This will extract the request header, set <response_required> as
   // appropriate.
   TAO_GIOP_Locate_Request_Header locate_request (input);
@@ -760,7 +796,7 @@ TAO_GIOP_Message_Lite::
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      int parse_error = 
+      int parse_error =
         this->parse_locate_header (locate_request);
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
@@ -769,14 +805,14 @@ TAO_GIOP_Message_Lite::
 
       const CORBA::Octet *object_key =
         locate_request.target_address ().object_key ().get_buffer ();
-      
+
       if (ACE_OS::memcmp (object_key,
                           &TAO_POA::objectkey_prefix[0],
                           TAO_POA::TAO_OBJECTKEY_PREFIX_SIZE) != 0)
         {
-          CORBA::ULong len = 
+          CORBA::ULong len =
             locate_request.target_address ().object_key ().length ();
-          
+
           ACE_CString object_id (ACE_reinterpret_cast (const char *,
                                                        object_key),
                                  len,
@@ -785,7 +821,7 @@ TAO_GIOP_Message_Lite::
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"), 
+                        ASYS_TEXT ("Simple Object key %s. Doing the Table Lookup ...\n"),
                         object_id.c_str ()));
 
           CORBA::Object_ptr object_reference;
@@ -830,7 +866,7 @@ TAO_GIOP_Message_Lite::
       // Set it to an error state
       parse_error = 1;
       CORBA::ULong req_id = locate_request.request_id ();
-      
+
       TAO_GIOP_ServerRequest server_request (this,
                                              req_id,
                                              response_required,
@@ -843,14 +879,14 @@ TAO_GIOP_Message_Lite::
       if (parse_error != 0)
         ACE_TRY_THROW (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO));
-      
+
       orb_core->object_adapter ()->dispatch_servant
-        (server_request.object_key (), 
+        (server_request.object_key (),
          server_request,
          transport,
          0,
          ACE_TRY_ENV);
-      
+
       ACE_TRY_CHECK;
 
       if (server_request.exception_type () == TAO_GIOP_NO_EXCEPTION)
@@ -929,16 +965,16 @@ TAO_GIOP_Message_Lite::
 {
   // Get the input CDR in the request class
   TAO_InputCDR& input = request.incoming ();
-  
+
   CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
 
-  CORBA::ULong req_id; 
-  
+  CORBA::ULong req_id;
+
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 
   request.request_id (req_id);
-  
+
    CORBA::Octet response_flags;
   hdr_status = hdr_status && input.read_octet (response_flags);
   request.response_expected ((response_flags != 0));
@@ -948,7 +984,7 @@ TAO_GIOP_Message_Lite::
   // of GIOP 1.2 is in place. Then we can check the version in the
   // message header instead.
   request.sync_with_server ((response_flags == 129));
-  
+
     // We use ad-hoc demarshalling here: there is no need to increase
   // the reference count on the CDR message block, because this key
   // will not outlive the request (or the message block).
@@ -994,27 +1030,27 @@ TAO_GIOP_Message_Lite::
 
 }
 
-int 
+int
 TAO_GIOP_Message_Lite::
   parse_locate_header (TAO_GIOP_Locate_Request_Header &request)
 {
-  // Get the stream 
+  // Get the stream
   TAO_InputCDR &msg = request.incoming_stream ();
 
   CORBA::Boolean hdr_status = 1;
-  
+
   // Get the request id
   CORBA::ULong req_id = 0;
   hdr_status = msg.read_ulong (req_id);
-  
+
   // Store it in the Locate request classes
   request.request_id (req_id);
 
   TAO_ObjectKey object_key;
-  
+
   // Note that here there are no unions and so no problems
   hdr_status = hdr_status && (msg >> object_key);
-  
+
   // Get the underlying TargetAddress from the request class
   GIOP::TargetAddress &target = request.target_address ();
 
@@ -1053,11 +1089,11 @@ TAO_GIOP_Message_Lite::
   // Make the GIOP & reply header. They are version specific.
   this->make_reply (request_id,
                     output);
-  
+
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
   ACE_DECLARE_NEW_CORBA_ENV;
-  
+
   ACE_TRY
     {
       // Write the exception
@@ -1071,7 +1107,7 @@ TAO_GIOP_Message_Lite::
 
       // write the reply_status
       output.write_ulong
-        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));  
+        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));
 
       x->_tao_encode (output, ACE_TRY_ENV);
       ACE_TRY_CHECK;
@@ -1119,7 +1155,7 @@ TAO_GIOP_Message_Lite::
   // Make the header for the locate request
   output.write_ulong (request.request_id ());
   output.write_ulong (status_info.status);
-  
+
   if (status_info.status == TAO_GIOP_OBJECT_FORWARD)
     {
       CORBA::Object_ptr object_ptr = status_info.forward_location_var.in ();
@@ -1168,11 +1204,11 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
     TAO_GIOP_MESSAGERROR,
     0, 0, 0, 0
   };
-  
+
   this->dump_msg ("send_error",
                   (const u_char *) error_message,
                   TAO_GIOP_LITE_HEADER_LEN);
- 
+
   ACE_HANDLE which = transport->handle ();
 
   int result = transport->send ((const u_char *)error_message,
@@ -1184,7 +1220,7 @@ TAO_GIOP_Message_Lite::send_error (TAO_Transport *transport)
                     ASYS_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
                     which));
     }
- 
+
   return result;
 }
 
@@ -1204,7 +1240,7 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
     "MessageError"
     "Fragment"
   };
-  
+
   if (TAO_debug_level >= 5)
     {
       // Message name.
@@ -1212,21 +1248,21 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
       u_long slot = ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET];
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
-      
+
       // Byte order.
       int byte_order = TAO_ENCAP_BYTE_ORDER;
 
       // request/reply id.
       CORBA::ULong tmp = 0;
       CORBA::ULong *id = &tmp;
-      
+
       if (ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
           ptr[TAO_GIOP_LITE_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
           // @@ Only works if ServiceContextList is empty....
           id = ACE_reinterpret_cast (CORBA::ULong *,
                                      (char * ) (ptr));
-                               
+
         }
 
       // Print.
@@ -1240,5 +1276,3 @@ TAO_GIOP_Message_Lite::dump_msg (const char *label,
                   *id));
     }
 }
-
-

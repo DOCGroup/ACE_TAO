@@ -3,7 +3,11 @@
 //$Id$
 
 //
-// Inlined methods for TAO_GIOP_Version  
+// @@ Bala: is this comment useful at all?  I mean, everybody can read
+// C++, it is *OBVIOUS* that they are inlined methods, and what class
+// they belong to, right?
+//
+// Inlined methods for TAO_GIOP_Version
 //
 
 ACE_INLINE
@@ -56,7 +60,10 @@ TAO_GIOP_Version::operator!= (const TAO_GIOP_Version &src)
   return !(*this == src);
 }
 
-// 
+// ****************************************************************
+// @@ Bala: we use the stars to separate classes in ACE+TAO
+
+//
 // Inlined methods for TAO_GIOP_Message_State
 //
 
