@@ -1,3 +1,12 @@
+Wed Jun 23 09:49:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/tests/Param_Test/complex_any.cpp:
+	* TAO/tests/Param_Test/results.cpp:
+	* TAO/tests/Param_Test/typecode.cpp:
+	* TAO/tests/Param_Test/ub_any_seq.cpp:
+	* TAO/tests/Param_Test/ub_short_seq.cpp:
+	  Fixed unused arg warnings.
+
 Wed Jun 23 09:26:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
