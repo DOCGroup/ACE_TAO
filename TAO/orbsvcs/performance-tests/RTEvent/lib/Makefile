@@ -35,7 +35,8 @@ SRCS = \
   RTEC_Initializer \
   RTCORBA_Setup \
   Send_Task \
-  Client_Group
+  Client_Group \
+  ORB_Task
 
 TEMPLATE_SOURCES = \
   Servant_var \

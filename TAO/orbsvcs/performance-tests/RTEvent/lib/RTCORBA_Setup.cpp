@@ -32,7 +32,7 @@ RTCORBA_Setup::RTCORBA_Setup (CORBA::ORB_ptr orb,
   ACE_CHECK;
 
   this->priority_mapping_ =
-    new TAO_Continuous_Priority_Mapping (rtclass.prc_sched_class ());
+    auto_ptr<RTCORBA::PriorityMapping> (new TAO_Continuous_Priority_Mapping (rtclass.prc_sched_class ()));
 
   this->priority_mapping_manager_->mapping (this->priority_mapping_.get ());
 
@@ -72,7 +72,7 @@ RTCORBA_Setup::setup_lane (int priority,
 {
   if (!this->priority_mapping_->to_CORBA (priority,
                                           lane.lane_priority))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), 0);
+    ACE_THROW (CORBA::BAD_PARAM ());
 
   lane.static_threads  = 1;
   lane.dynamic_threads = 0;

@@ -7,10 +7,11 @@
 #include "RTCORBA_Setup.h"
 #include "Send_Task.h"
 #include "Client_Group.h"
+#include "ORB_Task.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 
-#include "tao/Messaging.h"
+#include "tao/Messaging/Messaging.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/RTCORBA/Continuous_Priority_Mapping.h"
@@ -125,9 +126,10 @@ int main (int argc, char *argv[])
       auto_ptr<RTCORBA_Setup> rtcorba_setup;
       if (use_rt_corba)
         {
-          rtcorba_setup = new RTCORBA_Setup (orb,
-                                             test_scheduling
-                                             ACE_ENV_ARG_PARAMETER);
+          rtcorba_setup = 
+            auto_ptr<RTCORBA_Setup> (new RTCORBA_Setup (orb,
+                                                        test_scheduling
+                                                        ACE_ENV_ARG_PARAMETER));
           ACE_TRY_CHECK;
         }
 
@@ -183,6 +185,13 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "Finished EC configuration and activation\n"));
+
+      ORB_Task orb_task (orb);
+      orb_task.activate (test_scheduling.thr_sched_class ()
+                         | THR_NEW_LWP
+                         | THR_JOINABLE,
+                         1, 1,
+                         test_scheduling.priority_high ());
 
       ACE_Thread_Manager my_thread_manager;
 
@@ -322,6 +331,11 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+
+      orb->shutdown (0 ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      orb_task.wait ();
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;

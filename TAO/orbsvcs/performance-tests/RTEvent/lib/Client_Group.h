@@ -26,7 +26,7 @@
  * @brief Simplify the initialization of a Supplier/Consumer pair
  *        connected through a Loopback.
  */
-class Client_Group
+class TAO_RTEC_Perf_Export Client_Group
 {
 public:
   /// Constructor

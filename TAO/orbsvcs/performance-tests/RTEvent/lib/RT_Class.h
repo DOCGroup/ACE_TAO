@@ -9,6 +9,7 @@
 #ifndef TAO_PERF_RTEC_RT_CLASS_H
 #define TAO_PERF_RTEC_RT_CLASS_H
 
+#include "rtec_perf_export.h"
 #include "ace/Sched_Params.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -21,7 +22,7 @@
  * @brief Simplify the initialization of performance tests.
  *
  */
-class RT_Class
+class TAO_RTEC_Perf_Export RT_Class
 {
 public:
   /// Constructor
@@ -40,11 +41,11 @@ public:
   int priority_process (void) const;
 
   /// Return the (thread, native) priority for the high priority
-  /// task(s) in the test 
+  /// task(s) in the test
   int priority_high (void) const;
 
   /// Return the (thread, native) priority for the low priority
-  /// task(s) in the test 
+  /// task(s) in the test
   int priority_low (void) const;
 
   //@}

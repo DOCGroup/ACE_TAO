@@ -258,6 +258,9 @@ public:
           RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR,
           RtecEventChannelAdmin::EventChannel::CANT_REMOVE_OBSERVER));
 
+  /// Return 1 if the event channel is already destroyed.
+  int destroyed (void);
+
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
@@ -317,6 +320,12 @@ private:
   /// suppliers
   TAO_EC_ConsumerControl *consumer_control_;
   TAO_EC_SupplierControl *supplier_control_;
+
+  /// Mutex to protect the internal state
+  TAO_SYNCH_MUTEX mutex_;
+
+  /// Flag to check if the event channel has been destroyed already
+  int destroyed_;
 };
 
 #if defined (__ACE_INLINE__)

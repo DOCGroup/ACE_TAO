@@ -23,7 +23,7 @@
  * @brief Implement a simple ACE_Task to send the events
  *
  */
-class Send_Task : public ACE_Task_Base
+class TAO_RTEC_Perf_Export Send_Task : public ACE_Task_Base
 {
 public:
   /// Constructor

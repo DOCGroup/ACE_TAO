@@ -405,6 +405,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBAEvent_Static"=.\orbsvcs\orbsvcs\RTCORBAEvent_Static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "RTCORBA_Static"=.\tao\RTCORBA\TAO_RTCORBA_Static.dsp - Package Owner=<4>
 
 Package=<5>
