@@ -386,6 +386,34 @@ by using <CODE>make minimum_corba=1</CODE> when you compile TAO.</P>
 <HR>
 <P>
 
+<H3>Connection Caching feature</H3>
+
+<p>By default, TAO includes the connection caching and purging feature
+   which reuses "old" connections by purging them according to the
+   caching strategy opted for (Least Recently Used, Least Frequently
+   Used, First In First Out). This way socket descriptors are reused
+   thereby increasing scalability.<p>
+
+   This feature can be controlled by defining or commenting out
+   TAO_USES_ROBUST_CONNECTION_MGMT in $TAO_ROOT/tao/orbconf.h.<p>
+
+   But the code related to this feature consists of classes with large
+   template lists and can cause problems with linkers and assemblers
+   which cant grok long names.<p>
+
+   Tips:<p>
+
+   Check on SunOS5.6 (and above) whether the assembler used is of the Sun
+   Workshop 5 version else you could get linker errors due to huge
+   symbols.<p>
+
+   If using egcs2.95 as the compiler the <code>-fsquangle</code>
+   option could be used which shortens the symbol names. 
+   Thanks to <a href="mailto:ssweeney@sanders.com">Skye Sweeney</a>
+   for trying it out and <a href="mailto:othman@cs.wustl.edu">Ossama
+   Othman</a> for discovering the option with egcs. Note: Both the ACE
+   library and TAO library need to built using this option.</p>
+
 <HR><P>
 <H3><A NAME="resource_requirements">System Resource Requirements</A></H3>
 Please see the
