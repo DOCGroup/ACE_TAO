@@ -1,3 +1,38 @@
+Wed Jul 16 12:15:34 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/IOStream_T.cpp:
+        * ace/config-borland-common.h:
+        * ace/config-psos-diab-mips.h:
+        * ace/config-psos-diab-ppc.h:
+        * ace/config-psos-diab.h:
+        * ace/config-psos-tm.h:
+        * ace/config-psosim-g++.h:
+        * ace/config-vxworks5.x.h:
+        * ace/config-win32-ghs.h:
+        * ace/iosfwd.h:
+          Removed all references to ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION.
+          It was used to include ace/iosfwd.h instead of ace/streams.h,
+          but files should only include one they need instead of always
+          including ace/streams.h, which includes <iostream> if available
+          and unnecesarily increases compile times.  Thanks to Carlos O'Ryan
+          <coryan@atdesk.com> motivating this.
+
+        * ace/OS.h:
+        * ace/Basic_Types.h:
+          Removed the #ifdefs for ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION and
+          always include ace/iosfwd.h.
+
+        * ace/OS_Log_Msg_Attributes.h:
+          Replaced include of ace/streams.h with ace/iosfwd.h in order
+          to improve compile times
+
+        * performance-tests/SCTP/Options_Manager.cpp:
+        * performance-tests/SCTP/SOCK_SEQPACK_clt.cp:
+        * performance-tests/SCTP/SOCK_SEQPACK_srv.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_clt.cpp:
+        * performance-tests/SCTP/SOCK_STREAM_srv.cpp:
+          Added include of ace/streams.h, needed due to the above change.
+
 Tue Jul 16 11:43:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/tests.mpc:
@@ -311,7 +346,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  allows us to make timer related calls on the Reactor from the
 	  Timer Queue without having to include Reactor.h.
 
-        * ace/Reactor:
+      * ace/Reactor:
 
 	  Vastly improved documentation, specially with respect to how the
 	  reference counting works.

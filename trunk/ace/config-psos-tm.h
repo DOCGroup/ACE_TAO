@@ -38,8 +38,6 @@
 #define NSIG _NSIG           //_NSIG = 32 defined in signal.h JINLU
 #define TCP_NODELAY  1       // this will be defined later by pSOS/TM
 
-/* #define ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION */
-
 #define ACE_LACKS_HRTIME_T
 
 // #define ACE_LACKS_EVENT_T
