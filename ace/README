@@ -292,6 +292,10 @@ ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION Compiler's template
                                         used templates. This is also
                                         used for GNU G++ if you don't
                                         use the "repo" patches.
+ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
+                                        specialization of a class template
+                                        then this class template must be
+                                        explicitly exported
 ACE_HAS_GETPAGESIZE                     Platform supports
                                         getpagesize() call (otherwise,
                                         ACE_PAGE_SIZE must be defined,
@@ -743,8 +747,8 @@ ACE_LACKS_MPROTECT                      The platform doesn't have
 ACE_LACKS_MSG_ACCRIGHTS                 Platform defines ACE_HAS_MSG,
                                         but lacks msg_accrights{,len}.
 ACE_LACKS_MSG_WFMO                      Platform lacks
-                                        MsgWaitForMultipleObjects 
-                                        (only needs to be defined when 
+                                        MsgWaitForMultipleObjects
+                                        (only needs to be defined when
                                         ACE_WIN32 is also defined).
 ACE_LACKS_MSGBUF_T                      Platform lacks struct msgbuf
                                         (e.g., NT and MSV).
@@ -918,7 +922,7 @@ ACE_LACKS_WRITEV                        Platform doesn't define
 
 ACE_LEGACY_MODE                         When defined, it will enable some code that is
                                         used to provide some support for backwards
-                                        compatibility.  
+                                        compatibility.
 
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
@@ -952,9 +956,9 @@ ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that the "latest 
                                         replaced by ACE_LEGACY_MODE, which has the opposite
                                         meaning but serves the same purpose.
 
-ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate type, 
+ACE_WSTRING_HAS_USHORT_SUPPORT          If a platform has wchar_t as a separate type,
                                         then ACE_WString doesn't have a constructor that
-                                        understands an ACE_USHORT16 string.  So this 
+                                        understands an ACE_USHORT16 string.  So this
                                         macro enables one. (mostly used my ACE Name Space).
 
 ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK

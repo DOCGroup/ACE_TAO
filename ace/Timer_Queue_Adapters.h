@@ -32,7 +32,7 @@
  * the SIGARLM signal that is caught by this class.
  */
 template <class TQ>
-class ACE_Export ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
+class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
 {
 public:
   typedef TQ TIMER_QUEUE;
@@ -102,7 +102,7 @@ private:
  *
  */
 template <class TQ>
-class ACE_Export ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
+class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
 {
 public:
 

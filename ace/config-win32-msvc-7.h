@@ -5,9 +5,9 @@
  *
  *  $Id$
  *
- *  @brief  Microsoft Visual C++ 7.0 configuration file. 
+ *  @brief  Microsoft Visual C++ 7.0 configuration file.
  *
- *  This file is the ACE configuration file for Microsoft Visual C++ version 7. 
+ *  This file is the ACE configuration file for Microsoft Visual C++ version 7.
  *
  *  @note Do not include this file directly, include config-win32.h instead.
  *
@@ -30,11 +30,11 @@
 
 #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#endif 
+#endif
 
 #if !defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
 #define ACE_HAS_BROKEN_NESTED_TEMPLATES
-#endif 
+#endif
 
 // By default, we disable the C++ casting because
 // it requires the RTTI support to be turned on which
@@ -46,10 +46,10 @@
 #define ACE_HAS_EXPLICIT_KEYWORD
 #define ACE_HAS_MUTABLE_KEYWORD
 #define ACE_HAS_TYPENAME_KEYWORD
+#define ACE_HAS_USING_KEYWORD
 
 #define ACE_HAS_ITOA
 
-#define ACE_HAS_BROKEN_NAMESPACES
 #define ACE_HAS_BROKEN_IMPLICIT_CONST_CAST
 #define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
@@ -111,9 +111,19 @@
 
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
+// 'this' : used in base member initializer list
 #pragma warning(disable:4355)
+// 'class1' : inherits 'class2::member' via dominance
+#pragma warning(disable:4250)
+// C++ Exception Specification ignored
+#pragma warning(disable:4290)
 
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
+
+// With the MSVC7 compiler there is a new 'feature' when a base-class is a
+// specialization of a class template. The class template must be explicit
+// instantiated and exported.
+#define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_7_H */
