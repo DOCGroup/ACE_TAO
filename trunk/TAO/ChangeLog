@@ -1,3 +1,10 @@
+Fri Nov 26 10:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_1535_Regression/Bug_1535_Regression.mpc:
+          Add minimum_corba as base project, instead of adding
+          avoids += minimum_corba, the base does just the same and
+          make it a little bit better maintainable in the future
+
 Fri Nov 26 09:58:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/ECG_Complex_Address_server.cpp:
