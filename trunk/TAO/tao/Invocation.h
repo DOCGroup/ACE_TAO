@@ -263,15 +263,9 @@ public:
 
   TAO::SyncScope sync_scope (void);
   // Acessor for private member.
-
-  TAO_InputCDR &inp_stream (void);
-  // return the underlying input stream
 private:
   TAO::SyncScope sync_scope_;
   // Our sync scope.
-
-  TAO_Synch_Reply_Dispatcher rd_;
-  // Reply dispatcher for the current synchronous invocation.
 };
 
 // ****************************************************************
