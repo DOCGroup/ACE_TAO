@@ -152,6 +152,9 @@ public:
     from_string (ACE_CDR::Char* s,
                  ACE_CDR::ULong b,
                  ACE_CDR::Boolean nocopy = 0);
+    from_string (const ACE_CDR::Char* s,
+                 ACE_CDR::ULong b,
+                 ACE_CDR::Boolean nocopy = 0);
     ACE_CDR::Char *val_;
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
@@ -160,6 +163,9 @@ public:
   struct ACE_Export from_wstring
   {
     from_wstring (ACE_CDR::WChar* ws,
+                  ACE_CDR::ULong b,
+                  ACE_CDR::Boolean nocopy = 0);
+    from_wstring (const ACE_CDR::WChar* ws,
                   ACE_CDR::ULong b,
                   ACE_CDR::Boolean nocopy = 0);
     ACE_CDR::WChar *val_;
@@ -333,6 +339,9 @@ public:
   /// gateway.
   void reset_byte_order (int byte_order);
 
+  /// set GIOP version info
+  int set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
+
 private:
   /// disallow copying...
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
@@ -478,8 +487,11 @@ public:
                 ACE_CDR::Octet minor_version =
                   ACE_CDR_GIOP_MINOR_VERSION);
 
-  /// Create an input stream from an ACE_Data_Block
+  /// Create an input stream from an ACE_Data_Block. The <flag>
+  /// indicates  whether the <data> can be deleted by the CDR stream
+  /// or not
   ACE_InputCDR (ACE_Data_Block *data,
+                ACE_Message_Block::Message_Flags flag = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
@@ -491,8 +503,9 @@ public:
   /// helpful if the applications desires to create a new CDR stream
   /// from a semi-processed datablock.
   ACE_InputCDR (ACE_Data_Block *data,
-                size_t read_pointer_position,
-                size_t write_pointer_position,
+                ACE_Message_Block::Message_Flags flag = 0,
+                size_t read_pointer_position = 0,
+                size_t write_pointer_position = 0,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version =
                   ACE_CDR_GIOP_MAJOR_VERSION,
@@ -504,11 +517,7 @@ public:
    * the internal buffer, so the same stream can be read multiple
    * times efficiently.
    */
-  ACE_InputCDR (const ACE_InputCDR& rhs,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+  ACE_InputCDR (const ACE_InputCDR& rhs);
 
   ACE_InputCDR& operator= (const ACE_InputCDR& rhs);
 
@@ -516,30 +525,18 @@ public:
   /// "copy" of the stream starting in the new position.
   ACE_InputCDR (const ACE_InputCDR& rhs,
                 size_t size,
-                ACE_CDR::Long offset,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_CDR::Long offset);
 
   /// This creates an encapsulated stream, the first byte must be (per
   /// the spec) the byte order of the encapsulation.
   ACE_InputCDR (const ACE_InputCDR& rhs,
-                size_t size,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+                size_t size);
 
   /// Create an input CDR from an output CDR.
   ACE_InputCDR (const ACE_OutputCDR& rhs,
                 ACE_Allocator* buffer_allocator = 0,
                 ACE_Allocator* data_block_allocator = 0,
-                ACE_Allocator* message_block_allocator = 0,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+                ACE_Allocator* message_block_allocator = 0);
 
   /// Helper class to transfer the contents from one input CDR to
   /// another without requiring any extra memory allocations, data
@@ -551,11 +548,7 @@ public:
     ACE_InputCDR &rhs_;
   };
   /// Transfer the contents from <rhs> to a new CDR
-  ACE_InputCDR (Transfer_Contents rhs,
-                ACE_CDR::Octet major_version =
-                  ACE_CDR_GIOP_MAJOR_VERSION,
-                ACE_CDR::Octet minor_version =
-                  ACE_CDR_GIOP_MINOR_VERSION);
+  ACE_InputCDR (Transfer_Contents rhs);
 
   /// Destructor
   ~ACE_InputCDR (void);
@@ -590,17 +583,27 @@ public:
 
   struct ACE_Export to_string
   {
+    /// The constructor taking a non-const string is
+    /// now deprecated (C++ mapping 00-01-02), but we
+    /// keep it around for backward compatibility.
     to_string (ACE_CDR::Char *&s,
                ACE_CDR::ULong b);
-    ACE_CDR::Char *&val_;
+    to_string (const ACE_CDR::Char *&s,
+               ACE_CDR::ULong b);
+    const ACE_CDR::Char *&val_;
     ACE_CDR::ULong bound_;
   };
 
   struct ACE_Export to_wstring
   {
+    /// The constructor taking a non-const wstring is
+    /// now deprecated (C++ mapping 00-01-02), but we
+    /// keep it around for backward compatibility.
     to_wstring (ACE_CDR::WChar *&ws,
                 ACE_CDR::ULong b);
-    ACE_CDR::WChar *&val_;
+    to_wstring (const ACE_CDR::WChar *&ws,
+                ACE_CDR::ULong b);
+    const ACE_CDR::WChar *&val_;
     ACE_CDR::ULong bound_;
   };
   //@}
@@ -631,7 +634,7 @@ public:
   /**
    * The buffer <x> must be large enough to contain <length>
    * elements.
-   * Return -1 on failure and 0 on success.
+   * Return 0 on failure and 1 on success.
    */
   //@{ @name Read basic IDL types arrays
   ACE_CDR::Boolean read_boolean_array (ACE_CDR::Boolean* x,
@@ -736,6 +739,12 @@ public:
   /// and write pointers are also exchanged.
   /// Note: We now do only with the start_ message block.
   void exchange_data_blocks (ACE_InputCDR &cdr);
+
+  /// Copy the data portion from the <cdr> to this cdr and return the
+  /// data content (ie. the ACE_Data_Block) from this CDR to the
+  /// caller. The caller is responsible for managing the memory of the
+  /// returned ACE_Data_Block.
+  ACE_Data_Block* clone_from (ACE_InputCDR &cdr);
 
   /// Re-initialize the CDR stream, forgetting about the old contents
   /// of the stream and allocating a new buffer (from the allocators).
@@ -867,7 +876,7 @@ public:
   /// Read an array of characters from the stream, converting the
   /// characters from the stream codeset to the native codeset.
   virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
-                                            ACE_CDR::Char*,
+                                            const ACE_CDR::Char*,
                                             ACE_CDR::ULong) = 0;
 
   /// Write a single character to the stream, converting from the
@@ -951,7 +960,7 @@ public:
   virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
                                          ACE_CDR::WChar *&) = 0;
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR&,
-                                             ACE_CDR::WChar*,
+                                             const ACE_CDR::WChar*,
                                              ACE_CDR::ULong) = 0;
   virtual ACE_CDR::Boolean write_wchar (ACE_OutputCDR&,
                                         ACE_CDR::WChar) = 0;

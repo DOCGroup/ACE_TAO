@@ -251,6 +251,22 @@ public:
                    int create = 1);
 
   /**
+   * Exports the configuration database to filename.  If <filename> is
+   * already present, it is overwritten. This function is deprecated and
+   * will be removed in a future version of ACE. Please use either
+   * ACE_Registry_ImpExp or ACE_Ini_ImpExp instead.
+   */
+  int export_config (const ACE_TCHAR* filename);
+
+  /**
+   * Imports the configuration database from filename.  Any existing
+   * data is not removed. This function is deprecated and will be
+   * removed in a future version of ACE. Please use ACE_Registry_ImpExp
+   * or ACE_Ini_ImpExp instead.
+   */
+  int import_config (const ACE_TCHAR* filename);
+
+  /**
    * Determine if the contents of this object is the same as the 
    * contents of the object on the right hand side.
    * Returns 1 (True) if they are equal and 0 (False) if they are not equal

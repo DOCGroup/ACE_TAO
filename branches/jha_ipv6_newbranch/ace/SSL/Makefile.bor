@@ -12,7 +12,9 @@ OBJFILES = \
 	$(OBJDIR)\SSL_SOCK.obj \
 	$(OBJDIR)\SSL_SOCK_Acceptor.obj	\
 	$(OBJDIR)\SSL_SOCK_Connector.obj \
-	$(OBJDIR)\SSL_SOCK_Stream.obj
+	$(OBJDIR)\SSL_SOCK_Stream.obj \
+	$(OBJDIR)\SSL_Accept_Handler.obj \
+	$(OBJDIR)\SSL_Connect_Handler.obj
 
 CFLAGS = $(ACE_CFLAGS) $(SSL_CFLAGS) $(ACE_SSL_CFLAGS) -DACE_SSL_BUILD_DLL
 

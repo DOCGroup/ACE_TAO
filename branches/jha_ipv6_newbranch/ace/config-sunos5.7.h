@@ -25,6 +25,13 @@
     typedef long          t_scalar_t;  /* historical versions */
     typedef unsigned long t_uscalar_t;
     typedef void          *timeout_id_t;
+
+# elif __GNUC__ >= 3 && __GNUC_MINOR__ >= 0
+#   define ACE_HAS_SOCKLEN_T
+#   define ACE_HAS_POSIX_GETPWNAM_R
+#   define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+#   define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
+
 # endif /* __GNUC__ <= 2  &&  __GNUC_MINOR__ < 8 */
 
 #elif defined (ghs)

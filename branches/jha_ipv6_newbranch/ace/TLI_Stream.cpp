@@ -58,18 +58,19 @@ ACE_TLI_Stream::active_close (void)
   ACE_TRACE ("ACE_TLI_Stream::active_close");
   char buf;
 
-  if (this->sndrel () == ACE_INVALID_HANDLE)
-    return ACE_INVALID_HANDLE;
-  if (this->recv (&buf, sizeof buf) == ACE_INVALID_HANDLE)
+  if (this->sndrel () == -1) 
+    return -1; 
+  else if (this->recv (&buf, sizeof buf) == -1) 
     {
       if (t_errno == TLOOK && this->look () == T_ORDREL)
         {
-          if (this->rcvrel () == ACE_INVALID_HANDLE)
-            return ACE_INVALID_HANDLE;
+          if (this->rcvrel () == -1) 
+            return -1; 
         }
       else
-        return ACE_INVALID_HANDLE;
+        return -1; 
     }
+
   return this->close ();
 }
 
@@ -80,10 +81,12 @@ int
 ACE_TLI_Stream::passive_close (void)
 {
   ACE_TRACE ("ACE_TLI_Stream::passive_close");
-  if (this->rcvrel () == ACE_INVALID_HANDLE)
-    return ACE_INVALID_HANDLE;
-  if (this->sndrel () == ACE_INVALID_HANDLE)
-    return ACE_INVALID_HANDLE;
+
+  if (this->rcvrel () == -1) 
+    return -1; 
+  else if (this->sndrel () == -1) 
+    return -1; 
+
   return this->close ();
 }
 
@@ -91,7 +94,8 @@ int
 ACE_TLI_Stream::close (void)
 {
   ACE_TRACE ("ACE_TLI_Stream::close");
-  int fd = this->get_handle ();
+
+  ACE_HANDLE fd = this->get_handle (); 
 
   this->set_handle (ACE_INVALID_HANDLE);
 

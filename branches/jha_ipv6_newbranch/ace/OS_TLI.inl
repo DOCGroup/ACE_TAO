@@ -2,7 +2,8 @@
 // $Id$
 
 ACE_INLINE int
-ACE_OS_TLI::t_accept (ACE_HANDLE handle, int reshandle,
+ACE_OS_TLI::t_accept (ACE_HANDLE handle, 
+                      ACE_HANDLE reshandle,
                       struct t_call *call)
 {
 #if defined (ACE_HAS_TLI)
@@ -60,7 +61,7 @@ ACE_OS_TLI::t_close (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_OS_TLI::t_connect(int fildes,
+ACE_OS_TLI::t_connect(ACE_HANDLE fildes,
                       struct t_call *sndcall,
                       struct t_call *rcvcall)
 {
@@ -170,17 +171,17 @@ ACE_OS_TLI::t_look (ACE_HANDLE handle)
 #endif /* ACE_HAS_TLI */
 }
 
-ACE_INLINE int
+ACE_INLINE ACE_HANDLE
 ACE_OS_TLI::t_open (char *path, int oflag, struct t_info *info)
 {
 #if defined (ACE_HAS_TLI)
-  ACE_OSCALL_RETURN (::t_open (path, oflag, info), int, -1);
+  ACE_OSCALL_RETURN (::t_open (path, oflag, info), ACE_HANDLE, ACE_INVALID_HANDLE);
 #else
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (oflag);
   ACE_UNUSED_ARG (info);
 
-  ACE_NOTSUP_RETURN (-1);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 #endif /* ACE_HAS_TLI */
 }
 

@@ -1165,7 +1165,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"), thread_self());
 #elif defined (DIGITAL_UNIX)
                   ACE_OS::sprintf (bp, ACE_LIB_TEXT ("%u"),
-                                   pthread_getselfseq_np());
+#if defined (ACE_HAS_THREADS)
+                                   pthread_getselfseq_np ()
+#else
+                                   ACE_Thread::self ()
+#endif /* ACE_HAS_THREADS */
+					  );
 #else
                   ACE_hthread_t t_id;
                   ACE_Thread::self (t_id);

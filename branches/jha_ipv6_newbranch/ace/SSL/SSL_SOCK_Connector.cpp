@@ -4,6 +4,7 @@
 
 
 #include "SSL_SOCK_Connector.h"
+#include "SSL_Connect_Handler.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/Synch_T.h"
@@ -20,75 +21,12 @@ ACE_RCSID (ACE_SSL,
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
-int
-ACE_SSL_SOCK_Connector::shared_connect_start (ACE_SSL_SOCK_Stream &new_stream,
-                                              const ACE_Time_Value *timeout,
-                                              const ACE_Addr &local_sap)
+
+ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector (void)
 {
-  ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_start");
-
-  if (local_sap != ACE_Addr::sap_any)
-  {
-      sockaddr *laddr = ACE_reinterpret_cast (sockaddr *,
-                                              local_sap.get_addr ());
-      size_t size = local_sap.get_size ();
-
-      if (ACE_OS::bind (new_stream.get_handle (),
-			laddr,
-			size) == -1)
-	{
-	  // Save/restore errno.
-	  ACE_Errno_Guard error (errno);
-	  new_stream.close ();
-	  return -1;
-	}
-    }
-
-  // Enable non-blocking, if required.
-  if (timeout != 0 && new_stream.disable (ACE_NONBLOCK) == -1)
-    return -1;
-  else
-    return 0;
+  ACE_TRACE ("ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector");
 }
 
-int
-ACE_SSL_SOCK_Connector::shared_connect_finish (ACE_SSL_SOCK_Stream &new_stream,
-                                               const ACE_Time_Value *timeout,
-                                               int result)
-{
-  ACE_TRACE ("ACE_SSL_SOCK_Connector::shared_connect_finish");
-  // Save/restore errno.
-  ACE_Errno_Guard error (errno);
-
-  if (result == -1 && timeout != 0)
-    {
-      // Check whether the connection is in progress.
-      if (error == EINPROGRESS || error == EWOULDBLOCK)
-	{
-	  // This expression checks if we were polling.
-	  if (timeout->sec () == 0
-              && timeout->usec () == 0)
-	    error = EWOULDBLOCK;
-	  // Wait synchronously using timeout.
-	  else if (this->complete (new_stream,
-                                   0,
-                                   timeout) == -1)
-	    error = errno;
-	  else
-            return 0;
-	}
-    }
-
-  // EISCONN is treated specially since this routine may be used to
-  // check if we are already connected.
-  if (result != -1 || error == EISCONN)
-    // Start out with non-blocking disabled on the <new_stream>.
-    new_stream.disable (ACE_NONBLOCK);
-  else if (!(error == EWOULDBLOCK || error == ETIMEDOUT))
-    new_stream.close ();
-
-  return result;
-}
 
 int
 ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
@@ -101,34 +39,73 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
   if (!SSL_in_connect_init (new_stream.ssl ()))
     ::SSL_set_connect_state (new_stream.ssl ());
 
-  int status = 0;
-  do
+  int status = ::SSL_connect (new_stream.ssl ());
+
+  if (::SSL_get_error (new_stream.ssl (), status) != SSL_ERROR_NONE)
     {
-      status = ::SSL_connect (new_stream.ssl ());
-
-      switch (::SSL_get_error (new_stream.ssl (), status))
-        {
-        case SSL_ERROR_NONE:
-          // Start out with non-blocking disabled on the
-          // <new_stream>.
-          new_stream.disable (ACE_NONBLOCK);
-          return 0;
-        case SSL_ERROR_WANT_WRITE:
-        case SSL_ERROR_WANT_READ:
-          break;
-        default:
 #ifndef ACE_NDEBUG
-          ERR_print_errors_fp (stderr);
+      ERR_print_errors_fp (stderr);
 #endif  /* ACE_NDEBUG */
-          return -1;
-        }
+
+      return -1;
     }
-  while (::SSL_pending (new_stream.ssl ()));
 
-  // If we get this far then we would have blocked.
-  errno = EWOULDBLOCK;
+  return 0;
+}
 
-  return -1;
+int
+ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
+                                     const ACE_Time_Value *max_wait_time)
+{
+  if (SSL_is_init_finished (new_stream.ssl ()))
+    return 0;
+
+  // Check if a connection is already pending for the given SSL
+  // structure.
+  if (!SSL_in_connect_init (new_stream.ssl ()))
+    ::SSL_set_connect_state (new_stream.ssl ());
+
+  // Register an event handler to complete the non-blocking SSL
+  // connect.  A specialized event handler is necessary since since
+  // the ACE Connector strategies are not designed for protocols
+  // that require additional handshakes after the initial connect.
+  ACE_SSL_Connect_Handler eh (new_stream);
+
+  if (this->reactor_->register_handler (
+        new_stream.get_handle (),
+        &eh,
+        ACE_Event_Handler::READ_MASK |
+        ACE_Event_Handler::WRITE_MASK) == -1)
+    return -1;
+
+  ACE_Time_Value tv;
+  if (max_wait_time != 0)
+    tv += (*max_wait_time);  // Make a copy.
+
+  ACE_Time_Value *timeout = (max_wait_time == 0 ? 0 : &tv);
+
+  // Make the current thread take ownership of the Reactor.
+  this->reactor_->owner (ACE_Thread::self ());
+
+  // Have the Reactor complete the SSL active connection.  Run the
+  // event loop until the active connection is completed.  Since
+  // the Reactor is used, this isn't a busy wait.
+  while (SSL_in_connect_init (new_stream.ssl ()))
+    if (this->reactor_->handle_events (timeout) == -1)
+      {
+        reactor_->remove_handler (&eh,
+                                  ACE_Event_Handler::READ_MASK |
+                                  ACE_Event_Handler::WRITE_MASK);
+        return -1;
+      }
+
+  // SSL active connection was completed.  Deregister the event
+  // handler from the Reactor.
+  return
+    this->reactor_->remove_handler (&eh,
+                                    ACE_Event_Handler::READ_MASK |
+                                    ACE_Event_Handler::WRITE_MASK |
+                                    ACE_Event_Handler::DONT_CALL);
 }
 
 int
@@ -157,7 +134,11 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  return this->ssl_connect (new_stream);
+  // Enable non-blocking, if required.
+  if (timeout != 0 && new_stream.enable (ACE_NONBLOCK) == 0)
+    return this->ssl_connect (new_stream, timeout);
+  else
+    return this->ssl_connect (new_stream);
 }
 
 int
@@ -192,7 +173,11 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  return this->ssl_connect (new_stream);
+  // Enable non-blocking, if required.
+  if (timeout != 0 && new_stream.enable (ACE_NONBLOCK) == 0)
+    return this->ssl_connect (new_stream, timeout);
+  else
+    return this->ssl_connect (new_stream);
 }
 
 // Try to complete a non-blocking connection.
@@ -211,21 +196,23 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
     new_stream.set_handle (new_stream.peer ().get_handle ());
 
-
-  return this->ssl_connect (new_stream);
+  return this->ssl_connect (new_stream, tv);
 }
 
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
-                                        ACE_SSL_SOCK_Stream &new_stream,
-					const ACE_Addr &remote_sap,
-					const ACE_Time_Value *timeout,
-					const ACE_Addr &local_sap,
-					int reuse_addr,
-					int flags,
-					int perms,
-					int protocol_family,
-					int protocol)
+  ACE_SSL_SOCK_Stream &new_stream,
+  const ACE_Addr &remote_sap,
+  const ACE_Time_Value *timeout,
+  const ACE_Addr &local_sap,
+  int reuse_addr,
+  int flags,
+  int perms,
+  int protocol_family,
+  int protocol,
+  ACE_Reactor *reactor)
+  : connector_ (),
+    reactor_ (reactor)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
   if (this->connect (new_stream,
@@ -245,18 +232,21 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 }
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
-                                        ACE_SSL_SOCK_Stream &new_stream,
-					const ACE_Addr &remote_sap,
-					ACE_QoS_Params qos_params,
-					const ACE_Time_Value *timeout,
-					const ACE_Addr &local_sap,
-                                        ACE_Protocol_Info *protocolinfo,
-                                        ACE_SOCK_GROUP g,
-                                        u_long flags,
-					int reuse_addr,
-					int perms,
-					int protocol_family,
-					int protocol)
+  ACE_SSL_SOCK_Stream &new_stream,
+  const ACE_Addr &remote_sap,
+  ACE_QoS_Params qos_params,
+  const ACE_Time_Value *timeout,
+  const ACE_Addr &local_sap,
+  ACE_Protocol_Info *protocolinfo,
+  ACE_SOCK_GROUP g,
+  u_long flags,
+  int reuse_addr,
+  int perms,
+  int protocol_family,
+  int protocol,
+  ACE_Reactor *reactor)
+  : connector_ (),
+    reactor_ (reactor)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 
@@ -278,4 +268,3 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 		"%p\n",
                 ACE_TEXT ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector")));
 }
-

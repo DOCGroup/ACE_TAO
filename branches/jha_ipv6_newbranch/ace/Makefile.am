@@ -32,80 +32,89 @@ endif
 if BUILD_OS_FILES
 LIBACE_OS = libACE_OS.la
 else
-LIBACE_OS =  
+LIBACE_OS =
 endif
 
 if BUILD_UTILS_FILES
 LIBACE_UTILS = libACE_Utils.la
 else
-LIBACE_UTILS = 
+LIBACE_UTILS =
 endif
 
 if BUILD_LOGGING_FILES
 LIBACE_LOGGING = libACE_Logging.la
 else
-LIBACE_LOGGING = 
+LIBACE_LOGGING =
 endif
 
 
 if BUILD_THREADS_FILES
 LIBACE_THREADS = libACE_Threads.la
 else
-LIBACE_THREADS = 
+LIBACE_THREADS =
 endif
 
 if BUILD_DEMUX_FILES
 LIBACE_DEMUX = libACE_Demux.la
 else
-LIBACE_DEMUX = 
+LIBACE_DEMUX =
 endif
 
 if BUILD_CONNECTION_FILES
 LIBACE_CONNECTION = libACE_Connection.la
 else
-LIBACE_CONNECTION = 
+LIBACE_CONNECTION =
 endif
 
 if BUILD_SOCKETS_FILES
 LIBACE_SOCKETS = libACE_Sockets.la
 else
-LIBACE_SOCKETS = 
+LIBACE_SOCKETS =
 endif
 
 if BUILD_IPC_FILES
 LIBACE_IPC = libACE_IPC.la
 else
-LIBACE_IPC = 
+LIBACE_IPC =
 endif
 
 if BUILD_SVCCONF_FILES
 LIBACE_SVCCONF = libACE_Svcconf.la
 else
-LIBACE_SVCCONF = 
+LIBACE_SVCCONF =
+#AM_CPPFLAGS += -DACE_LACKS_ACE_SVCCONF
 endif
 
 if BUILD_STREAMS_FILES
 LIBACE_STREAMS = libACE_Streams.la
 else
-LIBACE_STREAMS = 
+LIBACE_STREAMS =
 endif
 
 if BUILD_MEMORY_FILES
 LIBACE_MEMORY = libACE_Memory.la
 else
-LIBACE_MEMORY = 
+LIBACE_MEMORY =
+endif
+
+if BUILD_TIMER_FILES
+LIBACE_TIMER = libACE_Timer.la
+else
+LIBACE_TIMER =
 endif
 
 if BUILD_TOKEN_FILES
 LIBACE_TOKEN = libACE_Token.la
 else
-LIBACE_TOKEN = 
+LIBACE_TOKEN =
+#AM_CPPFLAGS += -DACE_LACKS_ACE_TOKEN
 endif
 
 if BUILD_OTHER_FILES
 LIBACE_OTHER = libACE_Other.la
 else
-LIBACE_OTHER = 
+LIBACE_OTHER =
+#AM_CPPFLAGS += -DACE_LACKS_ACE_OTHER
 endif
 
 if BUILD_FULL_LIBRARY
@@ -128,6 +137,7 @@ lib_LTLIBRARIES = \
   $(LIBACE_SVCCONF) \
   $(LIBACE_STREAMS) \
   $(LIBACE_MEMORY) \
+  $(LIBACE_TIMER) \
   $(LIBACE_TOKEN) \
   $(LIBACE_OTHER)
 
@@ -139,52 +149,39 @@ libACE_OS_la_SOURCES = \
   OS_Memory.cpp \
   OS_String.cpp \
   OS_TLI.cpp \
-  Thread_Hook.cpp \
+  OS_Errno.cpp \
   Base_Thread_Adapter.cpp \
   OS_Thread_Adapter.cpp \
   OS_Log_Msg_Attributes.cpp \
-  Thread_Exit.cpp \
-  Thread_Control.cpp \
+  Thread_Hook.cpp \
   Sched_Params.cpp
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
-  Init_ACE.cpp \
-  Flag_Manip.cpp \
-  Handle_Ops.cpp \
-  Lib_Find.cpp \
-  Malloc_Instantiations.cpp \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
   ARGV.cpp \
   Capabilities.cpp \
   Configuration.cpp \
+  Configuration_Import_Export.cpp \
   Containers.cpp \
   Dirent.cpp \
   Dynamic.cpp \
-  Dynamic_Service_Base.cpp \
   Filecache.cpp \
+  Flag_Manip.cpp \
   Functor.cpp \
   Get_Opt.cpp \
   Hash_Map_Manager.cpp \
-  High_Res_Timer.cpp \
+  Handle_Ops.cpp \
+  Handle_Set.cpp \
+  Init_ACE.cpp \
+  Lib_Find.cpp \
   Method_Request.cpp \
   Object_Manager.cpp \
-  Profile_Timer.cpp \
   Registry.cpp \
   SString.cpp \
-  Basic_Stats.cpp \
   Stats.cpp \
-  Sample_History.cpp \
-  System_Time.cpp \
-  Time_Request_Reply.cpp \
-  Timeprobe.cpp \
-  Timer_Hash.cpp \
-  Timer_Heap.cpp \
-  Timer_List.cpp \
-  Timer_Queue.cpp \
-  Timer_Wheel.cpp \
-  $(ACE_GETHRTIME_CPP)
+  Sample_History.cpp
 
 # We only want `gethrtime.cpp' if building on Pentium(tm) so we need
 # to let Automake know that `gethrtime.cpp' is conditionally built.
@@ -193,10 +190,12 @@ EXTRA_libACE_Utils_la_SOURCES = gethrtime.cpp
 libACE_Logging_la_SOURCES = \
   Dump.cpp \
   Log_Msg.cpp \
-  Log_Record.cpp \
   Log_Msg_Callback.cpp \
   Log_Msg_Backend.cpp \
   Log_Msg_IPC.cpp \
+  Log_Msg_NT_Event_Log.cpp \
+  Log_Record.cpp \
+  Logging_Strategy.cpp \
   Trace.cpp
 
 libACE_Threads_la_SOURCES = \
@@ -204,22 +203,24 @@ libACE_Threads_la_SOURCES = \
   Process.cpp \
   Process_Manager.cpp \
   Synch.cpp \
+  Synch_Options.cpp \
   Process_Semaphore.cpp \
   Process_Mutex.cpp \
   RW_Process_Mutex.cpp \
   File_Lock.cpp \
-  Synch_Options.cpp \
   Thread.cpp \
   Thread_Adapter.cpp \
   Thread_Manager.cpp \
+  Thread_Exit.cpp \
+  Thread_Control.cpp \
   Token.cpp
 
 libACE_Demux_la_SOURCES = \
   Event_Handler.cpp \
   FlReactor.cpp \
-  Handle_Set.cpp \
   Msg_WFMO_Reactor.cpp \
   POSIX_Proactor.cpp \
+  WIN32_Proactor.cpp \
   Priority_Reactor.cpp \
   Proactor.cpp \
   Reactor.cpp \
@@ -239,6 +240,8 @@ libACE_Connection_la_SOURCES = \
   Strategies.cpp
 
 libACE_Sockets_la_SOURCES = \
+  Addr.cpp \
+  INET_ddr.cpp
   IPC_SAP.cpp \
   LSOCK.cpp \
   LSOCK_Acceptor.cpp \
@@ -258,7 +261,6 @@ libACE_Sockets_la_SOURCES = \
   SOCK_Stream.cpp
 
 libACE_IPC_la_SOURCES = \
-  Addr.cpp \
   ATM_Addr.cpp \
   ATM_Acceptor.cpp \
   ATM_Connector.cpp \
@@ -278,7 +280,6 @@ libACE_IPC_la_SOURCES = \
   FILE.cpp \
   FILE_Connector.cpp \
   FILE_IO.cpp \
-  INET_Addr.cpp \
   IO_SAP.cpp \
   IOStream.cpp \
   Pipe.cpp \
@@ -312,6 +313,7 @@ libACE_IPC_la_SOURCES = \
 
 libACE_Svcconf_la_SOURCES = \
   DLL.cpp \
+  Dynamic_Service_Base.cpp \
   Parse_Node.cpp \
   Service_Config.cpp \
   Service_Manager.cpp \
@@ -336,8 +338,10 @@ libACE_Memory_la_SOURCES = \
   Malloc.cpp \
   PI_Malloc.cpp \
   Malloc_Allocator.cpp \
+  Malloc_Instantiations.cpp \
   Mem_Map.cpp \
   Memory_Pool.cpp \
+  Obchunk.cpp \
   Obstack.cpp \
   Read_Buffer.cpp \
   Shared_Memory.cpp \
@@ -351,6 +355,20 @@ libACE_Token_la_SOURCES = \
   Token_Invariants.cpp \
   Token_Manager.cpp \
   Token_Request_Reply.cpp
+
+libACE_Timer_la_SOURCES = \
+  Basic_Stats.cpp \
+  High_Res_Timer.cpp \
+  Profile_Timer.cpp \
+  System_Time.cpp \
+  Time_Request_Reply.cpp \
+  Timeprobe.cpp \
+  Timer_Hash.cpp \
+  Timer_Heap.cpp \
+  Timer_List.cpp \
+  Timer_Queue.cpp \
+  Timer_Wheel.cpp \
+  $(ACE_GETHRTIME_CPP)
 
 libACE_Other_la_SOURCES = \
   CORBA_Handler.cpp \
@@ -375,12 +393,13 @@ libACE_la_SOURCES = \
   $(libACE_Svcconf_la_SOURCES) \
   $(libACE_Streams_la_SOURCES) \
   $(libACE_Memory_la_SOURCES) \
+  $(libACE_Timer_la_SOURCES) \
   $(libACE_Token_la_SOURCES) \
   $(libACE_Other_la_SOURCES)
 
 # We only want `gethrtime.cpp' if building on Pentium(tm) so we need
 # to let Automake know that `gethrtime.cpp' is conditionally built.
-EXTRA_libACE_la_SOURCES = gethrtime.cpp
+EXTRA_libACE_Timer_la_SOURCES = gethrtime.cpp
 
 
 ## The following is an excerpt from the "libtool" manual, written by
@@ -388,32 +407,32 @@ EXTRA_libACE_la_SOURCES = gethrtime.cpp
 ##
 ## This flag accepts an argument of the form `current[:revision[:age]]'. So,
 ## passing `-version-info 3:12:1' sets current to 3, revision to 12, and age
-## to 1. 
+## to 1.
 ## If either revision or age are omitted, they default to 0. Also note that
-## age must be less than or equal to the current interface number. 
+## age must be less than or equal to the current interface number.
 ##
 ## Here are a set of rules to help you update your library version
-## information: 
+## information:
 ##
-##     1.Start with version information of `0:0:0' for each libtool library. 
+##     1.Start with version information of `0:0:0' for each libtool library.
 ##     2.Update the version information only immediately before a public
 ##       release of your software. More frequent updates are unnecessary, and
-##       only guarantee that the current interface number gets larger faster. 
+##       only guarantee that the current interface number gets larger faster.
 ##     3.If the library source code has changed at all since the last update,
-##       then increment revision (`c:r:a' becomes `c:r+1:a'). 
+##       then increment revision (`c:r:a' becomes `c:r+1:a').
 ##     4.If any interfaces have been added, removed, or changed since the last
-##       update, increment current, and set revision to 0. 
+##       update, increment current, and set revision to 0.
 ##     5.If any interfaces have been added since the last public release, then
-##       increment age. 
+##       increment age.
 ##     6.If any interfaces have been removed since the last public release,
-##       then set age to 0. 
+##       then set age to 0.
 ##
 ## Never try to set the interface numbers so that they correspond to the
 ## release number of your package. This is an abuse that only fosters
 ## misunderstanding of the purpose of library versions. Instead, use the
 ## `-release' flag (see section 6.4 Managing release information), but be
 ## warned that every release of your package will not be binary compatibility
-## with any other release. 
+## with any other release.
 
 ## The below "-version-info" isn't being used the way libtool intends
 ## it to be used but we do it that way to make the version numbers
@@ -466,7 +485,9 @@ TEMPLATE_FILES = \
   Message_Block_T.cpp \
   Message_Queue_T.cpp \
   Module.cpp \
+  Obstack_T.cpp \
   Pair_T.cpp \
+  Refcounted_Auto_Ptr.cpp \
   RB_Tree.cpp \
   Select_Reactor_T.cpp \
   Singleton.cpp \
@@ -505,6 +526,7 @@ HEADER_FILES = \
   Addr.h \
   Arg_Shifter.h \
   Array.h \
+  Array_Base.h \
   Asynch_Acceptor.h \
   Asynch_IO.h \
   Asynch_IO_Impl.h \
@@ -513,6 +535,7 @@ HEADER_FILES = \
   Base_Thread_Adapter.h \
   Based_Pointer_Repository.h \
   Based_Pointer_T.h \
+  Basic_Stats.h \
   Basic_Types.h \
   CDR_Base.h \
   CDR_Stream.h \
@@ -527,6 +550,7 @@ HEADER_FILES = \
   Cleanup_Strategies_T.h \
   Codeset_IBM1047.h \
   Configuration.h \
+  Configuration_Import_Export.h \
   Connector.h \
   Containers.h \
   Containers_T.h \
@@ -594,6 +618,7 @@ HEADER_FILES = \
   Log_Msg_Backend.h \
   Log_Msg_Callback.h \
   Log_Msg_IPC.h \
+  Log_Msg_NT_Event_Log.h \
   Log_Priority.h \
   Log_Record.h \
   Logging_Strategy.h \
@@ -628,6 +653,7 @@ HEADER_FILES = \
   Name_Request_Reply.h \
   Name_Space.h \
   Naming_Context.h \
+  Node.h \
   OS.h \
   OS_Dirent.h \
   OS_Errno.h \
@@ -654,13 +680,13 @@ HEADER_FILES = \
   Process_Mutex.h \
   Process_Semaphore.h \
   Profile_Timer.h \
-  QoS_Session.h \
   QtReactor.h \
   RB_Tree.h \
   RW_Process_Mutex.h \
   Reactor.h \
   Reactor_Impl.h \
   Read_Buffer.h \
+  Refcounted_Auto_Ptr.h \
   Registry.h \
   Registry_Name_Space.h \
   Remote_Name_Space.h \
@@ -686,6 +712,7 @@ HEADER_FILES = \
   SV_Semaphore_Complex.h \
   SV_Semaphore_Simple.h \
   SV_Shared_Memory.h \
+  Sample_History.h \
   Sched_Params.h \
   Select_Reactor.h \
   Select_Reactor_Base.h \
@@ -703,9 +730,7 @@ HEADER_FILES = \
   Signal.h \
   Singleton.h \
   Sock_Connect.h \
-  Basic_Stats.h \
   Stats.h \
-  Sample_History.h \
   Strategies.h \
   Strategies_T.h \
   Stream.h \
@@ -761,6 +786,8 @@ HEADER_FILES = \
   UPIPE_Addr.h \
   UPIPE_Connector.h \
   UPIPE_Stream.h \
+  Unbounded_Queue.h \
+  Unbounded_Set.h \
   Version.h \
   WFMO_Reactor.h \
   WIN32_Asynch_IO.h \
@@ -768,13 +795,13 @@ HEADER_FILES = \
   XTI_ATM_Mcast.h \
   XtReactor.h \
   ace_wchar.h \
-  config-all.h \
   config.h \
+  config-all.h \
   iosfwd.h \
   post.h \
   pre.h \
   streams.h \
-  svc_export.h 
+  svc_export.h
 ## Make sure config.h and config-all.h are in the above header list!
 
 INLINE_FILES = \
@@ -888,6 +915,7 @@ INLINE_FILES = \
   RB_Tree.i \
   Reactor.i \
   Read_Buffer.i \
+  Refcounted_Auto_Ptr.i \
   Remote_Tokens.i \
   SOCK.i \
   SOCK_Acceptor.i \
@@ -923,9 +951,185 @@ INLINE_FILES = \
   Signal.i \
   Singleton.i \
   Sock_Connect.i \
-  Basic_Stats.inl \
   Stats.i \
-  Sample_History.inl \
+  Strategies.i \
+  Strategies_T.i \
+  Stream.i \
+  Svc_Conf.l \
+  Synch.i \
+  Synch_Options.i \
+  Synch_T.i \
+  TLI.i \
+  TLI_Connector.i \
+  TLI_Stream.i \
+  TP_Reactor.i \
+  Task.i \
+  Task_T.i \
+  Test_and_Set.i \
+  Thread.i \
+  Thread_Manager.i \
+  Timeprobe.i \
+  Timer_Queue_Adapters.i \
+  Timer_Queue_T.i \
+  Token.i \
+  Token_Collection.i \
+  Token_Manager.i \
+  Token_Request_Reply.i \
+  Typed_SV_Message.i \
+  Typed_SV_Message_Queue.i \
+  UNIX_Addr.i \
+  UPIPE_Acceptor.i \
+  UPIPE_Connector.i \
+  UPIPE_Stream.i \
+  WFMO_Reactor.i \
+  XTI_ATM_Mcast.i \
+  ACE.i \
+  ARGV.i \
+  ATM_Acceptor.i \
+  ATM_Addr.i \
+  ATM_Connector.i \
+  ATM_Params.i \
+  ATM_QoS.i \
+  ATM_Stream.i \
+  Activation_Queue.i \
+  Active_Map_Manager.i \
+  Active_Map_Manager_T.i \
+  Addr.i \
+  Asynch_IO_Impl.i \
+  Atomic_Op.i \
+  Auto_IncDec_T.i \
+  Auto_Ptr.i \
+  Based_Pointer_T.i \
+  Basic_Types.i \
+  CDR_Stream.i \
+  CORBA_Handler.i \
+  Cache_Map_Manager_T.i \
+  Caching_Strategies_T.i \
+  Capabilities.i \
+  Containers.i \
+  Containers_T.i \
+  DEV.i \
+  DEV_Addr.i \
+  DEV_Connector.i \
+  DEV_IO.i \
+  Date_Time.i \
+  Dirent.i \
+  Dynamic.i \
+  Dynamic_Service.i \
+  Dynamic_Service_Base.i \
+  Env_Value_T.i \
+  Event_Handler.i \
+  Event_Handler_T.i \
+  FIFO.i \
+  FIFO_Recv.i \
+  FIFO_Recv_Msg.i \
+  FIFO_Send.i \
+  FIFO_Send_Msg.i \
+  FILE.i \
+  FILE_Addr.i \
+  FILE_Connector.i \
+  FILE_IO.i \
+  FlReactor.i \
+  Flag_Manip.i \
+  Free_List.i \
+  Functor.i \
+  Functor_T.i \
+  Get_Opt.i \
+  Handle_Gobbler.i \
+  Handle_Ops.i \
+  Handle_Set.i \
+  Hash_Cache_Map_Manager_T.i \
+  Hash_Map_Manager_T.i \
+  Hash_Map_With_Allocator_T.i \
+  High_Res_Timer.i \
+  INET_Addr.i \
+  IOStream_T.i \
+  IO_SAP.i \
+  IPC_SAP.i \
+  Init_ACE.i \
+  LSOCK.i \
+  LSOCK_CODgram.i \
+  LSOCK_Connector.i \
+  LSOCK_Dgram.i \
+  LSOCK_Stream.i \
+  Lib_Find.i \
+  Local_Tokens.i \
+  Log_Record.i \
+  MEM_Acceptor.i \
+  MEM_Addr.i \
+  MEM_Connector.i \
+  MEM_IO.i \
+  MEM_SAP.i \
+  MEM_Stream.i \
+  Malloc.i \
+  Malloc_Allocator.i \
+  Malloc_T.i \
+  Managed_Object.i \
+  Map_Manager.i \
+  Map_T.i \
+  Mem_Map.i \
+  Memory_Pool.i \
+  Message_Block.i \
+  Message_Block_T.i \
+  Message_Queue.i \
+  Message_Queue_T.i \
+  Module.i \
+  Msg_WFMO_Reactor.i \
+  Multiplexor.i \
+  NT_Service.i \
+  OS.i \
+  Object_Manager.i \
+  Obstack.i \
+  PI_Malloc.i \
+  POSIX_Asynch_IO.i \
+  POSIX_Proactor.i \
+  Pair_T.i \
+  Parse_Node.i \
+  Pipe.i \
+  Proactor.i \
+  Process.i \
+  Process_Manager.i \
+  Profile_Timer.i \
+  RB_Tree.i \
+  Reactor.i \
+  Read_Buffer.i \
+  Refcounted_Auto_Ptr.i \
+  Remote_Tokens.i \
+  SOCK.i \
+  SOCK_Acceptor.i \
+  SOCK_CODgram.i \
+  SOCK_Connector.i \
+  SOCK_Dgram.i \
+  SOCK_Dgram_Bcast.i \
+  SOCK_Dgram_Mcast.i \
+  SOCK_IO.i \
+  SOCK_Stream.i \
+  SPIPE.i \
+  SPIPE_Addr.i \
+  SPIPE_Connector.i \
+  SPIPE_Stream.i \
+  SString.i \
+  SUN_Proactor.i \
+  SV_Message.i \
+  SV_Message_Queue.i \
+  SV_Semaphore_Complex.i \
+  SV_Semaphore_Simple.i \
+  SV_Shared_Memory.i \
+  Sched_Params.i \
+  Select_Reactor_Base.i \
+  Select_Reactor_T.i \
+  Service_Config.i \
+  Service_Manager.i \
+  Service_Object.i \
+  Service_Repository.i \
+  Service_Types.i \
+  Shared_Memory_MM.i \
+  Shared_Memory_SV.i \
+  Shared_Object.i \
+  Signal.i \
+  Singleton.i \
+  Sock_Connect.i \
+  Stats.i \
   Strategies.i \
   Strategies_T.i \
   Stream.i \
@@ -956,7 +1160,9 @@ INLINE_FILES = \
   UPIPE_Stream.i \
   WFMO_Reactor.i \
   XTI_ATM_Mcast.i \
+  Array_Base.inl \
   Base_Thread_Adapter.inl \
+  Basic_Stats.inl \
   CDR_Base.inl \
   File_Lock.inl \
   OS_Dirent.inl \
@@ -969,8 +1175,11 @@ INLINE_FILES = \
   Process_Mutex.inl \
   Process_Semaphore.inl \
   RW_Process_Mutex.inl \
+  Sample_History.inl \
   Thread_Adapter.inl \
   Thread_Control.inl \
+  Unbounded_Queue.inl \
+  Unbounded_Set.inl \
   ace_wchar.inl
 
 ## It would be good to remove pkgincludedir.  However, we want to install

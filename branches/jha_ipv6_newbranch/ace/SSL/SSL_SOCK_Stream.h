@@ -250,6 +250,18 @@ protected:
   /// Return the underlying <ACE_SOCK_Stream> which SSL runs atop of.
   ACE_SOCK_Stream & peer (void);
 
+  /// Underlying send() helper method common to all public send()
+  /// methods.
+  ssize_t send_i (const void *buf,
+                  size_t n,
+                  int flags) const;
+
+  /// Underlying send() helper method common to all public send()
+  /// methods.
+  ssize_t recv_i (void *buf,
+                  size_t n,
+                  int flags) const;
+
 private:
 
   ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_SOCK_Stream &))

@@ -2037,9 +2037,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts),
                                        result), int, -1);
-
 #  elif defined (ACE_HAS_WTHREADS)
-
   // Note that we must convert between absolute time (which is passed
   // as a parameter) and relative time (which is what the system call
   // expects).
@@ -2112,11 +2110,11 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
     return 0;
 #  endif /* ACE_HAS_PTHREADS */
 
-#endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
-
+#else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (timeout);
   ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS && ACE_HAS_MUTEX_TIMEOUTS */
 }
 
 ACE_INLINE int
@@ -6829,11 +6827,16 @@ ACE_INLINE struct passwd *
 ACE_OS::getpwnam_r (const char *name, struct passwd *pwent,
                     char *buffer, int buflen)
 {
-#if defined (ACE_HAS_PACE)
+#if defined (ACE_HAS_PACE) || defined (ACE_HAS_POSIX_GETPWNAM_R)
   struct passwd *result;
   int status;
 
+#  if defined (ACE_HAS_PACE)
   status = ::pace_getpwnam_r (name, pwent, buffer, buflen, &result);
+#  else
+  status = ::getpwnam_r (name, pwent, buffer, buflen, &result);
+#  endif /* ACE_HAS_PACE */
+
   if (status != 0)
   {
     errno = status;
@@ -9300,17 +9303,12 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ACE_UNUSED_ARG (len);
   ACE_NOTSUP_RETURN (-1);
 # else
-  unsigned long count, result;
-  result = ::read_f (handle, buf, len, &count);
+  u_long count;
+  u_long result = ::read_f (handle, buf, len, &count);
   if (result != 0)
-    {
-      return ACE_static_cast (ssize_t, -1);
-    }
+    return ACE_static_cast (ssize_t, -1);
   else
-    {
-      return ACE_static_cast (ssize_t,
-                              (count = len ? count : 0));
-    }
+    return ACE_static_cast (ssize_t, count == len ? count : 0);
 # endif /* defined (ACE_PSOS_LACKS_PHILE */
 #else
 

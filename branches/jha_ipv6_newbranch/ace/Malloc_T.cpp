@@ -258,7 +258,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p"),
+                ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 
@@ -274,7 +274,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   if (this->open () == -1)
     ACE_ERROR ((LM_ERROR,
-                ACE_LIB_TEXT ("%p"),
+                ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
 }
 #endif /* ACE_HAS_TEMPLATE_TYPEDEFS */
@@ -667,7 +667,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::avail_chunks (size_t size) const
 
   // Calculate how many will fit in this block.
   do {
-    size_t avail_size = currp->size_ - 1;
+    size_t avail_size = currp->size_ == 0 ? 0 : currp->size_ - 1;
     if (avail_size * sizeof (MALLOC_HEADER) >= size)
       count += avail_size * sizeof (MALLOC_HEADER) / size;
     currp = currp->next_block_;

@@ -64,7 +64,7 @@ ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::locked (void)
+ACE_Guard<ACE_LOCK>::locked (void) const
 {
   return this->owner_ != -1;
 }

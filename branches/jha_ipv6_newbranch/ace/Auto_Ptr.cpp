@@ -28,4 +28,15 @@ ACE_Auto_Basic_Array_Ptr<X>::dump (void) const
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::dump");
 }
 
+#if defined (__MINGW32__)
+# if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
+             (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+# if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template alloc;
+#  elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate alloc
+#  endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+# endif /* ACE_HAS_STANDARD_CPP_LIBRARY != 0 */
+#endif /* __MINGW32__ */
+
 #endif /* ACE_AUTO_PTR_C */
