@@ -396,6 +396,11 @@ main (
   //
   int terminationStatus = 0;
 #if defined(USE_ACE_EVENT_HANDLING)
+  // Set the callbacks for our implementation (cheesy!!!)
+  ACE_ROA::upcall(tcpoa_dispatch);
+  ACE_ROA::forwarder(fwd_ref ? tcpoa_forwarder : 0);
+  ACE_ROA::context(&obj_key);
+
   while (ACE_ROA::end_reactor_event_loop_ == 0)
     {
       int result = ACE_ROA::reactor()->handle_events ();

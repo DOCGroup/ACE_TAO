@@ -24,6 +24,8 @@ class ACE_ROA
 {
 public:
   typedef TOA::dsi_handler UpcallFunc;
+  typedef void (*ForwardFunc)(CORBA_OctetSeq&, CORBA_Object_ptr&, void*, CORBA_Environment&);
+
   static ACE_Reactor* reactor();
 
   static int usingThreads();
@@ -35,9 +37,15 @@ public:
   static void* context();
   static void context(void* p);
 
-  // In our first test case, this will always be set to tcpoa_dispatcher
+  // In our first test case, this will always be set to tcp_oa_dispatcher
   static UpcallFunc upcall();
   static void upcall(UpcallFunc f);
+
+  // In our first test case, this will always be set to
+  // tcp_oa_forwarder (even though we don't understand what the hell
+  // it does!)
+  static ForwardFunc forwarder();
+  static void forwarder(ForwardFunc f);
 
   static TCP_OA_ptr oa();
   static void oa(TCP_OA_ptr anOA);
@@ -49,6 +57,7 @@ private:
   static int usingThreads_;
   static void* context_p;
   static UpcallFunc theUpcall;
+  static ForwardFunc theForwarder;
   static TCP_OA_ptr theOA;
 };
 
