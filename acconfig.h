@@ -870,10 +870,10 @@
 /* Compiler/platform supports SVR4 signal typedef. */
 #undef ACE_HAS_SVR4_SIGNAL_T
 
-/* Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff), */
+/* Compiler/platform supports SVR4 TLI (in particular, T_GETNAME stuff). */
 #undef ACE_HAS_SVR4_TLI
 
-/* HP/UX has an undefined syscall for GETRUSAGE... */
+/* HP/UX has an undefined syscall for GETRUSAGE. */
 #undef ACE_HAS_SYSCALL_GETRUSAGE
 
 /* Compiler/platform contains the <sys/syscall.h> file. */
@@ -1462,4 +1462,4 @@
 /* All lines below "@BOTTOM@" will be placed at the bottom of config.h.in. */
 
 
-#endif /* ACE_CONFIG_H */
+#endif  /* ACE_CONFIG_H */
