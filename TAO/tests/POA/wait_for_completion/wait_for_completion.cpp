@@ -58,26 +58,26 @@ init_orb (int argc,
                                         argv,
                                         orb_name,
                                         ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Obtain the RootPOA.
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA",
                                                            ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POA_var object from Object_var.
   PortableServer::POA_var root_poa =
     PortableServer::POA::_narrow (obj.in (),
                                   ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   // Get the POAManager of the RootPOA.
   PortableServer::POAManager_var poa_manager =
     root_poa->the_POAManager (ACE_TRY_ENV);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   poa_manager->activate (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK_RETURN (PortableServer::POA::_nil ());
 
   return root_poa._retn ();
 }
