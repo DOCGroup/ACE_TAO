@@ -1,3 +1,7 @@
+Fri Jun 26 11:39:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACE-INSTALL.html: Added more infomation in {Free,Net}BSD.
+
 Fri Jun 26 10:51:07 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/OS.h: 
