@@ -1,3 +1,8 @@
+Sat Jul 25 13:56:45 1998  Carlos O'Ryan  <coryan@JIG>
+
+	* TAO_IDL/driver/drv_preproc.cpp: 
+	  Generate a #line directive which is accepted by more compilers.
+
 Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Exception.i: 
