@@ -62,7 +62,6 @@ typedef long fd_mask;
 #define ACE_HAS_MSG
 #define ACE_HAS_MT_SAFE_MKTIME
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
-#define ACE_HAS_PENTIUM
 #define ACE_HAS_POSIX_SEM
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_PTHREADS
