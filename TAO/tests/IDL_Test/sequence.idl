@@ -39,3 +39,11 @@ struct twinStruct
     sequence<short> and_;
     sequence<short> or_;
   };
+
+// Nested sequences
+typedef sequence<sequence<short, 5> > outside;
+
+struct nestedSeqStruct
+{
+  sequence<sequence<outside>, 7> inside;
+};
