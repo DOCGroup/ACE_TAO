@@ -21,6 +21,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 
+#include "tao/CDR.h"
 #include "Policy.h"
 #include "MCast.h"
 #include "AVStreams_i.h"

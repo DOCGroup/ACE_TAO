@@ -6,6 +6,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
+#include "tao/CDR.h"
 
 #include "ace/UUID.h"
 #include "ace/Lock_Adapter_T.h"

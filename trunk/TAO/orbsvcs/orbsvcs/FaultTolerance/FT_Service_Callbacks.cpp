@@ -10,6 +10,7 @@
 #include "tao/Invocation_Utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"
+#include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
 # include "FT_Service_Callbacks.inl"
