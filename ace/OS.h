@@ -2573,6 +2573,10 @@ struct sigaction
 #define SIG_UNBLOCK 2
 #endif /* SIG_UNBLOCK */
 
+#if !defined (SIGALRM)
+#define SIGALRM 14
+#endif /* SIGALRM */
+
 #if !defined (SIG_SETMASK)
 #define SIG_SETMASK 3
 #endif /* SIG_SETMASK */
