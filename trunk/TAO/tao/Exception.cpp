@@ -470,6 +470,9 @@ CORBA_SystemException::_info (void) const
         case TAO_POA_BEING_DESTROYED:
           location = "POA has been destroyed or is currently being destroyed";
           break;
+        case TAO_AMH_REPLY_LOCATION_CODE:
+          location = "Failure when trying to send AMH reply";
+          break;
         default:
           location = "unknown location";
         }

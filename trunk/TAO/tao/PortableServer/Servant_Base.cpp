@@ -292,8 +292,6 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
       ACE_THROW (CORBA_BAD_OPERATION());
     }
 
-  CORBA::Boolean send_reply = 0;
-
   ACE_TRY
     {
       // @@ Do we really need the following "callback?"  The
@@ -328,22 +326,16 @@ void TAO_ServantBase::asynchronous_upcall_dispatch (TAO_ServerRequest &req,
       // Log the message state to FT_Service Logging facility
       req.orb_core ()->services_log_msg_post_upcall (req);
 
-      // We send the reply only if it is NOT a SYNC_WITH_SERVER, a
-      // response is expected and if the reply is not deferred.
-      if (send_reply)
-        {
-          req.tao_send_reply ();
-        }
+      // Return immediately. Do not send a reply; this is an
+      // asunchronous upcall. (unless, of course there is a system
+      // exception.
 
     }
-  ACE_CATCH (CORBA::Exception,ex)
+  ACE_CATCH (CORBA::Exception, ex)
     {
       // If an exception was raised we should marshal it and send
       // the appropriate reply to the client
-      if (send_reply)
-        {
-          req.tao_send_reply_exception(ex);
-        }
+      req.tao_send_reply_exception (ex);
     }
   ACE_ENDTRY;
   ACE_CHECK;
