@@ -11,9 +11,11 @@
 #include "Kokyu_dsrt.i"
 #endif /* __ACE_INLINE__ */
 
+#if ! defined (ACE_WIN32) && defined (ACE_HAS_DSUI)
 #include "kokyu_config.h"
 #include "kokyu_dsui_families.h"
 #include <dsui.h>
+#endif /* ACE_HAS_DSUI */
 
 ACE_RCSID(Kokyu, Kokyu, "Kokyu_dsrt.cpp,v 1.3 2003/10/08 02:23:39 venkita Exp")
 
@@ -185,10 +187,10 @@ operator ()(const QoSDescriptor& qos1,
             const QoSDescriptor& qos2)
 {
 #ifdef KOKYU_DSRT_LOGGING
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):qos1.importance = %d, qos2.importance = %d\n",
               qos1.importance_, qos2.importance_));
-#endif  
+#endif
 
   if (qos1.importance_ > qos2.importance_)
     {
