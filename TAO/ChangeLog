@@ -1,3 +1,14 @@
+Tue Aug  5 15:20:00 UTC 2003  Gautam Thaker <gthaker@atl.lmco.com>
+
+        Please email any questions/comments about this update to
+        Jason Cohen, jcohen@atl.lmco.com
+
+        * tao/Strategies/SCIOP_Connection_Handler.cpp:
+
+          Changed IPPROTO_IP reference to IPPROTO_SCTP.
+          Fixed hardcoded SCTP_NODELAY option to allow stock RH9
+          to build SCIOP code without implementation support.
+
 Tue Aug  5 17:31:17 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
