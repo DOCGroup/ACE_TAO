@@ -1,3 +1,10 @@
+Sat Aug 14 01:43:16 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/CDR_Base.h (ACE_CDR):
+
+	  Parenthesize boolean condition that is the first argument to the
+	  ACE::IfThenElse<> template to avoid any potential confusion.
+
 Sat Aug 14 00:33:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* ace/IfThenElse.h (IfThenElse):

@@ -162,11 +162,11 @@ public:
   /**
    * @name Basic OMG IDL Types
    *
-   * These types are for use in the CDRclasses.  The cleanest way to
+   * These types are for use in the CDR classes.  The cleanest way to
    * avoid complaints from all compilers is to define them all.
    */
   //@{
-  typedef ACE::IfThenElse<sizeof (bool) == 1,
+  typedef ACE::IfThenElse<(sizeof (bool) == 1),
                           bool,
                           unsigned char>::result_type Boolean;
   typedef unsigned char Octet;
