@@ -29,7 +29,7 @@ TAO_Fault_Tolerance_Service::client_id (const char *id)
 }
 
 ACE_INLINE CORBA::Long
-TAO_Fault_Tolerance_Service::new_retention_id (void)
+TAO_Fault_Tolerance_Service::retention_id (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Lock,
                             guard,
@@ -37,10 +37,4 @@ TAO_Fault_Tolerance_Service::new_retention_id (void)
                             0));
 
   return ++this->ft_object_retention_id_;
-}
-
-ACE_INLINE CORBA::Long
-TAO_Fault_Tolerance_Service::retention_id (void)
-{
-  return this->ft_object_retention_id_;
 }
