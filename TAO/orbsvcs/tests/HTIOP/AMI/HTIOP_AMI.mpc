@@ -3,6 +3,7 @@
 // $Id$
 
 project(*Server): messaging, taoexe, portableserver, ami {
+  macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp
     ami_test_i.cpp
@@ -11,6 +12,7 @@ project(*Server): messaging, taoexe, portableserver, ami {
 }
 
 project(*Client): messaging, taoexe, portableserver, ami {
+  macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp
     client.cpp
@@ -18,6 +20,7 @@ project(*Client): messaging, taoexe, portableserver, ami {
 }
 
 project(*Simple Client): messaging, taoexe, portableserver, ami {
+  macros += TEST_OUTPUT_HAS_DLL=0
   Source_Files {
     Test_Output.cpp
     simple_client.cpp

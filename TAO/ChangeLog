@@ -1,3 +1,12 @@
+Tue Nov  9 07:22:46 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/tests/HTIOP/AMI/HTIOP_AMI.mpc:
+        * orbsvcs/tests/HTIOP/Hello/HTIOP_Hello.mpc:
+
+          Ensure that symbols from the ACE_Test_Output class do not get
+          exported for these exe's, they include Test_Output.cpp in the
+          projects.
+
 Mon Nov  8 12:24:15 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/Event_Service/Event_Service.mpc:
