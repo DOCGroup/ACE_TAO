@@ -1,9 +1,16 @@
+Thu Jun  3 23:21:13 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dirent_Selector.cpp (close):
+
+	  Fixed compile-time error where "d_name" member was accessed with
+	  the dot "." operator instead of the pointer "->" operator.
+
 Thu Jun  3 18:49:59 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/Dirent_Selector.cpp (close): Need to call
-	
+
 	  ACE_OS::free (this->namelist_[n_].d_name);
-	  
+
 	  in close() since ACE_OS::scandir() allocates a dirent structure
  	  array that includes a dynamically allocated ACE_TCHAR *.  Thanks
  	  to Benjamin Bronk <benjamin.j.bronk@lmco.com> for reporting this
