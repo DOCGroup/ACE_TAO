@@ -1,3 +1,8 @@
+Mon May 17 14:40:09 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp (init): Removed extra call to
+	  orb_params()->use_dotted_decimal_addresses.
+
 Mon May 17 11:31:48 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Naming_Utils.cpp
