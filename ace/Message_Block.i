@@ -211,7 +211,7 @@ ACE_Message_Block::is_data_msg (void) const
     || mt == ACE_Message_Block::MB_PCPROTO;
 }
 
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Message_Block::msg_priority (void) const
 {
   ACE_TRACE ("ACE_Message_Block::msg_priority");
@@ -219,7 +219,7 @@ ACE_Message_Block::msg_priority (void) const
 }
 
 ACE_INLINE void
-ACE_Message_Block::msg_priority (u_long pri)
+ACE_Message_Block::msg_priority (unsigned long pri)
 {
   ACE_TRACE ("ACE_Message_Block::msg_priority");
   this->priority_ = pri;
@@ -512,7 +512,7 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
 // class ACE_Dynamic_Message_Strategy //
 ////////////////////////////////////////
 
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Dynamic_Message_Strategy::static_bit_field_mask (void) const
 {
   return static_bit_field_mask_;
@@ -520,13 +520,13 @@ ACE_Dynamic_Message_Strategy::static_bit_field_mask (void) const
   // get static bit field mask
 
 ACE_INLINE void
-ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul)
+ACE_Dynamic_Message_Strategy::static_bit_field_mask (unsigned long ul)
 {
   static_bit_field_mask_ = ul;
 }
   // set static bit field mask
 
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Dynamic_Message_Strategy::static_bit_field_shift (void) const
 {
   return static_bit_field_shift_;
@@ -534,13 +534,13 @@ ACE_Dynamic_Message_Strategy::static_bit_field_shift (void) const
   // get left shift value to make room for static bit field
 
 ACE_INLINE void
-ACE_Dynamic_Message_Strategy::static_bit_field_shift (u_long ul)
+ACE_Dynamic_Message_Strategy::static_bit_field_shift (unsigned long ul)
 {
   static_bit_field_shift_ = ul;
 }
   // set left shift value to make room for static bit field
 
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Dynamic_Message_Strategy::dynamic_priority_max (void) const
 {
   return dynamic_priority_max_;
@@ -548,7 +548,7 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (void) const
   // get maximum supported priority value
 
 ACE_INLINE void
-ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
+ACE_Dynamic_Message_Strategy::dynamic_priority_max (unsigned long ul)
 {
   // pending_shift_ depends on dynamic_priority_max_: for performance
   // reasons, the value in pending_shift_ is (re)calculated only when
@@ -559,7 +559,7 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
 }
   // set maximum supported priority value
 
-ACE_INLINE u_long
+ACE_INLINE unsigned long
 ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void) const
 {
   return dynamic_priority_offset_;
@@ -567,7 +567,7 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void) const
   // get offset for boundary between signed range and unsigned range
 
 ACE_INLINE void
-ACE_Dynamic_Message_Strategy::dynamic_priority_offset (u_long ul)
+ACE_Dynamic_Message_Strategy::dynamic_priority_offset (unsigned long ul)
 {
   // max_late_ and min_pending_ depend on dynamic_priority_offset_:
   // for performance reasons, the values in max_late_ and min_pending_

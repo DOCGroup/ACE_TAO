@@ -344,7 +344,7 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
 
 ACE_Message_Block::ACE_Message_Block (const char *data,
                                       size_t size,
-                                      u_long priority)
+                                      unsigned long priority)
   : flags_ (0),
     data_block_ (0)
 {
@@ -396,7 +396,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       const char *msg_data,
                                       ACE_Allocator *allocator_strategy,
                                       ACE_Lock *locking_strategy,
-                                      u_long priority,
+                                      unsigned long priority,
                                       const ACE_Time_Value &execution_time,
                                       const ACE_Time_Value &deadline_time,
                                       ACE_Allocator *data_block_allocator,
@@ -430,7 +430,7 @@ ACE_Message_Block::init (size_t size,
                          const char *msg_data,
                          ACE_Allocator *allocator_strategy,
                          ACE_Lock *locking_strategy,
-                         u_long priority,
+                         unsigned long priority,
                          const ACE_Time_Value &execution_time,
                          const ACE_Time_Value &deadline_time,
                          ACE_Allocator *data_block_allocator,
@@ -482,7 +482,7 @@ ACE_Message_Block::ACE_Message_Block (size_t size,
                                       ACE_Allocator *allocator_strategy,
                                       ACE_Lock *locking_strategy,
                                       Message_Flags flags,
-                                      u_long priority,
+                                      unsigned long priority,
                                       const ACE_Time_Value &execution_time,
                                       const ACE_Time_Value &deadline_time,
                                       ACE_Data_Block *db,
@@ -626,7 +626,7 @@ ACE_Message_Block::init_i (size_t size,
                            ACE_Allocator *allocator_strategy,
                            ACE_Lock *locking_strategy,
                            Message_Flags flags,
-                           u_long priority,
+                           unsigned long priority,
                            const ACE_Time_Value &execution_time,
                            const ACE_Time_Value &deadline_time,
                            ACE_Data_Block *db,
@@ -1190,10 +1190,10 @@ ACE_Data_Block::base (char *msg_data,
 
 // ctor
 
-ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (u_long static_bit_field_mask,
-                                                            u_long static_bit_field_shift,
-                                                            u_long dynamic_priority_max,
-                                                            u_long dynamic_priority_offset)
+ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
+                                                            unsigned long static_bit_field_shift,
+                                                            unsigned long dynamic_priority_max,
+                                                            unsigned long dynamic_priority_offset)
   : static_bit_field_mask_ (static_bit_field_mask),
     static_bit_field_shift_ (static_bit_field_shift),
     dynamic_priority_max_ (dynamic_priority_max),
@@ -1241,10 +1241,10 @@ ACE_Dynamic_Message_Strategy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (u_long static_bit_field_mask,
-                                                               u_long static_bit_field_shift,
-                                                               u_long dynamic_priority_max,
-                                                               u_long dynamic_priority_offset)
+ACE_Deadline_Message_Strategy:: ACE_Deadline_Message_Strategy (unsigned long static_bit_field_mask,
+                                                               unsigned long static_bit_field_shift,
+                                                               unsigned long dynamic_priority_max,
+                                                               unsigned long dynamic_priority_offset)
   : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
                                   static_bit_field_shift,
                                   dynamic_priority_max,
@@ -1271,10 +1271,10 @@ ACE_Deadline_Message_Strategy::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
-ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (u_long static_bit_field_mask,
-                                                          u_long static_bit_field_shift,
-                                                          u_long dynamic_priority_max,
-                                                          u_long dynamic_priority_offset)
+ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_bit_field_mask,
+                                                          unsigned long static_bit_field_shift,
+                                                          unsigned long dynamic_priority_max,
+                                                          unsigned long dynamic_priority_offset)
   : ACE_Dynamic_Message_Strategy (static_bit_field_mask,
                                   static_bit_field_shift,
                                   dynamic_priority_max,

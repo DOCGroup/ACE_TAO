@@ -8,7 +8,7 @@
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *  @author and Prashant Jain <pjain@uci.edu>
+ *  @author Prashant Jain <pjain@uci.edu>
  */
 //==========================================================================
 

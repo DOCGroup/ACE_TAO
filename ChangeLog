@@ -1,3 +1,35 @@
+Wed Jun 04 07:06:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL_Manager.cpp:
+          Added explicit template instantiations in case the ACE autoptr
+          is used. This fixes unresolved externals with VxWorks 5.5
+
+        * ace/Handle_Set.h:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Tokens.h:
+        * ace/Name_Proxy.h:
+        * ace/Name_Request_Reply.h:
+        * ace/Naming_Context.h:
+        * ace/Object_Manager.h:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/Thread.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen improvements
+
+        * ace/Message_Block.cpp:
+        * ace/Message_Block.i:
+          Changed u_long to unsigned long to match header file. This fixes
+          doxygen warnings
+
+        * ace/String_Base.h:
+        * ace/String_Base.i:
+          Changed constructor argument alloc to the_allocator in doxygen
+          tags and in implementation.
+
+        * ace/config-doxygen.h:
+          Added TAO_HAS_SCIOP to generate SCIP documentation, added
+          ACE_HAS_USING_KEYWORD to improve ACE documentation
+
 Tue Jun 03 07:51:20 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * ACE version 5.3.2 released.
@@ -17,46 +49,46 @@ Mon Jun  2 11:24:10 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Mon Jun  2 00:10:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:Fixed some apparent bugs. Left some debugging
-	  statements for future refernces. 
+	  statements for future refernces.
 
 	* Makefile: Removed acconfig.h since it is not required. Thanks to
 	  Ossama for proving the information.
 
 Sun Jun 01 20:02:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* bin/make_release: Fixed a typo and added comments. 
+	* bin/make_release: Fixed a typo and added comments.
 
 Sun Jun  1 19:05:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release: The following changes were made to the release
-	  scripts.  
+	  scripts.
 
 	  - CIAO distribution has been integrated
-	  - Generation of doxygen documentation has been moved out. 
+	  - Generation of doxygen documentation has been moved out.
 	  - Added checks to see whether the user of the script has got
 	    write permissions in the output directory
 	  - Removed the option to create releases with no zipped
-	    libraries. 
+	    libraries.
 	  - Introduced the need for another environment variable MAILID to
-	    provide the mail id of the person cutting the beta. 
+	    provide the mail id of the person cutting the beta.
 
 Sun Jun 01 18:02:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/generate_rel_manpages: A new script for man page
 	  generation. This is being moved out of the release scripts for a
-	  number of reasons. A couple of them are 
-	 
+	  number of reasons. A couple of them are
+
 	  - They take a long time and beta/release process has to wait for
 	    completion of documentation generation.
 
 	  - Any problems during documentation generation like machine
 	    reboot or machine hang or whatever you can think off adversely
 	    affects the beta process. The build-czar has to cleanup
-	    numerous files  and start the process all over again. 
+	    numerous files  and start the process all over again.
 
 	  This will help to decouple the beta cutting process and the
-	  documentation generation process. 
-	
+	  documentation generation process.
+
 	* Makefile: A new target that can be used to kick of the
 	  documentation generation.
 

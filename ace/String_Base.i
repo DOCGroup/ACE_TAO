@@ -8,8 +8,8 @@
 // Default constructor.
 
 template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *alloc)
-  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *the_allocator)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (&ACE_String_Base<CHAR>::NULL_String_),
@@ -22,9 +22,9 @@ ACE_String_Base<CHAR>::ACE_String_Base (ACE_Allocator *alloc)
 
 template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
-                                        ACE_Allocator *alloc,
+                                        ACE_Allocator *the_allocator,
                                         int release)
-  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (0),
@@ -43,8 +43,8 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
 
 template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR>::ACE_String_Base (CHAR c,
-                                        ACE_Allocator *alloc)
-  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+                                        ACE_Allocator *the_allocator)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (0),
@@ -60,9 +60,9 @@ ACE_String_Base<CHAR>::ACE_String_Base (CHAR c,
 template <class CHAR> ACE_INLINE
 ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
                                         size_t len,
-                                        ACE_Allocator *alloc,
+                                        ACE_Allocator *the_allocator,
                                         int release)
-  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (0),
@@ -89,8 +89,8 @@ ACE_String_Base<CHAR>::ACE_String_Base (const ACE_String_Base<CHAR> &s)
 }
 
 template <class CHAR> ACE_INLINE
-ACE_String_Base<CHAR>::ACE_String_Base (size_t len, CHAR c, ACE_Allocator *alloc)
-  : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
+ACE_String_Base<CHAR>::ACE_String_Base (size_t len, CHAR c, ACE_Allocator *the_allocator)
+  : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ()),
     len_ (0),
     buf_len_ (0),
     rep_ (0),

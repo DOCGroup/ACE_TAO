@@ -151,12 +151,12 @@ ACE_DLL_Handle::close (int unload)
                     this->handle_));
       // First remove any associated Framework Components.
       ACE_Framework_Repository * frPtr= ACE_Framework_Repository::instance ();
-      
+
       if (frPtr)
       {
          frPtr->remove_dll_components (this->dll_name_);
       }
-      
+
       retval = ACE_OS::dlclose (this->handle_);
       this->handle_ = ACE_SHLIB_INVALID_HANDLE;
     }
@@ -212,7 +212,7 @@ ACE_DLL_Handle::get_handle (int become_owner)
                       ACE_SHLIB_INVALID_HANDLE);
 
   handle = this->handle_;
-  
+
   if (become_owner != 0)
     {
       if (--this->refcount_ == 0)
@@ -502,3 +502,19 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 
   return 0;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class auto_ptr<ACE_TString>;
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+template class ACE_Auto_Basic_Ptr<ACE_TString>;
+#  endif  /* ACE_LACKS_AUTO_PTR */
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_ptr<ACE_TString>
+#  if defined (ACE_LACKS_AUTO_PTR) \
+      || !(defined (ACE_HAS_STANDARD_CPP_LIBRARY) \
+           && (ACE_HAS_STANDARD_CPP_LIBRARY != 0))
+#    pragma instantiate ACE_Auto_Basic_Ptr<ACE_TString>
+#  endif  /* ACE_LACKS_AUTO_PTR */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
