@@ -75,7 +75,17 @@ REALCLEAN : CLEAN
 	-@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.pdb"
 <%endif%>
 <%endif%>
-	-@erase "<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%> $(INSTALLDIR)\<%exename%>.exe $(INSTALLDIR)\<%exename%>.ilk<%else%> $(OUTDIR)\<%staticname%><%lib_modifier%>.lib $(OUTDIR)\<%staticname%><%lib_modifier%>.exp $(OUTDIR)\<%staticname%><%lib_modifier%>.ilk<%endif%>"
+<%if(type_is_dynamic)%>
+        -@erase "<%dllout%>\<%sharedname%><%lib_modifier%>.dll"
+<%endif%>
+<%if(exename)%>
+        -@erase "$(INSTALLDIR)\<%exename%>.exe"
+        -@erase "$(INSTALLDIR)\<%exename%>.ilk"
+<%else%>
+        -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.lib"
+        -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.exp"
+        -@erase "$(OUTDIR)\<%staticname%><%lib_modifier%>.ilk"
+<%endif%>
 <%if(idl_files)%>
         -@erase<%foreach(idl_files)%> "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>C.*" "<%if(flag_overrides(idl_file, idlgendir))%><%flag_overrides(idl_file, idlgendir)%><%else%><%if(idlgendir)%><%idlgendir%><%else%><%dirname(idl_file)%><%endif%><%endif%>\<%basenoextension(idl_file)%>S.*"<%endfor%>
 <%endif%>
