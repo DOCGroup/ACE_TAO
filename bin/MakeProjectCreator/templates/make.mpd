@@ -26,16 +26,18 @@ CCC           = $(CXX)
 MAKEFILE      = <%project_file%>
 DEPENDENCIES  = .depend.$(MAKEFILE)
 <%if(exename)%>
-BIN           = <%exename%>
+BIN           = <%exename%>$(EXEEXT)
 <%endif%>
 <%if(staticname)%>
 LIB           = lib<%staticname%>.a
 <%endif%>
 <%foreach(platforms)%>
+EXEEXT        = <%exeext%>
 <%if(soext)%>
 <%if(sharedname)%>
 SHLIB         = lib<%sharedname%>.$(SOEXT)
 SOEXT         = <%soext%>
+LN            = <%ln%>
 <%foreach(configurations)%>
 <%if(pic)%>
 PICFLAGS      = <%pic%>
@@ -179,7 +181,7 @@ install:
 	echo "Installing $(INSTARGET) -> <%install%>/$(INSTARGET)"; \
 	-test -d "<%install%>" || mkdir -p "<%install%>" 2> /dev/null || true; \
 	$(RM) "<%install%>/$(INSTARGET)"; \
-	ln -s "$(PWD)/$(INSTARGET)" "<%install%>"; \
+	$(LN) "$(PWD)/$(INSTARGET)" "<%install%>"; \
 	fi
 
 <%endif%>
@@ -189,7 +191,7 @@ install:
 	@if [ "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" != "." ]; then \
 	test -d "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" || mkdir -p "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>" 2> /dev/null || true; \
 	$(RM) "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>/$(INSTARGET)"; \
-	ln -s "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"; \
+	$(LN) "$(PWD)/$(INSTARGET)" "<%if(dllout)%><%dllout%><%else%><%libout%><%endif%>"; \
 	fi
 
 <%endif%>
