@@ -1,3 +1,10 @@
+Tue Jun  8 10:16:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * DnC/RepositoryManager/Repository_Manager.cpp:
+
+          Added diagnostic comments to aid in debugging during execution
+          of the Executor.
+
 Tue Jun  8 09:55:41 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:
