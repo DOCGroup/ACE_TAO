@@ -105,7 +105,6 @@ Wed Apr  3 22:18:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  - Removed a version of rebind () and a couple of version of
 	    unbind () calls as they were not used.
 
-
 	* tao/Condition.h:
 	* tao/Condition.cpp:.
 	* tao/Condition.inl: A simple wrapper that wraps a
