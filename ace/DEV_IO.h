@@ -22,7 +22,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_stropts.h"
+#if defined (ACE_HAS_STREAM_PIPES)
+#  include "ace/OS_NS_stropts.h"
+#endif /* ACE_HAS_STREAM_PIPES */
+
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/sys/os_uio.h"
 

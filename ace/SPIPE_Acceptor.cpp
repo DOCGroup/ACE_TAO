@@ -5,7 +5,10 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_unistd.h"
+
+#if defined (ACE_HAS_STREAM_PIPES)
+#  include "ace/OS_NS_unistd.h"
+#endif  // ACE_HAS_STREAM_PIPES
 
 ACE_RCSID(ace, SPIPE_Acceptor, "$Id$")
 

@@ -15,7 +15,10 @@
 #define ACE_FIFO_SEND_MSG_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS_NS_stropts.h"
+#if defined (ACE_HAS_STREAM_PIPES)
+#  include "ace/OS_NS_stropts.h"
+#endif /* ACE_HAS_STREAM_PIPES */
+
 #include "ace/FIFO_Send.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
