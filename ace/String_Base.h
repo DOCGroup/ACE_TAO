@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+// -*- C++ -*-
 
 //=============================================================================
 /**
@@ -13,14 +13,19 @@
 
 #ifndef ACE_STRING_BASE_H
 #define ACE_STRING_BASE_H
+
 #include "ace/pre.h"
 
-#include "ace/ACE.h"
 #include "ace/String_Base_Const.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Global_Macros.h"
+#include "ace/OS_String.h"
+#include "ace/OS_Memory.h"
+
 
 // Forward decl.
 class ACE_Allocator;
@@ -63,7 +68,7 @@ public:
    * @param s Zero terminated input string
    * @param alloc ACE_Allocator associated with string
    * @param release Allocator responsible(1)/not reponsible(0) for
-   * 	freeing memory.
+   *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR * s,
@@ -80,7 +85,7 @@ public:
    * @param len Length of non-zero terminated input string
    * @param alloc ACE_Allocator associated with string
    * @param release Allocator responsible(1)/not reponsible(0) for
-   * 	freeing memory.
+   *    freeing memory.
    * @return ACE_String_Base containing const CHAR *s
    */
   ACE_String_Base (const CHAR * s,
@@ -164,7 +169,7 @@ public:
    *
    * @param s Null terminated input string
    * @param release Allocator responsible(1)/not reponsible(0) for
-   * 	freeing memory.
+   *    freeing memory.
    */
   void set (const CHAR * s, int release = 1);
 
@@ -175,7 +180,7 @@ public:
    *  @param s Non-zero terminated input string
    *  @param len Length of input string 's'
    *  @param release Allocator responsible(1)/not reponsible(0) for
-   * 	freeing memory.
+   *    freeing memory.
    */
   void set (const CHAR * s, size_t len, int release);
 
@@ -212,7 +217,7 @@ public:
    *
    *  @param s Input ACE_String_Base string to concatenate to another string.
    *  @return The combined string (input append to the end of the old). New
-   *  	string is zero terminated.
+   *    string is zero terminated.
    */
   ACE_String_Base < CHAR > &operator += (const ACE_String_Base < CHAR > &s);
 
@@ -238,7 +243,7 @@ public:
    * the memory when finished; use delete []
    *
    * @return Pointer reference to the string data. Returned string is
-   * 	zero terminated.
+   *    zero terminated.
    */
   CHAR *rep (void) const;
 
@@ -248,7 +253,7 @@ public:
    * if it has length 0!
    *
    * @return Pointer reference to the stored string data. No guarantee is
-   * 	that the string is zero terminated.
+   *    that the string is zero terminated.
    *
    */
   const CHAR *fast_rep (void) const;
@@ -264,7 +269,7 @@ public:
    *
    *  @param s Input ACE_String_Base string
    *  @return Integer index value of the first location of string @a s or
-   *  	-1 (not found).
+   *    -1 (not found).
    */
   ssize_t strstr (const ACE_String_Base<CHAR> &s) const;
 
@@ -347,7 +352,7 @@ public:
    *
    *  @param s Input ACE_String_Base string to compare against stored string.
    *  @return Integer value of result (less than 0, 0, greater than 0)
-   *  	depending on how input string @a s is to the stored string.
+   *    depending on how input string @a s is to the stored string.
    */
   int compare (const ACE_String_Base<CHAR> &s) const;
 
@@ -407,21 +412,21 @@ protected:
 
 template < class CHAR > ACE_INLINE
   ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &,
-				       const ACE_String_Base < CHAR > &);
+                                       const ACE_String_Base < CHAR > &);
 template < class CHAR > ACE_INLINE
   ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &,
-				       const CHAR *);
+                                       const CHAR *);
 template < class CHAR > ACE_INLINE
   ACE_String_Base < CHAR > operator + (const CHAR *,
-				       const ACE_String_Base < CHAR > &);
+                                       const ACE_String_Base < CHAR > &);
 
 template < class CHAR > ACE_INLINE
   ACE_String_Base < CHAR > operator + (const ACE_String_Base < CHAR > &t,
-				       const CHAR c);
+                                       const CHAR c);
 
 template < class CHAR > ACE_INLINE
   ACE_String_Base < CHAR > operator + (const CHAR c,
-				       const ACE_String_Base < CHAR > &t);
+                                       const ACE_String_Base < CHAR > &t);
 
 #if defined (__ACE_INLINE__)
 #include "ace/String_Base.i"
@@ -436,4 +441,5 @@ template < class CHAR > ACE_INLINE
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include "ace/post.h"
+
 #endif /* ACE_STRING_BASE_H */

@@ -1,5 +1,7 @@
-// $Id$
+#ifndef ACE_STRING_BASE_CPP
+#define ACE_STRING_BASE_CPP
 
+#include "ace/ACE.h"
 #include "ace/Malloc.h"
 #include "ace/String_Base.h"
 #include "ace/Auto_Ptr.h"
@@ -12,7 +14,11 @@
 #include "ace/String_Base.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, String_Base, "String_Base.cpp,v 4.61 2001/03/04 00:55:30 brunsch Exp")
+
+ACE_RCSID (ace,
+           String_Base,
+           "$Id$")
+
 
 ACE_ALLOC_HOOK_DEFINE(ACE_String_Base)
 
@@ -93,7 +99,7 @@ ACE_String_Base<CHAR>::substring (size_t offset,
   // case 1. empty string
   if (this->len_ == 0)
     return nill;
-  
+
   // case 2. start pos past our end
   if (offset >= this->len_)
     return nill;
@@ -160,6 +166,15 @@ ACE_String_Base<CHAR>::operator+= (const ACE_String_Base<CHAR> &s)
   return *this;
 }
 
+template <class CHAR> u_long
+ACE_String_Base<CHAR>::hash (void) const
+{
+  return ACE::hash_pjw ((ACE_reinterpret_cast (char *,
+                                               ACE_const_cast (CHAR *,
+                                                               this->rep_))),
+                        this->len_ * sizeof (CHAR));
+}
+
 template <class CHAR> void
 ACE_String_Base<CHAR>::resize (size_t len, CHAR c)
 {
@@ -181,3 +196,5 @@ ACE_String_Base<CHAR>::resize (size_t len, CHAR c)
                   c,
                   this->buf_len_ * sizeof (CHAR));
 }
+
+#endif  /* ACE_STRING_BASE_CPP */

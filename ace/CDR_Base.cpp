@@ -1,5 +1,6 @@
 #include "ace/CDR_Base.h"
 #include "ace/Message_Block.h"
+#include "ace/OS.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Base.inl"

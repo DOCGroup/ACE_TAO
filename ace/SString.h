@@ -14,21 +14,18 @@
 #define ACE_SSTRING_H
 #include "ace/pre.h"
 
-#include "ace/String_Base.h"
+#include "ace/SStringfwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-typedef ACE_WCHAR_T ACE_WSTRING_TYPE;
+#include "ace/String_Base.h"
+
 
 #if !defined (ACE_DEFAULT_GROWSIZE)
 #define ACE_DEFAULT_GROWSIZE 32
 #endif /* ACE_DEFAULT_GROWSIZE */
-
-typedef ACE_String_Base<char> ACE_CString;
-
-typedef ACE_String_Base<ACE_WSTRING_TYPE> ACE_WString;
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);

@@ -19,14 +19,11 @@
  * Those assumptions are pretty good these days, with Crays beign
  * the only known exception.
  *
- *  @author TAO version by
- *  @author Aniruddha Gokhale <gokhale@cs.wustl.edu>
- *  @author Carlos O'Ryan<coryan@cs.wustl.edu>
- *  @author ACE version by
- *  @author Jeff Parsons <parsons@cs.wustl.edu>
+ *  @author TAO version by Aniruddha Gokhale <gokhale@cs.wustl.edu>
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
+ *  @author ACE version by Jeff Parsons <parsons@cs.wustl.edu>
  *  @author Istvan Buki <istvan.buki@euronet.be>
- *  @author Codeset translation by
- *  @author Jim Rogers <jrogers@viasoft.com>
+ *  @author Codeset translation by Jim Rogers <jrogers@viasoft.com>
  */
 //=============================================================================
 
@@ -41,7 +38,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
+#include "ace/SStringfwd.h"
+#include "ace/OS_Memory.h"
+#include "ace/OS_String.h"
 #include "ace/Message_Block.h"
 
 

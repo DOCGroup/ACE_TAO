@@ -1338,22 +1338,6 @@ struct stat
 #   endif
 # endif /* ACE_HAS_WINCE */
 
-
-#if defined (ACE_HAS_NO_THROW_SPEC)
-#   define ACE_THROW_SPEC(X)
-#else
-# if defined (ACE_HAS_EXCEPTIONS)
-#   define ACE_THROW_SPEC(X) throw X
-#   if defined (ACE_WIN32) && defined(_MSC_VER) && !defined (ghs)
-// @@ MSVC "supports" the keyword but doesn't implement it (Huh?).
-//    Therefore, we simply supress the warning for now.
-#     pragma warning( disable : 4290 )
-#   endif /* ACE_WIN32 */
-# else  /* ! ACE_HAS_EXCEPTIONS */
-#   define ACE_THROW_SPEC(X)
-# endif /* ! ACE_HAS_EXCEPTIONS */
-#endif /*ACE_HAS_NO_THROW_SPEC*/
-
 #if !defined (ACE_LACKS_UNISTD_H)
 #  include /**/ <unistd.h>
 #endif /* ACE_LACKS_UNISTD_H */
@@ -5787,6 +5771,11 @@ public:
   // @@ (othman) IMHO, it is the lesser of two evils to use the
   //    correct type for the platform rather than (forcibly) assume
   //    that all wide characters are 16 bits.
+  /**
+   * @todo Move this typedef to a separate file so as not to have the
+   *       same typedefs duplicated in multiple headers
+   *       (e.g. CDR_Base.h).
+   */
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
   typedef wchar_t WChar;
 #else
@@ -7081,55 +7070,6 @@ typedef ACE_TRANSMIT_FILE_BUFFERS* ACE_LPTRANSMIT_FILE_BUFFERS;
  * in the wrong byte order.
  */
 // #define ACE_DISABLE_SWAP_ON_READ
-
-
-//@{
-/**
- * @name Efficiently compute aligned pointers to powers of 2 boundaries.
- */
-
-/**
- * Efficiently align "value" up to "alignment", knowing that all such
- * boundaries are binary powers and that we're using two's complement
- * arithmetic.
- *
- * Since the alignment is a power of two its binary representation is:
- *
- * alignment      = 0...010...0
- *
- * hence
- *
- * alignment - 1  = 0...001...1 = T1
- *
- * so the complement is:
- *
- * ~(alignment - 1) = 1...110...0 = T2
- *
- * Notice that there is a multiple of <alignment> in the range
- * [<value>,<value> + T1], also notice that if
- *
- * X = ( <value> + T1 ) & T2
- *
- * then
- *
- * <value> <= X <= <value> + T1
- *
- * because the & operator only changes the last bits, and since X is a
- * multiple of <alignment> (its last bits are zero) we have found the
- * multiple we wanted.
- */
-/// Return the next integer aligned to a required boundary
-/**
- * @param ptr the base pointer
- * @param alignment the required alignment
- */
-#define ACE_align_binary(ptr, alignment) \
-    ((ptr + ((ptr_arith_t)((alignment)-1))) & (~((ptrdiff_t)((alignment)-1))))
-
-/// Return the next address aligned to a required boundary
-#define ACE_ptr_align_binary(ptr, alignment) \
-        ((char *) ACE_align_binary (((ptrdiff_t) (ptr)), (alignment)))
-//@}
 
 // Defining POSIX4 real-time signal range.
 #if defined(ACE_HAS_POSIX_REALTIME_SIGNALS)
