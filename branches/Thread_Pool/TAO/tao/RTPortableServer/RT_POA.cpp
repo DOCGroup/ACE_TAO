@@ -109,15 +109,15 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies,
         ACE_CHECK;
 
         this->cached_policies ().priority_model (
-           TAO_POA_Cached_Policies::PriorityModel (
-              rt_priority_model));
+                                                 TAO_POA_Cached_Policies::PriorityModel (
+                                                                                         rt_priority_model));
 
         RTCORBA::Priority priority =
           priority_model->server_priority (ACE_TRY_ENV);
-      ACE_CHECK;
+        ACE_CHECK;
 
-      this->cached_policies ().server_priority (priority);
-    }
+        this->cached_policies ().server_priority (priority);
+      }
   }
 
   this->thread_pool_ =
@@ -128,9 +128,13 @@ TAO_RT_POA::parse_rt_policies (TAO_POA_Policy_Set &policies,
 }
 
 void
-TAO_RT_POA::valid_priority (RTCORBA::Priority priority,
-                            CORBA_Environment &ACE_TRY_ENV)
+TAO_RT_POA::validate_priority (RTCORBA::Priority priority,
+                               CORBA_Environment &ACE_TRY_ENV)
 {
+  if (priority < RTCORBA::minPriority ||
+      priority > RTCORBA::maxPriority)
+    ACE_THROW (CORBA::BAD_PARAM ());
+
   // If this POA is using a thread pool with lanes, make sure the
   // priority matches one of the thread lanes.
   if (this->thread_pool_ != 0 &&
@@ -161,7 +165,7 @@ TAO_RT_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
   // priority from "somewhere" when a request arrives for an inactive
   // object.
   if (this->cached_policies_.implicit_activation () ==
-            PortableServer::IMPLICIT_ACTIVATION)
+      PortableServer::IMPLICIT_ACTIVATION)
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
@@ -170,7 +174,7 @@ TAO_RT_POA::validate_policies (CORBA::Environment &ACE_TRY_ENV)
   // SERVER_DECLARED option for the PriorityModelPolicy then the ORB
   // shall raise a WrongPolicy user exception.
   if (this->cached_policies_.priority_model () !=
-            TAO_POA_Cached_Policies::SERVER_DECLARED)
+      TAO_POA_Cached_Policies::SERVER_DECLARED)
     {
       ACE_THROW (PortableServer::POA::WrongPolicy ());
     }
@@ -320,10 +324,11 @@ TAO_RT_POA::create_stub_object (const TAO_ObjectKey &object_key,
             lanes[i]->resources ().acceptor_registry ();
 
           result =
-            filter->fill_mprofile (object_key,
-                                   mprofile,
-                                   acceptor_registry.begin (),
-                                   acceptor_registry.end ());
+            filter->fill_profile (object_key,
+                                  mprofile,
+                                  acceptor_registry.begin (),
+                                  acceptor_registry.end (),
+                                  lanes[i]->lane_priority ());
           if (result == -1)
             error = 1;
         }
@@ -486,8 +491,8 @@ TAO_RT_POA::find_POA (const char *adapter_name,
 
 void
 TAO_RT_POA::destroy (CORBA::Boolean etherealize_objects,
-              CORBA::Boolean wait_for_completion,
-              CORBA_Environment &ACE_TRY_ENV)
+                     CORBA::Boolean wait_for_completion,
+                     CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->TAO_POA::destroy (etherealize_objects,
@@ -501,7 +506,7 @@ TAO_RT_POA::destroy (CORBA::Boolean etherealize_objects,
 
 PortableServer::ThreadPolicy_ptr
 TAO_RT_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
-                                                       CORBA_Environment &ACE_TRY_ENV)
+                                  CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ThreadPolicy_ptr policy =
@@ -515,7 +520,7 @@ TAO_RT_POA::create_thread_policy (PortableServer::ThreadPolicyValue value,
 
 PortableServer::LifespanPolicy_ptr
 TAO_RT_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
-                                                           CORBA_Environment &ACE_TRY_ENV)
+                                    CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::LifespanPolicy_ptr policy =
@@ -527,7 +532,7 @@ TAO_RT_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value,
 
 PortableServer::IdUniquenessPolicy_ptr
 TAO_RT_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue value,
-                                                                    CORBA_Environment &ACE_TRY_ENV)
+                                         CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::IdUniquenessPolicy_ptr policy =
@@ -540,12 +545,12 @@ TAO_RT_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue
 
 PortableServer::IdAssignmentPolicy_ptr
 TAO_RT_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue value,
-                                                                    CORBA_Environment &ACE_TRY_ENV)
+                                         CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::IdAssignmentPolicy_ptr policy =
     this->TAO_POA::create_id_assignment_policy (value,
-                                               ACE_TRY_ENV);
+                                                ACE_TRY_ENV);
   ACE_CHECK_RETURN (policy);
   return policy;
 }
@@ -555,7 +560,7 @@ TAO_RT_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue
 
 PortableServer::ImplicitActivationPolicy_ptr
 TAO_RT_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPolicyValue value,
-                                                                                CORBA_Environment &ACE_TRY_ENV)
+                                               CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ImplicitActivationPolicy_ptr policy =
@@ -567,7 +572,7 @@ TAO_RT_POA::create_implicit_activation_policy (PortableServer::ImplicitActivatio
 
 PortableServer::ServantRetentionPolicy_ptr
 TAO_RT_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicyValue value,
-                                                                            CORBA_Environment &ACE_TRY_ENV)
+                                             CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::ServantRetentionPolicy_ptr policy =
@@ -580,7 +585,7 @@ TAO_RT_POA::create_servant_retention_policy (PortableServer::ServantRetentionPol
 
 PortableServer::RequestProcessingPolicy_ptr
 TAO_RT_POA::create_request_processing_policy (PortableServer::RequestProcessingPolicyValue value,
-                                                                              CORBA_Environment &ACE_TRY_ENV)
+                                              CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   PortableServer::RequestProcessingPolicy_ptr policy =
@@ -648,7 +653,7 @@ TAO_RT_POA::the_activator (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_RT_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator,
-                    CORBA_Environment &ACE_TRY_ENV)
+                           CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->TAO_POA::the_activator (adapter_activator,
@@ -669,7 +674,7 @@ TAO_RT_POA::get_servant_manager (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_RT_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr,
-                          CORBA_Environment &ACE_TRY_ENV)
+                                 CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -692,7 +697,7 @@ TAO_RT_POA::get_servant (CORBA_Environment &ACE_TRY_ENV)
 
 void
 TAO_RT_POA::set_servant (PortableServer::Servant servant,
-                  CORBA_Environment &ACE_TRY_ENV)
+                         CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -705,7 +710,7 @@ TAO_RT_POA::set_servant (PortableServer::Servant servant,
 
 PortableServer::ObjectId *
 TAO_RT_POA::activate_object (PortableServer::Servant p_servant,
-                                           CORBA_Environment &ACE_TRY_ENV)
+                             CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::WrongPolicy))
@@ -719,8 +724,8 @@ TAO_RT_POA::activate_object (PortableServer::Servant p_servant,
 
 void
 TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
-                              PortableServer::Servant p_servant,
-                              CORBA_Environment &ACE_TRY_ENV)
+                                     PortableServer::Servant p_servant,
+                                     CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantAlreadyActive,
                    PortableServer::POA::ObjectAlreadyActive,
@@ -734,7 +739,7 @@ TAO_RT_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 
 void
 TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid,
-                        CORBA_Environment &ACE_TRY_ENV)
+                               CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -746,7 +751,7 @@ TAO_RT_POA::deactivate_object (const PortableServer::ObjectId &oid,
 
 CORBA::Object_ptr
 TAO_RT_POA::create_reference (const char *intf,
-                                    CORBA_Environment &ACE_TRY_ENV)
+                              CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -759,8 +764,8 @@ TAO_RT_POA::create_reference (const char *intf,
 
 CORBA::Object_ptr
 TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
-                                            const char *intf,
-                                            CORBA_Environment &ACE_TRY_ENV)
+                                      const char *intf,
+                                      CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
 {
@@ -774,7 +779,7 @@ TAO_RT_POA::create_reference_with_id (const PortableServer::ObjectId &oid,
 
 PortableServer::ObjectId *
 TAO_RT_POA::servant_to_id (PortableServer::Servant p_servant,
-                                         CORBA_Environment &ACE_TRY_ENV)
+                           CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -788,7 +793,7 @@ TAO_RT_POA::servant_to_id (PortableServer::Servant p_servant,
 
 CORBA::Object_ptr
 TAO_RT_POA::servant_to_reference (PortableServer::Servant p_servant,
-                                        CORBA_Environment &ACE_TRY_ENV)
+                                  CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ServantNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -803,7 +808,7 @@ TAO_RT_POA::servant_to_reference (PortableServer::Servant p_servant,
 
 PortableServer::Servant
 TAO_RT_POA::reference_to_servant (CORBA::Object_ptr reference,
-                                              CORBA_Environment &ACE_TRY_ENV)
+                                  CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongAdapter,
@@ -818,7 +823,7 @@ TAO_RT_POA::reference_to_servant (CORBA::Object_ptr reference,
 
 PortableServer::ObjectId *
 TAO_RT_POA::reference_to_id (CORBA::Object_ptr reference,
-                                           CORBA_Environment &ACE_TRY_ENV)
+                             CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongAdapter,
                    PortableServer::POA::WrongPolicy))
@@ -832,7 +837,7 @@ TAO_RT_POA::reference_to_id (CORBA::Object_ptr reference,
 
 PortableServer::Servant
 TAO_RT_POA::id_to_servant (const PortableServer::ObjectId &oid,
-                                       CORBA_Environment &ACE_TRY_ENV)
+                           CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))
@@ -846,7 +851,7 @@ TAO_RT_POA::id_to_servant (const PortableServer::ObjectId &oid,
 
 CORBA::Object_ptr
 TAO_RT_POA::id_to_reference (const PortableServer::ObjectId &oid,
-                                   CORBA_Environment &ACE_TRY_ENV)
+                             CORBA_Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::ObjectNotActive,
                    PortableServer::POA::WrongPolicy))

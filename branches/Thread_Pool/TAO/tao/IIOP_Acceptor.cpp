@@ -84,9 +84,9 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 // TODO =
 //    2) For V1.[1,2] there are tagged components
 int
-TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
-                                    TAO_MProfile &mprofile,
-                                    CORBA::Boolean share_profile)
+TAO_IIOP_Acceptor::create_profile (const TAO_ObjectKey &object_key,
+                                   TAO_MProfile &mprofile,
+                                   CORBA::Short priority)
 {
   // Sanity check.
   if (this->endpoint_count_ == 0)
@@ -94,17 +94,18 @@ TAO_IIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
-  if (share_profile == 1)
-    return this->create_shared_profile (object_key,
-                                        mprofile);
-  else
-    return this->create_new_profiles (object_key,
+  if (priority == TAO_INVALID_PRIORITY)
+    return this->create_new_profile (object_key,
                                      mprofile);
+  else
+    return this->create_shared_profile (object_key,
+                                        mprofile,
+                                        priority);
 }
 
 int
-TAO_IIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
-                                        TAO_MProfile &mprofile)
+TAO_IIOP_Acceptor::create_new_profile (const TAO_ObjectKey &object_key,
+                                       TAO_MProfile &mprofile)
 {
   // Adding this->endpoint_count_ to the TAO_MProfile.
   int count = mprofile.profile_count ();
@@ -150,7 +151,8 @@ TAO_IIOP_Acceptor::create_new_profiles (const TAO_ObjectKey &object_key,
 
 int
 TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
-                                          TAO_MProfile &mprofile)
+                                          TAO_MProfile &mprofile,
+                                          CORBA::Short priority)
 {
   size_t index = 0;
   TAO_Profile *pfile = 0;
@@ -161,11 +163,11 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
     {
       pfile = mprofile.get_profile (i);
       if (pfile->tag () == TAO_TAG_IIOP_PROFILE)
-      {
-        iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
-                                         pfile);
-        break;
-      }
+        {
+          iiop_profile = ACE_dynamic_cast (TAO_IIOP_Profile *,
+                                           pfile);
+          break;
+        }
     }
 
   // If <mprofile> doesn't contain a IIOP_Profile, we need to create
@@ -180,7 +182,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
                                         this->version_,
                                         this->orb_core_),
                       -1);
-      iiop_profile->endpoint ()->priority (this->priority ());
+      iiop_profile->endpoint ()->priority (priority);
 
       if (mprofile.give_profile (iiop_profile) == -1)
         {
@@ -215,7 +217,7 @@ TAO_IIOP_Acceptor::create_shared_profile (const TAO_ObjectKey &object_key,
                                          this->addrs_[index].get_port_number (),
                                          this->addrs_[index]),
                       -1);
-      endpoint->priority (this->priority_);
+      endpoint->priority (priority);
       iiop_profile->add_endpoint (endpoint);
     }
 
@@ -544,27 +546,27 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
       return this->dotted_decimal_address (addr, host);
     }
   else
-  if (specified_hostname != 0)
-    {
-      // If the user specified a hostname, pass it back
-      // blindly as it overrides our choice of hostname.
-      host = CORBA::string_dup (specified_hostname);
-    }
-  else
-    {
-      char tmp_host[MAXHOSTNAMELEN + 1];
+    if (specified_hostname != 0)
+      {
+        // If the user specified a hostname, pass it back
+        // blindly as it overrides our choice of hostname.
+        host = CORBA::string_dup (specified_hostname);
+      }
+    else
+      {
+        char tmp_host[MAXHOSTNAMELEN + 1];
 
-      // Get the hostname associated with our address
-      if (addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
-        {
-          // On failure, just return the decimal address.
-          return this->dotted_decimal_address (addr, host);
-        }
-      else
-        {
-          host = CORBA::string_dup (tmp_host);
-        }
-    }
+        // Get the hostname associated with our address
+        if (addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
+          {
+            // On failure, just return the decimal address.
+            return this->dotted_decimal_address (addr, host);
+          }
+        else
+          {
+            host = CORBA::string_dup (tmp_host);
+          }
+      }
 
   return 0;
 }
@@ -722,16 +724,16 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   // processing.
   if (!(cdr.read_octet (major)
         && cdr.read_octet (minor)))
-  {
-    if (TAO_debug_level > 0)
-      {
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
-                    major,
-                    minor));
-      }
-    return -1;
-  }
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("TAO (%P|%t) IIOP_Profile::decode - v%d.%d\n"),
+                      major,
+                      minor));
+        }
+      return -1;
+    }
 
   CORBA::String_var host;
   CORBA::UShort port = 0;
@@ -833,26 +835,7 @@ TAO_IIOP_Acceptor::parse_options (const char *str)
                                ACE_TEXT ("option name.\n")),
                               -1);
 
-          if (name == "priority")
-            {
-              CORBA::Short corba_priority =
-                ACE_static_cast (CORBA::Short,
-                                 ACE_OS::atoi (value.c_str ()));
-
-              if (corba_priority >= 0
-                  /* && corba_priority < 32768 */)
-                // priority_ and corba_priority will always be less
-                // than 32768 since CORBA::Short is a signed 16 bit
-                // integer.
-                this->priority_ = corba_priority;
-              else
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
-                                   ACE_TEXT ("priority: <%s>\n"),
-                                   value.c_str ()),
-                                  -1);
-            }
-          else if (name == "portspan")
+          if (name == "portspan")
             {
               int range = ACE_static_cast (int, ACE_OS::atoi (value.c_str ()));
               // @@ What's the lower bound on the range?  zero, or one?

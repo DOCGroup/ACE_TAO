@@ -10,6 +10,7 @@ ACE_RCSID(tao, Thread_Pool, "$Id$")
 #include "tao/Acceptor_Registry.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/debug.h"
+#include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Thread_Pool.i"
@@ -78,13 +79,55 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
     static_threads_ (static_threads),
     dynamic_threads_ (dynamic_threads),
     threads_ (*this),
-    resources_ (pool.manager ().orb_core ())
+    resources_ (pool.manager ().orb_core ()),
+    native_priority_ (TAO_INVALID_PRIORITY)
 {
+}
+
+void
+TAO_Thread_Lane::validate_and_map_priority (CORBA::Environment &ACE_TRY_ENV)
+{
+  // Check that the priority is in bounds.
+  if (this->lane_priority_ < RTCORBA::minPriority ||
+      this->lane_priority_ > RTCORBA::maxPriority)
+    ACE_THROW (CORBA::DATA_CONVERSION ());
+
+  CORBA::ORB_ptr orb =
+    this->pool_.manager ().orb_core ().orb ();
+
+  CORBA::Object_var obj =
+    orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER,
+                                     ACE_TRY_ENV);
+  ACE_CHECK;
+
+  TAO_Priority_Mapping_Manager_var mapping_manager =
+    TAO_Priority_Mapping_Manager::_narrow (obj.in (),
+                                           ACE_TRY_ENV);
+  ACE_CHECK;
+
+  RTCORBA::PriorityMapping *pm =
+    mapping_manager.in ()->mapping ();
+
+  CORBA::Boolean result =
+    pm->to_native (this->lane_priority_, this->native_priority_);
+
+  if (!result)
+    ACE_THROW (CORBA::DATA_CONVERSION ());
+
+  if (TAO_debug_level > 3)
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("TAO (%P|%t) - creating thread at ")
+                ACE_TEXT ("(corba:native) priority %d:%d\n"),
+                this->lane_priority_,
+                this->native_priority_));
 }
 
 void
 TAO_Thread_Lane::open (CORBA::Environment &ACE_TRY_ENV)
 {
+  this->validate_and_map_priority (ACE_TRY_ENV);
+  ACE_CHECK;
+
   int result = 0;
   result =
     this->resources_.open_acceptor_registry (ACE_TRY_ENV);
@@ -148,7 +191,7 @@ TAO_Thread_Lane::create_dynamic_threads (CORBA::ULong number_of_threads)
   return this->threads_.activate (default_flags,
                                   number_of_threads,
                                   force_active,
-                                  this->lane_priority_,
+                                  this->native_priority_,
                                   default_grp_id,
                                   default_task,
                                   default_thread_handles,

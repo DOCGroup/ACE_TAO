@@ -3278,10 +3278,10 @@ TAO_POA::create_stub_object (const TAO_ObjectKey &object_key,
   if (!error)
     {
       result =
-        filter->fill_mprofile (object_key,
-                               mprofile,
-                               acceptor_registry.begin (),
-                               acceptor_registry.end ());
+        filter->fill_profile (object_key,
+                              mprofile,
+                              acceptor_registry.begin (),
+                              acceptor_registry.end ());
       if (result == -1)
         error = 1;
     }

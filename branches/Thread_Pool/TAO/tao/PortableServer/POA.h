@@ -390,6 +390,8 @@ public:
   /// Accessor for the current thread policy of this POA.
   PortableServer::ThreadPolicyValue thread_policy (void) const;
 
+  virtual void *thread_pool (void) const;
+
 protected:
 
   const ACE_CString &name (void) const;

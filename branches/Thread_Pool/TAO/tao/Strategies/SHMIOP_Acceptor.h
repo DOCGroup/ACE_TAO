@@ -71,9 +71,9 @@ public:
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile);
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
@@ -94,13 +94,14 @@ private:
   virtual int parse_options (const char *options);
   // Parse protocol specific options.
 
-  int create_profile (const TAO_ObjectKey &object_key,
-                      TAO_MProfile &mprofile);
-  // Create a SHMIOP profile representing this acceptor.  Factors out
-  // common functionality of <create_mprofile> and <create_shared_mprofile>.
+  int create_new_profile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority);
+  // Create a SHMIOP profile representing this acceptor.
 
   int create_shared_profile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile);
+                             TAO_MProfile &mprofile,
+                             CORBA::Short priority);
   // Add the endpoints on this acceptor to a shared profile.
 
 protected:

@@ -130,8 +130,8 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
       ACE_CHECK;
 
       // Check that the priority is in bounds.
-      if (priority < RTCORBA::minPriority
-          || priority > RTCORBA::maxPriority)
+      if (priority < RTCORBA::minPriority ||
+          priority > RTCORBA::maxPriority)
         ACE_THROW (PortableServer::POA::InvalidPolicy ());
     }
 
@@ -149,9 +149,12 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
 
   // If priority banded connections are set, make sure that:
   //  1. There is at least one band.
-  //  2. If priority model is SERVER_DECLARED, server_priority must
+  //  2a. low is not < RTCORBA::minPriority
+  //  2b. low <= high
+  //  2c. high is not > RTCORBA::maxPriority
+  //  3. If priority model is SERVER_DECLARED, server_priority must
   //  match one of the bands.
-  //  3. If this POA has a thread pool with lanes, then for each band,
+  //  4. If this POA has a thread pool with lanes, then for each band,
   //  there must be at least one thread lane that can service it,
   //  i.e., whose priority falls into the band's range.
   if (bands_policy != 0)
@@ -163,7 +166,19 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
       if (bands.length () == 0)
         ACE_THROW (PortableServer::POA::InvalidPolicy ());
 
-      // Check 2.
+      // Checks 2.
+      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+        {
+          //  2a. low is not < RTCORBA::minPriority
+          //  2b. low is not > high
+          //  2c. high is not > RTCORBA::maxPriority
+          if (bands[i].low < RTCORBA::minPriority ||
+              bands[i].low > bands[i].high ||
+              bands[i].high > RTCORBA::maxPriority)
+            ACE_THROW (PortableServer::POA::InvalidPolicy ());
+        }
+
+      // Check 3.
       if (rt_priority_model == RTCORBA::SERVER_DECLARED)
         {
           int match = 0;
@@ -182,7 +197,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
         }
 
       //
-      // Check 3.
+      // Check 4.
       //
 
       // If this POA is using the default thread pool (which doesn't

@@ -17,11 +17,11 @@ TAO_Server_Protocol_Acceptor_Filter (RTCORBA::ProtocolList &protocols)
 }
 
 int
-TAO_Server_Protocol_Acceptor_Filter::
-fill_mprofile (const TAO_ObjectKey &object_key,
-               TAO_MProfile &mprofile,
-               TAO_Acceptor **acceptors_begin,
-               TAO_Acceptor **acceptors_end)
+TAO_Server_Protocol_Acceptor_Filter::fill_profile (const TAO_ObjectKey &object_key,
+                                                   TAO_MProfile &mprofile,
+                                                   TAO_Acceptor **acceptors_begin,
+                                                   TAO_Acceptor **acceptors_end,
+                                                   CORBA::Short priority)
 {
   // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
   // which protocols get included into IOR and in what order.
@@ -32,12 +32,10 @@ fill_mprofile (const TAO_ObjectKey &object_key,
       for (TAO_Acceptor** acceptor = acceptors_begin;
            acceptor != acceptors_end;
            ++acceptor)
-        if ((*acceptor)->tag () == protocol_type
-            && this->validate_acceptor (*acceptor)
-            && ((*acceptor)->create_mprofile (object_key,
-                                              mprofile,
-                                              1 /* >=1 endpoints per profile */)
-                == -1))
+        if ((*acceptor)->tag () == protocol_type &&
+            ((*acceptor)->create_profile (object_key,
+                                          mprofile,
+                                          priority) == -1))
           return -1;
     }
 
@@ -45,8 +43,7 @@ fill_mprofile (const TAO_ObjectKey &object_key,
 }
 
 int
-TAO_Server_Protocol_Acceptor_Filter::
-encode_endpoints (TAO_MProfile &mprofile)
+TAO_Server_Protocol_Acceptor_Filter::encode_endpoints (TAO_MProfile &mprofile)
 {
   // Encode endpoints.
   for (CORBA::ULong i = 0;
@@ -59,10 +56,4 @@ encode_endpoints (TAO_MProfile &mprofile)
     }
 
   return 0;
-}
-int
-TAO_Server_Protocol_Acceptor_Filter::
-validate_acceptor (TAO_Acceptor * /*acceptor*/)
-{
-  return 1;
 }

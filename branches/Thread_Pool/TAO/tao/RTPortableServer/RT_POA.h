@@ -266,6 +266,8 @@ public:
 
   virtual ~TAO_RT_POA (void);
 
+  void *thread_pool (void) const;
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -284,8 +286,8 @@ protected:
                                    CORBA::Short priority,
                                    CORBA_Environment &ACE_TRY_ENV);
 
-  void valid_priority (RTCORBA::Priority priority,
-                       CORBA_Environment &ACE_TRY_ENV);
+  void validate_priority (RTCORBA::Priority priority,
+                          CORBA_Environment &ACE_TRY_ENV);
 
   void validate_policies (CORBA::Environment &ACE_TRY_ENV);
 

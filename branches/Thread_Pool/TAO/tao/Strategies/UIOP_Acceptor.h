@@ -76,9 +76,9 @@ public:
                             int version_minor,
                             const char *options = 0);
   virtual int close (void);
-  virtual int create_mprofile (const TAO_ObjectKey &object_key,
-                               TAO_MProfile &mprofile,
-                               CORBA::Boolean share_profile);
+  virtual int create_profile (const TAO_ObjectKey &object_key,
+                              TAO_MProfile &mprofile,
+                              CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
   virtual CORBA::ULong endpoint_count (void);
@@ -101,14 +101,14 @@ private:
   // Obtains uiop properties that must be used by this acceptor, i.e.,
   // initializes <uiop_properties_>.
 
-  int create_profile (const TAO_ObjectKey &object_key,
-                      TAO_MProfile &mprofile);
-  // Create a UIOP profile representing this acceptor.  This method
-  // factors out common functionality of <create_mprofile> and
-  // <create_endpoint_for_mprofile>.
+  int create_new_profile (const TAO_ObjectKey &object_key,
+                          TAO_MProfile &mprofile,
+                          CORBA::Short priority);
+  // Create a UIOP profile representing this acceptor.
 
   int create_shared_profile (const TAO_ObjectKey &object_key,
-                             TAO_MProfile &mprofile);
+                             TAO_MProfile &mprofile,
+                             CORBA::Short priority);
   // Add the endpoints on this acceptor to a shared profile.
 
 private:

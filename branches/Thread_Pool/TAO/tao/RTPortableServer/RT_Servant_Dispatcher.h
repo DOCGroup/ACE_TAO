@@ -76,7 +76,8 @@ class TAO_RTPortableServer_Export RT_Priority_Model_Processing
 public:
 
   // Constructor.
-  RT_Priority_Model_Processing (TAO_POA &poa);
+  RT_Priority_Model_Processing (TAO_POA &poa,
+                                CORBA::Short servant_priority);
 
   // Resets the priority of the current thread back to its original
   // value if necessary, i.e., if it was changed and the
@@ -113,6 +114,9 @@ private:
 
   // Poa of the target servant.
   TAO_POA &poa_;
+
+  // Servant Priority.
+  CORBA::Short servant_priority_;
 
   // Original priority of the thread.
   RTCORBA::Priority original_priority_;
