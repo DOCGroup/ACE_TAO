@@ -1,5 +1,5 @@
 #
-# Makefile for building the TAO TimeBase library
+# Makefile for building the TAO Svc Utils library
 #
 
 NAME = TAO_Svc_Utils
@@ -10,13 +10,16 @@ TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe \
 	-Wb,post_include=ace/post.h
 
 IDLFILES = \
-	$(IDLDIR)\TimeBase.idl
+	$(IDLDIR)\TimeBase.idl \
+	$(IDLDIR)\RtecBase.idl
 
 OBJFILES = \
 	$(OBJDIR)\IOR_Multicast.obj \
 	$(OBJDIR)\Time_Utilities.obj \
 	$(OBJDIR)\TimeBaseC.obj \
-	$(OBJDIR)\TimeBaseS.obj
+	$(OBJDIR)\TimeBaseS.obj \
+	$(OBJDIR)\RtecBaseC.obj \
+	$(OBJDIR)\RtecBaseS.obj
 
 RESOURCE = $(OBJDIR)\orbsvcs.res
 
@@ -46,4 +49,7 @@ svc_utils_lib: $(TARGET)
 idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
 $(IDLDIR)\TimeBaseC.cpp $(IDLDIR)\TimeBaseS.cpp: $(IDLDIR)\TimeBase.idl
+	$(TAO_IDL) $**
+
+$(IDLDIR)\RtecBaseC.cpp $(IDLDIR)\RtecBaseS.cpp: $(IDLDIR)\RtecBase.idl
 	$(TAO_IDL) $**

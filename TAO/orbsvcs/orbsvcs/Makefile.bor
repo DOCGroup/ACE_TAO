@@ -9,6 +9,8 @@ MAKEFILES = \
 	CosTrading.bor \
 	RTSched.bor \
 	RTEvent.bor \
+	RTOLDEvent.bor \
+	RTSchedEvent.bor \
 	CosEvent.bor \
 	CosNotification.bor \
 	AV.bor \

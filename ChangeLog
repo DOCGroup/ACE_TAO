@@ -1,3 +1,8 @@
+Tue Jun  6 09:42:39 2000  Chris Kohlhoff <chris@kohlhoff.com>
+
+        * include/makeinclude/ace_flags.bor:
+	  Added support for new orbsvcs libraries.
+
 Mon Jun 05 20:59:42 2000  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/wrapper_macros.GNU: protected definitions
@@ -1678,7 +1683,7 @@ Sat May 13 19:05:23 2000  Darrell Brunsch <brunsch@uci.edu>
 
           Forgot to add a base member initialization for the allocator
           in the new ACE_USHORT16 constructor for ACE_WString.  Thanks
-          to Chris Kohlhoff <chris@kohlhoff.com> for noticeing this.
+          to Chris Kohlhoff <chris@kohlhoff.com> for noticing this.
 
 Sat May 13 19:07:32 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 

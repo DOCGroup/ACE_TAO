@@ -52,6 +52,7 @@ OBJFILES = \
  	$(OBJDIR)\recursive_union.obj \
 	$(OBJDIR)\except.obj \
 	$(OBJDIR)\big_union.obj \
+	$(OBJDIR)\small_union.obj \
 	$(OBJDIR)\multdim_array.obj \
 	$(OBJDIR)\complex_any.obj
 
