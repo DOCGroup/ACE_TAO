@@ -44,11 +44,15 @@ namespace FTRTEC
 
     initialized = 1;
 
+    Replication_Strategy* strategy;
+
     // Parse any service configurator parameters.
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_LIB_TEXT("AMI")) == 0)
-      replication_strategy.reset(new AMI_Replication_Strategy);
+      ACE_NEW_RETURN (strategy, AMI_Replication_Strategy, -1);
     else
-      replication_strategy.reset(new Basic_Replication_Strategy);
+      ACE_NEW_RETURN (strategy, Basic_Replication_Strategy, -1);
+
+     ACE_AUTO_PTR_RESET (replication_strategy, strategy, Replication_Strategy);
 
       ACE_TRY_NEW_ENV
       {
@@ -72,7 +76,7 @@ namespace FTRTEC
         ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
           "Unexpected exception caught while "
           "initializing the TransactionDepth");
-        return 1;
+        return -1;
       }
       ACE_ENDTRY;
     return 0;
@@ -87,7 +91,7 @@ namespace FTRTEC
     ACE_ASSERT(strategy);
 
     if (replication_strategy.get() != strategy) {
-      replication_strategy.reset(strategy);
+      ACE_AUTO_PTR_RESET(replication_strategy, strategy, Replication_Strategy);
     }
   }
 
