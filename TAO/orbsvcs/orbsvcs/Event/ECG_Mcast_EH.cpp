@@ -5,7 +5,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if !defined(__ACE_INLINE__)
-#include "ECG_MCast_EH.i"
+#include "ECG_Mcast_EH.i"
 #endif /* __ACE_INLINE__ */
 
 ACE_RCSID(Event, ECG_UDP_EH, "$Id$")
