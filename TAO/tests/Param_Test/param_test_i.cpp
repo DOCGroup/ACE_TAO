@@ -312,6 +312,39 @@ Param_Test::Bounded_StructSeq * Param_Test_i::test_bounded_struct_sequence (
   return ret;
 }
 
+
+Param_Test::PathSpec * Param_Test_i::test_unbounded_struct_sequence (
+      const Param_Test::PathSpec & s1,
+      Param_Test::PathSpec & s2,
+      Param_Test::PathSpec_out s3,
+      CORBA::Environment &
+     )
+{
+  Param_Test::PathSpec
+    *ret = new Param_Test::PathSpec,
+    *out = new Param_Test::PathSpec;
+
+
+  PathSpec_var rPathSpec = new Param_Test::PathSpec;
+  rPathSpec->length(2);
+  
+  rPathSpec[(unsigned long)0].name.id = CORBA::string_dup("staff");
+  rPathSpec[(unsigned long)0].name.kind = CORBA::string_dup("staff");
+  rPathSpec[(unsigned long)0].process = TRUE;
+  
+  rPathSpec[(unsigned long)1].name.id = CORBA::string_dup("john");
+  rPathSpec[(unsigned long)1].name.kind = CORBA::string_dup("john");
+  rPathSpec[(unsigned long)1].process = TRUE;
+
+  s2 = s1;
+  *out = s1;
+  *ret = s1;
+  s3 = out;
+  
+  return ret;
+}  
+
+
 Param_Test::Coffee_Mix * Param_Test_i::test_coffe_mix (
       const Param_Test::Coffee_Mix & s1,
       Param_Test::Coffee_Mix & s2,

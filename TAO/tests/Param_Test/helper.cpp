@@ -82,6 +82,15 @@ Generator::gen_fixed_struct (void)
   return this->fixed_struct_;
 }
 
+const Param_Test::Step
+Generator::gen_step (void)
+{
+  this->step_.name.id = this->gen_string ();
+  this->step_.name.kind = this->gen_string ();
+  this->step_.process = (CORBA::Boolean) ACE_OS::rand () % 2;
+  return this->step_;
+}
+
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Singleton<Generator, ACE_SYNCH_RECURSIVE_MUTEX>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)

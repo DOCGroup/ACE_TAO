@@ -132,6 +132,12 @@ public:
       Param_Test::StructSeq_out s3,
       CORBA::Environment &env
      );
+  virtual Param_Test::PathSpec * test_unbounded_struct_sequence (
+      const Param_Test::PathSpec & s1,
+      Param_Test::PathSpec & s2,
+      Param_Test::PathSpec_out s3,
+      CORBA::Environment &env
+     );
   virtual Param_Test::Bounded_StructSeq * test_bounded_struct_sequence (
       const Param_Test::Bounded_StructSeq & s1,
       Param_Test::Bounded_StructSeq & s2,

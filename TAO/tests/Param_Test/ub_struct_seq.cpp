@@ -228,3 +228,202 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
     }
 }
 
+
+// ************************************************************************
+//               Test_Unbounded_Struct_Sequence
+// ************************************************************************
+
+Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence (void)
+  : opname_ (CORBA::string_dup ("test_unbounded_struct_sequence")),
+    inout_ (new Param_Test::PathSpec),
+    out_ (new Param_Test::PathSpec),
+    ret_ (new Param_Test::PathSpec)
+{
+}
+
+Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (void)
+{
+  CORBA::string_free (this->opname_);
+  this->opname_ = 0;
+  // the other data members will be freed as they are "_var"s and objects
+  // (rather than pointers to objects)
+}
+
+const char *
+Test_Unbounded_Struct_Sequence::opname (void) const
+{
+  return this->opname_;
+}
+
+int
+Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr objref,
+                                     CORBA::Environment &env)
+{
+  Generator *gen = GENERATOR::instance (); // value generator
+
+  ACE_UNUSED_ARG (objref);
+  ACE_UNUSED_ARG (env);
+
+  // get some sequence length (not more than 10)
+  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  
+  // set the length of the sequence
+  this->in_.length (len);
+  this->inout_->length (len);
+  // now set each individual element
+
+  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+    {
+      // generate some arbitrary string to be filled into the ith location in
+      // the sequence
+      this->in_[i] = gen->gen_step ();
+      this->inout_[i] = gen->gen_step ();
+    }
+  return 0;
+}
+
+int
+Test_Unbounded_Struct_Sequence::reset_parameters (void)
+{
+  this->inout_ = new Param_Test::PathSpec; // delete the previous one
+  this->out_ = new Param_Test::PathSpec;
+  this->ret_ = new Param_Test::PathSpec;
+  return 0;
+}
+
+int
+Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref,
+                                    CORBA::Environment &env)
+{
+  Param_Test::PathSpec_out out (this->out_.out ());
+  this->ret_ = objref->test_unbounded_struct_sequence (this->in_,
+                                             this->inout_.inout (),
+                                             out,
+                                             env);
+  return (env.exception () ? -1:0);
+}
+
+int
+Test_Unbounded_Struct_Sequence::add_args (CORBA::NVList_ptr param_list,
+                                CORBA::NVList_ptr retval,
+                                CORBA::Environment &env)
+{
+  CORBA::Any in_arg (Param_Test::_tc_PathSpec, 
+                     &this->in_,
+                     0);
+
+  CORBA::Any inout_arg (Param_Test::_tc_PathSpec,
+                        &this->inout_.inout (),
+                        0);
+
+  CORBA::Any out_arg (Param_Test::_tc_PathSpec,
+                      &this->out_.inout (),
+                      0);
+
+  // add parameters
+  param_list->add_value ("s1",
+                         in_arg,
+                         CORBA::ARG_IN,
+                         env);
+
+  param_list->add_value ("s2",
+                         inout_arg,
+                         CORBA::ARG_INOUT,
+                         env);
+
+  param_list->add_value ("s3",
+                         out_arg,
+                         CORBA::ARG_OUT,
+                         env);
+
+  // add return value type
+  retval->item (0, env)->value ()->replace (Param_Test::_tc_PathSpec,
+                                            &this->ret_.inout (),
+                                            0,
+                                            env);
+  return 0;
+}
+
+CORBA::Boolean
+Test_Unbounded_Struct_Sequence::check_validity (void)
+{
+  if (this->compare (this->in_, this->inout_.in ()) &&
+      this->compare (this->in_, this->out_.in ()) &&
+      this->compare (this->in_, this->ret_.in ()))
+    return 1;
+  else
+    return 0;
+}
+
+CORBA::Boolean
+Test_Unbounded_Struct_Sequence::check_validity (CORBA::Request_ptr req)
+{
+  ACE_UNUSED_ARG (req);
+  return this->check_validity ();
+}
+
+void
+Test_Unbounded_Struct_Sequence::print_values (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
+              "IN sequence\n"));
+  this->print_sequence (this->in_);
+  ACE_DEBUG ((LM_DEBUG,
+              "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
+              "INOUT sequence\n"));
+  this->print_sequence (this->inout_.in ());
+  ACE_DEBUG ((LM_DEBUG,
+              "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
+              "OUT sequence\n"));
+  this->print_sequence (this->out_.in ());
+  ACE_DEBUG ((LM_DEBUG,
+              "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
+              "RET sequence\n"));
+  this->print_sequence (this->ret_.in ());
+}
+
+CORBA::Boolean
+Test_Unbounded_Struct_Sequence::compare (const Param_Test::PathSpec &s1,
+                               const Param_Test::PathSpec &s2)
+{
+  if (s1.maximum () != s2.maximum ())
+      return 0;
+  if (s1.length () != s2.length ())
+    return 0;
+
+  for (CORBA::ULong i=0; i < s1.length (); i++)
+    {
+      const Param_Test::Step& vs1 = s1[i];
+      const Param_Test::Step& vs2 = s2[i];
+
+      if (ACE_OS::strcmp (vs1.name.id.in (), vs2.name.id.in ())
+          || ACE_OS:: strcmp (vs1.name.kind.in (), vs2.name.kind.in ())
+          || vs1.process != vs2.process)
+        return 0;
+    }
+  return 1; // success
+}
+
+void
+Test_Unbounded_Struct_Sequence::print_sequence (const Param_Test::PathSpec &s)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "maximum = %d\n"
+              "length = %d\n",
+              s.maximum (),
+              s.length ()));
+  ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
+  for (CORBA::ULong i=0; i < s.length (); i++)
+    {
+      const Param_Test::Step& vs = s[i];
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Element #%d\n"
+                  "\tname.id = %s\n"
+                  "\tname.kind = %s\n"
+                  "\tprocess = %d\n",
+                  i,
+                  vs.name.id.in (), vs.name.kind.in (), vs.process));
+    }
+}

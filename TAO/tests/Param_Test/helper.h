@@ -42,8 +42,10 @@ public:
   CORBA::String gen_string (void);
   CORBA::String gen_string (int maxlength);
   const Param_Test::Fixed_Struct gen_fixed_struct (void);
-private:
+  const Param_Test::Step gen_step (void);
+ private:
   Param_Test::Fixed_Struct fixed_struct_;
+  Param_Test::Step step_;
 };
 
 typedef ACE_Singleton<Generator, ACE_SYNCH_RECURSIVE_MUTEX> GENERATOR;
