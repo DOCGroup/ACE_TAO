@@ -1,3 +1,7 @@
+Thu Jan 23 17:57:05 2003  Heather Drury  <drury_h@ociweb.com>
+
+        * ace/README: Deleted non-ascii characters around ACE_HAS_PTHREAD_SETSTACK.
+
 Thu Jan 23 17:44:38 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* include/makeinclude/platform_freebsd.GNU: Remove gratuitous link
