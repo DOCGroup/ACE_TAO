@@ -1,3 +1,11 @@
+Tue Sep 30 16:31:12 2003  Curt Hibbs  <hibbs_c@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp
+        * orbsvcs/orbsvcs/PortableGroup/PG_Properties_Decoder.cpp
+        * orbsvcs/tests/FT_App/FT_UnitTests.cpp
+          Minor changes to correct the way properties were being constructed
+          and extracted.
+
 Tue Sep 30 15:58:42 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
@@ -23,10 +31,6 @@ Tue Sep 30 15:58:42 2003  Dale Wilson  <wilson_d@ociweb.com>
         * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
         * orbsvcs/tests/FT_App/StubFaultNotifier.h:
           Minor changes to make these more ACE-like.
-
-
-
-
 
 Tue Sep 30 11:45:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
