@@ -159,12 +159,12 @@ endif
 #----------------------------------------------------------------------------
 
 clean.local:
-	-$(RM) -f *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
-	-$(RM) -rf $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
-		   gcctemp.c gcctemp so_locations
+	-$(RM) *.o *~ *.bak *.rpo *.sym lib*.*_pure_* Makefile.old core
+	-$(RM) -r $(OBJDIRS) $(TEMPINCDIR) ptrepository Templates.DB \
+	  gcctemp.c gcctemp so_locations
 
 realclean.local: clean.local
-	-$(RM) -f $(BIN:%=%) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%)
+	-$(RM) $(BIN) $(BIN:%=%_debug) $(BIN:%=%_profile) $(BIN:%=%_optimize) $(LIB:%=%) $(LIB:%=%_debug) $(LIB:%=%_profile) $(LIB:%=%_optimize) $(SHLIB:%=%) $(SHLIB:%=%_debug) $(SHLIB:%=%_profile) $(SHLIB:%=%_optimize) $(SHLIBA:%=%) $(BIN2) $(BIN2:%=%_debug) $(BIN2:%=%_profile) $(BIN2:%=%_optimize) $(LIB2:%=%) $(LIB2:%=%_debug) $(LIB2:%=%_profile) $(LIB2:%=%_optimize) $(SHLIB2:%=%) $(SHLIB2:%=%_debug) $(SHLIB2:%=%_profile) $(SHLIB2:%=%_optimize) $(SHLIBA2:%=%)
 
 #----------------------------------------------------------------------------
 #       Dependency generation target
@@ -185,7 +185,7 @@ ifndef SOEXT
 endif # SOEXT
 
 depend.local: $(MAKEFILE)
-	@$(RM) -f $(MAKEFILE).old
+	@$(RM) $(MAKEFILE).old
 	@cp $(MAKEFILE) $(MAKEFILE).old
 	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@cat $(MAKEFILE) | \
@@ -196,13 +196,13 @@ depend.local: $(MAKEFILE)
 	    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o .obj/\1.$(SOEXT) $(VSHDIR)\1.o $(VSHDIR)\1.$(SOEXT):;" \
 	> $(MAKEFILE).new
 	@cat $(MAKEFILE).new >$(MAKEFILE)
-	@$(RM) -f $(MAKEFILE).new
+	@$(RM) $(MAKEFILE).new
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
 	then	echo "Makefile dependencies unchanged." ;\
 	else \
 		echo "Makefile dependencies updated." ;\
 	fi ;\
-	$(RM) -f $(MAKEFILE).old ;
+	$(RM) $(MAKEFILE).old ;
 
 #----------------------------------------------------------------------------
 #       RCS info target
