@@ -63,8 +63,8 @@ MIB_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 
     rt_info_ = server->create (my_name, TAO_TRY_ENV);
 
-    scheduler_->set (rt_info_,
-                       RtecScheduler::VERY_LOW_CRITICALITY,
+      server->set (rt_info_,
+                        RtecScheduler::VERY_LOW_CRITICALITY,
                        ORBSVCS_Time::zero,
                        ORBSVCS_Time::zero,
                        ORBSVCS_Time::zero,
@@ -167,10 +167,36 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
       if (events_received_ == 1) {
         ACE_DEBUG ((LM_DEBUG, "MIB Consumer: received an event, going to be mute.\n"));
       }
+ 
+      TAO_TRY
+      {
 
-      TAO_TRY {
-        anyAnalyser_.printAny (events[i].data_.any_value.type(), events[i].data_.any_value.value());      
-        TAO_CHECK_ENV;
+        if (events[i].data_.any_value.any_owns_data ())
+        { 
+          void * void_ptr = ACE_OS::malloc (events[i].data_.any_value.type()->size(TAO_TRY_ENV));
+
+          TAO_InputCDR stream ((ACE_Message_Block *)events[i].data_.any_value.value ());
+          if (stream.decode (events[i].data_.any_value.type(), void_ptr, 0, TAO_TRY_ENV)
+              != CORBA::TypeCode::TRAVERSE_CONTINUE)
+          {
+            cout << "MIB_Consumer::push: "
+                 << "Something went wrong when decoding the Message Block (Any value)!"
+                 << endl;
+            // something went wrong
+            ACE_OS::free(void_ptr);
+            return;
+          }
+
+          // invoke the AnyAnalyser
+          anyAnalyser_.printAny (events[i].data_.any_value.type(), void_ptr);               
+          ACE_OS::free(void_ptr);
+        }
+        else
+        {                          
+          // invoke the AnyAnalyser
+          anyAnalyser_.printAny (events[i].data_.any_value.type(), events[i].data_.any_value.value());                         
+        }
+                      
       }
       TAO_CATCHANY {
         ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));
