@@ -1,3 +1,19 @@
+Mon Jul 05 19:13:56 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/Object_Adapter.cpp (servant_locator_cleanup): Using the
+	  zero'ness of the cookie to determine if we need to call the
+	  servant locator <postinvoke> method is not a good idea since the
+	  cookie itself might be set to zero by the user. Therefore, a new
+	  and separate variable <using_servant_locator_> is used for this
+	  purpose.
+
+	* tao/POA.cpp: Made sure to setup and teardown the single threaded
+	  poa lock for servants returned from servant managers.  Thanks to
+	  Mike Moran <mm4@cs.wustl.edu> for pointing this out.
+
+	  In addition, _add_ref() was not being invoked on a servant
+	  returned from a servant activator.  This is fixed now.
+
 Tue Jul  6 12:05:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/Simple/bank/run_test.pl:
