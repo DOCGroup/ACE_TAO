@@ -1,3 +1,8 @@
+Fri Feb 25 12:32:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/BiDirectional_NestedUpcall/BiDirectional_NestedUpcall.mpc:
+          Renamed to BiDir_NestedUpcall.mpc to fix fuzz error
+
 Fri Feb 25 12:07:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Advanced/ch_8_and_10/Advanced_ch_8_and_10.mpc:
