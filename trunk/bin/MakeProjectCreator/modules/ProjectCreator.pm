@@ -155,7 +155,6 @@ sub new {
   $self->{'pctype'}                = $self->extractType("$self");
   $self->{'verbatim'}              = {};
   $self->{'verbatim_accessed'}     = {$self->{'pctype'} => {}};
-  $self->{'type_specific_assign'}  = {};
   $self->{'defaulted'}             = {};
   $self->{'custom_types'}          = {};
   $self->{'parents_read'}          = {};
@@ -376,9 +375,6 @@ sub parse_line {
           ## Fill in all the default values
           $self->generate_defaults();
 
-          ## Fill in type specific assignments
-          $self->process_type_specific_assignments();
-
           ## Perform any additions, subtractions
           ## or overrides for the project values.
           my($addproj) = $self->get_addproj();
@@ -430,7 +426,6 @@ sub parse_line {
             $self->{'verbatim'}             = {};
             $self->{'verbatim_accessed'}    = {$self->{'pctype'} => {}};
             $self->{'special_supplied'}     = {};
-            $self->{'type_specific_assign'} = {};
             $self->{'flag_overrides'}       = {};
             $self->{'parents_read'}         = {};
             $self->{'inheritance_tree'}     = {};
@@ -531,9 +526,25 @@ sub parse_line {
           }
         }
         elsif ($comp eq 'specific') {
-          my(@types) = split(/\s*,\s*/, $name);
-          ($status, $errorString) = $self->parse_scope(
-                       $ih, $values[1], \@types, $self->{'valid_names'});
+          my($scope_parsed) = 0;
+          foreach my $type (split(/\s*,\s*/, $name)) {
+            if ($type eq $self->{'pctype'}) {
+              ($status, $errorString) = $self->parse_scope(
+                                          $ih, $values[1], $type,
+                                          $self->{'valid_names'},
+                                          $self->get_assignment_hash());
+              $scope_parsed = 1;
+              last;
+            }
+          }
+          if (!$scope_parsed) {
+            ## We still need to parse the scope, but we will be
+            ## throwing away whatever is processed.  However, it
+            ## could still be invalid code that will cause an error.
+            ($status, $errorString) = $self->parse_scope(
+                                        $ih, $values[1], undef,
+                                        $self->{'valid_names'});
+          }
         }
         elsif ($comp eq 'define_custom') {
           ($status, $errorString) = $self->parse_define_custom($ih, $name);
@@ -828,18 +839,6 @@ sub process_feature {
 }
 
 
-sub process_type_specific_assignments {
-  my($self) = shift;
-  my($tsa)  = $self->{'type_specific_assign'}->{$self->{'pctype'}};
-
-  if (defined $tsa) {
-    foreach my $key (keys %$tsa) {
-      $self->process_assignment_add($key, $$tsa{$key});
-    }
-  }
-}
-
-
 sub process_array_assignment {
   my($self)  = shift;
   my($aref)  = shift;
@@ -1049,22 +1048,6 @@ sub parse_define_custom {
   }
 
   return $status, $errorString;
-}
-
-
-sub handle_scoped_end {
-  my($self)  = shift;
-  my($types) = shift;
-  my($flags) = shift;
-
-  foreach my $type (@$types) {
-    if (!defined $self->{'type_specific_assign'}->{$type}) {
-      $self->{'type_specific_assign'}->{$type} = {};
-    }
-    foreach my $key (keys %$flags) {
-      $self->{'type_specific_assign'}->{$type}->{$key} = $$flags{$key};
-    }
-  }
 }
 
 
