@@ -1,3 +1,16 @@
+Wed Jul 14 21:21:35 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/README:
+
+	  Updated with descriptions of options that support the newly
+	  added enable/disable test feature.
+
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.{h,cpp}:
+
+	  Added ability to specify which tests should be run and which
+	  ones shouldn't be run.  This modification helps with isolating
+	  certain test timeprobes.
+
 Wed Jul 14 21:18:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
