@@ -18,7 +18,7 @@ static const CORBA::Long _oc_FT_FTDomainId[] =
   TAO_ENCAP_BYTE_ORDER, // byte order
   30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x46542f46), ACE_NTOHL (0x54446f6d), ACE_NTOHL (0x61696e49), ACE_NTOHL (0x643a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/FT/FTDomainId:1.0
   11, ACE_NTOHL (0x4654446f), ACE_NTOHL (0x6d61696e), ACE_NTOHL (0x49640000),  // name = FTDomainId
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_FT_FTDomainId (CORBA::tk_alias, sizeof (_oc_FT_FTDomainId), (char *) &_oc_FT_FTDomainId, 0, sizeof (FT::FTDomainId));
@@ -78,7 +78,7 @@ static const CORBA::Long _oc_FT_TagFTGroupTaggedComponent[] =
     TAO_ENCAP_BYTE_ORDER, // byte order
     30, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x46542f46), ACE_NTOHL (0x54446f6d), ACE_NTOHL (0x61696e49), ACE_NTOHL (0x643a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/FT/FTDomainId:1.0
     11, ACE_NTOHL (0x4654446f), ACE_NTOHL (0x6d61696e), ACE_NTOHL (0x49640000),  // name = FTDomainId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
   16, ACE_NTOHL (0x6f626a65), ACE_NTOHL (0x63745f67), ACE_NTOHL (0x726f7570), ACE_NTOHL (0x5f696400),  // name = object_group_id
@@ -107,7 +107,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TagFTGroupTaggedComponent, &_tc_T
 TAO_NAMESPACE_END
 void FT::TagFTGroupTaggedComponent::_tao_any_destructor (void *x)
 {
-  TagFTGroupTaggedComponent *tmp = ACE_static_cast (TagFTGroupTaggedComponent*,x);
+  FT_TagFTGroupTaggedComponent *tmp = ACE_static_cast (FT_TagFTGroupTaggedComponent*,x);
   delete tmp;
 }
 
@@ -128,7 +128,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_TagFTPrimaryTaggedComponent, &_tc
 TAO_NAMESPACE_END
 void FT::TagFTPrimaryTaggedComponent::_tao_any_destructor (void *x)
 {
-  TagFTPrimaryTaggedComponent *tmp = ACE_static_cast (TagFTPrimaryTaggedComponent*,x);
+  FT_TagFTPrimaryTaggedComponent *tmp = ACE_static_cast (FT_TagFTPrimaryTaggedComponent*,x);
   delete tmp;
 }
 
@@ -170,7 +170,7 @@ static const CORBA::Long _oc_FT_FTRequestServiceContext[] =
   24, ACE_NTOHL (0x46545265), ACE_NTOHL (0x71756573), ACE_NTOHL (0x74536572), ACE_NTOHL (0x76696365), ACE_NTOHL (0x436f6e74), ACE_NTOHL (0x65787400),  // name = FTRequestServiceContext
   3, // member count
   10, ACE_NTOHL (0x636c6965), ACE_NTOHL (0x6e745f69), ACE_NTOHL (0x64000000),  // name = client_id
-  CORBA::tk_string, 
+  CORBA::tk_string,
   0U, // string length
   13, ACE_NTOHL (0x72657465), ACE_NTOHL (0x6e74696f), ACE_NTOHL (0x6e5f6964), ACE_NTOHL (0x0),  // name = retention_id
   CORBA::tk_long,
@@ -250,11 +250,11 @@ FT::RequestDurationPolicy_ptr FT::RequestDurationPolicy::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::RequestDurationPolicy (stub), RequestDurationPolicy::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_RequestDurationPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -285,15 +285,15 @@ TimeBase::TimeT FT::RequestDurationPolicy::request_duration_value (
     CORBA::SystemException
   ))
 {
-  
+
   TimeBase::TimeT _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_request_duration_value",
@@ -336,7 +336,7 @@ TimeBase::TimeT FT::RequestDurationPolicy::request_duration_value (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -371,10 +371,10 @@ TimeBase::TimeT FT::RequestDurationPolicy::request_duration_value (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -427,7 +427,7 @@ void *FT::RequestDurationPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -571,11 +571,11 @@ FT::HeartbeatPolicy_ptr FT::HeartbeatPolicy::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::HeartbeatPolicy (stub), HeartbeatPolicy::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_HeartbeatPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -606,15 +606,15 @@ FT::HeartbeatPolicyValue FT::HeartbeatPolicy::heartbeat_policy_value (
     CORBA::SystemException
   ))
 {
-  
+
   FT::HeartbeatPolicyValue _tao_retval;
   ACE_OS::memset (&_tao_retval, 0, sizeof (FT::HeartbeatPolicyValue));
-  
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_heartbeat_policy_value",
@@ -657,7 +657,7 @@ FT::HeartbeatPolicyValue FT::HeartbeatPolicy::heartbeat_policy_value (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -692,10 +692,10 @@ FT::HeartbeatPolicyValue FT::HeartbeatPolicy::heartbeat_policy_value (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -748,7 +748,7 @@ void *FT::HeartbeatPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -824,11 +824,11 @@ FT::HeartbeatEnabledPolicy_ptr FT::HeartbeatEnabledPolicy::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::HeartbeatEnabledPolicy (stub), HeartbeatEnabledPolicy::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_HeartbeatEnabledPolicy_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -859,15 +859,15 @@ CORBA::Boolean FT::HeartbeatEnabledPolicy::heartbeat_enabled_policy_value (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "_get_heartbeat_enabled_policy_value",
@@ -910,7 +910,7 @@ CORBA::Boolean FT::HeartbeatEnabledPolicy::heartbeat_enabled_policy_value (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -945,10 +945,10 @@ CORBA::Boolean FT::HeartbeatEnabledPolicy::heartbeat_enabled_policy_value (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -1001,7 +1001,7 @@ void *FT::HeartbeatEnabledPolicy::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -1033,7 +1033,7 @@ static const CORBA::Long _oc_FT_TypeId[] =
     TAO_ENCAP_BYTE_ORDER, // byte order
     35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x49643a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
     13, ACE_NTOHL (0x5265706f), ACE_NTOHL (0x7369746f), ACE_NTOHL (0x72794964), ACE_NTOHL (0x0),  // name = RepositoryId
-    CORBA::tk_string, 
+    CORBA::tk_string,
     0U, // string length
 
 };
@@ -1084,7 +1084,7 @@ static const CORBA::Long _oc_FT_Name[] =
           TAO_ENCAP_BYTE_ORDER, // byte order
           34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
           8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
 
         5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1093,7 +1093,7 @@ static const CORBA::Long _oc_FT_Name[] =
           TAO_ENCAP_BYTE_ORDER, // byte order
           34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
           8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-          CORBA::tk_string, 
+          CORBA::tk_string,
           0U, // string length
 
 
@@ -1151,7 +1151,7 @@ static const CORBA::Long _oc_FT_Property[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
           5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1160,7 +1160,7 @@ static const CORBA::Long _oc_FT_Property[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
 
@@ -1191,7 +1191,7 @@ void FT::Property::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CS_
 
@@ -1200,43 +1200,43 @@ void FT::Property::_tao_any_destructor (void *x)
   {
     FT::Property* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       FT::Property *old = ACE_reinterpret_cast (FT::Property *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_FT_Properties::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   FT::_TAO_Unbounded_Sequence_FT_Properties::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     FT::Property *tmp = ACE_reinterpret_cast (FT::Property *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_FT_Properties::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   FT::_TAO_Unbounded_Sequence_FT_Properties::~_TAO_Unbounded_Sequence_FT_Properties (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_FT_PROPERTIES_CS_)
 #define _FT_PROPERTIES_CS_
@@ -1248,30 +1248,30 @@ void FT::Property::_tao_any_destructor (void *x)
 FT::Properties::Properties (void)
 {}
 FT::Properties::Properties (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 FT::Properties::Properties (CORBA::ULong max, CORBA::ULong length, FT::Property *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 FT::Properties::Properties (const Properties &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 FT::Properties::~Properties (void) // dtor
@@ -1325,7 +1325,7 @@ static const CORBA::Long _oc_FT_Properties[] =
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1334,7 +1334,7 @@ static const CORBA::Long _oc_FT_Properties[] =
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
 
@@ -1390,7 +1390,7 @@ static const CORBA::Long _oc_FT_Location[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
           5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1399,7 +1399,7 @@ static const CORBA::Long _oc_FT_Location[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
 
@@ -1415,7 +1415,7 @@ TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Location, &_tc_TAO_tc_FT_Location
 TAO_NAMESPACE_END
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CS_
 
@@ -1424,43 +1424,43 @@ TAO_NAMESPACE_END
   {
     FT::Location* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       FT::Location *old = ACE_reinterpret_cast (FT::Location *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_FT_Locations::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   FT::_TAO_Unbounded_Sequence_FT_Locations::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     FT::Location *tmp = ACE_reinterpret_cast (FT::Location *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_FT_Locations::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   FT::_TAO_Unbounded_Sequence_FT_Locations::~_TAO_Unbounded_Sequence_FT_Locations (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_FT_LOCATIONS_CS_)
 #define _FT_LOCATIONS_CS_
@@ -1472,30 +1472,30 @@ TAO_NAMESPACE_END
 FT::Locations::Locations (void)
 {}
 FT::Locations::Locations (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 FT::Locations::Locations (CORBA::ULong max, CORBA::ULong length, FT::Location *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 FT::Locations::Locations (const Locations &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 FT::Locations::~Locations (void) // dtor
@@ -1547,7 +1547,7 @@ static const CORBA::Long _oc_FT_Locations[] =
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
               5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1556,7 +1556,7 @@ static const CORBA::Long _oc_FT_Locations[] =
                 TAO_ENCAP_BYTE_ORDER, // byte order
                 34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                 8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                CORBA::tk_string, 
+                CORBA::tk_string,
                 0U, // string length
 
 
@@ -1618,7 +1618,7 @@ static const CORBA::Long _oc_FT_Criteria[] =
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                   8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                  CORBA::tk_string, 
+                  CORBA::tk_string,
                   0U, // string length
 
                 5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1627,7 +1627,7 @@ static const CORBA::Long _oc_FT_Criteria[] =
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                   8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                  CORBA::tk_string, 
+                  CORBA::tk_string,
                   0U, // string length
 
 
@@ -1698,7 +1698,7 @@ static const CORBA::Long _oc_FT_FactoryInfo[] =
               TAO_ENCAP_BYTE_ORDER, // byte order
               34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
               8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-              CORBA::tk_string, 
+              CORBA::tk_string,
               0U, // string length
 
             5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1707,7 +1707,7 @@ static const CORBA::Long _oc_FT_FactoryInfo[] =
               TAO_ENCAP_BYTE_ORDER, // byte order
               34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
               8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-              CORBA::tk_string, 
+              CORBA::tk_string,
               0U, // string length
 
 
@@ -1762,7 +1762,7 @@ static const CORBA::Long _oc_FT_FactoryInfo[] =
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string, 
+                    CORBA::tk_string,
                     0U, // string length
 
                   5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1771,7 +1771,7 @@ static const CORBA::Long _oc_FT_FactoryInfo[] =
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string, 
+                    CORBA::tk_string,
                     0U, // string length
 
 
@@ -1807,7 +1807,7 @@ void FT::FactoryInfo::_tao_any_destructor (void *x)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CS_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CS_
 
@@ -1816,43 +1816,43 @@ void FT::FactoryInfo::_tao_any_destructor (void *x)
   {
     FT::FactoryInfo* tmp = 0;
     tmp = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (length);
-    
+
     if (this->buffer_ != 0)
     {
       FT::FactoryInfo *old = ACE_reinterpret_cast (FT::FactoryInfo *,this->buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp[i] = old[i];
-      
+
       if (this->release_)
         _TAO_Unbounded_Sequence_FT_FactoryInfos::freebuf (old);
-      
+
     }
     this->buffer_ = tmp;
   }
-  
+
   void
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_deallocate_buffer (void)
   {
     if (this->buffer_ == 0 || this->release_ == 0)
       return;
-    
+
     FT::FactoryInfo *tmp = ACE_reinterpret_cast (FT::FactoryInfo *,this->buffer_);
-    
+
     _TAO_Unbounded_Sequence_FT_FactoryInfos::freebuf (tmp);
     this->buffer_ = 0;
-  } 
-  
+  }
+
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::~_TAO_Unbounded_Sequence_FT_FactoryInfos (void) // Dtor.
   {
     this->_deallocate_buffer ();
   }
-  
-  
+
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_FT_FACTORYINFOS_CS_)
 #define _FT_FACTORYINFOS_CS_
@@ -1864,30 +1864,30 @@ void FT::FactoryInfo::_tao_any_destructor (void *x)
 FT::FactoryInfos::FactoryInfos (void)
 {}
 FT::FactoryInfos::FactoryInfos (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 FT::FactoryInfos::FactoryInfos (CORBA::ULong max, CORBA::ULong length, FT::FactoryInfo *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 FT::FactoryInfos::FactoryInfos (const FactoryInfos &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   _TAO_Unbounded_Sequence_FT_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<FT::FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 FT::FactoryInfos::~FactoryInfos (void) // dtor
@@ -1953,7 +1953,7 @@ static const CORBA::Long _oc_FT_FactoryInfos[] =
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                   8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                  CORBA::tk_string, 
+                  CORBA::tk_string,
                   0U, // string length
 
                 5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -1962,7 +1962,7 @@ static const CORBA::Long _oc_FT_FactoryInfos[] =
                   TAO_ENCAP_BYTE_ORDER, // byte order
                   34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                   8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                  CORBA::tk_string, 
+                  CORBA::tk_string,
                   0U, // string length
 
 
@@ -2017,7 +2017,7 @@ static const CORBA::Long _oc_FT_FactoryInfos[] =
                         TAO_ENCAP_BYTE_ORDER, // byte order
                         34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                         8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                        CORBA::tk_string, 
+                        CORBA::tk_string,
                         0U, // string length
 
                       5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -2026,7 +2026,7 @@ static const CORBA::Long _oc_FT_FactoryInfos[] =
                         TAO_ENCAP_BYTE_ORDER, // byte order
                         34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                         8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                        CORBA::tk_string, 
+                        CORBA::tk_string,
                         0U, // string length
 
 
@@ -3177,7 +3177,7 @@ static const CORBA::Long _oc_FT_UnsupportedProperty[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
           5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -3186,7 +3186,7 @@ static const CORBA::Long _oc_FT_UnsupportedProperty[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
 
@@ -3331,7 +3331,7 @@ static const CORBA::Long _oc_FT_InvalidProperty[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
           5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -3340,7 +3340,7 @@ static const CORBA::Long _oc_FT_InvalidProperty[] =
             TAO_ENCAP_BYTE_ORDER, // byte order
             34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
             8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-            CORBA::tk_string, 
+            CORBA::tk_string,
             0U, // string length
 
 
@@ -3490,7 +3490,7 @@ static const CORBA::Long _oc_FT_NoFactory[] =
               TAO_ENCAP_BYTE_ORDER, // byte order
               34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
               8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-              CORBA::tk_string, 
+              CORBA::tk_string,
               0U, // string length
 
             5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -3499,7 +3499,7 @@ static const CORBA::Long _oc_FT_NoFactory[] =
               TAO_ENCAP_BYTE_ORDER, // byte order
               34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
               8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-              CORBA::tk_string, 
+              CORBA::tk_string,
               0U, // string length
 
 
@@ -3519,7 +3519,7 @@ static const CORBA::Long _oc_FT_NoFactory[] =
       TAO_ENCAP_BYTE_ORDER, // byte order
       35, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x434f5242), ACE_NTOHL (0x412f5265), ACE_NTOHL (0x706f7369), ACE_NTOHL (0x746f7279), ACE_NTOHL (0x49643a31), ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/RepositoryId:1.0
       13, ACE_NTOHL (0x5265706f), ACE_NTOHL (0x7369746f), ACE_NTOHL (0x72794964), ACE_NTOHL (0x0),  // name = RepositoryId
-      CORBA::tk_string, 
+      CORBA::tk_string,
       0U, // string length
 
 
@@ -3667,7 +3667,7 @@ static const CORBA::Long _oc_FT_InvalidCriteria[] =
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string, 
+                    CORBA::tk_string,
                     0U, // string length
 
                   5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -3676,7 +3676,7 @@ static const CORBA::Long _oc_FT_InvalidCriteria[] =
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string, 
+                    CORBA::tk_string,
                     0U, // string length
 
 
@@ -3842,7 +3842,7 @@ static const CORBA::Long _oc_FT_CannotMeetCriteria[] =
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string, 
+                    CORBA::tk_string,
                     0U, // string length
 
                   5, ACE_NTOHL (0x6b696e64), ACE_NTOHL (0x0),  // name = kind
@@ -3851,7 +3851,7 @@ static const CORBA::Long _oc_FT_CannotMeetCriteria[] =
                     TAO_ENCAP_BYTE_ORDER, // byte order
                     34, ACE_NTOHL (0x49444c3a), ACE_NTOHL (0x6f6d672e), ACE_NTOHL (0x6f72672f), ACE_NTOHL (0x436f734e), ACE_NTOHL (0x616d696e), ACE_NTOHL (0x672f4973), ACE_NTOHL (0x7472696e), ACE_NTOHL (0x673a312e), ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CosNaming/Istring:1.0
                     8, ACE_NTOHL (0x49737472), ACE_NTOHL (0x696e6700),  // name = Istring
-                    CORBA::tk_string, 
+                    CORBA::tk_string,
                     0U, // string length
 
 
@@ -3933,11 +3933,11 @@ FT::PropertyManager_ptr FT::PropertyManager::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::PropertyManager (stub), PropertyManager::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_PropertyManager_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -3971,21 +3971,21 @@ void FT::PropertyManager::set_default_properties (
     FT::UnsupportedProperty
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_PropertyManager_set_default_properties_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_PropertyManager_set_default_properties_exceptiondata [] =
   {
     {FT::_tc_InvalidProperty, FT::InvalidProperty::_alloc},
     {FT::_tc_UnsupportedProperty, FT::UnsupportedProperty::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_default_properties",
@@ -4028,7 +4028,7 @@ void FT::PropertyManager::set_default_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -4047,7 +4047,7 @@ void FT::PropertyManager::set_default_properties (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -4062,10 +4062,10 @@ void FT::PropertyManager::set_default_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4092,15 +4092,15 @@ FT::Properties * FT::PropertyManager::get_default_properties (
     CORBA::SystemException
   ))
 {
-  
+
   FT::Properties *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, FT::Properties, _tao_retval);
   FT::Properties_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4145,7 +4145,7 @@ FT::Properties * FT::PropertyManager::get_default_properties (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -4180,10 +4180,10 @@ FT::Properties * FT::PropertyManager::get_default_properties (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4213,21 +4213,21 @@ void FT::PropertyManager::remove_default_properties (
     FT::UnsupportedProperty
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_PropertyManager_remove_default_properties_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_PropertyManager_remove_default_properties_exceptiondata [] =
   {
     {FT::_tc_InvalidProperty, FT::InvalidProperty::_alloc},
     {FT::_tc_UnsupportedProperty, FT::UnsupportedProperty::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove_default_properties",
@@ -4270,7 +4270,7 @@ void FT::PropertyManager::remove_default_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -4289,7 +4289,7 @@ void FT::PropertyManager::remove_default_properties (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -4304,10 +4304,10 @@ void FT::PropertyManager::remove_default_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4338,21 +4338,21 @@ void FT::PropertyManager::set_type_properties (
     FT::UnsupportedProperty
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_PropertyManager_set_type_properties_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_PropertyManager_set_type_properties_exceptiondata [] =
   {
     {FT::_tc_InvalidProperty, FT::InvalidProperty::_alloc},
     {FT::_tc_UnsupportedProperty, FT::UnsupportedProperty::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_type_properties",
@@ -4395,7 +4395,7 @@ void FT::PropertyManager::set_type_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -4415,7 +4415,7 @@ void FT::PropertyManager::set_type_properties (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -4430,10 +4430,10 @@ void FT::PropertyManager::set_type_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4461,15 +4461,15 @@ FT::Properties * FT::PropertyManager::get_type_properties (
     CORBA::SystemException
   ))
 {
-  
+
   FT::Properties *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, FT::Properties, _tao_retval);
   FT::Properties_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4514,7 +4514,7 @@ FT::Properties * FT::PropertyManager::get_type_properties (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -4555,10 +4555,10 @@ FT::Properties * FT::PropertyManager::get_type_properties (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4589,21 +4589,21 @@ void FT::PropertyManager::remove_type_properties (
     FT::UnsupportedProperty
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_PropertyManager_remove_type_properties_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_PropertyManager_remove_type_properties_exceptiondata [] =
   {
     {FT::_tc_InvalidProperty, FT::InvalidProperty::_alloc},
     {FT::_tc_UnsupportedProperty, FT::UnsupportedProperty::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove_type_properties",
@@ -4646,7 +4646,7 @@ void FT::PropertyManager::remove_type_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -4666,7 +4666,7 @@ void FT::PropertyManager::remove_type_properties (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -4681,10 +4681,10 @@ void FT::PropertyManager::remove_type_properties (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4716,8 +4716,8 @@ void FT::PropertyManager::set_properties_dynamically (
     FT::UnsupportedProperty
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_PropertyManager_set_properties_dynamically_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_PropertyManager_set_properties_dynamically_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc},
     {FT::_tc_InvalidProperty, FT::InvalidProperty::_alloc},
@@ -4725,13 +4725,13 @@ void FT::PropertyManager::set_properties_dynamically (
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_properties_dynamically",
@@ -4774,7 +4774,7 @@ void FT::PropertyManager::set_properties_dynamically (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -4794,7 +4794,7 @@ void FT::PropertyManager::set_properties_dynamically (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -4809,10 +4809,10 @@ void FT::PropertyManager::set_properties_dynamically (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4841,20 +4841,20 @@ FT::Properties * FT::PropertyManager::get_properties (
     FT::ObjectGroupNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_PropertyManager_get_properties_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_PropertyManager_get_properties_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc}
   };
 
   FT::Properties *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, FT::Properties, _tao_retval);
   FT::Properties_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -4899,7 +4899,7 @@ FT::Properties * FT::PropertyManager::get_properties (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -4940,10 +4940,10 @@ FT::Properties * FT::PropertyManager::get_properties (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -4983,7 +4983,7 @@ void *FT::PropertyManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -5059,11 +5059,11 @@ FT::ObjectGroupManager_ptr FT::ObjectGroupManager::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::ObjectGroupManager (stub), ObjectGroupManager::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_ObjectGroupManager_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -5104,8 +5104,8 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::create_member (
     FT::CannotMeetCriteria
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_create_member_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_create_member_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc},
     {FT::_tc_MemberAlreadyPresent, FT::MemberAlreadyPresent::_alloc},
@@ -5117,13 +5117,13 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::create_member (
 
   FT::ObjectGroup_ptr _tao_retval = FT::ObjectGroup::_nil ();
   FT::ObjectGroup_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_member",
@@ -5166,7 +5166,7 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::create_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -5210,10 +5210,10 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::create_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -5246,8 +5246,8 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::add_member (
     FT::ObjectNotAdded
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_add_member_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_add_member_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc},
     {FT::_tc_MemberAlreadyPresent, FT::MemberAlreadyPresent::_alloc},
@@ -5256,13 +5256,13 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::add_member (
 
   FT::ObjectGroup_ptr _tao_retval = FT::ObjectGroup::_nil ();
   FT::ObjectGroup_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "add_member",
@@ -5305,7 +5305,7 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::add_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -5348,10 +5348,10 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::add_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -5382,8 +5382,8 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::remove_member (
     FT::MemberNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_remove_member_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_remove_member_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc},
     {FT::_tc_MemberNotFound, FT::MemberNotFound::_alloc}
@@ -5391,13 +5391,13 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::remove_member (
 
   FT::ObjectGroup_ptr _tao_retval = FT::ObjectGroup::_nil ();
   FT::ObjectGroup_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "remove_member",
@@ -5440,7 +5440,7 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::remove_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -5482,10 +5482,10 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::remove_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -5518,8 +5518,8 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::set_primary_member (
     FT::BadReplicationStyle
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_set_primary_member_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_set_primary_member_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc},
     {FT::_tc_MemberNotFound, FT::MemberNotFound::_alloc},
@@ -5529,13 +5529,13 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::set_primary_member (
 
   FT::ObjectGroup_ptr _tao_retval = FT::ObjectGroup::_nil ();
   FT::ObjectGroup_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_primary_member",
@@ -5578,7 +5578,7 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::set_primary_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -5620,10 +5620,10 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::set_primary_member (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -5652,20 +5652,20 @@ FT::Locations * FT::ObjectGroupManager::locations_of_members (
     FT::ObjectGroupNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_locations_of_members_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_locations_of_members_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc}
   };
 
   FT::Locations *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, FT::Locations, _tao_retval);
   FT::Locations_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -5710,7 +5710,7 @@ FT::Locations * FT::ObjectGroupManager::locations_of_members (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -5751,10 +5751,10 @@ FT::Locations * FT::ObjectGroupManager::locations_of_members (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -5783,20 +5783,20 @@ FT::ObjectGroupId FT::ObjectGroupManager::get_object_group_id (
     FT::ObjectGroupNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_get_object_group_id_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_get_object_group_id_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc}
   };
 
   FT::ObjectGroupId _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_object_group_id",
@@ -5839,7 +5839,7 @@ FT::ObjectGroupId FT::ObjectGroupManager::get_object_group_id (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -5880,10 +5880,10 @@ FT::ObjectGroupId FT::ObjectGroupManager::get_object_group_id (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -5912,21 +5912,21 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::get_object_group_ref (
     FT::ObjectGroupNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_get_object_group_ref_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_get_object_group_ref_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc}
   };
 
   FT::ObjectGroup_ptr _tao_retval = FT::ObjectGroup::_nil ();
   FT::ObjectGroup_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_object_group_ref",
@@ -5969,7 +5969,7 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::get_object_group_ref (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -6010,10 +6010,10 @@ FT::ObjectGroup_ptr FT::ObjectGroupManager::get_object_group_ref (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -6044,8 +6044,8 @@ CORBA::Object_ptr FT::ObjectGroupManager::get_member_ref (
     FT::MemberNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ObjectGroupManager_get_member_ref_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ObjectGroupManager_get_member_ref_exceptiondata [] =
   {
     {FT::_tc_ObjectGroupNotFound, FT::ObjectGroupNotFound::_alloc},
     {FT::_tc_MemberNotFound, FT::MemberNotFound::_alloc}
@@ -6053,13 +6053,13 @@ CORBA::Object_ptr FT::ObjectGroupManager::get_member_ref (
 
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   CORBA::Object_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_member_ref",
@@ -6102,7 +6102,7 @@ CORBA::Object_ptr FT::ObjectGroupManager::get_member_ref (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -6144,10 +6144,10 @@ CORBA::Object_ptr FT::ObjectGroupManager::get_member_ref (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -6187,7 +6187,7 @@ void *FT::ObjectGroupManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -6263,11 +6263,11 @@ FT::GenericFactory_ptr FT::GenericFactory::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::GenericFactory (stub), GenericFactory::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_GenericFactory_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -6317,8 +6317,8 @@ CORBA::Object_ptr FT::GenericFactory::create_object (
     FT::CannotMeetCriteria
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_GenericFactory_create_object_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_GenericFactory_create_object_exceptiondata [] =
   {
     {FT::_tc_NoFactory, FT::NoFactory::_alloc},
     {FT::_tc_ObjectNotCreated, FT::ObjectNotCreated::_alloc},
@@ -6329,13 +6329,13 @@ CORBA::Object_ptr FT::GenericFactory::create_object (
 
   CORBA::Object_ptr _tao_retval = CORBA::Object::_nil ();
   CORBA::Object_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (factory_creation_id.ptr (), CORBA::Any, 0);
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
@@ -6379,14 +6379,14 @@ CORBA::Object_ptr FT::GenericFactory::create_object (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
         TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
         if (!(
               (_tao_out << type_id) &&
-              (_tao_out << the_criteria)              
+              (_tao_out << the_criteria)
           ))
           TAO_INTERCEPTOR_THROW_RETURN (CORBA::MARSHAL (), 0);
 
@@ -6422,10 +6422,10 @@ CORBA::Object_ptr FT::GenericFactory::create_object (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -6454,20 +6454,20 @@ void FT::GenericFactory::delete_object (
     FT::ObjectNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_GenericFactory_delete_object_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_GenericFactory_delete_object_exceptiondata [] =
   {
     {FT::_tc_ObjectNotFound, FT::ObjectNotFound::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "delete_object",
@@ -6510,7 +6510,7 @@ void FT::GenericFactory::delete_object (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -6529,7 +6529,7 @@ void FT::GenericFactory::delete_object (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -6544,10 +6544,10 @@ void FT::GenericFactory::delete_object (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -6587,7 +6587,7 @@ void *FT::GenericFactory::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -6663,11 +6663,11 @@ FT::ReplicationManager_ptr FT::ReplicationManager::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::ReplicationManager (stub), ReplicationManager::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_ReplicationManager_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -6699,15 +6699,15 @@ void FT::ReplicationManager::register_fault_notifier (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "register_fault_notifier",
@@ -6750,7 +6750,7 @@ void FT::ReplicationManager::register_fault_notifier (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -6769,7 +6769,7 @@ void FT::ReplicationManager::register_fault_notifier (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -6784,10 +6784,10 @@ void FT::ReplicationManager::register_fault_notifier (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -6815,21 +6815,21 @@ FT::FaultNotifier_ptr FT::ReplicationManager::get_fault_notifier (
     FT::InterfaceNotFound
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_ReplicationManager_get_fault_notifier_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_ReplicationManager_get_fault_notifier_exceptiondata [] =
   {
     {FT::_tc_InterfaceNotFound, FT::InterfaceNotFound::_alloc}
   };
 
   FT::FaultNotifier_ptr _tao_retval = FT::FaultNotifier::_nil ();
   FT::FaultNotifier_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "get_fault_notifier",
@@ -6872,7 +6872,7 @@ FT::FaultNotifier_ptr FT::ReplicationManager::get_fault_notifier (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -6907,10 +6907,10 @@ FT::FaultNotifier_ptr FT::ReplicationManager::get_fault_notifier (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -6989,7 +6989,7 @@ void *FT::ReplicationManager::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -7065,11 +7065,11 @@ FT::PullMonitorable_ptr FT::PullMonitorable::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::PullMonitorable (stub), PullMonitorable::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_PullMonitorable_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -7100,15 +7100,15 @@ CORBA::Boolean FT::PullMonitorable::is_alive (
     CORBA::SystemException
   ))
 {
-  
+
   CORBA::Boolean _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "is_alive",
@@ -7151,7 +7151,7 @@ CORBA::Boolean FT::PullMonitorable::is_alive (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -7186,10 +7186,10 @@ CORBA::Boolean FT::PullMonitorable::is_alive (
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -7229,7 +7229,7 @@ void *FT::PullMonitorable::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -7305,11 +7305,11 @@ FT::FaultNotifier_ptr FT::FaultNotifier::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::FaultNotifier (stub), FaultNotifier::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_FaultNotifier_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -7352,15 +7352,15 @@ void FT::FaultNotifier::push_structured_fault (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "push_structured_fault",
@@ -7403,7 +7403,7 @@ void FT::FaultNotifier::push_structured_fault (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -7422,7 +7422,7 @@ void FT::FaultNotifier::push_structured_fault (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -7437,10 +7437,10 @@ void FT::FaultNotifier::push_structured_fault (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -7468,15 +7468,15 @@ void FT::FaultNotifier::push_sequence_fault (
     CORBA::SystemException
   ))
 {
-  
 
-  
-  
+
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "push_sequence_fault",
@@ -7519,7 +7519,7 @@ void FT::FaultNotifier::push_sequence_fault (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -7538,7 +7538,7 @@ void FT::FaultNotifier::push_sequence_fault (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -7553,10 +7553,10 @@ void FT::FaultNotifier::push_sequence_fault (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -7585,21 +7585,21 @@ CosNotifyFilter::Filter_ptr FT::FaultNotifier::create_subscription_filter (
     CosNotifyFilter::InvalidGrammar
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_FaultNotifier_create_subscription_filter_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_FaultNotifier_create_subscription_filter_exceptiondata [] =
   {
     {CosNotifyFilter::_tc_InvalidGrammar, CosNotifyFilter::InvalidGrammar::_alloc}
   };
 
   CosNotifyFilter::Filter_ptr _tao_retval = CosNotifyFilter::Filter::_nil ();
   CosNotifyFilter::Filter_var _tao_safe_retval (_tao_retval);
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "create_subscription_filter",
@@ -7642,7 +7642,7 @@ CosNotifyFilter::Filter_ptr FT::FaultNotifier::create_subscription_filter (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -7683,10 +7683,10 @@ CosNotifyFilter::Filter_ptr FT::FaultNotifier::create_subscription_filter (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -7715,15 +7715,15 @@ FT::FaultNotifier::ConsumerId FT::FaultNotifier::connect_structured_fault_consum
     CORBA::SystemException
   ))
 {
-  
+
   FT::FaultNotifier::ConsumerId _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "connect_structured_fault_consumer",
@@ -7766,7 +7766,7 @@ FT::FaultNotifier::ConsumerId FT::FaultNotifier::connect_structured_fault_consum
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -7808,10 +7808,10 @@ FT::FaultNotifier::ConsumerId FT::FaultNotifier::connect_structured_fault_consum
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -7840,15 +7840,15 @@ FT::FaultNotifier::ConsumerId FT::FaultNotifier::connect_sequence_fault_consumer
     CORBA::SystemException
   ))
 {
-  
+
   FT::FaultNotifier::ConsumerId _tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "connect_sequence_fault_consumer",
@@ -7891,7 +7891,7 @@ FT::FaultNotifier::ConsumerId FT::FaultNotifier::connect_sequence_fault_consumer
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
 
@@ -7933,10 +7933,10 @@ FT::FaultNotifier::ConsumerId FT::FaultNotifier::connect_sequence_fault_consumer
           );
         TAO_INTERCEPTOR_CHECK_RETURN  (_tao_retval);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -7965,20 +7965,20 @@ void FT::FaultNotifier::disconnect_consumer (
     CosEventComm::Disconnected
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_FaultNotifier_disconnect_consumer_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_FaultNotifier_disconnect_consumer_exceptiondata [] =
   {
     {CosEventComm::_tc_Disconnected, CosEventComm::Disconnected::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "disconnect_consumer",
@@ -8021,7 +8021,7 @@ void FT::FaultNotifier::disconnect_consumer (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -8040,7 +8040,7 @@ void FT::FaultNotifier::disconnect_consumer (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -8055,10 +8055,10 @@ void FT::FaultNotifier::disconnect_consumer (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -8098,7 +8098,7 @@ void *FT::FaultNotifier::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -8131,30 +8131,30 @@ TAO_NAMESPACE_END
 FT::State::State (void)
 {}
 FT::State::State (CORBA::ULong max) // uses max size
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max)
 {}
 FT::State::State (CORBA::ULong max, CORBA::ULong length, CORBA::Octet *buffer, CORBA::Boolean release)
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (max, length, buffer, release)
 {}
 FT::State::State (const State &seq) // copy ctor
-  : 
+  :
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
  (seq)
 {}
 FT::State::~State (void) // dtor
@@ -8592,11 +8592,11 @@ FT::Checkpointable_ptr FT::Checkpointable::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::Checkpointable (stub), Checkpointable::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_Checkpointable_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -8628,20 +8628,20 @@ FT::State * FT::Checkpointable::get_state (
     FT::NoStateAvailable
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_Checkpointable_get_state_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_Checkpointable_get_state_exceptiondata [] =
   {
     {FT::_tc_NoStateAvailable, FT::NoStateAvailable::_alloc}
   };
 
   FT::State *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, FT::State, _tao_retval);
   FT::State_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -8686,7 +8686,7 @@ FT::State * FT::Checkpointable::get_state (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -8721,10 +8721,10 @@ FT::State * FT::Checkpointable::get_state (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -8753,20 +8753,20 @@ void FT::Checkpointable::set_state (
     FT::InvalidState
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_Checkpointable_set_state_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_Checkpointable_set_state_exceptiondata [] =
   {
     {FT::_tc_InvalidState, FT::InvalidState::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_state",
@@ -8809,7 +8809,7 @@ void FT::Checkpointable::set_state (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -8828,7 +8828,7 @@ void FT::Checkpointable::set_state (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -8843,10 +8843,10 @@ void FT::Checkpointable::set_state (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -8886,7 +8886,7 @@ void *FT::Checkpointable::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -8962,11 +8962,11 @@ FT::Updateable_ptr FT::Updateable::_unchecked_narrow (
         ACE_NEW_RETURN (default_proxy, ::FT::Updateable (stub), Updateable::_nil ());
       #if (TAO_HAS_SMART_PROXIES == 1)
         return TAO_FT_Updateable_PROXY_FACTORY_ADAPTER::instance ()->create_proxy (default_proxy);
-      #else 
+      #else
         return default_proxy;
       #endif /*TAO_HAS_SMART_PROXIES == 1*/
     }
-  else 
+  else
     return
       ACE_reinterpret_cast
         (
@@ -8998,20 +8998,20 @@ FT::State * FT::Updateable::get_update (
     FT::NoUpdateAvailable
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_Updateable_get_update_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_Updateable_get_update_exceptiondata [] =
   {
     {FT::_tc_NoUpdateAvailable, FT::NoUpdateAvailable::_alloc}
   };
 
   FT::State *_tao_retval = 0;
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  
+
   ACE_NEW_RETURN (_tao_retval, FT::State, _tao_retval);
   FT::State_var _tao_safe_retval (_tao_retval);
   TAO_GIOP_Twoway_Invocation _tao_call (
@@ -9056,7 +9056,7 @@ FT::State * FT::Updateable::get_update (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK_RETURN (0);
 
@@ -9091,10 +9091,10 @@ FT::State * FT::Updateable::get_update (
           );
         TAO_INTERCEPTOR_CHECK_RETURN (0);
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -9123,20 +9123,20 @@ void FT::Updateable::set_update (
     FT::InvalidUpdate
   ))
 {
-  
-  static TAO_Exception_Data _tao_FT_Updateable_set_update_exceptiondata [] = 
+
+  static TAO_Exception_Data _tao_FT_Updateable_set_update_exceptiondata [] =
   {
     {FT::_tc_InvalidUpdate, FT::InvalidUpdate::_alloc}
   };
 
 
-  
-  
+
+
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)
     ACE_THROW (CORBA::INTERNAL ());
 
-  
+
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "set_update",
@@ -9179,7 +9179,7 @@ void FT::Updateable::set_update (
           );
         TAO_INTERCEPTOR_CHECK;
         CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-        
+
         _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag), ACE_TRY_ENV);
         TAO_INTERCEPTOR_CHECK;
 
@@ -9198,7 +9198,7 @@ void FT::Updateable::set_update (
         {
           TAO_INTERCEPTOR_THROW (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE, CORBA::COMPLETED_YES));
         }
-        
+
         TAO_INTERCEPTOR (
             _tao_vfr.postinvoke (
                 _tao_call.request_id (),
@@ -9213,10 +9213,10 @@ void FT::Updateable::set_update (
           );
         TAO_INTERCEPTOR_CHECK;
         break;
-        
+
       }
 #if (TAO_HAS_INTERCEPTORS == 1)
-      
+
     }
   ACE_CATCHANY
     {
@@ -9269,7 +9269,7 @@ void *FT::Updateable::_tao_QueryInterface (ptr_arith_t type)
   else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
-    
+
   if (retv)
     this->_add_ref ();
   return retv;
@@ -9624,7 +9624,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::RequestDurationPolicy_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_RequestDurationPolicy, 
+        FT::_tc_RequestDurationPolicy,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -9848,7 +9848,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::HeartbeatPolicy_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_HeartbeatPolicy, 
+        FT::_tc_HeartbeatPolicy,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -9910,7 +9910,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::HeartbeatEnabledPolicy_ptr _tao_elem
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_HeartbeatEnabledPolicy, 
+        FT::_tc_HeartbeatEnabledPolicy,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -11714,7 +11714,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::PropertyManager_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_PropertyManager, 
+        FT::_tc_PropertyManager,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -11776,7 +11776,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::ObjectGroupManager_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_ObjectGroupManager, 
+        FT::_tc_ObjectGroupManager,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -11838,7 +11838,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::GenericFactory_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_GenericFactory, 
+        FT::_tc_GenericFactory,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -11900,7 +11900,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::ReplicationManager_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_ReplicationManager, 
+        FT::_tc_ReplicationManager,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -11962,7 +11962,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::PullMonitorable_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_PullMonitorable, 
+        FT::_tc_PullMonitorable,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -12024,7 +12024,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::FaultNotifier_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_FaultNotifier, 
+        FT::_tc_FaultNotifier,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -12527,7 +12527,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::Checkpointable_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_Checkpointable, 
+        FT::_tc_Checkpointable,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -12589,7 +12589,7 @@ void operator<<= (CORBA::Any &_tao_any, FT::Updateable_ptr _tao_elem)
   if (stream << _tao_elem)
   {
     _tao_any._tao_replace (
-        FT::_tc_Updateable, 
+        FT::_tc_Updateable,
         TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
@@ -12671,7 +12671,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -12713,7 +12713,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -12755,7 +12755,7 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
     CORBA::Boolean _tao_marshal_flag = 1;
@@ -12776,20 +12776,20 @@ CORBA::Boolean operator<< (
   if (strm << _tao_sequence.length ())
   {
     // encode all elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (FT::State *)&_tao_sequence);
       if (oseq->mb ())
         return strm.write_octet_array_mb (oseq->mb ());
       else
         return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
     }
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
@@ -12806,14 +12806,14 @@ CORBA::Boolean operator>> (
     // set the length of the sequence
     _tao_sequence.length (_tao_seq_len);
     // If length is 0 we return true.
-    if (0 >= _tao_seq_len) 
+    if (0 >= _tao_seq_len)
       return 1;
     // retrieve all the elements
-    
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     if (ACE_BIT_DISABLED (strm.start ()->flags (),ACE_Message_Block::DONT_DELETE))
     {
-      TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
+      TAO_Unbounded_Sequence<CORBA::Octet> *oseq =
         ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
       oseq->replace (_tao_seq_len, strm.start ());
       oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
@@ -12822,12 +12822,11 @@ CORBA::Boolean operator>> (
     }
     else
       return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-    
+
 #else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
     return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-  
+
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
   }
   return 0; // error
 }
-
