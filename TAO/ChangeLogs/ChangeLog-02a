@@ -1,28 +1,8 @@
-Thu Apr 20 12:14:27 2000  Carlos O'Ryan  <coryan@uci.edu>
+Thu Apr 20 15:42:18 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* examples/Simulator/Makefile:
-	* examples/Simulator/DOVEMIB/AnyAnalyser.cpp:
-	* examples/Simulator/DOVEMIB/AnyAnalyser.h:
-	* examples/Simulator/DOVEMIB/DOVEMIB.cpp:
-	* examples/Simulator/DOVEMIB/DOVEMIB.dsp:
-	* examples/Simulator/DOVEMIB/DOVEMIB.dsw:
-	* examples/Simulator/DOVEMIB/DOVEMIB.h:
-	* examples/Simulator/DOVEMIB/DOVEMIBx.dsp:
-	* examples/Simulator/DOVEMIB/Makefile:
-	* examples/Simulator/DOVEMIB/Node.cpp:
-	* examples/Simulator/DOVEMIB/Node.h:
-	* examples/Simulator/DOVEMIB/NodeVisitor.h:
-	* examples/Simulator/DOVEMIB/PrintVisitor.cpp:
-	* examples/Simulator/DOVEMIB/PrintVisitor.h:
-	* examples/Simulator/DOVEMIB/TestClient.dsp:
-	* examples/Simulator/DOVEMIB/any_test.idl:
-	* examples/Simulator/DOVEMIB/any_test_i.cpp:
-	* examples/Simulator/DOVEMIB/any_test_i.h:
-	* examples/Simulator/DOVEMIB/clnt.cpp:
-	* examples/Simulator/DOVEMIB/clnt.h:
-	* examples/Simulator/DOVEMIB/svc.conf:
-	* examples/Simulator/DOVEMIB/svr.cpp:
-	  Removed more obsolete code that was not maintained or used.
+	* tao/ORB.cpp:
+	  Changes suggested by Carlos to prevent actual and
+	  possible memory leaks.
 
 Thu Apr 20 13:50:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
