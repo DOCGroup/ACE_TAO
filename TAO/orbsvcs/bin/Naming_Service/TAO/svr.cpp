@@ -15,8 +15,7 @@ main (int argc, char ** argv)
 
   if (env.exception () != 0)
     {
-//      print_exception (env.exception (), "ORB init");
-//  UNCOMMENT THIS WHEN solved symbol not found problem from libTAO.so
+      env.print_exception ("ORB init");
       return 1;
     }
 
@@ -30,7 +29,8 @@ main (int argc, char ** argv)
 
   // create an Naming Service object
 
-  CosNaming * name_server = new CosNaming_i;
+  //  CosNaming_i * name_server = new CosNaming_i;
+NS_NamingContext *naming_context = new NS_NamingContext;
   
   // Stringify the objref we'll be implementing, and print it to
   // stdout.  Someone will take that string and give it to a
@@ -38,12 +38,11 @@ main (int argc, char ** argv)
 
   CORBA::String str;
 
-  str = orb_ptr->object_to_string (name_server, env);
+  str = orb_ptr->object_to_string (naming_context, env);
 
   if (env.exception () != 0)
     {
-//      print_exception (env.exception (), "object2string");
-//  UNCOMMENT THIS WHEN solved symbol not found problem from libTAO.so
+      env.print_exception ("object2string");
       return 1;
     }
 

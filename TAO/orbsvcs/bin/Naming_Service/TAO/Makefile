@@ -17,7 +17,7 @@ PROG_SRCS =	$(IDL_SRC) NS_CosNaming.cpp svr.cpp clnt.cpp
 LSRC = $(PROG_SRCS)
 
 COSNAMING_SVR_OBJS = CosNamingC.o CosNamingS.o svr.o CosNaming_i.o NS_CosNaming.o
-COSNAMING_CLT_OBJS = CosNamingC.o clnt.o NS_CosNaming.o
+COSNAMING_CLT_OBJS = CosNamingC.o clnt.o 
 
 BIN = svr clnt
 BUILD = $(BIN)
