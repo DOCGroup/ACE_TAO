@@ -514,6 +514,9 @@ public:
   /// because of a thread trying to unblock the <Reactor_Impl>
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
+  /// Verify whether the buffer has dispatchable info  or not.
+  virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
+
   /// Read one of the notify call on the <handle> into the
   /// <buffer>. This could be because of a thread trying to unblock
   /// the <Reactor_Impl>

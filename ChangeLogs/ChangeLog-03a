@@ -1,3 +1,26 @@
+Sun Sep  9 08:28:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Reactor_Impl.h:
+	* ace/Select_Reactor_Base.h:
+	* ace/Select_Reactor_Base.cpp (is_dispatchable): Added a new
+	  method. This method, just figures out whether the buffer has any
+	  dispatchable info or not.
+
+	* ace/WFMO_Reactor.h:
+	* ace/WFMO_Reactor.cpp: Added the above method in the WFMO
+	  Reactor.
+
+	* ace/TP_Reactor.cpp: The handle_notify_events () method now
+	  checks whether the buffer it has read is dispatchable or not. If
+	  it is then it gives up the token to make an upcall. Else, it
+	  just sits around to remove messages of the pipe, till it find
+	  one with a dispatchable info. The fix was necessary  so that
+	  wake-up calls that are unanswered are removed of the
+	  pipe. Unanswered wakeup calls were filling up the pipe and they
+	  were blocking some application from writing further to the
+	  pipe. This should be in all probability be the final fix to the
+	  Reactor.
+
 Sat Sep  8 09:34:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Logging_Strategy_Test.cpp: Fixed a typo that was giving
@@ -5,7 +28,7 @@ Sat Sep  8 09:34:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Fri Sep  7 16:40:37 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	  Added an if-def case for IP_MULTICAST_TTL too.
 
 Fri Sep  7 17:09:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -21,18 +44,18 @@ Fri Sep  7 15:51:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tests/Logging_Strategy_Test.cpp: Included Auto_Ptr.h.
 
 Fri Sep 07 15:29:37 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
-	
-	* examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp: 
-	* examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp:: 	
-	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.cpp: 
 
-	* examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.cpp:  
-	* examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp:: 
-	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.cpp: 
+	* examples/QOS/Change_Receiver_FlowSpec/Receiver_QoS_Event_Handler.cpp:
+	* examples/QOS/Change_Receiver_FlowSpec/Sender_QoS_Event_Handler.cpp::
+	* examples/QOS/Change_Receiver_FlowSpec/Fill_ACE_QoS.cpp:
 
-	* examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp: 
-	* examples/QOS/Simple/Sender_QoS_Event_Handler.cpp: 
-	* examples/QOS/Simple/Fill_ACE_QoS.cpp: 
+	* examples/QOS/Change_Sender_TSpec/Receiver_QoS_Event_Handler.cpp:
+	* examples/QOS/Change_Sender_TSpec/Sender_QoS_Event_Handler.cpp::
+	* examples/QOS/Change_Sender_TSpec/Fill_ACE_QoS.cpp:
+
+	* examples/QOS/Simple/Receiver_QoS_Event_Handler.cpp:
+	* examples/QOS/Simple/Sender_QoS_Event_Handler.cpp:
+	* examples/QOS/Simple/Fill_ACE_QoS.cpp:
 
 	  Fixed compile errors.
 
@@ -62,7 +85,7 @@ Thu Sep  6 21:14:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Logging_Strategy_Test.cpp: Changed the usage of auto_ptr
 	  <> to ACE_Auto_Basic_Ptr<>. Thanks to Carlos O'Ryan for this
-	  suggestion. 
+	  suggestion.
 
 Thu Sep 06 18:42:39 2001  Steve Huston  <shuston@riverace.com>
 
@@ -71,16 +94,16 @@ Thu Sep 06 18:42:39 2001  Steve Huston  <shuston@riverace.com>
 
 Thu Sep  6 12:01:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/OS.h: 
+	* ace/OS.h:
 	  Added a if-def case for IP_MULTICAST_IF. Seems like it is not
 	  defined in some of the OS versions.
 
 Thu Sep 06 12:36:43 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/OS.h: 
-	* ace/OS.i: 	
+	* ace/OS.h:
+	* ace/OS.i:
 	* ace/QoS/QoS_Session_Impl.cpp:
-	* ace/QoS/QoS_Session.h:	
+	* ace/QoS/QoS_Session.h:
 
 	  Fixed compile errors.
 
@@ -137,7 +160,7 @@ Thu Sep  6 11:00:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	  of  number of active handles from wait_for_multiple_events
 	  (). The check for event_count > 0 before processing timer events
 	  was wrong. Removed the check. Thanks to Chad Elliott for
-	  pointing this out. 
+	  pointing this out.
 
 	  Further did some cosmetic changes like adding comments, removing
 	  comments that was not valid etc.
@@ -145,7 +168,7 @@ Thu Sep  6 11:00:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu Sep  6 07:50:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* bin/auto_run_tests.lst: The AMI buffering test should not be run
-	  Single threaded builds. 
+	  Single threaded builds.
 
 Thu Sep  6 02:30:14 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
@@ -159,7 +182,7 @@ Thu Sep  6 02:30:14 2001  Christopher Kohlhoff  <chris@kohlhoff.com>
 
 Wed Sep  5 19:48:34 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* ace/SOCK_Dgram.cpp (set_nic): 
+	* ace/SOCK_Dgram.cpp (set_nic):
 	  Fixed the errors that raised in Win.
 
 Wed Sep  5 20:38:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -175,20 +198,20 @@ Wed Sep  5 20:38:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Wed Sep  5 18:58:00 2001 Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/QoS/QoS_Session.h: 
-	* ace/QoS/QoS_Session_Impl.h: 	
+	* ace/QoS/QoS_Session.h:
+	* ace/QoS/QoS_Session_Impl.h:
 	* ace/QoS/QoS_Session_Impl.cpp:
 
 	  Added rapi_sender and rapi_reserve calls with null tspec and
 	  flow spec respectively to facilitate the tearing down of PATH
-	  and RESV messages.  
-	
-	* ace/OS.h: 
+	  and RESV messages.
+
+	* ace/OS.h:
 	* ace/OS.i:
 
 	  Changed the sending_flowspec_ and receiving_flowspec_ members of
 	  the ACE_QoS class to pointers so they can be initialized to null
-	  flow specs. 
+	  flow specs.
 
 Wed Sep  5 16:50:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
