@@ -1,3 +1,9 @@
+Sat Jul 12 17:55:14 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tests\Conn_Test.cpp: 
+
+	  Added explicit template instantiation for ACE_Connector_Base.
+
 Fri Jul 11 16:30:02 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\MT_Reference_Counted_Event_Handler_Test.cpp (run_main): 
