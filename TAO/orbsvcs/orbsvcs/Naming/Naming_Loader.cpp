@@ -78,7 +78,7 @@ TAO_Naming_Loader::create_object (CORBA::ORB_ptr orb,
   return 0;
 }
 
-ACE_SVC_FACTORY_DEFINE (TAO_Naming_Loader);
+ACE_SVC_FACTORY_DEFINE (TAO_Naming_Loader)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Dynamic_Service<TAO_Naming_Loader>;
