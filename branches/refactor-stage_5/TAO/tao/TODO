@@ -6,8 +6,6 @@
 . type of exception thrown to the client. Is it CORBA exception or C++
   exception if you receive one? 
 
-. Test Location forwards
-
 . Test location forwards with collocated servants for remote servants
   AND collcoated servants for collcoated servants.
 
@@ -19,12 +17,8 @@
   corbafwd.h. and _new form ORB_Core.h
 
 . Test case for forwarded objects in collocated mode being remote
+
 . Messaging is broken
-
-
-. Work on connection timeout
-
-. Work on exception list for interceptors in operation_details.cpp
 
 . Remove tao_queryinterface
 
