@@ -227,7 +227,7 @@ ACE_CString::substring (size_t offset,
 			ssize_t length) const
 {
   ACE_CString nil;
-  size_t count = len_;
+  size_t count = length;
 
   // case 1. empty string
   if (len_ == 0)
@@ -432,7 +432,7 @@ ACE_SString::substring (size_t offset,
 			ssize_t length) const
 {
   ACE_SString nil;
-  size_t count = len_;
+  size_t count = length;
 
   // case 1. empty string
   if (len_ == 0)
@@ -693,7 +693,7 @@ ACE_WString::substring (size_t offset,
 			ssize_t length) const
 {
   ACE_WString nil;
-  size_t count = len_;
+  size_t count = length;
 
   // case 1. empty string
   if (len_ == 0)
