@@ -30,6 +30,44 @@
 #include "ace/Reactor_Impl.h"
 #include "ace/Message_Queue.h"
 
+// If we don't have WinSOCK2, we need these defined
+#if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
+/*
+ * WinSock 2 extension -- bit values and indices for FD_XXX network events
+ */
+#define FD_READ_BIT      0
+#define FD_WRITE_BIT     1
+#define FD_OOB_BIT       2
+#define FD_ACCEPT_BIT    3
+#define FD_CONNECT_BIT   4
+#define FD_CLOSE_BIT     5
+#define FD_QOS_BIT       6
+#define FD_GROUP_QOS_BIT 7
+
+#define FD_QOS           (1 << FD_QOS_BIT)
+#define FD_GROUP_QOS     (1 << FD_GROUP_QOS_BIT)
+
+#define FD_MAX_EVENTS    8
+#define FD_ALL_EVENTS    ((1 << FD_MAX_EVENTS) - 1)
+
+#define WSAEVENT                HANDLE
+
+typedef struct _WSANETWORKEVENTS
+{
+  long lNetworkEvents;
+  int iErrorCode[FD_MAX_EVENTS];
+} WSANETWORKEVENTS, FAR * LPWSANETWORKEVENTS;
+
+int WSAEventSelect (SOCKET s,
+                    WSAEVENT hEventObject,
+                    long lNetworkEvents);
+
+int WSAEnumNetworkEvents (SOCKET s,
+                          WSAEVENT hEventObject,
+                          LPWSANETWORKEVENTS lpNetworkEvents);
+
+#endif /* !defined ACE_HAS_WINSOCK2 */
+
 // Forward decl.
 class ACE_WFMO_Reactor;
 class ACE_Handle_Set;
@@ -1120,44 +1158,6 @@ private:
   ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &);
   // Deny access since member-wise won't work...
 };
-
-// If we don't have WinSOCK2, we need these defined
-#if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
-/*
- * WinSock 2 extension -- bit values and indices for FD_XXX network events
- */
-#define FD_READ_BIT      0
-#define FD_WRITE_BIT     1
-#define FD_OOB_BIT       2
-#define FD_ACCEPT_BIT    3
-#define FD_CONNECT_BIT   4
-#define FD_CLOSE_BIT     5
-#define FD_QOS_BIT       6
-#define FD_GROUP_QOS_BIT 7
-
-#define FD_QOS           (1 << FD_QOS_BIT)
-#define FD_GROUP_QOS     (1 << FD_GROUP_QOS_BIT)
-
-#define FD_MAX_EVENTS    8
-#define FD_ALL_EVENTS    ((1 << FD_MAX_EVENTS) - 1)
-
-#define WSAEVENT                HANDLE
-
-typedef struct _WSANETWORKEVENTS
-{
-  long lNetworkEvents;
-  int iErrorCode[FD_MAX_EVENTS];
-} WSANETWORKEVENTS, FAR * LPWSANETWORKEVENTS;
-
-int WSAEventSelect (SOCKET s,
-                    WSAEVENT hEventObject,
-                    long lNetworkEvents);
-
-int WSAEnumNetworkEvents (SOCKET s,
-                          WSAEVENT hEventObject,
-                          LPWSANETWORKEVENTS lpNetworkEvents);
-
-#endif /* !defined ACE_HAS_WINSOCK2 */
 
 #endif /* ACE_WIN32 */
 
