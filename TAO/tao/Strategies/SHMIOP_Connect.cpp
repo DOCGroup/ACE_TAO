@@ -210,7 +210,8 @@ TAO_SHMIOP_Server_Connection_Handler::handle_close (ACE_HANDLE handle,
                  rm));
 
   --this->refcount_;
-  if (this->refcount_ == 0)
+  if (this->refcount_ == 0 &&
+      this->is_registered ())
     {
       // Set the flag to indicate that it is no longer registered with
       // the reactor, so that it isn't included in the set that is
@@ -333,6 +334,14 @@ TAO_SHMIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_SHMIOP_Client_Connection_Handler::~TAO_SHMIOP_Client_Connection_Handler (void)
 {
+  // Cannot deal with errors, and therefore they are ignored.
+  this->transport_.send_buffered_messages ();
+
+  this->peer ().close ();
+
+  // Note that it also doesn't matter how much of the data was
+  // actually sent.
+  this->transport_.dequeue_all ();
 }
 
 int
@@ -477,7 +486,6 @@ TAO_SHMIOP_Client_Connection_Handler::handle_cleanup (void)
   // Now do the decrement of the ref count
   this->decr_ref_count ();
 
-  this->peer ().close ();
   return 0;
 }
 
