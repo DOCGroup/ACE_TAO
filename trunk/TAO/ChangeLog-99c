@@ -1,3 +1,7 @@
+Wed Jun 23 23:36:22 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
+
+        * orbsvcs/tests/ImplRepo/Makefile: Removed Repository_Test.
+
 Wed Jun 23 21:27:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * TAO-INSTALL.html: removed space from "resource requirements"
