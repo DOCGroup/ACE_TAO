@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-// The following configuration file contains the defines 
+// The following configuration file contains the defines
 // common to all Win32/MSVC/MFC combinations.
 
 #if !defined (ACE_WIN32_COMMON_H)
@@ -25,6 +25,7 @@
 #define ACE_LACKS_SYSV_SHMEM
 #define ACE_LACKS_FIFO
 #define ACE_LACKS_UNISTD_H
+#define ACE_LACKS_RLIMIT
 
 // Only MSVC 5.0 definitions
 #if (_MSC_VER >= 1100)
@@ -141,8 +142,8 @@
 
 // ----------------- "derived" defines and includes -----------
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) 
-	#if defined (_MSC_VER) 
+#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+	#if defined (_MSC_VER)
                 #if (_MSC_VER > 1020)
 			// Platform has its Standard C++ library in the namespace std
                         #if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
@@ -187,7 +188,7 @@
 	#endif
 
 	// MSVC 5.0 ?
-	#if (_MSC_VER > 1020) 
+	#if (_MSC_VER > 1020)
 		// Compiler/platform supports typename keyword
 		#define ACE_HAS_TYPENAME_KEYWORD
 
@@ -210,7 +211,7 @@
 #endif /* _MSC_VER */
 
 // MFC itself defines STRICT.
-#if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0) 
+#if defined( ACE_HAS_MFC ) && (ACE_HAS_MFC != 0)
 	#if !defined(ACE_HAS_STRICT)
 		#define ACE_HAS_STRICT 1
 	#endif
@@ -224,7 +225,7 @@
 // Build.Settings.C++.CodeGeneration.Processor is
 // set to Pentium !
 #if (_M_IX86 > 400)
-	// Used for high resolution timers 
+	// Used for high resolution timers
 	#define ACE_HAS_PENTIUM
 #endif
 
@@ -238,7 +239,7 @@
 	// Compiler/platform has thread-specific storage
 	#define ACE_HAS_THREAD_SPECIFIC_STORAGE
 
-	// must have _MT defined to include multithreading 
+	// must have _MT defined to include multithreading
 	// features from win32 headers
 	#if !defined(_MT)
 		#define _MT
@@ -368,11 +369,11 @@
 #endif /* _MSC_VER */
 
 #if (_WIN32_WINNT >= 0x0400)
-        #define ACE_HAS_INTERLOCKED_EXCHANGEADD 
+        #define ACE_HAS_INTERLOCKED_EXCHANGEADD
 	#define ACE_HAS_WIN32_TRYLOCK
 	#define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
-	// If CancelIO is undefined get the updated sp2-sdk 
+	// If CancelIO is undefined get the updated sp2-sdk
 	// from MS
 	#define ACE_HAS_CANCEL_IO
 #endif
