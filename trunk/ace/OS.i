@@ -1994,7 +1994,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
                        int type)
 {
   ACE_UNUSED_ARG (type);
-# if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_THREADS) && ! defined (__MACOSX__)
 #   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
@@ -2042,7 +2042,12 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
 
 #   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS vs. pSOS */
 
-# else
+# elif defined (__MACOSX__)
+  ACE_UNUSED_ARG (attributes);
+  ACE_UNUSED_ARG (type);
+  return 0;
+
+#else
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (type);
   ACE_NOTSUP_RETURN (-1);
@@ -2052,7 +2057,7 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes,
 ACE_INLINE int
 ACE_OS::condattr_destroy (ACE_condattr_t &attributes)
 {
-# if defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_THREADS) && ! defined (__MACOSX__)
 #   if defined (ACE_HAS_PTHREADS)
 
 #     if defined (ACE_HAS_PTHREADS_DRAFT4)
@@ -2926,7 +2931,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                              O_CREAT,
                              ACE_DEFAULT_FILE_PERMS,
                              count);
-      if (s->sema_ == SEM_FAILED)
+      if (s->sema_ == (sem_t *) SEM_FAILED)
         return -1;
       else
         return 0;
@@ -7094,7 +7099,7 @@ ACE_OS::sigwait (sigset_t *set, int *sig)
   if (sig == 0)
     sig = &local_sig;
 #if defined (ACE_HAS_THREADS)
-# if (defined (__FreeBSD__) && (__FreeBSD__ < 3)) || defined (CHORUS) || defined (ACE_PSOS)
+# if (defined (__FreeBSD__) && (__FreeBSD__ < 3)) || defined (CHORUS) || defined (ACE_PSOS) || defined (__MACOSX__)
     ACE_UNUSED_ARG (set);
     ACE_NOTSUP_RETURN (-1);
 # elif (defined (ACE_HAS_STHREADS) && !defined (_POSIX_PTHREAD_SEMANTICS))
