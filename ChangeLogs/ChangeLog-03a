@@ -1,3 +1,8 @@
+Mon Jul 30 09:43:06 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
+
+	* ace/OS.i (mutex_lock): Missing an argument to the ACE_OSCALL macro.
+	  Thanks to Bala for reporting this.	
+  
 Mon Jul 30 05:43:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/Synch.h (ACE_Semaphore): Corrected the comment on
