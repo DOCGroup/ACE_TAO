@@ -492,7 +492,7 @@ main (int argc, char *argv[])
   if (exit_later) 
     {
       cubit->Cubit_please_exit (env);
-      dexc (env, "server, please ACE_OS::exit");
+      dexc (env, "server, please exit");
     }
     
   CORBA::release (objref);
