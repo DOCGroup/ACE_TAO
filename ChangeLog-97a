@@ -1,3 +1,16 @@
+Thu Apr 17 16:33:21 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/{platform*,wrapper_macros}.GNU:
+	  moved -g out of wrapper_macros.GNU and into each platform
+	  file so that -gstabs can be used on SCO.  Thanks to
+	  Ganesh Pai <gpai@voicetek.com> for reporting that problem.
+
+	  (The real change was getting rid of the CFLAGS += DCFLAGS
+	  default.  We could have left DCFLAGS=-g in wrapper_macros.GNU
+	  and overridden for SCO.  But the way I changed things, the
+	  C/CFLAGS pieces are together in each platform file, so they're
+	  easier to find.)
+
 Thu Apr 17 08:25:06 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Name_Handler.h: Arrgh, there was still one more
