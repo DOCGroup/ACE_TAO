@@ -1,3 +1,13 @@
+Wed Feb 20 17:00:34 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU: Users who use
+	  5.2 and above could use native exceptions with inlining turned
+	  on. Thanks to Ken O'Brien <kmobrien@fedex.com> for reporting
+	  this problem. 
+
+	* THANKS: Added  Ken O'Brien <kmobrien@fedex.com> to the hall of
+	  fame. 
+
 Mon Feb 18 23:17:08 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ACEXML/parser/parser/Makefile.bor:
