@@ -342,6 +342,49 @@ ACE_NT_Service::state (ACE_Time_Value *wait_hint)
 }
 
 
+int
+ACE_NT_Service::state (DWORD *pstate, ACE_Time_Value *wait_hint)
+{
+
+  DWORD state = state (wait_hint);
+  if (state > 0)
+    *pstate = state;
+  return state == 0 ? -1 : 0;
+
+}
+
+
+
+// test_access
+//
+// Open a new handle, ignoring any handle open in svc_sc_handle_.  This
+// function's results are returned without leaving the handle open.
+int
+ACE_NT_Service::test_access (DWORD desired_access)
+{
+
+  int status = -1;     // Guilty until proven innocent
+
+  SC_HANDLE sc_mgr = OpenSCManager(0, 0, GENERIC_READ);
+  if (sc_mgr != 0)
+    {
+      SC_HANDLE handle = OpenService(sc_mgr,
+                                     this->name(),
+                                     desired_access);
+      CloseServiceHandle(sc_mgr);
+      if (handle != 0)
+        {
+	  status = 0;
+	  CloseServiceHandle (handle);
+        }
+    }
+
+  return status;
+
+}
+
+
+
 // report_status
 //
 // Reports the current status.  If new_status is not 0, it sets the 

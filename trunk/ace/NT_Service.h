@@ -231,9 +231,23 @@ public:
   DWORD state (ACE_Time_Value *wait_hint = 0);
   // Get the current state for the service.  If <wait_hint> is not 0, it
   // receives the service's reported wait hint.
-  // Note that this function doesn't return anything that's guaranteed
-  // noticeable on a failure.  It'll return 0 on failure, but that may not
-  // be guaranteed to avoid conflict with any other value now or in the future.
+  // Note that this function returns 0 on failure (not -1 as is usual in ACE).
+  // A zero return would (probably) only be returned if there is either no
+  // service with the given name in the SCM database, or the caller does not
+  // have sufficient rights to access the service state.  The set of valid
+  // service state values are all greater than 0.
+
+  int state (DWORD *pstate, ACE_Time_Value *wait_hint = 0);
+  // A version of state() which returns -1 for failure, 0 for success.
+  // The DWORD pointed to by pstate receives the state value.
+
+  int test_access (DWORD desired_access = SERVICE_ALL_ACCESS);
+  // Test access to the object's service in the SCM.  The service must already
+  // have been inserted in the SCM database.  This function has no affect on
+  // the service itself.  Returns 0 if the specified access is allowed, -1
+  // otherwise (either the access is denied, or there is a problem with the
+  // service's definition - check ACE_OS::last_error to get the specific
+  // error indication.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
