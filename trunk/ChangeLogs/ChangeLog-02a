@@ -18,6 +18,9 @@ Wed Mar 28 21:39:26 2001  Darrell Brunsch <brunsch@uci.edu>
 
           Added all the ACE_TEXT_* API macros needed above.
 
+          Thanks to Nick Pratt <npratt@microstrategy.com> for 
+          reporting the first of these errors.
+
 Wed Mar 28 22:07:03 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/tests.dsw: Fixed project dependencies between DLL_Test and
