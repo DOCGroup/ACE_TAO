@@ -100,7 +100,9 @@ ACE_RMCast_Reassembly::data (ACE_RMCast::Data &data)
   ACE_RMCast::Data downstream_data;
   downstream_data.source = data.source;
   downstream_data.sequence_number = data.sequence_number;
-  downstream_data.total_size = message->message_body ()->length ();
+  downstream_data.total_size = ACE_static_cast(
+                                    ACE_UINT32,
+                                    message->message_body ()->length ());
   downstream_data.fragment_offset = 0;
   downstream_data.payload = message->message_body ();
 

@@ -33,7 +33,7 @@ public:
     {
       ACE_DEBUG ((LM_DEBUG,
                   "event handler %d closed.\n",
-                  (int) handle));
+                  (size_t) handle));
       delete this;
       return 0;
     }

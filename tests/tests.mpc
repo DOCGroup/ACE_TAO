@@ -1123,6 +1123,13 @@ project(Tokens Test) : aceexe {
   }
 }
 
+project(FIFO Test) : aceexe {
+  Source_Files {
+    FIFO_Test.cpp
+  }
+  Header_Files {
+  }
+}
 project(CDR Array Test) : aceexe {
   exename = CDR_Array_Test
   Source_Files {

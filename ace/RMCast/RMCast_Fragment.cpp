@@ -36,7 +36,7 @@ ACE_RMCast_Fragment::data (ACE_RMCast::Data &received_data)
   ACE_Message_Block *mb = data.payload;
 
   // @@ We should keep the total size precomputed
-  data.total_size = mb->total_length ();
+  data.total_size = ACE_static_cast (ACE_UINT32, mb->total_length ());
 
   // We must leave room for the header
 #if defined (ACE_HAS_BROKEN_DGRAM_SENDV)
@@ -130,7 +130,8 @@ ACE_RMCast_Fragment::data (ACE_RMCast::Data &received_data)
             return -1;
 
           // adjust the offset
-          data.fragment_offset += max_fragment_payload;
+          data.fragment_offset += ACE_static_cast (ACE_UINT32,
+                                                   max_fragment_payload);
 
           // Now compute how much data is left in the last message
           // block, to check if we should continue sending it...

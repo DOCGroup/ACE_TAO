@@ -1,3 +1,23 @@
+Mon May  5 13:34:46 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/RMCast/RMCast_Fragment.cpp:
+        * ace/RMCast/RMCast_IO_UDP.cpp:
+        * ace/RMCast/RMCast_Partial_Message.cpp:
+        * ace/RMCast/RMCast_Reassembly.cpp:
+        * examples/Reactor/WFMO_Reactor/APC.cpp:
+        * examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * examples/Reactor/WFMO_Reactor/Multithreading.cpp:
+        * examples/Reactor/WFMO_Reactor/Prerun_State_Changes.cpp:
+        * examples/Reactor/WFMO_Reactor/Removals.cpp:
+        * examples/Reactor/WFMO_Reactor/WFMO_Reactor.mpc:
+        * tests/Basic_Types_Test.cpp:
+
+          Fixed build errors and warnings for Windows XP 64-bit.
+
+        * tests/tests.mpc:
+
+          Added the FIFO test.
+
 Mon May  5 17:07:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/bor.mpd:
@@ -5,8 +25,8 @@ Mon May  5 17:07:23 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Sun May  4 23:59:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ACE-INSTALL.html: Updated MAC OS part of the file as per the Jon
-	  Zorko's request.
+        * ACE-INSTALL.html: Updated MAC OS part of the file as per the Jon
+          Zorko's request.
 
 Sun May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -14,7 +34,7 @@ Sun May 16:45:46 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sat May 03 16:19:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* THANKS: Added Andras Lang to the hall of fame.
+        * THANKS: Added Andras Lang to the hall of fame.
 
 Sat May  3 18:18:07 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
