@@ -6377,7 +6377,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
-# if __cplusplus >= 199707L
+# if defined(__GNUC__) || __cplusplus >= 199707L
   ACE_OSCALL_RETURN (::shl_unload(handle), int, -1);
 # else
   ACE_OSCALL_RETURN (::cxxshl_unload(handle), int, -1);
@@ -6433,7 +6433,7 @@ ACE_OS::dlopen (ACE_DL_TYPE filename, int mode)
   ACE_WIN32CALL_RETURN (::LoadLibraryA (filename), ACE_SHLIB_HANDLE, 0);
 #elif defined (__hpux)
 
-# if __cplusplus >= 199707L
+# if defined(__GNUC__) || __cplusplus >= 199707L
   ACE_OSCALL_RETURN (::shl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
 # else
   ACE_OSCALL_RETURN (::cxxshl_load(filename, mode, 0L), ACE_SHLIB_HANDLE, 0);
