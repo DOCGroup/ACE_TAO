@@ -28,10 +28,17 @@ Tue May 05 08:35:18 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.i (gethrtime): added RDTSC support for all g++
           _and_ ACE_HAS_PENTIUM platforms.
 
+        * ace/config-vxworks5.x.h: added ACE_HAS_PENTIUM with GHS
+          on Intel platforms.
+
         * ace/Makefile: for GHS on Intel 8086, build gethrtime.cpp.
           It's used to provide a high-resolution time using the
           Pentium RDTSC instruction.  I don't know how to get
           GHS' asm to do it, so it uses g++.
+
+        * ACE-INSTALL.html: added note about carefully installing
+          egcs on Linux.  Thanks to Kurt Sussman <kls@best.com> for
+          tracking down the cause of mysterious link failures.
 
 Tue May 05 02:15:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
