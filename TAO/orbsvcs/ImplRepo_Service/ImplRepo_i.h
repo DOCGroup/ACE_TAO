@@ -139,17 +139,8 @@ private:
   Repository repository_;
   // Repository containing information about each server.
 
-  int parse_args (void);
-  // Parses the commandline arguments.
-
-  int read_ior (char *filename);
-  // Reads the IOR of the real server from the file.
-
   TAO_ORB_Manager orb_manager_;
   // The ORB manager.
-
-  FILE *ior_output_file_;
-  // File where the IOR of the server object is stored.
 
   char *server_key_;
   // Key of the obj ref of the server.
@@ -162,12 +153,6 @@ private:
 
   char **argv_;
   // The command line arguments.
-
-  unsigned int debug_level_;
-  // Debug level for the IR.  
-  // 0 - Quiet
-  // 1 - Trace messages
-  // 2 - Detailed messages
 };
 
 class IR_Forwarder: public  PortableServer::DynamicImplementation
