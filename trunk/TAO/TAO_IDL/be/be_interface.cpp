@@ -763,6 +763,7 @@ be_interface::gen_operation_table (const char *flat_name,
   {
     case BE_GlobalData::TAO_DYNAMIC_HASH:
       {
+        this->skel_count_ = 0;
         // Init the outstream appropriately.
         TAO_OutStream *os = this->strategy_->get_out_stream ();
 
