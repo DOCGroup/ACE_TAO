@@ -1,0 +1,26 @@
+project(JAWS) : acelib {
+  sharedname = JAWS
+  Source_Files {
+    HTTP_Server.cpp
+    HTTP_Config.cpp
+    HTTP_Handler.cpp
+    HTTP_Helpers.cpp
+    JAWS_Pipeline.cpp
+    JAWS_Concurrency.cpp
+    HTTP_Request.cpp
+    HTTP_Response.cpp
+    Parse_Headers.cpp
+    IO.cpp
+  }
+}
+
+project(main) : aceexe {
+
+  after += JAWS
+  libs  += JAWS
+
+  Source_Files {
+    main
+  }
+}
+
