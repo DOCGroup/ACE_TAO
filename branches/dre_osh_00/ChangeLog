@@ -1,3 +1,15 @@
+Sat May 10 19:19:09 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/OS.h:
+          Commented and moved more code, as listed below.
+
+        * ace/os_include/sys/types.h:
+          Added ACE_LACKS_SYS_MMAN_H define.
+
+        * ace/os_include/sys/types.h:
+          Moved nlink_t, uid_t, gid_t, and caddr_t typedefs for
+          ACE_WIN32 here.
+
 Fri May  9 22:45:24 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:

@@ -74,5 +74,17 @@ typedef unsigned int dev_t;
 #   endif
 # endif /* ACE_HAS_LLSEEK || ACE_HAS_LSEEK64 */
 
+#if defined (ACE_WIN32)
+#  if !defined (__BORLANDC__)
+     typedef DWORD nlink_t;
+#    if !defined(__MINGW32__)
+        typedef u_short mode_t;
+#    endif /* !__MINGW32__ */
+     typedef long uid_t;
+     typedef long gid_t;
+#  endif /* __BORLANDC__ */
+   typedef char *caddr_t;
+#endif /* ACE_WIN32 */
+
 #include "ace/post.h"
 #endif /* ACE_OS_INCLUDE_SYS_TYPES_H */

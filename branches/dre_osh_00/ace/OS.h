@@ -2773,7 +2773,7 @@ typedef void (*ACE_SignalHandlerV)(...);
 //  FILETIME ru_stime;
 //};
 
-//// MMAP flags
+#include "ace/os_include/sys/mman.h" //// MMAP flags
 //#   define PROT_READ PAGE_READONLY
 //#   define PROT_WRITE PAGE_READWRITE
 //#   define PROT_RDWR PAGE_READWRITE
@@ -2918,15 +2918,15 @@ typedef ACE_UINT64 ACE_hrtime_t;
 #     endif
 #   endif /* ACE_HAS_WINCE */
 
-#   if !defined (__BORLANDC__)
-typedef DWORD nlink_t;
-#       if !defined(__MINGW32__)
-typedef u_short mode_t;
-#       endif /* !__MINGW32__ */
-typedef long uid_t;
-typedef long gid_t;
-#   endif /* __BORLANDC__ */
-typedef char *caddr_t;
+//#   if !defined (__BORLANDC__)
+//typedef DWORD nlink_t;
+//#       if !defined(__MINGW32__)
+//typedef u_short mode_t;
+//#       endif /* !__MINGW32__ */
+//typedef long uid_t;
+//typedef long gid_t;
+//#   endif /* __BORLANDC__ */
+//typedef char *caddr_t;
 
 typedef DWORD ACE_exitcode;
 #   define ACE_SYSCALL_FAILED 0xFFFFFFFF
