@@ -43,7 +43,7 @@ Dirent_Test
 Dynamic_Priority_Test
 Enum_Interfaces_Test
 Env_Value_Test: !chorus !WinCE
-FIFO_Test: !Win32
+FIFO_Test: !Win32 !Cygwin
 Framework_Component_Test: !STATIC
 Future_Set_Test
 Future_Test

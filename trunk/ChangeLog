@@ -1,3 +1,36 @@
+Mon Jul 14 18:33:12 UTC 2003  Johnny Willemsen
+
+        * ace/os_include/os_errno.h:
+          When building for VxWorks also include errnoLib.h
+
+        * ace/OS.cpp (inet_aton):
+          Fixed VxWorks specific implementation. Thanks to Eric Held
+          <Eric.Held@harris.com> for reporting this, this fixes bugzilla
+          entry [1484]
+
+        * THANKS:
+          Added Eric Held <Eric.Held@harris.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+          Removed windows specific use of cmd. This is not needed and
+          causes problems when using MinGW with the MSYS shell on windows.
+
+        * include/makeinclude/platform_cygwin32.GNU:
+          Threading compiles with cygwin again, so no need anymore to set
+          threads to 0 when not defined.
+
+        * ChangeLog:
+          Fixed fuzz errors about backslashed in file path
+
+        * tests/Logging_Strategy_Test.cpp:
+          Removed not needed newline.
+
+        * tests/MEM_Stream_Test.cpp:
+          Fixed typo in comment
+
+        * tests/run_test.lst:
+          The FIFO_Test doesn't run with Cygwin.
+
 Mon Jul 14 11:16:25 2003  Craig Rodrigues <crodrigu@bbn.com>
 
 	* ace/POSIX_Proactor.cpp: FreeBSD defines the sysconf value
@@ -9,13 +42,13 @@ Mon Jul 14 11:16:25 2003  Craig Rodrigues <crodrigu@bbn.com>
 
 Sat Jul 12 17:55:14 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Conn_Test.cpp: 
+        * tests/Conn_Test.cpp:
 
 	  Added explicit template instantiation for ACE_Connector_Base.
 
 Fri Jul 11 16:30:02 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\MT_Reference_Counted_Event_Handler_Test.cpp (run_main): 
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp (run_main):
 
 	  The string in ACE_START_TEST was incorrect.
 
@@ -48,54 +81,54 @@ Fri Jul 11 01:08:41 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Fri Jul 11 00:38:16 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Dev_Poll_Reactor.h (ACE_Dev_Poll_Reactor): 
+        * ace/Dev_Poll_Reactor.h (ACE_Dev_Poll_Reactor):
 
 	  Added find_handler() method.
 
 Thu Jul 10 19:51:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Conn_Test.cpp: 
+        * tests/Conn_Test.cpp:
 
 	  Fixed incorrect template instantiation for
 	  ACE_NonBlocking_Connect_Handler.
 
 Thu Jul 10 15:11:55 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\MT_Reference_Counted_Event_Handler_Test.dsp
-	* tests\MT_Reference_Counted_Notify_Test.dsp
-	* tests\NonBlocking_Conn_Test.dsp
-	* tests\Reactor_Registration_Test.dsp
-	* tests\Reference_Counted_Event_Handler_Test.dsp
-	* tests\Timer_Cancellation_Test.dsp
-	* tests\Timer_Queue_Reference_Counting_Test.dsp
-	* tests\WFMO_Reactor_Test.dsp
+        * tests/MT_Reference_Counted_Event_Handler_Test.dsp
+        * tests/MT_Reference_Counted_Notify_Test.dsp
+        * tests/NonBlocking_Conn_Test.dsp
+        * tests/Reactor_Registration_Test.dsp
+        * tests/Reference_Counted_Event_Handler_Test.dsp
+        * tests/Timer_Cancellation_Test.dsp
+        * tests/Timer_Queue_Reference_Counting_Test.dsp
+        * tests/WFMO_Reactor_Test.dsp
 
 	  Updated project files to add Main.cpp.
 
 Wed Jul 09 22:48:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\Thread_Pool_Reactor_Resume_Test: 
+        * tests/Thread_Pool_Reactor_Resume_Test:
 
 	  Removed the lame reference counting scheme in this test and
 	  replaced it with the new and proper reference counting.
 
 Wed Jul 09 21:37:52 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\MT_Reactor_Timer_Test.cpp (handle_close): 
+        * tests/MT_Reactor_Timer_Test.cpp (handle_close):
 
 	  Removed unused arg warning.
 
 Wed Jul 09 21:22:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Timer_Heap_T.cpp (insert): 
+        * ace/Timer_Heap_T.cpp (insert):
 
 	  The decision to grow the heap was made on this formula:
 
 	    if (this->cur_size_ + 2 >= this->max_size_)
 
 	  though the correct decision should have been:
-	
-	    if (this->cur_size_ + this->cur_limbo_ + 2 >= this->max_size_)	  
+
+	    if (this->cur_size_ + this->cur_limbo_ + 2 >= this->max_size_)
 
 	  Without this, tests/Timer_Queue_Test was failing with
 	  cur_size_ = 15, cur_limbo_ = 20 and max_size_ = 35, but insert()
@@ -103,7 +136,7 @@ Wed Jul 09 21:22:24 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Wed Jul 09 13:17:57 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Select_Reactor_Base.cpp (purge_pending_notifications): 
+        * ace/Select_Reactor_Base.cpp (purge_pending_notifications):
 
 	  Fixed build problem when ACE_HAS_REACTOR_NOTIFICATION_QUEUE,
 	  there was a typo in the name of a local variable.  Thanks to
@@ -111,7 +144,7 @@ Wed Jul 09 13:17:57 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Tue Jul 08 17:28:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* tests\MT_Reactor_Timer_Test.cpp (handle_close): 
+        * tests/MT_Reactor_Timer_Test.cpp (handle_close):
 
 	  Not sure why handle_close() was trying to remove the handler
 	  from the Reactor.  handle_close() is called as a result of being
@@ -119,14 +152,14 @@ Tue Jul 08 17:28:58 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 Tue Jul 08 15:02:48 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples\Reactor\Misc\pingpong.cpp: 
+        * examples/Reactor/Misc/pingpong.cpp:
 
 	  Included "ace/Test_and_Set.h" explicitly.
 
 Tue Jul 08 14:49:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Timer_List_T: 
-	* ace\Timer_Wheel_T: 
+        * ace/Timer_List_T:
+        * ace/Timer_Wheel_T:
 
 	  Fixed unused arg warning in cancel_i().
 
@@ -156,8 +189,8 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  that needs to be shutdown in a safe manner.  The following
 	  illustrates an example of how this mechanism works:
 
-	  - When a handler is created, it reference count is one. 
-	  
+	  - When a handler is created, it reference count is one.
+
 	  - After the handler is registered with the Reactor, it reference
 	  count becomes two.
 
@@ -171,19 +204,19 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Assuming an external event (and thread) decides to close the
 	  handler.  It simply removes the handler from the Reactor.  This
-	  decreases the reference count to three.  
+	  decreases the reference count to three.
 
 	  - As each thread completes their upcall, the reference reduces.
 
 	  - Once the final thread exits the upcall, the reference reaches
-	  zero, and the handler is finally deleted.	
+	  zero, and the handler is finally deleted.
 
 	  This mechanism ensures that the handler is not deleted until the
-	  final upcall thread exits the handler.  
+	  final upcall thread exits the handler.
 
 	  Reference counting on handlers is optional and is disabled by
 	  default.  To enable reference counting on a handler, reset its
-	  reference counting policy to "ENABLED".  
+	  reference counting policy to "ENABLED".
 
 	  To facilitate reference counting of handlers, an
 	  ACE_Event_Handler_var class was added.  This class is akin to
@@ -197,22 +230,22 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  the new memory management mechanisms and remove existing
 	  concurrency bugs.
 
-	  Several new examples/tests were added:  
+	  Several new examples/tests were added:
 
-	  - tests\Reference_Counted_Event_Handler_Test 
-	  - tests\MT_Reference_Counted_Event_Handler_Test 
-	  - tests\MT_Reference_Counted_Notify_Test
-	  - tests\Timer_Queue_Reference_Counting_Test 
-	  - tests\NonBlocking_Conn_Test 
-	  - tests\Reactor_Registration_Test 
-	  - tests\WFMO_Reactor_Test 
-	  - tests\Timer_Cancellation_Test
+          - tests/Reference_Counted_Event_Handler_Test
+          - tests/MT_Reference_Counted_Event_Handler_Test
+          - tests/MT_Reference_Counted_Notify_Test
+          - tests/Timer_Queue_Reference_Counting_Test
+          - tests/NonBlocking_Conn_Test
+          - tests/Reactor_Registration_Test
+          - tests/WFMO_Reactor_Test
+          - tests/Timer_Cancellation_Test
 
 	  Details follow below:
 
 	Fri May 09 20:13:37 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\Event_Handler: 
+        * ace/Event_Handler:
 
 	  Added reference counting capabilities to the event handler.  The
 	  reference counting will be used for event handler memory
@@ -231,14 +264,14 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  Added reactor_timer_interface() method that returns the
 	  Reactor's timer related interface.
 
-	* ace\Reactor_Timer_Interface.h: 
+        * ace/Reactor_Timer_Interface.h:
 
 	  Added a new class ACE_Reactor_Timer_Interface that contains
 	  timer related (pure virtual) methods of the Reactor.  This
 	  allows us to make timer related calls on the Reactor from the
 	  Timer Queue without having to include Reactor.h.
 
-	* ace\Reactor: 
+        * ace/Reactor:
 
 	  Vastly improved documentation, specially with respect to how the
 	  reference counting works.
@@ -247,15 +280,15 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  so that timer related calls can be made on the Reactor from the
 	  Timer Queue without having to include Reactor.h.
 
-	* ace\Reactor: 
-	* ace\Reactor_Impl: 
-	* ace\Select_Reactor_T: 
-	* ace\WFMO_Reactor: 
+        * ace/Reactor:
+        * ace/Reactor_Impl:
+        * ace/Select_Reactor_T:
+        * ace/WFMO_Reactor:
 
 	  Added a new find_handler() method that returns the event handler
 	  associated with a <handle>.
 
-	* ace\Select_Reactor_Base.cpp: 
+        * ace/Select_Reactor_Base.cpp:
 
 	  - bind(): Make sure that the user is not registering a different
 	  handler for an existing handle in the
@@ -282,11 +315,11 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Added reference counting for notifies.
 
-	* ace\Select_Reactor_T: 
+        * ace/Select_Reactor_T:
 
 	  notify_handle(): Added reference counting to upcalls.
 
-	* ace\TP_Reactor: 
+        * ace/TP_Reactor:
 
 	  - remove_handler(): All remove_handler() specializations can be
 	  removed since there no longer is the requirement of calling
@@ -300,7 +333,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - mask_ops(): Specialization no longer necessary since the base
 	  class now does the right thing.
 
-	* ace\WFMO_Reactor: 
+        * ace/WFMO_Reactor:
 
 	  - handler(): Original handler() method was not locked.
 
@@ -308,9 +341,9 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  needed.
 
 	  - make_changes_in_current_infos():
-	  - make_changes_in_suspension_infos(): 
+	  - make_changes_in_suspension_infos():
 	  - make_changes_in_to_be_added_infos():
-	
+
 	  The iteration loop was incorrect.  When an entry was replaced
 	  from the one at the end, the newly shifted entry was skipped and
 	  not evaluated.  make_changes_in_to_be_added_infos() did not need
@@ -328,14 +361,14 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  Added reference counting for notifies.
 
-	* ace\Timer_Queue_T: 
+        * ace/Timer_Queue_T:
 
           - Not sure why we were including Test_and_Set.h when we only
 	  needed to include Event_Handler.h.
 
 	  - dispatch_info() and dispatch_info_i(): Made these virtual so
-	  that they can be specialized.	
-	
+	  that they can be specialized.
+
 	  - ACE_Timer_Node_Dispatch_Info_T: Added <recurring_timer_> so
 	  that we can determine if we need to call remove_reference() if
 	  it is not a recurring timer and if reference counting is
@@ -379,11 +412,11 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - deletion(): Now calls cancel_type() and cancel_timer() for
 	  each timer remaining in the queue.
-	
-	* ace\Timer_List_T: 
-	* ace\Timer_Wheel_T: 
-	* ace\Timer_Heap_T: 
-	* ace\Timer_Hash_T: 
+
+        * ace/Timer_List_T:
+        * ace/Timer_Wheel_T:
+        * ace/Timer_Heap_T:
+        * ace/Timer_Hash_T:
 
 	  - schedule_i(): This method replaces the old schedule() method.
 	  Locking is not necessary anymore.
@@ -395,7 +428,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - cancel_i(): The <skip_close> check will be performed in the
 	  upcall functor.
 
-	* ace\Timer_Heap_T: 
+        * ace/Timer_Heap_T:
 
 	  - ~ACE_Timer_Heap_T(): Don't use <cur_size_> for the for loop
 	  since it reduces after free_node() is called.
@@ -403,7 +436,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  - cancel(): Not sure why this is the only cancel() where the
 	  upcall is made outside the lock.
 
-	* ace\Timer_Wheel_T: 
+        * ace/Timer_Wheel_T:
 
 	  - expire(): Made this method similar to Timer_Queue_T::expire()
 	  by (a) invoking preinvoke() before calling upcall() and invoking
@@ -411,12 +444,12 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  skip past time values that have already "expired" when
 	  rescheduling.
 
-	* ace\Timer_Hash_T: 
+        * ace/Timer_Hash_T:
 
  	  - ACE_Timer_Hash_Upcall: Updated this upcall functor to match
-	  the new APIs. 
+	  the new APIs.
 
-	  - ACE_Timer_Hash_Upcall::registration(): 
+	  - ACE_Timer_Hash_Upcall::registration():
 	  - ACE_Timer_Hash_Upcall::cancel_type():
 	  - ACE_Timer_Hash_Upcall::cancel_timer():
 
@@ -439,7 +472,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Hash_Token: Added TYPE information to the token.  This
 	  required templatizing Hash_Token since TYPE is a template
-	  parameter.	
+	  parameter.
 
 	  - reschedule(): Cancel the old timer before registering the new
 	  one.  Otherwise, the old timer will always remain in the
@@ -458,12 +491,12 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  before calling upcall() and invoking postinvoke() after calling
 	  upcall().
 
-	* ace\Proactor: 
+        * ace/Proactor:
 
 	  Updated ACE_Proactor_Handle_Timeout_Upcall upcall functor to
 	  match the new APIs.
 
-	* ace\Connector: 
+        * ace/Connector:
 
 	  Completely reworked the Connector to utilize the reference
 	  counting provided by the Reactor.  This new design fixes bugs
@@ -492,16 +525,16 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Reference counting of ASTs is no longer needed since event
 	  handlers are reference counted.
-	 
+
 	  Thanks to Andrew Voumard <andrewv@melbpc.org.au> for helping
 	  with this.
 
-	* tests\Reference_Counted_Event_Handler_Test: 
+        * tests/Reference_Counted_Event_Handler_Test:
 
 	  This test is used to check reference counting of the Event
 	  Handler when it interacts with the Reactor.
 
-	* tests\MT_Reference_Counted_Event_Handler_Test: 
+        * tests/MT_Reference_Counted_Event_Handler_Test:
 
           This test tries to represents what happens in the TAO ORB wrt to
 	  event handlers, reactors, timer queues, threads, and connection
@@ -515,18 +548,18 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  connection recycling and cache purging.  Nested upcalls are also
 	  tested.
 
-	* tests\MT_Reference_Counted_Notify_Test:
+        * tests/MT_Reference_Counted_Notify_Test:
 
 	  This test is used to check reference counting of the event
 	  handlers when it interacts with the reactor notification
 	  mechanism.
 
-	* tests\Timer_Queue_Reference_Counting_Test: 
+        * tests/Timer_Queue_Reference_Counting_Test:
 
 	  New test is used to check reference counting of the Event
 	  Handler when it interacts with Timer Queues.
 
-	* tests\NonBlocking_Conn_Test: 
+        * tests/NonBlocking_Conn_Test:
 
 	  This test checks for the proper working of the following:
           - blocking connections
@@ -535,57 +568,57 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
           - non-blocking connections without waiting for completions
           - non-blocking connections with timeouts
 
-	* tests\Reactor_Registration_Test: 
-	
+        * tests/Reactor_Registration_Test:
+
           This is a test of registering handlers with the Reactor.
-	
-	* tests\WFMO_Reactor_Test: 
-	  
+
+        * tests/WFMO_Reactor_Test:
+
 	  New test of the WFMO_Reactor.  It makes sure that removals and
 	  suspensions work correctly.
 
-	* tests\Timer_Cancellation_Test:
+        * tests/Timer_Cancellation_Test:
 
 	  A test to ensure the timer cancellation works correctly.
 
-	* tests\Makefile: 
-	* tests\Makefile.am: 
-	* tests\Makefile.bor: 
-	* tests\run_test.lst:
-	* tests\tests.icp:	
-	* tests\tests.mpc:	
-	* tests\tests.dsw:	
-	
+        * tests/Makefile:
+        * tests/Makefile.am:
+        * tests/Makefile.bor:
+        * tests/run_test.lst:
+        * tests/tests.icp:
+        * tests/tests.mpc:
+        * tests/tests.dsw:
+
 	  Added new tests:
 
 	  - MT_Reference_Counted_Event_Handler_Test
 	  - MT_Reference_Counted_Notify_Test
 	  - NonBlocking_Conn_Test
-	  - Reactor_Registration_Test	
+	  - Reactor_Registration_Test
 	  - Reference_Counted_Event_Handler_Test
 	  - Timer_Cancellation_Test
 	  - Timer_Queue_Reference_Counting_Test
 	  - WFMO_Reactor_Test
 
-	* tests\Conn_Test.cpp: 
+        * tests/Conn_Test.cpp:
 
 	  Updated template instantiations.
 
-	* tests\icc.bat:
-	* tests\run_tests.bat:
-	* tests\run_tests.psosim:	
+        * tests/icc.bat:
+        * tests/run_tests.bat:
+        * tests/run_tests.psosim:
 
 	  Removed this file since it has become obsolete.
 
 	Wed May 14 17:56:13 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/OS.i: 
+	* ace/OS.i:
 
 	  - event_timedwait(): For relative times, the <timeout> parameter
 	  was being modified.  Instead use a stack variable such that the
 	  <timeout> parameter is not modified.
 
-	* ace/Timer_Hash_T: 
+	* ace/Timer_Hash_T:
 
 	  - expire(): Remove nodes from the buckets instead of simply
 	  getting them and canceling them later.  Also, if timers were
@@ -613,28 +646,28 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  on UNIX platforms and that causes ambiguity between
 	  handler(ACE_HANDLE) and handler(int).
 
-	* ace/Select_Reactor_Base.cpp (unbind): 
+	* ace/Select_Reactor_Base.cpp (unbind):
 
 	  unbind() and bind(): Minor fixes for UNIX specific code.
 
-	* ace/SOCK_SEQPACK_Association.cpp: 
+	* ace/SOCK_SEQPACK_Association.cpp:
 
 	  Added template instantiation for ACE_Auto_Array_Ptr<sockaddr_in>.
 
-	* ace/Connector.cpp: 
+	* ace/Connector.cpp:
 
 	  cancel() and close(): Changed calls from Reactor::handler() to
 	  Reactor::find_handler().
 
-	* tests/MT_Reference_Counted_Notify_Test.cpp: 
+	* tests/MT_Reference_Counted_Notify_Test.cpp:
 	* tests/NonBlocking_Conn_Test.cpp:
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
-	* tests/Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+	* tests/Reference_Counted_Event_Handler_Test.cpp:
 	* tests/Timer_Queue_Reference_Counting_Test.cpp:
-	
+
 	  Added template instantiations.
 
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
 
 	  - main(): Added code to ignore SIGPIPE.
 
@@ -645,16 +678,16 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	Thu May 15 18:12:10 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/WFMO_Reactor (find_handler): 
+	* ace/WFMO_Reactor (find_handler):
 
 	  Fixed minor oversights.
 
-	* ace/Timer_Hash_T.cpp: 
-	* ace/Connector.cpp: 
+	* ace/Timer_Hash_T.cpp:
+	* ace/Connector.cpp:
 
 	  Fixed unused arg warnings.
 
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
 
 	  - Added a Pipe class. It is a replica of the ACE_Pipe class.
 	  Only difference is that this class always uses two sockets to
@@ -662,13 +695,13 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	  - Removed some test cases that don't work on Linux.
 
-	* tests/MT_Reference_Counted_Event_Handler_Test.cpp: 
+	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
 	* tests/MT_Reference_Counted_Notify_Test.cpp:
 	* tests/Reference_Counted_Event_Handler_Test.cpp:
 	* tests/Reactor_Registration_Test.cpp:
 	* tests/Timer_Cancellation_Test.cpp:
 	* tests/Timer_Queue_Reference_Counting_Test.cpp:
-	
+
 	  - Fixed member ordering in constructors.
 	  - Fixed unused arg warnings.
 
@@ -701,13 +734,13 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	Fri May 16 16:34:35 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests/MT_Reference_Counted_Event_Handler_Test.cpp:
-	* tests/Timer_Queue_Reference_Counting_Test.cpp (cancellation_test): 
+	* tests/Timer_Queue_Reference_Counting_Test.cpp (cancellation_test):
 
-	  Fixed static array initialization warnings.	
+	  Fixed static array initialization warnings.
 
 	Tue May 20 18:33:07 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace/Connector: 
+	* ace/Connector:
 
 	  Reverted the Connector to inherit from ACE_Service_Object again.
 	  Even though the Connector no longer registers with the Reactor,
@@ -718,7 +751,7 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 
 	Mon Jun 30 16:31:33 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* ace\SSL\ACE_SSL_LIB.dsp: 
+        * ace/SSL/ACE_SSL_LIB.dsp:
 
 	  Fixed the project names - they should be:
 
@@ -726,13 +759,13 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  # Name "ACE_SSL_LIB - Win32 Static Debug"
 
   	  instead of:
-	
+
 	  # Name "ACE_SSL_LIB - Win32 Release"
 	  # Name "ACE_SSL_LIB - Win32 Debug"
 
 	Wed Jul 02 15:31:33 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* examples\Connection\non_blocking\CPP-connector.cpp:
+        * examples/Connection/non_blocking/CPP-connector.cpp:
 
 	  handle_close() on the Connector was being specialized to know
 	  when the connection was not successful.  This is not the correct
@@ -741,18 +774,18 @@ Mon Jul 07 18:00:38 2003  Irfan Pyarali  <irfan@oomworks.com>
 	  used by ACE_Connector.  Therefore, I changed this to use close()
 	  on the service handler.
 
-	* apps\JAWS\clients\Caching\http_handler.h: 
+        * apps/JAWS/clients/Caching/http_handler.h:
 
 	  Included "ace/Svc_Handler.h" explicitly.
 
-	* examples\Logger\Acceptor-server\server_loggerd.cpp: 
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
 
 	  Included "ace/Test_and_Set.h" explicitly since
-	  ace\Timer_Queue_T.h is no longer including it.
+          ace/Timer_Queue_T.h is no longer including it.
 
 	Thu Jun 26 17:36:13 2003  Irfan Pyarali  <irfan@oomworks.com>
 
-	* bin\msvc_auto_compile.pl: 
+        * bin/msvc_auto_compile.pl:
 
 	  Added -tests_TAO and -examples_TAO options to make all projects
 	  in TAO tests and TAO examples.
