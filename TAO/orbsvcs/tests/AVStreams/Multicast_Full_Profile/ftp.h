@@ -5,44 +5,13 @@
 #define TAO_AV_FTP_H
 
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Flows_T.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
-
-// class FTP_Client_Flow_Handler
-// //  :public virtual ACE_Event_Handler,
-//    public virtual TAO_FlowProducer
-// {
-// public:
-//   FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
-//                            ACE_Time_Value &timeout);
-//   virtual int handle_timeout (const ACE_Time_Value &tv,
-//                               const void *arg = 0);
-//   virtual int start (void);
-//   virtual int stop (void);
-//   virtual int get_callback (const char *flowname,
-//                             TAO_AV_Callback *&callback);
-// protected:
-//   TAO_ORB_Manager *orb_manager_;
-//   long timer_id_;
-//   int count_;
-//   ACE_Time_Value timeout_;
-// };
-
-// class FTP_Client_Callback
-//   :public TAO_AV_Callback
-// {
-// public:
-//   FTP_Client_Callback (FTP_Client_Flow_Handler *handler);
-//   virtual int handle_start (void);
-//   virtual int handle_stop (void);
-// protected:
-//   FTP_Client_Flow_Handler *handler_;
-// };
 
 class FTP_Client_Callback;
 class FTP_Client_Producer
@@ -76,19 +45,6 @@ protected:
   TAO_AV_Protocol_Object *protocol_object_;
 };
 
-// class FTP_Client_FDev
-//   :public TAO_FDev
-// {
-// public:
-//   FTP_Client_FDev (TAO_ORB_Manager *orb_manger);
-//   virtual AVStreams::FlowProducer_ptr make_producer (AVStreams::FlowConnection_ptr the_requester,
-//                                                      AVStreams::QoS & the_qos,
-//                                                      CORBA::Boolean_out met_qos,
-//                                                      char *& named_fdev,
-//                                                      CORBA::Environment &env = CORBA::Environment::default_environment ());
-// protected:
-//   TAO_ORB_Manager *orb_manager_;
-// };
 
 typedef TAO_AV_Endpoint_Reactive_Strategy_A<TAO_StreamEndPoint_A,TAO_VDev,AV_Null_MediaCtrl> ENDPOINT_STRATEGY;
 
@@ -108,7 +64,6 @@ public:
 private:
   int parse_args (int argc, char **argv);
   int bind_to_server (const char *name);
-  TAO_ORB_Manager *orb_manager_;
   ENDPOINT_STRATEGY endpoint_strategy_;
   AVStreams::MMDevice_var server_mmdevice_;
   TAO_MMDevice client_mmdevice_;

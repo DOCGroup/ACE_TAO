@@ -5,7 +5,7 @@
 #define TAO_AV_FTP_H
 
 #include "ace/Get_Opt.h"
-#include "tao/PortableServer/ORB_Manager.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/Naming/Naming_Utils.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -13,33 +13,11 @@
 #include "orbsvcs/AV/sfp.h"
 #include "orbsvcs/AV/MCast.h"
 
-// class FTP_Client_Flow_Handler
-//   :public virtual ACE_Event_Handler
-// {
-// public:
-//   FTP_Client_Flow_Handler (TAO_ORB_Manager *orb_manager,
-//                            ACE_Time_Value &timeout);
-//   virtual int handle_timeout (const ACE_Time_Value &tv,
-//                               const void *arg = 0);
-//   virtual int start (void);
-//   virtual int stop (void);
-//   virtual int set_protocol_object (TAO_AV_Protocol_Object *object);
-// protected:
-//   TAO_ORB_Manager *orb_manager_;
-//   long timer_id_;
-//   int count_;
-//   TAO_AV_Protocol_Object *protocol_object_;
-//   ACE_Time_Value timeout_;
-// };
-
 class FTP_Client_Callback
   :public TAO_AV_Callback
 {
 public:
   FTP_Client_Callback (void);
-  //  FTP_Client_Callback (FTP_Client_Flow_Handler *handler);
-//   virtual int handle_start (void);
-//   virtual int handle_stop (void);
   virtual int handle_end_stream (void);
   void set_protocol_object (TAO_AV_Protocol_Object *protocol_object) {this->protocol_object_ = protocol_object;}
   virtual int handle_timeout (void *arg);
@@ -48,7 +26,6 @@ public:
 
 protected:
   int count_;
-  //  FTP_Client_Flow_Handler *handler_;
   TAO_AV_Protocol_Object *protocol_object_;
 };
 
@@ -56,7 +33,7 @@ class FTP_Client_StreamEndPoint
   :public TAO_Client_StreamEndPoint
 {
 public:
-  FTP_Client_StreamEndPoint (TAO_ORB_Manager *orb_manager = 0);
+  FTP_Client_StreamEndPoint (void);
 
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
@@ -76,7 +53,8 @@ class Endpoint_Reactive_Strategy
   : public ENDPOINT_STRATEGY
 {
 public:
-  Endpoint_Reactive_Strategy (TAO_ORB_Manager *orb_manager,
+  Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb,
+                              PortableServer::POA_ptr poa,
                               Client *client_ptr);
   // constructor . The orb manager is needed for the TAO_AV_Endpoint_Reactive_Strategy_A.
 

@@ -3,7 +3,6 @@
 #include "ping.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/corba.h"
-#include "tao/PortableServer/ORB_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Stats.h"
@@ -21,8 +20,6 @@ Pong_Send_Callback pong_callback;
 
 ACE_hrtime_t recv_base = 0;
 ACE_Throughput_Stats recv_latency;
-
-CORBA::ORB_ptr the_orb = 0;
 
 int
 parse_args (int argc, char *argv[])
@@ -96,40 +93,31 @@ int main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      TAO_AV_Core *av_core = TAO_AV_CORE::instance ();
-      av_core->init (argc, argv, ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
       parse_args (argc, argv);
-
-      TAO_ORB_Manager* orb_manager =
-        av_core->orb_manager ();
-
-      CORBA::ORB_var orb = orb_manager->orb ();
-      the_orb = orb.in ();
-      // No copying, because the global variable is not used after the
-      // event loop finishes...
-
-      CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA", ACE_TRY_ENV);
+      
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv);
+      
+      CORBA::Object_var obj
+        = orb->resolve_initial_references ("RootPOA");
+      
+      PortableServer::POA_var poa
+        = PortableServer::POA::_narrow (obj);
+      
+      PortableServer::POAManager_var mgr
+        = poa->the_POAManager ();
+      
+      mgr->activate ();
+      
+      TAO_AV_CORE::instance ()->init (orb.in (),
+                                      poa.in (),
+                                      ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      poa_manager->activate (ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+      
       // Register the video mmdevice object with the ORB
-
       Reactive_Strategy *reactive_strategy;
       ACE_NEW_RETURN (reactive_strategy,
-                      Reactive_Strategy (orb_manager),
+                      Reactive_Strategy (orb.in (), poa.in ()),
                       1);
       TAO_MMDevice *mmdevice_impl;
       ACE_NEW_RETURN (mmdevice_impl,
@@ -191,7 +179,7 @@ int main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Calibrating scale factory . . . "));
       ACE_UINT32 gsf = ACE_High_Res_Timer::global_scale_factor ();
-      ACE_DEBUG ((LM_DEBUG, "done\n"));
+      ACE_DEBUG ((LM_DEBUG, "done %d \n", gsf));
 
       recv_latency.dump_results ("Receive", gsf);
 
@@ -222,7 +210,7 @@ int
 Ping_Recv::get_callback (const char *,
                          TAO_AV_Callback *&callback)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Ping_Recv::get_callback\n"));
+  ACE_DEBUG ((LM_DEBUG,"Ping_Recv::get_callback\n"));
   callback = &this->callback_;
   return 0;
 }
@@ -231,7 +219,7 @@ int
 Ping_Recv_Callback::handle_stop (void)
 {
   ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::stop"));
-  the_orb->shutdown ();
+  TAO_AV_CORE::instance ()->orb ()->shutdown ();
 
   return 0;
 }
@@ -241,7 +229,7 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
                                    TAO_AV_frame_info *,
                                    const ACE_Addr &)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame\n"));
+  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::receive_frame\n"));
 
   for (const ACE_Message_Block *i = frame;
        i != 0;
@@ -274,7 +262,7 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 int
 Ping_Recv_Callback::handle_destroy (void)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::destroy\n"));
+  ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::destroy\n"));
   return 0;
 }
 
@@ -291,7 +279,7 @@ int
 Pong_Send::get_callback (const char *,
                          TAO_AV_Callback *&callback)
 {
-  // ACE_DEBUG ((LM_DEBUG,"Pong_Send::get_callback\n"));
+  ACE_DEBUG ((LM_DEBUG,"Pong_Send::get_callback\n"));
   callback = &pong_callback;
   return 0;
 }
@@ -320,7 +308,7 @@ Pong_Send_Callback::handle_end_stream (void)
 int
 Pong_Send_Callback::send_response (ACE_hrtime_t stamp)
 {
-  // ACE_DEBUG ((LM_DEBUG, "pong send response)\n"));
+  ACE_DEBUG ((LM_DEBUG, "pong send response)\n"));
 
   ACE_hrtime_t buf[2];
 
@@ -334,7 +322,7 @@ Pong_Send_Callback::send_response (ACE_hrtime_t stamp)
   int result = this->protocol_object_->send_frame (&mb);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "FTP_Client_Flow_Handler::send - %p\n",
+                       "Pong_Send_Callback::send - %p\n",
                        ""),
                       -1);
 

@@ -73,13 +73,12 @@ int
 FTP_Server_Callback::handle_destroy (void)
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_SFP_Callback::end_stream\n"));
-  TAO_AV_CORE::instance ()->stop_run ();
+  TAO_AV_CORE::instance ()->orb ()->shutdown (0);
   return 0;
 }
 
 Server::Server (void)
-  :orb_manager_ (TAO_AV_CORE::instance ()->orb_manager ()),
-   reactive_strategy_ (orb_manager_)
+  : reactive_strategy_ (TAO_AV_CORE::instance ()->orb (), TAO_AV_CORE::instance ()->poa ())
 {
 }
 
@@ -90,49 +89,27 @@ Server::init (int argc,
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->init (argc,
-                                      argv,
-                                      ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-      this->orb_manager_ =
-        TAO_AV_CORE::instance ()->orb_manager ();
-
-      // Initialize the orb_manager
-      this->orb_manager_->init_child_poa (argc,
-                                          argv,
-                                          "child_poa",
-                                          ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
-      CORBA::ORB_var orb =
-        this->orb_manager_->orb ();
-
-      PortableServer::POA_var child_poa =
-        this->orb_manager_->child_poa ();
-
-
+      PortableServer::POAManager_var mgr
+        = TAO_AV_CORE::instance ()->poa ()->the_POAManager ();
+      
+      mgr->activate ();
+      
       int result = this->parse_args (argc,argv);
       if (result == -1)
         ACE_ERROR_RETURN  ((LM_ERROR,"parse args failed\n"),-1);
       // Initialize the naming services
 
-      if (my_naming_client_.init (orb.in ()) != 0)
+      if (my_naming_client_.init (TAO_AV_CORE::instance ()->orb ()) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize "
                            "the TAO_Naming_Client. \n"),
                           -1);
 
-      this->orb_manager_->activate_poa_manager (ACE_TRY_ENV);
       // Register the video mmdevice object with the ORB
       ACE_NEW_RETURN (this->mmdevice_,
                       TAO_MMDevice (&this->reactive_strategy_),
                       -1);
-      // create the video server mmdevice with the naming service pointer.
-      this->orb_manager_->activate_under_child_poa ("Server_MMDevice",
-                                                   this->mmdevice_,
-                                                   ACE_TRY_ENV);
-      ACE_TRY_CHECK;
-
+            
       // Register the mmdevice with the naming service.
       CosNaming::Name server_mmdevice_name (1);
       server_mmdevice_name.length (1);
@@ -160,7 +137,7 @@ Server::run (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      TAO_AV_CORE::instance ()->run ();
+      TAO_AV_CORE::instance ()->orb ()->run ();
       ACE_TRY_CHECK;
     }
     ACE_CATCHANY
@@ -211,7 +188,34 @@ main (int argc,
       char **argv)
 {
   int result = 0;
-  result = FTP_SERVER::instance ()->init (argc,argv);
+  CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                        argv);
+  
+  CORBA::Object_var obj
+    = orb->resolve_initial_references ("RootPOA");
+  
+  PortableServer::POA_var poa
+    = PortableServer::POA::_narrow (obj);
+  
+  ACE_DECLARE_NEW_CORBA_ENV;
+  
+  ACE_TRY
+    {
+      TAO_AV_CORE::instance ()->init (argc,
+                                      argv,
+                                      orb.in (),
+                                      poa.in (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"server::init");
+      return -1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+   result = FTP_SERVER::instance ()->init (argc,argv);
   if (result < 0)
     ACE_ERROR_RETURN ((LM_ERROR,"FTP_SERVER::init failed\n"),1);
   result = FTP_SERVER::instance ()->run ();
