@@ -347,6 +347,11 @@ public:
     audio_state state;
     // The state of the audio server.
 
+    // playaudio members
+    int packets;
+    int hasdata;
+    struct timeval tval;
+
     int addSamples;
     unsigned nextTime;
     int upp;  /* micro-seconds per packet */

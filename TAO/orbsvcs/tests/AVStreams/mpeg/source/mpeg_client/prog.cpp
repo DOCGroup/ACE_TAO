@@ -404,9 +404,9 @@ static void deleteCB(Widget w, XtPointer closure, XtPointer call_data)
 {
   int i, j;
 
-  return;
+  //  return;
   
-  /*
+  
   if (items <= 0) { beep(); return; }
   j = curListPos();
   if (j == -1) return;
@@ -416,13 +416,13 @@ static void deleteCB(Widget w, XtPointer closure, XtPointer call_data)
   XmListDeletePos(wproglist, j+1);
   items --;
   SaveBuf();
-  */
+  return;
 }
 
 static void undoCB(Widget w, XtPointer closure, XtPointer call_data)
 {
-  return;
-  /*
+  //  return;
+  
   if (deletedprog.title[0] != 0)
   {
     insertprog(&deletedprog);
@@ -430,18 +430,18 @@ static void undoCB(Widget w, XtPointer closure, XtPointer call_data)
   }
   else
     beep();
-  */
+  
 }
 
 static void setposition(Widget w, int x, int y);
 
-static void insertCB(Widget w, XtPointer closure, XtPointer call_data)
+static void insertCB (Widget w, XtPointer closure, XtPointer call_data)
 {
   char buf[1000];
 
-  return;
+  //  return;
 
-#if 0
+  //#if 0
   if (items >= ITEMS -1)
   {
     beep();
@@ -466,11 +466,12 @@ static void insertCB(Widget w, XtPointer closure, XtPointer call_data)
   setposition(wprogmodify, titleSize, 1);
   XtAddCallback (wprogmodify, XmNmodifyVerifyCallback, (XtCallbackProc)verifyCB, NULL);
   XtAddCallback (wprogmodify, XmNmotionVerifyCallback, (XtCallbackProc)verifyCB, NULL);
-  /*
-  XtManageChild(progmodifyshell);
-  */
+  
+  // uncommented
+  //XtManageChild(progmodifyshell);
+  
   XtRealizeWidget(progmodifyshell);
-#endif
+  //#endif
 }
 
 static void modifyCB(Widget w, XtPointer closure, XtPointer call_data)
@@ -577,7 +578,7 @@ static void modifysaveCB(Widget w, XtPointer closure, XtPointer call_data)
 {
   return;
 
-#if 0
+  //#if 0
   if (progcmd == 1 && items <= progid)
   {
     beep();
@@ -630,7 +631,7 @@ static void modifysaveCB(Widget w, XtPointer closure, XtPointer call_data)
     else
       insertprog(&p);
   }
-#endif
+  //#endif
 }
 
 static void verifyCB(Widget w, XtPointer closure, XmTextVerifyCallbackStruct * cd)
@@ -673,10 +674,11 @@ static void CreateModifyWindow(Widget parent)
   XtSetArg(args[n], XmNallowShellResize, False); n++;
   
   progmodifyshell = XtAppCreateShell("Program List", "virtual_vcr",
-			       topLevelShellWidgetClass, display, args, n);
-  /*
-  progmodifyshell = XmCreateDialogShell(parent, "virtual_vcr", args, n);
-  */
+                                     topLevelShellWidgetClass, display, args, n);
+  
+  // uncommented.
+  //  progmodifyshell = XmCreateDialogShell(parent, "virtual_vcr", args, n);
+  
   n = 0;
 
   /* Create form widget */

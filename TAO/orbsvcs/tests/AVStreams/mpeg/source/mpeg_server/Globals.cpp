@@ -294,7 +294,10 @@ Video_Global::first_packet_send_to_network (int timeToUse)
         segsize = min (size, this->msgsize);
 
         if (this->conn_tag != 0) { /* this->packet stream */
-          cerr << "sending " << segsize  << " on fd = " << this->videoSocket << endl;
+          //          cerr << "vs sending " << segsize  << " on fd = " << this->videoSocket << endl;
+          //          ACE_DEBUG ((LM_DEBUG,"packetsn = %d,msgsn = %d\n",
+          //          msg->packetsn,msg->msgsn));
+
           while ((sentsize = write (this->videoSocket, 
                                     (char *)msg + sizeof (*msg), 
                                     segsize)) == -1) {
@@ -499,8 +502,8 @@ Video_Global::SendPacket (int shtag,
     int sent;
     if (first_time == 1)
       {
-        ACE_DEBUG ((LM_DEBUG, 
-                    "(%P|%t) Sending first frame to client\n"));
+        //        ACE_DEBUG ((LM_DEBUG, 
+        //          "(%P|%t) Sending first frame to client\n"));
         sent = first_packet_send_to_network (timeToUse);
       }
     else
@@ -1680,7 +1683,7 @@ Video_Global::init_play (Video_Control::PLAYpara para,
   this->VStimeAdvance = this->play_para.VStimeAdvance;
 
   vts = get_usec ();
-  cerr << "vts is " << vts << endl;
+  //  cerr << "vts is " << vts << endl;
   // begin evil code
   //  {
     //    int vts = get_usec ();
@@ -1717,7 +1720,8 @@ Video_Global::init_play (Video_Control::PLAYpara para,
     return result;
   Video_Timer_Global::StartTimer ();
 
-  // Sends the first frame of the video...
+  // Sends the first frame of the video... not true anymore since the
+  // user can position the stream anywhere and then call play.
   result = play_send (0);
   return 0;
 }
@@ -2408,7 +2412,7 @@ Audio_Global::INITaudio(void)
    returns: 0 - no more data from audio file: EOF reached;
             1 - More data is available from the audio file */
 int
-Audio_Global::send_packet(int firstSample, int samples)
+Audio_Global::send_packet (int firstSample, int samples)
 {
   //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) send_packet called\n"));
   long offset = firstSample * audioPara.bytesPerSample;
@@ -2495,21 +2499,22 @@ Audio_Global::send_packet(int firstSample, int samples)
    returns: 0 - no more data from audio file: EOF reached;
             1 - More data is available from the audio file */
 int
-Audio_Global::SendPacket(void)
+Audio_Global::SendPacket (void)
 {
   int moredata;
   pktbuf->cmdsn = htonl(cmdsn);
   pktbuf->resend = htonl(0);
   pktbuf->samplesPerSecond = htonl(sps);
   moredata = send_packet(nextsample, spp);
-  if (moredata) {
-    nextsample += spp;
-  }
+  if (moredata) 
+    {
+      nextsample += spp;
+    }
   return moredata;
 }
 
 void
-Audio_Global::ResendPacket(int firstsample, int samples)
+Audio_Global::ResendPacket (int firstsample, int samples)
 {
   pktbuf->cmdsn = htonl(cmdsn);
   pktbuf->resend = htonl(1);
@@ -2847,9 +2852,6 @@ Audio_Global::play_audio(void)
 int
 Audio_Global::send_audio (void)
 {
-  static int packets = 0;
-  static int hasdata = 1;
-  static struct timeval tval;
   unsigned curTime = get_usec();
     
   if (hasdata) {

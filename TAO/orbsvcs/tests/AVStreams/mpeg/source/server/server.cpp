@@ -126,7 +126,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
         // decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
         // DOWN operation.
         //        ::sleep (5);
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+        //        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
         int ack = 42;
         if (this->peer ().send_n (&ack,
                                   sizeof (ack)) == -1)
@@ -134,7 +134,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                              "(%P|%t), ACK send failed: %p",
                              "AV_Svc_Handler::handle_connection"),
                             -1);
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+        //        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       }
       // close down the connected socket in the main process
       this->destroy ();
@@ -207,7 +207,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                                "remove"),
                               -1);
 
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+        //        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
         // ?? do we need the ack even for audio!
         int ack = 42;
         if (this->peer ().send_n (&ack,
@@ -216,7 +216,7 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                              "(%P|%t), ACK send failed: %p",
                              "AV_Svc_Handler::handle_connection"),
                             -1);
-        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+        //        ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       }
       // close down the connected socket in the main process
       this->destroy ();
@@ -296,9 +296,7 @@ AV_Server_Sig_Handler::register_handler (void)
   // ACE_Reactor (see below).
   this->handle_ = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
   ACE_ASSERT (this->handle_ != -1);
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) sig_handler == %d\n",
-              this->handle_));
+  //  ACE_DEBUG ((LM_DEBUG,"(%P|%t) sig_handler == %d\n",this->handle_));
 
   // Register signal handler object.  Note that NULL_MASK is used to
   // keep the ACE_Reactor from calling us back on the "/dev/null"
@@ -394,8 +392,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
   int pid;
   int status;
   
-  ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) AV_Server: Reaping the children\n"));
+  ACE_DEBUG ((LM_DEBUG,"(%P|%t) AV_Server: Reaping the children\n"));
   // reap the children
   while ((pid = ACE_OS::waitpid (-1, 
                                  &status, 
@@ -403,8 +400,7 @@ AV_Server_Sig_Handler::clear_child (int sig)
   {
     if (pid == AV_Server::current_pid_)
       {
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) The child currently being waited for has died.\n"));
+        ACE_DEBUG ((LM_DEBUG,"(%P|%t) The child currently being waited for has died.\n"));
         AV_Server::done_ = 1;
       }
 

@@ -7,7 +7,7 @@ main (int argc,char **argv)
 {
   Audio_Server audio_server;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
+  //  ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
   
   TAO_TRY
     {
@@ -48,10 +48,7 @@ main (int argc,char **argv)
                            sem_str,
                            "semaphore.release ()"),
                           -1);
-      ACE_DEBUG ((LM_DEBUG, 
-                  "(%P|%t) %s:%d\n", 
-                  __FILE__, 
-                  __LINE__));
+      //      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:%d\n", __FILE__, __LINE__));
       // Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
       // Tannenbaums UP operation.
 
