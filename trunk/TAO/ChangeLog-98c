@@ -1,3 +1,10 @@
+Thu Nov 20 00:10:52 1997  Sergio Flores  <sergio@cs.wustl.edu>
+
+	* orbsvcs/tests/Logger/clnt.h : 
+	* orbsvcs/tests/Logger/clnt.cpp (Logger_Client): Fixed a bug
+ 	dealing with using "_bind" when the naming service is not
+ 	available.
+
 Thu Nov 20 00:06:03 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.39, released Thu Nov 20 00:06:03 1997.
