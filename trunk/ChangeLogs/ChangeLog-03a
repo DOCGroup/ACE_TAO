@@ -1,3 +1,17 @@
+Mon Jul  2 11:17:37 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Profile_Timer.cpp:
+
+          Cleaned up the conditional macros.  Added method bodies for
+          ACE_Profile_Timer::get_rusage() and
+          ACE_Profile_Timer::elapsed_rusage() when neither ACE_HAS_PRUSAGE_T
+          nor ACE_HAS_GETRUSAGE is defined.
+
+	* Reverted the reverted changes in this entry.
+	  "Fri Jun 29 22:31:56 2001  Balachandran Natarajan
+	  <bala@cs.wustl.edu>".  These changes are ok, I just
+          needed to fix the bug in Profile_Timer.cpp.
+
 Mon Jul  2 09:40:45 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * include/makeinclude/platform_aix_ibm.GNU:
