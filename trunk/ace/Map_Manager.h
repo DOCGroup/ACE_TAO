@@ -290,7 +290,11 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator_Base
 {
   // = TITLE
-  //     Iterator for the ACE_Map_Manager.
+  //     Iterator for the <ACE_Map_Manager>.
+  //
+  // = DESCRIPTION
+  //     This class factors out common code from its templatized
+  //     subclasses.  
 public:
   // = Initialization method.
   ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -341,11 +345,18 @@ protected:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Map_Iterator
-  : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+class ACE_Map_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
-  //     Iterator for the ACE_Map_Manager.
+  //     Forward iterator for the <ACE_Map_Manager>.
+  //
+  // = DESCRIPTION
+  //     This class does not perform any internal locking of the
+  //     <ACE_Map_Manager> it is iterating upon since locking is
+  //     inherently inefficient and/or error-prone within an STL-style
+  //     iterator.  If you require locking, you can explicitly use an
+  //     <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
+  //     internal lock, which is accessible via its <mutex> method.
 public:
   // = Initialization method.
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -379,11 +390,18 @@ public:
 };
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK>
-class ACE_Map_Reverse_Iterator
-  : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
+class ACE_Map_Reverse_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
   // = TITLE
-  //     Reverse Iterator for the ACE_Map_Manager.
+  //     Reverse Iterator for the <ACE_Map_Manager>.
+  //
+  // = DESCRIPTION
+  //     This class does not perform any internal locking of the
+  //     <ACE_Map_Manager> it is iterating upon since locking is
+  //     inherently inefficient and/or error-prone within an STL-style
+  //     iterator.  If you require locking, you can explicitly use an
+  //     <ACE_Guard> or <ACE_Read_Guard> on the <ACE_Map_Manager>'s
+  //     internal lock, which is accessible via its <mutex> method.
 public:
   // = Initialization method.
   ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
