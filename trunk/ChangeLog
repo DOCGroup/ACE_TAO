@@ -1,3 +1,9 @@
+Mon Apr 26 07:44:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * os-patches/vxworks-5.1.txt:
+          Removed this file from the repo. It is not correct anymore
+          and we don't support VxWorks 5.1 anymore.
+
 Mon Apr 26 07:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/test_config.h:
