@@ -913,9 +913,9 @@ cat_codeset_info(TAO_InputCDR& stream)
        ACE_DEBUG ((LM_DEBUG, "\tConversion Codesets for wchar are: \n"));
 
      //  Loop through and display them
-     for(  CORBA::ULong index=0; index < w_ccslen; ++index)
+     for(  CORBA::ULong index2=0; index2 < w_ccslen; ++index2)
      {
-       ACE_DEBUG ((LM_DEBUG, "\t %u) ", index + 1L));
+       ACE_DEBUG ((LM_DEBUG, "\t %u) ", index2 + 1L));
        displayHex( stream );
      }
      return 1;
