@@ -52,8 +52,7 @@ ACE_IPC_SAP::enable (int signum) const
 	return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
       }
     default:
-      errno = ENOTSUP;
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
     }
 #else
   switch (signum)
@@ -112,8 +111,7 @@ ACE_IPC_SAP::disable (int signum) const
 	return ACE_OS::ioctl (this->handle_, FIONBIO, &nonblock);
       }
     default:
-      errno = ENOTSUP;
-      return -1;
+      ACE_NOTSUP_RETURN (-1);
     }
 #else
   switch (signum)
