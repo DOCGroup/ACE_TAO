@@ -426,7 +426,8 @@ ACE_Service_Config::process_directives (void)
                             // sure how to fix this with %p...
                             ASYS_TEXT (sptr->fast_rep ())));
               errno = ENOENT;
-              return -1;
+              result = -1;
+              break;
             }
           else
             {
