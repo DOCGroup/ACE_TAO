@@ -180,6 +180,11 @@ extern "C"
 
 # endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
 
+#if defined (__Lynx__)
+  void swab(const void *, void *, ssize_t);
+  int getopt(int, char * const [], const char *);
+#endif /* __Lynx__ */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
