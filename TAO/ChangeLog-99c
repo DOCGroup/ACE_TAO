@@ -1,3 +1,16 @@
+Sat Jul 03 14:40:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.{cpp, dsp, h (new)}:
+          refactored Scheduling Service to use a class for options etc.,
+          added -p option for file name in which to write service pid,
+          added -o option for file name in which to write servant ior,
+          added -s <CONFIG | reconfig> option to specify whether service
+          uses config or reconfig scheduler implementation.
+	
+        * orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp
+          orbsvcs/tests/Sched_Conf/Sched_Conf_Runtime.cpp: replaced TAO
+	  try macros with ACE try macros.
+	
 Sat Jul 03 14:04:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Makefile, orbsvcs/orbsvcs/Makefile: call ace_components
@@ -12,7 +25,7 @@ Sat Jul  3 13:05:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
         * orbsvcs/orbsvcs/Concurrency/CC_Lock.cpp: Replaced the
           TAO_THROW macros with ACE_THROW macros.
 
-Sat Jul  3 09:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+Sat Jul 03 09:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils_T.h
           orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.h: Added
@@ -107,9 +120,7 @@ Fri Jul  2 17:50:56 1999  Ossama Othman  <othman@cs.wustl.edu>
           routine to improve code readability.
 
           Updated some exception handling code.
-
           Various pluggable protocol related code cleanups and updates.
-
           Removed null pointer checks in *String_var destructors and
           assignment operators since it is safe to pass a null pointer to
           CORBA::string_free().
