@@ -121,6 +121,85 @@ IFR_Service::init (int argc,
 }
 
 int
+IFR_Service::init_with_orb (int argc,
+                            ACE_TCHAR *argv [],
+                            CORBA::ORB_ptr orb)
+{
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      // Duplicate the ORB.
+      this->orb_ = CORBA::ORB::_duplicate (orb);
+
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (CORBA::is_nil (poa_object.in ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT(" (%P|%t) Unable to initialize the POA.\n")),
+                            -1);
+        }
+      this->root_poa_ =
+        PortableServer::POA::_narrow (poa_object.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      int retval = OPTIONS::instance()->parse_args (argc,
+                                                    argv);
+
+      if (retval != 0)
+        return retval;
+
+      retval = this->create_poas (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (retval != 0)
+        return retval;
+
+      retval = this->open_config (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (retval != 0)
+        return retval;
+
+      retval = this->create_repository (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (retval != 0)
+        return retval;
+
+      retval = this->create_locator (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (retval != 0)
+        return retval;
+
+      retval = this->init_multicast_server (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (retval != 0)
+        return retval;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "The IFR IOR is: <%s>\n",
+                  this->ifr_ior_.in ()));
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "IFR_Service::init");
+
+      ACE_RE_THROW;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK_RETURN (-1);
+  return 0;
+}
+
+int
 IFR_Service::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->orb_->run (0 ACE_ENV_ARG_PARAMETER);

@@ -22,6 +22,7 @@
 
 #include "IFR_ExtendedS.h"
 #include "ace/Configuration.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +37,7 @@
 
 class TAO_Repository_i;
 
-class TAO_IRObject_i : public POA_CORBA_IRObject
+class TAO_IFR_Service_Export TAO_IRObject_i : public POA_CORBA_IRObject
 {
   // = TITLE
   //    TAO_IRObject_i

@@ -3,160 +3,117 @@
 # $Id$
 #
 #----------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------
-#       Local macros
-#----------------------------------------------------------------------------
-
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
-endif
+endif # ! TAO_ROOT
 
-MAKEFILE=Makefile.IFR_Service
+MAKEFILE = Makefile.IFR_Service_LIB
+LIBNAME  = libTAO_IFRService
+LIB      = $(LIBNAME).a
+SHLIB    = $(LIBNAME).$(SOEXT)
 
-LDLIBS = -lTAO_TypeCodeFactory -lTAO_Svc_Utils -lTAO_IFR_Client \
-         -lTAO_IORTable -lTAO_PortableServer -lTAO
+VPATH=.
 
-PROG_SRCS = \
-	AbstractInterfaceDef_i.cpp \
-        AliasDef_i.cpp \
-        ArrayDef_i.cpp \
-        AttributeDef_i.cpp \
-        ComponentDef_i.cpp \
-	ComponentRepository_i.cpp \
-	ConstantDef_i.cpp \
-	ConsumesDef_i.cpp \
-	Contained_i.cpp \
-	Container_i.cpp \
-	EmitsDef_i.cpp \
-	EnumDef_i.cpp \
-	EventDef_i.cpp \
-	ExceptionDef_i.cpp \
-	FactoryDef_i.cpp \
-	FinderDef_i.cpp \
-	FixedDef_i.cpp \
-	HomeDef_i.cpp \
-	IDLType_i.cpp \
-	IFR_BaseS.cpp \
-	IFR_BasicS.cpp \
-	IFR_ComponentsS.cpp \
-	IFR_ExtendedS.cpp \
-	IFR_Server.cpp \
-	IFR_Service.cpp \
-	IFR_Service_Loader.cpp \
-	InterfaceDef_i.cpp \
-	IRObject_i.cpp \
-	LocalInterfaceDef_i.cpp \
-	ModuleDef_i.cpp \
-	NativeDef_i.cpp \
-	OperationDef_i.cpp \
-	Options.cpp \
-	PrimaryKeyDef_i.cpp \
-	PrimitiveDef_i.cpp \
-	ProvidesDef_i.cpp \
-	PublishesDef_i.cpp \
-	Repository_i.cpp \
-	SequenceDef_i.cpp \
-	Servant_Factory.cpp \
-	Servant_Locator.cpp \
-	StringDef_i.cpp \
-	StructDef_i.cpp \
-	tmplinst.cpp \
-	TypedefDef_i.cpp \
-	UnionDef_i.cpp \
-	UsesDef_i.cpp \
-	ValueBoxDef_i.cpp \
-	ValueDef_i.cpp \
-	ValueMemberDef_i.cpp \
-	WstringDef_i.cpp
-
-SRC = $(PROG_SRCS)
-
-IFR_SVR_OBJS = \
-	AbstractInterfaceDef_i.o \
-        AliasDef_i.o \
-        ArrayDef_i.o \
-        AttributeDef_i.o \
-        ComponentDef_i.o \
-	ComponentRepository_i.o \
-	ConstantDef_i.o \
-	ConsumesDef_i.o \
-	Contained_i.o \
-	Container_i.o \
-	EmitsDef_i.o \
-	EnumDef_i.o \
-	EventDef_i.o \
-	ExceptionDef_i.o \
-	FactoryDef_i.o \
-	FinderDef_i.o \
-	FixedDef_i.o \
-	HomeDef_i.o \
-	IDLType_i.o \
-	IFR_BaseS.o \
-	IFR_BasicS.o \
-	IFR_ComponentsS.o \
-	IFR_ExtendedS.o \
-	IFR_Server.o \
-	IFR_Service.o \
-	IFR_Service_Loader.o \
-	InterfaceDef_i.o \
-	IRObject_i.o \
-	LocalInterfaceDef_i.o \
-	ModuleDef_i.o \
-	NativeDef_i.o \
-	OperationDef_i.o \
-	Options.o \
-	PrimaryKeyDef_i.o \
-	PrimitiveDef_i.o \
-	ProvidesDef_i.o \
-	PublishesDef_i.o \
-	Repository_i.o \
-	SequenceDef_i.o \
-	Servant_Factory.o \
-	Servant_Locator.o \
-	StringDef_i.o \
-	StructDef_i.o \
-	tmplinst.o \
-	TypedefDef_i.o \
-	UnionDef_i.o \
-	UsesDef_i.o \
-	ValueBoxDef_i.o \
-	ValueDef_i.o \
-	ValueMemberDef_i.o \
-	WstringDef_i.o
-
-BIN = IFR_Service
+ACE_SHLIBS = -lTAO_TypeCodeFactory -lTAO_Svc_Utils -lTAO_IFR_Client -lTAO_IORTable -lTAO_PortableServer -lTAO -lACE
 
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
 
+default: all
+
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
+
+# On non-Windows environment, we should at least define
+# the export_include IDL flag.
+override TAO_IDLFLAGS += \
+        -I$(TAO_ROOT) -Ge 1 \
+	-Wb,export_macro=TAO_IFR_Service_Export \
+	-Wb,export_include=ifr_service_export.h \
+	-Wb,pre_include=ace/pre.h \
+	-Wb,post_include=ace/post.h
+	 
+CPP_SRCS += \
+        AbstractInterfaceDef_i \
+        AliasDef_i \
+        ArrayDef_i \
+        AttributeDef_i \
+        ComponentDef_i \
+        ComponentRepository_i \
+        ConstantDef_i \
+        ConsumesDef_i \
+        Contained_i \
+        Container_i \
+        EmitsDef_i \
+        EnumDef_i \
+        EventDef_i \
+        ExceptionDef_i \
+        FactoryDef_i \
+        FinderDef_i \
+        FixedDef_i \
+        HomeDef_i \
+        IDLType_i \
+        IFR_BaseS \
+        IFR_BasicS \
+        IFR_ComponentsS \
+        IFR_ExtendedS \
+        IFR_Server \
+        IFR_Service \
+        IFR_Service_Loader \
+        InterfaceDef_i \
+        IRObject_i \
+        LocalInterfaceDef_i \
+        ModuleDef_i \
+        NativeDef_i \
+        OperationDef_i \
+        Options \
+        PrimaryKeyDef_i \
+        PrimitiveDef_i \
+        ProvidesDef_i \
+        PublishesDef_i \
+        Repository_i \
+        SequenceDef_i \
+        Servant_Factory \
+        Servant_Locator \
+        StringDef_i \
+        StructDef_i \
+        tmplinst \
+        TypedefDef_i \
+        UnionDef_i \
+        UsesDef_i \
+        ValueBoxDef_i \
+        ValueDef_i \
+        ValueMemberDef_i \
+        WstringDef_i
+
+FILES = $(CPP_SRCS)
+DEFS  = $(addsuffix .h,$(FILES))
+LSRC  = $(addsuffix .cpp,$(FILES))
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
-include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#       Local targets
+#       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
+CPPFLAGS += -I$(TAO_ROOT)/tao -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)
 
-LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao -I$(TAO_ROOT)/tao
-CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao
+# Extra dependencies not caught by make depend.
 
-
-IFR_Service: $(addprefix $(VDIR),$(IFR_SVR_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS) $(POSTLINK)
-
-#all: $(BIN)
+.PRECIOUS: $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext))))
 
 realclean: clean
+	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 #----------------------------------------------------------------------------
-#	Dependencies
+#       Dependencies
 #----------------------------------------------------------------------------
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.

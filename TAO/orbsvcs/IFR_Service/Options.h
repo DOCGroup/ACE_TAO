@@ -22,8 +22,9 @@
 #define OPTIONS_H
 
 #include "ace/Singleton.h"
+#include "ifr_service_export.h"
 
-class Options
+class TAO_IFR_Service_Export Options
 {
   // = TITLE
   //   Maintains the global options.

@@ -454,7 +454,7 @@ realclean: clean
  $(TAO_ROOT)/tao/IFR_Client/IFR_BaseC.i \
  $(TAO_ROOT)/tao/IFR_Client/IFR_BasicC.i \
  ifr_visitor_macro.h ifr_removing_visitor.h ifr_visitor.h \
- ifr_adding_visitor.h
+ ifr_service_export.h ifr_adding_visitor.h
 
 .obj/ifr_adding_visitor.o .obj/ifr_adding_visitor.so .shobj/ifr_adding_visitor.o .shobj/ifr_adding_visitor.so: ifr_adding_visitor.cpp ifr_adding_visitor.h \
  ifr_visitor.h ../../TAO_IDL/include/ast_visitor.h \
@@ -616,7 +616,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- ../../TAO_IDL/include/idl.h ../../TAO_IDL/include/idl_narrow.h \
+ ifr_service_export.h ../../TAO_IDL/include/idl.h \
+ ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/idl_defines.h ../../TAO_IDL/include/idl_fwd.h \
  ../../TAO_IDL/include/utl_string.h \
  ../../TAO_IDL/include/utl_identifier.h ../../TAO_IDL/include/ast.h \
@@ -848,7 +849,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- ../../TAO_IDL/include/idl.h ../../TAO_IDL/include/idl_narrow.h \
+ ifr_service_export.h ../../TAO_IDL/include/idl.h \
+ ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/idl_defines.h ../../TAO_IDL/include/idl_fwd.h \
  ../../TAO_IDL/include/utl_string.h \
  ../../TAO_IDL/include/utl_identifier.h ../../TAO_IDL/include/ast.h \
@@ -1079,7 +1081,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- ../../TAO_IDL/include/idl.h ../../TAO_IDL/include/idl_narrow.h \
+ ifr_service_export.h ../../TAO_IDL/include/idl.h \
+ ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/idl_defines.h ../../TAO_IDL/include/idl_fwd.h \
  ../../TAO_IDL/include/utl_string.h \
  ../../TAO_IDL/include/utl_identifier.h ../../TAO_IDL/include/ast.h \
@@ -1309,7 +1312,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- ../../TAO_IDL/include/idl.h ../../TAO_IDL/include/idl_narrow.h \
+ ifr_service_export.h ../../TAO_IDL/include/idl.h \
+ ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/idl_defines.h ../../TAO_IDL/include/idl_fwd.h \
  ../../TAO_IDL/include/utl_string.h \
  ../../TAO_IDL/include/utl_identifier.h ../../TAO_IDL/include/ast.h \
@@ -1540,7 +1544,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- ../../TAO_IDL/include/idl.h ../../TAO_IDL/include/idl_narrow.h \
+ ifr_service_export.h ../../TAO_IDL/include/idl.h \
+ ../../TAO_IDL/include/idl_narrow.h \
  ../../TAO_IDL/include/idl_defines.h ../../TAO_IDL/include/idl_fwd.h \
  ../../TAO_IDL/include/utl_string.h \
  ../../TAO_IDL/include/utl_identifier.h ../../TAO_IDL/include/ast.h \
@@ -1771,8 +1776,9 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
- ../../TAO_IDL/include/utl_scope.h ../../TAO_IDL/include/idl_fwd.h \
- ../../TAO_IDL/include/idl_narrow.h ../../TAO_IDL/include/ast_decl.h \
+ ifr_service_export.h ../../TAO_IDL/include/utl_scope.h \
+ ../../TAO_IDL/include/idl_fwd.h ../../TAO_IDL/include/idl_narrow.h \
+ ../../TAO_IDL/include/ast_decl.h \
  ../../TAO_IDL/include/utl_scoped_name.h \
  ../../TAO_IDL/include/utl_string.h \
  ../../TAO_IDL/include/ast_expression.h
@@ -1936,6 +1942,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Unbounded_Queue.inl \
  $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
  $(ACE_ROOT)/ace/Containers_T.i \
- $(ACE_ROOT)/ace/Containers_T.cpp
+ $(ACE_ROOT)/ace/Containers_T.cpp \
+ ifr_service_export.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
