@@ -1273,7 +1273,10 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     io_handle = event_handler->get_handle ();
 
   if (this->handler_rep_.invalid_handle (io_handle))
-    return -1;
+    {
+      errno = ERROR_INVALID_HANDLE;
+      return -1;
+    }
 
   long new_network_events = 0;
   int delete_event = 0;
@@ -1319,7 +1322,19 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
       // The <event_handler> was not found in the repository, add to
       // the repository.
       if (delete_event)
-        event->handle (ACE_INVALID_HANDLE);
+        {
+          // Clear out the handle in the ACE_Auto_Event so that when
+          // it is destroyed, the handle isn't closed out from under
+          // the reactor. After setting it, running down the event
+          // (via auto_ptr<> event, above) at function return will
+          // cause an error because it'll try to close an invalid handle.
+          // To avoid that smashing the errno value, save the errno
+          // here, explicitly remove the event so the dtor won't do it
+          // again, then restore errno.
+          ACE_Errno_Guard guard (errno);
+          event->handle (ACE_INVALID_HANDLE);
+          event->remove ();
+        }
       return 0;
     }
   else
