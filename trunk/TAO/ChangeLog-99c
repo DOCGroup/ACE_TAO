@@ -1,3 +1,13 @@
+Fri Apr 30 21:43:29 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.h: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp: 
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i.h:
+	* orbsvcs/orbsvcs/Property/CosPropertyService_i_T.cpp:
+	Update the code to use ACE exception macros.
+	Also update the destroy method semantics to do POA deactivate. 
+	Removed all the useless ACE_DEBUG's from the code.	
+
 Fri Apr 30 20:06:44 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Typecode_Constants.cpp:
