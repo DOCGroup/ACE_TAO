@@ -225,13 +225,13 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_list_id (void) const
   // If you change ~0, please change
   // ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key()
   // accordingly.
-  return ~0;
+  return (size_t) ~0;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE size_t
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::occupied_list_id (void) const
 {
-  return ~1;
+  return (size_t) ~1;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE

@@ -173,7 +173,7 @@ ACE_OutputCDR::write_octet (ACE_CDR::Octet x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_boolean (ACE_CDR::Boolean x)
 {
-  return this->write_octet (x ? 1 : 0);
+  return (ACE_CDR::Boolean) this->write_octet (x ? 1 : 0);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -511,7 +511,7 @@ ACE_InputCDR::read_boolean (ACE_CDR::Boolean& x)
   ACE_CDR::Octet tmp;
   this->read_octet (tmp);
   x = tmp ? 1 : 0;
-  return this->good_bit_;
+  return (ACE_CDR::Boolean) this->good_bit_;
 }
 
 ACE_INLINE ACE_CDR::Boolean
