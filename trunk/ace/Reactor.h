@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Reactor.h
 //
 // = AUTHOR
-//    Irfan Pyarali 
-// 
+//    Irfan Pyarali
+//
 // ============================================================================
 
 #if !defined (ACE_REACTOR_H)
@@ -44,16 +44,16 @@ class ACE_Export ACE_Reactor
 {
 public:
 
-  enum 
+  enum
   {
     // = Operations on the "ready" mask and the "dispatch" mask.
-    GET_MASK = 1, 
-    // Retrieve current value of the the "ready" mask or the "dispatch" mask. 
-    SET_MASK = 2, 
+    GET_MASK = 1,
+    // Retrieve current value of the the "ready" mask or the "dispatch" mask.
+    SET_MASK = 2,
     // Set value of bits to new mask (changes the entire mask).
-    ADD_MASK = 3, 
+    ADD_MASK = 3,
     // Bitwise "or" the value into the mask (only changes enabled bits).
-    CLR_MASK = 4 
+    CLR_MASK = 4
     // Bitwise "and" the negation of the value out of the mask (only changes enabled bits).
   };
 
@@ -87,12 +87,12 @@ public:
 
   ACE_Reactor (ACE_Reactor_Impl *implementation = 0);
   // Create the Reactor using <implementation>
-  
+
   virtual ~ACE_Reactor (void);
   // Close down and release all resources.
-  
-  virtual int open (size_t size, 
-		    int restart = 0, 
+
+  virtual int open (size_t size,
+		    int restart = 0,
 		    ACE_Sig_Handler *signal_handler = 0,
 		    ACE_Timer_Queue *timer_queue = 0);
   // Initialization.
@@ -108,7 +108,7 @@ public:
   virtual int close (void);
   // Close down and release all resources.
 
-  // = Event loop drivers.  
+  // = Event loop drivers.
 
   virtual int handle_events (ACE_Time_Value *max_wait_time = 0);
   virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = 0);
@@ -123,7 +123,7 @@ public:
   // <max_wait_time> will equal 1 second.  This can be used if an
   // application wishes to handle events for some fixed amount of
   // time.
-  // 
+  //
   // Returns the total number of <ACE_Event_Handler>s that were
   // dispatched, 0 if the <max_wait_time> elapsed without dispatching
   // any handlers, or -1 if an error occurs.
@@ -144,21 +144,21 @@ public:
   // return when the system queues an I/O completion routine or an
   // Asynchronous Procedure Call.
 
-  // = Register and remove Handlers. 
+  // = Register and remove Handlers.
 
   virtual int register_handler (ACE_Event_Handler *event_handler,
 				ACE_Reactor_Mask mask);
   // Register <event_handler> with <mask>.  The I/O handle will always
   // come from <get_handle> on the <event_handler>.
- 
-  virtual int register_handler (ACE_HANDLE io_handle, 
+
+  virtual int register_handler (ACE_HANDLE io_handle,
 				ACE_Event_Handler *event_handler,
-				ACE_Reactor_Mask mask); 
+				ACE_Reactor_Mask mask);
   // Register <event_handler> with <mask>.  The I/O handle is provided
   // through the <io_handle> parameter.
 
 #if defined (ACE_WIN32)
-  virtual int register_handler (ACE_Event_Handler *event_handler, 
+  virtual int register_handler (ACE_Event_Handler *event_handler,
 				ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
   // Register an <event_handler> that will be notified when
   // <event_handle> is signaled.  Since no event mask is passed
@@ -175,18 +175,18 @@ public:
 
   virtual int register_handler (ACE_HANDLE event_handle,
 				ACE_HANDLE io_handle,
-				ACE_Event_Handler *event_handler, 
+				ACE_Event_Handler *event_handler,
 				ACE_Reactor_Mask mask);
   // Register an <event_handler> that will be notified when
   // <event_handle> is signaled.  <mask> specifies the network events
   // that the <event_handler> is interested in.
- 
+
   virtual int register_handler (const ACE_Handle_Set &handles,
 				ACE_Event_Handler *event_handler,
-				ACE_Reactor_Mask mask); 
+				ACE_Reactor_Mask mask);
   // Register <event_handler> with all the <handles> in the <Handle_Set>.
 
-  virtual int register_handler (int signum, 
+  virtual int register_handler (int signum,
 				ACE_Event_Handler *new_sh,
 				ACE_Sig_Action *new_disp = 0,
 				ACE_Event_Handler **old_sh = 0,
@@ -195,7 +195,7 @@ public:
   // <new_disp>.  Returns the <old_sh> that was previously registered
   // (if any), along with the <old_disp> of the signal handler.
 
-  virtual int register_handler (const ACE_Sig_Set &sigset, 
+  virtual int register_handler (const ACE_Sig_Set &sigset,
 				ACE_Event_Handler *new_sh,
 				ACE_Sig_Action *new_disp = 0);
   // Registers <new_sh> to handle a set of signals <sigset> using the
@@ -208,7 +208,7 @@ public:
   // <mask> == <ACE_Event_Handler::DONT_CALL> then the <handle_close>
   // method of the <event_handler> is not invoked.
 
-  virtual int remove_handler (ACE_HANDLE handle, 
+  virtual int remove_handler (ACE_HANDLE handle,
 			      ACE_Reactor_Mask mask);
   // Removes <handle>.  If <mask> == <ACE_Event_Handler::DONT_CALL>
   // then the <handle_close> method of the associated <event_handler>
@@ -220,8 +220,8 @@ public:
   // <ACE_Event_Handler::DONT_CALL> then the <handle_close> method of
   // the associated <event_handler>s is not invoked.
 
-  virtual int remove_handler (int signum, 
-			      ACE_Sig_Action *new_disp, 
+  virtual int remove_handler (int signum,
+			      ACE_Sig_Action *new_disp,
 			      ACE_Sig_Action *old_disp = 0,
 			      int sigkey = -1);
   // Remove the ACE_Event_Handler currently associated with <signum>.
@@ -232,7 +232,7 @@ public:
   virtual int remove_handler (const ACE_Sig_Set &sigset);
   // Calls <remove_handler> for every signal in <sigset>.
 
-  // = Suspend and resume Handlers. 
+  // = Suspend and resume Handlers.
 
   virtual int suspend_handler (ACE_Event_Handler *event_handler);
   // Suspend <event_handler> temporarily.  Use
@@ -245,27 +245,27 @@ public:
   // Suspend all <handles> in handle set temporarily.
 
   virtual int suspend_handlers (void);
-  // Suspend all <handles> temporarily. 
+  // Suspend all <handles> temporarily.
 
   virtual int resume_handler (ACE_Event_Handler *event_handler);
   // Resume <event_handler>. Use <event_handler->get_handle()> to get
   // the handle.
 
   virtual int resume_handler (ACE_HANDLE handle);
-  // Resume <handle>. 
+  // Resume <handle>.
 
   virtual int resume_handler (const ACE_Handle_Set &handles);
-  // Resume all <handles> in handle set. 
+  // Resume all <handles> in handle set.
 
   virtual int resume_handlers (void);
-  // Resume all <handles>. 
+  // Resume all <handles>.
 
   // Timer management.
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
 			       const void *arg,
 			       const ACE_Time_Value &delta,
-			       const ACE_Time_Value &interval = ACE_Time_Value::zero);  
+			       const ACE_Time_Value &interval = ACE_Time_Value::zero);
   // Schedule an <event_handler> that will expire after <delay> amount
   // of time.  If it expires then <arg> is passed in as the value to
   // the <event_handler>'s <handle_timeout> callback method.  If
@@ -285,7 +285,7 @@ public:
   // Cancel all Event_Handlers that match the address of
   // <event_handler>.  Returns number of handlers cancelled.
 
-  virtual int cancel_timer (long timer_id, 
+  virtual int cancel_timer (long timer_id,
 			    const void **arg = 0,
 			    int dont_call_handle_close = 1);
   // Cancel the single Event_Handler that matches the <timer_id> value
@@ -297,12 +297,12 @@ public:
   // wasn't found.
 
   // = High-level Event_Handler scheduling operations
-  
+
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
 			       ACE_Reactor_Mask masks_to_be_added);
   // Add <masks_to_be_added> to the <event_handler>'s entry.
   // <event_handler> must already have been registered.
-  
+
   virtual int schedule_wakeup (ACE_HANDLE handle,
 			       ACE_Reactor_Mask masks_to_be_added);
   // Add <masks_to_be_added> to the <handle>'s entry.  <event_handler>
@@ -318,7 +318,7 @@ public:
 
   // = Notification methods.
 
-  virtual int notify (ACE_Event_Handler *event_handler = 0, 
+  virtual int notify (ACE_Event_Handler *event_handler = 0,
 		      ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
 		      ACE_Time_Value *tv = 0);
   // Notify <event_handler> of <mask> event.  The <ACE_Time_Value>
@@ -343,13 +343,13 @@ public:
   // <ACE_Message_Queue::dequeue> loop.
 
   virtual int handler (ACE_HANDLE handle,
-		       ACE_Reactor_Mask mask, 
-		       ACE_Event_Handler **event_handler = 0);  
+		       ACE_Reactor_Mask mask,
+		       ACE_Event_Handler **event_handler = 0);
   // Check to see if <handle> is associated with a valid Event_Handler
   // bound to <mask>.  Return the <event_handler> associated with this
   // <handler> if <event_handler> != 0.
 
-  virtual int handler (int signum, 
+  virtual int handler (int signum,
 		       ACE_Event_Handler **event_handler = 0);
   // Check to see if <signum> is associated with a valid Event_Handler
   // bound to a signal.  Return the <event_handler> associated with
@@ -369,7 +369,7 @@ public:
   virtual void wakeup_all_threads (void);
   // Wake up all threads in waiting in the event loop
 
-  virtual int owner (ACE_thread_t new_owner, 
+  virtual int owner (ACE_thread_t new_owner,
 		     ACE_thread_t *old_owner = 0);
   // Transfers ownership of Reactor to the <new_owner>.
 
@@ -385,26 +385,26 @@ public:
   // = Low-level wait_set mask manipulation methods.
 
   virtual int mask_ops (ACE_Event_Handler *event_handler,
-			ACE_Reactor_Mask mask, 
+			ACE_Reactor_Mask mask,
 			int ops);
   // GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   // <event_handler> and <mask>.
 
-  virtual int mask_ops (ACE_HANDLE handle, 
-			ACE_Reactor_Mask mask, 
-			int ops);  
+  virtual int mask_ops (ACE_HANDLE handle,
+			ACE_Reactor_Mask mask,
+			int ops);
   // GET/SET/ADD/CLR the dispatch MASK "bit" bound with the <handle>
   // and <mask>.
 
   // = Low-level ready_set mask manipulation methods.
-  virtual int ready_ops (ACE_Event_Handler *event_handler, 
-			 ACE_Reactor_Mask mask, 
+  virtual int ready_ops (ACE_Event_Handler *event_handler,
+			 ACE_Reactor_Mask mask,
 			 int ops);
   // GET/SET/ADD/CLR the ready "bit" bound with the <event_handler>
   // and <mask>.
 
-  virtual int ready_ops (ACE_HANDLE handle, 
-			 ACE_Reactor_Mask mask, 
+  virtual int ready_ops (ACE_HANDLE handle,
+			 ACE_Reactor_Mask mask,
 			 int ops);
   // GET/SET/ADD/CLR the ready "bit" bound with the <handle> and <mask>.
 
@@ -440,8 +440,8 @@ protected:
   static sig_atomic_t end_event_loop_;
   // Terminate the event loop.
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Reactor (const ACE_Reactor &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Reactor &operator = (const ACE_Reactor &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Reactor (const ACE_Reactor &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Reactor &operator = (const ACE_Reactor &))
   // Deny access since member-wise won't work...
 };
 

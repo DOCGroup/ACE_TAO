@@ -6,13 +6,13 @@
 //
 // = LIBRARY
 //    ace
-// 
+//
 // = FILENAME
 //    Registry.h
 //
 // = AUTHOR
 //    Irfan Pyarali (irfan@cs.wustl.edu)
-// 
+//
 // ============================================================================
 
 #if !defined (ACE_REGISTRY_H)
@@ -36,17 +36,17 @@
 class ACE_Export ACE_Registry
   // = TITLE
   //     A Name Server implementation
-  // 
+  //
   // = DESCRIPTION
-  //     The registry interface is inspired by the interface 
+  //     The registry interface is inspired by the interface
   //     specified in the CORBA Naming Service Specification.
-  //     The implementation is done through Win32 Reg*() functions. 
+  //     The implementation is done through Win32 Reg*() functions.
   //     Other than providing an OO wrapper for the Win32 Reg*()
   //     functions, ACE_Registry provides an abstraction for iteration
   //     over the elements of the Registry.
 {
 public:
-  
+
 // International string
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
@@ -65,7 +65,7 @@ public:
 #endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
 #endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
-  struct ACE_Export Name_Component 
+  struct ACE_Export Name_Component
   {
     Istring id_;
     Istring kind_;
@@ -92,32 +92,32 @@ public:
 #endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
 
   static LPCTSTR STRING_SEPARATOR;
-  // Separator for components in a name 
+  // Separator for components in a name
 
   static Istring make_string (const Name &name);
   // Convert a <name> to a <string>
-    
+
   static Name make_name (const Istring &string);
   // Convert a <string> to a <name>
 
   enum Binding_Type {INVALID, OBJECT, CONTEXT};
   // There are two types of bindings
 
-  struct ACE_Export Binding 
+  struct ACE_Export Binding
   {
     Binding ();
     // Empty (default) constructor
 
     Binding (const Name &binding_name,
              Binding_Type binding_type);
-    // Constructor 
+    // Constructor
     // (Name version)
 
     Binding (const Istring &binding_name,
              Binding_Type binding_type);
-    // Constructor 
+    // Constructor
     // (String version)
-    
+
     void name (Name &name);
     // Name accessor
     // (Name version)
@@ -127,15 +127,15 @@ public:
     // Name accessors
     // (String version)
 
-    Binding_Type type (void);      
+    Binding_Type type (void);
     // Type accessor
 
   private:
     Istring name_;
-    Binding_Type type_;  
+    Binding_Type type_;
     // A binding has a name and a type
   };
-  
+
 // A list of bindings
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
@@ -162,26 +162,26 @@ public:
     //     An object representation
     // = DESCRIPTION
     //     In CORBA, all objects inherit from (CORBA::Object).
-    //     For the registry, this is used as a wrapper for an 
-    //     instance of a built-in data type.  
-    //     Think about an object as being similar to a file 
+    //     For the registry, this is used as a wrapper for an
+    //     instance of a built-in data type.
+    //     Think about an object as being similar to a file
     //     in a file system.
     {
-    public:   
+    public:
       Object (void *data = 0,
-	      u_long size = 0, 
+	      u_long size = 0,
 	      u_long type = REG_NONE);
-      // Default constructor 
+      // Default constructor
 
       void data (void *data);
       void *data (void) const;
       // Set/Get data
-    
+
       void size (u_long size);
       u_long size (void) const;
       // Set/Get size
 
-      void type (u_long type);      
+      void type (u_long type);
       u_long type (void) const;
       // Set/Get type
 
@@ -196,7 +196,7 @@ public:
       // Type of data
     };
 
-  class ACE_Export Naming_Context 
+  class ACE_Export Naming_Context
     // = TITLE
     //     An context representation
     // = DESCRIPTION
@@ -212,73 +212,73 @@ public:
 	   MAX_CONTEXT_NAME_SIZE = MAXPATHLEN + 1 };
     // Max sizes of names
     // (Not too sure about this value)
-    
+
     Naming_Context (void);
     // Empty constructor: keys will be NULL
 
     Naming_Context (const HKEY &key);
     // Constructor: key_ will be set to <key>
-    
+
     ~Naming_Context (void);
     // Destructor will call this->close()
 
 
     // The following interfaces are for objects
 
-    int bind_new (const Name &name, 
+    int bind_new (const Name &name,
 		  const Object &object);
     // Insert <object> with <name> into <this> context
     // This will fail if <name> already exists
     // (Name version)
 
-    int bind_new (const Istring &name, 
+    int bind_new (const Istring &name,
 		  const Object &object);
     // Insert <object> with <name> into <this> context
     // This will fail if <name> already exists
     // (String version)
 
-    int bind (const Name &name, 
+    int bind (const Name &name,
 	      const Object &object);
     // Insert or update <object> with <name> into <this> context
     // This will not fail if <name> already exists
     // (Name version)
 
-    int bind (const Istring &name, 
+    int bind (const Istring &name,
 	      const Object &object);
     // Insert or update <object> with <name> into <this> context
     // This will not fail if <name> already exists
     // (String version)
 
-    int rebind (const Name &name, 
+    int rebind (const Name &name,
 		const Object &object);
     // Update <object> with <name> in <this> context
     // (Name version)
-    
-    int rebind (const Istring &name, 
+
+    int rebind (const Istring &name,
 		const Object &object);
     // Update <object> with <name> in <this> context
-    
-    int resolve (const Name &name, 
+
+    int resolve (const Name &name,
 		 Object &object);
     // Find <object> with <name> in <this> context
     // (Name version)
-    
-    int resolve (const Istring &name, 
+
+    int resolve (const Istring &name,
 		 Object &object);
     // Find <object> with <name> in <this> context
-    
+
     int unbind (const Name &name);
     // Delete object with <name> in <this> context
     // (Name version)
-    
+
     int unbind (const Istring &name);
     // Delete object with <name> in <this> context
-    
+
 
     // The following interfaces are for Naming Context
-    
+
     int new_context (Naming_Context &naming_context);
-    // Create new <naming_context> 
+    // Create new <naming_context>
 
     int bind_new_context (const Name &name,
 			  Naming_Context &naming_context,
@@ -288,7 +288,7 @@ public:
     // Insert <naming_context> with <name> relative to <this> context
     // This will fail if <name> already exists
     // (Name version)
-    
+
     int bind_new_context (const Istring &name,
 			  Naming_Context &naming_context,
 			  u_long persistence = REG_OPTION_NON_VOLATILE,
@@ -296,8 +296,8 @@ public:
 			  LPSECURITY_ATTRIBUTES security_attributes = 0);
     // Insert <naming_context> with <name> relative to <this> context
     // This will fail if <name> already exists
-    
-    int bind_context (const Name &name, 
+
+    int bind_context (const Name &name,
 		      /* const */ Naming_Context &naming_context,
 		      u_long persistence = REG_OPTION_NON_VOLATILE,
 		      u_long security_access = KEY_ALL_ACCESS,
@@ -305,51 +305,51 @@ public:
     // Insert or update <naming_context> with <name> relative to <this> context
     // This will not fail if <name> already exists
     // (Name version)
-    
-    int bind_context (const Istring &name, 
+
+    int bind_context (const Istring &name,
 		      /* const */ Naming_Context &naming_context,
 		      u_long persistence = REG_OPTION_NON_VOLATILE,
 		      u_long security_access = KEY_ALL_ACCESS,
 		      LPSECURITY_ATTRIBUTES security_attributes = 0);
     // Insert or update <naming_context> with <name> relative to <this> context
     // This will not fail if <name> already exists
-    
-    int rebind_context (const Name &name, 
+
+    int rebind_context (const Name &name,
 			/* const */ Naming_Context &naming_context);
-    // Rename <naming_context> to <name> 
+    // Rename <naming_context> to <name>
     // (Name version)
-    
-    int rebind_context (const Istring &name, 
+
+    int rebind_context (const Istring &name,
 			/* const */ Naming_Context &naming_context);
-    // Rename <naming_context> to <name> 
-    
-    int resolve_context (const Name &name, 
+    // Rename <naming_context> to <name>
+
+    int resolve_context (const Name &name,
 			 Naming_Context &naming_context,
 			 u_long security_access = KEY_ALL_ACCESS);
     // Find <naming_context> with <name> in <this> context
     // (Name version)
-    
-    int resolve_context (const Istring &name, 
+
+    int resolve_context (const Istring &name,
 			 Naming_Context &naming_context,
 			 u_long security_access = KEY_ALL_ACCESS);
     // Find <naming_context> with <name> in <this> context
-    
+
     int unbind_context (const Name &name);
     // Remove naming_context with <name> from <this> context
     // (Name version)
-    
+
     int unbind_context (const Istring &name);
     // Remove naming_context with <name> from <this> context
-    
+
     int destroy (void);
     // Same as unbind_context() with <this> as naming_context
-    
-    int list (u_long how_many, 
-	      Binding_List &list, 
+
+    int list (u_long how_many,
+	      Binding_List &list,
 	      Binding_Iterator &iterator);
     // listing function: iterator creator
-    // This is useful when there are many objects and contexts 
-    // in <this> context and you only want to look at a few entries 
+    // This is useful when there are many objects and contexts
+    // in <this> context and you only want to look at a few entries
     // at a time
 
     int list (Binding_List &list);
@@ -362,12 +362,12 @@ public:
 
     int flush (void);
     // Sync content of context to disk
-    
+
     int close (void);
     // Close the handle of the context
     // Note: close() does not call flush()
-    
-    
+
+
     // Accessors
 
     HKEY key (void);
@@ -385,11 +385,11 @@ public:
     Istring name (void);
     // Get name
     // (String version)
-    
-  protected:  
+
+  protected:
     void key (HKEY key);
     // Set key
-    
+
     void parent (HKEY parent);
     // Set parent
 
@@ -400,25 +400,25 @@ public:
     void name (const Istring &name);
     // Set name
     // (String version)
-      
+
   private:
-    ACE_UNIMPLEMENTED_FUNC (Naming_Context (const Naming_Context &rhs));
+    ACE_UNIMPLEMENTED_FUNC (Naming_Context (const Naming_Context &rhs))
     // Disallow copy constructors
 
-    ACE_UNIMPLEMENTED_FUNC (const Naming_Context &operator= (const Naming_Context &rhs));
+    ACE_UNIMPLEMENTED_FUNC (const Naming_Context &operator= (const Naming_Context &rhs))
     // Disallow assignment
-    
+
     HKEY key_;
     // Key for self
-    
+
     HKEY parent_key_;
     // Key for parent
-    
+
     Istring name_;
     // Name of self
   };
 
-  class ACE_Export Binding_Iterator 
+  class ACE_Export Binding_Iterator
     // = TITLE
     //     An iterator
     // = DESCRIPTION
@@ -434,7 +434,7 @@ public:
     int next_one (Binding &binding);
     // Next entry
 
-    int next_n (u_long how_many, 
+    int next_n (u_long how_many,
 		Binding_List &list);
     // Next <how_many> entries
 
@@ -465,7 +465,7 @@ public:
       public:
 	Iteration_State (Binding_Iterator &iterator);
 
-	virtual int next_n (u_long how_many, 
+	virtual int next_n (u_long how_many,
 			    Binding_List &list) = 0;
 	// Next <how_many> entries
 
@@ -485,7 +485,7 @@ public:
       public:
 	Object_Iteration (Binding_Iterator &iterator);
 
-	int next_n (u_long how_many, 
+	int next_n (u_long how_many,
 		    Binding_List &list);
 	// Next <how_many> entries
       };
@@ -495,7 +495,7 @@ public:
       public:
 	Context_Iteration (Binding_Iterator &iterator);
 
-	int next_n (u_long how_many, 
+	int next_n (u_long how_many,
 		    Binding_List &list);
 	// Next <how_many> entries
       };
@@ -504,8 +504,8 @@ public:
       {
       public:
 	Iteration_Complete (Binding_Iterator &iterator);
-	
-	int next_n (u_long how_many, 
+
+	int next_n (u_long how_many,
 		    Binding_List &list);
 	// Next <how_many> entries
       };
@@ -515,12 +515,12 @@ public:
     friend class Context_Iteration;
     friend class Iteration_Complete;
     // Friend states
-    
+
     Object_Iteration object_iteration_;
     Context_Iteration context_iteration_;
     Iteration_Complete iteration_complete_;
     // Instances of all states
-    
+
     Iteration_State *current_enumeration_;
     // Pointer to current state
 
@@ -535,7 +535,7 @@ class ACE_Export ACE_Predefined_Naming_Contexts
   //     A factory for predefined registries, which exist by default
   //     on Win32 platforms
   // = DESCRIPTION
-  //     This factory can connect to both local and remote 
+  //     This factory can connect to both local and remote
   //     predefined registries.
 {
 public:
@@ -552,7 +552,7 @@ private:
   // Check if <machine_name> is the local host
 };
 
-// Fix me!  Shouldn't have to define this stuff 
+// Fix me!  Shouldn't have to define this stuff
 
 #if defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
   typedef ACE_Registry::Name_Component Name_Component;

@@ -484,8 +484,8 @@ private:
   // <ACE_Message_Block>s.
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Data_Block &operator= (const ACE_Data_Block &));
-  ACE_UNIMPLEMENTED_FUNC (ACE_Data_Block (const ACE_Data_Block &));
+  ACE_UNIMPLEMENTED_FUNC (ACE_Data_Block &operator= (const ACE_Data_Block &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Data_Block (const ACE_Data_Block &))
 };
 
 #if defined (__ACE_INLINE__)
