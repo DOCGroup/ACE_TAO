@@ -192,6 +192,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Containers.cpp"\
@@ -204,6 +206,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Free_List.i"\
 	{$(INCLUDE)}"\ace\Handle_Set.h"\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\Log_Msg.h"\
 	{$(INCLUDE)}"\ace\Log_Priority.h"\
 	{$(INCLUDE)}"\ace\Log_Record.h"\
@@ -237,7 +241,7 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Signal.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -248,6 +252,7 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Thread.h"\
 	{$(INCLUDE)}"\ace\Thread.i"\
 	{$(INCLUDE)}"\ace\Timer_Queue.h"\
@@ -257,6 +262,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Trace.h"\
 	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\sys\stat.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 NODEP_CPP_MAIN_=\
 	".\Client_Logging_Handler.h"\
@@ -298,6 +305,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Auto_Ptr.cpp"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.h"\
 	{$(INCLUDE)}"\ace\Auto_Ptr.i"\
+	{$(INCLUDE)}"\ace\Basic_Types.h"\
+	{$(INCLUDE)}"\ace\Basic_Types.i"\
 	{$(INCLUDE)}"\ace\config-win32-common.h"\
 	{$(INCLUDE)}"\ace\config.h"\
 	{$(INCLUDE)}"\ace\Connector.cpp"\
@@ -319,9 +328,11 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Handle_Set.i"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.cpp"\
 	{$(INCLUDE)}"\ace\Hash_Map_Manager.h"\
+	{$(INCLUDE)}"\ace\inc_user_config.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.h"\
 	{$(INCLUDE)}"\ace\INET_Addr.i"\
 	{$(INCLUDE)}"\ace\IO_Cntl_Msg.h"\
+	{$(INCLUDE)}"\ace\iosfwd.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.h"\
 	{$(INCLUDE)}"\ace\IPC_SAP.i"\
 	{$(INCLUDE)}"\ace\Local_Tokens.h"\
@@ -395,13 +406,13 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\SPIPE_Stream.i"\
 	{$(INCLUDE)}"\ace\SString.h"\
 	{$(INCLUDE)}"\ace\SString.i"\
-	{$(INCLUDE)}"\ace\stdcpp.h"\
 	{$(INCLUDE)}"\ace\Strategies.h"\
 	{$(INCLUDE)}"\ace\Strategies_T.cpp"\
 	{$(INCLUDE)}"\ace\Strategies_T.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.cpp"\
 	{$(INCLUDE)}"\ace\Stream_Modules.h"\
 	{$(INCLUDE)}"\ace\Stream_Modules.i"\
+	{$(INCLUDE)}"\ace\streams.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.h"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Complex.i"\
 	{$(INCLUDE)}"\ace\SV_Semaphore_Simple.h"\
@@ -416,6 +427,7 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Synch_T.cpp"\
 	{$(INCLUDE)}"\ace\Synch_T.h"\
 	{$(INCLUDE)}"\ace\Synch_T.i"\
+	{$(INCLUDE)}"\ace\sys_conf.h"\
 	{$(INCLUDE)}"\ace\Task.h"\
 	{$(INCLUDE)}"\ace\Task.i"\
 	{$(INCLUDE)}"\ace\Task_T.cpp"\
@@ -446,6 +458,8 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
+	{$(INCLUDE)}"\sys\stat.h"\
+	{$(INCLUDE)}"\sys\types.h"\
 	
 
 "$(INTDIR)\main.obj" : $(SOURCE) $(DEP_CPP_MAIN_) "$(INTDIR)"
