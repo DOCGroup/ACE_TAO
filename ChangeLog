@@ -1,3 +1,20 @@
+Thu Mar 11 08:47:55 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/WIN32_Proactor.cpp (post_completion):
+	  ACE_WIN32_Proactor::post_completion executes these two
+	  operations in wrong order:
+  
+	  1. If Proactor event is valid, signal it
+	  2. Post a completion
+  
+	  If, for example, a Reactor is connected to the proactor through
+ 	  the event, it may receive the event notification BEFORE the
+ 	  completion has been posted, which is wrong.  To fix the problem,
+ 	  those two operations must be swapped: FIRST post a completion,
+ 	  THEN signal the event.  Thanks to Enrico Detoma
+ 	  <enrico.detoma@email.it> for reporting this.  This closes bugid
+ 	  1763.
+
 Thu Mar 11 16:36:09 2004  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
 	* tests/Semaphore_Test.cpp (worker): 
