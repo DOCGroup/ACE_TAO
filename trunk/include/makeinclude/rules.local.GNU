@@ -152,11 +152,19 @@ depend.local: $(MAKEFILE)
 	@cp $(MAKEFILE) $(MAKEFILE).old
 	$(ACE_ROOT)/bin/g++dep -f $(MAKEFILE) $(CPPFLAGS) -DMAKEDEPEND $(LSRC) $(SRC)
 	@cat $(MAKEFILE) | \
+		if [ $(TAO_ROOT). = "." ] ;\
+		then \
+		sed -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
+		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
+		    -e "/:$$/d" \
+		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" ;\
+		else \
 		sed -e "s;$(TAO_ROOT);\$$(TAO_ROOT);g" \
 		    -e "s;$(ACE_ROOT);\$$(ACE_ROOT);g" \
 		    -e "s; /[-a-zA-Z0-9_./]*\.h;;g" \
 		    -e "/:$$/d" \
-		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" \
+		    -e "s;\([-a-zA-Z0-9._]*\)\.o:;.obj/\1.o $(VSHDIR)\1.$(SOEXT):;" ;\
+		fi \
 	> $(MAKEFILE).new
 	@mv $(MAKEFILE).new $(MAKEFILE) 
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
