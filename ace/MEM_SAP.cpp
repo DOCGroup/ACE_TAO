@@ -40,9 +40,9 @@ ACE_MEM_SAP::create_shm_malloc (LPCTSTR name,
     return -1;                  // already initialized.
 
   ACE_NEW_RETURN (this->shm_malloc_,
-                  MALLOC (name,
-                          0,
-                          options),
+                  MALLOC_TYPE (name,
+                               0,
+                               options),
                   -1);
 
   return 0;
