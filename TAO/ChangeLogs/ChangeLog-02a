@@ -1,3 +1,9 @@
+Mon Jan 31 11:14:21 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/orbsvcs.dsp:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsp:
+	  Updated the project files.
+
 Mon Jan 31 08:25:51 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Concrete_Proxy_Set.i:
