@@ -96,6 +96,31 @@ if ($client == -1) {
   exit 1;
 }
 
+print STDERR "\n\n==== Multi endpoint test with "
+  . "CORBA::ORB::list_initial_services ()\n";
+
+$port1 = $port + 1;
+$port2 = $port + 2;
+
+$CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
+                       " random_service "
+                       . " -l "
+                       . "-ORBInitRef random_service="
+                       . "iioploc://"
+                       . "localhost:$port1,"
+                       . "localhost:$port2,"
+                       . "localhost:$port"
+                       . "/object_name");
+
+$client = $CL->TimedWait (60);
+if ($client == -1) {
+  print STDERR "ERROR: client timedout\n";
+  $CL->Kill (); $CL->TimedWait (1);
+  $SV->Kill (); $SV->TimedWait (1);
+  unlink $file;
+  exit 1;
+}
+
 print STDERR "\n\n==== Multi endpoint default ref test\n";
 
 $CL = Process::Create ($EXEPREFIX."INS_test_client".$EXE_EXT,
