@@ -584,7 +584,7 @@ TAO_GIOP_Message_Acceptors::
 
       // write the reply_status
       output.write_ulong
-        (TAO_GIOP_Message_Acceptors::convert_CORBA_to_GIOP_exception (extype));  
+        (TAO_GIOP_Utils::convert_CORBA_to_GIOP_exception (extype));  
 
       // @@ Any way to implement this without interpretive
       //    marshaling???
@@ -671,26 +671,6 @@ set_state (CORBA::Octet def_major,
     }
 }
 
-TAO_GIOP_Reply_Status_Type
-TAO_GIOP_Message_Acceptors::
-  convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type)  
-{
-  switch (corba_type)
-    {
-    case CORBA::NO_EXCEPTION:
-      return TAO_GIOP_NO_EXCEPTION;
-
-    case CORBA::SYSTEM_EXCEPTION:
-      return TAO_GIOP_SYSTEM_EXCEPTION;
-
-    case CORBA::USER_EXCEPTION:
-      return TAO_GIOP_USER_EXCEPTION;
-
-    default:
-      // Don't know what to do here??
-      return TAO_GIOP_SYSTEM_EXCEPTION;
-    }
-}
 
 ////////////////////////////////////////////////////////////
 // Methods that should not be called from the acceptor side 

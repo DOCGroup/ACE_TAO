@@ -85,7 +85,8 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (ACE_Thre
   ACE_ASSERT (this->orb_core_ != 0);
 }
 
-TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core)
+TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                                                        CORBA::Boolean flag)
   : TAO_UIOP_Handler_Base (orb_core),
     transport_ (this, orb_core),
     orb_core_ (orb_core),

@@ -235,7 +235,28 @@ private:
 
 };
 
-
+class TAO_Export TAO_GIOP_Utils
+{
+  // = TITLE
+  //   Utility class that has some commonly used methods for both GIOP
+  //   Base  & GIOP lite
+  
+  // = DESCRIPTION
+public:
+  static int read_bytes_input (TAO_Transport *transport,
+                               TAO_InputCDR &cdr,
+                               CORBA::ULong buf_size,
+                               ACE_Time_Value *value = 0);
+  
+  static ssize_t read_buffer (TAO_Transport *transport,
+                              char *buf,
+                              size_t len,
+                              ACE_Time_Value *max_wait_time = 0);
+  
+  static TAO_GIOP_Reply_Status_Type 
+  convert_CORBA_to_GIOP_exception (CORBA::exception_type corba_type);
+  // Convert the exception type from CORBA to GIOP
+};
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Utils.i"

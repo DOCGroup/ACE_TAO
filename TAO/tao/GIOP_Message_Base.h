@@ -133,13 +133,6 @@ private:
                                TAO_OutputCDR &msg) = 0;
   // Write the GIOP locate request header in to <msg>
   
-  int read_bytes_input (TAO_Transport *transport,
-                        TAO_InputCDR &input,
-                        CORBA::ULong read_size,
-                        ACE_Time_Value *max_wait_time);
-  // This a helper that would read the <reade_size> bytes from
-  // <transport> in to the <inout> stream.
-
   virtual int validate_version (TAO_GIOP_Message_State *state) = 0;
   // This will do a validation of the versions that arrive in the transport.
 
@@ -148,14 +141,6 @@ private:
 
   virtual int parse_magic_bytes (TAO_GIOP_Message_State *state);
   // validates the first 4 bytes that contain the magic word "GIOP"
-
-  ssize_t read_buffer (TAO_Transport *transport,
-                       char *buf,
-                       size_t len,
-                       ACE_Time_Value *max_wait_time);
-  // The above method seems to be redundant with read_input_bytes. I
-  // will trim it down in the next iteration... @@Bala
-
 
   void send_close_connection (const TAO_GIOP_Version &version,
                               TAO_Transport *transport,

@@ -87,6 +87,18 @@ public:
                                           CORBA::Octet message_type) = 0;
   // Process messages from the connectors. This is the hert of the
   // server side processing 
+
+protected:
+  int transport_message (TAO_Transport *transport,
+                         TAO_OutputCDR &stream,
+                         int two_way = 1,
+                         TAO_Stub *stub = 0,
+                         ACE_Time_Value *max_wait_time = 0);
+  // This method uses the Transport <transport> objects send () method
+  // to send the contents in <stream>. Most of the derived classes, at
+  // one stage or other would tend to send the data to the socket. So,
+  // it is better if we have the method that does the sending and
+  // error checking in a seperate place for ease of maintenance.
 };
 
 

@@ -26,7 +26,8 @@ TAO_GIOP_Message_Base::
 {
   // Reset the message type
   msg.reset ();
-  
+
+  cout << "Thaye parameshi "<<endl;
   TAO_GIOP_Message_Type type = TAO_GIOP_MESSAGERROR;
   
   // First convert the Pluggable type to the GIOP specific type. 
@@ -100,17 +101,17 @@ TAO_GIOP_Message_Base::
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
-      this->write_request_header (params.svc_ctx,
-                                  params.request_id,
-                                  params.response_flags,
-                                  spec,
-                                  params.operation_name,
-                                  cdr);
+      return this->write_request_header (params.svc_ctx,
+                                         params.request_id,
+                                         params.response_flags,
+                                         spec,
+                                         params.operation_name,
+                                         cdr);
       break;
     case TAO_PLUGGABLE_MESSAGE_LOCATE_REQUEST_HEADER:
-      this->write_locate_request_header (params.request_id,
-                                         spec,
-                                         cdr);
+      return this->write_locate_request_header (params.request_id,
+                                                spec,
+                                                cdr);
       break;
     default:
       if (TAO_debug_level > 0)
@@ -173,35 +174,11 @@ TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
                                         buf),
                   stream.length ());
   
-  // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = transport->send (stub,
-                               two_way,
-                               stream.begin (),
-                               max_wait_time);
- 
-  if (n == -1)
-    {
-      if (TAO_orbdebug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO: (%P|%t|%N|%l) closing conn %d after fault %p\n"),
-                    transport->handle (),
-                    ASYS_TEXT ("GIOP_Message_Base::send_message ()")));
-
-      return -1;
-    }
-
-  // EOF.
-  if (n == 0)
-    {
-      if (TAO_orbdebug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO: (%P|%t|%N|%l) send_message () ")
-                    ASYS_TEXT ("EOF, closing conn %d\n"),
-                    transport->handle()));
-      return -1;
-    }
-
-  return 1;
+  return this->transport_message (transport,
+                                  stream,
+                                  two_way,
+                                  stub,
+                                  max_wait_time);
 }
 
 int
@@ -217,10 +194,11 @@ TAO_GIOP_Message_Base::
   
   if (state->header_received () == 0)
     {
-      int retval = this->read_bytes_input (transport,
-                                           state->cdr,
-                                           this->header_len (),
-                                           max_wait_time);
+      int retval = 
+        TAO_GIOP_Utils::read_bytes_input (transport,
+                                          state->cdr,
+                                          this->header_len (),
+                                          max_wait_time);
       if (retval == -1 && TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -270,10 +248,10 @@ TAO_GIOP_Message_Base::
     state->message_size - state->current_offset;
     
   ssize_t n =
-    this->read_buffer (transport,
-                       state->cdr.rd_ptr () + state->current_offset,
-                       missing_data,
-                       max_wait_time);
+    TAO_GIOP_Utils::read_buffer (transport,
+                                 state->cdr.rd_ptr () + state->current_offset,
+                                 missing_data,
+                                 max_wait_time);
 
    if (n == -1)
     {
@@ -374,40 +352,6 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 }
 
 int
-TAO_GIOP_Message_Base::read_bytes_input (TAO_Transport *transport,
-                                         TAO_InputCDR &input,
-                                         CORBA::ULong read_size,
-                                         ACE_Time_Value *time) 
-{
-  // Grow the size of CDR stream
-  if (input.grow (read_size) == -1)
-    return -1;
-  
-  // Read until all the header is received.  There should be no
-  // problems with locking, the header is only a few bytes so they
-  // should all be available on the socket, otherwise there is a
-  // problem with the underlying transport, in which case we have more
-  // problems than just this small loop.
-  char *buf = input.rd_ptr ();
-  ssize_t n = 0;
-  
-  for (int t = read_size;
-       t != 0;
-       t -= n)
-    {
-      n = transport->recv (buf, t, time);
-      if (n == -1)
-        return -1;
-      else if (n == 0) // @@ TODO && errno != EWOULDBLOCK)
-        return -1;
-      buf += n;
-    }
-
-  return 1;
-}
-
-
-int
 TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State *state)
 {
   // Grab the read pointer
@@ -494,6 +438,7 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   state->cdr.skip_bytes (this->message_size_offset ());
   state->cdr.read_ulong (state->message_size);
 
+  cout << "Message size "<< state->message_size <<endl;
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -508,38 +453,7 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   return 1;
 }
 
-ssize_t
-TAO_GIOP_Message_Base::read_buffer (TAO_Transport *transport,
-                                    char *buf,
-                                    size_t len,
-                                    ACE_Time_Value *max_wait_time)
-{
-  ssize_t bytes_read = transport->recv (buf, len, max_wait_time);
 
-  if (bytes_read <= 0 && TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("TAO (%P|%t|%N|%l) - %p,\n")
-                ASYS_TEXT ("              transport = %d, ")
-                ASYS_TEXT ("bytes = %d, len = %d\n"),
-                ASYS_TEXT ("read_buffer"),
-                transport->handle (),
-                bytes_read,
-                len));
-
-  if (bytes_read == -1 && errno == ECONNRESET)
-    {
-      // @@ Is this OK??
-
-      // We got a connection reset (TCP RSET) from the other side,
-      // i.e., they didn't initiate a proper shutdown.
-      //
-      // Make it look like things are OK to the upper layer.
-      bytes_read = 0;
-      errno = 0;
-    }
-
-  return bytes_read;
-}
 
 // Send an "I can't understand you" message -- again, the message is
 // prefabricated for simplicity.  This implies abortive disconnect (at

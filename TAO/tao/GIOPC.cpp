@@ -425,6 +425,7 @@ void operator<<= (
     stream << *_any_val;
     _tao_any._tao_replace (
         GIOP::_tc_TargetAddress,
+        TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
         _any_val,
@@ -450,6 +451,7 @@ void operator<<= (
     stream << *_tao_elem;
     _tao_any._tao_replace (
         GIOP::_tc_TargetAddress,
+        TAO_ENCAP_BYTE_ORDER,
         stream.begin (),
         1,
         _tao_elem,

@@ -51,7 +51,7 @@ CORBA_Current_ptr CORBA_Current::_narrow (
   ACE_NEW_RETURN (
       retval,
       POA_CORBA::_tao_collocated_Current (
-          ACE_reinterpret_cast (POA_CORBA::Current_ptr, 
+          ACE_reinterpret_cast (POA_CORBA::Current_ptr,
                                 servant),
           0
         ),
@@ -102,7 +102,8 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_Current_ptr &_tao_
       if (eq == 0)
         return 0;
 
-      TAO_InputCDR stream (_tao_any._tao_get_cdr ());
+      TAO_InputCDR stream (_tao_any._tao_get_cdr (),
+                           _tao_any._tao_byte_order ());
       CORBA::Object_ptr *_tao_obj_ptr;
       ACE_NEW_RETURN (_tao_obj_ptr, CORBA::Object_ptr, 0);
       if (stream.decode (CORBA::_tc_Current, _tao_obj_ptr, 0, ACE_TRY_ENV)
