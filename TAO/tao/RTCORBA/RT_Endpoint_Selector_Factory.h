@@ -20,13 +20,14 @@
 
 #include "rtcorba_export.h"
 
-#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Endpoint_Selector_Factory.h"
+
+#if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
+
 #include "ace/Service_Config.h"
 
 class TAO_RT_Invocation_Endpoint_Selector;
