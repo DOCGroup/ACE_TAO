@@ -12,7 +12,7 @@
  */
 
 #include "CIAO_Event.pidl"
-#include <tao/IFR_Client/Interface.pidl>
+#include <tao/IFR_Client/IFR_Base.pidl>
 
 module Components
 {

@@ -1,3 +1,57 @@
+Tue Nov 05 23:42:04 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* CCMCore.dsp:
+	* CIAO_BaseC.cpp:
+	* CIAO_BaseC.h:
+	* CIAO_BaseC.i:
+	* CIAO_ComponentC.cpp:
+	* CIAO_ComponentC.h:
+	* CIAO_ComponentC.i:
+	* CIAO_ContainerC.cpp:
+	* CIAO_ContainerC.h:
+	* CIAO_ContainerC.i:
+	* CIAO_Container_ExC.cpp:
+	* CIAO_Container_ExC.h:
+	* CIAO_Container_ExC.i:
+	* CIAO_DeploymentC.cpp:
+	* CIAO_DeploymentC.h:
+	* CIAO_DeploymentC.i:
+	* CIAO_EventC.cpp:
+	* CIAO_EventC.h:
+	* CIAO_EventC.i:
+	* CIAO_TransactionC.cpp:
+	* CIAO_TransactionC.h:
+	* CIAO_TransactionC.i:
+	* Component_BaseC.cpp:
+	* Component_BaseC.h:
+	* Component_BaseC.i:
+	* Component_BaseS.cpp:
+	* Component_BaseS.h:
+	* Component_BaseS.i:
+	* Component_BaseS_T.cpp:
+	* Component_BaseS_T.h:
+	* Component_BaseS_T.i:
+	* CosPersistentStateC.cpp:
+	* CosPersistentStateC.h:
+	* CosPersistentStateC.i:
+	* CosPersistentStateS.cpp:
+	* CosPersistentStateS.h:
+	* CosPersistentStateS.i:
+	* CosPersistentStateS_T.cpp:
+	* CosPersistentStateS_T.h:
+	* CosPersistentStateS_T.i: Removed generated files.
+
+	* CCMCore.dsw:
+	* CIAO_CLIENT_Export.h:
+	* CIAO_Client.dsp:
+	* CIAO_Component.pidl:
+	* CIAO_Container.dsp:
+	* CIAO_Container_Export.h:
+	* CIAO_SERVER_Export.h:
+	* CIAO_Server.dsp:
+	* README: Split up the CCM Core library into 3 libraries for clients,
+	  component implementations, and component servers.
+
 Thu Sep 26 15:20:13 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ciao/CCMCore.dsp:
