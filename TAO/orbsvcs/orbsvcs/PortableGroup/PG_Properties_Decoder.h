@@ -13,11 +13,11 @@
 //=============================================================================
 #ifndef TAO_PG_PROPERTIES_DECODER_H
 #define TAO_PG_PROPERTIES_DECODER_H
-#include "orbsvcs/PortableGroupS.h"
-#include "orbsvcs/CosNamingC.h"
 #include "portablegroup_export.h"
-
-#include "ace/Hash_Map_Manager.h"
+#include <orbsvcs/PortableGroupS.h>
+#include <orbsvcs/CosNamingC.h>
+#include <ace/Hash_Map_Manager.h>
+#include <ace/SSTring.h>
 
 namespace TAO_PG
 {
@@ -49,26 +49,6 @@ namespace TAO_PG
     PortableGroup::Properties_var property_set_;
   };
 
-  /**
-   * Find a value in a Properties::Properties_Decoder.
-   * This is a work-around for the lack of
-   * templated methods.
-   */
-  template <typename TYPE>
-  int find (const Properties_Decoder & decoder, const ACE_CString & key, TYPE & value);
-
-  template <typename TYPE>
-  int find (const Properties_Decoder & decoder, const ACE_CString & key, TYPE & value)
-  {
-    int result = 0;
-    PortableGroup::Value * any;
-    if ( decoder.find (key, any))
-    {
-      result = ((*any) >>= value);
-    }
-    return result;
-  }
-
 #ifdef PG_PS_UNIT_TEST
 
   /**
@@ -80,5 +60,9 @@ namespace TAO_PG
   int test_encode_decode();
 #endif // PG_PS_UNIT_TEST
 } //namespace TAO_PG
+
+////////////////////////////////////
+// include templated helper function
+#include "PG_Properties_Decoder_Find.h"
 
 #endif // TAO_PG_PROPERTIES_DECODER_H
