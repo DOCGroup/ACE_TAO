@@ -94,7 +94,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::Exception))" << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO_Object_Adapter::Servant_Upcall servant_upcall ("
+      << "TAO::Portable_Server::Servant_Upcall servant_upcall ("
       << be_idt << be_idt_nl
       << "obj->_stubobj ()"
       << "->servant_orb_var ()->orb_core ()"
@@ -111,7 +111,7 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
       << "ACE_CHECK;" << be_nl << be_nl
-      << "servant_upcall.pre_invoke_collocated_request (" 
+      << "servant_upcall.pre_invoke_collocated_request ("
       << be_idt << be_idt_nl
       << "ACE_ENV_SINGLE_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt_nl
