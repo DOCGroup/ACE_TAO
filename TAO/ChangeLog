@@ -1,3 +1,10 @@
+Fri Aug 16 10:40:53 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Loadbalancing.mpc:
+
+	  Removed this MakeProjectCreator file.  It was for the old load
+	  balancer prototype.
+
 Fri Aug 16 10:31:51 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadManager.bor (CFLAGS, LIBFILES):
