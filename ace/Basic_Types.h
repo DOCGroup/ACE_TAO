@@ -120,7 +120,7 @@
 #        error Unsupported long long size needs to be updated for this platform
 #      endif
        typedef unsigned long long ACE_UINT64;
-#    elif defined (ULONGLONG_MAX)
+#    elif defined (ULONGLONG_MAX) && !defined (__GNUG__)
        // Irix 6.x, for example.
 #      if (ULONGLONG_MAX) == 18446744073709551615ULL
 #        define ACE_SIZEOF_LONG_LONG 8
@@ -364,7 +364,7 @@ typedef ACE_UINT16 ACE_USHORT16;
 #   define ACE_LITTLE_ENDIAN 0123X
 #   define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
 # else
-    // Otherwise, we'll assume big endian.
+    // Otherwise, we assume big endian.
 #   define ACE_BIG_ENDIAN 3210X
 #   define ACE_BYTE_ORDER ACE_BIG_ENDIAN
 # endif
