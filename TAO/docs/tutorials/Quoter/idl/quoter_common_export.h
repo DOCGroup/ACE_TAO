@@ -9,9 +9,15 @@
 
 #include "ace/config-all.h"
 
-#if !defined (QUOTER_COMMON_HAS_DLL)
-#  define QUOTER_COMMON_HAS_DLL 1
-#endif /* ! QUOTER_COMMON_HAS_DLL */
+#if defined (TAO_AS_STATIC_LIBS)
+#  if !defined (QUOTER_COMMON_HAS_DLL)
+#    define QUOTER_COMMON_HAS_DLL 0
+#  endif /* ! QUOTER_COMMON_HAS_DLL */
+#else
+#  if !defined (QUOTER_COMMON_HAS_DLL)
+#    define QUOTER_COMMON_HAS_DLL 1
+#  endif /* ! QUOTER_COMMON_HAS_DLL */
+#endif
 
 #if defined (QUOTER_COMMON_HAS_DLL) && (QUOTER_COMMON_HAS_DLL == 1)
 #  if defined (QUOTER_COMMON_BUILD_DLL)
