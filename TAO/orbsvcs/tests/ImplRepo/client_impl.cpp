@@ -172,7 +172,6 @@ Client_i::init (int argc, char **argv)
                            this->argv_[0]),
                           -1);
 
-
       CORBA::Object_var server_object =
         this->orb_->string_to_object (this->server_key_, TAO_TRY_ENV);
       TAO_CHECK_ENV;

@@ -2,6 +2,8 @@
 
 #include "ir_implrepo_impl.h"
 
+#include "ace/Naming_Context.h"
+
 ACE_RCSID(ImplRepo, ir_server, "$Id$")
 
 int
@@ -33,5 +35,6 @@ main (int argc, char *argv[])
       return -1;
     }
   TAO_ENDTRY;
+
   return 0;
 }
