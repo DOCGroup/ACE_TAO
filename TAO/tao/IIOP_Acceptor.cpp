@@ -214,36 +214,15 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                   ACE_CString[this->num_hosts_],
                   -1);
 
-  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
-    {
-      const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                        ASYS_TEXT ("IIOP_Acceptor::open - %p\n\n"),
-                        ASYS_TEXT ("cannot cache hostname")));
-          return -1;
-        }
- 
-      this->hosts_[0] = tmp;
-    }
-  else
-    {
-      char tmp_host[MAXHOSTNAMELEN + 1];
-      if (addr.get_host_name (tmp_host,
-                              sizeof (tmp_host)) != 0)
-        {
-          if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                        ASYS_TEXT ("IIOP_Acceptor::open - %p\n\n"),
-                        ASYS_TEXT ("cannot cache hostname")));
-          return -1;
-        }
-      this->hosts_[0] = tmp_host;
-    }
+  if (this->hostname (orb_core,
+                      addr,
+                      this->hosts_[0]) != 0)
+    return -1;
+
+  // Copy the addr.  The port is (re)set in
+  // TAO_IIOP_Acceptor::open_i().
+  if (this->addrs_[0].set (addr) != 0)
+    return -1;
 
   return this->open_i (orb_core, addr);
 }
@@ -278,9 +257,25 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                               if_addrs) != 0)
     return -1;
 
+  if (if_cnt == 0 || if_addrs == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      ASYS_TEXT ("TAO (%P|%t) Unable to probe network ")
+                      ASYS_TEXT ("interfaces.  Using default.")));
+        }
+
+      if_cnt = 1; // Force the network interface count to be one.
+      delete [] if_addrs;
+      ACE_NEW_RETURN (if_addrs,
+                      ACE_INET_Addr[if_cnt],
+                      -1);
+    }
+
   // Scan for the loopback interface since it shouldn't be included in
   // the list of cached hostnames unless it is the only interface.
-  size_t lo_cnt = 0;
+  size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
     if (if_addrs[j].get_ip_address() == INADDR_LOOPBACK)
       lo_cnt++;
@@ -327,39 +322,16 @@ TAO_IIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
             if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
           continue;
 
-        if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
-          {
-            const char *tmp = if_addrs[i].get_host_addr ();
-            if (tmp == 0)
-              {
-                if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
-                              ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                              ASYS_TEXT ("IIOP_Acceptor::open_default ")
-                              ASYS_TEXT ("- %p\n\n"),
-                              ASYS_TEXT ("cannot cache hostname")));
-                return -1;
-              }
-            this->hosts_[host_cnt] = tmp;
-          }
-        else
-          {
-            char tmp_host[MAXHOSTNAMELEN + 1];
-            if (if_addrs[i].get_host_name (tmp_host,
-                                           sizeof (tmp_host)) != 0)
-              {
-                if (TAO_debug_level > 0)
-                  ACE_DEBUG ((LM_DEBUG,
-                              ASYS_TEXT ("\n\nTAO (%P|%t) ")
-                              ASYS_TEXT ("IIOP_Acceptor::open_default ")
-                              ASYS_TEXT ("- %p\n\n"),
-                              ASYS_TEXT ("cannot cache hostname")));
-                return -1;
-              }
-            this->hosts_[host_cnt] = tmp_host;
-          }
+        if (this->hostname (orb_core,
+                            if_addrs[i],
+                            this->hosts_[host_cnt]) != 0)
+          return -1;
 
-        this->addrs_[host_cnt] = if_addrs[i];  // Copy the addr.
+        // Copy the addr.  The port is (re)set in
+        // TAO_IIOP_Acceptor::open_i().
+        if (this->addrs_[host_cnt].set (if_addrs[i]) != 0)
+          return -1;
+
         host_cnt++;
       }
   } // End ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> scope.
@@ -404,7 +376,8 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i - %p\n\n"),
+                    ASYS_TEXT ("\n\nTAO (%P|%t) IIOP_Acceptor::open_i ")
+                    ASYS_TEXT ("- %p\n\n"),
                     ASYS_TEXT ("cannot open acceptor")));
       return -1;
     }
@@ -442,6 +415,48 @@ TAO_IIOP_Acceptor::open_i (TAO_ORB_Core* orb_core,
                       this->hosts_[i].c_str (),
                       this->addrs_[i].get_port_number ()));
         }
+    }
+
+  return 0;
+}
+
+int
+TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
+                             ACE_INET_Addr &addr,
+                             ACE_CString &host)
+{
+  if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
+    {
+      const char *tmp = addr.get_host_addr ();
+      if (tmp == 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
+                        ASYS_TEXT ("IIOP_Acceptor::hostname ")
+                        ASYS_TEXT ("- %p\n\n"),
+                        ASYS_TEXT ("cannot cache hostname")));
+          return -1;
+        }
+
+      host = tmp;
+    }
+  else
+    {
+      char tmp_host[MAXHOSTNAMELEN + 1];
+      if (addr.get_host_name (tmp_host,
+                              sizeof (tmp_host)) != 0)
+        {
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG,
+                        ASYS_TEXT ("\n\nTAO (%P|%t) ")
+                        ASYS_TEXT ("IIOP_Acceptor::hostname ")
+                        ASYS_TEXT ("- %p\n\n"),
+                        ASYS_TEXT ("cannot cache hostname")));
+          return -1;
+        }
+
+      host = tmp_host;
     }
 
   return 0;
