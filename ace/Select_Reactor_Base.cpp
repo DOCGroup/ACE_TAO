@@ -500,8 +500,8 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
     {
       if (-1 == this->notify_queue_.dequeue_head (temp))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("dequeue_head")),
+                           ACE_LIB_TEXT ("%p\n"),
+                           ACE_LIB_TEXT ("dequeue_head")),
                           -1);
 
       // check
@@ -509,16 +509,16 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
         {
           if (-1 == local_queue.enqueue_head (temp))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("enqueue_head")),
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enqueue_head")),
                               -1);
         }
       else
         {  // deallocate the space...
           if (-1 == this->free_queue_.enqueue_head (temp))
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               ACE_TEXT ("enqueue_head")),
+                               ACE_LIB_TEXT ("%p\n"),
+                               ACE_LIB_TEXT ("enqueue_head")),
                               -1);
           ++number_purged;
         }
@@ -536,14 +536,14 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
     {
       if (-1 == local_queue.dequeue_head (temp))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("dequeue_head")),
+                           ACE_LIB_TEXT ("%p\n"),
+                           ACE_LIB_TEXT ("dequeue_head")),
                           -1);
 
       if (-1 == this->notify_queue_.enqueue_head (temp))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("enqueue_head")),
+                           ACE_LIB_TEXT ("%p\n"),
+                           ACE_LIB_TEXT ("enqueue_head")),
                           -1);
     }
 
