@@ -1,3 +1,9 @@
+Tue Jan 18 19:46:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/SHMIOP_Connector.cpp:
+          Replaced ACE casts with their C++ versions
+
 Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
@@ -16,7 +22,7 @@ Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
         * TAO_IDL/be/be_visitor_union_branch/cdr_op_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
         * TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
-        
+
           - Replaced calls to an interface's virtual marshal() method
             with calls to TAO::Objref_Traits<>::marshal(), which
             in turn calls the static methjod CORBA::Object::Marshal(),
@@ -26,29 +32,29 @@ Thu Jan 13 13:50:26 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
             Thanks to Jiang Wei <jiangwei_1976@yahoo.com.cn> for
             reporting the marshaling failure of empty object
             references in a sequence.
-            
+
           - Made generated CORBA::Boolean values more consistent about
             assigning or returniong 'true' or 'false' rather than
             '1' or '0'.
-            
+
         * tao/Valuetype/AbstractBase.cpp:
-        
+
           Added a check to the CDR stream output operator for null
           _ptr value. If a null is found, the operator marshals a
           discriminator value of 1 (corresponding to an object reference)
           and an empty type hint (this last is similar to the behavior
           of CORBA::Object::marshal()).
-          
+
         * tao/Valuetype/AbstractBase.h:
         * tao/Valuetype/ValueBase.cpp:
-        
+
           Made CORBA::Boolean values more consistent about assigning or
           returning 'true' or 'false' rather than '1' or '0'. Also
           changed evaluation of CDR stream operations to use '!' instead
           of '== 0'.
-          
+
         * tests/IDL_Test/IDL_Test.mpc:
-        
+
           Shortened file to use wildcards instead of listing file names.
 
 Thu Jan 13 11:55:55 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
