@@ -28,10 +28,11 @@
 #  include "factories.h"
 #  include "params.h"
 
-#if 0
+#  if !defined(__ACE_INLINE)
+// Can't have forward decls if we're doing inlines of these functions
 void CORBA_release (CORBA_ORB_ptr orb);
 CORBA_Boolean CORBA_is_nil (CORBA_ORB_ptr orb);
-#endif
+#  endif
 
 extern const IID 		IID_CORBA_ORB;
 
