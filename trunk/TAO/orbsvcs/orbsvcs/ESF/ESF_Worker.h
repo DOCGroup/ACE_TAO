@@ -13,6 +13,7 @@
 #define TAO_ESF_WORKER_H
 
 #include "ace/CORBA_macros.h"
+#include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
