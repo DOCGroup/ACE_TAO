@@ -96,8 +96,10 @@ private:
   const size_t hwm_;
   const size_t lwm_;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> role_;
-  ACE_MT (ACE_Barrier mq_full_);
-  ACE_MT (ACE_Barrier mq_low_water_mark_hit_);
+#if defined (ACE_HAS_THREADS)
+  ACE_Barrier mq_full_;
+  ACE_Barrier mq_low_water_mark_hit_;
+#endif /* ACE_HAS_THREADS */
 };
 
 Message_Handler::Message_Handler (ACE_Reactor &reactor)
