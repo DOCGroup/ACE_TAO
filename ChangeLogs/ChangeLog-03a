@@ -10,7 +10,44 @@ Sat Dec 22 23:12:33 2001  Carlos O'Ryan  <coryan@uci.edu>
 	* examples/Misc/test_set.dsp:
 	* examples/Misc/test_sstring.dsp:
 	* examples/Misc/test_trace.dsp:
+	* examples/IPC_SAP/DEV_SAP/reader/reader.dsp:
+	* examples/IPC_SAP/DEV_SAP/reader/reader.dsw:
+	* examples/IPC_SAP/DEV_SAP/writer/writer.dsp:
+	* examples/IPC_SAP/DEV_SAP/writer/writer.dsw:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-client.dsp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-Msg-server.dsp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-client.dsp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-server.dsp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-test.dsp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO_SAP.dsw:
+	* examples/IPC_SAP/SPIPE_SAP/NPClient.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/NPServer.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/SPIPE_SAP.dsw:
+	* examples/IPC_SAP/SPIPE_SAP/client.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/consumer_msg.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/consumer_read.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/producer_msg.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/producer_read.dsp:
+	* examples/IPC_SAP/SPIPE_SAP/server.dsp:
+	* examples/IPC_SAP/TLI_SAP/CPP-ATM-client.dsp:
+	* examples/IPC_SAP/TLI_SAP/CPP-ATM-server.dsp:
+	* examples/IPC_SAP/TLI_SAP/CPP-client.dsp:
+	* examples/IPC_SAP/TLI_SAP/CPP-server.dsp:
+	* examples/IPC_SAP/TLI_SAP/TLI_SAP.dsw:
+	* examples/IPC_SAP/TLI_SAP/db-client.dsp:
+	* examples/IPC_SAP/TLI_SAP/db-server.dsp:
+	* examples/IPC_SAP/TLI_SAP/ftp-client.dsp:
+	* examples/IPC_SAP/TLI_SAP/ftp-server.dsp:
+	* examples/IPC_SAP/UPIPE_SAP/UPIPE_SAP.dsw:
+	* examples/IPC_SAP/UPIPE_SAP/ex1.dsp:
+	* examples/IPC_SAP/UPIPE_SAP/ex2.dsp:
+	* examples/IPC_SAP/UPIPE_SAP/ex3.dsp:
 	  Add yet more missing project files.
+
+	* examples/IPC_SAP/SPIPE_SAP/NPClient.cpp:
+	* examples/IPC_SAP/SPIPE_SAP/NPServer.cpp:
+	* examples/IPC_SAP/FIFO_SAP/FIFO-test.cpp:
+	  Fixed minor syntax errors for Win32 builds.
 
 Sat Dec 22 11:27:11 2001  Carlos O'Ryan  <coryan@uci.edu>
 

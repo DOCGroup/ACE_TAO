@@ -23,7 +23,7 @@ do_child (ACE_FIFO_Recv &fifo_reader)
 {
   // Set child's stdin to read from the fifo.
   if (ACE_OS::close (ACE_STDIN) == -1 
-      || ACE_OS::dup (fifo_reader.get_handle ()) == -1)
+      || ACE_OS::dup (fifo_reader.get_handle ()) == ACE_INVALID_HANDLE)
     return -1;
 
   char *argv[2];
@@ -107,7 +107,7 @@ main (int argc, char *argv[])
                     1));
 
       // wait for child to ACE_OS::exit.
-      if (ACE_OS::waitpid (child_pid, (int *) 0, 0) == -1)    
+      if (ACE_OS::waitpid (child_pid, (ACE_exitcode *) 0, 0) == -1)    
         ACE_ERROR ((LM_ERROR,
                     "%n: %p\n%a",
                     "waitpid",
