@@ -5,11 +5,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 #include "tao/Exception.h"
-#include "XercesString.h"
+#include "Config_Handlers/XercesString.h"
 #include <xercesc/util/XMLUniDefs.hpp>
-#include "Config_Handler_export.h"
-#include "Domain_Handler.h"
-#include "Config_Error_Handler.h"
+#include "Config_Handlers/Config_Handler_export.h"
+#include "Config_Handlers/Domain_Handler.h"
+#include "Config_Handlers/Config_Error_Handler.h"
 
 using Config_Handler::XStr;
 using xercesc::XMLUni;
