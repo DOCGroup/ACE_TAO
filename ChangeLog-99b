@@ -1,4 +1,7 @@
-Sun Jun  6 15:37:00 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
+Sun Jun  6 22:02:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Service_Config.h: Fixed a const incorrectness in the
+ 	  ACE_Static_Svc_Descriptor.
 
 	* ace/Process.h (ACE_Process_Options): The parameter type of
  	  command_line() should be LPCTSTR argv[] *not* LPTSTR argv[].
