@@ -71,11 +71,11 @@ extern "C" CORBA::WChar *
 wscpy (CORBA::WChar *dest,
        const CORBA::WChar *src)
 {
-    CORBA::WChar	*retval = dest;
+  CORBA::WChar	*retval = dest;
 
-    while ((*dest++ = *src++) != 0)
-	continue;
-    return retval;
+  while ((*dest++ = *src++) != 0)
+    continue;
+  return retval;
 }
 #endif	/* VXWORKS &&  ghs */
 
