@@ -38,7 +38,7 @@
 #ifndef TAO_EC_FILTER_H
 #define TAO_EC_FILTER_H
 
-#include "orbsvcs/RtecEventComm.h"
+#include "orbsvcs/RtecEventCommC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -52,8 +52,7 @@ public:
   // destructor
 
   virtual void activate (CORBA::Environment& env);
-  // Create all the objects, connect them, start the internal threads
-  // (if any), etc.
+  // Start the internal threads (if any), etc.
   // After this call the EC can be used.
 
   virtual void shutdown (CORBA::Environment &env);
@@ -77,6 +76,29 @@ public:
   TAO_EC_Timer_Module* timer_module (void) const;
   // Access the timer module...
 
+  // = The factory methods, they delegate on the EC_Factory.
+  TAO_EC_ProxyPushSupplier* create_proxy_push_supplier (void);
+  void destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier*);
+  // Create and destroy a ProxyPushSupplier
+
+  TAO_EC_ProxyPushConsumer* create_proxy_push_consumer (void);
+  void destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer*);
+  // Create and destroy a ProxyPushConsumer
+
+  virtual void connected (TAO_EC_ProxyPushConsumer*,
+                          CORBA::Environment&);
+  virtual void disconnected (TAO_EC_ProxyPushConsumer*,
+                             CORBA::Environment&);
+  // Used to inform the EC that a Consumer has connected or
+  // disconnected from it.
+
+  virtual void connected (TAO_EC_ProxyPushSupplier*,
+                          CORBA::Environment&);
+  virtual void disconnected (TAO_EC_ProxyPushSupplier*,
+                             CORBA::Environment&);
+  // Used to inform the EC that a Supplier has connected or
+  // disconnected from it.
+
   // = The RtecEventChannelAdmin::EventChannel methods...
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers (CORBA::Environment& env);
@@ -94,8 +116,8 @@ public:
   RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr,
 		       CORBA::Environment &env);
-  void remove_objserver (RtecEventChannelAdmin::Observer_Handle,
-			 CORBA::Environment &env);
+  void remove_observer (RtecEventChannelAdmin::Observer_Handle,
+                        CORBA::Environment &env);
   // @@ Do we need to strategize this also????? How???
 
 private:

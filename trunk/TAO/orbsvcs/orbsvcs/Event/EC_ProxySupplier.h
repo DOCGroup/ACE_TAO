@@ -40,7 +40,7 @@
 class TAO_EC_Dispatching;
 class TAO_EC_Filter_Builder;
 
-class TAO_EC_ProxyPushSupplier : public TAO_EC_Filter
+class TAO_EC_ProxyPushSupplier : public POA_RtecEventChannelAdmin::ProxyPushSupplier, public TAO_EC_Filter
 {
   // = TITLE
   //   ProxyPushSupplier
@@ -65,9 +65,7 @@ class TAO_EC_ProxyPushSupplier : public TAO_EC_Filter
   //   is properly configured, we need to explore this...
   //
 public:
-  TAO_EC_ProxyPushSupplier (TAO_EC_ConsumerAdmin* consumer_admin,
-                            TAO_EC_Dispatching* dispatching,
-                            TAO_EC_Filter_Builder* builder);
+  TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel* event_channel);
   // constructor...
 
   virtual ~TAO_EC_ProxyPushSupplier (void);
@@ -78,13 +76,19 @@ public:
 
   CORBA::Boolean is_suspended (void) const;
   // Return 1 if it is suspended.
-  
+
   RtecEventComm::PushConsumer_ptr consumer (void) const;
   // Return the consumer object reference. It returns nil() if it has
   // not connected yet.
 
   const RtecEventChannelAdmin::ConsumerQOS& subscriptions (void) const;
   // The QoS (subscription) used to connect to the EC.
+
+  void set_default_poa (PortableServer::POA_ptr poa);
+  // Set this servant's default POA
+
+  virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
+  // Override the ServantBase method.
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
@@ -107,11 +111,8 @@ public:
   virtual void event_ids (RtecEventComm::EventHeaderSet& headerset);
 
 private:
-  TAO_EC_ConsumerAdmin* consumer_admin_;
-  // The consumer admin, used for activation and memory managment.
-
-  TAO_EC_Dispatching *dispatching_;
-  // We delegate on this object to handle 
+  TAO_EC_Event_Channel* event_channel_;
+  // The Event Channel that owns this object.
 
   RtecEventComm::PushConsumer_var consumer_;
   // The consumer....
@@ -121,6 +122,9 @@ private:
 
   RtecEventChannelAdmin::ConsumerQOS qos_;
   // The subscription and QoS information...
+
+  PortableServer::POA_var default_POA_;
+  // Store the default POA.
 };
 
 #if defined (__ACE_INLINE__)

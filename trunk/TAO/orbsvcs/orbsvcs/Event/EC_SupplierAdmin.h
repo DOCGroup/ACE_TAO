@@ -7,15 +7,15 @@
 //   ORBSVCS Real-time Event Channel
 //
 // = FILENAME
-//   EC_ConsumerAdmin
+//   EC_SupplierAdmin
 //
 // = AUTHOR
 //   Carlos O'Ryan (coryan@cs.wustl.edu)
 //
 // = DESCRIPTION
-//   Implement the RtecEventChannelAdmin::ConsumerAdmin interface.
+//   Implement the RtecEventChannelAdmin::SupplierAdmin interface.
 //   This class is an Abstract Factory for the
-//   TAO_EC_ProxyPushSupplier.
+//   TAO_EC_ProxyPushConsumer.
 //
 // = CREDITS
 //   Based on previous work by Tim Harrison (harrison@cs.wustl.edu)
@@ -30,7 +30,6 @@
 #ifndef TAO_EC_PROXYSUPPLIER_H
 #define TAO_EC_PROXYSUPPLIER_H
 
-#include "ace/Containers.h"
 #include "orbsvcs/Event/EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,38 +37,33 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class TAO_EC_Event_Channel;
-class TAO_EC_ProxyPushSupplier;
 
-class TAO_EC_ConsumerAdmin : public POA_RtecEventChannelAdmin::ConsumerAdmin
+class TAO_EC_SupplierAdmin : public POA_RtecEventChannelAdmin::SupplierAdmin
 {
   // = TITLE
   //   ProxyPushSupplier
   //
   // = DESCRIPTION
-  //   Implements the ConsumerAdmin interface, i.e. the factory for
-  //   ProxyPushSupplier objects.
+  //   Implements the SupplierAdmin interface, i.e. the factory for
+  //   ProxyPushConsumer objects.
   //
   // = MEMORY MANAGMENT
-  //   It does not assume ownership of the TAO_EC_Dispatching object
-  //   or the EC_Filter_Builder object.
+  //   It does not assume ownership of the TAO_EC_Event_Channel object
   //
   // = LOCKING
   //   No provisions for locking, access must be serialized
   //   externally.
   //
   // = TODO
-  //   We don't need to provide a trivial filter, the object itself
-  //   could short-circuit the filter() ---> push() cycle when the EC
-  //   is properly configured, we need to explore this...
   //
 public:
-  TAO_EC_ConsumerAdmin (TAO_EC_Event_Channel* event_channel);
+  TAO_EC_SupplierAdmin (TAO_EC_Event_Channel* event_channel);
   // constructor...
 
-  virtual ~TAO_EC_ConsumerAdmin (void);
+  virtual ~TAO_EC_SupplierAdmin (void);
   // destructor...
 
-  void set_default_POA (PortableServer::POA_ptr poa);
+  void set_default_poa (PortableServer::POA_ptr poa);
   // Set this servant's default POA
 
   virtual PortableServer::POA_ptr _default_POA (CORBA::Environment& env);
@@ -89,9 +83,9 @@ public:
   // Used to inform the EC that a Supplier has connected or
   // disconnected from it.
 
-  // = The RtecEventChannelAdmin::ConsumerAdmin methods...
-  virtual RtecEventChannelAdmin::ProxyPushSupplier_ptr
-      obtain_push_supplier (CORBA::Environment &);
+  // = The RtecEventChannelAdmin::SupplierAdmin methods...
+  virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
+      obtain_push_consumer (CORBA::Environment &);
 
 private:
   TAO_EC_Event_Channel *event_channel_;
@@ -100,13 +94,13 @@ private:
   PortableServer::POA_var default_POA_;
   // Store the default POA.
 
-  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushSupplier*> SupplierSet;
-  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushSupplier*> SupplierSetIterator;
-  SupplierSet all_suppliers_;
+  typedef ACE_Unbounded_Set<TAO_EC_ProxyPushConsumer*> ConsumerSet;
+  typedef ACE_Unbounded_Set_Iterator<TAO_EC_ProxyPushConsumer*> ConsumerSetIterator;
+  ConsumerSet all_consumers_;
 };
 
 #if defined (__ACE_INLINE__)
-#include "EC_ConsumerAdmin.i"
+#include "EC_SupplierAdmin.i"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_EC_PROXYSUPPLIER_H */
