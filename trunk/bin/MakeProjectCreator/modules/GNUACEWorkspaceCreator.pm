@@ -69,6 +69,10 @@ sub write_comps {
       }
       print $fh $crlf;
     }
+    print $fh $crlf .
+              "ifeq (\$(KEEP_GOING),)$crlf" .
+              "  KEEP_GOING = 1$crlf" .
+              "endif$crlf";
   }
 
   print $fh $crlf .
@@ -76,9 +80,15 @@ sub write_comps {
 
   ## If there is more than one project, use a for loop
   if ($#list > 0) {
-    print $fh "\t\@for file in \$(MFILES); do \\$crlf" .
+    print $fh "ifeq (\$(KEEP_GOING),1)$crlf" .
+              "\t\@for file in \$(MFILES); do \\$crlf" .
               "\t\$(MAKE) -f `basename \$\$file` -C `dirname \$\$file` \$(\@); \\$crlf" .
-              "\tdone$crlf";
+              "\tdone$crlf" .
+              "else$crlf";
+    foreach my $project (@list) {
+      print $fh "\t\@\$(MAKE) -f " . basename($project) . ' -C ' . dirname($project) . " \$(\@);$crlf";
+    }
+    print $fh "endif$crlf";
   }
   else {
     ## Otherwise, just list the call to make without a for loop

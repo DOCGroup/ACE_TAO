@@ -1,3 +1,12 @@
+Thu Jul 31 11:36:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/GNUACEWorkspaceCreator.pm:
+
+          Added the ability for the main Makefile to stop after the first
+          error.  By default, it moves on to the next makefile when an error
+          is encountered.  Now, set the make macro KEEP_GOING to zero to
+          have it stop after the first error is encountered.
+
 Thu Jul 31 16:14:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * examples/C++NPv2/C++NPv2.mpc:
@@ -13,11 +22,11 @@ Thu Jul 31 16:14:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Thu Jul 31 07:42:57 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* apps/soreduce/Obj_Module.cpp (add_source): 
-	* apps/soreduce/SO_Group.cpp (add_executable): Fixed bugs where
-	  application code was being called within ACE_ASSERT macros,
- 	  which were disappearing when ACE_NDEBUG was enabled!  Thanks to
- 	  Roland Meub <roland.meub@gmx.de> for reporting this fix.
+        * apps/soreduce/Obj_Module.cpp (add_source):
+        * apps/soreduce/SO_Group.cpp (add_executable): Fixed bugs where
+          application code was being called within ACE_ASSERT macros,
+          which were disappearing when ACE_NDEBUG was enabled!  Thanks to
+          Roland Meub <roland.meub@gmx.de> for reporting this fix.
 
 Thu Jul 31 01:29:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
@@ -83,7 +92,7 @@ Wed Jul 30 19:21:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
           Added ACE_HAS_TRACE macro that gets defined if ACE_NTRACE=0 and
           is used to ifdef away calls to ACE_Trace when not tracing.  This
           removes the need to link in Trace.o for static applications not
-          tracing. 
+          tracing.
 
         * ace/Asynch_Acceptor.cpp:
         * ace/Auto_Ptr.h:
@@ -110,10 +119,10 @@ Wed Jul 30 19:21:27 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
-	* ace/UUID.cpp: 	
+        * ace/UUID.cpp:
 
-	  Removed erroneous casting of timeLow. Thanks to Johnny Willemsen
-	  <jwillemsen@remedy.nl> for pointing this out.
+          Removed erroneous casting of timeLow. Thanks to Johnny Willemsen
+          <jwillemsen@remedy.nl> for pointing this out.
 
 Wed Jul 30 02:18:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
