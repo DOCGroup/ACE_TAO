@@ -1,5 +1,22 @@
 Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* tests/MM_Shared_Memory_Test.cpp: Fixed the test so that it should
+	  work correctly for platforms that use either processes or
+ 	  threads.  Also, make sure to call remove() on the
+ 	  ACE_Process_Semaphore so that stray semaphores aren't left
+ 	  around.  Thanks to David Levine for helping to track this down.
+
+	* ace/Synch.h: Updated the documentation for the
+	  ACE_Process_Semaphore destructor to indicate that it doesn't
+ 	  remove the semaphore.  Instead, you must call remove()
+ 	  explicitly.  Thanks to David Levine for helping to track this
+ 	  down.
+
+	* ace/Malloc_T.cpp (print_stats): Added a cast for the ACE_LOCK to
+	  work around the fact that the print_stats() method is const.
+  	  Thanks to Jean-Marc Strauss <jms97@club-internet.fr> for
+ 	  reporting this.
+	
         * ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
           so the compiler won't complain about the protocol paraemter in
           parts of the code where it's not used.
