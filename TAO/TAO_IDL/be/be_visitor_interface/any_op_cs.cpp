@@ -76,9 +76,23 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);" << be_nl
       << "*_tao_obj_ptr = " << node->full_name ()
       << "::_duplicate (_tao_elem);" << be_nl
-      << "_tao_any.replace (" << node->tc_name () << ", "
-      << "_tao_obj_ptr, 1, ACE_TRY_ENV);" << be_nl
+      << "TAO_OutputCDR stream;" << be_nl
+      << "if (stream << *_tao_obj_ptr)" << be_nl
+      << "{" << be_idt_nl
+      << "_tao_any._tao_replace (" << be_idt << be_idt_nl 
+      << node->tc_name () << ", " << be_nl
+      << "TAO_ENCAP_BYTE_ORDER," << be_nl
+      << "stream.begin ()," << be_nl
+      << "1," << be_nl
+      << "_tao_obj_ptr," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_uidt_nl
+      << "}" << be_nl
+      << "else" << be_nl
+      << "{" << be_idt_nl
+      << "delete _tao_obj_ptr;" << be_uidt_nl
+      << "}" << be_uidt_nl
       << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
@@ -102,25 +116,25 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
-
       << "TAO_InputCDR stream (" << be_idt << be_idt_nl
       << "_tao_any._tao_get_cdr ()," << be_nl
       << "_tao_any._tao_byte_order ()" << be_uidt_nl
       << ");" << be_uidt_nl
-
       << "CORBA::Object_var _tao_obj_var;" << be_nl
       << "ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);" << be_nl
-      << "if (stream.decode (" << node->tc_name ()
-      << ", &_tao_obj_var.out (), 0, ACE_TRY_ENV)" << be_nl
-      << "   == CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
+      << "if (stream >> _tao_elem)" << be_nl
       << "{" << be_idt_nl
       << "_tao_elem = " << node->full_name ()
       << "::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);" << be_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "*tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object"
       << be_nl
-      << "((CORBA::Any *)&_tao_any)->replace ("
-      << node->tc_name () << ", tmp, 1, ACE_TRY_ENV);" << be_nl
+      << "((CORBA::Any *)&_tao_any)->_tao_replace (" << be_idt << be_idt_nl
+      << node->tc_name () << "," << be_nl
+      << "1," << be_nl
+      << "tmp," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt_nl
       << "ACE_TRY_CHECK;" << be_nl
       << "return 1;" << be_uidt_nl
       << "}" << be_nl
