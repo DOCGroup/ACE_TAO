@@ -159,7 +159,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (TIMER_QUEUE &timer_queue,
 				      time,
 				      handle);
   // If Proactor event is valid, signal it
-  if (handle != ACE_INVALID_HANDLE ||
+  if (handle != ACE_INVALID_HANDLE &&
       handle != 0)
     ACE_OS::event_signal (&handle);
 
