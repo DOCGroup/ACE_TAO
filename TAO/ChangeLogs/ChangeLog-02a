@@ -1,29 +1,62 @@
+Thu Mar 29 11:14:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * docs/tutorials/Quoter/AMI/client.cpp:
+        * docs/tutorials/Quoter/AMI/server.cpp:
+        * docs/tutorials/Quoter/AMI/Handler_i.cpp:
+        * docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/Event_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/Event_Service/client.cpp:
+        * docs/tutorials/Quoter/Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Naming_Service/Stock_i.h:
+        * docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Handler_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/Stock_Factory_Locator_i.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/Stock_Factory_i.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * docs/tutorials/Quoter/Simple/Server/server.cpp:
+          Instead of using std::cout & friends we use good ol' cout, this
+          avoids problems with all those platforms where ACE is configured
+          to use the OLD iotstreams.
+          But we also include a 'using namespace std;' to avoid problems
+          with compliant platforms.
+
 Thu Mar 29 10:15:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* tests/MT_Client/test.idl:
-	* tests/MT_Client/test_i.h:
-	* tests/MT_Client/test_i.cpp:
-	* tests/MT_Client/client.cpp:
-	  Prime the test by making many calls to test_method() that ignore
-	  all exceptions.  Otherwise we get TRANSIENT exceptions due to
-	  bug 189.
-	  Also cleaned up the IDL interface.
+        * tests/MT_Client/test.idl:
+        * tests/MT_Client/test_i.h:
+        * tests/MT_Client/test_i.cpp:
+        * tests/MT_Client/client.cpp:
+          Prime the test by making many calls to test_method() that ignore
+          all exceptions.  Otherwise we get TRANSIENT exceptions due to
+          bug 189.
+          Also cleaned up the IDL interface.
 
-	* tests/Client_Leaks/Process_Factory.cpp:
-	  Fixed typo
+        * tests/Client_Leaks/Process_Factory.cpp:
+          Fixed typo
 
-	* tests/Client_Leaks/Makefile:
-	  Update deps.
+        * tests/Client_Leaks/Makefile:
+          Update deps.
 
 Thu Mar 29 10:53:01 2001  Frank Hunleth <fhunleth@cs.wustl.edu>
 
-	* tao/operation_details.i: Reordered definition of reply_service_info ()
+        * tao/operation_details.i: Reordered definition of reply_service_info ()
           and request_service_info () to fix compiler warnings in vxWorks.
 
 Thu Mar 29 10:40:52 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/PortableServer/Servant_Base.i (_create_stub): Fixed a fuzz
-	  warning.  
+        * tao/PortableServer/Servant_Base.i (_create_stub): Fixed a fuzz
+          warning.
 
 Thu Mar 29 08:41:04 2001  Carlos O'Ryan  <coryan@uci.edu>
 

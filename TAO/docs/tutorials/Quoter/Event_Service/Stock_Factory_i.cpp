@@ -6,6 +6,8 @@
 #include "Stock_i.h"
 #include <iostream>
 
+using namespace std;
+
 Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()
 {
 }
@@ -63,17 +65,17 @@ Quoter_Stock_Factory_i::load_stock_objects (
     policies[i]->destroy ();
   }
 
-  while (!std::cin.eof () && std::cin.peek () != EOF) {
+  while (!cin.eof () && cin.peek () != EOF) {
     const int max_symbol_length = 8;
     char symbol[max_symbol_length];
     const int max_full_name_length = 64;
     char full_name[max_full_name_length];
     double price;
 
-    std::cin.getline (symbol, max_symbol_length, '\n');
-    std::cin.getline (full_name, max_full_name_length, '\n');
-    std::cin >> price;
-    std::cin.ignore (1, '\n');
+    cin.getline (symbol, max_symbol_length, '\n');
+    cin.getline (full_name, max_full_name_length, '\n');
+    cin >> price;
+    cin.ignore (1, '\n');
 
     Quoter_Stock_i *stock =
       new Quoter_Stock_i (symbol, full_name, price);

@@ -7,6 +7,8 @@
 #include <orbsvcs/Event_Utilities.h>
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -65,7 +67,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &ex) {
-    std::cerr << "CORBA exception raised!" << ex << std::endl;
+    cerr << "CORBA exception raised!" << ex << endl;
   }
   return 0;
 }

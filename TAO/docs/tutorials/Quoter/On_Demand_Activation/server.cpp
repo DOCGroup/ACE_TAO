@@ -5,6 +5,8 @@
 #include "Stock_Factory_Locator_i.h"
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -62,22 +64,10 @@ int main (int argc, char* argv[])
 
     // Put the object reference as an IOR string
     CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
+
     // Print it out!
-    std::cout << ior.in () << std::endl;
+    cout << ior.in () << endl;
 
-    /*
-    // Create the servant
-    Quoter_Stock_Factory_i stock_factory_i;
-
-    // Activate it to obtain the object reference
-    Quoter::Stock_Factory_var stock_factory =
-    stock_factory_i._this ();
-
-    // Put the object reference as an IOR string
-    CORBA::String_var ior = orb->object_to_string (stock_factory.in ());
-    // Print it out!
-    std::cout << ior.in () << std::endl;
-    */
     orb->run ();
 
     // Destroy the POA, waiting until the destruction terminates
@@ -85,7 +75,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &ex) {
-    std::cerr << "CORBA exception raised!" << std::endl;
+    cerr << "CORBA exception raised!" << endl;
   }
   return 0;
 }

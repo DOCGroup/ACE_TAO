@@ -5,6 +5,8 @@
 #include "Handler_i.h"
 #include <iostream>
 
+using namespace std;
+
 int main (int argc, char* argv[])
 {
   try {
@@ -17,8 +19,8 @@ int main (int argc, char* argv[])
     // name, the rest are the names of the stock symbols we want to
     // get quotes for.
     if (argc < 3) {
-      std::cerr << "Usage: " << argv[0]
-                << " Factory_IOR symbol symbol..." << std::endl;
+      cerr << "Usage: " << argv[0]
+           << " Factory_IOR symbol symbol..." << endl;
       return 1;
     }
 
@@ -56,16 +58,16 @@ int main (int argc, char* argv[])
         Quoter::Single_Query_Stock_var stock =
           Quoter::Single_Query_Stock::_narrow (tmp.in ());
         if (CORBA::is_nil (stock.in ())) {
-          std::cerr << "Cannot get single query interface for <"
-                    << argv[i] << ">" << std::endl;
+          cerr << "Cannot get single query interface for <"
+               << argv[i] << ">" << endl;
         }
 
         stock->sendc_get_price_and_names (handler.in ());
         request_count++;
       }
       catch (Quoter::Invalid_Stock_Symbol &) {
-        std::cerr << "Invalid stock symbol <"
-                  << argv[i] << ">" << std::endl;
+        cerr << "Invalid stock symbol <"
+             << argv[i] << ">" << endl;
       }
     }
 
@@ -79,7 +81,7 @@ int main (int argc, char* argv[])
     orb->destroy ();
   }
   catch (CORBA::Exception &ex) {
-    std::cerr << "CORBA exception raised!" << std::endl;
+    cerr << "CORBA exception raised!" << endl;
   }
   return 0;
 }
