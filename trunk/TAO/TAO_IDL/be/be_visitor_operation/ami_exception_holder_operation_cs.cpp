@@ -105,8 +105,19 @@ be_visitor_operation_ami_exception_holder_operation_cs::visit_operation (be_oper
   if (!idl_global->exception_support ())
     *os << "CORBA::Environment &ACE_TRY_ENV";
   
-  *os << ")" << be_nl
-      << "{" << be_idt_nl;
+  *os << ")" << be_uidt;
+
+  // now generate the throw specs
+  if (this->gen_throw_spec (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ASYS_TEXT ("(%N:%l) be_visitor_operation_ami_exception_holder_operation_cs::")
+                         ASYS_TEXT ("::visit_operation - ")
+                         ASYS_TEXT ("Failed to generate throw spec\n")),
+                        -1);
+    }
+
+  *os << be_nl << "{" << be_idt_nl;
 
   *os << this->gen_environment_var () << be_nl;
 
