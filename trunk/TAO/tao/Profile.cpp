@@ -5,6 +5,7 @@
 
 #include "tao/MessagingC.h"
 #include "tao/Policy_Factory.h"
+#include "tao/Stub.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Profile.i"
@@ -16,12 +17,6 @@ ACE_RCSID(tao, Profile, "$Id$")
 
 TAO_Profile::~TAO_Profile (void)
 {
-  if (policy_list_ != 0)
-    {
-      for (CORBA::ULong i = 0; i < policy_list_->length (); i++)
-        (*policy_list_)[i]->destroy ();
-    }
-  delete policy_list_;
 }
 
 
@@ -46,11 +41,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
 
   ACE_ASSERT (policy_list != 0);
 
-  create_policy_list (policy_list->length ());
-
-  // Make a deep copy.
-  *this->policy_list_ = *policy_list;
-
   // @@ Angelo, address memory management: every profile takes
   // ownership of the same copy and will try to destroy.
 
@@ -67,16 +57,16 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   CORBA::ULong length;
   CORBA::Octet *buf = 0;
   
-  policy_value_seq.length (policy_list_->length ());
+  policy_value_seq.length (policy_list->length ());
   
   // This loop iterates through CORBA::PolicyList to convert
   // each CORBA::Policy into a CORBA::PolicyValue
-  for (size_t i = 0; i < policy_list_->length (); i++)
+  for (size_t i = 0; i < policy_list->length (); i++)
     {
       ACE_NEW (pv_ptr, Messaging::PolicyValue);
-      pv_ptr->ptype = (*policy_list_)[i]->policy_type ();
+      pv_ptr->ptype = (*policy_list)[i]->policy_type ();
       
-      (*policy_list_)[i]->_tao_encode (out_CDR);
+      (*policy_list)[i]->_tao_encode (out_CDR);
       
       length = out_CDR.total_length ();
       pv_ptr->pvalue.length (length);
@@ -136,8 +126,11 @@ CORBA::PolicyList&
 TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-
-  if (!are_policies_parsed_)
+  
+  CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
+  if (!are_policies_parsed_ 
+      && (policies->length () == 0)) 
+      // None has already parsed the policies.
     {
       IOP::TaggedComponent tagged_component;
       tagged_component.tag = Messaging::TAG_POLICIES;
@@ -164,7 +157,9 @@ TAO_Profile::policies (void)
           CORBA::Policy *policy = 0;
           CORBA::ULong length = policy_value_seq.length ();
 
-          create_policy_list (length);
+          // Get the policy list from the MProfile.
+          CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
+          policies->length (length);
 
           for (CORBA::ULong i = 0; i < length; i++)
             {
@@ -178,7 +173,7 @@ TAO_Profile::policies (void)
                                        policy_value_seq[i].pvalue.length ());
                   
                   policy->_tao_decode (in_CDR);
-                  (*policy_list_)[i] = policy;
+                  (*policies)[i] = policy;
                 }
               else
                 {
@@ -189,47 +184,28 @@ TAO_Profile::policies (void)
                 }
             }
         }
-      else // Create an empty list if no policies were exposed.
+      else 
         {
-          // @@ Angelo, something isn't right with this code.
-          // create_policy_list allocates something ... should it?
-          create_policy_list (0);
-          // @@ Angelo, check that the list was created for real.
-          
-          // @@ Marina Right now I put an assertion in the 
-          // <create_policy_list> method. If there is no
-          // memory and no memory can be allocated shouldn't
-          // we terminate?
           
         }
       
     }
 
-#else /* (TAO_HAS_CORBA_MESSAGING == 1) */
-
-  create_policy_list (0);
-
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
-
-  return *policy_list_;
+  
+  return *(stub_->base_profiles ().policy_list ());
 }
 
 void
-TAO_Profile::create_policy_list (int length)
+TAO_Profile::the_stub (TAO_Stub *stub)
 {
-  // Precondition: Make sure that the policy list
-  // has not already allocated.
-  ACE_ASSERT (this->policy_list_ == 0);
+  this->stub_ = stub;
+}
 
-  ACE_NEW (this->policy_list_, CORBA::PolicyList (length));
- 
-  // Post-Condition: Make sure that the memory get allcated
-  // for real.
-  ACE_ASSERT (this->policy_list_ != 0);
-  
-  this->policy_list_->length (length);
-
-  // @@ Marina & Irfan I would raise an exception in this case.
+TAO_Stub*
+TAO_Profile::the_stub (void)
+{
+  return stub_;
 }
 
 // ****************************************************************
