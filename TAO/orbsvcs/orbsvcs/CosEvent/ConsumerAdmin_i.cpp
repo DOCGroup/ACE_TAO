@@ -1,6 +1,6 @@
 // $Id$
 
-#include "CosEvent/ConsumerAdmin_i.h"
+#include "ConsumerAdmin_i.h"
 
 ConsumerAdmin_i::ConsumerAdmin_i (void)
   : qos_ (),
