@@ -22,9 +22,11 @@ namespace
   {
   public:
     Context (std::ostream& os,
-             string export_macro)
+             string export_macro,
+             CommandLine const& cl)
         : os_ (os),
-          export_macro_ (export_macro)
+          export_macro_ (export_macro),
+          cl_ (cl)
     {
     }
 
@@ -39,10 +41,17 @@ namespace
   {
     return export_macro_;
   }
+  
+  CommandLine const&
+  cl ()
+  {
+    return cl_;
+  }
 
   private:
     std::ostream& os_;
     string export_macro_;
+    CommandLine const& cl_;
   };
 
   class EmitterBase
@@ -2241,36 +2250,90 @@ namespace
       Traversal::Belongs repo_id_belongs_;
       SemanticGraph::Component& scope_;
     };
-
+    
+    struct OperationExistsEmitter;
+    
     struct RegisterValueFactoryEmitter : Traversal::ConsumerData,
                                          EmitterBase
     {
       RegisterValueFactoryEmitter (Context& c)
         : EmitterBase (c),
-          type_name_emitter_ (c.os ())
+          type_name_emitter_ (c.os ()),
+          gen_factory_ (true)
       {
         belongs_.node_traverser (type_name_emitter_);
+      }
+      
+      void factory_gen_off (void)
+      {
+        gen_factory_ = false;
       }
 
       virtual void
       traverse (Type& c)
       {
-        os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
+        {
+          Traversal::ConsumerData consumer;
+          
+          Traversal::Belongs consumer_belongs;
+          consumer.edge_traverser (consumer_belongs);
+          
+          Traversal::EventType event_type;
+          consumer_belongs.node_traverser (event_type);
+         
+          Traversal::Defines defines;
+          event_type.edge_traverser (defines);
+        
+          OperationExistsEmitter op_emitter (this);
+          defines.node_traverser (op_emitter);
+        
+          consumer.traverse (c);
+        }
+      
+        if (gen_factory_)
+        {
+          os << "CIAO_REGISTER_OBV_FACTORY (" << endl;
 
-        Traversal::ConsumerData::belongs (c, belongs_);
+          Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << "_init," << endl;
+          os << "_init," << endl;
 
-        Traversal::ConsumerData::belongs (c, belongs_);
+          Traversal::ConsumerData::belongs (c, belongs_);
 
-        os << ");" << endl;
+          os << ");" << endl;
+        }
       }
 
     private:
       TypeNameEmitter type_name_emitter_;
       Traversal::Belongs belongs_;
+      bool gen_factory_;
     };
 
+    struct OperationExistsEmitter : Traversal::Operation,
+                                    Traversal::EventTypeFactory
+    {
+      OperationExistsEmitter (RegisterValueFactoryEmitter* r)
+        : r_ (r)
+      {
+      }
+      
+      virtual void
+      traverse (SemanticGraph::Operation&)
+      {
+        r_->factory_gen_off ();
+      }
+      
+      virtual void
+      traverse (SemanticGraph::EventTypeFactory&)
+      {
+        r_->factory_gen_off ();
+      }
+      
+    private:
+      RegisterValueFactoryEmitter* r_;
+    };
+    
     struct PortTablePopulator : Traversal::ProviderData,
                                 Traversal::UserData,
                                 Traversal::PublisherData,
@@ -2381,6 +2444,7 @@ namespace
 
       // Generate the macro to register a value factory for each
       // eventtype consumed.
+      if (!ctx.cl ().get_value ("suppress-register-factory", false))
       {
         Traversal::Component component_emitter;
 
@@ -3523,7 +3587,7 @@ ServantSourceEmitter::generate (TranslationUnit& u)
 {
   pre (u);
 
-  Context c (os, export_macro_);
+  Context c (os, export_macro_, cl_);
 
   Traversal::TranslationUnit unit;
 

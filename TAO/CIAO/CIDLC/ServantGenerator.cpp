@@ -76,6 +76,12 @@ void ServantGenerator::options (CL::Description& d)
                   "Replace default servant export include file "
                   "with provided file.",
                   true));
+  d.add_option (CL::OptionDescription (
+                  "suppress-register-factory",
+                  "",
+                  "Suppress generation of code to register eventtype "
+                  "factories for event sinks.",
+                  true));
 }
 
 
