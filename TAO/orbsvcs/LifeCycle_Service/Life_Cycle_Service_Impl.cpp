@@ -19,8 +19,6 @@
 #include "Life_Cycle_Service_Impl.h"
 
 
-static const char usage [] = "[-? |\n[-O[RBport] ORB port number]]";
-
 // Constructor
 Life_Cycle_Service_Impl::Life_Cycle_Service_Impl (void)
   : factory_trader_ptr_ (0)

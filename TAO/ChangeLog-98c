@@ -1,3 +1,11 @@
+Thu Jun 18 12:07:32 1998  Michael Kircher  <mk1@cs.wustl.edu>
+
+	* tests/Quoter/{Factory_Finder, Generic_Factory}_Impl.cpp:
+	  removed unneccessary code.
+
+	* orbsvcs/LifeCycle_Service/LifeCycle_Service_Impl.cpp:
+	  removed unneccessary code.
+
 1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/tests/Concurrency/CC_command.tab.cpp
