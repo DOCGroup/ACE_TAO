@@ -1,6 +1,6 @@
 // $Id$
 
-#if defined (ACE_TIMEPROBE_H)
+#if !defined (ACE_TIMEPROBE_H)
 #define ACE_TIMEPROBE_H
 
 #include "ace/Synch.h"
