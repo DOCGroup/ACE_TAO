@@ -74,11 +74,9 @@ namespace TAO
       void deactivate_object (const PortableServer::ObjectId &id
                               ACE_ENV_ARG_DECL);
 
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference,
-                            PortableServer::ObjectId system_id
-                            ACE_ENV_ARG_DECL);
+      virtual PortableServer::Servant find_servant (
+        PortableServer::ObjectId system_id
+        ACE_ENV_ARG_DECL);
 
       virtual
       PortableServer::ObjectId *

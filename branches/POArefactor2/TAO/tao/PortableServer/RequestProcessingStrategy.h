@@ -92,6 +92,15 @@ namespace TAO
         CORBA::Boolean cleanup_in_progress
         ACE_ENV_ARG_DECL)= 0;
 
+      /**
+       * @todo Check usage of reference, it is not used, so it could be just
+       * system_id, but then change the method name to system_id_to_servant,
+       * or something like that
+       */
+      virtual PortableServer::Servant reference_to_servant (
+        CORBA::Object_ptr reference,
+        PortableServer::ObjectId system_id
+        ACE_ENV_ARG_DECL) = 0;
     };
   }
 }

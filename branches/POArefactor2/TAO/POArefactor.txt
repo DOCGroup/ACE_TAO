@@ -1,3 +1,17 @@
+Fri Nov 19 14:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.{h,cpp}:
+        * tao/PortableServer/ServantRetentionStrategy*.{h,cpp}:
+        * tao/PortableServer/RequestProcessingStrategy*.{h,cpp}:
+          Changed the implementation of reference_to_servant. Previously the
+          POA called the servant retention, which called request processing.
+          This has been turned around. POA calls now reference_to_servant on
+          the request processing, which can call find_servant on the servant
+          retention strategy. This make the splitting of behaviour much
+          easier and cleaner. This will be done for another few methods, so
+          that servant retention and request processing are not coupled so
+          hard.
+
 Fri Nov 19 09:23:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ThreadStrategy.{h,cpp}:

@@ -1476,7 +1476,7 @@ TAO_POA::reference_to_servant_i (CORBA::Object_ptr reference
                         0);
     }
 
-  return this->active_policy_strategies_.servant_retention_strategy()->
+  return this->active_policy_strategies_.request_processing_strategy()->
     reference_to_servant (reference, system_id ACE_ENV_ARG_PARAMETER);
 }
 
@@ -1556,6 +1556,15 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
   return this->active_policy_strategies_.servant_retention_strategy()->
     reference_to_id (reference, system_id ACE_ENV_ARG_PARAMETER);
 }
+
+PortableServer::Servant
+TAO_POA::find_servant (PortableServer::ObjectId system_id
+                       ACE_ENV_ARG_DECL)
+{
+  return this->active_policy_strategies_.servant_retention_strategy()->
+    find_servant (system_id ACE_ENV_ARG_PARAMETER);
+}
+
 
 PortableServer::Servant
 TAO_POA::id_to_servant_i (const PortableServer::ObjectId &id

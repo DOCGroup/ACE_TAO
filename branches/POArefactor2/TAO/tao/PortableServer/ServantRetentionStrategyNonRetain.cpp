@@ -65,40 +65,12 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Non_Retain_Servant_Retention_Strategy::reference_to_servant (
-      CORBA::Object_ptr /*reference*/,
+    Non_Retain_Servant_Retention_Strategy::find_servant (
       PortableServer::ObjectId /*system_id*/
       ACE_ENV_ARG_DECL)
     {
-      // Always try the request processing strategy
-      PortableServer::Servant servant =
-        this->poa_->get_servant_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_CHECK_RETURN (0);
-
-      if (servant != 0)
-        {
-          // ATTENTION: Trick locking here, see class header for details
-          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
-          ACE_UNUSED_ARG (non_servant_upcall);
-
-          // The POA invokes _add_ref once on the Servant before returning
-          // it. If the application uses reference counting, the caller of
-          // id_to_servant is responsible for invoking _remove_ref once on
-          // the returned Servant when it is finished with it. A
-          // conforming caller need not invoke _remove_ref on the returned
-          // Servant if the type of the Servant uses the default reference
-          // counting inherited from ServantBase.
-          servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
-
-          return servant;
-        }
-      else
-        {
-          // Otherwise the ObjectNotActive exception is raised.
-          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
-                            0);
-        }
+      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
+                        0);
     }
 
     PortableServer::ObjectId *

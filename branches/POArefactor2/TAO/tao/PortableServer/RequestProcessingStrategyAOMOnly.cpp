@@ -11,6 +11,7 @@
 
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/POA.h"
 
 ACE_RCSID (PortableServer,
            Request_Processing,
@@ -22,7 +23,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    AOM_Only_Request_Processing_Strategy::AOM_Only_Request_Processing_Strategy()
+    AOM_Only_Request_Processing_Strategy::AOM_Only_Request_Processing_Strategy() :
+      poa_ (0)
     {
     }
 
@@ -31,8 +33,9 @@ namespace TAO
     }
 
     void
-    AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA * /*poa*/)
+    AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA * poa)
     {
+      poa_ = poa;
     }
 
     PortableServer::ServantManager_ptr
@@ -94,6 +97,16 @@ namespace TAO
       // the OBJECT_NOT_EXIST system exception.
       ACE_THROW_RETURN (CORBA::OBJECT_NOT_EXIST (),
                         0);
+    }
+
+    PortableServer::Servant
+    AOM_Only_Request_Processing_Strategy::reference_to_servant (
+      CORBA::Object_ptr /*reference*/,
+      PortableServer::ObjectId system_id
+      ACE_ENV_ARG_DECL)
+    {
+      return this->poa_->find_servant (system_id
+                                       ACE_ENV_ARG_PARAMETER);
     }
 
     void

@@ -500,6 +500,9 @@ public:
   CORBA::Short server_priority (void) const;
 
   bool has_system_id (void) const;
+
+  PortableServer::Servant find_servant (PortableServer::ObjectId system_id
+                                        ACE_ENV_ARG_DECL);
 protected:
 
   /// Template method for creating new POA's of this type.

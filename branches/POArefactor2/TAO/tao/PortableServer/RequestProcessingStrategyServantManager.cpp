@@ -11,6 +11,7 @@
 
 #include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
 #include "tao/PortableServer/ServantManagerC.h"
+#include "tao/PortableServer/POA.h"
 #include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableServer,
@@ -23,6 +24,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
+    Servant_Manager_Request_Processing_Strategy::Servant_Manager_Request_Processing_Strategy (void)
+     : poa_ (0)
+    {
+    }
+
     Servant_Manager_Request_Processing_Strategy::~Servant_Manager_Request_Processing_Strategy (void)
     {
     }
@@ -35,6 +41,12 @@ namespace TAO
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
+    }
+
+    void
+    Servant_Manager_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
+    {
+      poa_ = poa;
     }
 
     void
@@ -61,6 +73,16 @@ namespace TAO
           ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
                                          CORBA::COMPLETED_NO));
         }
+    }
+
+    PortableServer::Servant
+    Servant_Manager_Request_Processing_Strategy::reference_to_servant (
+      CORBA::Object_ptr /*reference*/,
+      PortableServer::ObjectId system_id
+      ACE_ENV_ARG_DECL)
+    {
+      return this->poa_->find_servant (system_id
+                                       ACE_ENV_ARG_PARAMETER);
     }
   }
 }

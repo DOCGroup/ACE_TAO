@@ -196,14 +196,10 @@ namespace TAO
     }
 
     PortableServer::Servant
-    Retain_Servant_Retention_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference,
+    Retain_Servant_Retention_Strategy::find_servant (
       PortableServer::ObjectId system_id
       ACE_ENV_ARG_DECL)
     {
-      PortableServer::Servant servant = 0;
-      int result = -1;
-
       // Find user id from system id.
       PortableServer::ObjectId_var user_id;
       if (active_object_map_->
@@ -219,6 +215,8 @@ namespace TAO
       // not active in the POA, an ObjectNotActive exception is
       // raised.
       TAO_Active_Object_Map_Entry *entry = 0;
+      PortableServer::Servant servant = 0;
+      int result = -1;
 
       result =
         active_object_map_->
@@ -229,11 +227,8 @@ namespace TAO
 
       if (servant == 0)
         {
-          servant = this->Non_Retain_Servant_Retention_Strategy::reference_to_servant (
-            reference,
-            system_id
-            ACE_ENV_ARG_PARAMETER);
-          ACE_CHECK_RETURN (0);
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
         }
 
       return servant;

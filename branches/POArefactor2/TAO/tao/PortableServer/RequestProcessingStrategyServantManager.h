@@ -37,7 +37,11 @@ namespace TAO
       : public virtual RequestProcessingStrategy
     {
     public:
+      Servant_Manager_Request_Processing_Strategy (void);
+
       virtual ~Servant_Manager_Request_Processing_Strategy (void);
+
+      virtual void strategy_init(TAO_POA *poa);
 
       PortableServer::Servant get_servant (ACE_ENV_SINGLE_ARG_DECL)
         ACE_THROW_SPEC ((CORBA::SystemException,
@@ -50,6 +54,13 @@ namespace TAO
       void validate_servant_manager (
         PortableServer::ServantManager_ptr servant_manager
         ACE_ENV_ARG_DECL);
+
+      virtual PortableServer::Servant reference_to_servant (
+        CORBA::Object_ptr reference,
+        PortableServer::ObjectId system_id
+        ACE_ENV_ARG_DECL);
+    protected:
+      TAO_POA* poa_;
     };
   }
 }

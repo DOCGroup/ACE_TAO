@@ -26,19 +26,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    Servant_Locator_Request_Processing_Strategy::Servant_Locator_Request_Processing_Strategy (void) :
-      poa_ (0)
+    Servant_Locator_Request_Processing_Strategy::Servant_Locator_Request_Processing_Strategy (void)
     {
     }
 
     Servant_Locator_Request_Processing_Strategy::~Servant_Locator_Request_Processing_Strategy (void)
     {
-    }
-
-    void
-    Servant_Locator_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
-    {
-      poa_ = poa;
     }
 
     PortableServer::ServantManager_ptr

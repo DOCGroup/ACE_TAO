@@ -135,8 +135,8 @@ namespace TAO
       // appropriate method on that servant. If no servant has been
       // associated with the POA, the POA raises the OBJ_ADAPTER system
       // exception.
-      PortableServer::Servant result = this->default_servant_.in ();
-      if (result == 0)
+      PortableServer::Servant servant = this->default_servant_.in ();
+      if (servant == 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -144,7 +144,7 @@ namespace TAO
       else
         {
           // Success
-          return result;
+          return servant;
         }
     }
 
@@ -156,6 +156,39 @@ namespace TAO
       ACE_ENV_ARG_DECL_NOT_USED)
     {
       // Just do nothing
+    }
+
+    PortableServer::Servant
+    Default_Servant_Request_Processing_Strategy::reference_to_servant (
+      CORBA::Object_ptr /*reference*/,
+      PortableServer::ObjectId system_id
+      ACE_ENV_ARG_DECL)
+    {
+      PortableServer::Servant servant = this->default_servant_.in ();
+
+      if (servant != 0)
+        {
+          // ATTENTION: Trick locking here, see class header for details
+          TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          ACE_UNUSED_ARG (non_servant_upcall);
+
+          // The POA invokes _add_ref once on the Servant before returning
+          // it. If the application uses reference counting, the caller of
+          // id_to_servant is responsible for invoking _remove_ref once on
+          // the returned Servant when it is finished with it. A
+          // conforming caller need not invoke _remove_ref on the returned
+          // Servant if the type of the Servant uses the default reference
+          // counting inherited from ServantBase.
+          servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+
+          return servant;
+        }
+      else
+        {
+          return this->poa_->find_servant (system_id
+                                           ACE_ENV_ARG_PARAMETER);
+        }
     }
 
   }
