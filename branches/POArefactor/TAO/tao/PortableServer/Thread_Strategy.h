@@ -46,7 +46,7 @@ namespace TAO
 
       virtual void exit () = 0;
 
-      void init(CORBA::PolicyList *policy_list)
+      void strategy_init (CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }

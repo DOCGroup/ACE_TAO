@@ -41,7 +41,7 @@ namespace TAO
     public:
       virtual ~Lifespan_Strategy (void);
 
-      void init(CORBA::PolicyList *policy_list)
+      void strategy_init (CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }
@@ -93,9 +93,19 @@ namespace TAO
       {
         return 'P';
       }
+    private:
+      /// @name Implementation repository related methods
+      //@{
+
+      /// ImplRepo helper method, notify the ImplRepo on startup
+      void imr_notify_startup (ACE_ENV_SINGLE_ARG_DECL);
+
+      /// ImplRepo helper method, notify the ImplRepo on shutdown
+      void imr_notify_shutdown (void);
+      //@}
     };
-  }
-}
+  } /* namespace Portable_Server */
+} /* namespace TAO */
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

@@ -14,12 +14,18 @@ ACE_RCSID (PortableServer,
 
 #include "tao/StringSeqC.h"
 
-#include "tao/PortableServer/ThreadPolicyFactory.h"
-#include "tao/PortableServer/LifespanPolicyFactory.h"
+#include "ThreadPolicyFactory.h"
+#include "LifespanPolicyFactory.h"
+#include "IdAssignmentPolicyFactory.h"
+#include "IdUniquenessPolicyFactory.h"
+#include "ImplicitActivationPolicyFactory.h"
+#include "RequestProcessingPolicyFactory.h"
+#include "ServantRetentionPolicyFactory.h"
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/ORT_Adapter.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
+#include "tao/PortableServer/Policy_Creator_T.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
@@ -65,29 +71,13 @@ TAO_POA::create_thread_policy (PortableServer::ThreadPolicyValue value
                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::Portable_Server::ThreadPolicyFactory *policy =
-    ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
-           "ThreadPolicyFactory");
-
-  // For static libraries try to force load
-  if (policy == 0)
-    {
-      ACE_Service_Config::process_directive (
-        ::TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory);
-
-      policy =
-        ACE_Dynamic_Service<TAO::Portable_Server::ThreadPolicyFactory>::instance (
-           "ThreadPolicyFactory");
-    }
-
-  if (policy == 0)
-    {
-      return ::PortableServer::ThreadPolicy::_nil();
-    }
-  else
-    {
-      return policy->create(value);
-    }
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::ThreadPolicyFactory,
+          ::PortableServer::ThreadPolicy,
+          PortableServer::ThreadPolicyValue>::create (
+            "ThreadPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_ThreadPolicyFactory,
+            value);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
@@ -97,29 +87,13 @@ TAO_POA::create_lifespan_policy (PortableServer::LifespanPolicyValue value
                                  ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO::Portable_Server::LifespanPolicyFactory *policy =
-    ACE_Dynamic_Service<TAO::Portable_Server::LifespanPolicyFactory>::instance (
-           "LifespanPolicyFactory");
-
-  // For static libraries try to force load
-  if (policy == 0)
-    {
-      ACE_Service_Config::process_directive (
-        ::TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory);
-
-      policy =
-        ACE_Dynamic_Service<TAO::Portable_Server::LifespanPolicyFactory>::instance (
-           "LifespanPolicyFactory");
-    }
-
-  if (policy == 0)
-    {
-      return ::PortableServer::LifespanPolicy::_nil();
-    }
-  else
-    {
-      return policy->create(value);
-    }
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::LifespanPolicyFactory,
+          ::PortableServer::LifespanPolicy,
+          PortableServer::LifespanPolicyValue>::create (
+            "LifespanPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_LifespanPolicyFactory,
+            value);
 }
 
 PortableServer::IdUniquenessPolicy_ptr
@@ -127,15 +101,13 @@ TAO_POA::create_id_uniqueness_policy (PortableServer::IdUniquenessPolicyValue va
                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-// @johnny
-  /*
-  TAO_Id_Uniqueness_Policy *id_uniqueness_policy = 0;
-  ACE_NEW_THROW_EX (id_uniqueness_policy,
-                    TAO_Id_Uniqueness_Policy (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (PortableServer::IdUniquenessPolicy::_nil ());
-  return id_uniqueness_policy;
-   */
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::IdUniquenessPolicyFactory,
+          ::PortableServer::IdUniquenessPolicy,
+          PortableServer::IdUniquenessPolicyValue>::create (
+            "IdUniquenessPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_IdUniquenessPolicyFactory,
+            value);
 }
 
 PortableServer::IdAssignmentPolicy_ptr
@@ -143,15 +115,13 @@ TAO_POA::create_id_assignment_policy (PortableServer::IdAssignmentPolicyValue va
                                       ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-// @johnny
-  /*
-  TAO_Id_Assignment_Policy *id_assignment_policy = 0;
-  ACE_NEW_THROW_EX (id_assignment_policy,
-                    TAO_Id_Assignment_Policy (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (PortableServer::IdAssignmentPolicy::_nil ());
-  return id_assignment_policy;
-*/
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::IdAssignmentPolicyFactory,
+          ::PortableServer::IdAssignmentPolicy,
+          ::PortableServer::IdAssignmentPolicyValue>::create (
+            "IdAssignmentPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_IdAssignmentPolicyFactory,
+            value);
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -161,16 +131,13 @@ TAO_POA::create_implicit_activation_policy (PortableServer::ImplicitActivationPo
                                             ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-// @johnny
-  /*
-  TAO_Implicit_Activation_Policy *implicit_activation_policy = 0;
-  ACE_NEW_THROW_EX (implicit_activation_policy,
-                    TAO_Implicit_Activation_Policy (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (PortableServer::ImplicitActivationPolicy::_nil ());
-
-  return implicit_activation_policy;
-   */
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::ImplicitActivationPolicyFactory,
+          ::PortableServer::ImplicitActivationPolicy,
+          ::PortableServer::ImplicitActivationPolicyValue>::create (
+            "ImplicitActivationPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_ImplicitActivationPolicyFactory,
+            value);
 }
 
 PortableServer::ServantRetentionPolicy_ptr
@@ -178,16 +145,13 @@ TAO_POA::create_servant_retention_policy (PortableServer::ServantRetentionPolicy
                                           ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-// @johnny
-  /*
-  TAO_Servant_Retention_Policy *servant_retention_policy = 0;
-  ACE_NEW_THROW_EX (servant_retention_policy,
-                    TAO_Servant_Retention_Policy (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (PortableServer::ServantRetentionPolicy::_nil ());
-
-  return servant_retention_policy;
-*/
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::ServantRetentionPolicyFactory,
+          ::PortableServer::ServantRetentionPolicy,
+          ::PortableServer::ServantRetentionPolicyValue>::create (
+            "ServantRetentionPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_ServantRetentionPolicyFactory,
+            value);
 }
 
 PortableServer::RequestProcessingPolicy_ptr
@@ -195,15 +159,13 @@ TAO_POA::create_request_processing_policy (PortableServer::RequestProcessingPoli
                                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-/*
- *   TAO_Request_Processing_Policy *request_processing_policy = 0;
-  ACE_NEW_THROW_EX (request_processing_policy,
-                    TAO_Request_Processing_Policy (value),
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (PortableServer::RequestProcessingPolicy::_nil ());
-
-  return request_processing_policy;
- */
+  return TAO::Portable_Server::Policy_Creator<
+          TAO::Portable_Server::RequestProcessingPolicyFactory,
+          ::PortableServer::RequestProcessingPolicy,
+          ::PortableServer::RequestProcessingPolicyValue>::create (
+            "RequestProcessingPolicyFactory",
+            TAO::Portable_Server::ace_svc_desc_RequestProcessingPolicyFactory,
+            value);
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

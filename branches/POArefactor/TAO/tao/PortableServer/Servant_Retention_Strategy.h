@@ -17,7 +17,8 @@
 #include "portableserver_export.h"
 #include "PolicyFactory.h"
 #include "PortableServerC.h"
-#include "PolicyStrategy.h"
+#include "Policy_Strategy.h"
+#include "Active_Object_Map.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -40,16 +41,19 @@ namespace TAO
        public virtual Policy_Strategy
     {
     public:
-      virtual ~Thread_Strategy (void);
+      virtual ~Servant_Retention_Strategy (void);
 
-      void init(CORBA::PolicyList *policy_list)
+      virtual void strategy_init (CORBA::PolicyList *policy_list)
       {
         // dependent on type create the correct strategy.
       }
 
-      bool
-      is_servant_in_map (PortableServer::Servant servant,
-                         int &wait_occurred_restart_call) = 0;
+      virtual bool is_servant_in_map (PortableServer::Servant servant,
+                                      int &wait_occurred_restart_call) = 0;
+
+      virtual void deactivate_object (const PortableServer::ObjectId &id
+                                      ACE_ENV_ARG_DECL) = 0;
+
     };
 
     class TAO_PortableServer_Export Retain_Servant_Retention_Strategy :
@@ -58,8 +62,21 @@ namespace TAO
     public:
       virtual ~Retain_Servant_Retention_Strategy (void);
 
+      void deactivate_object (const PortableServer::ObjectId &id
+                              ACE_ENV_ARG_DECL);
+
+    protected:
+      void
+      deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+                            ACE_ENV_ARG_DECL);
+
+      void
+      cleanup_servant (
+        TAO_Active_Object_Map::Map_Entry *active_object_map_entry
+        ACE_ENV_ARG_DECL);
+
     private:
-      TAO_Active_Object_Map *active_object_map_
+      TAO_Active_Object_Map *active_object_map_;
     };
 
     class TAO_PortableServer_Export Non_Retain_Servant_Retention_Strategy :
@@ -67,6 +84,9 @@ namespace TAO
     {
     public:
       virtual ~Non_Retain_Servant_Retention_Strategy (void);
+
+      virtual void deactivate_object (const PortableServer::ObjectId &id
+                                      ACE_ENV_ARG_DECL);
     };
   }
 }

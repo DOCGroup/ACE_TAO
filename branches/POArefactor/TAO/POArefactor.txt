@@ -1,3 +1,26 @@
+Tue Oct  5 14:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Policy_Strategy.h:
+        * tao/PortableServer/Thread_Strategy.h:
+          Renamed init to strategy_init to fix warning from the Borland
+          compiler about hiding the init from service_config
+
+        * tao/PortableServer/Servant_Retention_Strategy.{h,cpp}:
+          Added some more methods which belong to this strategy, just a copy,
+          didn't got things compiling yet, more has to move
+
+        * tao/PortableServer/PortableServer_PolicyFactory.cpp:
+          Implemented this using the policy_creator
+
+        * tao/PortableServer/PortableServer.cpp:
+          Removed not needed includes
+
+        * tao/PortableServer/POA.cpp:
+          Implemented the create policy methods
+
+        * tao/PortableServer/Lifespan_Strategy.h:
+          Moved more methods to this strategy
+
 Tue Oct  5 13:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Policy_Creator_T.h:
