@@ -60,9 +60,12 @@ int
 ACE_UPIPE_Acceptor::accept (ACE_UPIPE_Stream &new_stream,
 			    ACE_UPIPE_Addr *remote_addr,
 			    ACE_Time_Value *timeout, 
-			    int restart)
+			    int restart,
+                            int reset_new_handle)
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::accept");
+  ACE_UNUSED_ARG (reset_new_handle);
+
   ACE_SPIPE_Stream new_io;
 
   if (this->ACE_SPIPE_Acceptor::accept (new_io, remote_addr, 

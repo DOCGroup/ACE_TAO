@@ -385,11 +385,14 @@ ACE_TLI_Acceptor::accept (ACE_TLI_Stream &new_tli_sap,
 			  ACE_Addr *remote_addr,
 			  ACE_Time_Value *timeout, 
 			  int restart, 
+                          int reset_new_handle,
 			  int rwf,
 			  netbuf *udata,
 			  netbuf *opt)
 {
   ACE_TRACE ("ACE_TLI_Acceptor::accept");
+  ACE_UNUSED_ARG (reset_new_handle);
+
   ACE_TLI_Request *req = 0;
   int res = 0;
   
