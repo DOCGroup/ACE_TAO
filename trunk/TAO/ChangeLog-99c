@@ -1,3 +1,23 @@
+Wed Jul 28 22:07:14 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA_CORBA.h (Policy): We always inherit from ServantBase
+	  now.  Previously, we were inheriting from LocalServantBase if we
+	  had locality constraint policies, otherwise we inherit from
+	  ServantBase.  The difference between LocalServantBase and
+	  ServantBase is: (a) _dispatch() always returns an exception, and
+	  (b) create_stub() does not register with the POA but simply
+	  creates a fake stub.
+
+	  The problem with the above was that the POA policies were
+	  changed to make use of the POA registration and reference
+	  counting scheme.  However, when locality constrained, we never
+	  register with the POA, and thus breaking the code.
+
+	  The fix was to always inherit from ServantBase.  Even when
+	  locality constrained, we register with the POA (not because of
+	  remote calls, but because of the reference counting).  We
+	  overwrite _dispatch() to throw an exception.
+
 Wed Jul 28 22:09:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Simple/bank/server.cpp: Fixed a typo where
@@ -7,32 +27,32 @@ Wed Jul 28 22:09:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Wed Jul 28 21:10:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
-       * examples/Simulator/DOVEBrowser/NS_Resolve.java: fixed name
-         service reply handling, according to new reply format.  Thanks to
-         Rebecca Sanford <Rebecca.A.Sanford@gd-is.com> for reporting the
-         problem and for sending in the fix.
+        * examples/Simulator/DOVEBrowser/NS_Resolve.java: fixed name
+	  service reply handling, according to new reply format.  Thanks
+	  to Rebecca Sanford <Rebecca.A.Sanford@gd-is.com> for reporting
+	  the problem and for sending in the fix.
 
-       * examples/Simulator/DOVEBrowser/PushConsumer.java: added missing catch
-         blocks for new RtecScheduler INTERNAL and SYNCHRONIZATION_FAILURE
-         exceptions.
-	
-       * examples/Simulator/DOVEBrowser/make.bat: added commands to copy
-         over TimeBase.pidl file with other IDL files.
+        * examples/Simulator/DOVEBrowser/PushConsumer.java: added missing
+	  catch blocks for new RtecScheduler INTERNAL and
+	  SYNCHRONIZATION_FAILURE exceptions.
 
-       * examples/Simulator/Event_Supplier/DualEC_Sup.dsp,
-         examples/Simulator/Event_Supplier/Event_Sup.dsp,
-         examples/Simulator/Event_Supplier/Logging_Sup.dsp: added
-         orbsvcs/orbsvcs to preprocessor include paths, so generated headers
-         will compile.
+        * examples/Simulator/DOVEBrowser/make.bat: added commands to copy
+	  over TimeBase.pidl file with other IDL files.
 
-       * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added missing "o:"
-         to get opts string (was not parsing for -o option).
+        * examples/Simulator/Event_Supplier/DualEC_Sup.dsp,
+	  examples/Simulator/Event_Supplier/Event_Sup.dsp,
+	  examples/Simulator/Event_Supplier/Logging_Sup.dsp: added
+	  orbsvcs/orbsvcs to preprocessor include paths, so generated
+	  headers will compile.
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp: added missing
+	  "o:" to get opts string (was not parsing for -o option).
 
 Wed Jul 28 19:01:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/Makefile (ORB_CORE_FILES):
 
-	  ObjectIDList was incorrectly removed from the list of sources to 
+	  ObjectIDList was incorrectly removed from the list of sources to
 	  be built when building with minimum CORBA support.
 
 	* tao/TAO_Internal.cpp:
