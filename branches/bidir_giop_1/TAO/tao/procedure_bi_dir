@@ -1,0 +1,16 @@
+1. Transport does these
+   - prepares headers
+   - sends header using the handle from the connection handler
+
+2. Connection handler handle_input does these
+   - first reads GIOP header, determines whether it is a request or a
+   reply. If request, then increment refcount, read request, calls
+   process_request () messages  on the GIOP. If reply call, process
+   reply on GIOP
+
+3. Need to do processing of requests and replies!!
+4. Mux_Strategy is the problem!! -- talk with Irfan
+
+
+NOTE: Just start making simple transports, then add GIOP stuff as you
+need them
