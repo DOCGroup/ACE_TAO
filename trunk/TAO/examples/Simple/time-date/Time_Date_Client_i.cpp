@@ -31,7 +31,7 @@ Time_Date_Client_i::run (char *name,
                          char *argv[])
 {
   // Initialize the client.
-  if (client.init (name, argc, argv) == -1)
+  if (client_.init (name, argc, argv) == -1)
     return -1;
 
   if (this->parse_args (argc, argv) == -1)
@@ -44,16 +44,26 @@ Time_Date_Client_i::run (char *name,
       CORBA::Long l;
 
       // Get the time_date.
-      client->bin_date (l,
-                        ACE_TRY_ENV);
+      client_->bin_date (l,
+                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Binary time_date = %d\n",
                   l));
 
-      if (client.shutdown () == 1)
-        client->shutdown (ACE_TRY_ENV);
+      CORBA::String_var str_var;
+      client_->str_date (str_var.out(),
+                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) String time_date = %s\n",
+                  str_var.in()));
+
+  
+      client_.shutdown ();
+
     }
   ACE_CATCH (CORBA::UserException, range_ex)
     {
@@ -64,7 +74,7 @@ Time_Date_Client_i::run (char *name,
   ACE_CATCH (CORBA::SystemException, memex)
     {
       ACE_PRINT_EXCEPTION (memex,
-                           "Cannot make time_date as Memory exhausted");
+                           "Cannot make time_date");
       return -1;
     }
   ACE_ENDTRY;

@@ -11,7 +11,4 @@ interface Time_Date
 
   void str_date (out string time_date);
   // Obtain the time and date in string format.
-
-  oneway void shutdown ();
-  // Shutdown the application.
 };
