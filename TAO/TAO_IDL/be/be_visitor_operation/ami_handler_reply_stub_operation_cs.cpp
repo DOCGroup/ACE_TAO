@@ -230,7 +230,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
       << "exception_holder_var->is_system_exception (0);" << be_uidt_nl
       << "exception_holder_var->byte_order (ACE_CDR_BYTE_ORDER);" << be_nl
       << be_nl
-      << "_tao_reply_handler_object->foo_excep (exception_holder_var";
+      << "_tao_reply_handler_object->"
+      << node->local_name () << "_excep (exception_holder_var";
 
   if (!idl_global->exception_support ())
     *os << "," << be_nl << " ACE_TRY_ENV";
