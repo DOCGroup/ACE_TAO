@@ -646,6 +646,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
         server_addr_p = &data_->profile.get_object_addr ();
       }
   }
+
   if (server_addr_p == 0)
     {
       env.exception (new CORBA::COMM_FAILURE (CORBA::COMPLETED_NO));
@@ -653,10 +654,13 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
     }
 
   this->handler_ = 0;
-  // Must reset handler, otherwise, ACE_Cached_Connect_Strategy will complain.
+  // Must reset handler, otherwise, <ACE_Cached_Connect_Strategy> will
+  // complain.
 
-  // Establish the connection and get back a Client_Connection_Handler
-  if (con->connect (this->handler_, *server_addr_p) == -1)
+  // Establish the connection and get back a
+  // <Client_Connection_Handler>.
+  if (con->connect (this->handler_,
+                    *server_addr_p) == -1)
     {
       // @@ Need to figure out which exception to set...this one is
       // pretty vague.

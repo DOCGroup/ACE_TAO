@@ -60,9 +60,9 @@ public:
 
     Profile (const Profile &src);
     Profile (const Version &v,
-		 const char *h,
-		 const CORBA::UShort p,
-		 const TAO_opaque &object_key);
+             const char *h,
+             const CORBA::UShort p,
+             const TAO_opaque &object_key);
 
     ~Profile (void);
 
