@@ -1414,6 +1414,168 @@ operator>> (
   return 0;
 }
 
+void operator<<= (CORBA::Any &_tao_any, CORBA::PolicyManager_ptr _tao_elem)
+{
+  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  ACE_TRY_NEW_ENV
+  {
+    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
+    *_tao_obj_ptr = CORBA::PolicyManager::_duplicate (_tao_elem);
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          CORBA::_tc_PolicyManager, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_obj_ptr;
+  }
+  ACE_ENDTRY;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PolicyManager_ptr &_tao_elem)
+{
+  CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = CORBA::PolicyManager::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (CORBA::_tc_PolicyManager, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    CORBA::Object_var _tao_obj_var;
+    if (stream >> _tao_obj_var.out ())
+    {
+      _tao_elem = CORBA::PolicyManager::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          CORBA::_tc_PolicyManager,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+      return 1;
+    }
+    else    // failure
+    {
+      delete tmp;
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete tmp;
+    _tao_elem = CORBA::PolicyManager::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  _tao_elem = CORBA::PolicyManager::_nil ();
+  return 0;
+}
+
+void operator<<= (CORBA::Any &_tao_any, CORBA::PolicyCurrent_ptr _tao_elem)
+{
+  CORBA::Object_ptr *_tao_obj_ptr = 0;
+  ACE_TRY_NEW_ENV
+  {
+    ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
+    *_tao_obj_ptr = CORBA::PolicyCurrent::_duplicate (_tao_elem);
+    TAO_OutputCDR stream;
+    if (stream << *_tao_obj_ptr)
+    {
+      _tao_any._tao_replace (
+          CORBA::_tc_PolicyCurrent, 
+          TAO_ENCAP_BYTE_ORDER,
+          stream.begin (),
+          1,
+          _tao_obj_ptr,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+    }
+    else
+    {
+      delete _tao_obj_ptr;
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete _tao_obj_ptr;
+  }
+  ACE_ENDTRY;
+}
+
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::PolicyCurrent_ptr &_tao_elem)
+{
+  CORBA::Object_ptr *tmp = 0;
+  ACE_NEW_RETURN (tmp, CORBA::Object_ptr, 0);
+  ACE_TRY_NEW_ENV
+  {
+    _tao_elem = CORBA::PolicyCurrent::_nil ();
+    CORBA::TypeCode_var type = _tao_any.type ();
+    if (!type->equivalent (CORBA::_tc_PolicyCurrent, ACE_TRY_ENV)) // not equal
+      {
+        delete tmp;
+        return 0;
+      }
+    ACE_TRY_CHECK;
+    TAO_InputCDR stream (
+        _tao_any._tao_get_cdr (),
+        _tao_any._tao_byte_order ()
+      );
+    CORBA::Object_var _tao_obj_var;
+    if (stream >> _tao_obj_var.out ())
+    {
+      _tao_elem = CORBA::PolicyCurrent::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
+      ((CORBA::Any *)&_tao_any)->_tao_replace (
+          CORBA::_tc_PolicyCurrent,
+          1,
+          tmp,
+          ACE_TRY_ENV
+        );
+      ACE_TRY_CHECK;
+      return 1;
+    }
+    else    // failure
+    {
+      delete tmp;
+    }
+  }
+  ACE_CATCHANY
+  {
+    delete tmp;
+    _tao_elem = CORBA::PolicyCurrent::_nil ();
+    return 0;
+  }
+  ACE_ENDTRY;
+  _tao_elem = CORBA::PolicyCurrent::_nil ();
+  return 0;
+}
+
 // ****************************************************************
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

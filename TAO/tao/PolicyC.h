@@ -18,6 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CDR.h"
+#include "tao/Environment.h"
 #include "tao/Sequence.h"
 
 class TAO_Export CORBA_PolicyError : public CORBA::UserException
@@ -563,40 +564,39 @@ TAO_Export void operator<<= (CORBA::Any &,
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        CORBA::SetOverrideType &);
 
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA::PolicyManager_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA::PolicyManager *&);
+TAO_Export void operator<<= (CORBA::Any &, 
+                             CORBA::PolicyCurrent_ptr);
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, 
+                                       CORBA::PolicyCurrent *&);
+
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
 #include "tao/PolicyC.i"
 #else
 
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::PolicyError &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::PolicyError &);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::InvalidPolicies &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::InvalidPolicies &);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::InvalidPolicies::_tao_seq_UShort &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::InvalidPolicies::_tao_seq_UShort &);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::Policy_ptr );
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::Policy_ptr &);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::PolicyList &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::PolicyList &);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::PolicyTypeSeq &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::PolicyTypeSeq &);
-TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR &, const CORBA::SetOverrideType &);
-TAO_Export CORBA::Boolean
-operator>> (TAO_InputCDR &, CORBA::SetOverrideType &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PolicyError &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyError &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::InvalidPolicies &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::InvalidPolicies &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::InvalidPolicies::_tao_seq_UShort &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::InvalidPolicies::_tao_seq_UShort &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::Policy_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::Policy_ptr &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PolicyList &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyList &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PolicyTypeSeq &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyTypeSeq &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::SetOverrideType &);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::SetOverrideType &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PolicyManager_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyManager_ptr &);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const CORBA::PolicyCurrent_ptr );
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, CORBA::PolicyCurrent_ptr &);
 
 #endif /* defined INLINE */
 
