@@ -1,3 +1,10 @@
+Sun Jun  2 09:03:06 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Delete temp buffers
+	  if enqueue_head() fails in the ACE_Select_Reactor_Notify open()
+ 	  and notify() methods.  Thanks to Chris Uzdavinis
+ 	  <chris@atdesk.com> for reporting this.
+
 Sat Jun  1 22:42:17 2002  Steve Huston  <shuston@riverace.com>
 
         * examples/C++NPv2/AC_CLD.mak:
