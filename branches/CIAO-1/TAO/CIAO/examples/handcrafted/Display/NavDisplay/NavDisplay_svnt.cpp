@@ -85,6 +85,54 @@ CIAO_GLUE_HUDisplay::NavDisplay_Context::get_CCM_object (ACE_ENV_SINGLE_ARG_DECL
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
 
+CIAO_GLUE_HUDisplay::NavDisplay_Servant::NavDisplay_Servant (HUDisplay::CCM_NavDisplay_ptr exe,
+                                                             ::Components::CCMHome_ptr h,
+                                                             ::CIAO::Session_Container *c)
+  : executor_ (HUDisplay::CCM_NavDisplay::_duplicate (exe)),
+    container_ (c)
+{
+  this->context_ = new CIAO_GLUE_HUDisplay::NavDisplay_Context (h, c, this);
+
+  ACE_TRY_NEW_ENV
+    {
+      Components::SessionComponent_var scom =
+        Components::SessionComponent::_narrow (exe
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (scom.in ()))
+        scom->set_session_context (this->context_
+                                   ACE_ENV_ARG_PARAMETER);
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
+}
+
+CIAO_GLUE_HUDisplay::NavDisplay_Servant::~NavDisplay_Servant (void)
+{
+  ACE_TRY_NEW_ENV
+    {
+      Components::SessionComponent_var scom =
+        Components::SessionComponent::_narrow (this->executor_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      if (! CORBA::is_nil (scom.in ()))
+        scom->ccm_remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+    }
+  ACE_CATCHANY
+    {
+      // @@ Ignore any exceptions?  What happens if
+      // set_session_context throws an CCMException?
+    }
+  ACE_ENDTRY;
+  this->context_->_remove_ref ();
+}
+
 // Operations for provides interfaces.
 
 // Operations for consumers interfaces.
@@ -577,22 +625,30 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::_get_component (ACE_ENV_SINGLE_ARG_DECL
   ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 }
 
-HUDisplay::NavDisplay_ptr
-CIAO_GLUE_HUDisplay::NavDisplay_Servant::_ciao_activate_component (ACE_ENV_SINGLE_ARG_DECL)
+void
+CIAO_GLUE_HUDisplay::NavDisplay_Servant::_ciao_activate (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  CORBA::Object_var obj
-    = this->container_->install_servant (this
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (this->executor_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
-  HUDisplay::NavDisplay_var ho
-    = HUDisplay::NavDisplay::_narrow (obj
-                                      ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
 
-  return ho._retn ();
+void
+CIAO_GLUE_HUDisplay::NavDisplay_Servant::_ciao_passivate (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  ::Components::SessionComponent_var temp =
+      ::Components::SessionComponent::_narrow (this->executor_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
 
+  if (! CORBA::is_nil (temp.in ()))
+    temp->ccm_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -600,31 +656,70 @@ CIAO_GLUE_HUDisplay::NavDisplay_Servant::_ciao_activate_component (ACE_ENV_SINGL
 //////////////////////////////////////////////////////////////////
 
 HUDisplay::NavDisplay_ptr
-CIAO_GLUE_HUDisplay::NavDisplayHome_Servant::_ciao_create_helper (::Components::EnterpriseComponent_ptr com
-                                                                  ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException,
-                   Components::CreateFailure))
+CIAO_GLUE_HUDisplay::NavDisplayHome_Servant::_ciao_activate_component (HUDisplay::CCM_NavDisplay_ptr exe
+                                                                       ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  HUDisplay::CCM_NavDisplay_var hw
-    = HUDisplay::CCM_NavDisplay::_narrow (com
-                                          ACE_ENV_ARG_PARAMETER);
+  CORBA::Object_var hobj
+    = this->container_->get_objref (this
+                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  // Acquiring the home reference and pass it to the component servant
-  CORBA::Object_var hobj= this->container_->get_objref (this
-                                                        ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
-  HUDisplay::NavDisplayHome_var home
-    = HUDisplay::NavDisplayHome::_narrow (hobj.in ()
-                                          ACE_ENV_ARG_PARAMETER);
+  ::Components::CCMHome_var home
+      = ::Components::CCMHome::_narrow (hobj.in ()
+                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
   CIAO_GLUE_HUDisplay::NavDisplay_Servant *svt =
-    new CIAO_GLUE_HUDisplay::NavDisplay_Servant (hw.in (),
+    new CIAO_GLUE_HUDisplay::NavDisplay_Servant (exe,
                                                  home.in (),
                                                  this->container_);
-  return svt->_ciao_activate_component (ACE_ENV_ARG_PARAMETER);
+  PortableServer::ServantBase_var safe (svt);
+  PortableServer::ObjectId_var oid;
+
+  CORBA::Object_var objref
+    = this->container_->install_component (svt,
+                                           oid.out ()
+                                           ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  svt->_ciao_activate (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  HUDisplay::NavDisplay_var ho
+    = HUDisplay::NavDisplay::_narrow (objref.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  if (this->component_map_.bind (oid.in (), svt) == 0)
+    {
+      // @@ what should happen if bind fail?
+      safe._retn ();
+    }
+  return ho._retn ();
+}
+
+void
+CIAO_GLUE_HUDisplay::NavDisplayHome_Servant::_ciao_passivate_component (HUDisplay::NavDisplay_ptr comp
+                                                                        ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  PortableServer::ObjectId_var oid;
+
+  this->container_->uninstall_component (comp,
+                                         oid.out ()
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  CIAO_GLUE_HUDisplay::NavDisplay_Servant *servant = 0;
+  if (this->component_map_.unbind (oid.in (), servant) == 0)
+    {
+      PortableServer::ServantBase_var safe (servant);
+      servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+    }
+  // What happen if unbind failed?
+
 }
 
 // Operations for Implicit Home interface
@@ -636,12 +731,17 @@ CIAO_GLUE_HUDisplay::NavDisplayHome_Servant::create (ACE_ENV_SINGLE_ARG_DECL)
   if (this->executor_.in () == 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (), 0);
 
-  Components::EnterpriseComponent_var com =
+  Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->create (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->_ciao_create_helper (com
-                             ACE_ENV_ARG_PARAMETER);
+  HUDisplay::CCM_NavDisplay_var _ciao_comp
+    = HUDisplay::CCM_NavDisplay::_narrow (_ciao_ec.in ()
+                                          ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->_ciao_activate_component (_ciao_comp.in ()
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for CCMHome interface
@@ -651,15 +751,23 @@ CIAO_GLUE_HUDisplay::NavDisplayHome_Servant::remove_component (Components::CCMOb
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::RemoveFailure))
 {
-  if (CORBA::is_nil (comp))
+  HUDisplay::NavDisplay_var _ciao_comp
+    = HUDisplay::NavDisplay::_narrow (comp
+                                      ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (_ciao_comp.in ()))
     ACE_THROW (CORBA::INTERNAL ()); // What is the right exception to throw here?
 
-  comp->remove (ACE_ENV_ARG_PARAMETER);
+  // @@ It seems to me that we need to make sure this is a component
+  // generated by this home before calling remove on this component.
+  _ciao_comp->remove (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+
 
   // Removing the object reference?  get the servant from the POA with
   // the objref, and call remove() on the component, deactivate the
   // component, and then remove-ref the servant?
-  this->container_->uninstall (comp
-                               ACE_ENV_ARG_PARAMETER);
+  this->_ciao_passivate_component (_ciao_comp.in ()
+                                   ACE_ENV_ARG_PARAMETER);
 }

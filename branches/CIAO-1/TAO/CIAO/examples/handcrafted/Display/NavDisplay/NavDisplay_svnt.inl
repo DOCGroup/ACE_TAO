@@ -92,42 +92,6 @@ CIAO_GLUE_HUDisplay::NavDisplay_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_D
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
 
-ACE_INLINE
-CIAO_GLUE_HUDisplay::NavDisplay_Servant::NavDisplay_Servant (HUDisplay::CCM_NavDisplay_ptr exe,
-                                                             ::Components::CCMHome_ptr h,
-                                                             ::CIAO::Session_Container *c)
-  : executor_ (HUDisplay::CCM_NavDisplay::_duplicate (exe)),
-    container_ (c)
-{
-  this->context_ = new CIAO_GLUE_HUDisplay::NavDisplay_Context (h, c, this);
-
-  ACE_TRY_NEW_ENV
-    {
-      Components::SessionComponent_var scom =
-        Components::SessionComponent::_narrow (exe
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (! CORBA::is_nil (scom.in ()))
-        {
-          scom->set_session_context (this->context_
-                                     ACE_ENV_ARG_PARAMETER);
-        }
-    }
-  ACE_CATCHANY
-    {
-      // @@ Ignore any exceptions?  What happens if
-      // set_session_context throws an CCMException?
-    }
-  ACE_ENDTRY;
-}
-
-ACE_INLINE
-CIAO_GLUE_HUDisplay::NavDisplay_Servant::~NavDisplay_Servant (void)
-{
-  this->context_->_remove_ref ();
-}
-
 // Simplex [receptacle name] connection management operations
 ACE_INLINE void
 CIAO_GLUE_HUDisplay::NavDisplay_Servant::connect_GPSLocation (HUDisplay::position_ptr c

@@ -93,42 +93,6 @@ CIAO_GLUE_HUDisplay::RateGen_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
 
-ACE_INLINE
-CIAO_GLUE_HUDisplay::RateGen_Servant::RateGen_Servant (HUDisplay::CCM_RateGen_ptr exe,
-                                                       ::Components::CCMHome_ptr h,
-                                                       ::CIAO::Session_Container *c)
-  : executor_ (HUDisplay::CCM_RateGen::_duplicate (exe)),
-    container_ (c)
-{
-  this->context_ = new CIAO_GLUE_HUDisplay::RateGen_Context (h, c, this);
-
-  ACE_TRY_NEW_ENV
-    {
-      Components::SessionComponent_var scom =
-        Components::SessionComponent::_narrow (exe
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (! CORBA::is_nil (scom.in ()))
-        {
-          scom->set_session_context (this->context_
-                                     ACE_ENV_ARG_PARAMETER);
-        }
-    }
-  ACE_CATCHANY
-    {
-      // @@ Ignore any exceptions?  What happens if
-      // set_session_context throws an CCMException?
-    }
-  ACE_ENDTRY;
-}
-
-ACE_INLINE
-CIAO_GLUE_HUDisplay::RateGen_Servant::~RateGen_Servant (void)
-{
-  this->context_->_remove_ref ();
-}
-
 ACE_INLINE void
 CIAO_GLUE_HUDisplay::RateGen_Servant::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -216,13 +180,18 @@ CIAO_GLUE_HUDisplay::RateGenHome_Servant::new_RateGen (CORBA::Long hertz
   ACE_THROW_SPEC ((CORBA::SystemException,
                    ::Components::CreateFailure))
 {
-  Components::EnterpriseComponent_var com =
+  Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->new_RateGen (hertz
                                   ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->_ciao_create_helper (com
-                                    ACE_ENV_ARG_PARAMETER);
+  HUDisplay::CCM_RateGen_var _ciao_comp
+    = HUDisplay::CCM_RateGen::_narrow (_ciao_ec.in ()
+                                       ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->_ciao_activate_component (_ciao_comp.in ()
+                                         ACE_ENV_ARG_PARAMETER);
 }
 
 // Operations for KeylessHome interface

@@ -163,42 +163,6 @@ ACE_INLINE void
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
 
-ACE_INLINE
-[ciao module name]::[component name]_Servant::[component name]_Servant (CCM_[component name]_ptr exe,
-                                                                        ::Components::CCMHome_ptr h,
-                                                                        ::CIAO::Session_Container *c)
-  : executor_ (CCM_[component name]::_duplicate (exe)),
-    container_ (c)
-{
-  this->context_ = new [ciao module name]::[component name]_Context (h, c, this);
-
-  ACE_TRY_NEW_ENV
-    {
-      Components::SessionComponent_var scom =
-        Components::SessionComponent::_narrow (exe
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (! CORBA::is_nil (scom.in ()))
-        {
-          scom->set_session_context (this->context_
-                                     ACE_ENV_ARG_PARAMETER);
-        }
-    }
-  ACE_CATCHANY
-    {
-      // @@ Ignore any exceptions?  What happens if
-      // set_session_context throws an CCMException?
-    }
-  ACE_ENDTRY;
-}
-
-ACE_INLINE
-[ciao module name]::[component name]_Servant::~[component name]_Servant (void)
-{
-  this->context_->_remove_ref ();
-}
-
 ##foreach [operation] in all supported interfaces of own component and all inherited components and attribute accessors/mutators
 
 // This is only a guideline...  we always relay the operation to underlying
@@ -411,12 +375,17 @@ ACE_INLINE [component name]_ptr
                    ::Components::CreateFailure,
                    ....))
 {
-  Components::EnterpriseComponent_var com =
+  Components::EnterpriseComponent_var _ciao_ec =
     this->executor_->[factory name] (.... ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
-  return this->_ciao_create_helper (com
-                                    ACE_ENV_ARG_PARAMETER);
+  CCM_[component name]_var _ciao_comp
+    = CCM_[component name]::_narrow (_ciao_ec.in ()
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  return this->_ciao_activate_component (_ciao_comp.in ()
+                                         ACE_ENV_ARG_PARAMETER);
 }
 ##end foreach [factory name]
 

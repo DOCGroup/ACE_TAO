@@ -233,7 +233,7 @@ public:
   // CIAO specific operations.
 
   void _ciao_activate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
-  void _ciao_deactivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+  void _ciao_passivate (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
 
 protected:
   // My Executor.
@@ -282,16 +282,16 @@ public:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure));
 
+protected:
   // Activate the object in the container_
   HelloWorld_ptr _ciao_activate_component (CCM_HelloWorld_ptr exe
                                            ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  void _ciao_deactivate_component (HelloWorld_ptr comp
+  void _ciao_passivate_component (HelloWorld_ptr comp
                                    ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-protected:
   // My Executor.
   CCM_HelloHome_var executor_;
 

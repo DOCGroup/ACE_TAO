@@ -6,13 +6,6 @@
 // @@ Notice: [ciao module name] can expand to either CIAO_GLUE or
 //    CIAO_GLUE_[module name] as defined in the header file.
 
-/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-/// @@@ Notice that all component and interface names need to be
-/// fully qualified as we are creating a new namespace for the CIAO's
-/// container glue code.
-/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-
 //////////////////////////////////////////////////////////////////
 // Component specific context implementation
 //////////////////////////////////////////////////////////////////
@@ -91,42 +84,6 @@ CIAO_GLUE_HUDisplay::GPS_Context::set_rollback_only (ACE_ENV_SINGLE_ARG_DECL)
 //////////////////////////////////////////////////////////////////
 // Component Servant Glue code implementation
 //////////////////////////////////////////////////////////////////
-
-ACE_INLINE
-CIAO_GLUE_HUDisplay::GPS_Servant::GPS_Servant (HUDisplay::CCM_GPS_ptr exe,
-                                               ::Components::CCMHome_ptr h,
-                                               ::CIAO::Session_Container *c)
-  : executor_ (HUDisplay::CCM_GPS::_duplicate (exe)),
-    container_ (c)
-{
-  this->context_ = new CIAO_GLUE_HUDisplay::GPS_Context (h, c, this);
-
-  ACE_TRY_NEW_ENV
-    {
-      Components::SessionComponent_var scom =
-        Components::SessionComponent::_narrow (exe
-                                               ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (! CORBA::is_nil (scom.in ()))
-        {
-          scom->set_session_context (this->context_
-                                     ACE_ENV_ARG_PARAMETER);
-        }
-    }
-  ACE_CATCHANY
-    {
-      // @@ Ignore any exceptions?  What happens if
-      // set_session_context throws an CCMException?
-    }
-  ACE_ENDTRY;
-}
-
-ACE_INLINE
-CIAO_GLUE_HUDisplay::GPS_Servant::~GPS_Servant (void)
-{
-  this->context_->_remove_ref ();
-}
 
 //////////////////////////////////////////////////////////////////
 // EventConsumer Glue Code implementation
