@@ -13,7 +13,7 @@ ifndef TAO_ROOT
 endif # ! TAO_ROOT
 
 LDLIBS = -lTAO_PortableServer -lTAO_Valuetype -lTAO_ObjRefTemplate -lTAO_IORInterceptor -lTAO_SmartProxies -lTAO
-LDFLAGS += -L$(ACE_ROOT)/bin
+LDFLAGS += -L$(ACE_ROOT)/bin -L$(TAO_ROOT)/tao
 
 IDL_FILES = test
 IDL_SRC = testC.cpp testS.cpp

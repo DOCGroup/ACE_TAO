@@ -1,3 +1,9 @@
+Thu May 15 14:54:31 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * tests/Smart_Proxies/Makefile:
+
+          Missing -L flag value supplied.
+
 Thu May 15 14:07:33 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * CIAO/tools/Simple_Component_Server/Makefile:
