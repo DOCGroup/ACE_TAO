@@ -20,10 +20,10 @@ sub Create
     $console = 0;
   }
 
-  Win32::Process::Create ($self->[0], $name, $name." ".$args, 0, 
+  Win32::Process::Create ($self->[0], $name, $name." ".$args, 0,
                           $console, ".");
   bless $self;
-}  
+}
 
 sub Kill
 {
@@ -48,9 +48,9 @@ sub TimedWait
   my $self = shift;
   my $maxtime = shift;
   Win32::Process::Wait ($self->[0], $maxtime * 1000);
-  # @@ TODO figure out if we exit because of a timeout and return -1
-  # in that case.
-  return 0;
+  $status = 0;
+  Win32::Process::GetExitCode ($self->[0], $status);
+  return $status;
 }
 
 1;
