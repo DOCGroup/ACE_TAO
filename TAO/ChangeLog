@@ -1,3 +1,8 @@
+Wed Dec 10 10:25:43 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Tests/Collocation_Tests.mpc:
+          Fixed executable name to match with run_test.pl
+
 Wed Dec 10 10:08:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Logging/Logger.idl:
