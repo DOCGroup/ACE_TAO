@@ -12,7 +12,9 @@ Mon Jan 14 13:41:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
           New files added to finish the implementation of the
           Extended Trader Constraint Language library that was
-          begun by Carlos O'Ryan <coryan@uci.edu>.
+          begun by Carlos O'Ryan <coryan@uci.edu>. Thanks to
+          Chad Elliott <elliott_c@ociweb.com> for supplying
+          ETCL_Static.dsp.
 
         * orbsvcs/orbsvcs/ETCL/ETCL.ll:
         * orbsvcs/orbsvcs/ETCL/ETCL.yy:
