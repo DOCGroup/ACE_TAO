@@ -753,6 +753,13 @@ Client::svc (void)
 
   // Delete dynamic memory
   CORBA::release (this->cubit_);
+
+#if defined (VXWORKS)
+  // To avoid a memPartFree on VxWorks.  It will leak memory, though.
+  int status;
+  ACE_OS::thr_exit (&status);
+#endif /* VXWORKS */
+
   return 0;
 }
 
