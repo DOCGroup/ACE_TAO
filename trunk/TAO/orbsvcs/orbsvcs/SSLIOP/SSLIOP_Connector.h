@@ -84,7 +84,8 @@ namespace TAO
        *
        * Please check the documentation in Pluggable.h.
        */
-      virtual TAO_Profile * make_profile (int is_secure ACE_ENV_ARG_DECL);
+      virtual TAO_Profile * make_profile (ACE_ENV_SINGLE_ARG_DECL);
+      virtual TAO_Profile * make_secure_profile (ACE_ENV_SINGLE_ARG_DECL);
 
       /// Cancel the passed cvs handler from the connector
       virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
