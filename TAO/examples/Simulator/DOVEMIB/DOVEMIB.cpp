@@ -3,15 +3,11 @@
 // ============================================================================
 //
 // = FILENAME
-//    Event_Con.cpp
+//    DOVEMIB.cpp
 //
 // = DESCRIPTION
-//   This demo just tests the basic functionality of the Event Service
-//   One Conumer which inherits from the Rtec Consumer.  One Supplier
-//   with an internal Rtec Consumer and one internal Rtec Supplier.
-//   The internal Supplier is just a demo supplier because the
-//   architecture expects an supplier which has inherited from the
-//   Rtec Supplier.
+//    The MIB listens to the Event Channel, analyses the CORBA::Any
+//    and prints the result into a file.
 //
 // = AUTHOR
 //    originally
@@ -169,6 +165,21 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
  
       TAO_TRY
       {
+        // print the time stamps 
+        ACE_hrtime_t creation;
+        ORBSVCS_Time::TimeT_to_hrtime (creation,
+                                       events[i].creation_time_);
+
+        ACE_hrtime_t ec_recv;
+        ORBSVCS_Time::TimeT_to_hrtime (ec_recv,
+                                       events[i].ec_recv_time_);
+
+        ACE_hrtime_t ec_send;
+        ORBSVCS_Time::TimeT_to_hrtime (ec_send,
+                                       events[i].ec_send_time_);
+
+        anyAnalyser_.printTimeStamp (creation, ec_recv, ec_send);
+
         if (events[i].data_.any_value.any_owns_data ())
         { 
           void * void_ptr = ACE_OS::malloc (events[i].data_.any_value.type()->size(TAO_TRY_ENV));
@@ -184,7 +195,7 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
             ACE_OS::free(void_ptr);
             return;
           }
-	  TAO_CHECK_ENV;
+	        TAO_CHECK_ENV;
 
           // invoke the AnyAnalyser
           anyAnalyser_.printAny (events[i].data_.any_value.type(), void_ptr);               
@@ -195,7 +206,7 @@ MIB_Consumer::push (const RtecEventComm::EventSet &events,
           // invoke the AnyAnalyser
           anyAnalyser_.printAny (events[i].data_.any_value.type(), events[i].data_.any_value.value());                         
         }
-                      
+          
       }
       TAO_CATCHANY {
         ACE_ERROR ((LM_ERROR, "(%t)Error in extracting the Navigation and Weapons data.\n"));

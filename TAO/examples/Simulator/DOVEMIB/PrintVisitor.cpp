@@ -64,6 +64,36 @@ PrintVisitor::close () {
 }
 
 
+void 
+PrintVisitor::printSecNanoSec (ACE_hrtime_t total_nanoseconds)
+{
+  // Separate to seconds and nanoseconds.
+  u_long total_secs  = (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  
+  ACE_OS::fprintf (output_,
+                   "%3lu.%06lu secs\n",
+                   total_secs, 
+                   (extra_nsecs +500u) / 1000u);
+}
+
+void 
+PrintVisitor::printTimeStamp (ACE_hrtime_t creation,
+                              ACE_hrtime_t ec_recv,
+                              ACE_hrtime_t ec_send)
+{
+  ACE_OS::fprintf (output_,
+                   "\nTimeStamp\ncreation time: ");
+  this->printSecNanoSec (creation);
+  ACE_OS::fprintf (output_,
+                   "event channel received time: ");
+  this->printSecNanoSec (ec_recv);
+  ACE_OS::fprintf (output_,
+                   "event_channel sent time: ");
+  this->printSecNanoSec (ec_send);
+}
+
+
 // Visit a struct node
 void
 PrintVisitor::visitStructNode (StructNode *structNode) {
