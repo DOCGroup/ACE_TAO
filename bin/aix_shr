@@ -18,8 +18,10 @@ done
 $@ > "$usrtmp/$output" 2>&1
 status=$?
 
-## Print the output to stdout, but filter duplicate symbol warnings
-/bin/egrep -v '0711-(224|345)' "$usrtmp/$output"
+## Print the output to stdout, but filter duplicate symbol warnings from
+## Visual Age C++-using builds. The first pattern ends up coming from the
+## linker in Visual Age C++ 5 builds; the second is from Visual Age C++ 6.
+/bin/egrep -v '0711-(224|345)|1540-0(424|425|436)' "$usrtmp/$output"
 
 ## Clean up the temporary file
 /bin/rm -f "$usrtmp/$output"
