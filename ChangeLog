@@ -1,3 +1,14 @@
+Wed Mar 17 14:20:31 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-aix5.1.h: The AIO enable/disable check added at
+	  Mon Mar 15 15:42:33 2004  Steve Huston  <shuston@riverace.com>
+	  confuses the Visual Age C++ preprocessor. Rearrange it to use
+	  a temporary macro, _ACE_DISABLE_AIO_CALLS_ if we need to turn off
+	  ACE_HAS_AIO_CALLS after including config-aix-4.x.h.
+
+	* examples/APG/Proactor/HA_Proactive_Status.cpp: Add #include
+	  "ace/Message_Block.h" so Visual Age C++ can see ACE_Message_Block.
+
 Wed Mar 17 18:34:14 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.pl:
