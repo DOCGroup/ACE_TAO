@@ -63,7 +63,7 @@ IOR_corbaloc_Client_i::run (ACE_ENV_SINGLE_ARG_DECL)
 
       // Invoke a request on the server
       CORBA::Boolean ret_value =
-        factory->print_status (ACE_ENV_ARG_PARAMETER);
+        factory->print_status (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       if (ret_value != 0)
