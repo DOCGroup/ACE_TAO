@@ -342,6 +342,14 @@ CORBA_ORB::create_environment (CORBA::Environment_ptr &,
                                   CORBA::COMPLETED_NO));
 }
 
+CORBA::Boolean 
+CORBA_ORB::get_service_information (CORBA::ServiceType service_type,
+                                    CORBA::ServiceInformation_out service_information,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  return 0;
+}
+
 void
 CORBA_ORB::create_named_value (CORBA::NamedValue_ptr &,
                                CORBA_Environment &ACE_TRY_ENV)

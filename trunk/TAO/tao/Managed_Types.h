@@ -19,7 +19,6 @@
 #define TAO_MANAGED_TYPES_H
 
 #include "tao/corbafwd.h"
-#include "tao/ORB.h"
 
 /****************************************************************/
 

@@ -4,28 +4,9 @@
 // String utility support.  Since these are static methods we need to
 // explicitly export them from the DLL.
 
-ACE_INLINE TAO_Export CORBA::String
-CORBA::string_alloc (CORBA::ULong len)
-{
-  // Allocate 1 + strlen to accomodate the null terminating character.
-  return new CORBA::Char[size_t (len + 1)];
-}
-
-ACE_INLINE TAO_Export void
-CORBA::string_free (CORBA::Char *str)
-{
-  delete [] str;
-}
-
 // ----------------------------------------------------------------------
 // String_var type
 // ----------------------------------------------------------------------
-
-ACE_INLINE TAO_Export CORBA::String
-CORBA::string_dup (const CORBA::Char *str)
-{
-  return CORBA::string_copy (str);
-}
 
 ACE_INLINE
 CORBA_String_var::CORBA_String_var (void)
@@ -140,16 +121,6 @@ ACE_INLINE char *&
 CORBA_String_out::ptr (void)
 {
   return this->ptr_;
-}
-
-// ----------------------------------------------------------------------
-// Wide strings
-// ----------------------------------------------------------------------
-
-ACE_INLINE TAO_Export CORBA::WString
-CORBA::wstring_dup (const WChar *const str)
-{
-  return CORBA::wstring_copy (str);
 }
 
 // ---------------------------------------------------------------------------

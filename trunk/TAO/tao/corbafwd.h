@@ -742,6 +742,9 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_ServiceInformation *ServiceInformation_ptr;
   static CORBA::TypeCode_ptr _tc_ServiceInformation;
 
+  const CORBA::UShort Security;
+  
+
   typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
   typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
   typedef CORBA_PolicyTypeSeq_out PolicyTypeSeq_out;
@@ -860,5 +863,9 @@ class TAO_ObjectKey;
 class TAO_ObjectKey_var;
 class TAO_ObjectKey_out;
 typedef TAO_ObjectKey *TAO_ObjectKey_ptr;
+
+#if defined (__ACE_INLINE__)
+# include "tao/corbafwd.i"
+#endif /* ! __ACE_INLINE__ */
 
 #endif /* TAO_CORBAFWD_H */
