@@ -191,6 +191,11 @@ for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
       and <code>ace/config_linux_lxpthreads.h</code> platform/config
       files.<p>
 
+      <strong>NOTE</strong>:  the default RedHat 5.1 kernel
+      does not have IP multicast enabled.  If you want to use TAO's
+      Naming Service on RedHat 5.1, you'll have to build a Linux
+      kernel with IP multicast enabled.<p>
+
       With RedHat 5.0, you'll need some
       <a href="os-patches/linux-patches.html">updates and possibly some
       patches</a> to get ACE working with LinuxThreads.  Some of the patches
@@ -792,8 +797,8 @@ These non-default VxWorks kernel configuration <code>#defines</code>
 are required with ACE:<P>
 
 <pre>
-#define INCLUDE_CPLUS		/* include C++ support */
-#define INCLUDE_CPLUS_IOSTREAMS	/* include iostreams classes */
+#define INCLUDE_CPLUS           /* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS /* include iostreams classes */
 #define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
 </pre>
 
@@ -801,20 +806,20 @@ For completeness, here are the non-default <code>#defines</code> that
 we used for VxWorks 5.3.1/g++ 2.7.2:
 
 <pre>
-#define INCLUDE_CPLUS		/* include C++ support */
-#define INCLUDE_CPLUS_IOSTREAMS	/* include iostreams classes */
+#define INCLUDE_CPLUS           /* include C++ support */
+#define INCLUDE_CPLUS_IOSTREAMS /* include iostreams classes */
 #define INCLUDE_CONFIGURATION_5_2 /* pre-tornado tools */
 #define INCLUDE_DEBUG           /* pre-tornado debugging */
 #define INCLUDE_LOADER          /* object module loading */
 #define INCLUDE_NET_SYM_TBL     /* load symbol table from network */
-#define INCLUDE_SYM_TBL_SYNC	/* synchronize host and target symbol tables */
+#define INCLUDE_SYM_TBL_SYNC    /* synchronize host and target symbol tables */
 #define INCLUDE_NFS             /* nfs package */
-#define INCLUDE_PING		/* ping() utility */
+#define INCLUDE_PING            /* ping() utility */
 #define INCLUDE_POSIX_ALL       /* include all available POSIX functions */
 #define INCLUDE_RDB             /* remote debugging package */
 #define INCLUDE_RLOGIN          /* remote login */
-#define INCLUDE_RPC		/* rpc package */
-#define INCLUDE_SECURITY	/* shell security for network access */
+#define INCLUDE_RPC             /* rpc package */
+#define INCLUDE_SECURITY        /* shell security for network access */
 #define INCLUDE_SHELL           /* interactive c-expression interpreter */
 #define INCLUDE_SHOW_ROUTINES   /* show routines for system facilities*/
 #define INCLUDE_SPY             /* spyLib for task monitoring */
@@ -822,7 +827,7 @@ we used for VxWorks 5.3.1/g++ 2.7.2:
 #define INCLUDE_STAT_SYM_TBL    /* create user-readable error status */
 #define INCLUDE_SYM_TBL         /* symbol table package */
 #define INCLUDE_UNLOADER        /* object module unloading */
-#define INCLUDE_WINDVIEW	/* WindView command server */
+#define INCLUDE_WINDVIEW        /* WindView command server */
 </pre>
 
 If you use TAO, it's also a good idea to increase the
@@ -1312,7 +1317,7 @@ static_libs      Build shared libraries. Ignored if shared_libs_only is set.
 shared_libs_only Only build shared libraries.  Ignored if no SHLIBs are
 specified by the Makefile, as in performance-tests/Misc.
 static_libs_only Only build static libraries.
-xt_reactor	 Build the XtReactor
+xt_reactor       Build the XtReactor
 
 Usually, users do not need to be concerned with make targets.
 Just enter ``make'' on the command line to build.  A few notable
