@@ -413,32 +413,32 @@ public:
 
 // TypeCode constants, which are always accessible in all ORB runtimes.
 
-extern const CORBA_TypeCode_ptr _tc_CORBA_Null;
-extern const CORBA_TypeCode_ptr _tc_CORBA_Void;
-extern const CORBA_TypeCode_ptr _tc_CORBA_Short;
-extern const CORBA_TypeCode_ptr _tc_CORBA_Long;
-extern const CORBA_TypeCode_ptr _tc_CORBA_LongLong;
-extern const CORBA_TypeCode_ptr _tc_CORBA_UShort;
-extern const CORBA_TypeCode_ptr _tc_CORBA_ULong;
-extern const CORBA_TypeCode_ptr _tc_CORBA_ULongLong;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Null;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Void;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Short;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Long;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_LongLong;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_UShort;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_ULong;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_ULongLong;
 
-extern const CORBA_TypeCode_ptr _tc_CORBA_Float;
-extern const CORBA_TypeCode_ptr _tc_CORBA_Double;
-extern const CORBA_TypeCode_ptr _tc_CORBA_LongDouble;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Float;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Double;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_LongDouble;
 
-extern const CORBA_TypeCode_ptr _tc_CORBA_Boolean;
-extern const CORBA_TypeCode_ptr _tc_CORBA_Octet;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Boolean;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Octet;
 
-extern const CORBA_TypeCode_ptr _tc_CORBA_Char;
-extern const CORBA_TypeCode_ptr _tc_CORBA_String;
-extern const CORBA_TypeCode_ptr _tc_CORBA_WChar;
-extern const CORBA_TypeCode_ptr _tc_CORBA_WString;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Char;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_String;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_WChar;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_WString;
 
-extern const CORBA_TypeCode_ptr _tc_CORBA_Any;
-extern const CORBA_TypeCode_ptr _tc_CORBA_TypeCode;
-extern const CORBA_TypeCode_ptr _tc_CORBA_Principal;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Any;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_TypeCode;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Principal;
 
-extern const CORBA_TypeCode_ptr _tc_CORBA_Object;
+extern ACE_Svc_Export CORBA_TypeCode_ptr _tc_CORBA_Object;
 
 // In this case, we make a substantial exception to how inline
 // files are included.  Normally, we would conditionally include the
