@@ -6,6 +6,17 @@ Tue Sep 09 09:14:07 1997  David L. Levine  <levine@cs.wustl.edu>
 	  applications to use ACE_Log_Msg in their at_exit () hooks.  Thanks
 	  to Wei Chiang <chiang@tele.nokia.fi> for reporting this problem.
 
+	* ace/Object_Manager.{h,cpp}: added guard of internal structures.
+ 	  (dtor): call at_exit hooks before calling cleanup_tss, now that
+	  the ACE_TSS_Cleanup instance is no longer registered for an at_exit
+	  call.  (at_exit): set errno instead of returning different values
+	  on error.  Added ACE_Managed_Object template class, intended for
+	  use in replacing static instances.
+
+	* ace/Thread_Manager.cpp (exit): release guard before running the
+	  thread exit hooks.  This should help avoid deadlocks, in case
+	  one of those hooks needs to operate on the Thread_Manager.
+
 	* include/makeinclude/platform_sunos5_sunc++.GNU: when building
 	  libraries only, don't use CC to create individual .shobj/*.so
 	  files.  The .so files are not needed to build libraries, because
