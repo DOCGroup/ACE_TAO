@@ -18,13 +18,12 @@
 #define COSPROPERTYSERVICE_I_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "orbsvcs/Property/property_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Property/property_export.h"
 #include "orbsvcs/CosPropertyServiceS.h"
 
 #include "ace/Hash_Map_Manager.h"

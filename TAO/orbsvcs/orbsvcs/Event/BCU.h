@@ -19,7 +19,7 @@
 #define ACE_BCU_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "ace/os_include/os_stdint.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

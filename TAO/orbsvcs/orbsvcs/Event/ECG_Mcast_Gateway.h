@@ -22,6 +22,9 @@
 #include "ECG_UDP_Receiver.h"
 #include "ECG_UDP_Out_Endpoint.h"
 #include "ace/Service_Object.h"
+#include "ace/Service_Config.h"
+#include "ace/SString.h"
+#include "ace/os_include/os_stdint.h"
 
 class ACE_Event_Handler;
 

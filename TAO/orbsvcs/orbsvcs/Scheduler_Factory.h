@@ -18,13 +18,12 @@
 #define ACE_SCHEDULER_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "ace/OS.h"
+#include "orbsvcs/CosNamingC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Sched/sched_export.h"
 
