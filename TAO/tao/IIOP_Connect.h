@@ -71,7 +71,7 @@ public:
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-  // Called when a a response from a twoway invocation is available.
+  // Called when a response from a twoway invocation is available.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
@@ -133,8 +133,13 @@ protected:
   // = Event Handler overloads
 
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  virtual int handle_input_i (ACE_HANDLE = ACE_INVALID_HANDLE,
+                              ACE_Time_Value *max_wait_time = 0);
   // Reads a message from the <peer()>, dispatching and servicing it
   // appropriately.
+  // handle_input() just delegates on handle_input_i() which timeouts
+  // after <max_wait_time>, this is used in thread-per-connection to
+  // ensure that server threads eventually exit.
 
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
