@@ -5,6 +5,7 @@
 #include "Debug_Macros.h"
 #include "Event_Channel.h"
 #include "Memory_Pools.h"
+#include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
 #include "RT_Task.i"
@@ -27,7 +28,7 @@ public:
   ACE_ES_TASK *task_;
 };
 
-int 
+int
 ACE_RT_Task_Shutdown::execute (u_long &command_action)
 {
   ACE_UNUSED_ARG (command_action);
@@ -95,10 +96,10 @@ ACE_RT_Task::svc_one (void)
   if (this->getq (mb) == -1)
     {
       if (ACE_OS::last_error () == ESHUTDOWN)
-	return 1;
+        return 1;
       else
-	// We'll continue in spite of this error.
-	ACE_ERROR ((LM_ERROR, "%p (%t) getq error.\n", "ACE_RT_Task::svc_one"));
+        // We'll continue in spite of this error.
+        ACE_ERROR ((LM_ERROR, "%p (%t) getq error.\n", "ACE_RT_Task::svc_one"));
     }
 
   // Execute the command.
@@ -119,8 +120,8 @@ ACE_RT_Task::svc_one (void)
     case ACE_RT_Task_Command::RELEASE:
       // Free the message block.
       if (ACE_RT_Task_Command::release (command) != 0)
-	ACE_ERROR ((LM_ERROR, "ACE_RT_Task::svc_one: "
-		    "ACE_RT_Task_Command::release returned != 0!\n"));
+        ACE_ERROR ((LM_ERROR, "ACE_RT_Task::svc_one: "
+                    "ACE_RT_Task_Command::release returned != 0!\n"));
       break;
 
     case ACE_RT_Task_Command::UNGETQ:
@@ -161,9 +162,9 @@ ACE_RT_Task::open_task (const char* name)
 
   TAO_TRY
     {
-      rt_info_ = 
-	ACE_Scheduler_Factory::server()->create (tempname,
-						 TAO_TRY_ENV);
+      rt_info_ =
+        ACE_Scheduler_Factory::server()->create (tempname,
+                                                 TAO_TRY_ENV);
       TAO_CHECK_ENV;
       // @@ TODO: We do no initialization of the new rt_info, the
       // caller does, this is (IMnsHO) very error prone.
@@ -208,44 +209,88 @@ ACE_RT_Task::synch_threads (size_t threads)
       RtecScheduler::OS_Priority thread_priority;
       RtecScheduler::Sub_Priority subpriority;
       RtecScheduler::Preemption_Priority preemption_priority;
-      
+
       TAO_TRY
-	{
-	  // @@ TODO handle exceptions
-	  ACE_TIMEPROBE ("  synch_threads - priority requested");
-	  ACE_Scheduler_Factory::server ()->priority
-	    (rt_info_,
-	     thread_priority,
-	     subpriority,
-	     preemption_priority, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  ACE_TIMEPROBE ("  synch_threads - priority obtained");
+        {
+          // @@ TODO handle exceptions
+          ACE_TIMEPROBE ("  synch_threads - priority requested");
+          ACE_Scheduler_Factory::server ()->priority
+            (rt_info_,
+             thread_priority,
+             subpriority,
+             preemption_priority, TAO_TRY_ENV);
+          TAO_CHECK_ENV;
+          ACE_TIMEPROBE ("  synch_threads - priority obtained");
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) spawning %d threads at os thread"
-		      " priority %d.\n",
-		      threads - this->thr_count (),
-		      thread_priority));
+          ACE_DEBUG ((LM_DEBUG, "(%t) spawning %d threads at os thread"
+                      " priority %d.\n",
+                      threads - this->thr_count (),
+                      thread_priority));
 
-	  // This is here so that the constructor does not call it.  The
-	  // ORB has an instance of one of these.
-	  this->thr_mgr (ACE_Task_Manager::instance ()->ThrMgr ());
-	  
-	  // Add the difference.
-	  if (this->activate (THR_BOUND,
-			      threads - this->thr_count (),
-			      1, // Force it to spawn more threads
-			      thread_priority) == -1)
-	    {
-	      ACE_DEBUG ((LM_ERROR,
-			  "(%t) thread spawn FAILED, errno is %d!!!!\n",
-			  errno));
-	    }
-	  
-	}
+          // This is here so that the constructor does not call it.  The
+          // ORB has an instance of one of these.
+          this->thr_mgr (ACE_Task_Manager::instance ()->ThrMgr ());
+
+          // Add the difference.
+          // First try real-time scheduling with specified priority.
+          long flags = THR_BOUND | THR_SCHED_FIFO;
+          if (this->activate (flags,
+                              threads - this->thr_count (),
+                              1, // Force it to spawn more threads
+                              thread_priority) == -1)
+            {
+              // That didn't work.  Try default scheduling class with
+              // the requested priority.
+              flags = THR_BOUND;
+              if (this->activate (flags,
+                                  threads - this->thr_count (),
+                                  1, // Force it to spawn more threads
+                                  thread_priority) == -1)
+                {
+                  // That didn't work.  Finally, try default
+                  // scheduling class with minimum priority.
+
+                  // On Linux, for example, only the superuser can set
+                  // the policy to other than ACE_SCHED_OTHER.  But
+                  // with ACE_SCHED_OTHER, there is only one thread
+                  // priority value, for example, 0.  So, let the
+                  // superuser run an interesting test, but for other
+                  // users use the minimum ACE_SCHED_OTHER thread
+                  // priority.
+
+                  RtecScheduler::OS_Priority fallback_priority =
+                    ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
+                                                    ACE_SCOPE_THREAD);
+
+                  ACE_DEBUG ((LM_DEBUG, "(%t) task activation at priority %d "
+                              "with flags 0x%X failed; retry at priority %d "
+                              "with flags 0x%X\n",
+                              thread_priority,
+                              flags,
+                              fallback_priority,
+                              THR_BOUND));
+
+                  flags = THR_BOUND;
+
+                  if (this->activate (flags,
+                                      threads - this->thr_count (),
+                                      1, // Force it to spawn more threads
+                                      fallback_priority) == -1)
+                    {
+                      ACE_DEBUG ((LM_ERROR,
+                                  "(%t) thread spawn at priority %d FAILED "
+                                  "(errno is %d%p)!!!!\n",
+                                  fallback_priority,
+                                  errno,
+                                  ""));
+                    }
+                }
+            }
+        }
       TAO_CATCHANY
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR, "priority failed\n"), -1);
-	}
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "priority failed\n"), -1);
+        }
       TAO_ENDTRY;
 
     }
@@ -257,24 +302,24 @@ ACE_RT_Task::synch_threads (size_t threads)
       int kill_threads = this->thr_count () - threads;
 
       for (int x = kill_threads ; x > 0; x--)
-	{
-	  // Create a new shutdown command with a task pointer of 0.
-	  ACE_RT_Task_Shutdown *te = new ACE_RT_Task_Shutdown (0);
+        {
+          // Create a new shutdown command with a task pointer of 0.
+          ACE_RT_Task_Shutdown *te = new ACE_RT_Task_Shutdown (0);
 
-	  if (te == 0)
-	    return -1;
+          if (te == 0)
+            return -1;
 
-	  ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing thread exit.\n"));
-	  if (this->putq (te) == -1)
-	    {
-	      ACE_ERROR ((LM_ERROR, "%p putq failed.\n", 
-			  "ACE_RT_Task::synch_threads"));
-	      if (ACE_RT_Task_Shutdown::release (te) != 0)
-		ACE_ERROR ((LM_ERROR, "ACE_RT_Task::synch_threads: "
-			    "ACE_RT_Task_Shutdown::release returned != 0!\n"));
-	      return -1;
-	    }
-	}
+          ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing thread exit.\n"));
+          if (this->putq (te) == -1)
+            {
+              ACE_ERROR ((LM_ERROR, "%p putq failed.\n",
+                          "ACE_RT_Task::synch_threads"));
+              if (ACE_RT_Task_Shutdown::release (te) != 0)
+                ACE_ERROR ((LM_ERROR, "ACE_RT_Task::synch_threads: "
+                            "ACE_RT_Task_Shutdown::release returned != 0!\n"));
+              return -1;
+            }
+        }
     }
 
   return 0;
@@ -304,22 +349,22 @@ ACE_RT_Task::shutdown_task (void)
       ACE_RT_Task_Shutdown *fq = new ACE_RT_Task_Shutdown (this);
 
       if (fq == 0)
-	{
-	  ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_RT_Task::shutdown_threads"));
-	  return -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "%p.\n", "ACE_RT_Task::shutdown_threads"));
+          return -1;
+        }
 
       // Enqueue the command.
       ACE_DEBUG ((LM_DEBUG, "(%t) enqueueing task shutdown.\n"));
       if (this->putq (fq) == -1)
-	{
-	  ACE_ERROR ((LM_ERROR, "%p putq failed.\n", 
-		      "ACE_RT_Task::shutdown_task"));
-	  if (ACE_RT_Task_Shutdown::release (fq) != 0)
-	    ACE_ERROR ((LM_ERROR, "ACE_RT_Task::shutdown_task: "
-			"ACE_RT_Task_Shutdown::release returned != 0!\n"));
-	  return -1;
-	}
+        {
+          ACE_ERROR ((LM_ERROR, "%p putq failed.\n",
+                      "ACE_RT_Task::shutdown_task"));
+          if (ACE_RT_Task_Shutdown::release (fq) != 0)
+            ACE_ERROR ((LM_ERROR, "ACE_RT_Task::shutdown_task: "
+                        "ACE_RT_Task_Shutdown::release returned != 0!\n"));
+          return -1;
+        }
     }
 
   return 0;
@@ -345,19 +390,19 @@ ACE_RT_Thread_Manager::unsuspend_spawns (void)
   this->resume_all ();
 }
 
-int 
+int
 ACE_RT_Thread_Manager::spawn_i (ACE_THR_FUNC func,
-				void *args, 
-				long flags, 
-				ACE_thread_t *t_id, 
-				ACE_hthread_t *t_handle,
-				long priority,
-				int grp_id,
-				void *stack, 
-				size_t stack_size,
-				ACE_Task_Base *task)
+                                void *args,
+                                long flags,
+                                ACE_thread_t *t_id,
+                                ACE_hthread_t *t_handle,
+                                long priority,
+                                int grp_id,
+                                void *stack,
+                                size_t stack_size,
+                                ACE_Task_Base *task)
 {
   flags |= flags_;
-  return ACE_Thread_Manager::spawn_i (func, args, flags, t_id, t_handle, 
-				      priority, grp_id, stack, stack_size, task);
+  return ACE_Thread_Manager::spawn_i (func, args, flags, t_id, t_handle,
+                                      priority, grp_id, stack, stack_size, task);
 }
