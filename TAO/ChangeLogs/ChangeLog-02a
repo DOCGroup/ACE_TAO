@@ -1,3 +1,10 @@
+Tue Jan 29 10:56:35 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Notify/Structured_Filter/Notify_Push_Consumer.cpp:
+
+          Added throw spec to push_structured_event() to match the
+          declaration.
+
 Tue Jan 29 09:38:35 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tao/CORBALOC_Parser.cpp: 
