@@ -9,10 +9,10 @@ LIB      = libACE.a
 SHLIB    = libACE.$(SOEXT)
 
 OS_FILES = \
-  ACE \
   Basic_Types \
   OS
 UTILS_FILES = \
+  ACE \
   Active_Map_Manager \
   Arg_Shifter \
   ARGV \
