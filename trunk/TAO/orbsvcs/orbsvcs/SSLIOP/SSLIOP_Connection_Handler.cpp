@@ -237,7 +237,7 @@ TAO_SSLIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_output (ACE_HANDLE)
+TAO_SSLIOP_Connection_Handler::handle_output (ACE_HANDLE)
 {
   return this->transport ()->handle_output ();
 }

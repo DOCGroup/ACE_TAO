@@ -1,3 +1,8 @@
+Tue Apr 24 08:55:53 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+          Fixed errors about undefined symbols on Win32.
+
 Tue Apr 24 10:49:54 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
@@ -34,398 +39,398 @@ Tue Apr 24 10:03:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
 Tue Apr 24 08:28:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_decl.cpp:
-	* TAO_IDL/ast/ast_interface.cpp:
-	* TAO_IDL/be/be_decl.cpp:
-	* TAO_IDL/be/be_global.cpp:
-	* TAO_IDL/be/be_interface.cpp:
-	* TAO_IDL/be/be_interface_fwd.cpp:
-	* TAO_IDL/be/be_visitor_factory.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd.cpp:
-	* TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
-	* TAO_IDL/be/be_visitor_module/module.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	* TAO_IDL/be/be_visitor_root/root.cpp:
-	* TAO_IDL/be/be_visitor_root/root_ch.cpp
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be_include/be_codegen.h:
-	* TAO_IDL/be_include/be_decl.h:
-	* TAO_IDL/be_include/be_global.h:
-	* TAO_IDL/be_include/be_interface.h:
-	* TAO_IDL/be_include/be_interface_fwd.h:
-	* TAO_IDL/be_include/be_visitor_interface_fwd.h:
-	* TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_global.cpp:
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/be/be_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_factory.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_invoke_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface_fwd/interface_fwd_ci.cpp:
+        * TAO_IDL/be/be_visitor_module/module.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be/be_visitor_root/root_ch.cpp
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_union/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be_include/be_codegen.h:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_global.h:
+        * TAO_IDL/be_include/be_interface.h:
+        * TAO_IDL/be_include/be_interface_fwd.h:
+        * TAO_IDL/be_include/be_visitor_interface_fwd.h:
+        * TAO_IDL/include/ast_decl.h:
 
-	  Changes to IDL compiler, enabling it to handle a forward
-	  declared interface that is not defined in the same
-	  file (but must be fully defined somewhere in the build).
-	  Specific changes include:
-	  - Inlining disabled for CDR operators for all interfaces.
-	  - Any operators declared for undefined interfaces.
-	  - Inlining disabled for all interface _var and _out classes.
-	  - For undefined interfaces, extern declarations added for
-	    global functions that access the methods _duplicate,
-	    _nil, _narrow, and CORBA::release for the defined interface.
-	    Also added one to replace the upcast() mathod in the
-	    template object sequence classes in TAO, so an undefined
-	    interface pointer can be cast to CORBA::Object*.
-	  - For defined interfaces, added the implementation of the
-	    global methods (using the interface's flat name).
-	  - Added static hooks for these methods to the interface _var
-	    class (used by the template object sequence classes in TAO).
-	  - Modified generated code for non-template object sequence
-	    base classes, to use the global hooks for undefined
-	    interfaces.
-	  - Modified generated code for unions containing interfaces,
-	    so that the TAO_OBject_Manager template class will use the 
-	    global hooks if the interface is undefined.
-	  - Modified generated code for an operation to use the 
-	    global hooks, if it has an undefined interface in its
-	    signature.
+          Changes to IDL compiler, enabling it to handle a forward
+          declared interface that is not defined in the same
+          file (but must be fully defined somewhere in the build).
+          Specific changes include:
+          - Inlining disabled for CDR operators for all interfaces.
+          - Any operators declared for undefined interfaces.
+          - Inlining disabled for all interface _var and _out classes.
+          - For undefined interfaces, extern declarations added for
+            global functions that access the methods _duplicate,
+            _nil, _narrow, and CORBA::release for the defined interface.
+            Also added one to replace the upcast() mathod in the
+            template object sequence classes in TAO, so an undefined
+            interface pointer can be cast to CORBA::Object*.
+          - For defined interfaces, added the implementation of the
+            global methods (using the interface's flat name).
+          - Added static hooks for these methods to the interface _var
+            class (used by the template object sequence classes in TAO).
+          - Modified generated code for non-template object sequence
+            base classes, to use the global hooks for undefined
+            interfaces.
+          - Modified generated code for unions containing interfaces,
+            so that the TAO_OBject_Manager template class will use the
+            global hooks if the interface is undefined.
+          - Modified generated code for an operation to use the
+            global hooks, if it has an undefined interface in its
+            signature.
 
-	Added files:
+        Added files:
 
-	* TAO_IDL/be_include/be_visitor_interface_fwd/any_op_ch.h:
-	* TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
+        * TAO_IDL/be_include/be_visitor_interface_fwd/any_op_ch.h:
+        * TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp:
 
-	  Created a new visitor to generate Any operator declarations
-	  for a forward declared interface, defined or undefined.
+          Created a new visitor to generate Any operator declarations
+          for a forward declared interface, defined or undefined.
 
-	* orbsvcs/IFR_Service/IFR_BaseS.cpp:
-	* orbsvcs/IFR_Service/IFR_BaseS.h:
-	* orbsvcs/IFR_Service/IFR_BaseS.i:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.h:
-	* orbsvcs/IFR_Service/IFR_BaseS_T.i:
-	* orbsvcs/IFR_Service/IFR_BasicS.cpp:
-	* orbsvcs/IFR_Service/IFR_BasicS.h:
-	* orbsvcs/IFR_Service/IFR_BasicS.i:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.h:
-	* orbsvcs/IFR_Service/IFR_BasicS_T.i:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.h:
-	* orbsvcs/IFR_Service/IFR_ComponentsS.i:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
-	* orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.h:
-	* orbsvcs/IFR_Service/IFR_ExtendedS.i:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
-	* orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
-	* orbsvcs/IFR_Service/Servant_Factory.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS.h:
+        * orbsvcs/IFR_Service/IFR_BaseS.i:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.h:
+        * orbsvcs/IFR_Service/IFR_BaseS_T.i:
+        * orbsvcs/IFR_Service/IFR_BasicS.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS.h:
+        * orbsvcs/IFR_Service/IFR_BasicS.i:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.h:
+        * orbsvcs/IFR_Service/IFR_BasicS_T.i:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS.i:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+        * orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS.i:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+        * orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+        * orbsvcs/IFR_Service/Servant_Factory.cpp:
 
-	  Regerated all the IFR skeleton files. A different way of
-	  handling the CORBA namespace in the generation
-	  of the corresponding stub files gave the proxy classes,
-	  proxy factory function pointers, and tie classes slightly 
-	  different names.
+          Regerated all the IFR skeleton files. A different way of
+          handling the CORBA namespace in the generation
+          of the corresponding stub files gave the proxy classes,
+          proxy factory function pointers, and tie classes slightly
+          different names.
 
-	* orbsvcs/IFR_Service/IRObject_i.h:
+        * orbsvcs/IFR_Service/IRObject_i.h:
 
-	  A change in the include structure of the generated stub and
-	  skeleton files necessitated a change in the includes for this file.
+          A change in the include structure of the generated stub and
+          skeleton files necessitated a change in the includes for this file.
 
-	Removed files:
+        Removed files:
 
-	* orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
-	* orbsvcs/IFR_Service/diffs/InterfaceS.i.diff:
-	* orbsvcs/IFR_Service/diffs/InterfaceS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/InterfaceS.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/InterfaceS.h.diff:
+        * orbsvcs/IFR_Service/diffs/InterfaceS.i.diff:
+        * orbsvcs/IFR_Service/diffs/InterfaceS_T.i.diff:
 
-	  Replaced by the files below.
+          Replaced by the files below.
 
-	Added files:
+        Added files:
 
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BaseS_T.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_BasicS_T.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS.i.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.cpp.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.h.diff:
-	* orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS_T.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BaseS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS_T.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_BasicS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ComponentsS_T.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS.i.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.cpp.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.h.diff:
+        * orbsvcs/IFR_Service/diffs/IFR_ExtendedS_T.i.diff:
 
-	  Generated .diff files for all the generated IFR skeleton files.
+          Generated .diff files for all the generated IFR skeleton files.
 
-	Removed files:
+        Removed files:
 
-	* tao/IFR_Client/diffs/IntefaceC.cpp.diff:
-	* tao/IFR_Client/diffs/IntefaceC.h.diff:
-	* tao/IFR_Client/diffs/IntefaceC.i.diff:
+        * tao/IFR_Client/diffs/IntefaceC.cpp.diff:
+        * tao/IFR_Client/diffs/IntefaceC.h.diff:
+        * tao/IFR_Client/diffs/IntefaceC.i.diff:
 
-	  Replaced by the added files below.
+          Replaced by the added files below.
 
-	Added files:
+        Added files:
 
-	* tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_BaseC.h.diff:
-	* tao/IFR_Client/diffs/IFR_BaseC.i.diff:
-	* tao/IFR_Client/diffs/IFR_BasicC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_BasicC.h.diff:
-	* tao/IFR_Client/diffs/IFR_BasicC.i.diff:
-	* tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_ComponentsC.h.diff:
-	* tao/IFR_Client/diffs/IFR_ComponentsC.i.diff:
-	* tao/IFR_Client/diffs/IFR_ExtendedC.cpp.diff:
-	* tao/IFR_Client/diffs/IFR_ExtendedC.h.diff:
-	* tao/IFR_Client/diffs/IFR_ExtendedC.i.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.h.diff:
+        * tao/IFR_Client/diffs/IFR_BaseC.i.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.h.diff:
+        * tao/IFR_Client/diffs/IFR_BasicC.i.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.h.diff:
+        * tao/IFR_Client/diffs/IFR_ComponentsC.i.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.cpp.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.h.diff:
+        * tao/IFR_Client/diffs/IFR_ExtendedC.i.diff:
 
-	  Generated .diff files for all the generated IFR stub files.
+          Generated .diff files for all the generated IFR stub files.
 
-	* tao/IFR_Client/IFR_Base.pidl:
-	* tao/IFR_Client/IFR_Basic.pidl:
-	* tao/IFR_Client/IFR_Components.pidl:
-	* tao/IFR_Client/IFR_Extended.pidl:
+        * tao/IFR_Client/IFR_Base.pidl:
+        * tao/IFR_Client/IFR_Basic.pidl:
+        * tao/IFR_Client/IFR_Components.pidl:
+        * tao/IFR_Client/IFR_Extended.pidl:
 
-	  Added instructions to the .pidl files about patching the
-	  generated files and the .pidl files themselves.
+          Added instructions to the .pidl files about patching the
+          generated files and the .pidl files themselves.
 
-	* tao/IFR_Client/diffs/IFR_Base.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_Basic.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_Extended.pidl.diff:
-	* tao/IFR_Client/diffs/IFR_Components.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_Base.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_Basic.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_Extended.pidl.diff:
+        * tao/IFR_Client/diffs/IFR_Components.pidl.diff:
 
-	  Generated .diff files for the .pidl files themselves.
-	  Patching these files removes the CORBA namespace,
-	  adds CORBA_ to types formerly declared in the CORBA
-	  namespace, and makes various other minor mods to make
-	  patching the generated stub and skeleton files easier.
+          Generated .diff files for the .pidl files themselves.
+          Patching these files removes the CORBA namespace,
+          adds CORBA_ to types formerly declared in the CORBA
+          namespace, and makes various other minor mods to make
+          patching the generated stub and skeleton files easier.
 
-	* tao/IFR_Client/IFR_BaseC.cpp:
-	* tao/IFR_Client/IFR_BaseC.h:
-	* tao/IFR_Client/IFR_BaseC.i:
-	* tao/IFR_Client/IFR_BasicC.cpp:
-	* tao/IFR_Client/IFR_BasicC.h:
-	* tao/IFR_Client/IFR_BasicC.i:
-	* tao/IFR_Client/IFR_ComponentsC.cpp:
-	* tao/IFR_Client/IFR_ComponentsC.h:
-	* tao/IFR_Client/IFR_ComponentsC.i:
-	* tao/IFR_Client/IFR_ExtendedC.cpp:
-	* tao/IFR_Client/IFR_ExtendedC.h:
-	* tao/IFR_Client/IFR_ExtendedC.i:
+        * tao/IFR_Client/IFR_BaseC.cpp:
+        * tao/IFR_Client/IFR_BaseC.h:
+        * tao/IFR_Client/IFR_BaseC.i:
+        * tao/IFR_Client/IFR_BasicC.cpp:
+        * tao/IFR_Client/IFR_BasicC.h:
+        * tao/IFR_Client/IFR_BasicC.i:
+        * tao/IFR_Client/IFR_ComponentsC.cpp:
+        * tao/IFR_Client/IFR_ComponentsC.h:
+        * tao/IFR_Client/IFR_ComponentsC.i:
+        * tao/IFR_Client/IFR_ExtendedC.cpp:
+        * tao/IFR_Client/IFR_ExtendedC.h:
+        * tao/IFR_Client/IFR_ExtendedC.i:
 
-	  Regenerated IFR stub files.
+          Regenerated IFR stub files.
 
-	* tao/BiDir_GIOP/BiDirPolicyC.cpp:
-	* tao/BiDir_GIOP/BiDirPolicyC.h:
-	* tao/BiDir_GIOP/BiDirPolicyC.i:
+        * tao/BiDir_GIOP/BiDirPolicyC.cpp:
+        * tao/BiDir_GIOP/BiDirPolicyC.h:
+        * tao/BiDir_GIOP/BiDirPolicyC.i:
 
-	  Regenerated bidirectional GIOP stub files.
+          Regenerated bidirectional GIOP stub files.
 
-	Added files:
+        Added files:
 
-	* tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
-	* tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
-	* tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.cpp.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.h.diff:
+        * tao/BiDir_GIOP/diffs/BiDirPolicyC.i.diff:
 
-	  Added .diff files for the bidirectional GIOP stub files.
+          Added .diff files for the bidirectional GIOP stub files.
 
-	* tao/DynamicAny/DynamicAnyC.cpp:
-	* tao/DynamicAny/DynamicAnyC.h:
-	* tao/DynamicAny/DynamicAnyC.i:
-	* tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
-	* tao/DynamicAny/diffs/DynamicAnyC.h.diff:
-	* tao/DynamicAny/diffs/DynamicAnyC.i.diff:
+        * tao/DynamicAny/DynamicAnyC.cpp:
+        * tao/DynamicAny/DynamicAnyC.h:
+        * tao/DynamicAny/DynamicAnyC.i:
+        * tao/DynamicAny/diffs/DynamicAnyC.cpp.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.h.diff:
+        * tao/DynamicAny/diffs/DynamicAnyC.i.diff:
 
-	  Regenerated the DynamicAny stub files and .diff files.
+          Regenerated the DynamicAny stub files and .diff files.
 
-	* tao/IORManipulation/IORC.cpp:
-	* tao/IORManipulation/IORC.h:
-	* tao/IORManipulation/IORC.i:
-	* tao/IORManipulation/diffs/IORC.cpp.diff:
-	* tao/IORManipulation/diffs/IORC.h.diff:
-	* tao/IORManipulation/diffs/IORC.i.diff:
+        * tao/IORManipulation/IORC.cpp:
+        * tao/IORManipulation/IORC.h:
+        * tao/IORManipulation/IORC.i:
+        * tao/IORManipulation/diffs/IORC.cpp.diff:
+        * tao/IORManipulation/diffs/IORC.h.diff:
+        * tao/IORManipulation/diffs/IORC.i.diff:
 
-	  Regenerated the IORManipulation stub files and .diff files.
+          Regenerated the IORManipulation stub files and .diff files.
 
-	* tao/IORTable/IORTableC.cpp:
-	* tao/IORTable/IORTableC.h:
-	* tao/IORTable/IORTableC.i:
-	* tao/IORTable/diffs/IORTableC.cpp.diff:
-	* tao/IORTable/diffs/IORTableC.h.diff:
-	* tao/IORTable/diffs/IORTableC.i.diff:
+        * tao/IORTable/IORTableC.cpp:
+        * tao/IORTable/IORTableC.h:
+        * tao/IORTable/IORTableC.i:
+        * tao/IORTable/diffs/IORTableC.cpp.diff:
+        * tao/IORTable/diffs/IORTableC.h.diff:
+        * tao/IORTable/diffs/IORTableC.i.diff:
 
-	  Regenerated the IORTable stub files and .diff files.
+          Regenerated the IORTable stub files and .diff files.
 
-	* tao/PortableServer/ImplRepoC.cpp:
-	* tao/PortableServer/ImplRepoC.h:
-	* tao/PortableServer/ImplRepoC.i:
-	* tao/PortableServer/PortableServerC.cpp:
-	* tao/PortableServer/PortableServerC.h:
-	* tao/PortableServer/PortableServerC.i:
-	* tao/PortableServer/RTPortableServerC.cpp:
-	* tao/PortableServer/RTPortableServerC.h:
-	* tao/PortableServer/RTPortableServerC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/PortableServerC.cpp:
+        * tao/PortableServer/PortableServerC.h:
+        * tao/PortableServer/PortableServerC.i:
+        * tao/PortableServer/RTPortableServerC.cpp:
+        * tao/PortableServer/RTPortableServerC.h:
+        * tao/PortableServer/RTPortableServerC.i:
 
-	  Regnerated the PortableServer library stub files.
+          Regnerated the PortableServer library stub files.
 
-	* tao/TypeCodeFactory/TypeCodeFactory.pidl:
+        * tao/TypeCodeFactory/TypeCodeFactory.pidl:
 
-	  Added instructions for patching TypeCodeFactory.pidl itself.
+          Added instructions for patching TypeCodeFactory.pidl itself.
 
-	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
-	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
-	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.inl.diff:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.h:
+        * tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactoryC.inl.diff:
 
-	  Regenerated the TypeCodeFactory stub and .diff files.
+          Regenerated the TypeCodeFactory stub and .diff files.
 
-	Added file:
+        Added file:
 
-	* tao/TypeCodeFactory/diffs/TypeCodeFactory.pidl.diff:
+        * tao/TypeCodeFactory/diffs/TypeCodeFactory.pidl.diff:
 
-	  New file for patching TypeCodeFactory.pidl.
+          New file for patching TypeCodeFactory.pidl.
 
-	Added files:
+        Added files:
 
-	* tao/diffs/Domain.pidl.diff:
-	* tao/diffs/IOPC.cpp.diff:
-	* tao/diffs/IOPC.h.diff:
-	* tao/diffs/IOPC.i.diff:
-	* tao/diffs/PortableInterceptorC.cpp.diff:
-	* tao/diffs/PortableInterceptorC.h.diff:
-	* tao/diffs/PortableInterceptorC.i.diff:
-	* tao/diffs/RTPortableServerC.i.diff:
+        * tao/diffs/Domain.pidl.diff:
+        * tao/diffs/IOPC.cpp.diff:
+        * tao/diffs/IOPC.h.diff:
+        * tao/diffs/IOPC.i.diff:
+        * tao/diffs/PortableInterceptorC.cpp.diff:
+        * tao/diffs/PortableInterceptorC.h.diff:
+        * tao/diffs/PortableInterceptorC.i.diff:
+        * tao/diffs/RTPortableServerC.i.diff:
 
-	  New .diff files.
+          New .diff files.
 
-	* tao/diffs/CurrentC.cpp.diff:
-	* tao/diffs/CurrentC.h.diff:
-	* tao/diffs/CurrentC.i.diff:
-	* tao/diffs/DomainC.cpp.diff:
-	* tao/diffs/DomainC.h.diff:
-	* tao/diffs/DomainC.i.diff:
-	* tao/diffs/ImplRepoC.cpp.diff:
-	* tao/diffs/ImplRepoC.h.diff:
-	* tao/diffs/ImplRepoC.i.diff:
-	* tao/diffs/MessagingC.cpp.diff:
-	* tao/diffs/MessagingC.h.diff:
-	* tao/diffs/MessagingC.i.diff:
-	* tao/diffs/PolicyC.cpp.diff:
-	* tao/diffs/PolicyC.h.diff:
-	* tao/diffs/PolicyC.i.diff:
-	* tao/diffs/PollableC.cpp.diff:
-	* tao/diffs/PollableC.h.diff:
-	* tao/diffs/PollableC.i.diff:
-	* tao/diffs/PortableServerC.cpp.diff:
-	* tao/diffs/PortableServerC.h.diff:
-	* tao/diffs/PortableServerC.i.diff:
-	* tao/diffs/RTCORBAC.cpp.diff:
-	* tao/diffs/RTCORBAC.h.diff:
-	* tao/diffs/RTCORBAC.i.diff:
-	* tao/diffs/RTPortableServerC.cpp.diff:
-	* tao/diffs/RTPortableServerC.h.diff:
-	* tao/diffs/TAOC.cpp.diff:
-	* tao/diffs/TAOC.h.diff:
-	* tao/diffs/TAOC.i.diff:
+        * tao/diffs/CurrentC.cpp.diff:
+        * tao/diffs/CurrentC.h.diff:
+        * tao/diffs/CurrentC.i.diff:
+        * tao/diffs/DomainC.cpp.diff:
+        * tao/diffs/DomainC.h.diff:
+        * tao/diffs/DomainC.i.diff:
+        * tao/diffs/ImplRepoC.cpp.diff:
+        * tao/diffs/ImplRepoC.h.diff:
+        * tao/diffs/ImplRepoC.i.diff:
+        * tao/diffs/MessagingC.cpp.diff:
+        * tao/diffs/MessagingC.h.diff:
+        * tao/diffs/MessagingC.i.diff:
+        * tao/diffs/PolicyC.cpp.diff:
+        * tao/diffs/PolicyC.h.diff:
+        * tao/diffs/PolicyC.i.diff:
+        * tao/diffs/PollableC.cpp.diff:
+        * tao/diffs/PollableC.h.diff:
+        * tao/diffs/PollableC.i.diff:
+        * tao/diffs/PortableServerC.cpp.diff:
+        * tao/diffs/PortableServerC.h.diff:
+        * tao/diffs/PortableServerC.i.diff:
+        * tao/diffs/RTCORBAC.cpp.diff:
+        * tao/diffs/RTCORBAC.h.diff:
+        * tao/diffs/RTCORBAC.i.diff:
+        * tao/diffs/RTPortableServerC.cpp.diff:
+        * tao/diffs/RTPortableServerC.h.diff:
+        * tao/diffs/TAOC.cpp.diff:
+        * tao/diffs/TAOC.h.diff:
+        * tao/diffs/TAOC.i.diff:
 
-	  Regenerated these .diff files.
+          Regenerated these .diff files.
 
-	* tao/CurrentC.cpp:
-	* tao/CurrentC.h:
-	* tao/CurrentC.i:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DomainC.i:
-	* tao/IOPC.cpp:
-	* tao/IOPC.h:
-	* tao/IOPC.i:
-	* tao/MessagingC.cpp:
-	* tao/MessagingC.h:
-	* tao/MessagingC.i:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyC.i:
-	* tao/PollableC.cpp:
-	* tao/PollableC.h:
-	* tao/PollableC.i:
-	* tao/PortableInterceptorC.cpp:
-	* tao/PortableInterceptorC.h:
-	* tao/PortableInterceptorC.i:
-	* tao/RTCORBAC.cpp:
-	* tao/RTCORBAC.h:
-	* tao/RTCORBAC.i:
-	* tao/TAOC.cpp:
-	* tao/TAOC.h:
-	* tao/TAOC.i:
+        * tao/CurrentC.cpp:
+        * tao/CurrentC.h:
+        * tao/CurrentC.i:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DomainC.i:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/MessagingC.cpp:
+        * tao/MessagingC.h:
+        * tao/MessagingC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/PollableC.cpp:
+        * tao/PollableC.h:
+        * tao/PollableC.i:
+        * tao/PortableInterceptorC.cpp:
+        * tao/PortableInterceptorC.h:
+        * tao/PortableInterceptorC.i:
+        * tao/RTCORBAC.cpp:
+        * tao/RTCORBAC.h:
+        * tao/RTCORBAC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
 
-	  Regenerated these stub files.
+          Regenerated these stub files.
 
-	* tao/Domain.pidl:
+        * tao/Domain.pidl:
 
-	  Added instructions for patching the Domain.pidl itself.
+          Added instructions for patching the Domain.pidl itself.
 
-	* tao/Object.h:
-	* tao/Object.i:
+        * tao/Object.h:
+        * tao/Object.i:
 
-	  Added the static methods to CORBA::Object_var, similar to
-	  the static methods added to generated interface _var
-	  classes. These, however, don't need to call global hooks
-	  because CORBA::Object is always 'defined'. They need to
-	  to be here for use in the template object sequence classes
-	  in TAO, where there is no knowledge of whether the template
-	  parameter is a defined interface or not when the template
-	  class is compiled.
+          Added the static methods to CORBA::Object_var, similar to
+          the static methods added to generated interface _var
+          classes. These, however, don't need to call global hooks
+          because CORBA::Object is always 'defined'. They need to
+          to be here for use in the template object sequence classes
+          in TAO, where there is no knowledge of whether the template
+          parameter is a defined interface or not when the template
+          class is compiled.
 
-	* tao/Sequence_T.cpp:
-	* tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+        * tao/Sequence_T.i:
 
-	  Modified TAO_Unbounded_Object_Sequence<T,T_var>,
-	  TAO_Bounded_Object_Sequence<T,T_var>, and 
-	  TAO_Object_Manager<T,T_var> to call the new static
-	  T_var methods instead of T::_duplicate, T::_nil, T::_narrow,
-	  and CORBA::release (T_ptr), since the interface template
-	  parameter may be undefined when the template class is compiled.
-	  Also redefined the sequence template upcast() method in the
-	  same way, since it calls for a cast of the (possibly 
-	  undefined) interface pointer to CORBA::Object*.
+          Modified TAO_Unbounded_Object_Sequence<T,T_var>,
+          TAO_Bounded_Object_Sequence<T,T_var>, and
+          TAO_Object_Manager<T,T_var> to call the new static
+          T_var methods instead of T::_duplicate, T::_nil, T::_narrow,
+          and CORBA::release (T_ptr), since the interface template
+          parameter may be undefined when the template class is compiled.
+          Also redefined the sequence template upcast() method in the
+          same way, since it calls for a cast of the (possibly
+          undefined) interface pointer to CORBA::Object*.
 
-	* tao/corbafwd.h:
+        * tao/corbafwd.h:
 
-	  Removed an overlooked typedef that was a temporary hack 
-	  while working on CORBA 2.4 compliance for the IFR.
+          Removed an overlooked typedef that was a temporary hack
+          while working on CORBA 2.4 compliance for the IFR.
 
 Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* Merged in all the changes required to fix [BUGID:132]
+        * Merged in all the changes required to fix [BUGID:132]
 
-	Mon Apr 23 22:05:56 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 22:05:56 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/PluggableUDP/DIOP/DIOP_Transport.cpp:
         * examples/PluggableUDP/DIOP/DIOP_Transport.h:
@@ -435,14 +440,14 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/IIOP_Transport.cpp:
           Cosmetic fixes
 
-	Mon Apr 23 21:10:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 21:10:40 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/client.cpp:
         * tests/Big_Oneways/Coordinator.cpp:
         * tests/Big_Twoways/Coordinator.cpp:
           Fixed ACE_CHECK/ACE_TRY_CHECK mismatches.
 
-	Mon Apr 23 16:40:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 16:40:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
         * tao/Transport.cpp:
@@ -466,7 +471,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/AMI/run_test.pl:
           Cosmetic fixes
 
-	Mon Apr 23 11:54:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 11:54:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/AMI_Buffering.dsw:
         * tests/AMI_Buffering/admin.dsp:
@@ -474,7 +479,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/AMI_Buffering/server.dsp:
           Add MSVC project files for this test
 
-	Mon Apr 23 11:47:07 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 11:47:07 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/Client_Task.h:
         * tests/AMI_Buffering/Client_Task.cpp:
@@ -489,7 +494,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           Renamed the second part of the test, 'liveness' is a more
           descriptive term.
 
-	Mon Apr 23 10:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 10:38:28 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/AMI_Buffering/svc.conf:
           Without connection muxing the test runs out of resources pretty
@@ -500,7 +505,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           Add thread on the client to invoke the reply handler.  Without
           this feature the ORB would soon dead-lock.
 
-	Mon Apr 23 10:03:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Mon Apr 23 10:03:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
         * tao/Transport.inl:
@@ -510,12 +515,12 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           do any I/O it is a very natural fit, and saves us one mutex
           per-call.
 
-	Sun Apr 22 19:54:09 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sun Apr 22 19:54:09 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
           Update list of files.
 
-	Sun Apr 22 19:32:55 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sun Apr 22 19:32:55 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/README:
         * tests/Makefile:
@@ -541,7 +546,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/AMI_Buffering/client.cpp:
         * tests/AMI_Buffering/server.cpp:
 
-	Fri Apr 20 15:29:13 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Fri Apr 20 15:29:13 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
         * tao/Makefile.bor:
@@ -561,7 +566,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           Add new regression test to verify that the TIMEOUT buffering
           constraints work.
 
-	Thu Apr 19 14:17:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Thu Apr 19 14:17:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.h:
         * tao/Transport.cpp:
@@ -623,7 +628,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * examples/Buffered_AMI/run_test.pl:
           Increased wait time for the IOR file.
 
-	Tue Apr 17 19:12:31 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Tue Apr 17 19:12:31 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp:
           Reset the current deadline as soon as the queue is empty.
@@ -643,7 +648,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Strategies/UIOP_Transport.cpp:
           Add missing function (removed during the merge).
 
-	Tue Apr 17 14:21:23 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Tue Apr 17 14:21:23 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Queued_Message.h:
         * tao/Asynch_Queued_Message.h:
@@ -670,7 +675,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           what happened to the message, not if there was a generic problem
           with the ORB.
 
-	Tue Apr 17 09:59:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Tue Apr 17 09:59:38 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Sync_Strategies.h:
         * tao/Sync_Strategies.cpp:
@@ -696,13 +701,13 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           Remove unused argument from the send_synchronous_message_i()
           method.
 
-	Sat Apr 14 17:04:21 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sat Apr 14 17:04:21 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Transport.cpp (send_synchronous_message_i):
           The message was left in the queue even if a problem was detected
           in the write() operation.
 
-	Sat Apr 14 17:01:05 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sat Apr 14 17:01:05 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/TAO.dsp:
           Complete merge for Win32, CVS' automatic merge was not quite the
@@ -712,7 +717,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
           This file was removed in the main trunk but was accidentally
           resurrected during the merge.
 
-	Sat Apr 14 12:59:39 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sat Apr 14 12:59:39 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Block_Flushing_Strategy.h:
         * tao/Block_Flushing_Strategy.cpp:
@@ -735,7 +740,7 @@ Tue Apr 24 00:21:54 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tests/Big_Twoways/Makefile:
           Update dependencies
 
-	Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
+        Sat Apr 14 10:33:47 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Another merge for the bug 132 fixes.
 
@@ -1454,21 +1459,21 @@ Mon Apr 23 11:49:01 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 Mon Apr 23 10:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-	* tests/MT_Timeout/client.cpp:
-	* tests/MT_Timeout/Client_Task.cpp:
-	* tests/MT_Timeout/Client_Taks.h:
+        * tests/MT_Timeout/client.cpp:
+        * tests/MT_Timeout/Client_Task.cpp:
+        * tests/MT_Timeout/Client_Taks.h:
 
-	  Made the test more smart and tolerant regarding scheduling jitters.
-	  The test now checks how many calls have taken too long to return
-	  and prints warnings, or even errors in the case more than 5 % of
-	  the calls have taken too long. Thanks to Carlos for his suggestions.
-	
+          Made the test more smart and tolerant regarding scheduling jitters.
+          The test now checks how many calls have taken too long to return
+          and prints warnings, or even errors in the case more than 5 % of
+          the calls have taken too long. Thanks to Carlos for his suggestions.
+
 Mon Apr 23 00:45:00 2001  Craig Rodrigues <crodrigu@bbn.com>
 
         * orbsvcs/tests/AVStreams/*/Makefile
           All AVStreams tests now depend on libACE_QoS.so (even if they
           do not use QoS), because libTAO_AV.so links against libACE_QoS.so
-          if QoS was enabled. 
+          if QoS was enabled.
           libACE_QoS.so should only be conditionally linked in.
           (Check if rapi=1)
 
