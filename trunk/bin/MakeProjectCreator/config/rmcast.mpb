@@ -2,7 +2,7 @@
 // $Id$
 
 project : acelib, exceptions {
-  requires += rmcast
   after    += RMCast
   libs     += ACE_RMCast
+  includes += $(ACE_ROOT)/protocols
 }
