@@ -59,6 +59,7 @@ public:
 
 protected:
   ACE_Thread_Manager *thr_mgr_;
+  // Pointer to a thread manager.
 };
 
 template <class SVC_HANDLER>
@@ -182,6 +183,55 @@ public:
 };
 
 template <class SVC_HANDLER>
+class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
+  // = TITLE
+  //     Defines the interface for specifying a Reactive concurrency
+  //     strategy for a SVC_HANDLER.
+  //
+  // = DESCRIPTION
+  //     This class provides a strategy that registers the
+  //     <SVC_HANDLER> with a <Reactor>.
+{
+public:
+  // = Intialization and termination methods.
+  ACE_Reactive_Strategy (void);
+  // "Do-nothing constructor"
+
+  ACE_Reactive_Strategy (ACE_Reactor *reactor,
+			 ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK);
+  // Initialize the strategy.
+
+  virtual int open (ACE_Reactor *reactor,
+		    ACE_Reactor_Mask = ACE_Event_Handler::READ_MASK);
+  // Initialize the strategy.
+
+  virtual ~ACE_Reactive_Strategy (void);
+  // Destructor.
+
+  // = Factory method.
+  virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
+				    void *arg = 0);
+  // Activate the <svc_handler> by registering it with the <Reactor>
+  // and then calling it's <open> hook.
+
+  void dump (void) const;
+  // Dump the state of an object.
+
+  ACE_ALLOC_HOOK_DECLARE;
+  // Declare the dynamic allocation hooks.
+
+protected:
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> inherited;
+
+  ACE_Reactor *reactor_;
+  // Pointer to the Reactor we'll use to register the <SVC_HANDLER>.
+  
+  ACE_Reactor_Mask mask_;
+  // The mask that we pass to the <Reactor> when we register the
+  // <SVC_HANDLER>.
+};
+
+template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
   // = TITLE
   //     Defines the interface for specifying a concurrency strategy
@@ -201,12 +251,12 @@ public:
 
   ACE_Thread_Strategy (ACE_Thread_Manager *tm,
 		       long thr_flags,
-		       int n_threads = 1);
+		       size_t n_threads = 1);
   // Initialize the strategy.
 
   virtual int open (ACE_Thread_Manager *tm,
 		    long thr_flags,
-		    int n_threads = 1);
+		    size_t n_threads = 1);
   // Initialize the strategy.
   
   virtual ~ACE_Thread_Strategy (void);
@@ -234,7 +284,7 @@ protected:
   long thr_flags_;
   // Flags to pass into the SVC_HANDLER::activate() method.
 
-  int n_threads_;
+  size_t n_threads_;
   // Number of threads to spawn.
 };
 

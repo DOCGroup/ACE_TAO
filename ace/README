@@ -128,6 +128,7 @@ ACE_HAS_SYSV_SPRINTF			Platform/compiler support the System V sprintf().
 ACE_HAS_SYS_ERRLIST			Platform/compiler supports _sys_errlist symbol
 ACE_HAS_SYS_FILIO_H			Platform provides <sys/filio.h> header
 ACE_HAS_SYS_SIGLIST			Compiler/platform supports _sys_siglist array
+ACE_HAS_TEMPLATE_SPECIALIZATION		Compiler implements template specialization
 ACE_HAS_TEMPLATE_TYPEDEFS		Compiler implements templates that support typedefs inside of classes used as formal arguments to a template class. 
 ACE_HAS_TERM_IOCTLS			Platform has terminal ioctl flags like TCGETS and TCSETS.
 ACE_HAS_THREADS				Platform supports threads

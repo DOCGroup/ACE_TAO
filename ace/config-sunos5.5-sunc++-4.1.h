@@ -14,6 +14,8 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
+#define ACE_HAS_TEMPLATE_SPECIALIZATION
+
 // ACE_HAS_EXCEPTIONS precludes -noex, but without -noex causes problems
 // with Sun C++ 4.1/4.2 on multiprocessor UltraSparcs:  threaded
 // executables core dump when threads exit.  This problem does not seem
