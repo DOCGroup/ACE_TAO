@@ -4162,8 +4162,8 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
 
 #if (TAO_HAS_RT_CORBA == 1)
 
-//      if (this->policies ().priority_bands () != 0)
-  //      {
+      if (this->policies ().priority_bands () != 0)
+        {
           TAO_Priority_Acceptor_Filter
             filter (this->policies ().server_protocol ()->protocols_rep (),
                     priority);
@@ -4173,10 +4173,18 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
                                                      client_exposed_policies._retn (),
                                                      &filter,
                                                      ACE_TRY_ENV);
-    //    }
-#endif /* TAO_HAS_RT_CORBA == 1 */
+        }
 
-      ACE_CHECK_RETURN (0);
+      else
+        {
+          data = this->orb_core_.create_stub_object (key,
+                                                     type_id,
+                                                     client_exposed_policies._retn (),
+                                                     this->acceptor_filter_,
+                                                     ACE_TRY_ENV);
+          ACE_CHECK_RETURN (0);
+        }
+#endif /* TAO_HAS_RT_CORBA == 1 */
     }
   else
     {

@@ -1,3 +1,15 @@
+Thu Feb 15 11:09:50 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+
+	* tao/PortableServer/POA.cpp (key_to_stub_i):
+	  Added missing clause for handling the case when the priority
+	  of the object being created differ from the priority of the POA
+	  in the SERVER_DECLARED priority model, and there are priority
+	  bands.
+
+	* tao/Stub.cpp:
+	  Fixed compilation error on some platform caused by a wrong
+	  de-referencing of a var type.
+
 Thu Feb 15 10:47:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
@@ -8,7 +20,7 @@ Thu Feb 15 10:47:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Thu Feb 15 06:02:55 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one): 
+	* orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp (next_one):
 	  Initialize the hash_entry pointer to 0 to avoid a warning from
  	  Compaq C++.
 
@@ -21,7 +33,7 @@ Thu Feb 15 00:22:42 2001  Ossama Othman  <ossama@uci.edu>
 	  the SSLIOP pluggable protocol.
 
 Wed Feb 14 20:59:00 2001  Pradeep Gore <pradeep@cs.wustl.edu>
-        
+
 	* orbsvcs/examples/notify/Notify_Examples.dsw:
 	* orbsvcs/examples/notify/Filter/Filter.dsp:
 	* orbsvcs/examples/notify/Subscribe/Subscribe.dsp:
@@ -40,8 +52,8 @@ Wed Feb 14 20:59:00 2001  Pradeep Gore <pradeep@cs.wustl.edu>
 
 Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
-        * tao/Muxed_TMS.cpp: Changed the return value in the case of a 
-          not found reply dispatcher from -1 to 0. The semantics of the 
+        * tao/Muxed_TMS.cpp: Changed the return value in the case of a
+          not found reply dispatcher from -1 to 0. The semantics of the
           return values is 1, for success, 0, for a not found reply dispatcher
           (which is not critical, as this can easily happen with timeouts), and
           -1 on a critical error.
@@ -50,7 +62,7 @@ Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * tao/Exclusive_TMS.cpp: Documented the return value, see description
           for Muxed_TMS.cpp.
 
-        * tao/IIOP_Transport.cpp: 
+        * tao/IIOP_Transport.cpp:
         * tao/Strategies/SHMIOP_Transport.cpp:
         * tao/Strategies/UIOP_Transport.cpp:
           Changed return path of the method <process_message>.
@@ -60,7 +72,7 @@ Wed Feb 14 16:30:23 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
           This should fix the problem with the tao/tests/Timeout test.
 
         * tao/Wait_On_Leader_Follower.cpp:
-          Added code to remove the leader follower condition variable in the 
+          Added code to remove the leader follower condition variable in the
           case of a timeout. This should fix a bug, where the condition
           variable of the follower thread kept being registered
           with the leader follower model while it went already away.
