@@ -1,3 +1,13 @@
+Thu May 08 00:10:00 1997    <harrison@samba.cs.wustl.edu>
+
+	* ace/Process.*: This is the first pass at the new ACE_Process
+	  class.  It is now called ACE_ProcessEx.  When it is completely
+ 	  ported to Solaris, we'll replace the current ACE_Process with
+ 	  ACE_ProcessEx.
+
+	* examples/OS/Process/process.cpp: Added some examples for the new
+	  ACE_ProcessEx.
+
 Wed May 07 21:58:29 1997    <irfan@TWOSTEP>
 
 	* ace/Message_Block.h: ACE_Data_Block calling delete on the
