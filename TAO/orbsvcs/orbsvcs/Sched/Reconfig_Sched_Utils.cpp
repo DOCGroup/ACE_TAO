@@ -60,35 +60,8 @@ TAO_Reconfig_Scheduler_Entry (RtecScheduler::RT_Info &rt_info)
     effective_exec_multiplier_ (0),
     effective_period_ (0)
 {
-  // Store the RT_Info fields
-  this->orig_rt_info_data_.entry_point =
-    this->actual_rt_info_->entry_point;
-  this->orig_rt_info_data_.handle =
-    this->actual_rt_info_->handle;
-  this->orig_rt_info_data_.worst_case_execution_time =
-    this->actual_rt_info_->worst_case_execution_time;
-  this->orig_rt_info_data_.typical_execution_time =
-    this->actual_rt_info_->typical_execution_time;
-  this->orig_rt_info_data_.cached_execution_time =
-    this->actual_rt_info_->cached_execution_time;
-  this->orig_rt_info_data_.period =
-    this->actual_rt_info_->period;
-  this->orig_rt_info_data_.criticality =
-    this->actual_rt_info_->criticality;
-  this->orig_rt_info_data_.importance =
-    this->actual_rt_info_->importance;
-  this->orig_rt_info_data_.quantum =
-    this->actual_rt_info_->quantum;
-  this->orig_rt_info_data_.threads =
-    this->actual_rt_info_->threads;
-  this->orig_rt_info_data_.priority =
-    this->actual_rt_info_->priority;
-  this->orig_rt_info_data_.preemption_subpriority =
-    this->actual_rt_info_->preemption_subpriority;
-  this->orig_rt_info_data_.preemption_priority =
-    this->actual_rt_info_->preemption_priority;
-  this->orig_rt_info_data_.info_type =
-    this->actual_rt_info_->info_type;
+  // Store the RT_Info fields.  
+  this->orig_rt_info_data (*actual_rt_info_);
 }
 
 
@@ -539,6 +512,24 @@ TAO_MUF_Reconfig_Sched_Strategy::is_critical (TAO_Reconfig_Scheduler_Entry &rse)
   return (rse.actual_rt_info ()->criticality == RtecScheduler::HIGH_CRITICALITY ||
           rse.actual_rt_info ()->criticality == RtecScheduler::VERY_HIGH_CRITICALITY)
          ? 1 : 0;
+}
+
+// Fills in a static dispatch configuration for a priority level, based
+// on the operation characteristics of a representative scheduling entry.
+
+int
+TAO_MUF_Reconfig_Sched_Strategy::assign_config (RtecScheduler::Config_Info &info,
+                                                TAO_Reconfig_Scheduler_Entry &rse)
+{
+    // Global and thread priority of dispatching queue are simply
+    // those assigned the representative operation it will dispatch.
+    info.preemption_priority = rse.actual_rt_info ()->preemption_priority;
+    info.thread_priority = rse.actual_rt_info ()->priority;
+
+    // Dispatching queues are all laxity-based in this strategy.
+    info.dispatching_type = RtecScheduler::LAXITY_DISPATCHING;
+
+  return 0;
 }
 
 #endif /* __GNUC__ */

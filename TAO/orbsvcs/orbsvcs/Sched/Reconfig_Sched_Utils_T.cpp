@@ -722,8 +722,13 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::TAO_RSE_Priority_Visitor ()
 template <class RECONFIG_SCHED_STRATEGY> int
 TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler_Entry &rse)
 {
+  int result = 0;
+
   if (previous_entry_ == 0)
     {
+      // Indicate a new priority level was assigned.
+      result = 1;
+
       // If we're on the first node, store it as the start of
       // the priority level.
       first_subpriority_entry_ = &rse;
@@ -731,9 +736,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
     }
   else
     {
-      int result =
-        RECONFIG_SCHED_STRATEGY::compare_priority (*previous_entry_, rse);
-      if (result == 0)
+      if (RECONFIG_SCHED_STRATEGY::compare_priority (*previous_entry_, rse) == 0)
 	{
           // Subpriority is increased at each new node.
           ++subpriority_;
@@ -746,6 +749,9 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
 	}
       else
 	{
+          // Indicate a new priority level was assigned.
+          result = 1;
+
           // Iterate back through and adjust the subpriority levels.
           for (int i = 0; i <= subpriority_; ++i, ++first_subpriority_entry_)
 	    {
@@ -772,7 +778,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY>::visit (TAO_Reconfig_Scheduler
   // Remember the current entry for the next visit.
   previous_entry_ = &rse;
 
-  return 0;
+  return result;
 }
 
 
