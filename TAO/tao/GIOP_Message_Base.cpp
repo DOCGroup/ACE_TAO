@@ -338,7 +338,6 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
   // Move the wr_ptr () and rd_ptr in the message block. This is not
   // generally required as we are not going to write anything. But
   // this is *important* for checking the length of the CDR streams
-  size_t n = this->message_handler_.message_state ().message_size;
   msg_block.wr_ptr (this->message_handler_.wr_pos ());
   msg_block.rd_ptr (this->message_handler_.rd_pos ());
 
