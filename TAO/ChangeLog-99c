@@ -1,3 +1,8 @@
+Tue Aug 03 16:15:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: replaced auto_ptr
+          reset workaround for TAO 1.0, using ACE_AUTO_PTR_RESET macro.
+
 Mon Aug  2 18:43:15 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:

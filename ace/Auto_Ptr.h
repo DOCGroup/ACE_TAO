@@ -123,6 +123,27 @@ public:
   X *operator-> () const;
 };
 
+// Some platforms have an older version of auto_ptr
+// support, which lacks reset, and cannot be disabled
+// easily.  Portability to these platforms requires
+// use of the following ACE_AUTO_PTR_RESET macro.
+# if defined (ACE_AUTO_PTR_LACKS_RESET)
+#   define ACE_AUTO_PTR_RESET(X,Y) \
+      do { \
+        if (Y != X.get ()) \
+          { \
+            X.release (); \
+            X = Y; \
+          } \
+      } while (0)
+# else /* ! ACE_AUTO_PTR_LACKS_RESET */
+#   define ACE_AUTO_PTR_RESET(X,Y) \
+      do { \
+         X.reset (Y); \
+      } while (0)
+# endif /* ACE_AUTO_PTR_LACKS_RESET */
+
+
 #if defined (__ACE_INLINE__)
 #include "ace/Auto_Ptr.i"
 #endif /* __ACE_INLINE__ */
