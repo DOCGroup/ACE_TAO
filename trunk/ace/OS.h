@@ -1255,6 +1255,11 @@ extern "C" {
 extern "C" pthread_t pthread_self (void);
 #   endif /* DIGITAL_UNIX */
 }
+#   if defined (HPUX_10)
+//    HP-UX 10 needs to see cma_sigwait, and since _CMA_NOWRAPPERS_ is defined,
+//    this header does not get included from pthreads.h.
+#     include /**/ <dce/cma_sigwait.h>
+#   endif /* HPUX_10 */
 # endif /* ACE_HAS_PTHREADS */
 
 // There are a lot of threads-related macro definitions in the config files.
