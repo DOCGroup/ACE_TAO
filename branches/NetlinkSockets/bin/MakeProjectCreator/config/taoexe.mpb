@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : aceexe, taodefaults, taoidldefaults {
+  after += TAO
+  libs  += TAO
+}
