@@ -1,3 +1,10 @@
+Wed Aug 25 14:53:58 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* bin/run_all.pl:
+	* bin/auto_compile:
+	  The script did not start with the canonical trick to run perl
+	  from [t]csh, [ba]sh or perl itself.
+
 Wed Aug 25 14:45:06 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tests/Process_Manager_Test.cpp:
