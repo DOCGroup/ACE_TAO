@@ -97,6 +97,9 @@ CIAO::Session_Container::install_servant (PortableServer::Servant p
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
+  p->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
   return objref._retn ();
 }
 

@@ -1,3 +1,9 @@
+Tue Jan 07 07:48:02 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/Container_Base.cpp (install_servant): Changed to decrease
+	  the refcount of servant by one to make sure servants get
+	  "released" properly.
+
 Fri Jan 03 11:27:12 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/templates/Executor.idl: This pseudo-meta IDL template file
