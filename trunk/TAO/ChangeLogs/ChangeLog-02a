@@ -1,10 +1,37 @@
+Mon Apr  2 10:46:45 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/TimeBase.pidl:
+          Document using Doxygen.  Include instructions on how to
+          regenerate the code.
+
+        * tao/TimeBaseC.h:
+        * tao/TimeBaseC.i:
+        * tao/TimeBaseC.cpp:
+        * tao/TimeBaseS.h:
+        * tao/TimeBaseS.i:
+        * tao/TimeBaseS.cpp:
+        * tao/TimeBaseS_T.h:
+        * tao/TimeBaseS_T.i:
+        * tao/TimeBaseS_T.cpp:
+        * tao/diffs/TimeBaseC.h.diff:
+        * tao/diffs/TimeBaseC.i.diff:
+        * tao/diffs/TimeBaseC.cpp.diff:
+        * tao/diffs/TimeBaseS.h.diff:
+        * tao/diffs/TimeBaseS.i.diff:
+        * tao/diffs/TimeBaseS.cpp.diff:
+        * tao/diffs/TimeBaseS_T.h.diff:
+        * tao/diffs/TimeBaseS_T.i.diff:
+        * tao/diffs/TimeBaseS_T.cpp.diff:
+          Regenerate files, patch code to eliminate cycles in the
+          #includes and generate patch files for the new files.
+
 2001-04-02  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 	
-	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 	
+        * orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp:
+        * orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp:
+        * orbsvcs/tests/AVStreams/benchmark/server.cpp:
 
-	  Fixed Fuzz errors.
+          Fixed Fuzz errors.
 
 Mon Apr  2 08:46:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
@@ -12,15 +39,15 @@ Mon Apr  2 08:46:42 2001  Darrell Brunsch <brunsch@uci.edu>
         * docs/tutorials/Quoter/AMI/server.cpp:
         * docs/tutorials/Quoter/Event_Service/client.cpp:
         * docs/tutorials/Quoter/Event_Service/server.cpp:
-        * docs/tutorials/Quoter/On_Demand_Activation/server.cpp: 
-        * docs/tutorials/Quoter/RT_Event_Service/server.cpp: 
+        * docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * docs/tutorials/Quoter/RT_Event_Service/server.cpp:
 
-          Removed some warnings on MSVC by getting rid of the 
+          Removed some warnings on MSVC by getting rid of the
           unused variable names in the catch blocks.
 
         * docs/tutorials/Quoter/RT_Event_Service/Stock_i.cpp:
 
-          MSVC had problems with the 
+          MSVC had problems with the
           ((int (symbol[0]) << 24) | (int (symbol[1]) << 16)...
           expression.  If rewritten into separate statements, works
           fine.
@@ -40,10 +67,10 @@ Mon Apr  2 08:46:42 2001  Darrell Brunsch <brunsch@uci.edu>
         * docs/tutorials/Quoter/RT_Event_Service/RT_Event_Service.dsw: (added)
         * docs/tutorials/Quoter/RT_Event_Service/client.dsp: (added)
         * docs/tutorials/Quoter/RT_Event_Service/server.dsp: (added)
-        * docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp: 
+        * docs/tutorials/Quoter/Simple/Impl-Repo/server.dsp:
 
-          Standardized some contributed project files from John Ashmun 
-          <John.ASHMUN@esca.com> and also fixed some other dsp files in the 
+          Standardized some contributed project files from John Ashmun
+          <John.ASHMUN@esca.com> and also fixed some other dsp files in the
           tutorial.
 
 Mon Apr  2 08:40:37 2001  Carlos O'Ryan  <coryan@uci.edu>
