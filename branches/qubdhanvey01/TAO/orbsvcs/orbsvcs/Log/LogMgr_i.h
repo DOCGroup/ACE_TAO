@@ -12,7 +12,9 @@
 //   Implementation of the LogManager i,e DsLogAdmin::LogMgr interface.
 //
 // = AUTHOR
-//    Matthew Braun (mjb2@cs.wustl.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
+//    Matthew Braun <mjb2@cs.wustl.edu>
+//    Pradeep Gore <pradeep@cs.wustl.edu>
+//    D A Hanvey <d.hanvey@qub.ac.uk>
 //
 // ============================================================================
 
@@ -21,7 +23,8 @@
 #include "ace/pre.h"
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/BasicLog_i.h"
+#include "orbsvcs/Log/Log_i.h"
+
 #include "log_export.h"
 
 class TAO_Log_Export LogMgr_i : public virtual POA_DsLogAdmin::LogMgr
@@ -66,7 +69,7 @@ public:
 
 protected:
   typedef ACE_Hash_Map_Manager <DsLogAdmin::LogId,
-    DsLogAdmin::BasicLog_var,TAO_SYNCH_MUTEX> HASHMAP;
+    DsLogAdmin::Log_var,TAO_SYNCH_MUTEX> HASHMAP;
   // Define the HASHMAP.
 
   HASHMAP hash_map_;
@@ -74,6 +77,9 @@ protected:
 
   DsLogAdmin::LogId max_id_;
   // The Max id assigned so far.
+
+  DsLogAdmin::LogIdList logid_list_;
+  // A list of the current log ids.
 };
 #include "ace/post.h"
 #endif /* TLS_LOGMGR_I_H */

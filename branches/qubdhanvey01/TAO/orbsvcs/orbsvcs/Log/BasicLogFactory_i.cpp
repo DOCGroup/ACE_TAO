@@ -1,4 +1,4 @@
-// $Id$
+/* -*- C++ -*- $Id$ */
 
 #include "orbsvcs/Log/BasicLogFactory_i.h"
 #include "ace/Auto_Ptr.h"
@@ -44,12 +44,12 @@ BasicLogFactory_i::activate (PortableServer::POA_ptr poa
 }
 
 DsLogAdmin::BasicLog_ptr
-BasicLogFactory_i::create (DsLogAdmin::LogFullAction full_action,
+BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                            CORBA::ULongLong max_rec_size,
-                           DsLogAdmin::LogId_out id
+                           DsLogAdmin::LogId_out id//,
                            ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
-                   DsLogAdmin::NoResources
+                   DsLogAdmin::InvalidLogFullAction
                    ))
 {
   // Get an id for this Log.
@@ -58,24 +58,30 @@ BasicLogFactory_i::create (DsLogAdmin::LogFullAction full_action,
   DsLogAdmin::BasicLog_ptr basiclog =
     this->create_with_id (this->max_id_,
                           full_action,
-                          max_rec_size
+                          max_rec_size//,
                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
   // Set the id to return..
   id = this->max_id_;
+
+  // Store the id in the LogIdList.
+  CORBA::ULong len = logid_list_.length();
+  logid_list_.length(len+1);
+  logid_list_[len] = id;
+
   return basiclog;
 }
 
 DsLogAdmin::BasicLog_ptr
 BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
-                                   DsLogAdmin::LogFullAction full_action,
+                                   DsLogAdmin::LogFullActionType full_action,
                                    CORBA::ULongLong max_size
                                    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
-                   DsLogAdmin::NoResources,
-                   DsLogAdmin::LogIdAlreadyExists
+                   DsLogAdmin::LogIdAlreadyExists,
+                   DsLogAdmin::InvalidLogFullAction
                    ))
 {
   // Make sure the id not used up.
@@ -111,8 +117,11 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
   basic_log_i->_remove_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (DsLogAdmin::BasicLog::_nil ());
 
+  // widening a BasicLog_var to a Log_var
+  DsLogAdmin::Log_var log = DsLogAdmin::BasicLog::_duplicate(basic_log.in ());
+
   // Add to the Hash table..
-  if (hash_map_.bind (id, basic_log) == -1)
+  if (hash_map_.bind (id, log) == -1)
     ACE_THROW_RETURN (CORBA::INTERNAL (),
                       DsLogAdmin::BasicLog::_nil ());
 

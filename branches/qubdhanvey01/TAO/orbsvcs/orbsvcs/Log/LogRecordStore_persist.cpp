@@ -13,7 +13,8 @@ LogRecordStore::LogRecordStore (CORBA::ULongLong max_size,
     logid_ (logid),
     current_size_ (0),
     num_records_ (0),
-    max_rec_list_len_ (max_rec_list_len)
+    max_rec_list_len_ (max_rec_list_len),
+    persist_store_ (max_size)
 {
   //No-Op.
 }
@@ -26,12 +27,22 @@ LogRecordStore::~LogRecordStore (void)
 int
 LogRecordStore::open (void)
 { 
+  // Open the persistent store supplying a filename.
+  sprintf (this->file_name_, "%s.%d", PERSISTENT_LOG_FILE_NAME, logid_);
+
+  if (this->persist_store_.open (this->file_name_) ==-1)
+    ACE_THROW (CORBA::UNKNOWN ());
+
   return rec_hash_.open ();
 }
 
 int
 LogRecordStore::close (void)
 {
+  // Close the persistent store.
+  if (this->persist_store_.close() == -1)
+    ACE_THROW (CORBA::UNKNOWN ());
+
   // Close the hash
   return rec_hash_.close ();
 }
@@ -99,6 +110,9 @@ LogRecordStore::log (DsLogAdmin::LogRecord &rec)
   ++(this->num_records_);
   this->current_size_ =
     this->current_size_ + sizeof (rec);
+
+  if (this->persist_store_.log (rec) == -1)
+    ACE_THROW (CORBA::UNKNOWN ());
 
   return 0;
 }
