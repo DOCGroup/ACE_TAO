@@ -100,7 +100,7 @@ FILES = be/be_array \
         be/be_visitor_structure_fwd \
         be/be_visitor_traits \
         be/be_visitor_tmplinst \
-        be/be_visitor_arg_tmplinst \
+        be/be_visitor_arg_tmplinst_cs \
         be/be_visitor_typecode \
         be/be_visitor_typedef \
         be/be_visitor_union \

@@ -89,6 +89,14 @@ public:
   idl_bool cli_traits_gen (void);
   idl_bool cli_tmpl_class_gen (void);
   idl_bool cli_pragma_inst_gen (void);
+  idl_bool cli_inarg_tmpl_class_gen (void);
+  idl_bool cli_inarg_pragma_inst_gen (void);
+  idl_bool cli_inoutarg_tmpl_class_gen (void);
+  idl_bool cli_inoutarg_pragma_inst_gen (void);
+  idl_bool cli_outarg_tmpl_class_gen (void);
+  idl_bool cli_outarg_pragma_inst_gen (void);
+  idl_bool cli_retarg_tmpl_class_gen (void);
+  idl_bool cli_retarg_pragma_inst_gen (void);
 
   // Set the flag indicating that code generation is done.
   void cli_hdr_gen (idl_bool);
@@ -108,6 +116,14 @@ public:
   void cli_traits_gen (idl_bool);
   void cli_tmpl_class_gen (idl_bool);
   void cli_pragma_inst_gen (idl_bool);
+  void cli_inarg_tmpl_class_gen (idl_bool);
+  void cli_inarg_pragma_inst_gen (idl_bool);
+  void cli_inoutarg_tmpl_class_gen (idl_bool);
+  void cli_inoutarg_pragma_inst_gen (idl_bool);
+  void cli_outarg_tmpl_class_gen (idl_bool);
+  void cli_outarg_pragma_inst_gen (idl_bool);
+  void cli_retarg_tmpl_class_gen (idl_bool);
+  void cli_retarg_pragma_inst_gen (idl_bool);
 
   // Narrowing
   DEF_NARROW_METHODS1 (be_decl, AST_Decl);
@@ -137,6 +153,14 @@ private:
   idl_bool cli_traits_gen_;
   idl_bool cli_tmpl_class_gen_;
   idl_bool cli_pragma_inst_gen_;
+  idl_bool cli_inarg_tmpl_class_gen_;
+  idl_bool cli_inarg_pragma_inst_gen_;
+  idl_bool cli_inoutarg_tmpl_class_gen_;
+  idl_bool cli_inoutarg_pragma_inst_gen_;
+  idl_bool cli_outarg_tmpl_class_gen_;
+  idl_bool cli_outarg_pragma_inst_gen_;
+  idl_bool cli_retarg_tmpl_class_gen_;
+  idl_bool cli_retarg_pragma_inst_gen_;
 };
 
 #endif // if !defined

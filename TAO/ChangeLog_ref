@@ -1,3 +1,30 @@
+Sun Jul 13 14:40:35 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be/be_visitor_root.cpp:
+        * TAO_IDL/be/be_visitor_root/root.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+        * TAO_IDL/be_include/be_visitor_arg_tmplinst.h:
+        * TAO_IDL/be/be_visitor_arg_tmplinst.cpp:
+
+          Finished implementation of code generation for explicit
+          template instantiation for the arg template helper classes.
+
+        * TAO_IDL/be_include/be_visitor_tmplinst_cs.h:
+        * TAO_IDL/be/be_visitor_tmplinst_cs.cpp:
+
+          Renamed be_visitor_tmplinst* class and files and
+          be_visitor_tmplinst_cs*, since we are going to have to
+          generate explicit template instantiations for the skeleton-
+          side arg helper classes as well.
+
+        * TAO_IDL/Makefile.BE:
+        * TAO_IDL/TAO_IDL_BE.bor:
+        * TAO_IDL/TAO_IDL_BE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_BE_LIB.dsp:
+
+          Update project and makefiles with the renamed files.
+
 Sat Jul 12 18:42:40 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_decl.cpp:

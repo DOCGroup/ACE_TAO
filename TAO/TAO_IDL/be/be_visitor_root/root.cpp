@@ -370,7 +370,7 @@ int be_visitor_root::visit_root (be_root *node)
 
       os->gen_ifdef_AHETI ();
 
-      be_visitor_tmplinst visitor (this->ctx_);
+      be_visitor_tmplinst_cs visitor (this->ctx_);
 
       if (node->accept (&visitor) == -1)
         {
