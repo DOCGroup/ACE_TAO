@@ -82,7 +82,7 @@ static int senders = 1;
 static int duplex = 0;
 
 // number threads in the TP_Reactor thread pool
-static size_t threads = 1;
+static int threads = 1;
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;

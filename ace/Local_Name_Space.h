@@ -74,7 +74,7 @@ public:
   ACE_USHORT16 *fast_rep (void) const;
 
   /// Returns a hash value for this string.
-  size_t hash (void) const;
+  u_long hash (void) const;
 
 private:
   /// Length of the string.

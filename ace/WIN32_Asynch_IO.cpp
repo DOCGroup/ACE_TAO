@@ -431,27 +431,46 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
     //                      ACE_LIB_TEXT ("No space in the message block\n")),
     //                     -1);
 
-    if ( msg_space > bytes_to_read )  
+    if (msg_space > bytes_to_read)
       msg_space = bytes_to_read;
-
-    iov[iovcnt].iov_base  = msg->wr_ptr ();
-    iov[iovcnt].iov_len   = msg_space; 
-
     bytes_to_read -= msg_space;
+
+    // Make as many iovec as needed to fit all of msg_space.
+    size_t wr_ptr_offset = 0;
+    while (msg_space > 0 && iovcnt < ACE_IOV_MAX)
+      {
+        u_long this_chunk_length;
+        if (msg_space > ULONG_MAX)
+          this_chunk_length = ULONG_MAX;
+        else
+          this_chunk_length = ACE_static_cast (u_long, msg_space);
+        // Collect the data in the iovec.
+        iov[iovcnt].iov_base = msg->wr_ptr () + wr_ptr_offset;
+        iov[iovcnt].iov_len  = this_chunk_length;
+        msg_space -= this_chunk_length;
+        wr_ptr_offset += this_chunk_length;
+
+        // Increment iovec counter.
+        iovcnt++;
+      }
+    if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
+      {
+        errno = ERANGE;
+        return -1;
+      }
   }
 
   // Re-calculate number bytes to read
   bytes_to_read = 0;
 
-  for ( int i=0; i < iovcnt ; ++i )
+  for (int i = 0; i < iovcnt ; ++i)
     bytes_to_read += iov[i].iov_len;
 
-  if ( bytes_to_read == 0 )
+  if (bytes_to_read == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("ACE_WIN32_Asynch_Read_Stream::readv:")
                          ACE_LIB_TEXT ("Attempt to read 0 bytes\n")),
                         -1);
-
 
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
@@ -524,6 +543,13 @@ ACE_WIN32_Asynch_Read_Stream::~ACE_WIN32_Asynch_Read_Stream (void)
 int
 ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *result)
 {
+  // ReadFile API limits us to DWORD range.
+  if (result->bytes_to_read () > MAXDWORD)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+  DWORD bytes_to_read = ACE_static_cast (DWORD, result->bytes_to_read ());
   u_long bytes_read;
 
   result->set_error (0); // Clear error before starting IO.
@@ -531,7 +557,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
   // Initiate the read
   int initiate_result = ::ReadFile (result->handle (),
                                     result->message_block ().wr_ptr (),
-                                    result->bytes_to_read (),
+                                    bytes_to_read,
                                     &bytes_read,
                                     result);
   if (initiate_result == 1)
@@ -808,7 +834,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
   for (const ACE_Message_Block* msg = &message_block;
        msg != 0 && bytes_to_write > 0 && iovcnt < ACE_IOV_MAX;
-       msg = msg->cont () , ++iovcnt )
+       msg = msg->cont () , ++iovcnt)
   {
     size_t msg_len = msg->length ();
 
@@ -819,13 +845,33 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
     //                      ACE_LIB_TEXT ("Zero-length message block\n")),
     //                     -1);
 
-    if ( msg_len > bytes_to_write)  
+    if (msg_len > bytes_to_write)
       msg_len = bytes_to_write;
-
-    iov[iovcnt].iov_base  = msg->rd_ptr ();
-    iov[iovcnt].iov_len   = msg_len; 
-
     bytes_to_write -= msg_len;
+
+    // Make as many iovec as needed to fit all of msg_len.
+    size_t rd_ptr_offset = 0;
+    while (msg_len > 0 && iovcnt < ACE_IOV_MAX)
+      {
+        u_long this_chunk_length;
+        if (msg_len > ULONG_MAX)
+          this_chunk_length = ULONG_MAX;
+        else
+          this_chunk_length = ACE_static_cast (u_long, msg_len);
+        // Collect the data in the iovec.
+        iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
+        iov[iovcnt].iov_len  = this_chunk_length;
+        msg_len -= this_chunk_length;
+        rd_ptr_offset += this_chunk_length;
+
+        // Increment iovec counter.
+        iovcnt++;
+      }
+    if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
+      {
+        errno = ERANGE;
+        return -1;
+      }
   }
 
   // Re-calculate number bytes to write
@@ -909,13 +955,19 @@ int
 ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Result *result)
 {
   u_long bytes_written;
+  if (result->bytes_to_write () > MAXDWORD)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+  DWORD bytes_to_write = ACE_static_cast (DWORD, result->bytes_to_write ());
 
   result->set_error (0); // Clear error before starting IO.
 
   // Initiate the write
   int initiate_result = ::WriteFile (result->handle (),
                                      result->message_block ().rd_ptr (),
-                                     result->bytes_to_write (),
+                                     bytes_to_write,
                                      &bytes_written,
                                      result);
   if (initiate_result == 1)
@@ -1239,6 +1291,14 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   if (bytes_to_read > total_space)
     bytes_to_read = total_space;
 
+  // ReadFileScatter API limits us to DWORD range.
+  if (bytes_to_read > MAXDWORD)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+  DWORD dword_bytes_to_read = ACE_static_cast (DWORD, bytes_to_read);
+
   // last one should be completely 0
   buffer_pointers[buffer_pointers_count].Buffer = 0;
 
@@ -1261,10 +1321,10 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   result->set_error (0); // Clear error before starting IO.
 
   int initiate_result = ::ReadFileScatter (result->handle (),
-                                   buffer_pointers,
-                                   bytes_to_read,
-                                   0, // reserved, must be NULL
-                                   result);
+                                           buffer_pointers,
+                                           dword_bytes_to_read,
+                                           0, // reserved, must be NULL
+                                           result);
 
   if (0 != initiate_result)
     // Immediate success: the OVERLAPPED will still get queued.
@@ -1628,6 +1688,13 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   // not write more than we have in buffers
   if (bytes_to_write > total_len)
     bytes_to_write = total_len;
+  // WriteFileGather API limits us to DWORD range.
+  if (bytes_to_write > MAXDWORD)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+  DWORD dword_bytes_to_write = ACE_static_cast (DWORD, bytes_to_write);
 
   // last one should be completely 0
   buffer_pointers[buffer_pointers_count].Buffer = 0;
@@ -1652,7 +1719,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   // do the gather write
   int initiate_result = ::WriteFileGather (result->handle (),
                                            buffer_pointers,
-                                           bytes_to_write,
+                                           dword_bytes_to_write,
                                            0, // reserved, must be NULL
                                            result);
 
@@ -1895,12 +1962,12 @@ ACE_WIN32_Asynch_Accept::ACE_WIN32_Asynch_Accept (ACE_WIN32_Proactor *win32_proa
 }
 
 int
-ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
-                                  size_t bytes_to_read,
-                                  ACE_HANDLE accept_handle,
-                                  const void *act,
-                                  int priority,
-                                  int signal_number)
+ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
+                                 size_t bytes_to_read,
+                                 ACE_HANDLE accept_handle,
+                                 const void *act,
+                                 int priority,
+                                 int signal_number)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   // Sanity check: make sure that enough space has been allocated by
@@ -1914,6 +1981,14 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
     ACE_ERROR_RETURN ((LM_ERROR, ACE_LIB_TEXT ("Buffer too small\n")), -1);
 
   // WIN Specific.
+
+  // AcceptEx API limits us to DWORD range.
+  if (bytes_to_read > MAXDWORD)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+  DWORD dword_bytes_to_read = ACE_static_cast (DWORD, bytes_to_read);
 
   int close_accept_handle = 0;
   // If the <accept_handle> is invalid, we will create a new socket.
@@ -1957,9 +2032,9 @@ ACE_WIN32_Asynch_Accept::accept  (ACE_Message_Block &message_block,
   int initiate_result = ::AcceptEx ((SOCKET) result->listen_handle (),
                                     (SOCKET) result->accept_handle (),
                                     result->message_block ().wr_ptr (),
-                                    result->bytes_to_read (),
-                                    address_size,
-                                    address_size,
+                                    dword_bytes_to_read,
+                                    ACE_static_cast (DWORD, address_size),
+                                    ACE_static_cast (DWORD, address_size),
                                     &bytes_read,
                                     result);
   if (initiate_result == 1)
@@ -2408,7 +2483,7 @@ ACE_WIN32_Asynch_Connect::connect_i (ACE_WIN32_Asynch_Connect_Result *result,
     {
       sockaddr * laddr = ACE_reinterpret_cast (sockaddr *,
                                                local_sap.get_addr ());
-      size_t size = local_sap.get_size ();
+      int size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)
         {
@@ -2871,6 +2946,16 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                int signal_number)
 {
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
+
+  // TransmitFile API limits us to DWORD range.
+  if (bytes_to_write > MAXDWORD || bytes_per_send > MAXDWORD)
+    {
+      errno = ERANGE;
+      return -1;
+    }
+  DWORD dword_bytes_to_write = ACE_static_cast (DWORD, bytes_to_write);
+  DWORD dword_bytes_per_send = ACE_static_cast (DWORD, bytes_per_send);
+
   ACE_WIN32_Asynch_Transmit_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Transmit_File_Result (*this->handler_,
@@ -2895,8 +2980,8 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   // Initiate the transmit file
   int initiate_result = ::TransmitFile ((SOCKET) result->socket (),
                                         result->file (),
-                                        result->bytes_to_write (),
-                                        result->bytes_per_send (),
+                                        dword_bytes_to_write,
+                                        dword_bytes_per_send,
                                         result,
                                         transmit_buffers,
                                         result->flags ());
@@ -3192,10 +3277,31 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
     //                      ACE_LIB_TEXT ("No space in the message block\n")),
     //                     -1);
 
-    iov[iovcnt].iov_base  = msg->wr_ptr ();
-    iov[iovcnt].iov_len   = msg_space; 
-
     bytes_to_read += msg_space;
+
+    // Make as many iovec as needed to fit all of msg_len.
+    size_t wr_ptr_offset = 0;
+    while (msg_space > 0 && iovcnt < ACE_IOV_MAX)
+      {
+        u_long this_chunk_length;
+        if (msg_space > ULONG_MAX)
+          this_chunk_length = ULONG_MAX;
+        else
+          this_chunk_length = ACE_static_cast (u_long, msg_space);
+        // Collect the data in the iovec.
+        iov[iovcnt].iov_base = msg->wr_ptr () + wr_ptr_offset;
+        iov[iovcnt].iov_len  = this_chunk_length;
+        msg_space -= this_chunk_length;
+        wr_ptr_offset += this_chunk_length;
+
+        // Increment iovec counter.
+        iovcnt++;
+      }
+    if (msg_space > 0)       // Ran out of iovecs before msg_space exhausted
+      {
+        errno = ERANGE;
+        return -1;
+      }
   }
 
   if (bytes_to_read == 0)
@@ -3488,11 +3594,31 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
     //                      ACE_LIB_TEXT ("Zero-length message block\n")),
     //                     -1);
 
-    
-    iov[iovcnt].iov_base  = msg->rd_ptr ();
-    iov[iovcnt].iov_len   = msg_len; 
-
     bytes_to_write += msg_len;
+
+    // Make as many iovec as needed to fit all of msg_len.
+    size_t rd_ptr_offset = 0;
+    while (msg_len > 0 && iovcnt < ACE_IOV_MAX)
+      {
+        u_long this_chunk_length;
+        if (msg_len > ULONG_MAX)
+          this_chunk_length = ULONG_MAX;
+        else
+          this_chunk_length = ACE_static_cast (u_long, msg_len);
+        // Collect the data in the iovec.
+        iov[iovcnt].iov_base = msg->rd_ptr () + rd_ptr_offset;
+        iov[iovcnt].iov_len  = this_chunk_length;
+        msg_len -= this_chunk_length;
+        rd_ptr_offset += this_chunk_length;
+
+        // Increment iovec counter.
+        iovcnt++;
+      }
+    if (msg_len > 0)       // Ran out of iovecs before msg_space exhausted
+      {
+        errno = ERANGE;
+        return -1;
+      }
   }
 
   if ( bytes_to_write == 0 )

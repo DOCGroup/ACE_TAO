@@ -127,7 +127,7 @@ ACE_Service_Config::ACE_Service_Config (int ignore_static_svcs,
   ACE_Service_Config::signum_ = signum;
 
   // Initialize the Service Repository.
-  ACE_Service_Repository::instance (size);
+  ACE_Service_Repository::instance (ACE_static_cast (int, size));
 
   // Initialize the ACE_Reactor (the ACE_Reactor should be the same
   // size as the ACE_Service_Repository).

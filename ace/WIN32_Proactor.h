@@ -265,7 +265,7 @@ protected:
 
   /// This number is passed to the <CreatIOCompletionPort> system
   /// call.
-  size_t number_of_threads_;
+  DWORD number_of_threads_;
 
   /// This event is used in conjunction with Reactor when we try to
   /// integrate the event loops of Reactor and the Proactor.

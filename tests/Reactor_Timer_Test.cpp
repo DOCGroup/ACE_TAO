@@ -129,7 +129,7 @@ test_registering_all_handlers (void)
   Time_Handler rt[ACE_MAX_TIMERS];
   int t_id[ACE_MAX_TIMERS];
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (u_long i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (&rt[i], 
@@ -155,7 +155,7 @@ test_registering_one_handler (void)
   done = 0;
   count = 0;
 
-  for (size_t i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
+  for (u_long i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
         ACE_Reactor::instance ()->schedule_timer (&rt[0],
@@ -181,7 +181,7 @@ test_canceling_odd_timers (void)
   count = 1;
   odd = 1;
 
-  for (size_t i = 0; (u_long) i < ACE_MAX_TIMERS; i++)
+  for (u_long i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                           (const void *) i,

@@ -35,22 +35,26 @@ ACE_INET_Addr::ip_addr_pointer (void) const
 #endif
 }
 
-ACE_INLINE size_t
+ACE_INLINE int
 ACE_INET_Addr::ip_addr_size (void) const
 {
+  // Since this size value is used to pass to other host db-type
+  // functions (gethostbyaddr, etc.) the length is of int type.
+  // Thus, cast all these sizes back to int. They're all well
+  // within the range of an int anyway.
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
-    return sizeof this->inet_addr_.in4_.sin_addr;
+    return ACE_static_cast (int, sizeof this->inet_addr_.in4_.sin_addr);
   else
-    return sizeof this->inet_addr_.in6_.sin6_addr;
+    return ACE_static_cast (int, sizeof this->inet_addr_.in6_.sin6_addr);
 #else
   // These _UNICOS changes were picked up from pre-IPv6 code in
   // get_host_name_i... the IPv6 section above may need something
   // similar, so keep an eye out for it.
 #  if !defined(_UNICOS)
-  return sizeof this->inet_addr_.in4_.sin_addr.s_addr;
+  return ACE_static_cast (int, sizeof this->inet_addr_.in4_.sin_addr.s_addr);
 #  else /* _UNICOS */
-   return sizeof this->inet_addr_.in4_.sin_addr;
+  return ACE_static_cast (int, sizeof this->inet_addr_.in4_.sin_addr);
 #  endif /* ! _UNICOS */
 #endif /* ACE_HAS_IPV6 */
 }

@@ -3027,7 +3027,8 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         ACE_SET_BITS (flags, THR_SUSPENDED);
 
       *thr_handle = (void *) ACE_BEGINTHREADEX (0,
-                                                stacksize,
+                                                ACE_static_cast
+                                                   (u_int, stacksize),
                                                 thread_args->entry_point (),
                                                 thread_args,
                                                 flags,
@@ -3726,7 +3727,7 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
   if (argv == 0 || argv[0] == 0)
     return 0;
 
-  int buf_len = 0;
+  size_t buf_len = 0;
 
   // Determine the length of the buffer.
 
@@ -3739,10 +3740,10 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
       if (substitute_env_args
           && (argv[i][0] == '$'
               && (temp = ACE_OS::getenv (&argv[i][1])) != 0))
-        buf_len += ACE_OS::strlen (temp);
+        buf_len += ACE_OS_String::strlen (temp);
       else
 #endif /* ACE_LACKS_ENV */
-        buf_len += ACE_OS::strlen (argv[i]);
+        buf_len += ACE_OS_String::strlen (argv[i]);
 
       // Add one for the extra space between each string.
       buf_len++;
@@ -4129,7 +4130,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
   if (length != -1)
     {
       char *ptr = buf;
-      int copyn = length;
+      ssize_t copyn = length;
 
       for (i = 0;
            i < n && copyn > 0;
@@ -4743,7 +4744,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 
   BOOL result = ::ReadFile (handle,
                             buf,
-                            nbytes,
+                            ACE_static_cast (DWORD, nbytes),
                             &bytes_read,
                             &overlapped);
 
@@ -4868,7 +4869,7 @@ ACE_OS::pwrite (ACE_HANDLE handle,
 
   BOOL result = ::WriteFile (handle,
                              buf,
-                             nbytes,
+                             ACE_static_cast (DWORD, nbytes),
                              &bytes_written,
                              &overlapped);
 

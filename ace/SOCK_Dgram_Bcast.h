@@ -89,7 +89,7 @@ public:
   /// Broadcast the <iovec> datagrams to every interface.  Returns the
   /// average number of bytes sent.
   ssize_t send (const iovec iov[],
-                size_t n,
+                int n,
                 u_short portnum,
                 int flags = 0) const;
 
@@ -106,7 +106,7 @@ public:
    * subnet...)
    */
   ssize_t send (const iovec iov[],
-                size_t n,
+                int n,
                 const ACE_Addr &addr,
                 int flags = 0) const;
 

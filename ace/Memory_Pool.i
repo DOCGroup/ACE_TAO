@@ -56,7 +56,7 @@ ACE_INLINE size_t
 ACE_MMAP_Memory_Pool::round_up (size_t nbytes)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::round_up");
-  return ACE::round_to_pagesize (nbytes);
+  return ACE::round_to_pagesize (ACE_static_cast (off_t, nbytes));
 }
 
 ACE_INLINE void *
@@ -88,7 +88,7 @@ ACE_INLINE size_t
 ACE_Local_Memory_Pool::round_up (size_t nbytes)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::round_up");
-  return ACE::round_to_pagesize (nbytes);
+  return ACE::round_to_pagesize (ACE_static_cast (off_t, nbytes));
 }
 
 #if !defined (ACE_LACKS_SYSV_SHMEM)
@@ -234,7 +234,7 @@ ACE_Pagefile_Memory_Pool::round_to_chunk_size (size_t nbytes)
 ACE_INLINE size_t
 ACE_Pagefile_Memory_Pool::round_to_page_size (size_t nbytes)
 {
-  return ACE::round_to_pagesize (nbytes);
+  return ACE::round_to_pagesize (ACE_static_cast (off_t, nbytes));
 }
 
 ACE_INLINE int

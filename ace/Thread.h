@@ -93,14 +93,14 @@ public:
    *
    * @see spawn()
    */
-  static int spawn_n (size_t n,
-                      ACE_THR_FUNC func,
-                      void *arg = 0,
-                      long flags = THR_NEW_LWP | THR_JOINABLE,
-                      long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                      void *stack[] = 0,
-                      size_t stack_size[] = 0,
-                      ACE_Thread_Adapter *thread_adapter = 0);
+  static size_t spawn_n (size_t n,
+                         ACE_THR_FUNC func,
+                         void *arg = 0,
+                         long flags = THR_NEW_LWP | THR_JOINABLE,
+                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                         void *stack[] = 0,
+                         size_t stack_size[] = 0,
+                         ACE_Thread_Adapter *thread_adapter = 0);
 
   /**
    * Spawn <n> new threads, which execute <func> with argument <arg>
@@ -120,16 +120,16 @@ public:
    *
    * @see spawn()
    */
-  static int spawn_n (ACE_thread_t thread_ids[],
-                      size_t n,
-                      ACE_THR_FUNC func,
-                      void *arg,
-                      long flags,
-                      long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                      void *stack[] = 0,
-                      size_t stack_size[] = 0,
-                      ACE_hthread_t thread_handles[] = 0,
-                      ACE_Thread_Adapter *thread_adapter = 0);
+  static size_t spawn_n (ACE_thread_t thread_ids[],
+                         size_t n,
+                         ACE_THR_FUNC func,
+                         void *arg,
+                         long flags,
+                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
+                         void *stack[] = 0,
+                         size_t stack_size[] = 0,
+                         ACE_hthread_t thread_handles[] = 0,
+                         ACE_Thread_Adapter *thread_adapter = 0);
 
   /// Wait for one or more threads to exit and reap their exit status.
   static int join (ACE_thread_t,

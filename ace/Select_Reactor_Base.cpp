@@ -105,7 +105,7 @@ ACE_Select_Reactor_Handler_Repository::open (size_t size)
 
   // Try to increase the number of handles if <size> is greater than
   // the current limit.
-  return ACE::set_handle_limit (size);
+  return ACE::set_handle_limit (ACE_static_cast (int, size));
 }
 
 // Initialize a repository of the appropriate <size>.

@@ -26,7 +26,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
 
 ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (size_t len, ACE_Allocator *alloc)
-  : ACE_WString (len, alloc)
+  : ACE_WString (len, 0, alloc)
 {
 }
 
@@ -197,7 +197,7 @@ ACE_INLINE int
 ACE_SString::rfind (char c, int pos) const
 {
   if (pos == ACE_SString::npos)
-    pos = this->len_;
+    pos = ACE_static_cast (int, this->len_);
 
   for (int i = pos - 1; i >= 0; i--)
     if (this->rep_[i] == c)

@@ -229,7 +229,7 @@ public:
 
   /// Increment the semaphore by <release_count>, potentially
   /// unblocking waiting threads.
-  int release (size_t release_count);
+  int release (u_int release_count);
 
   /**
    * Acquire semaphore ownership.  This calls <acquire> and is only

@@ -61,7 +61,7 @@ ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
-  ACE_Str_Buf recv_msg ((char *) buf, 0, max_len);
+  ACE_Str_Buf recv_msg ((char *) buf, 0, ACE_static_cast (int, max_len));
 
   return this->recv (recv_msg);
 }

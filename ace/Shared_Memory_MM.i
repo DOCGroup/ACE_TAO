@@ -44,7 +44,8 @@ ACE_INLINE int
 ACE_Shared_Memory_MM::get_segment_size (void) const
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::get_segment_size");
-  return this->shared_memory_.size ();
+  // This cast is legit since the original length in open() is an int.
+  return ACE_static_cast (int, this->shared_memory_.size ());
 }
 
 // Unmaps the shared memory segment.

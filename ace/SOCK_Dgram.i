@@ -120,7 +120,7 @@ ACE_SOCK_Dgram::send (const void *buf,
   ACE_TRACE ("ACE_SOCK_Dgram::send");
 
   iovec buffer[1];
-  buffer[0].iov_len = n;
+  buffer[0].iov_len = ACE_static_cast (u_long, n);  // Betting on < 4G
   buffer[0].iov_base = (char *) buf;
   size_t number_of_bytes_sent = 0;
   return this->send (buffer,
@@ -145,7 +145,7 @@ ACE_SOCK_Dgram::recv (void *buf,
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 
   iovec buffer[1];
-  buffer[0].iov_len = n;
+  buffer[0].iov_len = ACE_static_cast (u_long, n);  // Betting on < 4G
   buffer[0].iov_base = (char *) buf;
   size_t number_of_bytes_recvd = 0;
   return this->recv (buffer,

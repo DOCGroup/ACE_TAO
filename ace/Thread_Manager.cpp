@@ -1909,11 +1909,11 @@ ACE_Thread_Manager::cancel_task (ACE_Task_Base *task,
 // lock held.
 
 ACE_Thread_Descriptor *
-ACE_Thread_Manager::find_task (ACE_Task_Base *task, int slot)
+ACE_Thread_Manager::find_task (ACE_Task_Base *task, size_t slot)
 {
   ACE_TRACE ("ACE_Thread_Manager::find_task");
 
-  int i = 0;
+  size_t i = 0;
 
   for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter (this->thr_list_);
        !iter.done ();
@@ -1977,7 +1977,7 @@ ACE_Thread_Manager::num_threads_in_task (ACE_Task_Base *task)
 
 // Returns in task_list a list of ACE_Tasks registered with ACE_Thread_Manager.
 
-int
+ssize_t
 ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
                                    size_t n)
 {
@@ -2012,9 +2012,9 @@ ACE_Thread_Manager::task_all_list (ACE_Task_Base *task_list[],
 
 // Returns in thread_list a list of all thread ids
 
-int
-ACE_Thread_Manager::thread_all_list ( ACE_thread_t thread_list[],
-                                      size_t n)
+ssize_t
+ACE_Thread_Manager::thread_all_list (ACE_thread_t thread_list[],
+                                     size_t n)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_all_list");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
@@ -2037,7 +2037,7 @@ ACE_Thread_Manager::thread_all_list ( ACE_thread_t thread_list[],
 
 // Returns in task_list a list of ACE_Tasks in a group.
 
-int
+ssize_t
 ACE_Thread_Manager::task_list (int grp_id,
                                ACE_Task_Base *task_list[],
                                size_t n)
@@ -2071,7 +2071,7 @@ ACE_Thread_Manager::task_list (int grp_id,
 
 // Returns in thread_list a list of thread ids in an ACE_Task.
 
-int
+ssize_t
 ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
                                  ACE_thread_t thread_list[],
                                  size_t n)
@@ -2100,7 +2100,7 @@ ACE_Thread_Manager::thread_list (ACE_Task_Base *task,
 
 // Returns in thread_list a list of thread handles in an ACE_Task.
 
-int
+ssize_t
 ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
                                   ACE_hthread_t hthread_list[],
                                   size_t n)
@@ -2127,7 +2127,7 @@ ACE_Thread_Manager::hthread_list (ACE_Task_Base *task,
   return hthread_count;
 }
 
-int
+ssize_t
 ACE_Thread_Manager::thread_grp_list (int grp_id,
                                      ACE_thread_t thread_list[],
                                      size_t n)
@@ -2156,7 +2156,7 @@ ACE_Thread_Manager::thread_grp_list (int grp_id,
 
 // Returns in thread_list a list of thread handles in an ACE_Task.
 
-int
+ssize_t
 ACE_Thread_Manager::hthread_grp_list (int grp_id,
                                       ACE_hthread_t hthread_list[],
                                       size_t n)

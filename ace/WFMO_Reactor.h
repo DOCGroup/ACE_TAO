@@ -333,7 +333,7 @@ public:
 
   // = Accessors.
   /// Maximum ACE_HANDLE value, plus 1.
-  size_t max_handlep1 (void) const;
+  DWORD max_handlep1 (void) const;
 
   /// Pointer to the beginning of the current array of <ACE_HANDLE>
   /// *'s.
@@ -432,7 +432,7 @@ protected:
   Current_Info *current_info_;
 
   /// A count of the number of active handles.
-  size_t max_handlep1_;
+  DWORD max_handlep1_;
 
   /// Information for entries to be added
   To_Be_Added_Info *to_be_added_info_;
@@ -1162,43 +1162,43 @@ protected:
                           int alertable);
 
   /// Wait for timer and I/O events to occur.
-  virtual int wait_for_multiple_events (int timeout,
-                                        int alertable);
+  virtual DWORD wait_for_multiple_events (int timeout,
+                                          int alertable);
 
   /// Check for activity on remaining handles.
-  virtual DWORD poll_remaining_handles (size_t slot);
+  virtual DWORD poll_remaining_handles (DWORD slot);
 
   /// Expire timers. Only the owner thread does useful stuff in this
   /// function.
   virtual int expire_timers (void);
 
   /// Dispatches the timers and I/O handlers.
-  virtual int dispatch (int wait_status);
+  virtual int dispatch (DWORD wait_status);
 
   /// Protect against structured exceptions caused by user code when
   /// dispatching handles
-  virtual int safe_dispatch (int wait_status);
+  virtual int safe_dispatch (DWORD wait_status);
 
   /**
    * Dispatches any active handles from handles_[<slot>] to
    * handles_[active_handles_] using <WaitForMultipleObjects> to poll
    * through our handle set looking for active handles.
    */
-  virtual int dispatch_handles (size_t slot);
+  virtual int dispatch_handles (DWORD slot);
 
   /// Dispatches a single handler. Returns 0 on success, -1 if the
   /// handler was removed.
-  virtual int dispatch_handler (size_t slot,
-                                size_t max_handlep1);
+  virtual int dispatch_handler (DWORD slot,
+                                DWORD max_handlep1);
 
   /// Dispatches a single handler.  Returns 0 on success, -1 if the
   /// handler was removed.
-  virtual int simple_dispatch_handler (int slot,
+  virtual int simple_dispatch_handler (DWORD slot,
                                        ACE_HANDLE event_handle);
 
   /// Dispatches a single handler. Returns 0 on success, -1 if the
   /// handler was removed.
-  virtual int complex_dispatch_handler (int slot,
+  virtual int complex_dispatch_handler (DWORD slot,
                                         ACE_HANDLE event_handle);
 
   /// Dispatches window messages. Noop for WFMO_Reactor.

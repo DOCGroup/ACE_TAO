@@ -120,11 +120,11 @@ ACE_Filecache_Handle::error (void) const
     return this->file_->error ();
 }
 
-size_t
+off_t
 ACE_Filecache_Handle::size (void) const
 {
   if (this->file_ == 0)
-    return (size_t) -1;
+    return -1;
   else
     return this->file_->size ();
 }
@@ -545,7 +545,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
-                                            int size,
+                                            off_t size,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa)
   : stale_ (0),
@@ -694,7 +694,7 @@ ACE_Filecache_Object::filename (void) const
   return this->filename_;
 }
 
-size_t
+off_t
 ACE_Filecache_Object::size (void) const
 {
   // The existence of the object means a read lock is being held.

@@ -527,11 +527,11 @@ ACE_Process_Options::inherit_environment (void)
   // Get the existing environment.
   ACE_TCHAR *existing_environment = ACE_OS::getenvstrings ();
 
-  int slot = 0;
+  size_t slot = 0;
 
   while (existing_environment[slot] != '\0')
     {
-      int len = ACE_OS::strlen (existing_environment + slot);
+      size_t len = ACE_OS::strlen (existing_environment + slot);
 
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
@@ -566,7 +566,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
   while (envp[i])
     {
       if (this->setenv_i (envp[i],
-                          ACE_OS::strlen (envp[i])) == -1)
+                          ACE_OS_String::strlen (envp[i])) == -1)
         return -1;
       i++;
     }
@@ -597,7 +597,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 
   // Append the string to are environment buffer.
   if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+                      ACE_OS_String::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -634,7 +634,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   // Append the string to our environment buffer.
   if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+                      ACE_OS_String::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -647,7 +647,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
 int
 ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
-                               int len)
+                               size_t len)
 {
   // Add one for the null char.
   len++;

@@ -74,7 +74,7 @@ ACE_UPIPE_Stream::get_remote_addr (ACE_UPIPE_Addr &remote_sap) const
   return 0;
 }
 
-int 
+int
 ACE_UPIPE_Stream::send (ACE_Message_Block *mb_p, 
 			ACE_Time_Value *timeout)
 {
@@ -90,7 +90,7 @@ int ACE_UPIPE_Stream::recv (ACE_Message_Block *& mb_p,
 
 // Send a buffer.
 
-int 
+ssize_t
 ACE_UPIPE_Stream::send (const char *buffer, 
 			size_t n, 
 			ACE_Time_Value *timeout)
@@ -102,12 +102,12 @@ ACE_UPIPE_Stream::send (const char *buffer,
                   ACE_Message_Block (n),
                   -1);
   mb_p->copy (buffer, n);
-  return this->stream_.put (mb_p, timeout) == -1 ? -1 : (int) n;
+  return this->stream_.put (mb_p, timeout) == -1 ? -1 : n;
 }
 
 // Receive a buffer.
 
-int 
+ssize_t
 ACE_UPIPE_Stream::recv (char *buffer, 
 			size_t n,
 			ACE_Time_Value *timeout)
@@ -173,7 +173,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
   return bytes_read;
 }
 
-int 
+ssize_t
 ACE_UPIPE_Stream::send_n (const char *buf, 
 			  size_t n,
 			  ACE_Time_Value *timeout)
@@ -198,7 +198,7 @@ ACE_UPIPE_Stream::send_n (const char *buf,
   return bytes_written;
 }
 
-int 
+ssize_t
 ACE_UPIPE_Stream::recv_n (char *buf, 
 			  size_t n, 
 			  ACE_Time_Value *timeout)

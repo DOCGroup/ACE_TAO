@@ -264,7 +264,7 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
        cur_block += seek_len)
     {
       map_size = ACE_OS::lseek (this->mmap_.handle (),
-                                seek_len - 1,
+                                ACE_static_cast (off_t, seek_len - 1),
                                 SEEK_END);
 
       if (map_size == -1
@@ -1071,10 +1071,9 @@ ACE_Pagefile_Memory_Pool::acquire (size_t nbytes,
       || this->shared_cb_->sh_.free_size_
       < (int) rounded_bytes)
     {
-      int append =
-        rounded_bytes - this->shared_cb_->sh_.free_size_;
-      if (append < 0)
-        append = 0;
+      size_t append = 0;
+      if (rounded_bytes > this->shared_cb_->sh_.free_size_)
+        append = rounded_bytes - this->shared_cb_->sh_.free_size_;
 
       if (this->map (first_time, append) < 0)
         return result;
@@ -1186,9 +1185,9 @@ ACE_Pagefile_Memory_Pool::unmap (void)
 
 int
 ACE_Pagefile_Memory_Pool::map (int &first_time,
-                               int append_bytes)
+                               size_t append_bytes)
 {
-  int map_size;
+  size_t map_size;
   void *map_addr;
 
   // Create file mapping, if not yet done
@@ -1210,17 +1209,29 @@ ACE_Pagefile_Memory_Pool::map (int &first_time,
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
 
       // Get an object handle to the named reserved memory object.
+      DWORD size_high;
+      DWORD size_low;
+#if defined (ACE_WIN64)
+      size_high = ACE_static_cast (DWORD,
+                                   this->local_cb_.sh_.max_size_ >> 32);
+      size_low  = ACE_static_cast (DWORD,
+                                   this->local_cb_.sh_.max_size_ & 0xFFFFFFFF);
+#else
+      size_high = 0;
+      size_low = this->local_cb_.sh_.max_size_;
+#endif
+
       object_handle_ =
         ACE_TEXT_CreateFileMapping (INVALID_HANDLE_VALUE,
 #if (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
-                                      &sa,
+                                    &sa,
 #else
-                                      0,
+                                    0,
 #endif /* (defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0)) */
-                                      PAGE_READWRITE | SEC_RESERVE,
-                                      0,
-                                      this->local_cb_.sh_.max_size_,
-                                      this->backing_store_name_);
+                                    PAGE_READWRITE | SEC_RESERVE,
+                                    size_high,
+                                    size_low,
+                                    this->backing_store_name_);
       if (object_handle_ == 0)
         return -1;
       first_time =

@@ -3283,7 +3283,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
 }
 
 ACE_INLINE int
-ACE_OS::sema_post (ACE_sema_t *s, size_t release_count)
+ACE_OS::sema_post (ACE_sema_t *s, u_int release_count)
 {
 #if defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   // Win32 supports this natively.
@@ -4766,7 +4766,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   // IPv4-only implementation
   if (family == AF_INET)
     return ACE_OS::gethostbyaddr (ACE_static_cast (const char *, src),
-                                  len,
+                                  ACE_static_cast (int, len),
                                   family);
 
   ACE_NOTSUP_RETURN (0);
@@ -4873,9 +4873,10 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
                        int, -1);
 #  endif /* defined ACE_PSOS_DIAB_PPC */
 #elif defined (ACE_WIN32)
+  int shortened_len = ACE_static_cast (int, len);
   int result = ::recvfrom ((ACE_SOCKET) handle,
                            buf,
-                           ACE_static_cast (int, len),
+                           shortened_len,
                            flags,
                            addr,
                            (ACE_SOCKET_LEN *) addrlen);
@@ -4884,7 +4885,7 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
       ACE_OS::set_errno_to_wsa_last_error ();
       if (errno == WSAEMSGSIZE &&
           ACE_BIT_ENABLED (flags, MSG_PEEK))
-        return len;
+        return shortened_len;
       else
         return -1;
     }
@@ -7988,7 +7989,10 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 #if defined (ACE_WIN32)
   DWORD bytes_written; // This is set to 0 byte WriteFile.
 
-  if (::WriteFile (handle, buf, nbyte, &bytes_written, 0))
+  // Strictly correctly, we should loop writing all the data if more
+  // than a DWORD length can hold.
+  DWORD short_nbyte = ACE_static_cast (DWORD, nbyte);
+  if (::WriteFile (handle, buf, short_nbyte, &bytes_written, 0))
     return (ssize_t) bytes_written;
   else
     ACE_FAIL_RETURN (-1);
@@ -8026,7 +8030,8 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte,
 #if defined (ACE_WIN32)
   DWORD bytes_written; // This is set to 0 byte WriteFile.
 
-  if (::WriteFile (handle, buf, nbyte, &bytes_written, overlapped))
+  DWORD short_nbyte = ACE_static_cast (DWORD, nbyte);
+  if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
     return (ssize_t) bytes_written;
   else
     return -1;
@@ -8041,7 +8046,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ACE_OS_TRACE ("ACE_OS::read");
 #if defined (ACE_WIN32)
   DWORD ok_len;
-  if (::ReadFile (handle, buf, len, &ok_len, 0))
+  if (::ReadFile (handle, buf, ACE_static_cast (DWORD, len), &ok_len, 0))
     return (ssize_t) ok_len;
   else
     ACE_FAIL_RETURN (-1);
@@ -8082,7 +8087,11 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
   overlapped = overlapped;
 #if defined (ACE_WIN32)
   DWORD ok_len;
-  return ::ReadFile (handle, buf, len, &ok_len, overlapped) ? (ssize_t) ok_len : -1;
+  DWORD short_len = ACE_static_cast (DWORD, len);
+  if (::ReadFile (handle, buf, short_len, &ok_len, overlapped))
+    return (ssize_t) ok_len;
+  else
+    ACE_FAIL_RETURN (-1);
 #else
   return ACE_OS::read (handle, buf, len);
 #endif /* ACE_WIN32 */
@@ -10045,8 +10054,12 @@ ACE_OS::getcwd (ACE_TCHAR *buf, size_t size)
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  return ::_wgetcwd (buf, size);
+#elif defined (ACE_WIN32)
+#  if defined (ACE_USES_WCHAR)
+  return ::_wgetcwd (buf, ACE_static_cast (int, size));
+#  else
+  return ::getcwd (buf, ACE_static_cast (int, size));
+#  endif /* ACE_USES_WCHAR */
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_PSOS_LACKS_PHILE */

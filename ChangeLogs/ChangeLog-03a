@@ -1,3 +1,275 @@
+Fri Oct  4 20:22:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/ace_dll64.mak: Removed the /wd4267 to re-enable the
+          conversion size_t to int warning.
+          Added Atomic_Op.obj to the files to compile directly.
+
+        * ace/ACE.cpp (recv, send): Extract int, not size_t, from implicit
+          char */int pairs.
+          (send_n, recv_n with ACE_Message_Blocks): Message block length
+          is a size_t but iov_len is u_long, so make as many iovs as needed
+          to fit the entire requested length.
+
+        * ace/Asynch_Acceptor.cpp: Added casts to fix size_t->DWORD warnings.
+
+        * ace/Asynch_IO.cpp (transmit_buffers): Cast lengths to DWORD for
+          Win64.
+
+        * ace/Configuration.{h cpp} (set_binary_value, get_binary_value):
+          Change length arg from u_int to size_t.
+
+        * ace/Configuration_Import_Export.cpp: Align use of u_int, size_t.
+
+        * ace/Containers_T.cpp (ACE_Fixed_Set::insert): Use ssize_t, not int,
+          to track free slot since max size is a size_t.
+
+        * ace/FIFO_Recv_Msg.i (recv):
+        * ace/FIFO_Send_Msg.i (send): Squeeze size_t max_len down to an int
+          because this gets run through the ACE_Str_Buf variant of recv/send.
+          If this restriction is too much, the code will need to be
+          refactored.
+
+        * ace/FILE_Addr.cpp (set): Cast size_t back to int for base_set().
+
+        * ace/FILE_IO.cpp (recv): Count iov tuples as an int to match what's
+          expected at the ACE_OS::readv level.
+
+        * ace/Filecache.h (ACE_File_Object): Change size_ from size_t to off_t.
+          It's a better match for what it's used for (checking against
+          stat.st_size, which is an off_t also).
+
+        * ace/Functor_T.i (ACE_Pointer_Hash): Add #pragmas for Win64 to
+          shut up the compiler warnings about casting a pointer to u_long.
+
+        * ace/INET_Addr.{h i} (ip_addr_size): Return an int, not size_t. This
+          value is just passed on to other methods (like host db functions)
+          that are expecting an int. Also, being the size of a IP addressing
+          structure, all the values are well within range of an int.
+
+        * ace/Lib_Find.cpp (ldfind, get_temp_dir): Cast path length value to
+          DWORD for calls to SearchPath and GetTempPath on Windows.
+
+        * ace/Local_Name_Space.{h cpp} (ACE_NS_String::strstr): Cast return
+          value from size_t to int. (hash): Change return type from size_t
+          to u_long to match what's expected from ACE_Hash<>, which this is
+          an adapter for.
+
+        * ace/Log_Msg_NT_Event_Log.cpp (open): Cast msg_file length to
+          DWORD for use in Windows API. Use size_t for reg key string length
+          since it need not be passed to a Windows API.
+
+        * ace/Log_Record.cpp (round_up): Do all the rounding math in size_t
+          terms, since all factors are size_t, but cast it back to ACE_UINT32
+          since the ACE_Log_Record length_ field is ACE_UINT32 and should
+          stay that way due to the need to send it over the network as a
+          known-length field.
+          (print): Cast verbose_msg string length to int so it can be compared
+          to fprintf return value.
+
+        * ace/MEM_Acceptor.cpp (accept): Cast string length to ACE_UINT16.
+
+        * ace/MEM_SAP.h:
+        * ace/MEM_IO.{h cpp} (ACE_Reactive_MEM_IO, ACE_MT_MEM_IO): Changed
+          return type of send_buf and recv_buf from int to ssize_t. This
+          is consistent with other ACE sock-type send methods, and matches
+          the range of sizes allowed to request sending of and the return
+          type expected by ACE_MEM_IO::send() and recv().
+
+        * ace/Mem_Map.i (advise): Get a size_t length as expected by
+          ACE_OS::madvise().
+
+        * ace/Mem_Map.cpp (map_it): Use off_t instead of size_t to calculate
+          null_byte_positition when extending the file. This is the type
+          that ACE_OS::pwrite() expects.
+
+        * ace/Memory_Pool.h (ACE_Pagefile_Memory_Pool::Shared_Control_Block):
+          Changed mapped_size_ from int to size_t to match the sizes it can
+          take (max_size_)and what's expected in the Win32/64 API calls.
+          Changed free_offset_ from int to ptrdiff_t to represent the full
+          range of mapped address range. Changed free_size_ from int to
+          size_t to match max_size_ and the range of mappable sizes.
+          Changed 'append' arg to map() from int to size_t, also to represent
+          full range of mappable size.
+
+        * ace/Memory_Pool.i (round_up): Cast nbytes to off_t for call to
+          ACE::round_to_page_size().
+
+        * ace/Memory_Pool.cpp: Adjust usage of size_t/off_t, usually with
+          casts where needed.
+	  (map): For Win64, allow full 64-bit range of file mapping size.
+
+        * ace/Message_Queue.{h i cpp} (ACE_Message_Queue_NT): Changed
+          max_threads arg (ctor and open()) and max_cthrs_/cur_thrs_ from
+          size_t to DWORD, as expected by the underlying API (this class
+          is not portable, or compilable outside of ACE_WIN32).
+
+        * ace/Msg_WFMO_Reactor.{h cpp} (poll_remaining_handles()): Changed
+          argument from size_t to DWORD - matches similar changes to
+          WFMO_Reactor, below.
+
+        * ace/Name_Request_Reply.cpp (ctor): Cast length to ACE_UINT32.
+
+        * ace/Naming_Context.cpp (info): Cast info string length to int.
+
+        * ace/OS.{h i cpp}: (sema_post): Changed count from size_t to u_int,
+          to match both the value range for initializing (sema_init) and
+          the underlying OS calls on all platforms.
+          (getipnodebyaddr): For IPv4 case, cast len to int.
+          (recvfrom): size_t->int casting for Windows.
+          (read, write, pread, pwrite): Reduce byte count to DWORD range
+          for Windows.
+          (getcwd): Windows offers an int len for getcwd(), as opposed to
+          size_t everywhere else... so special-case the Windows need to
+          cast the length down.
+          (thr_create): Cast stack_size to u_int for beginthreadex().
+          Other miscellaneous int/size_t casts to get Win64 to build clean.
+          (iovec): Changed iov_len field from size_t to u_long to match
+          WSABUF, as comment says to.
+
+        * ace/OS_String.cpp (strtok_r_emulation): Change string lengths from
+          int to size_t, matching that returned from strlen().
+
+        * ace/Process.{h cpp} (setenv_i): Change len arg from int to size_t.
+          Matches string lengths in general, and the expectations of both
+          callers and callees with this information.
+          Changed environment_buf_index_ and environment_buf_len_ from int
+          to size_t as well, matching available range.
+
+        * ace/Process_Manager.cpp: size_t to DWORD casting for current_count_.
+
+        * ace/Registry.cpp (make_name): Use ssize_t instead of int for string
+          positions - matches interface for ACE_TString, which this method
+          accepts and uses.
+
+        * ace/Remote_Name_Space.cpp (bind, rebind, resolve, list_names,
+          list_values, list_types, list_name_entries, list_value_entries,
+          list_type_entries): Cast length values to ACE_UINT32 as
+          ACE_Name_Request expects.
+
+        * ace/Select_Reactor_Base.cpp (ACE_Select_Reactor_Handler_Repository):
+          In open(), cast size to int for call to ACE::set_handle_limit().
+
+        * ace/Service_Config.cpp (ctor): Cast size value to int for passing to
+          ACE_Service_Repository::instance(). The ACE_Service_Repository
+          size should probably be changed to size_t for consistency.
+
+        * ace/Service_Manager.cpp (info): Cast return string length to int.
+
+        * ace/Service_Types.cpp (info): Cast return string length to int.
+
+        * ace/Shared_Memory_MM.i (get_segment_size):
+        * ace/Shared_Memory_SV.i (get_segment_size): Cast shared_memory_ size
+          to int. Legit since the open() call's size is an int; otherwise
+          this should be changed to return a size_t.
+
+        * ace/SOCK_Connector.cpp (shared_connect_start): Align use of
+          int/size_t.
+
+        * ace/SOCK_Dgram.{h cpp} (recv, send):
+        * ace/SOCK_Dgram_Bcast.{h cpp} (recv, send):
+        * ace/SOCK_Sgram_Mcast.{h i} (send, recv): Change iovcnt from
+          size_t to int to match the args used by other iovcnt-accepting
+          methods in ACE.
+
+        * ace/SOCK_Dgram_Bcast.i (send): Align use of int/size_t.
+
+        * ace/SOCK_IO.cpp (recv (size_t, ...), send(size_t, ...)): The
+          comments say the pairs are char*, int, but the code extracted
+          ssize_t values instead of int. Changed to extract ints as the
+          comment says. The values are put in iovecs which accept
+          unsigned long, not ssize_t.
+
+        * ace/SPIPE_Addr.cpp (set): Align use of int/size_t.
+
+        * ace/SPIPE_Stream.cpp (send, recv): Align use of int/size_t.
+
+        * ace/SString.i (ACE_NS_WString): Add missing arg for ACE_WString
+          ctor initialization.
+          (ACE_SString::rfind): Cast string len to int for searching... note
+          this limits the string to 'int' range, though the other size
+          arguments/parameters are size_t. There are crocodiles lurking
+          here... hopefully this class is on its way out.
+
+        * ace/SV_Shared_Memory.{h i} (get_segment_size, round_up): Changed
+          return type from int to size_t, matching it's argument type.
+          Also changed class's size_ member from int to size_t, matching
+          the arg from which it's set.
+
+        * ace/Synch.{h i} (ACE_Semaphore::release): Change release count from
+          size_t to u_int - also see corresponding change to OS.h, above.
+
+        * ace/Thread.{h cpp} (spawn_n): Change return value from int to size_t,
+          matching the range available via the 'n' argument.
+
+        * ace/Thread_Manager.{h i cpp}:
+          (count_threads): Change return value from int to size_t. Matches
+          the requestable number of threads in spawn_n, as well as
+          underlying container size return.
+          (find_task): Change slot argument from int to size_t... matches
+          range of available slots. The default changed from -1 to 0, but
+          should make no difference since first check is for 0 >= <slot>.
+          (thread_all_list, task_all_list, task_list, thread_list,
+           hthread_list, thread_grp_list, hthread_grp_list): Changed
+          return value from int to ssize_t, to match <n> argument.
+
+        * ace/Timer_Hash_T.{h cpp}: This timer queue generates timer IDs
+          by casting a pointer to a dynamically-allocated structure to
+          a long. This, of course, is invalid on Win64. On Win64, the ID
+          is obtained by masking off the lower 32 bits of the pointer,
+          and saving the upper 32 bits. This adds an assumption that all
+          the Hash_Tokens allocated will have the same upper 32 bits in
+          the pointer value. Note that the original pointer value is used
+          as the ACT value in the timer scheduled within this class. The
+          timer ID must only be reconverted to cancel a timer by ID, or
+          to explicitly reschedule it. Expiration and cancel-by-handler
+          are all handled by reconverting the ACT to the dynamically-allocated
+          memory area (Hash_Token).
+          Also changed hash starter from time.usec() to time.sec(). usec()
+          isn't usually anything of value.
+
+        * ace/Timer_Wheel_T.cpp: Added #pragma to disable compile warnings.
+          We know of the issue and deliberately used the fields this way.
+
+        * ace/UPIPE_Stream.{h cpp} (send, recv): Changed return value from
+          int to ssize_t, consistent with other IPC streams in ACE.
+
+        * ace/WFMO_Reactor.{h cpp} (ACE_WFMO_Reactor_Handler_Repository):
+          Changed max_handlep1_ and max_handlep1 () from size_t to DWORD.
+          Matches what they're used for (input to WaitForMultipleObjects).
+          (ACE_WFMO_Reactor): Changed wait_for_multiple_events() to return
+          DWORD, not int - matches what WaitForMultipleObjects returns.
+          Changed wait_status and slot args to dispatch(), safe_dispatch(),
+          dispatch_handles (), dispatch_handler (), simple_dispatch_handler (),
+          complex_dispatch_handler (), and poll_remaining_handles () to also
+          be DWORD, not int, as they're working directly (or close to it)
+          with the same WFMO return value.
+
+        * ace/WIN32_Asynch_IO.cpp (ACE_WIN32_Asynch_Read_Stream::readv,
+          ACE_WIN32_Write_Stream::writev, ACE_WIN32_Asynch_Read_Dgram::recv,
+          ACE_WIN32_Asynch_Write_Dgram::send):
+          Make multiple iovecs if needed to transfer all data requested.
+          (ACE_WIN32_Asynch_Read_Stream::shared_read,
+           ACE_WIN32_Asynch_Write_Stream::shared_write,
+           ACE_WIN32_Asynch_Read_File::readv,
+           ACE_WIN32_Asynch_Write_File::writev,
+           ACE_WIN32_Asynch_Accept::accept,
+           ACE_WIN32_Asynch_Transmit_File::transmit_file): Limit requested
+          bytes to MAXDWORD. Return -1, ERANGE if over.
+
+        * ace/WIN32_Proactor.{h cpp}: Changed number_of_threads_ member from
+          size_t to DWORD, matching the API calls it's passed to.
+          (post_completion): Cast transfer count from size_t back to DWORD
+          for posting. The cast is ok since the original requested transfer
+          counts (in WIN32_Asynch_IO) were limited to DWORD range.
+
+        * tests/Config_Test.cpp:
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Timer_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Semaphore_Test.cpp:
+        * tests/TP_Reactor_Test.cpp: size_t/int fixes.
+
 Fri Oct  4 18:39:19 2002  Steve Huston  <shuston@riverace.com>
 
         * tests/Recursive_Condition_Test.cpp: Added a deactivate/wait

@@ -302,7 +302,7 @@ private:
   // Methods to gain access to the actual address of
   // the underlying internet address structure.
   void *ip_addr_pointer (void) const;
-  size_t ip_addr_size (void) const;
+  int ip_addr_size (void) const;
   int determine_type (void) const;
 
   /// Underlying representation.

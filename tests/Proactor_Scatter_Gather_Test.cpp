@@ -800,7 +800,8 @@ Writer::initiate_write_file (void)
   size_t increment_writing_file_offset = united_mb->total_length ();
 
   // Reconstruct the file
-  // Write the size, not the length, because we must write in chunks of <page size>
+  // Write the size, not the length, because we must write in chunks
+  // of <page size>
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Writer::initiate_write_file: write %d bytes at %d\n"),
               united_mb->total_size (),
@@ -820,7 +821,8 @@ Writer::initiate_write_file (void)
   // we update now because otherwise, we'd have error when performing
   // pipelined writing (that is, mulitple calls to write before the callbacks 
   // to handle_x)
-  this->writing_file_offset_ += increment_writing_file_offset;
+  this->writing_file_offset_ +=
+    ACE_static_cast (u_long, increment_writing_file_offset);
   ++this->io_count_;
   return 0;
 }
@@ -835,7 +837,8 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
               this->reported_file_offset_,
               result.bytes_transferred ()));
 
-  this->reported_file_offset_ += result.bytes_transferred ();
+  this->reported_file_offset_ +=
+    ACE_static_cast (u_long, result.bytes_transferred ());
   
   // Always truncate as required, 
   // because partial will always be the last write to a file
@@ -843,7 +846,9 @@ Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
   last_chunk (mb, last_mb);
 
   if (last_mb->space ())
-    ACE_OS::truncate (output_file, this->reported_file_offset_ - last_mb->space ());
+    ACE_OS::truncate (output_file,
+                      this->reported_file_offset_ -
+                        ACE_static_cast (u_long, last_mb->space ()));
 
   free_chunks_chain (mb);
 
@@ -904,10 +909,12 @@ public:
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
-  // This is called by the framework when asynchronous reads from the file complete
+  // This is called by the framework when asynchronous reads from the
+  // file complete.
   virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
 
-  // This is called by the framework when asynchronous writes from the socket complete
+  // This is called by the framework when asynchronous writes from the
+  // socket complete.
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
@@ -923,7 +930,7 @@ private:
   // File to read from
   ACE_Asynch_Read_File rf_;
   ACE_HANDLE  input_file_handle_;
-  size_t      file_offset_;
+  u_long      file_offset_;
 
   // Sockets to send to
   // odd and even socket output streams
@@ -1222,7 +1229,7 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
                   bytes_transferred,
                   chunks_chain_size));
 
-      this->file_offset_ += bytes_transferred;
+      this->file_offset_ += ACE_static_cast (u_long, bytes_transferred);
 
       this->initiate_write_stream (*mb);
 

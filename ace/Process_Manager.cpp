@@ -671,7 +671,7 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
   if (until < ACE_Time_Value::max_time)
     until += ACE_OS::gettimeofday ();
 
-  while (current_count_ > 0)
+  while (this->current_count_ > 0)
     {
       pid_t pid = this->wait (0, remaining);
 
@@ -689,7 +689,7 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 
       // else Process terminated...wait for more...
     }
-  return current_count_;
+  return ACE_static_cast (int, this->current_count_);
 }
 
 // Collect a single child process' exit status.  Store the exit code
@@ -750,16 +750,17 @@ ACE_Process_Manager::wait (pid_t pid,
       HANDLE *handles;
 
       ACE_NEW_RETURN (handles,
-                      HANDLE[current_count_],
+                      HANDLE[this->current_count_],
                       ACE_INVALID_PID);
 
       for (size_t i = 0;
-           i < current_count_;
+           i < this->current_count_;
            ++i)
         handles[i] =
           process_table_[i].process_->gethandle ();
 
-      DWORD result = ::WaitForMultipleObjects (current_count_,
+      DWORD handle_count = ACE_static_cast (DWORD, this->current_count_);
+      DWORD result = ::WaitForMultipleObjects (handle_count,
                                                handles,
                                                FALSE,
                                                timeout == ACE_Time_Value::max_time
@@ -776,10 +777,10 @@ ACE_Process_Manager::wait (pid_t pid,
           // unsigned long, so this test is skipped for Green Hills.
           // Same for mingw.
 # if defined (ghs) || defined (__MINGW32__)
-          ACE_ASSERT (result < WAIT_OBJECT_0 + current_count_);
+          ACE_ASSERT (result < WAIT_OBJECT_0 + this->current_count_);
 # else
           ACE_ASSERT (result >= WAIT_OBJECT_0
-                      && result < WAIT_OBJECT_0 + current_count_);
+                      && result < WAIT_OBJECT_0 + this->current_count_);
 # endif
 
           idx = this->find_proc (handles[result - WAIT_OBJECT_0]);
@@ -911,7 +912,7 @@ int
 ACE_Process_Manager::notify_proc_handler (size_t i,
                                           ACE_exitcode exit_code)
 {
-  if (i < current_count_)
+  if (i < this->current_count_)
     {
       ACE_Process_Descriptor &proc_desc =
         this->process_table_[i];

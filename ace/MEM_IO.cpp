@@ -29,7 +29,7 @@ ACE_Reactive_MEM_IO::init (ACE_HANDLE handle,
                                   options);
 }
 
-int
+ssize_t
 ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
                                int flags,
                                const ACE_Time_Value *timeout)
@@ -40,11 +40,11 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
     return -1;
 
   off_t new_offset = 0;
-  int retv = ACE::recv (this->handle_,
-                        (char *) &new_offset,
-                        sizeof (off_t),
-                        flags,
-                        timeout);
+  ssize_t retv = ACE::recv (this->handle_,
+                            (char *) &new_offset,
+                            sizeof (off_t),
+                            flags,
+                            timeout);
 
   if (retv == 0)
     return 0;
@@ -54,13 +54,11 @@ ACE_Reactive_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
       buf = 0;
       return -1;
     }
-  else
-      return this->get_buf_len (new_offset, buf);
 
-  ACE_NOTREACHED (return 0;)
+  return this->get_buf_len (new_offset, buf);
 }
 
-int
+ssize_t
 ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
                                int flags,
                                const ACE_Time_Value *timeout)
@@ -243,7 +241,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   return 0;
 }
 
-int
+ssize_t
 ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
                          int flags,
                          const ACE_Time_Value *timeout)
@@ -274,7 +272,7 @@ ACE_MT_MEM_IO::recv_buf (ACE_MEM_SAP_Node *&buf,
   ACE_NOTREACHED (return 0;)
 }
 
-int
+ssize_t
 ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
                          int flags,
                          const ACE_Time_Value *timeout)

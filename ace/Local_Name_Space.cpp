@@ -89,7 +89,7 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
 
           if (j == pat_len)
             // Found a match!  Return the index.
-            return i;
+            return ACE_static_cast (int, i);
         }
 
       return -1;
@@ -123,7 +123,7 @@ ACE_NS_String::ACE_NS_String (ACE_USHORT16 *dst,
   ACE_OS::memcpy (this->rep_, src, bytes);
 }
 
-size_t
+u_long
 ACE_NS_String::hash (void) const
 {
   return ACE::hash_pjw
