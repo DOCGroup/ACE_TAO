@@ -2027,7 +2027,7 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
 
   // If the POA has the USE_DEFAULT_SERVANT policy, the servant
   // specified is the default servant, and the operation is being
-  // invoked in he context of executin a request on the default
+  // invoked in the context of executing a request on the default
   // servant, then the ObjectId associated with the current invocation
   // is returned.
   if (this->cached_policies_.request_processing () == PortableServer::USE_DEFAULT_SERVANT)
@@ -2545,10 +2545,16 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
 }
 
 CORBA::OctetSeq *
-TAO_POA::id (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+TAO_POA::id (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return new CORBA::OctetSeq (this->id_);
+  CORBA::OctetSeq *id = 0;
+  ACE_NEW_THROW_EX (id,
+                    CORBA::OctetSeq (this->id_),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (0);
+
+  return id;
 }
 
 PortableServer::Servant
