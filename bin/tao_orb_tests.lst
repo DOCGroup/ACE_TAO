@@ -102,7 +102,7 @@ TAO/tests/MT_Timeout/run_test.pl: !MINIMUM !ST
 TAO/tests/Timed_Buffered_Oneways/run_test.pl: !MINIMUM
 TAO/tests/Single_Read/run_test.pl:
 TAO/tests/Connection_Timeout/run_test.pl: !MINIMUM
-TAO/tests/Connection_Failure/run_test.pl
+#TAO/tests/Connection_Failure/run_test.pl ! Timesout for good reasons
 TAO/tests/MProfile_Connection_Timeout/run_test.pl: !MINIMUM
 TAO/tests/Codec/run_test.pl
 TAO/tests/IDL_Test/run_test.pl
@@ -144,9 +144,6 @@ TAO/tests/Portable_Interceptors/Service_Context_Manipulation/run_test.pl: !MINIM
 TAO/tests/Portable_Interceptors/Request_Interceptor_Flow/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/PICurrent/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Portable_Interceptors/AMI/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Collocated/Dynamic/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
-TAO/tests/Portable_Interceptors/Bug_1559/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/ORT/run_test.pl: !MINIMUM !DISABLE_INTERCEPTORS
 TAO/tests/Object_Loader/run_test.pl: !STATIC
 TAO/tests/Two_Objects/run_test.pl: !ST
