@@ -45,11 +45,6 @@ extern "C" {
 
 #ifndef PACE_PTHREAD_COND_T
 #define PACE_PTHREAD_COND_T 1
-
-
-
-
-
   typedef struct pthread_cond_t
   {
 #if 0
@@ -62,10 +57,6 @@ extern "C" {
     int a;
 
   } pace_pthread_cond_t;
-
-
-
-
 
 #endif /* PACE_PTHREAD_COND_T */
 
@@ -96,7 +87,13 @@ extern "C" {
 #endif
 
     /* Mutex kind: fast, recursive or errcheck */
-    int mutex_kind_;
+    int type_;
+
+    union
+    {
+       HANDLE proc_mutex_;
+       CRITICAL_SECTION thr_mutex_;
+    };
 
 #if 0
     /* Underlying fast lock */

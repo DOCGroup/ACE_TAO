@@ -1,3 +1,14 @@
+Wed Oct 18 15:41:20 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/win32/pthread.h:
+	* pace/win32/pthreadtypes.h:
+	* pace/semphore.h:
+	* pace/win32/semphore.h:	
+	* pace/win32/semphore.inl:
+
+	  Debugging ACE building with PACE over NT
+	  ACE_HAS_PACE.
+
 Tue Oct  3 15:37:35 2000  Joe Hoffert  <joeh@cs.wustl.edu>
 
         * pace/posix/stdio.inl:
