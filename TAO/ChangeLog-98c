@@ -1,3 +1,18 @@
+Wed Dec 23 23:55:25 1998  Kirthika Parameswaran <kirthika@cs.wustl.edu>
+		
+	* examples/POA/On_Demand_Loading/Servant_Manager.{h,cpp}:
+	  New addition to the repository. These are the helper files
+	  containing the common code between the ServantActivator and the
+	  ServantLocator.
+	
+	* examples/POA/On_Demand_Loading/Servant_Activator.{h,cpp}:
+	* examples/POA/On_Demand_Loading/Servant_Locator.{h,cpp}:
+	  Removed the superflous methods and added an object of
+	  ServantManager which provides the helper methods.
+
+	* examples/POA/On_Demand_Loading/Makefile:
+	  It now contains a Servant_Manager entry.
+
 Wed Dec 23 15:16:00 CST 1998  Chris Gill  <cdgill@cs.wustl.edu>
 
         * TAO/docs/events_tutorial.html: added tutorial on event channel.  
