@@ -142,11 +142,14 @@ read_IOR_from_file (void)
 int
 main (int argc, char **argv)
 {
-  TAO_TRY 
+  ACE_TRY_NEW_ENV 
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, 
+                                            argv, 
+                                            0, 
+                                            ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       // Initialize options based on command-line arguments.
       int parse_args_result = parse_args (argc, argv);
@@ -161,16 +164,19 @@ main (int argc, char **argv)
         }
 
       // Get an object reference from the argument string.
-      CORBA::Object_var object = orb->string_to_object (IOR, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      CORBA::Object_var object = orb->string_to_object (IOR, 
+                                                        ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
       // Try to narrow the object reference to a Foo reference.
-      Foo_var foo = Foo::_narrow (object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      Foo_var foo = Foo::_narrow (object.in (), 
+                                  ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       CORBA::String_var ior =
-        orb->object_to_string (foo.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        orb->object_to_string (foo.in (), 
+                               ACE_TRY_ENV);
+      ACE_TRY_CHECK;
 
 
       ACE_DEBUG ((LM_DEBUG,
@@ -191,14 +197,14 @@ main (int argc, char **argv)
           if (oneway)
             {
               // Invoke the simply_doit() method of the foo reference.
-              foo->simply_doit (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+              foo->simply_doit (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
             }
           else
             {
               // Invoke the doit() method of the foo reference.
-              result = foo->doit (TAO_TRY_ENV);
-              TAO_CHECK_ENV;
+              result = foo->doit (ACE_TRY_ENV);
+              ACE_TRY_CHECK;
             }
         }
 
@@ -211,8 +217,8 @@ main (int argc, char **argv)
       
       if (shutdown_server)
         {
-          foo->shutdown (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+          foo->shutdown (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
 
       // Print the result of doit () method of the foo reference.
@@ -222,11 +228,11 @@ main (int argc, char **argv)
       
       ACE_OS::free (IOR);
     }
-  TAO_CATCHANY
+  ACE_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("Error!");
+      ACE_TRY_ENV.print_exception ("Error!");
     }
-  TAO_ENDTRY;  
+  ACE_ENDTRY;  
 
   return 0;
 }
