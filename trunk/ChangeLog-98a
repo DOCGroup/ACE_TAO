@@ -9,6 +9,11 @@ Fri Jan 23 06:27:51 1998  David L. Levine  <levine@cs.wustl.edu>
           on VxWorks.  Thanks to Stan Leeson <STANLEY.D.LEESON@cdev.com>
           for suggesting this.
 
+        * tests/Env_Value_Test.cpp (TEST_THIS): cast val to (type)
+          before casting to (u_int), to try to avoid DEC CXX compiler
+          warning about integer overflow.  Thanks to Frederic Andres
+          <andres@rd.nacsis.ac.jp> for reporting this.
+
 Thu Jan 22 16:34:18 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Connection/misc/Connection_Handler.cpp (svc): Fixed a
