@@ -131,8 +131,11 @@ void do_testing (int argc, char *argv[], int light)
     }
   else  // Use NO-SYNC
     {
-      name_options->database (ACE_OS::strcat ("light", ACE::basename (name_options->process_name (),
-								      ACE_DIRECTORY_SEPARATOR_CHAR)));
+      const char *p = ACE::basename (name_options->process_name (),
+                                     ACE_DIRECTORY_SEPARATOR_CHAR);
+      char s[ACE_OS::strlen ("light") + ACE_OS::strlen (p) + 1];
+      ACE_OS::sprintf (s, "light%s", p);
+      name_options->database (s);
       ns_context.open (ACE_Naming_Context::PROC_LOCAL, 1);
     }
 
