@@ -1,3 +1,10 @@
+Tue Jun  4 14:31:08 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+
+	* tao/PortableServer/AMH_Response_Handler.cpp (TAO_AMH_Response_Handler): 
+	  Changed variable-name 'exception' to 'ex' and also declared
+	  NEW_CORBA_ENV.  This should now fix the minimum-static and
+	  no-inline builds.
+
 Tue Jun  4 16:00:46 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/CORBA_String.h:
