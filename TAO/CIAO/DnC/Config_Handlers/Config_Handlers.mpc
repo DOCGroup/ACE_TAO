@@ -15,7 +15,7 @@ project (Config_Handlers) : taolib {
     APM_Handler.cpp
     Bridge_Handler.cpp
     CAD_Handler.cpp
-    CAP_Handler.cpp
+    Cap_Handler.cpp
     CEPE_Handler.cpp
     CompImplDesc_Handler.cpp
     CompIntrDesc_Handler.cpp
