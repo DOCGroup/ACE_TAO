@@ -40,10 +40,10 @@ RSC=rc.exe
 # PROP Output_Dir "Release"
 # PROP Intermediate_Dir "Release"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../" /I "../../" /I "../../../" /I "../../../../" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
 # ADD RSC /l 0x409 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -65,8 +65,8 @@ LIB32=link.exe -lib
 # PROP Output_Dir "Metrics___Win32_Debug"
 # PROP Intermediate_Dir "Metrics___Win32_Debug"
 # PROP Target_Dir ""
-MTL=midl.exe
 LINK32=link.exe -lib
+MTL=midl.exe
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /YX /FD /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../" /I "../../" /I "../../../" /I "../../../../" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TAO_METRICS_BUILD_DLL" /YX /FD /c
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -182,6 +182,41 @@ SOURCE=Metrics.idl
 
 !IF  "$(CFG)" == "Metrics - Win32 Release"
 
+# Begin Custom Build
+InputPath=Metrics.idl
+InputName=Metrics
+
+BuildCmds= \
+	..\..\..\bin\Release\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Metrics_Export -Wb,export_include=Metrics\metrics_export.h $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
 !ELSEIF  "$(CFG)" == "Metrics - Win32 Debug"
 
 # PROP Intermediate_Dir "DLL\Debug\Metrics"
@@ -193,31 +228,31 @@ InputName=Metrics
 BuildCmds= \
 	..\..\..\bin\tao_idl -Ge 1 -I../../ -I../../tao  -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=TAO_Metrics_Export -Wb,export_include=Metrics\metrics_export.h $(InputName).idl
 
-"MetricsC.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsC.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsC.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsS.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsS.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsS.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsS_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsS_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 
-"MetricsS_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
 # End Custom Build
 
