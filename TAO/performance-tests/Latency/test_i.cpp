@@ -11,7 +11,8 @@ ACE_RCSID(Latency, test_i, "$Id$")
 
 CORBA::ULongLong
 Test_i::test_method (CORBA::ULongLong stamp,
-                     CORBA::Environment&) ACE_THROW_SPEC (())
+                     CORBA::Environment&)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
 #if defined (USING_QUANTIFY)

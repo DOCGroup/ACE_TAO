@@ -11,7 +11,7 @@ ACE_RCSID(Callback, Server_i, "$Id$")
 void
 Server_i::set_callback (Test::Callback_ptr callback,
                         CORBA::Environment &)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->callback_ = Test::Callback::_duplicate (callback);
 }
@@ -30,7 +30,7 @@ Server_i::request (Test::TimeStamp time_stamp,
 
 void
 Server_i::shutdown (CORBA::Environment &)
-    ACE_THROW_SPEC (())
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->done_ = 1;
 }
