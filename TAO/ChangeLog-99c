@@ -1,4 +1,6 @@
-Fri Jul 09 00:11:35 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+Fri Jul 09 01:00:40 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/DynAnyC.cpp: Removed a duplicated template instantiation.
 
 	* tao/Connector_Registry.cpp (preprocess_preconnects): Added a
 	  static cast to a ssize_t value to avoid MSVC warnings.
