@@ -2998,6 +2998,9 @@ struct ACE_OVERLAPPED
 #   if !defined (FILE_FLAG_OVERLAPPED)
 #     define FILE_FLAG_OVERLAPPED 0
 #   endif /* !defined FILE_FLAG_OVERLAPPED */
+#   if !defined (FILE_FLAG_SEQUENTIAL_SCAN)
+#     define FILE_FLAG_SEQUENTIAL_SCAN 0
+#endif   /* FILE_FLAG_SEQUENTIAL_SCAN */
 
 #   if defined (ACE_HAS_BROKEN_IF_HEADER)
 struct ifafilt;
