@@ -1,3 +1,8 @@
+Sun Feb  3 07:55:49 2002  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* examples/RTCORBA/Activity/activity.dsp: 
+	  Fixed include path. Thanks to Bala.
+
 Sat Feb  2 21:56:41 2002  Ossama Othman  <ossama@uci.edu>
 
 	* performance-tests/Latency/Single_Threaded/default_configuration.pl:
