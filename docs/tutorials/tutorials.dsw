@@ -279,7 +279,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "019 client"=".\019\019 client.dsp" - Package Owner=<4>
+Project: "019 client"=".\019\019_client.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -291,7 +291,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "019 client2"=".\019\019 client2.dsp" - Package Owner=<4>
+Project: "019 client2"=".\019\019_client2.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -303,7 +303,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "019 server"=".\019\019 server.dsp" - Package Owner=<4>
+Project: "019 server"=".\019\019_server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -315,7 +315,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "019 server2"=".\019\019 server2.dsp" - Package Owner=<4>
+Project: "019 server2"=".\019\019_server2.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -327,7 +327,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "020 client"=".\020\020 client.dsp" - Package Owner=<4>
+Project: "020 client"=".\020\020_client.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -339,7 +339,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "020 client2"=".\020\020 client2.dsp" - Package Owner=<4>
+Project: "020 client2"=".\020\020_client2.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -351,7 +351,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "020 server"=".\020\020 server.dsp" - Package Owner=<4>
+Project: "020 server"=".\020\020_server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -363,7 +363,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "020 server2"=".\020\020 server2.dsp" - Package Owner=<4>
+Project: "020 server2"=".\020\020_server2.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -375,7 +375,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "021 client"=".\021\021 client.dsp" - Package Owner=<4>
+Project: "021 client"=".\021\021_client.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
@@ -387,7 +387,7 @@ Package=<4>
 
 ###############################################################################
 
-Project: "021 server"=".\021\021 server.dsp" - Package Owner=<4>
+Project: "021 server"=".\021\021_server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
