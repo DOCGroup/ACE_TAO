@@ -163,6 +163,10 @@ SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\SSLIOP\SSLIOP_RSA.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\SSLIOP\SSLIOP_TargetCredentials.cpp
 # End Source File
 # Begin Source File
@@ -260,6 +264,10 @@ SOURCE=.\SSLIOP\SSLIOP_Profile.h
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_ReceivedCredentials.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_RSA.h
 # End Source File
 # Begin Source File
 
@@ -409,6 +417,10 @@ SOURCE=.\SSLIOP\SSLIOP_Endpoint.i
 # Begin Source File
 
 SOURCE=.\SSLIOP\SSLIOP_Profile.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\SSLIOP\SSLIOP_RSA.inl
 # End Source File
 # Begin Source File
 
