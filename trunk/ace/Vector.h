@@ -23,9 +23,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Default size of the block the ACE_Vector should grow by.
-#if !defined (ACE_DEFAULT_VECTOR_BLOCK_SIZE)
-# define ACE_DEFAULT_VECTOR_BLOCK_SIZE 4
+// Default ACE_Vector growth factor.
+// ACE_Vector will grow by
+//     ACE_DEFAULT_VECTOR_GROWTH_FACTOR * ACE_Vector::capacity()
+// in order to ensure insertion a series of elements into a vector is
+// a linear time operation.  If growth is not proportional to
+// ACE_Vector::capacity(), and instead grows by a constant amount,
+// insertion becomes a quadratic time operation.
+#if !defined (ACE_DEFAULT_VECTOR_GROWTH_FACTOR)
+# define ACE_DEFAULT_VECTOR_GROWTH_FACTOR 2
 #endif
 
 // Forward declarations
@@ -61,6 +67,11 @@ public:
   // copy of the contents of parameter <s>, i.e., *this == s will
   // return true.
 
+  ACE_Vector (ACE_Vector<T>::iterator first,
+              ACE_Vector<T>::iterator last,
+              ACE_Allocator *alloc = 0);
+  // Creates an ACE_Vector with a copy of a range.
+
   ~ACE_Vector (void);
   // The destructor
 
@@ -79,7 +90,10 @@ public:
   // Returns the last element
 
   void push_back (const T&);
-  // Inserts a new element at the end
+  // Inserts a new element at the end.  The push_back() method will
+  // automatically allocate memory as needed.  See the notes for the
+  // ACE_Vector::insert() methods for information about how the
+  // ACE_Vector grows when necessary.
 
   void pop_back (void);
   // Removes the last element
@@ -87,18 +101,43 @@ public:
   void swap (ACE_Vector<T>&);
   // Swaps the contents of two vectors
 
+  // = ACE_Vector Insertion Methods
+  ACE_Vector<T>::iterator insert (ACE_Vector<T>::iterator pos, const T& x);
+  // Inserts x before pos and returns the iterator that points to the
+  // location of the element in memory.  The original location of the
+  // element in memory may have changed if memory was reallocated
+  // during insertion so the returned iterator should be used instead
+  // of the one that was passed to the insert() method.
+
+  void insert (ACE_Vector<T>::iterator pos,
+               ACE_Vector<T>::iterator first,
+               ACE_Vector<T>::iterator last);
+  // Inserts the range [first, last) before pos.
+
+  void insert (ACE_Vector<T>::iterator pos, 
+               size_t n,
+               const T& x);
+  // Inserts n copies of x before pos.
+
+  ACE_Vector<T>::iterator erase (ACE_Vector<T>::iterator pos);
+  // Erases the element at position pos.
+
+  ACE_Vector<T>::iterator erase (ACE_Vector<T>::iterator first,
+                                 ACE_Vector<T>::iterator last);
+  // Erases the range [first, last)
+
   // = Iterators
 
-  iterator begin (void);
+  ACE_Vector<T>::iterator begin (void);
   // Returns an iterator pointing to the beginning of the vector
 
-  const iterator begin (void) const;
+  const ACE_Vector<T>::iterator begin (void) const;
   // Returns a constant iterator pointing to the beginning of the vector
 
-  iterator end (void);
+  ACE_Vector<T>::iterator end (void);
   // Returns an iterator pointing to the end of the vector. 
 
-  const iterator end (void) const;
+  const ACE_Vector<T>::iterator end (void) const;
   // Returns a constant iterator pointing to the end of the vector.
 
   // = Utility Methods
@@ -149,6 +188,31 @@ public:
   // Compare this array with <s> for inequality such that <*this> !=
   // <s> is always the complement of the boolean return value of
   // <*this> == <s>.
+
+private:
+  // ACE_Vector growth will always be proportional to the current
+  // capacity.  Unless specified by using ACE_Vector<T>::reserve(),
+  // the capacity will automatically grow by:
+  //
+  //     ACE_DEFAULT_VECTOR_GROWTH_FACTOR * ACE_Vector::capacity()
+  //
+  // In order to ensure insertion of a series of elements into a
+  // vector is a linear time operation growth must be proportionall to 
+  // the current capacity.  Otherwise, if growth is not proportional
+  // to the current capacity, and instead grows by a constant amount,
+  // insertion becomes a quadratic time operation.
+
+  void grow (void);
+  // Increase the capacity of the ACE_Vector.  Growth will only occur
+  // if necessary, i.e. if this->size () == this->capacity ().  The
+  // resulting capacity will be greater than or equal to the previous
+  // capacity.
+
+  void grow (size_t amount);
+  // Increase the capacity of the ACE_Vector by the specified amount.
+  // Growth will only occur if necessary, i.e. if this->size () +
+  // amount == this->capacity ().  The resulting capacity will
+  // be greater than or equal to the previous capacity.
 
 private:
   size_t size_;
