@@ -102,48 +102,53 @@ TAO_UTO::compare_time (CosTime::ComparisonType comparison_type,
 {
   ACE_TRY
     {
+      TimeBase::TimeT uto_time = uto->time (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+       TimeBase::InaccuracyT this_inaccuracy =
+         this->inaccuracy (ACE_TRY_ENV);
+       ACE_TRY_CHECK;
+
+       TimeBase::InaccuracyT uto_inaccuracy =
+         uto->inaccuracy (ACE_TRY_ENV);
+       ACE_TRY_CHECK;
+
       if (comparison_type == CosTime::MidC)
         {
-          if (this->time (ACE_TRY_ENV) == uto->time (ACE_TRY_ENV))
+          if ( this->time () ==  uto_time)
             {
-              ACE_TRY_CHECK;
               return CosTime::TCEqualTo;
             }
-          else if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
+          else if (this->time () > uto_time)
             {
-              ACE_TRY_CHECK;
               return CosTime::TCGreaterThan;
             }
           else
             return CosTime::TCLessThan;
         }
-      else if (this->time (ACE_TRY_ENV) == uto->time (ACE_TRY_ENV))
+      else if (this->time () == uto_time)
         {
-          ACE_TRY_CHECK;
-          if (this->inaccuracy (ACE_TRY_ENV) == 0U
-              && uto->inaccuracy (ACE_TRY_ENV) == 0U)
+          if ( this_inaccuracy == 0U
+               && uto_inaccuracy  == 0U)
             {
-              ACE_TRY_CHECK;
               return CosTime::TCEqualTo;
             }
         }
       else
         {
-          if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
+          if (this->time () > uto_time)
             {
-              ACE_TRY_CHECK;
-              if (this->time (ACE_TRY_ENV) - this->inaccuracy (ACE_TRY_ENV)
-                  > uto->time (ACE_TRY_ENV) - uto->inaccuracy (ACE_TRY_ENV))
+
+              if (this->time () - this_inaccuracy
+                  > uto_time  - uto_inaccuracy)
                 {
-                  ACE_TRY_CHECK;
                   return CosTime::TCGreaterThan;
                 }
             }
-          else if (this->time (ACE_TRY_ENV) + this->inaccuracy (ACE_TRY_ENV)
-                   < uto->time (ACE_TRY_ENV) - uto->inaccuracy (ACE_TRY_ENV))
+          else if (this->time () + this_inaccuracy
+                   < uto_time - uto_inaccuracy)
 
             {
-              ACE_TRY_CHECK;
               return CosTime::TCLessThan;
             }
         }
@@ -174,11 +179,14 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
 
   ACE_TRY
     {
-      if (this->time (ACE_TRY_ENV) > uto->time (ACE_TRY_ENV))
+      TimeBase::TimeT uto_time = uto->time (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      if (this->time (ACE_TRY_ENV) > uto_time)
         {
           ACE_NEW_THROW_EX (tio,
-                            TAO_TIO (uto->time (ACE_TRY_ENV),
-                                     this->time (ACE_TRY_ENV)),
+                            TAO_TIO (uto_time,
+                                     this->time ()),
                             CORBA::NO_MEMORY ());
 
           ACE_TRY_CHECK;
@@ -186,8 +194,8 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto,
       else
         {
           ACE_NEW_THROW_EX (tio,
-                            TAO_TIO (this->time (ACE_TRY_ENV),
-                                     uto->time (ACE_TRY_ENV)),
+                            TAO_TIO (this->time (),
+                                     uto_time),
                             CORBA::NO_MEMORY ());
 
           ACE_TRY_CHECK;

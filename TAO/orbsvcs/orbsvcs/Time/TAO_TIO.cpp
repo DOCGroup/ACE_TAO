@@ -42,20 +42,27 @@ TAO_TIO::spans (CosTime::UTO_ptr uto,
   ACE_TRY
     {
       TimeBase::TimeT lb1 =
-        this->time_interval (ACE_TRY_ENV).lower_bound;
-      ACE_TRY_CHECK;
+        this->time_interval ().lower_bound;
 
       TimeBase::TimeT up1 =
-        this->time_interval (ACE_TRY_ENV).upper_bound;
+        this->time_interval ().upper_bound;
+
+      TimeBase::TimeT tmp1 = uto->time (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TimeBase::TimeT lb2 =
-        uto->time (ACE_TRY_ENV) - uto->inaccuracy (ACE_TRY_ENV);
+      TimeBase::TimeT tmp2 = uto->inaccuracy (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      TimeBase::TimeT up2 =
-        uto->time (ACE_TRY_ENV) + uto->inaccuracy (ACE_TRY_ENV);
+      TimeBase::TimeT lb2 = tmp1 - tmp2;
+
+
+      tmp1 = uto->time (ACE_TRY_ENV);
       ACE_TRY_CHECK;
+
+      tmp2 = uto->inaccuracy (ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+
+      TimeBase::TimeT up2 = tmp1 + tmp2;
 
       if (lb1 == lb2 && up1 == up2)
         {
@@ -156,15 +163,16 @@ TAO_TIO::overlaps (CosTime::TIO_ptr tio,
   ACE_TRY
     {
       TimeBase::TimeT lb1 =
-        this->time_interval (ACE_TRY_ENV).lower_bound;
-      TimeBase::TimeT up1 =
-        this->time_interval (ACE_TRY_ENV).upper_bound;
-      TimeBase::TimeT lb2 =
-        tio->time_interval (ACE_TRY_ENV).lower_bound;
-      TimeBase::TimeT up2 =
-        tio->time_interval (ACE_TRY_ENV).upper_bound;
+        this->time_interval ().lower_bound;
 
-      ACE_TRY_CHECK;
+      TimeBase::TimeT up1 =
+        this->time_interval ().upper_bound;
+
+      TimeBase::TimeT lb2 =
+        tio->time_interval ().lower_bound;
+
+      TimeBase::TimeT up2 =
+        tio->time_interval ().upper_bound;
 
       if (lb1 == lb2 && up1 == up2)
         {
@@ -256,10 +264,10 @@ TAO_TIO::time (CORBA::Environment &ACE_TRY_ENV)
   TAO_UTO *uto = 0;
 
   ACE_NEW_THROW_EX (uto,
-                    TAO_UTO ((this->time_interval (ACE_TRY_ENV).upper_bound -
-                              this->time_interval (ACE_TRY_ENV).lower_bound) / 2,
-                             this->time_interval (ACE_TRY_ENV).upper_bound -
-                             this->time_interval (ACE_TRY_ENV).lower_bound,
+                    TAO_UTO ((this->time_interval ().upper_bound -
+                              this->time_interval ().lower_bound) / 2,
+                             this->time_interval ().upper_bound -
+                             this->time_interval ().lower_bound,
                              0),
                     CORBA::NO_MEMORY ());
 
@@ -267,4 +275,3 @@ TAO_TIO::time (CORBA::Environment &ACE_TRY_ENV)
 
   return uto->_this ();
 }
-

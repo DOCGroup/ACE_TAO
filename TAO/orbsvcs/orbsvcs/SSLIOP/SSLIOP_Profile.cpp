@@ -48,8 +48,8 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char* host,
 TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (const char *string,
                                         TAO_ORB_Core *orb_core,
                                         const SSLIOP::SSL *ssl_component,
-                                        CORBA::Environment &ACE_TRY_ENV)
-  : TAO_IIOP_Profile (string, orb_core, ACE_TRY_ENV),
+                                        CORBA::Environment &env)
+  : TAO_IIOP_Profile (string, orb_core, env),
     ssl_endpoint_ (ssl_component, 0)
 {
   this->ssl_endpoint_.iiop_endpoint_ = &this->endpoint_;
