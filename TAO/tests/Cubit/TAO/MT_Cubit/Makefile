@@ -68,8 +68,8 @@ CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT)/tao/compat
 
 # pccTimer will eventually get integrated into ACE.  It is specific for ClassiX on VME
 ifdef CHORUS
-	SRC += pccTimer.cpp
-	CLT_OBJS += pccTimer.o
+	LSRC += pccTimer.cpp
+	CUBIT_CLIENT_OBJS += pccTimer.o
 	LDLIBS += -lOrb
 else
 	LDLIBS += -lOrb-mt
