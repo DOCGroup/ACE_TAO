@@ -1565,7 +1565,7 @@ int
 ACE::count_interfaces (ACE_HANDLE handle, 
 		       size_t &how_many)
 {
-#if defined (sparc) 
+#if defined (sparc) && defined (SIOCGIFNUM)
   if (ACE_OS::ioctl (handle, SIOCGIFNUM, (caddr_t) &how_many) == -1) 
     ACE_ERROR_RETURN ((LM_ERROR, "ACE::get_ip_interfaces:ioctl - SIOCGIFNUM failed"), -1);
    return 0;
@@ -1614,7 +1614,7 @@ ACE::count_interfaces (ACE_HANDLE handle,
       if_count++;
     }
 
-  free(ifcfg.ifc_req);
+  ACE_OS::free (ifcfg.ifc_req);
   how_many = if_count;
   return 0;
 #else
