@@ -181,7 +181,7 @@ TAO_Offer_Exporter::export_offers_to_all (CORBA::Environment& _env)
           TAO_CHECK_ENV;
 #else
           TAO_CHECK_ENV;
-          remote_reg = link_info->target_reg;
+          remote_reg = link_info->target_reg.in ();
 #endif /* TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG */
 
           this->export_to (remote_reg.in (), _env);
@@ -636,5 +636,3 @@ template class TAO_Simple_Dynamic_Property<CORBA::ULong>;
 #pragma instantiate TAO_Simple_Dynamic_Property<TAO_Trader_Test::ULongSeq>
 #pragma instantiate TAO_Simple_Dynamic_Property<CORBA::ULong>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
