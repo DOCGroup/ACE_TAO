@@ -11,6 +11,9 @@ Thu May 21 17:36:37 1998  David L. Levine  <levine@cs.wustl.edu>
         * tests/SString_Test.cpp (main): added ACE_ASSERT with s4 in
           it, because it was unused otherwise.
 
+        * performance-tests/Synch-Benchmarks/Options.cpp (print_results):
+          changed #else to #elif, because it has a condition after it.
+
 Thu May 21 15:28:07 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * tests/test_config.h: Modified to write output from tests into
