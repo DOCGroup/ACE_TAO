@@ -260,6 +260,10 @@ public:
 //   //@}
 // #endif  /* !NO_DSA */
 
+  CORBA::Boolean operator== (const TAO_SSLIOP_Credentials &rhs);
+
+  CORBA::ULong hash (void) const;
+
   //@{
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
   typedef TAO_SSLIOP_Credentials_ptr _ptr_type;

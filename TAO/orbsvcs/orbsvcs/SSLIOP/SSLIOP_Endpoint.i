@@ -102,3 +102,15 @@ TAO_SSLIOP_Endpoint::trust (void) const
 {
   return this->trust_;
 }
+
+ACE_INLINE void
+TAO_SSLIOP_Endpoint::credentials (const TAO_SSLIOP_Credentials_ptr creds)
+{
+  this->credentials_ = TAO_SSLIOP_Credentials::_duplicate (creds);
+}
+
+ACE_INLINE TAO_SSLIOP_Credentials *
+TAO_SSLIOP_Endpoint::credentials (void) const
+{
+  return this->credentials_.in ();
+}

@@ -449,6 +449,27 @@ TAO_SSLIOP_Credentials::refresh (const CORBA::Any & /* refresh_data */
 #endif  /* 0 */
 }
 
+CORBA::Boolean
+TAO_SSLIOP_Credentials::operator== (const TAO_SSLIOP_Credentials &rhs)
+{
+  return
+    this->accepting_options_supported_ == rhs.accepting_options_supported_
+    && this->accepting_options_required_ == rhs.accepting_options_required_
+    && this->invocation_options_supported_ == invocation_options_supported_
+    && this->invocation_options_required_ == this->invocation_options_required_
+    && ::X509_cmp (this->x509_.in (), rhs.x509_.in ()) == 0
+#ifndef NO_RSA
+    && this->rsa_.in () == rhs.rsa_.in ()  // @@ weak test?
+#endif  /* NO_RSA */
+    ;
+}
+
+CORBA::ULong
+TAO_SSLIOP_Credentials::hash (void) const
+{
+  return ::X509_issuer_name_hash (this->x509_.in ());
+}
+
 TAO_SSLIOP_Credentials_ptr
 TAO_SSLIOP_Credentials::_narrow (CORBA::Object_ptr obj
                                  TAO_ENV_ARG_DECL)

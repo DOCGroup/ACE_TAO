@@ -22,7 +22,8 @@ TAO_SSLIOP_Endpoint::TAO_SSLIOP_Endpoint (const SSLIOP::SSL *ssl_component,
     iiop_endpoint_ (iiop_endp),
     destroy_iiop_endpoint_ (0),
     qop_ (Security::SecQOPIntegrityAndConfidentiality),
-    trust_ ()
+    trust_ (),
+    credentials_ ()
 {
   if (ssl_component != 0)
     {
@@ -140,7 +141,8 @@ TAO_SSLIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
        && this->ssl_component_.port != endpoint->ssl_component_.port)
       || this->qop_ != endpoint->qop ()
       || this->trust_.trust_in_target != t.trust_in_target
-      || this->trust_.trust_in_client != t.trust_in_client)
+      || this->trust_.trust_in_client != t.trust_in_client
+      || !(*this->credentials_.in () == *endpoint->credentials ()))
     return 0;
 
   return
@@ -157,6 +159,10 @@ TAO_SSLIOP_Endpoint::duplicate (void)
                                        0),
                   0);
 
+  endpoint->qop (this->qop_);
+  endpoint->trust (this->trust_);
+  endpoint->credentials (this->credentials_.in ());  // Shallow copy
+
   endpoint->iiop_endpoint (this->iiop_endpoint_, 1);
 
   return endpoint;
@@ -170,5 +176,6 @@ TAO_SSLIOP_Endpoint::hash (void)
     + this->ssl_component_.port
     + this->qop_
     + this->trust_.trust_in_target
-    + this->trust_.trust_in_client;
+    + this->trust_.trust_in_client
+    + this->credentials_->hash ();
 }
