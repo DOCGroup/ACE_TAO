@@ -195,11 +195,11 @@ public:
   void encode (void)
     {
       this->connection_id_ = htonl (this->connection_id_);
-      this->total_consumers_ = htonl (this->total_consumers_);
 
       for (ACE_INT32 i = 0; i < this->total_consumers_; i++)
         this->consumers_[i] = htonl (this->consumers_[i]);
         
+      this->total_consumers_ = htonl (this->total_consumers_);
     }
   // Encode from host byte order to network byte order.
 
