@@ -17,13 +17,12 @@ CFG=Simple Naming Client - Win32 Debug
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Simple Naming Client - Win32 Release" (based on\
- "Win32 (x86) Console Application")
-!MESSAGE "Simple Naming Client - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "Simple Naming Client - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
+# PROP AllowPerConfigDependencies 0
 # PROP Scc_ProjName ""
 # PROP Scc_LocalPath ""
 CPP=cl.exe
@@ -128,14 +127,51 @@ SOURCE=.\test_object.idl
 
 !IF  "$(CFG)" == "Simple Naming Client - Win32 Release"
 
-!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
-
+# PROP Ignore_Default_Tool 1
 # Begin Custom Build - Invoking TAO_IDL Compiler
 InputPath=.\test_object.idl
 InputName=test_object
 
 BuildCmds= \
-	..\..\..\TAO_IDL\tao_idl $(InputName).idl
+	tao_idl $(InputName).idl
+
+"$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)C.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S_T.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "Simple Naming Client - Win32 Debug"
+
+# PROP Ignore_Default_Tool 1
+# Begin Custom Build - Invoking TAO_IDL Compiler
+InputPath=.\test_object.idl
+InputName=test_object
+
+BuildCmds= \
+	tao_idl $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
