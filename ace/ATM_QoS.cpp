@@ -405,7 +405,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
 
   if (buf == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
+                       ASYS_TEXT ("Unable to allocate %d bytes for options\n"),
                        info.options),
                       0);
 

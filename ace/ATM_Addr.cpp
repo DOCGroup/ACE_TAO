@@ -440,7 +440,7 @@ ACE_ATM_Addr::dump (void) const
 
 //   if (buf == 0)
 //     ACE_ERROR_RETURN ((LM_ERROR,
-//                        ASYS_TEXT ("Unable to allocate %ld bytes for options\n"),
+//                        ASYS_TEXT ("Unable to allocate %d bytes for options\n"),
 //                        info.options),
 //                       0);
 
