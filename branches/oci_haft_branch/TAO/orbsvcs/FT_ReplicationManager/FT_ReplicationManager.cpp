@@ -17,6 +17,7 @@
 
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
+#include "tao/IORTable/IORTable.h"
 #include "tao/debug.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Decoder.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
@@ -202,6 +203,32 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
   ACE_CHECK_RETURN (-1);
   poa_mgr->activate (ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
+
+  // Register our IOR in the IORTable with the key-string
+  // "ReplicationManager".
+  CORBA::Object_var ior_table_obj =
+    this->orb_->resolve_initial_references (
+      TAO_OBJID_IORTABLE ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  IORTable::Table_var ior_table =
+    IORTable::Table::_narrow (ior_table_obj.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  if (CORBA::is_nil (ior_table.in ()))
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+      ACE_TEXT ("%T %n (%P|%t) Unable to resolve the IORTable.\n")),
+      -1);
+  }
+  else
+  {
+    CORBA::String_var rm_ior_str = this->orb_->object_to_string (
+      this->replication_manager_ref_.in () ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+    ior_table->bind ("ReplicationManager", rm_ior_str.in ()
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
+  }
 
   // Publish our IOR, either to a file or the Naming Service.
   if (this->ior_output_file_ != 0)
@@ -399,7 +426,7 @@ TAO::FT_ReplicationManager::register_fault_notifier_i (
 
   if (result != 0)
   {
-    ACE_ERROR((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
       ACE_TEXT (
         "TAO::FT_ReplicationManager::register_fault_notifier_i: "
         "Could not re-initialize FT_FaultConsumer.\n")
