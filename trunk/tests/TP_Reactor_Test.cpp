@@ -49,6 +49,9 @@
 //============================================================================
 
 #include "test_config.h"
+
+#if defined(ACE_HAS_THREADS) 
+
 #include "TP_Reactor_Test.h"
 
 #include "ace/Signal.h"
@@ -1012,62 +1015,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
-{
-  ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
-
-  if (::parse_args (argc, argv) == -1)
-    return -1;
-
-  ::disable_signal (SIGPIPE, SIGPIPE);
-
-  MyTask    task1;
-  Acceptor  acceptor;
-  Connector connector;
-
-  if (task1.start (threads) == 0)
-    {
-      int rc = 0;
-
-      if (both != 0 || host == 0) // Acceptor
-        // Simplify, initial read with  zero size
-        if (acceptor.start (ACE_INET_Addr (port)) == 0)
-          rc = 1;
-
-      if (both != 0 || host != 0)
-        {
-          if (host == 0)
-            host = ACE_TEXT ("localhost");
-
-          rc += connector.start (ACE_INET_Addr (port, host),
-                                 senders);
-
-        }
-
-      if (rc > 0)
-        ACE_OS::sleep (seconds);
-    }
-
-  task1.stop ();
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\nNumber of Receivers objects = %d\n")
-              ACE_TEXT ("\nNumber of Sender objects = %d\n"),
-              acceptor.get_number_sessions (),
-              connector.get_number_sessions ()));
-
-  // As Reactor event loop now is inactive it is safe to destroy all
-  // senders
-
-  connector.stop ();
-  acceptor.stop ();
-
-  ACE_END_TEST;
-
-  return 0;
-}
-
 static int
 disable_signal (int sigmin, int sigmax)
 {
@@ -1119,3 +1066,67 @@ template class ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>;
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* ACE_HAS_THREADS */
+
+int
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+{
+  ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
+
+#if defined(ACE_HAS_THREADS)
+  if (::parse_args (argc, argv) == -1)
+    return -1;
+
+  ::disable_signal (SIGPIPE, SIGPIPE);
+
+  MyTask    task1;
+  Acceptor  acceptor;
+  Connector connector;
+
+  if (task1.start (threads) == 0)
+    {
+      int rc = 0;
+
+      if (both != 0 || host == 0) // Acceptor
+        // Simplify, initial read with  zero size
+        if (acceptor.start (ACE_INET_Addr (port)) == 0)
+          rc = 1;
+
+      if (both != 0 || host != 0)
+        {
+          if (host == 0)
+            host = ACE_TEXT ("localhost");
+
+          rc += connector.start (ACE_INET_Addr (port, host),
+                                 senders);
+
+        }
+
+      if (rc > 0)
+        ACE_OS::sleep (seconds);
+    }
+
+  task1.stop ();
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("\nNumber of Receivers objects = %d\n")
+              ACE_TEXT ("\nNumber of Sender objects = %d\n"),
+              acceptor.get_number_sessions (),
+              connector.get_number_sessions ()));
+
+  // As Reactor event loop now is inactive it is safe to destroy all
+  // senders
+
+  connector.stop ();
+  acceptor.stop ();
+#else /* ACE_HAS_THREADS */
+   ACE_UNUSED_ARG( argc );
+   ACE_UNUSED_ARG( argv );
+#endif /* ACE_HAS_THREADS */
+
+  ACE_END_TEST;
+
+  return 0;
+}
+
