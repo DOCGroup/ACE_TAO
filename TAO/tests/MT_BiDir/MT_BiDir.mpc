@@ -14,9 +14,9 @@ project(*Server): taoexe, portableserver, minimum_corba, bidir_giop {
 
 project(*Client): taoexe, portableserver, minimum_corba, bidir_giop {
   Source_Files {
-    SenderC.cpp
     ReceiverC.cpp
     ReceiverS.cpp
+    SenderC.cpp
     Client_Task.cpp
     Receiver_i.cpp
     client.cpp
