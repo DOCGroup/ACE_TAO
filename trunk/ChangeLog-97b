@@ -12,6 +12,12 @@ Fri Sep 12 12:53:20 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/Service_Types.cpp: #include Service_Types.i instead of
 	  Service_Record.i.
 
+	* ace/Synch_T.cpp: added #include "ace/Log_Msg.h".  I don't know
+	  what change caused this to be necessary, but tests/TSS_Test
+	  wouldn't build without it.
+
+	* ace/Log_Msg.cpp (instance): preallocate ACE_Log_Msg instance lock.
+
 Thu Sep 11 21:07:25 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Service_Object.h: Moved the ACE_Service_Type class into the
