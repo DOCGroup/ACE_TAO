@@ -6,7 +6,7 @@ Thu Jun 18 11:38:32 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 	* orbscvs/tests/AVStreams/server_discovery/Makefile:
 	* orbsvcs/tests/AVStreams/server_discovery/remote_netscape:
 	The beginnings of a Java tool to locate a best matched server for
-	the A/V demos client using the Trading Service.
+	the A/V demo's client using the Trading Service.
 	
 
 1998-06-18  Torben Worm  <tworm@cumbia.cs.wustl.edu>
