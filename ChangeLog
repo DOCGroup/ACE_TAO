@@ -1,3 +1,21 @@
+Wed Mar 31 09:06:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Reverted our change of
+        Sun Mar 14 12:10:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.{h,cpp}:
+        * ace/Select_Reactor_T.{cpp ,i}:
+        * ace/Timer_Queue_Adapters.{h,cpp}:
+        * ace/Timer_Queue_T.{h,i,cpp}:
+        * ace/Timer_Wheel_T.cpp:
+        * ace/Timer_Hash_T.cpp:
+        * ace/Timer_List_T.cpp:
+          Removed accessor for zero and max_time which where added in the commit
+          and only for MinGW define two static variables in the header file.
+          This fixes the link problems in the MinGW builds we have with max_time
+          and zero. Thanks to Martin Corino <mcorino@remedy.nl> for figuring
+          out the problem and making the patches.
+
 Tue Mar 30 17:53:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/USAGE:
