@@ -74,7 +74,7 @@ public:
   operator sigset_t *();
   // Returns a pointer to the underlying <sigset_t>.
 
-  sigset_t sigset (void);
+  sigset_t sigset (void) const;
   // Returns a copy of the underlying <sigset_t>.
 
   void dump (void) const;
@@ -91,35 +91,70 @@ private:
 class ACE_Export ACE_Sig_Action
 {
   // = TITLE
-  //     C++ wrapper around struct sigaction.
+  //     C++ wrapper facade for the <sigaction> struct.
 public:
   // = Initialization methods.
   ACE_Sig_Action (void);
+  // Default constructor.  Initializes everything to 0.
+
   ACE_Sig_Action (ACE_SignalHandler handler,
                   sigset_t *sigmask = 0,
                   int flags = 0);
+  // Assigns the various fields of a <sigaction> struct but doesn't
+  // register for signal handling via the <sigaction> function.
+
   ACE_Sig_Action (ACE_SignalHandler handler,
-                  ACE_Sig_Set &sigmask,
+                  const ACE_Sig_Set &sigmask,
                   int flags = 0);
+  // Assigns the various fields of a <sigaction> struct but doesn't
+  // register for signal handling via the <sigaction> function.
+
   ACE_Sig_Action (ACE_SignalHandler handler,
                   int signum,
                   sigset_t *sigmask = 0,
                   int flags = 0);
+  // Assigns the various fields of a <sigaction> struct and registers
+  // the <handler> to process signal <signum> via the <sigaction>
+  // function.
+
   ACE_Sig_Action (ACE_SignalHandler handler,
                   int signum,
-                  ACE_Sig_Set &sigmask,
+                  const ACE_Sig_Set &sigmask,
                   int flags = 0);
+  // Assigns the various fields of a <sigaction> struct and registers
+  // the <handler> to process signal <signum> via the <sigaction>
+  // function.
+
+  ACE_Sig_Action (const ACE_Sig_Set &signals,
+                  ACE_SignalHandler handler,
+                  const ACE_Sig_Set &sigmask,
+                  int flags = 0);
+  // Assigns the various fields of a <sigaction> struct and registers
+  // the <handler> to process all <signals> via the <sigaction>
+  // function.
+
+  ACE_Sig_Action (const ACE_Sig_Set &signals,
+                  ACE_SignalHandler handler,
+                  sigset_t *sigmask = 0,
+                  int flags = 0);
+  // Assigns the various fields of a <sigaction> struct and registers
+  // the <handler> to process all <signals> via the <sigaction>
+  // function.
+
   ACE_Sig_Action (const ACE_Sig_Action &s);
+  // Copy constructor.
 
   ~ACE_Sig_Action (void);
   // Default dtor.
 
   // = Signal action management.
-  int register_action (int signum, ACE_Sig_Action *oaction = 0);
+  int register_action (int signum,
+                       ACE_Sig_Action *oaction = 0);
   // Register <this> as the current disposition and store old
   // disposition into <oaction> if it is non-NULL.
 
-  int restore_action (int signum, ACE_Sig_Action &oaction);
+  int restore_action (int signum,
+                      ACE_Sig_Action &oaction);
   // Assign the value of <oaction> to <this> and make it become the
   // new signal disposition.
 
@@ -143,13 +178,6 @@ public:
   // = Set/get current signal handler (pointer to function).
   void handler (ACE_SignalHandler);
   ACE_SignalHandler handler (void);
-
-#if 0
-  // = Set/get current sa_sigaction, which is needed for POSIX
-  // real-time signals.
-  void sigaction (ACE_SignalHandler);
-  ACE_SignalHandler sigaction (void);
-#endif /* 0 */
 
   void dump (void) const;
   // Dump the state of an object.

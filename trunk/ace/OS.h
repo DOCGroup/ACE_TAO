@@ -6864,7 +6864,7 @@ private:
   // For at_exit support.
 
   int at_exit (ACE_EXIT_HOOK func);
-  // For ACE_OS::atexit () support, with ACE_LACKS_ATEXIT.
+  // For <ACE_OS::atexit> support.
 
   friend class ACE_OS;
   friend class ACE_Object_Manager;

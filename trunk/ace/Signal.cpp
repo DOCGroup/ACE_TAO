@@ -107,7 +107,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 }
 
 ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
-                                ACE_Sig_Set &sig_mask,
+                                const ACE_Sig_Set &sig_mask,
                                 int sig_flags)
 {
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
@@ -146,7 +146,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 
 ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
                                 int signum,
-                                ACE_Sig_Set &sig_mask,
+                                const ACE_Sig_Set &sig_mask,
                                 int sig_flags)
 {
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
@@ -161,6 +161,62 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
 #endif /* !ACE_HAS_TANDEM_SIGNALS */
   ACE_OS::sigaction (signum, &this->sa_, 0);
+}
+
+ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
+                                ACE_SignalHandler sig_handler,
+                                const ACE_Sig_Set &sig_mask,
+                                int sig_flags)
+{
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  this->sa_.sa_flags = sig_flags;
+
+  // Structure assignment...
+  this->sa_.sa_mask = sig_mask.sigset ();
+
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
+  this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
+
+#if (ACE_NSIG > 0)
+  for (int s = 1; s < ACE_NSIG; s++)
+    if (signals.is_member (s)
+        && ACE_OS::sigaction (s, &this->sa_, 0) == -1)
+      break;
+#else
+  ACE_UNUSED_ARG (signals);
+#endif /* ACE_NSIG */
+}
+
+ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
+                                ACE_SignalHandler sig_handler,
+                                sigset_t *sig_mask,
+                                int sig_flags)
+{
+  // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
+  this->sa_.sa_flags = sig_flags;
+
+  if (sig_mask == 0)
+    ACE_OS::sigemptyset (&this->sa_.sa_mask);
+  else
+    this->sa_.sa_mask = *sig_mask; // Structure assignment...
+
+#if !defined(ACE_HAS_TANDEM_SIGNALS)
+  this->sa_.sa_handler = ACE_SignalHandlerV (sig_handler);
+#else
+  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (sig_handler);
+#endif /* !ACE_HAS_TANDEM_SIGNALS */
+
+#if (ACE_NSIG > 0)
+  for (int s = 1; s < ACE_NSIG; s++)
+    if (signals.is_member (s)
+        && ACE_OS::sigaction (s, &this->sa_, 0) == -1)
+      break;
+#else
+  ACE_UNUSED_ARG (signals);
+#endif /* ACE_NSIG */
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)

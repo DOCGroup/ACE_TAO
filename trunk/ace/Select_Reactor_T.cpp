@@ -654,7 +654,8 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 #if (ACE_NSIG > 0)
   for (int s = 1; s < ACE_NSIG; s++)
     if (sigset.is_member (s)
-        && this->signal_handler_->register_handler (s, new_sh,
+        && this->signal_handler_->register_handler (s,
+                                                    new_sh,
                                                     new_disp) == -1)
       result = -1;
 #else

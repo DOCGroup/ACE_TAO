@@ -88,7 +88,7 @@ ACE_Sig_Set::operator sigset_t *(void)
 }
 
 ACE_INLINE sigset_t
-ACE_Sig_Set::sigset (void)
+ACE_Sig_Set::sigset (void) const
 {
   ACE_TRACE ("ACE_Sig_Set::sigset");
   return this->sigset_;
