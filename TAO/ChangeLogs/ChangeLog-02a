@@ -1,3 +1,12 @@
+Fri Jun 15 11:19:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+        * tao/DynamicAny/DynArray_i.cpp:
+
+          Applied patches sent in by Philippe Merle 
+          <Philippe.Merle@lifl.fr> to fix some initialization
+          oversights.
+
 Fri Jun 15 11:11:19 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/orb.idl:
