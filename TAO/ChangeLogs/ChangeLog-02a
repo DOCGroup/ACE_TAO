@@ -1,3 +1,20 @@
+Wed Oct 24 14:51:03 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
+
+	* examples/Quoter/Client.bor: 
+	* examples/Quoter/Server.bor:
+	* examples/Quoter/Generic_factory.bor: 
+	* examples/Quoter/Factory_finder.bor:
+
+	  Updated makefiles to use ACE_ROOT instead of TAO_ROOT
+	  environment variable when referring to the include paths. Thanks
+	  to Christopher Kohlhoff <chris@kohlhoff.com> and Johnny
+	  Willemsen" <johnny_willemsen@planet.nl>, for traking this
+	  problem.
+
+	* orbsvcs/orbsvcs/AV/AV_Pluggable_Framework.html:
+
+	  Fixed Fuzzes.
+
 Wed Oct 24 14:12:29 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/PortableInterceptor.cpp:
@@ -217,7 +234,12 @@ Tue Oct  9 17:46:07 2001  Angelo Corsaro  <corsaro@doc.ece.uci.edu>
 	* orbsvcs/tests/AVStreams/Modify_QoS/receiver.cpp:
 	* orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
 
+<<<<<<< ChangeLog
+	  Added missing RCS ID tag. This will fix the FUZZ build.
+
+=======
 	  Added missing $Id$. This will fix the FUZZ build.
+>>>>>>> 1.4383
 
 Tue Oct 09 14:00:46 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
