@@ -129,6 +129,9 @@ cat_octet_seq (const char *object_name,
                TAO_InputCDR& stream);
 
 static CORBA::Boolean
+cat_profile_helper(TAO_InputCDR& stream, const char *protocol);
+
+static CORBA::Boolean
 catior (char* str,
         CORBA::Environment &)
 {
@@ -260,6 +263,12 @@ catior (char* str,
             continue_decoding = cat_shmiop_profile (stream);
             ACE_DEBUG ((LM_DEBUG, "%}"));
           }
+	else if (tag == TAO_TAG_UDP_PROFILE)
+          {
+            ACE_DEBUG ((LM_DEBUG, "%{"));
+	    continue_decoding =  cat_profile_helper(stream, "DIOP (GIOP over UDP)");
+            ACE_DEBUG ((LM_DEBUG, "%}"));
+	  }
         else
           {
             ACE_DEBUG ((LM_DEBUG, "%{"));
