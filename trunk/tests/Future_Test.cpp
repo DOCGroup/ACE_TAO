@@ -47,7 +47,6 @@ class Scheduler : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
   //     Active Object Scheduler.
 {
-  friend class Method_ObjectWork;
 public:
   Scheduler (const char *, Scheduler * = 0);
   virtual ~Scheduler (void);

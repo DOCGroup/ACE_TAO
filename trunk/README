@@ -40,10 +40,10 @@ automates system configuration and reconfiguration by dynamically
 linking services into applications at run-time and executing these
 services in one or more processes or threads.
 
-ACE is currently used in commercial products by dozens of companies
-including Ericsson, Bellcore, Siemens, Motorola, Kodak, Boeing,
-Lucent, DEC, Lockheed Martin, and SAIC.  Commercial support for ACE is
-available at http://www.riverace.com.
+ACE is currently used in commercial projects and products by dozens of
+companies including Ericsson, Bellcore, Siemens, Motorola, Kodak,
+Boeing, Lucent, DEC, Lockheed Martin, and SAIC.  Commercial support
+for ACE is available at http://www.riverace.com.
 
 ----------------------------------------
 

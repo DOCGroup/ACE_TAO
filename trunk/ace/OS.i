@@ -1771,10 +1771,9 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #if defined (ACE_HAS_THREADS)
   int result;
   timespec_t ts;
+
   if (timeout != 0)
-    {
-      ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
-    }
+    ts = *timeout; // Calls ACE_Time_Value::operator timespec_t().
 
 #if (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_HAS_FSU_PTHREADS)
 #  if defined (ACE_HAS_DCE_DRAFT4_THREADS)
