@@ -1404,7 +1404,8 @@ endif
   $(TAO_ROOT)/tao/ORB.i \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.h \
   $(TAO_ROOT)/tao/ORB_Core_Auto_Ptr.inl \
-  $(TAO_ROOT)/tao/Stub.i
+  $(TAO_ROOT)/tao/Stub.i \
+  $(TAO_ROOT)/tao/debug.h
 
 .obj/Messaging.o .obj/Messaging.so .shobj/Messaging.o .shobj/Messaging.so: Messaging.cpp Messaging.h \
   $(ACE_ROOT)/ace/pre.h messaging_export.h \
