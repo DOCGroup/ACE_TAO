@@ -1,3 +1,11 @@
+Wed May 20 23:02:41 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/SOCK_Dgram_Mcast.cpp (subscribe): On Win32, if
+	  ACE::get_ip_interfaces finds less than 2 interfaces, call
+	  subscribe with "0.0.0.0".  This is sort of a hack and is meant
+	  only to help get things working again until ACE::get_ip_interfaces
+	  can be made to work correctly in all cases.
+
 Wed May 20 10:42:12 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-mvs.h: enabled ACE_LACKS_CONDATTR_PSHARED and
