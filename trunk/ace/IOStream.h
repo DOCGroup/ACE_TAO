@@ -63,7 +63,7 @@ public:
   inline ACE_Quoted_String &operator = (const char *c) {
     return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
   }
-  inline bool operator < (const ACE_Quoted_String &s) const {
+  inline int operator < (const ACE_Quoted_String &s) const {
     return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
 #if defined (ACE_WIN32)
