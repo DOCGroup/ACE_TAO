@@ -1,3 +1,11 @@
+Wed Aug 22 12:30:25 2001  Joe Hoffert  <joeh@cs.wustl.edu>
+
+	* pace/win32/pace_lib.dsp: 
+	  Added #define PACE_AS_STATIC_LIBS to static debug
+	  build be consistent with ACE and TAO project files.
+	  It was mistakenly just added for the static release
+	  build previously.
+
 Wed Aug 22 12:16:30 2001  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* pace/win32/pace_lib.dsp: 
