@@ -143,12 +143,12 @@ main (int argc, char **argv)
       policies[0] =
         root_poa->create_implicit_activation_policy (PortableServer::IMPLICIT_ACTIVATION,
                                                      ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       policies[1] =
         root_poa->create_thread_policy (PortableServer::SINGLE_THREAD_MODEL,
                                         ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Creation of the child POA.
       PortableServer::POA_var child_poa =
@@ -156,7 +156,7 @@ main (int argc, char **argv)
                               poa_manager.in (),
                               policies,
                               ACE_TRY_ENV);
-      ACE_CHECK;
+      ACE_TRY_CHECK;
 
       // Destroy the policies
       for (CORBA::ULong i = 0;
@@ -164,7 +164,7 @@ main (int argc, char **argv)
            ++i)
         {
           policies[i]->destroy (ACE_TRY_ENV);
-          ACE_CHECK;
+          ACE_TRY_CHECK;
         }
 
       poa_manager->activate (ACE_TRY_ENV);
