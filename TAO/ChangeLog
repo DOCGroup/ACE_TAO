@@ -8,8 +8,8 @@ Tue Sep 24 09:36:43 2002  Ossama Othman  <ossama@uci.edu>
 	  Removed unnecessary references to the DynamicInterface library.
 
 	  Corrected ImR_Activator binary name from `ImR_Activator .exe' to
-	  `ImR_Activator.exe'.  Notice the space between "ImR_Activator"
-	  and ".exe".
+	  `ImR_Activator.exe'.  Notice the space that was between
+	  "ImR_Activator" and ".exe".
 
 	* TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp (ready_check):
 
@@ -60,6 +60,7 @@ Tue Sep 24 09:36:43 2002  Ossama Othman  <ossama@uci.edu>
 	  way of marching an argument unused, i.e. only list the type of
 	  the argument without the argument name.
 
+>>>>>>> 1.441
 Tue Sep 24 08:58:54 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp: 
