@@ -155,6 +155,7 @@ char * cuserid (char *s);
 #define ACE_LACKS_CONDATTR_PSHARED
 #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
+#define ACE_HAS_DIRENT
 
 // #define ACE_HAS_SIGWAIT
 
