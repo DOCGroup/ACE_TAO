@@ -109,16 +109,17 @@ ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result (void)
 {
 }
 
-ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result (ACE_Handler &handler,
-                                                  const void* act,
-                                                  ACE_HANDLE event,
-                                                  u_long offset,
-                                                  u_long offset_high,
-                                                  int priority,
-                                                  int signal_number)
+ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
+   const void* act,
+   ACE_HANDLE event,
+   u_long offset,
+   u_long offset_high,
+   int priority,
+   int signal_number)
   : ACE_Asynch_Result_Impl (),
     aiocb (),
-    handler_ (handler),
+    handler_proxy_ (handler_proxy),
     act_ (act),
     bytes_transferred_ (0),
     success_ (0),
@@ -144,18 +145,22 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result (ACE_Handler &handler,
 // ****************************************************************
 
 int
-ACE_POSIX_Asynch_Operation::open (ACE_Handler &handler,
+ACE_POSIX_Asynch_Operation::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
                                   const void *completion_key,
                                   ACE_Proactor *proactor)
 {
   this->proactor_ = proactor;
-  this->handler_ = &handler;
+  this->handler_proxy_ = handler_proxy;
   this->handle_ = handle;
 
   // Grab the handle from the <handler> if <handle> is invalid
   if (this->handle_ == ACE_INVALID_HANDLE)
-    this->handle_ = this->handler_->handle ();
+    {
+      ACE_Handler *handler = handler_proxy.get ()->handler ();
+      if (handler != 0)
+        this->handle_ = handler->handle ();
+    }
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
@@ -207,7 +212,6 @@ ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation (void)
 ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor)
   : ACE_Asynch_Operation_Impl (),
     posix_proactor_ (posix_proactor),
-    handler_ (0),
     handle_  (ACE_INVALID_HANDLE)
 {
 }
@@ -232,17 +236,19 @@ ACE_POSIX_Asynch_Read_Stream_Result::handle (void) const
   return this->aio_fildes;
 }
 
-ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result (ACE_Handler &handler,
-                                                                          ACE_HANDLE handle,
-                                                                          ACE_Message_Block &message_block,
-                                                                          size_t bytes_to_read,
-                                                                          const void* act,
-                                                                          ACE_HANDLE event,
-                                                                          int priority,
-                                                                          int signal_number)
+ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
+   ACE_HANDLE handle,
+   ACE_Message_Block &message_block,
+   size_t bytes_to_read,
+   const void* act,
+   ACE_HANDLE event,
+   int priority,
+   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_POSIX_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number),
     message_block_ (message_block)
 {
   this->aio_fildes = handle;
@@ -272,7 +278,9 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Read_Stream::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_read_stream (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_read_stream (result);
 }
 
 ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result (void)
@@ -309,7 +317,7 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
   ACE_POSIX_Asynch_Read_Stream_Result *result = 0;
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Read_Stream_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Read_Stream_Result (this->handler_proxy_,
                                                        this->handle_,
                                                        message_block,
                                                        bytes_to_read,
@@ -351,7 +359,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::handle (void) const
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Procy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
@@ -361,7 +369,8 @@ ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
    int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_POSIX_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number),
     message_block_ (message_block)
 {
   this->aio_fildes = handle;
@@ -392,7 +401,9 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Write_Stream::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_write_stream (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_write_stream (result);
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result (void)
@@ -429,7 +440,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   ACE_POSIX_Asynch_Write_Stream_Result *result = 0;
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Write_Stream_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Write_Stream_Result (this->handler_proxy_,
                                                         this->handle_,
                                                         message_block,
                                                         bytes_to_write,
@@ -453,7 +464,7 @@ ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream (void)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
@@ -466,7 +477,7 @@ ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
-    ACE_POSIX_Asynch_Read_Stream_Result (handler,
+    ACE_POSIX_Asynch_Read_Stream_Result (handler_proxy,
                                          handle,
                                          message_block,
                                          bytes_to_read,
@@ -504,7 +515,9 @@ ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Read_File::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_read_file (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_read_file (result);
 }
 
 ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result (void)
@@ -544,7 +557,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
   ACE_POSIX_Asynch_Read_File_Result *result = 0;
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Read_File_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Read_File_Result (this->handler_proxy_,
                                                      this->handle_,
                                                      message_block,
                                                      bytes_to_read,
@@ -575,16 +588,16 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   int signal_number)
 {
   return ACE_POSIX_Asynch_Read_Stream::read (message_block,
-                                                   bytes_to_read,
-                                                   act,
-                                                   priority,
-                                                   signal_number);
+                                             bytes_to_read,
+                                             act,
+                                             priority,
+                                             signal_number);
 }
 
 // ************************************************************
 
 ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
@@ -597,7 +610,7 @@ ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_Asynch_Write_File_Result_Impl (),
-    ACE_POSIX_Asynch_Write_Stream_Result (handler,
+    ACE_POSIX_Asynch_Write_Stream_Result (handler_proxy,
                                           handle,
                                           message_block,
                                           bytes_to_write,
@@ -635,7 +648,9 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Write_File::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_write_file (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_write_file (result);
 }
 
 ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  (void)
@@ -675,7 +690,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
   ACE_POSIX_Asynch_Write_File_Result *result = 0;
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Write_File_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Write_File_Result (this->handler_proxy_,
                                                       this->handle_,
                                                       message_block,
                                                       bytes_to_write,
@@ -740,7 +755,7 @@ ACE_POSIX_Asynch_Accept_Result::accept_handle (void) const
 }
 
 ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE listen_handle,
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
@@ -752,7 +767,8 @@ ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Accept_Result_Impl (),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_POSIX_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number),
     message_block_ (message_block),
     listen_handle_ (listen_handle)
 {
@@ -779,7 +795,9 @@ ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Accept::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_accept (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_accept (result);
 }
 
 ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result (void)
@@ -817,7 +835,7 @@ ACE_POSIX_Asynch_Accept::set_handle (ACE_HANDLE handle)
 }
 
 int
-ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
+ACE_POSIX_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                ACE_HANDLE handle,
                                const void *completion_key,
                                ACE_Proactor *proactor)
@@ -837,7 +855,7 @@ ACE_POSIX_Asynch_Accept::open (ACE_Handler &handler,
                        ACE_LIB_TEXT("acceptor already open \n")),
                       -1);
 
-  result = ACE_POSIX_Asynch_Operation::open (handler,
+  result = ACE_POSIX_Asynch_Operation::open (handler_proxy,
                                              handle,
                                              completion_key,
                                              proactor);
@@ -908,7 +926,7 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     // Create future Asynch_Accept_Result
     ACE_POSIX_Asynch_Accept_Result *result = 0;
     ACE_NEW_RETURN (result,
-                    ACE_POSIX_Asynch_Accept_Result (*this->handler_,
+                    ACE_POSIX_Asynch_Accept_Result (this->handler_proxy_,
                                                     this->handle_,
                                                     accept_handle,
                                                     message_block,
@@ -1232,7 +1250,7 @@ void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
 
 
 ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE connect_handle,
    const void* act,
    ACE_HANDLE event,
@@ -1241,7 +1259,8 @@ ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Connect_Result_Impl (),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number)
+    ACE_POSIX_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number)
 {
   this->aio_fildes = connect_handle;
   this->aio_nbytes = 0;
@@ -1263,7 +1282,9 @@ ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Connect::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_connect (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_connect (result);
 }
 
 ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result (void)
@@ -1302,7 +1323,7 @@ ACE_POSIX_Asynch_Connect::set_handle (ACE_HANDLE)
 }
 
 int
-ACE_POSIX_Asynch_Connect::open (ACE_Handler &handler,
+ACE_POSIX_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                 ACE_HANDLE handle,
                                 const void *completion_key,
                                 ACE_Proactor *proactor)
@@ -1321,7 +1342,7 @@ ACE_POSIX_Asynch_Connect::open (ACE_Handler &handler,
                       -1);
 
   //int result =
-  ACE_POSIX_Asynch_Operation::open (handler,
+  ACE_POSIX_Asynch_Operation::open (handler_proxy,
                                     handle,
                                     completion_key,
                                     proactor);
@@ -1359,13 +1380,13 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
     // Create future Asynch_Connect_Result
     ACE_POSIX_Asynch_Connect_Result *result = 0;
     ACE_NEW_RETURN (result,
-                    ACE_POSIX_Asynch_Connect_Result (*this->handler_,
-                                                    connect_handle,
-                                                    act,
-                                                    this->posix_proactor ()->get_handle (),
-                                                    priority,
-                                                    signal_number),
-                  -1);
+                    ACE_POSIX_Asynch_Connect_Result (this->handler_proxy_,
+                                                     connect_handle,
+                                                     act,
+                                                     this->posix_proactor ()->get_handle (),
+                                                     priority,
+                                                     signal_number),
+                    -1);
 
     int rc = connect_i (result,
                         remote_sap,
@@ -1823,7 +1844,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::flags (void) const
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE socket,
    ACE_HANDLE file,
    ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -1839,7 +1860,8 @@ ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Transmit_File_Result_Impl (),
-    ACE_POSIX_Asynch_Result (handler, act, event, offset, offset_high, priority, signal_number),
+    ACE_POSIX_Asynch_Result
+     (handler_proxy, act, event, offset, offset_high, priority, signal_number),
     socket_ (socket),
     header_and_trailer_ (header_and_trailer),
     bytes_per_send_ (bytes_per_send),
@@ -1881,7 +1903,9 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Transmit_File::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_transmit_file (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_transmit_file (result);
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result (void)
@@ -2269,7 +2293,7 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   ACE_POSIX_Asynch_Transmit_File_Result *result = 0;
 
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Transmit_File_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Transmit_File_Result (this->handler_proxy_,
                                                          this->handle_,
                                                          file,
                                                          header_and_trailer,
@@ -2354,7 +2378,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::message_block () const
 }
 
 ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_read,
@@ -2367,7 +2391,8 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Dgram_Result_Impl(),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_POSIX_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
     remote_address_ (0),
@@ -2402,7 +2427,9 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Read_Dgram::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_read_dgram (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_read_dgram (result);
 }
 
 ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result (void)
@@ -2437,7 +2464,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::message_block () const
 }
 
 ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
-  (ACE_Handler &handler,
+  (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
@@ -2449,7 +2476,8 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
 
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Dgram_Result_Impl(),
-    ACE_POSIX_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_POSIX_Asynch_Result
+     (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
     flags_ (flags),
@@ -2482,7 +2510,9 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Write_Dgram::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_write_dgram (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_write_dgram (result);
 }
 
 ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result (void)
@@ -2508,7 +2538,7 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
   ACE_POSIX_Asynch_Read_Dgram_Result *result = 0;
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Read_Dgram_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Read_Dgram_Result (this->handler_proxy_,
                                                       this->handle_,
                                                       message_block,
                                                       space,
@@ -2560,7 +2590,7 @@ ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   ACE_POSIX_Asynch_Write_Dgram_Result *result = 0;
   ACE_POSIX_Proactor *proactor = this->posix_proactor ();
   ACE_NEW_RETURN (result,
-                  ACE_POSIX_Asynch_Write_Dgram_Result (*this->handler_,
+                  ACE_POSIX_Asynch_Write_Dgram_Result (this->handler_proxy_,
                                                        this->handle_,
                                                        message_block,
                                                        len,

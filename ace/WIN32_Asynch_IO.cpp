@@ -108,16 +108,17 @@ ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result (void)
 {
 }
 
-ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result (ACE_Handler &handler,
-                                                  const void* act,
-                                                  ACE_HANDLE event,
-                                                  u_long offset,
-                                                  u_long offset_high,
-                                                  int priority,
-                                                  int signal_number)
+ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result
+   (ACE_Handler::Proxy_Ptr &handler_proxy,
+    const void* act,
+    ACE_HANDLE event,
+    u_long offset,
+    u_long offset_high,
+    int priority,
+    int signal_number)
   : ACE_Asynch_Result_Impl (),
     OVERLAPPED (),
-    handler_ (handler),
+    handler_proxy_ (handler_proxy),
     act_ (act),
     bytes_transferred_ (0),
     success_ (0),
@@ -136,18 +137,22 @@ ACE_WIN32_Asynch_Result::ACE_WIN32_Asynch_Result (ACE_Handler &handler,
 }
 
 int
-ACE_WIN32_Asynch_Operation::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Operation::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
                                   const void *completion_key,
                                   ACE_Proactor *proactor)
 {
   this->proactor_ = proactor;
-  this->handler_ = &handler;
+  this->handler_proxy_ = handler_proxy;
   this->handle_ = handle;
 
   // Grab the handle from the <handler> if <handle> is invalid
   if (this->handle_ == ACE_INVALID_HANDLE)
-    this->handle_ = this->handler_->handle ();
+    {
+      ACE_Handler *handler = handler_proxy.get ()->handler ();
+      if (handler != 0)
+        this->handle_ = handler->handle ();
+    }
   if (this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
@@ -194,7 +199,6 @@ ACE_WIN32_Asynch_Operation::ACE_WIN32_Asynch_Operation (ACE_WIN32_Proactor *win3
   : ACE_Asynch_Operation_Impl (),
     win32_proactor_ (win32_proactor),
     proactor_ (0),
-    handler_ (0),
     handle_ (ACE_INVALID_HANDLE)
 {
 }
@@ -224,7 +228,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::handle (void) const
 }
 
 ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_read,
@@ -235,7 +239,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::ACE_WIN32_Asynch_Read_Stream_Result (
   int scatter_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler,
+    ACE_WIN32_Asynch_Result (handler_proxy,
                              act,
                              event,
                              0,
@@ -285,7 +289,9 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Read_Stream::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_read_stream (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_read_stream (result);
 }
 
 ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result (void)
@@ -394,7 +400,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Read_Stream_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Read_Stream_Result (this->handler_proxy_,
                                                        this->handle_,
                                                        message_block,
                                                        bytes_to_read,
@@ -486,7 +492,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Read_Stream_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Read_Stream_Result (this->handler_proxy_,
                                                        this->handle_,
                                                        message_block,
                                                        bytes_to_read,
@@ -612,12 +618,12 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Read_Stream::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Read_Stream::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     const void *completion_key,
                                     ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -654,7 +660,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::handle (void) const
 }
 
 ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_write,
@@ -665,7 +671,8 @@ ACE_WIN32_Asynch_Write_Stream_Result::ACE_WIN32_Asynch_Write_Stream_Result (
   int gather_enabled)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_WIN32_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_write_ (bytes_to_write),
     message_block_ (message_block),
     handle_ (handle),
@@ -709,7 +716,9 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Write_Stream::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_write_stream (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_write_stream (result);
 }
 
 ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result (void)
@@ -819,7 +828,7 @@ ACE_WIN32_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
 
   ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Write_Stream_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Write_Stream_Result (this->handler_proxy_,
                                                         this->handle_,
                                                         message_block,
                                                         bytes_to_write,
@@ -908,7 +917,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 
   ACE_WIN32_Asynch_Write_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Write_Stream_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Write_Stream_Result (this->handler_proxy_,
                                                         this->handle_,
                                                         message_block,
                                                         bytes_to_write,
@@ -1027,12 +1036,12 @@ ACE_WIN32_Asynch_Write_Stream::shared_write (ACE_WIN32_Asynch_Write_Stream_Resul
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Write_Stream::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Write_Stream::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                      ACE_HANDLE handle,
                                      const void *completion_key,
                                      ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -1051,7 +1060,7 @@ ACE_WIN32_Asynch_Write_Stream::proactor (void) const
 }
 
 ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_read,
@@ -1065,7 +1074,7 @@ ACE_WIN32_Asynch_Read_File_Result::ACE_WIN32_Asynch_Read_File_Result (
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Stream_Result_Impl (),
     ACE_Asynch_Read_File_Result_Impl (),
-    ACE_WIN32_Asynch_Read_Stream_Result (handler,
+    ACE_WIN32_Asynch_Read_Stream_Result (handler_proxy,
                                          handle,
                                          message_block,
                                          bytes_to_read,
@@ -1121,7 +1130,9 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Read_File::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_read_file (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_read_file (result);
 }
 
 ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result (void)
@@ -1253,7 +1264,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
 
   ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Read_File_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Read_File_Result (this->handler_proxy_,
                                                      this->handle_,
                                                      message_block,
                                                      bytes_to_read,
@@ -1331,7 +1342,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
 
   ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Read_File_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Read_File_Result (this->handler_proxy_,
                                                      this->handle_,
                                                      message_block,
                                                      bytes_to_read,
@@ -1427,12 +1438,12 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Read_File::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Read_File::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE handle,
                                   const void *completion_key,
                                   ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -1451,7 +1462,7 @@ ACE_WIN32_Asynch_Read_File::proactor (void) const
 }
 
 ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_write,
@@ -1465,7 +1476,7 @@ ACE_WIN32_Asynch_Write_File_Result::ACE_WIN32_Asynch_Write_File_Result (
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Stream_Result_Impl (),
     ACE_Asynch_Write_File_Result_Impl (),
-    ACE_WIN32_Asynch_Write_Stream_Result (handler,
+    ACE_WIN32_Asynch_Write_Stream_Result (handler_proxy,
                                           handle,
                                           message_block,
                                           bytes_to_write,
@@ -1522,7 +1533,9 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Write_File::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_write_file (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_write_file (result);
 }
 
 ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result  (void)
@@ -1651,7 +1664,7 @@ ACE_WIN32_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
   ACE_WIN32_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Write_File_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Write_File_Result (this->handler_proxy_,
                                                       this->handle_,
                                                       message_block,
                                                       bytes_to_write,
@@ -1734,7 +1747,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
 
   ACE_WIN32_Asynch_Write_File_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Write_File_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Write_File_Result (this->handler_proxy_,
                                                       this->handle_,
                                                       message_block,
                                                       bytes_to_write,
@@ -1832,12 +1845,12 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Write_File::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Write_File::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE handle,
                                    const void *completion_key,
                                    ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -1880,7 +1893,7 @@ ACE_WIN32_Asynch_Accept_Result::accept_handle (void) const
 }
 
 ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE listen_handle,
   ACE_HANDLE accept_handle,
   ACE_Message_Block &message_block,
@@ -1891,7 +1904,7 @@ ACE_WIN32_Asynch_Accept_Result::ACE_WIN32_Asynch_Accept_Result (
   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Accept_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler,
+    ACE_WIN32_Asynch_Result (handler_proxy,
                              act,
                              event,
                              0,
@@ -1924,7 +1937,9 @@ ACE_WIN32_Asynch_Accept_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Accept::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_accept (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_accept (result);
 }
 
 ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
@@ -2061,7 +2076,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
   // Common code for both WIN and POSIX.
   ACE_WIN32_Asynch_Accept_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Accept_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Accept_Result (this->handler_proxy_,
                                                   this->handle_,
                                                   accept_handle,
                                                   message_block,
@@ -2135,12 +2150,12 @@ ACE_WIN32_Asynch_Accept::~ACE_WIN32_Asynch_Accept (void)
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Accept::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Accept::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                ACE_HANDLE handle,
                                const void *completion_key,
                                ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -2173,7 +2188,7 @@ void ACE_WIN32_Asynch_Connect_Result::connect_handle ( ACE_HANDLE handle )
 
 
 ACE_WIN32_Asynch_Connect_Result::ACE_WIN32_Asynch_Connect_Result
-            (ACE_Handler &handler,
+            (ACE_Handler::Proxy_Ptr &handler_proxy,
              ACE_HANDLE connect_handle,
              const void* act,
              ACE_HANDLE event,
@@ -2181,8 +2196,9 @@ ACE_WIN32_Asynch_Connect_Result::ACE_WIN32_Asynch_Connect_Result
              int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Connect_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
-    connect_handle_ ( connect_handle )
+    ACE_WIN32_Asynch_Result
+      (handler_proxy, act, event, 0, 0, priority, signal_number),
+    connect_handle_ (connect_handle)
 {
   ;
 }
@@ -2203,7 +2219,9 @@ ACE_WIN32_Asynch_Connect_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Connect::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_connect (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_connect (result);
 }
 
 ACE_WIN32_Asynch_Connect_Result::~ACE_WIN32_Asynch_Connect_Result (void)
@@ -2317,7 +2335,7 @@ ACE_WIN32_Asynch_Connect::set_handle (ACE_HANDLE)
 }
 
 int
-ACE_WIN32_Asynch_Connect::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Connect::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                 ACE_HANDLE,
                                 const void *completion_key,
                                 ACE_Proactor *proactor)
@@ -2335,7 +2353,7 @@ ACE_WIN32_Asynch_Connect::open (ACE_Handler &handler,
                       -1);
 
   //int result =
-  ACE_WIN32_Asynch_Operation::open (handler,
+  ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                     ACE_INVALID_HANDLE,
                                     completion_key,
                                     proactor);
@@ -2373,7 +2391,7 @@ ACE_WIN32_Asynch_Connect::connect (ACE_HANDLE connect_handle,
     // Create future Asynch_Connect_Result
     ACE_WIN32_Asynch_Connect_Result *result = 0;
     ACE_NEW_RETURN (result,
-                    ACE_WIN32_Asynch_Connect_Result (*this->handler_,
+                    ACE_WIN32_Asynch_Connect_Result (this->handler_proxy_,
                                                      connect_handle,
                                                      act,
                                                      this->win32_proactor_->get_handle (),
@@ -2837,7 +2855,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::flags (void) const
 }
 
 ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE socket,
   ACE_HANDLE file,
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -2852,7 +2870,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::ACE_WIN32_Asynch_Transmit_File_Result (
   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Transmit_File_Result_Impl (),
-    ACE_WIN32_Asynch_Result (handler,
+    ACE_WIN32_Asynch_Result (handler_proxy,
                              act,
                              event,
                              offset,
@@ -2900,7 +2918,9 @@ ACE_WIN32_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Transmit_File::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_transmit_file (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_transmit_file (result);
 }
 
 ACE_WIN32_Asynch_Transmit_File_Result::~ACE_WIN32_Asynch_Transmit_File_Result (void)
@@ -3008,7 +3028,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 
   ACE_WIN32_Asynch_Transmit_File_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Transmit_File_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Transmit_File_Result (this->handler_proxy_,
                                                          this->handle_,
                                                          file,
                                                          header_and_trailer,
@@ -3087,12 +3107,12 @@ ACE_WIN32_Asynch_Transmit_File::~ACE_WIN32_Asynch_Transmit_File (void)
 // call to the ACE_WIN32_Asynch_Operation base class.
 
 int
-ACE_WIN32_Asynch_Transmit_File::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Transmit_File::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                       ACE_HANDLE handle,
                                       const void *completion_key,
                                       ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -3225,7 +3245,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::post_completion (ACE_Proactor_Impl *proactor
 }
 
 ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block *message_block,
   size_t bytes_to_read,
@@ -3237,7 +3257,7 @@ ACE_WIN32_Asynch_Read_Dgram_Result::ACE_WIN32_Asynch_Read_Dgram_Result (
   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Read_Dgram_Result_Impl(),
-    ACE_WIN32_Asynch_Result (handler, act, event, 0, 0, priority, signal_number),
+    ACE_WIN32_Asynch_Result (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
     remote_address_ (0),
@@ -3287,7 +3307,9 @@ ACE_WIN32_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Read_Dgram::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_read_dgram (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_read_dgram (result);
 }
 
 ACE_WIN32_Asynch_Read_Dgram_Result::~ACE_WIN32_Asynch_Read_Dgram_Result (void)
@@ -3367,7 +3389,7 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Read_Dgram_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Read_Dgram_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Read_Dgram_Result (this->handler_proxy_,
                                                       this->handle_,
                                                       message_block,
                                                       bytes_to_read,
@@ -3433,12 +3455,12 @@ ACE_WIN32_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 }
 
 int
-ACE_WIN32_Asynch_Read_Dgram::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Read_Dgram::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                    ACE_HANDLE handle,
                                    const void *completion_key,
                                    ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);
@@ -3556,7 +3578,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::post_completion (ACE_Proactor_Impl *proacto
 }
 
 ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (
-  ACE_Handler &handler,
+  ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block *message_block,
   size_t bytes_to_write,
@@ -3567,7 +3589,7 @@ ACE_WIN32_Asynch_Write_Dgram_Result::ACE_WIN32_Asynch_Write_Dgram_Result (
   int signal_number)
   : ACE_Asynch_Result_Impl (),
     ACE_Asynch_Write_Dgram_Result_Impl(),
-    ACE_WIN32_Asynch_Result (handler,
+    ACE_WIN32_Asynch_Result (handler_proxy,
                              act,
                              event,
                              0,
@@ -3612,7 +3634,9 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   ACE_Asynch_Write_Dgram::Result result (this);
 
   // Call the application handler.
-  this->handler_.handle_write_dgram (result);
+  ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
+  if (handler != 0)
+    handler->handle_write_dgram (result);
 }
 
 ACE_WIN32_Asynch_Write_Dgram_Result::~ACE_WIN32_Asynch_Write_Dgram_Result (void)
@@ -3692,7 +3716,7 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
   // Create the Asynch_Result.
   ACE_WIN32_Asynch_Write_Dgram_Result *result = 0;
   ACE_NEW_RETURN (result,
-                  ACE_WIN32_Asynch_Write_Dgram_Result (*this->handler_,
+                  ACE_WIN32_Asynch_Write_Dgram_Result (this->handler_proxy_,
                                                        this->handle_,
                                                        message_block,
                                                        bytes_to_write,
@@ -3760,12 +3784,12 @@ ACE_WIN32_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram::open (ACE_Handler &handler,
+ACE_WIN32_Asynch_Write_Dgram::open (ACE_Handler::Proxy_Ptr &handler_proxy,
                                     ACE_HANDLE handle,
                                     const void *completion_key,
                                     ACE_Proactor *proactor)
 {
-  return ACE_WIN32_Asynch_Operation::open (handler,
+  return ACE_WIN32_Asynch_Operation::open (handler_proxy,
                                            handle,
                                            completion_key,
                                            proactor);

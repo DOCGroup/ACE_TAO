@@ -622,7 +622,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // greatly slowing down this mkstemp() implementation.  It is more
   // practical to limit the search space to UTF-8 / ASCII characters
   // (i.e. 127 characters).
-#  if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS)
+#  if defined (ACE_HAS_WINCE) || defined (ACE_VXWORKS) || defined (max)
   static float const MAX_VAL = static_cast<float> (127);
 #else
   static float const MAX_VAL =
