@@ -11,7 +11,10 @@
 // ============================================================================
 
 #include "ORB_Manager.h"
+
 #include "tao/Environment.h"
+#include "tao/ORBInitializer_Registry.h"
+
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (tao,

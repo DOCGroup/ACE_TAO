@@ -140,7 +140,9 @@ CORBA::Environment::exception_type (void) const
   static char typecode_extra [] = "TypeCode/";
 
   if (!this->exception_)
-    return CORBA::NO_EXCEPTION;
+    {
+      return CORBA::NO_EXCEPTION;
+    }
 
   // All exceptions currently (CORBA 2.0) defined in the CORBA scope
   // are system exceptions ... except for a couple that are related to

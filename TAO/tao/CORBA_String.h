@@ -313,7 +313,6 @@ operator>> (istream &, CORBA::WString_out &);
 # include "tao/CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_CORBA_STRING_H */

@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ior_manip_export.h"
 
 #ifndef TAO_IORMANIP_SAFE_INCLUDE
 #error "You should not include IORC.h directly, use IORManip_Loader.h"
@@ -44,7 +44,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "ior_manip_export.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"

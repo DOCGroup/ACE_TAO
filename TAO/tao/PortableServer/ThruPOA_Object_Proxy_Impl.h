@@ -17,13 +17,12 @@
 #ifndef TAO_THRUPOA_OBJECT_PROXY_IMPL_H_
 #define TAO_THRUPOA_OBJECT_PROXY_IMPL_H_
 
-#include "portableserver_export.h"
-
 // -- ACE Include --
 #include /**/ "ace/pre.h"
 
+#include "portableserver_export.h"
+
 // -- TAO Include --
-#include "tao/corbafwd.h"
 #include "tao/Object_Proxy_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -38,7 +37,8 @@
  *
  * This class implements the ThruPOA proxy for the CORBA::Object class.
  */
-class TAO_PortableServer_Export TAO_ThruPOA_Object_Proxy_Impl : public virtual TAO_Object_Proxy_Impl
+class TAO_PortableServer_Export TAO_ThruPOA_Object_Proxy_Impl 
+  : public virtual TAO_Object_Proxy_Impl
 {
 public:
 

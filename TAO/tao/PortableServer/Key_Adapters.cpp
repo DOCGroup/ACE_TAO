@@ -1,7 +1,6 @@
 // $Id$
 
 #include "Key_Adapters.h"
-#include "ace/ACE.h"
 
 #include "ace/ACE.h"
 

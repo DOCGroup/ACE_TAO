@@ -27,31 +27,6 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/cdr_op_ci.cpp:70
-
-ACE_INLINE
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const Dynamic::Parameter &_tao_aggregate
-  )
-{
-  return
-    (strm << _tao_aggregate.argument) &&
-    (strm << _tao_aggregate.mode);
-}
-
-ACE_INLINE
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    Dynamic::Parameter &_tao_aggregate
-  )
-{
-  return
-    (strm >> _tao_aggregate.argument) &&
-    (strm >> _tao_aggregate.mode);
-}
-
-// TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_I_

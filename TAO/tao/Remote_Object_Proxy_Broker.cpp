@@ -1,16 +1,15 @@
 #include "Remote_Object_Proxy_Broker.h"
-#include "Object.h"
 #include "UB_String_Arguments.h"
 #include "Special_Basic_Arguments.h"
 #include "Invocation_Adapter.h"
 #include "IFR_Client_Adapter.h"
 #include "ORB_Core.h"
+
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (tao,
            TAO_Object_Remote_Proxy_Broker,
            "$Id$")
-
 
 namespace TAO
 {
@@ -117,7 +116,6 @@ namespace TAO
   }
 
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
-
 }
 
 // -----------------------------------------------------

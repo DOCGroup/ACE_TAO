@@ -31,8 +31,7 @@
 
 #include "ServicesC.h"
 #include "tao/Any_Dual_Impl_T.h"
-#include "tao/Environment.h"
-#include "tao/ORB_Core.h"
+#include "Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig

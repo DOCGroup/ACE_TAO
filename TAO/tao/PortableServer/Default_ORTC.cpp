@@ -31,6 +31,7 @@
 
 #include "Default_ORTC.h"
 #include "tao/Any_Impl_T.h"
+#include "tao/Typecode.h"
 #include "tao/Valuetype/ValueFactory.h"
 
 #if defined (__BORLANDC__)
@@ -423,11 +424,7 @@ OBV_TAO_Default_ORT::ObjectReferenceTemplate::_tao_unmarshal_state (TAO_InputCDR
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::ParameterMode
-      >;  template class
-    TAO_Value_Var_T<
-        TAO_Default_ORT::ObjectReferenceTemplate,
-        TAO::Value_Traits<TAO_Default_ORT::ObjectReferenceTemplate>
-      >;
+      >;  
   
   template class
     TAO_Value_Out_T<

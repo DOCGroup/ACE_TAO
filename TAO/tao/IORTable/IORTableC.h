@@ -33,14 +33,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "iortable_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "iortable_export.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/VarOut_T.h"
 #include "tao/Object.h"

@@ -14,7 +14,7 @@
 #define TAO_UB_STRING_SARGUMENTS_H
 
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+
 #include "tao/UB_String_SArgument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -21,6 +21,7 @@
 
 #ifndef TAO_CORBA_EXCEPTIONLIST_H
 #define TAO_CORBA_EXCEPTIONLIST_H
+
 #include /**/ "ace/pre.h"
 
 #include "dynamicinterface_export.h"
@@ -29,8 +30,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "tao/Pseudo_VarOut_T.h"
+#include "tao/orbconf.h"
+#include "tao/Basic_Types.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Atomic_Op.h"
@@ -44,6 +46,9 @@
 
 namespace CORBA
 {
+  class ExceptionList;
+  typedef ExceptionList *ExceptionList_ptr;
+
   TAO_NAMESPACE_INLINE_FUNCTION void release (ExceptionList_ptr);
   TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ExceptionList_ptr);
 

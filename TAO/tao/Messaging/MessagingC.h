@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "messaging_export.h"
 
 #ifndef TAO_MESSAGING_SAFE_INCLUDE
 #error "You should not include MessagingC.h directly, use Messaging.h"
@@ -43,8 +43,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-#include "messaging_export.h"
 #include "tao/Valuetype/ValueBase.h"
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/Valuetype/ValueFactory.h"

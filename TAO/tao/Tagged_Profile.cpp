@@ -12,7 +12,9 @@
 # include "tao/Tagged_Profile.i"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID(tao, Tagged_Profile, "$Id$")
+ACE_RCSID (tao, 
+           Tagged_Profile, 
+           "$Id$")
 
 CORBA::Boolean
 TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
@@ -32,13 +34,17 @@ TAO_Tagged_Profile::extract_object_key (IOP::TaggedProfile &profile)
         acceptor->object_key (profile,
                               this->object_key_);
       if (retval == -1)
-        return 0;
+        {
+          return 0;
+        }
     }
   else
     {
       if (TAO_debug_level)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t)TAO_Tagged_Profile \n")));
+        }
 
       return 0;
     }
@@ -155,7 +161,9 @@ TAO_Tagged_Profile::unmarshall_ref_addr_i (
 
   // Set the value in TAO_Tagged_Profile
   if (hdr_status)
-    this->profile_index_ = prof_index;
+    {
+      this->profile_index_ = prof_index;
+    }
 
   // Get the length of the type_id
   CORBA::Long id_length = 0;

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/GIOP_Message_Generator_Parser_12.h"
+#include "tao/orbconf.h"
 
 /**
  * @class TAO_GIOP_Message_Generator_Parser_Impl

@@ -13,9 +13,10 @@
 
 #ifndef TAO_SHMIOP_CONNECT_H
 #define TAO_SHMIOP_CONNECT_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -25,7 +26,6 @@
 
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"
-#include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
 #include "SHMIOP_Transport.h"
@@ -115,4 +115,5 @@ private:
 #endif /* TAO_HAS_SHMIOP && TAO_HAS_SHMIOP != 0 */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_SHMIOP_CONNECT_H */

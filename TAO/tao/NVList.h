@@ -16,32 +16,48 @@
 #define TAO_NVLIST_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/orbconf.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Any.h"
-#include "tao/Environment.h"
-
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/CORBA_macros.h"
+
+#include "tao/CORBA_methods.h"
+#include "tao/Any.h"
+#include "tao/Environment.h"
 
 class TAO_ORB_Core;
 class TAO_InputCDR;
 
 namespace CORBA
 {
+  enum
+  {
+    // = Flags for NVList add methods
+    ARG_IN                  = 0x01,
+    ARG_OUT                 = 0x02,
+    ARG_INOUT               = 0x04,
+    IN_COPY_VALUE           = 0x08,
+    OUT_LIST_MEMORY         = 0x10,
+    DEPENDENT_LIST          = 0x20,
+
+    // = (Unused) flags for Context methods
+    CTX_RESTRICT_SCOPE      = 0x40,
+    CTX_DELETE_DESCENDENTS  = 0x80,
+
+    // = Flags for deferred synchronous methods
+    INV_NO_RESPONSE         = 0x100,
+    INV_TERM_ON_ERR         = 0x200,
+    RESP_NO_WAIT            = 0x400
+  };
+
   class NamedValue;
   typedef NamedValue *NamedValue_ptr;
   typedef TAO_Pseudo_Var_T<NamedValue> NamedValue_var;
   typedef TAO_Pseudo_Out_T<NamedValue, NamedValue_var> NamedValue_out;
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NamedValue_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NamedValue_ptr);
 
   typedef ULong Flags;
 
@@ -125,9 +141,6 @@ namespace CORBA
   typedef NVList *NVList_ptr;
   typedef TAO_Pseudo_Var_T<NVList> NVList_var;
   typedef TAO_Pseudo_Out_T<NVList, NVList_var> NVList_out;
-
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (NVList_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (NVList_ptr);
 
   /**
    * @class NVList

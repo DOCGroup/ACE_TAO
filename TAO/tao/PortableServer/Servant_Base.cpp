@@ -81,9 +81,7 @@ CORBA::Boolean
 TAO_ServantBase::_is_a (const char *logical_type_id
                         ACE_ENV_ARG_DECL)
 {
-  const char *id = CORBA::_tc_Object->id (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK_RETURN (0);
-
+  const char *id = "IDL:omg.org/CORBA/Object:1.0";
   return ACE_OS::strcmp (logical_type_id, id) == 0;
 }
 

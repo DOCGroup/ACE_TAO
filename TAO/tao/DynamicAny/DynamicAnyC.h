@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "dynamicany_export.h"
 
 #ifndef TAO_DYNAMICANY_SAFE_INCLUDE
 #error "You should not include DynamicAnyC.h directly, use DynamicAny.h"
@@ -46,7 +46,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "dynamicany_export.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"

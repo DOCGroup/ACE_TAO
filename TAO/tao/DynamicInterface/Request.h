@@ -31,7 +31,6 @@
 
 #include "Context.h"
 #include "ExceptionList.h"
-#include "tao/corbafwd.h"
 #include "tao/ORB.h"
 #include "tao/NVList.h"
 #include "tao/Environment.h"

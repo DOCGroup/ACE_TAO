@@ -1,24 +1,19 @@
 //$Id$
 #include "Invocation_Adapter.h"
-#include "Object.h"
 #include "Profile_Transport_Resolver.h"
 #include "operation_details.h"
 #include "Stub.h"
 #include "ORB_Core.h"
-//@@ Need to remove when we take care of the note below.
-#include "corbafwd.h"
 #include "Synch_Invocation.h"
 #include "debug.h"
 #include "Collocated_Invocation.h"
 #include "Transport.h"
 #include "Transport_Mux_Strategy.h"
-#include "Messaging_SyncScopeC.h"
 #include "Collocation_Proxy_Broker.h"
 
 ACE_RCSID (tao,
            Invocation_Adapter,
            "$Id$")
-
 
 namespace TAO
 {

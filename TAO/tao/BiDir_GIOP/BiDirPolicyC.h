@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "bidirgiop_export.h"
 
 #ifndef TAO_BIDIRGIOP_SAFE_INCLUDE
 #error "You should not include BiDirPolicyC.h directly, use BiDirGIOP.h"
@@ -44,7 +44,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "bidirgiop_export.h"
 #include "tao/Sequence_T.h"
 #include "tao/PolicyC.h"
 #include "tao/Objref_VarOut_T.h"

@@ -3,14 +3,14 @@
 
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
-#include "tao/GIOP_Message_Version.h"
 #include "tao/debug.h"
-#include "tao/Pluggable_Messaging_Utils.h"
 #include "Transport.h"
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
 
-ACE_RCSID(tao, Muxed_TMS, "$Id$")
+ACE_RCSID (tao, 
+           Muxed_TMS, 
+           "$Id$")
 
 TAO_Muxed_TMS::TAO_Muxed_TMS (TAO_Transport *transport)
   : TAO_Transport_Mux_Strategy (transport)
@@ -33,8 +33,10 @@ CORBA::ULong
 TAO_Muxed_TMS::request_id (void)
 {
   // @@ What is a good error return value?
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon,
-                    *this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, 
+                    ace_mon,
+                    *this->lock_, 
+                    0);
 
   ++this->request_id_generator_;
 

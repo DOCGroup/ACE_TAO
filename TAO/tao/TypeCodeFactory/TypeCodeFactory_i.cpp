@@ -5,6 +5,7 @@
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/Marshal.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Containers_T.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -843,13 +844,13 @@ TAO_TypeCodeFactory_i::insert_label_value (
         TAO_InputCDR in (any._tao_get_cdr (),
                          any._tao_byte_order ());
 
-        CORBA::TypeCode::traverse_status ts =
+        TAO::traverse_status ts =
           TAO_Marshal_Object::perform_append (disc_tc,
                                               &in,
                                               &cdr
                                               ACE_ENV_ARG_PARAMETER);
 
-        return (ts == CORBA::TypeCode::TRAVERSE_CONTINUE);
+        return (ts == TAO::TRAVERSE_CONTINUE);
       }
     default:
       return 0;

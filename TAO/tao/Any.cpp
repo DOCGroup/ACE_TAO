@@ -6,6 +6,9 @@
 #include "tao/Any_Dual_Impl_T.h"
 #include "tao/Any_Unknown_IDL_Type.h"
 #include "tao/Object.h"
+#include "tao/Typecode.h"
+
+#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Any.i"

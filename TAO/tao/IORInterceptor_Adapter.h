@@ -13,17 +13,15 @@
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_H
 #define TAO_IORINTERCEPTOR_ADAPTER_H
-#include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
-#include "ace/Service_Object.h"
-#include "ace/CORBA_macros.h"
 
 namespace PortableInterceptor
 {

@@ -12,6 +12,7 @@
 
 #ifndef TAO_WAIT_ON_LEADER_FOLLOWER_H
 #define TAO_WAIT_ON_LEADER_FOLLOWER_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Wait_Strategy.h"
@@ -54,4 +55,5 @@ public:
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_WAIT_ON_LEADER_FOLLOWER_H */

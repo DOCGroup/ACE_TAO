@@ -3,10 +3,9 @@
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-
-#include "Endpoint.h"
 #include "Base_Transport_Property.h"
 #include "Profile_Transport_Resolver.h"
+#include "ORB_Constants.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/Invocation_Endpoint_Selectors.i"
@@ -45,7 +44,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
       r->profile (r->stub ()->profile_in_use ());
 
       size_t endpoint_count =
-        r->profile ()->endpoint_count();
+        r->profile ()->endpoint_count ();
 
       TAO_Endpoint *ep =
         r->profile ()->endpoint ();

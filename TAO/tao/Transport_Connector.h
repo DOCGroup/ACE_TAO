@@ -15,15 +15,16 @@
 
 #ifndef TAO_CONNECTOR_H
 #define TAO_CONNECTOR_H
-#include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
+#include "TAO_Export.h"
+#include "Basic_Types.h"
 
 class ACE_Time_Value;
 class TAO_Transport_Descriptor_Interface;

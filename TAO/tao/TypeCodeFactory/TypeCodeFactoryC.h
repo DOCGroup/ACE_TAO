@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "typecodefactory_export.h"
 
 #ifndef TAO_TYPECODEFACTORY_SAFE_INCLUDE
 #error "You should not include TypeCodeFactoryC.h directly, use TypeCodeFactory_Loader.h"
@@ -44,7 +44,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "typecodefactory_export.h"
 #include "tao/Sequence_T.h"
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Seq_Var_T.h"

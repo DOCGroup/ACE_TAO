@@ -13,15 +13,15 @@
 
 #ifndef TAO_LOCATEREQUEST_INVOCATION_H
 #define TAO_LOCATEREQUEST_INVOCATION_H
-#include "ace/pre.h"
 
-#include "tao/Synch_Invocation.h"
+#include "ace/pre.h"
+#include "ace/Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
+#include "tao/Synch_Invocation.h"
 
 class TAO_Synch_Reply_Dispatcher;
 
@@ -34,7 +34,8 @@ namespace TAO
 {
   class Profile_Transport_Resolver;
 
-  class TAO_Export LocateRequest_Invocation: protected Synch_Twoway_Invocation
+  class TAO_Export LocateRequest_Invocation 
+    : protected Synch_Twoway_Invocation
   {
   public:
     LocateRequest_Invocation (CORBA::Object_ptr otarget,
@@ -54,4 +55,5 @@ namespace TAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_LOCATEREQUEST_INVOCATION_H*/

@@ -15,16 +15,15 @@
 
 #ifndef TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
-#include /**/ "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include /**/ "ace/pre.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/CORBA_macros.h"
-
+#include "tao/TAO_Export.h"
 
 class TAO_MProfile;
 class ACE_Time_Value;

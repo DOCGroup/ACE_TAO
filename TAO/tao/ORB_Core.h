@@ -16,30 +16,30 @@
 
 #include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include "Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Collocation_Strategy.h"
-#include "Resource_Factory.h"
 #include "params.h"
 #include "Adapter.h"
 #include "PolicyFactory_Registry.h"
 #include "Parser_Registry.h"
+#include "ORBInitializer_Registry.h"
 #include "Service_Callbacks.h"
 #include "Fault_Tolerance_Service.h"
 #include "Cleanup_Func_Registry.h"
 #include "Object_Ref_Table.h"
 #include "ObjectKey_Table.h"
+#include "ORB_Constants.h"
 
-// Interceptor definitions.
-#include "PortableInterceptorC.h"
-#include "Interceptor_List.h"
-#include "PICurrent.h"
+#if TAO_HAS_INTERCEPTORS == 1
+# include "Interceptor_List.h"
+# include "PICurrent.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
-#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 
@@ -106,6 +106,8 @@ class TAO_Policy_Validator;
 namespace CORBA
 {
   class ORB_ObjectIdList;  // CORBA::ORB::ObjectIdList
+  class ORB;
+  typedef ORB *ORB_ptr;
 }
 
 // ****************************************************************
@@ -272,8 +274,9 @@ public:
    * @note
    * No-Collocation is a special case of collocation.
    */
-  static TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
-                                                         ACE_ENV_ARG_DECL);
+  static 
+  TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object
+                                                  ACE_ENV_ARG_DECL);
   //@}
 
   /**
@@ -915,12 +918,6 @@ public:
     PortableInterceptor::IORInterceptor_ptr interceptor
     ACE_ENV_ARG_DECL);
 
-#if 0
-  /// NOTE: Removed during subsetting.
-  /// Return the array of IOR interceptors specific to this ORB.
-  TAO_IORInterceptor_List::TYPE &ior_interceptors (void);
-#endif /**/
-
   TAO_IORInterceptor_List *ior_interceptor_list (void);
   //@}
 
@@ -970,7 +967,12 @@ public:
   /// Get Code Set Manager
   TAO_Codeset_Manager *codeset_manager (void);
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, ACE_CString, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex> InitRefMap;
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString, 
+                                  ACE_CString, 
+                                  ACE_Hash<ACE_CString>, 
+                                  ACE_Equal_To<ACE_CString>, 
+                                  ACE_Null_Mutex> 
+    InitRefMap;
 
   /// Return a pointer to the -ORBInitRef map.
   InitRefMap * init_ref_map (void);

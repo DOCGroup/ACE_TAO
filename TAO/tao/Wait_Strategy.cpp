@@ -2,7 +2,9 @@
 
 #include "tao/Wait_Strategy.h"
 
-ACE_RCSID(tao, Wait_Strategy, "$Id$")
+ACE_RCSID (tao, 
+           Wait_Strategy, 
+           "$Id$")
 
 #if !defined (__ACE_INLINE__)
 # include "Wait_Strategy.inl"

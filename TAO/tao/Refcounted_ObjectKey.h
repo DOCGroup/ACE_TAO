@@ -12,6 +12,7 @@
 
 #ifndef TAO_REFCOUNTED_OBJECTKEY_H
 #define TAO_REFCOUNTED_OBJECTKEY_H
+
 #include /**/ "ace/pre.h"
 
 #include "tao/Object_KeyC.h"
@@ -58,7 +59,6 @@ namespace TAO
     /// The refcount on the object key..
     long ref_count_;
   };
-
 }
 
 #if defined (__ACE_INLINE__)
@@ -66,4 +66,5 @@ namespace TAO
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_REFCOUNTED_OBJECTKEY_H*/

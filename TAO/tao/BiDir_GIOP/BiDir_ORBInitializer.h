@@ -11,6 +11,7 @@
 // ===================================================================
 #ifndef TAO_BIDIR_ORB_INITIALIZER_H
 #define TAO_BIDIR_ORB_INITIALIZER_H
+
 #include /**/ "ace/pre.h"
 
 #include "bidirgiop_export.h"
@@ -22,8 +23,6 @@
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-#include "tao/corbafwd.h"
-
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

@@ -15,8 +15,9 @@
 
 #ifndef TAO_EXCEPTION_H
 #define TAO_EXCEPTION_H
+
 #include "ace/pre.h"
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,13 +30,11 @@
 #define TAO_RAISE(EXCEPTION)
 #endif /* ACE_HAS_EXCEPTIONS */
 
-
-#include "ace/CORBA_macros.h"
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
-#include "ace/Global_Macros.h"
-#include <stdarg.h>
-#include <stdio.h>   /* For "FILE" typedef. */
+
+#include "tao/TAO_Export.h"
+#include "tao/Basic_Types.h"
 
 class ACE_Allocator;
 
@@ -67,6 +66,17 @@ namespace CORBA
     COMPLETED_NO,      // didn't change any state; retry is OK
     COMPLETED_MAYBE    // can't say what happened; retry unsafe
   };
+
+  enum exception_type
+  {
+    // = Exception type.
+
+    NO_EXCEPTION,
+    USER_EXCEPTION,
+    SYSTEM_EXCEPTION
+  };
+
+  extern TAO_Export TypeCode_ptr _tc_exception_type;
 
   /**
    * @class Exception

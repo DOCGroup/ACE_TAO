@@ -1,9 +1,10 @@
 // $Id$
 
 #include "Unknown_User_Exception.h"
+
 #include "tao/Any.h"
 #include "tao/Environment.h"
-
+#include "tao/TC_Constants_Forward.h"
 
 ACE_RCSID (DynamicInterface,
            Unknown_User_Exception,

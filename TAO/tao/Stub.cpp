@@ -8,22 +8,13 @@
 // based implementation, and can neither be used by other kinds of
 // objref nor have a default implementation.
 
-#include "Endpoint.h"
 #include "Stub.h"
 #include "Profile.h"
-#include "Sequence.h"
-#include "Object.h"
-#include "Invocation_Adapter.h"
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
 #include "Sync_Strategies.h"
-#include "Buffering_Constraint_Policy.h"
 #include "debug.h"
-#include "Policy_Set.h"
 #include "Policy_Manager.h"
-#include "Special_Basic_Arguments.h"
-
-#include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Stub.i"
@@ -61,6 +52,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
                       ACE_TEXT ("TAO: (%P|%t) TAO_Stub created with default ")
                       ACE_TEXT ("ORB core\n")));
         }
+
       this->orb_core_.reset (TAO_ORB_Core_instance ());
     }
 

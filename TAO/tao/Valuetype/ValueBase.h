@@ -22,14 +22,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/corbafwd.h"
 #include "Value_VarOut_T.h"
+
+#include "tao/Object_Argument_T.h"
+#include "tao/Arg_Traits_T.h"
 
 #include "ace/Basic_Types.h"
 #include "ace/Synch_T.h"
 #include "ace/CORBA_macros.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Arg_Traits_T.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -38,8 +38,10 @@
 
 namespace CORBA
 {
+  class ValueFactoryBase;
+  typedef ValueFactoryBase *ValueFactory;
+  
   class ValueBase;
-  struct tao_ValueBase_life;
 
   extern TAO_Valuetype_Export void add_ref (ValueBase *);
   extern TAO_Valuetype_Export void remove_ref (ValueBase *);

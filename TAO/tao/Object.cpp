@@ -16,8 +16,8 @@
 #include "Dynamic_Adapter.h"
 #include "IFR_Client_Adapter.h"
 #include "Remote_Object_Proxy_Broker.h"
+
 #include "ace/Dynamic_Service.h"
-#include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"

@@ -9,6 +9,7 @@
 #include "Blocked_Connect_Strategy.h"
 #include "Reactive_Connect_Strategy.h"
 #include "LF_Connect_Strategy.h"
+#include "orbconf.h"
 
 #include "ace/Lock_Adapter_T.h"
 

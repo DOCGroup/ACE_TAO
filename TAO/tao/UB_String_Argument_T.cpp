@@ -4,12 +4,13 @@
 #define TAO_UB_STRING_ARGUMENT_T_C
 
 #include "tao/UB_String_Argument_T.h"
+#include "tao/Dynamic_ParameterC.h"
 
 #if !defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/DynamicC.h"
+//#include "tao/DynamicC.h"
 
 ACE_RCSID (tao,
            UB_String_Argument_T,

@@ -3,18 +3,15 @@
 #include "ORBInitInfo.h"
 #include "ORB_Core.h"
 #include "ORB.h"
-#include "StringSeqC.h"
 #include "CodecFactory.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
-
 ACE_RCSID (TAO,
            ORBInitInfo,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 #include "ORBInitInfo.inl"

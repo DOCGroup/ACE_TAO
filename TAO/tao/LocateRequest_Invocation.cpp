@@ -3,12 +3,12 @@
 #include "operation_details.h"
 #include "Stub.h"
 #include "Bind_Dispatcher_Guard.h"
-#include "Transport_Mux_Strategy.h"
 #include "Pluggable_Messaging.h"
 #include "Transport.h"
 #include "Synch_Reply_Dispatcher.h"
 #include "GIOP_Utils.h"
 #include "Profile.h"
+#include "ORB_Constants.h"
 
 ACE_RCSID (tao,
            LocateRequest_Invocation,

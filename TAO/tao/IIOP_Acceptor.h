@@ -32,8 +32,6 @@
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
 
-// TAO IIOP_Acceptor concrete call defination
-
 /**
  * @class TAO_IIOP_Acceptor
  *

@@ -5,7 +5,6 @@
 
 #include "NVList.h"
 
-#include "Exception.h"
 #include "BoundsC.h"
 #include "debug.h"
 #include "Typecode.h"
@@ -38,8 +37,11 @@ CORBA::NamedValue::_decr_refcnt (void)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
     this->refcount_--;
+
     if (this->refcount_ != 0)
-      return this->refcount_;
+      {
+        return this->refcount_;
+      }
   }
 
   delete this;
@@ -71,8 +73,11 @@ CORBA::NVList::_decr_refcnt (void)
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
     this->refcount_--;
+
     if (this->refcount_ != 0)
-      return this->refcount_;
+      {
+        return this->refcount_;
+      }
   }
 
   delete this;
@@ -125,7 +130,9 @@ CORBA::NVList::add_item (const char *name,
       return nv;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // add a value. If necessary, increment the list
@@ -180,7 +187,9 @@ CORBA::NVList::add_item_consume (char *name,
       return nv;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // add a value. If necessary, increment the list
@@ -208,7 +217,9 @@ CORBA::NVList::add_value_consume (char * name,
       return nv;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 //CORBA::Status
@@ -230,7 +241,10 @@ CORBA::NVList::add_element (CORBA::Flags flags
 
   if (ACE_BIT_DISABLED (flags,
                         CORBA::ARG_IN | CORBA::ARG_OUT | CORBA::ARG_INOUT))
-    ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::NamedValue::_nil ());
+    {
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (), 
+                        CORBA::NamedValue::_nil ());
+    }
 
   CORBA::NamedValue_ptr nv;
 
@@ -261,9 +275,11 @@ CORBA::NVList::item (CORBA::ULong n
   this->evaluate (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::NamedValue::_nil ());
 
-  if (n >= this->max_) // 0 based indexing
-    ACE_THROW_RETURN (CORBA::Bounds (),
-                      CORBA::NamedValue::_nil ());
+  if (n >= this->max_)
+    {
+      ACE_THROW_RETURN (CORBA::Bounds (),
+                        CORBA::NamedValue::_nil ());
+    }
 
   CORBA::NamedValue_ptr *nv;
 
@@ -283,7 +299,9 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
   //    example if the list is not empty but the anys own all their
   //    objects.
   if (lazy_evaluation == false && this->max_ == 0)
-    lazy_evaluation = true;
+    {
+      lazy_evaluation = true;
+    }
 
   if (lazy_evaluation == false)
     {
@@ -292,7 +310,9 @@ CORBA::NVList::_tao_incoming_cdr (TAO_InputCDR &cdr,
                          ACE_ENV_ARG_PARAMETER);
       return;
     }
+
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+
   if (this->incoming_ != 0)
     {
       delete this->incoming_;
@@ -449,7 +469,9 @@ CORBA::NVList::_tao_target_alignment (void)
   ptrdiff_t t = ptrdiff_t (rd) % ACE_CDR::MAX_ALIGNMENT;
 
   if (t < 0)
-    t += ACE_CDR::MAX_ALIGNMENT;
+    {
+      t += ACE_CDR::MAX_ALIGNMENT;
+    }
 
   return t;
 }
@@ -458,8 +480,11 @@ void
 CORBA::NVList::evaluate (ACE_ENV_SINGLE_ARG_DECL)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_);
+
   if (this->incoming_ == 0)
-    return;
+    {
+      return;
+    }
 
   auto_ptr<TAO_InputCDR> incoming (this->incoming_);
   this->incoming_ = 0;

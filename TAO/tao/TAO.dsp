@@ -331,10 +331,6 @@ SOURCE=.\CORBA_String.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\CORBALOC_Parser.cpp
 # End Source File
 # Begin Source File
@@ -398,6 +394,10 @@ SOURCE=.\DomainC.cpp
 # Begin Source File
 
 SOURCE=.\Dynamic_Adapter.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterC.cpp
 # End Source File
 # Begin Source File
 
@@ -754,6 +754,10 @@ SOURCE=.\ORBInitInfo.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ParameterMode.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\params.cpp
 # End Source File
 # Begin Source File
@@ -1054,6 +1058,10 @@ SOURCE=.\UB_String_Arguments.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\UB_String_SArguments.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Valuetype_Adapter.cpp
 # End Source File
 # Begin Source File
@@ -1311,6 +1319,10 @@ SOURCE=.\corba.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\CORBA_methods.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\CORBA_String.h
 # End Source File
 # Begin Source File
@@ -1384,6 +1396,10 @@ SOURCE=.\DomainC.h
 # Begin Source File
 
 SOURCE=.\Dynamic_Adapter.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterC.h
 # End Source File
 # Begin Source File
 
@@ -1552,6 +1568,10 @@ SOURCE=.\Invocation_Base.h
 # Begin Source File
 
 SOURCE=.\Invocation_Endpoint_Selectors.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Invocation_Utils.h
 # End Source File
 # Begin Source File
 
@@ -1747,6 +1767,10 @@ SOURCE=.\orb.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ORB_Constants.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\orb_core.h
 # End Source File
 # Begin Source File
@@ -1768,6 +1792,10 @@ SOURCE=.\ORBInitializer_Registry.h
 # Begin Source File
 
 SOURCE=.\ORBInitInfo.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParameterMode.h
 # End Source File
 # Begin Source File
 
@@ -2019,6 +2047,10 @@ SOURCE=.\target_specification.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\TC_Constants_Forward.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Thread_Lane_Resources.h
 # End Source File
 # Begin Source File
@@ -2080,6 +2112,10 @@ SOURCE=.\TSS_Resources.h
 # Begin Source File
 
 SOURCE=.\typecode.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Typecode_Constants.h
 # End Source File
 # Begin Source File
 
@@ -2279,10 +2315,6 @@ SOURCE=.\CORBA_String.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\corbafwd.i
-# End Source File
-# Begin Source File
-
 SOURCE=.\CORBALOC_Parser.i
 # End Source File
 # Begin Source File
@@ -2328,6 +2360,10 @@ SOURCE=.\DLL_Parser.i
 # Begin Source File
 
 SOURCE=.\DomainC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Dynamic_ParameterC.inl
 # End Source File
 # Begin Source File
 

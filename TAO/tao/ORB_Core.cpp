@@ -2,59 +2,39 @@
 
 #include "ORB_Core.h"
 #include "ORB_Table.h"
-
 #include "TAO_Internal.h"
-#include "default_client.h"
 #include "default_server.h"
-#include "default_resource.h"
-#include "debug.h"
-#include "MProfile.h"
 #include "Profile.h"
 #include "Stub.h"
+#include "LF_Follower.h"
 #include "Leader_Follower.h"
+#include "LF_Event_Loop_Thread_Helper.h"
 #include "Connector_Registry.h"
-
 #include "Sync_Strategies.h"
-
 #include "Object_Loader.h"
-
 #include "ObjectIdListC.h"
-
-#include "Services_Activate.h"
 #include "BiDir_Adapter.h"
-
-
 #include "Collocation_Resolver.h"
-#include "Endpoint_Selector_Factory.h"
 #include "Flushing_Strategy.h"
 #include "Request_Dispatcher.h"
 #include "Stub_Factory.h"
 #include "Thread_Lane_Resources.h"
 #include "Thread_Lane_Resources_Manager.h"
 #include "TSS_Resources.h"
-
 #include "Protocols_Hooks.h"
 #include "IORInterceptor_Adapter.h"
 #include "IORInterceptor_Adapter_Factory.h"
-#include "Valuetype_Adapter.h"
-
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-# include "Buffering_Constraint_Policy.h"
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
-
-#include "tao/LF_Event_Loop_Thread_Helper.h"
+#include "debug.h"
+#include "TAOC.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-#include "tao/ClientRequestInfo.h"
+# include "ClientRequestInfo.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
 
-#include "ace/Object_Manager.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/streams.h"
-
-#include "Codeset_Manager.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
@@ -2466,16 +2446,22 @@ TAO_ORB_Core::get_sync_strategy (TAO_Stub *,
   if (scope == Messaging::SYNC_WITH_TRANSPORT
       || scope == Messaging::SYNC_WITH_SERVER
       || scope == Messaging::SYNC_WITH_TARGET)
-    return this->transport_sync_strategy ();
+    {
+      return this->transport_sync_strategy ();
+    }
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   if (scope == Messaging::SYNC_NONE
       || scope == TAO::SYNC_EAGER_BUFFERING)
-    return this->eager_buffering_sync_strategy ();
+    {
+      return this->eager_buffering_sync_strategy ();
+    }
 
   if (scope == TAO::SYNC_DELAYED_BUFFERING)
-    return this->delayed_buffering_sync_strategy ();
+    {
+      return this->delayed_buffering_sync_strategy ();
+    }
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -2692,7 +2678,9 @@ TAO_ORB_Core::add_interceptor (
       ACE_CHECK;
     }
   else
-    ACE_THROW (CORBA::INTERNAL ());
+    {
+      ACE_THROW (CORBA::INTERNAL ());
+    }
 }
 
 TAO_IORInterceptor_List *
@@ -2715,6 +2703,7 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
                         ace_mon,
                         this->lock_,
                         0);
+
       if (this->ior_interceptor_adapter_ == 0)
         {
           ACE_DECLARE_NEW_CORBA_ENV;
@@ -2722,7 +2711,8 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
             {
               TAO_IORInterceptor_Adapter_Factory * ior_ap_factory =
                 ACE_Dynamic_Service<TAO_IORInterceptor_Adapter_Factory>::instance (
-                    TAO_ORB_Core::iorinterceptor_adapter_factory_name ());
+                    TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
+                  );
 
               if (ior_ap_factory)
                 {
@@ -2734,11 +2724,13 @@ TAO_ORB_Core::ior_interceptor_adapter (void)
           ACE_CATCHANY
             {
               ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                                   "(%P|%t) Cannot initialize the ior_interceptor_adapter \n");
+                                   "(%P|%t) Cannot initialize the "
+                                   "ior_interceptor_adapter \n");
             }
           ACE_ENDTRY;
         }
     }
+
   return this->ior_interceptor_adapter_;
 }
 

@@ -33,7 +33,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/Exception.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -41,7 +41,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
 #include "tao/CDR.h"
 
 #if defined (TAO_EXPORT_MACRO)

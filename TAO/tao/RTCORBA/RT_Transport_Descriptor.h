@@ -11,6 +11,7 @@
 
 #ifndef TAO_RT_TRANSPORT_DESCRIPTOR_H
 #define TAO_RT_TRANSPORT_DESCRIPTOR_H
+
 #include /**/ "ace/pre.h"
 
 #include "rtcorba_export.h"
@@ -19,8 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "RT_Transport_Descriptor_Property.h"
+
 #include "tao/Transport_Descriptor_Interface.h"
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 
 /**
  * @class TAO_RT_Transport_Descriptor
@@ -71,4 +73,5 @@ private:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_RT_TRANSPORT_DESCRIPTOR_H */

@@ -22,12 +22,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "tao/TAO_Export.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
+#include "tao/CORBA_methods.h"
 #include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
 
@@ -35,6 +37,7 @@ class TAO_ORB_Core;
 
 namespace CORBA
 {
+
   class Exception;
 
   class Environment;
@@ -42,8 +45,9 @@ namespace CORBA
   typedef TAO_Pseudo_Var_T<Environment> Environment_var;
   typedef TAO_Pseudo_Out_T<Environment, Environment_var> Environment_out;
 
-  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (Environment_ptr);
-  TAO_NAMESPACE_INLINE_FUNCTION void release (Environment_ptr);
+  /// Obtain the thread-specific default environment.  This is
+  /// obsolete and only left here for backwards compatibility.
+  TAO_NAMESPACE_INLINE_FUNCTION Environment & default_environment (void);
 
   /**
    * @class Environment
@@ -149,6 +153,14 @@ namespace CORBA
     Environment *previous_;
   };
 } // End CORBA namespace
+
+// ****************************************************************
+
+/// Provide a simple function to access the TSS default environment.
+/**
+ * @note We tried with CORBA::default_environment() and others.
+ */
+TAO_Export CORBA::Environment& TAO_default_environment (void);
 
 #if defined (__ACE_INLINE__)
 # include "tao/Environment.i"

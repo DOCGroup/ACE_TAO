@@ -1,21 +1,12 @@
 #include "IIOP_Transport.h"
-#include "IIOP_Connection_Handler.h"
 #include "IIOP_Acceptor.h"
-#include "IIOP_Profile.h"
+#include "tao/IIOPC.h"
 #include "Acceptor_Registry.h"
-#include "Thread_Lane_Resources.h"
 #include "operation_details.h"
-#include "Timeprobe.h"
-#include "CDR.h"
-#include "Transport_Mux_Strategy.h"
 #include "Wait_Strategy.h"
-#include "Sync_Strategies.h"
-#include "ORB_Core.h"
 #include "debug.h"
 #include "GIOP_Message_Base.h"
-#include "GIOP_Message_Lite.h"
 #include "Protocols_Hooks.h"
-#include "Adapter.h"
 
 #if !defined (__ACE_INLINE__)
 # include "IIOP_Transport.i"
@@ -24,7 +15,6 @@
 ACE_RCSID (tao,
            IIOP_Transport,
            "$Id$")
-
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,

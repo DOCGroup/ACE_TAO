@@ -6,6 +6,7 @@
 #include "tao/Environment.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"
+#include "tao/ORB_Constants.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"

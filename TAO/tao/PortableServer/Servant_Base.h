@@ -12,16 +12,18 @@
 
 #ifndef TAO_SERVANT_BASE_H
 #define TAO_SERVANT_BASE_H
+
 #include /**/ "ace/pre.h"
 
 #include "PortableServerC.h"
-#include "tao/Abstract_Servant_Base.h"
-#include "ace/Atomic_Op.h"
-#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Abstract_Servant_Base.h"
+
+#include "ace/Atomic_Op.h"
 
 class TAO_Operation_Table;
 
@@ -280,4 +282,5 @@ protected:
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_SERVANT_BASE_H */

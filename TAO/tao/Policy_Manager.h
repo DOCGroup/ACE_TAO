@@ -16,21 +16,21 @@
 
 #ifndef TAO_POLICY_MANAGER_H
 #define TAO_POLICY_MANAGER_H
+
 #include /**/ "ace/pre.h"
-
-#include "tao/orbconf.h"
-
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+#include "ace/Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Policy_Set.h"
-#include "tao/LocalObject.h"
+#include "tao/orbconf.h"
+
+#if (TAO_HAS_CORBA_MESSAGING == 1)
+
 #include "tao/PolicyC.h"
-#include "tao/debug.h"
-#include "ace/Guard_T.h"
+#include "tao/LocalObject.h"
+#include "tao/Policy_Set.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -63,8 +63,7 @@ public:
 
   virtual void set_policy_overrides (const CORBA::PolicyList & policies,
                                      CORBA::SetOverrideType set_add
-                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS
-                                     )
+                                     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      CORBA::InvalidPolicies));
 
@@ -161,4 +160,5 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_POLICY_MANAGER_H */

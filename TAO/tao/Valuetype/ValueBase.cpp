@@ -14,11 +14,12 @@
 // ============================================================================
 
 #include "ValueBase.h"
-#include "tao/CDR.h"
+#include "ValueFactory.h"
+
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
-#include "ValueFactory.h"
 #include "tao/debug.h"
+#include "tao/Typecode.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ValueBase.inl"

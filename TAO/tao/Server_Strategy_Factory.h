@@ -12,15 +12,17 @@
 
 #ifndef TAO_SERVER_STRATEGY_FACTORY_H
 #define TAO_SERVER_STRATEGY_FACTORY_H
+
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
+#include "TAO_Export.h"
+#include "Basic_Types.h"
 
 class TAO_Active_Object_Map_Impl;
 class TAO_Reverse_Active_Object_Map_Impl;
@@ -119,13 +121,15 @@ public:
   virtual int server_connection_thread_count (void);
 
   /// Return the active object map creation parameters.
-  virtual const Active_Object_Map_Creation_Parameters &active_object_map_creation_parameters (void) const;
+  virtual 
+  const Active_Object_Map_Creation_Parameters &
+  active_object_map_creation_parameters (void) const;
 
 protected:
-
   /// Active object map creation parameters.
   Active_Object_Map_Creation_Parameters active_object_map_creation_parameters_;
 };
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_SERVER_STRATEGY_FACTORY_H */

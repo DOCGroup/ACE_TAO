@@ -11,28 +11,19 @@
 //=============================================================================
 #ifndef TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 #define TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
+
 #include "ace/pre.h"
 
-#include "tao/TAO_Export.h"
+#include "tao/Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Policy_ForwardC.h"
-#include "ace/CORBA_macros.h"
-#include "ace/Global_Macros.h"
-
-
-class TAO_Operation_Details;
-class TAO_Stub;
-class ACE_Time_Value;
-
-namespace  CORBA
+namespace CORBA
 {
   class Object;
-  class Environment;
-  class SystemException;
+  typedef Object *Object_ptr;
 }
 
 namespace TAO
@@ -44,7 +35,7 @@ namespace TAO
   class TAO_Export LocateRequest_Invocation_Adapter
   {
   public:
-    LocateRequest_Invocation_Adapter (CORBA::Object *target);
+    LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);
 
     bool invoke (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -61,4 +52,5 @@ namespace TAO
 }
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H*/

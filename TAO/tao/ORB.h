@@ -18,20 +18,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "corbafwd.h"
+#include "Exception.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Exception.h"
-#include "ServicesC.h"
-#include "CORBA_String.h"
-#include "ObjectIdListC.h"
 #include "objectid.h"
-
-// IRIX needs this for the throw specs
 #include "PolicyC.h"
+#include "OBV_Constants.h"
+#include "CORBA_methods.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -56,7 +52,6 @@ class TAO_Stub;
 class TAO_Valuetype_Adapter;
 class TAO_Acceptor_Filter;
 
-
 // ****************************************************************
 
 namespace CORBA
@@ -67,14 +62,57 @@ namespace CORBA
   class ValueMemberSeq;
 
   class ORB_ObjectIdList;
+  
+  // Used at present only in Typecode_Constants.cpp, to make _tc_ORBid.
+  // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
+  typedef char * ORBid;
+  typedef String_var ORBid_var;
+  typedef String_out ORBid_out;
+  extern TAO_Export TypeCode_ptr _tc_ORBid;
 
-  class ORB;
-  typedef TAO_Pseudo_Var_T<ORB> ORB_var;
-  typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
+  typedef
+    TAO_MngSeq_Var_T<
+        ORB_ObjectIdList,
+        TAO_SeqElem_String_Manager
+      >
+    ORB_ObjectIdList_var;
+  
+  typedef
+    TAO_MngSeq_Out_T<
+        ORB_ObjectIdList,
+        ORB_ObjectIdList_var,
+        TAO_SeqElem_String_Manager
+      >
+    ORB_ObjectIdList_out;
+  
+  struct ServiceInformation;
+  
+  typedef
+    TAO_Var_Var_T<
+        ServiceInformation
+      >
+    ServiceInformation_var;
+  
+  typedef
+    TAO_Out_T<
+        ServiceInformation,
+        ServiceInformation_var
+      >
+    ServiceInformation_out;
+
+  class ValueFactoryBase;
+  typedef ValueFactoryBase *ValueFactory;
+
+  typedef UShort ServiceType;
 
   class Request;
   typedef TAO_Pseudo_Var_T<Request> Request_var;
   typedef TAO_Pseudo_Out_T<Request, Request_var> Request_out;
+
+  class ORB;
+  typedef ORB *ORB_ptr;
+  typedef TAO_Pseudo_Var_T<ORB> ORB_var;
+  typedef TAO_Pseudo_Out_T<ORB, ORB_var> ORB_out;
 
   /**
    * @class ORB
@@ -624,4 +662,5 @@ namespace CORBA
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
+
 #endif /* TAO_ORB_H */

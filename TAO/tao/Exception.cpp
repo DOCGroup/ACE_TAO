@@ -7,6 +7,9 @@
 #include "Environment.h"
 #include "Any_SystemException.h"
 #include "Any_Dual_Impl_T.h"
+#include "Typecode.h"
+#include "ORB_Constants.h"
+#include "TC_Constants_Forward.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
@@ -30,6 +33,37 @@ int TAO_Exceptions::initialized_ = 0;
 
 // TAO specific typecode.
 extern CORBA::TypeCode_ptr TC_completion_status;
+
+
+/**
+ * @name @c errno Encoding
+ *
+ * The @c errno encoding is located in the bottom 7 bits.
+ */
+//@{
+const CORBA::ULong TAO_UNSPECIFIED_MINOR_CODE        = 0x0U;
+const CORBA::ULong TAO_ETIMEDOUT_MINOR_CODE          = 0x1U;
+const CORBA::ULong TAO_ENFILE_MINOR_CODE             = 0x2U;
+const CORBA::ULong TAO_EMFILE_MINOR_CODE             = 0x3U;
+const CORBA::ULong TAO_EPIPE_MINOR_CODE              = 0x4U;
+const CORBA::ULong TAO_ECONNREFUSED_MINOR_CODE       = 0x5U;
+const CORBA::ULong TAO_ENOENT_MINOR_CODE             = 0x6U;
+const CORBA::ULong TAO_EBADF_MINOR_CODE              = 0x7U;
+const CORBA::ULong TAO_ENOSYS_MINOR_CODE             = 0x8U;
+const CORBA::ULong TAO_EPERM_MINOR_CODE              = 0x9U;
+const CORBA::ULong TAO_EAFNOSUPPORT_MINOR_CODE       = 0xAU;
+const CORBA::ULong TAO_EAGAIN_MINOR_CODE             = 0xBU;
+const CORBA::ULong TAO_ENOMEM_MINOR_CODE             = 0xCU;
+const CORBA::ULong TAO_EACCES_MINOR_CODE             = 0xDU;
+const CORBA::ULong TAO_EFAULT_MINOR_CODE             = 0xEU;
+const CORBA::ULong TAO_EBUSY_MINOR_CODE              = 0xFU;
+const CORBA::ULong TAO_EEXIST_MINOR_CODE             = 0x10U;
+const CORBA::ULong TAO_EINVAL_MINOR_CODE             = 0x11U;
+const CORBA::ULong TAO_ECOMM_MINOR_CODE              = 0x12U;
+const CORBA::ULong TAO_ECONNRESET_MINOR_CODE         = 0x13U;
+const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
+// *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
+//@}
 
 // ****************************************************************
 
@@ -957,7 +991,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
   // not scale as more native sets have to be supported
 
   ACE_IBM1047_ISO8859 translator;
-  TAO_OutputCDR stream (buffer, buflen,
+  TAO_OutputCDR stream (buffer, 
+                        buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
@@ -965,7 +1000,8 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr &tcp,
                         ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                         &translator);
 #else
-  TAO_OutputCDR stream (buffer, buflen,
+  TAO_OutputCDR stream (buffer, 
+                        buflen,
                         ACE_CDR_BYTE_ORDER,
                         TAO_Exceptions::global_allocator_,
                         TAO_Exceptions::global_allocator_,
@@ -1130,7 +1166,9 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
   // Not thread safe.  Caller must provide synchronization.
 
   if (TAO_Exceptions::initialized_ != 0)
-    return;
+    {
+      return;
+    }
 
   // Initialize the start up allocator.
   ACE_NEW (TAO_Exceptions::global_allocator_,
@@ -1144,9 +1182,7 @@ TAO_Exceptions::init (ACE_ENV_SINGLE_ARG_DECL)
       0
   };
 
-  for (CORBA::ULong i = 0;
-       i < array_sz;
-       ++i)
+  for (CORBA::ULong i = 0; i < array_sz; ++i)
     {
       TAO_Exceptions::make_standard_typecode (*type_code_array[i],
                                               name_array[i],

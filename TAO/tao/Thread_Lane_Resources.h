@@ -14,20 +14,18 @@
 #define TAO_THREAD_LANE_RESOURCES_H
 
 #include /**/ "ace/pre.h"
-
-#include "tao/corbafwd.h"
+#include "ace/CORBA_macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Thread_Mutex.h"
+
+#include "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 
-#include "ace/Thread_Mutex.h"
-#include "ace/CORBA_macros.h"
-
 class ACE_Allocator;
-
 class TAO_ORB_Core;
 class TAO_Acceptor_Registry;
 class TAO_Transport_Cache_Manager;
@@ -49,8 +47,9 @@ class TAO_Export TAO_Thread_Lane_Resources
 {
 public:
   /// Constructor.
-  TAO_Thread_Lane_Resources (TAO_ORB_Core &orb_core,
-                             TAO_New_Leader_Generator *new_leader_generator = 0);
+  TAO_Thread_Lane_Resources (
+      TAO_ORB_Core &orb_core,
+      TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor.
   ~TAO_Thread_Lane_Resources (void);

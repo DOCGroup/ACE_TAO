@@ -4,7 +4,9 @@
 #include "AbstractBase.h"
 #include "ValueBase.h"
 #include "ValueFactory_Map.h"
+
 #include "tao/ORB_Core.h"
+#include "tao/Typecode.h"
 
 ACE_RCSID (Valuetype,
            Valuetype_Adapter_Impl,

@@ -30,16 +30,11 @@
 
 
 #include "IOP_CodecC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
 #include "tao/Object_T.h"
 #include "tao/Any_Impl_T.h"
 #include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
-#include "tao/Basic_Arguments.h"
 #include "tao/Fixed_Size_Argument_T.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Var_Size_Argument_T.h"
+#include "tao/Typecode.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -1331,11 +1326,6 @@ TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
         CORBA::exception_type
       >;
 
-  template class
-    TAO::Any_Basic_Impl_T<
-        CORBA::ParameterMode
-      >;
-
 #if !defined (_IOP_CODEC__ARG_TRAITS_TMPLINST_CS_)
 #define _IOP_CODEC__ARG_TRAITS_TMPLINST_CS_
 
@@ -1492,11 +1482,6 @@ TAO::Any_Impl_T<IOP::CodecFactory>::demarshal_value (TAO_InputCDR &)
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         CORBA::exception_type \
-      >
-
-# pragma instantiate \
-    TAO::Any_Basic_Impl_T< \
-        CORBA::ParameterMode \
       >
 
 #if !defined (_IOP_CODEC__ARG_TRAITS_TMPLINST_CS_)

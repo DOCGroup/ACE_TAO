@@ -11,11 +11,12 @@ ACE_RCSID (DynamicInterface,
 #include "tao/NVList.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/Marshal.h"
+#include "tao/Typecode.h"
+#include "tao/Any_Impl.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
-
 
 // Reference counting for DSI ServerRequest object.
 

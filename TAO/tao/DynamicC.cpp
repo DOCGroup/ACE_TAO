@@ -30,12 +30,8 @@
 
 
 #include "DynamicC.h"
-#include "tao/Stub.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/Any_Impl_T.h"
+#include "tao/Typecode.h"
 #include "tao/Any_Dual_Impl_T.h"
-#include "tao/Any_Basic_Impl_T.h"
-#include "tao/Basic_Arguments.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -52,97 +48,6 @@
 namespace TAO
 {
 };
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_Dynamic_Parameter[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  34,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d69632f), 
-  ACE_NTOHL (0x50617261), 
-  ACE_NTOHL (0x6d657465), 
-  ACE_NTOHL (0x723a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/Dynamic/Parameter:1.0
-    10,
-  ACE_NTOHL (0x50617261), 
-  ACE_NTOHL (0x6d657465), 
-  ACE_NTOHL (0x72000000),  // name = Parameter
-  2, // member count
-    9,
-  ACE_NTOHL (0x61726775), 
-  ACE_NTOHL (0x6d656e74), 
-  ACE_NTOHL (0x0),  // name = argument
-    CORBA::tk_any,
-
-  5,
-  ACE_NTOHL (0x6d6f6465), 
-  ACE_NTOHL (0x0),  // name = mode
-    CORBA::tk_enum, // typecode kind
-  116, // encapsulation length
-TAO_ENCAP_BYTE_ORDER, // byte order
-    36,
-    ACE_NTOHL (0x49444c3a), 
-    ACE_NTOHL (0x6f6d672e), 
-    ACE_NTOHL (0x6f72672f), 
-    ACE_NTOHL (0x434f5242), 
-    ACE_NTOHL (0x412f5061), 
-    ACE_NTOHL (0x72616d65), 
-    ACE_NTOHL (0x7465724d), 
-    ACE_NTOHL (0x6f64653a), 
-    ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/CORBA/ParameterMode:1.0
-    14,
-    ACE_NTOHL (0x50617261), 
-    ACE_NTOHL (0x6d657465), 
-    ACE_NTOHL (0x724d6f64), 
-    ACE_NTOHL (0x65000000),  // name = ParameterMode
-    3, // member count
-    9,
-    ACE_NTOHL (0x50415241), 
-    ACE_NTOHL (0x4d5f494e), 
-    ACE_NTOHL (0x0),  // name = PARAM_IN
-    10,
-    ACE_NTOHL (0x50415241), 
-    ACE_NTOHL (0x4d5f4f55), 
-    ACE_NTOHL (0x54000000),  // name = PARAM_OUT
-    12,
-    ACE_NTOHL (0x50415241), 
-    ACE_NTOHL (0x4d5f494e), 
-    ACE_NTOHL (0x4f555400),  // name = PARAM_INOUT
-    
-};
-
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_Parameter (
-    CORBA::tk_struct,
-    sizeof (_oc_Dynamic_Parameter),
-    (char *) &_oc_Dynamic_Parameter,
-    0,
-    sizeof (Dynamic::Parameter)
-  );
-
-namespace Dynamic
-{
-  ::CORBA::TypeCode_ptr _tc_Parameter =
-    &_tc_TAO_tc_Dynamic_Parameter;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
-
-void 
-Dynamic::Parameter::_tao_any_destructor (
-    void *_tao_void_pointer
-  )
-{
-  Parameter *_tao_tmp_pointer =
-    ACE_static_cast (Parameter *, _tao_void_pointer);
-  delete _tao_tmp_pointer;
-}
 
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
@@ -360,44 +265,6 @@ namespace Dynamic
     &_tc_TAO_tc_Dynamic_ContextList;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
-
-static const CORBA::Long _oc_Dynamic_TypeCode[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  33,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x6f6d672e), 
-  ACE_NTOHL (0x6f72672f), 
-  ACE_NTOHL (0x44796e61), 
-  ACE_NTOHL (0x6d69632f), 
-  ACE_NTOHL (0x54797065), 
-  ACE_NTOHL (0x436f6465), 
-  ACE_NTOHL (0x3a312e30), 
-  ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Dynamic/TypeCode:1.0
-    9,
-  ACE_NTOHL (0x54797065), 
-  ACE_NTOHL (0x436f6465), 
-  ACE_NTOHL (0x0),  // name = TypeCode
-    CORBA::tk_TypeCode,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_Dynamic_TypeCode (
-    CORBA::tk_alias,
-    sizeof (_oc_Dynamic_TypeCode),
-    (char *) &_oc_Dynamic_TypeCode,
-    0,
-    sizeof (Dynamic::TypeCode)
-  );
-
-namespace Dynamic
-{
-  ::CORBA::TypeCode_ptr _tc_TypeCode =
-    &_tc_TAO_tc_Dynamic_TypeCode;
-}
-
 // TAO_IDL - Generated from 
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
 
@@ -411,7 +278,7 @@ Dynamic::ExceptionList::ExceptionList (
     CORBA::ULong max
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode
+        CORBA::TypeCode
       >
     (max)
 {}
@@ -423,7 +290,7 @@ Dynamic::ExceptionList::ExceptionList (
     CORBA::Boolean release
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode
+        CORBA::TypeCode
       >
     (max, length, buffer, release)
 {}
@@ -432,7 +299,7 @@ Dynamic::ExceptionList::ExceptionList (
     const ExceptionList &seq
   )
   : TAO_Unbounded_Pseudo_Sequence<
-        Dynamic::TypeCode
+        CORBA::TypeCode
       >
     (seq)
 {}
@@ -474,27 +341,9 @@ static const CORBA::Long _oc_Dynamic_ExceptionList[] =
   ACE_NTOHL (0x6e4c6973), 
   ACE_NTOHL (0x74000000),  // name = ExceptionList
     CORBA::tk_sequence, // typecode kind
-  80, // encapsulation length
+  12, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_alias, // typecode kind for typedefs
-    64, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      33,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x6f6d672e), 
-      ACE_NTOHL (0x6f72672f), 
-      ACE_NTOHL (0x44796e61), 
-      ACE_NTOHL (0x6d69632f), 
-      ACE_NTOHL (0x54797065), 
-      ACE_NTOHL (0x436f6465), 
-      ACE_NTOHL (0x3a312e30), 
-      ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/Dynamic/TypeCode:1.0
-            9,
-      ACE_NTOHL (0x54797065), 
-      ACE_NTOHL (0x436f6465), 
-      ACE_NTOHL (0x0),  // name = TypeCode
-            CORBA::tk_TypeCode,
-
+    CORBA::tk_TypeCode,
 
     0U,
 
@@ -574,64 +423,6 @@ namespace Dynamic
 {
   ::CORBA::TypeCode_ptr _tc_RequestContext =
     &_tc_TAO_tc_Dynamic_RequestContext;
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const Dynamic::Parameter &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Dynamic::Parameter>::insert_copy (
-      _tao_any,
-      Dynamic::Parameter::_tao_any_destructor,
-      Dynamic::_tc_Parameter,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    Dynamic::Parameter *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<Dynamic::Parameter>::insert (
-      _tao_any,
-      Dynamic::Parameter::_tao_any_destructor,
-      Dynamic::_tc_Parameter,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    Dynamic::Parameter *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const Dynamic::Parameter *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const Dynamic::Parameter *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<Dynamic::Parameter>::extract (
-        _tao_any,
-        Dynamic::Parameter::_tao_any_destructor,
-        Dynamic::_tc_Parameter,
-        _tao_elem
-      );
 }
 
 // TAO_IDL - Generated from 
@@ -895,23 +686,13 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ExceptionList_CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1702
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::SetOverrideType
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::PolicyError
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::InvalidPolicies
       >;
 
   template class
@@ -927,27 +708,6 @@ CORBA::Boolean operator>> (
   template class
     TAO::Any_Basic_Impl_T<
         CORBA::ParameterMode
-      >;
-
-  template class
-    TAO_Var_Var_T<
-        Dynamic::Parameter
-      >;
-
-  template class
-    TAO_Var_Base_T<
-        Dynamic::Parameter
-      >;
-
-  template class
-    TAO_Out_T<
-        Dynamic::Parameter,
-        Dynamic::Parameter_var
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        Dynamic::Parameter
       >;
 
   template class
@@ -986,14 +746,14 @@ CORBA::Boolean operator>> (
 
   template class
     TAO_Pseudo_Object_Manager<
-        Dynamic::TypeCode
+        CORBA::TypeCode
       >;
 
   template class
     TAO_MngSeq_Var_T<
         Dynamic::ExceptionList,
         TAO_Pseudo_Object_Manager<
-            Dynamic::TypeCode
+            CORBA::TypeCode
           >
       >;
 
@@ -1001,7 +761,7 @@ CORBA::Boolean operator>> (
     TAO_Seq_Var_Base_T<
         Dynamic::ExceptionList,
         TAO_Pseudo_Object_Manager<
-            Dynamic::TypeCode
+            CORBA::TypeCode
           >
       >;
 
@@ -1010,7 +770,7 @@ CORBA::Boolean operator>> (
         Dynamic::ExceptionList,
         Dynamic::ExceptionList_var,
         TAO_Pseudo_Object_Manager<
-            Dynamic::TypeCode
+            CORBA::TypeCode
           >
       >;
 
@@ -1027,16 +787,6 @@ CORBA::Boolean operator>> (
       >
 
 # pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::PolicyError \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::InvalidPolicies \
-      >
-
-# pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         CORBA::TCKind \
       >
@@ -1049,27 +799,6 @@ CORBA::Boolean operator>> (
 # pragma instantiate \
     TAO::Any_Basic_Impl_T< \
         CORBA::ParameterMode \
-      >
-
-# pragma instantiate \
-    TAO_Var_Var_T< \
-        Dynamic::Parameter \
-      >
-
-# pragma instantiate \
-    TAO_Var_Base_T< \
-        Dynamic::Parameter \
-      >
-
-# pragma instantiate \
-    TAO_Out_T< \
-        Dynamic::Parameter, \
-        Dynamic::Parameter_var \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        Dynamic::Parameter \
       >
 
 # pragma instantiate \
@@ -1110,7 +839,7 @@ CORBA::Boolean operator>> (
     TAO_MngSeq_Var_T< \
         Dynamic::ExceptionList, \
         TAO_Pseudo_Object_Manager< \
-            Dynamic::TypeCode \
+            CORBA::TypeCode \
           > \
       >
 
@@ -1118,7 +847,7 @@ CORBA::Boolean operator>> (
     TAO_Seq_Var_Base_T< \
         Dynamic::ExceptionList, \
         TAO_Pseudo_Object_Manager< \
-            Dynamic::TypeCode \
+            CORBA::TypeCode \
           > \
       >
 
@@ -1127,7 +856,7 @@ CORBA::Boolean operator>> (
         Dynamic::ExceptionList, \
         Dynamic::ExceptionList_var, \
         TAO_Pseudo_Object_Manager< \
-            Dynamic::TypeCode \
+            CORBA::TypeCode \
           > \
       >
 

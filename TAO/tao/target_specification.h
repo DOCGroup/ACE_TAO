@@ -17,11 +17,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/corbafwd.h"
+#include "tao/TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/Basic_Types.h"
 
 namespace IOP
 {
@@ -33,7 +35,6 @@ namespace TAO
 {
   class ObjectKey;
 }
-
 
 /**
  * @class TAO_Target_Specification
@@ -120,4 +121,5 @@ private:
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"
+
 #endif /*TAO_TARGET_SPECIFICATION_H*/
