@@ -1,3 +1,16 @@
+Wed Feb 11 09:50:27 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/config-dgux-4.x-ghs.h
+	* include/makeinclude/platform_dgux4_ghs.GNU: Configs for ACE on
+	  DG/UX 4 using Green Hills Multi C++ compiler, and draft 10 pthreads.
+
+	* ace/README
+	* ace/OS.h:  New macro ACE_NEEDS_SCHED_H for platforms which needs to
+	  #include <sched.h> to get complete defs for thread scheduling.
+
+	* ace/OS.cpp: Added a DG/UX-specific pthread_wait function for use with
+	  draft 10 pthreads on DG/UX.
+
 Wed Feb 11 09:32:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated DU CXX and Linux info.
