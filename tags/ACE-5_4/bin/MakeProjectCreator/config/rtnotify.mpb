@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : notify, rtcorba {
+  after += RT_Notification
+  libs  += TAO_RT_Notification
+}

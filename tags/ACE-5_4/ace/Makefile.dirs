@@ -1,0 +1,37 @@
+#----------------------------------------------------------------------------
+#       Makefile,v 4.313 2002/07/30 16:11:06 ossama Exp
+#
+#       Makefile for the entire ACE release
+#----------------------------------------------------------------------------
+
+MAKEFILE = Makefile.dirs
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+ifeq ($(ssl),1)
+  DIRS += SSL
+endif # ssl
+
+ifneq ($(rmcast),0)
+  DIRS += RMCast
+endif # rmcast
+
+## Only build the contents of the QoS directory under UNIX
+## if we have the RAPI library installed
+ifeq ($(rapi),1)
+  DIRS += QoS
+endif # rapi
+
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+# DO NOT DELETE THIS LINE -- g++dep uses it.
+# DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
+
+
+
+# IF YOU PUT ANYTHING HERE IT WILL GO AWAY

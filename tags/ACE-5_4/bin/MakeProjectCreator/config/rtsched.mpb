@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+project : naming {
+  after     += RTSched
+  libs      += TAO_RTSched
+  comps     += Sched
+  tagchecks += Sched
+}
