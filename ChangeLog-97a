@@ -5,8 +5,11 @@ Wed Jun 25 17:18:25 1997  Steve Huston  <shuston@riverace.com>
 
 Wed Jun 25 12:59:00 1997    <irfan@TWOSTEP>
 
-	* ace/Synch_T.h (ACE_SYNCH_PROCESS_MUTEX): Added new template
- 	  typedef to the list.
+	* ace/Synch_T.h (ACE_SYNCH_PROCESS_MUTEX and
+ 	  ACE_SYNCH_NULL_MUTEX): Added new template typedef to the list. 
+
+	* tests/Message_Queue_Notifications_Test.cpp: New test for
+ 	  demonstrating notification qualities of Message_Queue.
 
 Wed Jun 25 10:47:34 1997  Steve Huston  <shuston@riverace.com>
 
