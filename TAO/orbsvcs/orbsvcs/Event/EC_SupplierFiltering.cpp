@@ -63,7 +63,7 @@ TAO_EC_Null_SupplierFiltering::push (const RtecEventComm::EventSet& event,
   for (CORBA::ULong j = 0; j < event.length (); ++j)
     {
       const RtecEventComm::Event& e = event[j];
-      RtecEventComm::Event* buffer = 
+      RtecEventComm::Event* buffer =
         ACE_const_cast(RtecEventComm::Event*, &e);
       RtecEventComm::EventSet single_event (1, 1, buffer, 0);
 
