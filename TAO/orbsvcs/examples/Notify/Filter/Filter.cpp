@@ -20,17 +20,9 @@ public:
     myname_ = myname;
   }
 
-  virtual void open (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-             CORBA::Environment& ACE_TRY_ENV)
-  {
-    TAO_Notify_StructuredPushConsumer::open (consumer_admin, ACE_TRY_ENV);
-
-    // setup our filters
-  }
-
   virtual void push_structured_event (
         const CosNotification::StructuredEvent & notification,
-        CORBA::Environment &ACE_TRY_ENV
+        CORBA::Environment &/*ACE_TRY_ENV*/
         )
     ACE_THROW_SPEC ((
                      CORBA::SystemException,
@@ -121,19 +113,19 @@ FilterClient::init_ORB (int argc,
                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::Object_var poa_object  =
+  CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA",
                                            ACE_TRY_ENV);
   ACE_CHECK;
 
-  if (CORBA::is_nil (poa_object.in ()))
+  if (CORBA::is_nil (poa_object))
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to initialize the POA.\n"));
       return;
     }
   this->root_poa_ =
-    PortableServer::POA::_narrow (poa_object.in (),
+    PortableServer::POA::_narrow (poa_object,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -197,7 +189,7 @@ FilterClient::create_EC (CORBA::Environment &ACE_TRY_ENV)
 void
 FilterClient::create_supplieradmin (CORBA::Environment &ACE_TRY_ENV)
 {
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid = 0;
 
   supplier_admin_ =
     ec_->new_for_suppliers (this->ifgop_, adminid, ACE_TRY_ENV);
@@ -225,7 +217,6 @@ FilterClient::create_supplieradmin (CORBA::Environment &ACE_TRY_ENV)
   sa_filter->add_constraints (constraint_list, ACE_TRY_ENV);
   ACE_CHECK;
 
-  CosNotifyFilter::FilterID filter_id;
   supplier_admin_->add_filter (sa_filter.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -233,7 +224,7 @@ FilterClient::create_supplieradmin (CORBA::Environment &ACE_TRY_ENV)
 void
 FilterClient:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
 {
-  CosNotifyChannelAdmin::AdminID adminid;
+  CosNotifyChannelAdmin::AdminID adminid = 0;
 
   consumer_admin_ =
     ec_->new_for_consumers (this->ifgop_, adminid, ACE_TRY_ENV);
@@ -266,7 +257,6 @@ FilterClient:: create_consumeradmin (CORBA::Environment &ACE_TRY_ENV)
   ca_filter->add_constraints (constraint_list, ACE_TRY_ENV);
   ACE_CHECK;
 
-  CosNotifyFilter::FilterID filter_id;
   consumer_admin_->add_filter (ca_filter.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
@@ -279,11 +269,10 @@ FilterClient::create_consumers (CORBA::Environment &ACE_TRY_ENV)
                     PushConsumer ("consumer1"),
                     CORBA::NO_MEMORY ());
 
-  consumer_1->open (consumer_admin_.in (),
-                   ACE_TRY_ENV);
+  consumer_1->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  consumer_1->connect (ACE_TRY_ENV);
+  consumer_1->connect (consumer_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   // startup the second consumer.
@@ -291,11 +280,10 @@ FilterClient::create_consumers (CORBA::Environment &ACE_TRY_ENV)
                     PushConsumer ("consumer1"),
                     CORBA::NO_MEMORY ());
 
-  consumer_2->open (consumer_admin_.in (),
-                   ACE_TRY_ENV);
+  consumer_2->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  consumer_2->connect (ACE_TRY_ENV);
+  consumer_2->connect (consumer_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -307,11 +295,10 @@ FilterClient::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
                     PushSupplier ("supplier1"),
                     CORBA::NO_MEMORY ());
 
-  supplier_1->open (supplier_admin_.in (),
-                   ACE_TRY_ENV);
+  supplier_1->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  supplier_1->connect (ACE_TRY_ENV);
+  supplier_1->connect (supplier_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
   // startup the second supplier
@@ -319,11 +306,10 @@ FilterClient::create_suppliers (CORBA::Environment &ACE_TRY_ENV)
                     PushSupplier ("supplier2"),
                     CORBA::NO_MEMORY ());
 
-  supplier_2->open (supplier_admin_.in (),
-                   ACE_TRY_ENV);
+  supplier_2->init (this->root_poa_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 
-  supplier_2->connect (ACE_TRY_ENV);
+  supplier_2->connect (supplier_admin_.in (), ACE_TRY_ENV);
   ACE_CHECK;
 }
 
