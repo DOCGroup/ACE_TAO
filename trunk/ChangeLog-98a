@@ -1,3 +1,21 @@
+Tue Dec 23 07:26:28 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/TLI.cpp (get_local_addr): return -1, instead of 0, and
+          set errno (with ACE_NOTSUP_RETURN) if ! ACE_HAS_SVR4_TLI.
+          ({set,get}_option): added ACE_UNUSED_ARfor all
+          arguments if ! ACE_HAS_SVR4_TLI.
+
+        * ace/TLI_Stream.cpp (get_remote_addr): return -1, instead of 0,
+          and set errno (with ACE_NOTSUP_RETURN) if ! ACE_HAS_SVR4_TLI.
+          Declare and set local "name" only if ACE_HAS_SVR4_TLI.
+
+        * ace/TLI_Acceptor.cpp (handle_asynch_event): initialize local
+          "event" instead of defining it in the switch condition, to
+          avoid compiler warning about not using it.
+
+        * examples/IPC_SAP/TLI_SAP/db-server.cpp (lookup_name): removed
+          unused local variable "len".
+
 Mon Dec 22 22:42:57 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS: Added a few minor changes to Nanbor's Semaphore 
