@@ -306,8 +306,8 @@ CC_Client::run_extended_tests (char *params)
   ACE_DEBUG((LM_DEBUG, "Number of arguments: %i\n", no_of_args));
 
   char *cmd  = ACE_OS::strtok (params, ";");
-  char *arg1 = ACE_OS::strtok (NULL, ";");
-  //  char *arg2 = ACE_OS::strtok (NULL, ";");
+  char *arg1 = ACE_OS::strtok (0, ";");
+  //  char *arg2 = ACE_OS::strtok (0, ";");
 
   // A possible scenario using test 1,2, and 3 Create and lock the
   // lock set with the name 'Name'
