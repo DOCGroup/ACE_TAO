@@ -9,12 +9,7 @@
 #----------------------------------------------------------------------------
 
 BIN   	= main 
-
-FILES 	= main
-
-LSRC   	= $(addsuffix .cpp,$(FILES))
-LOBJ   	= $(LSRC:%.cpp=$(VDIR)%.o)
-SHOBJ	= $(addsuffix .so,$(FILES))
+LSRC   	= $(addsuffix .cpp,$(BIN))
 
 LDLIBS 	= -lnetsvcs
  
@@ -30,7 +25,6 @@ include	$(WRAPPER_ROOT)/include/makeinclude/wrapper_macros.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/macros.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.common.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.nonested.GNU
-include	$(WRAPPER_ROOT)/include/makeinclude/rules.lib.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.bin.GNU
 include	$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 
