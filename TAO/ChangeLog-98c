@@ -1,6 +1,13 @@
+Thu Aug 27 21:48:48 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/Options.html:
+	* tao/ORB_Core.cpp (parse_args): Renamed the option
+	  -ORBlockfreedreactor of Resource_Factory to -ORBreactorlock.
+	  Valid options become "null"/"token".  Default is "token".
+
 Thu Aug 27 20:09:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/IIOP_Interpreter.h: 
+	* tao/IIOP_Interpreter.h:
 	  The TAO_attribute_calculator typedef had a default value. This
 	  is illegal. Thanks to John Mulhern for pointing this out.
 
@@ -12,19 +19,19 @@ Thu Aug 27 20:01:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Thu Aug 27 17:52:38 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_operation/tie_si.cpp: 
-	* TAO_IDL/be/be_visitor_interface/tie_si.cpp: 
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp: 
+	* TAO_IDL/be/be_visitor_operation/tie_si.cpp:
+	* TAO_IDL/be/be_visitor_interface/tie_si.cpp:
+	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
 	  The destructor for the _tie classes was trying to release an
 	  object of type POA_var; there is no need to do that.
 
 Thu Aug 27 17:20:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* tests/Param_Test/: 
+	* tests/Param_Test/:
 		Modified the Makefiles and the following source files to
-		have the IDL-compiler-generated  stubs to have "Ser.h" & 
+		have the IDL-compiler-generated  stubs to have "Ser.h" &
 		"Ser.cpp" suffixes and the skeletons to have "Cli.h" &
-		"Cli.cpp". Just an example to show the newly added IDL 
+		"Cli.cpp". Just an example to show the newly added IDL
 		compiler options for optional file name endings.
 
 	Modified Files:
@@ -34,7 +41,7 @@ Thu Aug 27 17:20:07 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	objref_struct.h param_test_i.h server.dsp short.h tmplinst.cpp
 	typecode.h ub_any_seq.h ub_long_seq.h ub_objref_seq.h
 	ub_short_seq.h ub_str_seq.h ub_string.h ub_struct_seq.h
-	ulonglong.h var_array.h var_struct.h 
+	ulonglong.h var_array.h var_struct.h
 
 Thu Aug 27 17:20:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -43,7 +50,7 @@ Thu Aug 27 17:20:00 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Thu Aug 27 15:41:44 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
-	* tests/Cubit/TAO/MT_Cubit/server.cpp: 
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
 	* tests/Cubit/TAO/MT_Cubit/client.cpp: Deleted some unnecessary
  	ACE_DEBUG statements.  Cleaned up code.
