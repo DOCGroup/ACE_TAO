@@ -32,13 +32,13 @@ TAO_IOR_LookupTable::add_ior (const ACE_CString &object_name,
   // Make an entry in the table.
   switch (this->hash_map_.bind (object_name, ior))
     {
-    case 0 : // success.
-      break;
     case 1 : // object name already exists in the table.
-      break;
+      return 1;
     case -1 : // Failure.
       return -1;
     }
+
+  return 0;
 }
 
 int
