@@ -1,3 +1,12 @@
+Wed Feb  2 08:43:29 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* include/makeinclude/platform_linux_lxpthread.GNU:
+	  Add support for gprof, not very useful when compared to
+	  Quantify, but helps.
+
+	* bin/auto_compile:
+	  Some tests print ERROR to indicate a failure.
+
 Tue Feb  1 12:59:28 2000  Ossama Othman  <ossama@uci.edu>
 
 	* ltcf-cxx.sh:

@@ -55,6 +55,8 @@ ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
   LIBS += -lrt
 endif
 OCFLAGS += -O3
+PCFLAGS  = -pg
+PCCFLAGS = -pg
 PIC     = -fPIC
 AR      = ar
 ARFLAGS = rsuv

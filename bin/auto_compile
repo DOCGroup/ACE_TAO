@@ -395,6 +395,7 @@ if ($dont_run == 0) {
     while (<RUN>) {
 	print LOG $_;
 	if (m/Error/
+	    || m/ERROR/
 	    || m/FAILED/
 	    || m/EXCEPTION/
 	    || m/pure virtual /i) {
