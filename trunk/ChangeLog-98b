@@ -1,3 +1,9 @@
+Mon Dec 28 16:32:42 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/019/*: 
+	At long last, a basic Tutorial on ACE_Shared_Memory_SV.  With
+	luck, 020 will be added soon to cover ACE_Shared_Memory_MM
+
 Mon Dec 28 11:21:40 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Strategies.h: Put the "virtual" keyword in from of the
