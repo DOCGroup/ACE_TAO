@@ -703,11 +703,11 @@ TAO_NAMESPACE CORBA
 
   // = String memory management.
   TAO_NAMESPACE_INLINE_FUNCTION Char* string_alloc (ULong len);
-  TAO_Export  Char* string_dup (const Char *);
+  TAO_NAMESPACE_STORAGE_CLASS  Char* string_dup (const Char *);
   TAO_NAMESPACE_INLINE_FUNCTION void string_free (Char *);
 
   // This is a TAO extension and must go away....
-  TAO_Export Char* string_copy (const Char *);
+  TAO_NAMESPACE_STORAGE_CLASS Char* string_copy (const Char *);
 
   typedef CORBA_String_var String_var;
   typedef CORBA_String_out String_out;
@@ -719,7 +719,7 @@ TAO_NAMESPACE CORBA
 
   // = String memory management routines.
   TAO_NAMESPACE_INLINE_FUNCTION WChar* wstring_alloc (ULong len);
-  TAO_Export  WChar* wstring_dup (const WChar *const);
+  TAO_NAMESPACE_STORAGE_CLASS  WChar* wstring_dup (const WChar *const);
   TAO_NAMESPACE_INLINE_FUNCTION void wstring_free (WChar *const);
 
   typedef CORBA_WString_var WString_var;
@@ -1657,13 +1657,13 @@ TAO_NAMESPACE CORBA
   // There could be a single version of these methods, but g++ 2.7.2
   // gets horribly confused if we used CORBA::default_environment() at
   // this point.
-  TAO_Export ORB_ptr ORB_init (int &argc,
-                               char *argv[],
-                               const char *orb_name = 0);
-  TAO_Export ORB_ptr ORB_init (int &argc,
-                               char *argv[],
-                               const char *orb_name,
-                               CORBA_Environment &ACE_TRY_ENV);
+  TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
+                                                char *argv[],
+                                                const char *orb_name = 0);
+  TAO_NAMESPACE_STORAGE_CLASS ORB_ptr ORB_init (int &argc,
+                                                char *argv[],
+                                                const char *orb_name,
+                                                CORBA_Environment &ACE_TRY_ENV);
   // ORB initialisation
 
   // = TAO extensions...

@@ -191,7 +191,7 @@
 # if defined (_MSC_VER) && defined (__ACE_INLINE__)
 #   define TAO_NAMESPACE_INLINE_FUNCTION inline
 # else
-#   define TAO_NAMESPACE_INLINE_FUNCTION TAO_Export
+#   define TAO_NAMESPACE_INLINE_FUNCTION TAO_NAMESPACE_STORAGE_CLASS
 # endif
 
 // Instead of replacing this with the ACE macro
