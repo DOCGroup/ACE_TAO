@@ -1,3 +1,11 @@
+Wed May 31 12:17:20 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* examples/POA/Explicit_Activation/Alt_Resources/Resource_Factory.cpp:
+
+	  The implementation of this alternative resource factory had
+	  become obsolete with recent changes.  The new method to
+	  overwrite is allocate_reactor_impl().
+
 Wed May 31 10:04:18 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/tests/Trading/TradingLib.dsp:
