@@ -1,3 +1,8 @@
+Thu Nov 13 04:26:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * orbsvcs/PSS/Makefile.datastore:
+          Added MAKEFILE variable and updated dependencies.
+
 Wed Nov 12  5:01:00 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/Portable_Interceptors/Bug_1559/interceptors.cpp:

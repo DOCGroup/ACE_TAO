@@ -202,8 +202,10 @@ endif
 install.local: $(INSTALL)
 
 deinstall.local:
-	$(RM) $(INSTALL) $(CLEAN_LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
-$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT))
+	$(RM) $(INSTALL) \
+$(CLEAN_LIB:%.$(LIBEXT)=$(INSLIB)/%.$(LIBEXT)) \
+$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)) \
+$(CLEAN_SHLIB:%.$(SOEXT)=$(INSLIB)/%.$(SOEXT)$(SOVERSION))
 
 
 #### To disable installs, just add "INSTALL=" to your "make" invocation.
