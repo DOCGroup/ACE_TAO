@@ -775,7 +775,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       status =
         ACE_Log_Msg_Manager::custom_backend_->open (logger_key);
 
-      if (status == -1)
+      if (status != -1)
         ACE_SET_BITS (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM);
     }
 
