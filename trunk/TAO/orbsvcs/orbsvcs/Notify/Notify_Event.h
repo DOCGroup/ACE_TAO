@@ -32,6 +32,9 @@
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosEventCommC.h"
 
+// Needed for the SequencePushConsumer
+class TAO_Notify_QoSAdmin_i;
+
 // @@ Pradeep: this is another case of multiple classes bunched in the
 // same file, you should really think about separating it.
 
@@ -123,11 +126,16 @@ public:
   // ownership of the data to the new object otherwise we copy the data
   // for the new object.
 
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) const = 0;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) = 0;
   // Returns true if the filter matches.
 
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const = 0;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const = 0;
+  virtual void do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
+                        const TAO_Notify_QoSAdmin_i& qos_admin,
+                        CosNotification::EventBatch& unsent,
+                        int flush_queue
+                        TAO_ENV_ARG_DECL) const = 0;
   // Push self to <consumer>
 
   // = QoS Properties.
@@ -157,7 +165,7 @@ public:
   void _incr_refcnt (void);
   void _decr_refcnt (void);
 
- protected:
+protected:
   ACE_Lock* lock_;
   // The locking strategy.
 
@@ -198,9 +206,14 @@ public:
 
   virtual CORBA::Boolean is_special_event_type (void) const;
   virtual const TAO_Notify_EventType& event_type (void) const;
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) const;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL);
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
+  virtual void do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
+                        const TAO_Notify_QoSAdmin_i& qos_admin,
+                        CosNotification::EventBatch& unsent,
+                        int flush_queue
+                        TAO_ENV_ARG_DECL) const;
 
 protected:
   CORBA::Any* data_;
@@ -230,9 +243,14 @@ public:
 
   virtual CORBA::Boolean is_special_event_type (void) const;
   virtual const TAO_Notify_EventType& event_type (void) const;
-  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL) const;
+  virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter TAO_ENV_ARG_DECL);
   virtual void do_push (CosEventComm::PushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
   virtual void do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const;
+  virtual void do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
+                        const TAO_Notify_QoSAdmin_i& qos_admin,
+                        CosNotification::EventBatch& unsent,
+                        int flush_queue
+                        TAO_ENV_ARG_DECL) const;
 
 protected:
 

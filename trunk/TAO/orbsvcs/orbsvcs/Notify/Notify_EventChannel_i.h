@@ -37,11 +37,11 @@ class TAO_Notify_POA_Factory;
 class TAO_Notify_EMO_Factory;
 class TAO_Notify_EventListener;
 
-#if defined(_MSC_VER)
+#if defined (_MSC_VER)
 #if (_MSC_VER >= 1200)
-#pragma warning(push)
+#pragma warning (push)
 #endif /* _MSC_VER >= 1200 */
-#pragma warning(disable:4250)
+#pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
 class TAO_Notify_Export TAO_Notify_EventChannel_i : public virtual POA_CosNotifyChannelAdmin::EventChannel, public PortableServer::RefCountServantBase
@@ -244,6 +244,8 @@ virtual CosNotification::QoSProperties * get_qos (
                    CORBA::SystemException
   ));
 
+  const TAO_Notify_QoSAdmin_i& qos_admin (void) const;
+
 protected:
   // = Data Members
   ACE_Lock* lock_;
@@ -308,8 +310,8 @@ protected:
   // The list of group event listeners that have registered with us.
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
-#pragma warning(pop)
+#if defined (_MSC_VER) && (_MSC_VER >= 1200)
+#pragma warning (pop)
 #endif /* _MSC_VER */
 
 #include "ace/post.h"

@@ -55,8 +55,10 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     this->event_manager_->admin_properties ();
 
   // Init the tasks
-  this->dispatching_task_->init_task (admin_properties);
-  this->filter_eval_task_->init_task (admin_properties);
+  this->dispatching_task_->init_task (admin_properties,
+                                      &(this->qos_admin_));
+  this->filter_eval_task_->init_task (admin_properties,
+                                      &(this->qos_admin_));
 }
 
 // Implementation skeleton destructor
@@ -82,6 +84,7 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::~TAO_Notify_ProxySupplier (void)
   delete this->lock_;
 
   this->consumer_admin_->proxy_pushsupplier_destroyed (this->proxy_id_);
+
   consumer_admin_->_remove_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -114,12 +117,20 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::evaluate_filter (TAO_Notify_Event &event
           return bval;
         }
       else if (bval == 1 && filter_operator == CosNotifyChannelAdmin::OR_OP)
-        return 1;
+        {
+          return 1;
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
   else
-    return this->filter_admin_.match (event TAO_ENV_ARG_PARAMETER);
+    {
+      int status = this->filter_admin_.match (event TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (0);
+      return status;
+    }
 }
 
 template <class SERVANT_TYPE> void
@@ -141,7 +152,13 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::dispatch_event (TAO_Notify_Event &event 
       this->event_list_.enqueue_tail (event.clone ());
     }
   else
-    this->dispatch_event_i (event TAO_ENV_ARG_PARAMETER);
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                              "dispatching event\n"));
+      this->dispatch_event_i (event TAO_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+    }
 }
 
 template <class SERVANT_TYPE> TAO_Notify_Worker_Task*
@@ -381,5 +398,30 @@ TAO_Notify_ProxySupplier<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannelAd
     }
   return event_type_seq;
 }
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxySupplier<SERVANT_TYPE>::set_qos (
+                           const CosNotification::QoSProperties & qos
+                           TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ))
+{
+  // Call our base class set_qos ().
+  TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (qos TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Then update our task's qos
+  if (this->dispatching_task_ != 0)
+    {
+      this->dispatching_task_->update_qos (this->qos_admin_);
+    }
+  if (this->filter_eval_task_ != 0)
+    {
+      this->filter_eval_task_->update_qos (this->qos_admin_);
+    }
+}
+
 
 #endif /* TAO_NOTIFY_PROXYSUPPLIER_T_C */

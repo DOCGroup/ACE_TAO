@@ -18,18 +18,29 @@ Notify_Test_Client::~Notify_Test_Client ()
 {
 }
 
-void
+int
 Notify_Test_Client::init (int argc, char *argv [] TAO_ENV_ARG_DECL)
 {
-  this->init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-  this->resolve_Notify_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  int status = this->init_ORB (argc, argv TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  if (status == 0)
+    {
+      this->resolve_naming_service (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      this->resolve_Notify_factory (TAO_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
+  return status;
 }
 
-void
+int
+Notify_Test_Client::parse_args (int /*argc*/, char** /*argv*/)
+{
+   return 0;
+}
+
+
+int
 Notify_Test_Client::init_ORB (int argc,
                               char *argv []
                               TAO_ENV_ARG_DECL)
@@ -38,29 +49,36 @@ Notify_Test_Client::init_ORB (int argc,
                                 argv,
                                 ""
                                 TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  if (this->parse_args (argc, argv) != 0)
+    {
+      return -1;
+    }
 
   CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA"
                                            TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   if (CORBA::is_nil (poa_object))
     {
       ACE_ERROR ((LM_ERROR,
                   " (%P|%t) Unable to initialize the POA.\n"));
-      return;
+      return -1;
     }
   this->root_poa_ =
     PortableServer::POA::_narrow (poa_object TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   PortableServer::POAManager_var poa_manager =
     root_poa_->the_POAManager (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
 
   poa_manager->activate (TAO_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (-1);
+
+  return 0;
 }
 
 void
@@ -175,7 +193,8 @@ Notify_Test_Client::create_event_channel (const char* cname,
                                             initial_admin,
                                             id
                                             TAO_ENV_ARG_PARAMETER);
-      ACE_CHECK;
+      ACE_CHECK_RETURN (0);
+
 
       naming_context_->rebind(name, ec.in());
     }

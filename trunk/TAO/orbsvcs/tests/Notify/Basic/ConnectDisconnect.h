@@ -73,7 +73,7 @@ public:
 
   int parse_args(int argc, char *argv[]) ;
 
-  void init (int argc, char *argv [] TAO_ENV_ARG_DECL);
+  int init (int argc, char *argv [] TAO_ENV_ARG_DECL);
   // initialization.
 
   void run_test (TAO_ENV_SINGLE_ARG_DECL);

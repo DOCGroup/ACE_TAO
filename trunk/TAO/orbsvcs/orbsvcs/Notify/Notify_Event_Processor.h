@@ -42,6 +42,7 @@ class TAO_Notify_EventSource;
 class TAO_Notify_Worker_Task;
 class TAO_Notify_EMO_Factory;
 class TAO_Notify_EventListener;
+class TAO_Notify_QoSAdmin_i;
 
 class TAO_Notify_Export TAO_Notify_Event_Processor
 {
@@ -56,7 +57,8 @@ class TAO_Notify_Export TAO_Notify_Event_Processor
   TAO_Notify_Event_Processor (TAO_Notify_Event_Manager* event_manager);
   virtual ~TAO_Notify_Event_Processor ();
 
-  void init (TAO_ENV_SINGLE_ARG_DECL);
+  void init (TAO_Notify_QoSAdmin_i* qos_properties
+             TAO_ENV_ARG_DECL);
   // Init
 
   void shutdown (TAO_ENV_SINGLE_ARG_DECL);

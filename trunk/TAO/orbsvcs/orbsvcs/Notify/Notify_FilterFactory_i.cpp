@@ -37,13 +37,14 @@ TAO_Notify_FilterFactory_i::create_filter (
   ))
 {
   // @@: change to "ExTCL" later.
-  if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0)
+  if (ACE_OS::strcmp (constraint_grammar, "TCL") != 0 &&
+      ACE_OS::strcmp (constraint_grammar, "ETCL") != 0)
     ACE_THROW_RETURN (CosNotifyFilter::InvalidGrammar (), 0);
 
   TAO_Notify_Filter_i* filter;
 
   ACE_NEW_THROW_EX (filter,
-                    TAO_Notify_Filter_i,
+                    TAO_Notify_Filter_i (constraint_grammar),
                     CORBA::NO_MEMORY ());
 
   return filter->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);

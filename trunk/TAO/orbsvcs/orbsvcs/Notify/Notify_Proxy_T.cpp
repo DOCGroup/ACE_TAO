@@ -109,6 +109,10 @@ TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & 
                    ))
 {
   this->qos_admin_.set_qos (qos TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->setup_qos_policies (TAO_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 
 template <class SERVANT_TYPE> void
@@ -171,6 +175,19 @@ TAO_Notify_Proxy<SERVANT_TYPE>::remove_all_filters (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
+{
+  this->filter_admin_.remove_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
+}
+
+template <class SERVANT_TYPE> const TAO_Notify_QoSAdmin_i&
+TAO_Notify_Proxy<SERVANT_TYPE>::qos_admin (void) const
+{
+  return this->qos_admin_;
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_Proxy<SERVANT_TYPE>::setup_qos_policies (
+                                  TAO_ENV_SINGLE_ARG_DECL)
 {
   this->filter_admin_.remove_all_filters (TAO_ENV_SINGLE_ARG_PARAMETER);
 }

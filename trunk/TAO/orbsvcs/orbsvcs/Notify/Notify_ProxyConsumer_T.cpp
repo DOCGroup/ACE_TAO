@@ -19,7 +19,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::TAO_Notify_ProxyConsumer (TAO_Notify_Sup
     filter_eval_task_ (0)
 {
   this->event_manager_ = supplier_admin->get_event_manager ();
-  supplier_admin_->_add_ref ();
+  this->supplier_admin_->_add_ref ();
 }
 
 template <class SERVANT_TYPE> void
@@ -47,7 +47,8 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::init (CosNotifyChannelAdmin::ProxyID pro
     this->event_manager_->admin_properties ();
 
   // open the tasks
-  this->filter_eval_task_->init_task (admin_properties);
+  this->filter_eval_task_->init_task (admin_properties,
+                                      &(this->qos_admin_));
 }
 
 // Implementation skeleton destructor
@@ -63,7 +64,7 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer (void)
   delete this->lock_;
 
   this->supplier_admin_->proxy_pushconsumer_destroyed (this->proxy_id_);
-  supplier_admin_->_remove_ref ();
+  this->supplier_admin_->_remove_ref ();
 
   // @@: Move this to on_disconnected
   this->filter_eval_task_->shutdown (TAO_ENV_SINGLE_ARG_PARAMETER);
@@ -189,6 +190,26 @@ TAO_Notify_ProxyConsumer<SERVANT_TYPE>::MyAdmin (TAO_ENV_SINGLE_ARG_DECL)
                    ))
 {
   return this->supplier_admin_->get_ref (TAO_ENV_SINGLE_ARG_PARAMETER);
+}
+
+template <class SERVANT_TYPE> void
+TAO_Notify_ProxyConsumer<SERVANT_TYPE>::set_qos (
+                           const CosNotification::QoSProperties & qos
+                           TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((
+    CORBA::SystemException,
+    CosNotification::UnsupportedQoS
+  ))
+{
+  // Call our base class set_qos ().
+  TAO_Notify_Proxy<SERVANT_TYPE>::set_qos (qos TAO_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  // Then update our task's qos
+  if (this->filter_eval_task_ != 0)
+    {
+      this->filter_eval_task_->update_qos (this->qos_admin_);
+    }
 }
 
 #endif /* TAO_NOTIFY_PROXYCONSUMER_T_C */

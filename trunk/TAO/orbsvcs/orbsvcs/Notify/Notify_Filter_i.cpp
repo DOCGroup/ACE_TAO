@@ -10,7 +10,8 @@
 ACE_RCSID(Notify, Notify_Filter_i, "$Id$")
 
 // Implementation skeleton constructor
-TAO_Notify_Filter_i::TAO_Notify_Filter_i (void)
+TAO_Notify_Filter_i::TAO_Notify_Filter_i (const char* constraint_grammar)
+  : constraint_grammar_ (constraint_grammar)
 {
 }
 
@@ -56,8 +57,7 @@ TAO_Notify_Filter_i::constraint_grammar (
     CORBA::SystemException
   ))
 {
-  return CORBA::string_dup ("TCL");
-  // @@pradeep: change this when we support ExTCL.
+  return CORBA::string_dup (constraint_grammar_.in ());
 }
 
 void
@@ -93,10 +93,10 @@ TAO_Notify_Filter_i::add_constraints_i (
 
           notify_constr_expr->constr_expr = expr;
 
-          CosNotifyFilter::ConstraintID cnstr_id = 
+          CosNotifyFilter::ConstraintID cnstr_id =
             constraint_expr_ids_.get ();
 
-          if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr) 
+          if (this->constraint_expr_list_.bind (cnstr_id, notify_constr_expr)
               == -1)
             {
               ACE_THROW (CORBA::NO_RESOURCES ());
@@ -109,7 +109,7 @@ TAO_Notify_Filter_i::add_constraints_i (
       ACE_CATCHANY
         {
           // Delete the one that failed us.
-          delete notify_constr_expr; 
+          delete notify_constr_expr;
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
@@ -131,8 +131,8 @@ TAO_Notify_Filter_i::add_constraints (
 
   if (TAO_debug_level > 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
-                  "constraint_length = %d\n", 
+      ACE_DEBUG ((LM_DEBUG,
+                  "constraint_length = %d\n",
                   constraint_length));
     }
 
@@ -155,9 +155,9 @@ TAO_Notify_Filter_i::add_constraints (
 
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, 
+          ACE_DEBUG ((LM_DEBUG,
                       "adding constraint %d, %s",
-                      pop_index, 
+                      pop_index,
                       constraint_list [pop_index].constraint_expr.in ()));
         }
     }
@@ -213,7 +213,7 @@ TAO_Notify_Filter_i::modify_constraints (
 
   for (index = 0; index < modify_list.length (); ++index)
     {
-      CosNotifyFilter::ConstraintID cnstr_id = 
+      CosNotifyFilter::ConstraintID cnstr_id =
         modify_list [index].constraint_id;
 
       if (this->constraint_expr_list_.unbind (cnstr_id, constr_expr) != -1)
@@ -237,7 +237,7 @@ TAO_Notify_Filter_i::modify_constraints (
       // Restore,
       for (index = 0; index < modify_list.length (); ++index)
         {
-          CosNotifyFilter::ConstraintID cnstr_id = 
+          CosNotifyFilter::ConstraintID cnstr_id =
             this->constraint_expr_ids_.get ();
 
           if (constraint_expr_list_.bind (cnstr_id,
@@ -329,8 +329,8 @@ TAO_Notify_Filter_i::get_all_constraints (TAO_ENV_SINGLE_ARG_DECL)
       if (iter.next (entry) != 0)
         {
           // Why do we cast to a const object?
-          // We want to force the TAO_String_Manager to make a 
-          // copy of the string. It wouldn't unless we coax it to use 
+          // We want to force the TAO_String_Manager to make a
+          // copy of the string. It wouldn't unless we coax it to use
           // the correct assignment operator.
           (*infoseq)[index].constraint_expression =
             ACE_static_cast (const CosNotifyFilter::ConstraintExp,
@@ -383,7 +383,7 @@ TAO_Notify_Filter_i::match (const CORBA::Any & /*filterable_data */
   ACE_THROW_SPEC ((CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
 
@@ -429,7 +429,7 @@ TAO_Notify_Filter_i::match_typed (
   ACE_THROW_SPEC (( CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
 
@@ -440,7 +440,7 @@ TAO_Notify_Filter_i::attach_callback (
   )
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
 
@@ -459,7 +459,7 @@ CosNotifyFilter::CallbackIDSeq *
 TAO_Notify_Filter_i::get_callbacks (TAO_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (),
                     0);
 }
 
@@ -472,6 +472,10 @@ template class ACE_Hash_Map_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify
 template class ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,TAO_SYNCH_MUTEX>;
 template class ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>;
+
+#if !defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
+template class ACE_Equal_To<CosNotifyFilter::ConstraintID>;
+#endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 template class ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
 template class ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>;
@@ -489,6 +493,10 @@ template class ACE_Auto_Basic_Ptr<CosNotifyFilter::ConstraintInfoSeq>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,TAO_SYNCH_MUTEX>
 #pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<CosNotifyFilter::ConstraintID,TAO_Notify_Filter_i::Notify_Constraint_Expr*,ACE_Hash<CosNotifyFilter::ConstraintID>, ACE_Equal_To<CosNotifyFilter::ConstraintID>,TAO_SYNCH_MUTEX>
+
+#if !defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
+#pragma instantiate ACE_Equal_To<CosNotifyFilter::ConstraintID>
+#endif /* ACE_HAS_STD_TEMPLATE_SPECIALIZATION */
 
 #pragma instantiate ACE_Array<TAO_Notify_Filter_i::Notify_Constraint_Expr*>
 #pragma instantiate ACE_Array_Base<TAO_Notify_Filter_i::Notify_Constraint_Expr*>

@@ -7,6 +7,7 @@
 #include "Notify_Event.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID(Notify, Notify_Event, "$Id$")
 
 // @@ Pradeep: David is going to give you a hard time from having a
@@ -61,7 +62,7 @@ void
 TAO_Notify_EventType::recompute_hash (void)
 {
   // @@ Pradeep: this code is bound to crash someday if the strings
-  // are too long....  See if the hash_pjw() function can be modified
+  // are too long....  See if the hash_pjw () function can be modified
   // to take accumulate multiple strings, as in:
   //   hash = ACE::hash_pjw_accummulate (0, str1);
   //   hash = ACE::hash_pjw_accummulate (hash, str2);
@@ -92,19 +93,19 @@ TAO_Notify_EventType::operator==(const TAO_Notify_EventType& rhs) const
   else // compare the strings
     return (ACE_OS::strcmp (this->event_type_.type_name, rhs.event_type_.type_name) == 0  &&
             ACE_OS::strcmp (this->event_type_.domain_name, rhs.event_type_.domain_name) == 0
-            );
+           );
 }
 
 CORBA::Boolean
 TAO_Notify_EventType::is_special (void) const
 {
-  if ((event_type_.domain_name == 0 ||
-       ACE_OS::strcmp (event_type_.domain_name, "") == 0 ||
-       ACE_OS::strcmp (event_type_.domain_name, "*") == 0) &&
-      (event_type_.type_name == 0 ||
-       ACE_OS::strcmp (event_type_.domain_name, "") == 0 ||
-       ACE_OS::strcmp (event_type_.type_name, "*") == 0 ||
-       ACE_OS::strcmp (event_type_.type_name, "%ALL") == 0))
+  if ((this->event_type_.domain_name == 0 ||
+             ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
+             ACE_OS::strcmp (this->event_type_.domain_name, "*") == 0) &&
+      (this->event_type_.type_name == 0 ||
+             ACE_OS::strcmp (this->event_type_.domain_name, "") == 0 ||
+             ACE_OS::strcmp (this->event_type_.type_name, "*") == 0 ||
+             ACE_OS::strcmp (this->event_type_.type_name, "%ALL") == 0))
     return 1;
   else
     return 0;
@@ -124,10 +125,10 @@ TAO_Notify_Event::TAO_Notify_Event (void)
    event_reliability_ (CosNotification::BestEffort),
    priority_ (CosNotification::DefaultPriority),
    //   start_time_ (0),
-   // stop_time_ (0),
+   //   stop_time_ (0),
    timeout_ (0)
 {
-  ACE_NEW (lock_, ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ());
+  ACE_NEW (this->lock_, ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ());
 }
 
 TAO_Notify_Event::~TAO_Notify_Event ()
@@ -146,7 +147,7 @@ TAO_Notify_Event::_incr_refcnt (void)
   this->refcount_++;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X incr %d\n", this, refcount_));
+    ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X incr %d\n", this, this->refcount_));
 }
 
 void
@@ -159,7 +160,7 @@ TAO_Notify_Event::_decr_refcnt (void)
     this->refcount_--;
 
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X decr %d\n", this, refcount_));
+      ACE_DEBUG ((LM_DEBUG, "in TAO_Notify_Event %X decr %d\n", this, this->refcount_));
 
     if (this->refcount_ == 0)
       delete_me = 1;
@@ -175,13 +176,13 @@ TAO_Notify_Event::_decr_refcnt (void)
 
 TAO_Notify_Any::TAO_Notify_Any (CORBA::Any * data)
   :data_ (data),
-   is_owner_(1)
+   is_owner_ (1)
 {
 }
 
 TAO_Notify_Any::TAO_Notify_Any (const CORBA::Any * data)
   :data_ ((CORBA::Any*)data),
-   is_owner_(0)
+   is_owner_ (0)
 {
 }
 
@@ -245,8 +246,12 @@ TAO_Notify_Any::event_type (void) const
 
 CORBA::Boolean
 TAO_Notify_Any::do_match (CosNotifyFilter::Filter_ptr filter
-                          TAO_ENV_ARG_DECL) const
+                          TAO_ENV_ARG_DECL)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_Any::do_match ()\n"));
+
   return filter->match (*this->data_ TAO_ENV_ARG_PARAMETER);
 }
 
@@ -254,6 +259,11 @@ void
 TAO_Notify_Any::do_push (CosEventComm::PushConsumer_ptr consumer
                          TAO_ENV_ARG_DECL) const
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_Any::do_push ("
+                          "CosEventComm::PushConsumer_ptr)\n"));
+
   consumer->push (*this->data_ TAO_ENV_ARG_PARAMETER);
 }
 
@@ -261,6 +271,11 @@ void
 TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer
                          TAO_ENV_ARG_DECL) const
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_Any::do_push ("
+                          "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
+
   // translation pg. 28
   CosNotification::StructuredEvent event;
   event.remainder_of_body <<= *this->data_;
@@ -268,6 +283,31 @@ TAO_Notify_Any::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer
   event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("");
 
   consumer->push_structured_event (event TAO_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_Notify_Any::do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
+                         const TAO_Notify_QoSAdmin_i& /*qos_admin*/,
+                         CosNotification::EventBatch& /*unsent*/,
+                         int /*flush_queue*/
+                         TAO_ENV_ARG_DECL) const
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_Any::do_push ("
+                          "CosNotifyComm::SequencePushConsumer_ptr)\n"));
+
+  // translation pg. 28
+  CosNotification::StructuredEvent event;
+  event.remainder_of_body <<= *this->data_;
+  event.header.fixed_header.event_type.type_name = CORBA::string_dup ("%ANY");
+  event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("");
+
+  CosNotification::EventBatch events;
+  events.length (1);
+  events[0] = event;
+
+  consumer->push_structured_events (events TAO_ENV_ARG_PARAMETER);
 }
 
 // ****************************************************************
@@ -302,25 +342,25 @@ TAO_Notify_StructuredEvent::~TAO_Notify_StructuredEvent ()
 void
 TAO_Notify_StructuredEvent::init_QoS (void)
 {
-  CosNotification::PropertySeq& qos = data_->header.variable_header;
+  CosNotification::PropertySeq& qos = this->data_->header.variable_header;
 
   for (CORBA::ULong index = 0; index < qos.length (); ++index)
     {
-      ACE_CString property_name(qos[index].name);
+      ACE_CString property_name (qos[index].name);
 
       if (property_name.compare (CosNotification::Priority) == 0)
         {
           qos[index].value >>= this->priority_;
         }
-      else if (property_name.compare (CosNotification::StartTime))
+      else if (property_name.compare (CosNotification::StartTime) == 0)
         {
           // qos[index].value >>= this->start_time_;
         }
-      else if (property_name.compare (CosNotification::StopTime))
+      else if (property_name.compare (CosNotification::StopTime) == 0)
         {
           // qos[index].value >>= this->stop_time_;
         }
-      else if (property_name.compare (CosNotification::Timeout))
+      else if (property_name.compare (CosNotification::Timeout) == 0)
         {
           qos[index].value >>= this->timeout_;
         }
@@ -380,8 +420,12 @@ TAO_Notify_StructuredEvent::event_type (void) const
 
 CORBA::Boolean
 TAO_Notify_StructuredEvent::do_match (CosNotifyFilter::Filter_ptr filter
-                                      TAO_ENV_ARG_DECL) const
+                                      TAO_ENV_ARG_DECL)
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_StructuredEvent::do_match ()\n"));
+
   return filter->match_structured (*this->data_ TAO_ENV_ARG_PARAMETER);
 }
 
@@ -389,6 +433,11 @@ void
 TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer
                                      TAO_ENV_ARG_DECL) const
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_StructuredEvent::do_push ("
+                          "CosEventComm::PushConsumer_ptr)\n"));
+
   // translation pg. 28
   CORBA::Any any;
   any <<= *this->data_;
@@ -400,5 +449,29 @@ TAO_Notify_StructuredEvent::do_push (CosEventComm::PushConsumer_ptr consumer
 void
 TAO_Notify_StructuredEvent::do_push (CosNotifyComm::StructuredPushConsumer_ptr consumer TAO_ENV_ARG_DECL) const
 {
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_StructuredEvent::do_push ("
+                          "CosNotifyComm::StructuredPushConsumer_ptr)\n"));
+
   consumer->push_structured_event (*this->data_ TAO_ENV_ARG_PARAMETER);
+}
+
+void
+TAO_Notify_StructuredEvent::do_push (CosNotifyComm::SequencePushConsumer_ptr consumer,
+                                     const TAO_Notify_QoSAdmin_i& /*qos_admin*/,
+                                     CosNotification::EventBatch& /*unsent*/,
+                                     int /*flush_queue*/
+                                     TAO_ENV_ARG_DECL) const
+{
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Notify (%P|%t) - "
+                          "TAO_Notify_StructuredEvent::do_push ("
+                          "CosNotifyComm::SequencePushConsumer_ptr)\n"));
+
+  CosNotification::EventBatch events;
+  events.length (1);
+  events[0] = *this->data_;
+
+  consumer->push_structured_events (events TAO_ENV_ARG_PARAMETER);
 }
