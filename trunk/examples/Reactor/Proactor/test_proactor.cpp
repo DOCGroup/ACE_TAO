@@ -21,6 +21,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
+#include "ace/Asynch_IO_Impl.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Connector.h"
@@ -146,21 +147,24 @@ Receiver::open (ACE_HANDLE handle,
   if (message_block.length () != 0)
     {
       // Fake the result so that we will get called back.
-      ACE_Asynch_Read_Stream::Result fake_result (*this,
-                                                  this->handle_,
-                                                  duplicate,
-                                                  initial_read_size,
-                                                  0,
-                                                  ACE_INVALID_HANDLE);
+      ACE_Asynch_Read_Stream_Result_Impl *fake_result =
+        ACE_Proactor::instance ()->create_asynch_read_stream_result (*this,
+                                                                     this->handle_,
+                                                                     duplicate,
+                                                                     initial_read_size,
+                                                                     0,
+                                                                     ACE_INVALID_HANDLE,
+                                                                     0);
       
       size_t bytes_transferred = message_block.length ();
       
       // <complete> for Accept would have already moved the <wr_ptr>
       // forward. Update it to the beginning position.
-      duplicate.wr_ptr (duplicate.wr_ptr () - bytes_transferred);
+      duplicate.wr_ptr (-bytes_transferred);
+
 
       // This will call the callback.
-      fake_result.complete (bytes_transferred, 1, 0);
+      fake_result->complete (message_block.length (), 1, 0);
     }
   else 
     // Otherwise, make sure we proceed. Initiate reading the
@@ -392,14 +396,15 @@ Sender::transmit_file (void)
   if (tf.open (*this) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Asynch_Transmit_File::open"), -1);
 
-  // Header and trailer data for the file
+  // Header and trailer data for the file.
+  // @@ What happens if header and trailer are the same?
   this->header_and_trailer_.header_and_trailer (&this->welcome_message_,
 						this->welcome_message_.length (),
 						this->welcome_message_.duplicate (),
 						this->welcome_message_.length ());
 
   // Starting position
-  cerr << "Staring position: " << ACE_OS::lseek (file_handle, 0L, SEEK_CUR) << endl;
+  cerr << "Starting position: " << ACE_OS::lseek (file_handle, 0L, SEEK_CUR) << endl;
 
   // Send it
   if (tf.transmit_file (file_handle,
