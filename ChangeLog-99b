@@ -1,43 +1,50 @@
+Fri Jun 11 07:31:20 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_linux_lxpthread.GNU:  changed
+          PLATFORM_AIO_SUPPORT to use := instead of =, so that it
+          only invokes the shell once.  Thanks to Lothar Werzinger
+          <lwerzinger@krones.de> for suggesting this.
+
 Thu Jun 10 23:11:36 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Cache_Map_Manager_T.{h, i, cpp}:
-	  Added Iterator implementations to the template parameters to be
-	  able to build using the g++ compiler. Also removed unnecessary
-	  HASH_KEY and COMPARE_KEYS from the template list.
+        * ace/Cache_Map_Manager_T.{h, i, cpp}:
+          Added Iterator implementations to the template parameters to be
+          able to build using the g++ compiler. Also removed unnecessary
+          HASH_KEY and COMPARE_KEYS from the template list.
 
-	* ace/Hash_Cache_Map_Manager_T.{h, i, cpp}:
-	  Made appropriate changes to support changes made to
-	  Cache_Map_Manager.
+        * ace/Hash_Cache_Map_Manager_T.{h, i, cpp}:
+          Made appropriate changes to support changes made to
+          Cache_Map_Manager.
 
-	* ace/Caching_Strategies_T.{h, i, cpp}:
-	  Added an overloaded clear_cache method which allows the user to
-	  specify the total number of entries in the cache. Also added the
-	  Caching_Strategy_Utility parameter which decouples the actual
-	  purging from the caching strategy.
+        * ace/Caching_Strategies_T.{h, i, cpp}:
+          Added an overloaded clear_cache method which allows the user to
+          specify the total number of entries in the cache. Also added the
+          Caching_Strategy_Utility parameter which decouples the actual
+          purging from the caching strategy.
 
-	* ace/Caching_Strategy_Utility.{h,i,cpp}:
-	  Added a Null version of the utility to be used with the Null
-	  strategy.
+        * ace/Caching_Strategy_Utility.{h,i,cpp}:
+          Added a Null version of the utility to be used with the Null
+          strategy.
 
-	* ace/Cleanup_Strategies_T.{h,i,cpp}:
-	  Added the ACE_UNSED_ARGS macro to ward of g++ warnings.
+        * ace/Cleanup_Strategies_T.{h,i,cpp}:
+          Added the ACE_UNSED_ARGS macro to ward of g++ warnings.
 
-	* tests/Map_Manager_Test.cpp:
-	  Added performance tests for the Cache_Map_Manager and the
-	  Hash_Cache_Map_Manager.
+        * tests/Map_Manager_Test.cpp:
+          Added performance tests for the Cache_Map_Manager and the
+          Hash_Cache_Map_Manager.
 
 Thu Jun 10 20:29:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
 
         * ace/RB_Tree.h: Made constructors for iterator base class protected
-	  instead of protected, so the the base class can only be constructed
+          instead of protected, so the the base class can only be constructed
           by the derived forward and reverse iterator classes.  Thanks to
           Matt Braun for pointing this out.
-	
+
         * tests/RB_Tree_Test.cpp: Major overhaul of the test to use a
           test class template that encapsulates the test details and
           makes the code much more readable.  Then, the main program merely
           instantiates a test for each of the four possible combinations of
-	  key/item type parameterization over int and const char *, and calls
+          key/item type parameterization over int and const char *, and calls
           the run_test () method of each test instance.
 
 Thu Jun 10 12:44:22 1999  Steve Huston  <shuston@riverace.com>
