@@ -424,6 +424,7 @@ public:
     ACE_THR_JOINING = 0x10000000
   };
 
+  // = Initialization and termination methods.
   /**
    * @breif Initialization and termination methods.
    *
