@@ -53,8 +53,8 @@ Technical Data and Computer Software clause at DFARS 252.227-7013 and FAR
 Sun, Sun Microsystems and the Sun logo are trademarks or registered
 trademarks of Sun Microsystems, Inc.
 
-SunSoft, Inc.  
-2550 Garcia Avenue 
+SunSoft, Inc.
+2550 Garcia Avenue
 Mountain View, California  94043
 
 NOTE:
@@ -83,12 +83,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 ACE_RCSID(TAO_IDL, tao_idl, "$Id$")
 
+#define         IDL_CFE_VERSION        "1.3.0"
+
 static void
 DRV_version()
 {
-  cerr << idl_global->prog_name() 
-       << GTDEVEL(", version ")
-       << IDL_CFE_VERSION 
+  cerr << idl_global->prog_name() << endl;
+       << GTDEVEL("FE: Based on Sun IDL CFE version ")
+       << IDL_CFE_VERSION
        << "\n";
   (*DRV_BE_version)();
 }
@@ -155,7 +157,7 @@ DRV_drive(char *s)
   if (idl_global->err_count() > 0) {
     cerr << idl_global->prog_name()
 	 << ": "
-	 << s 
+	 << s
 	 << GTDEVEL(": found ");
     cerr << idl_global->err_count()
 	 << GTDEVEL(" error");
