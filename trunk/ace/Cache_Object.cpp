@@ -4,15 +4,17 @@
 
 ACE_RCSID(ace, Cache_Object, "$Id$")
 
-ACE_Cache_Object::ACE_Cache_Object (const void *data, size_t size)
+ACE_Cache_Object::ACE_Cache_Object (const void *data,
+                                    size_t size)
   : data_ (data),
     size_ (size)
 {
   this->first_access_ = ACE_OS::time ((time_t *)0);
-  this->new_last_access_ = this->last_access_ = this->first_access_;
+  this->last_access_ = this->first_access_;
+  this->new_last_access_ = this->last_access_;
 }
 
-ACE_Cache_Object::~ACE_Cache_Object ()
+ACE_Cache_Object::~ACE_Cache_Object (void)
 {
   this->data_ = 0;
   this->size_ = 0;
@@ -30,7 +32,7 @@ ACE_Cache_Object::size (void) const
   return this->size_;
 }
 
-unsigned int
+u_int
 ACE_Cache_Object::count (void) const
 {
   return this->count_i ();
@@ -62,7 +64,7 @@ ACE_Cache_Object::first_access (void) const
   return this->first_access_;
 }
 
-unsigned int
+u_int
 ACE_Cache_Object::priority (void) const
 {
   return this->priority_i ();
@@ -80,9 +82,9 @@ ACE_Cache_Object::heap_item (void *item)
   this->heap_item_ = item;
 }
 
-
 ACE_Referenced_Cache_Object::
-ACE_Referenced_Cache_Object (const void *data, size_t size)
+ACE_Referenced_Cache_Object (const void *data,
+                             size_t size)
   : ACE_Cache_Object (data, size)
 {
 }
@@ -91,9 +93,10 @@ ACE_Referenced_Cache_Object::~ACE_Referenced_Cache_Object (void)
 {
 }
 
-unsigned int
+u_int
 ACE_Referenced_Cache_Object::count_i (void) const
 {
+  // @@ James, please use the appropriate ACE_*_cast() macro here.
   ACE_Referenced_Cache_Object *mutable_this
     = (ACE_Referenced_Cache_Object *) this;
 
@@ -115,23 +118,23 @@ ACE_Referenced_Cache_Object::release_i (void)
   return this->count_.release ();
 }
 
-unsigned int
+u_int
 ACE_Referenced_Cache_Object::priority_i (void) const
 {
-  unsigned int priority = ~(0U);
+  u_int priority = ~(0U);
   double delta
-    = ACE_OS::difftime (this->last_access (), this->first_access ());
+    = ACE_OS::difftime (this->last_access (),
+                        this->first_access ());
 
   if (delta >= 0.0 && delta < ~(0U))
-    priority = (unsigned) delta;
+    priority = u_int (delta);
 
   return priority;
 }
 
-
-
 ACE_Counted_Cache_Object::
-ACE_Counted_Cache_Object (const void *data, size_t size)
+ACE_Counted_Cache_Object (const void *data,
+                          size_t size)
   : ACE_Cache_Object (data, size),
     count_ (0),
     new_count_ (0)
@@ -142,11 +145,12 @@ ACE_Counted_Cache_Object::~ACE_Counted_Cache_Object (void)
 {
 }
 
-unsigned int
+u_int
 ACE_Counted_Cache_Object::count_i (void) const
 {
-  ACE_Counted_Cache_Object *mutable_this = (ACE_Counted_Cache_Object *) this;
-
+  // @@ James, please use the appropriate ACE_*_cast() macro here.
+  ACE_Counted_Cache_Object *mutable_this =
+    (ACE_Counted_Cache_Object *) this;
   {
     ACE_Guard<ACE_SYNCH_MUTEX> g (mutable_this->lock_);
 
@@ -173,7 +177,7 @@ ACE_Counted_Cache_Object::release_i (void)
   return 0;
 }
 
-unsigned int
+u_int
 ACE_Counted_Cache_Object::priority_i (void) const
 {
   return this->count_i ();
@@ -213,24 +217,31 @@ ACE_Referenced_Cache_Object_Factory
 }
 
 ACE_Cache_Object *
-ACE_Referenced_Cache_Object_Factory::create (const void *data, size_t size)
+ACE_Referenced_Cache_Object_Factory::create (const void *data,
+                                             size_t size)
 {
   ACE_Referenced_Cache_Object *obj;
 
   size_t obj_size = sizeof (ACE_Referenced_Cache_Object);
+
   ACE_NEW_MALLOC_RETURN (obj,
                          (ACE_Referenced_Cache_Object *)
                          this->allocator_->malloc (obj_size),
-                         ACE_Referenced_Cache_Object (data, size), 0);
-
+                         ACE_Referenced_Cache_Object (data,
+                                                      size),
+                         0);
   return obj;
 }
 
 void
 ACE_Referenced_Cache_Object_Factory::destroy (ACE_Cache_Object *obj)
 {
-  ACE_Referenced_Cache_Object *rco = (ACE_Referenced_Cache_Object *) obj;
-  ACE_DES_FREE (rco, this->allocator_->free, ACE_Referenced_Cache_Object);
+  // @@ James, please use the appropriate ACE_*_cast() macro here.
+  ACE_Referenced_Cache_Object *rco =
+    (ACE_Referenced_Cache_Object *) obj;
+  ACE_DES_FREE (rco,
+                this->allocator_->free,
+                ACE_Referenced_Cache_Object);
 }
 
 ACE_Counted_Cache_Object_Factory
@@ -253,7 +264,9 @@ ACE_Counted_Cache_Object_Factory::create (const void *data, size_t size)
   ACE_NEW_MALLOC_RETURN (obj,
                          (ACE_Counted_Cache_Object *)
                          this->allocator_->malloc (obj_size),
-                         ACE_Counted_Cache_Object (data, size), 0);
+                         ACE_Counted_Cache_Object (data,
+                                                   size),
+                         0);
 
   return obj;
 }
@@ -261,6 +274,9 @@ ACE_Counted_Cache_Object_Factory::create (const void *data, size_t size)
 void
 ACE_Counted_Cache_Object_Factory::destroy (ACE_Cache_Object *obj)
 {
-  ACE_Counted_Cache_Object *cco = (ACE_Counted_Cache_Object *) obj;
-  ACE_DES_FREE (cco, this->allocator_->free, ACE_Counted_Cache_Object);
+  // @@ James, please use the appropriate ACE_*_cast() macro here.
+  ACE_Counted_Cache_Object *cco =
+    (ACE_Counted_Cache_Object *) obj;
+  ACE_DES_FREE (cco,
+                this->allocator_->free, ACE_Counted_Cache_Object);
 }
