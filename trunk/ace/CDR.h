@@ -45,10 +45,14 @@
 //
 // ============================================================================
 
-#if !defined(ACE_CDR_H)
+#ifndef ACE_CDR_H
 #define ACE_CDR_H
 
 #include "ace/Message_Block.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 class ACE_Export CDR
 {
