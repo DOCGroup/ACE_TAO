@@ -1,3 +1,13 @@
+Fri May 26 20:00:22 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.inl (strcasecmp, strncasecmp):
+
+          I have no idea how this worked before, but in these two functions
+          we were using _stricmp/_strnicmp for Win32.  Borland doesn't define  
+          these by default, instead they use stricmp/strnicmp.  So instead
+          of trying to figure out how this all worked before, I just added
+          an #elif for __BORLAND__ and called the stricmp/strnicmp.
+
 Fri May 26 19:26:34 2000  Ossama Othman  <ossama@uci.edu>
 
 	* netsvcs/clients/Logger/direct_logging.cpp:
