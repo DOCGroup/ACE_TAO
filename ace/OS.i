@@ -793,6 +793,19 @@ ACE_OS::fstat (ACE_HANDLE handle, struct stat *stp)
 
 #endif /* WIN32 */
 
+ACE_INLINE int
+ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
+{
+  // ACE_TRACE ("ACE_OS::clock_gettime");
+#if defined (ACE_HAS_CLOCK_GETTIME)
+  ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
+#else
+  ACE_UNUSED_ARG (clockid);
+  ACE_UNUSED_ARG (ts);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_CLOCK_GETTIME */
+}
+
 ACE_INLINE ACE_Time_Value
 ACE_OS::gettimeofday (void)
 {
@@ -4126,19 +4139,6 @@ ACE_OS::readv (ACE_HANDLE handle,
 {
   // ACE_TRACE ("ACE_OS::readv");
   ACE_OSCALL_RETURN (::readv (handle, iov, iovlen), ssize_t, -1);
-}
-
-ACE_INLINE int
-ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
-{
-  // ACE_TRACE ("ACE_OS::clock_gettime");
-#if defined (ACE_HAS_CLOCK_GETTIME)
-  ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int, -1);
-#else
-  ACE_UNUSED_ARG (clockid);
-  ACE_UNUSED_ARG (ts);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_CLOCK_GETTIME */
 }
 
 ACE_INLINE int 
