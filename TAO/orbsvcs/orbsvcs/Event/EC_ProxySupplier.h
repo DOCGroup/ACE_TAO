@@ -116,11 +116,17 @@ public:
 
   // = The TAO_EC_Filter methods, only push() is implemented...
   virtual int filter (const RtecEventComm::EventSet& event,
-                      const TAO_EC_QOS_Info& qos_info,
+                      TAO_EC_QOS_Info& qos_info,
                       CORBA::Environment& env);
+  virtual int filter_nocopy (RtecEventComm::EventSet& event,
+                             TAO_EC_QOS_Info& qos_info,
+                             CORBA::Environment& env);
   virtual void push (const RtecEventComm::EventSet& event,
-                     const TAO_EC_QOS_Info& qos_info,
+                     TAO_EC_QOS_Info& qos_info,
                      CORBA::Environment& env); 
+  virtual void push_nocopy (RtecEventComm::EventSet& event,
+                            TAO_EC_QOS_Info& qos_info,
+                            CORBA::Environment& env); 
   virtual void clear (void);
   virtual CORBA::ULong max_event_size (void) const;
   virtual void event_ids (TAO_EC_Filter::Headers& headerset);
