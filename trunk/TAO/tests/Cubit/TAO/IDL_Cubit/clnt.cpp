@@ -37,6 +37,8 @@ Cubit_Client::Cubit_Client (void)
 {
 }
 
+// simple function that returns the substraction of 117 from the parameter.
+
 int 
 Cubit_Client::func (u_int i) 
 { 
@@ -83,7 +85,7 @@ Cubit_Client::parse_args (void)
 			   "usage:  %s"
 			   " [-d]"
 			   " [-n loopcount]"
-			   " [-k cubit-obj-ref-key]"
+			   " [-k cubit obj ref key]"
                            " [-h hostname]"
                            " [-p port]"
 			   " [-x]"
@@ -95,6 +97,8 @@ Cubit_Client::parse_args (void)
   // Indicates successful parsing of command line.
   return 0;  
 }
+
+// Exercise the union.  Cube a union.
 
 void
 Cubit_Client::cube_union_stub (void)
@@ -163,9 +167,10 @@ Cubit_Client::cube_union_stub (void)
 	  ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
 	  this->error_count_++;
 	}
-
     }
 }
+
+// Exercise the union using dii.
 
 void
 Cubit_Client::cube_union_dii (void)
@@ -242,16 +247,16 @@ Cubit_Client::cube_union_dii (void)
   CORBA::release (req);
 }
 
+// Cube a short.
+
 void
 Cubit_Client::cube_short (int i)
 {
-  CORBA::Short arg_short;
-  CORBA::Short ret_short;
+  CORBA::Short arg_short = this->func (i);
+  // Cube a short.
+  CORBA::Short ret_short = cubit_->cube_short (arg_short, this->env_);
 
   this->call_count_++;
-
-  // Cube a short.
-  ret_short = cubit_->cube_short (arg_short = this->func (i), this->env_);
 
   if (this->env_.exception () != 0)
     {
@@ -275,6 +280,8 @@ Cubit_Client::cube_short (int i)
 	}
     }
 }
+
+// Cube an octet
 
 void 
 Cubit_Client::cube_octet (int i)
@@ -305,6 +312,8 @@ Cubit_Client::cube_octet (int i)
     }
 }
 
+// calculate the cube from a long
+
 void 
 Cubit_Client::cube_long (int i)
 {
@@ -333,6 +342,8 @@ Cubit_Client::cube_long (int i)
       }
     }
 }
+
+// Cube the numbers in a struct
 
 void 
 Cubit_Client::cube_struct (int i)
@@ -370,6 +381,8 @@ Cubit_Client::cube_struct (int i)
 	}
     }
 }
+
+// Cube the numbers in a struct
 
 void 
 Cubit_Client::cube_struct_dii (void)
@@ -435,15 +448,20 @@ Cubit_Client::cube_struct_dii (void)
   CORBA::release (req);
 }
 
+// Execute client example code.
+
 int
 Cubit_Client::run (void)
 {
   u_int i;
 
-  ACE_Time_Value before;
+  ACE_Profile_Timer timer;
+  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
 
-  // @@ We should use an ACE_Profile_Timer here...
-  before = ACE_OS::gettimeofday ();
+  //  ACE_Time_Value before;
+
+  // We start an ACE_Profile_Timer here...
+  timer.start ();
 
   // Make the calls in a loop.
   for (i = 0; i < this->loop_count_; i++)
@@ -457,28 +475,47 @@ Cubit_Client::run (void)
       this->cube_struct (i);
     }
 
-  ACE_Time_Value after = ACE_OS::gettimeofday ();
+  // stop the timer.
+  timer.stop ();
 
   // compute call average call time.
   if (this->call_count_ > 0)
     {
       if (this->error_count_ == 0)
         {
-          ACE_Time_Value diff = after - before;
-          u_int us = diff.sec () * 1000 * 1000 + diff.usec ();
+	  timer.elapsed_time (elapsed_time);
+	  double tmp;
+	  
+	  elapsed_time.real_time *= ACE_ONE_SECOND_IN_MSECS;
+	  elapsed_time.user_time *= ACE_ONE_SECOND_IN_MSECS;
+	  elapsed_time.system_time *= ACE_ONE_SECOND_IN_MSECS;
 
-          us /= this->call_count_;
+	  elapsed_time.real_time /= this->call_count_;
+	  elapsed_time.user_time /= this->call_count_;
+	  elapsed_time.system_time /= this->call_count_;
 
-          if (us > 0)
-            ACE_DEBUG ((LM_DEBUG,
-			"cube average call ACE_OS::time\t= %d.%.03dms, \t"
-			"%d calls/second\n",
-			us / 1000, us % 1000,
-			1000000L / us));
+	  tmp = 1000/(elapsed_time.real_time+elapsed_time.user_time+elapsed_time.system_time);
+
+	  ACE_DEBUG ((LM_DEBUG,
+		      "cube average call:\treal_time\t= %0.06f ms, \t"
+		      "user_time\t= %0.06f ms, \t"
+		      "system_time\t= %0.06f ms\n"
+		      "\t%0.06f calls/second\n",
+		      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+		      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+		      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time,
+		      tmp < 0.0? 0.0 : tmp));
+
+	  //   if (us > 0)
+	  //ACE_DEBUG ((LM_DEBUG,
+	  //	"cube average call ACE_OS::time\t= %d.%.03dms, \t"
+	  //	"%d calls/second\n",
+	  //	us / 1000, us % 1000,
+	  //	1000000L / us));
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%d calls, %d errors\n",
+                  "\t%d calls, %d errors\n",
                   this->call_count_,
                   this->error_count_));
     }
@@ -487,56 +524,54 @@ Cubit_Client::run (void)
   // the copious mallocation of DII would bias numbers against typical
   // stub-based calls).
 
-  ACE_Profile_Timer timer_2;
-  ACE_Profile_Timer::ACE_Elapsed_Time elapsed_time;
-  timer_2.start ();
+  timer.start ();
 
   this->cube_struct_dii ();
 
-  timer_2.stop ();
-  timer_2.elapsed_time (elapsed_time);
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
   ACE_DEBUG ((LM_DEBUG,
-	      "cube_struct_dii() call real_time\t= %fms, \t"
-	      "user_time\t= %fms, \t"
-	      "system_time\t= %fms\n",
-	      elapsed_time.real_time,
-	      elapsed_time.user_time,
-	      elapsed_time.system_time));
+	      "cube_struct_dii() call:\treal_time\t= %0.06f ms, \t"
+	      "user_time\t= %0.06f ms, \t"
+	      "system_time\t= %f ms\n",
+	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
   
 
   // ------------------>
   // Two more tests, using the "cube_union" function
+#if 0  
+  timer.start ();
   
-  //ACE_Profile_Timer timer_3;
-  //timer_3.start ();
+  this->cube_union_dii ();
   
-  //  this->cube_union_dii ();
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  ACE_DEBUG ((LM_DEBUG,
+	      "cube_struct_dii() call:\treal_time\t= %0.06f ms, \t"
+	      "user_time\t= %0.06f ms, \t"
+	      "system_time\t= %f ms\n",
+	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
+
+  timer.start ();
   
-  //timer_3.stop ();
-  //timer_3.elapsed_time (elapsed_time);
-  //ACE_DEBUG ((LM_DEBUG,
-  //	      "cube_struct_dii() call real_time\t= %fms, \t"
-  //	      "user_time\t= %fms, \t"
-  //	      "system_time\t= %fms\n",
-  //	      elapsed_time.real_time,
-  //	      elapsed_time.user_time,
-  //	      elapsed_time.system_time));
+  this->cube_union_stub ();
   
-  //ACE_Profile_Timer timer_3;
-  //timer_3.start ();
-  
-  //   this->cube_union_stub ();
-  
-  //timer_3.stop ();
-  //timer_3.elapsed_time (elapsed_time);
-  //ACE_DEBUG ((LM_DEBUG,
-  //	      "cube_struct_dii() call real_time\t= %fms, \t"
-  //	      "user_time\t= %fms, \t"
-  //	      "system_time\t= %fms\n",
-  //	      elapsed_time.real_time,
-  //	      elapsed_time.user_time,
-  //	      elapsed_time.system_time));
-  // ------------------> uncomment when dii and unions are supported.
+  timer.stop ();
+  timer.elapsed_time (elapsed_time);
+  ACE_DEBUG ((LM_DEBUG,
+	      "cube_struct_dii() call:\treal_time\t= %0.06f ms, \t"
+	      "user_time\t= %0.06f ms, \t"
+	      "system_time\t= %f ms\n",
+	      elapsed_time.real_time < 0.0? 0.0:elapsed_time.real_time,
+	      elapsed_time.user_time < 0.0? 0.0:elapsed_time.user_time,
+	      elapsed_time.system_time < 0.0? 0.0:elapsed_time.system_time));
+  // ------------------> uncomment when unions are supported.
+#endif  
+
   if (this->exit_later_)
     {
       this->cubit_->please_exit (this->env_);
@@ -567,18 +602,18 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       print_exception (this->env_.exception (), "ORB initialization");
-      return -1;
+      return 1;
     }
 
   // Parse command line and verify parameters.
   if (this->parse_args () == -1)
-    return -1;
+    return 1;
 
   if (this->cubit_key_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       "%s: must specify an object reference using -k <key>\n",
 		       this->argv_[0]),
-		      -1);
+		      1);
 
   // Retrieve a factory objref.
   this->objref_ = Cubit_Factory::_bind (this->hostname_,
@@ -589,7 +624,7 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       print_exception (this->env_.exception (), "Cubit_Factory::_bind");
-      return -1;
+      return 1;
     }
 
   if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
@@ -598,7 +633,7 @@ Cubit_Client::init (int argc, char **argv)
                        this->cubit_factory_key_,
                        this->hostname_,
                        this->portnum_),
-                      -1);
+                      1);
 
   // Narrow the CORBA::Object reference to the stub object, checking
   // the type along the way using _is_a.  There is really no need to
@@ -610,7 +645,7 @@ Cubit_Client::init (int argc, char **argv)
   if (this->factory_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
 		       " (%P|%t) Unable to narrow object reference to a Cubit_Factory_ptr.\n"),
-		      -1);
+		      1);
 
   // Now retrieve the Cubit obj ref corresponding to the key.
   this->cubit_ = this->factory_->make_cubit (this->cubit_key_, this->env_);
@@ -618,13 +653,13 @@ Cubit_Client::init (int argc, char **argv)
   if (this->env_.exception () != 0)
     {
       print_exception (this->env_.exception (), "string2object");
-      return -1;
+      return 1;
     }
 
   if (CORBA::is_nil (this->cubit_))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "null cubit objref returned by factory\n"),
-                      -1);
+                      1);
 
   return 0;
 }
