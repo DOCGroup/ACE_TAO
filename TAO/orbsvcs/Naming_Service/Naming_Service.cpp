@@ -66,7 +66,6 @@ Naming_Service::parse_args (int argc,
                            "\n",
                            argv [0]),
                           -1);
-        break;
       }
   return 0;
 }
