@@ -75,7 +75,7 @@ TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (ACE_
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (this->orb_core_ != 0);
+  ACE_ASSERT (this->orb_core () != 0);
 }
 
 TAO_SSLIOP_Server_Connection_Handler::TAO_SSLIOP_Server_Connection_Handler (
@@ -339,7 +339,7 @@ TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t)
     tcp_properties_ (0)
 {
   // This constructor should *never* get called.  See comments in .h
-  ACE_ASSERT (this->orb_core_ != 0);
+  ACE_ASSERT (this->orb_core () != 0);
 }
 
 TAO_SSLIOP_Client_Connection_Handler::
