@@ -1,3 +1,14 @@
+Mon Feb 28 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          HP aCC 3.57 has a bug that causes a compile error when we have
+          a class with a private constructor and we try to create it from
+          a friend class. We disable array optimization for this compiler
+          version to be able to build ACE and TAO.
+
+        * ace/OS_NS_stdio.cpp (snprintf):
+          Added two static cast to silence warnings with Borland and MinGW
+
 Mon Feb 28 11:10:58 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Queue
