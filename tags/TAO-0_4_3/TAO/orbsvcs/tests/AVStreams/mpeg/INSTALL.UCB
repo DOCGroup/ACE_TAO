@@ -1,0 +1,105 @@
+These are the instructions for compiling mpeg_play, the software MPEG
+decoder and player.
+
+1) Untar the file mpeg_play.tar.Z. This is best done by creating a new
+directory for the files involved, moving the tar file into this directory
+and invoking the command:
+
+	zcat mpeg_play-2.0.tar.Z | tar xvf -
+
+2) Create and customize the Makefile. Do this by copying the file
+Makefile.proto to Makefile. Then edit Makefile for your particular needs.
+
+In the makefile the CFLAGS definition is multiply defined for a couple of
+different machines, uncomment the one you want to use, or define your own
+if necessary. 
+
+The INCLUDEDIR variable should be set to include the paths leading to the
+standard header files such as stdio.h as well as to X11/Xlib.h  (on most
+systems, this is /usr/include).  To do this set the INCLUDEDIR variable to
+-I followed by the pathname. For example, if the path is /usr/local/include,
+edit the Makefile to look like this:
+
+	INCLUDEDIR       = -I/usr/local/include
+
+If more than one pathname is necessary, simply prepend -I to each path.
+For example if you needed to include /usr/local/include and /usr/X11/include,
+the variable definition would look like:
+
+	INCLUDEDIR       = -I/usr/local/include -I/usr/X11/include
+
+Finally, make sure the LIBS variable is set to the path and name of your X11
+library. For example:
+
+	LIBS             = /usr/lib/X11/libX11.a
+
+3) Type make all.
+
+4) To remove .o files, type make clean
+
+5) Add yourself to the mailing list by sending mail to
+   mpeg-list-request@roger-rabbit.cs.berkeley.edu with the subject line
+   "ADD" (you can delete yourself by sending the subject line "DEL").
+   If you are a uunet user, you can use the mail path
+   'uunet!ucbvax!roger-rabbit.cs!mpeg-list-request'
+
+    mail mpeg-list-request@roger-rabbit.cs.berkeley.edu
+    Subject: ADD
+    ^D
+
+6) Try it out! You can ftp some sample data files from the same site
+   you got this player from. Data files usually end in .mpg or .mpeg
+   The command line for the player is described in the man page, but
+   is basically:
+
+   mpeg_play [options] [file_name] 
+
+7) If you want the player to collect statistics on size of frames, 
+   macroblocks, time to decode, etc., add the following to the 
+   definition of CFLAGS in the Makefile:
+	-DANALYSIS
+   Remove all .o files with "make clean" and remake with "make all"
+   The player will now print summarized statistics at the end of the
+   video clip and can be made to print frame by frame statistics with
+   the use of the -eachstat flag. Read man page for more info.
+------------------------------------------------------------------------
+
+Using Imake
+
+We have included an Imakefile for use with Imake. Since we do not use
+Imake ourselves and the file was provided by someone else, we can not
+give any specific instructions on how to use it. Please, consult
+someone more experienced with Imake. 
+Thanks.
+
+------------------------------------------------------------------------
+NOTES
+
+It seems that much of the time is spent converting the 24 bit MPEG image
+to an 8 bit color space. This process is called "dithering".  We've included
+several dithering algorithms.  Read the man pages for more instructions.
+
+The data files available are produced by XING. These images are
+usually small (~160X120). XING data does not take advantage
+of P or B frames (ie, frames with motion compensation). The data is simply
+a series of I frames.  Performance of the player on XING data is
+significantly lower (half or less) of the performance when motion compensated
+MPEG data is decoded. 
+
+Reporting bugs:
+    If you find any bugs in this software, please send them to
+    mpeg-bugs@roger-rabbit.cs.berkeley.edu.  Since this software
+    is unsupported, we make no guarantees about how long it will
+    take to fix the bug, or if it will be fixed at all.  Bug fixes
+    will be cheerfully accepted.  Please include as much detailed
+    information as possible, including:
+
+	1) the version number of the program you are using (cf. VERSION)
+	2) the data file that caused the bug (if possible)
+	3) the OS version and machine type you ran the program on
+	4) the compiler used to compile the program
+
+
+
+
+
