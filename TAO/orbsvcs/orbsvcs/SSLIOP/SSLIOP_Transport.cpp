@@ -4,7 +4,9 @@
 
 #include "SSLIOP_Transport.h"
 
-ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
+ACE_RCSID (TAO_SSLIOP,
+           SSLIOP_Transport,
+           "$Id$")
 
 #include "SSLIOP_Connection_Handler.h"
 #include "SSLIOP_Profile.h"
@@ -21,11 +23,11 @@ ACE_RCSID (TAO_SSLIOP, SSLIOP_Transport, "$Id$")
 #include "tao/Acceptor_Registry.h"
 
 
-TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (TAO_SSLIOP_Connection_Handler *handler,
-                                            TAO_ORB_Core *orb_core,
-                                            CORBA::Boolean /*flag*/)
-  : TAO_Transport (TAO_TAG_IIOP_PROFILE,
-                   orb_core),
+TAO_SSLIOP_Transport::TAO_SSLIOP_Transport (
+  TAO_SSLIOP_Connection_Handler *handler,
+  TAO_ORB_Core *orb_core,
+  CORBA::Boolean /*flag*/)
+  : TAO_Transport (TAO_TAG_IIOP_PROFILE, orb_core),
     connection_handler_ (handler),
     messaging_object_ (0)
 {
@@ -454,11 +456,14 @@ TAO_SSLIOP_Transport::process_message (void)
 
       if (result == -1)
         {
+          // Something really critical happened, we will forget about
+          // every reply on this connection. 
           if (TAO_debug_level > 0)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) : SSLIOP_Client_Transport::")
-                        ACE_TEXT ("handle_client_input - ")
+                        ACE_TEXT ("TAO (%P|%t) : SSLIOP_Transport::")
+                        ACE_TEXT ("process_message - ")
                         ACE_TEXT ("dispatch reply failed\n")));
+
           this->messaging_object_->reset ();
           this->tms_->connection_closed ();
           return -1;
@@ -467,7 +472,16 @@ TAO_SSLIOP_Transport::process_message (void)
       if (result == 0)
         {
           this->messaging_object_->reset ();
-          return 0;
+
+          // The reply dispatcher was no longer registered.
+          // This can happened when the request/reply
+          // times out.
+          // To throw away all registered reply handlers is 
+          // not the right thing, as there might be just one
+          // old reply coming in and several valid new ones
+          // pending. If we would invoke <connection_closed>
+          // we would throw away also the valid ones.
+          //return 0;
         }
 
 
@@ -515,7 +529,7 @@ TAO_SSLIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_OutputCDR cdr;
 
   // Marshall the information into the stream
-  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)== 0)
+  if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
       || (cdr << listen_point_list) == 0)
     return;
 
@@ -534,7 +548,7 @@ TAO_SSLIOP_Transport::get_listen_point (
 {
   TAO_SSLIOP_Acceptor *iiop_acceptor =
     ACE_dynamic_cast (TAO_SSLIOP_Acceptor *,
-                      acceptor );
+                      acceptor);
 
   // Get the array of endpoints serviced by <iiop_acceptor>
   const ACE_INET_Addr *endpoint_addr =
@@ -551,8 +565,8 @@ TAO_SSLIOP_Transport::get_listen_point (
       == -1)
     {
        ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) Could not resolve local host")
-                         ACE_TEXT (" address in set_bidir_context_info () \n")),
+                          ACE_TEXT ("(%P|%t) Could not resolve local host")
+                          ACE_TEXT (" address in set_bidir_context_info()\n")),
                         -1);
     }
 
@@ -568,16 +582,16 @@ TAO_SSLIOP_Transport::get_listen_point (
       // Note: Looks like there is no point in sending the list of
       // endpoints on interfaces on which this connection has not
       // been established. If this is wrong, please correct me.
-      char local_interface[MAXHOSTNAMELEN];
-      char acceptor_interface[MAXHOSTNAMELEN];
+      char local_interface[MAXHOSTNAMELEN + 1];
+      char acceptor_interface[MAXHOSTNAMELEN + 1];
 
       if (endpoint_addr[index].get_host_name (acceptor_interface,
-                                              MAXHOSTNAMELEN) ==
+                                              sizeof (acceptor_interface)) ==
           -1)
         continue;
 
       if (local_addr.get_host_name (local_interface,
-                                    MAXHOSTNAMELEN) == -1)
+                                    sizeof (local_interface)) == -1)
         continue;
 
       // @@ This is very bad for performance, but it is a one time
