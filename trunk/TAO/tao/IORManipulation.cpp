@@ -306,9 +306,15 @@ TAO_IOR_Manipulation_impl::get_profile_count (
 template class TAO_Object_Manager<CORBA_Object,CORBA_Object_var>;
 template class TAO_Unbounded_Object_Sequence<CORBA_Object,CORBA_Object_var>;
 
+template class auto_ptr<TAO_MProfile>;
+template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Manager<CORBA_Object,CORBA_Object_var>
 #pragma instantiate TAO_Unbounded_Object_Sequence<CORBA_Object,CORBA_Object_var>
+
+#pragma instantiate auto_ptr<TAO_MProfile>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -20,8 +20,6 @@
 #include "tao/InterfaceC.h"
 #endif  /* TAO_HAS_INTERFACE_REPOSITORY == 1 */
 
-#include "ace/Auto_Ptr.h"
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Object.i"
 #endif /* ! __ACE_INLINE__ */
@@ -691,7 +689,7 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
       orb_core = TAO_ORB_Core_instance ();
       if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_WARNING,
                       ACE_TEXT ("WARNING: extracting object from default ORB_Core\n")));
         }
     }
@@ -761,13 +759,9 @@ TAO_Object_Field::~TAO_Object_Field (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class TAO_Object_Field_T<CORBA_Object,CORBA_Object_var>;
-template class auto_ptr<TAO_MProfile>;
-template class ACE_Auto_Basic_Ptr<TAO_MProfile>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO_Object_Field_T<CORBA_Object,CORBA_Object_var>
-#pragma instantiate auto_ptr<TAO_MProfile>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_MProfile>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
