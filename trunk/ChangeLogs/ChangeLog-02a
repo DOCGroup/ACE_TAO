@@ -1,3 +1,9 @@
+Tue Jun 12 21:22:19 2001  Ossama Othman  <ossama@uci.edu>
+
+	* bin/nightlybuilds/builds.lst:
+
+	  Added the new gcc 3.0 build to nightly build list.
+
 Tue Jun 12 23:06:36 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
 	* examples/ASX/Event_Server/Event_Server/Options.cpp:
