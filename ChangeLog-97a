@@ -5,8 +5,8 @@ Fri May 09 16:37:48 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/config-osf1-4.0-g++.h: removed commented-out
 	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS.
 
-	Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
-	patches for the above two OSF config files.
+	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+	  patches for the above two OSF config files.
 	
 	* ace/Sched_Params.cpp (priority_min): On Solaris (with STHREADS),
 	  don't return priority of 0 because ::pthread_attr_setschedparam ()
