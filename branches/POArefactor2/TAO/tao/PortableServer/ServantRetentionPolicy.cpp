@@ -1,6 +1,7 @@
 #include "ServantRetentionPolicy.h"
 #include "ServantRetentionPolicyValue.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Service_Config.h"
 
 #define TAO_PORTABLESERVER_SAFE_INCLUDE
 #include "PortableServerC.h"
@@ -42,30 +43,32 @@ namespace TAO
         case ::PortableServer::RETAIN :
           {
             this->value_ =
-              ACE_Dynamic_Service<Retain_Servant_Retention_Policy>::instance ("Retain_Servant_Retention_Policy");
+              ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("Retain_Servant_Retention_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Retain_Servant_Retention_Policy);
+                  ACE_TEXT("dynamic Retain_Servant_Retention_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Retain_Servant_Retention_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Retain_Servant_Retention_Policy>::instance ("Retain_Servant_Retention_Policy");
+                  ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("Retain_Servant_Retention_Policy");
               }
             break;
           }
         case ::PortableServer::NON_RETAIN :
           {
             this->value_ =
-              ACE_Dynamic_Service<Non_Retain_Servant_Retention_Policy>::instance ("Non_Retain_Servant_Retention_Policy");
+              ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("Non_Retain_Servant_Retention_Policy");
 
             if (this->value_ == 0)
               {
                 ACE_Service_Config::process_directive (
-                  ::TAO::Portable_Server::ace_svc_desc_Non_Retain_Servant_Retention_Policy);
+                  ACE_TEXT("dynamic Non_Retain_Servant_Retention_Policy Service_Object *")
+                  ACE_TEXT("TAO_PortableServer:_make_Non_Retain_Servant_Retention_Policy()"));
 
                 this->value_ =
-                  ACE_Dynamic_Service<Non_Retain_Servant_Retention_Policy>::instance ("Non_Retain_Servant_Retention_Policy");
+                  ACE_Dynamic_Service<ServantRetentionPolicyValue>::instance ("Non_Retain_Servant_Retention_Policy");
               }
 
             break;
