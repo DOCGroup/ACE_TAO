@@ -97,8 +97,8 @@ protected:
  private:
 
     // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Trader<LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Trader (const TAO_Trader<LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Trader (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &))
 
 };
 
