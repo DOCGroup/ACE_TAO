@@ -48,4 +48,8 @@ project : orbsvcslib, core, naming, iormanip, portablegroup, ami, minimum_corba,
 
   Template_Files {
   }
+
+  Pkgconfig_Files {
+    TAO_CosLoadBalancing.pc.in
+  }
 }

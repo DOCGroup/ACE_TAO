@@ -31,6 +31,10 @@ project(DsNotifyLogAdmin) : orbsvcslib, core, dslogadmin, dseventlogadmin, event
   Resource_Files {
     DsNotifyLogAdmin.rc
   }
+
+  Pkgconfig_Files {
+    TAO_DsNotifyLogAdmin.pc.in
+  }
 }
 
 
@@ -59,6 +63,10 @@ project(DsNotifyLogAdmin_Skel) : orbsvcslib, core, dsnotifylogadmin, dseventloga
   Template_Files {
     DsNotifyLogAdminS_T.cpp
   }
+
+  Pkgconfig_Files {
+    TAO_DsNotifyLogAdmin_Skel.pc.in
+  }
 }
 
 
@@ -83,5 +91,9 @@ project(DsNotifyLogAdmin_Serv) : orbsvcslib, core, dsnotifylogadmin_skel, dsloga
   }
 
   Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_DsNotifyLogAdmin_Serv.pc.in
   }
 }

@@ -33,6 +33,10 @@ project(CosNaming) : orbsvcslib, core {
   Resource_Files{
     CosNaming.rc
   }
+
+  Pkgconfig_Files {
+    TAO_CosNaming.pc.in
+  }
 }
 
 
@@ -60,6 +64,10 @@ project(CosNaming_Skel) : orbsvcslib, core, naming, portableserver {
 
   Template_Files {
     CosNamingS_T.cpp
+  }
+
+  Pkgconfig_Files {
+    TAO_CosNaming_Skel.pc.in
   }
 }
  
@@ -95,5 +103,9 @@ project(CosNaming_Serv) : orbsvcslib, core, naming_skel, messaging, svc_utils, i
   }
 
   Template_Files {
+  }
+
+  Pkgconfig_Files {
+    TAO_CosNaming_Serv.pc.in
   }
 }

@@ -1,8 +1,27 @@
+Thu Jan 20 17:23:27 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/CosConcurrency.mpc:
+	* orbsvcs/orbsvcs/CosEvent.mpc:
+	* orbsvcs/orbsvcs/CosLifeCycle.mpc:
+	* orbsvcs/orbsvcs/CosLoadBalancing.mpc:
+	* orbsvcs/orbsvcs/CosNaming.mpc:
+	* orbsvcs/orbsvcs/CosNotification.mpc:
+	* orbsvcs/orbsvcs/CosProperty.mpc:
+	* orbsvcs/orbsvcs/CosTime.mpc:
+	* orbsvcs/orbsvcs/CosTrading.mpc:
+	* orbsvcs/orbsvcs/DsEventLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsLogAdmin.mpc:
+	* orbsvcs/orbsvcs/DsNotifyLogAdmin.mpc:
+	* orbsvcs/orbsvcs/ETCL.mpc:
+	* orbsvcs/orbsvcs/Svc_Utils.mpc:
+
+	  Added Pkgconfig_Files definitions.
+
 Thu Jan 20 16:22:42 2005  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_typedef.cpp:
         * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
-        
+
           In code generation for a typedef of an IDL array, added
           a check for the case where the typedef is in the same
           scope as the array. In such a case, we now generate the
@@ -62,7 +81,7 @@ Thu Jan 20 06:42:31 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 	* tao/Valuetype.mpc:
 	* tao/tao.mpc:
 
-	  Added Pkgconfig_Files definition.
+	  Added Pkgconfig_Files definitions.
 
 Thu Jan 20 07:53:44 2005  Chad Elliott  <elliott_c@ociweb.com>
 
