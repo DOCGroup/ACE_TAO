@@ -16,16 +16,15 @@ CORBA::Policy *
 TAO_RT_Endpoint_Utils::priority_bands_policy (TAO_GIOP_Invocation *invocation,
                                               CORBA::Environment &ACE_TRY_ENV)
 {
+  CORBA::Policy *bands_policy = CORBA::Policy::_nil ();
   TAO_RT_Stub *rt_stub =
     ACE_dynamic_cast (TAO_RT_Stub *, invocation->stub ());
 
   ACE_TRY
     {
-      CORBA::Policy *bands_policy =
+      bands_policy =
         rt_stub->effective_priority_banded_connection (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-
-      return bands_policy;
     }
   ACE_CATCH (CORBA::INV_POLICY, ex)
     {
@@ -40,7 +39,7 @@ TAO_RT_Endpoint_Utils::priority_bands_policy (TAO_GIOP_Invocation *invocation,
   ACE_ENDTRY;
   ACE_CHECK_RETURN (CORBA::Policy::_nil ());
 
-  return (CORBA::Policy::_nil ());
+  return bands_policy;
 }
 
 CORBA::Policy *

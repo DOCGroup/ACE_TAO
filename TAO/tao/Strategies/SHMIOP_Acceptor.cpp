@@ -136,10 +136,11 @@ TAO_SHMIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
   // This method should not be called anymore
   return -1;
 
-#endif  /* TAO_HAS_RT_CORBA == 1 */
-
+#else
 
   return create_profile (object_key, mprofile);
+
+#endif  /* TAO_HAS_RT_CORBA == 1 */
 }
 
 int

@@ -1,3 +1,11 @@
+Wed May 16 16:21:02 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* tao/PortableServer/Object_Adapter.cpp:
+        * tao/Strategies/SHMIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+        * tao/RT_Endpoint_Utils.cpp:
+          More compiler warning cleanup from the Tru64 compiler.
+
 Wed May 16 16:05:59 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* tao/PortableServer/Default_Servant_Dispatcher.cpp:
