@@ -244,7 +244,7 @@ ACE_Profile_Timer::elapsed_time (ACE_Elapsed_Time &et)
   ACE_hrtime_t delta_t; /* nanoseconds */
   timer_.elapsed_time (delta_t);
 
-  et.real_time = (double) (delta_t / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  et.real_time = delta_t / (double) ACE_ONE_SECOND_IN_NSECS;
   et.user_time = 0;
   et.system_time = 0;
 
