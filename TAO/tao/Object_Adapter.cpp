@@ -403,28 +403,30 @@ TAO_Object_Adapter::locate_servant_i (const TAO_ObjectKey &key,
   ACE_CHECK_RETURN (-1);
 
   PortableServer::Servant servant = 0;
-  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
-                                                           servant,
-                                                           ACE_TRY_ENV);
+  TAO_SERVANT_LOCATION servant_location =
+    poa->locate_servant_i (id,
+                           servant,
+                           ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  switch (result)
+  switch (servant_location)
     {
-    case TAO_POA::FOUND:
+    case TAO_SERVANT_FOUND:
       // Optimistic attitude
-    case TAO_POA::DEFAULT_SERVANT:
-    case TAO_POA::SERVANT_MANAGER:
+    case TAO_DEFAULT_SERVANT:
+    case TAO_SERVANT_MANAGER:
       return 0;
 
-    case TAO_POA::NOT_FOUND:
+    case TAO_SERVANT_NOT_FOUND:
       return -1;
     }
 
   return -1;
 }
 
-PortableServer::Servant
+TAO_SERVANT_LOCATION
 TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
+                                    PortableServer::Servant &servant,
                                     CORBA::Environment &ACE_TRY_ENV)
 {
   PortableServer::ObjectId id;
@@ -434,26 +436,14 @@ TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
                     id,
                     poa,
                     ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  ACE_CHECK_RETURN (TAO_SERVANT_NOT_FOUND);
 
-  PortableServer::Servant servant = 0;
-  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
-                                                           servant,
-                                                           ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
+  TAO_SERVANT_LOCATION servant_location = poa->locate_servant_i (id,
+                                                                 servant,
+                                                                 ACE_TRY_ENV);
+  ACE_CHECK_RETURN (TAO_SERVANT_NOT_FOUND);
 
-  switch (result)
-    {
-    case TAO_POA::FOUND:
-      return servant;
-
-    case TAO_POA::DEFAULT_SERVANT:
-    case TAO_POA::SERVANT_MANAGER:
-    case TAO_POA::NOT_FOUND:
-      return 0;
-    }
-
-  return 0;
+  return servant_location;
 }
 
 TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy (void)

@@ -195,8 +195,9 @@ public:
   int locate_servant (const TAO_ObjectKey &key,
                       CORBA_Environment &ACE_TRY_ENV);
 
-  PortableServer::Servant find_servant (const TAO_ObjectKey &key,
-                                        CORBA_Environment &ACE_TRY_ENV);
+  TAO_SERVANT_LOCATION find_servant (const TAO_ObjectKey &key,
+                                     PortableServer::Servant &servant,
+                                     CORBA_Environment &ACE_TRY_ENV);
 
   int find_poa (const poa_name &system_name,
                 CORBA::Boolean activate_it,
@@ -240,8 +241,9 @@ protected:
   int locate_servant_i (const TAO_ObjectKey &key,
                         CORBA_Environment &ACE_TRY_ENV);
 
-  PortableServer::Servant find_servant_i (const TAO_ObjectKey &key,
-                                          CORBA_Environment &ACE_TRY_ENV);
+  TAO_SERVANT_LOCATION find_servant_i (const TAO_ObjectKey &key,
+                                       PortableServer::Servant &servant,
+                                       CORBA_Environment &ACE_TRY_ENV);
 
   void dispatch_servant_i (const TAO_ObjectKey &key,
                            CORBA::ServerRequest &req,

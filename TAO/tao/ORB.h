@@ -527,7 +527,8 @@ public:
   // = TAO-specific extensions to the CORBA specification.
   // ----------------------------------------------------------------
 
-  virtual TAO_ServantBase *_get_collocated_servant (TAO_Stub *p);
+  virtual TAO_SERVANT_LOCATION _get_collocated_servant (TAO_Stub *p,
+                                                        TAO_ServantBase *&servant);
   // Return the object pointer of an collocated object it there is
   // one, otherwise, return 0.  Each type of ORB, e. g., IIOP ORB,
   // must implement this and determine what is a collocated object
@@ -625,9 +626,10 @@ protected:
   CORBA_ORB (TAO_ORB_Core *orb_core);
   virtual ~CORBA_ORB (void);
 
-  TAO_ServantBase *_find_collocated_servant (TAO_Stub *sobj,
-                                             TAO_ORB_Core *orb_core,
-                                             const TAO_MProfile &mprofile);
+  TAO_SERVANT_LOCATION _find_collocated_servant (TAO_Stub *sobj,
+                                                 TAO_ORB_Core *orb_core,
+                                                 TAO_ServantBase *& servant,
+                                                 const TAO_MProfile &mprofile);
   // Check if local servant exists for <mprofile> in <orb_core>.
 
   CORBA_Object_ptr resolve_poa_current (CORBA_Environment &ACE_TRY_ENV);
