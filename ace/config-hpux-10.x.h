@@ -159,6 +159,9 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 
 // Platform supports ACE_TLI, including SVR4 facilities.
 #define ACE_HAS_TLI
+
+// t_error's arg is char *, not const char *
+#define ACE_HAS_BROKEN_T_ERROR
 // ACE_HAS_SVR4_TLI should work on HP-UX, but doesn't yet.  Riverace
 // problem ID P27.
 //#define ACE_HAS_SVR4_TLI
