@@ -1063,10 +1063,8 @@ ACE_Reactor::open (size_t size,
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
     result = -1;
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   else if (this->notify_handler_.open (this) == -1)
     result = -1;
-#endif /* ACE_MT_SAFE */
 
   if (result != -1)
     // We're all set to go.
@@ -1142,9 +1140,7 @@ ACE_Reactor::close (void)
     delete this->timer_queue_;
   this->timer_queue_ = 0;
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   this->notify_handler_.close ();
-#endif /* ACE_MT_SAFE */
   this->initialized_ = 0;
 }
 
