@@ -1,3 +1,20 @@
+Wed May 12 16:24:17 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* examples/Reactor/Proactor/Makefile: 
+
+	* examples/Reactor/Proactor/test_proactor.cpp:
+
+	* ace/POSIX_Proactor.cpp: 
+
+	* ace/POSIX_Proactor.h: 
+
+	* ace/Proactor.cpp :
+
+	* ace/POSIX_Asynch_IO.cpp: Fixed the problem
+	with terminating the Timer thread. Also, fixed the  places where
+	conversion between void * and ACE_POSIX_Asynch_Result. Used
+	ACE_reinterpret_cast at these places. 
+
 Wed May 12 12:14:09 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* COPYING: Additional updates/clarifications suggested by Richard
