@@ -44,38 +44,38 @@ CM_Client::receive (int timeout)
                           0,
                           0,
                           this->top_) <= 0)
-	break;
+        break;
       else
-	{
-	  int sin_len = sizeof this->sin_;
-	  int n = ACE_OS::recvfrom (Comm_Manager::sokfd_,
+        {
+          int sin_len = sizeof this->sin_;
+          int n = ACE_OS::recvfrom ((int)Comm_Manager::sokfd_,
                                     this->recv_packet_,
                                     UDP_PACKET_SIZE,
                                     0,
                                     (sockaddr *) &this->sin_,
                                     &sin_len);
-	  if (n < 0)
-	    return -1;
-	  else
-	    {
-	      if (Options::get_opt (Options::DEBUG) != 0)
-		{
-		  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
+          if (n < 0)
+            return -1;
+          else
+            {
+              if (Options::get_opt (Options::DEBUG) != 0)
+                {
+                  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
                                                        sizeof this->sin_.sin_addr,
                                                        AF_INET);
 
-		  ACE_DEBUG ((LM_DEBUG,
+                  ACE_DEBUG ((LM_DEBUG,
                               "receiving from server host %s (%s)\n",
                               np->h_name,
                               inet_ntoa (this->sin_.sin_addr)));
-		}
+                }
 
-	      if (this->demux (this->recv_packet_, n) < 0)
-		return -1;
+              if (this->demux (this->recv_packet_, n) < 0)
+                return -1;
 
-	      Multicast_Manager::checkoff_host (this->sin_.sin_addr);
-	    }
-	}
+              Multicast_Manager::checkoff_host (this->sin_.sin_addr);
+            }
+        }
     }
 
   for (const char *host_name;
@@ -100,16 +100,16 @@ CM_Client::send (void)
   while (Multicast_Manager::get_next_host_addr (this->sin_.sin_addr) != 0)
     {
       if (Options::get_opt (Options::DEBUG) != 0)
-	{
-	  hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
+        {
+          hostent *np = ACE_OS::gethostbyaddr ((char *) &this->sin_.sin_addr,
                                                sizeof this->sin_.sin_addr,
                                                AF_INET);
 
-	  ACE_DEBUG ((LM_DEBUG,
+          ACE_DEBUG ((LM_DEBUG,
                       "sending to server host %s (%s)\n",
                       np->h_name,
                       inet_ntoa (this->sin_.sin_addr)));
-	}
+        }
 
       if (sendto (Comm_Manager::sokfd_,
                   this->send_packet_,
@@ -117,7 +117,7 @@ CM_Client::send (void)
                   0,
                   (sockaddr *) &this->sin_,
                   sizeof this->sin_) < 0)
-	return -1;
+        return -1;
     }
   return 1;
 }
@@ -133,5 +133,5 @@ CM_Client::~CM_Client (void)
     ACE_DEBUG ((LM_DEBUG,
                 "disposing CM_Client\n"));
 
-  ACE_OS::closesocket (Comm_Manager::sokfd_);
+  ACE_OS::closesocket ((int)Comm_Manager::sokfd_);
 }
