@@ -1,3 +1,17 @@
+Thu Jun 24 07:03:27 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/OS_NS_dlfcn.inl:
+	* ace/OS_NS_signal.inl:
+	* ace/OS_NS_stdio.inl:
+	* ace/OS_NS_sys_shm.inl:
+	* ace/OS_NS_sys_socket.inl:
+	* ace/OS_NS_unistd.inl:
+	* ace/config-openvms.h:
+	* ace/config-tandem-nsk-mips-v2.h:
+	  Removed conditional code enabled by ACE_LACKS_POSIX_PROTOTYPES
+	  and ACE_LACKS_SOME_POSIX_PROTOTYPES, as those macros have been
+	  obsolete for some time.
+
 Thu Jun 24 06:59:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
