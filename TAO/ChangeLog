@@ -1,3 +1,10 @@
+Mon Apr 12 11:27:36 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+
+          Changed the names of the projects in this mpc file to avoid
+          conflicts with a couple of projects down in CIAO.
+
 Mon Apr 12 16:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Messaging/Messaging_No_Impl.pidl:
@@ -18,10 +25,10 @@ Mon Apr 12 16:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 12 11:08:25 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ci.cpp:
 
-	  Fixed wrabings (and an errror) in the daily builds.
+          Fixed wrabings (and an errror) in the daily builds.
 
 Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -48,20 +55,20 @@ Mon Apr 12 10:50:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon Apr 12 10:46:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/TODO:
+        * tao/TODO:
 
-	  Removed this from the repo. Thanks to Johnny for pointing this
-	  out.
+          Removed this from the repo. Thanks to Johnny for pointing this
+          out.
 
 Mon Apr 12 10:43:19 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{h,cpp}: Added a new
-	  comparison function comp_tuple_finish_times which can compare
-	  RT_Info_Tuple structures.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils.{h,cpp}: Added a new
+          comparison function comp_tuple_finish_times which can compare
+          RT_Info_Tuple structures.
 
-	* orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Used the above
-	  comparison function instead of comp_entry_finish_times which was
-	  causing a segfault.
+        * orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp: Used the above
+          comparison function instead of comp_entry_finish_times which was
+          causing a segfault.
 
 Mon Apr 12 15:35:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -102,28 +109,28 @@ Mon Apr 12 13:56:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Apr 12 08:02:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* TAO_IDL/be/be_visitor_field/field_ci.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ci.cpp:
 
-	  Fixed warnings.
+          Fixed warnings.
 
 Sun Apr 11 18:33:35 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*.icc:
+        * */*.icc:
 
-	  Axed them from the repo. Thanks tp Johnny for reminding me to do
-	  this.
+          Axed them from the repo. Thanks tp Johnny for reminding me to do
+          this.
 
 Sun Apr 11 18:20:40 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO/examples/POA/DSI/DSI.DSW:
+        * TAO/examples/POA/DSI/DSI.DSW:
 
-	  Removed this from the repo.
+          Removed this from the repo.
 
 Sat Apr 10 23:39:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*.ds[p,w]:
+        * */*.ds[p,w]:
 
-	  Removed.
+          Removed.
 
 Sat Apr 10 17:54:54 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -168,9 +175,9 @@ Sat Apr 10 14:07:20 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Fri Apr  9 23:25:04 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
 
-	  Fixed unused variable warning.
+          Fixed unused variable warning.
 
 Fri Apr  9 12:33:16 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -337,24 +344,24 @@ Fri Apr  9 12:28:48 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Thu Apr  8 20:12:30 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* */*.bor:
+        * */*.bor:
 
-	  Removed all the borland makefiles files from the
-	  repository. Files in include/makeinclude have not been removed.
+          Removed all the borland makefiles files from the
+          repository. Files in include/makeinclude have not been removed.
 
 Wed Apr  7 10:37:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* docs/ORBEndpoint.html:
+        * docs/ORBEndpoint.html:
 
-	  Added documentation for SSLIOP endpoints.
+          Added documentation for SSLIOP endpoints.
 
 Sat Apr  3 19:22:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* examples/Simulator/Event_Supplier/Makefile:
+        * examples/Simulator/Event_Supplier/Makefile:
 
-	  Fixed the Makefile. Thanks to Tommy Persson <tpe@ida.liu.se> for
-	  reporting the problem. Through some magic I am going to make
-	  this Makefile appear in 1.4.1.
+          Fixed the Makefile. Thanks to Tommy Persson <tpe@ida.liu.se> for
+          reporting the problem. Through some magic I am going to make
+          this Makefile appear in 1.4.1.
 
 Fri Apr 02 13:37:23 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
@@ -362,9 +369,9 @@ Fri Apr 02 13:37:23 2004  Balachandran  <bala@dre.vanderbilt.edu>
 
 Fri Apr  2 13:05:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* NEWS:
+        * NEWS:
 
-	  Updated with the latest developments just prior to BFO.
+          Updated with the latest developments just prior to BFO.
 
 Thu Apr  1 10:19:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -374,92 +381,92 @@ Thu Apr  1 10:19:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Mar 31 23:16:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Borland/ChatClient.cpp:
-	* examples/Borland/ORBThread.h:
-	* examples/Borland/pch.h:
-	* examples/Kokyu_dsrt_schedulers/EDF_Scheduling.pidl:
-	* examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
-	* examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
-	* examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
-	* examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
-	* examples/RTScheduling/FP_Scheduling.pidl:
-	* examples/RTScheduling/MIF_Scheduling.pidl:
-	* orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
-	* orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
-	* orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
-	* orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
-	* orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
-	* orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
-	* orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
-	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
-	* orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
-	* orbsvcs/orbsvcs/PortableGroup.idl:
-	* orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
-	* orbsvcs/orbsvcs/SSLIOP.idl:
-	* orbsvcs/orbsvcs/Security.idl:
-	* orbsvcs/orbsvcs/SecurityReplaceable.idl:
-	* orbsvcs/orbsvcs/miop.idl:
-	* orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
-	* orbsvcs/tests/FT_App/FTAPP_Analyzer_Main.cpp:
-	* orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
-	* orbsvcs/tests/FT_App/FTAPP_FaultConsumer_Main.cpp:
-	* orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
-	* orbsvcs/tests/FT_App/FT_Replica.cpp:
-	* orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
-	* orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
-	* orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
-	* orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
-	* orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
-	* orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
-	* performance-tests/POA/Demux/demux_stats.cpp:
-	* tao/orb.idl:
-	* tao/PortableServer/Default_ORT.pidl:
-	* tao/RTPortableServer/RTPortableServer.pidl:
-	* tao/Utils/Server_Main.cpp:
-	* tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
-	* tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
-	* tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
+        * examples/Borland/ChatClient.cpp:
+        * examples/Borland/ORBThread.h:
+        * examples/Borland/pch.h:
+        * examples/Kokyu_dsrt_schedulers/EDF_Scheduling.pidl:
+        * examples/Kokyu_dsrt_schedulers/FP_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/Kokyu_qos.idl:
+        * examples/Kokyu_dsrt_schedulers/MIF_Scheduling.idl:
+        * examples/Kokyu_dsrt_schedulers/MUF_Scheduling.idl:
+        * examples/RTScheduling/FP_Scheduling.pidl:
+        * examples/RTScheduling/MIF_Scheduling.pidl:
+        * orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_Main.cpp:
+        * orbsvcs/Fault_Detector/Fault_Detector_i.cpp:
+        * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
+        * orbsvcs/Fault_Notifier/Fault_Notifier_Main.cpp:
+        * orbsvcs/Logging_Service/RTEvent_Logging_Service/RTEvent_Logging_Service.mpc:
+        * orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
+        * orbsvcs/examples/RtEC/Kokyu/RtECKokyu.mpc:
+        * orbsvcs/orbsvcs/PortableGroup.idl:
+        * orbsvcs/orbsvcs/PortableGroup_Simple_DS.idl:
+        * orbsvcs/orbsvcs/SSLIOP.idl:
+        * orbsvcs/orbsvcs/Security.idl:
+        * orbsvcs/orbsvcs/SecurityReplaceable.idl:
+        * orbsvcs/orbsvcs/miop.idl:
+        * orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Property_Set.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_Analyzer_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FactoryRegistry_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_FaultConsumer_Main.cpp:
+        * orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
+        * orbsvcs/tests/FT_App/FT_Replica.cpp:
+        * orbsvcs/tests/FT_App/FT_ReplicaFactory_i.cpp:
+        * orbsvcs/tests/FT_App/FT_TestReplica_i.cpp:
+        * orbsvcs/tests/FT_App/StubBatchConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultAnalyzer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultConsumer.cpp:
+        * orbsvcs/tests/FT_App/StubFaultNotifier.cpp:
+        * performance-tests/POA/Demux/demux_stats.cpp:
+        * tao/orb.idl:
+        * tao/PortableServer/Default_ORT.pidl:
+        * tao/RTPortableServer/RTPortableServer.pidl:
+        * tao/Utils/Server_Main.cpp:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Char_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/libs/IBM1047_ISO8859/Wchar_IBM1047_ISO8859_Factory.h:
+        * tests/CodeSets/libs/UCS4_UTF16/WUCS4_UTF16_Factory.h:
 
-	  Fixed fuzz warnings.
+          Fixed fuzz warnings.
 
 Wed Mar 31 18:19:54 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* docs/releasenotes/ftcorba_services.html:
+        * docs/releasenotes/ftcorba_services.html:
 
-	  Fixed fuzz warnings.
+          Fixed fuzz warnings.
 
 Wed Mar 31 17:56:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/Advanced/ch_12/icp.h:
-	* examples/Advanced/ch_18/icp.h:
-	* examples/Advanced/ch_21/icp.h:
-	* examples/Advanced/ch_8_and_10/icp.h:
-	* examples/Simulator/Event_Supplier/Event_Supplier.mpc:
-	* orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
-	* orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
-	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
-	* orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
-	* orbsvcs/performance-tests/LoadBalancing/LoadBalancing.mpc:
-	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
-	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
-	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
-	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
-	* orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
-	* orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
-	* orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
-	* performance-tests/Anyop/Anyop.mpc:
-	* performance-tests/Latency/Collocation/Collocation.mpc:
+        * examples/Advanced/ch_12/icp.h:
+        * examples/Advanced/ch_18/icp.h:
+        * examples/Advanced/ch_21/icp.h:
+        * examples/Advanced/ch_8_and_10/icp.h:
+        * examples/Simulator/Event_Supplier/Event_Supplier.mpc:
+        * orbsvcs/Logging_Service/Basic_Logging_Service/Basic_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Event_Logging_Service/Event_Logging_Service.mpc:
+        * orbsvcs/Logging_Service/Notify_Logging_Service/Notify_Logging_Service.mpc:
+        * orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/performance-tests/LoadBalancing/LoadBalancing.mpc:
+        * orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+        * orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+        * orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+        * orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+        * orbsvcs/tests/InterfaceRepo/Latency_Test/Latency_Test.mpc:
+        * orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/Infrastructure_Controlled.mpc:
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/LoadMonitorCPU.mpc:
+        * performance-tests/Anyop/Anyop.mpc:
+        * performance-tests/Latency/Collocation/Collocation.mpc:
 
-	  Fixes for fuzz warnings.
+          Fixes for fuzz warnings.
 
 Wed Mar 31 15:29:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -468,11 +475,11 @@ Wed Mar 31 15:29:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Mar 31 08:00:17 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp (svr_worker):
-	* tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp (Worker_Thread):
-	  Changed the name "barrier" to "thread_barrier" to fix a problem
- 	  with macro conflicts on certain OS platforms.  Thanks to Levente
- 	  Torok <tealev@yahoo.com> for reporting this.
+        * performance-tests/Cubit/TAO/IDL_Cubit/collocation_test.cpp (svr_worker):
+        * tests/RTCORBA/MT_Client_Protocol_Priority/client.cpp (Worker_Thread):
+          Changed the name "barrier" to "thread_barrier" to fix a problem
+          with macro conflicts on certain OS platforms.  Thanks to Levente
+          Torok <tealev@yahoo.com> for reporting this.
 
 Wed Mar 31 09:12:00 2004  David Smith  <dts@prismtechnologies.com>
 
@@ -494,17 +501,17 @@ Tue Mar 30 08:48:06 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 
 Tue Mar 30 13:19:27 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
+        * orbsvcs/tests/Security/MT_IIOP_SSL/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Mon Mar 29 21:34:30 2004  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
 
-	  Fixed byte ordering problems that prevented DSI gateways on a
-	  different byte order to communicate with clients and servers
-	  running on different byte orders.  Thanks To Mouna Seri
+          Fixed byte ordering problems that prevented DSI gateways on a
+          different byte order to communicate with clients and servers
+          running on different byte orders.  Thanks To Mouna Seri
           <seri@crhc.uiuc.edu> for reporting the problem.
 
 Mon Mar 29 11:46:49 2004  Chad Elliott  <elliott_c@ociweb.com>
@@ -1943,8 +1950,8 @@ Thu Feb 26 17:39:51 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
         * orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
         * orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.cpp:
           Removed checking for duplicate service context id explicitly
-	  while adding  new service contexts which could degrade the
-	  performance in the common execution path.
+          while adding  new service contexts which could degrade the
+          performance in the common execution path.
 
 Thu Feb 26 10:10:40 MST 2004  Trevor Fields  <fields_t@ociweb.com>
 
@@ -2116,13 +2123,13 @@ Mon Feb 23 15:43:01 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
           Changed the processing of service contexts from
-	  receive_request_service_contexts() to receive_request(), this
-	  allows to filter out the requests which do not need the burden
-	  of service contexts processing.
+          receive_request_service_contexts() to receive_request(), this
+          allows to filter out the requests which do not need the burden
+          of service contexts processing.
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
           Changed to use FTRTEC specific message log facility instead of
-	  ACE_DEBUG.
+          ACE_DEBUG.
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.h:
           Removed used macros.
@@ -2775,11 +2782,11 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
         * orbsvcs/orbsvcs/Notify/Admin.cpp (subscribed_types):
 
           Corrected the implementation to add the caller's
-	  <subscribed_types> to the Admin Object's types. This solves the
-	  problem that if a proxy's connect_structured_push_consumer() is
-	  called *AFTER* the proxy's subscription_change(), then the
-	  subscriptions do not work. Thanks to Richard G. Hash
-	  <richard.hash@openspirit.com> for reporting this problem.
+          <subscribed_types> to the Admin Object's types. This solves the
+          problem that if a proxy's connect_structured_push_consumer() is
+          called *AFTER* the proxy's subscription_change(), then the
+          subscriptions do not work. Thanks to Richard G. Hash
+          <richard.hash@openspirit.com> for reporting this problem.
 
         * orbsvcs/orbsvcs/Notify/Properties.cpp:
         * orbsvcs/orbsvcs/Notify/Properties.h:
@@ -2790,9 +2797,9 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
 
           Added the -NoUpdates option to the Notification svc.conf
           options. e.g. static TAO_CosNotify_Service " -ListenerThreads 1
-	  -NoUpdates".  If this option is specified, the
-	  subscription_change/offer_change messages are NOT sent to proxy
-	  objects.
+          -NoUpdates".  If this option is specified, the
+          subscription_change/offer_change messages are NOT sent to proxy
+          objects.
 
           This option is useful to turn off entire updates for applications
           that do not reply on subscription_change/offer_change messages.
