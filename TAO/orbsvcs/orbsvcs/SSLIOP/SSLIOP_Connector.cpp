@@ -539,7 +539,10 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       // increment to the handler is done in make_svc_handler (). Now
       // that we dont need the reference to it anymore we can decrement
       // the refcount whether the connection is successful ot not.
-      svc_handler->decr_refcount ();
+      long refcount = svc_handler->decr_refcount ();
+
+      ACE_ASSERT (refcount >= 0);
+     
 
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
