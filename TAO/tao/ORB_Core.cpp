@@ -59,6 +59,9 @@ TAO_ORB_Core::~TAO_ORB_Core (void)
   // here once that chunk is actually implemented.
   if (preconnections_)
     ACE_OS::free (preconnections_);
+
+  // Allocated in init()
+  delete this->orb_params_;
 }
 
 int
@@ -661,7 +664,7 @@ int
 TAO_ORB_Core::fini (void)
 {
   // Ask the registry to close all registered connectors!
-  this->connector_registry ()->close_all ();
+  // this->connector_registry ()->close_all ();
 
   TAO_Internal::close_services ();
 
@@ -673,6 +676,8 @@ TAO_ORB_Core::fini (void)
 
   if (!this->server_factory_from_service_config_)
     delete server_factory_;
+
+  delete this;
 
   return 0;
 }
