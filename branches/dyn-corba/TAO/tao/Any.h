@@ -60,8 +60,8 @@ namespace CORBA
                        void* value,
                        CORBA::Any::_tao_destructor destructor) {}
     CORBA::Boolean any_owns_data (void) const { return 0; }
-    CORBA::Boolean contains_local (void) const { return 0; }
-    void contains_local (CORBA::Boolean) {}
+//    CORBA::Boolean contains_local (void) const { return 0; }
+//    void contains_local (CORBA::Boolean) {}
     CORBA::TypeCode_ptr type_;
     ACE_Message_Block *cdr_;
     void _tao_encode (TAO_OutputCDR &cdr,

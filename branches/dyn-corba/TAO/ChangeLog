@@ -1,3 +1,20 @@
+Wed Jan  8 22:43:39 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Any.h:
+        * tao/IOPC.cpp:
+        * tao/IOPC.h:
+        * tao/IOPC.i:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyC.i:
+        * tao/TAOC.cpp:
+        * tao/TAOC.h:
+        * tao/TAOC.i:
+
+	  Regenerated files from IOP.pidl, Policy.pidl and TAO.pidl,
+	  and removed items from Any.h that the old versions of these
+	  generated files depended on.
+
 Wed Jan  8 17:44:48 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Typecode.h:
