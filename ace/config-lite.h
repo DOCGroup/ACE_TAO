@@ -94,6 +94,13 @@
 #   define ACE_TYPENAME
 # endif /* ACE_HAS_TYPENAME_KEYWORD */
 
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+/**
+ * @deprecated The @c ACE_TEMPLATE_SPECIALIZATION and
+ *             @c ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION macros are
+ *             deprecated.  Use standard C++ template specialization
+ *             syntax instead.
+ */
 # if defined (ACE_HAS_STD_TEMPLATE_SPECIALIZATION)
 #   define ACE_TEMPLATE_SPECIALIZATION template<>
 # else
@@ -105,6 +112,7 @@
 # else
 #   define ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION template<>
 # endif /* ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION */
+#endif /* !ACE_LACKS_DEPRECATED_MACROS */
 
 // =========================================================================
 // Perfect Multicast filting refers to RFC 3376, where a socket is only
