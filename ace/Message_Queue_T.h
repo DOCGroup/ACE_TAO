@@ -66,7 +66,7 @@ public:
   // = EWOULDBLOCK).
 
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *tv = 0);
+                                 ACE_Time_Value *timeout = 0);
   // Retrieve the first <ACE_Message_Block> without removing it.
   // Returns -1 on failure, else the number of items still on the
   // queue.
@@ -160,7 +160,7 @@ public:
   virtual ACE_Notification_Strategy *notification_strategy (void);
   virtual void notification_strategy (ACE_Notification_Strategy *s);
 
-  void dump (void) const;
+  virtual void dump (void) const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -199,11 +199,11 @@ protected:
 
   // = Helper methods to factor out common #ifdef code.
   virtual int wait_not_full_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                  ACE_Time_Value *tv);
+                                  ACE_Time_Value *timeout);
   // Wait for the queue to become non-full.
 
   virtual int wait_not_empty_cond (ACE_Guard<ACE_SYNCH_MUTEX_T> &mon,
-                                   ACE_Time_Value *tv);
+                                   ACE_Time_Value *timeout);
   // Wait for the queue to become non-empty.
 
   virtual int signal_enqueue_waiters (void);
@@ -343,32 +343,75 @@ class ACE_Dynamic_Message_Queue : public ACE_Message_Queue<ACE_SYNCH_USE>
   // = TITLE
   //     A derived class which adapts the <ACE_Message_Queue>
   //     class in order to maintain dynamic priorities for enqueued
-  //     <ACE_Message_Blocks> and manage the queue dynamically.
+  //     <ACE_Message_Blocks> and manage the queue order according
+  //     to these dynamic priorities.
   //
   // = DESCRIPTION
-  //     Priorities and queue orderings are refreshed at each enqueue
-  //     and dequeue operation.  Head and tail enqueue methods were
-  //     made private to prevent out-of-order messages from confusing
-  //     the pending and late portions of the queue.  Messages in the
-  //     pending portion of the queue whose dynamic priority becomes
-  //     negative are placed into the late portion of the queue.
-  //     Messages in the late portion of the queue whose dynamic
-  //     priority becomes positive are dropped.  These behaviors
-  //     support a limited schedule overrun corresponding to one full
-  //     cycle through dynamic priority values.  These behaviors can
-  //     be modified in derived classes by providing alternative
-  //     definitions for the appropriate virtual methods.
+  //
+  //     The messages in the queue are managed so as to preserve
+  //     a logical ordering with minimal overhead per enqueue and
+  //     dequeue operation.  For this reason, the actual order of
+  //     messages in the linked list of the queue may differ from
+  //     their priority order.  As time passes, a message may change
+  //     from pending status to late status, and eventually to beyond
+  //     late status.  To minimize reordering overhead under this
+  //     design force, three separate boundaries are maintained
+  //     within the linked list of messages.  Messages are dequeued
+  //     preferentially from the head of the pending portion, then
+  //     the head of the late portion, and finally from the head
+  //     of the beyond late portion.  In this way, only the boundaries
+  //     need to be maintained (which can be done efficiently, as
+  //     aging messages maintain the same linked list order as they
+  //     progress from one status to the next), with no reordering
+  //     of the messages themselves, while providing correct priority
+  //     ordered dequeueing semantics.
+  //
+  //     Head and tail enqueue methods inherited from ACE_Message_Queue
+  //     are made private to prevent out-of-order messages from confusing
+  //     management of the various portions of the queue.  Messages in
+  //     the pending portion of the queue whose priority becomes late
+  //     (according to the specific dynamic strategy) advance into
+  //     the late portion of the queue.  Messages in the late portion
+  //     of the queue whose priority becomes later than can be represented
+  //     advance to the beyond_late portion of the queue.  These behaviors
+  //     support a limited schedule overrun, with pending messages prioritized
+  //     ahead of late messages, and late messages ahead of beyond late  
+  //     messages.  These behaviors can be modified in derived classes by
+  //     providing alternative definitions for the appropriate virtual methods.
+  //
+  //     When filled with messages, the queue's linked list should look like:
+  //
+  //          H                                           T
+  //          |                                           |
+  // 
+  //          B - B - B - B - L - L - L - P - P - P - P - P
+  //    
+  //          |           |   |       |   |               |
+  //         BH          BT   LH     LT   PH             PT
+  //
+  //     Where the symbols are as follows:
+  //
+  //     H  = Head of the entire list
+  //     T  = Tail of the entire list
+  //     B  = Beyond late message
+  //     BH = Beyond late messages Head
+  //     BT = Beyond late messages Tail
+  //     L  = Late message
+  //     LH = Late messages Head
+  //     LT = Late messages Tail
+  //     P  = Pending message
+  //     PH = Pending messages Head
+  //     PT = Pending messages Tail
   //
   //     Caveat: the virtual methods enqueue_tail, enqueue_head,
   //             and peek_dequeue_head were made private, but for some
   //             compilers it is possible to gain access to these methods
-  //             through nefarious means: achieving this may result in
+  //             through base class pointers: achieving this may result in
   //             highly unpredictable results, as expectations about
   //             where a message starts or remains between method
   //             invocations may not hold for a dynamically managed 
   //             message queue.
-
-
+  //
 public:
   // = Initialization and termination methods.
   ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
@@ -379,11 +422,25 @@ public:
   virtual ~ACE_Dynamic_Message_Queue (void);
   // Close down the message queue and release all resources.
 
+  virtual int remove_messages (ACE_Message_Block *&list_head, 
+                               ACE_Message_Block *&list_tail,
+                               u_int status_flags);
+  // Detach all messages with status given in the passed flags from
+  // the queue and return them by setting passed head and tail pointers
+  // to the linked list they comprise.  This method is intended primarily
+  // as a means of periodically harvesting messages that have missed
+  // their deadlines, but is available in its most general form.  All
+  // messages are returned in priority order, from head to tail, as of
+  // the time this method was called.
+
   virtual int dequeue_head (ACE_Message_Block *&first_item,
                             ACE_Time_Value *timeout = 0);
   // Dequeue and return the <ACE_Message_Block *> at the head of the
   // queue.  Returns -1 on failure, else the number of items still on
   // the queue.
+
+  virtual void dump (void) const;
+  // Dump the state of the queue.
 
   ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.
@@ -397,23 +454,49 @@ protected:
   // Message Queue constructor to update the priorities of all
   // enqueued messages.
 
-  virtual int refresh_priorities (const ACE_Time_Value & tv);
-  // Refresh the priorities in the queue according to a specific
-  // priority assignment function.
+  virtual int sublist_enqueue_i (ACE_Message_Block *new_item, 
+                                 const ACE_Time_Value &current_time,
+                                 ACE_Message_Block *&sublist_head, 
+                                 ACE_Message_Block *&sublist_tail, 
+                                 ACE_Dynamic_Message_Strategy::Priority_Status status);
+  // enqueue a message in priority order within a given priority status sublist
 
-  virtual int refresh_queue (const ACE_Time_Value & tv);
-  // Refresh the order of messages in the queue after refreshing their
-  // priorities.
+  virtual int dequeue_head_i (ACE_Message_Block *&first_item);
+  // Dequeue and return the <ACE_Message_Block *> at the head of the
+  // logical queue.  Attempts first to dequeue from the pending
+  // portion of the queue, or if that is empty from the late portion,
+  // or if that is empty from the beyond late portion, or if that is
+  // empty just sets the passed pointer to zero and returns -1.
+ 
+  virtual int refresh_queue (const ACE_Time_Value & current_time);
+  // Refresh the queue using the strategy
+  // specific priority status function.
 
-  virtual int remove_stale_messages (const ACE_Time_Value & tv);
-  // Remove messages that are later than the priority range can represent.
+  virtual int refresh_pending_queue (const ACE_Time_Value & current_time);
+  // Refresh the pending queue using the strategy
+  // specific priority status function.
 
-  virtual int reorder_queue (const ACE_Time_Value & tv);
-  // Refresh the order of messages in the queue.
+  virtual int refresh_late_queue (const ACE_Time_Value & current_time);
+  // Refresh the late queue using the strategy
+  // specific priority status function.
 
-  ACE_Message_Block *pending_list_tail_;
-  // Pointer to tail of the pending messages (those whose priority is
-  // and has been non-negative) in the <ACE_Message_Block list>.
+  ACE_Message_Block *pending_head_;
+  // Pointer to head of the pending messages
+
+  ACE_Message_Block *pending_tail_;
+  // Pointer to tail of the pending messages
+
+  ACE_Message_Block *late_head_;
+  // Pointer to head of the late messages
+
+  ACE_Message_Block *late_tail_;
+  // Pointer to tail of the late messages
+
+  ACE_Message_Block *beyond_late_head_;
+  // Pointer to head of the beyond late messages
+
+  ACE_Message_Block *beyond_late_tail_;
+  // Pointer to tail of the beyond late messages
 
   ACE_Dynamic_Message_Strategy &message_strategy_;
   // Pointer to a dynamic priority evaluation function.
@@ -428,7 +511,7 @@ private:
   // but make them private so they're not accessible outside the class
 
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
-                                 ACE_Time_Value *tv = 0);
+                                 ACE_Time_Value *timeout = 0);
   // private method to hide public base class method: just calls base class method
 
   virtual int enqueue_tail (ACE_Message_Block *new_item,
@@ -469,23 +552,9 @@ public:
                                    ACE_Notification_Strategy * = 0,
                                    u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                    u_long static_bit_field_shift = 10,            // 10 low order bits
-                                   u_long pending_threshold = 0x200000UL,         // 2^(22-1)
                                    u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                    u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
   // factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
-
-  static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
-    create_deadline_cleanup_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
-                                           size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                           ACE_Notification_Strategy * = 0,
-                                           u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
-                                           u_long static_bit_field_shift = 10,            // 10 low order bits
-                                           u_long pending_threshold = 0x200000UL,         // 2^(22-1)
-                                           u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
-                                           u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
-  // factory method for a dynamically prioritized (by time to deadline) 
-  // ACE_Dynamic_Message_Queue, with automatic deletion of beyond late messages
-
 
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
@@ -493,22 +562,20 @@ public:
                                  ACE_Notification_Strategy * = 0,
                                  u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
                                  u_long static_bit_field_shift = 10,            // 10 low order bits
-                                 u_long pending_threshold = 0x200000UL,         // 2^(22-1)
                                  u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
                                  u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
   // factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
 
-  static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE> *
-    create_laxity_cleanup_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
-                                         size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                         ACE_Notification_Strategy * = 0,
-                                         u_long static_bit_field_mask = 0x3FFUL,        // 2^(10) - 1
-                                         u_long static_bit_field_shift = 10,            // 10 low order bits
-                                         u_long pending_threshold = 0x200000UL,         // 2^(22-1)
-                                         u_long dynamic_priority_max = 0x3FFFFFUL,      // 2^(22)-1
-                                         u_long dynamic_priority_offset =  0x200000UL); // 2^(22-1)
-  // factory method for a dynamically prioritized (by laxity) 
-  // ACE_Dynamic_Message_Queue, with automatic deletion of beyond late messages
+
+#if defined (VXWORKS)
+
+  static ACE_Message_Queue_Vx *
+    create_Vx_message_queue (size_t max_messages, size_t max_message_length, 
+                             ACE_Notification_Strategy *ns = 0);
+  // factory method for a wrapped VxWorks message queue
+
+#endif /* defined (VXWORKS) */
+
 };
 
 #if defined (__ACE_INLINE__)

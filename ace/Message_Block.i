@@ -365,15 +365,9 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
 }
 
 
-ACE_INLINE int
-ACE_Dynamic_Message_Strategy::is_pending (const ACE_Message_Block & mb, 
-                                          const ACE_Time_Value & tv)
-{
-  return ((mb.msg_priority () < pending_threshold_) || 
-          this->is_beyond_late (mb, tv))
-         ? 0 : 1;
-}
-  // returns true if the message has a pending (not late) priority value
+////////////////////////////////////////
+// class ACE_Dynamic_Message_Strategy //
+////////////////////////////////////////
 
 ACE_INLINE u_long 
 ACE_Dynamic_Message_Strategy::static_bit_field_mask (void)
@@ -404,20 +398,6 @@ ACE_Dynamic_Message_Strategy::static_bit_field_shift (u_long ul)
   // set left shift value to make room for static bit field
 
 ACE_INLINE u_long 
-ACE_Dynamic_Message_Strategy::pending_threshold (void)
-{
-  return pending_threshold_;
-}
-  // get pending threshold priority value
-
-ACE_INLINE void 
-ACE_Dynamic_Message_Strategy::pending_threshold (u_long ul)
-{
-  pending_threshold_ = ul;
-}
-  // set pending threshold priority value
-
-ACE_INLINE u_long 
 ACE_Dynamic_Message_Strategy::dynamic_priority_max (void)
 {
   return dynamic_priority_max_;
@@ -427,7 +407,12 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (void)
 ACE_INLINE void 
 ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
 {
+  // pending_shift_ depends on dynamic_priority_max_: for performance
+  // reasons, the value in pending_shift_ is (re)calculated only when 
+  // dynamic_priority_max_ is initialized or changes, and is stored
+  // as a class member rather than being a derived value.
   dynamic_priority_max_ = ul;
+  pending_shift_ = ACE_Time_Value (0, ul);
 }
   // set maximum supported priority value
 
@@ -436,14 +421,108 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void)
 {
   return dynamic_priority_offset_;
 }
-  // get axis shift to map signed range into unsigned range
+  // get offset for boundary between signed range and unsigned range
 
 ACE_INLINE void 
 ACE_Dynamic_Message_Strategy::dynamic_priority_offset (u_long ul)
 {
-  dynamic_priority_offset_ = ul;
+
+
+  // max_late_ and min_pending_ depend on dynamic_priority_offset_: for 
+  // performance reasons, the values in max_late_ and min_pending_ are
+  // (re)calculated only when dynamic_priority_offset_ is initialized
+  // or changes, and are stored as a class member rather than being
+  // derived each time one of their values is needed.
+  dynamic_priority_offset_ = ul;  
+  max_late_ = ACE_Time_Value (0, ul - 1);
+  min_pending_ = ACE_Time_Value (0, ul);
 }
-  // set axis shift to map signed range into unsigned range
+  // set offset for boundary between signed range and unsigned range
+
+
+ACE_INLINE ACE_Dynamic_Message_Strategy::Priority_Status
+ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
+                                               const ACE_Time_Value & tv)
+{
+  // default the message to have pending priority status
+  Priority_Status status = ACE_Dynamic_Message_Strategy::PENDING;
+
+  // start with the passed absolute time as the message's priority, then
+  // call the polymorphic hook method to (at least partially) convert 
+  // the absolute time and message attributes into the message's priority
+  ACE_Time_Value priority (tv);  
+  convert_priority (priority, mb);
+
+  // if the priority is negative, the message is pending
+  if (priority < ACE_Time_Value::zero)
+  {
+    // priority for pending messages must be shifted
+    // upward above the late priority range
+    priority += pending_shift_;
+    if (priority < min_pending_)
+    {
+      priority = min_pending_;
+    }
+  }
+  // otherwise, if the priority is greater than the maximum late
+  // priority value that can be represented, it is beyond late 
+  else if (priority > max_late_)
+  {
+    // all messages that are beyond late are assigned lowest priority (zero)
+    mb.msg_priority (0);
+    return ACE_Dynamic_Message_Strategy::BEYOND_LATE;
+  }  
+  // otherwise, the message is late, but its priority is correct  
+  else
+  {
+    status = ACE_Dynamic_Message_Strategy::LATE;
+  }
+
+  // use (fast) bitwise operators to isolate and replace
+  // the dynamic portion of the message's priority
+  mb.msg_priority((mb.msg_priority() & static_bit_field_mask_) | 
+                  ((priority.usec () + ACE_ONE_SECOND_IN_USECS * priority.sec ()) <<
+                   static_bit_field_shift_));
+
+  return status;
+}
+  // returns the priority status of the message
+
+
+
+/////////////////////////////////////////
+// class ACE_Deadline_Message_Strategy //
+/////////////////////////////////////////
+
+ACE_INLINE void 
+ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
+                                                 const ACE_Message_Block & mb)
+{
+  // Convert absolute time passed in tv to negative time
+  // to deadline of mb with respect to that absolute time.
+  priority -= mb.msg_deadline_time ();
+}
+  // dynamic priority conversion function based on time to deadline
+
+
+///////////////////////////////////////
+// class ACE_Laxity_Message_Strategy //
+///////////////////////////////////////
+
+ACE_INLINE void 
+ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority, 
+                                               const ACE_Message_Block & mb)
+{
+  // Convert absolute time passed in tv to negative
+  // laxity of mb with respect to that absolute time.
+  priority += mb.msg_execution_time ();
+  priority -= mb.msg_deadline_time ();
+}
+  // dynamic priority conversion function based on laxity
+
+
+
+
 
 
 
