@@ -239,8 +239,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_Time_Value &tv)
 void
 ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time)
 {
-  // See elapsed_time (ACE_hrtime_t &nanoseconds) implementation below;
-  // this implementation is based on that.
+  // This implementation should be cleaned up.
 
   // Just grab the nanoseconds.  That is, leave off all values above
   // microsecond.  This equation is right!  Don't mess with me!  (It
@@ -274,42 +273,17 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_Time_Value &tv)
   hrtime_to_tv (tv, total_);
 }
 
-// The whole point is to get nanoseconds.  However, our scale_factor
-// gives us microseconds.  We could use floating points to get the
-// nanosecond precision if some compilers didn't barf on 64-bit
-// divisions with doubles.  So, we just extract out the nanoseconds
-// first and then add them to the standard microsecond calculation.
 void
 ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds)
 {
-  // Just grab the nanoseconds.  That is, leave off all values above
-  // microsecond.  This equation is right!  Don't mess with me!
-  // (It first strips off everything but the portion less than 1 usec.
-  // Then it converts that to nanoseconds by dividing by the scale
-  // factor to convert to usec, and multiplying by 1000.)
-  // The cast avoids a MSVC 4.1 compiler warning about narrowing.
-  u_long nseconds = ACE_static_cast (u_long,
-                                     (this->end_ - this->start_) %
-                                       global_scale_factor () * 1000u /
-                                       global_scale_factor ());
-
-  // Get just the microseconds (dropping any left over nanoseconds).
-#if defined (ACE_LACKS_LONGLONG_T)
-  ACE_UINT32 useconds = ACE_static_cast (ACE_UINT32,
-                                         (this->end_ - this->start_) /
-                                           global_scale_factor ());
-#else  /* ! ACE_LACKS_LONGLONG_T */
-  ACE_hrtime_t useconds = (this->end_ - this->start_) /
-    global_scale_factor ();
-#endif /* ! ACE_LACKS_LONGLONG_T */
-
-  // Total nanoseconds in a single 64-bit value.
-  nanoseconds = useconds * 1000u + nseconds;
+  nanoseconds = (this->end_ - this->start_) * 1000u / global_scale_factor ();
 }
 
 #if !defined (ACE_HAS_WINCE)
 void
-ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE handle)
+ACE_High_Res_Timer::print_ave (const char *str,
+                               const int count,
+                               ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
 
@@ -318,8 +292,12 @@ ACE_High_Res_Timer::print_ave (const char *str, const int count, ACE_HANDLE hand
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs  = (u_long) (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs = (ACE_UINT32) (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  u_long total_secs =
+    ACE_static_cast (u_long,
+                     total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
+  ACE_UINT32 extra_nsecs =
+    ACE_static_cast (ACE_UINT32,
+                     total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   char buf[100];
   if (count > 1)
