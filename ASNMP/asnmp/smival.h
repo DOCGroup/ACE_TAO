@@ -88,7 +88,7 @@ public:
   virtual ~SnmpSyntax() {};
   // virtual destructor to ensure deletion of derived classes...
 
-  virtual SnmpSyntax& operator=( SnmpSyntax &/*val*/)
+  virtual SnmpSyntax& operator=(const SnmpSyntax &/*val*/)
   {
       return *this;
   }

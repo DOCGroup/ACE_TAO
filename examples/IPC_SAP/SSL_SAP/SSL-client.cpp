@@ -260,7 +260,7 @@ Options::oneway_client_test (void *)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n"),
                     ACE_TEXT ("send_n")));
-        result = -1;
+        result = size_t (-1);
         break;
       }
 
@@ -326,7 +326,7 @@ Options::twoway_client_test (void *)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
                         ACE_TEXT ("send_n")));
-            result = -1;
+            result = size_t (-1);
             break;
           }
         // Receive the reply from the server.  Normally, it just sends

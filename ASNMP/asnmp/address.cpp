@@ -527,7 +527,6 @@ int IpAddress::parse_address( const char *inaddr)
 
         // save the friendly name
         ACE_OS::strcpy( iv_friendly_name_, inaddr);
-        return 1;
 
     }    // end if lookup result
     else {
