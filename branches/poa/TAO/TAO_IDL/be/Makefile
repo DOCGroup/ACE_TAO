@@ -44,6 +44,7 @@ BE_FILES	= \
 		be_state_array \
 		be_state_argument \
 		be_state_attribute \
+		be_state_exception \
 		be_state_operation \
 		be_state_sequence \
 		be_state_structure \
@@ -103,7 +104,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -112,7 +113,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -175,7 +175,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -184,7 +184,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -247,7 +246,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -256,7 +255,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -319,7 +317,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -328,7 +326,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -391,7 +388,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -400,7 +397,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -463,7 +459,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -472,7 +468,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -535,7 +530,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -544,7 +539,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -607,7 +601,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -616,7 +610,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -679,7 +672,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -688,7 +681,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -751,7 +743,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -760,7 +752,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -823,7 +814,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -832,7 +823,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -895,7 +885,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -904,7 +894,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -967,7 +956,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -976,7 +965,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1039,7 +1027,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1048,7 +1036,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1111,7 +1098,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1120,7 +1107,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1183,7 +1169,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1192,7 +1178,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1255,7 +1240,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1264,7 +1249,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1327,7 +1311,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1336,7 +1320,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1399,7 +1382,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1408,7 +1391,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1471,7 +1453,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1480,7 +1462,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1543,7 +1524,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1552,7 +1533,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1615,7 +1595,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1624,7 +1604,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1687,7 +1666,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1696,7 +1675,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1759,7 +1737,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1768,7 +1746,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1831,7 +1808,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1840,7 +1817,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1903,7 +1879,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1912,7 +1888,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -1975,7 +1950,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -1984,7 +1959,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2047,7 +2021,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2056,7 +2030,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2119,7 +2092,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2128,7 +2101,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2191,7 +2163,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2200,7 +2172,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2263,7 +2234,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2272,7 +2243,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2335,7 +2305,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2344,7 +2314,77 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
+ ../include/intlmacros.h ../include/idl_narrow.h \
+ ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
+ ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
+ ../include/utl_scoped_name.h ../include/ast_decl.h \
+ ../include/ast_expression.h ../include/utl_scope.h \
+ ../include/ast_type.h ../include/ast_concrete_type.h \
+ ../include/ast_predefined_type.h ../include/ast_module.h \
+ ../include/ast_root.h ../include/ast_interface.h \
+ ../include/ast_interface_fwd.h ../include/ast_structure.h \
+ ../include/ast_exception.h ../include/ast_enum.h \
+ ../include/ast_operation.h ../include/utl_list.h \
+ ../include/ast_field.h ../include/ast_argument.h \
+ ../include/ast_attribute.h ../include/ast_union.h \
+ ../include/ast_union_branch.h ../include/ast_union_label.h \
+ ../include/ast_constant.h ../include/ast_enum_val.h \
+ ../include/ast_array.h ../include/ast_sequence.h \
+ ../include/ast_string.h ../include/ast_typedef.h \
+ ../include/utl_strlist.h ../include/utl_exprlist.h \
+ ../include/ast_generator.h ../include/util.h ../include/utl_stack.h \
+ ../include/utl_idlist.h ../include/utl_exceptlist.h \
+ ../include/utl_namelist.h ../include/utl_labellist.h \
+ ../include/utl_decllist.h ../include/idl_global.h \
+ ../include/utl_error.h ../include/utl_indenter.h \
+ ../include/idl_extern.h ../include/fe_extern.h ../include/be_extern.h \
+ ../include/drv_extern.h ../include/ast_extern.h \
+ ../include/nr_extern.h ../include/global_extern.h ../be_include/be.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Synch.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.h \
+ $(ACE_ROOT)/ace/SV_Semaphore_Simple.i \
+ $(ACE_ROOT)/ace/SV_Semaphore_Complex.i \
+ $(ACE_ROOT)/ace/Synch.i \
+ $(ACE_ROOT)/ace/Synch_T.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.i \
+ $(ACE_ROOT)/ace/Synch_T.i \
+ $(ACE_ROOT)/ace/Thread.h \
+ $(ACE_ROOT)/ace/Thread.i \
+ $(ACE_ROOT)/ace/Atomic_Op.i \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Containers.h \
+ $(ACE_ROOT)/ace/Containers.i \
+ ../be_include/be_decl.h ../be_include/be_scope.h \
+ ../be_include/be_generator.h ../be_include/be_type.h \
+ ../be_include/be_predefined_type.h ../be_include/be_module.h \
+ ../be_include/be_interface.h ../be_include/be_interface_fwd.h \
+ ../be_include/be_structure.h ../be_include/be_exception.h \
+ ../be_include/be_expression.h ../be_include/be_enum.h \
+ ../be_include/be_operation.h ../be_include/be_field.h \
+ ../be_include/be_argument.h ../be_include/be_attribute.h \
+ ../be_include/be_union.h ../be_include/be_union_branch.h \
+ ../be_include/be_union_label.h ../be_include/be_constant.h \
+ ../be_include/be_enum_val.h ../be_include/be_array.h \
+ ../be_include/be_sequence.h ../be_include/be_string.h \
+ ../be_include/be_typedef.h ../be_include/be_root.h \
+ ../be_include/be_helper.h ../be_include/be_state.h \
+ ../be_include/be_codegen.h ../be_include/be_factory.h
+.obj/be_state_exception.o .shobj/be_state_exception.so: be_state_exception.cpp ../include/idl.h \
+ $(ACE_ROOT)/ace/ACE.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/config.h \
  $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/Log_Msg.h \
+ $(ACE_ROOT)/ace/Log_Record.h \
+ $(ACE_ROOT)/ace/Log_Priority.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ $(ACE_ROOT)/ace/Version.h \
+ $(ACE_ROOT)/ace/ACE.i \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2407,7 +2447,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2416,7 +2456,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2479,7 +2518,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2488,7 +2527,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2551,7 +2589,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2560,7 +2598,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2623,7 +2660,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2632,7 +2669,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2695,7 +2731,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2704,7 +2740,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2767,7 +2802,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2776,7 +2811,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2839,7 +2873,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2848,7 +2882,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2912,7 +2945,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2921,7 +2954,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -2985,7 +3017,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -2994,7 +3026,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \
@@ -3057,7 +3088,7 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/iosfwd.h \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -3066,7 +3097,6 @@ CPPFLAGS += -I../include -I../be_include -I. -DCPP_LOCATION=\"$(CXX)\" \
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/streams.h \
  ../include/intlmacros.h ../include/idl_narrow.h \
  ../include/idl_defines.h ../include/idl_fwd.h ../include/idl_bool.h \
  ../include/utl_string.h ../include/utl_identifier.h ../include/ast.h \

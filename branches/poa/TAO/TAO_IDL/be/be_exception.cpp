@@ -34,10 +34,10 @@ be_exception::be_exception (void)
 }
 
 be_exception::be_exception (UTL_ScopedName *n, UTL_StrList *p)
-	    : AST_Decl (AST_Decl::NT_except, n, p),
-              AST_Structure (AST_Decl::NT_except, n, p),
-	      UTL_Scope (AST_Decl::NT_except),
-              member_count_ (-1)
+  : AST_Decl (AST_Decl::NT_except, n, p),
+    AST_Structure (AST_Decl::NT_except, n, p),
+    UTL_Scope (AST_Decl::NT_except),
+    member_count_ (-1)
 {
   this->size_type (be_decl::VARIABLE); // always the case
 }
@@ -77,6 +77,8 @@ be_exception::member_count (void)
   return this->member_count_;
 }
 
+// CODE GENERATION
+
 int
 be_exception::gen_client_header (void)
 {
@@ -87,9 +89,8 @@ be_exception::gen_client_header (void)
       TAO_OutStream *ch = cg->client_header (); // output stream
       TAO_NL  nl;        // end line
 
-
+      cg->push (TAO_CodeGen::TAO_EXCEPTION_CH);
       ch->indent (); // start from whatever indentation level we were at
-
       ch->gen_ifdef_macro (this->flatname (), "_ptr");
 
       ch->indent ();
@@ -103,19 +104,51 @@ be_exception::gen_client_header (void)
 
       ch->indent ();
       *ch << "class " << this->local_name ()
-	  << " : public virtual CORBA::UserException" << nl;
+	  << " : public CORBA::UserException" << nl;
       *ch << "{" << nl
-	  << "public:" << nl;
+	  << "public:\n";
       ch->incr_indent ();
-      *ch << this->local_name () << " (void);\n";
+      // constructors and destructor
+      *ch << this->local_name () << " (void); // default ctor" << nl;
+      *ch << this->local_name () << " (const " << this->local_name () <<
+        " &); // copy ctor" << nl;
+      *ch << "~" << this->local_name () << "(void); // dtor" << nl;
+      // assignment operator
+      *ch << this->local_name () << " &operator= (const " << this->local_name
+        () << " &);" << nl;
+      // the static _narrow method
+      *ch << "static " << this->local_name () <<
+        " *_narrow (CORBA::Exception *);\n";
+      // generate code for members i.e., generate a constructor that takes in
+      // that member as a value as well as generate the member
+      if (be_scope::gen_client_header () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_exception::gen_client_header -"
+                             "codegen for scope failed\n"), -1);
+        }
       ch->decr_indent ();
-      *ch << "};" << nl << nl;
+      *ch << "};" << nl;
+
+      // generate the typecode decl
+      if (this->is_nested ())
+        {
+          // we have a scoped name
+          ch->indent ();
+          *ch << "static CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
+      else
+        {
+          // we are in the ROOT scope
+          ch->indent ();
+          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
+            ()->last_component () << ";\n\n";
+        }
       ch->gen_endif ();
 
-      *ch << "static CORBA::TypeCode_ptr " << this->tc_name
-	()->last_component () << ";\n\n";
-
       this->cli_hdr_gen_ = I_TRUE;
+      cg->pop ();
     }
 
   return 0;
@@ -131,23 +164,40 @@ be_exception::gen_client_inline (void)
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
       TAO_OutStream *ci = cg->client_inline ();
 
+      ci->indent ();
       *ci << "// *************************************************************"
           << nl;
       *ci << "// Inline operations for exception " << this->name () << nl;
       *ci << "// *************************************************************\n\n";
 
+      // default constructor
       ci->indent ();
       *ci << "// default constructor" << nl;
       *ci << "ACE_INLINE" << nl;
       *ci << this->name () << "::" << this->local_name () << " (void)" << nl;
-      ci->incr_indent ();
-      *ci << ": CORBA_UserException (_tc_"
-	  << this->local_name ()
-	  << ")\n";
-      ci->decr_indent ();
+      *ci << "\t: CORBA_UserException (ACE_CORBA_3 (TypeCode, _duplicate) (" <<
+        this->tc_name () << "))\n";
       *ci << "{" << nl;
-      *ci << "}" << nl << nl;
+      *ci << "}\n\n";
 
+      // destructor
+      ci->indent ();
+      *ci << "// destructor - all members are of self managing types" << nl;
+      *ci << "ACE_INLINE" << nl;
+      *ci << this->name () << "::~" << this->local_name () << " (void)" << nl;
+      *ci << "{" << nl;
+      *ci << "}\n\n";
+
+      cg->push (TAO_CodeGen::TAO_EXCEPTION_CI);
+      // constructors for individual members
+      if (be_scope::gen_client_inline () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_exception::gen_client_inline -"
+                             "codegen for scope failed\n"), -1);
+        }
+
+      cg->pop ();
       this->cli_inline_gen_ = I_TRUE;
     }
   return 0;
@@ -164,9 +214,66 @@ be_exception::gen_client_stubs (void)
     {
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
-      cg->push (TAO_CodeGen::TAO_STRUCT_CS); // set current code gen state
+      cg->push (TAO_CodeGen::TAO_EXCEPTION_CS); // set current code gen state
 
       cs = cg->client_stubs ();
+
+      // copy constructor
+      cs->indent ();
+      *cs << "// copy constructor" << nl;
+      *cs << this->name () << "::" << this->local_name () << "(const " <<
+        this->name () << " &_tao_excp)" << nl;
+      *cs << "\t:ACE_CORBA_1 (UserException) (" <<
+        "ACE_CORBA_3 (TypeCode, _duplicate) (_tao_excp.type ()))" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      // assign each individual member
+      if (be_scope::gen_client_stubs () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_exception::gen_client_stubs -"
+                             "codegen for scope failed\n"), -1);
+        }
+      cs->decr_indent ();
+      *cs << "}\n\n";
+
+      // assignment operator
+      cs->indent ();
+      *cs << "// assignment operator" << nl;
+      *cs << this->name () << "&" << nl;
+      *cs << this->name () << "::operator= (const " <<
+        this->name () << " &_tao_excp)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      *cs << "this->type_ = " <<
+        "ACE_CORBA_3 (TypeCode, _duplicate) (_tao_excp.type ());\n";
+      // assign each individual member
+      if (be_scope::gen_client_stubs () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_exception::gen_client_stubs -"
+                             "codegen for scope failed\n"), -1);
+        }
+      cs->indent ();
+      *cs << "return *this;\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
+
+      // narrow method
+      cs->indent ();
+      *cs << "// narrow" << nl;
+      *cs << this->name () << "_ptr " << nl;
+      *cs << this->name () << "::_narrow(CORBA::Exception *exc)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      *cs << "if (!ACE_OS::strcmp (\"" << this->repoID () <<
+        "\", exc->id ())) // same type" << nl;
+      *cs << "\treturn ACE_dynamic_cast (" << this->name () << "_ptr, exc);" <<
+        nl;
+      *cs << "else" << nl;
+      *cs << "\treturn ACE_dynamic_cast (" << this->name () << "_ptr, 0);\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
@@ -178,8 +285,9 @@ be_exception::gen_client_stubs (void)
       // encapsulation for the parameters
       if (this->gen_encapsulation () == -1)
         {
-          ACE_ERROR ((LM_ERROR, "Error generating encapsulation\n\n"));
-          return -1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_structure::gen_client_stubs -"
+                             "codegen for scope failed\n"), -1);
         }
       cs->decr_indent ();
       *cs << "};" << nl;

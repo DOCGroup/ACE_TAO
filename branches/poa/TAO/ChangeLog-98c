@@ -1,3 +1,23 @@
+Mon Dec 15 19:39:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* TAO_IDL/be/Makefile: 
+	* TAO_IDL/be/be_codegen.cpp: 
+	* TAO_IDL/be/be_exception.cpp: 
+	* TAO_IDL/be/be_interface.cpp: 
+	* TAO_IDL/be/be_state.cpp: 
+	* TAO_IDL/be/be_state_attribute.cpp: 
+	* TAO_IDL/be/be_state_exception.cpp: 
+	* TAO_IDL/be/be_union_branch.cpp: 
+	* TAO_IDL/be_include/be_state.h: 
+	* docs/releasenotes/orbcore.html: 
+	* docs/releasenotes/index.html: 
+	* orbsvcs/Naming_Service.cpp:
+	* tao/iiopobj.h: 
+	* tao/except.h: 
+	* tao/except.cpp: Merged in changes from the main trunk.
+
+	* tests/Thruput_test/Makefile: Updated to use taoconfig.mk.
+
 Sat Dec 13 22:06:25 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
 	* tao/poa.* (get_key): Removed this method, since it's
@@ -47,20 +67,56 @@ Thu Dec 11 21:28:09 1997  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
  	here, thereby helping confine IIOP-ness to the ORB Core and
  	keeping the POA pristine.
 
+Thu Dec 11 22:18:52 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp: Moved the code generation for the
+	_var and _out classes before the actual class declaration, but
+	after the forward declaration. This was necessary if any elements
+	in the scope of the interface are defined to be of the same type
+	as that interface. In such a situation those elements are defined
+	to be of the _var type. Hence the declaration for _var and _out
+	must precede the class declaration.
+
+Thu Dec 11 22:00:52 1997  Sergio Flores  <sergio@tango.cs.wustl.edu>
+
+	* orbsvcs/Naming_Service/Naming_Service.cpp (main): Fixed a bug
+ 	related to returning an empty string as the ior in the reply from
+ 	the multicast request.
+
+Thu Dec 11 14:06:50 1997  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_exception,be_state_exception}.cpp: Support for
+	exceptions added. Added a new file called
+	"be_state_exception.cpp".
+
+	* TAO_IDL/be_include/be_state.h: Added a new singleton for
+	be_state_exception.
+
+	* TAO_IDL/be/be_state.cpp: Template instantiations for
+	be_state_exception.
+
+	* TAO/docs/releasenotes/index.html: Updated to include exception
+	support.
+
+	* TAO/tao/except.{h,cpp}: Moved the TypeCode member from the
+	private section to the protected section so that derived classes
+	can set it. Also, changed the variable from _type to type_ to
+	stick to the ACE design standards.
+
 Thu Dec 11 00:01:41 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO version 0.0.42, released Thu Dec 11 00:01:41 1997.
 
 Wed Dec 10 23:04:04 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
-	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp: 
+	* orbsvcs/Scheduling_Service/Config_Scheduler.cpp:
 	  Still struggling with g++, it seems to use the wrong cast for
 	  IDL generated T_out classes.
 
-	* orbsvcs/tests/Logger/Makefile: 
-	* orbsvcs/tests/Logger/clnt.cpp: 
-	* orbsvcs/tests/Logger/clnt.h: 
-	* orbsvcs/tests/Logger/svr.cpp: 
+	* orbsvcs/tests/Logger/Makefile:
+	* orbsvcs/tests/Logger/clnt.cpp:
+	* orbsvcs/tests/Logger/clnt.h:
+	* orbsvcs/tests/Logger/svr.cpp:
 	  These files were missed in the orbsvcs hierarchy
 	  reorganization.
 
