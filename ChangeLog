@@ -27,6 +27,11 @@ Wed Jan 17 10:00:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
 Wed Jan 17 07:44:29 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
+	* apps/Gateway/Gateway/Concrete_Connection_Handlers.cpp (send): Set errno to
+	  EWOULDBLOCK if n < len so that the caller will initiate a
+ 	  handle_output()-driven reply.  Thanks to Klaus H. Wolf
+ 	  <hw@cyland.com> for reporting this.
+  
 	* ace/Log_Msg.h (ACE_Log_Msg): Clarified that only the current message 
 	  is stored in TSS.  Thanks to Pierre Oberson
  	  <oberson@nagra-kudelski.ch> for pointing out the need for this

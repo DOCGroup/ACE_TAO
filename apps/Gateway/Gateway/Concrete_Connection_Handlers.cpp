@@ -112,8 +112,11 @@ Consumer_Handler::send (ACE_Message_Block *event)
   if (n <= 0)
     return errno == EWOULDBLOCK ? 0 : n;
   else if (n < len)
-    // Re-adjust pointer to skip over the part we did send.
-    event->rd_ptr (n);
+    {
+      // Re-adjust pointer to skip over the part we did send.
+      event->rd_ptr (n);
+      errno = EWOULDBLOCK;
+    }
   else // if (n == length)
     {
       // The whole event is sent, we now decrement the reference count
