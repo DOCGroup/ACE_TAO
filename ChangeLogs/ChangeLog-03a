@@ -3,6 +3,13 @@ Sat May 25 01:15:02 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 	* bin/nightlybuilds/builds.lst: Move Debian_Minimum bulid to
 	  new scoreboard.
 
+Fri May 24 23:52:39 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/Configurable_Logging_Server.dsp:
+        * examples/C++NPv2/SLD.dsp:
+        * examples/C++NPv2/examples.dsw: Added new projects for chapter
+          5's configurable logging server.
+
 Fri May 24 20:51:25 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
 
         * ace/Log_Msg_NT_Event_Log.cpp (open):
