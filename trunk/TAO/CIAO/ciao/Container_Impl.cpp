@@ -59,7 +59,7 @@ CIAO::Container_Impl::configuration (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
                     CORBA::INTERNAL ());
   ACE_CHECK_RETURN (0);
 
-  *retval = this->config_;
+  *retval = this->config_.inout ();
 
   return retval;
 }

@@ -25,8 +25,8 @@
 #include <SecurityLevel2.idl>
 #include <CosPersistentState.idl>
 #include <tao/IFR_Client/Interface.pidl>
-#include <CosNotification.idl>
-#include <CosNotifyChannelAdmin.idl>
+// #include <CosNotification.idl>
+// #include <CosNotifyChannelAdmin.idl>
 
 /**
  * Temporarily fix for lacking of typePrefix keyword.
