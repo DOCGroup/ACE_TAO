@@ -1,3 +1,11 @@
+Mon Jul 19 21:49:32 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+	  Fixed several bugs in the manipulation of the bit set and the
+	  creation of the event. Thanks to Paul Calabrese
+	  <calabrese_p@ociweb.com> for reporting these problems and
+	  providing fixes.
+
 Mon Jul 19 21:39:06 EDT 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
 	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
@@ -109,16 +117,21 @@ Mon Jul 19 12:26:20 1999  David L. Levine  <levine@cs.wustl.edu>
           reporting this. [Bug 80]
 
 Mon Jul 19 11:26:33 1999  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
         HP/UX compile warning fixes -
+
         * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory.idl:
         * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.h:
         * orbsvcs/examples/CosEC/Factory/CosEventChannelFactory_i.cpp:
-        modified the <create> method to throw the BindFailed exception.
+          modified the <create> method to throw the BindFailed exception.
+
         * examples/Event_Comm/Event_Comm.idl:
         * examples/Event_Comm/Event_Comm_i.h:
         * examples/Event_Comm/Event_Comm_i.cpp:
-        modified the <subscribe> method to throw CannotSubscribe exception.
-        modified the <unsubscribe> method to throw CannotUnsubscribe exception.
+          modified the <subscribe> method to throw CannotSubscribe
+	  exception.
+          modified the <unsubscribe> method to throw CannotUnsubscribe
+	  exception.
 
 Mon Jul 19 11:05:23 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
