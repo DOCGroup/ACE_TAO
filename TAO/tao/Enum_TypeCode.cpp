@@ -5,6 +5,10 @@
 
 #include "tao/Enum_TypeCode.h"
 #include "tao/TypeCode_Enumerator.h"
+#include "tao/TypeCodeFactory_Adapter.h"
+#include "tao/ORB_Core.h"
+
+#include "ace/Dynamic_Service.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/Enum_TypeCode.inl"

@@ -50,7 +50,7 @@ namespace TAO
     {
     public:
 
-      /// Conenumor.
+      /// Constructor.
       Enum (char const * id,
             char const * name,
             Enumerator<StringType> const * enumerators,
