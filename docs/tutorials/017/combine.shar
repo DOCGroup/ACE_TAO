@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1999-02-14 14:25 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-02-24 16:56 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/017'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -12,12 +12,14 @@
 # length mode       name
 # ------ ---------- ------------------------------------------
 #    422 -rw-rw-r-- hdr
-#     45 -rw-rw-r-- bodies
+#     64 -rw-rw-r-- bodies
 #   1397 -rw-rw-r-- page01.pre
 #    420 -rw-rw-r-- page02.pre
 #    739 -rw-rw-r-- page03.pre
 #    479 -rw-rw-r-- page04.pre
 #    375 -rw-rw-r-- page05.pre
+#    373 -rw-rw-r-- page06.pre
+#    216 -rw-rw-r-- page05.pst
 #
 save_IFS="${IFS}"
 IFS="${IFS}:"
@@ -64,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh32003; then
+if mkdir _sh29953; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -116,20 +118,22 @@ PAGE=2
 barrier.cpp
 Barrier_i.h
 Barrier_i.cpp
+PAGE=6
+barrier2.cpp
 SHAR_EOF
-  $shar_touch -am 1110144198 'bodies' &&
+  $shar_touch -am 0224165499 'bodies' &&
   chmod 0664 'bodies' ||
   $echo 'restore of' 'bodies' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'bodies:' 'MD5 check failed'
-4924294a77d6ba78dcf667e92c341b4f  bodies
+b6fd04983b241794a9438df2ae77055c  bodies
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'bodies'`"
-    test 45 -eq "$shar_count" ||
-    $echo 'bodies:' 'original size' '45,' 'current size' "$shar_count!"
+    test 64 -eq "$shar_count" ||
+    $echo 'bodies:' 'original size' '64,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page01.pre ==============
@@ -316,5 +320,61 @@ SHAR_EOF
     $echo 'page05.pre:' 'original size' '375,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh32003
+# ============= page06.pre ==============
+if test -f 'page06.pre' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page06.pre' '(file already exists)'
+else
+  $echo 'x -' extracting 'page06.pre' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page06.pre' &&
+I could have included this in the first Test object of the tutorial
+but that may have complicated things a bit.  What we're doing here is
+recognizing when the "owner" thread adds more threads to the pool.
+When we notice that, we use the barrier to wait until everything
+stabilizes and then we recalibrate and move on.
+<P>
+The source is <A HREF="barrier2.cpp">here</A>.
+<HR>
+SHAR_EOF
+  $shar_touch -am 0224165499 'page06.pre' &&
+  chmod 0664 'page06.pre' ||
+  $echo 'restore of' 'page06.pre' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page06.pre:' 'MD5 check failed'
+ad87cd9f57af4c9b2c91cb32b484c0d1  page06.pre
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page06.pre'`"
+    test 373 -eq "$shar_count" ||
+    $echo 'page06.pre:' 'original size' '373,' 'current size' "$shar_count!"
+  fi
+fi
+# ============= page05.pst ==============
+if test -f 'page05.pst' && test "$first_param" != -c; then
+  $echo 'x -' SKIPPING 'page05.pst' '(file already exists)'
+else
+  $echo 'x -' extracting 'page05.pst' '(text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'page05.pst' &&
+<HR>
+Before we call it a wrap though, there's one more thing I want to show 
+you.  Remember the comments around Barrier::threads()?  On the next
+page, I'll show you how to synch up when the number of threads changes.
+SHAR_EOF
+  $shar_touch -am 0224165199 'page05.pst' &&
+  chmod 0664 'page05.pst' ||
+  $echo 'restore of' 'page05.pst' 'failed'
+  if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
+  && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
+    md5sum -c << SHAR_EOF >/dev/null 2>&1 \
+    || $echo 'page05.pst:' 'MD5 check failed'
+7ce8bbac0d211a3616b5052236e4983b  page05.pst
+SHAR_EOF
+  else
+    shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page05.pst'`"
+    test 216 -eq "$shar_count" ||
+    $echo 'page05.pst:' 'original size' '216,' 'current size' "$shar_count!"
+  fi
+fi
+rm -fr _sh29953
 exit 0

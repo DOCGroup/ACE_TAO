@@ -33,6 +33,7 @@ locking that is just a bit more than what I wanted to present here.
 <font color=#008888>Barrier::Barrier</font>(void)
    : threads_(0)
     ,barrier_(0)
+    ,new_barrier_(0)
 {
     owner_ = <font color=#008888>ACE_OS::thr_self</font>();
 }
@@ -42,6 +43,11 @@ locking that is just a bit more than what I wanted to present here.
 <font color=#008888>Barrier::~Barrier</font>(void)
 {
     delete barrier_;
+}
+
+void <font color=#008888>Barrier::owner</font>( ACE_thread_t _owner )
+{
+    owner_ = _owner;
 }
 
 <font color=red>// Report on the number of threads.</font>
@@ -88,6 +94,25 @@ int <font color=#008888>Barrier::wait</font>(void)
         return -1;
     }
 
+        <font color=red>// If the threads() mutator has been used, new_barrier_ will</font>
+        <font color=red>// point to a new ACE_Barrier instance.  We'll use a</font>
+        <font color=red>// traditional double-check here to move that new object into</font>
+        <font color=red>// place and cleanup the old one.</font>
+    if( new_barrier_ )
+    {
+            <font color=red>// mutex so that only one thread can do this part.</font>
+        ACE_Guard&lt;ACE_Mutex> mutex(barrier_mutex_);
+ 
+            <font color=red>// We only want the first thread to plug in the new barrier...</font>
+        if( new_barrier_ )
+        {
+                <font color=red>// out with the old and in with the new.</font>
+            delete barrier_;
+            barrier_ = new_barrier_;
+            new_barrier_ = 0;
+        }
+    }
+
     return barrier_->wait();
 }
 
@@ -123,26 +148,30 @@ int <font color=#008888>Barrier::done</font>(void)
  */</font>
 int <font color=#008888>Barrier::make_barrier</font>( int _wait )
 {
-        <font color=red>// Wait for and delete any existing barrier.</font>
-    if( barrier_ )
-    {
-        if( _wait )
-        {
-            barrier_->wait();
-        }
-        delete barrier_;
-    }
-
         <font color=red>// Ensure we have a valid thread count.</font>
     if( ! threads_.value() )
     {
         return -1;
     }
 
-        <font color=red>// Create the actual barrier.  Note that we initialize it with </font>
-        <font color=red>// threads_.value() to set its internal thread count.  If the</font>
-        <font color=red>// 'new' fails we will return -1 to the caller.</font>
-    ACE_NEW_RETURN(barrier_,ACE_Barrier(threads_.value()),-1);
+        <font color=red>// If a barrier already exists, we'll arrange for it to be</font>
+        <font color=red>// replaced through the wait() method above.</font>
+    if( barrier_ )
+    {
+            <font color=red>// Create the new barrier that wait() will install for us.</font>
+        ACE_NEW_RETURN(new_barrier_,ACE_Barrier(threads_.value()),-1);
+
+            <font color=red>// Wait for our siblings to synch before continuing</font>
+        if( _wait )
+        {
+            barrier_->wait();
+        }
+    }
+    else
+    {
+            <font color=red>// Create the initial barrier.</font>
+        ACE_NEW_RETURN(barrier_,ACE_Barrier(threads_.value()),-1);
+    }
 
     return 0;
 }
