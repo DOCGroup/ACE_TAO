@@ -1,3 +1,9 @@
+Fri Oct  3 20:42:15 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/RTScheduling/RTScheduling_Tests.dsw: Removed 
+	  from the repo since it was creating a hassle for the 
+	  beta.
+
 Thu Oct  2 16:12:45 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Event/EC_Kokyu_Dispatching.i:
