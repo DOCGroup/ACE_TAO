@@ -1,3 +1,87 @@
+Sun Oct 26 01:47:04 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_decl.cpp (tc_name2long): 
+	Added "unsigned" to index variable "i" used in for() loop,
+	to avoid warning "comparison between unsigned and signed"
+
+	* TAO_IDL/be/be_decl.cpp (compute_flatname): 
+	* TAO_IDL/be/be_decl.cpp (compute_repoID): 
+	Fixed error "second - I_FALSE;", should be "second = I_FALSE;"
+
+	* TAO_IDL/be/be_decl.cpp (be_decl): 
+	Reordered member initializers to match declaration order to
+	satisfy the compiler.
+
+	* TAO_IDL/be/be_state.cpp (gen_code): 
+	Initialized pointers to 0
+	
+	* TAO_IDL/be/be_decl.cpp (gen_out_defn): 
+	* TAO_IDL/be/be_decl.cpp (gen_var_defn): 
+	* TAO_IDL/be/be_scope.cpp (gen_client_header): 
+	* TAO_IDL/be/be_state.cpp (gen_code): 
+	* TAO_IDL/be/be_helper.cpp (operator<<): 
+	* TAO_IDL/be/be_union.cpp (tc_encap_len): 
+	* TAO_IDL/be/be_typedef.cpp (gen_client_stubs): 
+	* TAO_IDL/be/be_string.cpp (gen_client_header): 
+	* TAO_IDL/be/be_root.cpp (gen_idl2cplusplus_mapping): 
+	* TAO_IDL/be/be_predefined_type.cpp (gen_typecode): 
+	* TAO_IDL/be/be_interface.cpp (gen_client_stubs): 
+	* TAO_IDL/be/be_interface.cpp (gen_server_skeletons): 
+	* TAO_IDL/be/be_interface.cpp (gen_operation_table): 
+	* TAO_IDL/be/be_interface.cpp (gen_server_inline): 
+	* TAO_IDL/be/be_interface.cpp (tc_encap_len): 
+	* TAO_IDL/be/be_field.cpp (gen_encapsulation): 
+	* TAO_IDL/be/be_field.cpp (tc_encap_len):
+	* TAO_IDL/be/be_enum_val.cpp (gen_encapsulation): 
+	* TAO_IDL/be/be_enum.cpp (tc_encap_len): 
+	* TAO_IDL/be/be_constant.cpp (gen_client_header): 
+	* TAO_IDL/be/be_constant.cpp (gen_client_stubs): 
+	* TAO_IDL/be/be_argument.cpp (gen_client_header): 
+	* TAO_IDL/be/be_argument.cpp (gen_client_stubs): 
+	* TAO_IDL/be/be_argument.cpp (gen_server_header): 
+	* TAO_IDL/be/be_argument.cpp (gen_server_skeletons): 
+	* TAO_IDL/be/be_array.cpp (be_array): 
+	* TAO_IDL/be/be_array.cpp (gen_client_header): 
+	* TAO_IDL/be/be_array.cpp (gen_client_inline): 
+	* TAO_IDL/be/be_array.cpp (gen_forany_defn): 
+	* TAO_IDL/be/be_array.cpp (gen_forany_impl): 
+	* TAO_IDL/util/utl_stack.cpp (push): 
+	Added ACE_UNUSED_ARG macro to avoid unused variable warning,
+	for variable slen.
+
+	* TAO_IDL/be/be_interface.cpp (compute_fullskelname): 
+	Fixed error "second - I_FALSE;"; should be "second = I_FALSE;"
+
+	* TAO_IDL/be_include/be_helper.h (class TAO_OutStream): 
+	Made destructor virtual; we have virtual member functions.
+
+	* TAO_IDL/util/utl_string.cpp (canonicalize): 
+	Added "unsigned" to index variable "i" used in for() loop,
+	to avoid warning "comparison between unsigned and signed"	
+
+	* TAO_IDL/util/utl_stack.cpp (UTL_ScopeStack): 
+	Reordered member initializers to match declaration order to
+	satisfy the compiler.
+	
+	* TAO_IDL/util/utl_scope.cpp (UTL_ScopeActiveIterator): 
+	Reordered member initializers to match declaration order to
+	eliminate warnings from the compiler.	
+	
+	* TAO_IDL/util/utl_scope.cpp (lookup_primitive_type): 
+	Added "default" case to switch to return NULL.
+
+	* TAO_IDL/util/utl_scope.cpp (add_attribute): 
+	* TAO_IDL/util/utl_scope.cpp (add_operation):
+	* TAO_IDL/util/utl_scope.cpp (add_argument):
+	* TAO_IDL/util/utl_scope.cpp (add_union_branch):
+	* TAO_IDL/util/utl_scope.cpp (add_field):
+	* TAO_IDL/util/utl_scope.cpp (add_typedef):
+	* TAO_IDL/util/utl_scope.cpp (add_sequence):
+	* TAO_IDL/util/utl_scope.cpp (add_array):
+	Use 0 instead of NULL to initialize pointers in the
+	member initialization list, again to avoid ANSI C++ forbids
+	implicit (void *) conversions warnings.
+
 Sun Oct 26 01:05:36 1997    <nw1@COYOTE>
 
 	* tests/Cubit/TAO/clnt.cpp (main): Added a simple class
