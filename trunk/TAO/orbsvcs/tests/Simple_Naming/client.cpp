@@ -179,7 +179,7 @@ CosNaming_Client::init (int argc, char **argv)
     }
   TAO_ENDTRY;
 
-  return 0;
+  ACE_NOTREACHED (return 0);
 }
 
 int
