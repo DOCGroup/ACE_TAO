@@ -5,6 +5,7 @@
 #include "ace/Select_Reactor.h"
 
 #include "ace/Reactor.h"
+#include "ace/Thread.h"
 #include "ace/Synch_T.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
