@@ -8,6 +8,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Get_Opt.h"
+#include "ace/Signal.h"
 
 #include "transceiver.h"
 

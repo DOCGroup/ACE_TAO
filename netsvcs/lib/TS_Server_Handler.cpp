@@ -7,7 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "TS_Server_Handler.h"
 #include "ace/OS_NS_time.h"
-#include "ace/OS_NS_signal.h"
+#include "ace/Signal.h"
 
 ACE_RCSID(lib, TS_Server_Handler, "$Id$")
 

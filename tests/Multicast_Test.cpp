@@ -44,6 +44,7 @@
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
+#include "ace/Signal.h"
 
 ACE_RCSID(tests, Multicast_Test, "$Id$")
 

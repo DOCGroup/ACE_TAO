@@ -20,6 +20,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread.h"
+#include "ace/Signal.h"
 
 #include "Connection_Handler.h"
 
