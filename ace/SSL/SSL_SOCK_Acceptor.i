@@ -32,8 +32,8 @@ ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
                                               u_long flags,
                                               int reuse_addr,
                                               int protocol_family,
-                                              int backlog = ACE_DEFAULT_BACKLOG,
-                                              int protocol = 0)
+                                              int backlog,
+                                              int protocol)
   : acceptor_ (local_sap,
                protocolinfo,
                g,

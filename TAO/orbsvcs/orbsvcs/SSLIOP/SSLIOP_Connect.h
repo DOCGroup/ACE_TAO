@@ -4,13 +4,14 @@
 // ============================================================================
 //
 // = LIBRARY
-//    TAO
+//    TAO_SSLIOP
 //
 // = FILENAME
 //   SSLIOP_Connect.h
 //
 // = AUTHOR
-//   Chris Cleeland
+//    Carlos O'Ryan <coryan@ece.uci.edu>
+//    Ossama Othman <ossama@ece.uci.edu>
 //
 // ============================================================================
 
@@ -29,6 +30,7 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
+#include "tao/GIOP_Message_Acceptors.h"
 
 #include "SSLIOP_Transport.h"
 
@@ -47,19 +49,18 @@ class TAO_SSLIOP_Handler_Base : public TAO_SSL_SVC_HANDLER
 public:
   TAO_SSLIOP_Handler_Base (ACE_Thread_Manager *t);
   TAO_SSLIOP_Handler_Base (TAO_ORB_Core *orb_core);
-
-  virtual TAO_Transport *transport (void) = 0;
 };
 
-class TAO_Export TAO_SSLIOP_Client_Connection_Handler : public TAO_SSLIOP_Handler_Base
+class TAO_SSLIOP_Export TAO_SSLIOP_Client_Connection_Handler : public TAO_SSLIOP_Handler_Base
 {
   // = TITLE
   //      <Svc_Handler> used on the client side and returned by the
   //      <TAO_CONNECTOR>.
 public:
-  // = Intialization method.
+  // = Initialization method.
   TAO_SSLIOP_Client_Connection_Handler (ACE_Thread_Manager *t = 0,
-                                      TAO_ORB_Core* orb_core = 0);
+                                        TAO_ORB_Core* orb_core = 0,
+                                        CORBA::Boolean flag = 0);
 
   virtual ~TAO_SSLIOP_Client_Connection_Handler (void);
 
@@ -103,14 +104,15 @@ protected:
 
 // ****************************************************************
 
-class TAO_Export TAO_SSLIOP_Server_Connection_Handler : public TAO_SSLIOP_Handler_Base
+class TAO_SSLIOP_Export TAO_SSLIOP_Server_Connection_Handler : public TAO_SSLIOP_Handler_Base
 {
   // = TITLE
   //   Handles requests on a single connection in a server.
 
 public:
   TAO_SSLIOP_Server_Connection_Handler (ACE_Thread_Manager* t = 0);
-  TAO_SSLIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core);
+  TAO_SSLIOP_Server_Connection_Handler (TAO_ORB_Core *orb_core,
+                                        CORBA::Boolean flag = 0);
   ~TAO_SSLIOP_Server_Connection_Handler (void);
   // Constructor.
 
@@ -158,6 +160,9 @@ protected:
 protected:
   TAO_SSLIOP_Server_Transport transport_;
   // @@ New transport object reference.
+
+  TAO_GIOP_Message_Acceptors acceptor_factory_;
+  // Messaging acceptor factory
 
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
