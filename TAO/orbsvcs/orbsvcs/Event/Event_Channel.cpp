@@ -51,6 +51,7 @@ static const char *TAO_Event_Channel_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED = 5100,
   TAO_EVENT_CHANNEL_CONNECTED_PRIORITY_OBTAINED,
   TAO_EVENT_CHANNEL_ENTER_PUSH_SUPPLIER_PROXY_PUSH,
@@ -77,11 +78,11 @@ enum
   TAO_EVENT_CHANNEL_PUSH_SOURCE_TYPE
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Event_Channel_Timeprobe_Description,
-                                  TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED)
+                                  TAO_EVENT_CHANNEL_PREEMPTION_PRIORITY_PRIORITY_REQUESTED);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // ************************************************************
 

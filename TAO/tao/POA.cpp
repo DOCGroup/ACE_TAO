@@ -40,6 +40,7 @@ static const char *TAO_POA_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_POA_LOCATE_POA_I_START = 200,
   TAO_POA_LOCATE_POA_I_END,
 
@@ -59,11 +60,11 @@ enum
   TAO_SERVANT_DISPATCH_END
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_POA_Timeprobe_Description,
-                                  TAO_POA_LOCATE_POA_I_START)
+                                  TAO_POA_LOCATE_POA_I_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // This is the maximum space require to convert the ulong into a
 // string.

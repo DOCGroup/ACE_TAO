@@ -16,16 +16,16 @@ static const char *TAO_Reactor_Task_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_REACTOR_TASK_WAITING_FOR_EVENTS = 5300,
   TAO_REACTOR_TASK_EVENTS_HANDLED
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Reactor_Task_Timeprobe_Description,
-                                  TAO_REACTOR_TASK_WAITING_FOR_EVENTS)
+                                  TAO_REACTOR_TASK_WAITING_FOR_EVENTS);
 
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 ACE_ES_Reactor_Task::ACE_ES_Reactor_Task() :
   //  reactor_ (0, &timer_queue_),

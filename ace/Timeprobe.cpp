@@ -2,6 +2,10 @@
 
 #define ACE_BUILD_DLL
 
+#include "ace/OS.h"
+
+#if defined (ACE_COMPILE_TIMEPROBES)
+
 #include "ace/Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
@@ -35,3 +39,6 @@ template class ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>;
 #pragma instantiate ACE_Singleton<ACE_TIMEPROBE_WITH_LOCKING, ACE_SYNCH_MUTEX>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #  endif /* ACE_TSS_TIMEPROBES */
+
+#endif /* ACE_COMPILE_TIMEPROBES */
+

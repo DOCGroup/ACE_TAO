@@ -28,15 +28,16 @@ static const char *TAO_ORB_Timeprobe_Description[] =
 
 enum
 {
+  // Timeprobe description table start key 
   TAO_CORBA_ORB_RUN_START = 0,
   TAO_CORBA_ORB_RUN_END
 };
 
-#endif /* ACE_ENABLE_TIMEPROBES */
-
 // Setup Timeprobes
 ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ORB_Timeprobe_Description,
-                                  TAO_CORBA_ORB_RUN_START)
+                                  TAO_CORBA_ORB_RUN_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
 
 // Static initialization.
 int CORBA_ORB::orb_init_count_ = 0;
