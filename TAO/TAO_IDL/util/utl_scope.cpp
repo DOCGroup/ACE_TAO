@@ -881,6 +881,13 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
                                  long index,
                                  long scope_offset)
 {
+  // Temporary hack to disallow 'fixed' without 
+  // implementing all the classes for it.
+  UTL_String arg (e->get_string ());
+  UTL_String test("fixed");
+  if (arg.compare (&test))
+    return 0;
+
   UTL_ScopeActiveIterator *i = 
     new UTL_ScopeActiveIterator (this,
                                  UTL_Scope::IK_both);
