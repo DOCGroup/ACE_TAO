@@ -1,3 +1,12 @@
+Sun Mar 24 08:57:37 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Transport.cpp: Fix for bug 1164.  When big messages are
+	  being read, read it in a loop till you get all the bytes or till
+	  you get an error. We used to do only one read before and looks
+	  like this had performance impacts. Thanks to James Kanyok
+	  <james.kanyok@lmco.com> for reporting the problem. This will go
+	  into the main trunk once we get a feedback from James. 
+
 Tue Feb 19 07:45:05 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp: Added a fix for Jody ie. bug
