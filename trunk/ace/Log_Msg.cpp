@@ -521,6 +521,7 @@ ACE_Log_Msg::open (const char *prog_name,
 //   'S': format the appropriate _sys_siglist entry corresponding to var-argument.
 //   's': format a character string
 //   'T': print timestamp in hour:minute:sec:usec format.
+//   'D': print timestamp in month/day/year hour:minute:sec:usec format.
 //   't': print thread id (1 if single-threaded)
 //   'u': print as unsigned int
 //   'X', 'x': print as a hex number
@@ -747,13 +748,23 @@ ACE_Log_Msg::log (const char *format_str,
 #endif /* ACE_HAS_SYS_SIGLIST */
                     break;
                   }
-                case 'T': // Format the timestamp.
+                case 'D': // Format the timestamp in month/day/year hour:minute:sec:usec format.
                   {
                     type = SKIP_SPRINTF;
                     char day_and_time[35];
                     ACE::timestamp (day_and_time,
                                     sizeof day_and_time);
                     ACE_OS::sprintf (bp, "%s", day_and_time);
+                    break;
+                  }
+                case 'T': // Format the timestamp in hour:minute:sec:usec format.
+                  {
+                    type = SKIP_SPRINTF;
+                    char day_and_time[35];
+                    ACE_OS::sprintf (bp, 
+                                     "%s", 
+                                     ACE::timestamp (day_and_time,
+                                                     sizeof day_and_time));
                     break;
                   }
                 case 't': // Format thread id.

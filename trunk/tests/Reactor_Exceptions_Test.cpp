@@ -145,6 +145,8 @@ main (int argc, char *argv[])
   for (int i = 0; i < ACE_MAX_ITERATIONS; i++)
     dgram.send ("Hello", 6, remote_addr);
 
+  ex.close ();
+  dgram.close ();
   thr_mgr->wait ();
 
   ACE_DEBUG ((LM_DEBUG, "(%t) exiting main\n"));

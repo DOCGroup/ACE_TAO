@@ -316,7 +316,7 @@ Counting_Service::handle_input (ACE_HANDLE)
     {
       ACE_DEBUG ((LM_DEBUG,
 		  "(%P|%t) %d bytes of input on %d is %*s\n",
-		  len, this->peer ().get_handle (), bytes, buf));
+		  bytes, this->peer ().get_handle (), buf));
 
       // Read and return the current value in the file.
       if (ACE_OS::strncmp (buf, "read", 4) == 0)

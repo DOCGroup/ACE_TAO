@@ -1,3 +1,23 @@
+Wed Nov 19 01:55:06 1997    <irfan@TWOSTEP>
+
+	* tests/Process_Strategy_Test.cpp (handle_input): Fixed ACE_DEBUG
+ 	  statement to pass the correct number of arguments.
+
+	* tests/MT_SOCK_Test.cpp (spawn): Make sure to close the socket in
+ 	  ACE_SOCK_Acceptor.
+
+	* tests/Reactor_Exceptions_Test.cpp (main): Make sure to close the
+ 	  socket in ACE_SOCK_Dgram.
+
+	* tests/run_purify_tests.bat: Added "mkdir purify_results".
+
+	* tests/run_tests.bat, run_purify_tests.bat: Changed explicit name
+ 	  of bat file (e.g., run_tests, run_purify_tests) to %0.  This
+ 	  will allow the bat file to be used from other directories.
+
+	* ace/config-win32-common.h: Removed extraneous define of
+ 	  ACE_HAS_TEMPLATE_INSTANTIATION.
+
 Wed Nov 19 00:37:22 1997    <nw1@COYOTE>
 
 	* ace/stdcpp.h: Changed to use "ace/OS.h" instead of using
