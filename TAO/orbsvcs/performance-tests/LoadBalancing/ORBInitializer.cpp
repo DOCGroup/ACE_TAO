@@ -33,7 +33,6 @@ ORBInitializer::post_init (
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-
   ACE_NEW_THROW_EX (this->interceptor_,
                     ServerRequestInterceptor,
                     CORBA::NO_MEMORY (
