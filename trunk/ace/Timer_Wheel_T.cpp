@@ -450,6 +450,17 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::remove_first (void)
 }
 
 
+// Returns the earliest node without removing it
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK> ACE_Timer_Node_T<TYPE> *
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::get_first (void)
+{
+  ACE_TRACE ("ACE_Timer_Wheel_T::get_first");
+
+  return this->wheel_[this->earliest_pos_]->get_next ();
+}
+
+
 // Takes an ACE_Timer_Node and inserts it into the correct position in the correct
 // list
 

@@ -434,6 +434,20 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::remove_first (void)
 }
 
 
+// Returns the earliest node without removing it
+
+template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> ACE_Timer_Node_T<TYPE> *
+ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::get_first (void)
+{
+  ACE_TRACE ("ACE_Timer_Hash_T::get_first");
+
+  if (this->is_empty ())
+    return 0;
+
+  return this->table_[this->earliest_position_]->get_first ();
+}
+
+
 // Dummy version of expire to get rid of warnings in Sun CC 4.2
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET> int

@@ -269,6 +269,9 @@ public:
   virtual void dump (void) const;
   // Dump the state of a object.
 
+  virtual ACE_Timer_Node_T<TYPE> *get_first (void) = 0;
+  // Reads the earliest node from the queue and returns it.
+
 protected:
   virtual void upcall (TYPE &type,
 		       const void *act,
