@@ -1,3 +1,11 @@
+Mon Jan 10 12:41:23 2005  Steve Huston  <shuston@riverace.com>
+
+	* tests/Test_Output.cpp (close): If the output_file_ pointer is
+	  already 0, don't flush/close/delete it. Logging_Strategy_Test
+	  does a close before the end of the program, and this will
+	  cause ACE_END_TEST to close it again and crash, at least on
+	  some plaforms.
+
 Mon Jan 10 10:29:38 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
