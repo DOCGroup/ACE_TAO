@@ -1,4 +1,8 @@
-Sat Mar 21 12:21:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+Sat Mar 21 19:58:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (flock_destroy): lock->lockname_ should be cast to
+	  LPTSTR instead of char*.  Thanks to Goran Lowkrantz
+	  <Goran.Lowkrantz@infologigruppen.se> for reporting this.
 
 	* examples/Threads/task_five.cpp: Allow users to set thread stack
 	  size from command lines.  If a user doesn't give one, it will be
