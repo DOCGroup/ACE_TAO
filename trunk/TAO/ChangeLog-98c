@@ -1,171 +1,175 @@
 Fri Dec 18 00:20:37 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading/Servant_Locator.{h,cpp}:
-	  This interface of the Servant_Manager loads the servant per
-	  client request.
+        * examples/POA/On_Demand_Loading/Servant_Locator.{h,cpp}:
+          This interface of the Servant_Manager loads the servant per
+          client request.
 
-	* examples/POA/On_Demand_Loading/run_test_pl: This script is used
-	  to run this example.
+        * examples/POA/On_Demand_Loading/run_test_pl: This script is used
+          to run this example.
 
-	* examples/POA/On_Demand_Loading/server.cpp: Added changes to
-	  incorporate the Servant Locator interface.
+        * examples/POA/On_Demand_Loading/server.cpp: Added changes to
+          incorporate the Servant Locator interface.
 
-	* examples/POA/On_Demand_Loading/README: Added changes about the
-	  Servant Locator.
-	
+        * examples/POA/On_Demand_Loading/README: Added changes about the
+          Servant Locator.
+
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp (export):
+          commented out declaration/initialization of unused
+          local plength.
+
 Fri Dec 18 23:02:08 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* examples/POA/On_Demand_Loading: Removed the following entries:
-	  examples/POA/On_Demand_Loading/Dir_Service.idl
-	  examples/POA/On_Demand_Loading/Dir_Sevice_i.{h,cpp}
-	  examples/POA/On_Demand_Loading/Makefile.DirService
-	  examples/POA/On_Demand_Loading/Makefile.Client
-	  examples/POA/On_Demand_Loading/client.cpp
+        * examples/POA/On_Demand_Loading: Removed the following entries:
+          examples/POA/On_Demand_Loading/Dir_Service.idl
+          examples/POA/On_Demand_Loading/Dir_Sevice_i.{h,cpp}
+          examples/POA/On_Demand_Loading/Makefile.DirService
+          examples/POA/On_Demand_Loading/Makefile.Client
+          examples/POA/On_Demand_Loading/client.cpp
 
-	  Now this example uses the
-	  examples/POA/Generic_Servant/MyFooServant as the servant which
-	  will be loaded on demand.
+          Now this example uses the
+          examples/POA/Generic_Servant/MyFooServant as the servant which
+          will be loaded on demand.
 
-	* examples/POA/Generic_Servant/Makefile: Added changes so that an
-	  libMyFoo.so is created.
+        * examples/POA/Generic_Servant/Makefile: Added changes so that an
+          libMyFoo.so is created.
 
-	* examples/POA/Generic_Servant/MyFooServant.cpp (create_MyFoo):
-	  Added this extern "C" function which creates an MyFoo object.
-		
-	
+        * examples/POA/Generic_Servant/MyFooServant.cpp (create_MyFoo):
+          Added this extern "C" function which creates an MyFoo object.
+
+
 Fri Dec 18 16:18:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/Any.{i,cpp} (free_value):  Moved it to cpp file.
+        * tao/Any.{i,cpp} (free_value):  Moved it to cpp file.
 
-	* be/be_visitor_interface/any_op_cs.cpp (>>=):
-	  Fixed a memory management problem.
+        * be/be_visitor_interface/any_op_cs.cpp (>>=):
+          Fixed a memory management problem.
 
-	* be/be_visitor_array/any_op_cs.cpp (>>=):
-	* be/be_visitor_enum/any_op_cs.cpp (>>=):
-	* be/be_visitor_exception/any_op_cs.cpp (>>=):
-	* be/be_visitor_sequence/any_op_cs.cpp (>>=):
-	* be/be_visitor_structure/any_op_cs.cpp (>>=):
-	* be/be_visitor_union/any_op_cs.cpp (>>=): Adopted the changes
-	  made in Any.  Some of them may still have memory management
-	  problem.
+        * be/be_visitor_array/any_op_cs.cpp (>>=):
+        * be/be_visitor_enum/any_op_cs.cpp (>>=):
+        * be/be_visitor_exception/any_op_cs.cpp (>>=):
+        * be/be_visitor_sequence/any_op_cs.cpp (>>=):
+        * be/be_visitor_structure/any_op_cs.cpp (>>=):
+        * be/be_visitor_union/any_op_cs.cpp (>>=): Adopted the changes
+          made in Any.  Some of them may still have memory management
+          problem.
 
-	* tao/Any.{h,i,cpp}: The usage of <any_owns_data_> was not very
-	  consistant.  Sometime it meant any owns the cdr string,
-	  sometimes it meant any owns the internal data stored in
-	  <value_>.  It is now changed to indicate whether any owns the
-	  internal data.
-	  (value):  Now return the internal data if there's own,
-	  otherwise, it return a pointer to the cdr string.
-	  (free_value):  A small helper function to free up the internal
-	  data held by any.
-	  (any_owns_data): Now return true when any owns a valid data.
+        * tao/Any.{h,i,cpp}: The usage of <any_owns_data_> was not very
+          consistant.  Sometime it meant any owns the cdr string,
+          sometimes it meant any owns the internal data stored in
+          <value_>.  It is now changed to indicate whether any owns the
+          internal data.
+          (value):  Now return the internal data if there's own,
+          otherwise, it return a pointer to the cdr string.
+          (free_value):  A small helper function to free up the internal
+          data held by any.
+          (any_owns_data): Now return true when any owns a valid data.
 
-	* tao/Connect.cpp: Fixed typo in error messages.
+        * tao/Connect.cpp: Fixed typo in error messages.
 
 Fri Dec 18 12:14:48 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  I'm starting to support a run-time scheduler for this test.
-	  But it is still experimental and must be enabled at compile
-	  time.
+        * orbsvcs/tests/EC_Throughput/ECT_Scheduler_Info.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+          I'm starting to support a run-time scheduler for this test.
+          But it is still experimental and must be enabled at compile
+          time.
 
 Fri Dec 18 09:34:14 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.i:
-	* orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
-	  The test can easily measure latency as well as throughput, so I
-	  added the necessary methods in the ECT_Driver class.
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.h:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.i:
+        * orbsvcs/tests/EC_Throughput/ECT_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Consumer.cpp:
+        * orbsvcs/tests/EC_Throughput/ECT_Supplier.cpp:
+          The test can easily measure latency as well as throughput, so I
+          added the necessary methods in the ECT_Driver class.
 
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Added missing template instantiations.
-	  Fixed warnings reported by g++ 2.7.2.3
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Added missing template instantiations.
+          Fixed warnings reported by g++ 2.7.2.3
 
 1998-12-17  Seth Widoff  <swidoff@cs.cmu.edu>
 
-	* orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.{cpp}:
-	My crazy attempt to save copying by passing around sequence
-	buffers backfired -- it worked on some platforms but not
-	others. So I've supplanted that approach with good, old 
-	fashioned copying. Thanks to Sunil Kumar <skumar@sutmyn.com>'s
-	example program for helping me to pinpoint the problem. 
+        * orbsvcs/orbsvcs/Trader/Trader_Utils.{h,cpp}:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.{cpp}:
+        My crazy attempt to save copying by passing around sequence
+        buffers backfired -- it worked on some platforms but not
+        others. So I've supplanted that approach with good, old
+        fashioned copying. Thanks to Sunil Kumar <skumar@sutmyn.com>'s
+        example program for helping me to pinpoint the problem.
 
 Thu Dec 17 16:11:58 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
-	  Added support for fragmentation and reassembly to the UDP
-	  gateway. This is still experimental, but seems to work OK.
-	  Though I have payed attention to the first order optimizations:
-	  no data copying, little or no memory allocation, reduced
-	  locking; we have to systematically explore if there are any
-	  performance bottlenecks or problems.
-	  I still have to Purify/Quantify this code.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.h:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.i:
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+          Added support for fragmentation and reassembly to the UDP
+          gateway. This is still experimental, but seems to work OK.
+          Though I have payed attention to the first order optimizations:
+          no data copying, little or no memory allocation, reduced
+          locking; we have to systematically explore if there are any
+          performance bottlenecks or problems.
+          I still have to Purify/Quantify this code.
 
-	* tao/ORB_Core.cpp:
-	  By default the CDR allocators where TSS, but this was not safe
-	  for certain applications. Thanks to Ron Barack
-	  <r.barack@inobis.de> for pointing this out.
+        * tao/ORB_Core.cpp:
+          By default the CDR allocators where TSS, but this was not safe
+          for certain applications. Thanks to Ron Barack
+          <r.barack@inobis.de> for pointing this out.
 
-	* orbsvcs/tests/EC_Throughput/run_test.pl:
-	  Updated the script.
+        * orbsvcs/tests/EC_Throughput/run_test.pl:
+          Updated the script.
 
 Thu Dec 17 14:09:33 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao/DynAnyC.cpp:
-	  Added some AHETI lines at the end to reflect what the updated
-	  IDL compiler does. Should fix a build error reported on Dec
-	  Alpha.
-	  Builds ok on NT, doing further checking on Unix.
+          Added some AHETI lines at the end to reflect what the updated
+          IDL compiler does. Should fix a build error reported on Dec
+          Alpha.
+          Builds ok on NT, doing further checking on Unix.
 
 Thu Dec 17 04:45:39 1998  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
 
-	* tao/IIOP_Object.cpp (constructor):
+        * tao/IIOP_Object.cpp (constructor):
 
-	  We were missing the initialization of the forward profile and
-	  forward profile success in the constructor with the following
-	  signature.
+          We were missing the initialization of the forward profile and
+          forward profile success in the constructor with the following
+          signature.
 
-	  IIOP_Object::IIOP_Object (const char *host,
+          IIOP_Object::IIOP_Object (const char *host,
                                     const CORBA::UShort port,
                                     const char *objkey,
                                     char *repository_id);
 
-	  Without the above initialization, we were getting segmentation
-	  fault in the destructor of the underlying Profile as it tried to
-	  delete the forward profile which pointed to an illegal address
-	  in memory.
+          Without the above initialization, we were getting segmentation
+          fault in the destructor of the underlying Profile as it tried to
+          delete the forward profile which pointed to an illegal address
+          in memory.
 
 Tue Dec 15 19:39:45 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/ORB.h:
-	* tao/corba.h: Commented out "#pragma pack" directive NT used.
-	  This fixed the mis-alignment problem specific on NT.
+        * tao/ORB.h:
+        * tao/corba.h: Commented out "#pragma pack" directive NT used.
+          This fixed the mis-alignment problem specific on NT.
 
 Tue Dec 15 19:04:37 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/sfp.idl : Changed according to the version 1.1
-	changes.
+        * orbsvcs/orbsvcs/sfp.idl : Changed according to the version 1.1
+        changes.
 
-	* orbsvcs/orbsvcs/AV/sfp.{h,cpp}: Implemenation of the Simple Flow
-	Protocol specified in the Audio/Video Streaming
-	specification. This currently has support for sending simple
-	frames without fragmentation.
+        * orbsvcs/orbsvcs/AV/sfp.{h,cpp}: Implemenation of the Simple Flow
+        Protocol specified in the Audio/Video Streaming
+        specification. This currently has support for sending simple
+        frames without fragmentation.
 
-	* orbsvcs/tests/AVStreams/sfp/client.cpp:
-	* orbsvcs/tests/AVStreams/sfp/server.cpp:
-		client and server test files for sfp.
+        * orbsvcs/tests/AVStreams/sfp/client.cpp:
+        * orbsvcs/tests/AVStreams/sfp/server.cpp:
+                client and server test files for sfp.
 
-	* orbsvcs/orbsvcs/Makefile: Added sfp to the list of IDL_SRCS.
+        * orbsvcs/orbsvcs/Makefile: Added sfp to the list of IDL_SRCS.
 
 Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
