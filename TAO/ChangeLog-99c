@@ -1,3 +1,16 @@
+Sun Mar 28 14:20:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAnyC.{h,i,cpp}:
+	* tao/DynAny_i.{h,cpp}:
+	* tao/DynArray_i.{h,cpp}:
+	* tao/DynEnum_i.{h,cpp}:
+	* tao/DynSequence_i.{h,cpp}:
+	* tao/DynStruct_i.{h,cpp}:
+	* tao/DynUnion_i.{h,cpp}:
+	  Changed over TAO_IN_ENV to ACE_TRY_ENV and 
+	  ACE_NEW_THROW_RETURN to ACE_NEW_THROW_EX/ACE_CHECK_RETURN.
+	  Also replaced a few Any_ptr/delete pairs with Any_vars.
+
 Sun Mar 28 11:39:36 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* examples/Simple/grid/Grid_Client_i.cpp: Added #include

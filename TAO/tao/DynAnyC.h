@@ -18,7 +18,7 @@
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 //
 //
-// Modified by Jeff Parsons <jp4@cs.wustl.edu>
+// Modified by Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -126,7 +126,7 @@ public:
   static CORBA_DynAny_ptr _duplicate (CORBA_DynAny_ptr obj);
   static CORBA_DynAny_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynAny_ptr _nil (void);
@@ -488,7 +488,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -590,7 +590,7 @@ public:
   static CORBA_DynEnum_ptr _duplicate (CORBA_DynEnum_ptr obj);
   static CORBA_DynEnum_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynEnum_ptr _nil (void);
@@ -615,7 +615,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1083,7 +1083,7 @@ public:
   static CORBA_DynStruct_ptr _duplicate (CORBA_DynStruct_ptr obj);
   static CORBA_DynStruct_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynStruct_ptr _nil (void);
@@ -1107,7 +1107,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1209,7 +1209,7 @@ public:
   static CORBA_DynUnion_ptr _duplicate (CORBA_DynUnion_ptr obj);
   static CORBA_DynUnion_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynUnion_ptr _nil (void);
@@ -1250,7 +1250,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1651,7 +1651,7 @@ public:
   static CORBA_DynSequence_ptr _duplicate (CORBA_DynSequence_ptr obj);
   static CORBA_DynSequence_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynSequence_ptr _nil (void);
@@ -1676,7 +1676,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
@@ -1778,7 +1778,7 @@ public:
   static CORBA_DynArray_ptr _duplicate (CORBA_DynArray_ptr obj);
   static CORBA_DynArray_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   static CORBA_DynArray_ptr _nil (void);
@@ -1794,7 +1794,7 @@ public:
      );
   virtual CORBA::Boolean _is_a (
       const CORBA::Char *type_id,
-      CORBA::Environment &TAO_IN_ENV =
+      CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     );
   virtual const char* _interface_repository_id (void) const;
