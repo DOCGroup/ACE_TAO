@@ -18,7 +18,7 @@
 class Supplier_Handler; 
 
 // Type of search key for SUPPLIER_MAP.
-typedef long SUPPLIER_KEY;
+typedef ACE_HANDLE SUPPLIER_KEY;
 
 // Instantiated type for routing messages to suppliers.
 
