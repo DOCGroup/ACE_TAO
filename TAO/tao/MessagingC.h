@@ -2561,7 +2561,7 @@ class TAO_Export ReplyHandler : public virtual CORBA_Object
     ReplyHandler (int collocated = 0);
 
   protected:
-    virtual void _tao_setup_collocation (int collocated);
+    virtual void Messaging_ReplyHandler_setup_collocation (int collocated);
 
      ReplyHandler (
                   TAO_Stub *objref,

@@ -1629,7 +1629,7 @@ Messaging::_TAO_ReplyHandler_Remote_Proxy_Broker::select_proxy (
 // default constructor
 Messaging::ReplyHandler::ReplyHandler (int collocated)
 {
-  this->_tao_setup_collocation (collocated);
+  this->Messaging_ReplyHandler_setup_collocation (collocated);
 }
 
 // destructor
@@ -1637,7 +1637,7 @@ Messaging::ReplyHandler::~ReplyHandler (void)
 {}
 
 void
-Messaging::ReplyHandler::_tao_setup_collocation (int collocated)
+Messaging::ReplyHandler::Messaging_ReplyHandler_setup_collocation (int collocated)
 {
   if (collocated)
     this->the_TAO_ReplyHandler_Proxy_Broker_ =
