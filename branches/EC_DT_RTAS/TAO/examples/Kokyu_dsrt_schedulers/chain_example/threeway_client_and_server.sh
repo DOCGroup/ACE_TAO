@@ -1,4 +1,4 @@
 #!/bin/bash
 
-source ~/.linux.csh
+source /home/ron/storri/setenv.sh
 ./threeway_client_and_server

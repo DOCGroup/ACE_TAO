@@ -9,8 +9,8 @@
 
 #if defined (ACE_HAS_DSUI)
 #include <ace/Counter.h>
-#include "dt_oneway_config.h"
-#include "dt_oneway_dsui_families.h"
+#include "chain_config.h"
+#include "chain_dsui_families.h"
 #include <dsui.h>
 #endif // ACE_HAS_DSUI
 
