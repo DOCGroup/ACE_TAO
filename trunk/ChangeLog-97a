@@ -1,13 +1,13 @@
 Wed Jun 25 02:36:05 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
-	* ace/OS.h: Added (line: 2111) #endif /* CHORUS */.  (Unbalanced
+	* ace/OS.h: Added (line: 2188) #endif /* ! ACE_WIN32 */.  (Unbalanced
  	  if - endif?)
 
 Wed Jun 25 01:23:58 1997  Nanbor Wang  <nw1@dingo.wolfpack.cs.wustl.edu>
 
 	* ace/OS.i (strtok_r): Modified the implementation when OS does
 	  not provide reentrant strtok_r so that our imp. comforms with
-	  semantic of strtok_r ().
+	  the semantic of strtok_r ().
 
 Wed Jun 25 00:37:56 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 

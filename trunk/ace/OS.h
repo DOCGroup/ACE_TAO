@@ -2108,7 +2108,6 @@ extern "C" {
 #include /**/ <time.h>
 #include /**/ <stdfileio.h>
 #include /**/ <am/afexec.h>
-#endif /* CHORUS */
 
 // This must come after limits.h is included
 #define MAXPATHLEN _POSIX_PATH_MAX
@@ -2185,6 +2184,8 @@ extern "C" int sigwait (sigset_t *set);
 #if defined (ACE_HAS_TIUSER_H)
 #include /**/ <tiuser.h> 
 #endif /* ACE_HAS_TIUSER_H */
+
+#endif /* ! ACE_WIN32 */
 
 /* Set the proper handle type for dynamically-loaded libraries. */
 /* Also define a default 'mode' for loading a library - the names and values */
