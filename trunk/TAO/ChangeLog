@@ -1,3 +1,10 @@
+Sat Mar  1 09:30:47 2003  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/MT_IIOP_SSL/Server_Worker.h:
+	* orbsvcs/tests/Security/MT_SSLIOP/Server_Worker.h:
+
+	  "CORBA_" -> "CORBA::".
+
 Sat Mar  1 04:15:39 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/IFR_Service/be_global.cpp:
