@@ -1,3 +1,10 @@
+Wed Jul  2 15:39:33 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
+
+	* ace/Process.cpp: Modified spawn to check for the NO_EXEC
+	  flag after forking on UNIX.  If it's set, spawn returns the
+	  child pid without exec'ing.  Updated the NT version to
+	  always return the child pid on success.
+
 Wed Jul 02 10:55:23 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* tests/test_config.h: dynamically allocate "ace_file_stream" because
