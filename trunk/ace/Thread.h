@@ -34,7 +34,7 @@ public:
 		    long flags = THR_NEW_LWP,
 		    ACE_thread_t *t_id = 0, 
 		    ACE_hthread_t *t_handle = 0,
-		    long priority = -1,
+		    long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		    void *stack = 0, 
 		    size_t stack_size = 0);
   // Spawn a new thread having <{flags}> attributes and running
@@ -50,7 +50,8 @@ public:
   // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
   // 
-  // By default, or if <{priority}> is set to -1, an "appropriate"
+  // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
+  // an "appropriate"
   // priority value for the given scheduling policy (specified in
   // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
   // calculated dynamically, and is the median value between the
@@ -63,7 +64,7 @@ public:
 		      ACE_THR_FUNC func,
 		      void *arg = 0, 
 		      long flags = THR_NEW_LWP,
-		      long priority = -1,
+		      long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		      void *stack[] = 0, 
 		      size_t stack_size[] = 0);
   // Spawn N new threads, which execute <func> with argument <arg>.
@@ -82,7 +83,7 @@ public:
 		      ACE_THR_FUNC func, 
 		      void *arg, 
 		      long flags, 
-		      long priority = -1,
+		      long priority = ACE_DEFAULT_THREAD_PRIORITY,
 		      void *stack[] = 0,
 		      size_t stack_size[] = 0,
 		      ACE_hthread_t thread_handles[] = 0);

@@ -852,6 +852,8 @@ enum ACE_Thread_State
   // been reclaimed yet.
 };
 
+#define ACE_DEFAULT_THREAD_PRIORITY (-0x7fffffffL-1L)
+
 // Convenient macro for testing for deadlock, as well as for detecting
 // when mutexes fail.
 #define ACE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
@@ -3043,7 +3045,7 @@ public:
                          void *args, 
                          long flags, 
                          ACE_Thread_ID *,
-                         long priority = -1,
+                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
                          size_t stacksize = 0);
   static int thr_getprio (ACE_Thread_ID thr_id, int &prio, int *policy = 0);
@@ -3063,7 +3065,7 @@ public:
                          long flags, 
                          ACE_thread_t *thr_id, 
                          ACE_hthread_t *t_handle = 0,
-                         long priority = -1,
+                         long priority = ACE_DEFAULT_THREAD_PRIORITY,
                          void *stack = 0,
                          size_t stacksize = 0);
   // Creates a new thread having <{flags}> attributes and running <{ACE_THR_FUNC}>
@@ -3077,7 +3079,8 @@ public:
   // THR_SCHED_FIFO, THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
   // 
-  // By default, or if <{priority}> is set to -1, an "appropriate"
+  // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
+  // an "appropriate"
   // priority value for the given scheduling policy (specified in
   // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
   // calculated dynamically, and is the median value between the
