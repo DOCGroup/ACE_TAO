@@ -38,15 +38,15 @@ ACE_RCSID(Process, imore, "$Id$")
 
 #if defined (ACE_WIN32)
 static const char * executable = "MORE.COM";
-static const char *rendezvous_dir = "c:/temp";
-static const char *rendezvous_pfx = "imore";
+static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("c:/temp");
+static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #else
 static const char * executable = "more"; // I like less better.
-static const char *rendezvous_dir = "/tmp";
-static const char *rendezvous_pfx = "imore";
+static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("/tmp");
+static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
 #endif /* ACE_WIN32 */
 
-static char *fname = 0;		// File you want to view.
+static ACE_TCHAR *fname = 0;   // File you want to view.
 static int use_named_pipe = 0;	// Do we want to use named pipe?
 
 static void
@@ -58,9 +58,9 @@ usage (void)
 }
 
 static int
-parse_args (int argc, char **argv)
+parse_args (int argc, ACE_TCHAR **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "un");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("un"));
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -98,8 +98,8 @@ static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
   // Create a unique temporary name for named pipe.
-  char *rendezvous = ACE_OS::tempnam (rendezvous_dir,
-                                      rendezvous_pfx);
+  ACE_TCHAR *rendezvous = ACE_OS::tempnam (rendezvous_dir,
+                                           rendezvous_pfx);
 
   // Out of memory?
   if (rendezvous == NULL)
@@ -193,7 +193,7 @@ print_file (ACE_HANDLE infd)
 }
 
 int
-main (int argc, char *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Ignore SIGPIPE signal on Unix platforms in case
   // child process (more) terminates before we finish
