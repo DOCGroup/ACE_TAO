@@ -5,6 +5,10 @@ Wed Dec 17 11:16:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           to this mpc file. This fixes compile errors in no exception
           builds.
 
+        * bin/MakeProjectCreator/config/tmcast.mpb:
+          Because TMCast uses native exceptions, this is also required for
+          everything that uses TMCast.
+
 Tue Dec 16 11:48:11 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/config-aix-4.x.h:
