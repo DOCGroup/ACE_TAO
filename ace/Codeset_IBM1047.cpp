@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //   Defines the arrays required to convert between ISO8859 (aka
-//   Latin/1) and IBM1047 (aka EBCDIC)
+//   Latin/1) and IBM1047 (aka EBCDIC).
 //
 // = AUTHOR
 //   Jim Rogers (jrogers@viasoft.com)
@@ -32,14 +32,14 @@ ACE_IBM1047_ISO8859::~ACE_IBM1047_ISO8859 (void)
 }
 
 ACE_CDR::Boolean
-ACE_IBM1047_ISO8859::read_char (ACE_InputCDR& in,
-                                ACE_CDR::Char& x)
+ACE_IBM1047_ISO8859::read_char (ACE_InputCDR &in,
+                                ACE_CDR::Char &x)
 {
   if (this->read_1 (in, ACE_reinterpret_cast (ACE_CDR::Octet*, &x)))
-  {
-    x = ACE_to_IBM1047[x];
-    return 1;
-  }
+    {
+      x = ACE_to_IBM1047[x];
+      return 1;
+    }
   return 0;
 }
 
@@ -50,14 +50,18 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
   ACE_CDR::ULong len;
 
   in.read_ulong (len);
-  if (len > 0)
-  {
-    ACE_NEW_RETURN (x, ACE_CDR::Char[len], 0);
-    if (this->read_char_array (in, x, len))
-      return 1;
 
-    delete [] x;
-  }
+  if (len > 0)
+    {
+      ACE_NEW_RETURN (x,
+                      ACE_CDR::Char[len],
+                      0);
+
+      if (this->read_char_array (in, x, len))
+        return 1;
+
+      delete [] x;
+    }
 
   x = 0;
   return 0;
@@ -69,15 +73,16 @@ ACE_IBM1047_ISO8859::read_char_array (ACE_InputCDR& in,
                                       ACE_CDR::ULong len)
 {
   if (this->read_array (in,
-	                    x,
-	                    ACE_CDR::OCTET_SIZE,
+                        x,
+                        ACE_CDR::OCTET_SIZE,
                         ACE_CDR::OCTET_ALIGN,
                         len))
-  {
-    for (ACE_CDR::ULong i = 0; i != len; ++i)
-      x[i] = ACE_to_IBM1047[x[i]];
-	return 1;
-  }
+    {
+      for (ACE_CDR::ULong i = 0; i != len; ++i)
+        x[i] = ACE_to_IBM1047[x[i]];
+
+      return 1;
+    }
 
   return 0;
 }
@@ -86,19 +91,18 @@ ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
                                  ACE_CDR::Char x)
 {
-  return this->write_1 (out, ACE_reinterpret_cast (const ACE_CDR::Octet*,
-                                                   &ACE_from_IBM1047[x]));
+  return this->write_1 (out,
+                        ACE_reinterpret_cast (const ACE_CDR::Octet*,
+                                              &ACE_from_IBM1047[x]));
 }
 
 ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::write_string (ACE_OutputCDR& out,
-	                               ACE_CDR::ULong len,
+                                   ACE_CDR::ULong len,
                                    const ACE_CDR::Char* x)
 {
   if (out.write_ulong (len + 1))
-  {
     return this->write_char_array (out, x, len + 1);
-  }
   return 0;
 }
 
@@ -109,12 +113,14 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
 {
   char *buf;
   if (this->adjust (out, len, 1, buf) == 0)
-  {
-    ACE_OS::memcpy (buf, x, len);
-    for (ACE_CDR::ULong i = 0; i != len; ++i)
-      buf[i] = ACE_from_IBM1047[buf[i]];
-    return 1;
-  }
+    {
+      ACE_OS::memcpy (buf, x, len);
+
+      for (ACE_CDR::ULong i = 0; i != len; ++i)
+        buf[i] = ACE_from_IBM1047[buf[i]];
+
+      return 1;
+    }
 
   this->good_bit(out, 0);
   return 0;
@@ -143,28 +149,32 @@ ACE_ISO8859_IBM1047::read_char (ACE_InputCDR& in,
 }
 
 ACE_CDR::Boolean
-ACE_ISO8859_IBM1047::read_string (ACE_InputCDR& in,
-                                  ACE_CDR::Char *& x)
+ACE_ISO8859_IBM1047::read_string (ACE_InputCDR &in,
+                                  ACE_CDR::Char *&x)
 {
   ACE_CDR::ULong len;
 
   in.read_ulong (len);
-  if (len > 0)
-  {
-    ACE_NEW_RETURN (x, ACE_CDR::Char[len], 0);
-    if (this->read_char_array (in, x, len))
-      return 1;
 
-    delete [] x;
-  }
+  if (len > 0)
+    {
+      ACE_NEW_RETURN (x,
+                      ACE_CDR::Char[len],
+                      0);
+
+      if (this->read_char_array (in, x, len))
+        return 1;
+
+      delete [] x;
+    }
 
   x = 0;
   return 0;
 }
 
 ACE_CDR::Boolean
-ACE_ISO8859_IBM1047::read_char_array (ACE_InputCDR& in,
-                                      ACE_CDR::Char* x,
+ACE_ISO8859_IBM1047::read_char_array (ACE_InputCDR &in,
+                                      ACE_CDR::Char *x,
                                       ACE_CDR::ULong len)
 {
   if (this->read_array (in,
@@ -175,6 +185,7 @@ ACE_ISO8859_IBM1047::read_char_array (ACE_InputCDR& in,
     {
       for (ACE_CDR::ULong i = 0; i != len; ++i)
         x[i] = ACE_from_IBM1047[x[i]];
+
       return 1;
     }
 
@@ -182,11 +193,12 @@ ACE_ISO8859_IBM1047::read_char_array (ACE_InputCDR& in,
 }
 
 ACE_CDR::Boolean
-ACE_ISO8859_IBM1047::write_char (ACE_OutputCDR& out,
+ACE_ISO8859_IBM1047::write_char (ACE_OutputCDR &out,
                                  ACE_CDR::Char x)
 {
-  return this->write_1 (out, ACE_reinterpret_cast (const ACE_CDR::Octet*,
-                                                   &ACE_to_IBM1047[x]));
+  return this->write_1 (out,
+                        ACE_reinterpret_cast (const ACE_CDR::Octet *,
+                                              &ACE_to_IBM1047[x]));
 }
 
 ACE_CDR::Boolean
@@ -195,33 +207,36 @@ ACE_ISO8859_IBM1047::write_string (ACE_OutputCDR& out,
                                    const ACE_CDR::Char* x)
 {
   if (out.write_ulong (len + 1))
-    {
-      return this->write_char_array (out, x, len + 1);
-    }
-  return 0;
+    return this->write_char_array (out, x, len + 1);
+  else
+    return 0;
 }
 
 ACE_CDR::Boolean
-ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR& out,
-                                       const ACE_CDR::Char* x,
+ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
+                                       const ACE_CDR::Char *x,
                                        ACE_CDR::ULong len)
 {
   char *buf;
+
   if (this->adjust (out, len, 1, buf) == 0)
     {
       ACE_OS::memcpy (buf, x, len);
+
       for (ACE_CDR::ULong i = 0; i != len; ++i)
         buf[i] = ACE_to_IBM1047[buf[i]];
+
       return 1;
     }
 
-  this->good_bit(out, 0);
+  this->good_bit (out, 0);
   return 0;
 }
 
 // ****************************************************************
 
-char ACE_to_IBM1047[257] = {
+char ACE_to_IBM1047[257] = 
+{
   "\x00\x01\x02\x03\x37\x2D\x2E\x2F\x16\x05\x25\x0B\x0C\x0D\x0E\x0F" // 00-0F
   "\x10\x11\x12\x13\x3C\x3D\x32\x26\x18\x19\x3F\x27\x22\x1D\x35\x1F" // 10-1F
   "\x40\x5A\x7F\x7B\x5B\x6C\x50\x7D\x4D\x5D\x5C\x4E\x6B\x60\x4B\x61" // 20-2F
@@ -240,7 +255,8 @@ char ACE_to_IBM1047[257] = {
   "\xFC\x9E\xAE\x8C\xDD\xDC\x39\xFB\x80\xAF\xFD\x78\x76\xB2\x9F\xFF" // F0-FF
 };
 
-char ACE_from_IBM1047[257] = {
+char ACE_from_IBM1047[257] = 
+{ 
   "\x00\x01\x02\x03\xCF\x09\xD3\x7F\xD4\xD5\xC3\x0B\x0C\x0D\x0E\x0F" // 00-0F
   "\x10\x11\x12\x13\xC7\xB4\x08\xC9\x18\x19\xCC\xCD\x83\x1D\xD2\x1F" // 10-1F
   "\x81\x82\x1C\x84\x86\x0A\x17\x1B\x89\x91\x92\x95\xA2\x05\x06\x07" // 20-2F

@@ -10,7 +10,7 @@
 //
 // = DESCRIPTION
 //   Declares the arrays required to convert between ISO8859 (aka
-//   Latin/1) and IBM1047 (aka EBCDIC)
+//   Latin/1) and IBM1047 (aka EBCDIC).
 //
 // = AUTHOR
 //   Jim Rogers (jrogers@viasoft.com)
@@ -50,24 +50,22 @@ public:
   // Virtual destruction
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR&,
-                                      ACE_CDR::Char&);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR&,
+  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
+                                      ACE_CDR::Char &);
+  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
                                         ACE_CDR::Char *&);
-  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
-                                            ACE_CDR::Char*,
+  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
+                                            ACE_CDR::Char *,
                                             ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR&,
+  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &,
                                        ACE_CDR::Char);
-  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR&,
+  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
-                                         const ACE_CDR::Char*);
-  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR&,
-                                             const ACE_CDR::Char*,
+                                         const ACE_CDR::Char *);
+  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
+                                             const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
 };
-
-// ****************************************************************
 
 class ACE_Export ACE_ISO8859_IBM1047 : public ACE_Char_Codeset_Translator
 {
@@ -88,20 +86,20 @@ public:
   // Virtual destruction
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
-  virtual ACE_CDR::Boolean read_char (ACE_InputCDR&,
-                                      ACE_CDR::Char&);
-  virtual ACE_CDR::Boolean read_string (ACE_InputCDR&,
+  virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
+                                      ACE_CDR::Char &);
+  virtual ACE_CDR::Boolean read_string (ACE_InputCDR &,
                                         ACE_CDR::Char *&);
-  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR&,
-                                            ACE_CDR::Char*,
+  virtual ACE_CDR::Boolean read_char_array (ACE_InputCDR &,
+                                            ACE_CDR::Char *,
                                             ACE_CDR::ULong);
-  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR&,
+  virtual ACE_CDR::Boolean write_char (ACE_OutputCDR &,
                                        ACE_CDR::Char);
-  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR&,
+  virtual ACE_CDR::Boolean write_string (ACE_OutputCDR &,
                                          ACE_CDR::ULong,
-                                         const ACE_CDR::Char*);
-  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR&,
-                                             const ACE_CDR::Char*,
+                                         const ACE_CDR::Char *);
+  virtual ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
+                                             const ACE_CDR::Char *,
                                              ACE_CDR::ULong);
 };
 
