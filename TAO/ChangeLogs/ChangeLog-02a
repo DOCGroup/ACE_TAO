@@ -3,8 +3,7 @@ Sat Feb 17 12:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/orbconf.h: Disabled SHMIOP for the upcoming beta. SHMIOP
 	  does not work with the single read optimizations that have been
 	  integrated in to TAO. This will be enabled after the beta when
-	  we have a work around.
-
+	  we have a fix.
 
 Fri Sat 17 11:49:29 2001  Pradeep Gore <pradeep@cs.wustl.edu>
     
