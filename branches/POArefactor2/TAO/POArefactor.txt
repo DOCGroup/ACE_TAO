@@ -1,3 +1,23 @@
+Tue Oct 12 13:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp:
+          Initialize the active strategies after the cached policies are
+          completely updated.
+
+        * tao/PortableServer/Lifespan_Strategy.h:
+          Added a Server_Object_i pointer to the persistent strategy, it needs
+          to be there. Other code will move there also so that all ImR stuff
+          is in the persistent strategy
+
+        * examples/POA/FindPOA/FindPOA.cpp:
+          Updated because of TAO_Adapter_Activator change
+
+        * tests/ORT/ServerRequestInterceptor.h:
+          Added include of PS_CurrentC.h
+
+        * tests/Portable_Interceptors/PolicyFactory/server.cpp:
+          Include PortableServer.h instead of PortableServerC.h
+
 Tue Oct 12 12:35:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:

@@ -134,6 +134,9 @@ namespace TAO
       void imr_notify_shutdown (void);
       //@}
 
+      /// Implementation Repository Server Object
+      ServerObject_i *server_object_;
+
       /// Flag for whether the ImR should be used or not.
       int use_imr_;
     };
