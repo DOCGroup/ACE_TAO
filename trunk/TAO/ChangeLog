@@ -1,3 +1,8 @@
+Thu May 6 22:12:00 2004  Marek Brudka  <mbrudka@elka.pw.edu.pl>
+
+	* tests/Portable_Interceptors: Portable_Interceptors*.mpc were 
+	truncated to PI_*.mpc.
+
 Thu May  6 13:12:15 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp
