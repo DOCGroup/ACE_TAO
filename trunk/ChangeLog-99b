@@ -1,5 +1,8 @@
 Thu Apr 22 16:35:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* include/makeinclude/platform_sunos5_kcc.GNU: Makefile macros for
+	  KAI C++ compiler.
+
 	* ace/config-sunos5.5.h: Added KAI C++ compiler support.
 
 	* docs/exceptions.html: Explicitly state that ACE try macros will
