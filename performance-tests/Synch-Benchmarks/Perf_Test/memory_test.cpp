@@ -19,7 +19,7 @@ int
 Memory_Test::svc (void)
 {
   int ni = this->thr_id ();
-  size_t length = options.msg_size ();
+  size_t length = performance_test_options.msg_size ();
   char	 *from  = new char[length];
   char	 *to    = new char[length];
 
@@ -28,7 +28,7 @@ Memory_Test::svc (void)
   while (!this->done ())
     {
       ACE_OS::memcpy (to, from, length);
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
     }
   /* NOTREACHED */
   return 0;

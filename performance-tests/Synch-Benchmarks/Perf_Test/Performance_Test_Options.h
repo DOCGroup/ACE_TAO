@@ -3,8 +3,8 @@
 
 // Option manager for performance tests.
 
-#if !defined (_OPTIONS_H)
-#define _OPTIONS_H
+#if !defined (_PERFORMANCE_TEST_OPTIONS_H)
+#define _PERFORMANCE_TEST_OPTIONS_H
 
 #include "ace/OS.h"
 #include "ace/Profile_Timer.h"
@@ -13,10 +13,10 @@
 
 #if defined (ACE_HAS_THREADS)
 
-class ACE_Svc_Export Options
+class ACE_Svc_Export Performance_Test_Options
 {
 public:
-  Options (void);
+  Performance_Test_Options (void);
   void   parse_args (int argc, char *argv[]);
 
   void   init (void);
@@ -119,8 +119,8 @@ private:
 };
 
 // Make this available to any code that wants to see it!
-extern ACE_Svc_Export Options options;
+extern ACE_Svc_Export Performance_Test_Options performance_test_options;
 
 #include "Performance_Test_Options.i"
 #endif /* ACE_HAS_THREADS */
-#endif /* _OPTIONS_H */
+#endif /* _PERFORMANCE_TEST_OPTIONS_H */

@@ -43,8 +43,8 @@ Cond_Signal_Test::svc (void)
 	while (resources > 0)
 	  notfull.wait ();
 
-	options.thr_work_count[ni]++;
-	resources = options.thr_count () - 1;
+	performance_test_options.thr_work_count[ni]++;
+	resources = performance_test_options.thr_count () - 1;
 	buffer++;
 	notempty.signal ();
 	mutex.release ();
@@ -55,7 +55,7 @@ Cond_Signal_Test::svc (void)
 	mutex.acquire ();
 	while (resources == 0)
 	  notempty.wait ();
-	options.thr_work_count[ni]++;
+	performance_test_options.thr_work_count[ni]++;
 	buffer++;
 	if (--resources == 0)
 	  notfull.signal ();

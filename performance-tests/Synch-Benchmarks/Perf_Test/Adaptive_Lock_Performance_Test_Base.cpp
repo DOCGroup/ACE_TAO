@@ -30,7 +30,7 @@ Adaptive_Lock_Performance_Test_Base::svc (void)
   while (!this->done ())
     {
       Adaptive_Lock_Performance_Test_Base::lock_->acquire ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
       buffer++;
       Adaptive_Lock_Performance_Test_Base::lock_->release ();
     }

@@ -29,7 +29,7 @@ Recursive_Lock_Test::svc (void)
   while (!this->done ())
     {
       this->mutex.acquire ();
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
       buffer++;
       this->mutex.release ();
     }

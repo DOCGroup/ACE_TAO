@@ -46,20 +46,20 @@ void
 Pipe_Proc_Test::reader (ACE_HANDLE handle)
 {
   int  ni = this->thr_id ();
-  int length = options.msg_size ();
+  int length = performance_test_options.msg_size ();
   char *to;
 
   ACE_NEW (to, char[length]);
 
   while (ACE_OS::read (handle, to, length) > 0)
-    options.thr_work_count[ni]++;
+    performance_test_options.thr_work_count[ni]++;
 }
 
 
 int
 Pipe_Proc_Test::svc (void)
 {
-  ssize_t length = options.msg_size ();
+  ssize_t length = performance_test_options.msg_size ();
   int ni = this->thr_id ();
   ACE_HANDLE handle = this->pipe_handles[1];
   char *from;
@@ -68,7 +68,7 @@ Pipe_Proc_Test::svc (void)
 
   while (!this->done ())
     if (ACE_OS::write (handle, from, length) == length)
-      options.thr_work_count[ni]++;
+      performance_test_options.thr_work_count[ni]++;
     else
       ACE_OS::perror ("write");
 
