@@ -30,6 +30,22 @@ namespace TAO
   Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec
                                        ACE_ENV_ARG_DECL)
   {
+
+    /**
+     * Mega hack for RTCORBA start. I don't think that
+     * PortableInterceptor  would work here esp. for RTCORBA. PI needs
+     * to be improved to  help our cause.
+     */
+    this->resolver_.stub ()->orb_core ()->service_context_list (
+      this->resolver_.stub (),
+      this->details_.request_service_context (),
+      0
+      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK;
+    /**
+     * Mega hack for RTCORBA END
+     */
+
     TAO_Profile *pfile =
       this->resolver_.profile ();
 

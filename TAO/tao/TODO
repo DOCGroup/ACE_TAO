@@ -55,4 +55,7 @@
 
 . Complete documentation
 
+. Add the BAD_PARAM exception for bounded strings
+
+. Different versions of GIOP
 

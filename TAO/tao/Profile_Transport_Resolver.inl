@@ -31,4 +31,10 @@ namespace TAO
   {
     this->is_released_ = true;
   }
+
+  ACE_INLINE CORBA::PolicyList *
+  Profile_Transport_Resolver::inconsistent_policies (void) const
+  {
+    return this->inconsistent_policies_;
+  }
 }

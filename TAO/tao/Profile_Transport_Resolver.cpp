@@ -29,6 +29,7 @@ namespace TAO
       , transport_ (0)
       , profile_ (0)
       , is_released_ (false)
+      , inconsistent_policies_ (0)
   {
   }
 
@@ -44,6 +45,9 @@ namespace TAO
         if (this->is_released_ == false)
           this->transport_->make_idle ();
       }
+
+    if (this->inconsistent_policies_)
+      delete this->inconsistent_policies_;
   }
 
   void
@@ -105,7 +109,7 @@ namespace TAO
   }
 
   bool
-  Profile_Transport_Resolver::try_connect (TAO_Endpoint *ep,
+  Profile_Transport_Resolver::try_connect (TAO_Transport_Descriptor_Interface *desc,
                                            ACE_Time_Value *max_time_value
                                            ACE_ENV_ARG_DECL)
   {
@@ -138,10 +142,11 @@ namespace TAO
 
    // Obtain a connection.
    this->transport_ =
-     conn_reg->get_connector (ep)->connect (this,
-                                            ep,
-                                            max_wait_time
-                                            ACE_ENV_ARG_PARAMETER);
+     conn_reg->get_connector (desc->endpoint ())->connect (
+       this,
+       desc,
+       max_wait_time
+       ACE_ENV_ARG_PARAMETER);
    ACE_CHECK_RETURN (false);
 
    // A timeout error occurred
@@ -176,4 +181,17 @@ namespace TAO
     return is_conn_timeout;
   }
 
+
+  void
+  Profile_Transport_Resolver::init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException))
+  {
+    ACE_NEW_THROW_EX (this->inconsistent_policies_,
+                      CORBA::PolicyList (0),
+                      CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  }
 }

@@ -29,13 +29,16 @@ class TAO_Profile;
 class TAO_Transport;
 class TAO_Endpoint;
 class ACE_Time_Value;
+class TAO_Transport_Descriptor_Interface;
 
 namespace CORBA
 {
   class SystemException;
   class Environment;
   class Object;
+  class PolicyList;
 }
+
 namespace TAO
 {
   class Synch_Twoway_Invocation;
@@ -100,9 +103,16 @@ namespace TAO
     /// This is a callback method used by the endpoint selectors, to
     /// delegate the responsibility of reserving a transport from the
     /// connection cache for this invocation.
-    bool try_connect (TAO_Endpoint *,
+    bool try_connect (TAO_Transport_Descriptor_Interface *desc,
                       ACE_Time_Value *val
                       ACE_ENV_ARG_DECL);
+
+    /// Intialize the inconsistent policy list that this object has
+    /// cached.
+    void init_inconsistent_policies (ACE_ENV_SINGLE_ARG_DECL)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
+    CORBA::PolicyList *inconsistent_policies (void) const;
 
   private:
 
@@ -126,6 +136,26 @@ namespace TAO
 
     /// Has the transport been idled?
     mutable bool is_released_;
+
+    /// List of inconsistent policies
+    /**
+     * If current effective policies cause the invocation to raise
+     * CORBA::INV_POLICY exception, the conflicting/problematic policies
+     * are stored in this list.  This is used by \param
+     * Object::_validate_connection method to inform clients about
+     * causes of invocation failure.
+     * @par
+     * Conflicting policies are only stored in this list if \param
+     * init_inconsistent_policies method has been called prior to the
+     * beginning of invocation.  This saves extra work of conflicting
+     * policies 'logging' when it's not needed.
+     *
+     * @NOTE: We don't use _var with a reason. Using _var would
+     * involve including the  header file for atleast
+     * Policy_ForwardC.h, and that is what we precisely want to
+     * avoid.
+     */
+    CORBA::PolicyList *inconsistent_policies_;
   };
 } // TAO namespace end
 
