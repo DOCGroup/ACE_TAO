@@ -1,3 +1,14 @@
+Wed Mar 19 16:06:32 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h,README: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER to wrap
+	  #include of sys/socket.h with #undef/#define of __cplusplus.
+
+	* ace/config-aix-4.[12].x.h: added ACE_HAS_AIX_BROKEN_SOCKET_HEADER,
+	  ACE_HAS_PTHREAD_T, and ACE_LACKS_TCP_H.
+
+	Thanks to Daniel Montalibet <daniel_montalibet@stortek.com> for
+	both of the above modifications.
+
 Wed Mar 19 15:02:09 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/config-sunos4.*.h: Added #define ACE_HAS_UNION_WAIT based
