@@ -1,0 +1,62 @@
+<!-- $Id$ -->
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="James CE Johnson">
+   <TITLE>ACE Tutorial 015</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#000FFF" VLINK="#FF0F0F">
+
+<CENTER><B><FONT SIZE=+2>ACE Tutorial 015</FONT></B></CENTER>
+
+<CENTER><B><FONT SIZE=+2>Building a protocol stream</FONT></B></CENTER>
+
+<P>
+<HR WIDTH="100%">
+This and the next three pages present the protocol objects that
+provide compression and encryption.  If you were hoping to learn the
+secrets of compression and encryption then I'm going to disappoint
+you.  There are some really good libraries out there that do this
+stuff though and if anyone wants to integrate one of them into the
+tutorial I'll be glad to take it!
+<HR>
+<PRE>
+<font color=red>// $Id$</font>
+
+<font color=blue>#ifndef</font> <font color=purple>COMPRESSOR_H</font>
+<font color=blue>#define</font> <font color=purple>COMPRESSOR_h</font>
+
+<font color=blue>#include</font> "<font color=green>Protocol_Task.h</font>"
+
+<font color=red>/* A reallly dumb compression object.  (It actually adds 3 bytes to
+   every message block.)
+*/</font>
+class Compressor : public Protocol_Task
+{
+public:
+
+  typedef Protocol_Task inherited;
+
+  Compressor (void);
+
+  ~Compressor (void);
+
+protected:
+
+  <font color=red>// This is called when the compressor is on the downstream side.</font>
+  <font color=red>// We'll take the message, compress it and move it along to the next</font>
+  <font color=red>// module.</font>
+  int send (ACE_Message_Block *message,
+            ACE_Time_Value *timeout);
+
+  <font color=red>// This one is called on the upstream side.  No surprise: we</font>
+  <font color=red>// decompress the data and send it on up the stream.</font>
+  int recv (ACE_Message_Block *message,
+            ACE_Time_Value *timeout);
+};
+
+<font color=blue>#endif</font> <font color=red>/* COMPRESSOR_H */</font>
+</PRE>
+<P><HR WIDTH="100%">
+<CENTER>[<A HREF="../online-tutorials.html">Tutorial Index</A>] [<A HREF="page19.html">Continue This Tutorial</A>]</CENTER>
+
