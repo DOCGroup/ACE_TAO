@@ -259,6 +259,9 @@ AV_Server_Sig_Handler::register_handler (void)
   // ACE_Reactor (see below).
   this->handle_ = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
   ACE_ASSERT (this->handle_ != -1);
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) sig_handler == %d\n",
+              this->handle_));
 
   // Register signal handler object.  Note that NULL_MASK is used to
   // keep the ACE_Reactor from calling us back on the "/dev/null"
@@ -583,7 +586,10 @@ AV_Server::run (CORBA::Environment& env)
   if (this->acceptor_.open (this->server_control_addr_,
                             TAO_ORB_Core_instance ()->reactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) acceptor_handler == %d\n",
+              this->acceptor_.get_handle ()));
+  
     //  ACE_Reactor::instance ()->run_event_loop (); 
 
   // Run the ORB event loop
@@ -606,7 +612,7 @@ AV_Server::~AV_Server (void)
      ACE_Event_Handler::ACCEPT_MASK);
 
   TAO_ORB_Core_instance ()->reactor ()->remove_handler
-    (this->signal_handler_.get_handle (),
+    (&this->signal_handler_,
      ACE_Event_Handler::NULL_MASK);
 
 
