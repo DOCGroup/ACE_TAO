@@ -55,7 +55,7 @@ Object_Group_Factory_i::make_group (int random,
   // <id>.
   if (rr_groups_.find (group_id) == 0
       || random_groups_.find (group_id) == 0)
-    ACE_THROW_RETURN (Load_Balancer::duplicate_group,
+    ACE_THROW_RETURN (Load_Balancer::duplicate_group (),
                       Load_Balancer::Object_Group::_nil ());
   else
     {
@@ -113,7 +113,7 @@ Object_Group_Factory_i::resolve (const char * id,
 
   if (rr_groups_.find (group_id, group) == -1
       && random_groups_.find (group_id, group) == -1)
-    ACE_THROW_RETURN (Load_Balancer::no_such_group,
+    ACE_THROW_RETURN (Load_Balancer::no_such_group (),
                       Load_Balancer::Object_Group::_nil ());
   else
     return group._retn ();
@@ -212,7 +212,7 @@ Object_Group_i::bind (const Load_Balancer::Member & member,
   // Insert new member into <members_> and check for duplicates/failures.
   int result = members_.trybind (member_id, obj);
   if (result == 1)
-    ACE_THROW (Load_Balancer::duplicate_member);
+    ACE_THROW (Load_Balancer::duplicate_member ());
   else if (result == -1)
     ACE_THROW (CORBA::INTERNAL ());
 
@@ -244,7 +244,7 @@ Object_Group_i::unbind (const char * id,
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)
-    ACE_THROW (Load_Balancer::no_such_member);
+    ACE_THROW (Load_Balancer::no_such_member ());
 
   // Remove all entries for this member.
   members_.unbind (member_id);
@@ -266,7 +266,7 @@ Object_Group_i::resolve_with_id (const char * id,
   ACE_CString member_id (id);
 
   if (members_.find (member_id, obj) == -1)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member,
+    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
                       obj._retn ());
 
   return obj._retn ();
@@ -334,7 +334,7 @@ Random_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
 
   size_t group_size = members_.current_size ();
   if (group_size == 0)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member,
+    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
                       obj._retn ());
 
   // Generate random number in the range [0, group_size - 1]
@@ -366,7 +366,7 @@ RR_Object_Group::resolve (CORBA::Environment &ACE_TRY_ENV)
 
   size_t group_size = members_.current_size ();
   if (group_size == 0)
-    ACE_THROW_RETURN (Load_Balancer::no_such_member,
+    ACE_THROW_RETURN (Load_Balancer::no_such_member (),
                       obj._retn ());
 
   // Get the id of the member to return to the client.
@@ -395,7 +395,7 @@ RR_Object_Group::unbind (const char *id,
 
   // Check to make sure we have it.
   if (members_.find (member_id) == -1)
-    ACE_THROW (Load_Balancer::no_such_member);
+    ACE_THROW (Load_Balancer::no_such_member ());
 
   // Remove all entries for this member.
   members_.unbind (member_id);
