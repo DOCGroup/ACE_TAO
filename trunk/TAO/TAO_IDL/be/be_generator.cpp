@@ -136,7 +136,7 @@ be_generator::create_module (UTL_Scope *s,
     {
       d = iter->item ();
 
-      if (d->node_type () == AST_Decl::NT_module)
+      if (!d->imported () && d->node_type () == AST_Decl::NT_module)
         {
           if (d->local_name ()->compare (n->last_component ()))
             {
