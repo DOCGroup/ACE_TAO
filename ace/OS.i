@@ -497,14 +497,14 @@ ACE_INLINE int
 ACE_OS::fcntl (ACE_HANDLE handle, int cmd, int value)
 {
   // ACE_TRACE ("ACE_OS::fcntl");
-#if defined (VXWORKS)
+#if defined (ACE_LACKS_FCNTL)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (cmd);
   ACE_UNUSED_ARG (value);
   ACE_NOTSUP_RETURN (-1);
 #else
   ACE_OSCALL_RETURN (::fcntl (handle, cmd, value), int, -1);
-#endif /* VXWORKS */
+#endif /* ACE_LACKS_FCNTL */
 }
 
 ACE_INLINE int
