@@ -16,8 +16,7 @@
 
 #include "AVStreams_i.h"
 
-TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (const char *obj_name)
-  : POA_AVStreams::Basic_StreamCtrl (obj_name)
+TAO_Basic_StreamCtrl::TAO_Basic_StreamCtrl (void)
 {
 }
 
@@ -100,10 +99,8 @@ TAO_Basic_StreamCtrl::set_flow_connection (const char *flow_name,
   ACE_UNUSED_ARG (env);
 }
 
-TAO_StreamCtrl::TAO_StreamCtrl (const char *obj_name = 0)
-  : POA_AVStreams::StreamCtrl (obj_name)
+TAO_StreamCtrl::TAO_StreamCtrl (void)
 {
-
 }
 
 TAO_StreamCtrl::~TAO_StreamCtrl (void)
@@ -117,6 +114,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                            const AVStreams::flowSpec &the_flows,  
                            CORBA::Environment &env)
 {
+  return 0;
 }
   
 CORBA::Boolean 
@@ -126,6 +124,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr a_party,
                       const AVStreams::flowSpec &the_flows,  
                       CORBA::Environment &env)
 {
+  return 0;
 }
 
 void 
