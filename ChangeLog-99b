@@ -1,82 +1,89 @@
+Sun Dec 05 21:54:47 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Dump.cpp (ACE_ODB ctor): initialize current_size_
+          data member, so that examples/misc/test_dump will pass
+          on MSVC 6.0/NT 4.0, at least.  Thanks to Soren Ilsoe
+          <soren.ilsoe@tellabs.com> for reporting this.
+
 Sun Dec  5 16:50:37 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Some compilers were picky about the circular dependency fix.
-	  Moved inclusion of ace/Log_Msg.h after ace/OS.i yet again.
+          Some compilers were picky about the circular dependency fix.
+          Moved inclusion of ace/Log_Msg.h after ace/OS.i yet again.
 
 Sat Dec 04 21:14:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp (init_test): Need to call init_acquire to
-	  make sure the old mapfile does get removed.
+        * tests/Malloc_Test.cpp (init_test): Need to call init_acquire to
+          make sure the old mapfile does get removed.
 
-	  Added more printout items in the normally disabled debug
-	  section.
+          Added more printout items in the normally disabled debug
+          section.
 
 Sat Dec 04 19:45:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Memory_Pool.cpp: Conditionally bind/unbind the
-	  Pagefile_Memory_Pool with the Based_Pointer_Repository depends
-	  on whether position independent pointers are used or not.
+        * ace/Memory_Pool.cpp: Conditionally bind/unbind the
+          Pagefile_Memory_Pool with the Based_Pointer_Repository depends
+          on whether position independent pointers are used or not.
 
 Sat Dec  4 16:59:08 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	Circular dependency fixes/updates:
+        Circular dependency fixes/updates:
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Include "ace/Log_Msg.h" before "ace/OS.i" because the methods in
-	  ACE_OS depend on ACE_Log_Msg for output and error reporting.
+          Include "ace/Log_Msg.h" before "ace/OS.i" because the methods in
+          ACE_OS depend on ACE_Log_Msg for output and error reporting.
 
-	* ace/Log_Record.h:
+        * ace/Log_Record.h:
 
-	  Include "ace/OS.h" instead of "ace/ACE.h."  OS.h is needed to
-	  pull in the definition of ACE_Export.  ACE.h was overkill.  This
-	  change is at the core of the circular dependency fix.
+          Include "ace/OS.h" instead of "ace/ACE.h."  OS.h is needed to
+          pull in the definition of ACE_Export.  ACE.h was overkill.  This
+          change is at the core of the circular dependency fix.
 
-	* ace/Log_Record.cpp:
+        * ace/Log_Record.cpp:
 
-	  Include "ace/ACE.cpp" to pull in definition of ACE::log2().
+          Include "ace/ACE.cpp" to pull in definition of ACE::log2().
 
-	The above changes made the following changes necessary.  They also
-	corrected an annoying circular dependency problem that was
-	occurring when using an automatically generated ace/config.h.  The
-	below changes are actually legitimate fixes since the source files
-	in question unnecessarily relied on other headers to pull in ACE
-	class definitions.
+        The above changes made the following changes necessary.  They also
+        corrected an annoying circular dependency problem that was
+        occurring when using an automatically generated ace/config.h.  The
+        below changes are actually legitimate fixes since the source files
+        in question unnecessarily relied on other headers to pull in ACE
+        class definitions.
 
-	* ace/DLL.cpp:
+        * ace/DLL.cpp:
 
-	  Include "ace/ACE.h" because ACE_DLL::open() uses ACE::ldfind().
+          Include "ace/ACE.h" because ACE_DLL::open() uses ACE::ldfind().
 
-	* ace/Functor.h:
+        * ace/Functor.h:
 
-	  Include "ace/ACE.h" instead of "ace/OS.h" because
-	  "ace/Functor.i" needs the hash functions in the ACE class.
+          Include "ace/ACE.h" instead of "ace/OS.h" because
+          "ace/Functor.i" needs the hash functions in the ACE class.
 
-	All of the above changes nicely reduced the number of source files
-	that depend on ace/ACE.{h,i}!
+        All of the above changes nicely reduced the number of source files
+        that depend on ace/ACE.{h,i}!
 
-	* ace/Makefile:
-	* apps/gperf/src/Makefile:
+        * ace/Makefile:
+        * apps/gperf/src/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Fri Dec  3 21:51:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.cpp (shared_malloc): Changed the for loop to
-	  while(1) so the compilers can identify the control will never
-	  fall off the end of the loop and apply ACE_NOTREACHED to the
-	  final return statement.
+        * ace/Malloc_T.cpp (shared_malloc): Changed the for loop to
+          while(1) so the compilers can identify the control will never
+          fall off the end of the loop and apply ACE_NOTREACHED to the
+          final return statement.
 
 Fri Dec 03 12:14:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc_T.i (init_malloc_header_ptr): Applied ACE_UNUSED_ARG
-	  when we are not using position independent pointers.
+        * ace/Malloc_T.i (init_malloc_header_ptr): Applied ACE_UNUSED_ARG
+          when we are not using position independent pointers.
 
-	* ace/Malloc_T.cpp (shared_malloc): Split the structural exception
-	  try block into two to avoid warnings from the OSF compiler.
-	  Thanks to David for reporting this.
+        * ace/Malloc_T.cpp (shared_malloc): Split the structural exception
+          try block into two to avoid warnings from the OSF compiler.
+          Thanks to David for reporting this.
 
 Thu Dec  2 22:42:53 1999  James Hu <jxh@entera.com>
 
@@ -87,11 +94,11 @@ Thu Dec  2 22:42:53 1999  James Hu <jxh@entera.com>
 
 Thu Dec  2 22:41:53 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/OS.i:
-	  Added the bug fix to the SIO_GET_QOS call in ACE::ioctl () for
-	  RC2 release. This involved removing explicit buffer allocation
-	  for the provider specific buffer and just allocating one
-	  contiguos buffer for the QOS structure.
+        * ace/OS.i:
+          Added the bug fix to the SIO_GET_QOS call in ACE::ioctl () for
+          RC2 release. This involved removing explicit buffer allocation
+          for the provider specific buffer and just allocating one
+          contiguos buffer for the QOS structure.
 
 Thu Dec 02 18:16:27 1999  James Hu <jxh@entera.com>
 
@@ -100,69 +107,69 @@ Thu Dec 02 18:16:27 1999  James Hu <jxh@entera.com>
 
 Thu Dec 02 18:03:27 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp (parent): Before binding the name "bar",
-	  do a series of small malloc and a huge malloc to make sure the
-	  child process will segfault and the remapping is tested on the
-	  child process.
+        * tests/Malloc_Test.cpp (parent): Before binding the name "bar",
+          do a series of small malloc and a huge malloc to make sure the
+          child process will segfault and the remapping is tested on the
+          child process.
 
-	* ace/Memory_Pool.h:
-	* ace/Memory_Pool.cpp: Added a no-op <remap> method to
-	  Local_Memory_Pool because we might call remap from ACE_Malloc on
-	  Win32.
+        * ace/Memory_Pool.h:
+        * ace/Memory_Pool.cpp: Added a no-op <remap> method to
+          Local_Memory_Pool because we might call remap from ACE_Malloc on
+          Win32.
 
-	  (Win32 only) Added a new <seh_selector> function that takes a
-	  pointer to an EXCEPTION_POINTERS and is responsible to determine
-	  if remapping of the memory map file is required or not.
+          (Win32 only) Added a new <seh_selector> function that takes a
+          pointer to an EXCEPTION_POINTERS and is responsible to determine
+          if remapping of the memory map file is required or not.
 
-	* ace/Malloc_T.h:
-	* ace/Malloc_T.i (init_malloc_header_ptr): Added a new inline
-	  function which simply initializes a (position independent)
-	  pointer pointing to a Malloc_Header.  This is required because
-	  the placement new in this function makes MSVC think we are
-	  creating a new object and disallow the use of ACE_SEH_TRY in
-	  functions that use placement new.
+        * ace/Malloc_T.h:
+        * ace/Malloc_T.i (init_malloc_header_ptr): Added a new inline
+          function which simply initializes a (position independent)
+          pointer pointing to a Malloc_Header.  This is required because
+          the placement new in this function makes MSVC think we are
+          creating a new object and disallow the use of ACE_SEH_TRY in
+          functions that use placement new.
 
-	* ace/Malloc_T.cpp: Added the use of ACE_SEH_TRY in several
-	  ACE_Malloc::shared_* methods so we can catch the potential
-	  access violations and force remapping of memory maps.  On UNIX,
-	  this is done thru <handle_signal> in Memory_Pool.
+        * ace/Malloc_T.cpp: Added the use of ACE_SEH_TRY in several
+          ACE_Malloc::shared_* methods so we can catch the potential
+          access violations and force remapping of memory maps.  On UNIX,
+          this is done thru <handle_signal> in Memory_Pool.
 
 Thu Dec  2 09:17:02 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-borland.h: Apparently, the Borland BC4 compiler
-	  lacks operator placement delete, so I added #define
- 	  ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle this case.  Thanks
- 	  to Mike Gingell <mgingell@istar.ca>.
+        * ace/config-win32-borland.h: Apparently, the Borland BC4 compiler
+          lacks operator placement delete, so I added #define
+          ACE_LACKS_PLACEMENT_OPERATOR_DELETE to handle this case.  Thanks
+          to Mike Gingell <mgingell@istar.ca>.
 
 Wed Dec  1 22:26:06 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/MM_Shared_Memory_Test.cpp: Make sure to force the test
-	  to use System V Semaphores if the OS platform supports POSIX
- 	  semaphores natively (since these don't have the right semantics
- 	  for this test).  Thanks to Steve Huston for reporting this bug.
-	  This fix should clear BUG ID 382.
+        * tests/MM_Shared_Memory_Test.cpp: Make sure to force the test
+          to use System V Semaphores if the OS platform supports POSIX
+          semaphores natively (since these don't have the right semantics
+          for this test).  Thanks to Steve Huston for reporting this bug.
+          This fix should clear BUG ID 382.
 
 Wed Dec 01 06:16:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h (ACE_MALLOC_PADDING): Restored default value to 1.
-	  Added a new macro ACE_MALLOC_HEADER_SIZE which serves the same
-	  function as ACE_MALLOC_PADDING (both specify the minimum malloc
-	  header size) but ACE_MALLOC_HEADER_SIZE is normalized to be
-	  multiple of ACE_MALLOC_ALIGN.
+        * ace/Malloc.h (ACE_MALLOC_PADDING): Restored default value to 1.
+          Added a new macro ACE_MALLOC_HEADER_SIZE which serves the same
+          function as ACE_MALLOC_PADDING (both specify the minimum malloc
+          header size) but ACE_MALLOC_HEADER_SIZE is normalized to be
+          multiple of ACE_MALLOC_ALIGN.
 
-	  (ACE_CONTROL_BLOCK_ALIGN_LONGS): Changed back to use
-	  ACE_MALLOC_ALIGN to calculate the starting malloc header
-	  alignment.
+          (ACE_CONTROL_BLOCK_ALIGN_LONGS): Changed back to use
+          ACE_MALLOC_ALIGN to calculate the starting malloc header
+          alignment.
 
-	* tests/Malloc_Test.cpp: Expanded the memory offset between parent
-	  and child mmap base address so there'll be no overlap even when
-	  we use a larger ACE_MALLOC_PADDING.
+        * tests/Malloc_Test.cpp: Expanded the memory offset between parent
+          and child mmap base address so there'll be no overlap even when
+          we use a larger ACE_MALLOC_PADDING.
 
 Wed Dec  1 02:10:51 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Auto_IncDec_Test.cpp: The main() function was missing
-	  a return type.  Also, don't run the test with output logged to
- 	  stderr.  Thanks to David Levine for reporting this.
+        * tests/Auto_IncDec_Test.cpp: The main() function was missing
+          a return type.  Also, don't run the test with output logged to
+          stderr.  Thanks to David Levine for reporting this.
 
 Tue Nov 30 16:11:52 1999  Steve Huston  <shuston@riverace.com>
 
@@ -172,239 +179,239 @@ Tue Nov 30 16:11:52 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Nov 30 14:24:31 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
+        * acconfig.h:
 
-	  Minor cosmetic updates.
+          Minor cosmetic updates.
 
-	* configure.in:
+        * configure.in:
 
-	  Only enable POSIX semaphore support if process shared semaphores
-	  are supported.  Presumably process shared semaphores are only
-	  available if the _POSIX_THREAD_PROCESS_SHARED macro is defined
-	  by the platform.  [Bug 304]
+          Only enable POSIX semaphore support if process shared semaphores
+          are supported.  Presumably process shared semaphores are only
+          available if the _POSIX_THREAD_PROCESS_SHARED macro is defined
+          by the platform.  [Bug 304]
 
 Tue Nov 30 00:22:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Malloc_Test.cpp: Changed to store the mmap allocator in an
-	  auto_ptr instead of as a static object so we can be absolutely
-	  sure about the creation order.
+        * tests/Malloc_Test.cpp: Changed to store the mmap allocator in an
+          auto_ptr instead of as a static object so we can be absolutely
+          sure about the creation order.
 
-	  Added an init_test method which creates a mmap memory pool and
-	  releases it immediately to make sure the test won't
-	  crash/deadlock due to previous crashes.
+          Added an init_test method which creates a mmap memory pool and
+          releases it immediately to make sure the test won't
+          crash/deadlock due to previous crashes.
 
 Mon Nov 29 16:36:06 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Malloc.h (ACE_MALLOC_PADDING): Changed the default value of
-	  ACE_MALLOC_PADDING to 16 to avoid some some alignment problem.
+        * ace/Malloc.h (ACE_MALLOC_PADDING): Changed the default value of
+          ACE_MALLOC_PADDING to 16 to avoid some some alignment problem.
 
-	  Fixed the padding size calculation in ACE_Malloc_Header.
+          Fixed the padding size calculation in ACE_Malloc_Header.
 
-	* tests/Malloc_Test.cpp (main): Added some debug printout which is
-	  commented out for now (they are not used for regular test.)
+        * tests/Malloc_Test.cpp (main): Added some debug printout which is
+          commented out for now (they are not used for regular test.)
 
 Mon Nov 29 14:34:16 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/config-win32-borland.h:
-	* ace/config-win32-common.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-common.h:
 
-	  The ACE_HAS_BROKEN_IMPLICIT_CONST_CAST macro I previously
-	  removed is used in TAO's IDL_Test.  Thanks to Jeff for pointing
-	  this out.
+          The ACE_HAS_BROKEN_IMPLICIT_CONST_CAST macro I previously
+          removed is used in TAO's IDL_Test.  Thanks to Jeff for pointing
+          this out.
 
-	* ace/OS.i (sema_init):
+        * ace/OS.i (sema_init):
 
-	  The call to sem_init() for the process shared case incorrectly
-	  used USYNC_THREAD for the second argument.  For the
-	  USYNC_PROCESS case, the second argument to ::sem_init() should
-	  be "type == USYNC_PROCESS" since it will evaluate to "1" in this
-	  case.  A conditional is used since some platforms may	not define
-	  USYNC_PROCESS to be a non-zero value.
+          The call to sem_init() for the process shared case incorrectly
+          used USYNC_THREAD for the second argument.  For the
+          USYNC_PROCESS case, the second argument to ::sem_init() should
+          be "type == USYNC_PROCESS" since it will evaluate to "1" in this
+          case.  A conditional is used since some platforms may not define
+          USYNC_PROCESS to be a non-zero value.
 
 Mon Nov 29 12:15:56 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Auto_IncDec_Test.cpp: Updated this test to use multiple
-	  threads, if available.  Thanks to Edan Ayal <EdanA@cti2.com> for
- 	  this.
+        * tests/Auto_IncDec_Test.cpp: Updated this test to use multiple
+          threads, if available.  Thanks to Edan Ayal <EdanA@cti2.com> for
+          this.
 
 Mon Nov 29 11:47:55 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Backed out the inline related changes I made.  Some compilers
-	  have a problem with them.
+          Backed out the inline related changes I made.  Some compilers
+          have a problem with them.
 
 Sun Nov 28 20:03:03 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* ace/OS.i (sema_init):
+        * ace/OS.i (sema_init):
 
-	  According UNIX Network Programming V2 by Stevens, sem_init() is
-	  currently not required to return zero on success, but it *does*
-	  return -1 upon failure.  For this reason, check for failure by
-	  comparing to -1, instead of checking for success by comparing to
-	  zero.
+          According UNIX Network Programming V2 by Stevens, sem_init() is
+          currently not required to return zero on success, but it *does*
+          return -1 upon failure.  For this reason, check for failure by
+          comparing to -1, instead of checking for success by comparing to
+          zero.
 
 Sun Nov 28 19:05:31 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (open): Fixed an ASYS_TEXT usage.
-	  ASYS_TEXT can not enclose several string literals.
+        * ace/Process_Manager.cpp (open): Fixed an ASYS_TEXT usage.
+          ASYS_TEXT can not enclose several string literals.
 
 Sun Nov 28 18:09:49 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* m4/acinclude.m4 (ACE_USE_TEMP_FILE):
+        * m4/acinclude.m4 (ACE_USE_TEMP_FILE):
 
-	  Check that the source directory is not the current directory
-	  before moving a file in the current directory out of the way.
-	  Previously an attempt to move the same file out of the way was
-	  performed to twice.
+          Check that the source directory is not the current directory
+          before moving a file in the current directory out of the way.
+          Previously an attempt to move the same file out of the way was
+          performed to twice.
 
 Sun Nov 28 17:06:00 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* acconfig.h:
+        * acconfig.h:
 
-	  Added ACE_HAS_POSITION_INDEPENDENT_MALLOC macro.
+          Added ACE_HAS_POSITION_INDEPENDENT_MALLOC macro.
 
-	* configure.in:
+        * configure.in:
 
-	  Dropped AC_ISC_POSIX macro in favor of an AC_CHECK_LIB strerror
-	  test.
+          Dropped AC_ISC_POSIX macro in favor of an AC_CHECK_LIB strerror
+          test.
 
-	  Disabled exception handling support by default.
+          Disabled exception handling support by default.
 
-	  Added "--enable-pi-malloc" configure script option to
-	  enable/disable ACE's position independent malloc feature.  By
-	  default, this feature will be enabled.
+          Added "--enable-pi-malloc" configure script option to
+          enable/disable ACE's position independent malloc feature.  By
+          default, this feature will be enabled.
 
-	  Added a run-time test for sem_open().  glibc() apparently
-	  defines a stub for this function in the pthread library but
-	  there is no entry in <gnu/stubs.h> for it.  As such, the
-	  configure script assumed that it is a working function.  It
-	  turns out it is not (on Linux with glibc <= 2.1.2).
+          Added a run-time test for sem_open().  glibc() apparently
+          defines a stub for this function in the pthread library but
+          there is no entry in <gnu/stubs.h> for it.  As such, the
+          configure script assumed that it is a working function.  It
+          turns out it is not (on Linux with glibc <= 2.1.2).
 
-	  Generalized/improved setrlimit and getrusage tests that check if
-	  the first argument is an enum.  The tests now determine exactly
-	  what the enum type is.  Previously, the test was specific to
-	  Linux/glibc platforms.
+          Generalized/improved setrlimit and getrusage tests that check if
+          the first argument is an enum.  The tests now determine exactly
+          what the enum type is.  Previously, the test was specific to
+          Linux/glibc platforms.
 
-	  Fixed some tests that didn't initialize a const variable before
-	  it was used.
+          Fixed some tests that didn't initialize a const variable before
+          it was used.
 
-	  Added a test that checks the integrity of the generated
-	  configuration.  The test attempts to compile ace/OS.cpp.  If it
-	  fails then the rest of ACE won't compile, indicating that the
-	  automatic configuration wasn't successful.  Upon failure, some
-	  diagnostic information is output, and a request to submit a bug
-	  report is made.
+          Added a test that checks the integrity of the generated
+          configuration.  The test attempts to compile ace/OS.cpp.  If it
+          fails then the rest of ACE won't compile, indicating that the
+          automatic configuration wasn't successful.  Upon failure, some
+          diagnostic information is output, and a request to submit a bug
+          report is made.
 
-	  Flush the cached configuration test results to the cache file.
-	  This is mainly useful for configure script debugging purposes.
+          Flush the cached configuration test results to the cache file.
+          This is mainly useful for configure script debugging purposes.
 
-	* ace/Log_Msg.h (ACE_Log_Msg):
+        * ace/Log_Msg.h (ACE_Log_Msg):
 
-	  Added additional spaces before comments describing each format
-	  specifier since the single quote "'" at the beginning of each
-	  description was interpreted as a troff comment. Thanks to Kevin
-	  Dalley for pointing this out and suggesting a fix.
+          Added additional spaces before comments describing each format
+          specifier since the single quote "'" at the beginning of each
+          description was interpreted as a troff comment. Thanks to Kevin
+          Dalley for pointing this out and suggesting a fix.
 
-	* ace/OS.h:
+        * ace/OS.h:
 
-	  Consolidated some ACE_INLINE macro preprocessor conditionals.
+          Consolidated some ACE_INLINE macro preprocessor conditionals.
 
-	  Moved inclusion of Log_Msg.h and OS.i to the end of the file in
-	  case some declarations or definitions found earlier in OS.h are
-	  ever needed in the future by these two files.
+          Moved inclusion of Log_Msg.h and OS.i to the end of the file in
+          case some declarations or definitions found earlier in OS.h are
+          ever needed in the future by these two files.
 
-	* ace/Trace.h:
-	* ace/Trace.cpp:
+        * ace/Trace.h:
+        * ace/Trace.cpp:
 
-	  Removed inclusion of Log_Msg.h from Trace.cpp and included OS.h
-	  in Trace.h.  OS.h is needed for the definition of ACE_Export.
+          Removed inclusion of Log_Msg.h from Trace.cpp and included OS.h
+          in Trace.h.  OS.h is needed for the definition of ACE_Export.
 
-	* ace/config-win32-borland.h:
-	* ace/config-win32-common.h:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-common.h:
 
-	  Removed ACE_HAS_BROKEN_IMPLICIT_CONST_CAST macro.  This macro
-	  isn't used anywhere in ACE or TAO.
+          Removed ACE_HAS_BROKEN_IMPLICIT_CONST_CAST macro.  This macro
+          isn't used anywhere in ACE or TAO.
 
-	* ace/Makefile:
+        * ace/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* bin/am_edit:
+        * bin/am_edit:
 
-	  This script is generates IDL source file targets and
-	  dependencies in Makefile.in files.  It is essentially the same
-	  script that the KDE developers use for their IDL sources except
-	  that it is has been customised for TAO_IDL generated sources.
-	  Thanks to Stephan Kulow <coolo@kde.org> for pointing out the
-	  availability of this script.
+          This script is generates IDL source file targets and
+          dependencies in Makefile.in files.  It is essentially the same
+          script that the KDE developers use for their IDL sources except
+          that it is has been customised for TAO_IDL generated sources.
+          Thanks to Stephan Kulow <coolo@kde.org> for pointing out the
+          availability of this script.
 
-	* bin/make_release:
+        * bin/make_release:
 
-	  Archive list should be concatenated instead replaced.  This list
-	  is currently only used by the MD5 checksum generation support.
+          Archive list should be concatenated instead replaced.  This list
+          is currently only used by the MD5 checksum generation support.
 
-	* bin/generate_html_windex:
+        * bin/generate_html_windex:
 
-	  Created this script to generate the acewindex.html file.  It
-	  generates the acewindex.html directly from the man pages instead
-	  of an intermediate windex file.  Some platforms don't have a
-	  "catman -w" equivalent command since the man database is
-	  generated automatically by the OS (e.g. Debian GNU/Linux).  This
-	  script allows the acewindex.html file to be generated on such
-	  platforms.  The windex file (not acewindex.html) isn't generated
-	  but this typically isn't a problem since it is not the ACE
-	  install system's responsibility to (re)generate a windex file at
-	  install time.  It is up to the sysadmin to do so. Thanks to
-	  Kevin Dalley <kevind@rahul.net> for motivating the creation of
-	  this script.
+          Created this script to generate the acewindex.html file.  It
+          generates the acewindex.html directly from the man pages instead
+          of an intermediate windex file.  Some platforms don't have a
+          "catman -w" equivalent command since the man database is
+          generated automatically by the OS (e.g. Debian GNU/Linux).  This
+          script allows the acewindex.html file to be generated on such
+          platforms.  The windex file (not acewindex.html) isn't generated
+          but this typically isn't a problem since it is not the ACE
+          install system's responsibility to (re)generate a windex file at
+          install time.  It is up to the sysadmin to do so. Thanks to
+          Kevin Dalley <kevind@rahul.net> for motivating the creation of
+          this script.
 
-	* bin/bootstrap:
+        * bin/bootstrap:
 
-	  The list of ROFF and HTML man pages is now automatically
-	  generated and inserted into the appropriate Makefile.am file in
-	  this script.  This allows the removal of the non-portable
-	  "$(shell ...)" expression from the Makefile.am files.  It also
-	  improves build performance in the man directories since the list
-	  is only evaluate at bootstrap time instead of each time the
-	  directory is built.
+          The list of ROFF and HTML man pages is now automatically
+          generated and inserted into the appropriate Makefile.am file in
+          this script.  This allows the removal of the non-portable
+          "$(shell ...)" expression from the Makefile.am files.  It also
+          improves build performance in the man directories since the list
+          is only evaluate at bootstrap time instead of each time the
+          directory is built.
 
-	* man/Makefile.am (acewindex.html):
+        * man/Makefile.am (acewindex.html):
 
-	  Use the newly created `generate_html_windex' script to create
-	  the acewindex.html file since not all platforms support "catman
-	  -w" windex file generation.
+          Use the newly created `generate_html_windex' script to create
+          the acewindex.html file since not all platforms support "catman
+          -w" windex file generation.
 
-	* man/html/Makefile.am (html_DATA):
-	* man/man3/Makefile.am (man_MANS):
+        * man/html/Makefile.am (html_DATA):
+        * man/man3/Makefile.am (man_MANS):
 
-	  Removed the commands that generate the man pages lists.  The
-	  `bootstrap' script now takes care of substituting what each of
-	  the Makefile.am variables should contain.
+          Removed the commands that generate the man pages lists.  The
+          `bootstrap' script now takes care of substituting what each of
+          the Makefile.am variables should contain.
 
-	* m4/acinclude.m4:
+        * m4/acinclude.m4:
 
-	  Improved ACE_USE_TEMP_FILE macro.  It now checks for the
-	  existence of a file with the same name as the temporary file in
-	  the current directory, in addition to the top-level source
-	  directory.
+          Improved ACE_USE_TEMP_FILE macro.  It now checks for the
+          existence of a file with the same name as the temporary file in
+          the current directory, in addition to the top-level source
+          directory.
 
-	  Moved the setrlimit and getrusage enum tests into Autoconf
-	  macros in this file.  The macros are ACE_CHECK_SETRLIMIT_ENUM
-	  and ACE_CHECK_GETRUSAGE_ENUM.
+          Moved the setrlimit and getrusage enum tests into Autoconf
+          macros in this file.  The macros are ACE_CHECK_SETRLIMIT_ENUM
+          and ACE_CHECK_GETRUSAGE_ENUM.
 
-	  Fixed AC_SYS_RESTARTABLE_SYSCALLS and added it to this file.
-	  The patched version compiles and runs, whereas the existing/old
-	  version doesn't even compile on some platforms.  The
-	  AC_SYS_RESTARTABLE_SYSCALLS test is broken in GNU Autoconf
-	  2.13.  I use this test to determine if the
-	  ACE_HAS_SIGNAL_SAFE_OS_CALLS macro should be defined for ACE.  I
-	  patched it so that it works, at least platforms that expect a
-	  signal handler that expects an int argument.
+          Fixed AC_SYS_RESTARTABLE_SYSCALLS and added it to this file.
+          The patched version compiles and runs, whereas the existing/old
+          version doesn't even compile on some platforms.  The
+          AC_SYS_RESTARTABLE_SYSCALLS test is broken in GNU Autoconf
+          2.13.  I use this test to determine if the
+          ACE_HAS_SIGNAL_SAFE_OS_CALLS macro should be defined for ACE.  I
+          patched it so that it works, at least platforms that expect a
+          signal handler that expects an int argument.
 
-	* m4/subsets.m4:
+        * m4/subsets.m4:
 
-	  Disable building of all subset libraries by default.
+          Disable building of all subset libraries by default.
 
 Sun Nov 28 09:45:36 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -413,54 +420,54 @@ Sun Nov 28 09:45:36 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Sun Nov 28 02:41:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Reactor_Notify_Test.cpp (run_test): Only print out the
-	  error message when the notification pipe is not disable.
-	  Otherwise, when the notification pipe gets disabled, the event
-	  loop depends purely on the OS scheduling policy to determine how
-	  many times to gets to run.  Since the Supplier_Task removes
-	  itself from the reactor, there could be no active event handler
-	  available in the reactor when the <handle_events> gets called if
-	  the <perform_notifications> task finishes before the event loop
-	  has a chance to finish its iterations.  Another way to solve
-	  this is to add a thr_yield after every notification but that
-	  seems to defeat the intention of the test.  Thanks to Ivan
-	  Murphy for reporting the false error output.
+        * tests/Reactor_Notify_Test.cpp (run_test): Only print out the
+          error message when the notification pipe is not disable.
+          Otherwise, when the notification pipe gets disabled, the event
+          loop depends purely on the OS scheduling policy to determine how
+          many times to gets to run.  Since the Supplier_Task removes
+          itself from the reactor, there could be no active event handler
+          available in the reactor when the <handle_events> gets called if
+          the <perform_notifications> task finishes before the event loop
+          has a chance to finish its iterations.  Another way to solve
+          this is to add a thr_yield after every notification but that
+          seems to defeat the intention of the test.  Thanks to Ivan
+          Murphy for reporting the false error output.
 
 Sat Nov 27 22:06:26 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.cpp: Defined ACE_ENDTHREADEX and ACE_BEGINTHREADEX to use
-	  ExitThread and BeginThread for WinCE 2.11 and above.  Thanks to
-	  Peter C. Chien <peter@newsol.com> for the tip.
+        * ace/OS.cpp: Defined ACE_ENDTHREADEX and ACE_BEGINTHREADEX to use
+          ExitThread and BeginThread for WinCE 2.11 and above.  Thanks to
+          Peter C. Chien <peter@newsol.com> for the tip.
 
-	* ace/ace_ce_dll.dsp: Reworked for WinCE 2.11.  More
-	  configurations are added and the distributed token related files
-	  are removed from the project.
+        * ace/ace_ce_dll.dsp: Reworked for WinCE 2.11.  More
+          configurations are added and the distributed token related files
+          are removed from the project.
 
-	* ace/OS.{h,cpp}: WinCE 2.11 and above does implement exit method
-	  so we don't need to provide our own for them.
+        * ace/OS.{h,cpp}: WinCE 2.11 and above does implement exit method
+          so we don't need to provide our own for them.
 
-	* ace/config-WinCE.h: Updated configuration settings for WinCE
-	  2.11.
+        * ace/config-WinCE.h: Updated configuration settings for WinCE
+          2.11.
 
-	* ace/Memory_Pool.{h,i}: Added the <base_addr> method for
-	  accessing the base address information of the memory pool.
+        * ace/Memory_Pool.{h,i}: Added the <base_addr> method for
+          accessing the base address information of the memory pool.
 
 Sat Nov 27 18:36:48 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Priority_Buffer_Test.cpp (consumer): Revised the test
-	  so that it doesn't bother to check the priority in the
- 	  ACE_ASSERT macro if we're sending a shutdown message.  Thanks to
- 	  Ivan Murphy and Darrell Brunsch for narrowing this down.
+        * tests/Priority_Buffer_Test.cpp (consumer): Revised the test
+          so that it doesn't bother to check the priority in the
+          ACE_ASSERT macro if we're sending a shutdown message.  Thanks to
+          Ivan Murphy and Darrell Brunsch for narrowing this down.
 
 Thu Nov 25 13:32:00 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* netsvcs/lib/Client_Logging_Handler.cpp (parse_args): Make sure
-	  to free() the host or logger key before calling strdup()!
+        * netsvcs/lib/Client_Logging_Handler.cpp (parse_args): Make sure
+          to free() the host or logger key before calling strdup()!
 
-	* netsvcs/lib/Logging_Strategy.cpp (parse_args): Fixed up this
-	  code so that we correctly allocated and deallocate filename_
- 	  using strdup()/free() to prevent weird memory problems.  Thanks
- 	  to Dmitry Ergy <dergy@websci.ru> for reporting this.
+        * netsvcs/lib/Logging_Strategy.cpp (parse_args): Fixed up this
+          code so that we correctly allocated and deallocate filename_
+          using strdup()/free() to prevent weird memory problems.  Thanks
+          to Dmitry Ergy <dergy@websci.ru> for reporting this.
 
 Sat Nov 27 15:01:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -468,8 +475,8 @@ Sat Nov 27 15:01:44 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 Sat Nov 27 14:59:27 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* bin/make_release:
-	  There was a non-scoped variable.
+        * bin/make_release:
+          There was a non-scoped variable.
 
 Thu Nov 25 13:24:37 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -580,22 +587,22 @@ Mon Nov 22 17:06:34 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Mon Nov 22 14:15:23 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-	* examples/Configuration/config_test.cpp: ACE-ified this example.
+        * examples/Configuration/config_test.cpp: ACE-ified this example.
 
-	* ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
+        * ace/OS.i: Replaced all the uses of ACE_Time_Value private methods
           within the overloaded global relational operator to use inline
           methods.  This change should work around bugs with MSVC++.
           Thanks to Alok Gupta <alokg@ssind.stpn.soft.net> for reporting
           this.
 
-	* ace/Service_Config.cpp (parse_args): Reverted the behavior
-	  of parse_args() so that it doesn't return an error when it runs
- 	  across an option that it doesn't recognize.  This is necessary
- 	  to support certain use-cases where the Service Configurator is
- 	  part of an application-specific configuration process.  We do,
- 	  however, print a warning message if ACE::debug() > 0.  Thanks to
- 	  Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
- 	  suggesting a fix.
+        * ace/Service_Config.cpp (parse_args): Reverted the behavior
+          of parse_args() so that it doesn't return an error when it runs
+          across an option that it doesn't recognize.  This is necessary
+          to support certain use-cases where the Service Configurator is
+          part of an application-specific configuration process.  We do,
+          however, print a warning message if ACE::debug() > 0.  Thanks to
+          Ivan Murphy <Ivan.Murphy@med.siemens.de> for reporting this and
+          suggesting a fix.
 
 Sat Nov 20 10:16:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
@@ -2027,8 +2034,8 @@ Tue Oct 12 08:53:52 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 Tue Oct 12 10:00:52 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Memory_Pool (ACE_Pagefile_Memory_Pool):Added a new memory
-	  pool that uses the Win32 page file.  Thanks to Dieter Quehl for
-	  contributing this.
+          pool that uses the Win32 page file.  Thanks to Dieter Quehl for
+          contributing this.
 
 Mon Oct 11 17:07:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
