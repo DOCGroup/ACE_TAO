@@ -109,6 +109,12 @@ public:
   // Visiting
   virtual int accept (be_visitor *visitor);
 
+  idl_bool has_constructor (void);
+  // accessor for protected member.
+
+  void has_constructor (idl_bool value);
+  // mutator for protected member.
+
   // boolean methods to test if code was already generated
   idl_bool cli_hdr_gen (void);
   idl_bool cli_stub_gen (void);
@@ -205,6 +211,9 @@ protected:
   SIZE_TYPE size_type_;
   // whether we are fixed or variable size (by default fixed)
 
+  idl_bool has_constructor_;
+  // attribute that helps a union determine whether a member 
+  // should be included by value or by reference.
 };
 
 #endif // if !defined

@@ -39,6 +39,7 @@ be_valuetype::be_valuetype (void)
 {
   this->size_type (be_decl::VARIABLE); // always the case
   (AST_Module::narrow_from_scope (this->defined_in ()))->set_has_nested_valuetype ();
+  this->has_constructor (I_TRUE);  // always the case
 }
 
 // constructor used to build the AST
@@ -55,6 +56,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n, AST_Interface **ih, long nih,
   // ---
   this->size_type (be_decl::VARIABLE); // always the case
   (AST_Module::narrow_from_scope (this->defined_in ()))->set_has_nested_valuetype ();
+  this->has_constructor (I_TRUE);  // always the case
 }
 
 be_valuetype::~be_valuetype (void)

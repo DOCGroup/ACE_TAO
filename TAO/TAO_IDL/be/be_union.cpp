@@ -32,6 +32,7 @@ ACE_RCSID(be, be_union, "$Id$")
 
 be_union::be_union (void)
 {
+  this->has_constructor (I_TRUE);  // always the case
 }
 
 be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
@@ -43,6 +44,7 @@ be_union::be_union (AST_ConcreteType *dt, UTL_ScopedName *n, UTL_StrList *p)
     default_index_ (-2)
 {
   this->default_value_.computed_ = -2;
+  this->has_constructor (I_TRUE);  // always the case
 }
 
 // compute total number of members
@@ -627,9 +629,6 @@ be_union::gen_out_impl (char *, char *)
 int
 be_union::compute_size_type (void)
 {
-// @@ (JP) I'm going to leave this block here for
-// a while until I'm sure the change is ok.
-#if 0
   UTL_ScopeActiveIterator *si;
   AST_Decl *d;
   be_decl *bd;
@@ -664,8 +663,6 @@ be_union::compute_size_type (void)
         } // end of while
       delete si; // free the iterator object
     }
-#endif /* 0 */
-  this->size_type (be_decl::VARIABLE);
   return 0;
 }
 

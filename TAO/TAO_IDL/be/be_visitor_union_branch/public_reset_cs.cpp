@@ -371,7 +371,8 @@ be_visitor_union_branch_public_reset_cs::visit_structure (be_structure *node)
                          ), -1);
     }
   os = this->ctx_->stream ();
-  if (bt->size_type () == be_type::VARIABLE)
+  if (bt->size_type () == be_type::VARIABLE
+      || node->has_constructor ())
     {
       *os << "delete this->u_." << ub->local_name ()
           << "_;" << be_nl
