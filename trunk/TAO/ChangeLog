@@ -1,32 +1,37 @@
-Tue Feb 24 15:15:15 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+Wed Feb 25 08:41:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
-	* orbsvcs\tests\AVStreams\Simple_Two_Stage\sender.cpp: 	
+        * orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
+          Fixed compile problem in msvc6 build.
+
+Tue Feb 24 15:15:15 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs\tests\AVStreams\Simple_Two_Stage\sender.cpp:
 
 	  Removed the debug level check for printing frames sent message.
 
-	* orbsvcs\tests\AVStreams\Simple_Two_Stage\receiver.cpp: 
+	* orbsvcs\tests\AVStreams\Simple_Two_Stage\receiver.cpp:
 
 	  Removed the debug level check for printing frames received
 	  message. Fixed the multiple definition compile error.
 
-	* orbsvcs\tests\AVStreams\Simple_Two_Stage\receiver.dsp: 
-	* orbsvcs\tests\AVStreams\Simple_Two_Stage\receiver.bor: 
-	* orbsvcs\tests\AVStreams\Simple_Two_Stage\AVStreams_Simple_Two_Stage.mpc: 
+	* orbsvcs\tests\AVStreams\Simple_Two_Stage\receiver.dsp:
+	* orbsvcs\tests\AVStreams\Simple_Two_Stage\receiver.bor:
+	* orbsvcs\tests\AVStreams\Simple_Two_Stage\AVStreams_Simple_Two_Stage.mpc:
 
 	  Added the source file for Receiver_Stats.
 
-	* orbsvcs\tests\AVStreams\Simple_Two_Stage\Makefile: 
+	* orbsvcs\tests\AVStreams\Simple_Two_Stage\Makefile:
 
 	  Fixed the "overriding commands for target" warnings by removing
 	  the inclusion of rules.bin.GNU.
 
-Tue Feb 24 19:46:41 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 19:46:41 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/FaultTolerance/RolyPoly/ORB_Initializer.cpp:
 	* orbsvcs/examples/FaultTolerance/RolyPoly/ReplicaController.cpp:
 	  Fixed compile problem in msvc6 build.
 
-Tue Feb 24 19:41:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 19:41:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Sequence_Latency/DSI/DSI.mpc:
 	  Removed after and IDL_Files from client project, just let MPC do its
@@ -37,7 +42,7 @@ Tue Feb 24 19:41:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 	  job. Instead of requiring ami and adding idlflags, just add amh as base
 	  project.
 
-Tue Feb 24 19:20:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 19:20:05 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/orbsvcs/RTCosScheduling/RTCosScheduling_ServerScheduler_i.h:
 	  Removed useless forward declaration which caused a warning in the
@@ -48,7 +53,7 @@ Tue Feb 24 19:20:05 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
           constructor. A TAO_PropertySet cannot be copied and this fixes
 	  link errors in the VC71 build.
 
-Tue Feb 24 19:15:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 19:15:19 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* performance-tests/Sequence_Latency/Single_Threaded/Single_Threaded.mpc:
 	  Removed empty IDL_Files and after from the client project. Let MPC
@@ -57,33 +62,33 @@ Tue Feb 24 19:15:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 	  caused problems in our static builds. Thanks to Chad Elliott with
 	  helping solve this.
 
-Tue Feb 24 19:07:17 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 19:07:17 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/tests/Trading/TT_Info.h:
 	  Added missing export macros to fix link errors in the VC71 build
 
-Tue Feb 24 18:43:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 18:43:01 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/LoadBalancing/LoadBalancing.mpc:
 	  This example needs native C++ exceptions
 
-Tue Feb 24 18:36:54 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 18:36:54 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/performance-tests/LoadBalancing/server.cpp:
 	* orbsvcs/performance-tests/LoadBalancing/ServerRequestInterceptor.cpp:
 	  Fixed wrong exception macro usage
 
-Tue Feb 24 18:32:06 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 18:32:06 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* orbsvcs/examples/FaultTolerance/RolyPoly/RolyPoly.mpc:
 	  The client project requires native C++ exceptions
 
-Tue Feb 24 17:46:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Feb 24 17:46:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/TAO-tutorials.html:
           Fixed broken link
 
-Mon Feb 23 19:08:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+Mon Feb 23 19:08:37 2004  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 
 	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Receiver_Stats.inl:
 
