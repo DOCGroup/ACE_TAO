@@ -207,8 +207,8 @@ main (int argc, char * argv[])
           if (SetQos(&options.qosOptions,
                      TRUE,
                      &qos))
-			ACE_DEBUG ((LM_DEBUG,
-					    "  QOS set before accept\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        "  QOS set before accept\n"));
         }
       else if (QOS_IOCTL_SET_QOS == options.qosOptions.qosIoctlSet)
         {
@@ -216,16 +216,16 @@ main (int argc, char * argv[])
           if (SetQos(&options.qosOptions,
                      TRUE,
                      &qos))
-              ACE_DEBUG ((LM_DEBUG,
-						  "  QOS set qos before accept - will be "
-						  "set again in FD_QOS\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        "  QOS set qos before accept - will be "
+                        "set again in FD_QOS\n"));
         }
     }
 
   else
-	  ACE_ERROR_RETURN ((LM_ERROR,
-						"Use the -q:default option to enable the QOS\n"),
-						-1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Use the -q:default option to enable the QOS\n"),
+                      -1);
 
   // Opening a new Multicast Datagram.
   ACE_SOCK_Dgram_Mcast dgram_mcast;
@@ -237,7 +237,7 @@ main (int argc, char * argv[])
   // socket.
 
   ACE_INET_Addr mult_addr (options.port,
-	                       options.szHostname);
+                           options.szHostname);
 
   // Fill the ACE_QoS_Params to be passed to the <ACE_OS::join_leaf>
   // through subscribe.
@@ -323,10 +323,10 @@ main (int argc, char * argv[])
   // code used under the hood is SIO_SET_QOS.
   if (ACE_OS::ioctl (dgram_mcast.get_handle (),           // Socket.
                      &ace_qos,                            // ACE_QoS.
-					 &dwBytes                             // bytes returned.
-					 ) == -1)                          
+                     &dwBytes                             // bytes returned.
+                     ) == -1)                          
   	
-	ACE_ERROR ((LM_ERROR,
+    ACE_ERROR ((LM_ERROR,
                 "Error in Qos set ACE_OS::ioctl() %d\n",
                 dwBytes));					   	
   else
@@ -371,23 +371,23 @@ FindServiceProvider(int iProtocol,
                                         &buffer_length);
   if (ret_val != -1)
     ACE_DEBUG ((LM_DEBUG,
-			    "enum_protocols () : should not have suceeded\n"));
+                "enum_protocols () : should not have suceeded\n"));
 
   else if (WSAENOBUFS != (dwErr = ACE_OS::set_errno_to_wsa_last_error ()))
     {
       // enum_protocols () failed for some reason not relating to buffer size 
       ACE_DEBUG ((LM_DEBUG,
-				  "enum_protocols () : failed for a reason other than "
-				  "inadequate buffer size : %d\n",
-				  ACE_OS::set_errno_to_wsa_last_error ()));
+                  "enum_protocols () : failed for a reason other than "
+                  "inadequate buffer size : %d\n",
+                  ACE_OS::set_errno_to_wsa_last_error ()));
     }
   else
     {
 
-	  ACE_New_Allocator ace_new_allocator;
+      ACE_New_Allocator ace_new_allocator;
 		
-	  // Uses ACE_NEW_RETURN under the hood.
-	  protocol_buffer = (ACE_Protocol_Info *) ace_new_allocator.malloc (buffer_length);
+      // Uses ACE_NEW_RETURN under the hood.
+      protocol_buffer = (ACE_Protocol_Info *) ace_new_allocator.malloc (buffer_length);
 
       if (protocol_buffer)
         {
@@ -399,15 +399,15 @@ FindServiceProvider(int iProtocol,
                                             &buffer_length);
           if (ret_val == -1)
             ACE_DEBUG ((LM_DEBUG,
-						"enum_protocols () : failed even after allocating"
-						" a big enough buffer : %d\n",
-						ACE_OS::set_errno_to_wsa_last_error ()));
+                        "enum_protocols () : failed even after allocating"
+                        " a big enough buffer : %d\n",
+                        ACE_OS::set_errno_to_wsa_last_error ()));
           else
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Size allocated for the Protocol Buffer = %d\n"
-						  "\nList of transport protocols "
-						  "returned by enum_protocols () : \n",
+                          "\nList of transport protocols "
+                          "returned by enum_protocols () : \n",
                           buffer_length));
 			  
               // Loop thru protocols, looking for a matching service
@@ -415,8 +415,8 @@ FindServiceProvider(int iProtocol,
               for (int i = 0; i < ret_val; i++)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-							  "  sp <%s>\n",
-							  protocol_buffer[i].szProtocol));
+                              "  sp <%s>\n",
+                              protocol_buffer[i].szProtocol));
 
                   if (AF_INET == protocol_buffer[i].iAddressFamily 
                       && iProtocol == protocol_buffer[i].iProtocol)
@@ -457,7 +457,7 @@ FindServiceProvider(int iProtocol,
                             }
                         }
                       else if ((XP1_QOS_SUPPORTED != (XP1_QOS_SUPPORTED 
-                                                     & protocol_buffer[i].dwServiceFlags1)))
+                                                      & protocol_buffer[i].dwServiceFlags1)))
                         {
                           *pProtocolInfo = protocol_buffer[i];
                           bProtocolFound = TRUE;
@@ -467,18 +467,18 @@ FindServiceProvider(int iProtocol,
 
                 } // for loop.
           
-		  } // ACE_OS::enum_protocols ().
+            } // ACE_OS::enum_protocols ().
       
-		  ace_new_allocator.free(protocol_buffer);
+          ace_new_allocator.free(protocol_buffer);
       
-	  } // protocol_buffer
+        } // protocol_buffer
 
     } // ACE_OS::enum_protocols ().
 
   if (bProtocolFound)
     ACE_DEBUG ((LM_DEBUG,
-			    "\n  Using service provider <%s>\n\n", 
-				pProtocolInfo->szProtocol));
+                "\n  Using service provider <%s>\n\n", 
+                pProtocolInfo->szProtocol));
 
   return bProtocolFound;
 
@@ -596,8 +596,8 @@ ValidOptions (char *argv[],
                   else
                     {
                       ACE_DEBUG ((LM_DEBUG,
-								  "Ignoring option <%s>\n", 
-								  argv[i]));
+                                  "Ignoring option <%s>\n", 
+                                  argv[i]));
                     }
                 }
               break;
@@ -615,8 +615,8 @@ ValidOptions (char *argv[],
 
             default:
               ACE_DEBUG ((LM_DEBUG,
-						  "  unknown options flag %s\n", 
-						  argv[i]));
+                          "  unknown options flag %s\n", 
+                          argv[i]));
               Usage (argv[0],
                      &default_options);
               return FALSE;
@@ -626,8 +626,8 @@ ValidOptions (char *argv[],
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-					  "  unknown option %s\n", 
-					  argv[i]));
+                      "  unknown option %s\n", 
+                      argv[i]));
           Usage (argv[0],
                  &default_options);
           return FALSE;
@@ -673,10 +673,10 @@ ValidOptions (char *argv[],
           pOptions->qosOptions.qosIoctlSet = QOS_IOCTL_SET_BEFORE;
         }
 
-              pOptions->qosOptions.bFineGrainErrorAvail = TRUE;
-              pOptions->qosOptions.bQosabilityIoctls = TRUE;
-              ACE_DEBUG ((LM_DEBUG,
-						  "running on NT\n"));
+      pOptions->qosOptions.bFineGrainErrorAvail = TRUE;
+      pOptions->qosOptions.bQosabilityIoctls = TRUE;
+      ACE_DEBUG ((LM_DEBUG,
+                  "running on NT\n"));
     }
 
   ACE_New_Allocator ace_new_allocator;
@@ -684,10 +684,10 @@ ValidOptions (char *argv[],
   pOptions->buf = (char *) ace_new_allocator.malloc (pOptions->nBufSize);
 
   if (pOptions->buf == 0)
-	return FALSE;
+    return FALSE;
   else
     {      
-	  ACE_OS::memset (pOptions->buf, pOptions->fillchar, pOptions->nBufSize);
+      ACE_OS::memset (pOptions->buf, pOptions->fillchar, pOptions->nBufSize);
       return TRUE;
     }
 }
@@ -697,101 +697,101 @@ void PrintOptions (OPTIONS *pOptions)
 {
 
   ACE_DEBUG ((LM_DEBUG,
-			  "Options\n"
-			  "  Protocol %d\n"
-			  "  Port %d\n",
-			  pOptions->spOptions.iProtocol,
-			  pOptions->port));
+              "Options\n"
+              "  Protocol %d\n"
+              "  Port %d\n",
+              pOptions->spOptions.iProtocol,
+              pOptions->port));
 
   if (pOptions->qosOptions.bReceiver)
     ACE_DEBUG ((LM_DEBUG,
-				"  Act as Receiver\n"));
+                "  Act as Receiver\n"));
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-				  "  Act as sender and send to %s\n"
-				  "  Sleep %d milliseconds between sends\n"
-				  "  Fill buffer with <%c>\n", 
-				  pOptions->szHostname,
-				  pOptions->dwSleep,
-				  pOptions->fillchar));
+                  "  Act as sender and send to %s\n"
+                  "  Sleep %d milliseconds between sends\n"
+                  "  Fill buffer with <%c>\n", 
+                  pOptions->szHostname,
+                  pOptions->dwSleep,
+                  pOptions->fillchar));
 
       if (pOptions->nRepeat)
         ACE_DEBUG ((LM_DEBUG,
-					"  Repeat sending the buffer %d times\n", 
-					pOptions->nRepeat));
+                    "  Repeat sending the buffer %d times\n", 
+                    pOptions->nRepeat));
       else
         ACE_DEBUG ((LM_DEBUG,
-					"  Repeat sending the buffer continually\n"));
+                    "  Repeat sending the buffer continually\n"));
 
     }
   ACE_DEBUG ((LM_DEBUG,
-			  "  Bufsize %d (1K increments)\n"
-			  "  Multicast is %s\n", 
-			  pOptions->nBufSize,
-			  (pOptions->spOptions.bMulticast ? "Enabled" : "Disabled")));
+              "  Bufsize %d (1K increments)\n"
+              "  Multicast is %s\n", 
+              pOptions->nBufSize,
+              (pOptions->spOptions.bMulticast ? "Enabled" : "Disabled")));
 
   if (pOptions->spOptions.bQos)
     {
       ACE_DEBUG ((LM_DEBUG,
-				  "  Qos template %s\n"
-				  "  Qos to be set ", 
-				  pOptions->qosOptions.szTemplate));
+                  "  Qos template %s\n"
+                  "  Qos to be set ", 
+                  pOptions->qosOptions.szTemplate));
       
-	  switch (pOptions->qosOptions.qosIoctlSet)
+      switch (pOptions->qosOptions.qosIoctlSet)
         {
         case QOS_IOCTL_SET_BEFORE: 
           ACE_DEBUG ((LM_DEBUG,
-					  "Before accept/connect/joinleaf\n"));
+                      "Before accept/connect/joinleaf\n"));
           break;
         case QOS_IOCTL_SET_AFTER:  
           ACE_DEBUG ((LM_DEBUG,
-					  "After accept/connect/joinleaf\n")); 
+                      "After accept/connect/joinleaf\n")); 
           break;
         case QOS_IOCTL_SET_DURING: 
           ACE_DEBUG ((LM_DEBUG,
-					  "During accept/connect/joinleaf\n"));
+                      "During accept/connect/joinleaf\n"));
           break;
         case QOS_IOCTL_SET_QOS: 
           if (pOptions->qosOptions.bReceiver)
             ACE_DEBUG ((LM_DEBUG,
-			            "During FD_QOS, implies QOS with no "
-						"signaling set before accept/connect "
-						"(eventually)\n"));
+                        "During FD_QOS, implies QOS with no "
+                        "signaling set before accept/connect "
+                        "(eventually)\n"));
           else
             {
               pOptions->qosOptions.qosIoctlSet = QOS_IOCTL_SET_BEFORE;
               ACE_DEBUG ((LM_DEBUG,
-				          "Before connect\n"));
+                          "Before connect\n"));
             }
           break;
         }
 
       if (pOptions->qosOptions.bConfirmResv )
         ACE_DEBUG ((LM_DEBUG,
-				    "  RESV confirmation to be requested\n"));
+                    "  RESV confirmation to be requested\n"));
 
       if (INVALID_SEND_PRIORITY != pOptions->qosOptions.SendPriority)
         ACE_DEBUG ((LM_DEBUG,
-				    "  Qos TC SendPriority to be set to %d\n", 
+                    "  Qos TC SendPriority to be set to %d\n", 
                     pOptions->qosOptions.SendPriority));
       if (!pOptions->qosOptions.bReceiver)
         {
           if (pOptions->qosOptions.bWaitToSend)
             ACE_DEBUG ((LM_DEBUG,
-						"  Wait for RESV before sending data\n"));
+                        "  Wait for RESV before sending data\n"));
           else
             ACE_DEBUG ((LM_DEBUG,
-						"  Do not wait for RESV to start sending data\n"));
+                        "  Do not wait for RESV to start sending data\n"));
         }
       else
         ACE_DEBUG ((LM_DEBUG,
-					"  Qos must be set during Accept = %s\n", 
-					(pOptions->qosOptions.bMustSetQosInAccept?"TRUE":"FALSE")));
+                    "  Qos must be set during Accept = %s\n", 
+                    (pOptions->qosOptions.bMustSetQosInAccept?"TRUE":"FALSE")));
            
-        ACE_DEBUG ((LM_DEBUG,
-					"  Query for QOS buffer size: %s\n\n",
-                    (pOptions->qosOptions.bQueryBufferSize?"TRUE":"FALSE")));
+      ACE_DEBUG ((LM_DEBUG,
+                  "  Query for QOS buffer size: %s\n\n",
+                  (pOptions->qosOptions.bQueryBufferSize?"TRUE":"FALSE")));
     }
   return;
 }
@@ -802,33 +802,33 @@ Usage (char *szProgramname,
        OPTIONS *pOptions)
 {
 
-	ACE_DEBUG ((LM_DEBUG,
-				"usage:\n  %s -?\n\n"
-				"  %s [-b:#] [-d:c] [-e:#] [-l:#] [-m:group] "
-				"[-n:host] [-s:#] [-u]\n\t[-q:template [-i:[a|b|d|q]]"
-				"[-c] [-rsvp-confirm] [-rsvp-wait]]\n\n",
-				"  -?\t\tDisplay this help\n\n"
-				"  -b:bufsize\tSize of send/recv buffer; in 1K increments (Def:%d)\n"
-				"  -d:c\t\tCharacter used to fill buffer (Def:%c)\n"
-				"  -e:port\tEndpoint number (port) to use (Def:%d)\n"
-				"  -l:loop\tLoop count for sending buffer (0==>continuous)\n"
-			    "  -m:group\tMulticast group (IP) to join (Def:%s)\n"
-				"  -n:host\tAct as the client and connect to 'host' (Def:%s)\n"
-				"  -p:protocol\tTCP or UDP (def:TCP)\n"
-				"  -s:#\t\tSleep # milliseconds between sends (def: 0)\n"
-				"  -q:template\tEnable QoS and use 'template' to specify the name (Def:%s)\n"
-				"  -c\t\tCycle enabling/disabling QOS on sending socket (Def: no cycling)\n"
-				"  -i:[a|b|d|q]\tSet Qos After, Before, During accept/connect, or during FD_QOS\n\t\t\t(def: Before)\n"
-				"  -rsvp-confirm\t\tRequest RESV confirmation be sent (Def: no confirmation)\n"
-				"  -rsvp-wait\t\tWait for RESV from receiver before sending data\n",
-				szProgramname,
-				szProgramname,
-		        pOptions->nBufSize,
-				pOptions->fillchar,
-				pOptions->port,
-				pOptions->nRepeat,
-				DEFAULT_MULTICASTGROUP,
-				pOptions->szHostname,
-				pOptions->qosOptions.szTemplate));
+  ACE_DEBUG ((LM_DEBUG,
+              "usage:\n  %s -?\n\n"
+              "  %s [-b:#] [-d:c] [-e:#] [-l:#] [-m:group] "
+              "[-n:host] [-s:#] [-u]\n\t[-q:template [-i:[a|b|d|q]]"
+              "[-c] [-rsvp-confirm] [-rsvp-wait]]\n\n",
+              "  -?\t\tDisplay this help\n\n"
+              "  -b:bufsize\tSize of send/recv buffer; in 1K increments (Def:%d)\n"
+              "  -d:c\t\tCharacter used to fill buffer (Def:%c)\n"
+              "  -e:port\tEndpoint number (port) to use (Def:%d)\n"
+              "  -l:loop\tLoop count for sending buffer (0==>continuous)\n"
+              "  -m:group\tMulticast group (IP) to join (Def:%s)\n"
+              "  -n:host\tAct as the client and connect to 'host' (Def:%s)\n"
+              "  -p:protocol\tTCP or UDP (def:TCP)\n"
+              "  -s:#\t\tSleep # milliseconds between sends (def: 0)\n"
+              "  -q:template\tEnable QoS and use 'template' to specify the name (Def:%s)\n"
+              "  -c\t\tCycle enabling/disabling QOS on sending socket (Def: no cycling)\n"
+              "  -i:[a|b|d|q]\tSet Qos After, Before, During accept/connect, or during FD_QOS\n\t\t\t(def: Before)\n"
+              "  -rsvp-confirm\t\tRequest RESV confirmation be sent (Def: no confirmation)\n"
+              "  -rsvp-wait\t\tWait for RESV from receiver before sending data\n",
+              szProgramname,
+              szProgramname,
+              pOptions->nBufSize,
+              pOptions->fillchar,
+              pOptions->port,
+              pOptions->nRepeat,
+              DEFAULT_MULTICASTGROUP,
+              pOptions->szHostname,
+              pOptions->qosOptions.szTemplate));
   return;
 }
