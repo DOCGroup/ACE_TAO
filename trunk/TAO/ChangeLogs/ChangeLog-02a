@@ -1,3 +1,25 @@
+Wed Mar 06 18:59:37 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* examples/AMI/FL_Callback/AMI_Peer.dsp:
+        * examples/AMI/FL_Callback/AMI_Progress.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/client.dsp:
+	* performance-tests/Latency/AMH/Single_Threaded/server.dsp:
+	* performance-tests/Latency/DII/client.dsp:
+	* performance-tests/Latency/DII/server.dsp:
+	* performance-tests/Latency/DSI/client.dsp:
+	* performance-tests/Latency/DSI/server.dsp:
+	* performance-tests/Latency/Deferred/client.dsp:
+	* performance-tests/Latency/Deferred/server.dsp:
+	* performance-tests/Latency/Single_Threaded/client.dsp:
+	* performance-tests/Latency/Single_Threaded/server.dsp:
+	* performance-tests/Latency/Thread_Per_Connection/client.dsp:
+	* performance-tests/Latency/Thread_Per_Connection/server.dsp:
+	* performance-tests/Latency/Thread_Pool/client.dsp:
+	* performance-tests/Latency/Thread_Pool/server.dsp:
+	* performance-tests/Throughput/client.dsp:
+	* performance-tests/Throughput/server.dsp:
+	  Added links to the new Messaging library.
+
 Wed Mar  6 15:09:17 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* tao/Messaging/diffs/Messaging.diff:
