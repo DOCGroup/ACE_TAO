@@ -1,3 +1,40 @@
+Mon Jan  7 15:16:10 2002  Ossama Othman  <ossama@uci.edu>
+
+	* ace/OS.h (INADDR_NONE):
+
+	  If the platform does not define this constant, then define it.
+
+	* ace/OS.cpp (inet_aton):
+
+	  For some reason we were emulating inet_aton() on all platforms
+	  using the now deprecated inet_addr() function.  Use the native
+	  inet_aton() function unless ACE_LACKS_INET_ATON is defined.
+
+	  Instead of performing a memcpy() of the IPv4 32-bit address into
+	  the in_addr data structure, simply assign it to the s_addr field
+	  of that data structure.  It's not clear why we didn't do this in
+	  the first place.
+
+	  (inet_ntoa):
+
+	  Fixed PSoS emulation of this method.  The result is supposed to
+	  be stored in a statically allocated string, not a dynamically
+	  allocated one.  Fixes a memory leak.  Note that this change
+	  makes the implementation non-reentrant.  However, inet_ntoa()
+	  was not designed to be reentrant to begin with.
+
+	* ace/OS.i (inet_addr):
+
+	  On error, inet_addr() is supposed to return INADDR_NONE.
+
+	  The return value should be a 32 bit unsigned integer, not a
+	  signed one.
+
+	* ace/config-win32-common.h:
+
+	  MS Windows does not support the inet_aton() function.  Define
+	  ACE_LACKS_INET_ATON.
+
 Mon Jan  7 12:20:26 2002  Ossama Othman  <ossama@uci.edu>
 
 	* bin/auto_run_tests.lst:
