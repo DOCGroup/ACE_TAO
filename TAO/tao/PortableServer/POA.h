@@ -619,10 +619,7 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
-  CORBA::Object_ptr invoke_key_to_object (const char *intf,
-                                          PortableServer::ObjectId
-                                          &user_id
-                                          ACE_ENV_ARG_DECL);
+  CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
                                    const char *type_id,
@@ -696,13 +693,15 @@ protected:
   void deactivate_map_entry (TAO_Active_Object_Map::Map_Entry *active_object_map_entry
                              ACE_ENV_ARG_DECL);
 
-  CORBA::Object_ptr create_reference_i (const char *intf
+  CORBA::Object_ptr create_reference_i (const char *intf,
+                                        CORBA::Short priority
                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
 
   CORBA::Object_ptr create_reference_with_id_i (const PortableServer::ObjectId &oid,
-                                                const char *intf
+                                                const char *intf,
+                                                CORBA::Short priority
                                                 ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::WrongPolicy));
@@ -935,6 +934,23 @@ protected:
   CORBA::ULong caller_key_to_object_;
 
   PortableServer::Servant servant_for_key_to_object_;
+
+  struct Key_To_Object_Params
+  {
+    PortableServer::ObjectId_var *system_id_;
+    const char *type_id_;
+    TAO_ServantBase *servant_;
+    CORBA::Boolean collocated_;
+    CORBA::Short priority_;
+
+    void set (PortableServer::ObjectId_var &system_id_,
+              const char *type_id_,
+              TAO_ServantBase *servant_,
+              CORBA::Boolean collocated_,
+              CORBA::Short priority_);
+  };
+
+  Key_To_Object_Params key_to_object_params_;
 };
 
 
