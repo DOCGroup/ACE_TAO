@@ -1,3 +1,9 @@
+Mon Oct  1 18:27:41 2001  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv1/Logging_Client.cpp: Remove the third (optional)
+          arg from getline(). Using a char literal without further
+          qualification causes confusion in Unicode builds.
+
 Mon Oct  1 14:44:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* ace/SSL/SSL_Context.cpp (ssl_library_init):
