@@ -136,7 +136,7 @@ TAO_Tagged_Components::set_known_component_i (
   TAO_InputCDR cdr (ACE_reinterpret_cast (const char*,
                                           component.component_data.get_buffer ()),
                     component.component_data.length ());
-  CORBA::Octet byte_order;
+  CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) != 0)
     return;
   cdr.reset_byte_order (ACE_static_cast(int,byte_order));
