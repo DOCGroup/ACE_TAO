@@ -1,3 +1,9 @@
+Sat Oct 21 02:02:05 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Server_Declared/README:
+
+	  Updated command-line options, description and expected output.
+
 Fri Oct 20 21:54:58 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/default_client.cpp: Fixed a cut and paste error.
