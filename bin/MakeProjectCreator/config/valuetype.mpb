@@ -1,4 +1,0 @@
-project {
-  after   += Valuetype
-  libs    += TAO_Valuetype
-}

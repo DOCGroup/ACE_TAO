@@ -1,3 +1,0 @@
-project : aceexe {
-  requires += wxwindows
-}
