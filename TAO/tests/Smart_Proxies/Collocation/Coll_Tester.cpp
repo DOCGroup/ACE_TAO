@@ -110,19 +110,19 @@ Collocation_Test::test_narrow (ACE_ENV_SINGLE_ARG_DECL)
                                   -1);
 
   Diamond::Top_var top =
-    Diamond::Top::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Top::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Left_var left =
-    Diamond::Left::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Left::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Right_var right =
-    Diamond::Right::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Right::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   Diamond::Buttom_var buttom =
-    Diamond::Buttom::_narrow (this->diamond_obj_ ACE_ENV_ARG_PARAMETER);
+    Diamond::Buttom::_narrow (this->diamond_obj_.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   CORBA::String_var str = top->shape (ACE_ENV_SINGLE_ARG_PARAMETER);
