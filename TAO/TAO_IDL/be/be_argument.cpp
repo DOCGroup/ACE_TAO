@@ -147,6 +147,12 @@ be_argument::gen_server_inline (void)
   return 0;
 }
 
+int
+be_argument::accept (be_visitor *visitor)
+{
+  return visitor->visit_argument (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_argument, AST_Argument, be_decl)
 IMPL_NARROW_FROM_DECL (be_argument)

@@ -54,7 +54,10 @@ BE_FILES	= \
 		be_factory \
 		be_sunsoft \
 		be_decl \
-		be_scope
+		be_scope \
+		be_visitor \
+		be_visitor_interface \
+		be_visitor_args \
 
 FILES	 = $(BE_FILES)
 

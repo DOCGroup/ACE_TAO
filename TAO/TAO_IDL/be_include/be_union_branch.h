@@ -59,6 +59,9 @@ public:
   virtual long tc_encap_len (void);
   // return the total byte length of ourselves represented as an encapsulation
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl);
   DEF_NARROW_FROM_DECL (be_union_branch);

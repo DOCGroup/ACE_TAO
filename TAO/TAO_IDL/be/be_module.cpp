@@ -205,6 +205,12 @@ be_module::compute_size_type (void)
   return 0;
 }
 
+// Visiting methods
+int be_module::accept (be_visitor *visitor)
+{
+  return visitor->visit_module (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS3 (be_module, AST_Module, be_scope, be_decl)
 IMPL_NARROW_FROM_DECL (be_module)

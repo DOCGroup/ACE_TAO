@@ -55,6 +55,9 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the operation
 
+  // Visiting
+  virtual int accept (be_visitor *visitor);
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_operation, AST_Operation, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_operation);

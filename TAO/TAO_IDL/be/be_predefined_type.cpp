@@ -432,6 +432,12 @@ be_predefined_type::compute_size_type (void)
   return 0;
 }
 
+// Visiting methods
+int be_predefined_type::accept (be_visitor *visitor)
+{
+  return visitor->visit_predefined_type (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_predefined_type, AST_PredefinedType, be_type)
 IMPL_NARROW_FROM_DECL (be_predefined_type)

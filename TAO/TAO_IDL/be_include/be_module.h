@@ -56,6 +56,9 @@ public:
   virtual int gen_server_inline (void);
   // Generates the server-side inlines for the module
 
+  // Visiting
+  virtual int accept (be_visitor* visitor);
+
   // Narrowing
   DEF_NARROW_METHODS3 (be_module, AST_Module, be_scope, be_decl);
   DEF_NARROW_FROM_DECL (be_module);

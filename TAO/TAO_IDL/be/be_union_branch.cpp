@@ -184,6 +184,12 @@ be_union_branch::tc_encap_len (void)
   return this->encap_len_;
 }
 
+int
+be_union_branch::accept (be_visitor *visitor)
+{
+  return visitor->visit_union_branch (this);
+}
+
 // Narrowing
 IMPL_NARROW_METHODS2 (be_union_branch, AST_UnionBranch, be_decl)
 IMPL_NARROW_FROM_DECL (be_union_branch)
