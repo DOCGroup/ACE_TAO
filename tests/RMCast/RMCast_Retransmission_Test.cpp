@@ -216,7 +216,7 @@ main (int, ACE_TCHAR *[])
 // ****************************************************************
 
 Tester::Tester (void)
-  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::gethrtime ()))
+  : seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0)))
   , sequence_number_generator_ (0)
 {
   // Initialize the stack...
@@ -404,7 +404,7 @@ Task::svc (void)
 Test_Proxy::Test_Proxy (void)
   : joined_ (0)
   , tester_ (0)
-  , seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::gethrtime ()))
+  , seed_ (ACE_static_cast(ACE_RANDR_TYPE,ACE_OS::time (0)))
 {
 }
 

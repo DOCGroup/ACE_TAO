@@ -1,3 +1,14 @@
+Tue Mar  6 10:13:03 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tests/RMCast/RMCast_Fragment_Test.cpp:
+	* tests/RMCast/RMCast_Membership_Test.cpp:
+	* tests/RMCast/RMCast_Reassembly_Test.cpp:
+	* tests/RMCast/RMCast_Reordering_Test.cpp:
+	* tests/RMCast/RMCast_Retransmission_Test.cpp:
+	  Use ACE_OS::time(0) to initialize the pseudo-random numbers
+	  seed.  It is good enough for our purposes, and it works on
+	  platforms without 64-bit integer support.
+
 Mon Mar  5 13:56:33 2001  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Synch_T.{h,i}: Further simplified the new ACE_Guard constructor.
