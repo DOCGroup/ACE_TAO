@@ -47,7 +47,7 @@ public:
                             ACE_Reactor_Mask close_mask);
 
 private:
-  int handled_;
+  size_t handled_;
   // Number of iterations handled.
 
   static int task_count_;
