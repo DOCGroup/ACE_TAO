@@ -199,7 +199,7 @@ TAO_DIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
 
   // Read the message into the  message block that we have created on
   // the stack.
-  ssize_t n = this->recv (message_block.rd_ptr (),
+  ssize_t n = this->recv (message_block.wr_ptr (),
                           message_block.space (),
                           max_wait_time);
 
@@ -207,6 +207,7 @@ TAO_DIOP_Transport::handle_input_i (TAO_Resume_Handle &rh,
   if (n <= 0)
     {
       if (n == -1)
+        // @@ Why not send_connection_closed_notifications() ?
         this->tms_->connection_closed ();
 
       return n;

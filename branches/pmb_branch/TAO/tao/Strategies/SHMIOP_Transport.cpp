@@ -144,6 +144,9 @@ TAO_SHMIOP_Transport::recv_i (char *buf,
 }
 
 
+#if 0
+// This no longer exists with the PMB-change flow.  Not sure how to deal with that,
+// so for now we ditch the method and see if things work.
 int
 TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
                                            ssize_t missing_data,
@@ -199,6 +202,7 @@ TAO_SHMIOP_Transport::consolidate_message (ACE_Message_Block &incoming,
   // process that
   return this->process_parsed_messages (&pqd, rh);
 }
+#endif
 
 
 int
