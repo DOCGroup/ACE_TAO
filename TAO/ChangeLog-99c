@@ -1,3 +1,11 @@
+Tue Jul  6 12:05:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Simple/bank/run_test.pl:
+	  Remove the IOR file before running the server
+
+	* examples/Simple/bank/Bank_Client_i.cpp:
+	  Fixed debugging messages.
+
 Tue Jul 06 11:36:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/EC_Multiple/Makefile: don't build EC_Multiple

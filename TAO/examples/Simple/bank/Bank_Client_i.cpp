@@ -51,24 +51,24 @@ Bank_Client_i::check_accounts (void )
   ACE_TRY_NEW_ENV
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\nTests for account with same name"));
+                  "\nTests for account with same name\n"));
       this->test_for_same_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\nTests for account with different names"));
+                  "\nTests for account with different names\n"));
       this->test_for_different_name (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\nTests for overdrafts"));
+                  "\nTests for overdrafts\n"));
       this->test_for_overdraft (ACE_TRY_ENV);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(\nFrom Bank_Client_i::check_accounts()"));
+                  "From Bank_Client_i::check_accounts()"));
     }
   ACE_ENDTRY;
   return 0;
