@@ -177,9 +177,23 @@ int
 be_visitor_typecode_defn::visit_type (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  int i;
 
   os->indent ();
+  // generate the typecode information here
+  *os << "static const CORBA::Long _oc_" << node->flatname () << "[] ="
+      << be_nl;
+  *os << "{" << be_idt << "\n";
+  // note that we just need the parameters here and hence we generate the
+  // encapsulation for the parameters
+  if (node->gen_encapsulation () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_typecode_defn::"
+                         "visit_type - "
+                         "codegen for typecode failed\n"), -1);
+    }
+  *os << be_uidt << "};" << be_nl;
+
   *os << "static CORBA::TypeCode _tc__tc_" << node->flatname ()
       << " (";
   switch (node->node_type ())

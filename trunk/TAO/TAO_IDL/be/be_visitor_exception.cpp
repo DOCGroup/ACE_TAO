@@ -410,24 +410,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "return new " << node->name () << ";" << be_uidt_nl;
       *os << "}\n\n";
 
-      os->indent ();
-      // generate the typecode information here
-      os->indent (); // start from current indentation level
-      *os << "static const CORBA::Long _oc_" << node->flatname () << "[] =" <<
-        be_nl;
-      *os << "{\n";
-      os->incr_indent (0);
-      // note that we just need the parameters here and hence we generate the
-      // encapsulation for the parameters
-      if (node->gen_encapsulation () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_structure::gen_client_stubs -"
-                             "codegen for scope failed\n"), -1);
-        }
-      os->decr_indent ();
-      *os << "};" << be_nl;
-
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
       // based on the command line options. This is still TO-DO

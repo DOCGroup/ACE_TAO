@@ -194,6 +194,56 @@ public:
 };
 
 // ***********************************************************************
+// Operation visitor for operation declaration inside the TIE class
+// ***********************************************************************
+
+class be_visitor_operation_tie_sh : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_operation_tie_sh
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the operaton inside a TIE class
+  //
+  //
+public:
+  be_visitor_operation_tie_sh (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_operation_tie_sh (void);
+  // destructor
+
+  virtual int visit_operation (be_operation *node);
+  // set the right context and make a visitor
+};
+
+// ***********************************************************************
+// Operation visitor for operation declaration inside the TIE class
+// ***********************************************************************
+
+class be_visitor_operation_tie_si : public be_visitor_scope
+{
+  //
+  // = TITLE
+  //   be_visitor_operation_tie_ss
+  //
+  // = DESCRIPTION
+  //   This is a concrete visitor to generate the operaton inside a TIE class
+  //
+  //
+public:
+  be_visitor_operation_tie_si (be_visitor_context *ctx);
+  // constructor
+
+  ~be_visitor_operation_tie_si (void);
+  // destructor
+
+  virtual int visit_operation (be_operation *node);
+  // set the right context and make a visitor
+};
+
+// ***********************************************************************
 // Operation visitor for return types in the signature of the operation
 // ***********************************************************************
 

@@ -58,11 +58,18 @@ release</A> of <A HREF="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</A>:
 <A NAME="idl"></A>IDL Compiler</H3>
 Point of contact: <A HREF="mailto:gokhale@cs.wustl.edu">Aniruddha Gokhale</A>
 
-<P>Current status: (As of April 23rd, 1998.)
+<P>Current status: (As of June 1st, 1998.)
 <UL>
 <LI>
-The &lt;&lt;= and >>= operators for user-defined types are now generated
-yet.</LI>
+Added support for TIE classes. If the interfaces are defined inside
+modules, then the TIE class and its code gets generated inside a
+conditional macro. For platforms that support namespaces, this macro
+will allow these TIE classes else they get commented out. The reason
+to do this is because nested templates have problems on most compilers.
+</LI>
+
+<LI>
+The &lt;&lt;= and >>= operators for user-defined types are now generated.</LI>
 
 <LI>
 Completely redesigned the IDL compiler using the Visitor patterns. Many
