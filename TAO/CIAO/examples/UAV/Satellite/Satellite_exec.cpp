@@ -2,6 +2,7 @@
 
 #include "CIAO_common.h"
 #include "Satellite_exec.h"
+#include "ace/High_Res_Timer.h"
 
 #define DISPLACEMENT 256
 
@@ -23,13 +24,18 @@ void
 MyImpl::Satellite_exec_i::alert (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  BBN_UAV::TargetLocated_var ev = new OBV_BBN_UAV::TargetLocated ();
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Satellite, pushing TargetLocated!\n")));
 
-  BBN_UAV::TargetLocated_var ev = new OBV_BBN_UAV::TargetLocated ();
-
+  
+  ACE_hrtime_t start = ACE_OS::gethrtime ();
   this->context_->push_target_located (ev.in ()
                                        ACE_ENV_ARG_PARAMETER);
+  ACE_hrtime_t end = ACE_OS::gethrtime ();
+
+  ACE_DEBUG ((LM_DEBUG, "RTT = %i\n", end - start));
 }
 
 // Operations from Components::SessionComponent
