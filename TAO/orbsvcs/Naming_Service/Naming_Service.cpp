@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/streams.h"
-#include "CosNaming_i.h"
+#include "orbsvcs/Naming/CosNaming_i.h"
 #include "orbsvcs/Naming/Ior_Multicast.h"
 
 int
