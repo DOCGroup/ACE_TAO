@@ -3309,7 +3309,7 @@ ACE::strnnew (const char *str, size_t n)
   // NUL-terminated).
 
   for (len = 0;
-       len < n && *t++ != L'\0';
+       len < n && *t++ != ACE_TEXT_WIDE'\0';
        len++)
     continue;
 
@@ -3331,7 +3331,7 @@ ACE::strnnew (const wchar_t *str, size_t n)
   // NUL-terminated).
 
   for (len = 0;
-       len < n && *t++ != L'\0';
+       len < n && *t++ != ACE_TEXT_WIDE'\0';
        len++)
     continue;
 
@@ -3356,7 +3356,7 @@ ACE::strend (const char *s)
 const wchar_t *
 ACE::strend (const wchar_t *s)
 {
-  while (*s++ != L'\0')
+  while (*s++ != ACE_TEXT_WIDE'\0')
     continue;
 
   return s;
