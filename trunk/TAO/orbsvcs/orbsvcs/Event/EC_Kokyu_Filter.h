@@ -43,7 +43,7 @@ class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Filter : public TAO_EC_Filter
 public:
   /**
    * Constructor.
-   * It assumes ownership of the <body>, makes a copy of the other
+   * It assumes ownership of the @a body, makes a copy of the other
    * parameters
    */
   TAO_EC_Kokyu_Filter (const char* name,

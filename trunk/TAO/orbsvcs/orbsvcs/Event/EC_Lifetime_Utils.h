@@ -42,13 +42,13 @@ public:
   /// through set_values ().
   TAO_EC_Object_Deactivator (void);
 
-  /// Constructor.  Set <id> which will be deactivated from <poa> in
+  /// Constructor.  Set @a id which will be deactivated from @ poa in
   /// the deactivator's destructor, unless deactivate () or
   /// disallow_deactivation () are invoked before the destruction.
   TAO_EC_Object_Deactivator (PortableServer::POA_ptr poa,
                              PortableServer::ObjectId const & id);
 
-  /// Destructor.  Deactivates <id_> from <poa_> if those values have
+  /// Destructor.  Deactivates id_ from poa_ if those values have
   /// been set, and neither deactivate() nor disallow_deactivation()
   /// have been invoked.
   ~TAO_EC_Object_Deactivator (void);
@@ -59,7 +59,7 @@ public:
   void set_values (PortableServer::POA_ptr poa,
                    PortableServer::ObjectId const & id);
 
-  /// Take on the state of <deactivator>. <deactivator> loses its state.
+  /// Take on the state of @a deactivator. @a deactivator loses its state.
   void set_values (TAO_EC_Object_Deactivator & deactivator);
 
   /// Explicitly enable deactivation to happen in destructor or when
@@ -187,7 +187,7 @@ public:
   /// Destructor.  If holding an Event Channel, destroy it.
   ~TAO_EC_Event_Channel_Holder (void);
 
-  /// Set the Event Channel to be destroyed in destructor to <ec_var>.  If
+  /// Set the Event Channel to be destroyed in destructor to @a ec_var.  If
   /// TAO_EC_Event_Channel_Holder already held an Event Channel prior
   /// to invocation of this method, that Event Channel is NOT destroyed.
   void init (RtecEventChannelAdmin::EventChannel_var ec_var);

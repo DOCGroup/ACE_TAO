@@ -138,8 +138,8 @@ protected:
 
   /**
    * An update_consumer() message arrived *while* we were doing a
-   * push() the modification is stored <pub_>, if multiple
-   * update_consumer messages arrive only the last one is executed.
+   * push() the modification is stored, if multiple update_consumer messages
+   * arrive only the last one is executed.
    */
   int update_posted_;
   RtecEventChannelAdmin::ConsumerQOS c_qos_;
