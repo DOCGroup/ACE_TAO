@@ -193,14 +193,14 @@ LINK32=link.exe
 # PROP BASE Target_Dir "Timer_Queue_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Timer_Queue_Test\Alpha Release"
-# PROP Intermediate_Dir "Timer_Queue_Test\Alpha Release"
+# PROP Output_Dir "DLL/Release"
+# PROP Intermediate_Dir "DLL/Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Timer_Queue_Test"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /O2 /Ob2 /I "..\\" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /O2 /Ob2 /I "..\\" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /Zi /O2 /Ob2 /I "..\\" /D "WIN32" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -224,14 +224,14 @@ LINK32=link.exe
 # PROP BASE Target_Dir "Timer_Queue_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Timer_Queue_Test\Alpha Unicode Debug"
-# PROP Intermediate_Dir "Timer_Queue_Test\Alpha Unicode Debug"
+# PROP Output_Dir "DLL/Unicode_Debug"
+# PROP Intermediate_Dir "DLL/Unicode_Debug"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Timer_Queue_Test"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "UNICODE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "UNICODE" /FD /c
+# ADD CPP /nologo /MDd /Gt0 /W3 /GX /Zi /Od /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "UNICODE" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -253,14 +253,14 @@ LINK32=link.exe
 # PROP BASE Target_Dir "Timer_Queue_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "Timer_Queue_Test\Alpha Unicode Release"
-# PROP Intermediate_Dir "Timer_Queue_Test\Alpha Unicode Release"
+# PROP Output_Dir "DLL/Unicode_Release"
+# PROP Intermediate_Dir "DLL/Unicode_Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "Timer_Queue_Test"
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /O2 /Ob2 /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "UNICODE" /FD /c
 # SUBTRACT BASE CPP /YX
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /O2 /Ob2 /I "..\\" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "UNICODE" /FD /c
+# ADD CPP /nologo /MD /Gt0 /W3 /GX /Zi /O2 /Ob2 /I "..\\" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "UNICODE" /FD /c
 # SUBTRACT CPP /YX
 RSC=rc.exe
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
