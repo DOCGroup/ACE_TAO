@@ -9,9 +9,11 @@ You can either run the server in the background in the same window as
 the client or open a separate window for the client and server.
 
 The client and server can also make use of the Naming Service.
-To use the NamingService you need to start the 
-	TAO/orbsvcs/Naming_Service/Naming_Service
-before starting the server and client.
+The cubit server now has its own NamingServer implementation and hence
+you don't have to start the NamingService before starting the client
+and server.
+	You just have to use the -s flags on both the server and
+client to use the naming service.
 
 server:
 -------
@@ -44,8 +46,17 @@ Irrespective of the -o option the IOR will be outputted on the screen.
 client:
 -------
 
-% client [-d] [-s] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations> 
+% client [-d] [-s] [-x] <-f cubit_factory_ior_file> <-k cubit_factory_ior>  -n <iterations> 
 
+Options:
+-------
+	d	Debug flag
+	s	Use the Naming Service
+	x 	Tells the server to shutdown.
+	f	Reads the cubit factory ior from the file
+	k	Reads the cubit factory ior from commandline
+	n	no. of iterations
+	
 	There are 3 ways of giving the CubitFactory IOR to the client:
 
 	1. From a file using the -f option. (This file can be produced using 
@@ -55,8 +66,8 @@ client:
 	
 	3. Get it from the Naming Service using the -s option.
 
-Sample Run:
-----------
+Sample Run- Using files to communicate IOR:
+------------------------------------------
 
 1. Start the server.
 
@@ -87,3 +98,14 @@ Factory received OK
 .
 .
 .
+
+Sample Run-Using Naming Service:
+--------------------------------
+1. Start the server
+	%server -ORBport 19999 -s
+
+2. Start the client
+	%client -ORBport 19998 -s
+		if you don't want the server to shutdown.
+	%client -ORBport 19998 -s -x
+		if you want to shutdown the server after this request.
