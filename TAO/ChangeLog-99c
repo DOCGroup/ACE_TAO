@@ -1,5 +1,10 @@
-Sun Jul  4 13:00:38 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
-  
+Sun Jul  4 13:00:38 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu> 
+
+	* Transport_Mux_Strategy.cpp
+	* Transport_Mux_Strategy.h
+	* default_client.cpp: Implemented Muxed TMS. But have nt got to
+	  working yet. It is just there not burting anything.  
+
 	* tao/Asynch_Invocation.cpp
 	* tao/Asynch_Invocation.h
 	* tao/Asynch_Invocation.i
