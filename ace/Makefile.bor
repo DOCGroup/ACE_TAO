@@ -98,6 +98,8 @@ OBJFILES = \
         $(OBJDIR)\OS_String.obj \
         $(OBJDIR)\OS_TLI.obj \
         $(OBJDIR)\Thread_Hook.obj \
+        $(OBJDIR)\Base_Thread_Adapter.obj \
+        $(OBJDIR)\OS_Thread_Adapter.obj \
         $(OBJDIR)\Thread_Adapter.obj \
         $(OBJDIR)\Thread_Exit.obj \
         $(OBJDIR)\Thread_Control.obj \

@@ -23,9 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS.h"
+#include "ace/OS_Export.h"
 
-class ACE_Export ACE_Thread_Hook
+class ACE_OS_Export ACE_Thread_Hook
 {
   // = TITLE
   //     This class makes it possible to provide user-defined "start"

@@ -1,92 +1,49 @@
 // $Id$
 
-#include "ace/Thread_Adapter.h"
-#include "ace/OS.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Thread_Exit.h"
+#include "ace/OS_Thread_Adapter.h"
 #include "ace/Thread_Hook.h"
+#include "ace/OS.h"
 
-ACE_RCSID(ace, Thread_Adapter, "$Id$")
+ACE_RCSID(ace, OS_Thread_Adapter, "$Id$")
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/Thread_Adapter.inl"
+# include "ace/OS_Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
-ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
-                                        void *arg,
-                                        ACE_THR_C_FUNC entry_point,
-                                        ACE_Thread_Manager *tm,
-                                        ACE_Thread_Descriptor *td
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-                                        , ACE_SEH_EXCEPT_HANDLER selector,
-                                        ACE_SEH_EXCEPT_HANDLER handler
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                                        )
-  : ACE_Base_Thread_Adapter (
-        user_func
-        , arg
-        , entry_point
-        , td
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
-        , selector
-        , handler
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-        )
-  , thr_mgr_ (tm)
+ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
+     ACE_THR_FUNC user_func
+     , void *arg
+     , ACE_THR_C_FUNC entry_point
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+     , ACE_SEH_EXCEPT_HANDLER selector
+     , ACE_SEH_EXCEPT_HANDLER handler
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+     )
+  : ACE_Base_Thread_Adapter (user_func, arg, entry_point
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+                             , 0
+                             , selector
+                             , handler
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                             )
 {
-  ACE_OS_TRACE ("Ace_Thread_Adapter::Ace_Thread_Adapter");
 }
 
-ACE_Thread_Adapter::~ACE_Thread_Adapter (void)
+ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter (void)
 {
 }
 
 void *
-ACE_Thread_Adapter::invoke (void)
+ACE_OS_Thread_Adapter::invoke (void)
 {
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.
   this->inherit_log_msg ();
 
-#if !defined(ACE_USE_THREAD_MANAGER_ADAPTER)
-  // NOTE: this preprocessor directive should match the one in
-  // above ACE_Thread_Exit::instance ().  With the Xavier Pthreads
-  // package, the exit_hook in TSS causes a seg fault.  So, this
-  // works around that by creating exit_hook on the stack.
-# if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)
-  // Obtain our thread-specific exit hook and make sure that it
-  // knows how to clean us up!  Note that we never use this
-  // pointer directly (it's stored in thread-specific storage), so
-  // it's ok to dereference it here and only store it as a
-  // reference.
-  if (this->thr_mgr () != 0)
-    {
-      ACE_Thread_Exit &exit_hook = *ACE_Thread_Exit::instance ();
-      // Keep track of the <Thread_Manager> that's associated with this
-      // <exit_hook>.
-      exit_hook.thr_mgr (this->thr_mgr ());
-    }
-# else
-  // Without TSS, create an <ACE_Thread_Exit> instance.  When this
-  // function returns, its destructor will be called because the
-  // object goes out of scope.  The drawback with this appraoch is
-  // that the destructor _won't_ get called if <thr_exit> is
-  // called.  So, threads shouldn't exit that way.  Instead, they
-  // should return from <svc>.
-  ACE_Thread_Exit exit_hook;
-  exit_hook.thr_mgr (this->thr_mgr ());
-# endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
-
-#endif /* ! ACE_USE_THREAD_MANAGER_ADAPTER */
-
   // Extract the arguments.
-  ACE_THR_FUNC_INTERNAL func = ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL,
-                                                     this->user_func_);
+  ACE_THR_FUNC_INTERNAL func =
+    ACE_reinterpret_cast (ACE_THR_FUNC_INTERNAL, this->user_func_);
   void *arg = this->arg_;
-
-#if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-  ACE_OS_Thread_Descriptor *thr_desc = this->thr_desc_;
-#endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
@@ -170,12 +127,7 @@ ACE_Thread_Adapter::invoke (void)
 #endif /* 0 */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-# if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-      int using_afx = -1;
-      if (thr_desc)
-        using_afx = ACE_BIT_ENABLED (thr_desc->flags (), THR_USE_AFX);
-# endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
-          // Call TSS destructors.
+      // Call TSS destructors.
       ACE_OS::cleanup_tss (0 /* not main thread */);
 
 # if defined (ACE_WIN32)
@@ -184,28 +136,17 @@ ACE_Thread_Adapter::invoke (void)
       // AfxEndThread so don't exit the thread now if we are running
       // an MFC thread.
 #   if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-      if (using_afx != -1)
-        {
-          if (using_afx)
-            ::AfxEndThread ((DWORD) status);
-          else
-            ACE_ENDTHREADEX (status);
-        }
+      // Not spawned by ACE_Thread_Manager, use the old buggy
+      // version.  You should seriously consider using
+      // ACE_Thread_Manager to spawn threads.  The following code
+      // is know to cause some problem.
+      CWinThread *pThread = ::AfxGetThread ();
+
+      if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
+        ACE_ENDTHREADEX (status);
       else
-        {
-          // Not spawned by ACE_Thread_Manager, use the old buggy
-          // version.  You should seriously consider using
-          // ACE_Thread_Manager to spawn threads.  The following code
-          // is know to cause some problem.
-          CWinThread *pThread = ::AfxGetThread ();
-
-          if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-            ACE_ENDTHREADEX (status);
-          else
-            ::AfxEndThread ((DWORD)status);
-        }
+        ::AfxEndThread ((DWORD)status);
 #   else
-
       ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 # endif /* ACE_WIN32 */

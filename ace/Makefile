@@ -15,10 +15,9 @@ OS_FILES = \
   OS_Memory \
   OS_String \
   OS_TLI \
+  Base_Thread_Adapter \
+  OS_Thread_Adapter \
   Thread_Hook \
-  Thread_Adapter \
-  Thread_Exit \
-  Thread_Control \
   Sched_Params
 UTILS_FILES = \
   ACE \
@@ -63,6 +62,9 @@ THREADS_FILES = \
   Synch_Options \
   Thread \
   Thread_Manager \
+  Thread_Adapter \
+  Thread_Exit \
+  Thread_Control \
   Token
 DEMUX_FILES = \
   Event_Handler \
@@ -579,7 +581,8 @@ endif # GHS
  OS.i \
  Template_Instantiations.cpp
 
-.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp OS.h \
+.obj/OS.o .obj/OS.so .shobj/OS.o .shobj/OS.so: OS.cpp \
+ OS.h \
  pre.h \
  config-all.h \
  config.h \
@@ -608,11 +611,10 @@ endif # GHS
  OS.i \
  Sched_Params.h \
  Sched_Params.i \
- Thread_Adapter.h \
- Thread_Adapter.inl \
- Thread_Exit.h \
- Thread_Control.h \
- Thread_Control.inl
+ OS_Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ OS_Thread_Adapter.inl
 
 .obj/OS_Dirent.o .obj/OS_Dirent.so .shobj/OS_Dirent.o .shobj/OS_Dirent.so: OS_Dirent.cpp \
  OS_Dirent.h \
@@ -682,6 +684,71 @@ endif # GHS
  OS_Export.h \
  OS_TLI.inl
 
+.obj/Base_Thread_Adapter.o .obj/Base_Thread_Adapter.so .shobj/Base_Thread_Adapter.o .shobj/Base_Thread_Adapter.so: Base_Thread_Adapter.cpp \
+ Base_Thread_Adapter.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS_Export.h \
+ Base_Thread_Adapter.inl \
+ OS.h \
+ OS_Dirent.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i
+
+.obj/OS_Thread_Adapter.o .obj/OS_Thread_Adapter.so .shobj/OS_Thread_Adapter.o .shobj/OS_Thread_Adapter.so: OS_Thread_Adapter.cpp \
+ OS_Thread_Adapter.h \
+ pre.h \
+ Base_Thread_Adapter.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS_Export.h \
+ Base_Thread_Adapter.inl \
+ OS_Thread_Adapter.inl \
+ Thread_Hook.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i
+
 .obj/Thread_Hook.o .obj/Thread_Hook.so .shobj/Thread_Hook.o .shobj/Thread_Hook.so: Thread_Hook.cpp \
  Thread_Hook.h \
  pre.h \
@@ -710,296 +777,7 @@ endif # GHS
  Basic_Types.h \
  Basic_Types.i \
  Trace.h \
- OS.i \
- Thread_Manager.h \
- Thread.h \
- ACE.h \
- ACE.i \
- Thread.i \
- Thread_Adapter.h \
- Thread_Adapter.inl \
- Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Synch.i \
- Synch_T.h \
- Event_Handler.h \
- Event_Handler.i \
- Synch_T.i \
- Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- Containers_T.i \
- Containers_T.cpp \
- Malloc.h \
- Based_Pointer_T.h \
- Based_Pointer_T.i \
- Based_Pointer_T.cpp \
- Based_Pointer_Repository.h \
- Singleton.h \
- Singleton.i \
- Singleton.cpp \
- Object_Manager.h \
- Object_Manager.i \
- Managed_Object.h \
- Managed_Object.i \
- Managed_Object.cpp \
- Malloc.i \
- Malloc_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- Memory_Pool.i \
- Thread_Manager.i
-
-.obj/Thread_Adapter.o .obj/Thread_Adapter.so .shobj/Thread_Adapter.o .shobj/Thread_Adapter.so: Thread_Adapter.cpp \
- Thread_Adapter.h \
- pre.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- OS.h \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Thread_Adapter.inl \
- Thread_Manager.h \
- Thread.h \
- ACE.h \
- ACE.i \
- Thread.i \
- Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Synch.i \
- Synch_T.h \
- Event_Handler.h \
- Event_Handler.i \
- Synch_T.i \
- Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- Containers_T.i \
- Containers_T.cpp \
- Malloc.h \
- Based_Pointer_T.h \
- Based_Pointer_T.i \
- Based_Pointer_T.cpp \
- Based_Pointer_Repository.h \
- Singleton.h \
- Singleton.i \
- Singleton.cpp \
- Object_Manager.h \
- Object_Manager.i \
- Managed_Object.h \
- Managed_Object.i \
- Managed_Object.cpp \
- Malloc.i \
- Malloc_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- Memory_Pool.i \
- Thread_Manager.i \
- Thread_Exit.h \
- Thread_Control.h \
- Thread_Control.inl \
- Thread_Hook.h
-
-.obj/Thread_Exit.o .obj/Thread_Exit.so .shobj/Thread_Exit.o .shobj/Thread_Exit.so: Thread_Exit.cpp \
- Thread_Exit.h \
- pre.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- OS.h \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Thread_Control.h \
- Thread_Control.inl \
- Synch.h \
- ACE.h \
- ACE.i \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Synch.i \
- Synch_T.h \
- Event_Handler.h \
- Event_Handler.i \
- Synch_T.i \
- Thread.h \
- Thread.i \
- Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Managed_Object.h \
- Object_Manager.h \
- Object_Manager.i \
- Managed_Object.i \
- Managed_Object.cpp
-
-.obj/Thread_Control.o .obj/Thread_Control.so .shobj/Thread_Control.o .shobj/Thread_Control.so: Thread_Control.cpp \
- Thread_Control.h \
- pre.h \
- config-all.h \
- config.h \
- config-linux-lxpthreads.h \
- config-linux.h \
- config-linux-common.h \
- config-g++-common.h \
- post.h \
- ACE_export.h \
- svc_export.h \
- ace_wchar.h \
- OS.h \
- OS_Dirent.h \
- OS_Export.h \
- OS_Dirent.inl \
- OS_String.h \
- OS_String.inl \
- OS_Memory.h \
- OS_Memory.inl \
- OS_TLI.h \
- OS_TLI.inl \
- Min_Max.h \
- streams.h \
- Basic_Types.h \
- Basic_Types.i \
- Trace.h \
- OS.i \
- Thread_Control.inl \
- Thread_Manager.h \
- Thread.h \
- ACE.h \
- ACE.i \
- Thread.i \
- Thread_Adapter.h \
- Thread_Adapter.inl \
- Synch.h \
- SV_Semaphore_Complex.h \
- SV_Semaphore_Simple.h \
- SV_Semaphore_Simple.i \
- SV_Semaphore_Complex.i \
- Synch.i \
- Synch_T.h \
- Event_Handler.h \
- Event_Handler.i \
- Synch_T.i \
- Atomic_Op.i \
- Synch_T.cpp \
- Log_Msg.h \
- Log_Record.h \
- Log_Priority.h \
- Log_Record.i \
- Containers.h \
- Malloc_Base.h \
- Containers.i \
- Containers_T.h \
- Containers_T.i \
- Containers_T.cpp \
- Malloc.h \
- Based_Pointer_T.h \
- Based_Pointer_T.i \
- Based_Pointer_T.cpp \
- Based_Pointer_Repository.h \
- Singleton.h \
- Singleton.i \
- Singleton.cpp \
- Object_Manager.h \
- Object_Manager.i \
- Managed_Object.h \
- Managed_Object.i \
- Managed_Object.cpp \
- Malloc.i \
- Malloc_T.h \
- Free_List.h \
- Free_List.i \
- Free_List.cpp \
- Malloc_T.i \
- Malloc_T.cpp \
- Memory_Pool.h \
- Signal.h \
- Signal.i \
- Mem_Map.h \
- Mem_Map.i \
- Memory_Pool.i \
- Thread_Manager.i
+ OS.i
 
 .obj/Sched_Params.o .obj/Sched_Params.so .shobj/Sched_Params.o .shobj/Sched_Params.so: Sched_Params.cpp \
  Sched_Params.h \
@@ -1032,7 +810,8 @@ endif # GHS
  OS.i \
  Sched_Params.i
 
-.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp ACE.h \
+.obj/ACE.o .obj/ACE.so .shobj/ACE.o .shobj/ACE.so: ACE.cpp \
+ ACE.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -1101,6 +880,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1174,6 +957,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1324,6 +1111,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1391,6 +1182,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1519,6 +1314,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1601,6 +1400,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1732,6 +1535,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1875,6 +1682,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -1990,6 +1801,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2092,6 +1907,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2295,6 +2114,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2403,6 +2226,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2472,6 +2299,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2624,6 +2455,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2717,6 +2552,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2804,6 +2643,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2903,6 +2746,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -2976,6 +2823,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3064,6 +2915,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3170,6 +3025,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3218,9 +3077,11 @@ endif # GHS
  ACE.i \
  Thread_Manager.h \
  Thread.h \
- Thread.i \
  Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
+ Thread.i \
  Synch.h \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -3373,6 +3234,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3494,6 +3359,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3566,8 +3435,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -3653,6 +3520,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3719,6 +3590,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3805,6 +3680,10 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Synch_T.h \
  Event_Handler.h \
@@ -3887,6 +3766,10 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i
 
 .obj/Thread_Manager.o .obj/Thread_Manager.so .shobj/Thread_Manager.o .shobj/Thread_Manager.so: Thread_Manager.cpp \
@@ -3930,6 +3813,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -3938,8 +3825,6 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -3982,6 +3867,247 @@ endif # GHS
  Thread_Control.h \
  Thread_Control.inl
 
+.obj/Thread_Adapter.o .obj/Thread_Adapter.so .shobj/Thread_Adapter.o .shobj/Thread_Adapter.so: Thread_Adapter.cpp \
+ Thread_Adapter.h \
+ pre.h \
+ Base_Thread_Adapter.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS_Export.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ OS.h \
+ OS_Dirent.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Thread_Manager.h \
+ Thread.h \
+ ACE.h \
+ ACE.i \
+ Thread.i \
+ Synch.h \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Synch.i \
+ Synch_T.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Synch_T.i \
+ Atomic_Op.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ Containers.h \
+ Malloc_Base.h \
+ Containers.i \
+ Containers_T.h \
+ Containers_T.i \
+ Containers_T.cpp \
+ Malloc.h \
+ Based_Pointer_T.h \
+ Based_Pointer_T.i \
+ Based_Pointer_T.cpp \
+ Based_Pointer_Repository.h \
+ Singleton.h \
+ Singleton.i \
+ Singleton.cpp \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.h \
+ Managed_Object.i \
+ Managed_Object.cpp \
+ Malloc.i \
+ Malloc_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ Memory_Pool.i \
+ Thread_Manager.i \
+ Thread_Exit.h \
+ Thread_Control.h \
+ Thread_Control.inl \
+ Thread_Hook.h
+
+.obj/Thread_Exit.o .obj/Thread_Exit.so .shobj/Thread_Exit.o .shobj/Thread_Exit.so: Thread_Exit.cpp \
+ Thread_Exit.h \
+ pre.h \
+ config-all.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Thread_Control.h \
+ Thread_Control.inl \
+ Synch.h \
+ ACE.h \
+ ACE.i \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Synch.i \
+ Synch_T.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Synch_T.i \
+ Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Atomic_Op.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ Managed_Object.h \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.i \
+ Managed_Object.cpp
+
+.obj/Thread_Control.o .obj/Thread_Control.so .shobj/Thread_Control.o .shobj/Thread_Control.so: Thread_Control.cpp \
+ config-all.h \
+ pre.h \
+ config.h \
+ config-linux-lxpthreads.h \
+ config-linux.h \
+ config-linux-common.h \
+ config-g++-common.h \
+ post.h \
+ ACE_export.h \
+ svc_export.h \
+ ace_wchar.h \
+ Thread_Control.h \
+ OS.h \
+ OS_Dirent.h \
+ OS_Export.h \
+ OS_Dirent.inl \
+ OS_String.h \
+ OS_String.inl \
+ OS_Memory.h \
+ OS_Memory.inl \
+ OS_TLI.h \
+ OS_TLI.inl \
+ Min_Max.h \
+ streams.h \
+ Basic_Types.h \
+ Basic_Types.i \
+ Trace.h \
+ OS.i \
+ Thread_Control.inl \
+ Thread_Manager.h \
+ Thread.h \
+ ACE.h \
+ ACE.i \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
+ Thread.i \
+ Synch.h \
+ SV_Semaphore_Complex.h \
+ SV_Semaphore_Simple.h \
+ SV_Semaphore_Simple.i \
+ SV_Semaphore_Complex.i \
+ Synch.i \
+ Synch_T.h \
+ Event_Handler.h \
+ Event_Handler.i \
+ Synch_T.i \
+ Atomic_Op.i \
+ Synch_T.cpp \
+ Log_Msg.h \
+ Log_Record.h \
+ Log_Priority.h \
+ Log_Record.i \
+ Containers.h \
+ Malloc_Base.h \
+ Containers.i \
+ Containers_T.h \
+ Containers_T.i \
+ Containers_T.cpp \
+ Malloc.h \
+ Based_Pointer_T.h \
+ Based_Pointer_T.i \
+ Based_Pointer_T.cpp \
+ Based_Pointer_Repository.h \
+ Singleton.h \
+ Singleton.i \
+ Singleton.cpp \
+ Object_Manager.h \
+ Object_Manager.i \
+ Managed_Object.h \
+ Managed_Object.i \
+ Managed_Object.cpp \
+ Malloc.i \
+ Malloc_T.h \
+ Free_List.h \
+ Free_List.i \
+ Free_List.cpp \
+ Malloc_T.i \
+ Malloc_T.cpp \
+ Memory_Pool.h \
+ Signal.h \
+ Signal.i \
+ Mem_Map.h \
+ Mem_Map.i \
+ Memory_Pool.i \
+ Thread_Manager.i
+
 .obj/Token.o .obj/Token.so .shobj/Token.o .shobj/Token.so: Token.cpp \
  Thread.h \
  pre.h \
@@ -4013,6 +4139,10 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Token.h \
  Synch.h \
@@ -4086,6 +4216,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4128,8 +4262,6 @@ endif # GHS
  Reactor.i \
  Reactor_Impl.h \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i
 
 .obj/FlReactor.o .obj/FlReactor.so .shobj/FlReactor.o .shobj/FlReactor.so: FlReactor.cpp \
@@ -4178,6 +4310,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4317,6 +4453,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4388,8 +4528,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -4500,6 +4638,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4608,6 +4750,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4662,8 +4808,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -4739,6 +4883,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4808,8 +4956,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -4892,6 +5038,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -4993,6 +5143,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5145,6 +5299,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5245,6 +5403,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5369,6 +5531,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5440,8 +5606,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -5506,6 +5670,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5633,6 +5801,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5826,6 +5998,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -5884,8 +6060,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -6378,6 +6552,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp
@@ -6535,6 +6713,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -7026,7 +7208,8 @@ endif # GHS
  ATM_Addr.h \
  ATM_Addr.i
 
-.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp DEV.h \
+.obj/DEV.o .obj/DEV.so .shobj/DEV.o .shobj/DEV.so: DEV.cpp \
+ DEV.h \
  pre.h \
  IO_SAP.h \
  ACE.h \
@@ -7809,6 +7992,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -8257,7 +8444,8 @@ endif # GHS
  Log_Priority.h \
  Log_Record.i
 
-.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp TLI.h \
+.obj/TLI.o .obj/TLI.so .shobj/TLI.o .shobj/TLI.so: TLI.cpp \
+ TLI.h \
  pre.h \
  IPC_SAP.h \
  ACE.h \
@@ -8573,6 +8761,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -8635,8 +8827,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -8739,6 +8929,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -8801,8 +8995,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -8903,6 +9095,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -8965,8 +9161,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -9080,6 +9274,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9233,6 +9431,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9336,6 +9538,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9427,6 +9633,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9521,6 +9731,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9558,7 +9772,8 @@ endif # GHS
  MEM_IO.i \
  MEM_Stream.i
 
-.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp DLL.h \
+.obj/DLL.o .obj/DLL.so .shobj/DLL.o .shobj/DLL.so: DLL.cpp \
+ DLL.h \
  pre.h \
  OS.h \
  config-all.h \
@@ -9640,6 +9855,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9697,8 +9916,6 @@ endif # GHS
  Service_Repository.i \
  Task.h \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Task.i \
  Task_T.h \
@@ -9795,6 +10012,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -9875,8 +10096,6 @@ endif # GHS
  Auto_Ptr.cpp \
  Proactor.h \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Process_Manager.h \
  Process.h \
@@ -9932,6 +10151,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10021,8 +10244,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -10085,6 +10306,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10141,6 +10366,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10202,6 +10431,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10213,8 +10446,6 @@ endif # GHS
  Stream_Modules.h \
  Task.h \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Containers.h \
  Malloc_Base.h \
  Containers.i \
@@ -10393,6 +10624,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10503,6 +10738,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10569,8 +10808,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -10656,6 +10893,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10759,6 +11000,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10847,6 +11092,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -10906,8 +11155,6 @@ endif # GHS
  Synch_Options.h \
  Synch_Options.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i \
  Hash_Map_Manager.h \
  Functor.h \
@@ -10968,9 +11215,11 @@ endif # GHS
  Service_Object.i \
  Thread_Manager.h \
  Thread.h \
- Thread.i \
  Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
  Thread_Adapter.inl \
+ Thread.i \
  Synch.h \
  SV_Semaphore_Complex.h \
  SV_Semaphore_Simple.h \
@@ -11117,6 +11366,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -11229,6 +11482,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -11338,6 +11595,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -11432,6 +11693,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -11515,6 +11780,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -11698,6 +11967,10 @@ endif # GHS
  Trace.h \
  OS.i \
  ACE.i \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Local_Tokens.h \
  Synch_T.h \
@@ -11836,6 +12109,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -11944,6 +12221,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12051,6 +12332,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12158,6 +12443,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12267,6 +12556,10 @@ endif # GHS
  Synch.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12381,6 +12674,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12435,8 +12732,6 @@ endif # GHS
  Pipe.h \
  Pipe.i \
  Thread_Manager.h \
- Thread_Adapter.h \
- Thread_Adapter.inl \
  Thread_Manager.i
 
 .obj/CORBA_Ref.o .obj/CORBA_Ref.so .shobj/CORBA_Ref.o .shobj/CORBA_Ref.so: CORBA_Ref.cpp \
@@ -12536,6 +12831,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12676,6 +12975,10 @@ endif # GHS
  Synch_T.h \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12831,6 +13134,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -12953,6 +13260,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -13121,6 +13432,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -13257,6 +13572,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -13349,6 +13668,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -13438,6 +13761,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -13526,6 +13853,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
@@ -13596,6 +13927,10 @@ endif # GHS
  Event_Handler.i \
  Synch_T.i \
  Thread.h \
+ Thread_Adapter.h \
+ Base_Thread_Adapter.h \
+ Base_Thread_Adapter.inl \
+ Thread_Adapter.inl \
  Thread.i \
  Atomic_Op.i \
  Synch_T.cpp \
