@@ -1,13 +1,19 @@
+Mon Sep 20 06:54:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/global.features:
+          Set ssl to 0 again, added wince=0, seems this has been removed by
+          accident
+
 Sun Sep 19 20:36:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/run_test.pl:
 
-	  Fix for BUG 1924. Please see 
+	  Fix for BUG 1924. Please see
 
 	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1924
 
 	  for details. Thanks to Paul <paul at reeder dot cs> for the
-	  patch. 
+	  patch.
 
 Sun Sep 19 14:51:32 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
