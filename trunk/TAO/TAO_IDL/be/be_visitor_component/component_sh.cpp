@@ -59,6 +59,15 @@ be_visitor_component_sh::visit_component (be_component *node)
         }
     }
 
+  if (this->generate_amh_classes (node) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_sh::"
+                         "visit_interface - "
+                         "codegen for AMH classes failed\n"),
+                        -1);
+    }
+
   TAO_OutStream *os  = this->ctx_->stream ();
   ACE_CString class_name;
 
@@ -108,15 +117,15 @@ be_visitor_component_sh::visit_component (be_component *node)
   *os << "class " << be_global->skel_export_macro ()
       << " " << class_name.c_str () << be_idt_nl << ": " << be_idt;
 
-  int has_concrete_parent = 0;
-
   AST_Component *base = node->base_component ();
 
   if (base != 0)
     {
-      has_concrete_parent = 1;
-      
       *os << "public virtual POA_" << base->name ();
+    }
+  else
+    {
+      *os << "public virtual POA_Components::CCMObject";
     }
 
   long nsupports = node->n_inherits ();
@@ -132,19 +141,8 @@ be_visitor_component_sh::visit_component (be_component *node)
           continue;
         }
 
-      if (has_concrete_parent)
-        {
-          *os << "," << be_nl;
-        }
-
+      *os << "," << be_nl;
       *os << "public virtual POA_" << supported->name ();
-
-      has_concrete_parent = 1;
-    }
-
-  if (has_concrete_parent == 0)
-    {
-      *os << "public virtual PortableServer::ServantBase";
     }
 
   *os << be_uidt << be_uidt_nl
@@ -312,6 +310,18 @@ be_visitor_component_sh::visit_component (be_component *node)
             -1
           );
         }
+    }
+
+  return 0;
+}
+
+int
+be_visitor_component_sh::generate_amh_classes (be_component *node)
+{
+   if (be_global->gen_amh_classes ())
+    {
+      be_visitor_amh_interface_sh amh_intf (this->ctx_);
+      return amh_intf.visit_interface (node);
     }
 
   return 0;

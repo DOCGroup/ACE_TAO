@@ -1681,6 +1681,10 @@ be_interface::traverse_inheritance_graph (
                   (void) this->insert_non_dup (supports[j]);
                 }
             }
+          else
+            {
+              (void) this->insert_non_dup (be_global->ccmobject ());
+            }
         }
 
       // Now check if the dequeued element has any ancestors. If yes, insert

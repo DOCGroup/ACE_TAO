@@ -66,6 +66,22 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
         }
     }
 
+  if (node->node_type () == AST_Decl::NT_component)
+    {
+      AST_Component *base = 
+        AST_Component::narrow_from_decl (node)->base_component ();
+
+      if (base != 0)
+        {
+          be_interface *inherited =
+            be_interface::narrow_from_decl (base);
+
+          *os << "," << be_nl
+              << "public virtual "
+              << "::" << inherited->full_thru_poa_proxy_impl_name ();
+        }
+    }
+
   *os << be_uidt_nl;
   *os << "{" << be_nl << "public:" << be_idt_nl;
 
