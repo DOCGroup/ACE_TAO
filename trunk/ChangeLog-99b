@@ -1,7 +1,13 @@
+Tue Jul 13 14:57:56 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/SV_Semaphore_Simple.h (init): added static cast of
+          ACE_INVALID_SEM_KEY to key_t.  key_t is unsigned on
+          QNX Neutrino, but we want to keep ACE_INVALID_SEM_KEY as -1.
+
 Tue Jul 13 11:57:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/config-win32.h: Changed CApplication to CWinApp.  Thanks to
-	  John Morey <jmorey@tbi.com> for pointing this out.
+        * ace/config-win32.h: Changed CApplication to CWinApp.  Thanks to
+          John Morey <jmorey@tbi.com> for pointing this out.
 
 Tue Jul 13 11:13:52 1999  Steve Huston  <shuston@riverace.com>
 
@@ -19,15 +25,15 @@ Tue Jul 13 11:13:52 1999  Steve Huston  <shuston@riverace.com>
 
 Tue Jul 13 10:40:31 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Cached_Connect_Strategy_T.cpp (purge_connections): There is
-	  no need to set the purge percentage again.
+        * ace/Cached_Connect_Strategy_T.cpp (purge_connections): There is
+          no need to set the purge percentage again.
 
 Tue Jul 13 10:39:57 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Containers_T.h,i: Altered private member list_ of
-	  DLList_Iterator to be a pointer rather than a reference. This
-	  allows the reset method to work because it was overwriting the
-	  contents of list_ rather than iterating over a different list
+        * ace/Containers_T.h,i: Altered private member list_ of
+          DLList_Iterator to be a pointer rather than a reference. This
+          allows the reset method to work because it was overwriting the
+          contents of list_ rather than iterating over a different list
 
 Tue Jul 13 09:14:31 1999  Steve Huston  <shuston@riverace.com>
 
