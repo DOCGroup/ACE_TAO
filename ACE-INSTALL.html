@@ -220,10 +220,18 @@ discussion of the g++ -fno-implicit-templates option,
 -fno-implicit-templates is broken.  And, -O2 is not supported on some
 targets.<P>
 
-The current version of ACE, 4.3, has limited support for destroying
-static objects after program termination on VxWorks.  To destroy
-static objects, the module must be unloaded, using unld.  Static
-constructors are called when loading the module, with ld.<P>
+Please note that ACE uses one of the spare fields in
+the Wind River task control block, spare4, for thread-
+specific storage.  This field is specified in only one
+place, in ace/OS.i, so it can easily be changed to one
+of the other spare fields, if necessary.<P>
+
+The current version of ACE, 4.3.3, destroys dynamically
+allocated singletons in the ACE library.  But, it may not
+properly destroy some static objects.  If you have trouble
+running a program multiple times, it may be necessary to
+unload the module, using unld, and reload it between
+runs.<P>
 
 <DT><B>MVS OpenEdition</B> <BR><BR>
 
@@ -234,7 +242,7 @@ The ACE library, all the tests and most of the examples and apps build
 clean.  There are still some problems that need to be ironed out: <P>
 
    MVS does not support the dynamic linking dl...() calls that the Service
-   Configurator uses to dynmically link services at run time. As a result, all
+   Configurator uses to dynamically link services at run time. As a result, all
    the examples and apps that use a svc.conf file (for dynamically configuring
    service objects) do not work, however, most of these apps can be built/run
    statically.  Also, the Svc_Conf_l.cpp and Svc_Conf_y.cpp files are generated
