@@ -1,6 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
+#include "DIOP_Connector.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "ace/Connector.h"
 
 #include "tao/debug.h"
@@ -9,7 +13,6 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
 
-#include "DIOP_Connector.h"
 #include "DIOP_Profile.h"
 
 
@@ -269,3 +272,5 @@ template class ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>;
 #pragma instantiate ACE_Hash_Map_Manager_Ex<ACE_INET_Addr, TAO_DIOP_Connection_Handler *, ACE_Hash <ACE_INET_Addr>, ACE_Equal_To <ACE_INET_Addr>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<ACE_INET_Addr, TAO_DIOP_Connection_Handler *>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

@@ -23,6 +23,13 @@ include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 include $(TAO_ROOT)/rules.tao.GNU
 
 CPP_SRCS += \
+  DIOP_Factory \
+  DIOP_Profile \
+  DIOP_Transport \
+  DIOP_Connector \
+  DIOP_Acceptor \
+  DIOP_Connection_Handler \
+  DIOP_Endpoint \
   UIOP_Factory \
   UIOP_Lite_Factory \
   UIOP_Profile \

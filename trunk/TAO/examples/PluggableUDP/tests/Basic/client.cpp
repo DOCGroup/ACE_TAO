@@ -28,7 +28,7 @@
 
 // The following include file forces DIOP to be linked into the
 // executable and initialized for static builds.
-#include "examples/PluggableUDP/DIOP/DIOP.h"
+#include "tao/Strategies/advanced_resource.h"
 
 ACE_RCSID(AMI, client, "$Id$")
 

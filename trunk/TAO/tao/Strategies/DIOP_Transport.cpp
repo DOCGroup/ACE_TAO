@@ -2,6 +2,9 @@
 // $Id$
 
 #include "DIOP_Transport.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "DIOP_Connection_Handler.h"
 #include "DIOP_Acceptor.h"
 #include "DIOP_Profile.h"
@@ -539,3 +542,5 @@ TAO_DIOP_Transport::transition_handler_state_i (void)
 {
   this->connection_handler_ = 0;
 }
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

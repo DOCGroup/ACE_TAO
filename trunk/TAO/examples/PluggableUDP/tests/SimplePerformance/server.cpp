@@ -23,7 +23,7 @@
 
 // The following include file forces DIOP to be linked into the
 // executable and initialized for static builds.
-#include "examples/PluggableUDP/DIOP/DIOP.h"
+#include "tao/Strategies/advanced_resource.h"
 
 #if defined (VXWORKS)
 # undef ACE_MAIN

@@ -8,9 +8,7 @@
  *
  *  DIOP specific acceptor processing
  *
- *
- *  @author Fred Kuhns <fredk@cs.wustl.edu>
- *  @author Ossama Othman <ossama@uci.edu>
+ *  @author  Michael Kircher
  */
 //=============================================================================
 
@@ -19,17 +17,19 @@
 #define TAO_DIOP_ACCEPTOR_H
 #include "ace/pre.h"
 
-#include "tao/Pluggable.h"
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/Pluggable.h"
 #include "DIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
 #include "tao/GIOP_Message_Version.h"
-#include "diop_export.h"
 
 // TAO DIOP_Acceptor concrete call defination
 
@@ -40,7 +40,7 @@
  *
  * The DIOP-specific bridge class for the concrete acceptor.
  */
-class TAO_DIOP_Export TAO_DIOP_Acceptor : public TAO_Acceptor
+class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
@@ -179,6 +179,8 @@ private:
 #if defined(__ACE_INLINE__)
 #include "DIOP_Acceptor.i"
 #endif /* __ACE_INLINE__ */
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif  /* TAO_DIOP_ACCEPTOR_H */

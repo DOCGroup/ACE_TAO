@@ -6,7 +6,7 @@
  *
  *  $Id$
  *
- *  @author Fred Kuhns <fredk@cs.wustl.edu>
+ *  @author  Michael Kircher
  */
 //=============================================================================
 
@@ -15,6 +15,10 @@
 #define TAO_DIOP_FACTORY_H
 #include "ace/pre.h"
 
+#include "tao/corbafwd.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/Protocol_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -22,12 +26,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "diop_export.h"
+#include "strategies_export.h"
 
 class TAO_Acceptor;
 class TAO_Connector;
 
-class TAO_DIOP_Export TAO_DIOP_Protocol_Factory : public TAO_Protocol_Factory
+class TAO_Strategies_Export TAO_DIOP_Protocol_Factory : public TAO_Protocol_Factory
 {
 public:
   TAO_DIOP_Protocol_Factory (void);
@@ -60,7 +64,9 @@ private:
 };
 
 ACE_STATIC_SVC_DECLARE (TAO_DIOP_Protocol_Factory)
-ACE_FACTORY_DECLARE (TAO_DIOP, TAO_DIOP_Protocol_Factory)
+ACE_FACTORY_DECLARE (TAO_Strategies, TAO_DIOP_Protocol_Factory)
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
 
 #include "ace/post.h"
 #endif /* TAO_DIOP_FACTORY_H */

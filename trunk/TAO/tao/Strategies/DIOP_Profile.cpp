@@ -3,6 +3,9 @@
 
 
 #include "DIOP_Profile.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "tao/CDR.h"
 #include "tao/Environment.h"
 #include "tao/ORB.h"
@@ -670,3 +673,5 @@ TAO_DIOP_Profile::decode_endpoints (void)
 
   return 0;
 }
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

@@ -1,8 +1,10 @@
 // This may look like C, but it's really -*- C++ -*-
 // $Id$
 
-
 #include "DIOP_Acceptor.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "DIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
@@ -754,3 +756,5 @@ TAO_DIOP_Acceptor::init_tcp_properties (void)
   // @@ Michael: We use UDP, so we do not set TCP settings.
   return 0;
 }
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

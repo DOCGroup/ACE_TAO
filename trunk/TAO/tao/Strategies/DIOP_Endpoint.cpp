@@ -3,6 +3,9 @@
 
 
 #include "DIOP_Endpoint.h"
+
+#if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
+
 #include "DIOP_Connection_Handler.h"
 #include "tao/debug.h"
 
@@ -185,3 +188,5 @@ TAO_DIOP_Endpoint::hash (void)
     ACE::hash_pjw (this->host_.in ())
     + this->port_;
 }
+
+#endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */
