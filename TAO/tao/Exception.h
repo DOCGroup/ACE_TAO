@@ -353,6 +353,7 @@ public:
 
 #if !defined(__GNUC__) || __GNUC__ > 2 || __GNUC_MINOR__ >= 8
   typedef CORBA::ExceptionList_ptr _ptr_type;
+  typedef CORBA::ExceptionList_var _var_type;
 #endif /* __GNUC__ */
   // Useful for template programming.
 

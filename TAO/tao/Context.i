@@ -185,3 +185,185 @@ CORBA_Context_out::operator-> (void)
 {
   return this->ptr_;
 }
+
+// *************************************************************
+// Inline operations for class CORBA_ContextList
+// *************************************************************
+
+ACE_INLINE
+CORBA_ContextList::CORBA_ContextList (void)
+{
+}
+
+ACE_INLINE CORBA::ULong
+CORBA_ContextList::count (void)
+{
+  return (CORBA::ULong) this->ctx_list_.size ();
+}
+
+ACE_INLINE CORBA_ContextList_ptr
+CORBA_ContextList::_nil (void)
+{
+  return (CORBA_ContextList_ptr)0;
+}
+
+// *************************************************************
+// Inline operations for class CORBA_ContextList_var
+// *************************************************************
+
+ACE_INLINE
+CORBA_ContextList_var::CORBA_ContextList_var (void) // default constructor
+  : ptr_ (CORBA_ContextList::_nil ())
+{}
+
+ACE_INLINE
+CORBA_ContextList_var::CORBA_ContextList_var (CORBA_ContextList_ptr p)
+  : ptr_ (p)
+{}
+
+ACE_INLINE CORBA_ContextList_ptr
+CORBA_ContextList_var::ptr (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_ContextList_var::CORBA_ContextList_var (const CORBA_ContextList_var &p) // copy constructor
+  : ptr_ (p.ptr_->_duplicate ())
+{}
+
+ACE_INLINE
+CORBA_ContextList_var::~CORBA_ContextList_var (void) // destructor
+{
+  this->ptr_->_destroy ();
+}
+
+ACE_INLINE CORBA_ContextList_var &
+CORBA_ContextList_var::operator= (CORBA_ContextList_ptr p)
+{
+  this->ptr_->_destroy ();
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE CORBA_ContextList_var &
+CORBA_ContextList_var::operator= (const CORBA_ContextList_var &p)
+{
+  if (this != &p)
+    {
+      this->ptr_->_destroy ();
+      this->ptr_ = p.ptr_->_duplicate ();
+    }
+  return *this;
+}
+
+ACE_INLINE
+CORBA_ContextList_var::operator const CORBA_ContextList_ptr &() const // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE
+CORBA_ContextList_var::operator CORBA_ContextList_ptr &() // cast
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr
+CORBA_ContextList_var::operator-> (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr
+CORBA_ContextList_var::in (void) const
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr &
+CORBA_ContextList_var::inout (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr &
+CORBA_ContextList_var::out (void)
+{
+  this->ptr_->_destroy ();
+  this->ptr_ = CORBA_ContextList::_nil ();
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr
+CORBA_ContextList_var::_retn (void)
+{
+  // yield ownership of managed obj reference
+  CORBA_ContextList_ptr val = this->ptr_;
+  this->ptr_ = CORBA_ContextList::_nil ();
+  return val;
+}
+
+// *************************************************************
+// Inline operations for class CORBA_ContextList_out
+// *************************************************************
+
+ACE_INLINE
+CORBA_ContextList_out::CORBA_ContextList_out (CORBA_ContextList_ptr &p)
+        : ptr_ (p)
+{
+  this->ptr_ = CORBA_ContextList::_nil ();
+}
+
+ACE_INLINE
+CORBA_ContextList_out::CORBA_ContextList_out (CORBA_ContextList_var &p)
+  : ptr_ (p.out ())
+{
+  this->ptr_->_destroy ();
+  this->ptr_ = CORBA_ContextList::_nil ();
+}
+
+ACE_INLINE
+CORBA_ContextList_out::CORBA_ContextList_out (CORBA_ContextList_out &p)
+  : ptr_ (p.ptr_)
+{}
+
+ACE_INLINE CORBA_ContextList_out &
+CORBA_ContextList_out::operator= (CORBA_ContextList_out &p)
+{
+  this->ptr_ = p.ptr_;
+  return *this;
+}
+
+ACE_INLINE CORBA_ContextList_out &
+CORBA_ContextList_out::operator= (const CORBA_ContextList_var &p)
+{
+  this->ptr_ = p.ptr ()->_duplicate ();
+  return *this;
+}
+
+ACE_INLINE CORBA_ContextList_out &
+CORBA_ContextList_out::operator= (CORBA_ContextList_ptr p)
+{
+  this->ptr_ = p;
+  return *this;
+}
+
+ACE_INLINE
+CORBA_ContextList_out::operator CORBA_ContextList_ptr &()
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr &
+CORBA_ContextList_out::ptr (void)
+{
+  return this->ptr_;
+}
+
+ACE_INLINE CORBA_ContextList_ptr
+CORBA_ContextList_out::operator-> (void)
+{
+  return this->ptr_;
+}
+
