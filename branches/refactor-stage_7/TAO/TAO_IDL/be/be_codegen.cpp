@@ -458,8 +458,6 @@ TAO_CodeGen::start_server_header (const char *fname)
       this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/Servant_Base.h");
       this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/Collocated_Object.h");
-      this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/ThruPOA_Object_Proxy_Impl.h");
       this->gen_standard_include (this->server_header_,
                                   "tao/PortableServer/Direct_Object_Proxy_Impl.h");

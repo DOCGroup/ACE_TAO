@@ -374,6 +374,7 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   // Remove POA from the POAManager.
   int result = this->poa_manager_.remove_poa (this);
+
   if (result != 0)
     ACE_THROW (CORBA::OBJ_ADAPTER ());
 

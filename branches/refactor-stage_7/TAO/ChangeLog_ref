@@ -1,3 +1,54 @@
+Thu Sep  4 15:30:12 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/PortableServer/Collocated_Object.cpp:
+        * tao/PortableServer/Collocated_Object.h:
+        * tao/PortableServer/Collocated_Object.i:
+
+          Removed these files. This class is a legacy and no longer
+          necessary.
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Removed the generation of includes for the above header file.
+
+        * tao/DynamicInterface/Dynamic_Implementation.cpp:
+
+          Replaced the only remaining use of TAO_Collocated_Object with
+          CORBA::Object.
+
+        * tao/PortableServer/ImR_ActivatorS.h:
+        * tao/PortableServer/ImR_LocatorS.h:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/PolicyS.h:
+
+          Removed generated includes of Collocated_Object.h.
+
+        * tao/PortableServer/TAO_PortableServer.dsp:
+
+          Removed Collocated_Object.* from the project.
+
+        * tao/LocalObject.h:
+        * tao/LocalObject.i:
+
+          Updated implementation of _narrow(), and removed 
+          _unchecked_narrow ().
+
+        * tao/Object.cpp:
+        * tao/Object.h:
+        * tao/Object.i:
+
+          Same changes to narrowing as to LocalObject, plus added
+          template specialization for TAO::Objref_Traits<>.
+
+        * tao/TAO.dsp:
+
+          Restored more lost settings to the project.
+
+        * tao/PortableServer/POA.cpp:
+        * tao/PortableServer/POA.h:
+
+          Added template specialization of TAO::Objref_Traits<>.
+
 Thu Sep  4 11:33:45 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_interface.cpp:
