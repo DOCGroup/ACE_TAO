@@ -159,6 +159,9 @@ ifdef ibmcxx_build
 		$(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS); \
 	fi
 else
+ifdef kylix_build
+	$(SOLINK.cc) $(VSHOBJS1), $@,, $(ACE_SHLIBS) $(LIBS) $(LDFLAGS)
+else
 ifeq (1,$(ace_lib_prelink))
         #### Attempt a link (which will fail), to add template instantiations
         #### to lib files, for example.
@@ -168,6 +171,7 @@ ifeq ($(split),1)
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@$(SOVERSION) $(VSHDIR)/*.$(OBJEXT) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
 else
 	$(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@$(SOVERSION) $(VSHOBJS1) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+endif
 endif
 endif
 ifneq ($(SOVERSION),)
