@@ -1,3 +1,9 @@
+Thu Nov  8 13:05:12 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * include/makeinclude/platform_irix6.x_sgic++.GNU:
+
+          Added an option to suppress warnings about #pragma pack.
+
 Thu Nov  8 10:43:22 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/OS.cpp:
