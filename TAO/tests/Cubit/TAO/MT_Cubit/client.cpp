@@ -11,13 +11,6 @@
 
 ACE_RCSID(MT_Cubit, client, "$Id$")
 
-#if defined (FORCE_ARGS)
-char *force_argv[] = {"client",
-                      "-s",
-                      "-f",
-                      "ior.txt"};
-#endif /* FORCE_ARGS */
-
 #if defined (VXWORKS)
 u_int ctx = 0;
 u_int ct = 0;
@@ -91,48 +84,15 @@ Client_i::~Client_i (void)
 int
 Client_i::init (int argc, char *argv[])
 {
-#if defined (ACE_HAS_THREADS)
-  // @@ Naga, can you please abstract this stuff out into the
-  // Global.{h,cpp} class since I think it's rather messy?
-
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-  if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
-#if defined (__Lynx__)
-                                              30,
-#elif defined (VXWORKS) /* ! __Lynx__ */
-                                              6,
-#elif defined (ACE_WIN32)
-                                              ACE_Sched_Params::priority_max 
-                                                (ACE_SCHED_FIFO, ACE_SCOPE_THREAD),
-#else
-                                              ACE_THR_PRI_FIFO_DEF + 25,
-#endif /* ! __Lynx__ */
-                                              ACE_SCOPE_PROCESS)) != 0)
-    {
-      if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_MAX,
-                    "preempt: user is not superuser, "
-                    "so remain in time-sharing class\n"));
-      else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: ACE_OS::sched_params failed\n%a"),
-                          -1);
-    }
-#else
-  ACE_ERROR_RETURN ((LM_ERROR,
-                     "Test will not run.  This platform doesn't seem to have threads.\n"),
-                    -1);
-#endif /* ACE_HAS_THREADS */
-
   this->argc_ = argc;
   this->argv_ = argv;
 
+  int result;
+  result = GLOBALS::instance ()->sched_fifo_init ();
+  if (result != 0)
+    return result;
   VX_VME_INIT;
-
-#if defined (VXWORKS) && defined (FORCE_ARGS)
-  this->argc_ = 4;
-  this->argv_ = force_argv;
-#endif /* VXWORKS && FORCE_ARGS */
+  FORCE_ARGV (this->argc_,this->argv_);
   // Make sure we've got plenty of socket handles.  This call will use
   // the default maximum.
   ACE::set_handle_limit ();
@@ -154,20 +114,7 @@ Client_i::init (int argc, char *argv[])
         this->ts_->thread_count_ = 
           ACE_OS::atoi (this->argv_[i+1]);
     }
-#if defined (CHORUS)
-  // @@ Naga, can you please abstract this out into a macro or
-  // something in Global.h, like you did for the VxWorks VME driver?
-  // start the pccTimer for Chorus ClassiX.
-  int pTime;
-
-  // Initialize the PCC timer Chip
-  pccTimerInit ();
-
-  if (pccTimer (PCC2_TIMER1_START,
-                &pTime) != K_OK)
-    ACE_DEBUG ((LM_DEBUG,
-                "pccTimer has a pending benchmark\n"));
-#endif /* CHORUS */
+  PCCTIMER_INIT;
   return 0;
 }
 
@@ -330,14 +277,12 @@ Client_i::calc_util_time (void)
   this->util_task_duration_ = timer.get_elapsed ();
 #else
   for (u_int i = 0;
-       // @@ Naga, can you please "abstract" out this magic number and
-       // replace it with a symbolic constant?
-       i < 10000;
+       i < NUM_UTIL_COMPUTATIONS;
        i++)
     this->util_thread_->computation ();
 
   timer.stop ();
-  this->util_task_duration_ = timer.get_elapsed () / 10000;
+  this->util_task_duration_ = timer.get_elapsed () / NUM_UTIL_COMPUTATIONS;
 #endif /* !CHORUS */
 }
 
@@ -677,11 +622,11 @@ Client_i::start_servant (void)
 
    ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
 
-   // @@ Naga, can you please add a comment documenting what's going
-   // on here?
+   // Wait on the condition variable till the high priority cubit_task
+   // has finished argument processing.
    while (!GLOBALS::instance ()->ready_)
      GLOBALS::instance ()->ready_cnd_.wait ();
-
+   // wait on the barrier till the servant writes its ior.
    GLOBALS::instance ()->barrier_->wait ();
 
    this->ts_->one_ior_ =
@@ -787,17 +732,8 @@ Client_i::do_thread_per_rate_test (void)
                         this->ts_,
                         CB_1HZ_CONSUMER);
   ACE_Sched_Priority priority;
-
-  // @@ Naga, shouldn't this be abstracted into the Globals.* file?
-#if defined (VXWORKS)
-  priority = ACE_THR_PRI_FIFO_DEF;
-#elif defined (ACE_WIN32)
-  priority = ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
-                                             ACE_SCOPE_THREAD);
-#else  /* ! VXWORKS */
-  priority = ACE_THR_PRI_FIFO_DEF + 25;
-#endif /* ! ACE_WIN32 */
-
+  
+  priority = this->priority_.get_high_priority ();
   ACE_DEBUG ((LM_DEBUG,
               "Creating 20 Hz client with priority %d\n",
               priority));

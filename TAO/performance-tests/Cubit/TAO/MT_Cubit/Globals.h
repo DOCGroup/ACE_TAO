@@ -40,6 +40,58 @@ if (status != OK)\
 #define VX_VME_INIT
 #endif /* VXWORKS && VME_DRIVER */
 
+#if defined (__Lynx__)
+#define SCHED_PRIORITY 30
+#elif defined (VXWORKS)
+#define SCHED_PRIORITY 6
+#elif defined (ACE_WIN32)
+#define SCHED_PRIORITY \
+ACE_Sched_Params::priority_max(ACE_SCHED_INFO,ACE_SCOPE_THREAD)
+#else
+#define SCHED_PRIORITY \
+ACE_THR_PRI_FIFO_DEF + 25
+#endif /* ! __Lynx__ */
+
+// Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+#define SCHED_PARAMS_FIFO \
+ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,\
+                                        SCHED_PRIORITY,\
+                                        ACE_SCOPE_PROCESS))
+
+#if defined (CHORUS)
+#define PCCTIMER_INIT \
+{\
+int pTime;\
+// Initialize the PCC timer chip
+pccTimerInit ();\
+if (pccTimer (PCC2_TIMER1_START, &pTime) != K_OK)\
+ACE_DEBUG ((LM_DEBUG,"pccTimer has a pending benchmark\n"));\
+}
+#else /* !CHORUS */
+#define PCCTIMER_INIT 
+#endif /* !CHORUS */
+
+#if defined (VXWORKS) && defined (FORCE_ARGS)
+static char *force_argv[]=
+{
+  "server",
+  "-s",
+  "-f",
+  "ior.txt" 
+};
+#endif /* defined (VXWORKS) && defined (FORCE_ARGS) */
+
+#if defined (VXWORKS) && defined (FORCE_ARGS)
+#define FORCE_ARGV(argc,argv) \
+argc = 4;
+argv = force_argv;
+#else /* !VXWORKS && !FORCE_ARGS */
+#define FORCE_ARGV(argc,argv)
+#endif
+// Number of utilisation computations to compute the duration of one
+// util computation.
+#define NUM_UTIL_COMPUTATIONS 10000
+
 #define THREAD_PER_RATE_OBJS 4
 // Number of cubit objects in the thread per rate test.
 
@@ -51,6 +103,10 @@ if (status != OK)\
 
 #define TASKNAME_LEN 14
 // Length of the task name in the task control block for vxworks.
+
+#define UTIL_BOUND_CONSTANT 1000
+// A constant to avoid the utility thread blocking the machine and to
+// bound its  number of computations.
 
 class Globals
 {
@@ -66,6 +122,8 @@ public:
   int parse_args (int argc, char **argv);
   // parse the arguments.
 
+  static int sched_fifo_init (void);
+  // enables fifo scheduling eg.RT scheduling class on solaris.
   char hostname[BUFSIZ];
   // hostname to be used for ORB_init.
 
