@@ -236,7 +236,6 @@ TAO_PrivateConnectionPolicy::_remove_ref (void)
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const RTCORBA::PriorityBands &bands)
   : RTCORBA::PriorityBandedConnectionPolicy (),
-    CORBA::LocalObject (),
     priority_bands_ (bands)
 {
 }
@@ -244,6 +243,7 @@ TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 TAO_PriorityBandedConnectionPolicy::TAO_PriorityBandedConnectionPolicy
 (const TAO_PriorityBandedConnectionPolicy &rhs)
   : RTCORBA::PriorityBandedConnectionPolicy (),
+    CORBA::LocalObject (),
     priority_bands_ (rhs.priority_bands_)
 {
 }
