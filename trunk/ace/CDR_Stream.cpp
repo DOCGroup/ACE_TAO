@@ -544,10 +544,10 @@ ACE_InputCDR::ACE_InputCDR (const char *buf,
   : start_ (buf, bufsiz),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (major_version),
-    minor_version_ (minor_version)
+    minor_version_ (minor_version),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   this->start_.wr_ptr (bufsiz);
 }
@@ -559,10 +559,10 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
   : start_ (bufsiz),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (major_version),
-    minor_version_ (minor_version)
+    minor_version_ (minor_version),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
 }
 
@@ -572,10 +572,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
                             ACE_CDR::Octet minor_version)
   : start_ (),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (major_version),
-    minor_version_ (minor_version)
+    minor_version_ (minor_version),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   this->reset (data, byte_order);
 }
@@ -588,10 +588,10 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
   : start_ (data, flag),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (major_version),
-    minor_version_ (minor_version)
+    minor_version_ (minor_version),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
 }
 
@@ -605,10 +605,10 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
   : start_ (data, flag),
     do_byte_swap_ (byte_order != ACE_CDR_BYTE_ORDER),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (major_version),
-    minor_version_ (minor_version)
+    minor_version_ (minor_version),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   // Set the read pointer
   this->start_.rd_ptr (rd_pos);
@@ -630,10 +630,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
             ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (rhs.major_version_),
-    minor_version_ (rhs.minor_version_)
+    minor_version_ (rhs.minor_version_),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
@@ -661,10 +661,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
             ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (rhs.major_version_),
-    minor_version_ (rhs.minor_version_)
+    minor_version_ (rhs.minor_version_),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   // Align the base pointer assuming that the incoming stream is also
   // aligned the way we are aligned
@@ -697,10 +697,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
             ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (rhs.char_translator_),
-    wchar_translator_ (rhs.wchar_translator_),
     major_version_ (rhs.major_version_),
-    minor_version_ (rhs.minor_version_)
+    minor_version_ (rhs.minor_version_),
+    char_translator_ (rhs.char_translator_),
+    wchar_translator_ (rhs.wchar_translator_)
 {
   char *buf = ACE_ptr_align_binary (rhs.start_.base (),
                                     ACE_CDR::MAX_ALIGNMENT);
@@ -715,10 +715,10 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
   : start_ (x.rhs_.start_.data_block ()),
     do_byte_swap_ (x.rhs_.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (x.rhs_.char_translator_),
-    wchar_translator_ (x.rhs_.wchar_translator_),
     major_version_ (x.rhs_.major_version_),
-    minor_version_ (x.rhs_.minor_version_)
+    minor_version_ (x.rhs_.minor_version_),
+    char_translator_ (x.rhs_.char_translator_),
+    wchar_translator_ (x.rhs_.wchar_translator_)
 {
   this->start_.rd_ptr (x.rhs_.start_.rd_ptr ());
   this->start_.wr_ptr (x.rhs_.start_.wr_ptr ());
@@ -760,10 +760,10 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
             message_block_allocator),
     do_byte_swap_ (rhs.do_byte_swap_),
     good_bit_ (1),
-    char_translator_ (0),
-    wchar_translator_ (0),
     major_version_ (rhs.major_version_),
-    minor_version_ (rhs.minor_version_)
+    minor_version_ (rhs.minor_version_),
+    char_translator_ (0),
+    wchar_translator_ (0)
 {
   ACE_CDR::mb_align (&this->start_);
   for (const ACE_Message_Block *i = rhs.begin ();
