@@ -1,3 +1,11 @@
+Mon Aug 17 17:17:52 1998  Steve Huston  <shuston@riverace.com>
+
+	* ace/Makefile: Removed IO_Cntl_Msg from files to build.  It's empty.
+
+	* include/makeinclude/platform_hpux_aCC.GNU: Added '302' to warnings
+	  to suppress; changed LIBS from '=' to '+=' to work better with TAO
+	  builds.   Thanks to John Mulhern for these fixes.
+
 Mon Aug 17 17:04:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Env_Value_Test.cpp (main): Changed to use ASYS_TCHAR* for
