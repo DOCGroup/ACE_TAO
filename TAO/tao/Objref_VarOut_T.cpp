@@ -5,10 +5,6 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Environment.h"
 
-#if !defined (__ACE_INLINE__)
-#include "tao/Objref_VarOut_T.inl"
-#endif /* __ACE_INLINE__ */
-
 ACE_RCSID (tao,
            Objref_VarOut_T,
            "$Id$")

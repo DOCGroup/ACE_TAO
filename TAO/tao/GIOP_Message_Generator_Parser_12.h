@@ -113,10 +113,5 @@ private:
                              TAO_Transport *transport);
 };
 
-
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser_12.inl"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_MESSAGE_GENERATOR_PARSER_12_H*/

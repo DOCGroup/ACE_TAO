@@ -144,9 +144,5 @@ public:
                               ACE_Time_Value *max_wait_time = 0);
 };
 
-#if defined (__ACE_INLINE__)
-# include "tao/GIOP_Utils.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 #endif /*TAO_GIOP_UTILS_H */

@@ -42,7 +42,7 @@ class TAO_Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
 
-  /// Constructor. 
+  /// Constructor.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
                                  TAO_ORB_Core* orb_core = 0,
                                  CORBA::Boolean flag = 0);
@@ -93,11 +93,6 @@ private:
   TAO_ORB_Core *orb_core_;
 
 };
-
-
-#if defined(__ACE_INLINE__)
-#include "tao/Connector_Impl.inl"
-#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Connector_Impl.cpp"

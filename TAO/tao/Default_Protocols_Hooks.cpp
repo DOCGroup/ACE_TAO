@@ -1,15 +1,7 @@
-
-
 // $Id$
 
 #include "Default_Protocols_Hooks.h"
-
-#if !defined (__ACE_INLINE__)
-# include "Default_Protocols_Hooks.i"
-#endif /* ! __ACE_INLINE__ */
-
 #include "ace/Log_Msg.h"
-
 
 ACE_RCSID (tao,
            Default_Protocols_Hooks,

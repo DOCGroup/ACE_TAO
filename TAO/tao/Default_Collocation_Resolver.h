@@ -46,10 +46,6 @@ public:
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Collocation_Resolver)
 ACE_FACTORY_DECLARE (TAO, TAO_Default_Collocation_Resolver)
 
-#if defined (__ACE_INLINE__)
-# include "tao/Default_Collocation_Resolver.i"
-#endif /* __ACE_INLINE__ */
-
 #include /**/ "ace/post.h"
 
 #endif /* TAO_DEFAULT_COLLOCATION_RESOLVER_H */
