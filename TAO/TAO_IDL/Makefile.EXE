@@ -58,10 +58,9 @@ endif # !def TAO_IDL_PREPROCESSOR
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/tao_idl.o .obj/tao_idl.so .shobj/tao_idl.o .shobj/tao_idl.so: tao_idl.cpp include/idl_defines.h be_include/be_codegen.h \
+.obj/tao_idl.o .obj/tao_idl.SO .shobj/tao_idl.o .shobj/tao_idl.SO: tao_idl.cpp include/idl_defines.h be_include/be_codegen.h \
   $(ACE_ROOT)/ace/Singleton.h \
-  $(ACE_ROOT)/ace/pre.h \
-  $(ACE_ROOT)/ace/Synch.h \
+  $(ACE_ROOT)/ace/pre.h $(ACE_ROOT)/ace/Synch.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
@@ -86,8 +85,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Global_Macros.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/Synch.i \
   $(ACE_ROOT)/ace/Synch_T.h \
   $(ACE_ROOT)/ace/Synch_T.i \
@@ -141,11 +139,10 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
   $(ACE_ROOT)/ace/Malloc_Base.h \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  include/ast_typedef.h include/ast_type.h include/ast_argument.h \
-  include/ast_field.h include/ast_predefined_type.h \
-  include/ast_concrete_type.h include/ast_union_label.h \
-  be_include/be_extern.h be_include/be_global.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i include/ast_typedef.h \
+  include/ast_type.h include/ast_argument.h include/ast_field.h \
+  include/ast_predefined_type.h include/ast_concrete_type.h \
+  include/ast_union_label.h be_include/be_extern.h be_include/be_global.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
   $(ACE_ROOT)/ace/Node.h \
   $(ACE_ROOT)/ace/Node.cpp \
@@ -217,21 +214,18 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  include/utl_stack.h include/fe_extern.h include/ast_root.h \
-  include/ast_module.h include/ast_extern.h include/utl_string.h \
-  include/utl_identifier.h include/drv_extern.h \
-  $(ACE_ROOT)/ace/Process.h \
-  $(ACE_ROOT)/ace/Process.i \
-  ../tao/Version.h
+  $(ACE_ROOT)/ace/Containers_T.cpp include/utl_stack.h \
+  include/fe_extern.h include/ast_root.h include/ast_module.h \
+  include/ast_extern.h include/utl_string.h include/utl_identifier.h \
+  include/drv_extern.h $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/Process.i ../tao/Version.h
 
-.obj/drv_args.o .obj/drv_args.so .shobj/drv_args.o .shobj/drv_args.so: driver/drv_args.cpp include/idl_defines.h \
+.obj/drv_args.o .obj/drv_args.SO .shobj/drv_args.o .shobj/drv_args.SO: driver/drv_args.cpp include/idl_defines.h \
   include/global_extern.h include/TAO_IDL_FE_Export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl \
-  include/idl_global.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -259,8 +253,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -354,9 +347,8 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  include/idl_bool.h include/ast_expression.h \
-  $(ACE_ROOT)/ace/CDR_Stream.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp include/idl_bool.h \
+  include/ast_expression.h $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -364,23 +356,20 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
-  include/ast_predefined_type.h include/ast_concrete_type.h \
-  include/ast_type.h include/ast_decl.h include/idl_narrow.h \
-  include/utl_stack.h include/drv_extern.h be_include/be_global.h \
-  be_include/TAO_IDL_BE_Export.h be_include/be_extern.h \
-  $(ACE_ROOT)/ace/Process.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+  include/utl_idlist.h include/utl_list.h include/ast_predefined_type.h \
+  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
+  include/idl_narrow.h include/utl_stack.h include/drv_extern.h \
+  be_include/be_global.h be_include/TAO_IDL_BE_Export.h \
+  be_include/be_extern.h $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Process.i
 
-.obj/drv_preproc.o .obj/drv_preproc.so .shobj/drv_preproc.o .shobj/drv_preproc.so: driver/drv_preproc.cpp include/idl_bool.h \
+.obj/drv_preproc.o .obj/drv_preproc.SO .shobj/drv_preproc.o .shobj/drv_preproc.SO: driver/drv_preproc.cpp include/idl_bool.h \
   include/idl_defines.h include/global_extern.h \
-  include/TAO_IDL_FE_Export.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ace_wchar.h \
-  $(ACE_ROOT)/ace/ace_wchar.inl \
-  include/idl_global.h \
+  $(ACE_ROOT)/ace/ace_wchar.inl include/idl_global.h \
   $(ACE_ROOT)/ace/SString.h \
   $(ACE_ROOT)/ace/SStringfwd.h \
   $(ACE_ROOT)/ace/Basic_Types.h \
@@ -408,8 +397,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Default_Constants.h \
   $(ACE_ROOT)/ace/Min_Max.h \
   $(ACE_ROOT)/ace/streams.h \
-  $(ACE_ROOT)/ace/Trace.h \
-  $(ACE_ROOT)/ace/OS.i \
+  $(ACE_ROOT)/ace/Trace.h $(ACE_ROOT)/ace/OS.i \
   $(ACE_ROOT)/ace/String_Base.cpp \
   $(ACE_ROOT)/ace/ACE.h \
   $(ACE_ROOT)/ace/Flag_Manip.h \
@@ -503,8 +491,7 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
-  $(ACE_ROOT)/ace/Containers_T.cpp \
-  include/ast_expression.h \
+  $(ACE_ROOT)/ace/Containers_T.cpp include/ast_expression.h \
   $(ACE_ROOT)/ace/CDR_Stream.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/CDR_Base.inl \
@@ -513,12 +500,11 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Message_Block_T.h \
   $(ACE_ROOT)/ace/Message_Block_T.i \
   $(ACE_ROOT)/ace/Message_Block_T.cpp \
-  $(ACE_ROOT)/ace/CDR_Stream.i \
-  include/utl_scoped_name.h include/utl_idlist.h include/utl_list.h \
-  include/ast_predefined_type.h include/ast_concrete_type.h \
-  include/ast_type.h include/ast_decl.h include/idl_narrow.h \
-  include/utl_stack.h include/fe_extern.h include/drv_extern.h \
-  include/utl_string.h \
+  $(ACE_ROOT)/ace/CDR_Stream.i include/utl_scoped_name.h \
+  include/utl_idlist.h include/utl_list.h include/ast_predefined_type.h \
+  include/ast_concrete_type.h include/ast_type.h include/ast_decl.h \
+  include/idl_narrow.h include/utl_stack.h include/fe_extern.h \
+  include/drv_extern.h include/utl_string.h \
   $(ACE_ROOT)/ace/Version.h \
   $(ACE_ROOT)/ace/Process_Manager.h \
   $(ACE_ROOT)/ace/Process.h \
@@ -527,7 +513,6 @@ endif # !def TAO_IDL_PREPROCESSOR
   $(ACE_ROOT)/ace/Env_Value_T.h \
   $(ACE_ROOT)/ace/Env_Value_T.i \
   $(ACE_ROOT)/ace/Env_Value_T.cpp \
-  $(ACE_ROOT)/ace/ARGV.h \
-  $(ACE_ROOT)/ace/ARGV.i
+  $(ACE_ROOT)/ace/ARGV.h $(ACE_ROOT)/ace/ARGV.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
