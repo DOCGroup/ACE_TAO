@@ -1,4 +1,4 @@
-Thu Sep 30 09:16:52 2004  Nanbor Wang  <nanbor@txcorp.com>
+Thu Sep 30 09:16:52 2004  Nanbor Wang  <nanbor_a_txcorp_._com>
 
 	* CCF/Config.rules: Added new definitions to actually add the
 	  boost and utility related directives into compiler/linker
