@@ -30,7 +30,9 @@ endif # threads
 CC              = cc
 CXX             = CC
 
-ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(shell CC -V 2>&1)))
+CC_VERSION = $(shell CC -V 2>&1)
+
+ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(CC_VERSION)))
   #### CC 4.2, only, supports -features=castop
   CCFLAGS         += $(CFLAGS) -features=castop
 
@@ -44,10 +46,18 @@ ifeq (Compilers 4.2,$(findstring Compilers 4.2,$(shell CC -V 2>&1)))
     #### without -features=rtti, to convert dynamic_cast to static_cast.
     CCFLAGS += -DACE_LACKS_RTTI
   endif # ! rtti
-else  # CC 5.0 or later
-  #### Support RTTI by default.
-  CCFLAGS         += $(CFLAGS)
+else  # ! 4.2
+ifeq (Compilers 5,$(findstring Compilers 5,$(CC_VERSION)))
+#### CC 5.0 or later
+  #### Inlining appears to cause link problems with early releases of
+  #### CC 5.0.
+  inline = 0
+  #### Support RTTI by default.  And, use explicit template instantiation
+  #### because automatic instantiation appears to be broken, at least
+  #### with early releases of CC 5.0.
+  CCFLAGS         += $(CFLAGS) -instances=explicit
 endif # CC 5.0 or later
+endif # ! 4.2
 
 DCFLAGS         += -g
 DLD             = $(CXX)
