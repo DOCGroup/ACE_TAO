@@ -1,3 +1,10 @@
+Tue Jun  4 12:35:12 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * ace/Message_Queue*: Moved the state_ member and the accessor method
+          to the non-template base class to get rid of the Win32 build
+          bustage, since ACE_Message_Queue_NT is not a template class, and does
+          not inherit from ACE_Message_Queue<>.
+
 Tue Jun  4 10:03:19 2002  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* examples/C++NPv2/AC_Client_Logging_Daemon.cpp: Reverted the thr_count()
