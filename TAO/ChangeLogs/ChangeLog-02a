@@ -1,3 +1,22 @@
+Wed Feb 20 11:20:00 2002  Daniel Troesser  <troesser_d@ociweb.com>
+
+	* tests/RTCORBA/check_supported_priorities.cpp
+
+	  Changed to return a value of 2 when priorities are not supported.
+	
+	* tests/RTCORBA/Banded_Connections/run_test.pl
+	* tests/RTCORBA/Client_Propagated/run_test.pl
+	* tests/RTCORBA/Collocation/Collocation.cpp
+	* tests/RTCORBA/Collocation/run_test.pl
+	* tests/RTCORBA/Linear_Priority/run_test.pl
+        * tests/RTCORBA/MT_Client_Protocol_Priority/run_test.pl
+	* tests/RTCORBA/Policy_Combinations/run_test.pl
+	* tests/RTCORBA/Server_Declared/run_test.pl
+	* tests/RTCORBA/Thread_Pool/run_test.pl
+
+	  Changed run_test.pl scripts to exit gracefully, without error,
+	  if multiple priorities are not supported.
+
 Tue Feb 19 17:57:37 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/CORBA_String.cpp:

@@ -52,41 +52,46 @@ for $file (@iorfiles)
 $SV = new PerlACE::Process ("server");
 
 $SV->Spawn ();
-
-for $file (@iorfiles)
-{
-    if (PerlACE::waitforfile_timed ($file, 5) == -1)
+$server = $SV->TimedWait(10);
+if ($server == 2) {
+  print STDOUT "Could not change priority levels.  Check user permissions.  Exiting...\n";
+  # Mark as no longer running to avoid errors on exit.
+  $SV->{RUNNING} = 0;
+} else {
+  for $file (@iorfiles)
     {
-        print STDERR "ERROR: cannot find ior file: $file\n";
-        $status = 1;
-        goto kill_server;
+      if (PerlACE::waitforfile_timed ($file, 5) == -1)
+	{
+	  print STDERR "ERROR: cannot find ior file: $file\n";
+	  $status = 1;
+	  goto kill_server;
+	}
+      
+      print STDERR "\n******************************************************\n";
+      print STDERR "Invoking methods on servant in $file poa\n";
+      print STDERR "******************************************************\n\n";
+      
+      run_client ("-k file://$file");
     }
-
-    print STDERR "\n******************************************************\n";
-    print STDERR "Invoking methods on servant in $file poa\n";
-    print STDERR "******************************************************\n\n";
-
-    run_client ("-k file://$file");
-}
-
-print STDERR "\n**************************\n";
-print STDERR "Shutting down the server\n";
-print STDERR "**************************\n\n";
-
-run_client ("-k file://$iorfiles[0] -i 0 -x");
-
-kill_server:
-
-$server = $SV->WaitKill (5);
-
-if ($server != 0) {
+  
+  print STDERR "\n**************************\n";
+  print STDERR "Shutting down the server\n";
+  print STDERR "**************************\n\n";
+  
+  run_client ("-k file://$iorfiles[0] -i 0 -x");
+  
+ kill_server:
+  
+  $server = $SV->WaitKill (5);
+  
+  if ($server != 0) {
     print STDERR "ERROR: server returned $server\n";
     $status = 1
-}
+  }
 
-for $file (@iorfiles)
-{
-    unlink $file;
-}
-
+  for $file (@iorfiles)
+    {
+      unlink $file;
+    }
+  }
 exit $status
