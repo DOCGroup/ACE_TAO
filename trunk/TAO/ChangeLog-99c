@@ -1,3 +1,12 @@
+Mon Nov 15 20:29:33 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/ast/ast_module.cpp:
+	  Modified fe_add_module() so 'reopened module' warning
+	  will not be output if the result of the lookup is a
+	  module from an #include file. No code is generated for
+	  such a module, so platforms without namespaces will
+	  have no problem with it.
+
 Mon Nov 15 19:58:19 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao-config.in:
