@@ -5,8 +5,11 @@ Wed Mar 30 21:48:14 2005  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  externally.  The handler test program needed this change to
 	  compile on Win32.
 
+	* DAnCE/Config_Handlers/Config_Handlers.mpc: Changed to source in
+	  the Xerces library settings from the latest xerces MPC template
+	  that Kitty suggested.
+
 	* DAnCE/Config_Handlers/Basic_Deployment_Data.hpp:
-	* DAnCE/Config_Handlers/Config_Handlers.mpc:
 	* DAnCE/Config_Handlers/ccd.hpp:
 	* DAnCE/Config_Handlers/cdd.hpp:
 	* DAnCE/Config_Handlers/cdp.hpp:
