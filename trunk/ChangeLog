@@ -1,3 +1,10 @@
+Fri Aug 10 13:40:46 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/nightlybuilds/builds.lst:
+
+          I didn't realize the LIST definition was needed.  I have
+          added it for the Tru64 4.0f Compaq C++ 6.3-10 build.
+
 Fri Aug 10 11:45:03 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/nightlybuilds/builds.lst:
