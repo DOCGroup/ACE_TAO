@@ -894,12 +894,19 @@ ACE_Asynch_Write_File::Result::complete (u_long bytes_transferred,
 
 // ************************************************************
 
+#if defined (ACE_HAS_AIO_CALLS)
+// We need accept handlers here. 
 ACE_Asynch_Accept::ACE_Asynch_Accept (void)
   : accept_handler_ (0)
 {
   ACE_NEW (this->accept_handler_,
            ACE_Asynch_Accept_Handler (&this->reactor_));
 }
+#else /* Not ACE_HAS_AIO_CALLS */
+ACE_Asynch_Accept::ACE_Asynch_Accept (void)
+{
+}
+#endif /* ACE_HAS_AIO_CALLS */
 
 int
 ACE_Asynch_Accept::open (ACE_Handler &handler,
