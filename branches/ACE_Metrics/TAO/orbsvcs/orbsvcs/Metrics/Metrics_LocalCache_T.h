@@ -47,7 +47,7 @@ public:
                               const char *name = 0,
                               u_long size
                                 = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE,
-                              ALLOCATOR * alloc = 0);
+                              ALLOCATOR * alloc = (ALLOCATOR*)ALLOCATOR::instance());
   // Default constructor.
 
   void report_intervals (int report_full_interval_times = 0);
@@ -173,7 +173,7 @@ public:
                             = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE,
                           u_long number_of_probes
                             = METRICS_DEFAULT_TIMEPROBE_COUNT,
-                          ALLOCATOR * alloc = 0);
+                          ALLOCATOR * alloc = (ALLOCATOR*)ALLOCATOR::instance()); 
   // Constructor.
 
   ~TAO_Metrics_LocalCache () {this->fini ();}
@@ -283,7 +283,7 @@ public:
                                      = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE,
                                    u_long number_of_probes
                                      = METRICS_DEFAULT_TIMEPROBE_COUNT,
-                                   ALLOCATOR * alloc = 0);
+                                   ALLOCATOR * alloc = (ALLOCATOR*)ALLOCATOR::instance());
   // Constructor.
 
   ~TAO_Metrics_ReportingLocalCache () {this->fini ();}
