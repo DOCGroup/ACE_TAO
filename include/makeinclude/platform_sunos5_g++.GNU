@@ -47,6 +47,7 @@ ifeq ($(threads),1)
   CPPFLAGS      += -D_REENTRANT
 endif
 
+CPPFLAGS	+= -D_XOPEN_SOURCE -D_XOPEN_SOURCE_EXTENDED=1
 DLD             = $(CXX)
 LD              = $(CXX)
 LDFLAGS         +=
