@@ -17,7 +17,7 @@
 class JAWS_VFS_Node
 {
 public:
-  JAWS_VFS_Node (char *uri);
+  JAWS_VFS_Node (const char *uri);
   ~JAWS_VFS_Node (void);
 
   char const * URI (void) const;
@@ -79,10 +79,10 @@ public:
 
   ~JAWS_VFS_Hash_Table ();
 
-  JAWS_VFS_Node * operator[] (char *URI);
+  JAWS_VFS_Node * operator[] (const char *URI);
 
 private:
-  int hashfunction (char *key) const;
+  int hashfunction (const char *key) const;
 
 private:
   JAWS_VFS_Node_Bucket<ACE_SYNCH_MUTEX> *ht_;
@@ -91,7 +91,7 @@ private:
 class JAWS_VFS
 {
 public:
-  int open (char *URI, JAWS_VFS_Node * &handle);
+  int open (const char *URI, JAWS_VFS_Node * &handle);
   int close (JAWS_VFS_Node * &handle);
   
 private:

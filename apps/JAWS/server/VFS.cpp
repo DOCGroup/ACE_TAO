@@ -18,7 +18,7 @@ static const int READ_FLAGS = O_RDONLY;
 static const int WRITE_FLAGS = O_RDWR | O_CREAT;
 #endif /* ACE_WIN32 */
 
-JAWS_VFS_Node::JAWS_VFS_Node (char *uri)
+JAWS_VFS_Node::JAWS_VFS_Node (const char *uri)
   : uri_ (ACE_OS::strdup (uri)),
     map_state_ (NOT_OPEN)
 {
@@ -217,13 +217,13 @@ JAWS_VFS_Node::uritopath (void)
     if (ptr == buf)
       ACE_OS::strcpy (buf, ACE_OS::getenv ("HOME"));
     else {
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (VXWORKS)
       char pw_buf[BUFSIZ];
       struct passwd pw_struct;
       if (ACE_OS::getpwnam_r (buf, &pw_struct, pw_buf, sizeof (pw_buf)) == 0)
         return;
       ACE_OS::strcpy (buf, pw_struct.pw_dir);
-#endif /* ACE_WIN32 */
+#endif /* NOT ACE_WIN32 AND NOT VXWORKS */
     }
  
     ACE_OS::strcat (buf, "/.www-docs/");
@@ -283,14 +283,14 @@ JAWS_VFS_Hash_Table::~JAWS_VFS_Hash_Table ()
 }
 
 JAWS_VFS_Node *
-JAWS_VFS_Hash_Table::operator[] (char *URI)
+JAWS_VFS_Hash_Table::operator[] (const char *URI)
 {
   int index = this->hashfunction (URI);
   return ht_[index].find (URI);
 }
 
 int
-JAWS_VFS_Hash_Table::hashfunction (char *key) const
+JAWS_VFS_Hash_Table::hashfunction (const char *key) const
 {
   unsigned long sum = 0;
   int j = 0;
@@ -304,7 +304,7 @@ JAWS_VFS_Hash_Table::hashfunction (char *key) const
 }
 
 int
-JAWS_VFS::open (char *URI, JAWS_VFS_Node * &handle)
+JAWS_VFS::open (const char *URI, JAWS_VFS_Node * &handle)
 {
   handle = this->hash_[URI];
   

@@ -56,13 +56,21 @@ HTTP_Request::parse_request (ACE_Message_Block &mb)
 
   // In Apache, they assume that each header line should not exceed 8K.
 
-  if (this->headers_.complete_header_line (mb.rd_ptr ())) {
-    if (!this->got_request_line ())
-      this->parse_request_line (mb.rd_ptr ());
-    else do {
-      this->headers_.parse_header_line (mb.rd_ptr ());
-    } while (this->headers_.complete_header_line (mb.rd_ptr ()));
-  }
+  if (this->headers_.complete_header_line (mb.rd_ptr ()))
+    {
+      if (!this->got_request_line ())
+        {
+          this->parse_request_line (mb.rd_ptr ());
+          while (this->headers_.complete_header_line (mb.rd_ptr ()))
+            this->headers_.parse_header_line (mb.rd_ptr ());
+        }
+      else
+        do
+          {
+            this->headers_.parse_header_line (mb.rd_ptr ());
+          }
+        while (this->headers_.complete_header_line (mb.rd_ptr ()));
+    }
 
   mb.wr_ptr (strlen(mb.rd_ptr ()) - mb.length ());
 
@@ -78,6 +86,8 @@ HTTP_Request::parse_request_line (char * const request_line)
   char *buf = request_line;
   int offset = 1;
 
+  this->status_ = HTTP_Status_Code::STATUS_OK;
+
   ptr = ACE_OS::strchr (request_line, '\n');
   if (ptr > request_line && ptr[-1] == '\r')
     ptr--, offset++;
@@ -88,6 +98,8 @@ HTTP_Request::parse_request_line (char * const request_line)
     }
   *ptr = '\0';
   ptr += offset;
+
+  ACE_DEBUG ((LM_DEBUG, " (%t) request being parsed: %s\n", buf));
 
   char *lasts; // for strtok_r
 
@@ -106,7 +118,11 @@ HTTP_Request::parse_request_line (char * const request_line)
         }
     }
 
-  //  this->cgi_arguments (this->uri);
+  ACE_DEBUG ((LM_DEBUG, " (%t) request %s %s %s parsed\n",
+              this->method (), this->uri (),
+              (this->version () ? this->version () : "HTTP/0.9")));
+
+  ACE_OS::memmove (buf, ptr, ACE_OS::strlen (ptr));
 }
 
 int
@@ -114,27 +130,18 @@ HTTP_Request::init (char * const buffer, int buflen)
 {
   // Initialize these every time.
   content_length_ = -1;
-  filename_ = "";
-  status_ = OK;
-  type_ = NO_TYPE;
 
   // Extract the data pointer.
-  data_ = NULL;
+  data_ = buffer;
   datalen_ = 0;
 
-  if ((data_ = ACE_OS::strstr (buffer,"\r\n\r\n")) != NULL) 
-    data_ += 4;
-  else if ((data_ = ACE_OS::strstr (buffer, "\n\n")) != NULL)
-    data_ += 2;
-  else
-    // Keep going even without a header?
-    status_ = NO_HEADER;
-
-  // set the datalen
+  // Set the datalen
   if (data_ != NULL)
-    datalen_ = (buffer + buflen) - data_;
+    datalen_ = buflen;
   else
     datalen_ = 0;
+
+  ACE_DEBUG ((LM_DEBUG, " (%t) init has initialized\n"));
 
   return 1;
 }
@@ -210,12 +217,6 @@ HTTP_Request::data_length (void)
   return datalen_;
 }
 
-char *
-HTTP_Request::filename (void)
-{
-  return filename_;
-}
-
 int
 HTTP_Request::content_length (void)
 {
@@ -225,67 +226,31 @@ HTTP_Request::content_length (void)
 int
 HTTP_Request::status (void)
 {
-  return status_;
+  return this->status_;
 }
 
-char *
+const char *
 HTTP_Request::status_string (void)
 {
-  switch (status_) 
-    {
-    case OK:
-      return "All is well";
-    case NO_REQUEST:
-      return "Request line missing from HTTP request";
-    case NO_CONTENT_LENGTH:
-      return "Content-length: field missing in the header";
-    case NO_FILENAME:
-      return "Filename missing in the header";
-    case NO_HEADER:
-    default:
-      return "No header";
-    }
+  return HTTP_Status_Code::instance ()[this->status_];
 }
 
 void
 HTTP_Request::dump (void)
 {
-  switch (this->type ())
-    {
-    case GET :
-      ACE_DEBUG ((LM_DEBUG, "GET command.\n"
-		  "filename is %s,"
-		  " length of the file is %d,"
-		  " data string is %s,"
-		  " datalen is %d,"
-		  " status is %d, which is %s\n\n", 
-		  this->filename () ? this->filename () : "EMPTY",
-		  this->content_length (),
-		  this->data () ? this->data () : "EMPTY",
-		  this->data_length (),
-		  this->status (),
-		  this->status_string ()));
-      break;
-
-    case PUT :
-      ACE_DEBUG ((LM_DEBUG, "PUT command.\n"
-		  "filename is %s,"
-		  " length of the file is %d,"
-		  " data string is %s,"
-		  " datalen is %d,"
-		  " status is %d, which is %s\n\n", 
-		  this->filename () ? this->filename () : "EMPTY",
-		  this->content_length (),
-		  this->data () ? this->data () : "EMPTY",
-		  this->data_length (),
-		  this->status (),
-		  this->status_string ()));
-      break;
-
-    case NO_TYPE :
-    default:
-      break;
-    }
+  ACE_DEBUG ((LM_DEBUG, "%s command.\n"
+              "filename is %s,"
+              " length of the file is %d,"
+              " data string is %s,"
+              " datalen is %d,"
+              " status is %d, which is %s\n\n", 
+              this->method () ? this->method () : "EMPTY",
+              this->uri () ? this->uri () : "EMPTY",
+              this->content_length (),
+              this->data () ? this->data () : "EMPTY",
+              this->data_length (),
+              this->status (),
+              this->status_string ()));
 }
 
 const char *
@@ -370,39 +335,39 @@ HTTP_Request::cgi (char *uri_string)
   char *cgi_path_next, *lasts;
   char *extra_path_info = 0;
 
-  cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts);
-  do
-    {
-      int len = ACE_OS::strlen (cgi_path_next);
-      if ((*cgi_path_next == '/')
-          ? ! ACE_OS::strncmp (extra_path_info = uri_string,
-                               cgi_path_next, len)
-          : (int)(extra_path_info = ACE_OS::strstr (uri_string,
-                                                    cgi_path_next)))
-        {
-          if (extra_path_info[len] == '/')
-            {
-              this->cgi_ = 1;
-              extra_path_info += len;
+  if ((cgi_path_next = ACE_OS::strtok_r (cgi_path, ":", &lasts)))
+    do
+      {
+        int len = ACE_OS::strlen (cgi_path_next);
+        if ((*cgi_path_next == '/')
+            ? ! ACE_OS::strncmp (extra_path_info = uri_string,
+                                 cgi_path_next, len)
+            : (int)(extra_path_info = ACE_OS::strstr (uri_string,
+                                                      cgi_path_next)))
+          {
+            if (extra_path_info[len] == '/')
+              {
+                this->cgi_ = 1;
+                extra_path_info += len;
 
-              // move past the executable name
-              do
-                {
-                  extra_path_info++;
-                }
-              while (*extra_path_info != '/'
-                     && *extra_path_info != '?'
-                     && *extra_path_info != '\0');
+                // move past the executable name
+                do
+                  {
+                    extra_path_info++;
+                  }
+                while (*extra_path_info != '/'
+                       && *extra_path_info != '?'
+                       && *extra_path_info != '\0');
 
-              if (*extra_path_info == '\0')
-                extra_path_info = 0;
+                if (*extra_path_info == '\0')
+                  extra_path_info = 0;
 
-              break;
-            }
-        }
-      extra_path_info = 0;
-    }
-  while ((cgi_path_next = ACE_OS::strtok_r (NULL, ":", &lasts)));
+                break;
+              }
+          }
+        extra_path_info = 0;
+      }
+    while ((cgi_path_next = ACE_OS::strtok_r (NULL, ":", &lasts)));
 
   ACE_OS::free (cgi_path);
 
@@ -438,12 +403,12 @@ HTTP_Request::cgi (char *uri_string)
         }
     }
 
-  HTTP_Helper::HTTP_decode_string (uri_string);
-
   if (extra_path_info)
-    this->path_info_ = ACE_OS::strdup (extra_path_info);
-
-  *extra_path_info = '\0';
+    {
+      this->path_info_ = ACE_OS::strdup (extra_path_info);
+      HTTP_Helper::HTTP_decode_string (this->path_info_);
+      *extra_path_info = '\0';
+    }
 
   return this->cgi_;
 }

@@ -11,7 +11,7 @@ JAWS_VFS_Node_Bucket<LOCK>::JAWS_VFS_Node_Bucket (int size)
 
 template <class LOCK>
 JAWS_VFS_Node *
-JAWS_VFS_Node_Bucket<LOCK>::find (char *URI)
+JAWS_VFS_Node_Bucket<LOCK>::find (const char *URI)
 {
   ACE_Guard<LOCK> g (this->lock_);
   int found = -1;

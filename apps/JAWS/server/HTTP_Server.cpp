@@ -57,16 +57,13 @@ HTTP_Server::init (int argc, char *argv[])
     {
     case 2:
       return this->asynch_thread_pool ();      
-      break;
 
     case 1: 
       return this->thread_per_request ();
-      break;
       
     case 0: 
     default: 
       return this->synch_thread_pool ();      
-      break;
     } 
   return 0;
 }
@@ -120,15 +117,27 @@ Synch_Thread_Pool_Task::svc (void)
       ACE_SOCK_Stream stream;
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
+
       ACE_Message_Block *mb;
-      ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1), -1);
+      ACE_NEW_RETURN (mb,
+                      ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
+                      -1);
+
       HTTP_Handler *handler = factory.create_http_handler ();
       handler->open (stream.get_handle (), *mb);
       mb->release ();
-      ACE_DEBUG ((LM_DEBUG, " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  " (%t) in Synch_Thread_Pool_Task::svc, recycling\n"));
     }
   
+  // This stinks, because I am afraid that if I remove this line,
+  // some compiler will issue a warning that this routine could exit
+  // without returning a value.  But, leaving it in makes the VXWORKS
+  // compiler complain about an unreachable statement.
+
+#if ! defined(VXWORKS)
   return 0;
+#endif /* VXWORKS */
 }
 
 int
@@ -143,12 +152,26 @@ HTTP_Server::thread_per_request (void)
       ACE_SOCK_Stream stream;
       if (this->acceptor_.accept (stream) == -1)
 	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "HTTP_Acceptor::accept"), -1);
+
       Thread_Per_Request_Task *t;
-      ACE_NEW_RETURN (t, Thread_Per_Request_Task (stream.get_handle (), this->tm_), -1);
+      ACE_NEW_RETURN (t, Thread_Per_Request_Task (stream.get_handle (),
+                                                  this->tm_),
+                      -1);
+
       if (t->open () != 0) 
-	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "Thread_Per_Request_Task::open"), -1);
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p\n", "Thread_Per_Request_Task::open"),
+                          -1);
     }      
+
+  // This stinks, because I am afraid that if I remove this line,
+  // some compiler will issue a warning that this routine could exit
+  // without returning a value.  But, leaving it in makes the VXWORKS
+  // compiler complain about an unreachable statement.
+
+#if ! defined(VXWORKS)
   return 0;
+#endif /* VXWORKS */
 }
 
 Thread_Per_Request_Task::Thread_Per_Request_Task (ACE_HANDLE handle,
