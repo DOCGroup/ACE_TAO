@@ -133,7 +133,7 @@ ifneq ($(OUTPUT_DIRECTORY),)
 all: $(OUTPUT_DIRECTORY)
 
 $(OUTPUT_DIRECTORY):
-	-@mkdir -p "$(OUTPUT_DIRECTORY)"
+	-@$(MKDIR) "$(OUTPUT_DIRECTORY)"
 endif
 
 <%if(sharedname || staticname || exename)%>

@@ -170,6 +170,7 @@
 #  PWD          Command to get the current working directory
 #  PTDIRS       Pathnames of directories containing template code
 #  RM           Name of program to use to remove files
+#  ACE_MKDIR    Name of program to (recursively) create directories
 #  SOFLAGS      Flags used to build a shared library
 #  SOLINK.cc    Link line necessary to build a share library
 #  VAR          Variant identifier suffix
@@ -307,6 +308,12 @@ SONAME ?=
 
 ifeq ($(PWD),)
   PWD=$(shell pwd)
+endif
+
+ifeq ($(ACE_MKDIR),)
+  MKDIR = mkdir -p
+else
+  MKDIR = $(ACE_MKDIR)
 endif
 
 #----------------------------------------------------------------------------

@@ -1,3 +1,11 @@
+Wed Nov 10 16:35:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+	* include/makeinclude/rules.local.GNU:
+	* include/makeinclude/wrapper_macros.GNU:
+	  Introduced use of ACE_MKDIR and MKDIR variables to better support
+          VxWorks 5.5.1 builds.
+
 Wed Nov 10 07:10:12 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * ASNMP/asnmp/enttraps.h:
