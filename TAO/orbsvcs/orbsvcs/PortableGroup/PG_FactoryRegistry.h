@@ -30,6 +30,7 @@ namespace TAO
 
 /////////////////////////////////
 // Includes needed by this header
+#include "portablegroup_export.h"
 #include <orbsvcs/PortableGroupS.h>
 #include <ace/Hash_Map_Manager.h>
 
