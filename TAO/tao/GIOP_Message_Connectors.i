@@ -12,4 +12,3 @@ ACE_INLINE
 TAO_GIOP_Message_Connector_11::TAO_GIOP_Message_Connector_11 (void)
 {
 }
-

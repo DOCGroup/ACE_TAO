@@ -1,39 +1,4 @@
 //$Id$
-// @(#)giop.cpp 1.10 95/09/21
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
-//
-//
-// Note that the Internet IOP is just the TCP-specific mapping of the
-// General IOP.  Areas where other protocols may map differently
-// include use of record streams (TCP has none), orderly disconnect
-// (TCP has it), endpoint addressing (TCP uses host + port), security
-// (Internet security should be leveraged by IIOP) and more.
-//
-// NOTE: There are a few places where this code knows that it's really
-// talking IIOP instead of GIOP.  No rush to fix this so long as we
-// are really not running atop multiple connection protocols.
-//
-// THREADING NOTE: currently, the connection manager eliminates tricky
-// threading issues by providing this code with the same programming
-// model both in threaded and unthreaded environments.  Since the GIOP
-// APIs were all designed to be reentrant, this makes threading rather
-// simple!
-//
-// That threading model is that the thread making (or handling) a call
-// is given exclusive access to a connection for the duration of a
-// call, so that no multiplexing or demultiplexing is needed.  That
-// is, locking is at the "connection level" rather than "message
-// level".
-// The down side of this simple threading model is that utilization of
-// system resources (mostly connections, but to some extent network
-// I/O) in some kinds of environments can be inefficient.  However,
-// simpler threading models are much easier to get properly debugged,
-// and often perform better.  Also, such environments haven't been
-// seen to be any kind of problem; the model can be changed later if
-// needed, it's just an internal implementation detail.  Any portable
-// ORB client is not allowed to rely on semantic implications of such
-// a model.
 
 #include "tao/GIOP_Message_Base.h"
 #include "tao/operation_details.h"
@@ -49,12 +14,12 @@ ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (void)
 {
-  
+
 }
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
-  
+
 }
 
 CORBA::Boolean
@@ -77,7 +42,7 @@ TAO_GIOP_Message_Base::
   // mask the GIOP specificness of the incoming parameter type. Let me
   // know what you feel.
 
-  // First convert the Pluggable type to the GIOP specific type. 
+  // First convert the Pluggable type to the GIOP specific type.
   switch (t)
     {
     case (TAO_PLUGGABLE_MESSAGE_REQUEST):
@@ -121,13 +86,13 @@ TAO_GIOP_Message_Base::
   msg.write_octet_array (magic, magic_size);
   msg.write_octet (this->major_version ());
   msg.write_octet (this->minor_version ());
-  
+
   // We are putting the byte order. But at a later date if we support
   // fragmentation and when we want to use the other 6 bits in this
   // octet we can have a virtual function do this for us as the
   // version info , Bala
   msg.write_octet (TAO_ENCAP_BYTE_ORDER);
- 
+
   msg.write_octet ((CORBA::Octet) type);
 
   // Write a dummy <size> later it is set to the right value...
@@ -148,9 +113,14 @@ TAO_GIOP_Message_Base::
   // @@ Bala: Why not do this right, the application should call the
   // methods below directly!
   // @@Carlos: The idea was that the application (or the user of this
-  // method)  shouldn't know what is being done. 
+  // method)  shouldn't know what is being done.
   // An afterthought, please see my comments in the file
-  // Pluggable_Messaging.h 
+  // Pluggable_Messaging.h
+  // @@ Bala: I think we agree by know that the application knows very
+  // well if it is creating a request or a locate request, and that
+  // using an enum for that, instead of calling an operation is just
+  // more obscure.... Of course, the final implementation can share
+  // code in some private method that takes the enum as an argument.
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
@@ -166,13 +136,13 @@ TAO_GIOP_Message_Base::
         ACE_ERROR_RETURN ((LM_ERROR,
                            ASYS_TEXT ("(%P|%t|%N|%l) Wrong header type \n")),
                           0);
-      
+
     }
-  
+
   return 1;
 }
 
-                        
+
 int
 TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
                                      TAO_OutputCDR &stream,
@@ -199,7 +169,7 @@ TAO_GIOP_Message_Base::send_message (TAO_Transport *transport,
   // encrypt messages (or just the message bodies) if that's needed in
   // this particular environment and that isn't handled by the
   // networking infrastructure (e.g., IPSEC).
- 
+
   CORBA::ULong bodylen = total_len - header_len;
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
@@ -241,10 +211,10 @@ TAO_GIOP_Message_Base::
   TAO_GIOP_Message_State *state =
     ACE_dynamic_cast (TAO_GIOP_Message_State *,
                       &mesg_state);
-  
+
   if (state->header_received () == 0)
     {
-      int retval = 
+      int retval =
         TAO_GIOP_Utils::read_bytes_input (transport,
                                           state->cdr,
                                           TAO_GIOP_MESSAGE_HEADER_LEN ,
@@ -256,8 +226,8 @@ TAO_GIOP_Message_Base::
                       ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input")));
           return -1;
         }
-      
-      
+
+
       if (this->parse_magic_bytes (state) == -1)
         {
           if (TAO_debug_level > 0)
@@ -266,7 +236,7 @@ TAO_GIOP_Message_Base::
                         ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input, parse_magic_bytes \n")));
           return -1;
         }
-      
+
       // Read the rest of the stuff. That should be read by the
       // corresponding states
       if (this->parse_header (state) == -1)
@@ -277,7 +247,7 @@ TAO_GIOP_Message_Base::
                         ASYS_TEXT ("TAO_GIOP_Message_Base::handle_input \n")));
           return -1;
         }
-      
+
       if (state->cdr.grow (TAO_GIOP_MESSAGE_HEADER_LEN  +
                            state->message_size) == -1)
         {
@@ -287,7 +257,7 @@ TAO_GIOP_Message_Base::
                         ASYS_TEXT ("ACE_CDR::grow")));
           return -1;
         }
-      
+
       // Growing the buffer may have reset the rd_ptr(), but we want
       // to leave it just after the GIOP header (that was parsed
       // already);
@@ -296,7 +266,7 @@ TAO_GIOP_Message_Base::
 
   size_t missing_data =
     state->message_size - state->current_offset;
-    
+
   ssize_t n =
     TAO_GIOP_Utils::read_buffer (transport,
                                  state->cdr.rd_ptr () + state->current_offset,
@@ -321,7 +291,7 @@ TAO_GIOP_Message_Base::
     }
 
    state->current_offset += n;
- 
+
   if (state->current_offset == state->message_size)
     {
       if (TAO_debug_level >= 4)
@@ -359,7 +329,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     "MessageError"
     "Fragment"
   };
-  
+
   if (TAO_debug_level >= 5)
     {
       // Message name.
@@ -367,14 +337,14 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
       u_long slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
       if (slot < sizeof (names)/sizeof(names[0]))
         message_name = names [slot];
-      
+
       // Byte order.
       int byte_order = ptr[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & 0x01;
 
       // request/reply id.
       CORBA::ULong tmp = 0;
       CORBA::ULong *id = &tmp;
-      
+
       if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REQUEST ||
           ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == TAO_GIOP_REPLY)
         {
@@ -429,7 +399,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   this->dump_msg ("send_error",
                   (const u_char *) error_message,
                   TAO_GIOP_MESSAGE_HEADER_LEN );
-  
+
   ACE_HANDLE which = transport->handle ();
 
   int result = transport->send ((const u_char *)error_message,
@@ -441,17 +411,17 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
                     ASYS_TEXT ("TAO (%N|%l|%P|%t) error sending error to %d\n"),
                     which));
     }
-  
+
   return result;
 }
 
 
 int
-TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state) 
+TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state)
 {
   // Grab the read pointer
   char *buf = state->cdr.rd_ptr ();
-  
+
   // The values are hard-coded to support non-ASCII platforms.
   if (!(buf [0] == 0x47      // 'G'
         && buf [1] == 0x49   // 'I'
@@ -461,7 +431,7 @@ TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state)
       // For the present...
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    ASYS_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"), 
+                    ASYS_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"),
                     buf[0],
                     buf[1],
                     buf[2],
@@ -479,7 +449,7 @@ TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state)
           return -1;
         }
     }
-  
+
   return 0;
 }
 
@@ -536,7 +506,7 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
   if (TAO_debug_level > 2)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n"), 
+                  ASYS_TEXT ("TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n"),
                   this->major_version (),
                   this->minor_version (),
                   state->byte_order,
@@ -565,14 +535,14 @@ TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
 
 void
 TAO_GIOP_Message_Base::
-  send_close_connection (const TAO_GIOP_Version &version,  
+  send_close_connection (const TAO_GIOP_Version &version,
                          TAO_Transport *transport,
                          void *)
 {
-  
+
   // static CORBA::Octet
   // I hate  this in every method. Till the time I figure out a way
-  // around  I will have them here hanging around. 
+  // around  I will have them here hanging around.
   const char close_message [TAO_GIOP_MESSAGE_HEADER_LEN] =
   {
     // The following works on non-ASCII platforms, such as MVS (which
@@ -597,7 +567,7 @@ TAO_GIOP_Message_Base::
   this->dump_msg ("send_close_connection",
                   (const u_char *) close_message,
                   TAO_GIOP_MESSAGE_HEADER_LEN);
-  
+
   ACE_HANDLE which = transport->handle ();
   if (which == ACE_INVALID_HANDLE)
     {
@@ -623,5 +593,3 @@ TAO_GIOP_Message_Base::
               which));
 
 }
-
-

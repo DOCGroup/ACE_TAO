@@ -42,4 +42,3 @@ TAO_GIOP_Message_Base::message_type_offset (void)
 }
 
 #endif /*if 0*/
-

@@ -46,7 +46,7 @@ TAO_Pluggable_Messaging:: transport_message (TAO_Transport *transport,
 
       return -1;
     }
-  
+
   // EOF.
   if (n == 0)
     {

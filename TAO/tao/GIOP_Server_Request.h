@@ -24,8 +24,6 @@
 
 #include "tao/corbafwd.h"
 
-
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -39,6 +37,10 @@ class TAO_Export TAO_GIOP_ServerRequest : public CORBA_ServerRequest
 {
   // = TITLE
   //    Class representing an GIOP ServerRequest object.
+  //
+  // @@ This class should go away, there is no reason to provide a
+  // per-protocol server request class.
+  //
 public:
   // = Initialization and termination methods.
   TAO_GIOP_ServerRequest (TAO_Pluggable_Messaging *mesg_base,

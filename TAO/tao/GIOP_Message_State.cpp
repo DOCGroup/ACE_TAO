@@ -10,8 +10,8 @@
 # include "tao/GIOP_Message_State.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP_Message_State, "$Id$")
 
-ACE_RCSID(tao, GIOP_Message_State, "$Id$") 
 TAO_GIOP_Message_State::TAO_GIOP_Message_State (TAO_ORB_Core* orb_core)
   : byte_order (TAO_ENCAP_BYTE_ORDER),
     more_fragments (0),
@@ -30,6 +30,7 @@ TAO_GIOP_Message_State::TAO_GIOP_Message_State (TAO_ORB_Core* orb_core)
 
 TAO_GIOP_Message_State::~TAO_GIOP_Message_State (void)
 {
+  // @@ Bala: this is not a very useful comment, is it?
   //no-op
 }
 
@@ -73,7 +74,7 @@ TAO_GIOP_Message_State::is_complete ()
       ACE_Message_Block::release (this->fragments_begin);
       this->fragments_begin = 0;
       this->fragments_end = 0;
-      
+
       this->byte_order = this->first_fragment_byte_order;
       this->giop_version = this->first_fragment_giop_version;
       this->message_type = this->first_fragment_message_type;
@@ -101,6 +102,10 @@ TAO_GIOP_Message_State::append_fragment (ACE_Message_Block* current)
       || this->first_fragment_giop_version.minor != this->giop_version.minor)
     {
       // Yes, print it out in all debug levels!
+      // @@ Bala: i know this code is mine, but could you check out
+      // the spec and the latest CORBA 2.4 draft (ptc/00-03-02) to
+      // verify if this is actually an error or not?  If so, could you
+      // please site the right section of the spec?
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) incompatible fragments:\n"
                   "   Different GIOP versions or byte order\n"));
