@@ -212,7 +212,7 @@ const int ACE_CString::npos = -1;
 const int ACE_SString::npos = -1;
 const int ACE_WString::npos = -1;
 
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ostream &
 operator<< (ostream &os, const ACE_CString &cs)
 {
@@ -235,12 +235,12 @@ operator<< (ostream &os, const ACE_SString &ss)
   os << ss.fast_rep ();
   return os;
 }
-#endif /* !ACE_HAS_WINCE */
+#endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 
 // Constructor that copies <s> into dynamically allocated memory.
 // Probable loss of data. Please use with care.
 
-ACE_CString::ACE_CString (const ACE_USHORT16 *s, 
+ACE_CString::ACE_CString (const ACE_USHORT16 *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc ? alloc : ACE_Allocator::instance ()),
     len_ (0),
@@ -259,7 +259,7 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
     {
       this->release_ = 1;
 
-      this->len_ = ACE_WString::strlen (s);      
+      this->len_ = ACE_WString::strlen (s);
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
 
       // Copy the ACE_USHORT16 * string byte-by-byte into the char *
@@ -272,22 +272,22 @@ ACE_CString::ACE_CString (const ACE_USHORT16 *s,
 }
 
 void
-ACE_CString::set (const char *s, 
+ACE_CString::set (const char *s,
                   size_t len,
                   int release)
 {
   // Free memory if necessary
 
   // Going from memory to no memory
-  if ((!release || s == 0 || s[0] == '\0') 
+  if ((!release || s == 0 || s[0] == '\0')
       && this->release_)
     this->allocator_->free (this->rep_);
 
   // Going from memory to more memory
-  else if (this->len_ < len 
+  else if (this->len_ < len
            && this->release_)
     this->allocator_->free (this->rep_);
-  
+
   // Figure out future ownership
   if (!release || s == 0 || s[0] == '\0')
     this->release_ = 0;
@@ -295,7 +295,7 @@ ACE_CString::set (const char *s,
     this->release_ = 1;
 
   // Allocate memory if owner and necessary
-  
+
   // Len is greater than 0, so must allocate space for it.
   if (this->release_ && this->len_ < len)
     this->rep_ = (char *) this->allocator_->malloc (len + 1);
@@ -310,7 +310,7 @@ ACE_CString::set (const char *s,
   // If we don't own the string.
   else if (!this->release_)
     this->rep_ = (char *) s;
-  
+
   // We own the string.
   else
     {
@@ -632,14 +632,14 @@ ACE_WString::ACE_WString (const char *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc
         ((this->len_ + 1) * sizeof (ACE_USHORT16));
       this->rep_[this->len_] = 0;
     }
   else
     {
       this->len_ = ACE_OS::strlen (s);
-      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
         ((this->len_ + 1) * sizeof (ACE_USHORT16));
 
       // Copy the char * string byte-by-byte into the ACE_USHORT16 *
@@ -666,14 +666,14 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *)  this->allocator_->malloc
         ((this->len_ + 1) * sizeof (ACE_USHORT16));
       this->rep_[this->len_] = 0;
     }
   else
     {
       this->len_ = ACE_WString::strlen (s);
-      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
         ((this->len_ + 1) * sizeof (ACE_USHORT16));
 
       ACE_OS::memcpy (this->rep_,
@@ -695,7 +695,7 @@ ACE_WString::ACE_WString (ACE_USHORT16 c,
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 1;
-  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
     ((this->len_ + 1) * sizeof (ACE_USHORT16));
   this->rep_[0] = c;
   this->rep_[this->len_] = 0;
@@ -716,14 +716,14 @@ ACE_WString::ACE_WString (const ACE_USHORT16 *s,
   if (s == 0)
     {
       this->len_ = 0;
-      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
         ((this->len_ + 1) * sizeof (ACE_USHORT16));
       this->rep_[this->len_] = 0;
     }
   else
     {
       this->len_ = len;
-      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
         ((this->len_ + 1) * sizeof (ACE_USHORT16));
 
       ACE_OS::memcpy (this->rep_,
@@ -747,7 +747,7 @@ ACE_WString::ACE_WString (size_t len,
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = len;
-  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
     ((this->len_ + 1) * sizeof (ACE_USHORT16));
 
   ACE_OS::memset (this->rep_,
@@ -768,7 +768,7 @@ ACE_WString::ACE_WString (const ACE_WString &s)
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 
-  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+  this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
     ((s.len_ + 1) * sizeof (ACE_USHORT16));
   ACE_OS::memcpy ((void *) this->rep_,
                   (const void *) s.rep_,
@@ -803,7 +803,7 @@ ACE_WString::set (const ACE_USHORT16 *s, size_t len)
   if (this->len_ < len)
     {
       this->allocator_->free (this->rep_);
-      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
         ((len + 1) * sizeof (ACE_USHORT16));
     }
 
@@ -849,7 +849,7 @@ ACE_WString::resize (size_t len)
   if (this->len_ < len)
     {
       this->allocator_->free (this->rep_);
-      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc 
+      this->rep_ = (ACE_USHORT16 *) this->allocator_->malloc
         ((len + 1) * sizeof (ACE_USHORT16));
     }
 
@@ -866,7 +866,7 @@ ACE_WString &
 ACE_WString::operator+= (const ACE_WString &s)
 {
   ACE_TRACE ("ACE_WString::operator+=");
-  ACE_USHORT16 *t = (ACE_USHORT16 *) this->allocator_->malloc 
+  ACE_USHORT16 *t = (ACE_USHORT16 *) this->allocator_->malloc
     ((this->len_ + s.len_ + 1) * sizeof (ACE_USHORT16));
 
   ACE_OS::memcpy ((void *) t,
@@ -906,7 +906,7 @@ ACE_WString::strstr (const ACE_USHORT16 *s1,
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
-    return 0;                 
+    return 0;
 
   // Go upto <len>
   size_t len = len1 - len2;

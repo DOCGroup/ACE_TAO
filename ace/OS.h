@@ -688,8 +688,10 @@ typedef int key_t;
 #     include /**/ <pna.h>      /* pNA+ TCP/IP Network Manager calls */
 #     include /**/ <phile.h>     /* pHILE+ file system calls */
 //    #include /**/ <prepccfg.h>     /* pREPC+ file system calls */
-#     include /**/ <unistd.h>    /* Diab Data supplied file system calls */
-#     include /**/ <sys/wait.h>    /* Diab Data supplied header file */
+
+// These are colliding with the pSOS libraries
+// # include /**/ <unistd.h>    /* Diab Data supplied file system calls */
+// # include /**/ <sys/wait.h>    /* Diab Data supplied header file */
 
 // This collides with phile.h
 //    #include /**/ <sys/stat.h>    /* Diab Data supplied header file */
@@ -2486,6 +2488,8 @@ protected:
   // from compiler supplied stdlib.h
   extern int putenv(char *);
 
+  int isatty (ACE_HANDLE h);
+
 # endif /* ACE_PSOS_SNARFS_HEADER_INFO */
 
 # if defined (ACE_LACKS_SCHED_H)
@@ -4084,7 +4088,7 @@ typedef int ACE_Sched_Priority;
 class ACE_Sched_Params;
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (VXWORKS)
+#   if ! defined (VXWORKS) && ! defined (ACE_PSOS)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
 // appear to support flock ().
 struct flock

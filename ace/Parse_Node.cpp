@@ -77,7 +77,14 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
 
 ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
                                   const ACE_Parse_Node *str_mods)
+#if defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS)
+  : ACE_Parse_Node (str_ops == 0 ? ACE_static_cast (char *,
+                                                    ASYS_TEXT ("<unknown>"))
+                                 : ACE_static_cast (char *,
+                                                    str_ops->name ())),
+#else
   : ACE_Parse_Node (str_ops == 0 ? "<unknown>" : str_ops->name ()),
+#endif /* defined (ACE_HAS_BROKEN_CONDITIONAL_STRING_CASTS) */
     node_ (str_ops),
     mods_ (str_mods)
 {
@@ -180,7 +187,7 @@ ACE_Resume_Node::apply (void)
   if (ACE_Service_Config::resume (this->name ()) == -1)
     ace_yyerrno++;
 
-  if (ACE::debug ())  
+  if (ACE::debug ())
     ACE_DEBUG ((LM_DEBUG,
                 ASYS_TEXT ("did resume on %s, error = %d\n"),
                 this->name (),
@@ -392,7 +399,7 @@ ACE_Location_Node::open_handle (void)
   ASYS_TCHAR dl_exppathname[MAXPATHLEN];
   if (::ExpandEnvironmentStringsA (name,
                                    dl_exppathname,
-                                   MAXPATHLEN)) 
+                                   MAXPATHLEN))
     name = dl_exppathname;
 #endif /* ACE_WIN32 */
 

@@ -137,9 +137,15 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
               // Scale up by field width so that we don't lose the
               // precision of the mean.  Carefully . . .
               const ACE_UINT64 product (*sample * field);
-              ACE_UINT64 difference =
-                product >= mean_scaled  ?  product - mean_scaled
-                                        :  mean_scaled - product;
+              ACE_UINT64 difference;
+              if  (product >= mean_scaled)
+                {
+                  difference = product - mean_scaled;
+                }
+              else
+                {
+                  difference = mean_scaled - product;
+                }
               // Do the squaring using 64-bit arithmetic.
               sum_of_squares += difference *
                 ACE_U64_TO_U32 (difference);
