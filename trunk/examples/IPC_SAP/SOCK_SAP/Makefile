@@ -160,7 +160,8 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i \
  $(ACE_ROOT)/ace/High_Res_Timer.h \
- $(ACE_ROOT)/ace/High_Res_Timer.i CPP-inclient.h
+ $(ACE_ROOT)/ace/High_Res_Timer.i \
+ CPP-inclient.h
 
 .obj/CPP-unclient.o .obj/CPP-unclient.so .shobj/CPP-unclient.o .shobj/CPP-unclient.so: CPP-unclient.cpp \
  $(ACE_ROOT)/ace/LSOCK_Connector.h \
@@ -530,7 +531,8 @@ endif
  $(ACE_ROOT)/ace/High_Res_Timer.i \
  $(ACE_ROOT)/ace/Profile_Timer.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i CPP-inserver-fancy.h
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ CPP-inserver-fancy.h
 
 .obj/CPP-inserver-poll.o .obj/CPP-inserver-poll.so .shobj/CPP-inserver-poll.o .shobj/CPP-inserver-poll.so: CPP-inserver-poll.cpp \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
@@ -832,7 +834,8 @@ endif
  $(ACE_ROOT)/ace/LSOCK.i \
  $(ACE_ROOT)/ace/LSOCK_Stream.i
 
-.obj/C-inclient.o .obj/C-inclient.so .shobj/C-inclient.o .shobj/C-inclient.so: C-inclient.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/C-inclient.o .obj/C-inclient.so .shobj/C-inclient.o .shobj/C-inclient.so: C-inclient.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
@@ -857,7 +860,8 @@ endif
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i
 
-.obj/C-inserver.o .obj/C-inserver.so .shobj/C-inserver.o .shobj/C-inserver.so: C-inserver.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/C-inserver.o .obj/C-inserver.so .shobj/C-inserver.o .shobj/C-inserver.so: C-inserver.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

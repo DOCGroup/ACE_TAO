@@ -200,9 +200,11 @@ endif # BIN
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i Client_Test.h
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ Client_Test.h
 
-.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp $(ACE_ROOT)/ace/Service_Config.h \
+.obj/main.o .obj/main.so .shobj/main.o .shobj/main.so: main.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -323,6 +325,7 @@ endif # BIN
  $(ACE_ROOT)/ace/Name_Request_Reply.h \
  $(ACE_ROOT)/ace/Name_Space.h \
  $(ACE_ROOT)/ace/ARGV.h \
- $(ACE_ROOT)/ace/ARGV.i Client_Test.h
+ $(ACE_ROOT)/ace/ARGV.i \
+ Client_Test.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

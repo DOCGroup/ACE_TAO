@@ -115,7 +115,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Containers_T.i \
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i TS_Server_Handler.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ TS_Server_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -285,7 +286,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i TS_Clerk_Handler.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ TS_Clerk_Handler.h \
  $(ACE_ROOT)/ace/SOCK_Connector.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -646,7 +648,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/SPIPE_Addr.h \
  $(ACE_ROOT)/ace/SPIPE_Addr.i \
  $(ACE_ROOT)/ace/SPIPE.i \
- $(ACE_ROOT)/ace/SPIPE_Stream.i Client_Logging_Handler.h
+ $(ACE_ROOT)/ace/SPIPE_Stream.i \
+ Client_Logging_Handler.h
 
 .obj/Name_Handler.o .obj/Name_Handler.so .shobj/Name_Handler.o .shobj/Name_Handler.so: Name_Handler.cpp \
  $(ACE_ROOT)/ace/Containers.h \
@@ -732,7 +735,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
- $(ACE_ROOT)/ace/Auto_Ptr.cpp Name_Handler.h \
+ $(ACE_ROOT)/ace/Auto_Ptr.cpp \
+ Name_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -889,7 +893,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Server_Logging_Handler_T.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
  $(ACE_ROOT)/ace/Synch_T.h \
@@ -1103,8 +1108,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Thread_Adapter.inl \
  $(ACE_ROOT)/ace/Thread.i \
  $(ACE_ROOT)/ace/Atomic_Op.i \
- $(ACE_ROOT)/ace/Synch_T.cpp Log_Message_Receiver.h \
- Log_Message_Receiver.cpp
+ $(ACE_ROOT)/ace/Synch_T.cpp \
+ Log_Message_Receiver.h Log_Message_Receiver.cpp
 
 .obj/Server_Logging_Handler.o .obj/Server_Logging_Handler.so .shobj/Server_Logging_Handler.o .shobj/Server_Logging_Handler.so: Server_Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Synch.h \
@@ -1160,9 +1165,9 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i Server_Logging_Handler.h \
- Log_Message_Receiver.h Log_Message_Receiver.cpp \
- Server_Logging_Handler_T.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ Server_Logging_Handler.h Log_Message_Receiver.h \
+ Log_Message_Receiver.cpp Server_Logging_Handler_T.h \
  $(ACE_ROOT)/ace/TLI_Acceptor.h \
  $(ACE_ROOT)/ace/TLI.h \
  $(ACE_ROOT)/ace/IPC_SAP.h \
@@ -1302,7 +1307,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Dynamic.h \
  $(ACE_ROOT)/ace/Dynamic.i \
  $(ACE_ROOT)/ace/Acceptor.cpp \
- Server_Logging_Handler_T.cpp $(ACE_ROOT)/ace/Get_Opt.h \
+ Server_Logging_Handler_T.cpp \
+ $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/Token_Handler.o .obj/Token_Handler.so .shobj/Token_Handler.o .shobj/Token_Handler.so: Token_Handler.cpp \
@@ -1343,7 +1349,8 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Sock_Connect.h \
  $(ACE_ROOT)/ace/Sock_Connect.i \
  $(ACE_ROOT)/ace/ACE.i \
- $(ACE_ROOT)/ace/Get_Opt.i Token_Handler.h \
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ Token_Handler.h \
  $(ACE_ROOT)/ace/Acceptor.h \
  $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/Service_Object.h \
@@ -1532,6 +1539,7 @@ endif # SUPPRESS_DASH_G
  $(ACE_ROOT)/ace/Basic_Types.h \
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
- $(ACE_ROOT)/ace/OS.i Base_Optimizer.cpp
+ $(ACE_ROOT)/ace/OS.i \
+ Base_Optimizer.cpp
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -177,7 +177,8 @@ endif
  $(ACE_ROOT)/ace/Containers_T.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/barrier1.o .obj/barrier1.so .shobj/barrier1.o .shobj/barrier1.so: barrier1.cpp $(ACE_ROOT)/ace/Synch.h \
+.obj/barrier1.o .obj/barrier1.so .shobj/barrier1.o .shobj/barrier1.so: barrier1.cpp \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -287,7 +288,8 @@ endif
  $(ACE_ROOT)/ace/Reactor_Impl.h \
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h
 
-.obj/barrier2.o .obj/barrier2.so .shobj/barrier2.o .shobj/barrier2.so: barrier2.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/barrier2.o .obj/barrier2.so .shobj/barrier2.o .shobj/barrier2.so: barrier2.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -457,7 +459,8 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/future1.o .obj/future1.so .shobj/future1.o .shobj/future1.so: future1.cpp $(ACE_ROOT)/ace/ACE.h \
+.obj/future1.o .obj/future1.so .shobj/future1.o .shobj/future1.so: future1.cpp \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -635,7 +638,8 @@ endif
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp
 
-.obj/future2.o .obj/future2.so .shobj/future2.o .shobj/future2.so: future2.cpp $(ACE_ROOT)/ace/ACE.h \
+.obj/future2.o .obj/future2.so .shobj/future2.o .shobj/future2.so: future2.cpp \
+ $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/post.h \
@@ -1374,7 +1378,8 @@ endif
  $(ACE_ROOT)/ace/Get_Opt.h \
  $(ACE_ROOT)/ace/Get_Opt.i
 
-.obj/task_one.o .obj/task_one.so .shobj/task_one.o .shobj/task_one.so: task_one.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/task_one.o .obj/task_one.so .shobj/task_one.o .shobj/task_one.so: task_one.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1544,7 +1549,8 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/task_two.o .obj/task_two.so .shobj/task_two.o .shobj/task_two.so: task_two.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/task_two.o .obj/task_two.so .shobj/task_two.o .shobj/task_two.so: task_two.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -1714,7 +1720,8 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/task_three.o .obj/task_three.so .shobj/task_three.o .shobj/task_three.so: task_three.cpp $(ACE_ROOT)/ace/Reactor.h \
+.obj/task_three.o .obj/task_three.so .shobj/task_three.o .shobj/task_three.so: task_three.cpp \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \
@@ -1884,7 +1891,8 @@ endif
  $(ACE_ROOT)/ace/Stream_Modules.h \
  $(ACE_ROOT)/ace/Stream_Modules.cpp
 
-.obj/task_four.o .obj/task_four.so .shobj/task_four.o .shobj/task_four.so: task_four.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/task_four.o .obj/task_four.so .shobj/task_four.o .shobj/task_four.so: task_four.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2336,7 +2344,8 @@ endif
  $(ACE_ROOT)/ace/Managed_Object.cpp \
  $(ACE_ROOT)/ace/Thread_Manager.i
 
-.obj/thread_pool.o .obj/thread_pool.so .shobj/thread_pool.o .shobj/thread_pool.so: thread_pool.cpp $(ACE_ROOT)/ace/Task.h \
+.obj/thread_pool.o .obj/thread_pool.so .shobj/thread_pool.o .shobj/thread_pool.so: thread_pool.cpp \
+ $(ACE_ROOT)/ace/Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2615,9 +2624,11 @@ endif
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
  $(ACE_ROOT)/ace/Managed_Object.cpp \
- $(ACE_ROOT)/ace/Thread_Manager.i thread_specific.h
+ $(ACE_ROOT)/ace/Thread_Manager.i \
+ thread_specific.h
 
-.obj/tss1.o .obj/tss1.so .shobj/tss1.o .shobj/tss1.so: tss1.cpp $(ACE_ROOT)/ace/Service_Config.h \
+.obj/tss1.o .obj/tss1.so .shobj/tss1.o .shobj/tss1.so: tss1.cpp \
+ $(ACE_ROOT)/ace/Service_Config.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Service_Object.h \
  $(ACE_ROOT)/ace/Shared_Object.h \
@@ -2785,9 +2796,11 @@ endif
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Module.cpp \
  $(ACE_ROOT)/ace/Stream_Modules.h \
- $(ACE_ROOT)/ace/Stream_Modules.cpp thread_specific.h
+ $(ACE_ROOT)/ace/Stream_Modules.cpp \
+ thread_specific.h
 
-.obj/tss2.o .obj/tss2.so .shobj/tss2.o .shobj/tss2.so: tss2.cpp $(ACE_ROOT)/ace/Thread.h \
+.obj/tss2.o .obj/tss2.so .shobj/tss2.o .shobj/tss2.so: tss2.cpp \
+ $(ACE_ROOT)/ace/Thread.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -2834,7 +2847,8 @@ endif
  $(ACE_ROOT)/ace/Log_Msg.h \
  $(ACE_ROOT)/ace/Log_Record.h \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i TSS_Data.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ TSS_Data.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
@@ -2848,11 +2862,13 @@ endif
  $(ACE_ROOT)/ace/Object_Manager.i \
  $(ACE_ROOT)/ace/Managed_Object.h \
  $(ACE_ROOT)/ace/Managed_Object.i \
- $(ACE_ROOT)/ace/Managed_Object.cpp TSS_Obj.h TSS_Task.h \
+ $(ACE_ROOT)/ace/Managed_Object.cpp \
+ TSS_Obj.h TSS_Task.h \
  $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/Token.i
 
-.obj/token.o .obj/token.so .shobj/token.o .shobj/token.so: token.cpp $(ACE_ROOT)/ace/Token.h \
+.obj/token.o .obj/token.so .shobj/token.o .shobj/token.so: token.cpp \
+ $(ACE_ROOT)/ace/Token.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/ACE.h \

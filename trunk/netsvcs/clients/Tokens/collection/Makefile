@@ -48,7 +48,8 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/collection.o .obj/collection.so .shobj/collection.o .shobj/collection.so: collection.cpp $(ACE_ROOT)/ace/OS.h \
+.obj/collection.o .obj/collection.so .shobj/collection.o .shobj/collection.so: collection.cpp \
+ $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \

@@ -236,6 +236,7 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Time_Value.h \
  $(ACE_ROOT)/ace/SOCK_Connector.i \
  $(ACE_ROOT)/ace/Get_Opt.h \
- $(ACE_ROOT)/ace/Get_Opt.i transceiver.h
+ $(ACE_ROOT)/ace/Get_Opt.i \
+ transceiver.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -40,7 +40,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/tcp_test.o .obj/tcp_test.so .shobj/tcp_test.o .shobj/tcp_test.so: tcp_test.cpp $(ACE_ROOT)/ace/Reactor.h \
+.obj/tcp_test.o .obj/tcp_test.so .shobj/tcp_test.o .shobj/tcp_test.so: tcp_test.cpp \
+ $(ACE_ROOT)/ace/Reactor.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/ACE.h \

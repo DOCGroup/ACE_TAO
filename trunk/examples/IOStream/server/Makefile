@@ -229,7 +229,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i iostream_server.h \
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ iostream_server.h \
  $(ACE_ROOT)/ace/IOStream.h \
  $(ACE_ROOT)/ace/IOStream_T.h \
  $(ACE_ROOT)/ace/IOStream_T.i \

@@ -47,7 +47,8 @@ include		$(ACE_ROOT)/include/makeinclude/rules.local.GNU
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/pingpong.o .obj/pingpong.so .shobj/pingpong.o .shobj/pingpong.so: pingpong.cpp $(ACE_ROOT)/ace/Synch.h \
+.obj/pingpong.o .obj/pingpong.so .shobj/pingpong.o .shobj/pingpong.so: pingpong.cpp \
+ $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \

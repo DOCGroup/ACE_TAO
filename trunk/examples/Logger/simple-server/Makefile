@@ -200,7 +200,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Message_Queue.i \
  $(ACE_ROOT)/ace/Process_Mutex.h \
  $(ACE_ROOT)/ace/Process_Mutex.inl \
- $(ACE_ROOT)/ace/WFMO_Reactor.i Logging_Acceptor.h \
+ $(ACE_ROOT)/ace/WFMO_Reactor.i \
+ Logging_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Acceptor.h \
  $(ACE_ROOT)/ace/SOCK_Stream.h \
  $(ACE_ROOT)/ace/SOCK_IO.h \
@@ -215,8 +216,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK_Stream.i \
  $(ACE_ROOT)/ace/Time_Value.h \
- $(ACE_ROOT)/ace/SOCK_Acceptor.i Logging_Handler.h \
- Reactor_Singleton.h
+ $(ACE_ROOT)/ace/SOCK_Acceptor.i \
+ Logging_Handler.h Reactor_Singleton.h
 
 .obj/Logging_Handler.o .obj/Logging_Handler.so .shobj/Logging_Handler.o .shobj/Logging_Handler.so: Logging_Handler.cpp \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -249,7 +250,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/Log_Record.i \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h \
  $(ACE_ROOT)/ace/OS_Log_Msg_Attributes.inl \
- Logging_Handler.h $(ACE_ROOT)/ace/Event_Handler.h \
+ Logging_Handler.h \
+ $(ACE_ROOT)/ace/Event_Handler.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/Flag_Manip.h \
  $(ACE_ROOT)/ace/Flag_Manip.i \
@@ -274,7 +276,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/SOCK.i \
  $(ACE_ROOT)/ace/SOCK_IO.i \
- $(ACE_ROOT)/ace/SOCK_Stream.i Reactor_Singleton.h \
+ $(ACE_ROOT)/ace/SOCK_Stream.i \
+ Reactor_Singleton.h \
  $(ACE_ROOT)/ace/Singleton.h \
  $(ACE_ROOT)/ace/Synch.h \
  $(ACE_ROOT)/ace/Synch.i \
