@@ -1,5 +1,4 @@
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
@@ -23,13 +22,16 @@
 //    order to help validate how well the multicast filtering works on a
 //    particular platform.
 //
-//    The list of destination groups start at 239.255.0.1 (default) and
-//    increment by 1 up to 5 (default) groups.  Both of these values, as well
-//    as others, can be overridden via command-line options.  Use the -?
-//    option to display the usage message...
+//    The list of destination groups start at ff01::1 (default)
+//    and increment by 1 up to 5 (default) groups.  Both of these values, as
+//    well as others, can be overridden via command-line options.  Use the
+//    -? option to display the usage message...
 //
 // = AUTHOR
 //    Don Hinton <dhinton@dresystems.com>
+//    Brian Buesker <bbuesker@qualcomm.com> - Adapted Multicast_Test to
+//                                            work over IPv6 (only enabled
+//                                            for Linux currently)
 //
 // ============================================================================
 
@@ -39,17 +41,12 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/OS_NS_sys_time.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
 #include "ace/Signal.h"
-#include "ace/Min_Max.h"
-
-ACE_RCSID(tests, Multicast_Test, "$Id$")
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
@@ -68,7 +65,13 @@ static const int MCT_ITERATIONS = 10;
 static const int MCT_GROUPS = 5;
 static const int MCT_MIN_GROUPS = 2;
 
+#if defined (ACE_HAS_IPV6)
+static const char MCT_START_GROUP[] = "ff01::1";
+#else
+// an IPv4 address that will ensure an error message is not printed when
+// IPv6 is not enabled
 static const char MCT_START_GROUP[] = "239.255.0.1";
+#endif /* ACE_HAS_IPV6 */
 static const int  MCT_START_PORT = 16000;
 
 static const size_t MAX_STRING_SIZE = 200;
@@ -107,6 +110,7 @@ public:
       else
         this->groups_ = ACE_MIN (IP_MAX_MEMBERSHIPS, MCT_GROUPS);
     }
+
   ~MCT_Config (void)
     {}
 
@@ -124,8 +128,10 @@ public:
     return ACE_static_cast (ACE_SOCK_Dgram_Mcast::options, this->sdm_opts_);
   }
 
+  int set_group (int port, const char *group);
+
 private:
-  // Starting group address. (only IPv4 capable right now...)
+  // Starting group address.
   ACE_INET_Addr group_start_;
 
   // Number of groups we will try to use in the test.
@@ -426,6 +432,12 @@ MCT_Config::dump (void) const
               this->group_start_.get_port_number ()));
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+int
+MCT_Config::set_group (int port, const char *group)
+{
+  return group_start_.set (port, group);
 }
 
 /******************************************************************************/
@@ -759,9 +771,8 @@ int producer (MCT_Config &config)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Starting producer...\n")));
   ACE_SOCK_Dgram socket (ACE_sap_any_cast (ACE_INET_Addr &));
 
-  // Note that is is IPv4 specific and needs to be changed once
-  //
-  if (config.ttl () > 1)
+  // set the TTL or hop count based on the config.ttl () value
+  if (config.ttl () > 1 && config.group_start().get_type() == AF_INET)
     {
       int ttl = config.ttl ();
       if (socket.set_option (IPPROTO_IP,
@@ -775,6 +786,25 @@ int producer (MCT_Config &config)
       else
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IP_MULTICAST_TTL = %d\n"), ttl));
     }
+#if defined (__linux__) && defined (ACE_HAS_IPV6)
+  else
+    {
+      // for IPv6, a hop limit is used instead of TTL
+      int hops = config.ttl ();
+      if (socket.set_option (IPPROTO_IPV6,
+                             IPV6_MULTICAST_HOPS,
+                             (void*) &hops,
+                             sizeof hops) != 0)
+        ACE_DEBUG ((LM_ERROR,
+                    ACE_TEXT ("could net set socket option IPV6_MULTICAST_HOPS")
+                    ACE_TEXT (" = %d\n"),
+                    hops));
+      else
+        ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IPV6_MULTICAST_HOPS = %d\n"),
+                    hops));
+    }
+#endif /* __linux__ && ACE_HAS_IPV6 */
+
 
   int iterations = config.iterations ();
   // we add an extra 5 groups for noise.
@@ -805,38 +835,77 @@ int producer (MCT_Config &config)
 int advance_addr (ACE_INET_Addr &addr)
 {
   int a, b, c, d;
-  ::sscanf (addr.get_host_addr (), "%d.%d.%d.%d", &a, &b, &c, &d);
-  if (d < 255)
-    ++d;
-  else if (c < 255)
+  if (addr.get_type () == AF_INET)
     {
-      d = 1;
-      ++c;
-    }
-  else if (b < 255)
-    {
-      d = 1;
-      c = 0;
-      ++b;
-    }
-  else if (a < 239)
-    {
-      d = 1;
-      c = 0;
-      b = 0;
-      ++a;
-    }
-  else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("advance_addr - Cannot advance multicast ")
-                       ACE_TEXT ("group address past %s\n"),
-                       addr.get_host_addr ()),
-                      -1);
+      ::sscanf (addr.get_host_addr (), "%d.%d.%d.%d", &a, &b, &c, &d);
+      if (d < 255)
+        ++d;
+      else if (c < 255)
+        {
+          d = 1;
+          ++c;
+        }
+      else if (b < 255)
+        {
+          d = 1;
+          c = 0;
+          ++b;
+        }
+      else if (a < 239)
+        {
+          d = 1;
+          c = 0;
+          b = 0;
+          ++a;
+        }
+      else
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("advance_addr - Cannot advance multicast ")
+                           ACE_TEXT ("group address past %s\n"),
+                           addr.get_host_addr ()),
+                          -1);
 
-  ACE_TCHAR buf[MAX_STRING_SIZE];
-  ACE_OS::sprintf (buf, ACE_TEXT ("%d.%d.%d.%d:%d"),
-                   a, b, c, d, addr.get_port_number ());
-  addr.set (buf);
+      ACE_TCHAR buf[MAX_STRING_SIZE];
+      ACE_OS::sprintf (buf, ACE_TEXT ("%d.%d.%d.%d:%d"),
+                       a, b, c, d, addr.get_port_number ());
+      addr.set (buf);
+      return 0;
+    }
+#if defined (__linux__) && defined (ACE_HAS_IPV6)
+  else  // assume AF_INET6
+    {
+      sockaddr_in6 *saddr = ACE_reinterpret_cast (sockaddr_in6 *,
+                                                  addr.get_addr ());
+      unsigned char *sin6_addr = ACE_reinterpret_cast (unsigned char *,
+                                                       &saddr->sin6_addr);
+      int i = 15;
+
+      // i >= 2 is used here so that the flags and scope for the
+      // multicast address are not changed
+      while (i >= 2 && sin6_addr[i] == 0xff)
+        {
+          sin6_addr[i] = 0;
+          i--;
+        }
+
+      if (i >= 2)
+        {
+          sin6_addr[i]++;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("advance_addr - Cannot advance ")
+                             ACE_TEXT ("multicast group address past %s\n"),
+                             addr.get_host_addr ()),
+                            -1);
+
+        }
+
+      return 0;
+    }
+#endif /* __linux__ && ACE_HAS_IPV6 */
+
   return 0;
 }
 
@@ -849,7 +918,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (retval != 0)
     return 1;
 
-  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test");
+  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPv6");
   ACE_TString test = temp;
 
   u_long role = config.role ();
@@ -865,6 +934,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Start test only if options are valid.
   ACE_START_TEST (test.c_str ());
 
+#if defined (__linux__) && defined (ACE_HAS_IPV6)
   // Register a signal handler to close down application gracefully.
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
 
@@ -913,6 +983,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   delete task;
+#endif /* __linux__ && ACE_HAS_IPV6 */
   ACE_END_TEST;
   return (retval == 0 && error == 0) ? 0 : 1;
 }
@@ -931,7 +1002,7 @@ template class ACE_Array<ACE_String_Base<char> *>;
 int
 run_main (int, ACE_TCHAR *argv[])
 {
-  ACE_START_TEST (ACE_TEXT ("Multicast_Test"));
+  ACE_START_TEST (ACE_TEXT ("Multicast_Test_IPv6"));
 
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("%s must be run on a platform ")

@@ -1,12 +1,11 @@
 // $Id$
-
 // ============================================================================
 //
 // = LIBRARY
 //    tests
 //
 // = FILENAME
-//    SOCK_Test.cpp
+//    SOCK_Test_IPv6.cpp
 //
 // = DESCRIPTION
 //     This is a test of the <ACE_SOCK_Acceptor> and
@@ -16,7 +15,10 @@
 //     exchange data.
 //
 // = AUTHOR
-//    Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+//    Prashant Jain <pjain@cs.wustl.edu> and
+//    Doug Schmidt <schmidt@cs.wustl.edu>
+//    Brian Buesker <bbuesker@qualcomm.com> - Modified SOCK_Test to run
+//                                            over IPv6
 //
 // ============================================================================
 
@@ -29,15 +31,20 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
-ACE_RCSID(tests, SOCK_Test, "$Id$")
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 static void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (), ACE_LOCALHOST);
+#if defined (ACE_HAS_IPV6)
+  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+                             ACE_IPV6_LOCALHOST);
+#else
+  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+                             ACE_LOCALHOST);
+#endif /*ACE_HAS_IPV6*/
+
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
 
@@ -215,7 +222,7 @@ spawn (void)
   ACE_INET_Addr server_addr;
 
   // Bind listener to any port and then find out what the port was.
-  if (peer_acceptor.open (ACE_Addr::sap_any) == -1
+  if (peer_acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
   else
@@ -275,9 +282,11 @@ spawn (void)
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("SOCK_Test"));
+  ACE_START_TEST (ACE_TEXT ("SOCK_Test_IPv6"));
 
+#if defined (ACE_HAS_IPV6)
   spawn ();
+#endif /* ACE_HAS_IPV6 */
 
   ACE_END_TEST;
   return 0;
