@@ -14,6 +14,7 @@ ACE_RCSID (PortableGroup,
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitInfo.h"
+#include "tao/debug.h"
 
 #include "PortableGroup_Request_Dispatcher.h"
 #include "POA_Hooks.h"
@@ -79,4 +80,3 @@ TAO_PortableGroup_ORBInitializer::post_init (
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
-
