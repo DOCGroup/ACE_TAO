@@ -1,3 +1,9 @@
+Wed Aug 11 15:08:44 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/CIDL/CodeGen/CodeGen.mpc:
+
+	  Fix for the compilation errors in the daily builds.
+
 Mon Aug  9 11:38:04 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ciao/Servant_Impl_T.cpp:

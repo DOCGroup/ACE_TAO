@@ -66,7 +66,7 @@ project(CodeGen_svnt) : ciao_servant {
   after += CIDL_Basic_svnt CodeGen_stub
   sharedname  = CodeGen_svnt
   libs    += CodeGen_stub CIDL_Basic_stub CIDL_Basic_svnt
-  idlflags  +=  -Wb,export_macro=CODEGEN_SVNT_Export -Wb,export_include=CODEGEN_svnt_export.h
+  idlflags  +=  -Wb,export_macro=CODEGEN_SVNT_Export -Wb,export_include=CodeGen_svnt_export.h
   dynamicflags = CODEGEN_SVNT_BUILD_DLL
   cidlflags -= --
   cidlflags += --gen-exec-impl --exec-export-include CodeGen_exec_export.h --
