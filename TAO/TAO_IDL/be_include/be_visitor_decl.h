@@ -22,6 +22,7 @@
 #define TAO_BE_VISITOR_DECL_H
 
 #include "be_visitor.h"
+#include "be_codegen.h"
 
 class be_visitor_decl : public be_visitor
 {

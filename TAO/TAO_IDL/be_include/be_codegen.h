@@ -19,11 +19,17 @@
 #ifndef TAO_BE_CODEGEN_H
 #define TAO_BE_CODEGEN_H
 
+#include "ace/Singleton.h"
+#include "ace/Synch.h"
+
 #define NAMEBUFSIZE 1024
 // maximum length of static buffers used to store names
 
 class TAO_Visitor_Factory;
+class TAO_OutStream;
 class be_visitor_context;
+class be_visitor;
+class be_decl;
 
 class TAO_CodeGen
 {

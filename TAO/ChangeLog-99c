@@ -1,3 +1,10 @@
+Thu Jul  1 22:29:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* TAO_IDL/Makefile:
+	* TAO_IDL/be_include/be_codegen.h:
+	* TAO_IDL/be_include/be_visitor_decl.h:
+	  Fixed include's to compile on Unix boxes.
+
 Thu Jul  1 22:23:15 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Profile.h:

@@ -6338,6 +6338,10 @@ tags:
  include/ast_extern.h include/nr_extern.h include/global_extern.h \
  be_include/be_visitor_interface.h be_include/be_visitor_scope.h \
  be_include/be_visitor.h be_include/be_visitor_decl.h \
+ be_include/be_codegen.h \
+ $(ACE_ROOT)/ace/Singleton.h \
+ $(ACE_ROOT)/ace/Singleton.i \
+ $(ACE_ROOT)/ace/Singleton.cpp \
  be_include/be_visitor_interface/interface.h \
  be_include/be_visitor_interface/interface_ch.h \
  be_include/be_visitor_interface/interface_ci.h \
@@ -6361,9 +6365,6 @@ tags:
  be_include/be_visitor_interface/ami_handler_fwd_ch.h \
  be_include/be_visitor_interface/ami_handler_fwd_ci.h \
  be_include/be_visitor_interface/ami_handler_ch.h be_include/be.h \
- $(ACE_ROOT)/ace/Singleton.h \
- $(ACE_ROOT)/ace/Singleton.i \
- $(ACE_ROOT)/ace/Singleton.cpp \
  $(ACE_ROOT)/ace/Process.h \
  $(ACE_ROOT)/ace/Process.i \
  be_include/be_decl.h be_include/be_scope.h be_include/be_generator.h \
@@ -6379,9 +6380,8 @@ tags:
  be_include/be_enum_val.h be_include/be_array.h \
  be_include/be_sequence.h be_include/be_string.h \
  be_include/be_typedef.h be_include/be_root.h be_include/be_native.h \
- be_include/be_helper.h be_include/be_codegen.h \
- be_include/be_stream_factory.h be_include/be_visitor_factory.h \
- be_include/be_visitor_context.h
+ be_include/be_helper.h be_include/be_stream_factory.h \
+ be_include/be_visitor_factory.h be_include/be_visitor_context.h
 .obj/be_interface_fwd.o .obj/be_interface_fwd.so .shobj/be_interface_fwd.o .shobj/be_interface_fwd.so: be/be_interface_fwd.cpp include/idl.h \
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
