@@ -38,7 +38,7 @@ static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 
 // static data members
 JAWS_Virtual_Filesystem * JAWS_Virtual_Filesystem::cvf_ = 0;
-ACE_SYNCH_MUTEX JAWS_Virtual_Filesystem::lock_;
+ACE_SYNCH_RW_MUTEX JAWS_Virtual_Filesystem::lock_;
 
 // this is how you make data opaque in C++
 // I'd like to do this with JAWS_File too, but Doug would pro'ly kill me
@@ -159,7 +159,7 @@ JAWS_Virtual_Filesystem::instance (void)
   // Double check locking pattern
   if (JAWS_Virtual_Filesystem::cvf_ == 0)
     {
-      ACE_Guard<ACE_SYNCH_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+      ACE_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
       if (JAWS_Virtual_Filesystem::cvf_ == 0)
         {
           JAWS_Virtual_Filesystem::cvf_ = new JAWS_Virtual_Filesystem;
@@ -187,20 +187,27 @@ JAWS_Virtual_Filesystem::~JAWS_Virtual_Filesystem (void)
 JAWS_File *
 JAWS_Virtual_Filesystem::fetch (const char * filename)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+  int i;
+  JAWS_File * jf = 0;
 
-  int i = this->fetch_i (filename);
-  JAWS_File * jf;
-  if (i == -1)
+  {
+    ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+    i = this->fetch_i (filename);
+    if (i != -1 && ! this->table_[i]->update ())
+      jf = this->table_[i];
+  }
+
+  if (jf == 0)
     {
-      jf = this->insert_i (new JAWS_File (filename));
+      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+      if (i == -1)
+        jf = this->insert_i (new JAWS_File (filename));
+      else /* need to update */
+        {
+          this->remove_i (i);
+          jf = this->table_[i] = new JAWS_File (filename);
+        }
     }
-  else if (this->table_[i]->update ())
-    {
-      this->remove_i (i);
-      jf = this->table_[i] = new JAWS_File (filename);
-    }
-  else jf = this->table_[i];
 
   return jf;
 }
@@ -222,7 +229,7 @@ JAWS_Virtual_Filesystem::fetch_i (const char * filename)
 JAWS_File *
 JAWS_Virtual_Filesystem::remove (const char * filename)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
 
   int i = this->fetch_i (filename);
   return ((i == -1) ? 0 : this->remove_i (i));
@@ -252,7 +259,7 @@ JAWS_File *
 JAWS_Virtual_Filesystem::insert (JAWS_File * new_file)
 {
   // Assume the filename associated with this file is unique.
-  ACE_Guard<ACE_SYNCH_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
 
   return this->insert_i (new_file);
 }
@@ -287,7 +294,7 @@ JAWS_Virtual_Filesystem::insert_i (JAWS_File * new_file)
 JAWS_File *
 JAWS_Virtual_Filesystem::replace (JAWS_File * new_file)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (JAWS_Virtual_Filesystem::lock_);
 
   int i = this->fetch_i (new_file->filename ());
   if (i == -1) this->insert_i (new_file);
@@ -410,7 +417,7 @@ JAWS_File::~JAWS_File (void)
 int
 JAWS_File::acquire (void)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> m (this->lock_);
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   if (this->reference_count_++ == 0)
     {
       if (this->error_ == OKIE_DOKIE)
@@ -478,7 +485,7 @@ JAWS_File::acquire (void)
 int
 JAWS_File::release (void)
 {
-  ACE_Guard<ACE_SYNCH_MUTEX> m (this->lock_);
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   if (--this->reference_count_ == 0)
     {
       if (this->error_ == OKIE_DOKIE)
@@ -533,24 +540,28 @@ JAWS_File::release (void)
 int
 JAWS_File::action (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return this->action_;
 }
 
 int
 JAWS_File::action (int action_value)
 {
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return (this->action_ = action_value);
 }
 
 int
 JAWS_File::error (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return this->error_;
 }
 
 int
 JAWS_File::error (int error_value, const char * s)
 {
+  ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   ACE_ERROR ((LM_ERROR, "%p.\n", s));
   return (this->error_ = error_value);
 }
@@ -558,30 +569,35 @@ JAWS_File::error (int error_value, const char * s)
 const char *
 JAWS_File::filename (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return this->filename_;
 }
 
 size_t
 JAWS_File::size (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return this->size_;
 }
 
 ACE_HANDLE
 JAWS_File::handle (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return this->handle_;
 }
 
 void *
 JAWS_File::address (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   return this->mmap_.addr ();
 }
 
 int
 JAWS_File::update (void) const
 {
+  ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (this->lock_);
   int result;
   struct stat statbuf;
 

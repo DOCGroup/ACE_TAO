@@ -1,3 +1,10 @@
+Wed Jul  2 14:33:27 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* JAWS_File.{h.cpp}: Modifications to support RW_MUTEX for both
+	  the virtual filesystem and the low level ACE_File.  Next major
+	  change will be to re-implement the virtual filesystem to use a
+	  hash table ala ACE_Hash_Map_Manager.
+
 Wed Jul  2 00:23:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 
 	* HTTP_Server.{h,cpp}: Changed parsing of options to use
@@ -14,7 +21,10 @@ Wed Jul  2 00:23:22 1997  James C Hu  <jxh@polka.cs.wustl.edu>
 	* JAWS_File.cpp: Changed it so that when the file is added to the
 	  cache, it is also acquired.  When it is removed from the cache,
 	  it is released.  This is so that the reference count is at least
-	  one while the file is in the cache.
+	  one while the file is in the cache.  Also, fixed the virtual
+	  filesystem by giving it a simple replacement strategy if the
+	  table is full.  For now, it will replace the largest file in the
+	  cache with the request for the current file.
 
 Tue Jul  1 19:13:44 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
