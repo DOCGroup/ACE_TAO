@@ -1,3 +1,20 @@
+Sun Oct 15 18:58:16 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* tests/RTCORBA/Client_Protocol/README:
+
+	  Added expected output.
+
+	* tests/RTCORBA/Client_Protocol/client.cpp:
+
+	  Updated comment.
+
+	* tests/RTCORBA/Client_Protocol/server.cpp:
+
+	  Set transport and orb protocol properties in the
+	  ClientProtocolPolicy to be non-nil.  This is a temporary change
+	  to make the test work until policy streaming code is fixed to
+	  handle nil properties.
+
 Sun Oct 15 00:11:07 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Profile.h
