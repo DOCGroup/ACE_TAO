@@ -20,6 +20,7 @@
 #define TAO_LOOKUP_H
 
 #include "Policies.h"
+#include "Attributes_T.h"
 #include "Offer_Filter.h"
 #include "Offer_Iterator.h"
 #include "Constraint_Interpreter.h"
