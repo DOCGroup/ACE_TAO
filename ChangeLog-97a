@@ -1,3 +1,14 @@
+Tue Feb 18 11:43:04 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* tests/Reactor_Notify_Test.cpp (main): added shutdown flag so
+	  that normal termination reaches ACE_END_TEST.
+
+	* examples/Mem_Map/IO-tests/test_io.cpp (main): added
+          ACE_UNUSED_ARG (sa);.
+
+	* examples/Misc/test_trace.cpp (main): added ACE_UNUSED_ARG
+          for sig1 and sig2.
+
 Tue Feb 18 03:50:10 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
 
 	* ace/ReactorEx: 
@@ -78,7 +89,7 @@ Mon Feb 17 20:59:47 1997  David L. Levine  <levine@cs.wustl.edu>
 	* ace/ReactorEx.h: made ACE_ReactorEx_Handler_Repository destructor
 	  virtual because the class has other virtual functions.
 
- 	* tests/IOStream_Test.cpp: removed ACE_WIN32 #ifndef, and
+	* tests/IOStream_Test.cpp: removed ACE_WIN32 #ifndef, and
 	  removed q_char bool conversion operator because it shouldn't
 	  be needed.
 
