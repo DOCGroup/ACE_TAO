@@ -7633,7 +7633,6 @@ AC_OUTPUT([
   apps/gperf/Makefile
   apps/gperf/src/Makefile
   man/Makefile
-  man/html/Makefile
   man/man3/Makefile
   netsvcs/Makefile
   netsvcs/clients/Makefile
