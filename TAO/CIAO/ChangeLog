@@ -1,3 +1,13 @@
+Sat Aug 14 14:44:24 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/Config_Handlers/Config_Handlers.mpc:
+
+	  Do not include /usr/lib to be in libpaths. This is odd and
+	  shouldn't be there at the application level. Applications should
+	  only be bothered about using $XERCESCROOT and the like. If the
+	  application doesn't specify the compiler, linker and the loader
+	  knows where to pick things from. 
+
 Sat Aug 14 14:07:53 2004  Aniruddha Gokhale  <a.gokhale@vanderbilt.edu>
 
 	* DAnCE/NodeManager/Node_Daemon.cpp:
