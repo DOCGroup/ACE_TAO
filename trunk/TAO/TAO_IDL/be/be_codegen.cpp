@@ -120,7 +120,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".");
+      const char *suffix = ACE_OS::strrchr (fname, '.');
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
@@ -305,7 +305,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".");
+      const char *suffix = ACE_OS::strrchr (fname, '.');
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
@@ -394,7 +394,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".");
+      const char *suffix = ACE_OS::strrchr (fname, '.');
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
@@ -499,7 +499,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       static char macro_name [NAMEBUFSIZE];
 
       ACE_OS::memset (macro_name, '\0', NAMEBUFSIZE);
-      const char *suffix = ACE_OS::strstr (fname, ".");
+      const char *suffix = ACE_OS::strrchr (fname, '.');
       if (suffix == 0)
         {
           // File seems to have no extension, so let us take the name
