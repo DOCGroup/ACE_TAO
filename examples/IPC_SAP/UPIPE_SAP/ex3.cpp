@@ -46,7 +46,7 @@ supplier (void *)
                 "(%t) %p\n",
                 "ACE_UPIPE_Acceptor.connect failed"));
 
-  ACE_Auto_Basic_Array_Ptr <char> mybuf = new char[size];
+  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> mybuf = new ASYS_TCHAR[size];
 
   for (int i = 0; i < size; i++)
     mybuf[i] = 'a';
@@ -95,7 +95,7 @@ consumer (void *)
                 "ACE_UPIPE_Acceptor.accept failed"));
 
   // Ensure deletion upon exit.
-  ACE_Auto_Basic_Array_Ptr <char> mybuf = new char[size];
+  ACE_Auto_Basic_Array_Ptr <ASYS_TCHAR> mybuf = new ASYS_TCHAR[size];
   time_t currsec;
 
   ACE_OS::time (&currsec);
@@ -129,7 +129,7 @@ consumer (void *)
 }
 
 int
-main (int argc, char *argv[])
+main (int argc, ASYS_TCHAR *argv[])
 {
   size = argc > 1 ? ACE_OS::atoi (argv[1]) : 32;
   iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : 16;
@@ -148,7 +148,7 @@ main (int argc, char *argv[])
 }
 #else
 int
-main (int, char *[])
+main (int, ASYS_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
                      "threads not supported on this platform\n"),
