@@ -2375,6 +2375,9 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
                               void *arg,
                               LPSECURITY_ATTRIBUTES sa)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_init (m, 0, name, arg);
+#else
   if (ACE_OS::thread_mutex_init (&m->nesting_mutex_, 0, name, arg) == -1)
     return -1;
   else if (ACE_OS::cond_init (&m->lock_available_, USYNC_THREAD, name, arg) == -1)
@@ -2385,22 +2388,30 @@ ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
       m->owner_id_ = ACE_OS::NULL_thread;
       return 0;
     }
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int 
 ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_destroy (m);
+#else
   if (ACE_OS::thread_mutex_destroy (&m->nesting_mutex_) == -1)
     return -1;
   else if (ACE_OS::cond_destroy (&m->lock_available_) == -1)
     return -1;
   else
     return 0;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int 
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_lock (m);
+#else
   ACE_thread_t t_id = ACE_OS::thr_self ();
   int result = 0;
 
@@ -2436,27 +2447,39 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
   ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
   errno = error;
   return result;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int 
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
                               int &abandoned)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_lock (m, abandoned);
+#else
   // @@ Irfan, can you please fill in here?
   return 0;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int 
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m,
                                  int &abandoned)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_trylock (m, abandoned);
+#else
   // @@ Irfan, can you please fill in here?
   return 0;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int 
 ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_trylock (m);
+#else
   ACE_thread_t t_id = ACE_OS::thr_self ();
   int result = 0;
 
@@ -2486,11 +2509,15 @@ ACE_OS::recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m)
   ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
   errno = error;
   return result;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int 
 ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
 {
+#if defined (ACE_HAS_RECURSIVE_MUTEXES)
+  return ACE_OS::thread_mutex_unlock (m);
+#else
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::release");
 #if !defined (ACE_NDEBUG)
   ACE_thread_t t_id = ACE_OS::thr_self ();
@@ -2528,6 +2555,7 @@ ACE_OS::recursive_mutex_unlock (ACE_recursive_thread_mutex_t *m)
   ACE_OS::thread_mutex_unlock (&m->nesting_mutex_);
   errno = error;
   return result;
+#endif /* ACE_HAS_RECURSIVE_MUTEXES */
 }
 
 ACE_INLINE int
