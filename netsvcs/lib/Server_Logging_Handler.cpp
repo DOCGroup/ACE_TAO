@@ -345,10 +345,19 @@ template class ACE_Scheduling_Strategy<ACE_Thr_Server_Logging_Handler>;
 template class ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>;
 template class ACE_Strategy_Acceptor<ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH>, LOGGING_PEER_ACCEPTOR>;
 template class ACE_Strategy_Acceptor<ACE_Thr_Server_Logging_Handler, LOGGING_PEER_ACCEPTOR>;
-template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
+
 #if defined (ACE_HAS_THREADS)
-template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
-template class ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, ACE_Atomic_Op<ACE_Thread_Mutex, u_long>, ACE_MT_SYNCH>;
+  template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
+  template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_NULL_SYNCH>;
+  template class ACE_Server_Logging_Handler<LOGGING_PEER_STREAM, ACE_Atomic_Op<ACE_Thread_Mutex, u_long>, ACE_MT_SYNCH>;
+#else
+  #if defined (ACE_HAS_TLI)
+    template class ACE_Svc_Handler<LOGGING_PEER_STREAM, ACE_SYNCH>;
+  // else if ! ACE_HAS_TLI, then LOGGING_PEER_STREAM is ACE_SOCK_STREAM,
+  // and without threads the specialization would be
+  //   template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
+  // That specialization is in TS_Server_Handler.cpp, so we don't need it here.
+  #endif /* ACE_HAS_TLI */
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
 
