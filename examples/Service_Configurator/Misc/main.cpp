@@ -31,23 +31,24 @@ ACE_STATIC_SVC_REQUIRE (Timer_Service_1)
 int
 main (int, ASYS_TCHAR *argv[])
 {
-  LPCTSTR l_argv[9];
+  LPCTSTR l_argv[10];
 
   // Manufacture a "fake" svc.conf entry to demonstrate the -S option
   // that allows us to pass these entries via the "command-line"
   // rather than the svc.conf file.
   l_argv[0] = argv[0];
   l_argv[1] = ASYS_TEXT ("-y");
-  l_argv[2] = ASYS_TEXT ("-S");
-  l_argv[3] = ASYS_TEXT ("static Timer_Service_1 \"timer 1 10 $TRACE\"");
-  l_argv[4] = ASYS_TEXT ("-S");
-  l_argv[5] = ASYS_TEXT ("dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() \"timer 2 10 $TRACE\"");
-  // Use the -f option twice to test this feature!
-  l_argv[6] = ASYS_TEXT ("-fsvc.conf");
-  l_argv[7] = ASYS_TEXT ("-fsvc.conf");
-  l_argv[8] = 0;
+  l_argv[2] = ASYS_TEXT ("-d");
+  l_argv[3] = ASYS_TEXT ("-S");
+  l_argv[4] = ASYS_TEXT ("static Timer_Service_1 \"timer 1 10 $TRACE\"");
+  l_argv[5] = ASYS_TEXT ("-S");
+  l_argv[6] = ASYS_TEXT ("dynamic Timer_Service_2 Service_Object * ./Timer:_make_Timer_Service_2() \"timer 2 10 $TRACE\"");
+  // Test the -f option!
+  l_argv[7] = ASYS_TEXT ("-fsvc.conf1");
+  l_argv[8] = ASYS_TEXT ("-fsvc.conf2");
+  l_argv[9] = 0;
 
-  if (ACE_Service_Config::open (8,
+  if (ACE_Service_Config::open (9,
                                 (ASYS_TCHAR **) l_argv,
                                 ACE_DEFAULT_LOGGER_KEY, 0) == -1 
       && errno != ENOENT)

@@ -1,3 +1,18 @@
+Wed Sep  8 15:58:07 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Log_Msg_Test.cpp (test_ostream): Make sure to add 1
+	  to the buffer we allocate dynamically so we can put a NUL at the
+ 	  end of it!  Thanks to David Levine for reporting this.
+
+	* examples/Service_Configurator/Misc/main.cpp (main): Changed the
+	  test of the -f Service Configurator option so that it links two
+ 	  different svc.conf files to avoid reentrancy problems.
+
+	* examples/Service_Configurator/Misc/svc.conf: Revised this
+	  svc.conf file (and the application) to illustrate the use of
+ 	  both static *and* dynamic service.  Thanks to Amir Bahmanyari
+ 	  <amir@peakstone.com> for motivating this.
+
 Wed Sep  8 14:05:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp: Shifted the instantiations to the top to keep
