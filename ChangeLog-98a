@@ -1,17 +1,3 @@
-Thu Jun  4 12:25:48 1998  Rajiv C. Gandhi  <gandhi@tango.cs.wustl.edu>
-
-	* apps/gperf/src/Options.h: removing the option to stack
-	  allocate some large arrays as CC does not seem to like it.
-
-
-	* apps/gperf/src/Key_List.cpp (output_lookup_array): removing
-	  the option to stack allocate some large arrays as CC does 
-          not seem to like it. 
-
-
-	* apps/gperf/src/Gen_Perf.cpp: removing the option to stack
-	  allocate some large arrays as CC does not seem to like it.
-
 Wed Apr 29 18:55:13 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5 released.
