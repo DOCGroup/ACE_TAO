@@ -69,22 +69,6 @@ TAO_IIOP_Transport::event_handler (void)
   return this->connection_handler_;
 }
 
-void
-TAO_IIOP_Transport::close_connection (void)
-{
-  // Call handle close
-  this->connection_handler_->handle_close ();
-
-  // Purge the entry
-  this->connection_handler_->purge_entry ();
-}
-
-int
-TAO_IIOP_Transport::idle (void)
-{
-  return this->connection_handler_->make_idle ();
-}
-
 ssize_t
 TAO_IIOP_Transport::send (const ACE_Message_Block *message_block,
                           const ACE_Time_Value *max_wait_time,
@@ -151,10 +135,6 @@ TAO_IIOP_Transport::register_handler (void)
 
   if (r == this->connection_handler_->reactor ())
     return 0;
-
-  // About to be registered with the reactor, so bump the ref
-  // count
-  this->connection_handler_->incr_ref_count ();
 
   // Set the flag in the Connection Handler
   this->connection_handler_->is_registered (1);
@@ -579,4 +559,16 @@ TAO_IIOP_Transport::get_listen_point (
 
   CORBA::string_free (local_interface);
   return 1;
+}
+
+void
+TAO_IIOP_Transport::transition_handler_state (void)
+{
+  connection_handler_ = 0;
+}
+
+TAO_Connection_Handler*
+TAO_IIOP_Transport::connection_handler (void) const
+{
+  return connection_handler_;
 }

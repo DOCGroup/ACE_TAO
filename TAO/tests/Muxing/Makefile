@@ -55,17 +55,16 @@ realclean: clean
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
 
 
-.obj/server.o .obj/server.o .obj/server.o .obj/server.o: server.cpp Receiver.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+.obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp Receiver.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -212,7 +211,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -221,7 +220,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -290,17 +289,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Get_Opt.h
 
-.obj/client.o .obj/client.o .obj/client.o .obj/client.o: client.cpp Client_Task.h \
- $(ACE_ROOT)/ace/pre.h \
- TestC.h \
+.obj/client.o .obj/client.so .shobj/client.o .shobj/client.so: client.cpp Client_Task.h \
+ $(ACE_ROOT)/ace/pre.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -447,7 +445,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -456,7 +454,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -515,17 +513,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Task_T.i \
  $(ACE_ROOT)/ace/Get_Opt.h
 
-.obj/Receiver.o .obj/Receiver.o .obj/Receiver.o .obj/Receiver.o: Receiver.cpp Receiver.h \
- $(ACE_ROOT)/ace/pre.h \
- TestS.h TestC.h \
+.obj/Receiver.o .obj/Receiver.so .shobj/Receiver.o .shobj/Receiver.so: Receiver.cpp Receiver.h \
+ $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -672,7 +669,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -681,7 +678,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -725,17 +722,16 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/ServerRequestInfo.h \
  TestS_T.h TestS_T.cpp TestS_T.i
 
-.obj/Client_Task.o .obj/Client_Task.o .obj/Client_Task.o .obj/Client_Task.o: Client_Task.cpp Client_Task.h \
- $(ACE_ROOT)/ace/pre.h \
- TestC.h \
+.obj/Client_Task.o .obj/Client_Task.so .shobj/Client_Task.o .shobj/Client_Task.so: Client_Task.cpp Client_Task.h \
+ $(ACE_ROOT)/ace/pre.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -882,7 +878,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -891,7 +887,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -949,16 +945,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Task_T.i
 
-.obj/Server_Task.o .obj/Server_Task.o .obj/Server_Task.o .obj/Server_Task.o: Server_Task.cpp Server_Task.h \
+.obj/Server_Task.o .obj/Server_Task.so .shobj/Server_Task.o .shobj/Server_Task.so: Server_Task.cpp Server_Task.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1105,7 +1101,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1114,7 +1110,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -1172,16 +1168,16 @@ realclean: clean
  $(ACE_ROOT)/ace/Module.i \
  $(ACE_ROOT)/ace/Task_T.i
 
-.obj/TestC.o .obj/TestC.o .obj/TestC.o .obj/TestC.o: TestC.cpp TestC.h \
+.obj/TestC.o .obj/TestC.so .shobj/TestC.o .shobj/TestC.so: TestC.cpp TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1328,7 +1324,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1337,7 +1333,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \
@@ -1373,16 +1369,16 @@ realclean: clean
  $(TAO_ROOT)/tao/RequestInfo_Util.h \
  TestC.i
 
-.obj/TestS.o .obj/TestS.o .obj/TestS.o .obj/TestS.o: TestS.cpp TestS.h TestC.h \
+.obj/TestS.o .obj/TestS.so .shobj/TestS.o .shobj/TestS.so: TestS.cpp TestS.h TestC.h \
  $(TAO_ROOT)/tao/corba.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
  $(ACE_ROOT)/ace/ace_wchar.inl \
  $(ACE_ROOT)/ace/OS_Errno.h \
  $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/post.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
  $(ACE_ROOT)/ace/Basic_Types.h \
@@ -1529,7 +1525,7 @@ realclean: clean
  $(TAO_ROOT)/tao/Parser_Registry.h \
  $(TAO_ROOT)/tao/Service_Callbacks.h \
  $(TAO_ROOT)/tao/Fault_Tolerance_Service.h \
- $(TAO_ROOT)/tao/Connection_Cache_Manager.h \
+ $(TAO_ROOT)/tao/Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor_T.h \
@@ -1538,7 +1534,7 @@ realclean: clean
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(TAO_ROOT)/tao/Cache_Entries.h \
- $(TAO_ROOT)/tao/Connection_Descriptor_Interface.h \
+ $(TAO_ROOT)/tao/Transport_Descriptor_Interface.h \
  $(TAO_ROOT)/tao/Endpoint.h \
  $(TAO_ROOT)/tao/Cleanup_Func_Registry.h \
  $(TAO_ROOT)/tao/Object_Ref_Table.h \

@@ -13,7 +13,7 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/GIOP_Message_Lite.h"
 #include "tao/Server_Strategy_Factory.h"
-#include "tao/Base_Connection_Property.h"
+#include "tao/Base_Transport_Property.h"
 #include "SHMIOP_Endpoint.h"
 
 #if !defined (__ACE_INLINE__)
@@ -27,8 +27,7 @@ ACE_RCSID(Strategies, SHMIOP_Connect, "$Id$")
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
   : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    transport_ (this, 0, 0),
-    refcount_ (1)
+    pending_upcalls_ (1)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -44,26 +43,33 @@ TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_
                                                           void *)
   : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    transport_ (this, orb_core, flag),
-    refcount_ (1)
+    pending_upcalls_ (1)
 {
+  TAO_SHMIOP_Transport* specific_transport = 0;
+  ACE_NEW(specific_transport,
+          TAO_SHMIOP_Transport(this, orb_core, 0));
+
+  // store this pointer (indirectly increment ref count)
+  this->transport(specific_transport);
+  TAO_Transport::release (specific_transport);
 }
 
 
 TAO_SHMIOP_Connection_Handler::~TAO_SHMIOP_Connection_Handler (void)
 {
-
-  // If the socket has not already been closed.
-  if (this->get_handle () != ACE_INVALID_HANDLE)
-    {
-      // Cannot deal with errors, and therefore they are ignored.
-      this->transport_.send_buffered_messages ();
-    }
-  else
-    {
-      // Dequeue messages and delete message blocks.
-      this->transport_.dequeue_all ();
-    }
+  if (this->transport () != 0) {
+    // If the socket has not already been closed.
+    if (this->get_handle () != ACE_INVALID_HANDLE)
+      {
+        // Cannot deal with errors, and therefore they are ignored.
+        this->transport ()->send_buffered_messages ();
+      }
+    else
+      {
+        // Dequeue messages and delete message blocks.
+        this->transport ()->dequeue_all ();
+      }
+  }
 }
 
 
@@ -87,7 +93,7 @@ TAO_SHMIOP_Connection_Handler::open (void*)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  if (this->transport_.wait_strategy ()->non_blocking ())
+  if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
         return -1;
@@ -184,8 +190,8 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
                  handle,
                  rm));
 
-  --this->refcount_;
-  if (this->refcount_ == 0 &&
+  --this->pending_upcalls_;
+  if (this->pending_upcalls_ == 0 &&
       this->is_registered ())
     {
       // Make sure there are no timers.
@@ -200,17 +206,20 @@ TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE handle,
       if (this->get_handle () != ACE_INVALID_HANDLE)
         {
           // Send the buffered messages first
-          this->transport_.send_buffered_messages ();
+          this->transport ()->send_buffered_messages ();
+
+          // Mark the entry as invalid
+          this->transport ()->mark_invalid ();
+
+          // Signal the transport that we will no longer have
+          // a reference to it.  This will eventually call
+          // TAO_Transport::release ().
+          this->transport (0);
 
           this->peer ().close ();
-
-          // Purge the entry too
-          this->mark_invalid ();
         }
 
-      // Decrement the reference count
-      this->decr_ref_count ();
-
+      delete this;
     }
 
   return 0;
@@ -245,16 +254,7 @@ TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
 
 
 int
-TAO_SHMIOP_Connection_Handler::close (u_long)
-{
-  this->decr_ref_count ();
-
-  return 0;
-}
-
-
-int
-TAO_SHMIOP_Connection_Handler::add_handler_to_cache (void)
+TAO_SHMIOP_Connection_Handler::add_transport_to_cache (void)
 {
   ACE_INET_Addr addr;
 
@@ -267,11 +267,11 @@ TAO_SHMIOP_Connection_Handler::add_handler_to_cache (void)
                               0);
 
   // Construct a property object
-  TAO_Base_Connection_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (&endpoint);
 
   // Add the handler to Cache
-  return this->orb_core ()->connection_cache ().cache_handler (&prop,
-                                                               this);
+  return this->orb_core ()->transport_cache ().cache_transport (&prop,
+                                                                this->transport ());
 }
 
 
@@ -286,10 +286,10 @@ int
 TAO_SHMIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
                                              ACE_Time_Value *max_wait_time)
 {
-  this->refcount_++;
+  this->pending_upcalls_++;
 
   // Call the transport read the message
-  int result = this->transport_.read_process_message (max_wait_time);
+  int result = this->transport ()->read_process_message (max_wait_time);
 
   // Now the message has been read
   if (result == -1 && TAO_debug_level > 0)
@@ -301,9 +301,7 @@ TAO_SHMIOP_Connection_Handler::handle_input_i (ACE_HANDLE,
     }
 
   // The upcall is done. Bump down the reference count
-  --this->refcount_;
-  if (this->refcount_ == 0)
-    this->decr_ref_count ();
+  --this->pending_upcalls_;
 
   if (result == 0 || result == -1)
     {

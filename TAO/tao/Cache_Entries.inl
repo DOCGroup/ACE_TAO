@@ -3,59 +3,41 @@
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (void)
-  : handler_ (0),
-    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
-{
-}
-
-ACE_INLINE
-TAO_Cache_IntId::TAO_Cache_IntId (TAO_Connection_Handler *handler)
-  : handler_ (handler),
+  : transport_ (0),
     recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
 }
 
 ACE_INLINE
 TAO_Cache_IntId::TAO_Cache_IntId (const TAO_Cache_IntId &rhs)
+  : transport_ (0),
+    recycle_state_ (ACE_RECYCLABLE_UNKNOWN)
 {
-  this->handler_ = rhs.handler_;
-  this->recycle_state_ = rhs.recycle_state_;
-}
-
-ACE_INLINE
-TAO_Cache_IntId::~TAO_Cache_IntId (void)
-{
-}
-
-ACE_INLINE void
-TAO_Cache_IntId::operator= (const TAO_Cache_IntId &rhs)
-{
-  this->handler_ = rhs.handler_;
-  this->recycle_state_ = rhs.recycle_state_;
+  *this = rhs;
 }
 
 ACE_INLINE int
 TAO_Cache_IntId::operator== (const TAO_Cache_IntId &rhs) const
 {
-  return (this->handler_ == rhs.handler_);
+  return (this->transport_ == rhs.transport_);
 }
 
 ACE_INLINE int
 TAO_Cache_IntId::operator!= (const TAO_Cache_IntId &rhs) const
 {
-  return (this->handler_ != rhs.handler_);
+  return (this->transport_ != rhs.transport_);
 }
 
-ACE_INLINE TAO_Connection_Handler *
-TAO_Cache_IntId::handler (void)
+ACE_INLINE TAO_Transport *
+TAO_Cache_IntId::transport (void)
 {
-  return this->handler_;
+  return this->transport_;
 }
 
-ACE_INLINE const TAO_Connection_Handler *
-TAO_Cache_IntId::handler (void) const
+ACE_INLINE const TAO_Transport *
+TAO_Cache_IntId::transport (void) const
 {
-  return this->handler_;
+  return this->transport_;
 }
 
 ACE_INLINE void
@@ -74,15 +56,15 @@ TAO_Cache_IntId::recycle_state (void)
 /*******************************************************/
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (void)
-  : connection_property_ (0),
+  : transport_property_ (0),
     is_delete_ (0),
     index_ (0)
 {
 }
 
 ACE_INLINE
-TAO_Cache_ExtId::TAO_Cache_ExtId (TAO_Connection_Descriptor_Interface *prop)
-  : connection_property_ (prop),
+TAO_Cache_ExtId::TAO_Cache_ExtId (TAO_Transport_Descriptor_Interface *prop)
+  : transport_property_ (prop),
     is_delete_ (0),
     index_ (0)
 {
@@ -93,43 +75,49 @@ ACE_INLINE
 TAO_Cache_ExtId::~TAO_Cache_ExtId (void)
 {
   if (this->is_delete_)
-    delete this->connection_property_;
+    delete this->transport_property_;
 }
 
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
+  : transport_property_ (0),
+    is_delete_ (0),
+    index_ (0)
 {
-  // Do a deep copy
-  this->connection_property_ =
-    rhs.connection_property_->duplicate ();
-  this->is_delete_ = 1;
-  this->index_ = rhs.index_;
+  *this = rhs;
 }
 
-ACE_INLINE void
+ACE_INLINE TAO_Cache_ExtId&
 TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
 {
-  // Do a deep copy
-  this->connection_property_ =
-    rhs.connection_property_->duplicate ();
+  if (this != &rhs) {
+    // Do a deep copy
+    this->transport_property_ =
+      rhs.transport_property_->duplicate ();
 
-  if (this->connection_property_ == 0)
-    return;
-  this->is_delete_ = 1;
-  this->index_ = rhs.index_;
+    if (this->transport_property_ == 0) {
+      this->is_delete_ = 0;
+      this->index_ = 0;
+    }
+    else {
+      this->is_delete_ = 1;
+      this->index_ = rhs.index_;
+    }
+  }
+  return *this;
 }
 
 ACE_INLINE int
 TAO_Cache_ExtId::operator== (const TAO_Cache_ExtId &rhs) const
 {
-  return (this->connection_property_->is_equivalent (rhs.connection_property_) &&
+  return (this->transport_property_->is_equivalent (rhs.transport_property_) &&
             this->index_ == rhs.index_);
 }
 
 ACE_INLINE int
 TAO_Cache_ExtId::operator!= (const TAO_Cache_ExtId &rhs) const
 {
-  if (this->connection_property_->is_equivalent (rhs.connection_property_) &&
+  if (this->transport_property_->is_equivalent (rhs.transport_property_) &&
       this->index_ == rhs.index_)
   return 0;
 
@@ -139,26 +127,26 @@ TAO_Cache_ExtId::operator!= (const TAO_Cache_ExtId &rhs) const
 ACE_INLINE u_long
 TAO_Cache_ExtId::hash (void) const
 {
-  return (this->connection_property_->hash () + this->index_);
+  return (this->transport_property_->hash () + this->index_);
 }
 
 ACE_INLINE void
 TAO_Cache_ExtId::duplicate (void)
 {
-  TAO_Connection_Descriptor_Interface *prop = 0;
+  TAO_Transport_Descriptor_Interface *prop = 0;
 
   // Make a deep copy
-  prop = this->connection_property_->duplicate ();
+  prop = this->transport_property_->duplicate ();
 
   if (prop == 0)
     return;
 
   // Release memory if there was some allocated in the first place
  if (this->is_delete_)
-   delete this->connection_property_;
+   delete this->transport_property_;
 
   this->is_delete_ = 1;
-  this->connection_property_ = prop;
+  this->transport_property_ = prop;
 }
 
 
@@ -181,8 +169,8 @@ TAO_Cache_ExtId::index (CORBA::ULong index)
   this->index_ = index;
 }
 
-ACE_INLINE TAO_Connection_Descriptor_Interface *
+ACE_INLINE TAO_Transport_Descriptor_Interface *
 TAO_Cache_ExtId::property (void) const
 {
-  return this->connection_property_;
+  return this->transport_property_;
 }

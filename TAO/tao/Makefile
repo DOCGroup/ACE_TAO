@@ -225,10 +225,10 @@ ORB_CORE_FILES = \
   ORBInitializer_Registry \
   PolicyFactory_Registry \
   Cache_Entries \
-  Base_Connection_Property \
-  Connection_Cache_Manager \
+  Base_Transport_Property \
+  Transport_Cache_Manager \
   Cleanup_Func_Registry \
-  Connection_Descriptor_Interface \
+  Transport_Descriptor_Interface \
   IORInfo \
   Object_Ref_Table \
   BiDirPolicyC \
@@ -311,7 +311,7 @@ ORB_CORE_FILES += \
   RTCORBAC \
   RT_PolicyFactory \
   RT_ORBInitializer \
-  Private_Connection_Descriptor
+  Private_Transport_Descriptor
 
 #rtcorbafwd
 
@@ -688,7 +688,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -698,12 +698,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -962,14 +962,14 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -1215,7 +1215,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1225,12 +1225,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -1555,7 +1555,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1565,12 +1565,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -1645,7 +1645,7 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -1723,7 +1723,7 @@ realclean:
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  TAO_Export.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1739,9 +1739,9 @@ realclean:
  varbase.h \
  corbafwd.i \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  ORB_Core.h \
  ORB.h \
@@ -2063,7 +2063,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -2073,12 +2073,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -2654,14 +2654,14 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Transport.h \
  Transport.h \
@@ -2977,14 +2977,14 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Transport.h \
  Transport.h \
@@ -3312,7 +3312,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -3322,10 +3322,10 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -3558,14 +3558,14 @@ realclean:
  $(ACE_ROOT)/ace/Acceptor.cpp \
  Wait_Strategy.h \
  Connection_Handler.h \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Connection_Handler.i \
  IIOP_Acceptor.h \
@@ -3948,14 +3948,14 @@ realclean:
  $(ACE_ROOT)/ace/Acceptor.cpp \
  Wait_Strategy.h \
  Connection_Handler.h \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Transport.h \
  Transport.h \
@@ -4043,8 +4043,8 @@ realclean:
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
- Base_Connection_Property.h \
- Base_Connection_Property.inl
+ Base_Transport_Property.h \
+ Base_Transport_Property.inl
 
 .obj/IIOP_Acceptor.o .obj/IIOP_Acceptor.so .shobj/IIOP_Acceptor.o .shobj/IIOP_Acceptor.so: IIOP_Acceptor.cpp \
  IIOP_Acceptor.h \
@@ -4261,14 +4261,14 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Transport.h \
  Transport.h \
@@ -4563,14 +4563,14 @@ realclean:
  $(ACE_ROOT)/ace/INET_Addr.h \
  $(ACE_ROOT)/ace/INET_Addr.i \
  $(ACE_ROOT)/ace/SOCK.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Transport.h \
  Transport.h \
@@ -4682,8 +4682,8 @@ realclean:
  Server_Strategy_Factory.h \
  IIOP_Endpoint.h \
  IIOP_Endpoint.i \
- Base_Connection_Property.h \
- Base_Connection_Property.inl
+ Base_Transport_Property.h \
+ Base_Transport_Property.inl
 
 .obj/IIOP_Endpoint.o .obj/IIOP_Endpoint.so .shobj/IIOP_Endpoint.o .shobj/IIOP_Endpoint.so: IIOP_Endpoint.cpp \
  IIOP_Endpoint.h \
@@ -4908,12 +4908,12 @@ realclean:
  $(ACE_ROOT)/ace/IPC_SAP.i \
  $(ACE_ROOT)/ace/QoS_Session.h \
  $(ACE_ROOT)/ace/SOCK.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.inl \
  IIOP_Transport.h \
  Transport.h \
@@ -5260,7 +5260,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -5270,12 +5270,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -5507,7 +5507,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -5517,12 +5517,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -5746,7 +5746,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -5756,12 +5756,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -6886,7 +6886,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -6896,12 +6896,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -7342,7 +7342,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7352,12 +7352,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -7689,7 +7689,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7699,12 +7699,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -7937,7 +7937,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -7947,12 +7947,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -8217,7 +8217,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -8227,12 +8227,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -8626,14 +8626,14 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -9017,7 +9017,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9027,12 +9027,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -9786,7 +9786,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -9796,12 +9796,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -10054,7 +10054,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10064,12 +10064,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -10814,7 +10814,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -10824,11 +10824,11 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -11252,7 +11252,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11262,12 +11262,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -11766,7 +11766,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -11776,12 +11776,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -12255,7 +12255,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12265,12 +12265,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -12485,7 +12485,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12495,12 +12495,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -12732,7 +12732,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -12742,12 +12742,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -12816,10 +12816,10 @@ realclean:
  Wait_Strategy.h Transport_Mux_Strategy.h Bind_Dispatcher_Guard.h \
  Bind_Dispatcher_Guard.i \
  Transport_Mux_Strategy.h \
- Endpoint.h RT_Policy_i.h Base_Connection_Property.h \
- Base_Connection_Property.inl \
- Private_Connection_Descriptor.h \
- Private_Connection_Descriptor.inl \
+ Endpoint.h RT_Policy_i.h Base_Transport_Property.h \
+ Base_Transport_Property.inl \
+ Private_Transport_Descriptor.h \
+ Private_Transport_Descriptor.inl \
  Messaging_Policy_i.h \
  Messaging_Policy_i.i \
  GIOP_Utils.h \
@@ -13048,7 +13048,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -13058,12 +13058,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -13325,7 +13325,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -13335,12 +13335,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -13596,7 +13596,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -13606,12 +13606,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -14176,7 +14176,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -14186,12 +14186,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -15074,7 +15074,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -15084,12 +15084,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -15399,14 +15399,14 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -15624,7 +15624,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -15634,12 +15634,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -16074,7 +16074,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -16084,12 +16084,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -16475,14 +16475,14 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -16886,7 +16886,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -16896,12 +16896,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -17173,7 +17173,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -17183,12 +17183,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -17440,7 +17440,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -17450,12 +17450,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -17944,7 +17944,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -17954,12 +17954,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -18206,7 +18206,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -18216,12 +18216,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -19121,7 +19121,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -19131,12 +19131,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -19390,7 +19390,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -19400,12 +19400,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -19949,7 +19949,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -19959,12 +19959,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -20342,7 +20342,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -20352,12 +20352,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -21534,7 +21534,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -21544,12 +21544,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -22017,7 +22017,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -22027,12 +22027,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -22665,7 +22665,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -22675,12 +22675,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -22927,7 +22927,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -22937,12 +22937,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -23320,7 +23320,7 @@ realclean:
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  Parser_Registry.h \
  Parser_Registry.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -23330,12 +23330,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -23703,7 +23703,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -23713,12 +23713,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -24062,7 +24062,7 @@ realclean:
 .obj/Cache_Entries.o .obj/Cache_Entries.so .shobj/Cache_Entries.o .shobj/Cache_Entries.so: Cache_Entries.cpp \
  Cache_Entries.h \
  $(ACE_ROOT)/ace/pre.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -24160,13 +24160,13 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl
 
-.obj/Base_Connection_Property.o .obj/Base_Connection_Property.so .shobj/Base_Connection_Property.o .shobj/Base_Connection_Property.so: Base_Connection_Property.cpp \
- Base_Connection_Property.h \
+.obj/Base_Transport_Property.o .obj/Base_Transport_Property.so .shobj/Base_Transport_Property.o .shobj/Base_Transport_Property.so: Base_Transport_Property.cpp \
+ Base_Transport_Property.h \
  $(ACE_ROOT)/ace/pre.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -24264,11 +24264,11 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
- Base_Connection_Property.inl
+ Transport_Descriptor_Interface.inl \
+ Base_Transport_Property.inl
 
-.obj/Connection_Cache_Manager.o .obj/Connection_Cache_Manager.so .shobj/Connection_Cache_Manager.o .shobj/Connection_Cache_Manager.so: Connection_Cache_Manager.cpp \
- Connection_Cache_Manager.h \
+.obj/Transport_Cache_Manager.o .obj/Transport_Cache_Manager.so .shobj/Transport_Cache_Manager.o .shobj/Transport_Cache_Manager.so: Transport_Cache_Manager.cpp \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -24382,7 +24382,7 @@ realclean:
  $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
  TAO_Export.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -24398,9 +24398,9 @@ realclean:
  varbase.h \
  corbafwd.i \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Connection_Handler.h \
  $(ACE_ROOT)/ace/SOCK.h \
  $(ACE_ROOT)/ace/Addr.h \
@@ -24615,8 +24615,8 @@ realclean:
  corbafwd.i \
  Cleanup_Func_Registry.inl
 
-.obj/Connection_Descriptor_Interface.o .obj/Connection_Descriptor_Interface.so .shobj/Connection_Descriptor_Interface.o .shobj/Connection_Descriptor_Interface.so: Connection_Descriptor_Interface.cpp \
- Connection_Descriptor_Interface.h \
+.obj/Transport_Descriptor_Interface.o .obj/Transport_Descriptor_Interface.so .shobj/Transport_Descriptor_Interface.o .shobj/Transport_Descriptor_Interface.so: Transport_Descriptor_Interface.cpp \
+ Transport_Descriptor_Interface.h \
  $(ACE_ROOT)/ace/pre.h \
  Endpoint.h \
  corbafwd.h \
@@ -24715,7 +24715,7 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Endpoint.i \
- Connection_Descriptor_Interface.inl
+ Transport_Descriptor_Interface.inl
 
 .obj/IORInfo.o .obj/IORInfo.so .shobj/IORInfo.o .shobj/IORInfo.so: IORInfo.cpp IORInfo.h \
  $(ACE_ROOT)/ace/pre.h corbafwd.h \
@@ -25344,7 +25344,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -25354,12 +25354,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -25749,7 +25749,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -25759,12 +25759,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -26789,7 +26789,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -26799,12 +26799,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -27041,7 +27041,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -27051,12 +27051,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -27300,7 +27300,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -27310,12 +27310,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -27562,7 +27562,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -27572,12 +27572,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -28142,7 +28142,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -28152,12 +28152,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -28672,7 +28672,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -28682,12 +28682,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -29081,7 +29081,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -29091,12 +29091,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -29483,7 +29483,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -29493,12 +29493,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -29718,7 +29718,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -29728,12 +29728,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -30033,14 +30033,14 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -30559,7 +30559,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -30569,12 +30569,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -30605,8 +30605,8 @@ realclean:
  $(ACE_ROOT)/ace/Parse_Node.h \
  $(ACE_ROOT)/ace/Parse_Node.i
 
-.obj/Private_Connection_Descriptor.o .obj/Private_Connection_Descriptor.so .shobj/Private_Connection_Descriptor.o .shobj/Private_Connection_Descriptor.so: Private_Connection_Descriptor.cpp \
- Private_Connection_Descriptor.h \
+.obj/Private_Transport_Descriptor.o .obj/Private_Transport_Descriptor.so .shobj/Private_Transport_Descriptor.o .shobj/Private_Transport_Descriptor.so: Private_Transport_Descriptor.cpp \
+ Private_Transport_Descriptor.h \
  $(ACE_ROOT)/ace/pre.h \
  orbconf.h \
  $(ACE_ROOT)/ace/OS.h \
@@ -30632,7 +30632,7 @@ realclean:
  $(ACE_ROOT)/ace/Basic_Types.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/OS.i \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
@@ -30706,8 +30706,8 @@ realclean:
  TAO_Export.h \
  corbafwd.i \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
- Private_Connection_Descriptor.inl
+ Transport_Descriptor_Interface.inl \
+ Private_Transport_Descriptor.inl
 
 .obj/IFR_TypeCodes.o .obj/IFR_TypeCodes.so .shobj/IFR_TypeCodes.o .shobj/IFR_TypeCodes.so: IFR_TypeCodes.cpp \
  corbafwd.h \
@@ -31145,7 +31145,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31155,12 +31155,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -31405,7 +31405,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31415,12 +31415,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h Cleanup_Func_Registry.inl Object_Ref_Table.h \
  Interceptor_List.h Interceptor_List.inl RT_Policy_i.h \
  RTCORBAC.h \
@@ -31690,7 +31690,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31700,12 +31700,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -31982,7 +31982,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -31992,12 +31992,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -32692,7 +32692,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -32702,12 +32702,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -33066,7 +33066,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -33076,12 +33076,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -33594,7 +33594,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -33604,12 +33604,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \
@@ -33837,7 +33837,7 @@ realclean:
  Service_Callbacks.i \
  Fault_Tolerance_Service.h \
  Fault_Tolerance_Service.i \
- Connection_Cache_Manager.h \
+ Transport_Cache_Manager.h \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.h \
  $(ACE_ROOT)/ace/Functor.h \
  $(ACE_ROOT)/ace/Functor.i \
@@ -33847,12 +33847,12 @@ realclean:
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
  $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
  Cache_Entries.h \
- Connection_Descriptor_Interface.h \
+ Transport_Descriptor_Interface.h \
  Endpoint.h \
  Endpoint.i \
- Connection_Descriptor_Interface.inl \
+ Transport_Descriptor_Interface.inl \
  Cache_Entries.inl \
- Connection_Cache_Manager.inl \
+ Transport_Cache_Manager.inl \
  Cleanup_Func_Registry.h \
  Cleanup_Func_Registry.inl \
  Object_Ref_Table.h \

@@ -127,7 +127,7 @@ SOURCE=.\Asynch_Timeout_Handler.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Connection_Property.h
+SOURCE=.\Transport_Connection_Property.h
 # End Source File
 # Begin Source File
 
@@ -195,11 +195,11 @@ SOURCE=.\CodecFactory_ORBInitializer.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connection_Cache_Manager.h
+SOURCE=.\Transport_Cache_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connection_Descriptor_Interface.h
+SOURCE=.\Transport_Descriptor_Interface.h
 # End Source File
 # Begin Source File
 
@@ -631,7 +631,7 @@ SOURCE=.\Priority_Mapping_Manager.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Private_Connection_Descriptor.h
+SOURCE=.\Private_Transport_Descriptor.h
 # End Source File
 # Begin Source File
 
@@ -907,7 +907,7 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Connection_Property.i
+SOURCE=.\Transport_Connection_Property.inl
 # End Source File
 # Begin Source File
 
@@ -947,11 +947,11 @@ SOURCE=.\Client_Priority_Policy.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connection_Cache_Manager.i
+SOURCE=.\Transport_Cache_Manager.inl
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connection_Descriptor_Interface.inl
+SOURCE=.\Transport_Descriptor_Interface.inl
 # End Source File
 # Begin Source File
 
@@ -1307,7 +1307,7 @@ SOURCE=.\Priority_Mapping_Manager.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Private_Connection_Descriptor.inl
+SOURCE=.\Private_Transport_Descriptor.inl
 # End Source File
 # Begin Source File
 
@@ -1523,7 +1523,7 @@ SOURCE=.\Asynch_Timeout_Handler.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Base_Connection_Property.cpp
+SOURCE=.\Transport_Connection_Property.cpp
 # End Source File
 # Begin Source File
 
@@ -1591,11 +1591,11 @@ SOURCE=.\CodecFactory_ORBInitializer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connection_Cache_Manager.cpp
+SOURCE=.\Transport_Cache_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Connection_Descriptor_Interface.cpp
+SOURCE=.\Transport_Descriptor_Interface.cpp
 # End Source File
 # Begin Source File
 
@@ -1983,7 +1983,7 @@ SOURCE=.\Priority_Mapping_Manager.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Private_Connection_Descriptor.cpp
+SOURCE=.\Private_Transport_Descriptor.cpp
 # End Source File
 # Begin Source File
 
