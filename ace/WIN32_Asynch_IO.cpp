@@ -337,7 +337,7 @@ ACE_WIN32_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     int signal_number)
 {
   // Create the Asynch_Result.
-  ACE_WIN32_Asynch_Read_Stream_Result *result;
+  ACE_WIN32_Asynch_Read_Stream_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_Stream_Result (*this->handler_,
                                                        this->handle_,
@@ -836,7 +836,7 @@ ACE_WIN32_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   int priority,
                                   int signal_number)
 {
-  ACE_WIN32_Asynch_Read_File_Result *result;
+  ACE_WIN32_Asynch_Read_File_Result *result = 0;
   ACE_NEW_RETURN (result,
                   ACE_WIN32_Asynch_Read_File_Result (*this->handler_,
                                                      this->handle_,

@@ -29,7 +29,8 @@ Supplier::Supplier (void)
     use_naming_service_ (1),
     notifier_ (),
     loop_count_ (10),
-    period_value_ (1)
+    period_value_ (1),
+    f_ptr_(0)
 {
   // No-op.
 }
@@ -82,7 +83,7 @@ Supplier::read_ior (char *filename)
 int
 Supplier::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:fi:xk:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "dn:f:i:xk:xs");
 
   int c;
   int result;
