@@ -1,3 +1,16 @@
+Sun Dec 02 15:17:47 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.cpp (join): This method mistakenly used the
+	  local copy of Thread_Descriptor to change the thread status when
+	  it found a thread to join from the <thr_list_>.  This prevented
+	  the status of the original Thread_Descriptor to be updated
+	  correctly and the same descriptor got put into the
+	  <terminated_thr_list_> again, which caused the same thread to be
+	  waiting on in some cases.  Changed to manipulate the descriptor
+	  directly to avoid the problem.  Thanks to Eyal Lubetzky
+	  <eyall@BANDWIZ.COM> for reporting the problem and providing a
+	  nice example to showcase it.
+
 Sun Dec  2 12:44:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 	* tests/ACE_Init_Test.cpp:
@@ -17,7 +30,7 @@ Sun Dec  2 12:44:58 2001  Carlos O'Ryan  <coryan@uci.edu>
 
 Sun Dec 02 12:15:25 2001  Carlos O'Ryan  <coryan@uci.edu>
 
-	* ace/OS.cpp: 
+	* ace/OS.cpp:
 	  Fixed typos in ACE_Time_Value::operator++ implementations.
 	  Also moved the implementation outside the #ifdef ACE_WIN32
 	  section.
