@@ -1,3 +1,9 @@
+Wed Apr 26 02:19:34 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	* docs/LocalObject.html: Added information about local
+	  interfaces.
+
 Tue Apr 25 19:25:28 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	  Added local interfaces support as defined in the CCM spec.
