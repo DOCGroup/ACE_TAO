@@ -1,3 +1,25 @@
+Mon Feb 18 09:26:02 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/ETCL/ETCL.dsp:
+        * orbsvcs/orbsvcs/ETCL/ETCL_Constraint.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+        * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.h:
+
+          Modified constraints and visitor to recognize values
+          from all the fields of a structured event, not just
+          'filterable_data', if they occur in a filter string.
+          Also modified visitor's handling of enum values so no
+          cast to CORBA::ULong is required when setting an enum
+          value in a structured event. In the filter string,
+          however, any rhs value to be compared against an enum
+          value must still be a CORBA::ULong, since the spec
+          does not allow enum values as valid literals in a filter
+          string. Thanks to Bhaskara Rao G <bhaskar@mihy.mot.com>
+          for reporting the problem with enums, and to Chad Elliott
+          <elliott_c@ociweb.com> for reporting the problem with
+          fields of the structured event.
+
+
 Mon Feb 18 09:14:47 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_array.cpp:
