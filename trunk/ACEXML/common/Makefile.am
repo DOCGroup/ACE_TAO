@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/common
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -96,6 +97,11 @@ nobase_include_HEADERS = \
   SAXExceptions.i \
   URL_Addr.inl \
   XMLFilterImpl.i
+
+pkgconfigdata_DATA = ACEXML.pc
+
+ACEXML.pc: ${top_builddir}/config.status ${srcdir}/ACEXML.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACEXML.pc.in
 
 ## Clean up template repositories, etc.
 clean-local:
