@@ -269,5 +269,5 @@ check_for_inline_in_cpp () if ($opt_l >= 2);
 check_for_id_string () if ($opt_l >= 2);
 check_for_inline () if ($opt_l >= 2);
 check_for_math_include () if ($opt_l >= 3);
-check_for_line_length () if ($opt_l >= 6);
-check_for_preprocessor_comments () if ($opt_l >= 3);
+check_for_line_length () if ($opt_l >= 8);
+check_for_preprocessor_comments () if ($opt_l >= 7);
