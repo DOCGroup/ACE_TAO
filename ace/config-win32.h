@@ -165,8 +165,11 @@
 // By default, we use non-static object manager on Win32.  That is,
 // the object manager is allocated in main's stack memory.  If this
 // does not suit your need, i.e., if your programs depend on the use
-// of static object manager, you neet to disable the behavior by
-// defining ACE_HAS_NONSTATIC_OBJECT_MANAGER=0.
+// of static object manager, you neet to disable the behavior by adding
+//
+//   #undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
+//
+// in the config.h after including config-win32.h
 //
 // MFC users: the main function is defined within a MFC library and
 // therefore, ACE won't be able to meddle with main function and
