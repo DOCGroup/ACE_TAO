@@ -22,6 +22,14 @@
 #ifndef TAO_CLIENT_PRIORITY_POLICY_H
 #define TAO_CLIENT_PRIORITY_POLICY_H
 
+#include "tao/orbconf.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 #include "TAOS.h"
 
 #if defined(_MSC_VER)
@@ -76,12 +84,14 @@ private:
   // The attribute
 };
 
-#if defined (__ACE_INLINE__)
-#include "tao/Client_Priority_Policy.i"
-#endif /* __ACE_INLINE__ */
-
 #if defined(_MSC_VER)
 #pragma warning(default:4250)
 #endif /* _MSC_VER */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
+#if defined (__ACE_INLINE__)
+#include "tao/Client_Priority_Policy.i"
+#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_CLIENT_PRIORITY_POLICY_H */

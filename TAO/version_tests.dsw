@@ -219,6 +219,42 @@ Package=<4>
 
 ###############################################################################
 
+Project: "Buffered_Oneways Client"=.\examples\Buffered_Oneways\client.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "Buffered_Oneways Server"=.\examples\Buffered_Oneways\server.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL Compiler
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "Callback Quoter Consumer"=.\examples\Callback_Quoter\Consumer.dsp - Package Owner=<4>
 
 Package=<5>

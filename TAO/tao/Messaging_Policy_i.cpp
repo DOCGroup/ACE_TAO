@@ -10,6 +10,14 @@
 
 ACE_RCSID(TAO, Messaging_Policy_i, "$Id$")
 
+TAO_RelativeRoundtripTimeoutPolicy_i::TAO_RelativeRoundtripTimeoutPolicy_i (
+    PortableServer::POA_ptr poa,
+    const TimeBase::TimeT& relative_expiry)
+  :  poa_ (PortableServer::POA::_duplicate (poa)),
+     relative_expiry_ (relative_expiry)
+{
+}
+
 TimeBase::TimeT
 TAO_RelativeRoundtripTimeoutPolicy_i::relative_expiry (
       CORBA::Environment &
@@ -100,6 +108,90 @@ TAO_RelativeRoundtripTimeoutPolicy_i::_default_POA (
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization,
+                                              PortableServer::POA_ptr poa)
+  : synchronization_ (synchronization),
+    poa_ (PortableServer::POA::_duplicate (poa))
+{
+}
+
+Messaging::SyncScope
+TAO_Sync_Scope_Policy::synchronization (CORBA::Environment &)
+{
+  return this->synchronization_;
+}
+
+CORBA::PolicyType
+TAO_Sync_Scope_Policy::policy_type (CORBA_Environment &)
+{
+  return Messaging::SYNC_SCOPE_POLICY_TYPE;
+}
+
+CORBA::Policy_ptr
+TAO_Sync_Scope_Policy::create (PortableServer::POA_ptr poa,
+                               const CORBA::Any& val,
+                               CORBA::Environment &ACE_TRY_ENV)
+{
+  Messaging::SyncScope synchronization;
+  if ((val >>= synchronization) == 0)
+    ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY_TYPE),
+                      CORBA::Policy::_nil ());
+
+  TAO_Sync_Scope_Policy *servant = 0;
+  ACE_NEW_THROW_EX (servant,
+                    TAO_Sync_Scope_Policy (synchronization,
+                                           poa),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  PortableServer::ServantBase_var smart_servant (servant);
+
+  CORBA::Policy_var result = servant->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return result._retn ();
+}
+
+CORBA::Policy_ptr
+TAO_Sync_Scope_Policy::copy (CORBA_Environment &ACE_TRY_ENV)
+{
+  TAO_Sync_Scope_Policy *servant = 0;
+  ACE_NEW_THROW_EX (servant,
+                    TAO_Sync_Scope_Policy (*this),
+                    CORBA::NO_MEMORY ());
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  PortableServer::ServantBase_var smart_servant (servant);
+
+  CORBA::Policy_var result = servant->_this (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return result._retn ();
+}
+
+void
+TAO_Sync_Scope_Policy::destroy (CORBA_Environment &ACE_TRY_ENV)
+{
+  PortableServer::ObjectId_var id =
+    this->poa_->servant_to_id (this,
+                               ACE_TRY_ENV);
+  ACE_CHECK;
+
+  this->poa_->deactivate_object (id.in (),
+                                 ACE_TRY_ENV);
+  ACE_CHECK;
+}
+
+PortableServer::POA_ptr
+TAO_Sync_Scope_Policy::_default_POA (CORBA_Environment &)
+{
+  return PortableServer::POA::_duplicate (this->poa_.in ());
+}
+
+////////////////////////////////////////////////////////////////////////////////
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

@@ -45,7 +45,7 @@
 #include "tao/TAOS.h"
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
-
+class TAO_Sync_Strategy;
 class TAO_GIOP_Invocation;
 class TAO_ORB_Core;
 class TAO_Policy_Manager_Impl;
@@ -289,11 +289,13 @@ public:
         TAO_default_environment ()
     );
 
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-     relative_roundtrip_timeout (void);
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
 
-  POA_TAO::ClientPriorityPolicy*
-     client_priority (void);
+  POA_TAO::ClientPriorityPolicy *client_priority (void);
+
+  POA_Messaging::SyncScopePolicy *sync_scope (void);
+
+  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void);
 
   CORBA::Policy_ptr get_client_policy (
       CORBA::PolicyType type,
@@ -317,6 +319,10 @@ public:
         TAO_default_environment ()
     );
 #endif /* TAO_HAS_CORBA_MESSAGING */
+
+  TAO_Sync_Strategy &sync_strategy (void);
+  // Return the sync strategy to be used in by the transport.
+  // Selection will be based on the SyncScope policies.
 
   CORBA::String_var type_id;
   // All objref representations carry around a type ID.
@@ -511,7 +517,7 @@ private:
   //      the ORB's RootPOA.
 
 #if defined (TAO_HAS_CORBA_MESSAGING)
-  TAO_Policy_Manager_Impl* policies_;
+  TAO_Policy_Manager_Impl *policies_;
   // The policy overrides in this object, if nil then use the default
   // policies.
 #endif /* TAO_HAS_CORBA_MESSAGING */

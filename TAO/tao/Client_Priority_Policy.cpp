@@ -6,9 +6,11 @@
 #include "tao/Client_Priority_Policy.i"
 #endif /* __ACE_INLINE__ */
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 ACE_RCSID(TAO, Client_Priority_Policy, "$Id$")
 
-  TAO::PrioritySpecification
+TAO::PrioritySpecification
 TAO_Client_Priority_Policy::priority_specification (CORBA::Environment &)
 {
   return this->priority_spec_;
@@ -88,3 +90,5 @@ TAO_Client_Priority_Policy::_default_POA (CORBA_Environment &)
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif /* TAO_HAS_CORBA_MESSAGING */

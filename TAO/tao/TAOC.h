@@ -7,17 +7,26 @@
 // Information about TAO is available at:
 //                 http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOC_H_
-#define _TAO_IDL__PROJECT_DOC_MARINA_ACE_WRAPPERS_TAO_TAO_TAOC_H_
+#ifndef _TAO_IDL_TAOC_H_
+#define _TAO_IDL_TAOC_H_
 
-#include "tao/corbafwd.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PolicyC.h"
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
+#include "tao/PolicyC.h"
+#include "tao/TimeBaseC.h"
+
+// This file inclusion should be moved outside the
+// TAO_HAS_CORBA_MESSAGING scope once more classes have been added to
+// the TAO module.
 #include "tao/varout.h"
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -35,6 +44,9 @@
 
 TAO_NAMESPACE  TAO
 {
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
   typedef CORBA::Short PrioritySelectionMode;
   typedef CORBA::Short_out PrioritySelectionMode_out;
     TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrioritySelectionMode;
@@ -208,9 +220,189 @@ class TAO_Export ClientPriorityPolicy: public virtual CORBA::Policy
 
   TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ClientPriorityPolicy;
 
+  typedef CORBA::UShort BufferingConstraintMode;
+  typedef CORBA::UShort_out BufferingConstraintMode_out;
+    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BufferingConstraintMode;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_NONE;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_TIMEOUT;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_MESSAGE_COUNT;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::UShort BUFFER_MESSAGE_BYTES;
+
+  struct TAO_Export BufferingConstraint
+  {
+    ACE_NESTED_CLASS (TAO, BufferingConstraintMode) mode;
+    TimeBase::TimeT timeout;
+    CORBA::ULong message_count;
+    CORBA::ULong message_bytes;
+  };
+
+  class TAO_Export BufferingConstraint_var
+  {
+  public:
+    BufferingConstraint_var (void); // default constructor
+    BufferingConstraint_var (BufferingConstraint *);
+    BufferingConstraint_var (const BufferingConstraint_var &); // copy constructor
+    ~BufferingConstraint_var (void); // destructor
+
+    BufferingConstraint_var &operator= (BufferingConstraint *);
+    BufferingConstraint_var &operator= (const BufferingConstraint_var &);
+    BufferingConstraint *operator-> (void);
+    const BufferingConstraint *operator-> (void) const;
+
+    operator const BufferingConstraint &() const;
+    operator BufferingConstraint &();
+    operator BufferingConstraint &() const;
+    // in, inout, out, _retn
+    const BufferingConstraint &in (void) const;
+    BufferingConstraint &inout (void);
+    BufferingConstraint &out (void);
+    BufferingConstraint _retn (void);
+    BufferingConstraint *ptr (void) const;
+
+  private:
+    BufferingConstraint *ptr_;
+  };
+
+  typedef BufferingConstraint &BufferingConstraint_out;
+
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BufferingConstraint;
+
+  TAO_NAMESPACE_STORAGE_CLASS const CORBA::ULong BUFFERING_CONSTRAINT_POLICY_TYPE;
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___PTR_CH_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY___PTR_CH_
+
+  class BufferingConstraintPolicy;
+  typedef BufferingConstraintPolicy *BufferingConstraintPolicy_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CH_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY___VAR_CH_
+
+  class TAO_Export BufferingConstraintPolicy_var
+  {
+  public:
+    BufferingConstraintPolicy_var (void); // default constructor
+    BufferingConstraintPolicy_var (BufferingConstraintPolicy_ptr);
+    BufferingConstraintPolicy_var (const BufferingConstraintPolicy_var &); // copy constructor
+    ~BufferingConstraintPolicy_var (void); // destructor
+
+    BufferingConstraintPolicy_var &operator= (BufferingConstraintPolicy_ptr);
+    BufferingConstraintPolicy_var &operator= (const BufferingConstraintPolicy_var &);
+    BufferingConstraintPolicy_ptr operator-> (void) const;
+
+    operator const BufferingConstraintPolicy_ptr &() const;
+    operator BufferingConstraintPolicy_ptr &();
+    // in, inout, out, _retn
+    BufferingConstraintPolicy_ptr in (void) const;
+    BufferingConstraintPolicy_ptr &inout (void);
+    BufferingConstraintPolicy_ptr &out (void);
+    BufferingConstraintPolicy_ptr _retn (void);
+    BufferingConstraintPolicy_ptr ptr (void) const;
+
+  private:
+    BufferingConstraintPolicy_ptr ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY___OUT_CH_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY___OUT_CH_
+
+  class TAO_Export BufferingConstraintPolicy_out
+  {
+  public:
+    BufferingConstraintPolicy_out (BufferingConstraintPolicy_ptr &);
+    BufferingConstraintPolicy_out (BufferingConstraintPolicy_var &);
+    BufferingConstraintPolicy_out (const BufferingConstraintPolicy_out &);
+    BufferingConstraintPolicy_out &operator= (const BufferingConstraintPolicy_out &);
+    BufferingConstraintPolicy_out &operator= (const BufferingConstraintPolicy_var &);
+    BufferingConstraintPolicy_out &operator= (BufferingConstraintPolicy_ptr);
+    operator BufferingConstraintPolicy_ptr &();
+    BufferingConstraintPolicy_ptr &ptr (void);
+    BufferingConstraintPolicy_ptr operator-> (void);
+
+  private:
+    BufferingConstraintPolicy_ptr &ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_TAO_BUFFERINGCONSTRAINTPOLICY_CH_)
+#define _TAO_BUFFERINGCONSTRAINTPOLICY_CH_
+
+class TAO_Export BufferingConstraintPolicy: public virtual CORBA::Policy
+  {
+  public:
+  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef BufferingConstraintPolicy_ptr _ptr_type;
+    typedef BufferingConstraintPolicy_var _var_type;
+  #endif /* ! __GNUC__ || g++ >= 2.8 */
+
+    // the static operations
+    static BufferingConstraintPolicy_ptr _duplicate (BufferingConstraintPolicy_ptr obj);
+    static BufferingConstraintPolicy_ptr _narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &env =
+          TAO_default_environment ()
+      );
+    static BufferingConstraintPolicy_ptr _unchecked_narrow (
+        CORBA::Object_ptr obj,
+        CORBA::Environment &env =
+          TAO_default_environment ()
+      );
+    static BufferingConstraintPolicy_ptr _nil (void)
+      {
+        return (TAO::BufferingConstraintPolicy_ptr)0;
+      }
+
+    virtual ACE_NESTED_CLASS (TAO, BufferingConstraint) buffering_constraint (
+        CORBA::Environment &ACE_TRY_ENV =
+          TAO_default_environment ()
+      ) = 0;
+
+    virtual CORBA::Boolean _is_a (
+        const CORBA::Char *type_id,
+        CORBA::Environment &env =
+          TAO_default_environment ()
+      );
+    virtual const char* _interface_repository_id (void) const;
+
+  protected:
+    BufferingConstraintPolicy (void);
+    BufferingConstraintPolicy (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
+        CORBA::Boolean _tao_collocated = 0
+      );
+    virtual ~BufferingConstraintPolicy (void);
+  private:
+    BufferingConstraintPolicy (const BufferingConstraintPolicy &);
+    void operator= (const BufferingConstraintPolicy &);
+  };
+
+
+#endif /* end #if !defined */
+
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BufferingConstraintPolicy;
+
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 }
 TAO_NAMESPACE_CLOSE // module TAO
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
 
 void TAO_Export operator<<= (CORBA::Any &, const TAO::PrioritySpecification &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, TAO::PrioritySpecification*); // noncopying version
@@ -218,11 +410,25 @@ CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TAO::PrioritySpecific
 // Any operators for interface TAO::ClientPriorityPolicy
 void TAO_Export operator<<= (CORBA::Any &, TAO::ClientPriorityPolicy_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TAO::ClientPriorityPolicy *&);
+void TAO_Export operator<<= (CORBA::Any &, const TAO::BufferingConstraint &); // copying version
+void TAO_Export operator<<= (CORBA::Any &, TAO::BufferingConstraint*); // noncopying version
+CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, TAO::BufferingConstraint *&);
+// Any operators for interface TAO::BufferingConstraintPolicy
+void  operator<<= (CORBA::Any &, TAO::BufferingConstraintPolicy_ptr);
+CORBA::Boolean  operator>>= (const CORBA::Any &, TAO::BufferingConstraintPolicy *&);
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #ifndef __ACE_INLINE__
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+
 CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TAO::PrioritySpecification &);
 CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TAO::PrioritySpecification &);
+CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, const TAO::BufferingConstraint &);
+CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, TAO::BufferingConstraint &);
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 #endif /* __ACE_INLINE__ */
 

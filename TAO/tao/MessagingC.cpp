@@ -77,6 +77,11 @@ TAO_NAMESPACE_TYPE (const CORBA::Short)
 TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_WITH_TARGET, 3)
 TAO_NAMESPACE_END
+// = TAO specific extension.
+TAO_NAMESPACE_TYPE (const CORBA::Short)
+TAO_NAMESPACE_BEGIN (Messaging)
+TAO_NAMESPACE_DEFINE (const CORBA::Short, SYNC_FLUSH, 4)
+TAO_NAMESPACE_END
 static const CORBA::Long _oc_Messaging_RoutingType[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -1452,7 +1457,7 @@ Messaging::ExceptionHolder_init::~ExceptionHolder_init ()
 {
 }
 
-const char* 
+const char*
 Messaging::ExceptionHolder_init::tao_repository_id ()
 {
   return Messaging::ExceptionHolder::_tao_obv_static_repository_id ();
@@ -1529,14 +1534,14 @@ TAO_NAMESPACE_BEGIN (Messaging)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ReplyHandler, &_tc_TAO_tc_Messaging_ReplyHandler)
 TAO_NAMESPACE_END
 
-CORBA::Boolean 
+CORBA::Boolean
 OBV_Messaging::ExceptionHolder::_tao_marshal__Messaging_ExceptionHolder (TAO_OutputCDR &strm){
   return _tao_marshal_state (strm);
-  
+
 }
 CORBA::Boolean OBV_Messaging::ExceptionHolder::_tao_unmarshal__Messaging_ExceptionHolder (TAO_InputCDR &strm){
   return _tao_unmarshal_state (strm);
-  
+
 }
 // accessor to set the member
 void
@@ -1575,13 +1580,13 @@ OBV_Messaging::ExceptionHolder::marshaled_exception (const Messaging::ExceptionH
       /*Messaging::ExceptionHolder::*/_tao_seq_Octet (val)
     );
 }
-// readonly get method 
+// readonly get method
 const Messaging::ExceptionHolder::_tao_seq_Octet &
 OBV_Messaging::ExceptionHolder::marshaled_exception (void) const
 {
   return *this->_pd_marshaled_exception;
 }
-// read/write get method 
+// read/write get method
 Messaging::ExceptionHolder::_tao_seq_Octet &
 OBV_Messaging::ExceptionHolder::marshaled_exception (void)
 {

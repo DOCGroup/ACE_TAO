@@ -26,7 +26,8 @@ ACE_RCSID(tao, Pluggable, "$Id$")
 TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               TAO_ORB_Core *orb_core)
   : tag_ (tag),
-    orb_core_ (orb_core)
+    orb_core_ (orb_core),
+    buffering_queue_ (0)
 {
   TAO_Client_Strategy_Factory *cf =
     this->orb_core_->client_factory ();
@@ -42,8 +43,34 @@ TAO_Transport::~TAO_Transport (void)
 {
   delete this->ws_;
   this->ws_ = 0;
+
   delete this->tms_;
   this->tms_ = 0;
+
+  delete this->buffering_queue_;
+}
+
+void
+TAO_Transport::flush_buffered_messages (void)
+{
+  // If we have a buffering queue.
+  if (this->buffering_queue_)
+    {
+      // Flush all queued messages.
+      while (!this->buffering_queue_->is_empty ())
+        {
+          // Get the first message from the queue.
+          ACE_Message_Block *queued_message = 0;
+          this->buffering_queue_->dequeue_head (queued_message);
+
+          // Actual network send. Cannot deal with errors, and
+          // therefore they are ignored.
+          this->send (queued_message);
+
+          // Release the memory.
+          queued_message->release ();
+        }
+    }
 }
 
 // Read and handle the reply. Returns 0 when there is Short Read on
@@ -107,6 +134,19 @@ TAO_Transport::start_locate (TAO_ORB_Core *,
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_THROW (CORBA::INTERNAL ());
+}
+
+TAO_Transport_Buffering_Queue &
+TAO_Transport::buffering_queue (void)
+{
+  if (this->buffering_queue_ == 0)
+    {
+      // Infinite high water mark: ACE_UINT32_MAX.
+      this->buffering_queue_ =
+        new TAO_Transport_Buffering_Queue (ACE_UINT32_MAX);
+    }
+
+  return *this->buffering_queue_;
 }
 
 // *********************************************************************

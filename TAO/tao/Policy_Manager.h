@@ -83,11 +83,13 @@ public:
 
   // = Direct accesors to the policy implementations, for speedy
   //   lookups.
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-      relative_roundtrip_timeout (void) const;
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy*
-      client_priority (void) const;
+  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+
+  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+
+  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Policy_Manager_Impl operator=(const TAO_Policy_Manager_Impl&))
@@ -104,6 +106,10 @@ private:
   POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout_;
 
   POA_TAO::ClientPriorityPolicy *client_priority_;
+
+  POA_Messaging::SyncScopePolicy *sync_scope_;
+
+  POA_TAO::BufferingConstraintPolicy *buffering_constraint_;
 
   CORBA::PolicyList other_policies_;
   // Other policies that are not optimized for fast querying
@@ -140,11 +146,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-      relative_roundtrip_timeout (void) const;
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy*
-      client_priority (void) const;
+  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+
+  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+
+  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
 
 private:
   TAO_Policy_Manager_Impl impl_;
@@ -176,11 +184,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-      relative_roundtrip_timeout (void) const;
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy*
-      client_priority (void) const;
+  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+
+  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+
+  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
 
 private:
   TAO_Policy_Manager_Impl manager_impl_;
@@ -215,11 +225,13 @@ public:
         CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
-  POA_Messaging::RelativeRoundtripTimeoutPolicy*
-      relative_roundtrip_timeout (void) const;
+  POA_Messaging::RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void) const;
 
-  POA_TAO::ClientPriorityPolicy*
-      client_priority (void) const;
+  POA_TAO::ClientPriorityPolicy *client_priority (void) const;
+
+  POA_Messaging::SyncScopePolicy *sync_scope (void) const;
+
+  POA_TAO::BufferingConstraintPolicy *buffering_constraint (void) const;
 
   // = Set and get the implementation.
   TAO_Policy_Current_Impl &implementation (void) const;
