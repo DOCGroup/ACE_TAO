@@ -22,9 +22,8 @@
 // Must specialize templates due to G++'s lame parameterized type
 // support...
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
-#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+// #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 
-#define ACE_HAS_STRING_CLASS
 // Compiler's template mechanism must see source code (i.e., .C
 // files).
 #define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -59,6 +58,9 @@
 // Platform's implementation of setlrmit() has a non-const rlimit
 // parameter.
 #define ACE_HAS_BROKEN_SETRLIMIT
+
+#define ACE_HAS_STRING_CLASS
+#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 
 // Platform supports POSIX 1.b clock_gettime ()
 #define ACE_HAS_CLOCK_GETTIME
