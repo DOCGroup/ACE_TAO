@@ -44,7 +44,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 #else /* ACE_WIN32 */
         ACE_ERROR_RETURN ((
             LM_ERROR,
-            ACE_TEXT ("parse_args: not a win32 platform\n"),
+            ACE_TEXT ("parse_args: not a win32 platform\n")
           ),
           1
         );
