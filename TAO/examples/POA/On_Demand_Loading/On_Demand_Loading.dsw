@@ -3,7 +3,7 @@ Microsoft Developer Studio Workspace File, Format Version 6.00
 
 ###############################################################################
 
-Project: "POA On_Demand_Loading Server"=".\POA On_Demand_Loading Server.dsp" - Package Owner=<4>
+Project: "POA On Demand Loading Server"=".\server.dsp" - Package Owner=<4>
 
 Package=<5>
 {{{
