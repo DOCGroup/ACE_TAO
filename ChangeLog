@@ -1,3 +1,9 @@
+Fri Jun 25 08:03:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Based_Pointer_Repository.cpp:
+        * ace/Timeprobe_T.h:
+          Doxygen fixes
+
 Fri Jun 25 07:56:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timeprobe.cpp:
