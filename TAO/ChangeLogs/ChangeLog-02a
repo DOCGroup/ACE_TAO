@@ -1,3 +1,8 @@
+Tue Jan 25 12:17:35 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+	  Missed some cases in the previous checkin of this file.
+
 Tue Jan 25 10:38:31 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.cpp:
