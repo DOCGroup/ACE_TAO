@@ -83,10 +83,12 @@ endif # AMI
 Test.java: test.idl
 	idl2java test.idl
 
+java_version: java_client.class java_server.class
+
 java_client.class: Test.java
 	vbjc java_client.java
 
-java_server.class:
+java_server.class: Test.java
 	vbjc java_server.java
 
 realclean: clean
