@@ -990,6 +990,18 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::_shrink_buffer (CORBA::ULong nl,
 // Operations for class TAO_Unbounded_Array_Sequence
 // *************************************************************
 
+template <class T, class T_var> T *
+TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (CORBA::ULong nelems)
+{
+  T *buf = 0;
+
+  ACE_NEW_RETURN (buf, 
+                  T[nelems], 
+                  0);
+
+  return buf;
+}
+
 template <class T, class T_var>
 TAO_Unbounded_Array_Sequence<T, T_var>::
 TAO_Unbounded_Array_Sequence (const TAO_Unbounded_Array_Sequence<T, T_var> &rhs)
@@ -1127,6 +1139,18 @@ TAO_Unbounded_Array_Sequence<T, T_var>::_deallocate_buffer (void)
 // *************************************************************
 // Operations for class TAO_Bounded_Array_Sequence
 // *************************************************************
+
+template <class T, class T_var, size_t MAX> T *
+TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (CORBA::ULong)
+{
+  T *buf = 0;
+
+  ACE_NEW_RETURN (buf, 
+                  T[MAX], 
+                  0);
+
+  return buf;
+}
 
 template <class T, class T_var, size_t MAX>
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::

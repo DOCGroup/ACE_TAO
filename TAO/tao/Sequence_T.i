@@ -451,18 +451,6 @@ TAO_Bounded_Pseudo_Sequence<T, T_var,MAX>::operator[] (CORBA::ULong slot) const
 // class TAO_Unbounded_Array_Sequence
 // *************************************************************
 
-template <class T, class T_var> ACE_INLINE T *
-TAO_Unbounded_Array_Sequence<T, T_var>::allocbuf (CORBA::ULong nelems)
-{
-  T *buf = 0;
-
-  ACE_NEW_RETURN (buf, 
-                  T[nelems], 
-                  0);
-
-  return buf;
-}
-
 template <class T, class T_var> ACE_INLINE void
 TAO_Unbounded_Array_Sequence<T, T_var>::freebuf (T *buffer)
 {
@@ -587,18 +575,6 @@ TAO_Unbounded_Array_Sequence<T, T_var>::replace (CORBA::ULong max,
 // *************************************************************
 // class TAO_Bounded_Array_Sequence
 // *************************************************************
-
-template <class T, class T_var, size_t MAX> ACE_INLINE T *
-TAO_Bounded_Array_Sequence<T, T_var, MAX>::allocbuf (CORBA::ULong)
-{
-  T *buf = 0;
-
-  ACE_NEW_RETURN (buf, 
-                  T[MAX], 
-                  0);
-
-  return buf;
-}
 
 template <class T, class T_var, size_t MAX> ACE_INLINE void
 TAO_Bounded_Array_Sequence<T, T_var, MAX>::freebuf (T *buffer)
