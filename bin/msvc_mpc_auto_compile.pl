@@ -274,20 +274,20 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ '-ACE') {# Build ACE and its tests
         print "Building ACE\n" if ( $verbose );
         $use_custom_dir = 1;
-	push @directories, @ace_core_dirs;
+        push @directories, @ace_core_dirs;
     }
     elsif ($ARGV[0] =~ '-TAO') {# Build TAO and its tests
         print "Building TAO\n" if ( $verbose );
         $use_custom_dir = 1;
-	push @directories, @ace_core_dirs;
-	push @directories, @tao_core_dirs;
+        push @directories, @ace_core_dirs;
+        push @directories, @tao_core_dirs;
     }
     elsif ($ARGV[0] =~ '-CIAO') {# Build the CIAO and related
                                  # libraries
         print "Building only CIAO\n" if ( $verbose );
         $use_custom_dir = 1;
         push @directories, @ace_core_dirs;
-	push @directories, @tao_core_dirs;
+        push @directories, @tao_core_dirs;
         push @directories, @ciao_core_dirs;
     }
     elsif ($ARGV[0] =~ '-ALL') {# Build the CIAO and related
