@@ -29,10 +29,6 @@ int
 TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
                                       TAO_Cache_IntId &int_id)
 {
-  // First call duplicate on the ext_id ie. make a copy of the
-  // contents
-  ext_id.duplicate ();
-
   // Get the entry too
   HASH_MAP_ENTRY *entry = 0;
   int retval = this->cache_map_.bind (ext_id,
@@ -46,6 +42,14 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
     }
   else if (retval == 1)
     {
+      if (TAO_debug_level > 0 && retval != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
+                      ACE_TEXT (" unable to bind in the first attempt")
+                      ACE_TEXT (" so trying with a new index \n")));
+        }
+
       // There was an entry like this before, so let us do some
       // minor adjustments
       retval = this->get_last_index_bind (ext_id,
@@ -59,7 +63,7 @@ TAO_Connection_Cache_Manager::bind_i (TAO_Cache_ExtId &ext_id,
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::bind_i")
-                  ACE_TEXT ("unable to bind \n")));
+                  ACE_TEXT (" unable to bind \n")));
     }
 
   return retval;
@@ -90,7 +94,7 @@ TAO_Connection_Cache_Manager::find_i (const TAO_Cache_ExtId &key,
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Connection_Cache_Manager::find_i")
-                      ACE_TEXT ("unable to locate a free connection \n")));
+                      ACE_TEXT (" unable to locate a free connection \n")));
         }
     }
 
@@ -160,7 +164,6 @@ TAO_Connection_Cache_Manager::mark_closed_i (HASH_MAP_ENTRY *&entry)
   // cache map in the mean time)
   HASH_MAP_ENTRY *new_entry = 0;
 
-  cout << "Just gettin the size " << this->total_size () <<endl;
   int retval = this->cache_map_.find (entry->ext_id_,
                                       new_entry);
   if (retval == 0)
@@ -183,7 +186,6 @@ TAO_Connection_Cache_Manager::mark_closed_i (HASH_MAP_ENTRY *&entry)
 int
 TAO_Connection_Cache_Manager::close_i (void)
 {
-  cout << "We are closing now " <<endl;
   // Call the close the on the Hash Map that we hold
   return this->cache_map_.close ();
 }
@@ -195,8 +197,6 @@ TAO_Connection_Cache_Manager::
                          HASH_MAP_ENTRY *&entry)
 {
   CORBA::ULong ctr = entry->ext_id_.index ();
-
-  cout << "Counter is " << ctr << endl;
 
   // Start looking at the succesive elements
   while (entry->next_ != 0 &&

@@ -96,16 +96,20 @@ TAO_Cache_ExtId::~TAO_Cache_ExtId (void)
 ACE_INLINE
 TAO_Cache_ExtId::TAO_Cache_ExtId (const TAO_Cache_ExtId &rhs)
 {
-  this->connection_property_ = rhs.connection_property_;
-  this->is_delete_ = rhs.is_delete_;
+  // Do a deep copy
+  this->connection_property_ =
+    rhs.connection_property_->duplicate ();
+  this->is_delete_ = 1;
   this->index_ = rhs.index_;
 }
 
 ACE_INLINE void
 TAO_Cache_ExtId::operator= (const TAO_Cache_ExtId &rhs)
 {
-  this->connection_property_ = rhs.connection_property_;
-  this->is_delete_ = rhs.is_delete_;
+  // Do a deep copy
+  this->connection_property_ =
+    rhs.connection_property_->duplicate ();
+  this->is_delete_ = 1;
   this->index_ = rhs.index_;
 }
 
