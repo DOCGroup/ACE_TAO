@@ -1,3 +1,13 @@
+Fri Dec 26 12:30:55 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/taoexe.mpb:
+	* bin/MakeProjectCreator/config/taolib_with_idl.mpb:
+
+	  We are forcing -Sc to the users. Though this is generally good,
+	  but it breaks some of the tests in TAO that uses the TIE
+	  classes.  Just removing -Sc so that we have the minimal number
+	  of options out here.
+
 Fri Dec 26 18:22:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * include/makeinclude/all_in_one.GNU:
