@@ -1,3 +1,8 @@
+Thu Apr  5 21:42:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Transport.cpp: Fixed a compile
+	  problem. The origin was a cut and paste error. 
+
 Thu Apr  5 21:38:56 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/Sequence_T.cpp:

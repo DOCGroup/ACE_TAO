@@ -65,7 +65,7 @@ TAO_SSLIOP_Transport::event_handler_i (void)
 }
 
 TAO_Pluggable_Messaging *
-TAO_SSLIOP_Transport::event_handler_i (void)
+TAO_SSLIOP_Transport::messaging_object (void)
 {
   return this->messaging_object_;
 }
@@ -276,9 +276,9 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
 
 
 int
-TAO_SSLIOP_Transport::send_request_header (TAO_Target_Specification &spec,
-                                           TAO_Operation_Details &opdetails,
-                                           TAO_OutputCDR &msg)
+TAO_SSLIOP_Transport::generate_request_header (TAO_Target_Specification &spec,
+                                               TAO_Operation_Details &opdetails,
+                                               TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set, whether the
   // messaging objects are ready to handle bidirectional connections
@@ -300,8 +300,9 @@ TAO_SSLIOP_Transport::send_request_header (TAO_Target_Specification &spec,
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-  return TAO_Transport::generate_request_header (op
-  return 1;
+  return TAO_Transport::generate_request_header (spec,
+                                                 opdetails,
+                                                 msg);
 }
 
 int
