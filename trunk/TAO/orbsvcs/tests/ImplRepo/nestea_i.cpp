@@ -60,12 +60,11 @@ Nestea_i::crush (CORBA::Long cans,
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Nestea_i::crush %d cans\n", cans));
 
-  this->cans_ -= cans;
-  
-  // Don't go below 0.
-  if (this->cans_ < 0) 
+  if (cans > this->cans_)
     this->cans_ = 0;
-
+  else
+    this->cans_ -= cans;
+  
   if (this->shutdown_ != 0)
     TAO_ORB_Core_instance ()->orb ()->shutdown ();
 
