@@ -1,3 +1,15 @@
+Tue Nov 21 18:07:01 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynamicAny/DynArray_i.cpp:
+	* tao/DynamicAny/DynSequence_i.cpp:
+	* tao/DynamicAny/DynStruct_i.cpp:
+	* tao/DynamicAny/DynUnion_i.cpp:
+
+	  In the to_any() method, replaced the exception
+	  DynamicAny::TypecodeMismatch with BAD_INV_ORDER,
+	  since to_any() isn't supposed to throw any user
+	  exceptions.
+
 Tue Nov 21 18:04:00 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tests/RTCORBA/README
