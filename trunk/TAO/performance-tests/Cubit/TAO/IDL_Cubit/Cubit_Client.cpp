@@ -368,7 +368,7 @@ Cubit_Client::cube_void (int)
 // Cube an octet
 
 void
-Cubit_Client::cube_octet (int)
+Cubit_Client::cube_octet (int i)
 {
   CORBA::Octet arg_octet = this->func (i);
 
