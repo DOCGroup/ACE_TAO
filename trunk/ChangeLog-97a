@@ -1,3 +1,9 @@
+Thu Apr  3 22:17:53 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* ace/Registry.cpp: Changed STRING_SEPARATOR from Istring to
+ 	  LPCTSTR.  Thanks to Matthias Kerkhoff <make@cs.tu-berlin.de> for
+ 	  suggesting this.
+
 Thu Apr  3 21:39:45 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.i (mutex_init): Removed errant open-brace ('{').  Thanks
