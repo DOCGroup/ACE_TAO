@@ -27,6 +27,7 @@
     // It won't hurt with 2.5.0.
 #   undef ACE_HAS_TEMPLATE_SPECIALIZATION
 # elif __LYNXOS_SDK_VERSION <= 199603L
+    /* LynxOS <= 2.5.0 */
     // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
     // this must appear before its #include.
 
@@ -80,7 +81,6 @@
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SOCKIO_H
 #define ACE_HAS_SSIZE_T
-#define ACE_HAS_STDARG_THR_DEST
 #define ACE_HAS_STRBUF_T
 #define ACE_HAS_STREAMS
 #define ACE_HAS_STRERROR
@@ -122,7 +122,13 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREADS_DRAFT4
+# if __LYNXOS_SDK_VERSION >= 199901L
+    /* LynxOS >= 3.1.0 */
+#   define ACE_HAS_PTHREADS_STD
+# else  /* LynxOS < 3.1.0 */
+#   define ACE_HAS_PTHREADS_DRAFT4
+#   define ACE_HAS_STDARG_THR_DEST
+# endif /* LynxOS < 3.1.0 */
 # define ACE_HAS_THREADS
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
   // Without TSS emulation, you'll only have 3 native TSS keys, on
