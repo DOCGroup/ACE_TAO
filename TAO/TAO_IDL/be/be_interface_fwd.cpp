@@ -181,7 +181,8 @@ be_interface_fwd::gen_var_defn (void)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
@@ -441,7 +442,8 @@ be_interface_fwd::gen_out_defn (void)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();

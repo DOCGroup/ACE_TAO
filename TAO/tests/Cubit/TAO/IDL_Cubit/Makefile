@@ -1,4 +1,5 @@
 #----------------------------------------------------------------------------
+#
 #	$Id$
 #
 #	Top-level Makefile for the ACE-ified Sun Ref. implementation
@@ -50,37 +51,6 @@ svr:	$(addprefix $(VDIR),$(CUBIT_SVR_OBJS))
 
 clnt:	$(addprefix $(VDIR),$(CUBIT_CLT_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
-
-########
-# Sanity check builds by running basic functionality tests.
-#
-# "sleep 5" in the server startup is usually enough to get the
-# objref into the file so the client can read it.
-#
-check:	$(TESTS)
-	@echo "testing with 'cube' calls, stub + DII, IOR strings"
-	@./svr -i30 -o non-internet > obj.1 & sleep 5
-	@./clnt -n250 -O `cat obj.1` -x
-	@echo ''
-	@echo "testing request forwarding with 'cube' calls, stub + DII"
-	@./svr -f -i30 > obj.2 & sleep 5
-	@./clnt -n250 -O `cat obj.2` -x
-	@echo ''
-	@echo "testing transmission of primitive data types"
-	@./test1_svr -i30 > obj.3 & sleep 5
-	@./test1_clnt -n50 -O `cat obj.3` -x
-	@echo ''
-#	@echo "testing echo of primitive data values"
-#	@./echo_svr -i30 > obj.4 & sleep 5
-#	@./echo_clnt -O `cat obj.4` -x
-#	@echo ''
-	@echo "testing with 'cube' calls, MT-ized (no forwarding)"
-	@./svr -t -i30 -o non-internet > obj.5 & sleep 5
-	@./clnt -n250 -O `cat obj.5` -x
-	@echo ''
-
-#clean:
-#	-/bin/rm -rf *.o Log $(BIN) obj.* core Templates.DB .make.state
 
 realclean: clean
 	-/bin/rm -rf cubitC.* cubitS.*

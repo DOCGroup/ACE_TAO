@@ -304,7 +304,8 @@ be_interface::gen_client_header (void)
 
       // now generate the class definition
       ch->indent ();
-      *ch << "class " << this->local_name ();
+      *ch << "class " << idl_global->export_macro ()
+	  << " " << this->local_name ();
 
       if (n_inherits () > 0)  // this interface inherits from other interfaces
         {
@@ -412,8 +413,10 @@ be_interface::gen_client_header (void)
 	{
 	  // we are in the ROOT scope
 	  ch->indent ();
-	  *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-	    ()->last_component () << ";\n\n";
+	  *ch << "extern "
+	      << idl_global->export_macro ()
+	      << " CORBA::TypeCode_ptr "
+	      << this->tc_name ()->last_component () << ";\n\n";
 	}
 
       cg->pop ();
@@ -691,7 +694,8 @@ int be_interface::gen_server_header (void)
       << "_ptr;" << nl;
 
   // now generate the class definition
-  *sh << "class " << namebuf << " : ";
+  *sh << "class " << idl_global->export_macro ()
+      << " " << namebuf << " : ";
   if (n_inherits () > 0)  // this interface inherits from other interfaces
     {
       be_interface *intf;
@@ -1076,7 +1080,8 @@ be_interface::gen_var_defn (void)
   // for over here.
 
   ch->indent (); // start with whatever was our current indent level
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();
@@ -1336,7 +1341,8 @@ be_interface::gen_out_defn (void)
   // generate the out definition (always in the client header)
   ch->indent (); // start with whatever was our current indent level
 
-  *ch << "class " << namebuf << nl;
+  *ch << "class " << idl_global->export_macro ()
+      << " " << namebuf << nl;
   *ch << "{" << nl;
   *ch << "public:\n";
   ch->incr_indent ();

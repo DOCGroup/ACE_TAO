@@ -85,8 +85,10 @@ be_typedef::gen_client_header (void)
         {
           // we are in the ROOT scope
           ch->indent ();
-          *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
-            ()->last_component () << ";\n\n";
+          *ch << "extern "
+	      << idl_global->export_macro ()
+	      << " CORBA::TypeCode_ptr "
+	      << this->tc_name ()->last_component () << ";\n\n";
         }
 
       cg->pop ();

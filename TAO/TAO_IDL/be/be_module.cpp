@@ -57,7 +57,8 @@ int be_module::gen_client_header (void)
   ch->indent (); // start with whatever indentation level we are at
 
   // now generate the class definition
-  *ch << "class " << local_name ();
+  *ch << "class " << idl_global->export_macro ()
+      << " " << local_name ();
 
   // generate the body
   *ch << "{" << nl;
@@ -117,12 +118,15 @@ int be_module::gen_server_header (void)
   // now generate the class definition. The prefix POA_ is prepended to our
   // name only if we are the outermost module
   d = ScopeAsDecl (this->defined_in ());
+
+  *sh << "class " << idl_global->export_macro ()
+      << " ";
   if (d->node_type () == AST_Decl::NT_root)
     // we are outermost module
-    *sh << "class POA_" << local_name () << nl;
+    *sh << "POA_" << local_name () << nl;
   else
     // we are inside another module
-    *sh << "class " << local_name () << nl;
+    *sh << local_name () << nl;
 
   *sh << "{" << nl;
   *sh << "public:\n";
