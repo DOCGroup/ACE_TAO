@@ -10,6 +10,8 @@
 
 #include "InterfaceC.h"
 
+#ifdef TAO_HAS_INTERFACE_REPOSITORY
+
 #if !defined (__ACE_INLINE__)
 #include "InterfaceC.i"
 #endif /* !defined INLINE */
@@ -23,10 +25,8 @@ static const CORBA::Long _oc_CORBA_Identifier[] =
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_Identifier (CORBA::tk_alias, sizeof (_oc_CORBA_Identifier), (char *) &_oc_CORBA_Identifier, 0, sizeof (CORBA::Identifier));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Identifier, &_tc_TAO_tc_CORBA_Identifier)
-TAO_NAMESPACE_END
+
+
 static const CORBA::Long _oc_CORBA_ScopedName[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -49,10 +49,7 @@ static const CORBA::Long _oc_CORBA_RepositoryId[] =
   0U, // string length
 };
 static CORBA::TypeCode _tc_TAO_tc_CORBA_RepositoryId (CORBA::tk_alias, sizeof (_oc_CORBA_RepositoryId), (char *) &_oc_CORBA_RepositoryId, 0, sizeof (CORBA::RepositoryId));
-TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
-TAO_NAMESPACE_BEGIN (CORBA)
-TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_RepositoryId, &_tc_TAO_tc_CORBA_RepositoryId)
-TAO_NAMESPACE_END
+
 static const CORBA::Long _oc_CORBA_DefinitionKind[] =
 {
   TAO_ENCAP_BYTE_ORDER, // byte order
@@ -17275,3 +17272,4 @@ CORBA::Boolean operator>> (
   return 0; // error
 }
 
+#endif /*TAO_HAS_INTERFACE_REPOSITORY */
