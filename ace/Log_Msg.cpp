@@ -505,6 +505,10 @@ ACE_Log_Msg::ACE_Log_Msg (void)
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
                      *ACE_Log_Msg_Manager::get_lock ()));
   ++instance_count_;
+
+  if (this->instance_count_ == 1)
+    ACE_Thread_Adapter::set_log_msg_hooks (ACE_Log_Msg_Attributes::init_hook,
+                                           ACE_Log_Msg_Attributes::inherit_hook);
 }
 
 ACE_Log_Msg::~ACE_Log_Msg (void)
@@ -1774,3 +1778,121 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
   return this->log_priority_enabled (log_priority);
 }
 #endif /* ACE_USES_WCHAR */
+
+// ****************************************************************
+
+ACE_Log_Msg_Attributes::ACE_Log_Msg_Attributes (void)
+  : ostream_ (0)
+  , priority_mask_ (0)
+  , tracing_enabled_ (0)
+  , restart_ (1)
+  , trace_depth_ (0)
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  , seh_except_selector_ (selector)
+  , seh_except_handler_ (handler)
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+{
+  if (ACE_Log_Msg::exists ())
+    {
+      ACE_Log_Msg *inherit_log_ = ACE_LOG_MSG;
+      this->ostream_ = inherit_log_->msg_ostream ();
+      this->priority_mask_ = inherit_log_->priority_mask ();
+      this->tracing_enabled_ = inherit_log_->tracing_enabled ();
+      this->restart_ = inherit_log_->restart ();
+      this->trace_depth_ = inherit_log_->trace_depth ();
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+      this->seh_except_selector_ = selector;
+      this->seh_except_handler_ = handler;
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+    }
+}
+
+ACE_Log_Msg_Attributes::~ACE_Log_Msg_Attributes (void)
+{
+}
+
+void
+ACE_Log_Msg_Attributes::init_hook (void *&attr)
+{
+  ACE_Log_Msg_Attributes *attributes;
+  ACE_NEW (attributes, ACE_Log_Msg_Attributes);
+  attr = attributes;
+}
+
+void
+ACE_Log_Msg_Attributes::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
+                                      void *&attr)
+{
+  ACE_Log_Msg_Attributes *attributes =
+    ACE_static_cast (ACE_Log_Msg_Attributes*,attr);
+
+  attributes->inherit_log_msg (thr_desc);
+  delete attributes;
+  attr = 0;
+}
+
+#if defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  || \
+    defined (ACE_HAS_MINIMAL_ACE_OS)
+# if defined (ACE_PSOS)
+// Unique file identifier
+static int ACE_PSOS_unique_file_id = 0;
+# endif /* ACE_PSOS */
+#endif /* ACE_THREADS_DONT_INHERIT_LOG_MSG) || ACE_HAS_MINIMAL_ACE_OS */
+
+void
+ACE_Log_Msg_Attributes::inherit_log_msg (ACE_OS_Thread_Descriptor *thr_desc)
+{
+#if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  && \
+    !defined (ACE_HAS_MINIMAL_ACE_OS)
+  // Inherit the logging features if the parent thread has an
+  // <ACE_Log_Msg>.  Note that all of the following operations occur
+  // within thread-specific storage.
+  ACE_Log_Msg *new_log = ACE_LOG_MSG;
+
+  // Note that we do not inherit the callback because this might have
+  // been allocated off of the stack of the original thread, in which
+  // case all hell would break loose...
+
+  if (this->ostream_)
+    {
+      new_log->msg_ostream (this->ostream_);
+      new_log->priority_mask (this->priority_mask_);
+
+      if (this->tracing_enabled_)
+        new_log->start_tracing ();
+
+      new_log->restart (this->restart_);
+      new_log->trace_depth (this->trace_depth_);
+    }
+
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  new_log->seh_except_selector (this->seh_except_selector_);
+  new_log->seh_except_handler (this->seh_except_handler_);
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+
+  // @@ Now the TSS Log_Msg has been created, cache my thread
+  // descriptor in.
+
+  if (thr_desc != 0)
+    // This downcast is safe.  We do it to avoid having to #include
+    // ace/Thread_Manager.h.
+    ACE_LOG_MSG->thr_desc (ACE_reinterpret_cast (ACE_Thread_Descriptor *,
+                                                 thr_desc));
+  // Block the thread from proceeding until
+  // thread manager has thread descriptor ready.
+
+# else  /* Don't inherit Log Msg */
+#  if defined (ACE_PSOS)
+  //Create a special name for each thread...
+  char new_name[MAXPATHLEN]={"Ace_thread-"};
+  char new_id[2]={0,0};  //Now it's pre-terminated!
+
+  new_id[0] = '0' + (ACE_PSOS_unique_file_id++);  //Unique identifier
+  ACE_OS::strcat(new_name, new_id);
+
+  //Initialize the task specific logger
+  ACE_LOG_MSG->open(new_name);
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting %s thread at %D\n"),new_name));
+#  endif /* ACE_PSOS */
+#endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
+}
