@@ -2,11 +2,11 @@
 //
 // $Id$
 
-#include "tao/ORB_Table.h"
-#include "tao/ORB_Core.h"
+#include "ORB_Table.h"
+#include "ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Table.inl"
+# include "ORB_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
 ACE_RCSID(tao, ORB_Table, "$Id$")
@@ -29,7 +29,7 @@ TAO_ORB_Table::~TAO_ORB_Table (void)
       CORBA::string_free (ACE_const_cast (char *, (*i).ext_id_));
 
       // Destroy the ORB_Core
-      (*i).int_id_->_decr_refcnt ();
+      (void) (*i).int_id_->_decr_refcnt ();
     }
 
   this->table_.close ();
@@ -64,8 +64,9 @@ TAO_ORB_Table::bind (const char *orb_id,
   int result = this->table_.bind (id.in (), orb_core);
   if (result == 0)
     {
-      // The ORB table now owns the ORB Core.  As such, the reference
-      // count on the ORB Core is *not* increased.
+      // Make sure the ORB table owns the ORB Core by increasing the
+      // reference count on it.
+      (void) orb_core->_incr_refcnt ();
 
       // Only set the "first_orb_" member if the given ORB Core was
       // successfully added to the ORB table.
