@@ -3,6 +3,24 @@
 
 // Malloc_T.i
 
+template <class T> T *
+ACE_Cached_Mem_Pool_Node::addr (void)
+{
+  return &this->obj_; 
+}
+
+template <class T> ACE_Cached_Mem_Pool_Node<T> *
+ACE_Cached_Mem_Pool_Node::get_next (void) 
+{
+  return this->next_;
+}
+
+template <class T> void
+ACE_Cached_Mem_Pool_Node::set_next (ACE_Cached_Mem_Pool_Node<T> *ptr)
+{
+  this->next_ = ptr;
+}
+
 template <class T, class LOCK> void *
 ACE_Cached_Allocator<T, LOCK>::malloc (size_t nbytes)
 {
