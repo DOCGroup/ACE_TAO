@@ -3,7 +3,7 @@
  * ============================================================================
  *
  * = LIBRARY
- *    pace ()
+ *    pace
  *
  * = FILENAME
  *    pace/win32/limits.h
@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_LIMITS_H
-#define PACE_LIMITS_H
+#ifndef PACE_LIMITS_H_WIN32
+#define PACE_LIMITS_H_WIN32
 
 #include <limits.h>
 
@@ -26,4 +26,4 @@ extern "C" {
 }
 # endif /* PACE_HAS_CPLUSPLUS */
 
-#endif /* PACE_LIMITS_H */
+#endif /* PACE_LIMITS_H_WIN32 */

@@ -13,8 +13,8 @@
  *
  * ============================================================================ */
 
-#ifndef PACE_SYS_STAT_H
-#define PACE_SYS_STAT_H
+#ifndef PACE_SYS_STAT_H_WIN32
+#define PACE_SYS_STAT_H_WIN32
 
 #include "pace/sys/types.h"
 #include <sys/stat.h>
@@ -48,32 +48,13 @@ extern "C" {
 #define PACE_S_TYPEISSEM S_TYPEISSEM
 #define PACE_S_TYPEISSHM S_TYPEISSHM
 
-
 #ifndef PACE_STAT
 #define PACE_STAT
   typedef struct stat pace_stat;
 #endif /* PACE_STAT */
 
-  PACE_INLINE int pace_chmod (const char * path, pace_mode_t mode);
-
-  PACE_INLINE int pace_fchmod (int fildes, pace_mode_t mode);
-
-  PACE_INLINE int pace_fstat (int fildes, struct stat * buf);
-
-  PACE_INLINE int pace_mkdir (const char * path, pace_mode_t mode);
-
-  PACE_INLINE int pace_mkfifo (const char * path, pace_mode_t mode);
-
-  PACE_INLINE int pace_stat (const char * path, struct stat * buf);
-
-  PACE_INLINE mode_t pace_umask (pace_mode_t cmask);
-
 #if defined (PACE_HAS_CPLUSPLUS)
 }
 #endif /* PACE_HAS_CPLUSPLUS */
 
-#if defined (PACE_HAS_INLINE)
-# include "pace/win32/stat.inl"
-#endif /* PACE_HAS_INLINE */
-
-#endif /* PACE_SYS_STAT_H */
+#endif /* PACE_SYS_STAT_H_WIN32 */
