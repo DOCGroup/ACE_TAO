@@ -1,12 +1,26 @@
+Tue Jul 31 10:39:18 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tests/IDL_Test/gperf.idl:
+
+          New file in IDL_Test containing examples sent in by
+          Karl Proese <karl.proese@mchp.siemens.de> and Vsevolod Novikov
+ 	  <novikov@df.nnov.rfnet.ru> that uncovered bugs in gperf.
+
+        * tests/IDL_Test/idl_test.dsp:
+        * tests/IDL_Test/Makefile:
+        * tests/IDL_Test/Makefile.bor:
+
+          Updated project and makefiles to include the new generated files.
+
 Tue Jul 31 08:25:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * idl.ll:
-        * idl.yy:
-        * lex.yy.cpp:
-        * lex.yy.cpp.diff:
-        * y.tab.cpp:
-        * y.tab.cpp.diff:
-        * y.tab.h:
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/y.tab.cpp.diff:
+        * TAO_IDL/fe/y.tab.h:
 
           Removed OBV-related token IDL_INIT and replaced it with
           IDL_FACTORY, which is returned when the string 'factory'
