@@ -1,20 +1,29 @@
+Sat Apr 21 19:33:43 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Environment.h:
+        * tao/Environment.i:
+        * tao/Environment.cpp:
+          Remove the reference count, this allow us to eliminate the
+          creation (and destruction) of 3 locks on the server's critical
+          path.  This fixes [BUGID:873]
+
 Sat Apr 21 19:30:35 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* orbsvcs/tests/Trading/TradingLib.dsp: Fixed the library output
-	  directory to conform with our pattern.
+        * orbsvcs/tests/Trading/TradingLib.dsp: Fixed the library output
+          directory to conform with our pattern.
 
 Sat Apr 21 16:08:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/tests/Performace/UDP_PerformanceClient.cpp:
         * examples/PluggableUDP/tests/Performace/UDP_i.cpp:
 
-	  Fixed the test output.
+          Fixed the test output.
 
 Sat Apr 21 05:50:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
         * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
 
-	  Fixed a template instantiation problem.
+          Fixed a template instantiation problem.
 
 Sat Apr 21 05:05:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -54,7 +63,7 @@ Sat Apr 21 01:35:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
         * examples/PluggableUDP/tests/Basic/Makefile:
         * examples/PluggableUDP/tests/SimplePerformance/Makefile:
 
-	  Fixed the Makfiles to properly compile and link.
+          Fixed the Makfiles to properly compile and link.
 
 Sat Apr 21 01:20:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -87,58 +96,58 @@ Fri Apr 20 21:29:38 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
         * TAO/tao/Client_Strategy_Factory.h:
         * TAO/tao/default_client.cpp:
         * TAO/tao/default_client.h:
-	  Added a new method <allow_callback> that query the strategy
-	  factory whether the effective wait strategy allows any form of
-	  callback.
+          Added a new method <allow_callback> that query the strategy
+          factory whether the effective wait strategy allows any form of
+          callback.
 
         * TAO/tao/Strategies/SHMIOP_Acceptor.cpp (open):
         * TAO/tao/Strategies/SHMIOP_Connector.cpp (open): Added code to
-	  hint the MEM_Stream's to use the new multithreaded transport when
-	  the client/server strategies allow them to.
+          hint the MEM_Stream's to use the new multithreaded transport when
+          the client/server strategies allow them to.
 
 Fri Apr 20 16:13:40 2001  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Makefile.av:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
-	* orbsvcs/orbsvcs/AV/Transport.cpp:
-	* orbsvcs/orbsvcs/AV/AV_Core.h:
-	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
-	* orbsvcs/orbsvcs/AV/UDP.cpp:
-	* orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
-	* orbsvcs/orbsvcs/AV/QoS_UDP.h:
-	* orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
-	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
-	* orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:
+        * orbsvcs/orbsvcs/Makefile.av:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.i:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/orbsvcs/AV/Transport.cpp:
+        * orbsvcs/orbsvcs/AV/AV_Core.h:
+        * orbsvcs/orbsvcs/AV/AV_Core.cpp:
+        * orbsvcs/orbsvcs/AV/UDP.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.cpp:
+        * orbsvcs/orbsvcs/AV/QoS_UDP.h:
+        * orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
+        * orbsvcs/orbsvcs/AV/Fill_ACE_QoS.cpp:
 
-	  Integrated AQoSA and AVStreams for the UDP unicast protocol. This allows
-	  to set up an RSVP session between the sender and receiver using AQoSA.
+          Integrated AQoSA and AVStreams for the UDP unicast protocol. This allows
+          to set up an RSVP session between the sender and receiver using AQoSA.
 
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/input:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Simple_Two_Stage_With_QoS.dsw:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.dsp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.dsp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/README:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/runtest.pl:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/input:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/Simple_Two_Stage_With_QoS.dsw:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.dsp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.h:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.cpp:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/receiver.dsp:
 
-	  Test to verify the AQoSA/AV integration.
+          Test to verify the AQoSA/AV integration.
 
 Fri Apr 20 14:39:48 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
-	  (handle_close):
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp
-	  (handle_close):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp
+          (handle_close):
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp
+          (handle_close):
 
-	  Call destroy() on the Svc_Handler rather than calling "delete
-	  this."  See ChangeLog entry from Tue Apr 17 15:48:20 2001
-	  Nanbor Wang  <nanbor@cs.wustl.edu>.
+          Call destroy() on the Svc_Handler rather than calling "delete
+          this."  See ChangeLog entry from Tue Apr 17 15:48:20 2001
+          Nanbor Wang  <nanbor@cs.wustl.edu>.
 
 Fri Apr 20 15:51:52 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
@@ -158,10 +167,10 @@ Fri Apr 20 15:51:52 2001  Paul Calabrese <calabrese_p@ociweb.com>
 
 Fri Apr 20 16:00:40 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
-	* examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
-	  Added missing explicit template instatiation to fix the
-	  problem on compiler that use explicit template instantiation.
+        * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
+        * examples/PluggableUDP/DIOP/DIOP_Connector.cpp:
+          Added missing explicit template instatiation to fix the
+          problem on compiler that use explicit template instantiation.
 
 Fri Apr 20 08:17:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
@@ -198,13 +207,13 @@ Thu Apr 19 14:40:00 2001  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
 Thu Apr 19 07:09:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/RTCORBA/Thread_Pool/server.cpp: Fixed a typo that was
-	  giving a warning.
+        * tests/RTCORBA/Thread_Pool/server.cpp: Fixed a typo that was
+          giving a warning.
 
 Wed Apr 18 23:00:07 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Collocation/Collocation.bor: Changed main.obj to
-	  Collocation.obj.
+        * tests/Collocation/Collocation.bor: Changed main.obj to
+          Collocation.obj.
 
 Wed Apr 18 21:57:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -215,9 +224,9 @@ Wed Apr 18 21:57:46 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Apr 18 21:38:35 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
-	* orbsvcs/Naming_Service: Updated the README file so that it explains
-	  how to trouble shoot problems with multicast.  Thanks to Stephen
- 	  Torri <s.torri@lancaster.ac.uk> for contributing this.
+        * orbsvcs/Naming_Service: Updated the README file so that it explains
+          how to trouble shoot problems with multicast.  Thanks to Stephen
+          Torri <s.torri@lancaster.ac.uk> for contributing this.
 
 Wed Apr 18 19:17:37 2001  Carlos O'Ryan  <coryan@uci.edu>
 

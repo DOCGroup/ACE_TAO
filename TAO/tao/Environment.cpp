@@ -11,43 +11,16 @@
 ACE_RCSID(tao, Environment, "$Id$")
 
 
-#if 0
 CORBA_Environment::CORBA_Environment (void)
-  : exception_ (0),
-    previous_ (TAO_ORB_Core_instance ()->default_environment ())
-{
-  TAO_ORB_Core_instance ()->default_environment (this);
-}
-
-CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
-  : exception_ (rhs.exception_),
-    previous_ (TAO_ORB_Core_instance ()->default_environment ())
-{
-  TAO_ORB_Core_instance ()->default_environment (this);
-  exception_->_incr_refcnt ();
-}
-
-CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
-  : exception_ (0),
-    previous_ (orb_core->default_environment ())
-{
-  orb_core->default_environment (this);
-}
-
-#else
-
-CORBA_Environment::CORBA_Environment (void)
-  : exception_ (0),
-    previous_ (0),
-    refcount_ (1)
+  : exception_ (0)
+  , previous_ (0)
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
 }
 
 CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
-  : exception_ (rhs.exception_),
-    previous_ (0),
-    refcount_ (1)
+  : exception_ (rhs.exception_)
+  , previous_ (0)
 {
   //  TAO_ORB_Core_instance ()->default_environment (this);
   if (this->exception_)
@@ -55,33 +28,10 @@ CORBA_Environment::CORBA_Environment (const CORBA_Environment& rhs)
 }
 
 CORBA_Environment::CORBA_Environment (TAO_ORB_Core* orb_core)
-  : exception_ (0),
-    previous_ (orb_core->default_environment ())
+  : exception_ (0)
+  , previous_ (orb_core->default_environment ())
 {
   orb_core->default_environment (this);
-}
-#endif /* 0 */
-
-CORBA::ULong
-CORBA_Environment::_incr_refcnt (void)
-{
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-  return refcount_++;
-}
-
-CORBA::ULong
-CORBA_Environment::_decr_refcnt (void)
-{
-  {
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->refcount_lock_, 0);
-
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
-  }
-
-  delete this;
-  return 0;
 }
 
 CORBA_Environment&
