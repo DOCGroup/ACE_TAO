@@ -1,3 +1,10 @@
+Mon Nov 13 03:46:21 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * docs/CE-status.txt:
+        * docs/wchar.txt:
+
+          Updated documentation == good thing.
+
 Mon Nov 13 03:39:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/config-win32-borland.h:
