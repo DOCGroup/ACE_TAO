@@ -1,3 +1,4 @@
+V1spr1anj
 // $Id$
 
 #include "ORB_Core.h"
@@ -1570,7 +1571,7 @@ TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
 {
   /// Initialize a TAO_Stub object with the mprofile thats passed.
   TAO_Stub *stub =
-    this->create_stub (type_id, mprofile TAO_ENV_ARG_DECL);
+    this->create_stub (type_id, mprofile TAO_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (stub);
 
   stub->base_profiles ().policy_list (policy_list);
@@ -1684,7 +1685,7 @@ TAO_ORB_Core::run (ACE_Time_Value *tv,
 
   // This method should only be called by servers, so now we set up
   // for listening!
-  int ret = this->open (TAO_ENV_ARG_DECL);
+  int ret = this->open (TAO_ENV_SINGLE_ARG_DECL);
   ACE_CHECK_RETURN (-1);
 
   if (ret == -1)
