@@ -1,6 +1,6 @@
-// ============================================================================
 // $Id$
 
+// ============================================================================
 //
 // = LIBRARY
 //    examples
@@ -9,11 +9,11 @@
 //    process.cpp
 //
 // = DESCRIPTION
-//    This example tests the ACE_Process.  For more info, check the
+//    This example tests the <ACE_Process>.  For more info, check the
 //    README file in this directory.
 //
 // = AUTHOR
-//    Tim Harrison.
+//    Tim Harrison <harrison@cs.wustl.edu>.
 //
 // ============================================================================
 
@@ -27,10 +27,12 @@ ACE_RCSID(Process, process, "$Id$")
 #define EXEC_NAME "MORE.COM"
 const char *DATE_PATH = "date.exe";
 const char *LS_PATH = "ls.exe";
+const char *SLEEP_PATH = "sleep.exe";
 #else
 #define EXEC_NAME "less"
 const char *DATE_PATH = "date";
 const char *LS_PATH = "ls";
+const char *SLEEP_PATH = "sleep";
 #endif /* ACE_WIN32 */
 
 static char *executable = EXEC_NAME;
@@ -42,12 +44,13 @@ static int run_ls = 0;
 static int run_all = 0;
 static int run_setenv = 0;
 static int run_tokenizer = 0;
+static int run_wait = 0;
 
 // Parse the command-line arguments and set options.
 static int
 parse_args (int argc, char **argv)
 {
-  ACE_Get_Opt get_opt (argc, argv, "dlx:p:e:gastu");
+  ACE_Get_Opt get_opt (argc, argv, "dlx:p:e:gastuw");
   int c;
 
   while ((c = get_opt ()) != -1)
@@ -81,6 +84,9 @@ parse_args (int argc, char **argv)
       case 'g':
 	get_env = 1;
 	break;
+      case 'w':
+	run_wait = 1;
+	break;
       case 'u':
       default:
 	ACE_ERROR_RETURN ((LM_ERROR, "Usage:\n"
@@ -92,6 +98,7 @@ parse_args (int argc, char **argv)
 			   "-s setenv ACE_PROCESS_ENV and spawn -g\n"
 			   "-g get_env ACE_PROCESS_ENV\n"
 			   "-t test tokenizer\n"
+			   "-w test wait functions\n"
 			   "-a run all (d,l,e \"running\")\n"), -1);
 	break;
       }
@@ -120,19 +127,25 @@ test_more (void)
   if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
-      ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
-		  "test_more", error));
+      ACE_ERROR ((LM_ERROR,
+                  "%p errno = %d.\n",
+		  "test_more",
+                  error));
     }
 
   int status;
   new_process.wait (&status);
-  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
+  ACE_DEBUG ((LM_DEBUG,
+              "Process exit with status %d\n",
+              status));
   ACE_OS::close (infile);
 
-  ACE_DEBUG ((LM_DEBUG, "More succeeded.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "More succeeded.\n"));
 }
 
 // This is a simple usage of ACE_Process.
+
 static void
 test_date (void)
 {
@@ -144,15 +157,20 @@ test_date (void)
   if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
-      ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
-		  "test_date", error));
+      ACE_ERROR ((LM_ERROR,
+                  "%p errno = %d.\n",
+		  "test_date",
+                  error));
       return;
     }
 
   int status;
   new_process.wait (&status);
-  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
-  ACE_DEBUG ((LM_DEBUG, "date succeeded.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Process exit with status %d\n",
+              status));
+  ACE_DEBUG ((LM_DEBUG,
+              "date succeeded.\n"));
 }
 
 static void
@@ -165,13 +183,83 @@ test_ls (void)
   if (new_process.spawn (options) == -1)
     {
       int error = ACE_OS::last_error ();
-      ACE_ERROR ((LM_ERROR, "%p errno = %d.\n",
-		  "test_ls", error));
+      ACE_ERROR ((LM_ERROR,
+                  "%p errno = %d.\n",
+		  "test_ls",
+                  error));
     }
 
   int status;
   new_process.wait (&status);
-  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
+  ACE_DEBUG ((LM_DEBUG,
+              "Process exit with status %d\n",
+              status));
+}
+
+static void
+test_wait (void)
+{
+  ACE_Process_Options options;
+  options.command_line ("%s 10", SLEEP_PATH);
+
+  ACE_Process process1;
+  if (process1.spawn (options) == -1)
+    {
+      int error = ACE_OS::last_error ();
+      ACE_ERROR ((LM_ERROR,
+                  "%p errno = %d.\n",
+		  "test_ls",
+                  error));
+    }
+
+  int result;
+  int status;
+
+  ACE_DEBUG ((LM_DEBUG,
+              "[%T] New process sleeping 10; try wait(2)\n",
+              status));
+
+  result = process1.wait (ACE_Time_Value (2),
+                          &status);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "[%T] wait(2) returns %d(%d)...now try regular wait\n",
+              result,
+              status));
+
+  result = process1.wait (&status);
+  ACE_DEBUG ((LM_DEBUG,
+              "[%T] wait() returns %d(%d)\n",
+              result,
+              status));
+
+  ACE_Process process2;
+  if (process2.spawn (options) == -1)
+    {
+      int error = ACE_OS::last_error ();
+      ACE_ERROR ((LM_ERROR,
+                  "%p errno = %d.\n",
+		  "test_ls",
+                  error));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,
+              "[%T] New process sleeping 10; try wait(12)\n",
+              status));
+
+  result = process2.wait (ACE_Time_Value (12),
+                          &status);
+
+  ACE_DEBUG ((LM_DEBUG,
+              "[%T] wait(12) returns %d(%d)...now try regular wait\n",
+              result,
+              status));
+
+  result = process2.wait (&status);
+  ACE_DEBUG ((LM_DEBUG,
+              "[%T] wait returns %d(%d)\n",
+              result,
+              status));
 }
 
 #if defined (ACE_WIN32)
@@ -183,23 +271,27 @@ win32_test_ls (void)
   PROCESS_INFORMATION process_info;
   STARTUPINFO startup_info;
   ACE_OS::memset ((void *) &startup_info,
-		  0, sizeof startup_info);
+		  0,
+                  sizeof startup_info);
   ACE_OS::memset ((void *) &process_info,
-		  0, sizeof process_info);
-  startup_info.cb = sizeof (startup_info);
+		  0,
+                  sizeof process_info);
+  startup_info.cb = sizeof startup_info;
   startup_info.dwFlags = STARTF_USESTDHANDLES;
 
   ACE_HANDLE std_out = ACE_STDOUT;
 
-  if (!::DuplicateHandle (::GetCurrentProcess(),
+  if (!::DuplicateHandle (::GetCurrentProcess (),
 			  std_out,
-			  ::GetCurrentProcess(),
+			  ::GetCurrentProcess (),
 			  &startup_info.hStdOutput,
 			  NULL,
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
     {
-      ACE_ERROR ((LM_ERROR, "%p duplicate failed.\n", "test_ls"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p duplicate failed.\n",
+                  "test_ls"));
       return;
     }
 
@@ -218,11 +310,15 @@ win32_test_ls (void)
   ::CloseHandle (startup_info.hStdOutput);
 
   if (fork_result == 0)
-    ACE_ERROR ((LM_ERROR, "%p CreateProcess failed.\n", "test_ls"));
+    ACE_ERROR ((LM_ERROR,
+                "%p CreateProcess failed.\n",
+                "test_ls"));
   else
     {
-      ::WaitForSingleObject (process_info.hProcess, INFINITE);
-      ACE_DEBUG ((LM_ERROR, "ls succeeded.\n"));
+      ::WaitForSingleObject (process_info.hProcess,
+                             INFINITE);
+      ACE_DEBUG ((LM_ERROR,
+                  "ls succeeded.\n"));
     }
 }
 
@@ -230,15 +326,18 @@ win32_test_ls (void)
 // existing environment, plus one more.  This has to be done by hand
 // since CreateProcess does not allow us to inherit AND add
 // environment variables.
+
 static void
 win32_spawn_environment_process (void)
 {
   PROCESS_INFORMATION process_info;
   STARTUPINFO startup_info;
   ACE_OS::memset ((void *) &startup_info,
-		  0, sizeof startup_info);
+		  0,
+                  sizeof startup_info);
   ACE_OS::memset ((void *) &process_info,
-		  0, sizeof process_info);
+		  0,
+                  sizeof process_info);
   startup_info.cb = sizeof (startup_info);
   startup_info.dwFlags = STARTF_USESTDHANDLES;
 
@@ -254,7 +353,8 @@ win32_spawn_environment_process (void)
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
     {
-      ACE_ERROR ((LM_ERROR, "%p duplicate failed.\n", "spawn_environment_process"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p duplicate failed.\n", "spawn_environment_process"));
       return;
     }
 
@@ -266,7 +366,9 @@ win32_spawn_environment_process (void)
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
     {
-      ACE_ERROR ((LM_ERROR, "%p duplicate failed.\n", "spawn_environment_process"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p duplicate failed.\n",
+                  "spawn_environment_process"));
       return;
     }
 
@@ -278,13 +380,16 @@ win32_spawn_environment_process (void)
 			  TRUE,
 			  DUPLICATE_SAME_ACCESS))
     {
-      ACE_ERROR ((LM_ERROR, "%p duplicate failed.\n", "spawn_environment_process"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p duplicate failed.\n",
+                  "spawn_environment_process"));
       return;
     }
 
   char *existing_environment = ::GetEnvironmentStrings ();
   char environment[10240];
-  ACE_OS::sprintf (environment, "ACE_PROCESS_TEST=%s",
+  ACE_OS::sprintf (environment,
+                   "ACE_PROCESS_TEST=%s",
 		   environment_string);
 
   int size = 0;
@@ -314,11 +419,15 @@ win32_spawn_environment_process (void)
   ::CloseHandle (startup_info.hStdError);
 
   if (fork_result == 0)
-    ACE_ERROR ((LM_ERROR, "%p.\n", "spawn_environment_process"));
+    ACE_ERROR ((LM_ERROR,
+                "%p.\n",
+                "spawn_environment_process"));
   else
     {
-      ::WaitForSingleObject (process_info.hProcess, INFINITE);
-      ACE_DEBUG ((LM_ERROR, "spawn_environment_process succeeded.\n"));
+      ::WaitForSingleObject (process_info.hProcess,
+                             INFINITE);
+      ACE_DEBUG ((LM_ERROR, 
+                  "spawn_environment_process succeeded.\n"));
     }
 }
 #endif
@@ -334,13 +443,17 @@ test_setenv (const char *argv0)
   ACE_Process process;
   if (process.spawn (options) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "%p.\n", "test_setenv"));
+      ACE_ERROR ((LM_ERROR,
+                  "%p.\n",
+                  "test_setenv"));
       return;
     }
 
   int status;
   process.wait (&status);
-  ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
+  ACE_DEBUG ((LM_DEBUG,
+              "Process exit with status %d\n",
+              status));
 }
 
 // Tests the ACE_Tokenizer.
@@ -354,15 +467,15 @@ tokenize (char *buffer)
   parser.preserve_designators ('\"', '\"'); // "  This quote is for emacs
   parser.preserve_designators ('\'', '\'');
 
-  const char *temp;
-
-  while (1)
+  for (const char *temp; ;-)
     {
       temp = parser.next ();
       if (temp == 0)
 	break;
-      ACE_DEBUG ((LM_DEBUG, temp));
-      ACE_DEBUG ((LM_DEBUG, "\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  temp));
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n"));
     }
 }
 
@@ -370,9 +483,11 @@ int
 main (int argc, char *argv[])
 {
   if (ACE_LOG_MSG->open (argv[0]) == -1)
-    ACE_ERROR ((LM_ERROR, "cannot open logger!!!\n"));
+    ACE_ERROR ((LM_ERROR,
+                "cannot open logger!!!\n"));
 
-  ACE_DEBUG ((LM_DEBUG, "starting...\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "starting...\n"));
 
   if (::parse_args (argc, argv) == -1)
     return -1;
@@ -380,14 +495,19 @@ main (int argc, char *argv[])
   if (run_all)
     {
       ACE_Process_Options options;
-      options.command_line ("%s -d -l -s", argv[0]);
+      options.command_line ("%s -d -l -s -w",
+                            argv[0]);
       ACE_Process process;
       if (process.spawn (options) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR, "%p.\n", "main"), -1);
-
+	ACE_ERROR_RETURN ((LM_ERROR,
+                           "%p.\n",
+                           "main"),
+                          -1);
       int status;
       process.wait (&status);
-      ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Process exit with status %d\n",
+                  status));
     }
 
   if (run_date)
@@ -401,7 +521,8 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "checking ACE_PROCESS_TEST\n"));
       char *value = ACE_OS::getenv ("ACE_PROCESS_TEST");
       char *value2 = ACE_OS::getenv ("ACE_PROCESS_TEST2");
-      ACE_DEBUG ((LM_DEBUG, "ACE_PROCESS_TEST = %s.\n"
+      ACE_DEBUG ((LM_DEBUG,
+                  "ACE_PROCESS_TEST = %s.\n"
 		  "ACE_PROCESS_TEST2 = %s.\n",
 		  value == 0 ? "no value" : value,
 		  value2 == 0 ? "no value" : value2));
@@ -409,6 +530,9 @@ main (int argc, char *argv[])
 
   if (run_ls)
     ::test_ls ();
+
+  if (run_wait)
+    ::test_wait ();
 
 #if defined (ACE_WIN32)
   if (environment_string != 0)

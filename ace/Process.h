@@ -142,6 +142,12 @@ public:
   // is an environment assignment "VARIABLE=value".  This buffer
   // should end with two null characters.
 
+  // = Get/set process group.
+  pid_t getgroup (void) const;
+  pid_t setgroup (pid_t pgrp);
+  // On UNIX, these methods are used by the <ACE_Process_Manager> to
+  // manage groups of processes.
+
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
 
@@ -277,6 +283,9 @@ protected:
 
   LPTSTR command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
   // Argv-style command-line arguments.
+
+  pid_t process_group_;
+  // Process-group on Unix; unused on Win32.
 };
 
 class ACE_Export ACE_Process
@@ -295,7 +304,7 @@ class ACE_Export ACE_Process
   //    program file in the PATH variable.
 public:
   ACE_Process (void);
-  // Default construction.  Must use ACE_Process::start.
+  // Default construction.  Must use <ACE_Process::spawn> to start.
 
   virtual ~ACE_Process (void);
   // Destructor.
@@ -307,18 +316,26 @@ public:
 
   pid_t wait (int *status = 0,
               int wait_options = 0);
-  // Wait for the process we just created to exit.  If <status> != 0,
-  // it points to an integer where the function store the exit status
-  // of child process to.  If <wait_options> == <WNOHANG> then return
-  // 0 and don't block if the child process hasn't exited yet.  A
-  // return value of -1 represents the <wait> operation failed,
-  // otherwise, the child process id is returned.
+  // Wait for the process we've created to exit.  If <status> != 0, it
+  // points to an integer where the function store the exit status of
+  // child process to.  If <wait_options> == <WNOHANG> then return 0
+  // and don't block if the child process hasn't exited yet.  A return
+  // value of -1 represents the <wait> operation failed, otherwise,
+  // the child process id is returned.
 
   pid_t wait (const ACE_Time_Value &tv,
               int *status = 0);
-  // Timed wait for the process we just created to exit.  This
-  // operation is only supported on Win32 platforms because UNIX
-  // platforms don't support a timed <wait> operation.
+  // Timed wait for the process we've created to exit.  A return value
+  // of -1 indicates that the something failed; 0 indicates that a
+  // timeout occurred.  Otherwise, the child's process id is returned.
+  // If <status> != 0, it points to an integer where the function
+  // stores the child's exit status.
+  // 
+  // NOTE: on UNIX platforms this function uses <ualarm>, i.e., it
+  // overwrites any existing alarm.  In addition, it steals all
+  // <SIGCHLD>s during the timeout period, which will break another
+  // <ACE_Process_Manager> in the same process that's expecting
+  // <SIGCHLD> to kick off process reaping.
 
   int kill (int signum = SIGINT);
   // Send the process a signal.  This is only portable to operating
@@ -331,6 +348,9 @@ public:
 
   pid_t getpid (void);
   // Return the process id of the new child process.
+
+  ACE_HANDLE gethandle (void);
+  // Return the handle of the process, if it has one.
 
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info (void);

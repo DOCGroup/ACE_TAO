@@ -7,6 +7,7 @@
 #ifndef ACE_CONFIG_H
 
 #define ACE_LACKS_GETPGID
+#define ACE_LACKS_SETPGID
 
 // Maximum compensation (10 ms) for early return from timed ::select ().
 #if !defined (ACE_TIMER_SKEW)

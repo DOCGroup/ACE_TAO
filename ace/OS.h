@@ -851,10 +851,11 @@ typedef int key_t;
 
 #       if defined (ACE_PSOS_DIAB_PPC)
       typedef unsigned long pid_t;
+#     define ACE_INVALID_PID ((pid_t) ~0)
 #       else /* !defined (ACE_PSOS_DIAB_PPC) */
       typedef long pid_t;
+#     define ACE_INVALID_PID ((pid_t) -1)
 #       endif /* defined (ACE_PSOS_DIAB_PPC) */
-
 
 //      typedef unsigned char wchar_t;
 #     endif
@@ -3250,6 +3251,7 @@ typedef OVERLAPPED ACE_OVERLAPPED;
 typedef DWORD ACE_thread_t;
 typedef HANDLE ACE_hthread_t;
 typedef long pid_t;
+#define ACE_INVALID_PID ((pid_t) -1)
 #   if defined (ACE_HAS_TSS_EMULATION)
       typedef DWORD ACE_OS_thread_key_t;
       typedef u_int ACE_thread_key_t;
@@ -3491,6 +3493,10 @@ typedef char TCHAR;
 #   define ACE_SEH_TRY if (1)
 #   define ACE_SEH_EXCEPT(X) while (0)
 #   define ACE_SEH_FINALLY if (1)
+
+# if !defined (ACE_INVALID_PID)
+# define ACE_INVALID_PID ((pid_t) -1)
+# endif /* ACE_INVALID_PID */
 
 // The "null" device on UNIX.
 #   define ACE_DEV_NULL "/dev/null"
@@ -5545,6 +5551,7 @@ public:
   static uid_t getuid (void);
   static int setuid (uid_t);
   static pid_t setsid (void);
+  static int setpgid (pid_t pid, pid_t pgid);
   static int system (const char *s);
   static pid_t waitpid (pid_t,
                         int *status = 0,
