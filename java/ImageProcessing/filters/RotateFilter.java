@@ -52,7 +52,7 @@ public class RotateFilter extends ImageFilter implements MedFilter
 
   public String info ()
   {
-    return "Rotates an image";
+    return "Rotates an image.";
   }
 
     public void transform(double x, double y, double[] retcoord) {
