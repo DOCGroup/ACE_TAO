@@ -19,6 +19,11 @@ Job_i::Job_i (DT_Creator* dt_creator)
 
 }
 
+Job_i::~Job_i (void)
+{
+  delete task_stats_;
+}
+
 const ACE_CString&
 Job_i::name (void)
 {

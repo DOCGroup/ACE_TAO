@@ -121,31 +121,29 @@ DT_Creator::init (int argc, char *argv [])
 	{
           arg_shifter.consume_arg ();
 
-          POA_Holder *poa_holder;
+          ACE_NEW_RETURN (this->poa_list_[poa_count], POA_Holder (), -1);
 
-          ACE_NEW_RETURN (poa_holder, POA_Holder (), -1);
-
-          if (poa_holder->init (arg_shifter) == -1)
+          if (this->poa_list_[poa_count]->init (arg_shifter) == -1)
             {
-              delete poa_holder;
+              delete this->poa_list_[poa_count];
               return -1;
             }
-
-          this->poa_list_[poa_count++] = poa_holder;
+	  else
+	    poa_count++;
 	}
       else if (arg_shifter.cur_arg_strncasecmp ("-Job") == 0)
 	{
           arg_shifter.consume_arg ();
 
-          Job_i *job;
+          ACE_NEW_RETURN (this->job_list_[job_count], Job_i (this), -1);
 
-          ACE_NEW_RETURN (job, Job_i (this), -1);
-
-          if (job->init (arg_shifter) == -1)
-            return -1;
-
-          this->job_list_[job_count++] = job;
-
+          if (this->job_list_[job_count]->init (arg_shifter) == -1)
+	    {
+	      delete this->job_list_[job_count];
+	      return -1;
+	    }
+	  else 
+	    job_count++;
 	}
       else if ((current_arg = arg_shifter.get_the_parameter ("-OutFile")))
 	{
@@ -351,13 +349,6 @@ DT_Creator::activate_job_list (ACE_ENV_SINGLE_ARG_DECL)
       ACE_DEBUG ((LM_DEBUG,
 		  "Activated Job List\n"));
 
-//        ACE_NEW (base_time_,
-//         	       ACE_Time_Value (ACE_OS::gettimeofday ()));
-
-      //base_hr_time_ = ACE_OS::gethrtime ();
-
-      //      active_job_count_++;
-
     } /* while */
 
 }
@@ -501,8 +492,6 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
   ACE_NEW (base_time_,
 	   ACE_Time_Value (*(this->synch ()->base_time ())));
 
-  base_hr_time_ = ACE_OS::gethrtime ();
-
   for (int i = 0; i < this->dt_count_; i++)
     {
       ACE_Time_Value now (ACE_OS::gettimeofday ());
@@ -534,9 +523,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current
       dt_list_ [i]->activate_task (current,
 				   sched_param.in (),
 				   flags,
-				   base_time_,
-				   base_hr_time_,
-				   barrier_
+				   base_time_
 				   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
 
@@ -653,7 +640,17 @@ DT_Creator::dt_count (void)
 
 DT_Creator::~DT_Creator (void)
 {
+  // for (int i = 0; i < (BUFSIZ * 100); i++)
+  delete[] log;
+
+  delete[] dt_list_;
+  delete[] poa_list_;
+  delete[] job_list_;
+
+  delete base_time_;
+
   delete state_lock_;
+  delete shutdown_lock_;
 }
 
 
@@ -687,11 +684,6 @@ DT_Creator::base_time (ACE_Time_Value* base_time)
   this->base_time_ = base_time;
 }
 
-ACE_hrtime_t
-DT_Creator::base_hr_time (void)
-{
-  return this->base_hr_time_;
-}
 
 RTScheduling::Current_ptr
 DT_Creator::current (void)

@@ -31,6 +31,7 @@ class Job_i : public POA_Job, public virtual PortableServer::RefCountServantBase
   /// Constructor
   Job_i (DT_Creator* dt_creator);
 
+  ~Job_i (void);
 
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);

@@ -14,7 +14,8 @@ class MIF_Task : public Thread_Task
 	    int dist,
 	    char *job_name,
 	    DT_Creator *dt_creator);
-  
+
+  ~MIF_Task (void);
   virtual int perform_task (void);
   
   virtual void pre_activate (void);
