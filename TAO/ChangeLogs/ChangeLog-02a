@@ -1,3 +1,23 @@
+Thu Jul 13 06:29:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Updated Makefile dependencies.
+
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp: 
+	* orbsvcs/IFR_Service/Servant_Factory.h: 
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp: 
+
+	  Fixed incorrect includes.
+
+Thu Jul 13 03:55:51 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao: Updated Makefile dependencies.
+
+	* tao/CurrentC.cpp: Added missing include.
+
+	* tao/ORB.cpp (resolve_policy_current): Removed extra argument.
+
+	* tao/POA.cpp (the_children_i): Fixed use of guard macro.
+
 Thu Jul 13 02:50:26 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Current.pidl: Made CORBA::Current interface local per CMM
