@@ -78,6 +78,10 @@ public:
   // Wild-card address.
 #endif /* ACE_HAS_BROKEN_SAP_ANY */
 
+  virtual u_long hash (void) const;
+  // Returns a hash value.  This should be overwritten by a subclass
+  // which can produce a better hash value.
+
   void dump (void) const;
   // Dump the state of an object.
 

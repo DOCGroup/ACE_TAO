@@ -177,19 +177,6 @@ Svc_Handler::idle (u_long flags)
 
 // ****************************************
 
-// Template specializations.  Older versions of g++, such as 2.7.2.3,
-// can't deal with them, though.
-
-#if defined (ACE_HAS_TEMPLATE_SPECIALIZATION)  &&  !defined (ACE_HAS_GNUG_PRE_2_8)
-u_long
-ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>::hash_i (void) const
-{
-  return this->t_.get_ip_address () + this->t_.get_port_number ();
-}
-#endif /* ACE_HAS_TEMPLATE_SPECIALIZATION && newer g++, if __GNUG__ */
-
-// ****************************************
-
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
 // listen-mode port/socket.

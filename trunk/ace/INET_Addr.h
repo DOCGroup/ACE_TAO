@@ -155,6 +155,9 @@ public:
   int operator != (const ACE_INET_Addr &SAP) const;
   // Compare two addresses for inequality.
 
+  virtual u_long hash (void) const;
+  // Computes and returns hash value.  
+
   void dump (void) const;
   // Dump the state of an object.
 
