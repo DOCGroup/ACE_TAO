@@ -78,6 +78,7 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 <li>
 <a href="#ts">CORBA Time Service</a></li>
 
+<li>
 <a href="#ec">CORBA Event Service</a></li>
 
 <li>
@@ -85,6 +86,9 @@ release</a> of <a href="http://www.cs.wustl.edu/~schmidt/TAO.html">TAO</a>:
 
 <li>
 <a href="#notify">CORBA Notification Service</a></li>
+
+<li>
+<a href="#security">CORBA Security Service</a></li>
 
 <li>
 <a href="ec.html">TAO's Real-time Event Service</a></li>
@@ -373,7 +377,7 @@ it, so the IDL compiler should ultimately support Unix's wchar_t as well.
 
 <h3>
 <a NAME="pp"></a>Pluggable Protocols</h3>
-Point of contact: <a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a>
+Point of contact: <a href="mailto:ossama@uci.edu">Ossama Othman</a>
 <p>The goal of the pluggable protocol effort is to (1) identify logical
 communication layers in the ORB, (2) abstract out common features, (3)
 define general interfaces, and (4) provide necessary mechanisms for
@@ -1315,7 +1319,7 @@ Features in this release:</h3>
 
       <LI><P>A new binary to run the native COS Event Service was
 	  added, it is compiled in:
-	  <CODE>$TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service_Native<CODE>
+	  <CODE>$TAO_ROOT/orbsvcs/CosEvent_Service/CosEvent_Service_Native</CODE>
 	</P>
       </LI>
 
@@ -1573,6 +1577,44 @@ The TODO list runs like this:
       If possible, implement event communication via reliable multicast.
   </li>
 </ul>
+
+<!-- BEGIN: CORBA Security Service Release Notes -->
+<HR WIDTH="100%">
+<H3><A NAME="security"></A>CORBA Security Service </H3>
+Point of contact: <A HREF="mailto:ossama@uci.edu">Ossama Othman</A>
+
+<P>
+For up-to-date information, see the project web site
+<A HREF="http://doc.ece.uci.edu/TAO/Security/">here</A>.
+
+<P>
+Implemented Features:
+<UL>
+  <LI>
+    IIOP over SSL integration via TAO's
+    <A HREF="http://doc.ece.uci.edu/TAO/Security/SSLIOP.html">SSLIOP pluggable protocol</A>.
+  </LI>
+</UL>
+
+Current Status:
+<UL>
+  <LI>
+    The level 1 authentication mechanisms detailed in the CORBA
+    Security Service specification are currently under development.
+  </LI>
+</UL>
+
+Schedule:
+<UL>
+  <LI>
+    Security Level 1 completion by Winter 2000.
+  </LI>
+  <LI>
+    Security Level 2 completion by <FONT COLOR=RED><STRONG>TBD</STRONG></FONT>.
+  </LI>
+</UL>
+
+<!-- END: CORBA Security Service Release Notes -->
 
 <!--#include virtual="ec.html" -->
 <p>
@@ -1840,7 +1882,7 @@ Kircher</a>.
 <a NAME="ami"></a>Asynchronous Method Invocation</h3>
 Points of contact: <a href="mailto:alex@cs.wustl.edu">Alexander Arulanthu</a>
 , <a href="mailto:Michael.Kircher@mchp.siemens.de">Michael Kircher</a> and
-<a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a>
+<a href="mailto:coryan@uci.edu">Carlos O'Ryan</a>
 <p>Status:
 <ul>
 
