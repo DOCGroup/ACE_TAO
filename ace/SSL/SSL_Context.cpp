@@ -37,11 +37,6 @@
 ACE_mutex_t * ACE_SSL_Context::lock_ = 0;
 #endif  /* ACE_HAS_THREADS */
 
-// @@ We really need a better seed value.  A seed value based on the
-//    date and time, in combination with some other strings, may
-//    suffice.
-//      -Ossama
-static const char rnd_seed[] = "string to make the random number generator think it has entropy";
 
 int ACE_SSL_Context::library_init_count_ = 0;
 
@@ -77,10 +72,33 @@ ACE_SSL_Context::ssl_library_init (void)
       ::SSL_load_error_strings ();
       ::SSLeay_add_ssl_algorithms ();
 
-      // Seed the random number generator
-      // @@ TODO: Need to pick a better seed value.
-      ::RAND_seed (rnd_seed,
-                   sizeof rnd_seed);
+      // Seed the random number generator.  Note that the random
+      // number generator can be seeded more than once to "stir" its
+      // state.
+
+#ifdef WIN32
+      // Seed the random number generator by sampling the screen.
+      ::RAND_screen ();
+#endif  /* WIN32 */
+
+#if OPENSSL_VERSION_NUMBER >= 0x00905100L
+      // OpenSSL < 0.9.5 doesn't have EGD support.
+
+      const char *egd_socket_file =
+        ACE_OS::getenv (ACE_SSL_CERT_FILE_ENV);
+
+      if (egd_file != 0)
+        (void) this->egd_file (egd_socket_file);
+#endif  /* OPENSSL_VERSION_NUMBER */
+
+      const char *rand_file =
+        ACE_OS::getenv (ACE_SSL_RAND_FILE_ENV);
+
+      if (rand_file != 0)
+        (void) this->seed_file (rand_file);
+
+      // Initialize the mutexes that will be used by the crypto
+      // library.
 
 #ifdef ACE_HAS_THREADS
       int num_locks = ::CRYPTO_num_locks ();
@@ -293,6 +311,49 @@ ACE_SSL_Context::certificate (const char *file_name,
                                     this->certificate_.type ());
   return status;
 }
+
+int
+ACE_SSL_Context::random_seed (const char * seed)
+{
+  ::RAND_seed (seed, ACE_OS::strlen (seed));
+
+#if OPENSSL_VERSION_NUMBER >= 0x00905100L
+  // RAND_status() returns 1 if the PRNG has enough entropy.
+  return (::RAND_status () == 1 ? 0 : -1);
+#else
+  return 0;  // Ugly, but OpenSSL <= 0.9.4 doesn't have RAND_status().
+#endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
+}
+
+int
+ACE_SSL_Context::egd_file (const char * socket_file)
+{
+#if OPENSSL_VERSION_NUMBER < 0x00905100L
+  // OpenSSL < 0.9.5 doesn't have EGD support.
+  ACE_UNUSED_ARG (socket_file);
+  ACE_NOTSUP_RETURN (-1);
+#else
+  // RAND_egd() returns the amount of entropy used to seed the random
+  // number generator.  The actually value should be greater than 16,
+  // i.e. 128 bits.
+  if (::RAND_egd (socket_file) > 0)
+    return 0;
+  else
+    return -1;
+#endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
+}
+
+int
+ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
+{
+  // RAND_load_file() returns the number of bytes used to seed the
+  // random number generator.
+  if (::RAND_load_file (seed_file, bytes) > 0)
+    return 0;
+  else
+    return -1;
+}
+
 
 // ****************************************************************
 
