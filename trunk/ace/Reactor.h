@@ -83,7 +83,7 @@ public:
   static int event_loop_done (void);
   // Report if the <ACE_Reactor::instance>'s event loop is finished.
 
-  static int reset_event_loop (void);
+  static void reset_event_loop (void);
   // Resets the <ACE_Reactor::end_event_loop_> static so that the
   // <run_event_loop> method can be restarted.
 
