@@ -1,3 +1,14 @@
+Thu Feb  6 15:45:28 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS: Added a new accessor method called waiters() in
+ 	  ACE_cond_t that returns the number of waiters on the condition
+ 	  variable.  Thanks to Karlheinz for suggesting this.
+
+	* ace/OS: Changed all the ACE_cont_t, ACE_rwlock_t, etc. so that
+ 	  their fields are private, but made class ACE_OS a friend.
+  	  Applications should not be mucking with these fields since they
+ 	  may change.
+
 Thu Feb  6 20:25:13 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.i (select): Adapted ACE_OS::select methods for use on
