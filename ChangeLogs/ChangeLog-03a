@@ -1,3 +1,10 @@
+Fri Nov 17 01:16:25 2000  Ossama Othman  <ossama@uci.edu>
+
+	* include/makeinclude/wrapper_macros.GNU (ssl):
+
+	  Removed definition of the ACE_HAS_SSL macro.  It is no longer
+	  used.
+
 Thu Nov 16 16:14:03 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * Makefile:
