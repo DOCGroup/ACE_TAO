@@ -218,7 +218,12 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
      << "{" <<be_idt_nl 
      <<" // Generate the arg list on demand" << be_nl;
 
-  if (node->argument_count () == 0)
+  if (node->argument_count () == 0 ||
+      // Now make sure that we have some in and inout
+      // parameters. Otherwise, there is nothing to be put into
+      // the Dyanmic::Paramlist.
+      (!(this->has_param_type (node, AST_Argument::dir_IN)) &&
+       !(this->has_param_type (node, AST_Argument::dir_INOUT))))
     {
       *os << "return 0;\n}\n\n" << be_nl;
     }
