@@ -1,3 +1,11 @@
+Mon Mar  3 11:43:01 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicAny/DynStruct_i.cpp (current_member_kind):
+
+	  Corrected return value in emulated exception case.
+	  "CORBA::tk_null", not "0".  Fixes build problems related to
+	  invalid conversions from "int" to "CORBA::TCKind".
+
 Mon Mar  3 13:27:01 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_array/array.cpp:
