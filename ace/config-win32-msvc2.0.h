@@ -104,7 +104,11 @@
 
 #define ACE_HAS_UNICODE
 
+// _M_IX86 is set by Build->Settings->Code Generation->Processor.
+// Choose Pentium if you want _M_IX86 == 500.
+#if _M_IX86 == 500
 #define ACE_HAS_PENTIUM
+#endif /* _M_IX86 == 500 */
 
 // Compiler/platform correctly calls init()/fini() for shared
 // libraries. - applied for DLLs ?
