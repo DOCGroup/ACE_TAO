@@ -1,6 +1,7 @@
 // $Id$
 
 #define ACE_BUILD_DLL
+#include "ace/OS.h"
 #include "ace/Process.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
@@ -9,16 +10,17 @@
 #include "ace/Process.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(ace, Process, "$Id$")
+ACE_RCSID (ace, Process, "$Id$")
 
 ACE_Process::ACE_Process (void)
 #if !defined (ACE_WIN32)
-  : child_id_ (0)
+  : child_id_ (ACE_INVALID_PID)
 #endif /* !defined (ACE_WIN32) */
 {
 #if defined (ACE_WIN32)
   ACE_OS::memset ((void *) &this->process_info_,
-                  0, sizeof this->process_info_);
+                  0,
+                  sizeof this->process_info_);
 #endif /* ACE_WIN32 */
 }
 
@@ -47,27 +49,26 @@ ACE_Process::spawn (ACE_Process_Options &options)
                      options.startup_info (),
                      &this->process_info_);
 
-  if (fork_result) // If success.
+  if (fork_result)
     return this->getpid ();
   else
-    // CreateProcess failed.
-    return -1;
+    return ACE_INVALID_PID;
 #elif defined (CHORUS)
-  // This only works if we <exec>.  Chorus does not really support
-  // <fork>.
+  // This only works if we exec.  Chorus does not really support
+  // forking.
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
-    ACE_NOTSUP_RETURN (-1);
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
 
   // These are all currently unsupported.
   if (options.get_stdin () != ACE_INVALID_HANDLE)
-    ACE_NOTSUP_RETURN (-1);
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
   if (options.get_stdout () != ACE_INVALID_HANDLE)
-    ACE_NOTSUP_RETURN (-1);
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
   if (options.get_stderr () != ACE_INVALID_HANDLE)
-    ACE_NOTSUP_RETURN (-1);
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
   if (options.working_directory () != 0)
-    ACE_NOTSUP_RETURN (-1);
+    ACE_NOTSUP_RETURN (ACE_INVALID_PID);
 
   if (options.env_argv ()[0] == 0)
     // command-line args
@@ -81,7 +82,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
            *user_env != 0;
            user_env++)
         if (ACE_OS::putenv (*user_env) != 0)
-          return -1;
+          return ACE_INVALID_PID;
 
       // Now the forked process has both inherited variables and the
       // user's supplied variables.
@@ -95,6 +96,14 @@ ACE_Process::spawn (ACE_Process_Options &options)
   this->child_id_ = ACE::fork (options.command_line_argv ()[0],
                                options.avoid_zombies ());
 
+  // If we're the child and the options specified a non-default
+  // process group, try to set our pgid to it. (This will allow
+  // Process_Manager to wait for Processes by process-group.)
+  if (options.getgroup () != ACE_INVALID_PID 
+      && this->child_id_ == 0)
+    ACE_OS::setpgid (0,
+                     options.getgroup ());
+  
   // If we're not supposed to exec, return the process id.
   if (ACE_BIT_ENABLED (options.creation_flags (),
                        ACE_Process_Options::NO_EXEC))
@@ -104,9 +113,9 @@ ACE_Process::spawn (ACE_Process_Options &options)
     {
     case -1:
       // Error.
-      return -1;
+      return ACE_INVALID_PID;
     case 0:
-      // Child process.
+      // Child process...exec the 
       {
         if (options.get_stdin () != ACE_INVALID_HANDLE
             && ACE_OS::dup2 (options.get_stdin (),
@@ -130,6 +139,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // process.
         if (options.working_directory () != 0)
           ACE_OS::chdir (options.working_directory ());
+        // Should check for error here!
 
         // Child process executes the command.
         int result = 0;
@@ -140,10 +150,10 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                    options.command_line_argv ());
         else
           {
-#if defined( ghs )
+#if defined (ghs)
             // GreenHills 1.8.8 (for VxWorks 5.3.x) can't compile this
             // code.  Processes aren't supported on VxWorks anyways.
-            ACE_NOTSUP_RETURN (-1);
+            ACE_NOTSUP_RETURN (ACE_INVALID_PID);
 #else
             // Add the new environment variables to the environment
             // context of the context before doing an <execvp>.
@@ -151,7 +161,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
                  *user_env != 0;
                  user_env++)
               if (ACE_OS::putenv (*user_env) != 0)
-                return -1;
+                return ACE_INVALID_PID;
 
             // Now the forked process has both inherited variables and
             // the user's supplied variables.
@@ -159,7 +169,6 @@ ACE_Process::spawn (ACE_Process_Options &options)
                                      options.command_line_argv ());
 #endif /* ghs */
           }
-
         if (result == -1)
           {
             // If the execv fails, this child needs to exit.
@@ -168,12 +177,77 @@ ACE_Process::spawn (ACE_Process_Options &options)
             // catch this and figure out what went wrong.
             ACE_OS::exit (errno);
           }
-
+        // ... otherwise, this is never reached.
         return 0;
       }
     default:
       // Server process.  The fork succeeded.
       return this->child_id_;
+    }
+#endif /* ACE_WIN32 */
+}
+
+pid_t
+ACE_Process::wait (const ACE_Time_Value &tv,
+                   int *status)
+{
+#if defined (ACE_WIN32)
+  // Don't try to get the process exit status if wait failed so we can
+  // keep the original error code intact.
+  switch (::WaitForSingleObject (process_info_.hProcess,
+                                 tv.msec ()))
+    {
+    case WAIT_OBJECT_0:
+      if (status != 0)
+        // The error status of <GetExitCodeProcess> is nonetheless not
+        // tested because we don't know how to return the value.
+        ::GetExitCodeProcess (process_info_.hProcess,
+                              (LPDWORD) status);
+      return 0;
+    case WAIT_TIMEOUT:
+      errno = ETIME;
+      return 0;
+    default:
+      ACE_OS::set_errno_to_last_error ();
+      return -1;
+    }
+#else /* ACE_WIN32 */
+  if (tv == ACE_Time_Value::zero)
+    ACE_OSCALL_RETURN (ACE_OS::waitpid (this->child_id_,
+                                        status,
+                                        WNOHANG),
+                       int, ACE_INVALID_PID);
+
+  if (tv == ACE_Time_Value::max_time)
+    return this->wait (status);
+
+  ACE_Time_Value wait_until = ACE_OS::gettimeofday () + tv;
+
+  for (;;) 
+    {
+      int result = ACE_OS::waitpid (this->getpid (),
+                                    status,
+                                    WNOHANG);
+      if (result != 0)
+        return result;
+
+      ACE_Sig_Set alarm_or_child;
+
+      alarm_or_child.sig_add (SIGALRM);
+      alarm_or_child.sig_add (SIGCHLD);
+
+      ACE_Time_Value time_left = wait_until - ACE_OS::gettimeofday ();
+
+      // If ACE_OS::ualarm doesn't have sub-second resolution:
+      time_left += ACE_Time_Value (0, 500000);
+      time_left.usec (0);
+
+      if (time_left <= ACE_Time_Value::zero)
+        return 0; // timeout
+
+      ACE_OS::ualarm (time_left);
+      if (ACE_OS::sigwait (alarm_or_child) == -1)
+        return ACE_INVALID_PID;
     }
 #endif /* ACE_WIN32 */
 }
@@ -208,7 +282,8 @@ ACE_Process_Options::ACE_Process_Options (int ie,
     max_environ_argv_index_ (mea - 1),
 #endif /* !ACE_HAS_WINCE */
     command_line_argv_calculated_ (0),
-    command_line_buf_ (0)
+    command_line_buf_ (0),
+	process_group_ (ACE_INVALID_PID)
 {
   ACE_NEW (command_line_buf_,
            TCHAR[cobl]);
@@ -256,7 +331,8 @@ ACE_Process_Options::inherit_environment (void)
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
         {
-          ACE_ERROR ((LM_ERROR, ASYS_TEXT ("%p.\n"),
+          ACE_ERROR ((LM_ERROR,
+                      ASYS_TEXT ("%p.\n"),
                       ASYS_TEXT ("ACE_Process_Options::ACE_Process_Options")));
           break;
         }
@@ -434,27 +510,27 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   if (std_err == ACE_INVALID_HANDLE)
     std_err = ACE_STDERR;
 
-  if (!::DuplicateHandle (::GetCurrentProcess(),
+  if (!::DuplicateHandle (::GetCurrentProcess (),
                           std_in,
-                          ::GetCurrentProcess(),
+                          ::GetCurrentProcess (),
                           &this->startup_info_.hStdInput,
                           NULL,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     return -1;
 
-  if (!::DuplicateHandle (::GetCurrentProcess(),
+  if (!::DuplicateHandle (::GetCurrentProcess (),
                           std_out,
-                          ::GetCurrentProcess(),
+                          ::GetCurrentProcess (),
                           &this->startup_info_.hStdOutput,
                           NULL,
                           TRUE,
                           DUPLICATE_SAME_ACCESS))
     return -1;
 
-  if (!::DuplicateHandle (::GetCurrentProcess(),
+  if (!::DuplicateHandle (::GetCurrentProcess (),
                           std_err,
-                          ::GetCurrentProcess(),
+                          ::GetCurrentProcess (),
                           &this->startup_info_.hStdError,
                           NULL,
                           TRUE,

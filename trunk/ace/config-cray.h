@@ -143,49 +143,32 @@
 // working.  Of course, all other Cray PVP and MPP systems do NOT support it,
 // so it's probably good to just define like this for consistency
 #define ACE_LACKS_SYSV_SHMEM
-
 #define ACE_LACKS_MMAP
-
 #define ACE_LACKS_CONST_TIMESPEC_PTR
-
 #define ACE_LACKS_SYSCALL
-
 #define ACE_LACKS_STRRECVFD
-
 #define ACE_LACKS_MADVISE
-
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
-
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
-
 #define ACE_LACKS_PTHREAD_CLEANUP
-
 #define ACE_LACKS_CONDATTR_PSHARED
-
 #define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 #if !defined(_CRAYMPP)
 
 #define ACE_LACKS_PTHREAD_CANCEL
-
 #define ACE_LACKS_PTHREAD_KILL
 
 #endif
 
 #define ACE_LACKS_MUTEXATTR_PSHARED
-
 #define ACE_LACKS_RWLOCK_T
-
 #define ACE_LACKS_PRI_T
-
 #define ACE_LACKS_GETPGID
-
+#define ACE_LACKS_SETPGID
 #define ACE_LACKS_MPROTECT
-
 #define ACE_LACKS_MSYNC
-
 #define ACE_LACKS_READV
-
 #define ACE_LACKS_RLIMIT
 
 // we probably want to fake not having this, since Cray memory mgmt is different

@@ -30,6 +30,7 @@
 
 // Platform specific directives
 #define ACE_LACKS_GETPGID
+#define ACE_LACKS_SETPGID
 #define ACE_LACKS_RWLOCK_T
 #define ACE_LACKS_READDIR_R
 #define ACE_HAS_SIG_MACROS

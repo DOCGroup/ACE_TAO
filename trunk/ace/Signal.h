@@ -52,7 +52,8 @@ public:
   // the set.
 
   ACE_Sig_Set (int fill = 0);
-  // If <fill> == 0 then initialize the <sigset_> empty, else full.
+  // If <fill> == 0 then initialize the <sigset_> to be empty, else
+  // full.
 
   ~ACE_Sig_Set (void);
 
