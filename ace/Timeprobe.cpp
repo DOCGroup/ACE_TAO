@@ -14,17 +14,13 @@
 #include "ace/High_Res_Timer.h"
 
 template <class ACE_LOCK>
-ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
-                                        ACE_Allocator *alloc)
+ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size)
   : timeprobes_ (0),
-    allocator_ (alloc != 0 ? alloc : ACE_Allocator::instance ()),
     lock_ (),
     max_size_ (size),
     current_size_ (0)
 {
-  ACE_NEW_MALLOC (this->timeprobes_, 
-                  (ACE_timeprobe_t *) this->allocator_->malloc ((sizeof (ACE_timeprobe_t)) * this->max_size_),
-                  ACE_timeprobe_t[this->max_size_]);
+  this->timeprobes_ = new ACE_timeprobe_t[this->max_size_];
 
 #ifdef VXWORKS
   if (sysProcNumGet () == 0)
@@ -41,10 +37,7 @@ ACE_Timeprobe<ACE_LOCK>::ACE_Timeprobe (u_long size,
 template <class ACE_LOCK>
 ACE_Timeprobe<ACE_LOCK>::~ACE_Timeprobe (void)
 {
-  for (u_long i = 0; i < this->max_size_; i++)
-    this->timeprobes_[i].ACE_timeprobe_t::~ACE_timeprobe_t ();
-
-  this->allocator_->free (this->timeprobes_);
+  delete this->timeprobes_;
 }
 
 template <class ACE_LOCK> void

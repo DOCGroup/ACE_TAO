@@ -1,3 +1,9 @@
+Mon Jun 01 13:01:14 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe: The vxworks compiler is lame as it cannot handle
+ 	  operator placement new for arrays.  Therefore, ACE_Allocator was
+ 	  removed in favor of regular new and delete.
+
 Mon Jun 01 09:54:51 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Timeprobe_Test.cpp: removed trailing ; from template
