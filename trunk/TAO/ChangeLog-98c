@@ -1,3 +1,10 @@
+Sat Nov 21 19:30:11 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/benchmark/{client,server}.cpp: Added
+	template class, #pragma instantiate for the templates. Thanks to
+	Leif Jakobsmeier" <leif@informatik.uni-frankfurt.de for pointing
+	this out.
+
 Sat Nov 21 02:29:00 1998 Marina Spivak  <marina@cs.wustl.edu>
 
 	* TAO/orbsvcs/tests/Simple_Naming/run-test.pl:  modified the
