@@ -198,7 +198,6 @@
 //ACE_HAS_PTHREADS                      Platform supports POSIX Pthreads
 //ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP   Platform has pthread_condattr_
 // setkind_np().
-//ACE_HAS_PTHREAD_EQUAL                 Platform has pthread_equal().
 //ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP  Platform has
 // pthread_mutexattr_setkind_np().
 //ACE_HAS_THREAD_SELF                   Platform has thread_self() rather

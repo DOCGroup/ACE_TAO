@@ -114,8 +114,6 @@
 
 #define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 
-#define ACE_HAS_PTHREAD_EQUAL
-
 // ACE supports POSIX Pthreads. OSF/1 3.2 has draft 4
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_DRAFT4
