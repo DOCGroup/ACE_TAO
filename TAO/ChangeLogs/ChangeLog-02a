@@ -1,3 +1,14 @@
+Fri Jan  4 18:28:44 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/be/be_decl.cpp:
+        * TAO_IDL/be_include/be_decl.h:
+
+          Removed compute_repoID(), the version that is always 
+          called in in the base class AST_Decl. Thanks to
+          Brian Olson <bolson@rtlogic.com> for pointing out
+          that the be_decl version was not doing the version
+          part of the string correctly.
+
 Fri Jan  4 16:30:04 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynCommon.cpp (insert_reference):
