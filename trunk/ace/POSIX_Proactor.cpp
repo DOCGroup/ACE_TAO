@@ -15,7 +15,7 @@
 #endif /* __ACE_INLINE__ */
 
 # if defined (ACE_HAS_SYSINFO)
-#   include  <sys/systeminfo.h>
+#   include /**/ <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_INFO */
 
 // *********************************************************************

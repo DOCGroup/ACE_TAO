@@ -23,7 +23,7 @@
 #if defined (ACE_HAS_TK)
 
 #include "ace/Select_Reactor.h"
-#include <tk.h>
+#include /**/ <tk.h>
 
 /**
  * @class ACE_TkReactorID

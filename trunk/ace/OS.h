@@ -2924,6 +2924,19 @@ typedef ACE_UINT64 ACE_hrtime_t;
 
 // Win32 dummies to help compilation.
 
+// These are used in SPIPE_Acceptor/Connector, but are ignored at runtime.
+#   if defined (ACE_HAS_WINCE)
+#     if !defined (PIPE_TYPE_MESSAGE)
+#       define PIPE_TYPE_MESSAGE  0
+#     endif
+#     if !defined (PIPE_READMODE_MESSAGE)
+#       define PIPE_READMODE_MESSAGE  0
+#     endif
+#     if !defined (PIPE_WAIT)
+#       define PIPE_WAIT  0
+#     endif
+#   endif /* ACE_HAS_WINCE */
+
 #   if !defined (__BORLANDC__)
 typedef DWORD nlink_t;
 #       if !defined(__MINGW32__)
@@ -4393,6 +4406,23 @@ extern "C" {
   typedef int (*ACE_COMPARE_FUNC)(const void *, const void *);
 }
 
+#if defined (ACE_HAS_WINCE)
+// WinCE doesn't have most of the standard C library time functions. It
+// also doesn't define struct tm. SYSTEMTIME has pretty much the same
+// info though, so we can map it when needed. Define struct tm here and
+// use it when needed. This is taken from the standard C library.
+struct tm {
+  int tm_sec;
+  int tm_min;
+  int tm_hour;
+  int tm_mday;      // Day of the month
+  int tm_mon;
+  int tm_year;
+  int tm_wday;      // Day of the week
+  int tm_yday;      // Day in the year
+  int tm_isdst;     // >0 if dst in effet; 0 if not; <0 if unknown
+};
+#endif /* ACE_HAS_WINCE */
 
 
 /// Helper for the ACE_OS::timezone() function
@@ -4406,9 +4436,12 @@ extern "C" {
  */
 inline long ace_timezone()
 {
-#if !defined (ACE_HAS_WINCE) && !defined (VXWORKS) && !defined (ACE_PSOS) \
-    && !defined (CHORUS)
-# if defined (ACE_WIN32)
+#if !defined (VXWORKS) && !defined (ACE_PSOS) && !defined (CHORUS)
+# if defined (ACE_HAS_WINCE)
+  TIME_ZONE_INFORMATION tz;
+  GetTimeZoneInformation (&tz);
+  return tz.Bias * 60;
+# elif defined (ACE_WIN32)
   return _timezone;  // For Win32.
 # elif ( defined (__Lynx__) || defined (__FreeBSD__) || defined (ACE_HAS_SUNOS4_GETTIMEOFDAY) ) && ( !defined (__linux__) )
   long result = 0;
@@ -5005,9 +5038,9 @@ public:
   //@}
 
   //@{ @name A set of wrappers for operations on time.
-# if !defined (ACE_HAS_WINCE)
+
+  // Get the current time.
   static time_t mktime (struct tm *timeptr);
-# endif /* !ACE_HAS_WINCE */
 
   // wrapper for time zone information.
   static void tzset (void);

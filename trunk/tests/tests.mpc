@@ -512,6 +512,15 @@ project(Multicast Test) : aceexe {
   }
 }
 
+project(New Fail Test) : aceexe {
+  exename = New_Fail_Test
+  Source_Files {
+    New_Fail_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(Notify Performance Test) : aceexe {
   exename = Notify_Performance_Test
   Source_Files {

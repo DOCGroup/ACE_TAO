@@ -21,7 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP) && \
+   !defined (ACE_HAS_WINCE)
 
 #include "ace/ACE.h"
 #include "ace/OS_Log_Msg_Attributes.h"
@@ -429,7 +430,7 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
 #include "ace/NT_Service.i"
 #endif /* __ACE_INLINE__ */
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP && !ACE_HAS_WINCE */
 
 #include "ace/post.h"
 
