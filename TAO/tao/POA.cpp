@@ -280,6 +280,17 @@ TAO_POA::find_POA (const char *adapter_name,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
 
+  // A recursive thread lock without using a recursive thread
+  // lock.  Non_Servant_Upcall has a magic constructor and
+  // destructor.  We unlock the Object_Adapter lock for the
+  // duration of the servant activator upcalls; reacquiring
+  // once the upcalls complete.  Even though we are releasing
+  // the lock, other threads will not be able to make progress
+  // since <Object_Adapter::non_servant_upcall_in_progress_>
+  // has been set.
+  TAO_Object_Adapter::Non_Servant_Upcall non_servant_upcall (*this->orb_core_.object_adapter ());
+  ACE_UNUSED_ARG (non_servant_upcall);
+
   TAO_POA *child = this->find_POA_i (adapter_name,
                                      activate_it,
                                      ACE_TRY_ENV);

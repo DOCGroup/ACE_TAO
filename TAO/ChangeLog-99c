@@ -1,4 +1,9 @@
-Tue Jun 08 18:06:43 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Tue Jun 08 18:17:38 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/POA.cpp (find_POA): Must release the Object Adapter lock
+	  before calling the Adapter Activators which may call back into
+	  the POA (create_POA) causing a deadlock.  Thanks to Carlos for
+	  pointing this out.
 
 	* performance-tests/POA/Object_Creation_And_Registration/svc.conf:
 	  Changed ORBTableSize to ORBActiveObjectMapSize. Also, removed
