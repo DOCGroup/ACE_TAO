@@ -155,6 +155,29 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // available (say the user wants an ATM connection, but we don't
   // have the protocol) then we give it another profile to try.
 
+#if defined (TAO_HAS_CORBA_MESSAGING)
+#if 0 // @@ TODO implement once PP are merged in
+  POA_Messaging::RelativeRoundtripTimeoutPolicy* timeout =
+    this->stub_->relative_roundtrip_timeout ();
+  if (TAO_debug_level > 0)
+    {
+      if (timeout == 0)
+        ACE_DEBUG ((LM_DEBUG, "TAO (%P|%t) Timeout is nil\n"));
+      else
+        {
+          TimeBase::TimeT expiry =
+            timeout->relative_expiry (ACE_TRY_ENV);
+          ACE_CHECK;
+          CORBA::ULong msecs =
+            ACE_static_cast(CORBA::ULong, expiry / 10000);
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) Timeout is <%u>\n",
+                      msecs));
+        }
+    }
+#endif /* 0 */
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
   // Loop until a connection is established or there aren't any more
   // profiles to try.
  for (;;)
@@ -640,7 +663,8 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
 {
   int retval = TAO_GIOP_Invocation::invoke (1, ACE_TRY_ENV);
   ACE_CHECK_RETURN (retval);
-  ACE_UNUSED_ARG (retval);
+  if (retval != TAO_INVOKE_OK)
+    return retval;
 
   // This blocks until the response is read.  In the current version,
   // there is only one client thread that ever uses this connection,

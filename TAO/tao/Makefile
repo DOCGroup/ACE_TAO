@@ -147,10 +147,8 @@ ifeq ($(corba_messaging),1)
 ORB_CORE_FILES += \
   MessagingC \
   MessagingS \
-  Policy_Manager
-
-CPPFLAGS += -DTAO_HAS_CORBA_MESSAGING
-
+  Policy_Manager \
+  Messaging_Policy_i
 endif # corba_messaging
 
 ifndef TAO_ROOT

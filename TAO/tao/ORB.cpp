@@ -33,9 +33,14 @@
 #include "tao/Object_Adapter.h"
 #include "tao/POA.h"
 #include "tao/Request.h"
-#ifdef TAO_HAS_VALUETYPE
+
+#if defined (TAO_HAS_VALUETYPE)
 #  include "tao/ValueFactory_Map.h"
 #endif /* TAO_HAS_VALUETYPE */
+
+#if defined (TAO_HAS_CORBA_MESSAGING)
+#include "tao/Messaging_Policy_i.h"
+#endif /* TAO_HAS_CORBA_MESSAGING */
 
 
 #if !defined (__ACE_INLINE__)
@@ -858,6 +863,27 @@ CORBA_ORB::resolve_initial_references (const char *name,
                                        ACE_Time_Value *timeout,
                                        CORBA_Environment &ACE_TRY_ENV)
 {
+  if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
+    return this->resolve_root_poa (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
+    return this->resolve_poa_current (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
+    return this->resolve_policy_manager (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
+    return this->resolve_policy_current (ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
+    return this->resolve_service ("NameService", timeout, ACE_TRY_ENV);
+
+  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
+    return this->resolve_trading_service (timeout, ACE_TRY_ENV);
+
+  else
+    return this->resolve_service (name, timeout, ACE_TRY_ENV);
+
   // Get the table of initial references specified through
   // -ORBInitRef.
   TAO_IOR_LookupTable *table =
@@ -913,26 +939,6 @@ CORBA_ORB::resolve_initial_references (const char *name,
       delete default_init_ref;
     }
 
-  if (ACE_OS::strcmp (name, TAO_OBJID_NAMESERVICE) == 0)
-    return this->resolve_service ("NameService", timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_TRADINGSERVICE) == 0)
-    return this->resolve_trading_service (timeout, ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_ROOTPOA) == 0)
-    return this->resolve_root_poa (ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POACURRENT) == 0)
-    return this->resolve_poa_current (ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYMANAGER) == 0)
-    return this->resolve_policy_manager (ACE_TRY_ENV);
-
-  else if (ACE_OS::strcmp (name, TAO_OBJID_POLICYCURRENT) == 0)
-    return this->resolve_policy_current (ACE_TRY_ENV);
-
-  else
-    return this->resolve_service (name, timeout, ACE_TRY_ENV);
 }
 
 // Unimplemented at this time.
@@ -1443,6 +1449,54 @@ CORBA_ORB::string_to_object (const char *str,
 
   return obj;
 }
+
+// ****************************************************************
+
+#if defined(TAO_HAS_CORBA_MESSAGING)
+
+CORBA::Policy_ptr
+CORBA_ORB::create_policy (CORBA::PolicyType type,
+                          const CORBA::Any& val,
+                          CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException, CORBA::PolicyError))
+{
+  PortableServer::POA_var root_poa =
+    this->orb_core_->root_poa_reference (ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  switch (type)
+    {
+    case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
+      return TAO_RelativeRoundtripTimeoutPolicy_i::create (root_poa.in (),
+                                                           val,
+                                                           ACE_TRY_ENV);
+      break;
+
+    case TAO_MESSAGING_REBIND_POLICY_TYPE:
+    case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
+    case TAO_MESSAGING_REQUEST_PRIORITY_POLICY_TYPE:
+    case TAO_MESSAGING_REPLY_PRIORITY_POLICY_TYPE:
+    case TAO_MESSAGING_REQUEST_START_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_REQUEST_END_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_REPLY_START_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_REPLY_END_TIME_POLICY_TYPE:
+    case TAO_MESSAGING_RELATIVE_REQ_TIMEOUT_POLICY_TYPE:
+    case TAO_MESSAGING_ROUTING_POLICY_TYPE:
+    case TAO_MESSAGING_MAX_HOPS_POLICY_TYPE:
+    case TAO_MESSAGING_QUEUE_ORDER_POLICY_TYPE:
+      ACE_THROW_RETURN (CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY),
+                        CORBA::Policy::_nil ());
+      break;
+
+    default:
+      break;
+    }
+  ACE_THROW_RETURN (CORBA::PolicyError (CORBA::BAD_POLICY),
+                    CORBA::Policy::_nil ());
+}
+
+#endif /* TAO_HAS_CORBA_MESSAGING */
+
 
 // ****************************************************************
 
