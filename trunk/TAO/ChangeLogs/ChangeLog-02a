@@ -1,3 +1,10 @@
+Mon Mar  6 19:43:00 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.cpp:
+	  fixed compile warning in create method.
+        * orbsvcs/tests/CosEC_Basic/CosEC_Basic.cpp:
+          fix for IRIX compile error: used ServantBase_var instead of auto_ptr
+
 Mon Mar  6 16:49:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/deep_free.cpp:
@@ -19,7 +26,7 @@ Sun Mar  5 18:36:34 2000  Darrell Brunsch <brunsch@uci.edu>
         * orbsvcs/orbsvcs/Notify/Notify_StructuredPushSupplier.h:
 
           Disabled the inheritance by dominance warnings in MSVC.
-             
+
         * orbsvcs/orbsvcs/orbsvcs.dsp:
         * orbsvcs/orbsvcs/orbsvcs_static.dsp:
 
