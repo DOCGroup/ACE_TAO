@@ -15,21 +15,26 @@ $iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
 
 ACE::checkForTarget($cwd);
 
-print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
+print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n\n";
 
 unlink $iorfile1;
 unlink $iorfile2;
 
-# CORBA priorities 65, 70 and 75 are for the SCHED_OTHER class on
+# CORBA priorities 66, 75 and 80, etc. are for the SCHED_OTHER class on
 # Solaris.  May need to use different values for other platforms
 # depending on their native priorities scheme, i.e., based on the
 # available range.
 
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBSvcConf server.conf "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=65 "
+    "-n $iorfile1 -o $iorfile2 -b bands.unix -ORBSvcConf server.conf "
+    ."-p 67 -w 78 "
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=66 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
-    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=73 ";
+    ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=80 ";
+
+$client_args = 
+    "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
+    ."-a 76 -b 80 -c 64";
 
 if ($^O eq "MSWin32")
 {
@@ -38,9 +43,11 @@ if ($^O eq "MSWin32")
             ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
                 ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
-}
 
-$client_args = "-p file://$iorfile1 -o file://$iorfile2";
+    $client_args = 
+        "-n file://$iorfile1 -o file://$iorfile2 -ORBSvcConf client.conf "
+            ."-a 76 -b 80 -c 64";
+}
 
 $SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
                        $server_args);
