@@ -18,7 +18,7 @@
 #if !defined (ACE_ACTIVATION_QUEUE_H)
 #define ACE_ACTIVATION_QUEUE_H
 
-#include "ace/Synch.h"
+#include "ace/Synch_T.h"
 #include "ace/Message_Queue.h"
 #include "ace/Method_Object.h"
 

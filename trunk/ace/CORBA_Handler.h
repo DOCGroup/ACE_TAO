@@ -22,7 +22,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Pipe.h"
 
-#if defined (ACE_HAS_ORBIX) || defined (ACE_HAS_MT_ORBIX)
+#if (defined (ACE_HAS_ORBIX) && (ACE_HAS_ORBIX != 0)) || (defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0))
 #define EXCEPTIONS
 #define WANT_ORBIX_FDS
 #include /**/ <CORBA.h>
@@ -166,7 +166,7 @@ protected:
   // Number of iterations to process per processNextEvent() call.
 };
 
-#if defined (ACE_HAS_MT_ORBIX)
+#if defined (ACE_HAS_MT_ORBIX) && (ACE_HAS_MT_ORBIX != 0)
 
 class ACE_Export ACE_MT_CORBA_Handler : public ACE_CORBA_Handler, public ACE_CORBA_1 (ThreadFilter)
   // = TITLE
@@ -223,7 +223,7 @@ protected:
   ACE_Pipe pipe_;
   // Used to send CORBA::Requests through the server
 
-#if defined (ACE_MT_SAFE)  
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static ACE_Thread_Mutex ace_mt_corba_handler_lock_;
   // Double-Check lock.
 #endif /* ACE_MT_SAFE */

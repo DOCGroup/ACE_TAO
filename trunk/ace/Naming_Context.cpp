@@ -5,8 +5,9 @@
 #include "ace/Get_Opt.h"
 #include "ace/Naming_Context.h"
 #include "ace/Remote_Name_Space.h"
-#include "ace/Local_Name_Space.h"
+#include "ace/Local_Name_Space_T.h"
 #include "ace/Registry_Name_Space.h"
+#include "ace/Memory_Pool.h"
 
 // Make life easier later on...
 

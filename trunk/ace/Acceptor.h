@@ -52,7 +52,7 @@ public:
   // "Do-nothing" constructor.
 
   ACE_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-		ACE_Reactor * = ACE_Service_Config::reactor (),
+		ACE_Reactor * = ACE_Reactor::instance(),
 		int flags = 0);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>
@@ -62,7 +62,7 @@ public:
   // <SVC_HANDLER> when it is opened.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
-	    ACE_Reactor * = ACE_Service_Config::reactor (),
+	    ACE_Reactor * = ACE_Reactor::instance (),
 	    int flags = 0);
   // Initialize and register <this> with the Reactor and listen for
   // connection requests at the designated <local_addr>.  <flags>
@@ -181,7 +181,7 @@ public:
   // Default constructor.
 
   ACE_Strategy_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-			 ACE_Reactor * = ACE_Service_Config::reactor (),
+			 ACE_Reactor * = ACE_Reactor::instance (),
 			 ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 			 ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
 			 ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
@@ -194,7 +194,7 @@ public:
   // designated <local_addr>.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
-	    ACE_Reactor * = ACE_Service_Config::reactor (),
+	    ACE_Reactor * = ACE_Reactor::instance (),
 	    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 	    ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> * = 0,
 	    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
@@ -353,13 +353,13 @@ public:
   // "Do-nothing" constructor.
 
   ACE_Oneshot_Acceptor (const ACE_PEER_ACCEPTOR_ADDR &,
-			ACE_Reactor * = ACE_Service_Config::reactor (),
+			ACE_Reactor * = ACE_Reactor::instance(),
 			ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
   // Initialize the appropriate strategies for concurrency and
   // creation and then register <this> at the designated <local_addr>.
 
   int open (const ACE_PEER_ACCEPTOR_ADDR &, 
-	    ACE_Reactor * = ACE_Service_Config::reactor (),
+	    ACE_Reactor * = ACE_Reactor::instance(),
 	    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
   // Initialize the appropriate strategies for concurrency and
   // creation and then register <this> at the designated <local_addr>.

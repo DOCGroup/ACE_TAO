@@ -11,6 +11,21 @@
 #include "ace/Malloc.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Synch_T.h"
+
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+// Lock the creation of the Singletons.
+static ACE_Thread_Mutex ace_allocator_lock_;
+#endif /* ACE_MT_SAFE */
+
+// Process-wide ACE_Allocator.
+ACE_Allocator *ACE_Allocator::allocator_ = 0;
+
+// Controls whether the Allocator is deleted when we shut down (we can
+// only delete it safely if we created it!)
+int ACE_Allocator::delete_allocator_ = 0;
+
+
 void
 ACE_Control_Block::dump (void) const
 {
@@ -49,6 +64,56 @@ ACE_Name_Node::dump (void) const
   ACE_DEBUG ((LM_DEBUG, "\nname_ = %s", this->name_));
   ACE_DEBUG ((LM_DEBUG, "\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+ACE_Allocator *
+ACE_Allocator::instance (void)
+{
+  ACE_TRACE ("ACE_Allocator::instance");
+
+  if (ACE_Allocator::allocator_ == 0)
+    {
+      // Perform Double-Checked Locking Optimization.
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_allocator_lock_, 0));
+
+      if (ACE_Allocator::allocator_ == 0)
+	{
+	  ACE_NEW_RETURN (ACE_Allocator::allocator_,
+			  ACE_New_Allocator,
+			  0);
+	  ACE_Allocator::delete_allocator_ = 1;
+	}
+    }
+  return ACE_Allocator::allocator_;
+}
+
+ACE_Allocator *
+ACE_Allocator::instance (ACE_Allocator *r)
+{
+  ACE_TRACE ("ACE_Allocator::instance");
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, ace_allocator_lock_, 0));
+  ACE_Allocator *t = ACE_Allocator::allocator_;
+
+  // We can't safely delete it since we don't know who created it!
+  ACE_Allocator::delete_allocator_ = 0;
+
+  ACE_Allocator::allocator_ = r;
+  return t;
+}
+
+void
+ACE_Allocator::close_singleton (void)
+{
+  ACE_TRACE ("ACE_Allocator::close_singleton");
+
+  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, ace_allocator_lock_));
+
+  if (ACE_Allocator::delete_allocator_)
+    {
+      delete ACE_Allocator::allocator_;
+      ACE_Allocator::allocator_ = 0;
+      ACE_Allocator::delete_allocator_ = 0;
+    }
 }
 
 ACE_Allocator::~ACE_Allocator (void)

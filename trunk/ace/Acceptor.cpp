@@ -615,7 +615,7 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::handle_signal");
-  ACE_Service_Config::end_reactor_event_loop ();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 

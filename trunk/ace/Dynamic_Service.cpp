@@ -27,7 +27,7 @@ ACE_Dynamic_Service<SERVICE>::instance (const char *name)
   ACE_TRACE ("ACE_Dynamic_Service::instance");
   const ACE_Service_Record *svc_rec;
   
-  if (ACE_Service_Config::svc_rep ()->find (name, &svc_rec) == -1)
+  if (ACE_Service_Repository::instance ()->find (name, &svc_rec) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "svc_rep"), 0);
 
   const ACE_Service_Type *type = svc_rec->type ();

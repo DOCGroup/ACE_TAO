@@ -19,7 +19,7 @@
 #define ACE_FILECACHE_H
 
 #include "ace/Mem_Map.h"
-#include "ace/Synch.h"
+#include "ace/Synch_T.h"
 
 // = Forward declarations.
 class ACE_Filecache_Object;

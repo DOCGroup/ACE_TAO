@@ -22,7 +22,7 @@
 #endif /* !ACE_HAS_INLINED_OSCALLS */
 
 #include "ace/Thread.h"
-#include "ace/Synch.h"
+#include "ace/Synch_T.h"
 #include "ace/Signal.h"
 #include "ace/Containers.h"
 
@@ -49,7 +49,7 @@ static ACE_FIFO_Send_Msg message_queue_;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
-#if !defined (VXWORKS) && defined (ACE_MT_SAFE)
+#if !defined (VXWORKS) && defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 static int key_created_ = 0;
 static ACE_thread_key_t key_;
 #endif /* !VXWORKS && ACE_MT_SAFE */
@@ -63,7 +63,7 @@ static ACE_thread_key_t key_;
      if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
      } while (0)
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 typedef ACE_Unbounded_Set<ACE_Log_Msg *> ACE_Log_Msg_Set;
 
@@ -205,7 +205,7 @@ ACE_TSS_cleanup (void *ptr)
 int 
 ACE_Log_Msg::exists (void)
 {
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #if defined (VXWORKS)
   // Get the tss_log_msg from thread-specific storage, using one of
   // the "spare" fields in the task control block.  Note that no locks
@@ -237,7 +237,7 @@ ACE_Log_Msg::exists (void)
 ACE_Log_Msg *
 ACE_Log_Msg::instance (void)
 {
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #if defined (VXWORKS)
   // Get the tss_log_msg from thread-specific storage, using one of
   // the "spare" fields in the task control block.  Note that no locks
@@ -431,7 +431,7 @@ int
 ACE_Log_Msg::acquire (void)
 {
   ACE_TRACE ("ACE_Log_Msg::acquire");
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   return ACE_Log_Msg_Manager::get_lock ()->acquire ();
 #else
   return 0;
@@ -457,7 +457,7 @@ ACE_Log_Msg::release (void)
 {
   ACE_TRACE ("ACE_Log_Msg::release");
 
-#if defined (ACE_MT_SAFE)
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   return ACE_Log_Msg_Manager::get_lock ()->release ();
 #else
   return 0;
@@ -496,7 +496,7 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
   // <program_name_> and <local_host_> strings weren't duplicated, in
   // order to avoid memory leaks, because this destructor can't tell
   // when the last thread in the program exits.
-#if !defined (VXWORKS) && defined (ACE_MT_SAFE)
+#if !defined (VXWORKS) && defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, *ACE_Log_Msg_Manager::get_lock ()));
   
   // If this is the last instance then cleanup.
@@ -1067,7 +1067,7 @@ ACE_Log_Msg::dump (void) const
     ACE_DEBUG ((LM_DEBUG, "\thr_state_ = %d\n", *this->thr_state_));
   ACE_DEBUG ((LM_DEBUG, "\nmsg_off_ = %d\n", this->msg_off_));
   message_queue_.dump ();
-#if defined (ACE_MT_SAFE)  
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_Log_Msg_Manager::get_lock ()->dump ();
   // Synchronize output operations.  
 #endif /* ACE_MT_SAFE */

@@ -102,7 +102,7 @@ ACE_Hash_Map_Manager<EXT_ID, INT_ID, LOCK>::open (size_t size,
   ACE_WRITE_GUARD_RETURN (LOCK, ace_mon, this->lock_, -1);
 
   if (alloc == 0)
-    alloc = ACE_Service_Config::alloc ();
+    alloc = ACE_Allocator::instance ();
 
   this->allocator_ = alloc;
 

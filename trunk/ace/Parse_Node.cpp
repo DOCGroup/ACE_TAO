@@ -259,7 +259,7 @@ ACE_Static_Node::record (void) const
   ACE_TRACE ("ACE_Static_Node::record");
   ACE_Service_Record *sr;
 
-  if (ACE_Service_Config::svc_rep ()->find (this->name (), 
+  if (ACE_Service_Repository::instance()->find (this->name (), 
 					 (const ACE_Service_Record **) &sr) == -1)
     return 0;
   else

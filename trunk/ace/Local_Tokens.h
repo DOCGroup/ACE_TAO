@@ -39,7 +39,7 @@
 #if !defined (ACE_LOCAL_MUTEX_H)
 #define ACE_LOCAL_MUTEX_H
 
-#include "ace/Synch.h"
+#include "ace/Synch_T.h"
 #include "ace/Containers.h"
 #include "ace/Synch_Options.h"
 #include "ace/Map_Manager.h"
@@ -55,7 +55,7 @@ class ACE_Export ACE_TOKEN_CONST
   //   this class is necessary to fight the compiler with order of
   //   declaration errors.
 public:
-#if defined (ACE_MT_SAFE) 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   // ACE platform supports some form of threading.
   typedef ACE_Condition_Thread_Mutex COND_VAR;
   typedef ACE_Thread_Mutex MUTEX;

@@ -109,7 +109,7 @@ public:
   typedef ACE_PEER_CONNECTOR_ADDR ACE_PEER_ADDR_TYPEDEF;
 #endif /* ACE_HAS_TYPENAME_KEYWORD */
 
-  ACE_Connector (ACE_Reactor *r = ACE_Service_Config::reactor (),
+  ACE_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
 		 int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
@@ -117,7 +117,7 @@ public:
   // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
 
-  virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor (),
+  virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
 		    int flags = 0);
   // Initialize a connector.  <flags> indicates how <SVC_HANDLER>'s
   // should be initialized prior to being activated.  Right now, the
@@ -292,7 +292,7 @@ class ACE_Strategy_Connector : public ACE_Connector <SVC_HANDLER, ACE_PEER_CONNE
   //     particular concurrency mechanism.
 {
 public:
-  ACE_Strategy_Connector (ACE_Reactor *r = ACE_Service_Config::reactor (),
+  ACE_Strategy_Connector (ACE_Reactor *r = ACE_Reactor::instance (),
 			  ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 			  ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
 			  ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,
@@ -302,7 +302,7 @@ public:
   // only flag that is processed is <ACE_NONBLOCK>, which enabled
   // non-blocking I/O on the <SVC_HANDLER> when it is opened.
 
-  virtual int open (ACE_Reactor *r = ACE_Service_Config::reactor (),
+  virtual int open (ACE_Reactor *r = ACE_Reactor::instance (),
 		    ACE_Creation_Strategy<SVC_HANDLER> * = 0,
 		    ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> * = 0,
 		    ACE_Concurrency_Strategy<SVC_HANDLER> * = 0,

@@ -3,7 +3,7 @@
 
 #define ACE_BUILD_DLL
 #include "ace/Message_Block.h"
-#include "ace/Service_Config.h"
+#include "ace/Synch_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Message_Block.i"
@@ -196,9 +196,9 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
   ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
 
   // If the user didn't pass one in, let's use the
-  // <ACE_Service_Config::alloc>.
+  // <ACE_Allocator::instance>.
   if (this->allocator_strategy_ == 0)
-    ACE_ALLOCATOR (this->allocator_strategy_, ACE_Service_Config::alloc ());
+    ACE_ALLOCATOR (this->allocator_strategy_, ACE_Allocator::instance ());
 
   if (msg_data == 0)
     ACE_ALLOCATOR (this->base_, 

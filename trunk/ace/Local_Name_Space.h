@@ -21,7 +21,7 @@
 
 #include "ace/SString.h"
 #include "ace/Containers.h"
-#include "ace/Malloc.h"
+#include "ace/Malloc_T.h"
 #include "ace/Synch.h"
 
 class ACE_Export ACE_NS_String

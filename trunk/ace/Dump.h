@@ -143,24 +143,13 @@ private:
   int current_size_;
   // Current size of <object_table_>.
 
-#if defined (ACE_MT_SAFE)  
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   static ACE_Thread_Mutex ace_dump_lock_;
   // Double-Check lock.
 #endif /* ACE_MT_SAFE */
 };
 
+// Include the templates classes at this point.
 #include "ace/Dump_T.h"
 
-// Some useful macros for conditionally compiling this feature...
-#if defined (ACE_NDEBUG)
-#define ACE_REGISTER_OBJECT(CLASS)
-#define ACE_REMOVE_OBJECT
-#else
-#define ACE_REGISTER_OBJECT(CLASS) \
-        ACE_ODB::instance ()->register_object \
-          (new ACE_Dumpable_Adapter<CLASS> (this));
-#define ACE_REMOVE_OBJECT \
-        ACE_ODB::instance ()->remove_object    \
-          ((void *) this);
-#endif /* ACE_NDEBUG */
 #endif /* ACE_DUMP_H */
