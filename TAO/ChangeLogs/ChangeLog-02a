@@ -11,6 +11,8 @@ Wed May 29 13:51:50 2002  Ossama Othman  <ossama@uci.edu>
 	* tao/CORBA_String.cpp (operator>>):
 
 	  Corrected type conversion logic in wstring extraction operators.
+  	  Thanks to David Smith <dts@prismtechnologies.com> for reporting
+ 	  this.
 
 Wed May 29 12:31:53 2002  Ossama Othman  <ossama@uci.edu>
 
