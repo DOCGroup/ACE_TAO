@@ -14,6 +14,7 @@ My_Resource_Factory::get_reactor (void)
 #else
   // Just use the Singleton Reactor.
   return ACE_Reactor::instance ();
+#endif /* ACE_HAS_THREADS */
 }
 
 ACE_FACTORY_DEFINE (Alt_Resource_Factory, My_Resource_Factory)
