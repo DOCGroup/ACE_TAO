@@ -1,3 +1,9 @@
+Thu Dec 16 14:38:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/arpa/os_inet.h:
+          Removed prototypes for VxWorks <= 0x540, these VxWorks versions
+          are not usable anymore because of the lack of namespace support.
+
 Thu Dec 16 16:12:07 2004  Olli Savia  <ops@iki.fi>
 
         * ace/Mem_Map.h:
@@ -5,9 +11,9 @@ Thu Dec 16 16:12:07 2004  Olli Savia  <ops@iki.fi>
         * ace/Mem_Map.cpp:
         * ace/OS_NS_sys_mman.inl:
           Replaced __Lynx__ macro with ACE_HAS_LYNX_BROKEN_MMAP macro.
-          This makes code maintenace easier across different 
+          This makes code maintenace easier across different
           LynxOS versions.
-        
+
 Thu Dec 16 14:14:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Flag_Manip.cpp:
