@@ -2,6 +2,10 @@ Fri May 15 09:38:37 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * bin/make_release: redirect cvs tag output to /dev/null.
 
+        * performance-tests/Misc/context_switch_time (main): fixed
+          printout of yield test time for other than the default
+          number of iterations.
+
 Fri May 15 09:29:57 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.6 released.
