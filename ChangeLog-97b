@@ -1,5 +1,9 @@
 Sat Nov  8 15:46:30 1997  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
+	* ace/INET_Addr.cpp: Enhanced the get_host_name() functions so
+ 	  that if the sin_addr.s_addr == INADDR_ANY we assume that we're a
+ 	  server, and we return our "hostname".
+
 	* Added a number of minor fixes for UNIXWARE with G++.  Thanks to
  	  Michael Rueger <m_rueger@syscomp.de> for reporting these.
 
