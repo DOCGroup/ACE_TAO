@@ -1696,9 +1696,9 @@ extern "C" {
 #include /**/ <netinet/in.h>
 #include /**/ <arpa/inet.h>
 }
+#include /**/ <netinet/tcp.h>
 #if defined (VXWORKS)
 #include /**/ <sys/times.h>
-#include /**/ <netinet/tcp.h>
 #else
 #include /**/ <sys/uio.h>
 #include /**/ <sys/ipc.h>
