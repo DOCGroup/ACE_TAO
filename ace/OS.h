@@ -329,13 +329,13 @@ typedef long      id_t;
 #   elif defined (VXWORKS)
 #     define ACE_DEFAULT_FILE_PERMS (S_IRUSR | S_IWUSR| S_IRGRP| S_IROTH)
 #   else
-#     define ACE_DEFAULT_FILE_PERMS 0664
+#     define ACE_DEFAULT_FILE_PERMS 0644
 #   endif /* ACE_WIN32 */
 # endif /* ACE_DEFAULT_FILE_PERMS */
 
 // Default directory permissions.
 # if !defined (ACE_DEFAULT_DIR_PERMS)
-#   define ACE_DEFAULT_DIR_PERMS 0775
+#   define ACE_DEFAULT_DIR_PERMS 0755
 # endif /* ACE_DEFAULT_DIR_PERMS */
 
 // Default size of the ACE Reactor.
