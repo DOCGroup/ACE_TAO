@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Loader 
+class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_Loader
   : public TAO_Object_Loader
 {
   // = TITLE
@@ -40,7 +40,7 @@ public:
                                            int argc,
                                            char *argv [],
                                            CORBA::Environment &)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Overload the base class method to create a new instance
   // of a TypeCodeFactory object.
 

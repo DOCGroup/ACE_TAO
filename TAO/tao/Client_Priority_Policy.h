@@ -63,7 +63,8 @@ public:
       CORBA::Environment &ACE_TRY_ENV =
         CORBA::Environment::default_environment ()
     )
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
   virtual CORBA::PolicyType policy_type (
       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()
     )
