@@ -94,9 +94,14 @@ ACE_Service_Repository::open (int size)
 {
   ACE_TRACE ("ACE_Service_Repository::open");
 
-  ACE_NEW_RETURN (this->service_vector_,
+  ACE_Service_Type **temp;
+
+  ACE_NEW_RETURN (temp,
                   ACE_Service_Type *[size],
                   -1);
+
+  this->service_vector_ = ACE_const_cast (const ACE_Service_Type **,
+                                          temp);
   this->total_size_ = size;
   return 0;
 }
@@ -162,8 +167,8 @@ ACE_Service_Repository::close (void)
 
       for (int i = this->current_size_ - 1; i >= 0; i--)
         {
-          s = ACE_const_Cast (ACE_Service_Type *,
-                              this->service_vector_[i]);
+          ACE_Service_Type *s = ACE_const_cast (ACE_Service_Type *,
+                                                this->service_vector_[i]);
           delete s;
         }
 
