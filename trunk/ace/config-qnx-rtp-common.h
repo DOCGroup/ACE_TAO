@@ -1,6 +1,7 @@
 // -*- C++ -*-
 // $Id$
 // several macros common to various qnx neutrino version.
+
 #ifndef ACE_CONFIG_QNX_RTP_COMMON_H
 #define ACE_CONFIG_QNX_RTP_COMMON_H
 #include /**/ "ace/pre.h"

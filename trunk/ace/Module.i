@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 // $Id$
-
 // Module.i
 
 #include "ace/OS_NS_string.h"
