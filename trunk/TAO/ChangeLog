@@ -1,3 +1,11 @@
+Tue Mar 16 00:07:21 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/IFR_Client_Adapter.h:
+
+	  Include "tao/orbconf.h" to pull TAO_HAS_MINIMUM_CORBA macro
+	  definition.  Addresses a warning when using the GNU g++
+	  "-Wundef" flag regarding an undefined preprocessor symbol.
+
 Tue Mar 16 08:04:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
