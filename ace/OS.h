@@ -1086,9 +1086,9 @@ struct cancel_state
 #    define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #    define ACE_PROC_PRI_FIFO_MAX  (sched_get_priority_max(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
-#    define ACE_PROC_PRI_RR_MAX    (sched_get_priority_min(SCHED_RR))
+#    define ACE_PROC_PRI_RR_MAX    (sched_get_priority_max(SCHED_RR))
 #    define ACE_PROC_PRI_OTHER_MIN (sched_get_priority_min(SCHED_OTHER))
-#    define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_min(SCHED_OTHER))
+#    define ACE_PROC_PRI_OTHER_MAX (sched_get_priority_max(SCHED_OTHER))
 #    if !defined(ACE_PROC_PRI_FIFO_DEF)
 #      define ACE_PROC_PRI_FIFO_DEF (ACE_PROC_PRI_FIFO_MIN + (ACE_PROC_PRI_FIFO_MAX - ACE_PROC_PRI_FIFO_MIN)/2)
 #    endif
