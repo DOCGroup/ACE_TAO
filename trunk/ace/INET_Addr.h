@@ -219,7 +219,6 @@ public:
   */
 #endif /* ACE_HAS_WCHAR */
 
-
   /**
    * Sets the port number without affecting the host name.  If
    * <encode> is enabled then <port_number> is converted into network
