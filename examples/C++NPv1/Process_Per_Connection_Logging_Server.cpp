@@ -13,7 +13,7 @@
 
 #include <errno.h>
 
-static void sigterm_handler (int /* signum */) { /* No-op. */ }
+extern "C" static void sigterm_handler (int /* signum */) { /* No-op. */ }
 
 
 Logging_Process::Logging_Process (const char *prog_name,
