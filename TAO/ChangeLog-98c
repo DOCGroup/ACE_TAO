@@ -4,8 +4,7 @@ Sun Sep 28 03:18:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	  class from "CORBA::Object" to "CORBA_Object."  MSVC doesn't
 	  allow this.
 
-	* tao/Orb_Core.h: Added ACE_Svc_Export to TAO_Orb_Core class and
-	  added conditionally inclusion of Orb_Core.i at the end.
+	* tao/Orb_Core.h: Added ACE_Svc_Export to TAO_Orb_Core class.
 
 	* tao/corbacom.h: Added ACE_Svc_Export to all IID constants.
 	  Notice that we must put ACE_Svc_Export _after_ extern "C".
