@@ -180,7 +180,7 @@ ACE_File_Lock::ACE_File_Lock (LPCTSTR name,
 {
 // ACE_TRACE ("ACE_File_Lock::ACE_File_Lock");
 
-  if (this->open (&this->lock_, flags, name, perms) == -1)
+  if (this->open (name, flags, perms) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "ACE_File_Lock::ACE_File_Lock"));
 }
 
