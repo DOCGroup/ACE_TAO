@@ -189,8 +189,9 @@
       </LI>
 
       <LI><P>Demarshaling and managment of Anys could be optimized,
-	  they esentially keep a *copy* of the CDR stream,
-	  but they could just keep a reference.
+	  they esentially keep a copy of the CDR stream,
+	  but they could just keep a reference (and increase the
+          reference count).
 	</P>
       </LI>
       
@@ -219,7 +220,14 @@
           hashing.
         </P>
       </LI>
-           
+
+      <LI><P>The CDR streaming classes compute the alignment on each
+          operation, but they could remember the alingment from the
+          previous insertion or extraction operation; saving a few
+          cycles but spending a little more memory.
+        </P>
+      </LI>
+
     </OL>
 
     <H4>New features and Bug fixes</H4>
