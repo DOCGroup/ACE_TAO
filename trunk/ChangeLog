@@ -1,3 +1,9 @@
+Sat Jan 17 23:52:38 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tests/SOCK_Dgram_Test.cpp:
+
+	  Fixed a compile error in Full_Reactor builds.
+
 Sat Jan 17 19:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* tests/INET_Addr_Test_IPV6.cpp:
