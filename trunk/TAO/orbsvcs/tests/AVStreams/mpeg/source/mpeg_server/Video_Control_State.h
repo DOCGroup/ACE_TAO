@@ -168,6 +168,9 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the fast_forward state  
+  CORBA::Boolean close (void);
+
+  CORBA::Boolean stop (CORBA::Long cmdsn);
 };
 
 class Video_Control_Fast_Backward_State : public virtual Video_Control_State

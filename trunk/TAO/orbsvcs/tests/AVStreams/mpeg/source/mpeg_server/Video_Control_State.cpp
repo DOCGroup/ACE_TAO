@@ -251,11 +251,11 @@ Video_Control_Waiting_State::handle_input (ACE_HANDLE h)
         return result;
       break;
     case CmdFF:
-      VIDEO_SINGLETON::instance ()->init_fast_play ();
+      //      VIDEO_SINGLETON::instance ()->init_fast_play ();
       this->vch_->change_state (VIDEO_CONTROL_FAST_FORWARD_STATE::instance ());
       break;
     case CmdFB:
-      VIDEO_SINGLETON::instance ()->init_fast_play ();
+      //      VIDEO_SINGLETON::instance ()->init_fast_play ();
       this->vch_->change_state (VIDEO_CONTROL_FAST_BACKWARD_STATE::instance ());
       break;
     case CmdPLAY:
@@ -320,7 +320,13 @@ CORBA::Boolean
 Video_Control_Waiting_State::fast_forward (const Video_Control::FFpara &para)
                                
 {
-  return 0;
+  // Many guys in legacy code depend on this variable.
+  VIDEO_SINGLETON::instance ()-> cmd = CmdFF;
+  ACE_DEBUG ((LM_DEBUG,
+              "(%P|%t) Video_Control_Waiting_State::fast_forward () called\n"));
+  VIDEO_SINGLETON::instance ()->init_fast_play (para);
+  this->vch_->change_state (VIDEO_CONTROL_FAST_FORWARD_STATE::instance ());
+  return CORBA::B_TRUE;
 }
 
 
@@ -346,12 +352,12 @@ Video_Control_Waiting_State::play (const Video_Control::PLAYpara &para,
                        
 {
   // Many guys in legacy code depend on this variable.
-  VIDEO_SINGLETON::instance ()-> cmd =CmdPLAY;
+  VIDEO_SINGLETON::instance ()-> cmd = CmdPLAY;
   //ACE_DEBUG ((LM_DEBUG,
   //            "(%P|%t)Video_Control_Waiting_State::play () called \n"));
   VIDEO_SINGLETON::instance ()->init_play (para);
   this->vch_->change_state (VIDEO_CONTROL_PLAY_STATE::instance ());
-  return 0;
+  return CORBA::B_TRUE;
 }
 
 
@@ -493,6 +499,9 @@ int
 Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
 {
   int result = VIDEO_SINGLETON::instance ()->CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Fast_Forward_State::handle_input: cmd = %d \n",
+              VIDEO_SINGLETON::instance ()->cmd));
   if (result != 0)
     return result;
   if (VIDEO_SINGLETON::instance ()->cmd == CmdCLOSE) {
@@ -521,6 +530,25 @@ Video_Control_Fast_Forward_State::handle_input (ACE_HANDLE h)
   this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
   return 0;
 }
+
+
+CORBA::Boolean
+Video_Control_Fast_Forward_State::stop (CORBA::Long cmdsn)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              "Video_Control_Fast_Forward_State::stop ()\n"));
+  VIDEO_SINGLETON::instance ()->cmd = CmdSTOP;
+  Video_Timer_Global::StopTimer();
+  this->vch_->change_state (VIDEO_CONTROL_WAITING_STATE::instance ());
+  return CORBA::B_TRUE;
+}
+
+CORBA::Boolean
+Video_Control_Fast_Forward_State::close (void)
+{
+  return CORBA::B_TRUE;
+}
+
 
 Video_Control_Fast_Backward_State::Video_Control_Fast_Backward_State (void)
 {

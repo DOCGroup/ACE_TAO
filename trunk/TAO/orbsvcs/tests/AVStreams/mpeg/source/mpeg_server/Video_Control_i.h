@@ -4,8 +4,8 @@
 #if !defined (AV_VIDEO_CONTROL_H)
 #define AV_VIDEO_CONTROL_H
 
-
 #include "mpeg_shared/Video_ControlS.h"
+#include "Video_Server.h"
 
 class Video_Control_i
   : public virtual POA_Video_Control
@@ -48,7 +48,9 @@ public:
                                CORBA::Environment &_tao_environment);
 
   virtual ~Video_Control_i (void);
-  
+
+protected:
+  Video_Control_Handler *get_video_control_handler (void);
 };
 
 #endif /* if !defined (AV_VIDEO_CONTROL_H) */
