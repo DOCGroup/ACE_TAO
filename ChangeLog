@@ -3,6 +3,9 @@ Tue Jan  6 14:00:12 2004  Steve Huston  <shuston@riverace.com>
 	* examples/Misc/test_read_buffer.cpp: Added #include
 	  "ace/OS_NS_unistd.h" to get ACE_OS::write().
 
+	* examples/performance-tests/SCTP/Options_Manager.cpp: Added #include
+	  "ace/OS_NS_stdlib.h" to get ACE_OS::atoi().
+
 Tue Jan  6 13:34:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* examples/APG/ThreadSafety/Atomic_Op.cpp:
