@@ -372,7 +372,7 @@ int be_interface::gen_client_stubs (void)
   cs->incr_indent ();
   *cs << "CORBA::ORB_ptr orb = 0;" << nl;
   *cs << "CORBA::Object_ptr objref = CORBA::Object::_nil ();" << nl << nl;
-  *cs << "static char IOR [256];" << nl;
+  *cs << "char IOR [256];" << nl;
   *cs << "orb =  TAO_ORB_Core_instance ()->orb (); // access the ORB" << nl;
   *cs << "if (!orb) return " << this->name () <<
     "::_nil (); // return null obj" << nl << nl;
