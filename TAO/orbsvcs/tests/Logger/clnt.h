@@ -24,6 +24,7 @@
 #include "ace/Get_Opt.h"
 #include "tao/corba.h"
 #include "loggerC.h"
+#include "CosNamingC.h"
 
 class Logger_Client 
   // = TITLE
@@ -87,4 +88,6 @@ private:
   Logger_ptr logger_2_;
   // Logger obj ref
 
+  CosNaming::NamingContext_ptr naming_service_;
+  // naming service
 };

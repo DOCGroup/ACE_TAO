@@ -29,7 +29,7 @@
 // constructor
 
 Logger_Client::Logger_Client (void)
-  : logger_factory_key_ ("logger_factory"),
+  : logger_factory_key_ ("factory"),
     hostname_ (ACE_DEFAULT_SERVER_HOST),
     portnum_ (TAO_DEFAULT_SERVER_PORT),
     exit_later_ (0),
@@ -37,7 +37,8 @@ Logger_Client::Logger_Client (void)
     objref_ (CORBA::Object::_nil ()),
     orb_ptr_ (0),
     logger_1_ (Logger::_nil ()),
-    logger_2_ (Logger::_nil ())
+    logger_2_ (Logger::_nil ()),
+    naming_service_ (CosNaming::NamingContext::_nil ())
 {
 }
 
@@ -102,6 +103,8 @@ Logger_Client::run (void)
 Logger_Client::~Logger_Client (void)
 {
   // Free resources
+  if (CORBA::is_nil (this->naming_service_) == CORBA::B_FALSE)
+    CORBA::release (this->naming_service_);
   CORBA::release (this->logger_1_);
   CORBA::release (this->logger_2_);
   CORBA::release (this->factory_);
@@ -132,16 +135,15 @@ Logger_Client::init (int argc, char **argv)
       return 1;
     }
 
-  CORBA::Object_ptr  obj_ptr = 
-    this->orb_ptr_->resolve_initial_references ("NameService");
+  this->objref_ = this->orb_ptr_->resolve_initial_references ("NameService");
   
-  if (CORBA::is_nil (obj_ptr) != CORBA::B_TRUE)
+  if (CORBA::is_nil (this->objref_) != CORBA::B_TRUE)
     {  
       // resolve the naming service
-      CosNaming::NamingContext_ptr naming_service = 
-	CosNaming::NamingContext::_narrow (obj_ptr, this->env_);
+      this->naming_service_ = 
+	CosNaming::NamingContext::_narrow (this->objref_, this->env_);
 
-      if (CORBA::is_nil (naming_service) == CORBA::B_TRUE)
+      if (CORBA::is_nil (this->naming_service_) == CORBA::B_TRUE)
 	ACE_ERROR_RETURN ((LM_ERROR, "CosNaming::NamingContext::_narrow"), 1);
 
       // Create the name of the logger factory.
@@ -149,19 +151,16 @@ Logger_Client::init (int argc, char **argv)
       n.length (1);
       n[0].id = CORBA::string_dup ("logger_factory");  
 
-      // @@ destroy the naming service reference
-
       // Resolve the logger factory to a corba object pointer
-      obj_ptr = naming_service->resolve (n, this->env_);
+      this->objref_ = this->naming_service_->resolve (n, this->env_);
   
-      if (CORBA::is_nil (obj_ptr) == CORBA::B_TRUE)
+      if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
 	ACE_ERROR_RETURN ((LM_ERROR, "resolve"), 1);
-
     }
   else
     {
       ACE_ERROR ((LM_ERROR, "resolve_initial_references failed\n"));  
-      ACE_ERROR ((LM_ERROR, "Unable to use the naming service"));  
+      ACE_ERROR ((LM_ERROR, "Unable to use the naming service\n"));  
 
       // Retrieve a factory objref.
       this->objref_ = Logger_Factory::_bind (this->hostname_,
@@ -185,13 +184,15 @@ Logger_Client::init (int argc, char **argv)
     }
 
   // Narrow it to a logger factory pointer
-  this->factory_ = Logger_Factory::_narrow (obj_ptr, this->env_);
+  this->factory_ = Logger_Factory::_narrow (this->objref_, this->env_);
 
   if (this->env_.exception () != 0)
     {
       this->env_.print_exception ("Logger_Factory::_narrow");
       return 1;
     }
+
+  
 
   // Now retrieve the Logger obj ref corresponding to key1 and key2
   this->logger_1_ = this->factory_->make_logger ("key1", this->env_);
