@@ -1,3 +1,13 @@
+Wed May 19 09:14:00 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
+        
+          Changed more instances similar to the change in 
+          
+          Tue May 18 10:15:02 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          Again, thanks to Olli Savia <ops@iki.fi> for pointing them out.
+
 Wed May 19 10:19:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Options.html:

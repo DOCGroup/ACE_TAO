@@ -972,9 +972,9 @@ IDL_GlobalData::validate_included_idl_files (void)
           for (size_t ni = 0; ni < n_post_preproc_includes; ++ni)
             {
               post_tmp = post_preproc_includes[ni]->get_string ();
-              (void) FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
+              full_path = FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
 
-              if (post_abspath != 0
+              if (full_path != 0
                   && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
                 {
                         FILE *test = ACE_OS::fopen (post_abspath, "r");
@@ -1004,18 +1004,18 @@ IDL_GlobalData::validate_included_idl_files (void)
               ACE_CString pre_partial (*path_tmp);
               pre_partial += separator;
               pre_partial += pre_preproc_includes[j];
-              (void) FULLPATH (pre_abspath,
+              full_path = FULLPATH (pre_abspath,
                                ACE_const_cast (char *, pre_partial.c_str ()),
                                MAXPATHLEN);
 
-              if (pre_abspath != 0)
+              if (full_path != 0)
                 {
                   for (size_t m = 0; m < n_post_preproc_includes; ++m)
                     {
                       post_tmp = post_preproc_includes[m]->get_string ();
-                      (void) FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
+                      full_path = FULLPATH (post_abspath, post_tmp, MAXPATHLEN);
 
-                      if (post_abspath != 0
+                      if (full_path != 0
                           && ACE_OS::strcmp (pre_abspath, post_abspath) == 0)
                         {
                                 FILE *test = ACE_OS::fopen (post_abspath, "r");
