@@ -1,3 +1,14 @@
+Thu Jan 31 13:18:39 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Filter/Structured_Filter_Supplier.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+        * orbsvcs/tests/Notify/Structured_Multi_Filter/Structured_Multi_Filter_Consumer.dsp:
+
+          Changes the settings for the release versions of these projects
+          to use the release version of the IDL compiler. Thanks to
+          Venkita <venkits@cs.wustl.edu> for tracking this down.
+
 Thu Jan 31 10:37:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
