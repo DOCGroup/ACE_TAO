@@ -579,9 +579,9 @@ public:
   /**
    * Called to clean up when a thread exits.
    *
-   * @arg do_thread_exit   If non-0 then ACE_Thread::exit is called to
+   * @param do_thread_exit If non-0 then ACE_Thread::exit is called to
    *                       exit the thread
-   * @arg status           If ACE_Thread_Exit is called, this is passed as
+   * @param status         If ACE_Thread_Exit is called, this is passed as
    *                       the exit value of the thread.
    * Should _not_ be called by main thread.
    */

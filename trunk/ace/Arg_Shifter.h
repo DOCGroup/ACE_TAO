@@ -50,12 +50,12 @@ public:
    * forbidding iteration. Following iteration over @a argv, the
    * @a argc value will be updated to contain the number of
    * unconsumed arguments.
-   * @arg argc The number of strings in @a argv. @a argc will be
+   * @param argc The number of strings in @a argv. @a argc will be
    *    updated to reflect the number of unconsumed arguments.
-   * @arg argv The argument vector to shift. The string pointers in
+   * @param argv The argument vector to shift. The string pointers in
    *    the vector will be reordered to place the @a argc unconsumed
    *    arguments at the front of the vector.
-   * @arg temp A vector of @c ACE_TCHAR pointers at least @a argc
+   * @param temp A vector of @c ACE_TCHAR pointers at least @a argc
    *    elements long. The vector will be used for argument shifting as
    *    the specified @a argv vector is consumed. The vector must not
    *    be modified while this object exists. If this argument is 0

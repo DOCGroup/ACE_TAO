@@ -757,10 +757,10 @@ public:
   virtual ~ACE_Token_Proxy (void);
 
   /**
-   * Open the <ACE_Token>/
-   * @arg name The string uniquely identifying the token.
-   * @arg ignore_deadlock Can be 1 to disable deadlock notifications.
-   * @arg debug Prints debug messages.
+   * Open the <ACE_Token>.
+   * @param name The string uniquely identifying the token.
+   * @param ignore_deadlock Can be 1 to disable deadlock notifications.
+   * @param debug Prints debug messages.
    */
   virtual int open (const ACE_TCHAR *name,
                     int ignore_deadlock = 0,
@@ -969,9 +969,9 @@ class ACE_Export ACE_Local_Mutex : public ACE_Token_Proxy
 public:
   /**
    * Constructor.
-   * @arg token_name Uniquely id's the token.
-   * @arg ignore_deadlock Will allow deadlock to occur (useful for testing).
-   * @arg debug Prints a bunch of messages.
+   * @param token_name Uniquely id's the token.
+   * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
+   * @param debug Prints a bunch of messages.
    */
   ACE_Local_Mutex (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
@@ -1023,9 +1023,9 @@ public:
 
   /**
    * Constructor.
-   * @arg token_name Uniquely id's the token.
-   * @arg ignore_deadlock Will allow deadlock to occur (useful for testing).
-   * @arg debug Prints a bunch of messages.
+   * @param token_name Uniquely id's the token.
+   * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
+   * @param debug Prints a bunch of messages.
    */
   ACE_Local_RLock (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,
@@ -1080,9 +1080,9 @@ public:
 
   /**
    * Constructor.
-   * @arg token_name Uniquely id's the token.
-   * @arg ignore_deadlock Will allow deadlock to occur (useful for testing).
-   * @arg debug Prints a bunch of messages.
+   * @param token_name Uniquely id's the token.
+   * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
+   * @param debug Prints a bunch of messages.
    */
   ACE_Local_WLock (const ACE_TCHAR *token_name = 0,
                    int ignore_deadlock = 0,

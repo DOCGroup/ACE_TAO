@@ -1,3 +1,31 @@
+Tue Sep 24 06:30:31 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE.h:
+        * Acceptor.h:
+        * Activation_Queue.h:
+        * Asynch_Acceptor.h:
+        * Asynch_Connector.h:
+        * Arg_Shifter.h:
+        * Get_Opt.h:
+        * Local_Tokens.h:
+        * Method_Request.h:
+        * Thread_Manager.h:
+        * WIN32_Asynch_IO.h:
+        * INET_Addr.h:
+          Corrected doxygen tags.
+
+        * CDR_Stream.cpp (write_string):
+        * Map_T.i (find, unbind):
+        * Timer_Hash_T.cpp:
+          Made arguments in method definition and implementation the same.
+
+        * Future.h:
+          Improved doxygen documentation.
+
+        * POSIX_CB_Proactor.i:
+          Added same ifdef as in the header file around the code in this file,
+          so that doxygen doesn't parse it.
+
 Mon Sep 23 13:43:11 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:

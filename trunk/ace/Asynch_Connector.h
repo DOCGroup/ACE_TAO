@@ -57,7 +57,7 @@ public:
   virtual int open (int pass_addresses = 0,
                     ACE_Proactor *proactor = 0,
                     int validate_new_connection = 1);
-  
+
   /// This initiates a new asynchronous connect
   virtual int connect (const ACE_INET_Addr &remote_sap,
                        const ACE_INET_Addr &local_sap =
@@ -91,12 +91,12 @@ public:
    * desireable. The return value from this method determines whether or
    * not ACE will continue opening the service or abort the connection.
    *
-   * @arg result    Result of the connection acceptance. Use
+   * @param result  Result of the connection acceptance. Use
    *                result.success() to determine success or failure of
    *                the connection attempt.
-   * @arg remote    Peer's address. If the connection failed, this object
+   * @param remote  Peer's address. If the connection failed, this object
    *                is undefined.
-   * @arg local     Local address connection was completed from. If the
+   * @param local   Local address connection was completed from. If the
    *                connection failed, this object is undefined.
    *
    * @retval  -1  ACE_Asynch_Connector will close the connection, and
@@ -121,13 +121,13 @@ public:
   /// required.
   virtual int  validate_new_connection (void) const;
   virtual void validate_new_connection (int new_value);
-  
+
 protected:
 
   /// This is called when an outstanding accept completes.
   virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
 
-  
+
   /// This parses the address from read buffer.
   void parse_address (const ACE_Asynch_Connect::Result &result,
                       ACE_INET_Addr &remote_address,
@@ -144,7 +144,7 @@ protected:
   virtual HANDLER *make_handler (void);
 
 private:
-  
+
   /// Asynch_Connect used to make life easier :-)
   ACE_Asynch_Connect asynch_connect_;
 

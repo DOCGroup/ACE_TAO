@@ -689,7 +689,7 @@ public:
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: Each data block payload must be at least the size of a system memory page 
+  * NOTE: Each data block payload must be at least the size of a system memory page
   * and must be aligned on a system memory page size boundary
   */
   int readv (ACE_Message_Block &message_block,
@@ -894,7 +894,7 @@ public:
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
-  * NOTE: Each data block payload must be at least the size of a system memory page 
+  * NOTE: Each data block payload must be at least the size of a system memory page
   * and must be aligned on a system memory page size boundary
   */
   int writev (ACE_Message_Block &message_block,
@@ -1251,7 +1251,7 @@ public:
   /**
    * Start an asynchronous connect.
    *
-   * @arg connect_handle   handle to use for the connect. If the value
+   * @param connect_handle Handle to use for the connect. If the value
    *                       ACE_INVALID_HANDLE, a new handle will be created.
    *
    * @retval 0  Success
@@ -1307,12 +1307,12 @@ private:
 
   /// Cancel uncompleted connect operations.
   /**
-   * @arg flg_notify  Indicates whether or not to send notification about
-   *                  canceled connect operations.  If 0, don't send
-   *                  notifications. If 1, notify user about canceled
-   *                  connects.
-   *                  According WIN32 standards we should receive
-   *                  notifications on canceled AIO requests.
+   * @param flg_notify Indicates whether or not to send notification about
+   *                   canceled connect operations.  If 0, don't send
+   *                   notifications. If 1, notify user about canceled
+   *                   connects.
+   *                   According WIN32 standards we should receive
+   *                   notifications on canceled AIO requests.
    */
   int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
 

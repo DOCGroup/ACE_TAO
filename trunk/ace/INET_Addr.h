@@ -247,7 +247,7 @@ public:
    * storing it in the <hostname> (which is assumed to be
    * <hostnamelen> bytes long).  This version is reentrant.  If
    * <hostnamelen> is greater than 0 then <hostname> will be
-   * NUL-terminated even if -1 is returned. 
+   * NUL-terminated even if -1 is returned.
    */
   int get_host_name (char hostname[],
                      size_t hostnamelen) const;
@@ -297,7 +297,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Insure that @arg hostname is properly null-terminated.
+  /// Insure that @a hostname is properly null-terminated.
   int get_host_name_i (char hostname[], size_t hostnamelen) const;
 
   // Methods to gain access to the actual address of
