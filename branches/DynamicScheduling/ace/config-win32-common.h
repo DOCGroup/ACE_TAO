@@ -506,5 +506,13 @@ typedef unsigned long long ACE_UINT64;
 #  define ACE_MALLOC_ALIGN 8
 #endif /* ACE_WIN64 */
 
+// Needed for obtaining the MAC address
+// I dont believe this will work under CE, notice the
+// check for UNDER_CE.
+# if defined (_MSC_VER) && !defined (UNDER_CE)
+# include <nb30.h>
+# pragma comment(lib, "netapi32.lib") // needed for obtaing MACaddress
+# endif /* _MSC_VER */
+
 #include "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */
