@@ -148,11 +148,11 @@ libACE_OS_la_SOURCES = \
 
 libACE_Utils_la_SOURCES = \
   ACE.cpp \
-  ACE_Init.cpp \
-  ACE_Flag_Manip.cpp \
-  ACE_Handle_Ops.cpp \
-  ACE_Lib_Find.cpp \
-  ACE_Sock_Connect.cpp \
+  Init.cpp \
+  Flag_Manip.cpp \
+  Handle_Ops.cpp \
+  Lib_Find.cpp \
+  Sock_Connect.cpp \
   Malloc_Instantiations.cpp \
   Active_Map_Manager.cpp \
   Arg_Shifter.cpp \
@@ -474,6 +474,7 @@ TEMPLATE_FILES = \
   Synch_T.cpp \
   Task_T.cpp \
   Template_Instantiations.cpp \
+  Test_and_Set.cpp \
   Timeprobe_T.cpp \
   Timer_Hash_T.cpp \
   Timer_Heap_T.cpp \
@@ -486,11 +487,6 @@ TEMPLATE_FILES = \
 
 HEADER_FILES = \
   ACE.h \
-  ACE_Init.h \
-  ACE_Flag_Manip.h \
-  ACE_Handle_Ops.h \
-  ACE_Lib_Find.h \
-  ACE_Sock_Connect.h \
   ACE_export.h \
   ARGV.h \
   ATM_Acceptor.h \
@@ -511,6 +507,7 @@ HEADER_FILES = \
   Asynch_IO_Impl.h \
   Auto_IncDec_T.h \
   Auto_Ptr.h \
+  Base_Thread_Adapter.h \
   Based_Pointer_Repository.h \
   Based_Pointer_T.h \
   Basic_Types.h \
@@ -553,8 +550,10 @@ HEADER_FILES = \
   FILE_Addr.h \
   FILE_Connector.h \
   FILE_IO.h \
+  File_Lock.h \
   Filecache.h \
   FlReactor.h \
+  Flag_Manip.h \
   Free_List.h \
   Functor.h \
   Functor_T.h \
@@ -562,6 +561,7 @@ HEADER_FILES = \
   Future_Set.h \
   Get_Opt.h \
   Handle_Gobbler.h \
+  Handle_Ops.h \
   Handle_Set.h \
   Hash_Cache_Map_Manager_T.h \
   Hash_Map_Manager.h \
@@ -574,6 +574,7 @@ HEADER_FILES = \
   IO_Cntl_Msg.h \
   IO_SAP.h \
   IPC_SAP.h \
+  Init_ACE.h \
   LOCK_SOCK_Acceptor.h \
   LSOCK.h \
   LSOCK_Acceptor.h \
@@ -581,10 +582,14 @@ HEADER_FILES = \
   LSOCK_Connector.h \
   LSOCK_Dgram.h \
   LSOCK_Stream.h \
+  Lib_Find.h \
   Local_Name_Space.h \
   Local_Name_Space_T.h \
   Local_Tokens.h \
   Log_Msg.h \
+  Log_Msg_Backend.h \
+  Log_Msg_Callback.h \
+  Log_Msg_IPC.h \
   Log_Priority.h \
   Log_Record.h \
   Logging_Strategy.h \
@@ -595,7 +600,6 @@ HEADER_FILES = \
   MEM_SAP.h \
   MEM_Stream.h \
   Malloc.h \
-  PI_Malloc.h \
   Malloc_Allocator.h \
   Malloc_Base.h \
   Malloc_T.h \
@@ -623,11 +627,14 @@ HEADER_FILES = \
   OS.h \
   OS_Dirent.h \
   OS_Export.h \
+  OS_Log_Msg_Attributes.h \
   OS_Memory.h \
   OS_String.h \
   OS_TLI.h \
+  OS_Thread_Adapter.h \
   Object_Manager.h \
   Obstack.h \
+  PI_Malloc.h \
   POSIX_Asynch_IO.h \
   POSIX_Proactor.h \
   Pair.h \
@@ -639,6 +646,8 @@ HEADER_FILES = \
   Proactor_Impl.h \
   Process.h \
   Process_Manager.h \
+  Process_Mutex.h \
+  Process_Semaphore.h \
   Profile_Timer.h \
   QoS_Decorator.h \
   QoS_Manager.h \
@@ -647,6 +656,7 @@ HEADER_FILES = \
   QoS_Session_Impl.h \
   QtReactor.h \
   RB_Tree.h \
+  RW_Process_Mutex.h \
   Reactor.h \
   Reactor_Impl.h \
   Read_Buffer.h \
@@ -681,17 +691,19 @@ HEADER_FILES = \
   Select_Reactor_Base.h \
   Select_Reactor_T.h \
   Service_Config.h \
+  Service_Loader.h \
   Service_Manager.h \
   Service_Object.h \
   Service_Repository.h \
-  Service_Types.h \
   Service_Templates.h \
+  Service_Types.h \
   Shared_Memory.h \
   Shared_Memory_MM.h \
   Shared_Memory_SV.h \
   Shared_Object.h \
   Signal.h \
   Singleton.h \
+  Sock_Connect.h \
   Stats.h \
   Strategies.h \
   Strategies_T.h \
@@ -701,10 +713,6 @@ HEADER_FILES = \
   Svc_Conf_Tokens.h \
   Svc_Handler.h \
   Synch.h \
-  Process_Semaphore.h \
-  Process_Mutex.h \
-  RW_Process_Mutex.h \
-  File_Lock.h \
   Synch_Options.h \
   Synch_T.h \
   System_Time.h \
@@ -716,6 +724,7 @@ HEADER_FILES = \
   TTY_IO.h \
   Task.h \
   Task_T.h \
+  Test_and_Set.h \
   Thread.h \
   Thread_Adapter.h \
   Thread_Control.h \
@@ -758,15 +767,15 @@ HEADER_FILES = \
   XTI_ATM_Mcast.h \
   XtReactor.h \
   ace_wchar.h \
-  config.h \
   config-all.h \
+  config.h \
   iosfwd.h \
   post.h \
   pre.h \
   streams.h \
   svc_export.h \
   ws2tcpip.h
-## Make sure config.h is in the above header list!
+## Make sure config.h and config-all.h are in the above header list!
 
 INLINE_FILES = \
   ACE.i \
@@ -787,7 +796,7 @@ INLINE_FILES = \
   Auto_Ptr.i \
   Based_Pointer_T.i \
   Basic_Types.i \
-  CDR_Base.inl \
+  CDR_Base.i \
   CDR_Stream.i \
   CORBA_Handler.i \
   Cache_Map_Manager_T.i \
@@ -816,11 +825,13 @@ INLINE_FILES = \
   FILE_Connector.i \
   FILE_IO.i \
   FlReactor.i \
+  Flag_Manip.i \
   Free_List.i \
   Functor.i \
   Functor_T.i \
   Get_Opt.i \
   Handle_Gobbler.i \
+  Handle_Ops.i \
   Handle_Set.i \
   Hash_Cache_Map_Manager_T.i \
   Hash_Map_Manager_T.i \
@@ -830,11 +841,13 @@ INLINE_FILES = \
   IOStream_T.i \
   IO_SAP.i \
   IPC_SAP.i \
+  Init_ACE.i \
   LSOCK.i \
   LSOCK_CODgram.i \
   LSOCK_Connector.i \
   LSOCK_Dgram.i \
   LSOCK_Stream.i \
+  Lib_Find.i \
   Local_Tokens.i \
   Log_Record.i \
   MEM_Acceptor.i \
@@ -844,6 +857,7 @@ INLINE_FILES = \
   MEM_SAP.i \
   MEM_Stream.i \
   Malloc.i \
+  Malloc_Allocator.i \
   Malloc_T.i \
   Managed_Object.i \
   Map_Manager.i \
@@ -861,6 +875,7 @@ INLINE_FILES = \
   OS.i \
   Object_Manager.i \
   Obstack.i \
+  PI_Malloc.i \
   POSIX_Asynch_IO.i \
   POSIX_Proactor.i \
   Pair_T.i \
@@ -900,6 +915,7 @@ INLINE_FILES = \
   Select_Reactor_Base.i \
   Select_Reactor_T.i \
   Service_Config.i \
+  Service_Loader.i \
   Service_Manager.i \
   Service_Object.i \
   Service_Repository.i \
@@ -909,6 +925,7 @@ INLINE_FILES = \
   Shared_Object.i \
   Signal.i \
   Singleton.i \
+  Sock_Connect.i \
   Stats.i \
   Strategies.i \
   Strategies_T.i \
@@ -922,6 +939,7 @@ INLINE_FILES = \
   TP_Reactor.i \
   Task.i \
   Task_T.i \
+  Test_and_Set.i \
   Thread.i \
   Thread_Manager.i \
   Timeprobe.i \
@@ -939,13 +957,21 @@ INLINE_FILES = \
   UPIPE_Stream.i \
   WFMO_Reactor.i \
   XTI_ATM_Mcast.i \
+  Base_Thread_Adapter.inl \
+  CDR_Base.inl \
+  File_Lock.inl \
   OS_Dirent.inl \
+  OS_Log_Msg_Attributes.inl \
   OS_Memory.inl \
   OS_String.inl \
   OS_TLI.inl \
+  OS_Thread_Adapter.inl \
+  Process_Mutex.inl \
+  Process_Semaphore.inl \
+  RW_Process_Mutex.inl \
   Thread_Adapter.inl \
-  Thread_Control.inl
-
+  Thread_Control.inl \
+  ace_wchar.inl
 
 ## It would be good to remove pkgincludedir.  However, we want to install
 ## headers in "$(prefix)/ace" not "$(prefix)/ACE" because the source files
