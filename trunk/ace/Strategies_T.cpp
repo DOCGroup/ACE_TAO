@@ -1039,71 +1039,93 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::connect_s
   // Create the search key
   ADDRESS search_addr (remote_addr);
   CONNECTION_MAP_ENTRY *entry = 0;
+  int found = 0;
 
-  // Synchronization is required here as the setting of the recyclable
-  // bit must be done atomically with the finding and binding of the
-  // service handler in the cache.
-  ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
+  // This artificial scope is required since we need to let go of the
+  // lock *before* registering the newly created handler with the
+  // Reactor.
+  {
+    // Synchronization is required here as the setting of the
+    // recyclable bit must be done atomically with the finding and
+    // binding of the service handler in the cache.
+    ACE_GUARD_RETURN (MUTEX, ace_mon, this->lock_, -1);
 
-  // Try to find the address in the cache.  Only if we don't find it
-  // do we create a new <SVC_HANDLER> and connect it with the server.
-  if (this->connection_cache_.find (search_addr, entry) == -1)
-    {
-      // Create a new svc_handler
-      if (this->make_svc_handler (sh) == -1)
-        return -1;
+    // Try to find the address in the cache.  Only if we don't find it
+    // do we create a new <SVC_HANDLER> and connect it with the
+    // server.
+    if (this->connection_cache_.find (search_addr, entry) == -1)
+      {
+        // Set the flag
+        found = 0;
 
-      // Actively establish the connection.  This is a timed blocking
-      // connect.
-      if (CONNECT_STRATEGY::connect_svc_handler (sh,
-                                                 remote_addr,
-                                                 timeout,
-                                                 local_addr,
-                                                 reuse_addr,
-                                                 flags,
-                                                 perms) == -1)
-        {
-          // If connect() failed because of timeouts, we have to
-          // reject the connection entirely. This is necessary since
-          // currently there is no way for the non-blocking connects
-          // to complete and for the <Connector> to notify the cache
-          // of the completion of connect().
-          if (errno == EWOULDBLOCK)
-            errno = ENOTSUP;
+        // Create a new svc_handler
+        if (this->make_svc_handler (sh) == -1)
           return -1;
-        }
-      // Insert the new SVC_HANDLER instance into the cache.
-      else
-        {
-          // Activate immediately if we are connected.
-          if (this->activate_svc_handler (sh))
+
+        // Actively establish the connection.  This is a timed
+        // blocking connect.
+        if (CONNECT_STRATEGY::connect_svc_handler (sh,
+                                                   remote_addr,
+                                                   timeout,
+                                                   local_addr,
+                                                   reuse_addr,
+                                                   flags,
+                                                   perms) == -1)
+          {
+            // If connect() failed because of timeouts, we have to
+            // reject the connection entirely. This is necessary since
+            // currently there is no way for the non-blocking connects
+            // to complete and for the <Connector> to notify the cache
+            // of the completion of connect().
+            if (errno == EWOULDBLOCK)
+              errno = ENOTSUP;
             return -1;
+          }
+        // Insert the new SVC_HANDLER instance into the cache.
+        else
+          {
+            // Create the key
+            ADDRESS server_addr (remote_addr);
+            if (this->connection_cache_.bind (server_addr,
+                                              sh,
+                                              entry) == -1)
+              return -1;
 
-          // Create the key
-          ADDRESS server_addr (remote_addr);
-          if (this->connection_cache_.bind (server_addr,
-                                            sh,
-                                            entry) == -1)
-            return -1;
+            // Set the recycler and the recycling act
+            this->assign_recycler (sh, this, entry);
+          }
+      }
+    else
+      // We found a cached svc_handler.
+      {
+        // Set the flag
+        found = 1;
 
-          // Set the recycler and the recycling act
-          this->assign_recycler (sh, this, entry);
-        }
-    }
-  else
-    // We found a cached svc_handler.
-    {
-      // Get the cached <svc_handler>
-      sh = entry->int_id_;
+        // Get the cached <svc_handler>
+        sh = entry->int_id_;
 
-      // Tell the <svc_handler> that it should prepare itself for being
-      // recycled.
-      this->prepare_for_recycling (sh);
-    }
+        // Tell the <svc_handler> that it should prepare itself for
+        // being recycled.
+        this->prepare_for_recycling (sh);
+      }
 
-  // Mark the <svc_handler> in the cache as being <in_use>.
-  // Therefore recyclable is 0.
-  entry->ext_id_.recyclable (0);
+    // Mark the <svc_handler> in the cache as being <in_use>.
+    // Therefore recyclable is 0.
+    entry->ext_id_.recyclable (0);
+  }
+
+  // If it is a new connection, activate it.
+  //
+  // Note: This activation is outside the scope of the lock of the
+  // cached connector.  This is necessary to avoid subtle deadlock
+  // conditions with this lock and the Reactor lock.
+  //
+  // @@ If an error occurs on activation, we should try to remove this
+  // entry from the internal table.  
+
+  if (!found)
+    if (this->activate_svc_handler (sh))
+      return -1;
 
   return 0;
 }
