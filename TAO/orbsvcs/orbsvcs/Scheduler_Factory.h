@@ -1,4 +1,18 @@
+/* -*- C++ -*- */
 // $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    orbsvcs
+//
+// = FILENAME
+//    Scheduler_Factory.h
+//
+// = AUTHOR
+//     Chris Gill <cdgill@cs.wustl.edu>
+//
+// ============================================================================
 
 #ifndef ACE_SCHEDULER_FACTORY_H
 #define ACE_SCHEDULER_FACTORY_H
@@ -13,6 +27,7 @@
 #include "orbsvcs/RtecSchedulerC.h"
 
 class TAO_ORBSVCS_Export ACE_Scheduler_Factory
+{
   // = TITLE
   //   Factory of scheduler services.
   //
@@ -22,9 +37,9 @@ class TAO_ORBSVCS_Export ACE_Scheduler_Factory
   //   compute the scheduling parameters. At run-time it returns a
   //   local server, which will use the results of the config runs to
   //   actually do the scheduling, without incurring in RPC overheads.
-{
 public:
-  enum Factory_Status {UNINITIALIZED, CONFIG, RUNTIME};
+  enum Factory_Status 
+  {
     // = TITLE
     //   Factory Status
     //
@@ -32,7 +47,13 @@ public:
     //   This type enumerates the possible states of the factory:
     //   uninitialized, or in a config or runtime mode of operation.
 
+    UNINITIALIZED,
+    CONFIG,
+    RUNTIME
+  };
+
   struct POD_RT_Info
+  {
     // = TITLE
     //   Plain Old Data for RT_Infos.
     //
@@ -40,8 +61,8 @@ public:
     //   This class provide us with a plain old data version of
     //   RT_Info, this is useful for implementing static arrays or  of
     //   those.
-  {
-    const char* entry_point;
+
+    const char *entry_point;
     RtecScheduler::handle_t handle;
     RtecScheduler::Time worst_case_execution_time;
     RtecScheduler::Time typical_execution_time;
@@ -57,23 +78,24 @@ public:
     CORBA::Long info_type;
   };
 
-    struct POD_Config_Info
+  struct POD_Config_Info
+  {
     // = TITLE
     //   Plain Old Data for dispatch queue configuration information.
     //
     // = DESCRIPTION
     //   This class provide us with a plain old data version of
     //   configuration info, which is useful for implementing static arrays
-        //   NOTE: if used in an array, the run-time scheduler requires that the
-        //   array index match the preemption priority stored in the config info
-        //   at that index: this is used to detect uninitialized/corrupted schedules
-  {
+    //   NOTE: if used in an array, the run-time scheduler requires that the
+    //   array index match the preemption priority stored in the config info
+    //   at that index: this is used to detect uninitialized/corrupted schedules
     RtecScheduler::Preemption_Priority_t preemption_priority;
     RtecScheduler::OS_Priority thread_priority;
     RtecScheduler::Dispatching_Type_t dispatching_type;
   };
 
-    struct POD_Scheduling_Anomaly
+  struct POD_Scheduling_Anomaly
+  {
     // = TITLE
     //   Plain Old Data for scheduling anomaly information.
     //
@@ -81,7 +103,7 @@ public:
     //   This class provide us with a plain old data version of
     //   scheduling anomalies, which is used to generate error
     //   and warning lines in the runtime scheduling header output.
-  {
+
     const char* description;
     RtecScheduler::Anomaly_Severity severity;
   };
@@ -108,9 +130,8 @@ public:
   // Must have been configured either using use_context() or use_data().
   //
   // Normally use_data() is called at static elaboration time, so
-  // everything is automatic.
-  // On config runs use_context() is called from main, after
-  // resolve_initial_references.
+  // everything is automatic.  On config runs use_context() is called
+  // from main, after resolve_initial_references.
 
   static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
                             const RtecScheduler::Config_Info_Set& configs,
@@ -125,8 +146,9 @@ public:
   // TODO: How to do cleanup()? Use the ACE_Object_Manager stuff?
 
   static Factory_Status status (void);
-  // This helper function allows the application to determine whether the
-  // factory is uninitialized, or in a config or runtime mode of operation.
+  // This helper function allows the application to determine whether
+  // the factory is uninitialized, or in a config or runtime mode of
+  // operation.
 
   // = Access the (OS independent) preemption priority of the calling thread.
   static RtecScheduler::Preemption_Priority_t preemption_priority ();
@@ -142,12 +164,11 @@ public:
 protected:
   static int no_config_run (void);
   // By default this factory assumes we are runnning a config
-  // run. Calling this method disables that.
-  // Since the methods returns an int it can be used to initialize a
-  // static variable, hence calling it before main(); this technique
-  // can be used in the code emitted for the run-time scheduler,
-  // automagically disabling the config_run() when that code is linked
-  // in.
+  // run. Calling this method disables that.  Since the methods
+  // returns an int it can be used to initialize a static variable,
+  // hence calling it before main(); this technique can be used in the
+  // code emitted for the run-time scheduler, automagically disabling
+  // the config_run() when that code is linked in.
 
 private:
   static RtecScheduler::Scheduler_ptr server_;
