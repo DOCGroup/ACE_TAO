@@ -305,6 +305,19 @@ public:
     ACE_UINT64 string_seq_seen_;
     ACE_UINT64 wstring_seq_seen_;
     ACE_UINT64 octet_seq_seen_;
+    ACE_UINT64 boolean_seq_seen_;
+    ACE_UINT64 char_seq_seen_;
+    ACE_UINT64 wchar_seq_seen_;
+    ACE_UINT64 short_seq_seen_;
+    ACE_UINT64 ushort_seq_seen_;
+    ACE_UINT64 long_seq_seen_;
+    ACE_UINT64 ulong_seq_seen_;
+    ACE_UINT64 longlong_seq_seen_;
+    ACE_UINT64 ulonglong_seq_seen_;
+    ACE_UINT64 float_seq_seen_;
+    ACE_UINT64 double_seq_seen_;
+    ACE_UINT64 longdouble_seq_seen_;
+    ACE_UINT64 any_seq_seen_;
 
     ACE_UINT64 basic_arg_seen_;
     ACE_UINT64 bd_string_arg_seen_;

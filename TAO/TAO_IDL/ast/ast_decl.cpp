@@ -469,7 +469,7 @@ AST_Decl::compute_repoID (void)
   while (version == 0 && scope != 0)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
-      version = parent->version ();
+      version = parent->version_;
       scope = parent->defined_in ();
     }
 

@@ -84,12 +84,6 @@ ACE_RCSID (TAO_IDL,
            tao_idl,
            "$Id$")
 
-#define SUN_IDL_FE_VERSION "1.3.0"
-
-#if !defined (NFILES)
-# define NFILES 1024
-#endif /* ! NFILES */
-
 const char *DRV_files[NFILES];
 long DRV_nfiles = 0;
 long DRV_file_index = -1;
@@ -334,9 +328,8 @@ main (int argc, char *argv[])
   // Initialize AST and load predefined types.
   FE_populate ();
 
-  // For the IDL compiler, this has to come after FE_populate().
-  // For the IFR loader, it does nothing.
-  BE_post_init ();
+  // Does various things in various backends.
+  BE_post_init (DRV_files, DRV_nfiles);
 
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
@@ -345,6 +338,7 @@ main (int argc, char *argv[])
       DRV_drive (DRV_files[DRV_file_index]);
     }
     
+  be_global->destroy ();  
   delete be_global;
   be_global = 0;
   

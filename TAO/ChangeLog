@@ -1,3 +1,32 @@
+Sun Aug  1 20:57:32 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/tao_idl.cpp:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_home.cpp:
+        * TAO_IDL/ast/ast_root.cpp:
+        * TAO_IDL/ast/ast_sequence.cpp:
+        * TAO_IDL/be/be_init.cpp:
+        * TAO_IDL/be_include/be_extern.h:
+        * TAO_IDL/include/idl_defines.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/util/utl_global.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+        
+          - Fixed bugs in cleanup between iterations in processing the IDL
+            file list passed on the command line.
+            
+          - Fixed bug in checking for recursive types.
+          
+          - Fixed bug in eager calculation of the version segment of the
+            repository ID.
+            
+          - Fixed bug in checking number of interfaces supported by a home.
+          
+          - Added markers in existing bit vector to keep track of which
+            sequences of basic types have been referenced, and code to
+            update the markers.
+
 Sun Aug  1 16:32:56 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* TAO_IDL/Makefile.am:

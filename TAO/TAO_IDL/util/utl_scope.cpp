@@ -440,6 +440,147 @@ UTL_Scope::redef_clash (AST_Decl::NodeType new_nt,
   }
 }
 
+void
+UTL_Scope::check_for_predef_seq (AST_Decl *d)
+{
+  // Right now, we're interested only in predefined sequences
+  // referenced in the main IDL file. If we are processing
+  // multiple IDL files in one execution, the bits will
+  // stay set, and be accumulated as each file is parsed.
+  if (!idl_global->in_main_file ())
+    {
+      return;
+    }
+
+  AST_Type *bt = 0;
+  AST_Decl::NodeType nt = d->node_type ();
+  
+  // We are interested only in members, arguments and typedefs.
+  switch (nt)
+    {
+      case AST_Decl::NT_field:
+      case AST_Decl::NT_union_branch:
+      case AST_Decl::NT_attr:
+      case AST_Decl::NT_argument:
+        bt = AST_Field::narrow_from_decl (d)->field_type ();
+        break;
+      case AST_Decl::NT_typedef:
+        bt = AST_Typedef::narrow_from_decl (d)->base_type ();
+        break;
+      default:
+        return;
+    }
+  
+  // Check to eliminate more candidates.
+  if (!bt->imported () || bt->node_type () != AST_Decl::NT_typedef)
+    {
+      return;
+    }
+    
+  bt = AST_Typedef::narrow_from_decl (bt)->base_type ();  
+  nt = bt->node_type ();
+  
+  // Must be a sequence with only one level of typedef.
+  if (nt != AST_Decl::NT_sequence)
+    {
+      return;
+    }
+    
+  // Must be defined in the CORBA module.  
+  AST_Decl *p = ScopeAsDecl (bt->defined_in ());
+  if (ACE_OS::strcmp (p->local_name ()->get_string (), "CORBA") != 0)
+    {
+      return;
+    }
+    
+  // We know this narrowing will be successful.  
+  bt = AST_Sequence::narrow_from_decl (bt)->base_type ();
+  nt = bt->node_type ();
+  
+  // First check for string or wstring base type.
+  if (nt == AST_Decl::NT_string)
+    {
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.string_seq_seen_);
+      return;
+    }
+  else if (nt == AST_Decl::NT_wstring)
+    {
+      ACE_SET_BITS (idl_global->decls_seen_info_,
+                    idl_global->decls_seen_masks.wstring_seq_seen_);
+      return;
+    }
+  
+  // Now check for predefined base type.
+  AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+  if (pdt == 0)
+    {
+      return;
+    }
+    
+  switch (pdt->pt ())
+    {
+      case AST_PredefinedType::PT_long:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.long_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_ulong:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.ulong_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_longlong:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.longlong_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_ulonglong:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.ulonglong_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_short:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.short_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_ushort:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.ushort_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_float:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.float_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_double:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.double_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_longdouble:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.longdouble_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_char:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.char_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_wchar:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.wchar_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_boolean:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.boolean_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_octet:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.octet_seq_seen_);
+        break;
+      case AST_PredefinedType::PT_any:
+        ACE_SET_BITS (idl_global->decls_seen_info_,
+                      idl_global->decls_seen_masks.any_seq_seen_);
+        break;
+      default:
+        break;
+    }
+}
+
 // Public operations.
 
 // Scope Management Protocol.
@@ -1851,6 +1992,9 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
     {
       return;
     }
+    
+  // Sets the appropriate *_seen_ flag for future use.  
+  this->check_for_predef_seq (e);
 
   // Make sure there's space for one more decl.
   if (this->pd_referenced_allocated == this->pd_referenced_used)
@@ -1933,7 +2077,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
         }
 
       // Insert new identifier.
-      this->pd_name_referenced[this->pd_name_referenced_used++] = id;
+      this->pd_name_referenced[this->pd_name_referenced_used++] = id->copy ();
     }
 }
 

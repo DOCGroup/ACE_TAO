@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // of AST_Type).
 
 #include "ast_sequence.h"
+#include "ast_typedef.h"
 #include "ast_expression.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
@@ -151,6 +152,18 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                          ACE_TEXT ("in_recursion - ")
                          ACE_TEXT ("bad base type\n")),
                         0);
+    }
+    
+  if (type->node_type () == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+      type = td->primitive_base_type ();
+      AST_Decl::NodeType nt = type->node_type ();
+      
+      if (nt != AST_Decl::NT_struct && nt != AST_Decl::NT_union)
+        {
+          return I_FALSE;
+        }
     }
 
   if (this->match_names (this, list))

@@ -87,4 +87,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
 
+#define SUN_IDL_FE_VERSION "1.3.0"
+
+#if !defined (NFILES)
+# define NFILES 1024
+#endif /* ! NFILES */
+
 #endif  // _IDL_DEFINES_IDL_DEFINES_HH
