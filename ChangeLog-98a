@@ -14,9 +14,12 @@ Mon Mar 09 16:11:16 1998  David L. Levine  <levine@cs.wustl.edu>
           of ace/SString.h and template instantiations.  Replaced gets
           with ACE_OS::fgets.
 
+        * examples/Makefile,examples/Map_Manager/Makefile: added
+          Map_Manager to examples DIRS and added RCS keyword string.
+
 Mon Mar  9 14:59:20 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* include/makeinclude/platform_irix6.x-sgic++.GNU: 
+	* include/makeinclude/platform_irix6.x-sgic++.GNU:
 	  Added the definition for MATHLIB.
 
 Mon Mar 09 01:23:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
@@ -24,7 +27,7 @@ Mon Mar 09 01:23:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	* ace/ace_ce.dsw:
 	* ace/ace_ce_dll.dsp: New project/workspace files for WinCE.  This
 	  is a temporary workspace only and should be merged into ACE mail
-	  Win32 project/workspace when the port is stable enough. 
+	  Win32 project/workspace when the port is stable enough.
 
 	* ace/config-WinCE.h: Added ACE_LACKS_GETS.
 
@@ -49,17 +52,17 @@ Mon Mar 09 01:23:49 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  wchar strings when ACE_HAS_MOSTLY_UNICODE_APIS is defined.
 	  (ASYS_MULTIBYTE_STRING): This macro converts wchar strings back
 	  to char strings *only* when ACE_HAS_MOSTLY_UNICODE_APIS is
-	  defined. 
+	  defined.
 
 	* ace/INET_Addr.{h,cpp}: Redefined interface signatures on WinCE
 	  using ASYS_* macros.  The principle here is to pass wide char
 	  strings in and get char strings out.  That's because we will use
 	  mostly wchar strings in CE but most winsock APIs return (or uses
 	  char strings.)  Doing so should reduce conversion between them
-	  to minimum.  
+	  to minimum.
 	  Converting debug messages with ASYS_TEXT.
-	
-	* ace/Log_Msg.cpp (open): 
+
+	* ace/Log_Msg.cpp (open):
 	* ace/ACE.cpp (get_ip_interfaces): Only convert the wide character
 	  string to a char string when ACE_HAS_MOSTLY_UNICODE_APIS flag is
 	  not set using the ASYS_MULTIBYTE_STRING macro.
