@@ -10,6 +10,7 @@ Wed Feb 10 19:39:27 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 	  Lothar Werzinger <lwerzinger@krones.de> for suggesting this. 
 
 Wed Feb 10 18:55:09 1999 Fred Kuhns <fredk@cs.wustl.edu>
+
         * Changed Stub.i, set_fwd_profiles () so it doesn't
 	  complain about fwd_profiles which are themselves forwarded.
 
@@ -464,7 +465,7 @@ Mon Feb  8 00:00:02 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 Sun Feb  7 23:45:19 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
         * Updated makefile dependencies in
-	orbsvcs/tests/Simulator/Event_Supplier
+	  orbsvcs/tests/Simulator/Event_Supplier
 
 Sun Feb  7 22:31:01 1999 Fred Kuhns <fredk@cs.wustl.edu>
 
