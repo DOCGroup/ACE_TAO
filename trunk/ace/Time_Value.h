@@ -21,6 +21,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_PSOS_DIAB_MIPS)
+# include "ace/os_include/sys/os_time.h"
+#endif /* ACE_HAS_WINCE ACE_PSOS_DIAB_MIPS */
+
 // HP-UX 10.20 doesn't define timespec_t - it defined struct timespec.
 #if defined (HPUX_10)
 typedef struct timespec timespec_t;
