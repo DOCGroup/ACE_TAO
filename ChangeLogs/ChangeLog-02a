@@ -1,6 +1,12 @@
+Thu May  3 16:00:15 2001  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Malloc.h:
+	* ace/PI_Malloc.h: Fixed the [PI_]Control_Block size estimation
+	  macros.  I added a new member to control block.
+
 Thu May  3 14:52:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR): 
+	* ace/CDR_Stream.h (ACE_InputCDR):
 	* ace/CDR_Stream.cpp: Removed the method steal_data () as it did
 	  not serve the purpose.  Added a new method exchange_data_blocks
 	  (). This method exchanges data_blocks between two CDR
@@ -38,7 +44,7 @@ Thu May  3 08:00:56 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu May  3 07:42:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* examples/IPC_SAP/FILE_SAP/client.cpp: Fixed a warning with Linux
-	  builds. 
+	  builds.
 
 Wed May  2 22:55:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
@@ -46,7 +52,7 @@ Wed May  2 22:55:25 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* examples/ASX/UPIPE_Event_Server/Options.cpp:
 	* examples/IPC_SAP/FILE_SAP/client.cpp:
 	* examples/Naming/test_open.cpp:
-	* examples/Naming/test_writers.cpp: Fixed warnings in g++ builds. 
+	* examples/Naming/test_writers.cpp: Fixed warnings in g++ builds.
 
 Wed May  2 18:36:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
@@ -56,12 +62,12 @@ Wed May  2 18:36:29 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 Wed May  2 15:10:28 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* ace/CDR_Stream.h (ACE_InputCDR): 
+	* ace/CDR_Stream.h (ACE_InputCDR):
 	* ace/CDR_Stream.cpp: Added a new constructor for ACE_inputCDR
 	  class. This constructor would take the data block with a
 	  pre-determined read and write pointer positions. This is helpful
 	  when an application would like to create a CDR stream with a
-	  smei-processed data block. 
+	  smei-processed data block.
 
 Wed May  2 11:10:59 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
