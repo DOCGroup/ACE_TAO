@@ -21,6 +21,7 @@ TAO_ServerRequestInterceptor_Adapter::
 {
 }
 
+#if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
 void
 TAO_ServerRequestInterceptor_Adapter::tao_ft_interception_point (
     TAO_ServerRequestInfo *ri,
@@ -118,6 +119,57 @@ receive_request_service_contexts (
   ACE_ENDTRY;
   ACE_CHECK;
 }
+
+#elif TAO_HAS_EXTENDED_FT_INTERCEPTORS == 0
+
+/// NOTE: Yes, we have two versions of this. This is easier than
+/// messing around things in the same function, which is harder to
+/// read and could make the code buggier.
+void
+TAO_ServerRequestInterceptor_Adapter::
+receive_request_service_contexts (
+  TAO_ServerRequestInfo *ri
+  ACE_ENV_ARG_DECL)
+{
+
+  // This method implements one of the "starting" server side
+  // interception point if extended interceptors are not in place.
+
+  ACE_TRY
+    {
+      // Copy the request scope current (RSC) to the thread scope
+      // current (TSC) upon leaving this scope, i.e. just after the
+      // receive_request_service_contexts() completes.  A "guard" is
+      // used to make the copy also occur if an exception is thrown.
+      TAO_PICurrent_Guard pi_guard (ri->server_request (),
+                                    0 /* Copy RSC to TSC */);
+
+      for (size_t i = 0 ; i < this->len_; ++i)
+        {
+          this->interceptors_[i]->receive_request_service_contexts (
+            ri
+            ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+
+          // The starting interception point completed successfully.
+          // Push the interceptor on to the flow stack.
+          ++this->stack_size_;
+        }
+    }
+  ACE_CATCH (PortableInterceptor::ForwardRequest, exc)
+    {
+      ri->forward_reference (exc);
+      this->send_other (ri
+                        ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      this->location_forwarded_ = 1;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+}
+
+#endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
 void
 TAO_ServerRequestInterceptor_Adapter::
