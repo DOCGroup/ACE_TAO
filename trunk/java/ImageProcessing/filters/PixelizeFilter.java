@@ -19,7 +19,7 @@ public class PixelizeFilter extends SpatialFilter
 
   public String info ()
   {
-    return "Pixelizes the image";
+    return "Pixelizes the image.";
   }
 
   public void imageComplete(int status)
