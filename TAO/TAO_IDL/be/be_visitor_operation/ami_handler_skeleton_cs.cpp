@@ -145,8 +145,6 @@ be_visitor_operation_ami_handler_skeleton_cs::visit_operation (be_operation *nod
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// @@ Error handling " << be_nl << be_nl;
 
-  *os << "//Demarshall all the arguments.\n";
-
   // declare a return type variable
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DECL_CS);
@@ -402,56 +400,57 @@ gen_marshal_and_invoke (be_operation *node,
 
   os->indent ();
 
-  *os << "if (!(\n" << be_idt << be_idt << be_idt;
-
-  if (!this->void_return_type (bt))
+  *os << "// Demarshall all the arguments.\n";
+  if (!this->void_return_type (bt)
+      || this->has_param_type (node, AST_Argument::dir_INOUT)
+      || this->has_param_type (node, AST_Argument::dir_OUT))
     {
-      // demarshal the return val
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      *os << "if (!(\n" << be_idt << be_idt << be_idt;
+
+      if (!this->void_return_type (bt))
         {
+          // demarshal the return val
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_RETVAL_DEMARSHAL_CS);
+          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_compiled_visitor_operation_ami_handler_skeleton_cs::"
+                                 "gen_demarshal_params - "
+                                 "codegen for return var failed\n"),
+                                -1);
+            }
           delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_compiled_visitor_operation_ami_handler_skeleton_cs::"
-                             "gen_demarshal_params - "
-                             "codegen for return var failed\n"),
-                            -1);
         }
-      delete visitor;
 
-      // Print the && if there are OUT or INOUT arguements in the
-      // signature.
-      if (this->has_param_type (node, AST_Argument::dir_OUT) ||
-          this->has_param_type (node, AST_Argument::dir_INOUT))
-        *os << " &&\n";
-    }
-
-  if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
-      this->has_param_type (node, AST_Argument::dir_OUT))
-    {
-      // demarshal each in and inout argument
-      ctx = *this->ctx_;
-      ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS);
-      ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
-      visitor = tao_cg->make_visitor (&ctx);
-      if (!visitor || (node->accept (visitor) == -1))
+      if (this->has_param_type (node, AST_Argument::dir_INOUT) ||
+          this->has_param_type (node, AST_Argument::dir_OUT))
         {
-          delete visitor;
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l)  be_compiled_visitor_operation_ami_handler_skeleton_cs::"
-                             "gen_marshal_params - "
-                             "codegen for args failed\n"),
-                            -1);
-        }
-      delete visitor;
-    }
+          *os << " &&\n";
 
-  *os << be_uidt << be_uidt_nl
-      << " ))" << be_nl
-      << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+          // demarshal each in and inout argument
+          ctx = *this->ctx_;
+          ctx.state (TAO_CodeGen::TAO_AMI_HANDLER_OPERATION_ARG_DEMARSHAL_CS);
+          ctx.sub_state (TAO_CodeGen::TAO_CDR_INPUT);
+          visitor = tao_cg->make_visitor (&ctx);
+          if (!visitor || (node->accept (visitor) == -1))
+            {
+              delete visitor;
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l)  be_compiled_visitor_operation_ami_handler_skeleton_cs::"
+                                 "gen_marshal_params - "
+                                 "codegen for args failed\n"),
+                                -1);
+            }
+          delete visitor;
+        }
+      *os << be_uidt << be_uidt_nl
+          << " ))" << be_nl
+          << "ACE_THROW (CORBA::MARSHAL ());" << be_uidt_nl << be_nl;
+    }
 
   // Invoke the callback method
   *os << "// Invoke the call back method." << be_nl

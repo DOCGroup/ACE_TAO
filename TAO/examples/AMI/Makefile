@@ -10,14 +10,7 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Callback_Quoter \
-        POA \
-	Logging \
-	Quoter \
-	Simple \
-	Event_Comm \
-	OBV \
-	AMI
+DIRS  = FL_Callback
 
 #----------------------------------------------------------------------------
 #	Include macros and targets

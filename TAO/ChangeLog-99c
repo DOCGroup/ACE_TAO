@@ -1,3 +1,32 @@
+Wed Jul 21 21:08:57 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* examples/Makefile:
+	* examples/AMI/Makefile:
+	* examples/AMI/FL_Callback/Makefile:
+	* examples/AMI/FL_Callback/README:
+	* examples/AMI/FL_Callback/test.idl:
+	* examples/AMI/FL_Callback/Peer_i.cpp:
+	* examples/AMI/FL_Callback/Peer_i.h:
+	* examples/AMI/FL_Callback/Peer_i.i:
+	* examples/AMI/FL_Callback/Progress_i.cpp:
+	* examples/AMI/FL_Callback/Progress_i.h:
+	* examples/AMI/FL_Callback/Progress_i.i:
+	* examples/AMI/FL_Callback/peer.conf:
+	* examples/AMI/FL_Callback/peer.cpp:
+	* examples/AMI/FL_Callback/progress.cpp:
+	* examples/AMI/FL_Callback/svc.conf:
+	  New demo for asynchronous messaging, it uses a simple GUI to
+	  display the progress in the clients as requests and replys are
+	  sent asynchronously.
+
+	* TAO_IDL/be/be_visitor_interface/ami_handler_stub_ch.cpp:
+	  The _nil() methods where not generated properly.
+
+	* TAO_IDL/be/be_visitor_operation/ami_handler_skeleton_cs.cpp:
+	  The "smart stubs" where not working for void functions without
+	  out or inout arguments, thanks to Michael for helping me out
+	  with this fix.
+
 Wed Jul 21 12:26:21 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* performance-test/Latency/Makefile
