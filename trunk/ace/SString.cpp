@@ -1049,10 +1049,20 @@ ACE_WString::check_allocate (size_t len)
   if (tempbuflen != this->buf_len_)
     {
       if (this->buf_len_ != 0)
-        this->allocator_->free (this->rep_);
-
-      this->rep_ = (ACE_WSTRING_TYPE *)
-        this->allocator_->malloc ((tempbuflen) * sizeof (ACE_WSTRING_TYPE));
+        {
+          ACE_WSTRING_TYPE *t = (ACE_WSTRING_TYPE *)
+            this->allocator_->malloc ((tempbuflen) * sizeof (ACE_WSTRING_TYPE));
+ 
+          ACE_OS::memcpy ((void *) t,
+                          (const void *) this->rep_,
+                          this->len_ * sizeof (ACE_WSTRING_TYPE));
+ 
+          this->allocator_->free (this->rep_);
+          this->rep_ = t;
+        }
+      else
+        this->rep_ = (ACE_WSTRING_TYPE *)
+          this->allocator_->malloc ((tempbuflen) * sizeof (ACE_WSTRING_TYPE));
 
       ACE_OS::memset (this->rep_ + this->len_,
                       0,
