@@ -1,3 +1,8 @@
+Thu Mar 20 22:38:27 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* include/makeinclude/platform_{chorus,hpux,hpux_gcc}.GNU:
+	  split out CFLAGS and CCFLAGS from CC and CXX.
+
 Thu Mar 20 18:58:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace: Made a bunch of minor changes to support SunOS 4.x better.
