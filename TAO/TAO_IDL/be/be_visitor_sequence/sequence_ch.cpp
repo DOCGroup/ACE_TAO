@@ -77,6 +77,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // and generate a class declaration for it as well.
   if (nt == AST_Decl::NT_sequence)
     {
+      // Temporarily make the context's tdef node 0 so the nested call
+      // to create_name will not get confused and give our anonymous
+      // sequence element type the same name as we have.
+      be_typedef *tmp = this->ctx_->tdef ();
+      this->ctx_->tdef (0);
+
       if (bt->accept (this) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -85,6 +91,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                              "codegen for anonymous base type failed\n"),
                             -1);
         }
+
+      // Restore the tdef value.
+      this->ctx_->tdef (tmp);
     }
 
   *os << be_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
