@@ -158,7 +158,7 @@ InputPath=".\FT_CORBA_ORB.idl"
 InputName=FT_CORBA_ORB
 
 BuildCmds= \
-	..\..\..\bin\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
+	..\..\..\bin\Release\tao_idl -o . -Wb,export_macro=TAO_FT_ORB_Utils_Export -Wb,export_include=FaultTolerance\FT_ORB_Utils_export.h -Wb,skel_export_include=tao\PortableServer\PolicyS.h -Gv -I..\.. -I..\..\orbsvcs -Ge 1 -Sc -Wb,pre_include=ace\pre.h -Wb,post_include=ace\post.h $(InputPath)
 
 ".\$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
