@@ -36,7 +36,25 @@ namespace Deployment
       template <typename SEQUENCE>
         static void dump_sequence (const char* caption, const SEQUENCE &seq);
 
+      static void dump (const char* caption, const TAO_String_Manager& str);
+
+      static void dump (const char* caption, const CORBA::Boolean& val);
+
       /// A whole slew of overloaded dump routines for different IDL data types.
+
+      static void dump(const Deployment::SatisfierProperty &sp);
+
+      static void dump (const Deployment::SharedResource& sr);
+
+      static void dump (const Deployment::Node& node);
+
+      static void dump (const Deployment::Resource& resource);
+
+      static void dump (const Deployment::Interconnect& conn);
+
+      static void dump (const Deployment::Bridge& bridge);
+
+      static void dump (const ::Deployment::Property &property);
 
       static void dump (const ::Deployment::AssemblyConnectionDescription &acd);
 
@@ -66,8 +84,6 @@ namespace Deployment
 
       static void dump (const ::Deployment::SubcomponentInstantiationDescription &sid);
 
-      static void dump (const ::Deployment::Property &property);
-
       static void dump (const ::Deployment::NamedImplementationArtifact &named_implementation);
 
       static void dump (const ::Deployment::ComponentInterfaceDescription &cid);
@@ -84,11 +100,32 @@ namespace Deployment
 
       static void dump (const ::Deployment::ImplementationRequirement &ir);
 
-      static void dump(const Deployment::SatisfierProperty &sp);
-
       static void dump(const Deployment::ResourceUsageKind &ruk);
 
       static void dump(const Deployment::DeploymentPlan &plan);
+
+      static void dump(const Deployment::MonolithicDeploymentDescription &mdd);
+
+      static void dump(const Deployment::InstanceDeploymentDescription &idd);
+
+      static void dump(const Deployment::PlanConnectionDescription &pcd);
+
+      static void dump(const Deployment::PlanPropertyMapping &ppm);
+
+      static void dump(const Deployment::ImplementationDependency &id);
+
+      static void dump(const Deployment::ArtifactDeploymentDescription &add);
+
+      static void dump(const Deployment::InstanceResourceDeploymentDescription &irdd);
+
+      static void dump(const PlanSubcomponentPortEndpoint &pspe);
+
+      static void dump(const ConnectionResourceDeploymentDescription &crdd);
+
+      static void dump(const PlanSubcomponentPropertyReference &pspr);
+
+      static void dump(const ResourceDeploymentDescription &rdd);
+
       ///   ... Zillions of such things ....
 
     private:
