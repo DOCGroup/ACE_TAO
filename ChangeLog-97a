@@ -25,6 +25,10 @@ Mon Mar 24 14:22:17 1997  David L. Levine  <levine@cs.wustl.edu>
 	  Also, set flags to VX_FP_TASK if it's 0, to match behavior
 	  of ::sp ().
 
+	* ace/High_Res_Timer.cpp (elapsed_time (struct timespec &):
+	  fixed, using same approach as in elapsed_time
+	  (ACE_hrtime_t &nanoseconds), to get nanosecond resolution.
+
 	* netsvcs/lib/TS_Clerk_Handler.cpp (handle_close): added
 	  ACE_UNUSED_ARG (mask).  Also, added template specializations.
 
