@@ -15,7 +15,7 @@
 
 #include "ace/pre.h"
 
-#include "ace/Event_Handler.h"
+#include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -135,7 +135,7 @@ private:
  * Further, non-blocking connects support timeouts.
  */
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
-class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>
+class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service_Object
 {
 public:
 
@@ -264,7 +264,6 @@ public:
 
 protected:
   // = Helpful typedefs.
-
   typedef ACE_NonBlocking_Connect_Handler<SVC_HANDLER> NBCH;
 
   // = The following two methods define the Connector's strategies for
@@ -331,6 +330,26 @@ protected:
   /// Return the handle set representing the non-blocking connects in
   /// progress.
   ACE_Handle_Set &non_blocking_handles (void);
+
+  // = Dynamic linking hooks.
+  /// Default version does no work and returns -1.  Must be overloaded
+  /// by application developer to do anything meaningful.
+  virtual int init (int argc, ACE_TCHAR *argv[]);
+
+  /// Calls <handle_close> to shutdown the Connector gracefully.
+  virtual int fini (void);
+
+  /// Default version returns address info in <buf>.
+  virtual int info (ACE_TCHAR **, size_t) const;
+
+  // = Service management hooks.
+  /// Default version does no work and returns -1.  Must be overloaded
+  /// by application developer to do anything meaningful.
+  virtual int suspend (void);
+
+  /// Default version does no work and returns -1.  Must be overloaded
+  /// by application developer to do anything meaningful.
+  virtual int resume (void);
 
 private:
   /// This is the peer connector factory.
