@@ -5,4 +5,4 @@
 
 dynamic Resource_Factory Service_Object * TAO:_make_TAO_Resource_Factory() "-ORBresources global -ORBreactorlock null"
 dynamic Client_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Client_Strategy_Factory() "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
-dynamic Server_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Server_Strategy_Factory() "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null"
+dynamic Server_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Server_Strategy_Factory() "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null -ORBallowreactivationofsystemids 0"

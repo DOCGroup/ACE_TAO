@@ -6,4 +6,4 @@
 # of the server and client.
 static Resource_Factory "-ORBresources tss"
 static Client_Strategy_Factory "-ORBiiopprofilelock null -ORBclientconnectionhandler ST"
-static Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null"
+static Server_Strategy_Factory "-ORBconcurrency thread-per-connection -ORBpoalock null -ORBconnectorlock null -ORBallowreactivationofsystemids 0"
