@@ -239,7 +239,8 @@ TAO_DIOP_Acceptor::close (void)
         }
       else
         {
-          this->connection_handler_->handle_close ();
+          this->connection_handler_->handle_close (ACE_INVALID_HANDLE,
+                                                   ACE_Event_Handler::ALL_EVENTS_MASK);
         }
       this->connection_handler_ = 0;
     }

@@ -28,6 +28,7 @@ class TAO_ORB_Core_TSS_Resources;
 class TAO_Transport;
 class ACE_SOCK;
 class ACE_Lock;
+class ACE_Event_Handler;
 
 /**
  * @class TAO_Connection_Handler
@@ -108,6 +109,49 @@ protected:
 
   /// Shutdown the object
   virtual void handle_close_i (void) = 0;
+
+  //@{
+  /**
+   * @name Helper methods for Event_Handler-based derived classes.
+   *
+   * Many (actually all so far) implementations of
+   * TAO_Connection_Handler are a mixin of TAO_Connection_Handler and
+   * some form of ACE_Event_Handler.  The following methods simplify
+   * such implementations by capturing the common code in a single
+   * place.
+   */
+
+  /// Implement the handle_close() callback
+  virtual int handle_close_eh (ACE_HANDLE h,
+                               unsigned long reactor_mask,
+                               ACE_Event_Handler * eh);
+
+  /// Implement the handle_close_i() template method.
+  void handle_close_i_eh (ACE_Event_Handler * eh);
+
+  /// Implement the handle_output() callback
+  int handle_output_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
+
+  /// Implement the handle_input() callback
+  int handle_input_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
+
+  /// Release the OS resources related to this handler, used in handle_close_eh()
+  virtual int release_os_resources (void);
+
+  /// Pre-invocation hook for I/O operations (handle_input() &
+  /// handle_output())
+  /**
+   * See the SSLIOP protocol for an interesting use-case
+   */
+  virtual void pre_io_hook (int & return_value);
+
+  /// Post-invocation hook for I/O operations (handle_input() &
+  /// handle_output())
+  /**
+   * See the SSLIOP protocol for an interesting use-case
+   */
+  virtual void pos_io_hook (int & return_value);
+  //@}
 
 private:
   /// Pointer to the TAO_ORB_Core

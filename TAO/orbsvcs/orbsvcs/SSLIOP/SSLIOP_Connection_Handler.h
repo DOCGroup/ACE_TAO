@@ -81,15 +81,14 @@ public:
   /// calling <activate>.  This serves as the event loop in such cases.
   virtual int svc (void);
 
-  /// Perform appropriate closing.
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::NULL_MASK);
-
-  /// Documented in ACE_Event_Handler
-  virtual int handle_output (ACE_HANDLE);
-
-  /// Doumented in ACE_Event_Handler
+  //@{
+  /** @name Event Handler overloads
+   */
   virtual int resume_handler (void);
+  virtual int handle_input (ACE_HANDLE);
+  virtual int handle_output (ACE_HANDLE);
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  //@}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
@@ -109,18 +108,13 @@ public:
 
 protected:
 
-  /**
-   * @name Event Handler overloads
-   *
-   * SSLIOP-specific event handling methods.
-   */
   //@{
-
-  /// Reads a message from the <peer()>, dispatching and servicing it
-  /// appropriately.
-  /// handle_input() just delegates on handle_input_i().
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
-
+  /**
+   * @name TAO_Connection Handler overloads
+   */
+  void handle_close_i (void);
+  virtual int release_os_resources (void);
+  virtual void pos_io_hook (int & return_value);
   //@}
 
 protected:
@@ -128,11 +122,6 @@ protected:
   /// Reference to the SSLIOP::Current object (downcast to gain access
   /// to the low-level management methods).
   TAO_SSLIOP_Current_var current_;
-
-private:
-
-  /// Perform appropriate closing..
-  void handle_close_i (void);
 
 private:
 
