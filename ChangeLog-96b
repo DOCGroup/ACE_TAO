@@ -1,3 +1,10 @@
+Wed Jan 08 10:26:45 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-linux-lxpthreads.h:  added
+	  ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS, thanks to
+	  James CE Johnson <jcej@lads.com> for tracking down this problem
+	  and testing the fix.
+
 Tue Dec 31 18:27:50 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (log): Added a test so that if we're
