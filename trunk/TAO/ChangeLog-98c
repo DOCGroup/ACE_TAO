@@ -1,3 +1,10 @@
+Mon Apr 06 09:59:22 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Thruput/tao/utils.cpp: hacked so that it will compile
+          on VxWorks and Chorus.  It won't run properly, though.  The
+          file should be updated to use ACE_Profile_Timer instead of
+          using rusage directly.
+
 Sun Apr 05 18:05:26 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
         * orbsvcs/tests/Simulator/DOVEBrowser/{ DOVEBrowser.java,
