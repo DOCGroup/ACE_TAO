@@ -453,7 +453,7 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
 
 void
 Connection_Manager::destroy (const ACE_CString &flowname
-                             ACE_ENV_ARG_DECL)
+                             ACE_ENV_ARG_DECL_NOT_USED)
 {
   this->protocol_objects_.unbind (flowname);
   this->receivers_.unbind (flowname);
