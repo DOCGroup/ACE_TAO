@@ -1,3 +1,10 @@
+Sun Apr 11 14:38:22 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* configure.in:
+
+	  Added test for ACE_NEEDS_FUNC_DEFINITIONS.  Corrected bug in
+	  ACE_TEMPLATES_REQUIRE_SOURCE test.
+
 Sat Apr 10 14:02:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc[_Base]: Added a new no-op constructor for
