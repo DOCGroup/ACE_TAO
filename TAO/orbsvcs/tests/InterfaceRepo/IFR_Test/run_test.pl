@@ -6,82 +6,66 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../../../bin";
-
-require ACEutils;
-use Cwd;
-
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+use PerlACE::Run_Test;
 
 $locking = "-m";
 
-$if_repo_server = $EXEPREFIX."..".$DIR_SEPARATOR."..".$DIR_SEPARATOR.
-		  "..".$DIR_SEPARATOR."IFR_Service".$DIR_SEPARATOR.
-		  "IFR_Service".$EXE_EXT, " $locking";
+$iorfile = "if_repo.ior";
 
-
-$init_ref = 
-  "-ORBInitRef InterfaceRepository=file://if_repo.ior";
-
-$iorfile = "$cwd$DIR_SEPARATOR" . "if_repo.ior";
+$status = 0;
 
 $debug = "";
 $test = "";
 $iterations = "";
 $other = "";
 
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-d")
-    {
-      $debug = "-d";
-      last SWITCH;
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-d") {
+        $debug = "-d";
     }
-    if ($ARGV[$i] eq "-t")
-    {
-      $test = "-t ".$ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-t") {
+        $test = "-t ".$ARGV[$i + 1];
+        $i++;
     }
-    if ($ARGV[$i] eq "-i")
-    {
-      $iterations = "-i ".$ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-i") {
+        $iterations = "-i ".$ARGV[$i + 1];
+        $i++;
     }
-    $other .= $ARGV[$i];
-  }
+    else {
+        $other .= $ARGV[$i];
+    }
 }
 
 unlink $iorfile;
 
-$SV = Process::Create ($if_repo_server);
+$SV = new PerlACE::Process ("../../../IFR_Service/IFR_Service", " $locking");
+$CL = new PerlACE::Process ("IFR_Test", 
+                            "-ORBInitRef InterfaceRepository=file://$iorfile"
+                            . " $debug $test $iterations");
 
-if (ACE::waitforfile_timed ($iorfile, 15) == -1) 
-{
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); 
-  $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."IFR_Test".$EXE_EXT,
-                       " $init_ref $debug $test $iterations");
+$client = $CL->SpawnWaitKill (60);
 
-$client = $CL->TimedWait (60);
-if ($client == -1) 
-{
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); 
-  $CL->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$SV->Kill (); 
-$SV->TimedWait (1);
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 
 unlink $iorfile;
 
-exit 0;
+exit $status;
 

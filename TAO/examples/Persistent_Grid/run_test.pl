@@ -6,49 +6,63 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../bin";
-require ACEutils;
-require Process;
+use PerlACE::Run_Test;
 
-$iorfile = "grid.ior";
-$mem     = "foo";
+$iorfile = PerlACE::LocalFile ("grid.ior");
+$mem     = PerlACE::LocalFile ("foo");
+$status  = 0;
 
-$SV = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-o $iorfile -m $mem");
+$SV  = new PerlACE::Process ("server", "-o $iorfile -m $mem");
+$CL  = new PerlACE::Process ("client", "-k file://$iorfile");
+$PCL = new PerlACE::Process ("persistent_client", "-k file://$iorfile -w 10 -h 10");
 
-if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
-  print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: Could not find file <$iorfile>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
-$client  = Process::Create ($EXEPREFIX."client$Process::EXE_EXT -k file://$iorfile ");
-if ($client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $client->Kill (); $client->TimeWait (1);
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$SV->Kill (); $SV->TimedWait (1);
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 
 unlink $iorfile;
 
-$server = Process::Create ($EXEPREFIX."server$Process::EXE_EXT", "-o $iorfile -m $mem");
+$SV->Spawn ();
 
-if (ACE::waitforfile_timed ($iorfile, 10) == -1) {
-  print STDERR "ERROR: timedout waiting for file <$iorfile>\n";
-  $server->Kill (); $server->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: Could not find file <$iorfile>\n";
+    $server->Kill (); 
+    exit 1;
 }
 
-$per_client  = Process::Create ($EXEPREFIX."persistent_client$Process::EXE_EXT -k file://$iorfile -w 10 -h 10");
+$pclient = $PCL->SpawnWaitKill (60);
 
-if ($per_client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $perclient->Kill (); $per_client->TimeWait (1);
+if ($pclient != 0) {
+    print STDERR "ERROR: persistent client returned $pclient\n";
+    $status = 1;
 }
 
-$server->Kill (); $server->TimedWait (1);
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
 
 unlink $iorfile;
 unlink $mem;
+
 exit $status;

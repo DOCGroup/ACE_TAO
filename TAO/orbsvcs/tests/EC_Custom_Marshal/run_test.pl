@@ -5,69 +5,70 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-require Process;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$port = ACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+$port = PerlACE::uniqueid () + 10001;  # This can't be 10000 on Chorus 4.0
 
-$NS_ior = "$cwd$DIR_SEPARATOR" . "NameService.ior";
+$NS_ior = PerlACE::LocalFile ("NameService.ior");
 $sleeptime = 5;
 $status = 0;
 
-$NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
-                       "..".$DIR_SEPARATOR.
-                       "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$EXE_EXT,
-                       "-ORBNameServicePort $port -o $NS_ior ");
+$NS = new PerlACE::Process ("../../Naming_Service/Naming_Service",
+                            "-ORBNameServicePort $port -o $NS_ior");
+$ES = new PerlACE::Process ("../../Event_Service/Event_Service",
+                            "-ORBInitRef NameService=file://$NS_ior -t new");
+$C  = new PerlACE::Process ("ECM_Consumer", 
+                            "-ORBInitRef NameService=file://$NS_ior");
+$S  = new PerlACE::Process ("ECM_Supplier",
+                            "-ORBInitRef NameService=file://$NS_ior");
 
-if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
-  print STDERR "ERROR: waiting for naming service IOR file\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($NS_ior, 5) == -1) {
+    print STDERR "ERROR: waiting for naming service IOR file\n";
+    $NS->Kill (); 
+    exit 1;
 }
 
-$ES = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
-                       "..".$DIR_SEPARATOR.
-                       "Event_Service".$DIR_SEPARATOR.
-                       "Event_Service".$EXE_EXT,
-		       "-ORBInitRef NameService=file://$NS_ior -t new");
+$ES->Spawn ();
 
 sleep $sleeptime;
 
-$C = Process::Create ($EXEPREFIX."ECM_Consumer".$EXE_EXT,
-		      "-ORBInitRef NameService=file://$NS_ior");
+$C->Spawn ();
 
 sleep $sleeptime;
 
-$S = Process::Create ($EXEPREFIX."ECM_Supplier".$EXE_EXT,
-		      "-ORBInitRef NameService=file://$NS_ior");
+$S->Spawn ();
 
-if ($C->TimedWait (60) == -1) {
-  $status = 1;
-  print STDERR "ERROR: consumer timedout\n";
-  $C->Kill (); $C->TimedWait (1);
+$consumer = $C->WaitKill (60);
+
+if ($consumer != 0) {
+    print STDERR "ERROR: consumer returned $consumer\n";
+    $status = 1;
 }
 
-if ($S->TimedWait (60) == -1) {
-  $status =1;
-  print STDERR "ERROR: supplier timedout\n";
-  $S->Kill (); $S->TimedWait (1);
+$supplier = $S->WaitKill (60);
+
+if ($supplier == -1) {
+    print STDERR "ERROR: supplier returned $supplier\n";
+    $status = 1;
 }
 
-$NS->Terminate();
-$ES->Terminate();
-if ($NS->TimedWait (5) == -1 || $ES->TimedWait (5) == -1) {
-  print STDERR "ERROR: couldn't terminate the services nicely\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  $ES->Kill (); $ES->TimedWait (1);
-  $status = 1;
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: nameserver returned $nserver\n";
+    $status = 1;
+}
+
+$eserver = $ES->TerminateWaitKill (5);
+
+if ($eserver != 0) {
+    print STDERR "ERROR: eventserver returned $eserver\n";
+    $status = 1;
 }
 
 unlink $NS_ior;
 
-# @@ Capture the errors from the processes.
 exit $status;

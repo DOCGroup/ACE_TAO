@@ -5,24 +5,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 # $Id$
 
-unshift @INC, '../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
-
-$cwd = getcwd();
-ACE::checkForTarget($cwd);
+use lib '../../../bin';
+use PerlACE::Run_Test;
 
 print STDERR "\n\n==== Running Codec test\n";
 
-$codec = Process::Create ($EXEPREFIX."client".$EXE_EXT);
+$T = new PerlACE::Process ("client");
 
-$pid = $codec->TimedWait (15);
-if ($pid == -1) {
-  print STDERR "ERROR: Codec timed out\n";
-  $codec->Kill (); $codec->TimedWait (1);
+$test = $T->SpawnWaitKill (15);
 
-  exit 1;
+if ($test != 0) {
+    print STDERR "ERROR: Codec test returned $test\n";
+    exit 1;
 }
 
 exit 0;

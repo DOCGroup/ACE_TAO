@@ -7,41 +7,37 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # This is a Perl script that runs the Logger client and server
 
-unshift @INC, '../../../bin';
-require Process;
+use lib '../../../bin';
+use PerlACE::Run_Test;
+
+$status = 0;
 
 # amount of delay between running the servers
 $sleeptime = 7;
 
-# Starts the Logging Service
-sub service
-{
-  my $args = "";
-  my $prog = $EXEPREFIX."Logging_Service"
-      .$EXE_EXT;
-  $SV = Process::Create ($prog, $args);
-}
-
-# Starts the test client
-sub test
-{
-  my $args = "";
-  my $prog = $EXEPREFIX."Logging_Test".$EXE_EXT;
-
-  system ("$prog $args");
-}
+$SV = new PerlACE::Process ("Logging_Service");
+$CL = new PerlACE::Process ("Logging_Test");
 
 # Start the service
-service ();
+$SV->Spawn ();
 
 # Give the service time to settle
 sleep $sleeptime;
 
-# Start the client (which exits automatically)
-test ();
+# Start the client 
+$client = $CL->SpawnWaitKill (60);
 
-# Give the client time to log and exit
-sleep 3;
+if ($client != 0) {
+    print STDERR "ERROR: test returned $client\n";
+    $status = 1;
+}
 
 # Kill the service
-$SV->Kill ();
+$server = $SV->TerminateWaitKill (5);
+
+if ($server != 0) {
+    print STDERR "ERROR: service returned $server\n";
+    $status = 1;
+}
+
+exit $status;

@@ -8,57 +8,62 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This is a Perl script that runs all Naming Service tests.  It starts
 # all the servers and clients as necessary.
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-require Uniqueid;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
 # Amount of delay (in seconds) between starting a server and a client
 # to allow proper server initialization.
 $sleeptime = 8;
 
+$quiet = 0;
+
+# check for -q flag
+if ($ARGV[0] eq '-q') {
+    $quiet = 1;
+}
+
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10001 + uniqueid (); # Can not be 10000 on Chorus 4.0
-$ns_orb_port = 12000 + uniqueid ();
-$iorfile = "$cwd$DIR_SEPARATOR" . "ns.ior";
-$persistent_ior_file = "$cwd$DIR_SEPARATOR" . "pns.ior";
-$persistent_log_file = "$cwd$DIR_SEPARATOR" . "test_log";
-$data_file = "$cwd$DIR_SEPARATOR" . "test_run.data";
+$ns_multicast_port = 10001 + PerlACE::uniqueid (); # Can not be 10000 on Chorus 4.0
+$ns_orb_port = 12000 + PerlACE::uniqueid ();
+$iorfile = PerlACE::LocalFile ("ns.ior");
+$persistent_ior_file = PerlACE::LocalFile ("pns.ior");
+$persistent_log_file = PerlACE::LocalFile ("test_log");
+$data_file = PerlACE::LocalFile ("test_run.data");
 
-ACE::checkForTarget($cwd);
+$status = 0;
 
 sub name_server
 {
-  my $args = "@_ "."-ORBnameserviceport $ns_multicast_port -o $iorfile";
-  my $prog = $EXEPREFIX."..$DIR_SEPARATOR..$DIR_SEPARATOR".
-      "Naming_Service".$DIR_SEPARATOR.
-          "Naming_Service".$EXE_EXT;
+    my $args = "@_ "."-ORBnameserviceport $ns_multicast_port -o $iorfile";
+    my $prog = "../../Naming_Service/Naming_Service";
 
-  unlink $iorfile;
-  $NS = Process::Create ($prog, $args);
+    $NS = new PerlACE::Process ($prog, $args);
 
-  if (ACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
-    print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
-    $NS->Kill (); $NS->TimedWait (1);
-    exit 1;
-  }
+    unlink $iorfile;
+
+    $NS->Spawn ();
+
+    if (PerlACE::waitforfile_timed ($iorfile, $sleeptime) == -1) {
+        print STDERR "ERROR: cannot find IOR file <$iorfile>\n";
+        $NS->Kill (); 
+        exit 1;
+    }
 }
 
 sub client
 {
-  my $args = "@_"." ";
-  my $prog = $EXEPREFIX."client".$EXE_EXT;
+    my $args = "@_"." ";
+    my $prog = "client";
 
-  $CL = Process::Create ($prog, $args);
+    $CL = new PerlACE::Process ($prog, $args);
 
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-      print STDERR "ERROR: client timedout\n";
-      $CL->Kill (); $CL->TimedWait (1);
-  }
+    $client = $CL->SpawnWaitKill (60);
+
+    if ($client != 0) {
+        print STDERR "ERROR: client returned $client\n";
+        $status = 1;
+    }
 }
 
 # Options for all simple tests recognized by the 'client' program.
@@ -90,20 +95,15 @@ unlink $persistent_ior_file, $persistent_log_file;
 
 # Run server and client for each of the tests.  Client uses ior in a
 # file to bootstrap to the server.
-foreach $o (@opts)
-{
-  name_server ($server_opts[$test_number]);
+foreach $o (@opts) {
+    name_server ($server_opts[$test_number]);
 
-  print STDERR "\n          ".$comments[$test_number];
+    print STDERR "\n          ".$comments[$test_number];
 
-  client ($o);
+    client ($o);
 
-  $NS->Terminate (); $server = $NS->TimedWait (5);
-  if ($server == -1) {
-    print STDERR "ERROR: server timedout\n";
-    $NS->Kill (); $NS->TimedWait (1);
-  }
-  $test_number++;
+    $NS->Kill ();
+    $test_number++;
 }
 
 unlink $persistent_ior_file, $persistent_log_file;
@@ -117,6 +117,10 @@ open (STDOUT, ">$data_file") or die "can't redirect stdout: $!";
 open (OLDERR, ">&STDERR");
 open (STDERR, ">&STDOUT") or die "can't redirect stderror: $!";
 
+# just here to quiet warnings
+$fh = \*OLDOUT;
+$fh = \*OLDERR;
+
 name_server ();
 
 client ("-ORBInitRef NameService=file://$iorfile", "-m15");
@@ -126,22 +130,31 @@ close (STDOUT);
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
-$NS->Terminate (); $server = $NS->TimedWait (5);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $NS->Kill (); $NS->TimedWait (1);
+$NS->Kill ();
+
+unlink $iorfile;
+
+
+$errors = system ("perl process-m-output.pl $data_file 15") >> 8;
+
+if ($errors > 0) {
+    $status = 1;
+
+    if (!$quiet) {
+        print STDERR "Errors Detected, printing output\n";
+        if (open (DATA, "<$data_file")) {
+            print STDERR "================================= Begin\n";
+            print STDERR <DATA>;
+            print STDERR "================================= End\n";
+            close (DATA);
+        }
+        else {
+            print STDERR "ERROR: Could not open $data_file\n";
+        }
+        unlink $data_file;
+    }
 }
 
 unlink $iorfile;
 
-$FL = Process::Create ($EXEPREFIX."process-m-output.pl",
-                       " $data_file 15");
-$filter = $FL->TimedWait (60);
-if ($filter == -1) {
-  print STDERR "ERROR: filter timedout\n";
-  $FL->Kill (); $FL->TimedWait (1);
-}
-print STDERR "\n";
-
-# @@ Capture any exit status from the processes.
-exit 0;
+exit $status;

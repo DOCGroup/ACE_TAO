@@ -8,9 +8,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "../../../../bin";
 use PerlACE::Run_Test;
 
-# Set STDERR to autoflush (weird unbuffered output stuff)
-$| = 1;
-
 # Make pretty look thing
 print STDERR "\n";
 

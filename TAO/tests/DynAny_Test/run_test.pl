@@ -6,66 +6,50 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../bin";
-require ACEutils;
-require Process;
-use Cwd;
+use PerlACE::Run_Test;
 
+$status = 0;
 $type = "";
 
 sub run_test
 {
-  my $type = shift(@_);
+    my $type = shift(@_);
 
-  $BT = Process::Create ($EXEPREFIX."basic_test".$EXE_EXT,
-			 " -t $type");
-
-  $test = $BT->TimedWait (10);
-  if ($test == -1) {
-    print STDERR "ERROR: test timedout\n";
-    $BT->Kill (); $BT->TimedWait (1);
-  }
-
+    $BT = new PerlACE::Process ("basic_test", "-t $type");
+    my $basictest = $BT->SpawnWaitKill (10);
+    
+    if ($basictest != 0) {
+        print STDERR "ERROR: basic test for ($type) returned $basictest\n";
+        $status = 1;
+    }
 }
 
-# Parse the arguments
-ACE::checkForTarget(getcwd());
-
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
-    {
-      print "Run_Test Perl script for TAO DynAny Test\n\n";
-      print "run_test [-chorus <target>] [-t type]\n";
-      print "\n";
-      print "-t type             -- runs only one type of dynany test\n";
-      exit;
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
+        print "Run_Test Perl script for TAO DynAny Test\n\n";
+        print "run_test [-chorus <target>] [-t type]\n";
+        print "\n";
+        print "-t type             -- runs only one type of dynany test\n";
+        exit;
     }
-    if ($ARGV[$i] eq "-t")
-    {
-      $type = $ARGV[$i + 1];
-      $i++;
-      last SWITCH;
+    elsif ($ARGV[$i] eq "-t") {
+        $type = $ARGV[$i + 1];
+        $i++;
     }
-  }
 }
 
 @types = ("dynany", "dynarray", "dynenum", "dynsequence", "dynstruct",
           "dynunion");
 
 
-
-if ($type ne "")
-{
-  run_test ($type);
-}
-else
-{
-  foreach $type (@types)
-  {
+if ($type ne "") {
     run_test ($type);
-  }
+}
+else {
+    foreach $type (@types) {
+        run_test ($type);
+    }
 }
 
+exit $status;
 

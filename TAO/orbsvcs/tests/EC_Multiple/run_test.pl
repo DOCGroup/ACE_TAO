@@ -5,42 +5,40 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require Process;
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$NS_ior = "$cwd$DIR_SEPARATOR" . "NameService.ior";
 $status = 0;
 
-ACE::checkForTarget($cwd);
+$NS_ior = PerlACE::LocalFile ("NameService.ior");
 
-$NS = Process::Create ($EXEPREFIX."..".$DIR_SEPARATOR.
-                       "..".$DIR_SEPARATOR.
-                       "Naming_Service".$DIR_SEPARATOR.
-                       "Naming_Service".$EXE_EXT,
-                       " -o $NS_ior ");
-if (ACE::waitforfile_timed ($NS_ior, 5) == -1) {
-  print STDERR "ERROR: waiting for naming service IOR file\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$NS = new PerlACE::Process ("../../Naming_Service/Naming_Service", "-o $NS_ior");
+$T = new PerlACE::Process ("EC_Multiple", 
+                           "-ORBInitRef NameService=file://$NS_ior"
+                           ." -s local");
+
+$NS->Spawn ();
+
+if (PerlACE::waitforfile_timed ($NS_ior, 5) == -1) {
+    print STDERR "ERROR: waiting for naming service IOR file\n";
+    $NS->Kill ();
+    exit 1;
 }
 
 # This is a very simple test, no multiple consumers and no gateways.
-$TEST = Process::Create ($EXEPREFIX."EC_Multiple".$EXE_EXT,
-			 "-ORBInitRef NameService=file://$NS_ior"
-			 ." -s local");
-if ($TEST->TimedWait (60) == -1) {
-  print STDERR "ERROR: test timedout\n";
-  $status = 1;
-  $TEST->Kill (); $TEST->TimedWait (1);
+$test = $T->SpawnWaitKill (60);
+
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    $status = 1;
 }
 
-$NS->Terminate (); if ($NS->TimedWait (5) == -1) {
-  print STDERR "ERROR: cannot terminate naming service\n";
-  $NS->Kill (); $NS->TimedWait (1);
-  exit 1;
+$nserver = $NS->TerminateWaitKill (5);
+
+if ($nserver != 0) {
+    print STDERR "ERROR: naming service returned $nserver\n";
+    $status = 1;
 }
 
 exit $status;

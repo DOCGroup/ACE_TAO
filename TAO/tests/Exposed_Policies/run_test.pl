@@ -10,8 +10,9 @@ require PerlACE::Run_Test;
 
 $poa_file = PerlACE::LocalFile ("POA.cfg");
 $obj_file = PerlACE::LocalFile ("Object.cfg");
+$server_conf = PerlACE::LocalFile ("server.conf");
 
-$SV = new PerlACE::Process ("server", "-ORBSvcConf server.conf"
+$SV = new PerlACE::Process ("server", "-ORBSvcConf $server_conf"
                                       . " -ORBendpoint iiop://localhost:0/priority=5"
                                       . " -ORBendpoint iiop://localhost:0/priority=15"
                                       . " -POAConfigFile $poa_file"
@@ -25,12 +26,18 @@ $SV->Spawn ();
 
 sleep (5);
 
-if ($CL->SpawnWaitKill (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); 
-  exit 1;
+$client = $CL->SpawnWaitKill (60);
+
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$SV->Kill ();
+$server = $SV->TerminateWaitKill (10);
 
-exit 0;
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
+}
+
+exit $status;

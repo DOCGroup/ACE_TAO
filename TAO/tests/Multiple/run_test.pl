@@ -6,51 +6,42 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # -*- perl -*-
 
 use lib "../../../bin";
-require Process;
-
-
-unshift @INC, '../../../bin';
-require ACEutils;
-use Cwd;
-
+use PerlACE::Run_Test;
 
 $status = 0;
-$EXEPREFIX = "./";
-$DIRECT_COLLOC = "-ORBCollocationStrategy direct";
-$NO_COLLOC = "-ORBCollocation no";
 
-$cwd = getcwd();
+$direct_colloc = "-ORBCollocationStrategy direct";
+$no_colloc = "-ORBCollocation no";
 
-$iorfile = "$cwd$DIR_SEPARATOR" . "s.ior";
+# @todo Test should take -o and -k options to specify iorfile
+# Hard coded in test.
+$iorfile = "s.ior";
+
 unlink $iorfile;
 
-ACE::checkForTarget($cwd);
+$SV = new PerlACE::Process ("server");
+$CL = new PerlACE::Process ("client");
 
 #
 # Test using ThruPOA collocation.
 #
 
+$SV->Spawn ();
 
-$Server = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-			   "");
-
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $Server->Kill (); $Server->TimedWait (1);
-  exit 1;
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
+$client = $CL->SpawnWaitKill (60);
 
-$Client = Process::Create($EXEPREFIX."client$EXE_EXT", "");
+$SV->Kill ();
 
-if ($Client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = 1;
-  $Client->Kill (); 
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
-
-$Server->Kill ();
-
 
 #
 # Test using Direct Collocation
@@ -58,24 +49,24 @@ $Server->Kill ();
 
 unlink $iorfile;
 
-$Server = Process::Create ($EXEPREFIX."server$EXE_EXT", $DIRECT_COLLOC);
+$SV->Arguments ($direct_colloc);
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $Server->Kill (); $Server->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
+$client = $CL->SpawnWaitKill (60);
 
-$Client = Process::Create($EXEPREFIX."client$EXE_EXT", "");
+$SV->Kill ();
 
-if ($Client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = $status+1;
-  $Client->Kill (); 
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
-
-$Server->Kill ();
 
 #
 # Test using No Collocation
@@ -83,23 +74,25 @@ $Server->Kill ();
 
 unlink $iorfile;
 
-$Server = Process::Create ($EXEPREFIX."server$EXE_EXT", $NO_COLLOC);
+$SV->Arguments ($no_colloc);
 
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $Server->Kill (); $Server->TimedWait (1);
-  exit 1;
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
+$client = $CL->SpawnWaitKill (60);
 
-$Client = Process::Create($EXEPREFIX."client$EXE_EXT", "");
+$SV->Kill ();
 
-if ($Client->TimedWait (60) == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $status = $status+1;
-  $Client3->Kill (); 
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$Server->Kill ();
+unlink $iorfile;
 
 exit $status

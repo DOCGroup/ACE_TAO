@@ -5,20 +5,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$iorfile1 = "$cwd$DIR_SEPARATOR" . "test1.ior";
-$iorfile2 = "$cwd$DIR_SEPARATOR" . "test2.ior";
-
-ACE::checkForTarget($cwd);
-
-print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
+$iorfile1 = PerlACE::LocalFile ("test1.ior");
+$iorfile2 = PerlACE::LocalFile ("test2.ior");
 
 unlink $iorfile1;
 unlink $iorfile2;
+
+
+$server_conf = PerlACE::LocalFile ("server.conf");
 
 # CORBA priorities 65, 70 and 75 are for the SCHED_OTHER class on
 # Solaris.  May need to use different values for other platforms
@@ -26,15 +23,14 @@ unlink $iorfile2;
 # available range.
 
 $server_args =
-    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBSvcConf server.conf "
+    "-p $iorfile1 -o $iorfile2 -a 65 -b 75 -c 70 -ORBSvcConf $server_conf "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=65 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=75 "
     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=73 ";
 
-if ($^O eq "MSWin32")
-{
+if ($^O eq "MSWin32") {
     $server_args =
-        "-p $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf server.conf "
+        "-p $iorfile1 -o $iorfile2 -a 3 -b 5 -c 2 -ORBSvcConf $server_conf "
             ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=3 "
                 ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=5 "
                     ."-ORBendpoint iiop://$TARGETHOSTNAME:0/priority=1 ";
@@ -42,35 +38,35 @@ if ($^O eq "MSWin32")
 
 $client_args = "-p file://$iorfile1 -o file://$iorfile2";
 
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT ",
-                       $server_args);
+$SV = new PerlACE::Process ("server", $server_args);
+$CL = new PerlACE::Process ("client", $client_args);
 
-if (ACE::waitforfile_timed ($iorfile2, 10) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile2>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+print STDERR "\n********** RTCORBA SERVER_DECLARED Priority Unit Test\n\n";
+
+
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
+    print STDERR "ERROR: cannot find file <$iorfile2>\n";
+    $SV->Kill (); 
+    exit 1;
 }
 
-$CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                       $client_args);
+$client = $CL->SpawnWaitKill (60);
 
-$client = $CL->TimedWait (60);
-if ($client == -1) {
-  print STDERR "ERROR: client timedout\n";
-  $CL->Kill (); $CL->TimedWait (1);
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
+    $status = 1;
 }
 
-$server = $SV->TimedWait (60);
-if ($server == -1) {
-  print STDERR "ERROR: server timedout\n";
-  $SV->Kill (); $SV->TimedWait (1);
+$server = $SV->WaitKill (60);
+
+if ($server != 0) {
+    print STDERR "ERROR: server returned $server\n";
+    $status = 1;
 }
 
 unlink $iorfile1;
 unlink $iorfile2;
 
-if ($server != 0 || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;

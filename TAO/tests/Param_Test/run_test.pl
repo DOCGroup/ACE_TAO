@@ -5,58 +5,19 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-
-
 use lib "../../../bin";
-require ACEutils;
-require Process;
-use Cwd;
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$iorfile = "$cwd$DIR_SEPARATOR" . "server.ior";
+$iorfile = PerlACE::LocalFile ("server.ior");
+
 $invocation = "sii";
 $num = 5;
 $other = "";
 $debug = "";
 $type = "";
+$status = 0;
 
 unlink $iorfile;
-
-sub run_test
-{
-  my $type = shift(@_);
-
-  unlink $iorfile; # Ignore errors
-  print STDERR "==== Testing $type === wait....\n";
-
-  $SV = Process::Create ($EXEPREFIX."server".$EXE_EXT,
-                         "$debug -o $iorfile");
-
-  if (ACE::waitforfile_timed ($iorfile, 15) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-  }
-
-  $CL = Process::Create ($EXEPREFIX."client".$EXE_EXT,
-                         " $debug -f $iorfile  -i $invocation "
-			 . "-t $type -n $num -x");
-
-  $client = $CL->TimedWait (60);
-  if ($client == -1) {
-    print STDERR "ERROR: client timedout\n";
-    $CL->Kill (); $CL->TimedWait (1);
-  }
-
-  $server = $SV->TimedWait (10);
-  if ($server == -1) {
-    print STDERR "ERROR: server timedout\n";
-    $SV->Kill (); $SV->TimedWait (1);
-  }
-  unlink $iorfile;
-
-  print STDERR "==== Test for $type finished ===\n";
-}
 
 # Parse the arguments
 
@@ -74,73 +35,76 @@ sub run_test
           "big_union", "small_union", "recursive_union", "complex_any");
 
 
-ACE::checkForTarget($cwd);
-
-for ($i = 0; $i <= $#ARGV; $i++)
-{
-  SWITCH:
-  {
-    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?")
-    {
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
       print "Run_Test Perl script for TAO Param Test\n\n";
       print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)] [-chorus <target>]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
-      print "-onewin             -- keeps all tests in one window on NT\n";
       print "-h                  -- prints this information\n";
       print "-t type             -- runs only one type of param test\n";
       print "-i (dii|sii)        -- Changes the type of invocation\n";
       print "-chorus <target>    -- Run tests on chorus target\n";
       exit 0;
     }
-    if ($ARGV[$i] eq "-n")
-    {
+    elsif ($ARGV[$i] eq "-n") {
       $num = $ARGV[$i + 1];
       $i++;
-      last SWITCH;
     }
-    if ($ARGV[$i] eq "-d")
-    {
+    elsif ($ARGV[$i] eq "-d") {
       $debug = $debug." -d";
-      last SWITCH;
     }
-    if ($ARGV[$i] eq "-onewin")
-    {
-      if ($^O eq "MSWin32")
-      {
-        $newwindow = "no";
-      }
-      last SWITCH;
-    }
-    if ($ARGV[$i] eq "-twowin")
-    {
-      if ($^O eq "MSWin32")
-      {
-        $newwindow = "yes";
-      }
-      last SWITCH;
-    }
-    if ($ARGV[$i] eq "-t")
-    {
+    elsif ($ARGV[$i] eq "-t") {
       @types = split (',', $ARGV[$i + 1]);
       $i++;
-      last SWITCH;
     }
-    if ($ARGV[$i] eq "-i")
-    {
+    elsif ($ARGV[$i] eq "-i") {
       $invocation = $ARGV[$i + 1];
       $i++;
-      last SWITCH;
     }
-    $other .= $ARGV[$i];
-  }
+    else {
+        $other .= $ARGV[$i];
+    }
 }
 
+$SV = new PerlACE::Process ("server", "$debug -o $iorfile");
+$CL = new PerlACE::Process ("client");
+
 foreach $type (@types) {
-  run_test ($type);
+    unlink $iorfile; # Ignore errors
+
+    print STDERR "==== Testing $type === wait....\n";
+
+    $SV->Spawn ();
+    
+    if (PerlACE::waitforfile_timed ($iorfile, 15) == -1) {
+        print STDERR "ERROR: cannot find file <$iorfile>\n";
+        $SV->Kill (); 
+        exit 1;
+    }
+
+    $CL->Arguments ("$debug -f $iorfile  -i $invocation -t $type -n $num -x");
+
+    $client = $CL->SpawnWaitKill (60);
+    
+    if ($client != 0) {
+        print STDERR "ERROR: client returned $client\n";
+        $status = 1;
+    }
+
+    $server = $SV->WaitKill (10);
+    
+    if ($server != 0) {
+        print STDERR "ERROR: server returned $server\n";
+        $status = 1;
+    }
+    
+    unlink $iorfile;
+
+    print STDERR "==== Test for $type finished ===\n";
 }
 
 unlink $iorfile;
 
-exit 0;
+exit $status;

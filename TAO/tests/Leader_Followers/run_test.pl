@@ -5,139 +5,161 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # $Id$
 # -*- perl -*-
 
-unshift @INC, '../../../bin';
-require ACEutils;
-use Cwd;
+use lib '../../../bin';
+use PerlACE::Run_Test;
 
-$cwd = getcwd();
-$iorfile = "$cwd$DIR_SEPARATOR" . "ior";
+$status = 0;
+$iorfile = PerlACE::LocalFile ("lb.ior");
+$mt_conffile = PerlACE::LocalFile ("multi_threaded_event_loop.conf");
+$st_conffile = PerlACE::LocalFile ("single_threaded_event_loop.conf");
 
-ACE::checkForTarget($cwd);
+$SV = new PerlACE::Process ("server");
+$CL = new PerlACE::Process ("client");
 
-sub run_client
+sub run_client ($)
 {
-  my $args = shift;
+    my $args = shift;
 
-  $CL = Process::Create ($EXEPREFIX."client$EXE_EXT ",
-                         "-k file://$iorfile " . $args);
+    $CL->Arguments ("-k file://$iorfile " . $args);
 
-  $client = $CL->TimedWait (200);
-  if ($client == -1) {
-      $time = localtime;
-      print STDERR "ERROR: client timedout at $time\n";
-      $CL->Kill (); $CL->TimedWait (1);
-  }
+    my $client = $CL->SpawnWaitKill (200);
+    
+    if ($client != 0) {
+        $time = localtime;
+        print STDERR "ERROR: client returned $client at $time\n";
+        $status = 1;
+    }
 }
 
-sub run_clients
+sub run_clients ()
 {
-  print STDERR "\n\n*** No event loop threads ***\n\n\n";
+    print STDERR "\n\n*** No event loop threads ***\n\n\n";
 
-  print STDERR "\nSelect Reactor\n\n";
+    print STDERR "\nSelect Reactor\n\n";
 
-  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 0");
+    run_client ("-ORBsvcconf $st_conffile -e 0");
 
-  print STDERR "\nTP Reactor\n\n";
+    print STDERR "\nTP Reactor\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 0");
+    run_client ("-ORBsvcconf $mt_conffile -e 0");
 
-  print STDERR "\n\n*** Single-threaded client event loop: Select Reactor ***\n\n\n";
+    print STDERR "\n\n*** Single-threaded client event loop: Select Reactor ***\n\n\n";
 
-  print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
+    print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
 
-  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 1 -t 3000");
+    run_client ("-ORBsvcconf $st_conffile -e 1 -t 3000");
 
-  print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
+    print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
 
-  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 1 -t 10000");
+    run_client ("-ORBsvcconf $st_conffile -e 1 -t 10000");
 
-  print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
+    print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
 
-  run_client ("-ORBsvcconf single_threaded_event_loop.conf -e 1 -t 20000");
+    run_client ("-ORBsvcconf $st_conffile -e 1 -t 20000");
 
-  print STDERR "\n\n*** Single-threaded client event loop: TP Reactor ***\n\n\n";
+    print STDERR "\n\n*** Single-threaded client event loop: TP Reactor ***\n\n\n";
 
-  print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
+    print STDERR "\nSingle-threaded client running event loop for 3 seconds\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 1 -t 3000");
+    run_client ("-ORBsvcconf $mt_conffile -e 1 -t 3000");
 
-  print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
+    print STDERR "\nSingle-threaded client running event loop for 10 seconds\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 1 -t 10000");
+    run_client ("-ORBsvcconf $mt_conffile -e 1 -t 10000");
 
-  print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
+    print STDERR "\nSingle-threaded client running event loop for 20 seconds\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 1 -t 20000");
+    run_client ("-ORBsvcconf $mt_conffile -e 1 -t 20000");
 
-  print STDERR "\n\n*** Multi-threaded client event loop: TP Reactor ***\n\n\n";
+    print STDERR "\n\n*** Multi-threaded client event loop: TP Reactor ***\n\n\n";
 
-  print STDERR "\nMulti-threaded client running event loop for 3 seconds\n\n";
+    print STDERR "\nMulti-threaded client running event loop for 3 seconds\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 5 -t 3000");
+    run_client ("-ORBsvcconf $mt_conffile -e 5 -t 3000");
 
-  print STDERR "\nMulti-threaded client running event loop for 10 seconds\n\n";
+    print STDERR "\nMulti-threaded client running event loop for 10 seconds\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 5 -t 10000");
+    run_client ("-ORBsvcconf $mt_conffile -e 5 -t 10000");
 
-  print STDERR "\nMulti-threaded client running event loop for 20 seconds\n\n";
+    print STDERR "\nMulti-threaded client running event loop for 20 seconds\n\n";
 
-  run_client ("-ORBsvcconf multi_threaded_event_loop.conf -e 5 -t 20000 -x");
+    run_client ("-ORBsvcconf $mt_conffile -e 5 -t 20000 -x");
 }
 
-unlink $iorfile;
+$single = 1;
+$multi = 0;
 
-print STDERR "\n\n*** Single threaded server ***\n\n\n";
-
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT", "-o $iorfile");
-
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
+for ($i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
+      print "run_test [-m] -[a]\n";
+      print "\n";
+      print "-m  -- tests the multithreaded server (default is single)\n";
+      print "-a  -- tests both multi and single threaded servers\n";
+      exit 0;
+    }
+    elsif ($ARGV[$i] eq "-m") {
+      $multi = 1;
+      $single = 0;
+    }
+    elsif ($ARGV[$i] eq "-a") {
+      $multi = 1;
+      $single = 1;
+    }
 }
 
-run_clients ();
+if ($single == 1) {
+    unlink $iorfile;
 
-$server = $SV->TimedWait (100);
-if ($server == -1) {
-  $time = localtime;
-  print STDERR "ERROR: server timedout at $time\n";
-  $SV->Kill (); $SV->TimedWait (1);
+    print STDERR "\n\n*** Single threaded server ***\n\n\n";
+
+    $SV->Arguments ("-o $iorfile");
+
+    $SV->Spawn ();
+
+    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+        print STDERR "ERROR: cannot find file <$iorfile>\n";
+        $SV->Kill (); 
+        exit 1;
+    }
+
+    run_clients ();
+
+    $server = $SV->WaitKill (100);
+    if ($server != 0) {
+        $time = localtime;
+        print STDERR "ERROR: server returned $server at $time\n";
+        $status = 1;
+    }
+
+    unlink $iorfile;
 }
 
-unlink $iorfile;
+if ($multi == 1) {
+    unlink $iorfile;
+    
+    print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
 
-if ($server != 0 || $client != 0) {
-  print STDERR "ERROR: server exit value = $server and client exit value = $client\n";
-  exit 1;
+    $SV->Arguments ("-o $iorfile -e 5 -ORBSvcConf $mt_conffile");
+
+    $SV->Spawn ();
+
+    if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
+        print STDERR "ERROR: cannot find file <$iorfile>\n";
+        $SV->Kill (); 
+        exit 1;
+    }
+
+    run_clients ();
+
+    $server = $SV->WaitKill (10);
+
+    if ($server != 0) {
+        $time = localtime;
+        print STDERR "ERROR: server returned $server at $time\n";
+        $SV->Kill (); 
+    }
+
+    unlink $iorfile;
 }
 
-print STDERR "\n\n*** Thread-Pool server ***\n\n\n";
-
-$SV = Process::Create ($EXEPREFIX."server$EXE_EXT",
-                       " -o $iorfile -e 5" .
-                       " -ORBSvcConf $cwd$DIR_SEPARATOR" .
-                       "multi_threaded_event_loop.conf");
-
-if (ACE::waitforfile_timed ($iorfile, 5) == -1) {
-  print STDERR "ERROR: cannot find file <$iorfile>\n";
-  $SV->Kill (); $SV->TimedWait (1);
-  exit 1;
-}
-
-run_clients ();
-
-$server = $SV->TimedWait (100);
-if ($server == -1) {
-  $time = localtime;
-  print STDERR "ERROR: server timedout at $time\n";
-  $SV->Kill (); $SV->TimedWait (1);
-}
-
-unlink $iorfile;
-
-if ($server != 0 || $client != 0) {
-  exit 1;
-}
-
-exit 0;
+exit $status;
