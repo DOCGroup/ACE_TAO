@@ -48,14 +48,14 @@ BIN_DIR         = $(HOST_DIR)/bin
 
 CC              = cc$(TOOLENV)
 CXX             = g++$(TOOLENV)
-CFLAGS          += -DVXWORKS -D_REENTRANT -I. -I$(ACE_ROOT) -I$(WIND_BASE)/target/h -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
+CFLAGS          += -DVXWORKS -D_REENTRANT -ansi -fno-builtin -fno-defer-pop -fvolatile -nostdinc -nostdlib -O -pipe -Wall
 #### Note: -f-no-implicit-templates doesn't seem to work well with
 ####       g++ cygnus-2.7.2-960126 for pc486 target.  Some
 ####       member functions don't get instantiated.  Wind River knows
 ####       about this problem (SPR 8483).
 CCFLAGS         += $(CFLAGS) #### -fno-implicit-templates
 DCFLAGS         += -g
-INCLDIRS        +=
+INCLDIRS        += -I$(WIND_BASE)/target/h
 LD              = ld$(TOOLENV)
 LDFLAGS         += -X -r .obj/__ctordtor.o
 PIC             =
