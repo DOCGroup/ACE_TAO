@@ -39,6 +39,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup =
         new TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> (*this);
       this->trading_components ().lookup_if (lookup->_this (env));
+      lookup->_remove_ref (env);
       this->ifs_[LOOKUP_IF] = lookup;
     }
   if (ACE_BIT_ENABLED (components, REGISTER))
@@ -46,6 +47,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg =
         new TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().register_if (reg->_this (env));
+      reg->_remove_ref (env);
       this->ifs_[REGISTER_IF] = reg;
     }
   if (ACE_BIT_ENABLED (components, ADMIN))
@@ -53,6 +55,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin =
         new TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().admin_if (admin->_this (env));
+      admin->_remove_ref (env);
       this->ifs_[ADMIN_IF] = admin;
     }
   if (ACE_BIT_ENABLED (components, PROXY))
@@ -60,6 +63,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy =
         new TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().proxy_if (proxy->_this (env));
+      proxy->_remove_ref (env);
       this->ifs_[PROXY_IF] = proxy;
     }
   if (ACE_BIT_ENABLED (components, LINK))
@@ -67,6 +71,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
       TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link =
         new TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().link_if (link->_this (env));
+      link->_remove_ref (env);
       this->ifs_[LINK_IF] = link;
     }
 }
@@ -89,17 +94,18 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
               PortableServer::POA_var poa =
                 this->ifs_[i]->_default_POA (TAO_TRY_ENV);
               TAO_CHECK_ENV;
+
               PortableServer::ObjectId_var id =
                 poa->servant_to_id (this->ifs_[i], TAO_TRY_ENV);
               TAO_CHECK_ENV;
+
               poa->deactivate_object (id.in (), TAO_TRY_ENV);
+              TAO_CHECK_ENV;              
             }
           TAO_CATCHANY
             {
             }
           TAO_ENDTRY;
-
-          delete this->ifs_[i];
         }
     }
 }

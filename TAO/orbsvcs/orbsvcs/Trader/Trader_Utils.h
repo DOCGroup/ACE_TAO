@@ -179,7 +179,8 @@ private:
   // *************************************************************
 
 class TAO_ORBSVCS_Export TAO_Dynamic_Property :
-  public POA_CosTradingDynamic::DynamicPropEval
+  public virtual POA_CosTradingDynamic::DynamicPropEval,
+  public virtual PortableServer::RefCountServantBase
 // = TITLE
 //   Little helper class that you can extend to have your dynamic
 //   property handler construct CosTradingDynamic::DynamicProp structs.
@@ -192,6 +193,8 @@ public:
 
   virtual ~TAO_Dynamic_Property (void);
 
+  void destroy (void);
+  
   virtual CORBA::Any* evalDP(const char* name,
                              CORBA::TypeCode_ptr returned_type,
                              const CORBA::Any& extra_info,
@@ -206,6 +209,10 @@ public:
                             const CORBA::Any& extra_info);
   // Method to construct a dynamic property structure suitable for
   // exporting in a CosTrading::PropertyStruct to the Trading Service.
+
+ private:
+
+  CosTradingDynamic::DynamicPropEval_var prop_;
 };
 
 
