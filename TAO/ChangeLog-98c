@@ -1,3 +1,14 @@
+Mon Jan 19 17:33:45 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/clnt.cpp (init): Changed the marker
+ 	name for the naming service to "NameService" and fixed a bunch of
+ 	places in init() where "1" was being returned instead of "-1".
+
+	* tests/Cubit/TAO/IDL_Cubit/README: Fixed portion that talks about
+ 	the IOR to use the correct default IOR.  Thanks to J Russell
+ 	Noseworthy <j.russell.noseworthy@objectsciences.com> for catching
+ 	this and submitting fixes!
+
 Mon Jan 19 15:41:53 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/server.cpp (create_servants): Added a
