@@ -35,7 +35,8 @@ Static Release {
   output_dir       = Static_Release
   intermediate_dir = Static_Release
   lib_modifier     = s
-  need_staticflags    = 1
+  need_staticflags = 1
+  configuration_type = 4
   runtime_library  = 2
 }
 
@@ -47,7 +48,8 @@ Static Debug {
   output_dir       = Static_Debug
   intermediate_dir = Static_Debug
   lib_modifier     = sd
-  need_staticflags    = 1
+  need_staticflags = 1
+  configuration_type = 4
   runtime_library  = 3
 }
 
@@ -85,7 +87,8 @@ Static MFC Release {
   output_dir       = Static_MFC_Release
   intermediate_dir = Static_MFC_Release
   lib_modifier     = mfcs
-  need_staticflags    = 1
+  need_staticflags = 1
+  configuration_type = 4
   runtime_library  = 2
   use_mfc          = 2
 }
@@ -98,7 +101,8 @@ Static MFC Debug {
   output_dir       = Static_MFC_Debug
   intermediate_dir = Static_MFC_Debug
   lib_modifier     = mfcsd
-  need_staticflags    = 1
+  need_staticflags = 1
+  configuration_type = 4
   runtime_library  = 3
   use_mfc          = 2
 }
