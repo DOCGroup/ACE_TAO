@@ -39,6 +39,8 @@
 #include "ImplRepoC.i"
 #endif /* !defined INLINE */
 
+int ImplementationRepository::ServerObject::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class ImplementationRepository::ServerObject_var
 // *************************************************************
@@ -407,7 +409,7 @@ void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::ping (
   ))
 {
   
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -559,7 +561,7 @@ void ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Impl::shutdown (
   ))
 {
   
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -776,9 +778,9 @@ ImplementationRepository::ServerObject::ImplementationRepository_ServerObject_se
       ::ImplementationRepository::_TAO_ServerObject_Remote_Proxy_Broker::the_TAO_ServerObject_Remote_Proxy_Broker ();
 }
 
-void ImplementationRepository::ServerObject::_tao_any_destructor (void *x)
+void ImplementationRepository::ServerObject::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ServerObject *tmp = ACE_static_cast (ServerObject*,x);
+  ServerObject *tmp = ACE_static_cast (ServerObject*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -816,36 +818,50 @@ ImplementationRepository::ServerObject_ptr ImplementationRepository::ServerObjec
       if (
           !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
           stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
-          obj->_is_collocated () &&ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer != 0
+          obj->_is_collocated () &&
+          ImplementationRepository__TAO_ServerObject_Proxy_Broker_Factory_function_pointer != 0
         )
-      {
-        ACE_NEW_RETURN (
-          default_proxy,
-          ::ImplementationRepository::ServerObject (
-            stub,
-            1,
-            obj->_servant ()),
-            
-          ServerObject::_nil ());
+        {
+          ACE_NEW_RETURN (
+              default_proxy,
+              ::ImplementationRepository::ServerObject (
+                  stub,
+                  1,
+                  obj->_servant ()
+                ),
+              ServerObject::_nil ()
+            );
         }
+      
       if (CORBA::is_nil (default_proxy))
-        ACE_NEW_RETURN (default_proxy, ::ImplementationRepository::ServerObject (stub, 0, obj->_servant ()), ServerObject::_nil ());
-        return default_proxy;
-      }
-    else 
-      return
-        ACE_reinterpret_cast
-          (
-            ServerObject_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ServerObject::_narrow
-                    )
-                )
-          );
+        {
+          ACE_NEW_RETURN (
+              default_proxy,
+              ::ImplementationRepository::ServerObject (
+                  stub,
+                  0,
+                  obj->_servant ()
+                ),
+              ServerObject::_nil ()
+            );
+        }
+      
+      return default_proxy;
+    }
+  else 
+    return
+      ACE_reinterpret_cast
+        (
+          ServerObject_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ServerObject::_tao_class_id
+                  )
+              )
+        );
 }
 
 ImplementationRepository::ServerObject_ptr
@@ -871,9 +887,9 @@ void *ImplementationRepository::ServerObject::_tao_QueryInterface (ptr_arith_t t
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::ImplementationRepository, ServerObject)::_narrow))
+      &ACE_NESTED_CLASS (::ImplementationRepository, ServerObject)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -1007,9 +1023,9 @@ TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_EnvironmentVariable, &_tc_TAO_tc_ImplementationRepository_EnvironmentVariable)
 TAO_NAMESPACE_END
 
-void ImplementationRepository::EnvironmentVariable::_tao_any_destructor (void *x)
+void ImplementationRepository::EnvironmentVariable::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EnvironmentVariable *tmp = ACE_static_cast (EnvironmentVariable*,x);
+  EnvironmentVariable *tmp = ACE_static_cast (EnvironmentVariable*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1135,9 +1151,9 @@ TAO_Unbounded_Sequence<ImplementationRepository::EnvironmentVariable>
 {}
 ImplementationRepository::EnvironmentList::~EnvironmentList (void) // dtor
 {}
-void ImplementationRepository::EnvironmentList::_tao_any_destructor (void *x)
+void ImplementationRepository::EnvironmentList::_tao_any_destructor (void *_tao_void_pointer)
 {
-  EnvironmentList *tmp = ACE_static_cast (EnvironmentList*,x);
+  EnvironmentList *tmp = ACE_static_cast (EnvironmentList*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1434,9 +1450,9 @@ TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_StartupOptions, &_tc_TAO_tc_ImplementationRepository_StartupOptions)
 TAO_NAMESPACE_END
 
-void ImplementationRepository::StartupOptions::_tao_any_destructor (void *x)
+void ImplementationRepository::StartupOptions::_tao_any_destructor (void *_tao_void_pointer)
 {
-  StartupOptions *tmp = ACE_static_cast (StartupOptions*,x);
+  StartupOptions *tmp = ACE_static_cast (StartupOptions*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1666,9 +1682,9 @@ TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServerInformation, &_tc_TAO_tc_ImplementationRepository_ServerInformation)
 TAO_NAMESPACE_END
 
-void ImplementationRepository::ServerInformation::_tao_any_destructor (void *x)
+void ImplementationRepository::ServerInformation::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ServerInformation *tmp = ACE_static_cast (ServerInformation*,x);
+  ServerInformation *tmp = ACE_static_cast (ServerInformation*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -1759,9 +1775,9 @@ TAO_Unbounded_Sequence<ImplementationRepository::ServerInformation>
 {}
 ImplementationRepository::ServerInformationList::~ServerInformationList (void) // dtor
 {}
-void ImplementationRepository::ServerInformationList::_tao_any_destructor (void *x)
+void ImplementationRepository::ServerInformationList::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ServerInformationList *tmp = ACE_static_cast (ServerInformationList*,x);
+  ServerInformationList *tmp = ACE_static_cast (ServerInformationList*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -2025,6 +2041,8 @@ TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_ServerInformationList, &_tc_TAO_tc_ImplementationRepository_ServerInformationList)
 TAO_NAMESPACE_END
 
+int ImplementationRepository::Administration::_tao_class_id = 0;
+
 // *************************************************************
 // Operations for class ImplementationRepository::Administration_var
 // *************************************************************
@@ -2287,16 +2305,16 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_activate_server::e
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_activate_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_activate_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc},
-    {ImplementationRepository::Administration::_tc_CannotActivate, ImplementationRepository::Administration::CannotActivate::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound,
+    ImplementationRepository::Administration::_tc_CannotActivate
   };
   
   exception_list->length (2);
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_activate_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_activate_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -2404,15 +2422,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_register_server::e
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_register_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_register_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_AlreadyRegistered, ImplementationRepository::Administration::AlreadyRegistered::_alloc}
+    ImplementationRepository::Administration::_tc_AlreadyRegistered
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_register_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_register_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -2614,15 +2632,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_remove_server::exc
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_remove_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_remove_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_remove_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_remove_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -2723,15 +2741,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_shutdown_server::e
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -2848,15 +2866,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_running:
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -2967,15 +2985,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_server_is_shutting
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -3076,15 +3094,15 @@ TAO_ClientRequestInfo_ImplementationRepository_Administration_find::exceptions (
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_find_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_find_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_find_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_find_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
@@ -3233,11 +3251,17 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::activate_s
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_activate_server_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc},
-    {ImplementationRepository::Administration::_tc_CannotActivate, ImplementationRepository::Administration::CannotActivate::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/NotFound:1.0",
+      ImplementationRepository::Administration::NotFound::_alloc
+    },
+    {
+      "IDL:ImplementationRepository/Administration/CannotActivate:1.0",
+      ImplementationRepository::Administration::CannotActivate::_alloc
+    }
   };
 
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -3403,10 +3427,13 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::register_s
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_register_server_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_AlreadyRegistered, ImplementationRepository::Administration::AlreadyRegistered::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/AlreadyRegistered:1.0",
+      ImplementationRepository::Administration::AlreadyRegistered::_alloc
+    }
   };
 
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -3571,7 +3598,7 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::reregister
   ))
 {
   
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -3738,10 +3765,13 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::remove_ser
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_remove_server_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/NotFound:1.0",
+      ImplementationRepository::Administration::NotFound::_alloc
+    }
   };
 
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -3906,10 +3936,13 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::shutdown_s
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/NotFound:1.0",
+      ImplementationRepository::Administration::NotFound::_alloc
+    }
   };
 
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -4076,7 +4109,10 @@ char * ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::server_i
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_running_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/NotFound:1.0",
+      ImplementationRepository::Administration::NotFound::_alloc
+    }
   };
 
   CORBA::String_var _tao_safe_retval;
@@ -4264,10 +4300,13 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::server_is_
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/NotFound:1.0",
+      ImplementationRepository::Administration::NotFound::_alloc
+    }
   };
 
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -4433,10 +4472,13 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::find (
   
   static TAO_Exception_Data _tao_ImplementationRepository_Administration_find_exceptiondata [] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    {
+      "IDL:ImplementationRepository/Administration/NotFound:1.0",
+      ImplementationRepository::Administration::NotFound::_alloc
+    }
   };
 
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -4444,7 +4486,11 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::find (
     ACE_THROW (CORBA::INTERNAL ());
 
   
-  ACE_NEW (info.ptr (), ImplementationRepository::ServerInformation);
+  ACE_NEW (
+      info.ptr (),
+      ImplementationRepository::ServerInformation
+    );
+  
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "find",
@@ -4611,7 +4657,7 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::list (
   ))
 {
   
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -4619,7 +4665,11 @@ void ImplementationRepository::_TAO_Administration_Remote_Proxy_Impl::list (
     ACE_THROW (CORBA::INTERNAL ());
 
   
-  ACE_NEW (server_list.ptr (), ImplementationRepository::ServerInformationList);
+  ACE_NEW (
+      server_list.ptr (),
+      ImplementationRepository::ServerInformationList
+    );
+  
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "list",
@@ -4850,9 +4900,9 @@ ImplementationRepository::Administration::ImplementationRepository_Administratio
       ::ImplementationRepository::_TAO_Administration_Remote_Proxy_Broker::the_TAO_Administration_Remote_Proxy_Broker ();
 }
 
-void ImplementationRepository::Administration::_tao_any_destructor (void *x)
+void ImplementationRepository::Administration::_tao_any_destructor (void *_tao_void_pointer)
 {
-  Administration *tmp = ACE_static_cast (Administration*,x);
+  Administration *tmp = ACE_static_cast (Administration*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -4890,36 +4940,50 @@ ImplementationRepository::Administration_ptr ImplementationRepository::Administr
       if (
           !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
           stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
-          obj->_is_collocated () &&ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer != 0
+          obj->_is_collocated () &&
+          ImplementationRepository__TAO_Administration_Proxy_Broker_Factory_function_pointer != 0
         )
-      {
-        ACE_NEW_RETURN (
-          default_proxy,
-          ::ImplementationRepository::Administration (
-            stub,
-            1,
-            obj->_servant ()),
-            
-          Administration::_nil ());
+        {
+          ACE_NEW_RETURN (
+              default_proxy,
+              ::ImplementationRepository::Administration (
+                  stub,
+                  1,
+                  obj->_servant ()
+                ),
+              Administration::_nil ()
+            );
         }
+      
       if (CORBA::is_nil (default_proxy))
-        ACE_NEW_RETURN (default_proxy, ::ImplementationRepository::Administration (stub, 0, obj->_servant ()), Administration::_nil ());
-        return default_proxy;
-      }
-    else 
-      return
-        ACE_reinterpret_cast
-          (
-            Administration_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &Administration::_narrow
-                    )
-                )
-          );
+        {
+          ACE_NEW_RETURN (
+              default_proxy,
+              ::ImplementationRepository::Administration (
+                  stub,
+                  0,
+                  obj->_servant ()
+                ),
+              Administration::_nil ()
+            );
+        }
+      
+      return default_proxy;
+    }
+  else 
+    return
+      ACE_reinterpret_cast
+        (
+          Administration_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &Administration::_tao_class_id
+                  )
+              )
+        );
 }
 
 ImplementationRepository::Administration_ptr
@@ -4945,9 +5009,9 @@ void *ImplementationRepository::Administration::_tao_QueryInterface (ptr_arith_t
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::ImplementationRepository, Administration)::_narrow))
+      &ACE_NESTED_CLASS (::ImplementationRepository, Administration)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     
@@ -4972,9 +5036,9 @@ ImplementationRepository::Administration::AlreadyRegistered::~AlreadyRegistered 
 {
 }
 
-void ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destructor (void *x)
+void ImplementationRepository::Administration::AlreadyRegistered::_tao_any_destructor (void *_tao_void_pointer)
 {
-  AlreadyRegistered *tmp = ACE_static_cast (AlreadyRegistered*,x);
+  AlreadyRegistered *tmp = ACE_static_cast (AlreadyRegistered*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -5104,9 +5168,9 @@ ImplementationRepository::Administration::CannotActivate::~CannotActivate (void)
 {
 }
 
-void ImplementationRepository::Administration::CannotActivate::_tao_any_destructor (void *x)
+void ImplementationRepository::Administration::CannotActivate::_tao_any_destructor (void *_tao_void_pointer)
 {
-  CannotActivate *tmp = ACE_static_cast (CannotActivate*,x);
+  CannotActivate *tmp = ACE_static_cast (CannotActivate*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -5249,9 +5313,9 @@ ImplementationRepository::Administration::NotFound::~NotFound (void)
 {
 }
 
-void ImplementationRepository::Administration::NotFound::_tao_any_destructor (void *x)
+void ImplementationRepository::Administration::NotFound::_tao_any_destructor (void *_tao_void_pointer)
 {
-  NotFound *tmp = ACE_static_cast (NotFound*,x);
+  NotFound *tmp = ACE_static_cast (NotFound*, _tao_void_pointer);
   delete tmp;
 }
 
@@ -5594,6 +5658,8 @@ TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)
 TAO_NAMESPACE_BEGIN (ImplementationRepository)
 TAO_NAMESPACE_DEFINE (CORBA::TypeCode_ptr, _tc_Administration, &_tc_TAO_tc_ImplementationRepository_Administration)
 TAO_NAMESPACE_END
+
+int ImplementationRepository::ServerInformationIterator::_tao_class_id = 0;
 
 // *************************************************************
 // Operations for class ImplementationRepository::ServerInformationIterator_var
@@ -5998,7 +6064,12 @@ CORBA::Boolean ImplementationRepository::_TAO_ServerInformationIterator_Remote_P
     ACE_THROW_RETURN (CORBA::INTERNAL (), _tao_retval);
 
   
-  ACE_NEW_RETURN (server_list.ptr (), ImplementationRepository::ServerInformationList, 0);
+  ACE_NEW_RETURN (
+      server_list.ptr (),
+      ImplementationRepository::ServerInformationList,
+      0
+    );
+  
   TAO_GIOP_Twoway_Invocation _tao_call (
       istub,
       "next_n",
@@ -6168,7 +6239,7 @@ void ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Impl:
   ))
 {
   
-
+  
   
   
   TAO_Stub *istub = _collocated_tao_target_->_stubobj ();
@@ -6385,9 +6456,9 @@ ImplementationRepository::ServerInformationIterator::ImplementationRepository_Se
       ::ImplementationRepository::_TAO_ServerInformationIterator_Remote_Proxy_Broker::the_TAO_ServerInformationIterator_Remote_Proxy_Broker ();
 }
 
-void ImplementationRepository::ServerInformationIterator::_tao_any_destructor (void *x)
+void ImplementationRepository::ServerInformationIterator::_tao_any_destructor (void *_tao_void_pointer)
 {
-  ServerInformationIterator *tmp = ACE_static_cast (ServerInformationIterator*,x);
+  ServerInformationIterator *tmp = ACE_static_cast (ServerInformationIterator*, _tao_void_pointer);
   CORBA::release (tmp);
 }
 
@@ -6425,36 +6496,50 @@ ImplementationRepository::ServerInformationIterator_ptr ImplementationRepository
       if (
           !CORBA::is_nil (stub->servant_orb_var ().ptr ()) &&
           stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects () &&
-          obj->_is_collocated () &&ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer != 0
+          obj->_is_collocated () &&
+          ImplementationRepository__TAO_ServerInformationIterator_Proxy_Broker_Factory_function_pointer != 0
         )
-      {
-        ACE_NEW_RETURN (
-          default_proxy,
-          ::ImplementationRepository::ServerInformationIterator (
-            stub,
-            1,
-            obj->_servant ()),
-            
-          ServerInformationIterator::_nil ());
+        {
+          ACE_NEW_RETURN (
+              default_proxy,
+              ::ImplementationRepository::ServerInformationIterator (
+                  stub,
+                  1,
+                  obj->_servant ()
+                ),
+              ServerInformationIterator::_nil ()
+            );
         }
+      
       if (CORBA::is_nil (default_proxy))
-        ACE_NEW_RETURN (default_proxy, ::ImplementationRepository::ServerInformationIterator (stub, 0, obj->_servant ()), ServerInformationIterator::_nil ());
-        return default_proxy;
-      }
-    else 
-      return
-        ACE_reinterpret_cast
-          (
-            ServerInformationIterator_ptr,
-              obj->_tao_QueryInterface
-                (
-                  ACE_reinterpret_cast
-                    (
-                      ptr_arith_t,
-                      &ServerInformationIterator::_narrow
-                    )
-                )
-          );
+        {
+          ACE_NEW_RETURN (
+              default_proxy,
+              ::ImplementationRepository::ServerInformationIterator (
+                  stub,
+                  0,
+                  obj->_servant ()
+                ),
+              ServerInformationIterator::_nil ()
+            );
+        }
+      
+      return default_proxy;
+    }
+  else 
+    return
+      ACE_reinterpret_cast
+        (
+          ServerInformationIterator_ptr,
+            obj->_tao_QueryInterface
+              (
+                ACE_reinterpret_cast
+                  (
+                    ptr_arith_t,
+                    &ServerInformationIterator::_tao_class_id
+                  )
+              )
+        );
 }
 
 ImplementationRepository::ServerInformationIterator_ptr
@@ -6480,9 +6565,9 @@ void *ImplementationRepository::ServerInformationIterator::_tao_QueryInterface (
   void *retv = 0;
   if (type == ACE_reinterpret_cast
     (ptr_arith_t,
-      &ACE_NESTED_CLASS (::ImplementationRepository, ServerInformationIterator)::_narrow))
+      &ACE_NESTED_CLASS (::ImplementationRepository, ServerInformationIterator)::_tao_class_id))
     retv = ACE_reinterpret_cast (void*, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_narrow))
+  else if (type == ACE_reinterpret_cast (ptr_arith_t, &CORBA::Object::_tao_class_id))
     retv = ACE_reinterpret_cast (void *,
       ACE_static_cast (CORBA::Object_ptr, this));
     

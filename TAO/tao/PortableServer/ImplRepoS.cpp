@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IMPLREPOS_CPP_
-#define _TAO_IDL_IMPLREPOS_CPP_
+#ifndef _TAO_IDL_ORIG_IMPLREPOS_CPP_
+#define _TAO_IDL_ORIG_IMPLREPOS_CPP_
 
 #include "ImplRepoS.h"
 
@@ -54,9 +54,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 17:40:16 */
+/* starting time is 17:59:21 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/sirion/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -119,7 +119,8 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 13,
       HASH_VALUE_RANGE = 10,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 9
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -149,7 +150,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
     }
   return 0;
 }
-/* ending time is 17:40:16 */
+/* ending time is 17:59:21 */
 static TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable tao_ImplementationRepository_ServerObject_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -234,6 +235,7 @@ TAO_ServerRequestInfo_ImplementationRepository_ServerObject_ping::exceptions (CO
   
   return exception_list;
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_ServerObject_ping::result (CORBA::Environment &ACE_TRY_ENV)
@@ -347,6 +349,7 @@ TAO_ServerRequestInfo_ImplementationRepository_ServerObject_shutdown::exceptions
   
   return exception_list;
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_ServerObject_shutdown::result (CORBA::Environment &ACE_TRY_ENV)
@@ -940,9 +943,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 17:40:16 */
+/* starting time is 17:59:21 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/sirion/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -1005,7 +1008,8 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
       MIN_HASH_VALUE = 4,
       MAX_HASH_VALUE = 28,
       HASH_VALUE_RANGE = 25,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 16
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -1044,7 +1048,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
     }
   return 0;
 }
-/* ending time is 17:40:16 */
+/* ending time is 17:59:21 */
 static TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable tao_ImplementationRepository_Administration_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -1142,22 +1146,23 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_activate_server::e
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_activate_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_activate_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc},
-    {ImplementationRepository::Administration::_tc_CannotActivate, ImplementationRepository::Administration::CannotActivate::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound,
+    ImplementationRepository::Administration::_tc_CannotActivate
   };
   
   exception_list->length (2);
   for (CORBA::ULong i = 0; i < 2; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_activate_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_activate_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_activate_server::result (CORBA::Environment &ACE_TRY_ENV)
@@ -1291,21 +1296,22 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_register_server::e
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_register_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_register_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_AlreadyRegistered, ImplementationRepository::Administration::AlreadyRegistered::_alloc}
+    ImplementationRepository::Administration::_tc_AlreadyRegistered
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_register_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_register_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_register_server::result (CORBA::Environment &ACE_TRY_ENV)
@@ -1440,6 +1446,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_reregister_server:
   return exception_list;
 }
 
+
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_reregister_server::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -1565,21 +1572,22 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_remove_server::exc
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_remove_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_remove_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_remove_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_remove_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_remove_server::result (CORBA::Environment &ACE_TRY_ENV)
@@ -1706,21 +1714,22 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_shutdown_server::e
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_shutdown_server_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_shutdown_server::result (CORBA::Environment &ACE_TRY_ENV)
@@ -1862,21 +1871,22 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_server_is_running:
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_running_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_server_is_running::result (CORBA::Environment &ACE_TRY_ENV)
@@ -2014,21 +2024,22 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_server_is_shutting
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_server_is_shutting_down_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_server_is_shutting_down::result (CORBA::Environment &ACE_TRY_ENV)
@@ -2155,21 +2166,22 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_find::exceptions (
   
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
     
-  static TAO_Exception_Data _tao_ImplementationRepository_Administration_find_exceptiondata[] = 
+  static CORBA::TypeCode_ptr _tao_ImplementationRepository_Administration_find_exceptiondata[] = 
   {
-    {ImplementationRepository::Administration::_tc_NotFound, ImplementationRepository::Administration::NotFound::_alloc}
+    ImplementationRepository::Administration::_tc_NotFound
   };
   
   exception_list->length (1);
   for (CORBA::ULong i = 0; i < 1; ++i)
     {
-      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_find_exceptiondata[i].tc;
+      CORBA::TypeCode_ptr tcp = _tao_ImplementationRepository_Administration_find_exceptiondata[i];
       TAO_Pseudo_Object_Manager<CORBA::TypeCode,CORBA::TypeCode_var> tcp_object (&tcp, 1);
       (*exception_list)[i] = tcp_object;
     }
 
   return safe_exception_list._retn ();
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_find::result (CORBA::Environment &ACE_TRY_ENV)
@@ -2301,6 +2313,7 @@ TAO_ServerRequestInfo_ImplementationRepository_Administration_list::exceptions (
   
   return exception_list;
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_Administration_list::result (CORBA::Environment &ACE_TRY_ENV)
@@ -3956,9 +3969,9 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 17:40:17 */
+/* starting time is 17:59:21 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
+/* Command-line: /project/sirion/coryan/head/ACE_wrappers/build/Linux/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
 unsigned int
 TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::hash (const char *str, unsigned int len)
 {
@@ -4021,7 +4034,8 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
       MIN_HASH_VALUE = 5,
       MAX_HASH_VALUE = 13,
       HASH_VALUE_RANGE = 9,
-      DUPLICATES = 0
+      DUPLICATES = 0,
+      WORDLIST_SIZE = 10
     };
 
   static const class TAO_operation_db_entry  wordlist[] =
@@ -4050,7 +4064,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
     }
   return 0;
 }
-/* ending time is 17:40:17 */
+/* ending time is 17:59:21 */
 static TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable tao_ImplementationRepository_ServerInformationIterator_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -4149,6 +4163,7 @@ TAO_ServerRequestInfo_ImplementationRepository_ServerInformationIterator_next_n:
   
   return exception_list;
 }
+
 
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_ServerInformationIterator_next_n::result (CORBA::Environment &ACE_TRY_ENV)
@@ -4274,6 +4289,7 @@ TAO_ServerRequestInfo_ImplementationRepository_ServerInformationIterator_destroy
   return exception_list;
 }
 
+
 CORBA::Any * 
 TAO_ServerRequestInfo_ImplementationRepository_ServerInformationIterator_destroy::result (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -4322,14 +4338,14 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 {
   for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_Broker::~_TAO_ServerInformationIterator_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 ImplementationRepository::_TAO_ServerInformationIterator_Proxy_Impl&
@@ -4340,25 +4356,25 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
 {
   int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_Broker::create_proxy (
     int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
@@ -4441,7 +4457,7 @@ CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_Thru
     CORBA::SystemException
   ))
 {
-    CORBA::Boolean _tao_retval = 0;
+  CORBA::Boolean _tao_retval = 0;
   ACE_UNUSED_ARG (_tao_retval);
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       _collocated_tao_target_->_stubobj ()->servant_orb_var ()->orb_core ()
@@ -4526,7 +4542,7 @@ CORBA::Boolean POA_ImplementationRepository::_TAO_ServerInformationIterator_Dire
           server_list,
           ACE_TRY_ENV
         );
-  
+
 }
 
 void POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_Impl::destroy  (
@@ -4577,7 +4593,7 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::ServerInformationIterator *, _tao_object_reference);
   
-    CORBA::Boolean _tao_retval = 0;
+  CORBA::Boolean _tao_retval = 0;
   CORBA::ULong how_many;
   ImplementationRepository::ServerInformationList_var server_list;
     if (!(
@@ -4644,11 +4660,11 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
   ACE_ENDTRY;
   ACE_CHECK;
 #endif /* TAO_HAS_INTERCEPTORS */
-  
+
   _tao_server_request.init_reply ();
-  
+
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-  
+
   if (!(
       (_tao_out << CORBA::Any::from_boolean (_tao_retval)) &&
       (_tao_out << server_list.in ())
@@ -4701,7 +4717,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-
+      
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -4761,7 +4777,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
 }
 
 void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
@@ -4778,7 +4794,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
 }
 
 void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV

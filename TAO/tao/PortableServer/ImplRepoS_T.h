@@ -19,8 +19,8 @@
 // Information about TAO is available at:
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
-#ifndef _TAO_IDL_IMPLREPOS_T_H_
-#define _TAO_IDL_IMPLREPOS_T_H_
+#ifndef _TAO_IDL_ORIG_IMPLREPOS_T_H_
+#define _TAO_IDL_ORIG_IMPLREPOS_T_H_
 
 #include "ace/pre.h"
 #if defined(_MSC_VER)
@@ -31,7 +31,6 @@
 #endif /* _MSC_VER */
 
 #if defined (ACE_HAS_USING_KEYWORD)
-
 TAO_NAMESPACE  POA_ImplementationRepository
 {
   // TIE class: Refer to CORBA v2.2, Section 20.34.4
@@ -295,7 +294,6 @@ TAO_NAMESPACE  POA_ImplementationRepository
 
 }
 TAO_NAMESPACE_CLOSE // module ImplementationRepository
-
 #endif /* ACE_HAS_USING_KEYWORD */
 
 #if defined (__ACE_INLINE__)

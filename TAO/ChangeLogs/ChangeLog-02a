@@ -1,3 +1,29 @@
+Wed Aug  1 18:17:38 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/PortableServer/ImplRepoC.h:
+        * tao/PortableServer/ImplRepoC.i:
+        * tao/PortableServer/ImplRepoC.cpp:
+        * tao/PortableServer/ImplRepoS.h:
+        * tao/PortableServer/ImplRepoS.i:
+        * tao/PortableServer/ImplRepoS.cpp:
+        * tao/PortableServer/ImplRepoS_T.h:
+        * tao/PortableServer/ImplRepoS_T.i:
+        * tao/PortableServer/ImplRepoS_T.cpp:
+        * tao/PortableServer/diffs/ImplRepo.diff:
+          After Jeff's changes it was necessary to regenerate the ImplRepo
+          pre-compiled IDL.
+
+        * tao/diffs/ImplRepoC.cpp.diff:
+        * tao/diffs/ImplRepoC.h.diff:
+        * tao/diffs/ImplRepoC.i.diff:
+        * tao/diffs/ImplRepoS.cpp.diff:
+        * tao/diffs/ImplRepoS.h.diff:
+        * tao/diffs/ImplRepoS.i.diff:
+        * tao/diffs/ImplRepoS_T.cpp.diff:
+        * tao/diffs/ImplRepoS_T.h.diff:
+        * tao/diffs/ImplRepoS_T.i.diff:
+          Move diffs to $TAO_ROOT/tao/PortableServer/ImplRepo.diff
+
 Wed Aug  1 16:05:36 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Merged changes from the fix_886 branch
