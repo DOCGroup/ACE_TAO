@@ -1,3 +1,16 @@
+Thu Nov  1 14:01:40 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/driver/drv_preproc.cpp:
+
+          Added fix sent in by Chris Kohlhoff <kohlhoff@pop.ihug.com.au>
+          for the Borland preprocessor. Previously it sent everything
+          (output, errors and warnings) to stdout, so if there was a
+          failure it would be a silent one. This fix enables the output
+          to be sent to an arbitrary file, leaving errors and warnings
+          in stdout. There is a corresponding fix to config-win32-borland.h
+          to ACE_CC_PREPROCESSOR_ARGS enabling the recognition of the 
+          filename.
+
 Thu Nov  1 14:01:15 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tao/IIOP_Acceptor.cpp:
