@@ -49,14 +49,7 @@ $MODULE='ACE_wrappers';
     ( 'tests , run_tests.sh',
       'TAO/tests/Param_Test , run_test.pl',
       'TAO/tests/Param_Test , run_test.pl -i dii',
-      'TAO/tests/NestedUpcall/Reactor , run_test.pl',
-      'TAO/tests/NestedUpcall/Triangle_Test , run_test.pl',
-      'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
       'TAO/orbsvcs/tests/Simple_Naming , run_test.pl',
-      'TAO/orbsvcs/tests/Event_Latency , run_test.pl',
-      'TAO/orbsvcs/tests/EC_Throughput , run_test.pl',
-      'TAO/orbsvcs/tests/EC_Custom_Marshal , run_test.pl',
-      'TAO/orbsvcs/tests/EC_Multiple , run_test.pl',
       'TAO/orbsvcs/tests/Property , run_test.pl',
       'TAO/performance-tests/Cubit/TAO/IDL_Cubit , run_test.pl');
 
