@@ -1,3 +1,15 @@
+Mon Nov 13 01:07:36 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * ace/OS_String.cpp:
+        * ace/config-win32-borland.h:
+        * ace/config-win32-msvc.h:
+
+          Christopher Kohlhoff <chris@kohlhoff.com> mentioned to me 
+          that Borland did have a wcsdup, but it was named differently
+          than the _wcsdup in MSVC.  I took his suggestion and added
+          a ACE_WCSDUP_EQUIVALENT for MSVC's version and enabled
+          wcsdup for Borland's config.
+
 Mon Nov 13 00:36:29 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * ace/Obstack.cpp:
