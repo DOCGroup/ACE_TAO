@@ -1426,13 +1426,12 @@ TAO_MCastConfigIf::configure (const CosPropertyService::Property & a_configurati
   Peer_Info *info;
   ACE_TRY
     {
-      this->peer_list_iterator_.first ();
-      info = this->peer_list_iterator_.next ();
-      while (info != 0)
+      for (this->peer_list_iterator_.first ();
+           (info = this->peer_list_iterator_.next ()) != 0;
+           this->peer_list_iterator_.advance ())
         {
           info->peer_->configure (a_configuration, ACE_TRY_ENV);
           ACE_TRY_CHECK;
-          info = this->peer_list_iterator_.next ();
         }
     }
   ACE_CATCHANY
@@ -1464,16 +1463,15 @@ TAO_MCastConfigIf::set_format (const char * flowName,
   Peer_Info *info;
   ACE_TRY
     {
-      this->peer_list_iterator_.first ();
-      info = this->peer_list_iterator_.next ();
-      while (info != 0)
+      for (this->peer_list_iterator_.first ();
+           (info = this->peer_list_iterator_.next ()) != 0;
+           this->peer_list_iterator_.advance ())
         {
           if (this->in_flowSpec (info->flow_spec_, flowName))
             {
               info->peer_->set_format (flowName, format_name, ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
-          info = this->peer_list_iterator_.next ();
         }
     }
   ACE_CATCHANY
@@ -1498,16 +1496,15 @@ TAO_MCastConfigIf::set_dev_params (const char * flowName,
   ACE_TRY
     {
 
-      this->peer_list_iterator_.first ();
-      info = this->peer_list_iterator_.next ();
-      while (info != 0)
+      for (this->peer_list_iterator_.first ();
+           (info = this->peer_list_iterator_.next ()) != 0;
+           this->peer_list_iterator_.advance ())
         {
           if (this->in_flowSpec (info->flow_spec_, flowName))
             {
               info->peer_->set_dev_params (flowName, new_params, ACE_TRY_ENV);
               ACE_TRY_CHECK;
             }
-          info = this->peer_list_iterator_.next ();
         }
     }
   ACE_CATCHANY
