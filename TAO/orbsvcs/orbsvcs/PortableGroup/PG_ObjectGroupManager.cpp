@@ -91,7 +91,7 @@ TAO_PG_ObjectGroupManager::add_member (
                              member,
                              check_type_id
                              ACE_ENV_ARG_PARAMETER);
-                             
+
 }
 
 
