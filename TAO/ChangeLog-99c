@@ -1,7 +1,16 @@
+Tue Jan 12 08:46:42 1999  Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
+
+	* TAO_IDL/util/utl_scope.cpp:
+
+	  In the patch applied mentioned in the ChangeLog below, we were
+	  using the keyword "true" in a while loop. Unfortunately, it is
+	  not supported by SunCC. So we use the value 1 to represent a
+	  "true" value.
+
 Mon Jan 11 22:56:26 1999  Jeff Parsons <jp4@cs.wustl.edu>
 
         * tao_idl/include/utl_scope.h:
-        * tao_idl/utl_scope.cpp:
+        * tao_idl/util/utl_scope.cpp:
           Added a patch sent in by Hamish Friedlander. This patch
           modified his previous patch (which enabled re-opening of
           modules) to further enable scoped lookups on these

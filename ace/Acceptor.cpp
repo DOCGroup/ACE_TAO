@@ -206,7 +206,7 @@ ACE_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::handle_close (ACE_HANDLE,
     {
       ACE_HANDLE handle = this->get_handle ();
 
-      this->reactor_->remove_handler
+      this->reactor ()->remove_handler
         (handle,
          // We must pass the DONT_CALL flag here to avoid infinite
          // recursion.

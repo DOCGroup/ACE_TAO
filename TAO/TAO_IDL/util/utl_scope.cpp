@@ -896,7 +896,7 @@ UTL_Scope::lookup_by_name(UTL_ScopedName *e, idl_bool treat_as_ref)
    * Is name defined here?
    */
    long index = 0 ;
-   while (true) {
+   while (1) {
      d = lookup_by_name_local(e->head(), treat_as_ref, index);
      if (d == NULL) {
        /*
