@@ -20,6 +20,7 @@ FILES   =  Attributes_Def_Builder \
 	   LocatorImpl \
 	   NamespaceSupport \
 	   SAXExceptions \
+	   StrCharStream \
 	   Transcode \
 	   Validator \
 	   XMLFilterImpl

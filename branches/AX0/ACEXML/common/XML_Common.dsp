@@ -144,6 +144,10 @@ SOURCE=.\SAXExceptions.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\StrCharStream.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Transcode.cpp
 # End Source File
 # Begin Source File
@@ -237,6 +241,10 @@ SOURCE=.\NamespaceSupport.h
 # Begin Source File
 
 SOURCE=.\SAXExceptions.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\StrCharStream.h
 # End Source File
 # Begin Source File
 

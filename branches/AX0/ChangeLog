@@ -1,3 +1,20 @@
+Thu Feb 07 01:48:06 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* XML/examples/SAXPrint/main.cpp: Added a new test to try the new
+	  StrCharStream and switch to use ACE_Get_Opt to support more
+	  robust command line arguments.
+
+	* XML/common/StrCharStream.h:
+	* XML/common/StrCharStream.cpp: Added new CharStream class that
+	  take a null-terminated ACEXML_Char string as an input source.
+
+	* XML/common/FileCharStream.h: Removed unnecessary inclusion of
+	  "ace/streams.h".
+
+	* XML/common/Makefile:
+	* XML/common/Makefile.bor:
+	* XML/common/XML_Common.dsp: Added StrCharStream.*.
+
 Tue Feb  5 11:59:00 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tests/TP_Reactor_Test.cpp (disable_signal): Eliminate unused
@@ -12,10 +29,10 @@ Mon Feb  4 19:58:03 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* ace/Log_Msg.cpp:
 
-	  Fixed minor bug in what's just commited before. 
+	  Fixed minor bug in what's just commited before.
 	  Thanks to Craig Rodrigues <crodrigu@bbn.com>
 	  for pointing it out.
-	
+
 Mon Feb  4 14:11:14 2002  Boris Kolpackov  <bosk@ipmce.ru>
 
 	* ace/Log_Msg.h:
@@ -24,7 +41,7 @@ Mon Feb  4 14:11:14 2002  Boris Kolpackov  <bosk@ipmce.ru>
 	  Added ability to install custom backend which is a
 	  per-process entity as opposite to callback which is
 	  a per-thread not-inheritable entity.
-	
+
 Sun Feb  3 17:59:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-sunos5.5.h (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION):
