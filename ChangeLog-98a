@@ -1,3 +1,11 @@
+Fri Dec 12 07:49:01 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * examples/System_V_IPC/SV_Semaphores/Semaphores_2.cpp:
+          removed unused constant SHMSZ.
+
+        * examples/Timer_Queue/Reactor_Timer_Queue_Test.cpp: removed
+          unused constant NO_OF_IO_HANDLERS.
+
 Fri Dec 12 03:00:21 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* ace/config-sunos5.5-egcs-1.0.h: Fundamemntally identical to g++
