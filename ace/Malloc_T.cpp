@@ -304,25 +304,37 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
 {
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc");
 
-      if (this->cb_ptr_ == 0)
-        return 0;
+  if (this->cb_ptr_ == 0)
+    return 0;
 
   // Round up request to a multiple of the ACE_Malloc_Header size.
   size_t nunits =
     (nbytes + sizeof (ACE_Malloc_Header) - 1) / sizeof (ACE_Malloc_Header)
     + 1; // Add one for the <ACE_Malloc_Header> itself.
 
+  ACE_Malloc_Header *prevp = 0;
+  ACE_Malloc_Header *currp = 0;
+
   ACE_SEH_TRY
     {
       // Begin the search starting at the place in the freelist where the
       // last block was found.
-      ACE_Malloc_Header *prevp = this->cb_ptr_->freep_;
-      ACE_Malloc_Header *currp = prevp->next_block_;
+      prevp = this->cb_ptr_->freep_;
+      currp = prevp->next_block_;
+    }
+  ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
+    {
+    }
 
   // Search the freelist to locate a block of the appropriate size.
 
-      for (int i = 0;
-           ; i++, prevp = currp, currp = currp->next_block_)
+  for (int i = 0;
+       ; i++)
+
+    // *Warning* Do not use "continue" within this for-loop.
+
+    {
+      ACE_SEH_TRY
         {
           if (currp->size_ >= nunits) // Big enough
             {
@@ -381,12 +393,14 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::shared_malloc (size_t nbytes)
                                    ASYS_TEXT ("malloc")),
                                   0);
             }
+          prevp = currp;
+          currp = currp->next_block_;
+        }
+      ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
+        {
         }
     }
-  ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
-    {
-    }
-  ACE_NOTREACHED (return 0;)
+  return 0;
 }
 
 // General-purpose memory allocator.
