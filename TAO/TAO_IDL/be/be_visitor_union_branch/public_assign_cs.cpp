@@ -300,9 +300,18 @@ be_visitor_union_branch_public_assign_cs::visit_predefined_type (be_predefined_t
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_pseudo:
-      *os << "this->u_." << ub->local_name () << "_ = "
-          << bt->name () << "::_duplicate (u.u_."
-          << ub->local_name () << "_);" << be_uidt_nl;
+      *os << "this->u_." << ub->local_name () << "_ = ";
+      if (!ACE_OS::strcmp (bt->local_name ()->get_string (), "Object"))
+        {
+          *os << "new TAO_Object_Field_T<CORBA::Object> "
+              << "(CORBA::Object::_duplicate (u.u_."
+              << ub->local_name () << "_->ptr ()));" << be_uidt_nl;
+        }
+      else
+        {
+          *os << bt->name () << "::_duplicate (u.u_."
+              << ub->local_name () << "_);" << be_uidt_nl;
+        }
       break;
     case AST_PredefinedType::PT_any:
       *os << "this->u_." << ub->local_name () << "_ = new "
