@@ -9,10 +9,6 @@
 #define ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-#include "ace/Cleanup_Strategies_T.i"
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 ACE_RCSID(ace, Cleanup_Strategies_T, "$Id$")
 
 ////////////////////////////////////////////////////////////////////////////
