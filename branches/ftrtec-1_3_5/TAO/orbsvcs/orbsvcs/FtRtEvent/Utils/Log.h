@@ -26,6 +26,17 @@ namespace TAO_FTRTEC {
   private:
     const char* msg_;
   };
+
+  class TAO_FtRtEvent_Export TimeLogger 
+  {
+  public:
+    TimeLogger(const char* msg);
+    ~TimeLogger();
+    static void output();
+  private:
+    const char* msg_;
+    ACE_Time_Value start_time_;
+  };
   /**
    * A utility class for logging messages.
    */
@@ -42,7 +53,7 @@ namespace TAO_FTRTEC {
 }
 
 #define FTRTEC_TRACE(x) TAO_FTRTEC::Trace __ftrtec_trace_obj(x)
-
+#define FTRTEC_LOGTIME(x) TAO_FTRTEC::TimeLogger __ftrtec_time_logger(x)
 #if defined(__ACE_INLINE__)
 #include "Log.inl"
 #endif /* __ACE_INLINE__ */

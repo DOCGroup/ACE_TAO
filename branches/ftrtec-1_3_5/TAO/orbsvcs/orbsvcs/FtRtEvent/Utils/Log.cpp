@@ -21,6 +21,27 @@ namespace TAO_FTRTEC {
       va_end(p);
     }
   }
+
+  char buffer [1024*100];
+  char* now=buffer;
+
+  TimeLogger::TimeLogger(const char* msg)
+    : msg_(msg)
+  {
+    start_time_ = ACE_OS::gettimeofday ();
+  }
+  
+  TimeLogger::~TimeLogger()
+  {
+    ACE_Time_Value result = ACE_OS::gettimeofday () - start_time_;
+    int n = ACE_OS::snprintf(now, buffer-now, "%s %d\n", msg_, result.sec()*1000000+result.usec());
+    now+=n;
+  }
+
+  void TimeLogger::output() 
+  {
+    ACE_DEBUG((LM_DEBUG, buffer));
+  }
 #endif
 
 }

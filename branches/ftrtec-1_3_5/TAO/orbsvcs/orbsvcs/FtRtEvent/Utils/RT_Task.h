@@ -10,10 +10,11 @@
 //=============================================================================
 #ifndef RT_TASK_H
 #define RT_TASK_H
+#include "ftrtevent_export.h"
 
 class ACE_Task_Base;
 
-class RT_Task 
+class TAO_FtRtEvent_Export RT_Task 
 {
 public:
   static void set_current();

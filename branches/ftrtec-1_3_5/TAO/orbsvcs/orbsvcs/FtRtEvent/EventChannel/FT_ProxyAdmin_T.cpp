@@ -3,6 +3,7 @@
 #include "IOGR_Maker.h"
 #include "Replication_Service.h"
 #include "ace/Synch_T.h"
+#include "../Utils/Log.h"
 
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
@@ -20,6 +21,7 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface,State>::obtain_proxy (
   const FtRtecEventChannelAdmin::Operation& op
   ACE_ENV_ARG_DECL)
 {
+  FTRTEC_LOGTIME("FT_ProxyAdmin::obtain_proxy(op)");
   Request_Context_Repository().set_object_id(op.object_id
                                      ACE_ENV_ARG_PARAMETER);
 
@@ -51,6 +53,8 @@ template <class EC_PROXY_ADMIN, class Proxy,
 typename FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::ProxyInterface_ptr
 FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (ACE_ENV_SINGLE_ARG_DECL)
 {
+  FTRTEC_LOGTIME("FT_ProxyAdmin::obtain_proxy()");
+
   CORBA::Any_var any = Request_Context_Repository().get_cached_result(ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN(0);
 
