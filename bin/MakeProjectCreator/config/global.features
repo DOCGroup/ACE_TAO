@@ -31,4 +31,3 @@ sctp 	      = 0
 xt_reactor    = 0
 dummy_label   = 0
 cidl          = 0
-dnc	      = 0

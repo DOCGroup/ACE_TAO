@@ -2,8 +2,8 @@
 // $Id$
 
 project : ciao_component_dnc {
-  after += CIAO_Server
-  libs  += CIAO_Server
+  after += CIAO_DnC_Server
+  libs  += CIAO_DnC_Server
 
   Define_Custom(CIDL) {
     automatic         = 0

@@ -2,8 +2,8 @@
 // $Id$
 
 project : orbsvcslib, ifr_client, valuetype, security, taoidldefaults {
-  after    += CIAO_Client
+  after    += CIAO_DnC_Client
   includes   += $(CIAO_ROOT)/DnC $(CIAO_ROOT)/DnC/ciao
   idlflags += -I$(CIAO_ROOT)/DnC -I$(CIAO_ROOT)/DnC/ciao -Sc
-  libs     += CIAO_Client
+  libs     += CIAO_DnC_Client
 }
