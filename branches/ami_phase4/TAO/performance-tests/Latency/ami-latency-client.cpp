@@ -13,7 +13,7 @@ const char *ior = "file://test.ior";
 int nthreads = 1;
 int niterations = 5;
 
-int sleep_flag = 1;
+int sleep_flag = 0;
 
 ACE_hrtime_t latency_base;
 
@@ -71,10 +71,6 @@ public:
   
   void test_method (CORBA::Environment&)
     {
-      if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P | %t) : Callback method  called\n"));
-      
       ACE_hrtime_t now = ACE_OS::gethrtime ();
       throughput_stats.sample (now - throughput_base,
                                now - latency_base);
@@ -332,3 +328,5 @@ Client::dump_stats (const char* msg, ACE_UINT32 gsf)
 {
   throughput_stats.dump_results (msg, gsf);
 }
+
+
