@@ -509,8 +509,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
-  // First try to open the Reactor with the user supplied or
-  // hard-coded default.
+  // First try to open the Reactor with the hard-coded default.
   if (this->open (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::DEFAULT_SIZE,
                   0,
                   sh,
