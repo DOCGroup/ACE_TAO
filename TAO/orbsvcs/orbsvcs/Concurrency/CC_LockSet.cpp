@@ -21,7 +21,6 @@
 CC_LockSet::CC_LockSet (void)
   : related_lockset_ (0)
 {
-  ACE_NEW(mlock_, ACE_Thread_Mutex);
   TAO_TRY
     {
       this->Init(TAO_TRY_ENV);
@@ -29,7 +28,7 @@ CC_LockSet::CC_LockSet (void)
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception("CC_LockSet::CC_LockSet(...)");
+      TAO_TRY_ENV.print_exception("CC_LockSet::CC_LockSet(void)");
     }
   TAO_ENDTRY;
 }
@@ -39,7 +38,6 @@ CC_LockSet::CC_LockSet (void)
 CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
   : related_lockset_ (related)
 {
-  ACE_NEW(mlock_, ACE_Thread_Mutex);
   TAO_TRY
     {
       this->Init(TAO_TRY_ENV);
@@ -57,6 +55,11 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
 void
 CC_LockSet::Init(CORBA::Environment &_env)
 {
+  // Create the lock for serialization
+  _env.clear();
+  _env.exception(new CORBA::NO_MEMORY (CORBA::COMPLETED_NO));
+  ACE_NEW(mlock_, ACE_Thread_Mutex);
+  _env.clear();
   // Set the mode of the statically allocated locks
   lock_[CC_IR] = 0;
   lock_[CC_R] = 0;
@@ -112,11 +115,6 @@ CC_LockSet::lock (CosConcurrencyControl::lock_mode mode,
   if(this->lock_d(lm)==1)
     if(semaphore_.acquire()==-1)
       TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
-
-  //  ACE_DEBUG ((LM_DEBUG,
-  //              "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
-  //              lock_queue_.size(),
-  //              lock_[CC_IR], lock_[CC_R], lock_[CC_U], lock_[CC_IW], lock_[CC_W]));
 }
 
 // Tries to lock. If it is not possible false is returned.
@@ -125,22 +123,14 @@ CORBA::Boolean
 CC_LockSet::try_lock (CosConcurrencyControl::lock_mode mode,
                       CORBA::Environment &_env)
 {
-  //  CORBA::Boolean success = CORBA::B_TRUE;
-
   CC_LockModeEnum lm = lmconvert(mode);
 
   ACE_DEBUG ((LM_DEBUG,
               "CC_LockSet::try_lock\n"));
   if(this->try_lock_d(lm)==0)
-    return CORBA::B_FALSE; // success = CORBA::B_FALSE;
+    return CORBA::B_FALSE;
   else
-    return CORBA::B_TRUE;  // success = CORBA::B_TRUE;
-
-  //ACE_DEBUG ((LM_DEBUG,
-  //            "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
-  //            lock_queue_.size(),
-  //            lock_[CC_IR], lock_[CC_R], lock_[CC_U], lock_[CC_IW], lock_[CC_W]));
-  //return success;
+    return CORBA::B_TRUE;
 }
 
 // Converts the enum from the spec to the internally (ordered)
@@ -211,10 +201,7 @@ CC_LockSet::unlock (CosConcurrencyControl::lock_mode mode,
       TAO_RETHROW;
     }
   TAO_ENDTRY;
-  ACE_DEBUG ((LM_DEBUG,
-              "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
-              lock_queue_.size(),
-              lock_[CC_IR], lock_[CC_R], lock_[CC_U], lock_[CC_IW], lock_[CC_W]));
+  this->dump();
 }
 
 // Changes the mode of a held lock.
@@ -238,6 +225,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
           if(this->change_mode_d(lm_held, lm_new)==1)
             {
               this->unlock(held_mode, _env);
+              TAO_CHECK_ENV;
               if(semaphore_.acquire()==-1)
                 TAO_THROW (CORBA::INTERNAL (CORBA::COMPLETED_NO));
             }
@@ -249,10 +237,7 @@ CC_LockSet::change_mode (CosConcurrencyControl::lock_mode held_mode,
     }
   TAO_ENDTRY;
 
-  ACE_DEBUG ((LM_DEBUG,
-              "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
-              lock_queue_.size(),
-              lock_[CC_IR], lock_[CC_R], lock_[CC_U], lock_[CC_IW], lock_[CC_W]));
+  //  this->dump();
 }
 
 int
@@ -335,10 +320,10 @@ CC_LockSet::lock_held(CC_LockModeEnum lm)
 void
 CC_LockSet::dump(void)
 {
-  printf("waiting_calls_: %i, ", lock_queue_.size());
-  for(int i=CC_IR; i<=CC_W; i+=1)
-    printf("%i ", lock_[i]);
-  printf("\n");
+  ACE_DEBUG ((LM_DEBUG,
+              "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",
+              lock_queue_.size(),
+              lock_[CC_IR], lock_[CC_R], lock_[CC_U], lock_[CC_IW], lock_[CC_W]));
 }
 
 CORBA::Boolean CC_LockSet::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] ={

@@ -73,6 +73,7 @@ public:
   ~CC_LockSet(void);
   // Destructor.
 
+  // = CosConcurrencyControl methods
   virtual void lock (CosConcurrencyControl::lock_mode mode,
 		     CORBA::Environment &env);
   // Acquires this lock. Blocks until lock is obtained
@@ -91,6 +92,7 @@ public:
 			    CORBA::Environment &env);
   // Changes the mode of this lock.
 
+  // = Debugging methods
   void dump(void);
   // Dump the state of the object to stdout
 
@@ -155,7 +157,6 @@ private:
   // Mapping between requested and held lock modes. Used by compatible(...).
   // Uses the internal enumeration as indices.
 
-  //  ACE_Thread_Mutex mlock_;
   ACE_Thread_Mutex *mlock_;
   // Lock to ensure that race conditions does not occur
 
