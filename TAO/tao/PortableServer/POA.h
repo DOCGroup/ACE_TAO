@@ -134,6 +134,10 @@ class TAO_Acceptor_Registry;
 class TAO_ObjectReferenceTemplate_Adapter;
 class TAO_ObjectReferenceTemplate_Adapter_Factory;
 
+typedef
+ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*> TAO_ObjectReferenceTemplate_Array;
+
+
 namespace PortableInterceptor
 {
   class IORInfo;
@@ -159,7 +163,7 @@ public:
   friend class TAO_POA_Current_Impl;
   friend class TAO_POA_Manager;
   friend class TAO_RT_Collocation_Resolver;
-  //friend class TAO_ObjectReferenceTemplate;
+  friend class TAO_ObjectReferenceTemplate_Adapter_Factory;
 
   typedef ACE_CString String;
 
@@ -550,6 +554,10 @@ public:
 
   CORBA::Boolean waiting_destruction (void) const;
 
+  static void objectreferencetemplate_adapter_factory_name (const char *name);
+
+  static const char *objectreferencetemplate_adapter_factory_name (void);
+
 protected:
 
   /// Template method for creating new POA's of this type.
@@ -606,10 +614,9 @@ protected:
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
   void adapter_state_changed (
-      const PortableInterceptor::ObjectReferenceTemplateSeq &seq_obj_ref_template,
+      const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
-      ACE_ENV_ARG_DECL
-    )
+      ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Add the given tagged component to all profiles.
@@ -663,8 +670,11 @@ protected:
   //@}
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
+// @johnny hacke
+public:
   CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
+protected:
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
@@ -849,10 +859,6 @@ protected:
   /// Access the list of default POA policies.  This list is used as a
   /// prototype for creating new POA's.  It should
   static TAO_POA_Policy_Set &default_poa_policies (void);
-
-  static void objectreferencetemplate_adapter_factory_name (const char *name);
-
-  static const char *objectreferencetemplate_adapter_factory_name (void);
 
 protected:
 

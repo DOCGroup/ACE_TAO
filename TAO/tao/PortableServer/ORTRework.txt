@@ -1,3 +1,21 @@
+Tue Aug 17 14:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+          Checkin of rework until now, not happy with the interfaces yet, now
+          the test app seems to work a little, I am going to review all
+          changed interfaces again and improve things.
+
+        * tao/POA.{h,cpp}:
+          - Changed adapter_state_changed to use IORInterceptor_List
+          functionality to call adapter_state_changed on all IORInterceptors
+          - Changed access of some methods
+        * tao/IORInfo.cpp:
+          Commented out some add_refs on the ORT, this should be done in the
+          ORT Adapter. Need to check this
+
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Factory.{h,cpp}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_Impl.{h,cpp,inl}:
+          New files with first implementation
+
 Tue Aug 17 13:59:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptor_List/{h,cpp}:
