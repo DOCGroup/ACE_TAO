@@ -225,7 +225,7 @@ long
 CIAO::XML_Utils::get_single_attribute (const char *attname,
                                        const char *&id,
                                        ACEXML_Attributes *atts
-                                       ACEXML_ENV_ARG_DECL)
+                                       ACEXML_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
   for (size_t i = 0; i < atts->getLength (); ++i)
