@@ -102,6 +102,7 @@ TAO_UIOP_Server_Connection_Handler::TAO_UIOP_Server_Connection_Handler (TAO_ORB_
 
 TAO_UIOP_Server_Connection_Handler::~TAO_UIOP_Server_Connection_Handler (void)
 {
+
 }
 
 int
@@ -332,6 +333,7 @@ TAO_UIOP_Client_Connection_Handler (ACE_Thread_Manager *t,
 
 TAO_UIOP_Client_Connection_Handler::~TAO_UIOP_Client_Connection_Handler (void)
 {
+    delete this->mesg_factory_;
 }
 
 // @@ Should I do something here to enable non-blocking?? (Alex).
