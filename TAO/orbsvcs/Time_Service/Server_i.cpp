@@ -167,7 +167,7 @@ Server_i::register_server (void)
 	  TAO_TRY_ENV.clear ();
 
 	  // Get context.
-	  server_context = 
+	  server_context =
             this->my_name_server_->new_context (TAO_TRY_ENV);
 	  TAO_CHECK_ENV;
 
@@ -199,10 +199,6 @@ Server_i::register_server (void)
 		  "Binding ServerContext -> %s\n",
 		  server_name[1].id.in ()));
     }
-  // TAO_CATCH (CosNaming::NamingContext::AlreadyBound, ex)
-  //     {
-  //       @@ Vishal, please make sure to do the right thing here...
-  //  }
   TAO_CATCHANY
     {
       TAO_TRY_ENV.print_exception ("(%P|%t) Exception from init_naming_service ()\n");
@@ -226,47 +222,64 @@ Server_i::init (int argc,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  // Call the init of <TAO_ORB_Manager> to initialize the ORB and
-  // create a child POA under the root POA.
+  TAO_TRY
+    {
 
-  if (this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa",
-                                         env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       "%p\n",
-		       "init_child_poa"),
-		      -1);
+      // Call the init of <TAO_ORB_Manager> to initialize the ORB and
+      // create a child POA under the root POA.
 
-  TAO_CHECK_ENV_RETURN (env, -1);
+      if (this->orb_manager_.init_child_poa (argc,
+					     argv,
+					     "child_poa",
+					     TAO_TRY_ENV) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "%p\n",
+			   "init_child_poa"),
+			  -1);
 
-  int result = this->parse_args ();
+      TAO_CHECK_ENV_RETURN (TAO_TRY_ENV, -1);
 
-  if (result != 0)
-    return result;
+      int result = this->parse_args ();
 
-  // Get the orb.
-  this->orb_ = this->orb_manager_.orb ();
+      if (result != 0)
+	return result;
 
-  // Register the above implementation with the Naming Service.
-  this->init_naming_service (env);
+      // Get the orb.
+      this->orb_ = this->orb_manager_.orb ();
 
-  // Create the server object.
-  this->create_server ();
+      // Register the above implementation with the Naming Service.
+      this->init_naming_service (TAO_TRY_ENV);
 
-  // Register the server object with the Naming Service.
-  this->register_server ();
+      // Create the server object.
+      this->create_server ();
 
-  return 0;
+      // Register the server object with the Naming Service.
+      this->register_server ();
+
+      return 0;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception:");
+    }
+  TAO_ENDTRY;
 }
 
 int
 Server_i::run (CORBA::Environment &env)
 {
-  // Run the main event loop for the ORB.
-  if (this->orb_manager_.run (env) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
-                      -1);
-  return 0;
+TAO_TRY
+    {
+      // Run the main event loop for the ORB.
+      if (this->orb_manager_.run (TAO_TRY_ENV) == -1)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   "[SERVER] Process/Thread Id : (%P/%t) Server_i::run"),
+			  -1);
+      return 0;
+    }
+ TAO_CATCHANY
+   {
+     TAO_TRY_ENV.print_exception ("Exception:");
+   }
+ TAO_ENDTRY;
 }
