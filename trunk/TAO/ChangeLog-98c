@@ -14,6 +14,15 @@ Thu Sep  3 15:52:33 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/AV/Endpoint_Strategy.cpp: Fixed g++ warnings.
 
+Thu Sep 03 14:00:47 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+	  
+	* tests/Cubit/TAO/MT_Cubit/MT_Cubit.dsw:
+	* tests/Cubit/TAO/MT_Cubit/{client,server}.dsp: Updated project
+	  settings.
+	
+	* tests/Cubit/TAO/MT_Cubit/server.cpp: Removed an unused local
+	  variable.  
+
 Thu Sep  3 13:36:36 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
         * tests/Cubit/TAO/MT_Cubit/Timer.cpp: Fixed syntax errors that
