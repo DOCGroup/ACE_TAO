@@ -1,5 +1,8 @@
 Thu Aug 28 14:04:44 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tests/Cubit/TAO/clnt.cpp (main): Added release of the orb
+ 	pointer.
+
 	* tao/typecode.cpp (TC_Private_State): Relocated the delete of
  	tc_discriminator_type_ to be after the deletion of the label list.
   	This is because the discriminator will be inside each of the
