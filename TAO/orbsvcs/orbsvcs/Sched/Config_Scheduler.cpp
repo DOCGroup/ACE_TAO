@@ -44,7 +44,7 @@ ACE_Config_Scheduler::create (const char * entry_point,
   rt_info[0]->typical_execution_time = ORBSVCS_Time::zero;
   rt_info[0]->cached_execution_time = ORBSVCS_Time::zero;
   rt_info[0]->period = 0;
-  rt_info[0]->importance = RtecScheduler::VERY_LOW;
+  rt_info[0]->importance = RtecScheduler::VERY_LOW_IMPORTANCE;
   rt_info[0]->quantum = ORBSVCS_Time::zero;
   rt_info[0]->threads = 0;
   rt_info[0]->priority = 0;

@@ -483,7 +483,7 @@ ACE_ES_Dispatch_Queue::open_queue (RtecScheduler::Period &period,
                                                 ORBSVCS_Time::zero,
                                                 ORBSVCS_Time::zero,
                                                 0,
-                                                RtecScheduler::VERY_LOW,
+                                                RtecScheduler::VERY_LOW_IMPORTANCE,
                                                 ORBSVCS_Time::zero,
                                                 1, TAO_TRY_ENV);
           TAO_CHECK_ENV;
