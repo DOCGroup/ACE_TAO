@@ -493,7 +493,7 @@ Test_ECG::run (int argc, char* argv[])
           if (orb->run (&tv) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "orb->run"), -1);
 
-          RtecEventChannelAdmin::Observer_ptr observer = 
+          RtecEventChannelAdmin::Observer_ptr observer =
             this->ecg_._this (TAO_TRY_ENV);
           TAO_CHECK_ENV;
           observer_handle = ec_impl.append_observer (observer,
@@ -1162,7 +1162,7 @@ Test_ECG::parse_args (int argc, char *argv [])
 
         case 'i':
           {
-            char* aux;
+            char* aux = 0;
             char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
             this->consumer_disconnects_ = ACE_OS::atoi (arg);
             arg = ACE_OS::strtok_r (0, ",", &aux);
@@ -1172,7 +1172,7 @@ Test_ECG::parse_args (int argc, char *argv [])
 
         case 'h':
           {
-            char* aux;
+            char* aux = 0;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
             this->hp_suppliers_ = ACE_OS::atoi (arg);
@@ -1197,7 +1197,7 @@ Test_ECG::parse_args (int argc, char *argv [])
 
         case 'w':
           {
-            char* aux;
+            char* aux = 0;
                 char* arg = ACE_OS::strtok_r (get_opt.optarg, ",", &aux);
 
             this->lp_suppliers_ = ACE_OS::atoi (arg);
