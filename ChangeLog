@@ -1,3 +1,8 @@
+Fri Dec 26 17:29:29 2003  Steve Huston  <shuston@riverace.com>
+
+	* m4/ace.m4: Uncommented the AM_CONDITIONAL for BUILD_SSL so
+	  explicit sets of --with-ssl work.
+
 Fri Dec 26 16:53:18 2003  Steve Huston  <shuston@riverace.com>
 
 	* m4/ace.m4: Don't restrict --enable-rtti to Solaris. AIX Visual Age
