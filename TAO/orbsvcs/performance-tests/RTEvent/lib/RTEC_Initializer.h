@@ -9,6 +9,7 @@
 #ifndef TAO_PERF_RTEC_RTEC_INITIALIZER_H
 #define TAO_PERF_RTEC_RTEC_INITIALIZER_H
 
+#include "rtec_perf_export.h"
 #include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -27,7 +28,7 @@ class RTCORBA_Setup;
  * TAO's Real-time Event Service
  *
  */
-class RTEC_Initializer
+class TAO_RTEC_Perf_Export RTEC_Initializer
 {
 public:
   /// Return a new event channel

@@ -1,3 +1,85 @@
+Thu Feb 28 15:12:35 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsp:
+	* orbsvcs/performance-tests/RTEvent/lib/TAO_RTEC_Perf.dsw:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.dsw:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.dsp:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.dsp:
+	  Add MSVC project files and workspaces.
+
+	* TAOACE.dsw:
+	* TAOACE_Static.dsw:
+	* orbsvcs/orbsvcs/orbsvcs.dsw:
+	* orbsvcs/orbsvcs/orbsvcs_static.dsw:
+	* orbsvcs/orbsvcs/RTCORBAEvent.dsp:
+	* orbsvcs/orbsvcs/RTCORBAEvent_Static.dsp:
+	  Add new project files for the RTCORBAEvent library, and insert
+	  the project in the corresponding workspaces.
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.i:
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+	  Add PortableServer::RefCountServantBase mixin.
+	  Add new method to check if an event channel is getting
+	  destroyed.
+
+	* orbsvcs/orbsvcs/Event/rtcorba_event_export.h:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Dispatching.h:
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.h:
+	  Fixed export macros.
+
+	* orbsvcs/orbsvcs/Event/EC_RTCORBA_Factory.cpp:
+	  Fixed misuse of return statement in void functions.
+
+	* tao/Messaging/MessagingC.h:
+	  The code did not link on NT because a couple of CDR operators
+	  are declared, but not defined nor used. I removed offending code
+	  until Jaiganesh can introduce a complete fix.
+
+	* orbsvcs/orbsvcs/RTEvent.dsp:
+	  The RTEvent library needs the TAO_Messaging library to work
+	  correctly.
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/client.cpp:
+	  Fixed #include for Messaging.h
+	  Fixed problems with explicit auto_ptr<> constructors.
+	  Create special thread for ORB::run()
+
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+	  Fixed #include for Messaging.h
+	  Fixed problems with explicit auto_ptr<> constructors.
+	  Stop the event loop if the event channel is destroyed.
+
+	* orbsvcs/performance-tests/RTEvent/lib/rtec_perf_export.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Consumer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Consumer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Loopback_Supplier.h:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Holder.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RT_Class.h:
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.h:
+	* orbsvcs/performance-tests/RTEvent/lib/Supplier.h:
+	  Create export macro file for the benchmark library.
+	  Add export macros to all the classes.
+
+	* orbsvcs/performance-tests/RTEvent/lib/Makefile:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.h:
+	* orbsvcs/performance-tests/RTEvent/lib/ORB_Task.cpp:
+	  Add new files to the Makefile too!
+	
+	* orbsvcs/performance-tests/RTEvent/lib/Client_Group.cpp:
+	  Fixed event types in the loopback supplier.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTCORBA_Setup.cpp:
+	  Fixed problems with explicit auto_ptr<> constructors.
+	  I used ACE_THROW_RETURN() where an ACE_THROW() was needed.
+
+	* orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.cpp:
+	* orbsvcs/performance-tests/RTEvent/lib/Send_Task.cpp:
+	  Fixed problems with explicit auto_ptr<> constructors.
+
 Thu Feb 28 13:51:30 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/be/be_interface.cpp:

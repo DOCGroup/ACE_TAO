@@ -729,6 +729,30 @@ Package=<4>
 
 ###############################################################################
 
+Project: "RTCORBAEvent"=.\orbsvcs\orbsvcs\RTCORBAEvent.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name RTCORBA
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTEvent
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name RTPortableServer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name Messaging
+    End Project Dependency
+}}}
+
+###############################################################################
+
 Project: "RTEvent"=.\orbsvcs\orbsvcs\RTEvent.dsp - Package Owner=<4>
 
 Package=<5>

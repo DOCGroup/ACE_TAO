@@ -16,6 +16,7 @@
 #define TAO_EC_RTCORBA_FACTORY_H
 #include "ace/pre.h"
 
+#include "rtcorba_event_export.h"
 #include "EC_Factory.h"
 #include "tao/RTCORBA/RTCORBA.h"
 
@@ -29,7 +30,7 @@
  * @brief Decorate an EC_Factory to use the EC_RTCORBA_Dispatching
  * module.
  */
-class TAO_RTEvent_Export TAO_EC_RTCORBA_Factory : public TAO_EC_Factory
+class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor

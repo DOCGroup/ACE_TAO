@@ -24,12 +24,12 @@ RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,
   auto_ptr<TAO_EC_Factory> factory;
   if (rtcorba_setup == 0)
     {
-      factory = new TAO_EC_Default_Factory;
+      factory = auto_ptr<TAO_EC_Factory> (new TAO_EC_Default_Factory);
     }
   else
     {
-      factory = new TAO_EC_RTCORBA_Factory (new TAO_EC_Default_Factory,
-                                            rtcorba_setup->lanes ());
+      factory = auto_ptr<TAO_EC_Factory> (new TAO_EC_RTCORBA_Factory (new TAO_EC_Default_Factory,
+                                                                      rtcorba_setup->lanes ()));
     }
 
   TAO_EC_Event_Channel_Attributes attr (consumer_poa,

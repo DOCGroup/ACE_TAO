@@ -16,6 +16,7 @@
 #define TAO_EC_RTCORBA_DISPATCHING_H
 #include "ace/pre.h"
 
+#include "rtcorba_event_export.h"
 #include "EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -33,7 +34,7 @@ class TAO_EC_Event_Channel;
  * @brief RTCORBA-based dispatching strategy
  *
  */
-class TAO_RTEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
+class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
 {
 public:
   /// Constructor

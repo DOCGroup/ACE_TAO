@@ -9,6 +9,7 @@
 #ifndef TAO_PERF_RTEC_ORB_HOLDER_H
 #define TAO_PERF_RTEC_ORB_HOLDER_H
 
+#include "rtec_perf_export.h"
 #include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -21,7 +22,7 @@
  * @brief Implement a helper class to initialize and destroy an ORB.
  *
  */
-class ORB_Holder
+class TAO_RTEC_Perf_Export ORB_Holder
 {
 public:
   /// Constructor

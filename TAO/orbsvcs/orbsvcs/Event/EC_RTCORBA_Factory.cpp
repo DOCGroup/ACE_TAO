@@ -90,7 +90,7 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel *)
 void
 TAO_EC_RTCORBA_Factory::destroy_dispatching (TAO_EC_Dispatching *x)
 {
-  return this->body_->destroy_dispatching (x);
+  this->body_->destroy_dispatching (x);
 }
 
 TAO_EC_Filter_Builder*
@@ -102,7 +102,7 @@ TAO_EC_RTCORBA_Factory::create_filter_builder (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_filter_builder (TAO_EC_Filter_Builder *x)
 {
-  return this->body_->destroy_filter_builder (x);
+  this->body_->destroy_filter_builder (x);
 }
 
 TAO_EC_Supplier_Filter_Builder*
@@ -114,7 +114,7 @@ TAO_EC_RTCORBA_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel *ec
 void
 TAO_EC_RTCORBA_Factory::destroy_supplier_filter_builder (TAO_EC_Supplier_Filter_Builder *x)
 {
-  return this->body_->destroy_supplier_filter_builder (x);
+  this->body_->destroy_supplier_filter_builder (x);
 }
 
 TAO_EC_ConsumerAdmin*
@@ -126,7 +126,7 @@ TAO_EC_RTCORBA_Factory::create_consumer_admin (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_consumer_admin (TAO_EC_ConsumerAdmin *x)
 {
-  return this->body_->destroy_consumer_admin (x);
+  this->body_->destroy_consumer_admin (x);
 }
 
 TAO_EC_SupplierAdmin*
@@ -138,7 +138,7 @@ TAO_EC_RTCORBA_Factory::create_supplier_admin (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_supplier_admin (TAO_EC_SupplierAdmin *x)
 {
-  return this->body_->destroy_supplier_admin (x);
+  this->body_->destroy_supplier_admin (x);
 }
 
 TAO_EC_ProxyPushSupplier*
@@ -150,7 +150,7 @@ TAO_EC_RTCORBA_Factory::create_proxy_push_supplier (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_proxy_push_supplier (TAO_EC_ProxyPushSupplier *x)
 {
-  return this->body_->destroy_proxy_push_supplier (x);
+  this->body_->destroy_proxy_push_supplier (x);
 }
 
 TAO_EC_ProxyPushConsumer*
@@ -162,7 +162,7 @@ TAO_EC_RTCORBA_Factory::create_proxy_push_consumer (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 {
-  return this->body_->destroy_proxy_push_consumer (x);
+  this->body_->destroy_proxy_push_consumer (x);
 }
 
 TAO_EC_Timeout_Generator*
@@ -174,7 +174,7 @@ TAO_EC_RTCORBA_Factory::create_timeout_generator (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_timeout_generator (TAO_EC_Timeout_Generator *x)
 {
-  return this->body_->destroy_timeout_generator (x);
+  this->body_->destroy_timeout_generator (x);
 }
 
 TAO_EC_ObserverStrategy*
@@ -186,7 +186,7 @@ TAO_EC_RTCORBA_Factory::create_observer_strategy (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
 {
-  return this->body_->destroy_observer_strategy (x);
+  this->body_->destroy_observer_strategy (x);
 }
 
 TAO_EC_Scheduling_Strategy*
@@ -198,7 +198,7 @@ TAO_EC_RTCORBA_Factory::create_scheduling_strategy (TAO_EC_Event_Channel *ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_scheduling_strategy (TAO_EC_Scheduling_Strategy* x)
 {
-  return this->body_->destroy_scheduling_strategy (x);
+  this->body_->destroy_scheduling_strategy (x);
 }
 
 TAO_EC_ProxyPushConsumer_Collection*
@@ -210,7 +210,7 @@ TAO_EC_RTCORBA_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Chan
 void
 TAO_EC_RTCORBA_Factory::destroy_proxy_push_consumer_collection (TAO_EC_ProxyPushConsumer_Collection *x)
 {
-  return this->body_->destroy_proxy_push_consumer_collection (x);
+  this->body_->destroy_proxy_push_consumer_collection (x);
 }
 
 TAO_EC_ProxyPushSupplier_Collection*
@@ -222,7 +222,7 @@ TAO_EC_RTCORBA_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Chan
 void
 TAO_EC_RTCORBA_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection *x)
 {
-  return this->body_->destroy_proxy_push_supplier_collection (x);
+  this->body_->destroy_proxy_push_supplier_collection (x);
 }
 
 ACE_Lock*
@@ -234,7 +234,7 @@ TAO_EC_RTCORBA_Factory::create_consumer_lock (void)
 void
 TAO_EC_RTCORBA_Factory::destroy_consumer_lock (ACE_Lock* x)
 {
-  return this->body_->destroy_consumer_lock (x);
+  this->body_->destroy_consumer_lock (x);
 }
 
 ACE_Lock*
@@ -246,7 +246,7 @@ TAO_EC_RTCORBA_Factory::create_supplier_lock (void)
 void
 TAO_EC_RTCORBA_Factory::destroy_supplier_lock (ACE_Lock* x)
 {
-  return this->body_->destroy_supplier_lock (x);
+  this->body_->destroy_supplier_lock (x);
 }
 
 TAO_EC_ConsumerControl*
@@ -258,7 +258,7 @@ TAO_EC_RTCORBA_Factory::create_consumer_control (TAO_EC_Event_Channel* ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_consumer_control (TAO_EC_ConsumerControl* x)
 {
-  return this->body_->destroy_consumer_control (x);
+  this->body_->destroy_consumer_control (x);
 }
 
 TAO_EC_SupplierControl*
@@ -270,7 +270,7 @@ TAO_EC_RTCORBA_Factory::create_supplier_control (TAO_EC_Event_Channel* ec)
 void
 TAO_EC_RTCORBA_Factory::destroy_supplier_control (TAO_EC_SupplierControl* x)
 {
-  return this->body_->destroy_supplier_control (x);
+  this->body_->destroy_supplier_control (x);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

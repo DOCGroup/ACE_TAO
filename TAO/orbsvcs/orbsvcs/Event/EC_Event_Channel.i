@@ -188,3 +188,10 @@ TAO_EC_Event_Channel::max_write_delay (void) const
 {
   return this->max_write_delay_;
 }
+
+ACE_INLINE int
+TAO_EC_Event_Channel::destroyed (void)
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
+  return this->destroyed_;
+}  

@@ -8,6 +8,7 @@
 #ifndef TAO_PERF_RTEC_CONSUMER_H
 #define TAO_PERF_RTEC_CONSUMER_H
 
+#include "rtec_perf_export.h"
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
@@ -23,7 +24,7 @@
  * @brief Implement a simple consumer to keep track of the latency
  *
  */
-class Consumer
+class TAO_RTEC_Perf_Export Consumer
   : public virtual POA_RtecEventComm::PushConsumer
   , public virtual PortableServer::RefCountServantBase
 
