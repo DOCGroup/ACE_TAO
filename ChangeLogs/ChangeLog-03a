@@ -202,6 +202,9 @@ Mon Feb 26 15:01:55 2001  Darrell Brunsch <brunsch@uci.edu>
         * tests/DLL_Test_Impl.dsp:
         * tests/version_tests/DLL_Test_Impl.dsp: (removed)
 
+          Me thinks that the Release and Static configurations should
+          also compile, and me thinks that it is now fixed.  
+
 Mon Feb 26 12:29:45 2001  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
         * ace/ARGV.h: Clarify that the int add (const ACE_TCHAR *next_arg)
