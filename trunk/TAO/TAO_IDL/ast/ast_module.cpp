@@ -657,8 +657,8 @@ void
 AST_Module::set_has_nested_valuetype ()
 {
 #ifdef IDL_HAS_VALUETYPE
-  UTL_Scope *parent;
-  if (!pd_has_nested_valuetype && (parent = this->defined_in()))
+  UTL_Scope *parent = this->defined_in ();
+  if (!pd_has_nested_valuetype && parent)
     {
       AST_Module *pm = AST_Module::narrow_from_scope (parent);
       if (pm)

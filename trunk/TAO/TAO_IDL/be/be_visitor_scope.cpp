@@ -160,10 +160,15 @@ int
 be_visitor_scope::next_elem (be_decl *elem,
                              be_decl *&successor)
 {
+  be_decl *ctx_scope = this->ctx_->scope ();
   be_scope *node = 0;
 
-  if (!this->ctx_->scope () ||
-      !(node = this->ctx_->scope ()->scope ()))
+  if (ctx_scope)
+    {
+      node = ctx_scope->scope ();
+    }
+
+  if (!ctx_scope || !node)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_scope::next_elem - "
