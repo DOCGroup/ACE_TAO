@@ -309,9 +309,12 @@ public:
   // Service Configurator hook methods.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini ();
+#if 0
+  // Implementing these methods is left as an exercise for the reader.
   virtual int info (ACE_TCHAR **bufferp, size_t length = 0) const;
   virtual int suspend ();
   virtual int resume ();
+#endif
 
 protected:
   // Receives, processes, and forwards log records.
