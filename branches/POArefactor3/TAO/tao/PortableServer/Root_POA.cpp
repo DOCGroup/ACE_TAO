@@ -2026,11 +2026,11 @@ TAO_Root_POA::invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL)
 
 CORBA::Object_ptr
 TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
-                        const char *type_id,
-                        TAO_ServantBase *servant,
-                        CORBA::Boolean collocated,
-                        CORBA::Short priority
-                        ACE_ENV_ARG_DECL)
+                             const char *type_id,
+                             TAO_ServantBase *servant,
+                             CORBA::Boolean collocated,
+                             CORBA::Short priority
+                             ACE_ENV_ARG_DECL)
 {
   // Check if the ORB is still running, otherwise throw an exception.
   // @@ What if the ORB was destroyed?  In that case we shouldn't even

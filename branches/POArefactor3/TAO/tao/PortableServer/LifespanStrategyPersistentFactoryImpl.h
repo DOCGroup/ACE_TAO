@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file LifespanStrategyFactoryImpl.h
+ *  @file LifespanStrategyPersistentFactoryImpl.h
  *
  *  $Id$
  *

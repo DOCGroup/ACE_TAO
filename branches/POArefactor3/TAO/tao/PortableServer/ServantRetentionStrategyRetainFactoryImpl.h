@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ThreadStrategyFactoryImpl.h
+ *  @file ServantRetentionStrategyRetainFactoryImpl.h
  *
  *  $Id$
  *

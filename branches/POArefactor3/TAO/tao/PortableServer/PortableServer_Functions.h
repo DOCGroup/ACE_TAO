@@ -37,13 +37,6 @@
 #  define TAO_EXPORT_NESTED_MACRO TAO_PortableServer_Export
 #endif /* TAO_EXPORT_NESTED_CLASSES */
 
-// This is to remove "inherits via dominance" warnings from MSVC.
-// MSVC is being a little too paranoid.
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning(disable:4250)
-#endif /* _MSC_VER */
-
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "ace/OS_NS_wchar.h"
 

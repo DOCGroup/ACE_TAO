@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file ThreadStrategySingleFactoryImpl.h
+ *  @file IdUniquenessStrategyUniqueFactoryImpl.h
  *
  *  $Id$
  *

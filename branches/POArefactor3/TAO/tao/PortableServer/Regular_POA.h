@@ -67,10 +67,6 @@ protected:
 
 // ****************************************************************
 
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif /* _MSC_VER */
-
 #if defined (__ACE_INLINE__)
 # include "Regular_POA.inl"
 #endif /* __ACE_INLINE__ */
