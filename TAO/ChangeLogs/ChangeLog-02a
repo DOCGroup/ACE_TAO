@@ -1,3 +1,40 @@
+Wed Mar 15 19:49:35 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/OctetSeq/Makefile
+	* tests/Param_Test/Makefile
+	* tests/AMI/Makefile
+	* tests/CDR/Makefile
+	* tests/Connection_Purging/Makefile
+	* tests/DSI_Gateway/Makefile
+	* tests/DynAny_Test/Makefile
+	* tests/Endpoint_Per_Priority/Makefile
+	* tests/Explicit_Event_Loop/Makefile
+	* tests/Faults/Makefile
+	* tests/IDL_Test/Makefile
+	* tests/IORManipulation/Makefile
+	* tests/Interceptors/Makefile
+	* tests/Leader_Followers/Makefile
+	* tests/MProfile/Makefile
+	* tests/MProfile_Forwarding/Makefile
+	* tests/MT_Client/Makefile
+	* tests/MT_Server/Makefile
+	* tests/Multiple_Inheritance/Makefile
+	* tests/NestedUpcall/MT_Client_Test/Makefile
+	* tests/NestedUpcall/Triangle_Test/Makefile
+	* tests/NestedUpcall/Simple/Makefile
+	* tests/Nested_Event_Loop/Makefile
+	* tests/ORB_init/Makefile
+	* tests/POA/Deactivation/Makefile
+	* tests/POA/Destruction/Makefile
+	* tests/POA/Identity/Makefile
+	* tests/FL_Cube/Makefile
+	* tests/Smart_Proxies/Makefile
+	* tests/Smart_Proxies/On_Demand/Makefile
+	* tests/Timed_Buffered_Oneways/Makefile
+	* tests/Timeout/Makefile
+	* tests/Xt_Stopwatch/Makefile: Updated all these Makefiles to
+	  change the dependency on GIOP.h.
+
 Wed Mar 15 19:46:36 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP.cpp:
