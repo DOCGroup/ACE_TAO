@@ -21,39 +21,6 @@
 #define TRUE  1
 #define FALSE 0
 
-/*
-#if !(defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
-
-#define XP1_QOS_SUPPORTED        0x00002000
-#define XP1_SUPPORT_MULTIPOINT   0x00000400
-
-#define WSABASEERR              10000
-#define WSAENOBUFS              (WSABASEERR+55)
-
-#define FROM_PROTOCOL_INFO (-1)
-
-#define WSA_FLAG_OVERLAPPED           0x01
-#define WSA_FLAG_MULTIPOINT_C_ROOT    0x02
-#define WSA_FLAG_MULTIPOINT_C_LEAF    0x04
-#define WSA_FLAG_MULTIPOINT_D_ROOT    0x08
-#define WSA_FLAG_MULTIPOINT_D_LEAF    0x10
-
-#define QOS_NOT_SPECIFIED     0xFFFFFFFF
-#define SERVICETYPE_NOTRAFFIC 0x00000000  // No data in this direction.
-#define SERVICETYPE_CONTROLLEDLOAD 0x00000002  // Controlled Load. 
-#define SERVICETYPE_GUARANTEED 0x00000003  // Guaranteed.
-
-#define JL_SENDER_ONLY    0x01
-#define JL_BOTH           0x04
-
-#define SIO_GET_QOS              (0x40000000 | 0x08000000 | 7)
-#define SIO_MULTIPOINT_LOOPBACK  (0x08000000 | 9)
-#define SIO_MULTICAST_SCOPE      (0x08000000 | 10)
-#define SIO_SET_QOS			     (0x08000000 | 11)
-
-#endif ACE_HAS_WINSOCK2 
-*/
-
 #define MY_DEFPORT 5001
 
 // Application-specific define - there is NO specific invalid send
