@@ -1,3 +1,10 @@
+Fri Dec 17 21:29:19 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h: use __DECCXX instead of DEC_CXX to detect that
+          the compiler is Compaq (Digital Unix) cxx.  DEC_CXX is
+          #defined in ACE config files for cxx, but __DECCXX is
+          #defined by the compiler.  Only the latter should be used.
+
 Fri Dec 17 21:20:48 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/TTY_IO.cpp (control): added static cast of TCSETS to

@@ -696,7 +696,7 @@ private:
 # define ACE_MIN(x,y) (((y)>(x))?(x):(y))
 
 // Keep the compiler from complaining about parameters which are not used.
-# if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (DEC_CXX) || defined (__KCC) || defined (__rational__) || (__USLC__)
+# if defined (ghs) || defined (__GNUC__) || defined (__hpux) || defined (__sgi) || defined (__DECCXX) || defined (__KCC) || defined (__rational__) || (__USLC__)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  NOTE: that may only be true if -O is enabled,
@@ -706,7 +706,7 @@ private:
 #   define ACE_UNUSED_ARG(a) (a)
 # endif /* ghs */
 
-# if defined (__sgi) || defined (ghs) || defined (DEC_CXX) || defined(__BORLANDC__) || defined (__KCC)
+# if defined (__sgi) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (__KCC)
 #   define ACE_NOTREACHED(a)
 # else  /* ! defined . . . */
 #   define ACE_NOTREACHED(a) a
@@ -5332,11 +5332,11 @@ public:
   // = Get/set the provider specific information.
   iovec provider_specific (void) const;
   void provider_specific (const iovec &ps);
-  
+
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #else
 private:
-  
+
   ACE_Flow_Spec sending_flowspec_;
   ACE_Flow_Spec receiving_flowspec_;
 #endif
