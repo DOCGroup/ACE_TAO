@@ -183,7 +183,7 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
     CORBA::Environment &ACE_TRY_ENV
 )
 {
-  POA_ImplementationRepository::ServerObject *_tao_impl = 
+  POA_ImplementationRepository::ServerObject *_tao_impl =
     (POA_ImplementationRepository::ServerObject *)_tao_object_reference;
 
   _tao_impl->ping (
@@ -340,9 +340,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_ServerObje
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -363,9 +365,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_ServerObje
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -388,9 +392,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_ServerObject::ping  
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "ping",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -415,9 +421,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_ServerObject::shutdo
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "shutdown",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1026,9 +1034,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_Administra
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1049,9 +1059,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_Administra
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1077,9 +1089,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::acti
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "activate_server",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1108,9 +1122,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::regi
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "register_server",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1139,9 +1155,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::rere
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "reregister_server",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1170,9 +1188,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::remo
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "remove_server",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1200,9 +1220,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::shut
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "shutdown_server",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1234,9 +1256,11 @@ char * POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::se
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "server_is_running",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1266,9 +1290,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::serv
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "server_is_shutting_down",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1297,9 +1323,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::find
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "find",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1329,9 +1357,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_Administration::list
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "list",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1692,9 +1722,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInfo
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1715,9 +1747,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInfo
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1744,9 +1778,11 @@ CORBA::Boolean POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInfo
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "next_n",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN  (_tao_retval);
@@ -1773,9 +1809,11 @@ void POA_ImplementationRepository::_tao_thru_poa_collocated_ServerInformationIte
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "destroy",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;

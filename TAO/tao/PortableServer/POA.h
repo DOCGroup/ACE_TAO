@@ -634,17 +634,6 @@ public:
   // This method gives the policies that are exposed to the client.
   // These policies are shipped within the IOR.
 
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-  //
-  // Forwarding related.
-  //
-  void forward_object (const PortableServer::ObjectId &oid,
-                       CORBA::Object_ptr forward_to,
-                       CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
-
   // Utility functions for the other
   static char* ObjectId_to_string (const PortableServer::ObjectId &id);
 
@@ -883,16 +872,6 @@ protected:
     ACE_THROW_SPEC ((CORBA::SystemException,
                      PortableServer::POA::ObjectNotActive,
                      PortableServer::POA::WrongPolicy));
-//
-// Forwarding related.
-//
-#if (TAO_HAS_MINIMUM_CORBA == 0)
-
-  void forward_object_i (const PortableServer::ObjectId &oid,
-                         CORBA::Object_ptr forward_to,
-                         CORBA_Environment &ACE_TRY_ENV);
-
-#endif /* TAO_HAS_MINIMUM_CORBA */
 
   TAO_Active_Object_Map &active_object_map (void) const;
 

@@ -336,8 +336,8 @@ if (ACE_OS::strcmp (logical_type_id, "IDL:CORBA/DomainManager:1.0") == 0)
   return 0;
 }
 
-void POA_CORBA_DomainManager::_dispatch (TAO_ServerRequest &req, 
-                                         void *context, 
+void POA_CORBA_DomainManager::_dispatch (TAO_ServerRequest &req,
+                                         void *context,
                                          CORBA::Environment &ACE_TRY_ENV)
 {
   this->synchronous_upcall_dispatch(req, context, this, ACE_TRY_ENV);
@@ -405,9 +405,11 @@ CORBA::Boolean POA_CORBA__tao_thru_poa_collocated_DomainManager::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -428,9 +430,11 @@ CORBA::Boolean POA_CORBA__tao_thru_poa_collocated_DomainManager::_non_existent(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -456,9 +460,11 @@ CORBA::Policy_ptr POA_CORBA__tao_thru_poa_collocated_DomainManager::get_domain_p
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "get_domain_policy",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -779,7 +785,7 @@ void POA_CORBA_ConstructionPolicy::make_domain_manager_skel (
     );
   POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_make_domain_manager ri (
       "make_domain_manager",
-      _tao_server_request.service_info (),  
+      _tao_server_request.service_info (),
       object_type.in (),
       constr_policy,
       ACE_TRY_ENV
@@ -954,9 +960,11 @@ CORBA::Boolean POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -977,9 +985,11 @@ CORBA::Boolean POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::_non_exist
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -1004,9 +1014,11 @@ void POA_CORBA__tao_thru_poa_collocated_ConstructionPolicy::make_domain_manager 
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "make_domain_manager",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK;
@@ -1033,7 +1045,7 @@ POA_CORBA_ConstructionPolicy::TAO_ServerRequest_Info_CORBA_ConstructionPolicy_ma
     CORBA::Environment &
   )
   : TAO_ServerRequestInfo (
-        _tao_operation, 
+        _tao_operation,
         _tao_service_context_list
       ),
     object_type_ (object_type),

@@ -331,9 +331,11 @@ CORBA::Boolean POA_Messaging::_tao_thru_poa_collocated_ReplyHandler::_is_a(
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_is_a",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);
@@ -354,9 +356,11 @@ CORBA::Boolean POA_Messaging::_tao_thru_poa_collocated_ReplyHandler::_non_existe
   TAO_Object_Adapter::Servant_Upcall servant_upcall (
       this->_stubobj ()->servant_orb_var ()->orb_core ()
     );
+  CORBA::Object_var forward_to;
   servant_upcall.prepare_for_upcall (
       this->_object_key (),
       "_non_existent",
+      forward_to.out (),
       ACE_TRY_ENV
     );
   ACE_CHECK_RETURN (0);

@@ -5,7 +5,7 @@
 #include "Object_Adapter.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/Stub.h"  
+#include "tao/Stub.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Collocated_Object.i"
@@ -60,8 +60,11 @@ TAO_Collocated_Object::_is_a (const CORBA::Char *logical_type_id,
       TAO_Object_Adapter::Servant_Upcall servant_upcall (
           stub->servant_orb_var ()->orb_core ()
         );
+
+      CORBA::Object_var forward_to;
       servant_upcall.prepare_for_upcall (this->_object_key (),
                                          "_is_a",
+                                         forward_to.out (),
                                          ACE_TRY_ENV);
       ACE_CHECK_RETURN (0);
       return servant_upcall.servant ()->_is_a (logical_type_id, ACE_TRY_ENV);
@@ -123,8 +126,11 @@ TAO_Collocated_Object::_non_existent (CORBA_Environment &ACE_TRY_ENV)
           TAO_Object_Adapter::Servant_Upcall servant_upcall (
               stub->servant_orb_var ()->orb_core ()
             );
+
+          CORBA::Object_var forward_to;
           servant_upcall.prepare_for_upcall (this->_object_key (),
                                              "_non_existent",
+                                             forward_to.out (),
                                              ACE_TRY_ENV);
           ACE_TRY_CHECK;
           return servant_upcall.servant ()->_non_existent (ACE_TRY_ENV);
