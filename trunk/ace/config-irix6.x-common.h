@@ -136,10 +136,6 @@
 #define ACE_HAS_DIRENT
 #define ACE_LACKS_RWLOCK_T
 
-// Platform supports the tid_t type (e.g., AIX and Irix 6.2)
-#define ACE_HAS_TID_T
-
-
 // Turns off the tracing feature.
 #if !defined (ACE_NTRACE)
 #define ACE_NTRACE 1

@@ -121,9 +121,6 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC
 
-// Platform supports the tid_t type
-#define ACE_HAS_TID_T
-
 #define ACE_HAS_UALARM
 
 // Platform has XPG4 wide character support
@@ -194,7 +191,6 @@ extern int h_errno;     /* This isn't declared in a header file on HP-UX */
 // will compile and link with this in place, but will not run.  HP says
 // the functions are not implemented.
 //#  define ACE_HAS_POSIX_SEM
-#  define ACE_HAS_PTHREAD_T
 #  define ACE_HAS_PTHREAD_EQUAL
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE

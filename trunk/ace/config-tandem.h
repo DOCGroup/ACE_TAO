@@ -87,9 +87,7 @@
 //Platform supports the SVR4 timestruc_t type
 #define ACE_HAS_SVR4_TIME
 
-//ACE_HAS_PROC_FS                       Platform supports the /proc file
-// system and defines tid_t in <sys/procfs.h>
-// Has /proc but no tid_t
+//ACE_HAS_PROC_FS                       Platform supports the /proc file system
 
 //ACE_HAS_PRUSAGE_T                     Platform supports the prusage_t struct
 
@@ -203,7 +201,6 @@
 //ACE_HAS_PTHREAD_EQUAL                 Platform has pthread_equal().
 //ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP  Platform has
 // pthread_mutexattr_setkind_np().
-//ACE_HAS_PTHREAD_T                     Platform has pthread_t defined.
 //ACE_HAS_THREAD_SELF                   Platform has thread_self() rather
 // than pthread_self() (e.g., DCETHREADS and AIX)
 //ACE_HAS_THR_C_DEST                    The pthread_keycreate() routine *
@@ -346,8 +343,6 @@
 //ACE_HAS_TEMPLATE_TYPEDEFS             Compiler implements templates that
 // support typedefs inside of classes used as formal arguments to a template
 // class.
-//ACE_HAS_TID_T                         Platform supports the tid_t type
-//(e.g., AIX)
 //Platform/compiler supports timezone * as second parameter to gettimeofday()
 //#define ACE_HAS_TIMEZONE_GETTIMEOFDAY  According to man we have but not
 //when compiling

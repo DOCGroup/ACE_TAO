@@ -148,9 +148,6 @@
 // accept() is thread-safe
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 
-// Platform supports the tid_t type
-#define ACE_HAS_TID_T
-
 // Platform has XPG4 wide character support
 #define ACE_HAS_XPG4_MULTIBYTE_CHAR
 
@@ -226,7 +223,6 @@
 
 #  define ACE_HAS_PTHREADS
 #  define ACE_HAS_PTHREADS_STD
-#  define ACE_HAS_PTHREAD_T
 #  define ACE_HAS_PTHREAD_EQUAL
 
 #  define ACE_HAS_THREAD_SPECIFIC_STORAGE

@@ -42,7 +42,7 @@
 #define ACE_HAS_IP_MULTICAST
 #define ACE_HAS_H_ERRNO
 #define ACE_HAS_SIN_LEN
-#define ACE_HAS_SYSV_IPC			
+#define ACE_HAS_SYSV_IPC
 #define ACE_HAS_STRUCT_NETDB_DATA
 #define ACE_HAS_ALLOCA
 #define ACE_HAS_SYSV_IPC
@@ -133,11 +133,11 @@
 // Threads related definitions.
 //
 // The threads on AIX are generally POSIX P1003.1c (ACE_HAS_PTHREADS).
-// However, there is also a kernel thread ID (tid_t) that is used in 
-// ACE_Log_Msg (printing the thread ID).  The tid_t is not the same as
-// pthread_t, and can't derive one from the other - thread_self() gets
-// the tid_t (kernel thread ID) if called from a thread.
-// Thanks very much to Chris Lahey for straightening this out.
+// However, there is also a kernel thread ID (tid_t).  The tid_t is
+// not the same as pthread_t, and can't derive one from the other -
+// thread_self() gets the tid_t (kernel thread ID) if called from a
+// thread.  Thanks very much to Chris Lahey for straightening this
+// out.
 
 #define ACE_HAS_THREADS
 #if !defined (ACE_MT_SAFE)
@@ -147,22 +147,18 @@
 #define ACE_HAS_PTHREADS
 #define ACE_HAS_PTHREADS_DRAFT7
 #define ACE_HAS_PTHREAD_EQUAL
-#define ACE_HAS_PTHREAD_T
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
-#define ACE_HAS_REENTRANT_FUNCTIONS 
+#define ACE_HAS_REENTRANT_FUNCTIONS
 #define ACE_HAS_SIGTHREADMASK
 #define ACE_HAS_SIGWAIT
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
-// tid_t is defined, but is used in the underlying thread API, not in the
-// pthreads API.
-#define ACE_HAS_TID_T
 
 // ACE_HAS_THREAD_SELF has been defined in the past... it is apparently not
 // needed.  However, if someone comes across a need for it, here it is.
 //#define ACE_HAS_THREAD_SELF
 
 // If ACE doesn't compile due to the lack of these methods, please
-// send email to schmidt@cs.wustl.edu reporting this. 
+// send email to schmidt@cs.wustl.edu reporting this.
 // #define ACE_LACKS_CONDATTR_PSHARED
 // #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_RWLOCK_T
@@ -175,7 +171,7 @@
 #undef msg_control
 #define msg_accrights msg_control
 #endif /* msg_accrights */
- 
+
 #if !defined (msg_accrightslen)
 #undef msg_controllen
 #define msg_accrightslen msg_controllen
