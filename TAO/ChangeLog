@@ -1,3 +1,8 @@
+Tue Oct 15 07:39:39 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+          Fixed incorrect trace statement to fix fuzz error
+
 Tue Oct 15 05:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Kokyu_dsrt_schedulers/muf_example/server.cpp:
