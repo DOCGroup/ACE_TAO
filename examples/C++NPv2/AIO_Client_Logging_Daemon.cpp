@@ -233,7 +233,7 @@ void AIO_Output_Handler::handle_write_stream
   ACE_Message_Block &mblk = result.message_block ();
   if (!result.success ()) {
     mblk.rd_ptr (mblk.base ());
-    ungetq (mblk);
+    ungetq (&mblk);
   }
   else {
     can_write_ = handle () == result.handle ();
@@ -242,7 +242,7 @@ void AIO_Output_Handler::handle_write_stream
       if (can_write_) start_write ();
     }
     else if (can_write_) start_write (&mblk);
-    else { mblk.rd_ptr (mblk.base ()); ungetq (mblk); }
+    else { mblk.rd_ptr (mblk.base ()); ungetq (&mblk); }
   }
 }
 
@@ -364,7 +364,8 @@ int AIO_CLD_Connector::validate_connection
   }
 
   SSL_clear (ssl_);
-  SSL_set_fd (ssl_, result.connect_handle ());
+  SSL_set_fd
+    (ssl_, ACE_reinterpret_cast (int, result.connect_handle ()));
 
   SSL_set_verify (ssl_, SSL_VERIFY_PEER, 0);
 
