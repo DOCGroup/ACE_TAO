@@ -1,29 +1,29 @@
 #----------------------------------------------------------------------------
-#	$Id$
+#       $Id$
 #
-#	Makefile for the server-side ACE network services
+#       Makefile for the server-side ACE network services
 #----------------------------------------------------------------------------
 
-LIB	= libnetsvcs.a
-SHLIB	= libnetsvcs.$(SOEXT)
+LIB     = libnetsvcs.a
+SHLIB   = libnetsvcs.$(SOEXT)
 
-FILES	=  TS_Server_Handler \
-	   TS_Clerk_Handler \
-	   Client_Logging_Handler \
-	   Name_Handler \
-	   Server_Logging_Handler_T \
-	   Log_Message_Receiver \
-	   Server_Logging_Handler \
-	   Token_Handler \
-	   Logging_Strategy \
-	   Base_Optimizer
+FILES   =  TS_Server_Handler \
+   TS_Clerk_Handler \
+   Client_Logging_Handler \
+   Name_Handler \
+   Server_Logging_Handler_T \
+   Log_Message_Receiver \
+   Server_Logging_Handler \
+   Token_Handler \
+   Logging_Strategy \
+   Base_Optimizer
 
 DEFS    = $(addsuffix .h,$(FILES))
-LSRC	= $(addsuffix .cpp,$(FILES))
+LSRC    = $(addsuffix .cpp,$(FILES))
 
-LIBS 	+= $(ACELIB)
+LIBS   += $(ACELIB)
 
-BUILD	= $(VLIB) $(VSHLIB) 
+BUILD   = $(VLIB) $(VSHLIB)
 
 #----------------------------------------------------------------------------
 #	Include macros and targets
@@ -35,7 +35,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.common.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.lib.GNU
 include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
- 
+
 #----------------------------------------------------------------------------
 #	Local targets
 #----------------------------------------------------------------------------
