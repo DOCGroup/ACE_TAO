@@ -304,7 +304,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs
       return 0;
     }
 
-  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_
+  CORBA::TCKind tk = TAO_DynAnyFactory::unalias (this->type_.in ()
                                                  ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
 
