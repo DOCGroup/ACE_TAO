@@ -1183,16 +1183,18 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       int rc = 0;
 
+      ACE_INET_Addr addr (port);
       if (both != 0 || host == 0) // Acceptor
-        rc += acceptor.start (ACE_INET_Addr (port));
+        rc += acceptor.start (addr);
 
       if (both != 0 || host != 0)
         {
           if (host == 0)
-            host = ACE_TEXT ("localhost");
+            host = ACE_LOCALHOST;
 
-          rc += connector.start (ACE_INET_Addr (port, host),
-                                 senders);
+          if (addr.set (port, host, 1, addr.get_type ()) == -1)
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          rc += connector.start (addr, senders);
 
         }
 

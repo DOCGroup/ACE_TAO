@@ -24,15 +24,16 @@
 #include "ace/Thread_Mutex.h"
 
 // forward declaration
-class Acceptor;
+class TestData;
 
-class Receiver : public ACE_Service_Handler
+class Server : public ACE_Service_Handler
 {
-  friend class Acceptor;
 public:
-  Receiver  (Acceptor *acceptor = 0, int index = -1);
-  ~Receiver (void);
+  Server ();
+  Server (TestData *tester, int id);
+  ~Server (void);
 
+  int id (void) { return this->id_; }
   size_t get_total_snd (void) { return this->total_snd_; }
   size_t get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
@@ -45,6 +46,7 @@ public:
   /// This is called after the new connection has been accepted.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
+  void cancel ();
 
 protected:
   /**
@@ -63,10 +65,9 @@ protected:
 private:
   int initiate_read_stream (void);
   int initiate_write_stream (ACE_Message_Block &mb, size_t nbytes);
-  void cancel ();
 
-  Acceptor *acceptor_;
-  int index_;
+  TestData *tester_;
+  int id_;
 
   ACE_Asynch_Read_Stream rs_;
   ACE_Asynch_Write_Stream ws_;
@@ -82,23 +83,22 @@ private:
 };
 
 // *******************************************
-//   Sender
+//   Client
 // *******************************************
 
-class Connector;
-
-class Sender : public ACE_Service_Handler
+class Client : public ACE_Service_Handler
 {
-  friend class Connector;
 public:
 
   /// This is called after the new connection has been established.
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
-  Sender  (Connector *connector = 0, int index = -1);
-  ~Sender (void);
+  Client ();
+  Client (TestData *tester, int id);
+  ~Client (void);
 
+  int id (void) { return this->id_; }
   size_t get_total_snd (void) { return this->total_snd_; }
   size_t get_total_rcv (void) { return this->total_rcv_; }
   long get_total_w   (void) { return this->total_w_; }
@@ -114,14 +114,15 @@ public:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
   // This is called when asynchronous writes from the socket complete
 
+  void cancel (void);
+
 private:
   int initiate_read_stream (void);
   int initiate_write_stream (void);
-  void cancel (void);
   void close (void);
 
-  int  index_;
-  Connector * connector_;
+  TestData *tester_;
+  int id_;
 
   ACE_Asynch_Read_Stream rs_;
   ACE_Asynch_Write_Stream ws_;
