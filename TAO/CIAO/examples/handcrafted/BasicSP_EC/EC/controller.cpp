@@ -9,6 +9,7 @@
 
 #include "ECC.h"
 #include "ace/Get_Opt.h"
+#include "ace/Streams.h"
 
 char *rategen_ior_ = 0;
 int rate = 2;

@@ -98,30 +98,18 @@ namespace CIAO_GLUE_BasicSP
   // START new event code
   void BMClosedED_Context::create_event_channel (void)
   {
-    // @@ Bala, I've created this new method to decouple event channel
-    // creation from other tasks.
-
-    // @@ Bala, this crashes if I call
-	// CORBA::ORB_var orb = this->orb_core ()->orb ();
-	// I'll keep looking for the problem, but if you have any ideas
-	// tell me.
-	// Get a reference to the ORB.
-    char * argv[1] = { "BMDevice_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
-
+  	// Get a reference to the ORB.
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
     if (CORBA::is_nil (orb.in ()))
       ACE_ERROR ((LM_ERROR, "Nil ORB\n"));
-
 
     // Get a reference to the POA
     CORBA::Object_var poa_object =
       orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK;
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (poa_object.in () ACE_ENV_ARG_PARAMETER);
-    ACE_TRY_CHECK;
+    ACE_CHECK;
     if (CORBA::is_nil (root_poa.in ()))
       ACE_ERROR ((LM_ERROR, "Nil RootPOA\n"));
 
@@ -346,10 +334,7 @@ namespace CIAO_GLUE_BasicSP
 
     // START new event code
     // Get a reference to the ORB.
-    char * argv[1] = { "BMClosedED_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
 
     // Establish supplier's connection to event channel if not done yet
     if (CORBA::is_nil (this->ciao_proxy_out_avail_consumer_.in ()))
@@ -414,10 +399,7 @@ namespace CIAO_GLUE_BasicSP
   {
 
     // Get a reference to the ORB.
-    char * argv[1] = { "BMClosedED_exec" };
-    int argc = sizeof (argv) / sizeof (argv[0]);
-    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv ACE_ENV_ARG_PARAMETER);
-		ACE_TRY_CHECK;
+    CORBA::ORB_var orb = this->container_->_ciao_the_ORB ();
 
     ::BasicSP::DataAvailableConsumer_var sub = ::BasicSP::DataAvailableConsumer::_duplicate (c);
 
@@ -433,10 +415,6 @@ namespace CIAO_GLUE_BasicSP
     ACE_NEW_RETURN (consumer_servant, out_avail_Consumer_impl (orb.in (), sub.in ()), 0);
     RtecEventComm::PushConsumer_var consumer = consumer_servant->_this ();
 
-    // Put reference to this PushConsumer in the map so we can disconnect later
-    ACE_Active_Map_Manager_Key key;
-    this->ciao_proxy_out_avail_supplier_map_.bind (ciao_proxy_out_avail_supplier.in (), key);
-
     // Set QoS properties and connect
     ACE_ConsumerQOS_Factory qos;
     qos.start_disjunction_group (1);
@@ -447,9 +425,11 @@ namespace CIAO_GLUE_BasicSP
 
     sub._retn ();
 
-    ::Components::Cookie_var retv = new ::CIAO::Map_Key_Cookie (key);
-    return retv._retn ();
-
+    ::Components::Cookie * return_cookie;
+    ACE_NEW_RETURN (return_cookie,
+                    ::CIAO::Object_Reference_Cookie (consumer.in ()),
+                    0);
+    return return_cookie;
   }
 
   ::BasicSP::DataAvailableConsumer_ptr
@@ -461,35 +441,31 @@ namespace CIAO_GLUE_BasicSP
   ::Components::InvalidConnection))
   {
     // START new event code
-    ::BasicSP::DataAvailableConsumer_var retv;
-    ACE_Active_Map_Manager_Key key;
+    CORBA::Object_var obj = CORBA::Object::_nil ();
+    ::BasicSP::DataAvailableConsumer_var return_consumer;
 
-    if (ck == 0 || ::CIAO::Map_Key_Cookie::extract (ck, key) == -1)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      ::BasicSP::DataAvailableConsumer::_nil ());
-    }
+    if (ck == 0 || ::CIAO::Object_Reference_Cookie::extract (ck, obj.out ()) == -1)
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BasicSP::DataAvailableConsumer::_nil ());
+      }
 
-    RtecEventChannelAdmin::ProxyPushSupplier_var ciao_proxy_out_avail_supplier;
-    
-    if (this->ciao_proxy_out_avail_supplier_map_.find (key, ciao_proxy_out_avail_supplier) != 0)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      ::BasicSP::DataAvailableConsumer::_nil ());
-    }
+    RtecEventComm::PushConsumer_var push_consumer =
+      ::RtecEventComm::PushConsumer::_narrow (obj.in ());
 
-    ciao_proxy_out_avail_supplier->disconnect_push_supplier ();
+    if (CORBA::is_nil (push_consumer.in ()))
+      {
+        ACE_THROW_RETURN (
+        ::Components::InvalidConnection (),
+        ::BasicSP::DataAvailableConsumer::_nil ());
+      }
 
-    if (this->ciao_proxy_out_avail_supplier_map_.unbind (key, ciao_proxy_out_avail_supplier) != 0)
-    {
-      ACE_THROW_RETURN (
-      ::Components::InvalidConnection (),
-      ::BasicSP::DataAvailableConsumer::_nil ());
-    }
+    push_consumer->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
+    ACE_CHECK;
 
-    return retv._retn ();
+    // @@ Bala, what should I return here?
+    return ::BasicSP::DataAvailableConsumer::_nil ();
     // END new event code
 
     // START old event code

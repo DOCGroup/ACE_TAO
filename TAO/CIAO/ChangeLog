@@ -1,3 +1,30 @@
+Wed Aug 13 17:37:30 2003  George Edwards <g.edwards@vanderbilt.edu>
+
+        * examples/handcrafted/BasicSP_EC/BasicSP.mpc:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED.mpc:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice.mpc:
+        * examples/handcrafted/BasicSP_EC/BMDisplay/BMDisplay.mpc:
+        * examples/handcrafted/BasicSP_EC/EC/EC.mpc:
+
+          Updated library linkage and library paths.
+
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedEDE.idl:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMClosedED/BMClosedED_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDeviceE.idl:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.h:
+        * examples/handcrafted/BasicSP_EC/BMDevice/BMDevice_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/EC/ECE.idl:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.h:
+        * examples/handcrafted/BasicSP_EC/EC/EC_svnt.cpp:
+        * examples/handcrafted/BasicSP_EC/EC/EC_exec.h:
+        * examples/handcrafted/BasicSP_EC/EC/controller.cpp:
+        * examples/handcrafted/BasicSP_EC/EC/client.cpp:
+
+          Added new Cookie implementation.
+          Use new method _ciao_the_ORB () to get container's ORB reference in
+          subscribe () and unsubscribe () methods.
+
 Wed Aug 13 16:23:02 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * examples/handcrafted/BasicSP_EC2/RTEventService/RTEventService_exec.h:

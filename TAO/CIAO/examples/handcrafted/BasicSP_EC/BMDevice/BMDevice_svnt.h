@@ -36,6 +36,7 @@
 #include "Event_Utilities.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
+#include "..\EC\EC_svnt.h" // For Cookie implementation
 // END new event code
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -190,10 +191,6 @@ namespace CIAO_GLUE_BasicSP
     // START new event code
     RtecEventChannelAdmin::ProxyPushConsumer_var
     ciao_proxy_data_available_consumer_;
-
-    ACE_Active_Map_Manager<
-    ::RtecEventChannelAdmin::ProxyPushSupplier_var>
-    ciao_proxy_data_available_supplier_map_;
 
     RtecEventChannelAdmin::EventChannel_var ciao_event_channel_;
     // END new event code
