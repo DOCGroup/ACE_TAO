@@ -1,4 +1,21 @@
-Mon Jun 21 07:18:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+Tue Jun 22 12:44:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * performance-tests/Sequence_Latency/AMH/Single_Threaded:
+        * performance-tests/Sequence_Latency/AMH_Single_Threaded:
+          Moved the files from the first directory to the second. For the
+          automatic performance tests scoreboard the tests must be directly
+          under Sequence_Latency.
+
+        * performance-tests/Latency/AMH/Single_Threaded:
+        * performance-tests/Latency/AMH_Single_Threaded:
+          Moved the files from the first directory to the second. For the
+          automatic performance tests scoreboard the tests must be directly
+          under Latency.
+
+        * performance-tests/Latency/README:
+          Updated location of AMH test
+
+Tue Jun 22 07:18:31 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_global.cpp:
           Added missing includes for Tru64 no online build
