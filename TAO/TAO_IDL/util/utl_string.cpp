@@ -153,7 +153,7 @@ UTL_String::canonicalize (void)
   unsigned long	i;
 
   for (i = 0; i < len; i++)
-    c_str[i] = isalpha (p_str[i]) ? toupper (p_str[i]) : p_str[i];
+    c_str[i] = (char) (isalpha (p_str[i]) ? toupper (p_str[i]) : p_str[i]);
 
   c_str[i] = '\0';
 }

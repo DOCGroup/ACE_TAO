@@ -91,7 +91,7 @@ TAO_CodeGen::upcase (const char *str)
     {
       if (isalpha (str [i]))
         {
-          upcase_str[i] = toupper (str [i]);
+          upcase_str[i] = (char) toupper (str [i]);
         }
       else
         {
@@ -145,7 +145,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       for (int i=0; i < (suffix - fname); i++)
         {
           if (isalpha (fname [i]))
-            macro_name[i+9] = toupper (fname [i]);
+            macro_name[i+9] = (char) toupper (fname [i]);
           else if (isdigit (fname [i]))
             macro_name[i+9] = fname[i];
           else
@@ -416,7 +416,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       // convert letters in fname to upcase
       for (int i=0; i < (suffix - fname); i++)
         if (isalpha (fname [i]))
-          macro_name[i+9] = toupper (fname [i]);
+          macro_name[i+9] = (char) toupper (fname [i]);
         else if (isdigit (fname [i]))
           macro_name[i+9] = fname[i];
         else
@@ -517,7 +517,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       // convert letters in fname to upcase
       for (int i=0; i < (suffix - fname); i++)
         if (isalpha (fname [i]))
-              macro_name[i+9] = toupper (fname [i]);
+              macro_name[i+9] = (char) toupper (fname [i]);
         else if (isdigit (fname [i]))
           macro_name[i+9] = fname[i];
         else
@@ -628,7 +628,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       // convert letters in fname to upcase
       for (int i=0; i < (suffix - fname); i++)
         if (isalpha (fname [i]))
-          macro_name[i+9] = toupper (fname [i]);
+          macro_name[i+9] = (char) toupper (fname [i]);
         else if (isdigit (fname [i]))
           macro_name[i+9] = fname[i];
         else
@@ -756,7 +756,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 
       for (int i=0; i < (suffix - fname); i++)
         if (isalpha (fname [i]))
-          macro_name[i] = toupper (fname [i]);
+          macro_name[i] = (char) toupper (fname [i]);
         else if (isdigit (fname [i]))
           macro_name[i] = fname[i];
       else
@@ -944,7 +944,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
   // convert letters in fname to upcase
   for (int i=0; i < (suffix - fname); i++)
     if (isalpha (fname [i]))
-      macro_name[i] = toupper (fname [i]);
+      macro_name[i] = (char) toupper (fname [i]);
     else if (isdigit (fname [i]))
       macro_name[i] = fname[i];
     else
