@@ -192,11 +192,22 @@ ACE library subsets.  All of the other libraries will depend on this
 library.  The following classes are included in this library.
 
 <PRE><CODE>
-config.h
-Basic_Types
-OS
-Sched_Params
-Handle_Set
+  Basic_Types 
+  Time_Value 
+  OS 
+  OS_Dirent 
+  OS_Memory 
+  OS_QoS 
+  OS_String 
+  OS_TLI 
+  OS_Errno 
+  Base_Thread_Adapter 
+  OS_Thread_Adapter 
+  OS_Log_Msg_Attributes 
+  Thread_Hook 
+  Sched_Params 
+  Handle_Set 
+  Copy_Disabled
 </code></pre>
 
 <H4>libACE_Utils</H4>
@@ -205,32 +216,39 @@ This library contains the following ACE container classes and other
 miscellaneous classes.
 
 <PRE><CODE>
-ACE
-Active_Map_Manager
-Arg_Shifter
-ARGV
-Containers
-Dirent
-Dynamic
-Filecache
-Functor
-Get_Opt
-Hash_Map_Manager
-High_Res_Timer
-Method_Request
-Object_Manager
-Profile_Timer
-Registry
-SString
-Stats
-System_Time
-Time_Request_Reply
-Timeprobe
-Timer_Hash
-Timer_Heap
-Timer_List
-Timer_Queue
-Timer_Wheel
+  ACE 
+  Active_Map_Manager 
+  Arg_Shifter 
+  ARGV 
+  Argv_Type_Converter 
+  Capabilities 
+  Containers 
+  Configuration 
+  Configuration_Import_Export 
+  Dirent 
+  Dirent_Selector 
+  Dynamic 
+  Flag_Manip 
+  Framework_Component 
+  Functor 
+  Get_Opt 
+  Hash_Map_Manager 
+  Connection_Recycling_Strategy 
+  Hashable 
+  Notification_Strategy 
+  Recyclable 
+  Refcountable 
+  Handle_Ops 
+  Init_ACE 
+  Lib_Find 
+  Message_Block 
+  Method_Request 
+  Object_Manager 
+  Registry 
+  String_Base_Const 
+  SString 
+  Stats 
+  Sample_History
 </code></pre>
 
 <H4>libACE_Logging</H4>
@@ -238,10 +256,16 @@ Timer_Wheel
 This library contains the various ACE logging and tracing classes.
 
 <PRE><CODE>
-Dump
-Log_Msg
-Log_Record
-Trace
+  Dump 
+  Log_Msg 
+  Log_Msg_Callback 
+  Log_Msg_Backend 
+  Log_Msg_IPC 
+  Log_Msg_NT_Event_Log 
+  Log_Msg_UNIX_Syslog 
+  Log_Record 
+  Logging_Strategy 
+  Trace
 </code></pre>
 
 <H4>libACE_Threads</H4>
@@ -250,14 +274,21 @@ This library contains the ACE thread/process management and
 synchronization classes.
 
 <PRE><CODE>
-Activation_Queue
-Process
-Process_Manager
-Synch
-Synch_Options
-Thread
-Thread_Manager
-Token
+  Activation_Queue 
+  Process 
+  Process_Manager 
+  Synch 
+  Synch_Options 
+  Process_Semaphore 
+  Process_Mutex 
+  RW_Process_Mutex 
+  File_Lock 
+  Thread 
+  Thread_Manager 
+  Thread_Adapter 
+  Thread_Exit 
+  Thread_Control 
+  Token
 </code></pre>
 
 <H4>libACE_Demux</H4>
@@ -266,14 +297,24 @@ This library contains the ACE Reactor and its associated classes,
 including the ACE Connection components.
 
 <PRE><CODE>
-Event_Handler
-POSIX_Proactor
-Priority_Reactor
-Proactor
-Reactor
-Select_Reactor
-Select_Reactor_Base
-WFMO_Reactor
+  Event_Handler 
+  FlReactor 
+  Msg_WFMO_Reactor 
+  POSIX_Proactor 
+  POSIX_CB_Proactor 
+  WIN32_Proactor 
+  Priority_Reactor 
+  Proactor 
+  Reactor 
+  Select_Reactor 
+  Select_Reactor_Base 
+  SUN_Proactor 
+  Dev_Poll_Reactor 
+  TP_Reactor 
+  TkReactor 
+  WFMO_Reactor 
+  XtReactor 
+  QtReactor
 </code></pre>
 
 <H4>libACE_Connection</H4>
@@ -282,10 +323,11 @@ This library contains the ACE Connection components, i.e., Acceptor,
 Connector, and Svc_Handler.
 
 <PRE><CODE>
-Asynch_IO
-Asynch_IO_Impl
-POSIX_Asynch_IO
-Strategies
+  Asynch_IO 
+  Asynch_IO_Impl 
+  Asynch_Pseudo_Task 
+  POSIX_Asynch_IO 
+  WIN32_Asynch_IO
 </code></pre>
 
 <H4>libACE_Sockets</H4>
@@ -293,22 +335,25 @@ Strategies
 This library contains the ACE C++ wrappers for sockets.
 
 <PRE><CODE>
-IPC_SAP
-LSOCK
-LSOCK_Acceptor
-LSOCK_CODgram
-LSOCK_Connector
-LSOCK_Dgram
-LSOCK_Stream
-SOCK
-SOCK_Acceptor
-SOCK_CODgram
-SOCK_Connector
-SOCK_Dgram
-SOCK_Dgram_Bcast
-SOCK_Dgram_Mcast
-SOCK_IO
-SOCK_Stream
+  Addr 
+  INET_Addr 
+  IPC_SAP 
+  LSOCK 
+  LSOCK_Acceptor 
+  LSOCK_CODgram 
+  LSOCK_Connector 
+  LSOCK_Dgram 
+  LSOCK_Stream 
+  SOCK 
+  SOCK_Acceptor 
+  SOCK_CODgram 
+  Sock_Connect 
+  SOCK_Connector 
+  SOCK_Dgram 
+  SOCK_Dgram_Bcast 
+  SOCK_Dgram_Mcast 
+  SOCK_IO 
+  SOCK_Stream
 </code></pre>
 
 <H4>libACE_IPC</H4>
@@ -318,44 +363,55 @@ IPC and FILE I/O other than sockets.  This library will depend on the
 <CODE>libACE_Socket</CODE> library.
 
 <PRE><CODE>
-Addr
-DEV
-DEV_Addr
-DEV_Connector
-DEV_IO
-FIFO
-FIFO_Recv
-FIFO_Recv_Msg
-FIFO_Send
-FIFO_Send_Msg
-FILE_Addr
-FILE
-FILE_Connector
-FILE_IO
-INET_Addr
-IO_SAP
-IOStream
-Pipe
-Signal
-SPIPE_Addr
-SPIPE
-SPIPE_Acceptor
-SPIPE_Connector
-SPIPE_Stream
-SV_Message
-SV_Message_Queue
-SV_Semaphore_Complex
-SV_Semaphore_Simple
-SV_Shared_Memory
-TLI
-TLI_Acceptor
-TLI_Connector
-TLI_Stream
-TTY_IO
-UNIX_Addr
-UPIPE_Acceptor
-UPIPE_Connector
-UPIPE_Stream
+  ATM_Addr 
+  ATM_Acceptor 
+  ATM_Connector 
+  ATM_Params 
+  ATM_QoS 
+  ATM_Stream 
+  XTI_ATM_Mcast 
+  DEV 
+  DEV_Addr 
+  DEV_Connector 
+  DEV_IO 
+  FIFO 
+  FIFO_Recv 
+  FIFO_Recv_Msg 
+  FIFO_Send 
+  FIFO_Send_Msg 
+  FILE_Addr 
+  FILE 
+  FILE_Connector 
+  FILE_IO 
+  IO_SAP 
+  IOStream 
+  Pipe 
+  Signal 
+  SPIPE_Addr 
+  SPIPE 
+  SPIPE_Acceptor 
+  SPIPE_Connector 
+  SPIPE_Stream 
+  SV_Message 
+  SV_Message_Queue 
+  SV_Semaphore_Complex 
+  SV_Semaphore_Simple 
+  SV_Shared_Memory 
+  TLI 
+  TLI_Acceptor 
+  TLI_Connector 
+  TLI_Stream 
+  TTY_IO 
+  UNIX_Addr 
+  UPIPE_Acceptor 
+  UPIPE_Connector 
+  UPIPE_Stream 
+  MEM_Acceptor 
+  MEM_Addr 
+  MEM_Connector 
+  MEM_IO 
+  MEM_SAP 
+  MEM_Stream
 </code></pre>
 
 <H4>libACE_Svcconf</H4>
@@ -364,16 +420,21 @@ This library contains the ACE C++ wrappers for the Service
 Configurator component.
 
 <PRE><CODE>
-DLL
-Parse_Node
-Service_Config
-Service_Manager
-Service_Object
-Service_Repository
-Service_Types
-Shared_Object
-Svc_Conf_l
-Svc_Conf_y
+  DLL 
+  DLL_Manager 
+  Dynamic_Service_Base 
+  Parse_Node 
+  Service_Config 
+  Service_Manager 
+  Service_Object 
+  Service_Repository 
+  Service_Types 
+  Service_Templates 
+  Shared_Object 
+  XML_Svc_Conf 
+  Svc_Conf_l 
+  Svc_Conf_y 
+  Svc_Conf_Lexer_Guard
 </code></pre>
 
 <H4>libACE_Streams</H4>
@@ -381,10 +442,12 @@ Svc_Conf_y
 This library contains the ACE Streams classes.
 
 <PRE><CODE>
-CDR_Stream
-Message_Block
-Message_Queue
-Task
+  CDR_Base 
+  CDR_Stream 
+  Codeset_IBM1047 
+  Message_Queue 
+  Reactor_Notification_Strategy 
+  Task
 </code></pre>
 
 <H4>libACE_Memory</H4>
@@ -393,14 +456,37 @@ This library contains the ACE C++ wrappers for shared memory and
 memory-mapped files.
 
 <PRE><CODE>
-Malloc
-Mem_Map
-Memory_Pool
-Obstack
-Read_Buffer
-Shared_Memory
-Shared_Memory_MM
-Shared_Memory_SV
+  Based_Pointer_Repository 
+  Malloc 
+  PI_Malloc 
+  Malloc_Allocator 
+  Malloc_Instantiations 
+  Mem_Map 
+  Memory_Pool 
+  Obchunk 
+  Obstack 
+  Read_Buffer 
+  Shared_Memory 
+  Shared_Memory_MM 
+  Shared_Memory_SV
+</code></pre>
+
+<H4>libACE_Timer</H4>
+
+This componenty contains the ACE C++ wrappers for the ACE timer classes.
+
+<pre><code>
+  Basic_Stats 
+  High_Res_Timer 
+  Profile_Timer 
+  System_Time 
+  Time_Request_Reply 
+  Timeprobe 
+  Timer_Hash 
+  Timer_Heap 
+  Timer_List 
+  Timer_Queue 
+  Timer_Wheel
 </code></pre>
 
 <H4>libACE_Token</H4>
@@ -408,31 +494,34 @@ Shared_Memory_SV
 This componenty contains the ACE C++ wrappers for Token classes.
 
 <pre><code>
-Local_Tokens
-Remote_Tokens
-Token_Collection
-Token_Invariants
-Token_Manager
-Token_Request_Reply
+  Local_Tokens 
+  Remote_Tokens 
+  Token_Collection 
+  Token_Invariants 
+  Token_Manager 
+  Token_Request_Reply
+</code></pre>
+
+<H4>libACE_Codec</H4>
+
+This component contains the ACE codec support:
+
+<pre><code>
+  Codecs
 </code></pre>
 
 <H4>libACE_Other</H4>
 
-This component contains miscellaneous ACE C++ wrappers.
+This component contains miscellaneous ACE C++ wrappers:
 
 <pre><code>
-CORBA_Handler
-CORBA_Ref
-Local_Name_Space
-Msg_WFMO_Reactor
-Name_Proxy
-Name_Request_Reply
-Name_Space
-Naming_Context
-Registry_Name_Space
-Remote_Name_Space
-TP_Reactor
-XtReactor
+  Local_Name_Space 
+  Name_Proxy 
+  Name_Request_Reply 
+  Name_Space 
+  Naming_Context 
+  Registry_Name_Space 
+  Remote_Name_Space 
 </code></pre>
 
 <hr><p>
