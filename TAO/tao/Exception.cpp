@@ -1137,7 +1137,7 @@ TAO_Exceptions::fini (void)
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 int \
-CORBA::##name ::_is_a (const char* interface_id) const \
+CORBA::name ::_is_a (const char* interface_id) const \
 { \
   return ((ACE_OS_String::strcmp ( \
                interface_id, \
@@ -1148,11 +1148,11 @@ STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::##name * \
-CORBA::##name ::_downcast (CORBA::Exception* exception) \
+CORBA::name * \
+CORBA::name ::_downcast (CORBA::Exception* exception) \
 { \
   if (exception->_is_a ("IDL:omg.org/CORBA/" #name ":1.0")) \
-    return ACE_dynamic_cast (CORBA::##name *, exception); \
+    return ACE_dynamic_cast (CORBA::name *, exception); \
   return 0; \
 }
 STANDARD_EXCEPTION_LIST
@@ -1160,7 +1160,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::##name ::_raise (void) \
+CORBA::name ::_raise (void) \
 { \
   TAO_RAISE (*this); \
 }
@@ -1169,7 +1169,7 @@ STANDARD_EXCEPTION_LIST
 
 // SystemException constructors
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::##name ::##name (void) \
+CORBA::name ::name (void) \
   :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
                              #name, \
                              TAO_DEFAULT_MINOR_CODE, \
@@ -1181,7 +1181,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-CORBA::##name ::_type (void) const \
+CORBA::name ::_type (void) const \
 { \
   return CORBA::_tc_ ## name; \
 }
@@ -1190,9 +1190,9 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::##name ::_tao_any_destructor (void *x) \
+CORBA::name ::_tao_any_destructor (void *x) \
 { \
-  CORBA::##name *tmp = ACE_static_cast (CORBA::##name *, x); \
+  CORBA::name *tmp = ACE_static_cast (CORBA::name *, x); \
   delete tmp; \
 }
 STANDARD_EXCEPTION_LIST
@@ -1200,10 +1200,10 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Exception * \
-CORBA::##name ::_tao_duplicate (void) const \
+CORBA::name ::_tao_duplicate (void) const \
 { \
   CORBA::Exception *result; \
-  ACE_NEW_RETURN (result, CORBA::##name (*this), 0); \
+  ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
   return result; \
 }
 STANDARD_EXCEPTION_LIST
@@ -1235,7 +1235,7 @@ tao_insert_for_insertion_system_exception (CORBA::Any &any,
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-void operator<<= (CORBA::Any &any, const CORBA::##name &ex) \
+void operator<<= (CORBA::Any &any, const CORBA::name &ex) \
 { \
   tao_insert_for_insertion_system_exception (any, ex, \
             "\tCORBA::Any insertion (non-copy) of CORBA::" #name "\n" \
@@ -1275,10 +1275,10 @@ tao_insert_system_exception (CORBA::Any &any,
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-void operator<<= (CORBA::Any &any, CORBA::##name *ex) \
+void operator<<= (CORBA::Any &any, CORBA::name *ex) \
 { \
   tao_insert_system_exception (any, ex, \
-          CORBA::##name ::_tao_any_destructor, \
+          CORBA::name ::_tao_any_destructor, \
           "\tCORBA::Any insertion (non-copy) of CORBA::" #name "\n" \
                                ); \
 }
@@ -1289,7 +1289,7 @@ STANDARD_EXCEPTION_LIST
 #define TAO_SYSTEM_EXCEPTION(name) \
 static CORBA::SystemException* _tao_allocator_##name (void) \
 { \
-  return new CORBA::##name; \
+  return new CORBA::name; \
 }
 STANDARD_EXCEPTION_LIST
 #undef TAO_SYSTEM_EXCEPTION
@@ -1355,7 +1355,7 @@ tao_insert_in_extractor_system_exception (
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean operator>>= (const CORBA::Any &any, \
-                            const CORBA::##name *&ex) \
+                            const CORBA::name *&ex) \
 { \
   ex = 0; \
   CORBA::SystemException *tmp; \
@@ -1363,14 +1363,14 @@ CORBA::Boolean operator>>= (const CORBA::Any &any, \
        tmp, \
        _tao_allocator_##name, \
        CORBA::_tc_##name, \
-       CORBA::##name ::_tao_any_destructor, \
+       CORBA::name ::_tao_any_destructor, \
        "IDL:omg.org/CORBA/" #name ":1.0", \
        "\tCORBA::Any extraction of CORBA::" #name "\n") == 0) \
          { \
              ex = 0; \
          return 0; \
          } \
- ex = (CORBA::##name*)tmp; \
+ ex = (CORBA::name*)tmp; \
  return 1; \
 }
 
