@@ -1,3 +1,16 @@
+Thu Jan 14 23:50:25 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * docs/implrepo/usersguide.html:
+        * docs/implrepo/index.html:
+        * docs/implrepo/status.html:
+          Added and collected most of the information on the 
+          Implementation Repository.  The main addition was a rough
+          User's Guide which should help people use the IR.
+
+        * docs/releasenotes/index.html:
+        * docs/index.html:
+          Now point to the correct IR stuff.
+
 Thu Jan 14 23:32:19 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* orbsvcs/tests/ImplRepo/Makefile: Changed to incorporate the
