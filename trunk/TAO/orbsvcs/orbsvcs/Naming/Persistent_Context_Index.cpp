@@ -7,9 +7,7 @@
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
 template class ACE_Auto_Basic_Ptr<TAO_Naming_Context>;
-template class ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>;
-template class ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>;
-template class ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >;
+
 template class ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId>;
 template class ACE_Hash_Map_Manager<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Manager_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>;
@@ -24,9 +22,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_Persistent_Index_ExtId, TAO_
 template class ACE_Auto_Basic_Ptr<ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,  TAO_Persistent_Index_IntId>::ITERATOR>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Auto_Basic_Ptr<TAO_Naming_Context>
-#pragma instantiate ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX>
-#pragma instantiate ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX, ACE_Control_Block>
-#pragma instantiate ACE_Allocator_Adapter<ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_SYNCH_MUTEX> >
+
 #pragma instantiate ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId>
 #pragma instantiate ACE_Hash_Map_Manager<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Manager_Ex<TAO_Persistent_Index_ExtId, TAO_Persistent_Index_IntId, ACE_Hash<TAO_Persistent_Index_ExtId>, ACE_Equal_To<TAO_Persistent_Index_ExtId>, ACE_Null_Mutex>
@@ -90,7 +86,7 @@ TAO_Persistent_Context_Index::bind (const char *poa_id,
 
       if (result == 1)
         {
-          // Entry already existed so bind failed. Free our dynamically 
+          // Entry already existed so bind failed. Free our dynamically
           // allocated memory.
           this->allocator_->free ((void *) ptr);
           return result;
@@ -124,8 +120,8 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 {
   delete allocator_;
-  ACE_OS::free (ACE_reinterpret_cast (void *, 
-                                      ACE_const_cast (ACE_TCHAR *, 
+  ACE_OS::free (ACE_reinterpret_cast (void *,
+                                      ACE_const_cast (ACE_TCHAR *,
                                                       index_file_)));
 }
 

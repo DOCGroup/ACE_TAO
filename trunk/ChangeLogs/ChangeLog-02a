@@ -1,3 +1,12 @@
+Sun Nov 26 19:07:48 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
+
+	* examples/Map_Manager/test_hash_map_manager.cpp:
+	* examples/Shared_Malloc/Malloc.cpp:
+	* examples/Shared_Malloc/test_position_independent_malloc.cpp:
+	
+	  Removed extraneous explicit template instantiation declarations causing
+	  "multiply defined" errors on VxWorks and LynxOS.
+	
 Sat Nov 25 22:08:46 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
 	* apps/drwho/Makefile:
