@@ -68,6 +68,14 @@ ifeq ($(threads),1)
     CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
 endif # threads
 
+# 
+# /usr/include/features.h says all of the below are default.
+# To ensure that they are always set, regardless of #include file order,
+# we'll set them here explicitly.
+#
+CPPFLAGS += -D_SVID_SOURCE -D_BSD_SOURCE -D_POSIX_SOURCE -D_POSIX_C_SOURCE=199506L
+
+
 CCFLAGS += $(CFLAGS) $(TEMPLATES_FLAG)
 DCFLAGS += -g
 DLD     = $(CXX)
