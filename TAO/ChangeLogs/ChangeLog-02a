@@ -1,3 +1,10 @@
+Mon Jan 14 09:34:35 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/IDL_Test/including.idl:
+
+          Prefix the enum value FE with TAO_ to avoid a conflict on HP-UX
+          10.20.
+
 Mon Jan 14 09:27:44 2002  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile.PortableGroup: Added missing
