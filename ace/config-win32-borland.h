@@ -30,8 +30,6 @@
 
 # include "ace/config-win32-common.h"
 
-# define ACE_STRCASECMP_EQUIVALENT ::stricmp
-# define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 # define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 
 # define ACE_LACKS_MODE_MASKS 1
@@ -79,15 +77,17 @@
 
 #define ACE_LACKS_STRRECVFD
 
-#if defined(__BORLANDC__) && (__BORLANDC__ >= 0x600)
+#if (__BORLANDC__ >= 0x600)
 # define ACE_LACKS_PTRDIFF_T
 # define ACE_PTRDIFF_T_TYPE std::ptrdiff_t
 # define ACE_HAS_DINKUM_STL
 # undef ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif
 
-#if defined(__BORLANDC__) && (__BORLANDC__ < 0x600)
-#define ACE_USES_EXPLICIT_STD_NAMESPACE
+#if (__BORLANDC__ < 0x600)
+# define ACE_STRCASECMP_EQUIVALENT ::stricmp
+# define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
+# define ACE_USES_EXPLICIT_STD_NAMESPACE
 #endif
 
 #include /**/ "ace/post.h"
