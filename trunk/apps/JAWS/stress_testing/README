@@ -1,0 +1,27 @@
+To use the http_tester, you need to use a config file, which consists
+of a list of experiments, one on each line.
+
+Each experiment (line) consists of several space-delimited compulsory
+fields, as follows:
+
+experiment_id (string)
+total_number_of_requests (integer)
+request_rate (float)
+url1 (first URL)
+p1 (probability of requesting the first URL)
+url2 (second URL)
+p2 (probability of requesting the second URL)
+url3 (third URL)
+p3 (probability of requesting the third URL)
+TCP_NODELAY (boolean, 1 == TCP_NODELAY is set)
+SOCKET_RECV_BUFSIZ (usually 65536)
+
+URLS must be of the form:
+
+http://www.cs.wustl.edu:8888/~sumedh/index.html
+
+(the port number is required, im making it optional in the next version).
+
+Please see the sample file "config", for an example.
+
+
