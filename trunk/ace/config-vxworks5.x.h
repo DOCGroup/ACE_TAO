@@ -2,9 +2,10 @@
 // $Id$
 
 // The following configuration file is designed to work for VxWorks
-// 5.2/5.3 platforms using one of these compilers:
-// 1) The GNU/Cygnus g++ compiler that is shipped with Tornado 1.0.1.
+// 5.5 platforms using one of these compilers:
+// 1) The GNU g++ compiler that is shipped with Tornado 2.2 or newer.
 // 2) The Green Hills 1.8.8 (not 1.8.7!!!!) and 1.8.9 compilers.
+// 3) The WindRiver Compiler (formerly known as Diab)
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
