@@ -1382,7 +1382,7 @@ clean-local:
 ## os_include subdirectory just for installation purposes seemed like
 ## overkill.
 install-data-local:
-	list=`(cd $(srcdir); find os_include -type d -a \! \( -name CVS -o -name .svn \) )`; for p in $$list; do \
+	list=`(cd $(srcdir); find os_include -type d -a \! \( \( -name CVS -o -name .svn \) -prune \) )`; for p in $$list; do \
 	  $(mkdir_p) $(DESTDIR)$(pkgincludedir)/$$p; \
 	  files=`(cd $(srcdir)/$$p; $(ECHO) *.h)`; \
           test "$$files" != "*.h"  && \
