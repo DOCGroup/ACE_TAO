@@ -1,3 +1,9 @@
+Wed Jul 14 10:10:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Dev_Poll_Reactor.h:
+
+	  Removed extraneous character that was inadvertently committed.
+
 Tue Jul 13 22:51:53 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* examples/Shared_Malloc/Options.h (slave_name):
