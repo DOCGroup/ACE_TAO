@@ -64,6 +64,7 @@ $MODULE='ACE_wrappers';
       'TAO/tests/Faults , run_test.pl',
       'TAO/tests/NestedUpcall/Simple , run_test.pl',
       'TAO/tests/NestedUpcall/MT_Client_Test , run_test.pl',
+      'TAO/tests/NestedUpcall/Triangle_Test , run_test.pl',
       'TAO/tests/POA/Identity , run_test.pl',
       'TAO/tests/POA/Deactivation , run_test.pl',
       'TAO/tests/POA/Destruction , run_test.pl',
