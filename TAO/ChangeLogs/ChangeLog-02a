@@ -1,3 +1,9 @@
+Mon Nov 20 01:16:38 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/interceptors.html:
+
+	  Updated these release notes.
+
 Mon Nov 20 00:50:14 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connect.h:
