@@ -24,6 +24,7 @@
 #include "pace/config/codes.h"
 #include "pace/config/constants.h"
 #include "pace/config/defaults.h"
+#include "pace/config/types.h"
 #include "pace/config/utility.h"
 
 /* Temporary <luther@cs.wustl.edu> */
