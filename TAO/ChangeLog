@@ -1,3 +1,8 @@
+Mon Feb 14 09:25:27 2005  Ciju John  <john_c@ociweb.com>
+
+        * orbsvcs/tests/Notify/MT_Dispatching/run_test.pl:
+          Cleaned out consumer/supplier argument list on each test iteration.
+
 Mon Feb 14 10:57:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/performance-tests/RTEvent/lib/Implicit_Deactivator.h:
