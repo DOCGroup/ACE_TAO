@@ -169,8 +169,6 @@ TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
                     svc_handler->get_handle ()));
    }
 
-  svc_handler->decr_refcount ();
-
   // @@ Michael: We do not use regular connection management.
 
   transport = TAO_Transport::_duplicate (svc_handler->transport ());
