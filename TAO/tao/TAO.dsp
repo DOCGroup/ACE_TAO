@@ -532,9 +532,15 @@ SOURCE=.\IOP_CodecC.cpp
 
 !IF  "$(CFG)" == "TAO DLL - Win32 MFC Release"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 MFC Debug"
 
+# ADD CPP /GR
+
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Release"
+
+# ADD CPP /GR
 
 !ELSEIF  "$(CFG)" == "TAO DLL - Win32 Debug"
 
