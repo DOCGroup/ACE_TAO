@@ -95,22 +95,50 @@ TAO_Basic_StreamCtrl::stop (const AVStreams::flowSpec &flow_spec,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow))
 {
-  // call stop on the flow connections.
-  if (this->flow_connection_map_.current_size () > 0)
-    for (u_int i=0;i<flow_spec.length ();i++)
-      {
-        char *flowname = get_flowname (flow_spec[i]);
-        TAO_String_Hash_Key flow_name_key (flowname);
-        FlowConnection_Map::ENTRY *flow_connection_entry = 0;
-        if (this->flow_connection_map_.find (flow_name_key,flow_connection_entry) == 0)
-          flow_connection_entry->int_id_->stop (ACE_TRY_ENV);
-      }
-
-  if (CORBA::is_nil (this->sep_a_.in ()))
-    return;
+  ACE_TRY
+    {
+      // @@Call stop on the Related MediaCtrl.
+      // call stop on the flow connections.
+      if (this->flow_connection_map_.current_size () > 0)
+        {
+          if (flow_spec.length () > 0)
+            for (u_int i=0;i<flow_spec.length ();i++)
+              {
+                char *flowname = get_flowname (flow_spec[i]);
+                TAO_String_Hash_Key flow_name_key (flowname);
+                FlowConnection_Map::ENTRY *flow_connection_entry = 0;
+                if (this->flow_connection_map_.find (flow_name_key,flow_connection_entry) == 0)
+                  {
+                    flow_connection_entry->int_id_->stop (ACE_TRY_ENV);
+                    ACE_TRY_CHECK;
+                  }
+              }
+          else
+            {
+              // call start on all the flows.
+              FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
+              FlowConnection_Map_Entry *entry = 0;
+              for (;iterator.next (entry) !=  0;iterator.advance ())
+                {
+                  entry->int_id_->stop (ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+            }
+        }
+      if (CORBA::is_nil (this->sep_a_.in ()))
+        return;
 
   // Make the upcall into the application
-  this->sep_a_->stop (flow_spec, ACE_TRY_ENV);
+      this->sep_a_->stop (flow_spec, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Basic_StreamCtrl::stop");
+      return;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // Start the transfer of data in the stream.
@@ -121,22 +149,51 @@ TAO_Basic_StreamCtrl::start (const AVStreams::flowSpec &flow_spec,
   ACE_THROW_SPEC ((CORBA::SystemException,
                    AVStreams::noSuchFlow))
 {
-  // call start on the flow connections.
-  if (this->flow_connection_map_.current_size () > 0)
-    for (u_int i=0;i<flow_spec.length ();i++)
-      {
-        char *flowname = get_flowname (flow_spec[i]);
-        TAO_String_Hash_Key flow_name_key (flowname);
-        FlowConnection_Map::ENTRY *flow_connection_entry = 0;
-        if (this->flow_connection_map_.find (flow_name_key,flow_connection_entry) == 0)
-          flow_connection_entry->int_id_->start (ACE_TRY_ENV);
-      }
+  ACE_TRY
+    {
+      // @@Call start on the Related MediaCtrl.
 
-  if (CORBA::is_nil (this->sep_a_.in ()))
-    return;
+      // call start on the flow connections.
+      if (this->flow_connection_map_.current_size () > 0)
+        {
+          if (flow_spec.length () > 0)
+            for (u_int i=0;i<flow_spec.length ();i++)
+              {
+                char *flowname = get_flowname (flow_spec[i]);
+                TAO_String_Hash_Key flow_name_key (flowname);
+                FlowConnection_Map::ENTRY *flow_connection_entry = 0;
+                if (this->flow_connection_map_.find (flow_name_key,flow_connection_entry) == 0)
+                  {
+                    flow_connection_entry->int_id_->start (ACE_TRY_ENV);
+                    ACE_TRY_CHECK;
+                  }
+              }
+          else
+            {
+              // call start on all the flows.
+              FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
+              FlowConnection_Map_Entry *entry = 0;
+              for (;iterator.next (entry) !=  0;iterator.advance ())
+                {
+                  entry->int_id_->start (ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+            }
+        }
+      if (CORBA::is_nil (this->sep_a_.in ()))
+        return;
 
-  // Make the upcall into the application
-  this->sep_a_->start (flow_spec, ACE_TRY_ENV);
+      // Make the upcall into the application
+      this->sep_a_->start (flow_spec, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Basic_StreamCtrl::start");
+      return;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // Tears down the stream. This will close the connection, and delete
@@ -148,22 +205,46 @@ TAO_Basic_StreamCtrl::destroy (const AVStreams::flowSpec &flow_spec,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      AVStreams::noSuchFlow))
 {
-  // call stop on the flow connections.
-  if (this->flow_connection_map_.current_size () > 0)
-    for (u_int i=0;i<flow_spec.length ();i++)
-      {
-        char *flowname = get_flowname (flow_spec[i]);
-        TAO_String_Hash_Key flow_name_key (flowname);
-        FlowConnection_Map::ENTRY *flow_connection_entry = 0;
-        if (this->flow_connection_map_.find (flow_name_key,flow_connection_entry) == 0)
-          flow_connection_entry->int_id_->destroy (ACE_TRY_ENV);
-      }
+  ACE_TRY
+    {
+      // call stop on the flow connections.
+      if (this->flow_connection_map_.current_size () > 0)
+        {
+          if (flow_spec.length () > 0)
+            for (u_int i=0;i<flow_spec.length ();i++)
+              {
+                char *flowname = get_flowname (flow_spec[i]);
+                TAO_String_Hash_Key flow_name_key (flowname);
+                FlowConnection_Map::ENTRY *flow_connection_entry = 0;
+                if (this->flow_connection_map_.find (flow_name_key,flow_connection_entry) == 0)
+                  flow_connection_entry->int_id_->destroy (ACE_TRY_ENV);
+              }
+          else
+            {
+              // call start on all the flows.
+              FlowConnection_Map_Iterator iterator (this->flow_connection_map_);
+              FlowConnection_Map_Entry *entry = 0;
+              for (;iterator.next (entry) !=  0;iterator.advance ())
+                {
+                  entry->int_id_->start (ACE_TRY_ENV);
+                  ACE_TRY_CHECK;
+                }
+            }
+        }
+      if (CORBA::is_nil (this->sep_a_.in ()))
+        return;
 
-  if (CORBA::is_nil (this->sep_a_.in ()))
-    return;
-
-  // Make the upcall into the application
-  this->sep_a_->destroy (flow_spec, ACE_TRY_ENV);
+      // Make the upcall into the application
+      this->sep_a_->destroy (flow_spec, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,"TAO_Basic_StreamCtrl::start");
+      return;
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
 }
 
 // Changes the QoS associated with the stream
