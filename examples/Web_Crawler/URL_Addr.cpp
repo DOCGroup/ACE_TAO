@@ -1,5 +1,7 @@
 // $Id$
+
 #include "URL_Addr.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Web_Crawler, URL_Addr, "$Id$")
 
@@ -58,8 +60,8 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
   if (size > this->addr_string_len_)
     {
       ACE_ALLOCATOR_RETURN (this_ptr->addr_string_,
-                            (LPTSTR) ACE_OS::realloc ((void *) this->addr_string_,
-                                                      size),
+                            (ACE_TCHAR *) ACE_OS::realloc ((void *) this->addr_string_,
+                                                           size),
                             0);
       this_ptr->addr_string_len_ = size;
     }
@@ -123,7 +125,8 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s)
 }
 
 ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
-  : path_name_ (0),
+  : ACE_INET_Addr (),
+    path_name_ (0),
     addr_string_ (0),
     addr_string_len_ (0)
 {
@@ -212,10 +215,10 @@ ACE_URL_Addr::get_path_name (void) const
 ACE_URL_Addr::~ACE_URL_Addr (void)
 {
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (LPTSTR,
+                                      ACE_const_cast (ACE_TCHAR *,
                                                       this->path_name_)));
   ACE_OS::free (ACE_reinterpret_cast (void *,
-                                      ACE_const_cast (LPTSTR,
+                                      ACE_const_cast (ACE_TCHAR *,
                                                       this->addr_string_)));
   this->path_name_ = 0;
 }

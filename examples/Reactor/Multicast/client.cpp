@@ -4,6 +4,7 @@
 // Log_Wrapper.
 
 #include "ace/Get_Opt.h"
+#include "ace/Log_Msg.h"
 #include "Log_Wrapper.h"
 
 ACE_RCSID(Multicast, client, "$Id$")

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/OS.h"
+#include "ace/Log_Msg.h"
 #include "HTTPU/parse_url.h"
 
 HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
