@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file  struct_typecode.cpp
+ *  @file  value_typecode.cpp
  *
  *  $Id$
  *
@@ -16,7 +16,7 @@
 #include <string>
 
 
-TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
+TAO::be_visitor_value_typecode::be_visitor_value_typecode (
   be_visitor_context * ctx,
   bool is_exception)
   : be_visitor_typecode_defn (ctx),
@@ -25,7 +25,7 @@ TAO::be_visitor_struct_typecode::be_visitor_struct_typecode (
 }
 
 int
-TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
+TAO::be_visitor_value_typecode::visit_structure (AST_Structure * node)
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -38,7 +38,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
                                  + node->flat_name ());
 
   // Generate array containing struct field characteristics.
-  os << "static TAO::TypeCode::Field<char const *> const "
+  os << "static TAO::TypeCode::Value_Field<char const *> const "
      << fields_name.c_str ()
      << "[] =" << be_idt_nl
      << "{" << be_idt_nl;
@@ -51,11 +51,11 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
 
   // Generate the TypeCode instantiation.
   os
-    << "static TAO::TypeCode::Struct<char const *," << be_nl
-    << "                             TAO::TypeCode::Field<char const *> const *," << be_nl
-    << "                             CORBA::tk_"
+    << "static TAO::TypeCode::Value<char const *," << be_nl
+    << "                            TAO::TypeCode::Value_Field<char const *> const *," << be_nl
+    << "                            CORBA::tk_"
     << (this->is_exception_ ? "except" : "struct") << "," << be_nl
-    << "                             TAO::Null_RefCount_Policy> const"
+    << "                            TAO::Null_RefCount_Policy> const"
     << be_idt_nl
     << "_tao_tc_" << node->flat_name () << " (" << be_idt_nl
     << "\"" << node->repoID () << "\"," << be_nl
@@ -69,7 +69,7 @@ TAO::be_visitor_struct_typecode::visit_structure (AST_Structure * node)
 }
 
 int
-TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
+TAO::be_visitor_value_typecode::visit_members (AST_Structure * node)
 {
   AST_Field ** member_ptr = 0;
 
