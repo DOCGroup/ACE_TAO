@@ -1,72 +1,77 @@
+Sat Jul 08 14:35:27 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/MProfile/client.cpp: removed unnecessary #include
+          of tao/IORS.h.
+
 Fri Jul  7 19:07:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/InterfaceS.cpp:
+        * orbsvcs/IFR_Service/InterfaceS.cpp:
 
-	  Patched the _dispatch() methods with the new version
-	  checked in by Bruce Trask on Wednesday. The old
-	  code now causes replies to get lost.
+          Patched the _dispatch() methods with the new version
+          checked in by Bruce Trask on Wednesday. The old
+          code now causes replies to get lost.
 
-	* orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/IFR_Service.h:
 
-	  Cosmetic changes.
+          Cosmetic changes.
 
 Fri Jul 07 15:04:43 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
-	
-	* tao/RT_Policy_i.h: 
-	  
-	  Removed code review comment.
-        
+
+        * tao/RT_Policy_i.h:
+
+          Removed code review comment.
+
         * tao/RT_Policy_i.cpp:
 
           Modified <_tao_encode> and <_tao_decode> imlpementation
           for client exposed policies to make those more compact
           and/or efficient.
 
-	* tao/RTCORBAC.cpp: 
+        * tao/RTCORBAC.cpp:
 
-	  Removed code review comment.
+          Removed code review comment.
 
-	* tao/Profile.cpp (policies): 
+        * tao/Profile.cpp (policies):
 
-	  Changed memory allocation model to improve
-	  the method performance.
+          Changed memory allocation model to improve
+          the method performance.
 
-	* tao/Policy_Factory.h:
-	  
-	  Extended class documentation.
-	  
+        * tao/Policy_Factory.h:
+
+          Extended class documentation.
+
 
 Fri Jul  7 14:47:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs/IFR_Service/Makefile:
-	* orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
+        * orbsvcs/IFR_Service/Makefile:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test/Makefile:
 
-	  Updated dependencies.
+          Updated dependencies.
 
-	* orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
+        * orbsvcs/IFR_Service/Makefile.TypeCodeFactory:
 
-	  Added check for interface_repo=1. Automated builds
-	  will need to have this turned on for TAO.
+          Added check for interface_repo=1. Automated builds
+          will need to have this turned on for TAO.
 
-	* orbsvcs/tests/InterfaceRepo/IFR_Test:
+        * orbsvcs/tests/InterfaceRepo/IFR_Test:
 
-	  When a string member of a struct or sequence is matched
-	  with a '%s' in ACE_DEBUG, egcs can't seem to turn it
-	  into a const char*. Had to add .in() to all these cases.
+          When a string member of a struct or sequence is matched
+          with a '%s' in ACE_DEBUG, egcs can't seem to turn it
+          into a const char*. Had to add .in() to all these cases.
 
 Fri Jul  7 11:08:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* orbsvcs.IFR_Service/ConstantDef_i.cpp:
-	* orbsvcs/IFR_Service/Contained_i.cpp:
-	* orbsvcs/IFR_Service/Container_i.cpp:
-	* orbsvcs/IFR_Service/IFR_Service.cpp:
-	* orbsvcs/IFR_Service/IFR_Service.h:
-	* orbsvcs/IFR_Service/InterfaceDef_i.cpp:
-	* orbsvcs/IFR_Service/Options.cpp:
-	* orbsvcs/IFR_Service/Repository_i.cpp:
+        * orbsvcs.IFR_Service/ConstantDef_i.cpp:
+        * orbsvcs/IFR_Service/Contained_i.cpp:
+        * orbsvcs/IFR_Service/Container_i.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.cpp:
+        * orbsvcs/IFR_Service/IFR_Service.h:
+        * orbsvcs/IFR_Service/InterfaceDef_i.cpp:
+        * orbsvcs/IFR_Service/Options.cpp:
+        * orbsvcs/IFR_Service/Repository_i.cpp:
 
-	  Various cases of unused variables/arguments, mismatched
-	  signatures, unreachable code, etc., reported by cxx.
+          Various cases of unused variables/arguments, mismatched
+          signatures, unreachable code, etc., reported by cxx.
 
 Thu Jul  7 08:09:00 2000  Bruce Trask   <brucetrask@aol.com>
 
@@ -1926,7 +1931,7 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
           Changed <_tao_encode> method implementation for the
           client exposed policies, to make it more compact.
-          
+
         * tests/Exposed_Policies/client.cpp:
         * tests/Exposed_Policies/Client.dsp:
         * tests/Exposed_Policies/Counter.idl:
@@ -1941,8 +1946,8 @@ Fri Jun 16 13:16:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tests/Exposed_Policies/Server.dsp:
 
           Added files for testing the client exposed policies.
-	  Renamed directory containing the tests from ExposedPolicies
-	  to Exposed_Policies.
+          Renamed directory containing the tests from ExposedPolicies
+          to Exposed_Policies.
 
 Fri Jun 16 08:46:42 2000  Darrell Brunsch <brunsch@uci.edu>
 
@@ -2206,12 +2211,12 @@ Thu Jun 15 13:20:49 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
         * tao/Stub.h:
         * tao/Stub.cpp:
 
-          Added methods: 
-	    <exposed_priority_model>, 
-	    <exposed_priority_banded_connection> 
-	    <exposed_client_protocol>
-	  to get client exposed policies, and added member variable 
-	  to cache those client exposed policies.
+          Added methods:
+            <exposed_priority_model>,
+            <exposed_priority_banded_connection>
+            <exposed_client_protocol>
+          to get client exposed policies, and added member variable
+          to cache those client exposed policies.
 
 Thu Jun 15 12:43:44 2000  yamuna  <yamuna@cs.wustl.edu>
 
@@ -2405,9 +2410,9 @@ Mon Jun 12 10:38:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 Mon Jun 12 12:00:14 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
         * tao/MProfile.i:
-	
+
           Moved <create_policy_list> in the proper position, so
-	  that no problem occurs when inlining is enabled.
+          that no problem occurs when inlining is enabled.
 
 
 Sun Jun 11 20:55:08 2000  Carlos O'Ryan  <coryan@uci.edu>
