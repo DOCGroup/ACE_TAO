@@ -11,7 +11,7 @@
 // = DESCRIPTION
 //
 //    This application tests the working of ReactorEx when users are
-//    interested in changes in the filesystem.
+//    interested in monitoring changes in the filesystem.
 //
 // = AUTHOR
 //    Irfan Pyarali
@@ -93,13 +93,13 @@ worker (void)
       ACE_DEBUG ((LM_DEBUG, "(%t) Thread sleeping\n"));
       ACE_OS::sleep (3);
       ACE_DEBUG ((LM_DEBUG, "(%t) Thread removing temporary file\n"));
-      ACE_OS::unlink (temp_file);
       stop_test = 1;
+      ACE_OS::unlink (temp_file);
     }
 }
 
 int
-main ()
+main (void)
 {
   ACE_ReactorEx reactorEx;
   Event_Handler handler (reactorEx);
