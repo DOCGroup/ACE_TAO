@@ -1456,6 +1456,8 @@ be_interface::traverse_inheritance_graph (
       // If we are doing a component, we check for a parent.
       if (intf->node_type () == AST_Decl::NT_component)
         {
+          (void) this->insert_non_dup (be_global->ccmobject ());
+
           AST_Component *base =
             AST_Component::narrow_from_decl (intf)->base_component ();
 
@@ -1472,8 +1474,6 @@ be_interface::traverse_inheritance_graph (
                                                abstract_paths_only);
                 }
             }
-
-          (void) this->insert_non_dup (be_global->ccmobject ());
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);
