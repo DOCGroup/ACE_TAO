@@ -119,7 +119,7 @@ int run_receiver ()
                      ACE_TEXT ("Cannot open broadcast socket")), -1);
 }
 
-#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
+#if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)
 /* \brief Thread main function to run run_receiver function
    \note run_receiver return valu is stored in receiver_exit_code global variable
 */
@@ -128,7 +128,7 @@ static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
   receiver_exit_code = run_receiver ();
   return 0;
 }
-#endif /* defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS) */
+#endif /* !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS) */
 
 /* \brief Just runs automatic tests
 
@@ -139,7 +139,7 @@ tries to receive at least one datagram.
 */
 int run_auto_test (const ACE_TCHAR *prog_name)
 {
-#if !defined (ACE_LACKS_FORK)
+#if defined (ACE_HAS_PROCESS_SPAWN)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Running auto_tests in process mode\n")));
 
   ACE_Process_Options opts;
@@ -160,7 +160,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   ACE_ERROR_RETURN ((LM_ERROR,
                      ACE_TEXT ("Cannot run in auto_test mode without fork or threads.\n")),
                       -1);
-#endif /* !defined (ACE_LACKS_FORK) */
+#endif /* defined (ACE_HAS_PROCESS_SPAWN) */
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Sending datagrams on port %d in auto_test mode\n"),
@@ -175,7 +175,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
         {
           send_datagram (socket, dgrams_no--);
           ACE_Time_Value child_timeout (1);
-#if !defined (ACE_LACKS_FORK)
+#if defined (ACE_HAS_PROCESS_SPAWN)
 
           if (ACE_Process_Manager::instance ()->wait (child_pid,
                                                       child_timeout,

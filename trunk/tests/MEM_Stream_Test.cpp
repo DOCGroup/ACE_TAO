@@ -34,10 +34,10 @@
 
 ACE_RCSID(tests, MEM_Stream_Test, "$Id$")
 
-#if (defined (ACE_HAS_THREADS) || !defined (ACE_LACKS_FORK)) && \
+#if (defined (ACE_HAS_THREADS) || defined (ACE_HAS_PROCESS_SPAWN)) && \
     (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS) && !defined (WIN32) 
+#if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)
 #  define _TEST_USES_THREADS
 #else
 #  define _TEST_USES_PROCESSES
@@ -554,4 +554,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return 0;
 }
-#endif /* (ACE_HAS_THREADS || ACE_HAS_FORK) && ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
+#endif /* (ACE_HAS_THREADS || ACE_HAS_PROCESS_SPAWN) && ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
