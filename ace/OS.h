@@ -56,6 +56,10 @@ enum ACE_Recyclable_State
 #define ACE_DEFAULT_SERVICE_REPOSITORY_SIZE 1024
 #endif /* ACE_DEFAULT_SERVICE_REPOSITORY_SIZE */
 
+#if !defined (ACE_REACTOR_NOTIFICATION_ARRAY_SIZE)
+#define ACE_REACTOR_NOTIFICATION_ARRAY_SIZE 1024
+#endif /* ACE_REACTOR_NOTIFICATION_ARRAY_SIZE */
+
 // Do not change these values wantonly since GPERF depends on them..
 #define ACE_ASCII_SIZE 128
 #define ACE_EBCDIC_SIZE 256

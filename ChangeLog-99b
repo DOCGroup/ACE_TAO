@@ -1,19 +1,41 @@
+Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Reactor_Notify_Test.cpp: Modified this test to exercise
+	  the new user-level notification queueing in the ACE_Reactor.
+
+Tue Aug 31 16:05:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Process_Manager.cpp (handle_close): Added an ACE_UNUSED_ARG
+	  to keep the compiler from warning that the "handle" parameter
+ 	  isn't used.
+
+	* ace/OS.h: Added a new #defined called
+	  ACE_REACTOR_NOTIFICATION_ARRAY_SIZE that designates the size of
+ 	  the array of ACE_Notification_Buffers used by the new Reactor
+ 	  user-level notification queue feature.
+
+	* ace/Select_Reactor_Base: Added support for a user-level
+	  notification queue that can buffer very large amounts of pending
+ 	  notifications, i.e., well beyond the 64 kbyte limit imposed by
+ 	  the use of a socket.  This feature is only enabled if
+ 	  ACE_HAS_REACTOR_NOTIFICATION_QUEUE is enabled in a config.h
+ 	  file.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+ 	  for suggesting this and contributing a prototype implementation.
 
 Tue Aug 31 20:10:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/OS.h: 
-	Added the ACE_HAS_NO_THROW_SPEC check in order to suppress the
-	generation of throw specs to placate some compilers
-	Thank to Andreas Geisler <Andreas.Geisler@erls.siemens.de> for
-	suggesting this addition
-
+	* ace/OS.h: Added the ACE_HAS_NO_THROW_SPEC check in order to
+	  suppress the generation of throw specs to placate some compilers
+ 	  and make it easier for CORBA developers to by lazy wrt C++
+ 	  exception throw specs ;-).  Thank to Andreas Geisler
+ 	  <Andreas.Geisler@erls.siemens.de> for suggesting this addition
 
 1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Modified the test to use a single handler registered for
-	  QOS_MASK|READ_MASK instead of two separate handlers. Had to
-	  remove the following files and add other files.
-	 
+	  Modified the ACE GQoS test to use a single handler registered
+ 	  for QOS_MASK|READ_MASK instead of two separate handlers. Had to
+ 	  remove the following files and add other files.
+  
 	* ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
 	* ACE_wrappers/examples/QOS/Read_Handler.h
 	* ACE_wrappers/examples/QOS/QOS_Event_Handler.h
@@ -23,30 +45,30 @@ Tue Aug 31 20:10:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	  The Sender event handler is only registered for QOS events. It
  	  uses the ACE_OS::sendto () as soon as it receives a QOS event.
-	
+  
 	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp
 	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.h
 
 	  The Receiver event handler is registered for both QOS as well as
-	  READ events since it has to initially wait for a PATH RSVP message
-	  from the sender (QOS event, finally!!) and then read from the
-	  same QOS enabled socket.
-	
+ 	  READ events since it has to initially wait for a PATH RSVP
+ 	  message from the sender (QOS event, finally!!) and then read
+ 	  from the same QOS enabled socket.
+  
 	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
 	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
 
 	  The client and server have been modified to subscribe to the
-	  same multicast session. The RSVP SP on the receiver side sends
-	  RESV messages at the earliest indication of QOS parameters AND
-	  existence of a matching PATH state. This state is found only if
-	  a multicast socket has been created (by the sender) with a
-	  matching "multicast session" address.
+ 	  same multicast session. The RSVP SP on the receiver side sends
+ 	  RESV messages at the earliest indication of QOS parameters AND
+ 	  existence of a matching PATH state. This state is found only if
+ 	  a multicast socket has been created (by the sender) with a
+ 	  matching "multicast session" address.
 	
 	* ACE_wrappers/examples/QOS/server.cpp: 
 	* ACE_wrappers/examples/QOS/client.cpp:
 
 	  Modified the following to incorporate the removal and addition
-	  of files listed above.
+ 	  of files listed above.
 
 	* ACE_wrappers/examples/QOS/QOS.dsw 
 	* ACE_wrappers/examples/QOS/client.dsp
