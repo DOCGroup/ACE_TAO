@@ -185,3 +185,12 @@ ACE_Multihomed_INET_Addr::~ACE_Multihomed_INET_Addr (void)
 
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Array_Base<ACE_INET_Addr>;
+template class ACE_Array<ACE_INET_Addr>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate ACE_Array_Base<ACE_INET_Addr>
+#pragma instantiate ACE_Array<ACE_INET_Addr>
+
+#endif /*ACE_HAS_TEMPLATE_INSTANTIATION*/
