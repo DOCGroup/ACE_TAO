@@ -1,3 +1,15 @@
+Wed Nov 24 17:23:22 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Timer_Wheel_T.cpp (expire): 
+
+	  ACE_Timer_Wheel_T<>::expire() made the upcall before
+	  rescheduling a recurring timer.  The problem with this is that
+	  if the upcall code tries to cancel the recurring timer, the
+	  cancel will fail since the timer has not been rescheduled.  The
+	  fix is to move the rescheduling code before the upcall code.
+	  Thanks to Domingos Monteiro <d.monteiro@netia.net> for reporting
+	  and providing a fix for this bug.
+
 Wed Nov 24 16:02:21 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/Asynch_Connector.{h cpp}: Removed the locally-defined

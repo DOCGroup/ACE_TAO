@@ -828,14 +828,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
       // Get the dispatch info
       n->get_dispatch_info (info);
 
-      const void *upcall_act = 0;
-
-      this->preinvoke (info, cur_time, upcall_act);
-
-      this->upcall (info, cur_time);
-
-      this->postinvoke (info, cur_time, upcall_act);
-
       if (n->get_interval () > ACE_Time_Value::zero)
         {
           // Make sure that we skip past values that have already
@@ -852,10 +844,16 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK>::expire (const ACE_Time_Value& cur_ti
           this->free_node (n);
         }
 
+      const void *upcall_act = 0;
+
+      this->preinvoke (info, cur_time, upcall_act);
+
+      this->upcall (info, cur_time);
+
+      this->postinvoke (info, cur_time, upcall_act);
+
       n = this->remove_first_expired (cur_time);
     }
-
-  //ACE_ERROR((LM_ERROR, "Expired %d nodes\n", expcount));
 
   return expcount;
 }
