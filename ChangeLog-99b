@@ -1,3 +1,10 @@
+Thu Apr 22 16:35:50 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* docs/exceptions.html: Explicitly state that ACE try macros will
+	  replace TAO try macros and advise users to take action if they
+	  are still using TAO try macros.  Thanks to Don Busch
+	  <busch_d@ociweb.com> for pointing this out.
+
 Thu Apr 22 15:07:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_vxworks5.x_g++.GNU:
