@@ -472,7 +472,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // reply body contains an object reference to the new object.
   // This object pointer will be now extracted.
 
-  if ((inp_stream >> this->forward_reference_.inout ()) == 0)
+  if ((inp_stream >> this->forward_reference_.out ()) == 0)
     {
       ACE_THROW_RETURN (CORBA::MARSHAL (),
                         TAO_INVOKE_EXCEPTION);
