@@ -1619,7 +1619,6 @@ be_visitor_root::visit_union_fwd (be_union_fwd *node)
         status = node->accept (&visitor);
         break;
       }
-      return 0; // nothing to be done
     default:
       return 0; // nothing to be done
   }

@@ -1,3 +1,14 @@
+Wed Dec 31 14:24:52 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+
+ 	* TAO_IDL/be/be_visitor_root/root.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+	* tao/Object.cpp:
+	* tests/Portable_Interceptors/Collocated/Dynamic/Client_Task.cpp:
+	* tests/RTScheduling/Thread_Cancel/Thread_Task.cpp:
+
+	  Fixed unused variable warnings from CXX. 
+
 Wed Dec 31 13:44:20 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
