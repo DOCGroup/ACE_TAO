@@ -99,25 +99,13 @@ ACE_OS_Dirent::readdir_emulation (ACE_DIR *d)
   if (!d->started_reading_)
     {
       d->current_handle_ = ACE_TEXT_FindFirstFile (d->directory_name_,
-                                                   &(d->fdata_));
-
-      if (d->current_handle_ != INVALID_HANDLE_VALUE)
-        {
-          // readdir under UNIX doesn't skip '.' and '..', so
-          // why should this implementation
-          if (ACE_TEXT_FindNextFile (d->current_handle_, &d->fdata_) == 0)
-            {
-              ::FindClose (d->current_handle_);
-              d->current_handle_ = INVALID_HANDLE_VALUE;
-            }
-        }
-
+                                                   &d->fdata_);
       d->started_reading_ = 1;
     }
   else
     {
       int retval = ACE_TEXT_FindNextFile (d->current_handle_,
-                                          &(d->fdata_));
+                                          &d->fdata_);
       if (retval == 0)
         {
           // Make sure to close the handle explicitly to avoid a leak!
