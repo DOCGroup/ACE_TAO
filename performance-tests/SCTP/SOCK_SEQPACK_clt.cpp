@@ -144,11 +144,12 @@ int sendHeader(ACE_SOCK_SEQPACK_Association & stream) {
   // create an ACE CDR output stream and place the header information
   // into it
   ACE_OutputCDR hdrCDR;
+  hdrCDR << ACE_OutputCDR::from_boolean (ACE_CDR_BYTE_ORDER);
   hdrCDR << ACE_CDR::ULong(Options_Manager::test_iterations+primerIterations);
   if (!hdrCDR.good_bit())
     return (0);
 
-  // send the header to the server HEADER is 4 BYTES LONG
+  // send the header to the server (HEADER is 8 BYTES LONG)
   size_t bt;
   if (stream.send_n(hdrCDR.begin(), 0,  &bt) == -1)
     return 0;
@@ -188,7 +189,8 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
 
     // send message size
     // TODO : The message length should be CDR encoded
-    if (-1 == stream.send_n (&msgLen, ACE_CDR::LONG_SIZE, 0, &bt))
+    ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
+    if (-1 == stream.send_n (&msgLenExpressed, ACE_CDR::LONG_SIZE, 0, &bt))
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
                          "send_n"),
@@ -231,7 +233,8 @@ HIST runUnmarshalledOctetTest(ACE_CDR::Octet *buf, size_t seqLen, ACE_SOCK_SEQPA
                         "ACE_OS::gethrtime()"),
                        0);
 
-    iov[0].iov_base = ACE_reinterpret_cast(char *, &msgLen);
+    ACE_CDR::ULong msgLenExpressed = ACE_HTONL(msgLen);
+    iov[0].iov_base = ACE_reinterpret_cast(char *, &msgLenExpressed);
     iov[0].iov_len = ACE_CDR::LONG_SIZE;
     iov[1].iov_base = ACE_reinterpret_cast(char *, buf);
     iov[1].iov_len = msgLen;
