@@ -9,6 +9,8 @@
 
 #define ACE_HAS_UNICODE
 
+#define ACE_HAS_TERM_IOCTLS
+
 // Must specialize templates due to G++'s lame parameterized type
 // support...
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION

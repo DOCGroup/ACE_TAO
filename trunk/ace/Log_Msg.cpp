@@ -278,7 +278,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
     trace_depth_ (0),
     thr_handle_ (0),
     trace_active_ (0),
-    tracing_enabled_ (0), // Off by default?
+    tracing_enabled_ (1), // On by default?
     thr_state_ (0),
     priority_mask_ (LM_SHUTDOWN // By default, all priorities are enabled.
 		    | LM_TRACE 

@@ -221,8 +221,9 @@ ACE_Malloc<ACE_MEM_POOL_2, LOCK>::shared_malloc (size_t nbytes)
   ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::shared_malloc");
 
   // Round up request to a multiple of the ACE_Malloc_Header size.
-  size_t nunits = (nbytes + sizeof (ACE_Malloc_Header) - 1) 
-    / sizeof (ACE_Malloc_Header) + 1;
+  size_t nunits = 
+    (nbytes + sizeof (ACE_Malloc_Header) - 1) / sizeof (ACE_Malloc_Header) 
+    + 1; // Add one for the <ACE_Malloc_Header> itself.
 
   // Begin the search starting at the place in the freelist 
   // where the last block was found. 

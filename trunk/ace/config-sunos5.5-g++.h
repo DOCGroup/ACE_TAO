@@ -23,6 +23,8 @@
 // G++ doesn't support template typedefs fully (yet).
 // #define ACE_HAS_TEMPLATE_TYPEDEFS
 
+#define ACE_HAS_TERM_IOCTLS
+
 // Must specialize templates due to G++'s lame parameterized type
 // support...
 #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
