@@ -24,13 +24,17 @@ class node_impl :
   
   node_impl (const char * name);
   
-  virtual void add_edge (Supports_Test::Node * neighbor);
+  virtual void add_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
-  virtual void remove_edge (Supports_Test::Node * neighbor);
+  virtual void remove_edge (Supports_Test::Node * neighbor ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
-  void change_weight (CORBA::Long new_weight);
+  void change_weight (CORBA::Long new_weight ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
-  void print (void);
+  void print (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
 };
 
@@ -80,7 +84,8 @@ class vt_graph_init_impl :
   virtual Supports_Test::vt_graph * create (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 	
-  virtual CORBA::ValueBase * create_for_unmarshal (void);
+  virtual CORBA::ValueBase * create_for_unmarshal (ACE_ENV_SINGLE_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   
 };
 
