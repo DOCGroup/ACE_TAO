@@ -212,6 +212,17 @@ class CORBA_Environment_var;
 class CORBA_Environment_out;
 typedef class CORBA_Environment *CORBA_Environment_ptr;
 
+// = Service Forward declaration
+struct CORBA_ServiceDetail;
+struct CORBA_ServiceDetail_var;
+struct CORBA_ServiceDetail_out;
+typedef CORBA_ServiceDetail * CORBA_ServiceDetail_ptr;
+
+struct CORBA_ServiceInformation;
+struct CORBA_ServiceInformation_var;
+struct CORBA_ServiceInformation_out;
+typedef CORBA_ServiceInformation * CORBA_ServiceInformation_ptr;
+
 class CORBA_Principal;
 typedef class CORBA_Principal *CORBA_Principal_ptr;
 
@@ -694,6 +705,37 @@ TAO_SYSTEM_EXCEPTION_LIST
   typedef CORBA_PolicyList_var PolicyList_var;
   typedef CORBA_PolicyList_out PolicyList_out;
   static CORBA::TypeCode_ptr _tc_PolicyList;
+
+  // = Service definitions
+  typedef CORBA::UShort ServiceType;
+  typedef ServiceType CORBA_ServiceType;
+  typedef CORBA::UShort_out ServiceType_out;
+  typedef ServiceType_out CORBA_ServiceType_out;
+  static CORBA::TypeCode_ptr _tc_ServiceType;
+
+  typedef CORBA::ULong ServiceOption;
+  typedef ServiceOption CORBA_ServiceOption;
+  typedef CORBA::ULong_out ServiceOption_out;
+  typedef ServiceOption_out CORBA_ServiceOption_out;
+  static  CORBA::TypeCode_ptr _tc_ServiceOption;
+
+  typedef CORBA::ULong ServiceDetailType;
+  typedef ServiceDetailType CORBA_ServiceDetailType;
+  typedef CORBA::ULong_out ServiceDetailType_out;
+  typedef ServiceDetailType_out CORBA_ServiceDetailType_out;
+  static  CORBA::TypeCode_ptr _tc_ServiceDetailType;
+
+  typedef CORBA_ServiceDetail ServiceDetail;
+  typedef CORBA_ServiceDetail_var ServiceDetail_var;
+  typedef CORBA_ServiceDetail_out ServiceDetail_out;
+  typedef CORBA_ServiceDetail *ServiceDetail_ptr;
+  static CORBA::TypeCode_ptr _tc_ServiceDetail;
+
+  typedef CORBA_ServiceInformation ServiceInformation;
+  typedef CORBA_ServiceInformation_var ServiceInformation_var;
+  typedef CORBA_ServiceInformation_out ServiceInformation_out;
+  typedef CORBA_ServiceInformation *ServiceInformation_ptr;
+  static CORBA::TypeCode_ptr _tc_ServiceInformation;
 
   typedef CORBA_PolicyTypeSeq PolicyTypeSeq;
   typedef CORBA_PolicyTypeSeq_var PolicyTypeSeq_var;
