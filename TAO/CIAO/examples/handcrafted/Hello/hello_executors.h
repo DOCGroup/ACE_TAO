@@ -7,6 +7,7 @@
 
 #include "helloEC.h"
 #include "hello_executors_export.h"
+#include "tao/LocalObject.h"
 
 class HelloWorld_Impl :
   public virtual CCM_HelloWorld,
