@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/valuetype_ci.cpp:56
+// be/be_visitor_valuetype/valuetype_ci.cpp:56
 
 ACE_INLINE
 TAO_Default_ORT::ObjectReferenceTemplate::ObjectReferenceTemplate (void)
@@ -44,7 +44,7 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_static_repository_id ()
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_valuetype.cpp:236
+// be/be_valuetype.cpp:463
 
 #if defined (__ACE_INLINE__)
 
@@ -57,7 +57,7 @@ namespace CORBA
 #endif /*__ACE_INLINE__*/
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_valuetype/cdr_op_ci.cpp:60
+// be/be_visitor_valuetype/cdr_op_ci.cpp:60
 
 TAO_PortableServer_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const TAO_Default_ORT::ObjectReferenceTemplate *);
 TAO_PortableServer_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_Default_ORT::ObjectReferenceTemplate *&);

@@ -32,6 +32,7 @@
 #include "Messaging_RT_PolicyC.h"
 #include "tao/Typecode.h"
 #include "tao/Any_Impl_T.h"
+#include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -107,6 +108,7 @@ namespace Messaging
 
 // Traits specializations for Messaging::RelativeRoundtripTimeoutPolicy.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_duplicate (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
@@ -115,6 +117,7 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_duplicate (
   return Messaging::RelativeRoundtripTimeoutPolicy::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 void
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_release (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p
@@ -123,12 +126,14 @@ TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 Messaging::RelativeRoundtripTimeoutPolicy_ptr
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_nil (void)
 {
   return Messaging::RelativeRoundtripTimeoutPolicy::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
 CORBA::Boolean
 TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>::tao_marshal (
     Messaging::RelativeRoundtripTimeoutPolicy_ptr p,
@@ -351,18 +356,19 @@ operator>>= (
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-  template class TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>;
+  template class
+    TAO::Objref_Traits<
+        Messaging::RelativeRoundtripTimeoutPolicy
+      >;
 
   template class
     TAO_Objref_Var_T<
         Messaging::RelativeRoundtripTimeoutPolicy
-        
       >;
   
   template class
     TAO_Objref_Out_T<
         Messaging::RelativeRoundtripTimeoutPolicy
-        
       >;
 
   template class
@@ -372,18 +378,19 @@ operator>>= (
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-# pragma instantiate TAO::Objref_Traits<Messaging::RelativeRoundtripTimeoutPolicy>
+# pragma instantiate \
+    TAO::Objref_Traits< \
+        Messaging::RelativeRoundtripTimeoutPolicy \
+      >
 
 # pragma instantiate \
     TAO_Objref_Var_T< \
         Messaging::RelativeRoundtripTimeoutPolicy
-        
       >
   
 # pragma instantiate \
     TAO_Objref_Out_T< \
         Messaging::RelativeRoundtripTimeoutPolicy
-        
       >
 
 # pragma instantiate \
