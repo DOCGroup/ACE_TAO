@@ -17,6 +17,9 @@ Wed Oct 29 15:56:01 1997  David L. Levine  <levine@cs.wustl.edu>
           keys then.  That also corresponds with the starting key value
           on Windows NT.
 
+        * ace/IOStream.h: DEC_CXX #includes now depend on compiler version.
+          Thanks to James Johnson <jcej@lads.com> for providing the fix.
+
 Wed Oct 29 10:25:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace: Changes all uses of the overly long
