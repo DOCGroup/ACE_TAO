@@ -8,7 +8,7 @@ Wed Jul 15 12:40:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 	* tao/GIOP.cpp: The suspended Client Connection Handler
 	  from Connect.cpp get resumed (TAO_GIOP_Invocation::invoke).
 
-	* tao/ORB.cpp: The run method conforms to the rules
+	* tao/ORB.{h,cpp}: The run method conforms to the rules
 	  of the leader follower model.
 
 	* tao/ORB_Core.{h,cpp}: The ORB Core now supports all

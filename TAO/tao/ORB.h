@@ -963,6 +963,9 @@ private:
   // Count of the number of times that <ORB_init> has been called.
   // This must be protected by <ACE_Static_Object_Lock>.
 
+  ACE_SYNCH_CONDITION* cond_become_leader_;
+  // wait to become the leader if the leader-follower model is active
+
   // = NON-PROVIDED METHODS
   CORBA_ORB (const CORBA_ORB &);
   CORBA_ORB &operator= (const CORBA_ORB &);
