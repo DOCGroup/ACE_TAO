@@ -126,7 +126,7 @@ NS_NamingContext::bind (const CosNaming::Name& n,
   // If we received a simple name, we need to bind it in this context.
  else
     {
-      NS_IntId entry (obj);
+      NS_IntId entry (obj, CosNaming::nobject);
       NS_ExtId name (n[0].id, n[0].kind);
 
       // Try binding the name.
@@ -193,7 +193,7 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
       // If we received a simple name, we need to rebind it in this
       // context.
 
-      NS_IntId entry (obj);
+      NS_IntId entry (obj, CosNaming::nobject);
       NS_ExtId name (n[0].id, n[0].kind);
       NS_IntId oldentry;
       NS_ExtId oldname;

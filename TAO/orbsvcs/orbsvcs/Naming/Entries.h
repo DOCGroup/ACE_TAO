@@ -42,7 +42,7 @@ public:
   // default constructor.
 
   NS_IntId (CORBA::Object_ptr obj,
-	    CosNaming::BindingType type = CosNaming::nobject);
+	    CosNaming::BindingType type /* = CosNaming::nobject */);
   // constructor.
   
   NS_IntId (const NS_IntId & rhs);
