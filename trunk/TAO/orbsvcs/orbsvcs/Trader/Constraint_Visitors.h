@@ -229,8 +229,8 @@ class TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 //     that node's type, and return the result. Note: the
 //     TAO_Constraint_Evaluator assumes the tree is semantically correct,
 //     that is, the validate method on TAO_Constraint_Validator return
-//     true. The only possible evaluation time error is a divide by a
-//     property whose value is zero.
+//     true. The only possible evaluation time errors are a divide by a
+//     property whose value is zero and undefined properties.
 {
 public:
 
@@ -315,33 +315,41 @@ private:
 
   class Operand_Queue :
   public ACE_Unbounded_Queue <TAO_Literal_Constraint>
+    // = TITLE
+    // A queue adapter with methods to setting and getting operands 
+    // from the expression evaluation results.
   {
   public:
 
     Operand_Queue  (void);
 
     TAO_Literal_Constraint& get_left_operand (void);
+    // In a binary operation, obtain the left operand.
 
     TAO_Literal_Constraint& get_right_operand (void);
+    // In a binary operation, obtain the right operand.
 
     TAO_Literal_Constraint& get_operand (void);
+    // In a unary operation, obtain the only operand.
 
     void dequeue_operand (void);
+    // Remove an operand from the queue.
   };
   
   void do_the_op (int operation);
+  // Method for performing a arithmetic or comparison operation.
+  
   int visit_bin_op (TAO_Binary_Constraint* op, int operation);
+  // Method for evaluating a binary operation.
   
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
   // Determine if sequence contains <element>, a literal of the same
   // simple type as <sequence_type>. Return 1 in this eventuality.
 
-  TAO_Literal_Constraint& left_operand (void);
-  TAO_Literal_Constraint& right_operand (void);
-
   TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&);
   TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&);
+  // Disallow copying.
   
   TAO_Lookup_Table props_;
   // The map of property names to their values for a property.

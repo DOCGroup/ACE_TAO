@@ -37,7 +37,7 @@ class TAO_Constraint
 //     An TAO_Constraint knows what type of operation or entity
 //     it represents, and which method on TAO_Constraint_Visitor
 //     correlates to its type. When the accept method is invoked, a
-//     subclass dispatches the method on an InterpreterVisitor
+//     subclass dispatches the method on an TAO_Constraint_Visitor
 //     correlating to its type.
 {
 public:
