@@ -1,42 +1,48 @@
+Thu Apr 08 14:48:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf.dynamic,
+          performance-tests/Cubit/TAO/MT_Cubit/svc.conf.static:
+          Added -ORBallowreactivationofsystemids 0.
+
 Thu Apr 08 14:31:19 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
-	* performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/MT_Cubit/svc.conf:
+        * performance-tests/Cubit/TAO/IDL_Cubit/svc.conf:
 
-	  Added -ORBallowreactivationofsystemids 0 to the svc.conf files
-	  since no reactivation of servants was taking place.
+          Added -ORBallowreactivationofsystemids 0 to the svc.conf files
+          since no reactivation of servants was taking place.
 
 Thu Apr  8 14:17:31 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/sfp/sfp_client.dsp:
-	* orbsvcs/tests/AVStreams/sfp/sfp_server.dsp:
-	* orbsvcs/tests/AVStreams/sfp/sfp_tests.dsw:
-		Added these project/ worspace files for VC++.
+        * orbsvcs/tests/AVStreams/sfp/sfp_client.dsp:
+        * orbsvcs/tests/AVStreams/sfp/sfp_server.dsp:
+        * orbsvcs/tests/AVStreams/sfp/sfp_tests.dsw:
+                Added these project/ worspace files for VC++.
 
-	* orbsvcs/tests/AVStreams/sfp/server.cpp :
-	* orbsvcs/tests/AVStreams/sfp/client.cpp :
-		Added a ORB shutdown so that the tests terminate when the
-	SFP stream terminates.
+        * orbsvcs/tests/AVStreams/sfp/server.cpp :
+        * orbsvcs/tests/AVStreams/sfp/client.cpp :
+                Added a ORB shutdown so that the tests terminate when the
+        SFP stream terminates.
 
-	* orbsvcs/tests/AVStreams/sfp/common.h:
-		Added a #include "orbsvcs_export.h" for VC++.
+        * orbsvcs/tests/AVStreams/sfp/common.h:
+                Added a #include "orbsvcs_export.h" for VC++.
 
-	* orbsvcs/orbsvcs/AV/sfp.{h,cpp} : Changed the DUMP_BUF macro to a
-	function. Fixed the signed/unsigned warnings on NT.Fixed a missing
-	return 0 so that the tests work on NT.
+        * orbsvcs/orbsvcs/AV/sfp.{h,cpp} : Changed the DUMP_BUF macro to a
+        function. Fixed the signed/unsigned warnings on NT.Fixed a missing
+        return 0 so that the tests work on NT.
 
 Thu Apr  8 13:49:16 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Active_Object_Map.cpp:
-	* orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
-	  Added missing template instantiations. Thanks to Dave Meyer
-	  <dmeyer@saic.com> for this one.
+        * tao/Active_Object_Map.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+          Added missing template instantiations. Thanks to Dave Meyer
+          <dmeyer@saic.com> for this one.
 
-	* rules.tao.GNU:
-	* orbsvcs/orbsvcs/Makefile:
-	  Fixed some dependencies and rules problems with the IDL
-	  generated files, now we can do "make -j 4" in orbsvcs (and
-	  apparently all the TAO directories)
+        * rules.tao.GNU:
+        * orbsvcs/orbsvcs/Makefile:
+          Fixed some dependencies and rules problems with the IDL
+          generated files, now we can do "make -j 4" in orbsvcs (and
+          apparently all the TAO directories)
 
 Thu Apr 08 14:05:28 1999  David L. Levine  <levine@cs.wustl.edu>
 
