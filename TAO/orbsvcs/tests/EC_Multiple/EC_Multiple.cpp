@@ -2,11 +2,13 @@
 // $Id$
 //
 
+#if defined (sun) || defined (__osf__)
 // @@ TODO This should be encapsulated in ACE...
 #include <sys/types.h>
 #include <sys/priocntl.h>
 #include <sys/rtpriocntl.h>
 #include <sys/tspriocntl.h>
+#endif /* sun || __osf__ */
 
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"
@@ -57,7 +59,6 @@ print_priority_info (const char *const name)
   id_t ts_id, rt_id;
   pcparms_t pcparms;
   rtparms_t rtparms;
-#endif /* sun || Digital Unix 4.0 */
   struct sched_param param;
   int policy, status;
 
@@ -84,7 +85,6 @@ print_priority_info (const char *const name)
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
 
-#if defined (sun) || defined (__osf__)
   // Get the class TS and RT class IDs.
 
   memset (&pcinfo, 0, sizeof pcinfo);
