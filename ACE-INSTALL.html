@@ -1248,11 +1248,6 @@ Set the environment variable below to build a version of ACE with
 Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
       <br>
-Set the environment variable below to build a version of ACE that is
-build against the VCL-compatible run-time library. This can only be
-used with BCB version 4<br>
-      <code>set PASCAL=1</code><br>
-      <br>
       Set the environment variable below to build a version of ACE using the
       C++BuilderX preview compiler. This compiler isn't supported at this moment
       but by setting this environment variable the new compiler is used and
@@ -1263,7 +1258,7 @@ used with BCB version 4<br>
       <br><code>make -f Makefile.bor</code><br>
       <br>
       You may also enable the options by passing them as command line options to make, for example:<br>
-      <code>make -f Makefile.bor -DDEBUG -DPASCAL</code><br>
+      <code>make -f Makefile.bor -DDEBUG</code><br>
       <br>
   </li><li>Optionally install the ACE header files, libraries and executables
 for use
@@ -1277,17 +1272,6 @@ These instructions do not cover all possible build configurations. Please
 see <a href="http://www.tenermerx.com/tao_bcb/index.html">http://www.tenermerx.com/tao_bcb/index.html</a>
 for more detailed information on building and using ACE+TAO with Borland C++
 Builder. <p>
-
-If you are using C++Builder 4, then the libraries built using the above
-instructions are intended for use with generic console or windows applications
-and they link against the corresponding C++ runtime library. VCL applications
-created using BCB4's RAD environment must link against the VCL-compatible (ie
-pascal-compatible) runtime library.  To tell the difference between these
-libraries the VCL-compatible ones have a 'p' in the suffix (i.e., 'p' for
-pascal).  To build VCL compatible libraries try
-</p><blockquote><pre><code>set PASCAL=1
-make -f Makefile.bor
-</code></pre></blockquote> <p>
 
 The Borland C++ Builder 4.0/5.0/6.0 port has been done by <a href="mailto:jody@atdesk.com">Jody Hagins</a>, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
