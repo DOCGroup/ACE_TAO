@@ -1,3 +1,8 @@
+Fri Mar 14 23:19:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ciao/CCM_Core.mpc: Updated the core MPC file to reflect recent
+	  added files.
+
 Fri Mar 14 16:08:22 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* docs/todo.html: Recorded a compilation error in the generated
