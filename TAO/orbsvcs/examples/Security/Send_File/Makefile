@@ -12,8 +12,6 @@ ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
 endif # ! TAO_ROOT
 
-LDLIBS = -lTAO
-
 IDL_FILES += \
         test
 
@@ -42,6 +40,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
+CLNT_LIBS += -lTAO_PortableServer $(TAO_CLNT_LIBS)
+SRVR_LIBS += -lTAO_PortableServer $(TAO_SRVR_LIBS)
+
 #----------------------------------------------------------------------------
 #       Local targets
 #----------------------------------------------------------------------------
@@ -54,10 +55,10 @@ realclean: clean
 	-$(RM) $(foreach file, $(IDL_FILES), $(foreach ext, $(IDL_EXT), $(file)$(ext)))
 
 server: $(addprefix $(VDIR),$(SERVER_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_SRVR_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(TAO_CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(CLNT_LIBS) $(POSTLINK)
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
