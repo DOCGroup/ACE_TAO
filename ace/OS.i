@@ -697,8 +697,6 @@ ACE_OS::umask (mode_t cmask)
 
 #else /* ACE_WIN32 */
 
-// This is for Win32 exclusively!
-
 // Adapt the Win32 System Calls (which return BOOLEAN values of TRUE
 // and FALSE) into int values expected by the ACE_OSCALL macros.
 # define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) == FALSE ? -1 : 0)
@@ -4141,46 +4139,428 @@ ACE_OS::event_reset (ACE_event_t *event)
 # endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 #endif /* ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
+ACE_INLINE u_long 
+ACE_Flow_Spec::token_rate (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->TokenRate; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::token_rate (u_long tr) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->TokenRate = tr; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE u_long 
+ACE_Flow_Spec::token_bucket_size (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->TokenBucketSize; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::token_bucket_size (u_long tbs) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->TokenBucketSize = tbs; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+  
+ACE_INLINE u_long 
+ACE_Flow_Spec::peak_bandwidth (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->PeakBandwidth; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::peak_bandwidth (u_long pb) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->PeakBandwidth = pb; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE u_long 
+ACE_Flow_Spec::latency (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->Latency; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::latency (u_long l) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->Latency = l; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE u_long 
+ACE_Flow_Spec::delay_variation (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->DelayVariation; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+ACE_INLINE void 
+ACE_Flow_Spec::delay_variation (u_long dv) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->DelayVariation = dv; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE ACE_SERVICE_TYPE 
+ACE_Flow_Spec::service_type (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->ServiceType; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::service_type (ACE_SERVICE_TYPE st) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->ServiceType = st; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE u_long 
+ACE_Flow_Spec::max_sdu_size (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->MaxSduSize; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::max_sdu_size (u_long mss) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->MaxSduSize = mss; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE u_long 
+ACE_Flow_Spec::minimum_policed_size (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return this->MinimumPolicedSize; 
+#else
+  ACE_NOTSUP_RETURN (0);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_Flow_Spec::minimum_policed_size (u_long mps) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->MinimumPolicedSize = mps; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE ACE_Flow_Spec
+ACE_QoS::sending_flowspec (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return (ACE_Flow_Spec &) this->SendingFlowspec; 
+#else
+  ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_QoS::sending_flowspec (const ACE_Flow_Spec &fs) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->SendingFlowspec = (FLOWSPEC) fs; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE ACE_Flow_Spec
+ACE_QoS::receiving_flowspec (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return (ACE_Flow_Spec &) this->ReceivingFlowspec; 
+#else
+  ACE_NOTSUP_RETURN (ACE_Flow_Spec ());
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_QoS::receiving_flowspec (const ACE_Flow_Spec &fs) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->ReceivingFlowspec = (FLOWSPEC) fs; 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE iovec 
+ACE_QoS::provider_specific (void) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  return (iovec &) this->ProviderSpecific; 
+#else
+  ACE_NOTSUP_RETURN (iovec ());
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE void 
+ACE_QoS::provider_specific (const iovec &ps) 
+{ 
+#if defined (ACE_HAS_WINSOCK2)
+  this->ProviderSpecific = (WSABUF) ((iovec &) ps); 
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE
+ACE_Connect_QoS_Params::ACE_Connect_QoS_Params (iovec *caller_data,
+						iovec *callee_data,
+						ACE_QoS *socket_qos,
+						ACE_QoS *group_socket_qos,
+						u_long flags)
+  : caller_data_ (caller_data),
+    callee_data_ (callee_data),
+    socket_qos_ (socket_qos),
+    group_socket_qos_ (group_socket_qos),
+    flags_ (flags)
+{
+}
+
+ACE_INLINE iovec *
+ACE_Connect_QoS_Params::caller_data (void)
+{
+  return this->caller_data_;
+}
+
+ACE_INLINE void 
+ACE_Connect_QoS_Params::caller_data (iovec *cd)
+{
+  this->caller_data_ = cd;
+}
+
+ACE_INLINE iovec *
+ACE_Connect_QoS_Params::callee_data (void)
+{
+  return this->callee_data_;  
+}
+
+ACE_INLINE void 
+ACE_Connect_QoS_Params::callee_data (iovec *cd)
+{
+  this->callee_data_ = cd;  
+}
+
+ACE_INLINE ACE_QoS *
+ACE_Connect_QoS_Params::socket_qos (void)
+{
+  return this->socket_qos_;
+}
+
+ACE_INLINE void 
+ACE_Connect_QoS_Params::socket_qos (ACE_QoS *sq)
+{
+  this->socket_qos_ = sq;
+}
+
+ACE_INLINE ACE_QoS *
+ACE_Connect_QoS_Params::group_socket_qos (void)
+{
+  return this->group_socket_qos_;
+}
+
+ACE_INLINE void 
+ACE_Connect_QoS_Params::group_socket_qos (ACE_QoS *gsq)
+{
+  this->group_socket_qos_ = gsq;
+}
+
+ACE_INLINE u_long 
+ACE_Connect_QoS_Params::flags (void)
+{
+  return this->flags_;
+}
+
+ACE_INLINE void 
+ACE_Connect_QoS_Params::flags (u_long f)
+{
+  this->flags_ = f;
+}
+
+ACE_INLINE
+ACE_Accept_QoS_Params::ACE_Accept_QoS_Params (ACE_QOS_CONDITION_FUNC qos_condition_callback,
+					      u_long callback_data)
+  : qos_condition_callback_ (qos_condition_callback),
+    callback_data_ (callback_data)
+{
+}
+
+ACE_INLINE ACE_QOS_CONDITION_FUNC
+ACE_Accept_QoS_Params::qos_condition_callback (void)
+{
+  return this->qos_condition_callback_;
+}
+
+ACE_INLINE void 
+ACE_Accept_QoS_Params::qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc)
+{
+  this->qos_condition_callback_ = qcc;
+}
+
+ACE_INLINE u_long
+ACE_Accept_QoS_Params::callback_data (void)
+{
+  return this->callback_data_;
+}
+
+ACE_INLINE void 
+ACE_Accept_QoS_Params::callback_data (u_long cd)
+{
+  this->callback_data_ = cd;
+}
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::accept (ACE_HANDLE handle, struct sockaddr *addr,
+ACE_OS::accept (ACE_HANDLE handle,
+		struct sockaddr *addr,
                 int *addrlen)
 {
   ACE_TRACE ("ACE_OS::accept");
 #if defined (ACE_PSOS)
 #  if !defined (ACE_PSOS_DIAB_PPC)
-ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, (struct sockaddr_in *) addr,
-                                (ACE_SOCKET_LEN *) addrlen),
-                      ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
+				 (struct sockaddr_in *) addr,
+				 (ACE_SOCKET_LEN *) addrlen),
+		       ACE_HANDLE, 
+		       ACE_INVALID_HANDLE);
 #  else
-ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, (struct sockaddr *) addr,
-                                (ACE_SOCKET_LEN *) addrlen),
-                      ACE_HANDLE, ACE_INVALID_HANDLE);
+ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
+			       (struct sockaddr *) addr,
+			       (ACE_SOCKET_LEN *) addrlen),
+		     ACE_HANDLE,
+		     ACE_INVALID_HANDLE);
 #  endif /* defined ACE_PSOS_DIAB_PPC */
 #else
-  // On a non-blocking socket with no connections to accept, this system
-  // call will return EWOULDBLOCK or EAGAIN, depending on the platform.
-  // UNIX 98 allows either errno, and they may be the same numeric value.
-  // So to make life easier for upper ACE layers as well as application
-  // programmers, always change EAGAIN to EWOULDBLOCK.  Rather than hack the
-  // ACE_OSCALL_RETURN macro, it's handled explicitly here.  If the ACE_OSCALL
-  // macro ever changes, this function needs to be reviewed.
-  // On Win32, the regular macros can be used, as this is not an issue.
+  // On a non-blocking socket with no connections to accept, this
+  // system call will return EWOULDBLOCK or EAGAIN, depending on the
+  // platform.  UNIX 98 allows either errno, and they may be the same
+  // numeric value.  So to make life easier for upper ACE layers as
+  // well as application programmers, always change EAGAIN to
+  // EWOULDBLOCK.  Rather than hack the ACE_OSCALL_RETURN macro, it's
+  // handled explicitly here.  If the ACE_OSCALL macro ever changes,
+  // this function needs to be reviewed.  On Win32, the regular macros
+  // can be used, as this is not an issue.
 
 #  if defined (ACE_WIN32)
-  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN *) addrlen),
-                       ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_SOCKCALL_RETURN (::accept ((ACE_SOCKET) handle,
+				 addr,
+				 (ACE_SOCKET_LEN *) addrlen),
+                       ACE_HANDLE,
+		       ACE_INVALID_HANDLE);
 #  else
-
-  ACE_HANDLE ace_result_;
-  ace_result_ = ::accept ((ACE_SOCKET) handle, addr,
-                          (ACE_SOCKET_LEN *) addrlen) ;
+  ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
+				    addr,
+				    (ACE_SOCKET_LEN *) addrlen) ;
   if (ace_result_ == ACE_INVALID_HANDLE && errno == EAGAIN)
     errno = EWOULDBLOCK;
-  return ace_result_;
+  return ace_result;
 
 #  endif /* defined (ACE_WIN32) */
 #endif /* defined (ACE_PSOS) */
+}
+
+ACE_INLINE ACE_HANDLE
+ACE_OS::accept (ACE_HANDLE handle,
+		struct sockaddr *addr,
+                int *addrlen,
+		ACE_Accept_QoS_Params qos_params)
+{
+#if defined (ACE_HAS_WINSOCK2)
+  ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
+				    addr,
+				    (ACE_SOCKET_LEN *) addrlen,
+				    (LPCONDITIONPROC) qos_params.qos_condition_callback (),
+				    qos_params.callback_data ()),
+                       ACE_HANDLE,
+		       ACE_INVALID_HANDLE);
+#else
+  ACE_UNUSED_ARG (qos_params);
+  return ACE_OS::accept (handle,
+			 addr,
+			 addrlen);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+ACE_INLINE ACE_HANDLE
+ACE_OS::join_leaf (ACE_HANDLE socket,
+		   const sockaddr *name,
+		   int namelen,
+		   ACE_Connect_QoS_Params qos_params)
+{
+#if defined (ACE_HAS_WINSOCK2)
+  ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
+				      name,
+				      namelen,
+				      (WSABUF *) qos_params.caller_data (),
+				      (WSABUF *) qos_params.callee_data (),
+				      (QOS *) qos_params.socket_qos (),
+				      (QOS *) qos_params.group_socket_qos (),
+				      qos_params.flags ()),
+                       ACE_HANDLE,
+		       ACE_INVALID_HANDLE);
+#else
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#endif /* ACE_HAS_WINSOCK2 */
+}
+
+int 
+ACE_OS::ioctl (ACE_HANDLE socket,
+	       u_long io_control_code,
+	       void *in_buffer_p,
+	       u_long in_buffer,
+	       void *out_buffer_p,
+	       u_long out_buffer,
+	       u_long *bytes_returned,
+	       ACE_OVERLAPPED *overlapped,
+	       ACE_OVERLAPPED_COMPLETION_FUNC func)
+{
+#if defined (ACE_HAS_WINSOCK2)
+  ACE_SOCKCALL_RETURN (::WSAIoctl ((ACE_SOCKET) socket,
+				   io_control_code,
+				   in_buffer_p,
+				   in_buffer,
+				   out_buffer_p,
+				   out_buffer,
+				   bytes_returned,
+				   (WSAOVERLAPPED *) overlapped,
+				   (LPWSAOVERLAPPED_COMPLETION_ROUTINE) func),
+                       int,
+		       SOCKET_ERROR);
+#else
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
+#endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE int
@@ -4197,7 +4577,9 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 }
 
 ACE_INLINE int
-ACE_OS::connect (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
+ACE_OS::connect (ACE_HANDLE handle,
+		 struct sockaddr *addr,
+		 int addrlen)
 {
   ACE_TRACE ("ACE_OS::connect");
 #if defined (ACE_PSOS) && !defined (ACE_PSOS_DIAB_PPC)
@@ -4207,6 +4589,30 @@ ACE_OS::connect (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
 #else  /* !defined (ACE_PSOS) || defined (ACE_PSOS_DIAB_PPC) */
   ACE_SOCKCALL_RETURN (::connect ((ACE_SOCKET) handle, addr, (ACE_SOCKET_LEN) addrlen), int, -1);
 #endif /* defined (ACE_PSOS)  && !defined (ACE_PSOS_DIAB_PPC) */
+}
+
+ACE_INLINE int
+ACE_OS::connect (ACE_HANDLE handle,
+		 const sockaddr *addr,
+		 int addrlen,
+		 ACE_Connect_QoS_Params qos_params)
+{
+  ACE_TRACE ("ACE_OS::connect");
+#if defined (ACE_HAS_WINSOCK2)
+  ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
+				     (const sockaddr *) addr,
+				     (ACE_SOCKET_LEN) addrlen,
+				     (WSABUF *) qos_params.caller_data (),
+				     (WSABUF *) qos_params.callee_data (),
+				     (QOS *) qos_params.socket_qos (),
+				     (QOS *) qos_params.group_socket_qos ()),
+                       int, -1);
+#else  
+  ACE_UNUSED_ARG (qos_params);
+  return ACE_OS::connect (handle,
+			  addr,
+			  addrlen);
+#endif /* ACE_HAS_WINSOCK2 */
 }
 
 #if !defined (VXWORKS)
@@ -10950,3 +11356,53 @@ ACE_OS_CString::wchar_rep (void)
 {
   return this->rep_;
 }
+
+ACE_INLINE
+ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref,
+				  int error)
+  :
+#if defined (ACE_MT_SAFE)
+    errno_ptr_ (&errno_ref),
+#endif /* ACE_MT_SAFE */
+    error_ (error) 
+{
+}
+
+ACE_INLINE
+ACE_Errno_Guard::ACE_Errno_Guard (int &errno_ref)
+  :
+#if defined (ACE_MT_SAFE)
+    errno_ptr_ (&errno_ref),
+#endif /* ACE_MT_SAFE */
+    error_ (errno_ref) 
+{ 
+}
+
+ACE_INLINE 
+ACE_Errno_Guard::~ACE_Errno_Guard (void)
+{
+#if defined (ACE_MT_SAFE)
+  *errno_ptr_ = this->error_;
+#else
+  errno = this->error_;
+#endif /* ACE_MT_SAFE */
+}
+
+ACE_INLINE int 
+ACE_Errno_Guard::operator= (int error)
+{
+  return this->error_ = error;
+}
+
+ACE_INLINE int 
+ACE_Errno_Guard::operator== (int error)
+{
+  return this->error_ == error;
+}
+
+ACE_INLINE int 
+ACE_Errno_Guard::operator!= (int error)
+{
+  return this->error_ != error;
+}
+
