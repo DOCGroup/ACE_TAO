@@ -27,6 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_WIN32) && !defined (ACE_PSOS)
+# include /**/ <sys/types.h>
 # include /**/ <dirent.h>
 #endif /* !ACE_WIN32 && !ACE_PSOS */
 
