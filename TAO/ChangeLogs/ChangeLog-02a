@@ -1,3 +1,12 @@
+Sun Jul 23 18:18:35 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+		
+	Fixed Compile Warnings
+		
+
 Sat Jul 22 17:36:58 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/ArrayDef_i.cpp:
@@ -53,11 +62,12 @@ Sat Jul 22 16:30:39 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Added item about persistence test and removed some completed
 	  items from Future Work.
 
-2000-07-22  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
+Sat Jul 22 09:53:02 2000  Yamuna Krishnamurthy  <yamuna@danzon.cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
 	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+
 	Fixed compile warnings	
 
 Fri Jul 21 17:54:55 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
@@ -112,7 +122,7 @@ Fri Jul 21 11:55:49 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 	  tests (there is only one at present, but there
 	  will be more).
 
-Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
+Thu Jul 20 04:53:02 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/IFR_Service/IFR_Service.dsp:
         * orbsvcs/examples/Security/Send_File/Send_File_Client.dsp:
@@ -125,30 +135,38 @@ Thu Jul 20 23:21:11 2000  Darrell Brunsch <brunsch@uci.edu>
 Thu Jul 20 19:49:06 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+		
 	  Fixed Compilation Errors and Warning	
 
 Thu Jul 20 18:37:46 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	
 	  Replaced the TAO_AV_Core run with the orb run	
 	
 	* orbsvcs/tests/AVStreams/Full_Profile/README: 
+
 	  Added the README for the test
 		
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp: 
+	  
 	  Replaced the TAO_AV_Core run with the orb run	
 		
 	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/README: 
+	  
 	  Added the REAME file for the test
 		
 	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp: 
+	  
 	  Added a default multicast address and replaced the TAO_AV_Core
 	  run with the orb run
 		
 	* orbsvcs/tests/AVStreams/Multicast/README: 
+	  
 	  Added the README file for the test
 	
 	* AVStreams_i.cpp: 
+	  
 	  Duplicated the flow device and flow endpoints before binding
 	  them to the corresponding hash maps to fix the AVStreams tests.
 
