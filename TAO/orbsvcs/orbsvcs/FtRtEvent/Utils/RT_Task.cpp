@@ -3,18 +3,23 @@
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 
+#define ENABLE_RT_CLASS 0
+
 void RT_Task::set_current()
 {
+#if ENABLE_RT_CLASS == 1
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   long prio = ACE_Sched_Params::priority_max(ACE_SCHED_FIFO);
   if (ACE_OS::thr_setprio(thr_handle, prio, ACE_SCHED_FIFO) == -1){
     ACE_DEBUG((LM_DEBUG, "Cannot set the thread to RT class\n"));
   }
+#endif
 }
 
 int RT_Task::activate(ACE_Task_Base* task)
 {
+#if ENABLE_RT_CLASS == 1
   long priority = ACE_Sched_Params::priority_max(ACE_SCHED_FIFO);
   long flags = THR_NEW_LWP;
 
@@ -67,5 +72,6 @@ int RT_Task::activate(ACE_Task_Base* task)
                         -1));
         }
     }
+#endif
   return 0;
 }

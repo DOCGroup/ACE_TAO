@@ -24,6 +24,12 @@ namespace TAO_FTRTEC {
   }
 
   ACE_INLINE
+  unsigned int Log::level()
+  {
+    return log_level_;
+  }
+
+  ACE_INLINE
   void Log::hexdump(unsigned int level, const char* buf, size_t len, const char* msg)
   {
     if (Log::log_level_ >= level)
@@ -48,6 +54,12 @@ namespace TAO_FTRTEC {
   ACE_INLINE
   void Log::level(unsigned int )
   {
+  }
+
+  ACE_INLINE
+  unsigned int Log::level()
+  {
+    return 0;
   }
 
   ACE_INLINE

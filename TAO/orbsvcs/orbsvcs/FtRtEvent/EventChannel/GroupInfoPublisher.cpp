@@ -144,6 +144,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr info)
         /// there's nothing we can do if the naming service is down
       }
       ACE_ENDTRY;
+
     }
   }
   info_ = info;

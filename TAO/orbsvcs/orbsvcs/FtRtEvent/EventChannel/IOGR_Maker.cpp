@@ -20,15 +20,17 @@ ACE_RCSID (EventChannel,
 
 
 static IOGR_Maker* maker;
+static CORBA::ORB_ptr orb;
 
 IOGR_Maker::IOGR_Maker()
 {
 }
 
 void
-IOGR_Maker::init(CORBA::ORB_ptr orb
+IOGR_Maker::init(CORBA::ORB_ptr the_orb
                  ACE_ENV_ARG_DECL)
 {
+    orb = the_orb;
     iorm_ = resolve_init<TAO_IOP::TAO_IOR_Manipulation>(orb,
                                                         TAO_OBJID_IORMANIPULATION
                                                         ACE_ENV_ARG_PARAMETER);
@@ -69,6 +71,13 @@ IOGR_Maker::make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList& list
                      ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN(CORBA::Object::_nil());
+
+  if (TAO_FTRTEC::Log::level() > 3)
+  {
+    CORBA::String_var str = orb->object_to_string(obj.in() ACE_ENV_ARG_PARAMETER);
+    ACE_DEBUG((LM_DEBUG, "new IOGR = %s\n", str.in()));
+  }
+
   return obj._retn();
 }
 
