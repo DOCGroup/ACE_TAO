@@ -72,8 +72,11 @@ public:
   // servant_name. Users should call this to activate objects under
   // the child_poa.
 
-  int run (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment (),
-           ACE_Time_Value *tv = 0);
+  int run (CORBA_Environment &TAO_IN_ENV,
+           ACE_Time_Value *tv);
+  int run (ACE_Time_Value &tv,
+           CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  int run (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Run the ORB event loop with the specified <tv> time value Returns
   // -1 on failure.
 

@@ -80,12 +80,12 @@ TAO_ORB_Manager::init (int& argc,
 
 int
 TAO_ORB_Manager::init_child_poa (int& argc,
-				 char **argv,       
+				 char **argv,
 				 char *poa_name,
 				 CORBA_Environment &env)
 {
   int init_result;
-  
+
   // check to see if root poa has to be created.
   init_result = this->init (argc, argv, env);
 
@@ -194,7 +194,7 @@ TAO_ORB_Manager::activate_under_child_poa (const char* object_name,
 
   return str;
 }
-  
+
 // Enter the ORB event loop.
 
 int
@@ -202,16 +202,42 @@ TAO_ORB_Manager::run (CORBA_Environment &env,
                       ACE_Time_Value *tv)
 {
   this->poa_manager_->activate (env);
-
   TAO_CHECK_ENV_RETURN (env, -1);
 
   if (this->orb_->run (tv) == -1)
-    ACE_ERROR_RETURN ( (LM_ERROR,
+    ACE_ERROR_RETURN ((LM_ERROR,
                        "(%P|%t) TAO_ORB_Manager %p\n",
                        "run"),
-                       -1);
+                      -1);
+  return 0;
+}
 
+int
+TAO_ORB_Manager::run (ACE_Time_Value &tv,
+                      CORBA_Environment &env)
+{
+  this->poa_manager_->activate (env);
   TAO_CHECK_ENV_RETURN (env, -1);
+
+  if (this->orb_->run (tv) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) TAO_ORB_Manager %p\n",
+                       "run"),
+                      -1);
+  return 0;
+}
+
+int
+TAO_ORB_Manager::run (CORBA_Environment &env)
+{
+  this->poa_manager_->activate (env);
+  TAO_CHECK_ENV_RETURN (env, -1);
+
+  if (this->orb_->run () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) TAO_ORB_Manager %p\n",
+                       "run"),
+                      -1);
   return 0;
 }
 
