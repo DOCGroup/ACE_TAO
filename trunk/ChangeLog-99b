@@ -1,3 +1,10 @@
+Fri Jan 29 16:25:22 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-hpux-10.x-hpc++.h: Added ACE_HAS_GPERF.
+        * apps/gperf/src/List_Node.cpp (ctor): Added ACE_const_cast to
+          a char * initializer.
+        * apps/gperf/src/Options.cpp: Fixed -j processing (typo).
+
 Fri Jan 29 14:49:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* ace/ACE.cpp: 
