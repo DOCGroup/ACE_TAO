@@ -65,7 +65,7 @@ protected:
   const char* basic_log_factory_name_;
   // The Log Factory name.
 
-  BasicLogFactory_i basic_log_factory_;
+  TAO_BasicLogFactory_i basic_log_factory_;
   // The Basic Log Factory.
 
   CORBA::ORB_var orb_;

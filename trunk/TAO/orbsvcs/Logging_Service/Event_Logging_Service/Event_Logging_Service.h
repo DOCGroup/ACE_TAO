@@ -41,7 +41,7 @@ class Event_Logging_Service
   int parse_args (int argc, char *argv []);
   // Parses the command line arguments.
 
-  void startup (int argc, char *argv[]
+  int startup (int argc, char *argv[]
                ACE_ENV_ARG_DECL);
   // Initializes the Telecom EventLog Service.
   // Returns 0 on success, -1 on error.
@@ -66,7 +66,7 @@ protected:
   const char* event_log_factory_name_;
   // The Log Factory name.
 
-  EventLogFactory_i event_log_factory_;
+  TAO_EventLogFactory_i event_log_factory_;
   // The Event Log Factory.
 
   CORBA::ORB_var orb_;
