@@ -1,8 +1,0 @@
-project : taolib, core {
-  depends    += PortableServer
-  sharedname  = TAO_Messaging
-  libs       += TAO_Valuetype TAO_PortableServer TAO
-  dllflags    = TAO_MESSAGING_BUILD_DLL
-  libout      = ..
-  include_dir = tao/Messaging
-}

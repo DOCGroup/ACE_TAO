@@ -1,5 +1,0 @@
-project : orbsvcsexe, core {
-  depends += RTSched CosNaming Svc_Utils IORTable PortableServer
-  exename  = Scheduling_Service
-  libs    += TAO_RTSched TAO_CosNaming TAO_Svc_Utils TAO_IORTable TAO_PortableServer
-}

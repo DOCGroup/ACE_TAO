@@ -1,4 +1,0 @@
-workspace {
-  tests.mpc
-  RMCast/tests.mpc
-}

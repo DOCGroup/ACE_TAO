@@ -1,3 +1,0 @@
-project(POA Identity): server {
-  exename = Identity
-}
