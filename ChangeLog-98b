@@ -1,3 +1,9 @@
+Sun Nov  1 17:32:50 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* tests/Hash_Map_Manager_Test.cpp (run_test): Oops, we need to
+ 	  account for compilers that lack template specialization!  Thanks
+ 	  to David Levine for reporting this.
+
 Sun Nov 01 17:24:56 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-win32-borland.h,config-win32-common.h,README:
