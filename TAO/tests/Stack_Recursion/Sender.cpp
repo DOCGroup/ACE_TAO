@@ -72,7 +72,7 @@ Sender::ping (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
 }
 
 void
-Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL)
+Sender::shutdown (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->is_done_ == 0)
