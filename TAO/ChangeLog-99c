@@ -1,14 +1,35 @@
+Fri Mar  5 20:50:23 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/Makefile: included the CosEvent_Channel in the list
+	  of directories to build.
+	* orbsvcs/CosEvent_Service/CosEvent_Service{.h, .cpp}:
+	  replaced the TAO_TRY macros with ACE_ macros.
+	* orbsvcs/tests/CosEC_Basic/{*.h, *.cpp}:
+	  replaced the TAO_TRY macros with ACE_ macros.
+	* orbsvcs/tests/CosEC_Basic/CosECConsumer{.h.cpp}:
+	  added an ORB pointer, which is used to shutdown the ORB
+	  after a <push> is received by a consumer.
+	* orbsvcs/tests/CosEC_Basic/CosEC_Basic{.h, .cpp}:
+	  fixed a bug that caused this test to fail - thanks to
+          Jim Crossley <jim@lads.com> for pointing this out.
+	  The RtEC needs to be constructed with a valid
+	  TAO_Reactive_Module_Factory. Creating the Rtec on the heap
+	  with an initialized module factory fixed this.
+	* orbsvcs/tests/CosEC_Multiple {*.h, *.cpp}
+	  replaced the TAO_TRY macros with ACE_ macros.
+	* docs/releasenotes/index.html: updated the CosEC information.
+
 Fri Mar  5 18:11:04 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/orbsvcs.dsp: Added the new EC files.
 
 Fri Mar  5 16:43:06 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_Timeout_Generator.cpp:
 	  Fixed const correctness problem, Sun/CC didn't even give a
 	  warning for this one!
 
-	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyPushSupplier_Set.cpp:
 	  Added missing template instantiation.
 
 Fri Mar  5 15:12:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
@@ -43,12 +64,12 @@ Fri Mar  5 15:12:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  Fixed several problems with g++ 2.7.2.X; thanks to David Levine
 	  for reporting them.
 
-	* orbsvcs/tests/Makefile: 
+	* orbsvcs/tests/Makefile:
 	  Added a bunch of missing directories to the list.
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
 	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
-	  The Event2 service is compiled by default, not need to check for 
+	  The Event2 service is compiled by default, not need to check for
 	  it.
 
 	* orbsvcs/Event_Service/Event_Service.h:
@@ -60,7 +81,7 @@ Fri Mar  5 15:12:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/deep_free.cpp:
 	* tao/encode.cpp:
 	* tao/skip.cpp:
-	  The debug messages are only be printed out if TAO_debug_level is 
+	  The debug messages are only be printed out if TAO_debug_level is
 	  greater than 0.
 	  Also fixed many of them.
 
@@ -98,7 +119,7 @@ Fri Mar  5 15:12:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/orbsvcs/Event/EC_QOS_Info.h:
 	* orbsvcs/orbsvcs/Event/EC_SupplierAdmin.h:
 	* orbsvcs/orbsvcs/Event/EC_Type_Filter.h:
-	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp: 
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
 	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:
 	  Minor cosmetic changes.
 
