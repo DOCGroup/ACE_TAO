@@ -65,8 +65,8 @@ CORBA_ORB::~CORBA_ORB (void)
 {
   TAO_ORB_Core_instance ()->fini ();
 
-  // This assertion isn't valid because our ORB is a singleton
-  // assert (refcount_ == 0);
+  // This assertion isn't valid because our ORB is a singleton assert
+  // (refcount_ == 0);
 }
 
 // Set up listening endpoints.

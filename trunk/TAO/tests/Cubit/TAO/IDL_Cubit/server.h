@@ -30,11 +30,11 @@
 
 class Cubit_Server : public TAO_ORB_Manager
 {
-  // =TITLE
+  // = TITLE
   //   Defines a Cubit Server class that implements the functionality
   //   of a server process as an object.
   //
-  // =DESCRIPTION
+  // = DESCRIPTION
   //   The interface is quite simple. A server program has to call
   //   init to initialize the cubit_server's state and then call run
   //   to run the orb.

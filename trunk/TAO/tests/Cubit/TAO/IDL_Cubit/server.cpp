@@ -3,9 +3,9 @@
 #include "server.h"
 
 Cubit_Server::Cubit_Server (void)
-  :num_of_objs_ (1),
-   use_naming_service_ (1),
-   ior_output_file_ (0)
+  : num_of_objs_ (1),
+    use_naming_service_ (1),
+    ior_output_file_ (0)
 {
 }
 
@@ -156,8 +156,8 @@ main (int argc, char *argv[])
         return 1;
       else
         {
-         cubit_server.run (TAO_TRY_ENV);
-         TAO_CHECK_ENV;
+          cubit_server.run (TAO_TRY_ENV);
+          TAO_CHECK_ENV;
         }
     }
   TAO_CATCH (CORBA::SystemException, sysex)

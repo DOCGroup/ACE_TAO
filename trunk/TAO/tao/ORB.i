@@ -205,13 +205,15 @@ CORBA_ORB::work_pending (void)
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (void) // default constructor
-        : ptr_ (CORBA_ORB::_nil ())
-{}
+  : ptr_ (CORBA_ORB::_nil ())
+{
+}
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (CORBA::ORB_ptr p)
         : ptr_ (p)
-{}
+{
+}
 
 ACE_INLINE CORBA::ORB_ptr
 CORBA_ORB_var::ptr (void) const
@@ -221,8 +223,9 @@ CORBA_ORB_var::ptr (void) const
 
 ACE_INLINE
 CORBA_ORB_var::CORBA_ORB_var (const CORBA_ORB_var &p) // copy constructor
-        : ptr_ (CORBA_ORB::_duplicate (p.ptr ()))
-{}
+  : ptr_ (CORBA_ORB::_duplicate (p.ptr ()))
+{
+}
 
 ACE_INLINE
 CORBA_ORB_var::~CORBA_ORB_var (void) // destructor
@@ -242,10 +245,10 @@ ACE_INLINE CORBA_ORB_var &
 CORBA_ORB_var::operator= (const CORBA_ORB_var &p)
 {
   if (this != &p)
-  {
-    CORBA::release (this->ptr_);
-    this->ptr_ = CORBA_ORB::_duplicate (p.ptr ());
-  }
+    {
+      CORBA::release (this->ptr_);
+      this->ptr_ = CORBA_ORB::_duplicate (p.ptr ());
+    }
   return *this;
 }
 
