@@ -1,3 +1,8 @@
+Sat Dec 11 09:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Task.cpp:
+          Minor borland fix
+
 Fri Dec 10 18:40:29 2004  Steve Huston  <shuston@riverace.com>
 
 	* tests/Reactor_Exceptions_Test.cpp: Force the ACE_SOCK_Dgram to all
