@@ -48,6 +48,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "EC_Mcast"=.\tests\EC_Mcast\EC_Mcast.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "EC_Multiple"=.\tests\EC_Multiple\EC_Multiple.dsp - Package Owner=<4>
 
 Package=<5>
