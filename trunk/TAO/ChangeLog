@@ -1,3 +1,13 @@
+Sat Jun 21 19:54:47 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * tao/RTPortableServer/RTPortableServerC.h:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * tao/RTPortableServer/RT_POA.cpp:
+        * tao/RTPortableServer/RT_POA.h:
+          Adjusted location of ifdef so that it's after orbconf.h
+          which is where ACE_HAS_CORBA_MESSAGING gets set if you user
+          doesn't specify it explicitely.
+
 Sat Jun 21 09:34:14 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/BiDir_GIOP/BiDir_Policy_i.cpp (TAO_BidirectionalPolicy):
