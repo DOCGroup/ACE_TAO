@@ -167,6 +167,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_NS_WString s3 ("ll");
     ACE_NS_WString s4 ("ello");
     ACE_NS_WString s5 = s1 + " " + s2;
+    ACE_NS_WString s6 = ("hella"); // Same length as s1, off by one char.
 
     ACE_WCHAR_T single_character = 'z';
     ACE_NS_WString single_character_string (single_character);
@@ -177,6 +178,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     // Not equal comparisons. Error if they are equal
     if (s1 == s2){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
     if (s1 == s5){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
+    if (s1 == s6){ACE_ERROR((LM_ERROR,"Set #3: off-by-one failed\n"));}
 
     // Equal comparisons. Error if they are not equal
     if (s1 != s1){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
@@ -207,13 +209,13 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     if (s1.rfind ('l', 3) != 2){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
 
     // Assignment. Error if they are not equal
-    ACE_NS_WString s6;
-    s6 = s0;
-    if (s6 != s0){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
-    s6 = s4;
-    if (s4 != s6){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
-    s6 = s5;
-    if (s6 != s5){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
+    ACE_NS_WString s7;
+    s7 = s0;
+    if (s7 != s0){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
+    s7 = s4;
+    if (s4 != s7){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
+    s7 = s5;
+    if (s7 != s5){ACE_ERROR((LM_ERROR,"Set #3: \n"));}
 
     // Clear. Error if they are not equal
     s0.clear();
