@@ -12,6 +12,18 @@
 #include <orbsvcs/orbsvcs/PortableGroup/PG_Operators.h> // Borrow operator == on CosNaming::Name
 #include <orbsvcs/orbsvcs/PortableGroup/PG_Utils.h>
 
+// Borland C++ 6 Update Pack 4 and earlier give a warning about comparing
+// signed and unsigned values in the minimum_polulate() and
+// initial_populate() warnings. The comparison uses a unsigned long and
+// unsigned short and it seems that the compiler promotes the unsigned
+// short of an int and this then gives the warning. Just for Borland
+// disabled the warning in this file.
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+# pragma option push -w-csu
+# pragma nopushoptwarn
+# pragma nopackwarning
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
+
 #define TODO int todo;
 //#define TODO
 
@@ -787,8 +799,12 @@ int TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & locatio
   return (0 == this->members_.find (location));
 }
 
-
-
+// Restore original compiler flags.
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x564)
+# pragma option pop
+# pragma nopushoptwarn
+# pragma nopackwarning
+#endif /* __BORLANDC__ && __BORLANDC__ <= 0x564 */
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -825,3 +841,4 @@ int TAO::PG_Object_Group::has_member_at (const PortableGroup::Location & locatio
     TAO::PG_Object_Group::MemberMapMutex>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
