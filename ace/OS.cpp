@@ -229,7 +229,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Time_Value)
 //
 // In the beginning (Jan. 1, 1601), there was no time and no computer.
 // And Bill said: "Let there be time," and there was time....
-const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = 0x19db1ded53e8000i64;
+const DWORDLONG ACE_Time_Value::FILETIME_to_timval_skew = ACE_INT64_LITERAL (0x19db1ded53e8000);
 
 ACE_Time_Value::ACE_Time_Value (const FILETIME &file_time)
 {
@@ -247,7 +247,7 @@ void ACE_Time_Value::set (const FILETIME &file_time)
   // Convert 100ns units to seconds;
   this->tv_.tv_sec = long (_100ns.QuadPart / (10000 * 1000));
   // Convert remainder to microseconds;
-  this->tv_.tv_usec = long ((_100ns.QuadPart % (10000 * 1000)) / 10);
+  this->tv_.tv_usec = long ((long (_100ns.QuadPart) % long (10000 * 1000)) / 10);
 }
 
 // Returns the value of the object as a Win32 FILETIME.
@@ -2227,6 +2227,16 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 #endif /* ! ACE_THREADS_DONT_INHERIT_LOG_MSG  &&  ! ACE_HAS_MINIMAL_ACE_OS */
 }
 
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ();
+#define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
+      ::_beginthreadex (STACK, (void *) STACKSIZE, (unsigned int) ENTRYPOINT, (unsigned int *) THR_ID)
+#else
+#define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS);
+#define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
+      ::_beingthreadex (STACK, STACKSIZE, (unsigned (__stdcall *) (void *)) ENTRY_POINT, ARGS, FLAGS, (unsigned int *) THR_ID);
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+
 void *
 ACE_Thread_Adapter::invoke (void)
 {
@@ -2359,7 +2369,7 @@ ACE_Thread_Adapter::invoke (void)
           if (using_afx)
             ::AfxEndThread ((DWORD)status);
           else
-            ::_endthreadex ((DWORD) status);
+            ACE_ENDTHREADEX (status);
         }
       else
         {
@@ -2370,12 +2380,13 @@ ACE_Thread_Adapter::invoke (void)
           CWinThread *pThread = ::AfxGetThread ();
 
           if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-            ::_endthreadex ((DWORD) status);
+            ACE_ENDTHREADEX (status);
           else
             ::AfxEndThread ((DWORD)status);
         }
 #   else
-      ::_endthreadex ((DWORD) status);
+
+      ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 # endif /* ACE_WIN32 */
 #endif /* ACE_WIN32 || ACE_HAS_TSS_EMULATION */
@@ -3114,13 +3125,12 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         // thread in a suspended mode.
         ACE_SET_BITS (flags, THR_SUSPENDED);
 
-      *thr_handle = (void *) ::_beginthreadex
-        (0,
-         stacksize,
-         (unsigned (__stdcall *) (void *)) thread_args->entry_point (),
-         thread_args,
-         flags,
-         (unsigned int *) thr_id);
+      *thr_handle = (void *) ACE_BEGINTHREADEX (0,
+                                                stacksize,
+                                                thread_args->entry_point (),
+                                                thread_args,
+                                                flags,
+                                                thr_id);
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY && *thr_handle != 0)
         {
@@ -3362,7 +3372,7 @@ ACE_TRACE ("ACE_OS::thr_exit");
         if (using_afx)
           ::AfxEndThread ((DWORD)status);
         else
-          ::_endthreadex ((DWORD) status);
+          ACE_ENDTHREADEX (status);
       }
     else
       {
@@ -3372,12 +3382,12 @@ ACE_TRACE ("ACE_OS::thr_exit");
         // know to cause some problem.
         CWinThread *pThread = ::AfxGetThread ();
         if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-          ::_endthreadex ((DWORD) status);
+          ACE_ENDTHREADEX (status);
         else
           ::AfxEndThread ((DWORD)status);
       }
 #     else
-    ::_endthreadex ((DWORD) status);
+    ACE_ENDTHREADEX (status);
 #     endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 #   elif defined (VXWORKS)

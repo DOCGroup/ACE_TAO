@@ -17,7 +17,6 @@ ACE_RCSID(ace, Timer_Heap_T, "$Id$")
 #define ACE_HEAP_PARENT(X) (X == 0 ? 0 : (((X) - 1) / 2))
 #define ACE_HEAP_LCHILD(X) (((X)+(X))+1)
 
-
 // Constructor that takes in an <ACE_Timer_Heap_T> to iterate over.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
@@ -76,9 +75,9 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK>::item (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
-                                                         int preallocate,
-                                                         FUNCTOR *upcall_functor,
-                                                         ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
+                                                             int preallocate,
+                                                             FUNCTOR *upcall_functor,
+                                                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     max_size_ (size),
     cur_size_ (0),
@@ -89,10 +88,12 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
 
   // Create the heap array.
-  ACE_NEW (this->heap_, (ACE_Timer_Node_T<TYPE> *[size]));
+  ACE_NEW (this->heap_,
+           (ACE_Timer_Node_T<TYPE> *[size]));
 
   // Create the parallel
-  ACE_NEW (this->timer_ids_, long[size]);
+  ACE_NEW (this->timer_ids_,
+           long[size]);
 
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
@@ -126,7 +127,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (size_t size,
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_functor,
-                                                         ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
+                                                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist)
   : ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK> (upcall_functor, freelist),
     max_size_ (ACE_DEFAULT_TIMERS),
     cur_size_ (0),
@@ -137,10 +138,17 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::ACE_Timer_Heap_T (FUNCTOR *upcall_fun
   ACE_TRACE ("ACE_Timer_Heap_T::ACE_Timer_Heap_T");
 
   // Create the heap array.
-  ACE_NEW (this->heap_, (ACE_Timer_Node_T<TYPE> *[this->max_size_]));
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+    ACE_NEW (this->heap_,
+             (ACE_Timer_Node_T<TYPE> *[ACE_DEFAULT_TIMERS]));
+#else
+    ACE_NEW (this->heap_,
+             (ACE_Timer_Node_T<TYPE> *[this->max_size_]));
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
-  // Create the parallel
-  ACE_NEW (this->timer_ids_, long[this->max_size_]);
+  // Create the parallel array.
+  ACE_NEW (this->timer_ids_,
+           long[this->max_size_]);
 
   // Initialize the "freelist," which uses negative values to
   // distinguish freelist elements from "pointers" into the <heap_>
@@ -399,6 +407,15 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
    // First grow the heap itself.
 
   ACE_Timer_Node_T<TYPE> **new_heap;
+
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+  ACE_NEW (new_heap,
+           (ACE_Timer_Node_T<TYPE> *[1024]));
+#else
+  ACE_NEW (new_heap,
+           (ACE_Timer_Node_T<TYPE> *[new_size]));
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
+
   ACE_NEW (new_heap, (ACE_Timer_Node_T<TYPE> *[new_size]));
   ACE_OS::memcpy (new_heap, this->heap_,
                   max_size_ * sizeof *new_heap);
@@ -409,7 +426,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
 
   long *new_timer_ids;
 
-  ACE_NEW (new_timer_ids, long[new_size]);
+  ACE_NEW (new_timer_ids, 
+           long[new_size]);
 
   ACE_OS::memcpy (new_timer_ids,
                   this->timer_ids_,
@@ -427,8 +445,13 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
     {
       // Create a new array with max_size elements to link in
       // to existing list.
+#if defined (__IBMCPP__) && (__IBMCPP__ >= 400)
+      ACE_NEW (this->preallocated_nodes_,
+               (ACE_Timer_Node_T<TYPE>[88]));
+#else
       ACE_NEW (this->preallocated_nodes_,
                (ACE_Timer_Node_T<TYPE>[this->max_size_]));
+#endif /* defined (__IBMCPP__) && (__IBMCPP__ >= 400) */
 
       // Add it to the set for later deletion
       this->preallocated_node_set_.insert (this->preallocated_nodes_);
@@ -445,7 +468,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
         this->preallocated_nodes_freelist_ = &preallocated_nodes_[0];
       else
         {
-          ACE_Timer_Node_T<TYPE> *previous = this->preallocated_nodes_freelist_;
+          ACE_Timer_Node_T<TYPE> *previous =
+            this->preallocated_nodes_freelist_;
 
           for (ACE_Timer_Node_T<TYPE> *current = this->preallocated_nodes_freelist_->get_next ();
                current != 0;
