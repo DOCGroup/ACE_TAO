@@ -1,3 +1,9 @@
+Mon Jun 28 17:30:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (recvv): We must not passed a null pointer to <flags>
+	  but a pointer pointing to a real flag.  This fixed the
+	  SOCK_Send_Recv_Test failing on NT problem.
+
 Mon Jun 28 15:10:50 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T: Removed ACE_Hash_Addr which was no longer used
@@ -52,37 +58,37 @@ Mon Jun 28 09:32:59 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Sun Jun 27 18:03:24 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
-        * ACE-INSTALL.html: Updated the discussion for Borland C++ Building 4.0
-          and IBM's VisualAge C++ compiler to reference the appropriate
-          maintainers.
+        * ACE-INSTALL.html: Updated the discussion for Borland C++
+	  Building 4.0 and IBM's VisualAge C++ compiler to reference the
+	  appropriate maintainers.
 
-        * ace/WIN32_Proactor.cpp,
-          ace/WIN32_Asynch_IO.cpp: Added back some initializers to keep EGCS happy.
+        * ace/WIN32_Proactor.cpp, ace/WIN32_Asynch_IO.cpp: Added back some
+	  initializers to keep EGCS happy.
 
-        * ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work
-          around an omission within the EGCS standard library.
+        * ace/config-g++-common.h: Added ACE_LACKS_AUTO_PTR to work around
+	  an omission within the EGCS standard library.
 
-        * ace/Auto_Ptr.h: If ACE_LACKS_AUTO_PTR is enabled then
-          use our version of auto_ptr.  This is necessary to work around
-          problems with EGCS.
+        * ace/Auto_Ptr.h: If ACE_LACKS_AUTO_PTR is enabled then use our
+	  version of auto_ptr.  This is necessary to work around problems
+	  with EGCS.
 
-        * ace/config-g++-common.h: Define ACE_HAS_STANDARD_CPP_LIBRARY
-          so that #include <exception> will work properly.  However, this
-          required that we also set ACE_USES_OLD_IOSTREAMS, as well.
-          Thanks to Carlos for help with this.
+        * ace/config-g++-common.h: Define ACE_HAS_STANDARD_CPP_LIBRARY so
+	  that #include <exception> will work properly.  However, this
+	  required that we also set ACE_USES_OLD_IOSTREAMS, as well.
+	  Thanks to Carlos for help with this.
 
-        * ace/config-g++-common.h: The EGCS 1.1.1 compiler supports
-          the template<> syntax.  If this breaks older EGCS or GCC
-          compilers we'll have to handle each of those cases.
+        * ace/config-g++-common.h: The EGCS 1.1.1 compiler supports the
+	  template<> syntax.  If this breaks older EGCS or GCC compilers
+	  we'll have to handle each of those cases.
 
         * ace/config-win32-borland.h:
           Added ACE_HAS_STD_TEMPLATE_METHOD_SPECIALIZATION.
 
         * ace/OS.h: Replaced the const's for ACE_DEFAULT_SHLIB_MODE and
-          ACE_SHLIB_INVALID_HANDLE with #defines since it's more portable.
+	  ACE_SHLIB_INVALID_HANDLE with #defines since it's more portable.
 
         * ace/OS.i: All the strcasecmp() and strncasecmp() methods were
-          broken.  Thanks to David Levine for reporting this.
+	  broken.  Thanks to David Levine for reporting this.
 
         * ace/WFMO_Reactor.cpp: Updated the programming style a bit to
           conform to the ACE guidelines.
