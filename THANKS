@@ -1077,6 +1077,7 @@ Brendan Corcoran <brendan@jenisys.com.au>
 Steve Sivier <Steven.Sivier@Eng.Sun.COM>
 Rick Schneeman <rschneeman@nist.gov>
 Klaus H. Wolf <hw@cyland.com>
+Jean-Christophe Dubois <jcd@one.com>
 
 I would particularly like to thank Paul Stephenson, who worked with me
 at Ericsson.  Paul devised the recursive Makefile scheme that
