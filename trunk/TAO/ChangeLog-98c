@@ -1,3 +1,8 @@
+1998-06-06  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
+
+	* docs/orbsvcs.html: Changed the test directory from
+	CosPropertyService to Property
+
 Sat Jun 6 Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* Moved $TAO_ROOT/orbsvcs/tests/CosPropertyService to
