@@ -14,12 +14,12 @@
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_name%>
 <%if(exename)%>
-BIN_UNCHECKED    = <%exename%>
+BIN_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%><%exename%>
 <%endif%>
 <%if(staticname)%>
 
 ## LIB may be set to empty later on in this file
-LIB_UNCHECKED    = lib<%staticname%>.a
+LIB_UNCHECKED    = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%staticname%>.a
 LIB              = $(LIB_UNCHECKED)
 <%if(!sharedname)%>
 static_libs_only = 1
@@ -28,7 +28,7 @@ static_libs_only = 1
 <%if(sharedname)%>
 
 ## SHLIB may be set to empty later on in this file
-SHLIB_UNCHECKED  = lib<%sharedname%>.$(SOEXT)
+SHLIB_UNCHECKED  = <%if(targetoutdir)%><%targetoutdir%><%endif%>lib<%sharedname%>.$(SOEXT)
 SHLIB            = $(SHLIB_UNCHECKED)
 <%endif%>
 <%if(tao)%>
@@ -74,10 +74,10 @@ RESOURCES += \
 #----------------------------------------------------------------------------
 <%marker(macros)%>
 <%if(exename)%>
-LDLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
+LDLIBS =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%>
 <%else%>
 <%if(sharedname)%>
-ACE_SHLIBS =<%foreach(libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%><%foreach(lit_libs)%> -l<%lit_lib%><%endfor%>
+ACE_SHLIBS =<%foreach(libs lit_libs)%> -l<%lib%><%endfor%><%foreach(pure_libs)%> <%pure_lib%><%endfor%>
 <%endif%>
 <%endif%>
 <%if(tao_idl)%>
@@ -109,7 +109,15 @@ ifeq ($(INSBIN),.)
   endif
   INSBIN = $(PWD)
 endif
+<%if(targetoutdir)%>
+ifneq ($(INSBIN),)
+OUTPUT_DIRECTORY = $(INSBIN)/<%targetoutdir%>
+else
+<%endif%>
 OUTPUT_DIRECTORY = $(INSBIN)
+<%if(targetoutdir)%>
+endif
+<%endif%>
 <%else%>
 <%if(dllout || libout)%>
 INSLIB ?= <%if(dllout)%><%dllout%><%else%><%libout%><%endif%>
@@ -120,9 +128,14 @@ ifeq ($(INSLIB),.)
   endif
   INSLIB = $(PWD)
 endif
-OUTPUT_DIRECTORY = $(INSLIB)
+OUTPUT_DIRECTORY = $(INSLIB)<%if(targetoutdir)%>/<%targetoutdir%><%endif%>
 <%endif%>
 
+<%if(targetoutdir)%>
+VDIR   = <%targetoutdir%>.obj/
+VSHDIR = <%targetoutdir%>.shobj/
+
+<%endif%>
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 ## We don't need the ACELIB setting from wrapper_macros.GNU
 ACELIB =

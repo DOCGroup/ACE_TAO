@@ -1,4 +1,4 @@
 // -*- MPC -*-
 // $Id$
 
-conditional_include "common"
+conditional_include "gnudll"
