@@ -1,3 +1,9 @@
+Fri Mar 10 19:06:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/DynAnyC.h:
+	* tao/DynAnyC.cpp:
+	  Removed some unnecessary _ptr_type typedefs.
+
 Fri Mar 10 14:54:20 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_array/array_cs.cpp:
