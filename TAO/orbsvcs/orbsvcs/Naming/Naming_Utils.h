@@ -73,7 +73,7 @@ public:
   // arguments are parsed to determine if this name server instance is
   // part of a naming tree that resides under the default name
   // server. 
-
+  
   ~TAO_Naming_Server (void);
   // Destructor.
 
@@ -139,6 +139,9 @@ public:
   CosNaming::NamingContext_ptr operator-> (void) const;
   // Returns a <NamingContext_ptr>.
 
+  CosNaming::NamingContext_ptr get_context (void) const;
+  // Returns the NamingContext
+  
 private:
   CosNaming::NamingContext_var naming_context_;
   // NamingContext ptr.
