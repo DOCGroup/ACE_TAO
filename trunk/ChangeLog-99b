@@ -1,3 +1,31 @@
+Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
+	* ACE_wrappers/ace/POSIX_Asynch_IO.h
+	* ACE_wrappers/ace/POSIX_Proactor.cpp
+	* ACE_wrappers/ace/POSIX_Proactor.h
+	* ACE_wrappers/ace/Proactor.cpp
+	* ACE_wrappers/ace/Proactor.h
+	* ACE_wrappers/ace/Proactor_Impl.h
+
+	- Completed Multithreading of POSIX_SIG_Proactor.
+
+	- Introduced another constructor for ACE_POSIX_SIG_Proactor for taking
+	  signal mask to be used with the Proactor.
+	
+	- Thanks to Dave Butenhof <butenhof@zko.dec.com> for helping a lot to
+	  understand the various things in the POSIX4 standard.
+	
+	- Thanks to Dave suggestion of keeping null_handler for the sigaction
+	  to real-time signals. With this and a couple of other correct POSIX
+	  things SIG proactor is now working with in Solaris 2.7.
+	
+	- Lynx OS doesnt support <pthread_sigmask>, so it couldnt be
+	  multithreaded. Enabled AIOCB_Proactor for this platform.
+	
+	- Added an example to make use of the real-time signal numbers for the
+	   asynchronous I/O calls.
+
 Sat Apr 24 13:09:27 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Containers_T.h: Added allocator support to ACE_Array.
