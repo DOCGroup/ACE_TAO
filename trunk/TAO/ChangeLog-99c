@@ -33,6 +33,7 @@ Mon Sep 13 13:55:22 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 Mon Sep 13 13:49:08 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp (visit_interface):
 	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp
 	  (visit_interface): The implementation of _duplicate method was
 	  mistakenly removed from the code for locality constaint
