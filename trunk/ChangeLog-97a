@@ -1,3 +1,16 @@
+Thu Jun 19 22:20:20 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.h (VxWorks/g++ only): added horrible hack to work around
+	  mismatch of memcmp, etc., prototypes in <string.h>.
+
+	* ace/OS.i: reordered many function definitions to avoid use
+	  before definition.  Building with g++ 2.7.2 on VxWorks 5.3.1
+	  revealed them.
+
+	* ace/config-vxworks5.2-g++.h: removed ACE_HAS_STRING_CLASS and
+	  ACE_HAS_GNU_CSTRING_H, because those aren't distributed with
+	  Tornado 1.0.1.
+
 Thu Jun 19 15:31:53 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* ace/Timer_Wheel_T.cpp: Fixed problem with expire () not expiring
