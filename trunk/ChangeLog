@@ -1,3 +1,7 @@
+Sun Jan  6 21:19:10 2002  John Aughey  <jha@cs.wustl.edu>
+
+        * tests/run_test.lst: Uncommented out Conn_Test from daily builds.
+
 Sun Jan  6 21:09:10 2002  John Aughey  <jha@cs.wustl.edu>
 
         * ace/INET_Addr.cpp ace/INET_Addr.h: Reverted to January 1 version
