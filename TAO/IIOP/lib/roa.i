@@ -14,3 +14,6 @@ ACE_INLINE void ACE_ROA::forwarder(ACE_ROA::ForwardFunc f) { theForwarder = f; }
 
 ACE_INLINE TCP_OA_ptr ACE_ROA::oa() { return theOA; }
 ACE_INLINE void ACE_ROA::oa(TCP_OA_ptr anOA) { theOA = anOA; }
+
+ACE_INLINE unsigned int ACE_ROA::threadFlags() { return theThreadFlags; }
+ACE_INLINE void ACE_ROA::threadFlags(unsigned int f) { theThreadFlags = f; }
