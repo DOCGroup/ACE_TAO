@@ -25,3 +25,17 @@ TAO_ExtLocalInterfaceDef_i::~TAO_ExtLocalInterfaceDef_i (void)
 {
 }
 
+// Just call the base class version, this is here only to
+// disambiguate multiple inheritance.
+void
+TAO_ExtLocalInterfaceDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  TAO_IFR_WRITE_GUARD;
+
+  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  TAO_LocalInterfaceDef_i::destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
