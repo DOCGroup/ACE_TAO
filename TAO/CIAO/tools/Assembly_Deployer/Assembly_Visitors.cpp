@@ -4,6 +4,7 @@
 #include "../XML_Helpers/XML_Utils.h"
 #include "ciao/CIAO_common.h"
 #include "ace/OS_NS_stdio.h"
+#include "../Segment_Timer/Segment_Timer.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Assembly_Visitors.inl"
@@ -110,6 +111,8 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
   if (CIAO::debug_level () > 10)
     ACE_DEBUG ((LM_DEBUG, "processcollocation %s\n", pc->id ()));
 
+  segment_timers[CREATE_COMPSERVER_TIMER].start_timer ();
+
   Components::ConfigValues server_config;
 
   // Destination logical host id.
@@ -180,6 +183,8 @@ CIAO::Assembly_Builder_Visitor::visit_processcollocation
   this->container_ = Components::Deployment::Container::_nil ();
   this->rtpolicy_name_.clear ();
 
+  segment_timers[CREATE_COMPSERVER_TIMER].stop_timer ();
+
   // Now deal with the children nodes.
   CIAO::Assembly_Placement::Container::ITERATOR iter (*pc);
   CIAO::Assembly_Placement::Node *node = 0;
@@ -222,6 +227,7 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
     {
       //      info.dump ();             // For debug purpose.
 
+      segment_timers[CREATE_HOME_TIMER].start_timer ();
       // install home
       Components::ConfigValues home_config;
       // Setting home config value here:
@@ -278,6 +284,7 @@ CIAO::Assembly_Builder_Visitor::visit_homeplacement
         ACE_ERROR_RETURN ((LM_DEBUG,
                            "Failed to register home\n"),
                           -1);
+      segment_timers[CREATE_HOME_TIMER].stop_timer ();
       // Save the home for component instantiation.
       this->home_ = klhome;
 
@@ -313,19 +320,20 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
   if (CIAO::debug_level () > 10)
     ACE_DEBUG ((LM_DEBUG, "ComponentInstantiation %s\n", ci->id ()));
 
-
+  segment_timers[CREATE_COMPONENT_TIMER].start_timer ();
   Components::CCMObject_var comp
     = this->home_->create_component (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
   this->context_.instantiated_components_.bind (ci->id (),
                                                 comp);
-
+  segment_timers[CREATE_COMPONENT_TIMER].stop_timer ();
 
   // Registering component.
   CIAO::Assembly_Placement::componentinstantiation::REGISTRATION_QUEUE::ITERATOR
     iter (ci->register_info_);
 
+  segment_timers[REGISTER_COMPONENT_TIMER].start_timer ();
 
   while (!iter.done ())
     {
@@ -338,6 +346,8 @@ CIAO::Assembly_Builder_Visitor::visit_componentinstantiation
 
       iter.advance ();
     }
+  segment_timers[REGISTER_COMPONENT_TIMER].stop_timer ();
+
   return 0;
 }
 
@@ -348,7 +358,8 @@ CIAO::Assembly_Builder_Visitor::get_current_componentserver (ACE_ENV_SINGLE_ARG_
     {
       if (CIAO::debug_level () > 10)
         ACE_DEBUG ((LM_DEBUG, "Creating new ComponenetServer\n"));
-
+ 
+      segment_timers[CREATE_COMPSERVER_TIMER].start_timer ();
       Components::Deployment::ServerActivator_var activator =
         this->deployment_config_.get_default_activator ();
 
@@ -367,6 +378,7 @@ CIAO::Assembly_Builder_Visitor::get_current_componentserver (ACE_ENV_SINGLE_ARG_
       this->context_.component_servers_.enqueue_tail (this->compserv_);
       this->container_ = Components::Deployment::Container::_nil ();
       this->rtpolicy_name_.clear ();
+      segment_timers[CREATE_COMPSERVER_TIMER].stop_timer ();
     }
   return Components::Deployment::ComponentServer::_duplicate
     (this->compserv_.in ());
@@ -384,6 +396,7 @@ CIAO::Assembly_Builder_Visitor::get_container (const char *rtpolicy
       Components::Deployment::ComponentServer_var server
         = this->get_current_componentserver ();
 
+      segment_timers[CREATE_CONTAINER_TIMER].start_timer ();
       Components::ConfigValues container_config;
       // @@ Should we get the config value from Softpkg_Info?
       if (rtpolicy != 0)
@@ -403,6 +416,7 @@ CIAO::Assembly_Builder_Visitor::get_container (const char *rtpolicy
         server->create_container (container_config
                                   ACE_ENV_ARG_PARAMETER);
       ACE_CHECK_RETURN (0);
+      segment_timers[CREATE_CONTAINER_TIMER].stop_timer ();
 
       this->rtpolicy_name_ = rtpolicy;
 

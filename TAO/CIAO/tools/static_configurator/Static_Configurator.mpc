@@ -11,10 +11,9 @@ project(Static_Assembly_Parser) : ciao_server, acexml, rtcorba{
 
 project (Static_Configurator) : ciao_server, orbsvcslib, portableserver, security, iorinterceptor, objreftemplate, valuetype, ifr_client, rt_server{
   sharedname  = Static_Configurator
-  after += CIAO_Server XML_Helpers
-  libs       += CIAO_Server CIAO_XML_Helpers
+  libs       += CIAO_Server CIAO_XML_Helpers Segment_Timer
+  after += CIAO_Server XML_Helpers Segment_Timer
   includes   += $(TAO_ROOT)/orbsvcs/orbsvcs
-  dynamicflags = STATIC_CONFIGURATOR_BUILD_DLL
 
   Source_Files {
     Static_Configurator.cpp

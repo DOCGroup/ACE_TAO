@@ -1,3 +1,30 @@
+Thu May 27 22:14:18 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* tools/static_configurator/Static_Configurator.mpc: 
+	* tools/static_configurator/Static_Configurator.h: 
+	* tools/static_configurator/Static_Configurator.cpp: 
+	* tools/static_configurator/Static_Assembly_Visitors.cpp: 
+	* tools/static_configurator/Static_Assembly_Parser.cpp: 
+	
+	  Made changes related to performance measurement of static
+	  configuration mechanisms.
+
+	* tools/Segment_Timer/Segment_Timer_Export.h: 
+	* tools/Segment_Timer/Segment_Timer.{cpp,h,mpc}: 
+	* tools/Segment_Timer/README: 
+
+	  Adding segment timer files. This class is used in the
+	  performance measurements of static and dynamic configurations.
+
+	* tools/RTComponentServer/RTComponentServer.mpc: 
+	* tools/Assembly_Deployer/Assembly_Visitors.cpp: 
+	* tools/Assembly_Deployer/Assembly_Manager.cpp: 
+	* tools/Assembly_Deployer/Assembly_Impl.cpp: 
+	* tools/Assembly_Deployer/Assembly_Deployer.mpc: 
+	
+	  Made changes related to performance measurement of dynamic
+	  configuration mechanisms.
+	
 Thu May 27 18:39:10 2004  Gan Deng  <dengg@dre.vanderbilt.edu>
 
 	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.h

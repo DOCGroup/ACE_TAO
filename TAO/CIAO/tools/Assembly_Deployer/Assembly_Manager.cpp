@@ -16,6 +16,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "../Segment_Timer/Segment_Timer.h"
 
 char *config_filename_ = 0;
 char *output_ior_filename_ = 0;
@@ -23,7 +24,7 @@ char *output_ior_filename_ = 0;
 int
 parse_args (int argc, char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "c:o:");
+  ACE_Get_Opt get_opts (argc, argv, "c:o:t");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -37,12 +38,16 @@ parse_args (int argc, char *argv[])
        output_ior_filename_ = get_opts.opt_arg ();
       break;
 
+      case 't': //Show timing measurement information for deployment configuration
+       Segment_Timer::set_dump_flag(true);
+       break;
       case '?':  // display help for use of the server.
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s\n"
                            "-c <deployment configuration file>\n"
                            "-o <ior_output_file>\n"
+                           "-t turn on timing measurement\n"
                            "\n",
                            argv [0]),
                           -1);
