@@ -33,7 +33,7 @@ TAO_CEC_ProxyPullConsumer::~TAO_CEC_ProxyPullConsumer (void)
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_ProxyPullConsumer::activate (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CosEventChannelAdmin::ProxyPullConsumer_var result;
   ACE_TRY
@@ -51,7 +51,7 @@ TAO_CEC_ProxyPullConsumer::activate (CORBA::Environment &ACE_TRY_ENV)
 
 void
 TAO_CEC_ProxyPullConsumer::deactivate (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC (())
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_TRY
     {

@@ -38,7 +38,7 @@ public:
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
     incarnation (CORBA::Environment &)
-      ACE_THROW_SPEC (());
+      ACE_THROW_SPEC ((CORBA::SystemException));
 
   virtual CosTradingRepos::ServiceTypeRepository::IncarnationNumber
   add_type (const char *name,
@@ -231,7 +231,7 @@ public:
                                    ACE_Equal_To<TAO_String_Hash_Key>,
                                    ACE_Null_Mutex>
                                    Service_Type_Map_Iterator;
-  
+
   void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
                               CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                               CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);

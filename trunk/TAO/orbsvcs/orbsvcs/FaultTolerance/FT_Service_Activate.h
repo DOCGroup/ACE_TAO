@@ -51,7 +51,7 @@ public:
   // Initializes object when dynamic linking occurs.
 
   virtual TAO_Service_Callbacks *activate_services (TAO_ORB_Core *orb)
-    ACE_THROW_SPEC (());
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Create and activate the service callbacks into the orb.
   // This method cannot throw any exception, but it can return a nil
   // object to indicate an error condition.
