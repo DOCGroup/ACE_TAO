@@ -86,7 +86,7 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
       IIOP_Object *obj2;
 
       if (obj->QueryInterface (IID_IIOP_Object,
-			       (void **) &obj2) != NOERROR)
+			       (void **) &obj2) != TAO_NOERROR)
         {
           env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
           return 0;
@@ -348,7 +348,7 @@ IIOP_ORB::string_to_object (const CORBA::String str,
 DEFINE_GUID (IID_IIOP_ORB,
 0xa201e4c4, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-HRESULT __stdcall
+TAO_HRESULT
 IIOP_ORB::QueryInterface (REFIID riid,
                           void **ppv)
 {
@@ -356,16 +356,16 @@ IIOP_ORB::QueryInterface (REFIID riid,
 
   if (IID_CORBA_ORB == riid
       || IID_IIOP_ORB == riid
-      || IID_IUnknown == riid)
+      || IID_TAO_IUnknown == riid)
     *ppv = this;
 
   // XXX gotta aggregate ...
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
   (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)

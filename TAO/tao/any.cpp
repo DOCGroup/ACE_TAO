@@ -507,7 +507,6 @@ DEFINE_GUID (IID_CORBA_Any,
 0xa201e4c8, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 ULONG
-__stdcall
 CORBA_Any::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -515,7 +514,7 @@ CORBA_Any::AddRef (void)
   return ++refcount_;
 }
 
-ULONG __stdcall
+ULONG
 CORBA_Any::Release (void)
 {
   {
@@ -531,27 +530,27 @@ CORBA_Any::Release (void)
   return 0;
 }
 
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_Any::QueryInterface (REFIID riid,
 			   void **ppv)
 {
   *ppv = 0;
 
-  if (IID_CORBA_Any == riid || IID_IUnknown == riid)
+  if (IID_CORBA_Any == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
-// VARIANT conversions
+// TAO_VARIANT conversions
 
 // copy constructor
 
-CORBA_Any::CORBA_Any (const VARIANT &src)
+CORBA_Any::CORBA_Any (const TAO_VARIANT &src)
 {
   orb_owns_data_ = CORBA::B_TRUE;
   refcount_ = 1;
@@ -563,7 +562,7 @@ CORBA_Any::CORBA_Any (const VARIANT &src)
 
 // assignment operator
 CORBA_Any &
-CORBA_Any::operator = (const VARIANT &src)
+CORBA_Any::operator = (const TAO_VARIANT &src)
 {
   this->~CORBA_Any ();
 
@@ -640,9 +639,9 @@ CORBA_Any::operator = (const VARIANT &src)
   return *this;
 }
 
-CORBA_Any::operator VARIANT (void)
+CORBA_Any::operator TAO_VARIANT (void)
 {
-  VARIANT retval;
+  TAO_VARIANT retval;
 
   // XXX convert it ... or report exception somehow!
 

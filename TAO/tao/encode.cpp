@@ -326,7 +326,8 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       IIOP_Object *objdata;
       IIOP::Profile *profile;
 
-      if (obj->QueryInterface (IID_IIOP_Object, (void **) &objdata) != NOERROR)
+      if (obj->QueryInterface (IID_IIOP_Object, (void **) &objdata)
+          != TAO_NOERROR)
         {
           env.exception (new CORBA::MARSHAL (CORBA::COMPLETED_NO));
           return CORBA::TypeCode::TRAVERSE_STOP;

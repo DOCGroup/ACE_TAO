@@ -223,7 +223,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 
   if (CORBA::is_nil (other_obj) == CORBA::B_TRUE
       || other_obj->QueryInterface (IID_IIOP_Object,
-                                    (void **) &other_iiop_obj) != NOERROR)
+                                    (void **) &other_iiop_obj) != TAO_NOERROR)
     return CORBA::B_FALSE;
   CORBA::release (other_obj);
 
@@ -250,7 +250,7 @@ IIOP_Object::is_equivalent (CORBA::Object_ptr other_obj,
 DEFINE_GUID (IID_IIOP_Object,
 0xa201e4c3, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
-ULONG __stdcall
+ULONG
 IIOP_Object::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->IUnknown_lock_, 0));
@@ -258,7 +258,7 @@ IIOP_Object::AddRef (void)
   return ++this->refcount_;
 }
 
-ULONG __stdcall
+ULONG
 IIOP_Object::Release (void)
 {
   {
@@ -284,7 +284,7 @@ IIOP_Object::Release (void)
 // CORBA::Object ... contained within this; it delegates back
 //      to this one as its "parent"
 
-HRESULT __stdcall
+TAO_HRESULT
 IIOP_Object::QueryInterface (REFIID riid,
                              void **ppv)
 {
@@ -292,16 +292,16 @@ IIOP_Object::QueryInterface (REFIID riid,
 
   if (IID_IIOP_Object == riid
       || IID_STUB_Object == riid
-      || IID_IUnknown == riid)
+      || IID_TAO_IUnknown == riid)
     *ppv = this;
   else if (IID_CORBA_Object == riid)
     *ppv = &base;
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 //TAO extensions

@@ -192,7 +192,7 @@ DEFINE_GUID (IID_CORBA_TypeCode,
 0xa201e4c1, 0xf258, 0x11ce, 0x95, 0x98, 0x0, 0x0, 0xc0, 0x7c, 0xa8, 0x98);
 
 // COM stuff
-u_long __stdcall
+u_long
 CORBA_TypeCode::AddRef (void)
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, lock_, 0));
@@ -210,7 +210,7 @@ CORBA_TypeCode::AddRef (void)
 }
 
 // COM stuff
-u_long __stdcall
+u_long
 CORBA_TypeCode::Release (void)
 {
   // This code is subtle since we need to make sure that we don't try
@@ -343,20 +343,20 @@ TC_Private_State::~TC_Private_State (void)
 }
 
 // COM stuff
-HRESULT __stdcall
+TAO_HRESULT
 CORBA_TypeCode::QueryInterface (REFIID riid,
 				void **ppv)
 {
   *ppv = 0;
 
-  if (IID_CORBA_TypeCode == riid || IID_IUnknown == riid)
+  if (IID_CORBA_TypeCode == riid || IID_TAO_IUnknown == riid)
     *ppv = this;
 
   if (*ppv == 0)
-    return ResultFromScode (E_NOINTERFACE);
+    return ResultFromScode (TAO_E_NOINTERFACE);
 
  (void) AddRef ();
-  return NOERROR;
+  return TAO_NOERROR;
 }
 
 // This method is not yet implemented completely - low priority task

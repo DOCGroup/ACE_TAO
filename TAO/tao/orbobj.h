@@ -25,7 +25,7 @@
 
 #include "tao/corba.h"
 
-class TAO_Export CORBA_ORB : public IUnknown
+class TAO_Export CORBA_ORB : public TAO_IUnknown
   // = TITLE
   // ORB pseudo-objref.
 {
@@ -117,8 +117,8 @@ public:
   // objrefs, as well as how to marshal and unmarshal them ... as well
   // as provide their own QueryInterface.
 
-  ULONG __stdcall AddRef (void);
-  ULONG __stdcall Release (void);
+  ULONG AddRef (void);
+  ULONG Release (void);
 
   CORBA_Object_ptr resolve_initial_references (CORBA::String name);
   // This method acts as a miniature name service provided by the ORB

@@ -73,8 +73,8 @@
 #endif /* TAO_HAS_DLL */
 
 // COM stuff
-#include <objbase.h>
-#include <initguid.h>
+#include "tao/compat/objbase.h"
+#include "tao/compat/initguid.h"
 
 // ORB configuration
 #include "tao/orbconf.h"
