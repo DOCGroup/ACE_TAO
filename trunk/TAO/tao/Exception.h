@@ -134,10 +134,6 @@ class TAO_Export CORBA_SystemException : public CORBA_Exception
   //   System exceptions are those defined in the CORBA spec; OMG-IDL
   //   defines these.
 public:
-
-  CORBA_SystemException (void);
-  // default ctor
-
   CORBA_SystemException (const CORBA_SystemException &src);
   // copy ctor
 
@@ -164,11 +160,6 @@ public:
 
   // extension
 
-  CORBA_SystemException (CORBA::TypeCode_ptr tc,
-                         CORBA::ULong code,
-                         CORBA::CompletionStatus completed);
-  // ctor using a TypeCode
-
   virtual int _is_a (const char *type_id) const;
   // helper for the _narrow operation
 
@@ -184,8 +175,13 @@ public:
   static CORBA::ULong errno_tao_ (int errno_value);
   // Helper to translate a platform-specific errno to a TAO errno value.
 
-private:
+protected:
+  CORBA_SystemException (CORBA::TypeCode_ptr tc,
+                         CORBA::ULong code,
+                         CORBA::CompletionStatus completed);
+  // ctor using a TypeCode
 
+private:
   CORBA::ULong minor_;
   // minor code
 

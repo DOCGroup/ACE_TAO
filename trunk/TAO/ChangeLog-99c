@@ -1,3 +1,39 @@
+Tue Jun  1 19:48:12 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* Merged in the changes from ami_phase1_start to
+	  ami_phase1_end. The main trunk *before* the merge is tagged as
+	  pre_ami_phase1_merge and after the merge is pos_ami_phase1_merge
+
+	* This change is the first phase in the quest for supporting
+	  asynchronous messaging in TAO, it involved a somewhat large
+	  re-organization of the critical path to:
+
+	* Decouple the waiting strategy for the protocol implementations:
+	  a new strategy in incorporated that can handle any of the
+	  current waiting modes (on read, select or the leader-follower
+	  set) using *any* protocol.
+
+	* Allowing multiple simultaneous requests over the same
+	  connection, this is also strategized so low-latency or QoS
+	  enabled applications can obtain better guarantees. Currently
+	  only the "exclusive" strategy is implemented.
+
+	* Decoupling the thread that sends a request from the thread that
+	  receives the reply: a new object is introduced, the
+	  Reply_Dispatcher that will process the reply. Currently the
+	  Synch_Reply_Dispatcher is a noop and simply stores the CDR
+	  stream and reply status.  The thread that initiated the request
+	  then process the reply.  In the future an
+	  Asynch_Reply_Dispatcher will process the reply as soon as it
+	  arrives and pass it up to the Reply_Handlers specified by the
+	  user when making asynchronous invocations.
+
+	* Most of the work on this branch was done by Alexander Babu
+	  Arulanthu <alex@cs.wust.edu> I'm just helping him with the
+	  merge.  Please check
+	  http://www.cs.wustl.edu/~alex/Messaging/messaging_design.html
+	  for more details on these changes.
+
 Tue Jun  1 18:00:23 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_State.cpp: 

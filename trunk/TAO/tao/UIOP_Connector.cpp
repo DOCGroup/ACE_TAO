@@ -29,18 +29,18 @@ ACE_RCSID(tao, UIOP_Connector, "$Id$")
 
 // ****************************************************************
 
-TAO_UIOP_MT_Connect_Creation_Strategy::
-  TAO_UIOP_MT_Connect_Creation_Strategy (ACE_Thread_Manager* t)
+TAO_UIOP_Connect_Creation_Strategy::
+  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager* t)
     :  ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler> (t)
 {
 }
 
 int
-TAO_UIOP_MT_Connect_Creation_Strategy::make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh)
+TAO_UIOP_Connect_Creation_Strategy::make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh)
 {
   if (sh == 0)
     {
-      ACE_NEW_RETURN (sh, TAO_MT_UIOP_Client_Connection_Handler, -1);
+      ACE_NEW_RETURN (sh, TAO_UIOP_Client_Connection_Handler, -1);
     }
   return 0;
 }
@@ -62,7 +62,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
         TAO_CACHED_CONNECT_STRATEGY;
 
   TAO_CACHED_CONNECT_STRATEGY* cached_connect_strategy =
-    new TAO_CACHED_CONNECT_STRATEGY (new TAO_UIOP_MT_Connect_Creation_Strategy);
+    new TAO_CACHED_CONNECT_STRATEGY (new TAO_UIOP_Connect_Creation_Strategy);
 
   return this->base_connector_.open (orb_core->reactor (),
                                      &this->null_creation_strategy_,
@@ -121,7 +121,7 @@ TAO_UIOP_Connector::connect (TAO_Profile *profile,
 int
 TAO_UIOP_Connector::preconnect (const char *preconnects)
 {
-  // Check for the proper protocol prefix.  
+  // Check for the proper protocol prefix.
   if (this->check_prefix (preconnects) != 0)
     return 0; // Failure: zero successful preconnections
 
@@ -156,7 +156,7 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
               rendezvous_point[3] == '@')
             version_offset = 4;
 
-          // @@ For now, we just drop the version prefix.  However, at 
+          // @@ For now, we just drop the version prefix.  However, at
           //    some point in the future the version may become useful.
 
           dest.set (rendezvous_point + version_offset);
@@ -217,7 +217,7 @@ TAO_UIOP_Connector::preconnect (const char *preconnects)
                   ACE_DEBUG ((LM_DEBUG,
                               "TAO (%P|%t) Preconnection <%s> failed.\n",
                               remote_addrs[index].get_path_name ()));
-                } 
+                }
             }
         }
 

@@ -17,9 +17,9 @@
 #ifndef TAO_UIOP_FACTORY_H
 #define TAO_UIOP_FACTORY_H
 
-# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
-
 #include "tao/Protocol_Factory.h"
+
+# if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -10,7 +10,7 @@
 //     Pluggable.h
 //
 // = DESCRIPTION
-//     Interface for the TAO pluggable protocol frameowrk.
+//     Interface for the TAO pluggable protocol framework.
 //
 // = AUTHOR
 //     Fred Kuhns <fredk@cs.wustl.edu>
@@ -22,6 +22,8 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Sequence.h"
+#include "tao/Typecode.h"
+#include "tao/GIOP.h"
 
 // Forward declarations.
 class ACE_Addr;
@@ -33,6 +35,10 @@ class TAO_Profile;
 class TAO_MProfile;
 class TAO_Resource_Factory;
 
+class TAO_Reply_Dispatcher;
+class TAO_Request_Mux_Strategy;
+class TAO_Wait_Strategy;
+
 class TAO_Export TAO_Transport
 {
   // = TITLE
@@ -43,8 +49,12 @@ class TAO_Export TAO_Transport
   //   constructor and deleted in the service handlers destructor!!
 
 public:
-  TAO_Transport (CORBA::ULong tag);
+  TAO_Transport (CORBA::ULong tag,
+                 TAO_ORB_Core *orb_core);
   // default creator, requres the tag value be supplied.
+
+  virtual ~TAO_Transport (void);
+  // destructor
 
   CORBA::ULong tag (void) const;
   // The tag, each concrete class will have a specific tag value.
@@ -117,12 +127,122 @@ public:
                             int twoway) = 0;
   // Default action to be taken for send request.
 
-  virtual ~TAO_Transport (void);
-  // destructor
+  void input_cdr_stream (TAO_InputCDR *cdr);
+  // Set the CDR stream for reading the input message.
 
-private:
+  TAO_InputCDR *input_cdr_stream (void) const;
+  // Get the CDR stream for reading the input message.
+
+  void destroy_cdr_stream (TAO_InputCDR *) const;
+  // Release a CDR stream, simply pass it to the RMS...
+
+  // = State of the incoming message.
+
+  void message_size (CORBA::ULong message_size);
+  // Set the total size of the incoming message. (This does not
+  // include the header size). This inits the <message_offset> setting
+  // it to zero.
+
+  CORBA::ULong message_size (void) const;
+  // Get the total size of the incoming message.
+
+  CORBA::ULong message_offset (void) const;
+  // Get the current offset of the incoming message.
+
+  int incr_message_offset (CORBA::Long bytes_transferred);
+  // Update the offset of the incoming message. Returns 0 on success
+  // -1 on failure.
+
+  void message_received (int received);
+  // Set the flag to indicate whether the input message was read fully
+  // or no.
+
+  int message_received (void) const;
+  // Get the flag.
+
+  // = Get and set methods for the ORB Core.
+
+  // void orb_core (TAO_ORB_Core *orb_core);
+  // Set it.
+
+  TAO_ORB_Core *orb_core (void) const;
+  // Get it.
+
+  // = Get and set methods for thr RMS object.
+
+  // void rms (TAO_Request_Mux_Strategy *rms);
+  // Set the RMS object.
+
+  TAO_Request_Mux_Strategy * rms (void) const;
+  // Get the RMS used by this Transport object.
+
+  TAO_Wait_Strategy *wait_strategy (void) const;
+  // Return the Wait strategy used by the Transport.
+
+  CORBA::ULong request_id (void);
+  // Get request id for the current invocation from the RMS object.
+
+  int bind_reply_dispatcher (CORBA::ULong request_id,
+                              TAO_Reply_Dispatcher *rd);
+  // Bind the reply dispatcher with the RMS object.
+
+  virtual int wait_for_reply (void);
+  // Wait for the reply depending on the strategy.
+
+  virtual int handle_client_input (int block = 0);
+  // @@ Make this pure virtual !!! (alex)
+
+  // Read and handle the reply. Returns 0 when there is Short Read on
+  // the connection. Returns 1 when the full reply is read and
+  // handled. Returns -1 on errors.
+  // If <block> is 1, then reply is read in a blocking manner.
+
+  virtual int register_handler (void);
+  // Register the handler with the reactor. Will be called by the Wait
+  // Strategy if Reactor is used  for that strategy. Default
+  // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  virtual int suspend_handler (void);
+  // Suspend the handler from the reactor. Will be called by the Wait
+  // Strategy if Reactor is used  for that strategy. Default
+  // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  virtual int resume_handler (void);
+  // Resume the handler from the reactor. This will be called by the
+  // Wait Strategies, if Reactor is used in the strategy. Default
+  // implementation out here returns -1 setting <errno> to ENOTSUP.
+
+  virtual int handle_close (void);
+  // The connection was closed, let everybody know about it....
+
+protected:
   CORBA::ULong tag_;
   // IOP protocol tag.
+
+  TAO_ORB_Core *orb_core_;
+  // Global orbcore resource.
+
+  // = States for the input message.
+  CORBA::ULong message_size_;
+  // Total length of the whole message. This does not include the
+  // header length.
+
+  CORBA::ULong message_offset_;
+  // Current offset of the input message.
+
+  int message_received_;
+  // Flag to indicate whether the input message has been received
+  // fully or not.
+
+  TAO_Request_Mux_Strategy *rms_;
+  // Strategy to decide whether multiple requests can be sent over the
+  // same connection or the connection is exclusive for a request.
+
+  TAO_Wait_Strategy *ws_;
+  // Strategy for waiting for the reply after sending the request.
+
+  TAO_GIOP_Version version_;
+  // Version information found in the incoming message.
 };
 
 class TAO_Export TAO_IOP_Version

@@ -179,6 +179,8 @@ CORBA_UserException::_narrow (CORBA_Exception* exception)
   return 0;
 }
 
+// ****************************************************************
+
 CORBA_SystemException::CORBA_SystemException (CORBA::TypeCode_ptr tc,
                                               CORBA::ULong code,
                                               CORBA::CompletionStatus completed)

@@ -21,9 +21,10 @@
 #ifndef TAO_UIOP_CONNECTOR_H
 #define TAO_UIOP_CONNECTOR_H
 
+#include "ace/Connector.h"
+
 # if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Connector.h"
 #include "ace/LSOCK_Connector.h"
 
 #include "tao/Pluggable.h"
@@ -34,13 +35,13 @@ typedef ACE_Strategy_Connector<TAO_UIOP_Client_Connection_Handler,
 
 // ****************************************************************
 
-class TAO_Export TAO_UIOP_MT_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
+class TAO_Export TAO_UIOP_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
 {
   // = TITLE
   //   Helper creation strategy
   //
   // = DESCRIPTION
-  //   Creates UIOP_MT_Client_Connection_Handler objects but satisfies
+  //   Creates UIOP_Client_Connection_Handler objects but satisfies
   //   the interface required by the
   //   ACE_Creation_Strategy<TAO_UIOP_Client_Connection_Handler>
   //
@@ -48,10 +49,10 @@ class TAO_Export TAO_UIOP_MT_Connect_Creation_Strategy : public ACE_Creation_Str
   // from the asynch. messaging branch.
   //
 public:
-  TAO_UIOP_MT_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
+  TAO_UIOP_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
 
   virtual int make_svc_handler (TAO_UIOP_Client_Connection_Handler *&sh);
-  // Makes TAO_UIOP_MT_Client_Connection_Handlers
+  // Makes TAO_UIOP_Client_Connection_Handlers
 };
 
 // ****************************************************************

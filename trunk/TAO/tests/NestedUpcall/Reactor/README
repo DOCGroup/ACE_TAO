@@ -36,12 +36,10 @@ client if you don't want to use the naming service.
 server:
 -------
 
-% server [-d] [-s] [-o <ior_output_file>] 
+% server [-d] [-o <ior_output_file>] 
 
 Options:
 -------
--s       Tells the server not to use the Naming Service.
-
 -d       Debug flag (It is additive more -d flags will give debugging).
 
 -o      Outputs the ior file to the file
@@ -55,14 +53,12 @@ are ignored.
 client:
 -------
 
-% client [-d] [-s] [-x] <-f ior_file> <-k ior>  -n <iterations> 
+% client [-d] [-x] <-f ior_file> <-k ior>  -n <iterations> 
 
 Options:
 -------
 	d	Debug flag
-	s	Don't Use the Naming Service
 	x 	Tells the server to shutdown.
-	f	Reads the ior from the file
 	k	Reads the ior from commandline
 	
 	There are 3 ways of giving the IOR to the client:
@@ -75,6 +71,19 @@ Options:
 	3. Get it from the Naming Service (which is the default client
        	   behavior).  
 
+mt_client:
+-------
+
+% mt_client [-d] [-x] <-k ior> [-n <iterations>] [-t threads]
+
+Options:
+-------
+	d	Debug flag
+	x 	Tells the server to shutdown.
+	k	Reads the ior from commandline
+	n	Number of iterations on each thread
+	t	Number of concurrent threads
+	
 NestedUpCalls_Test:
 ------------------
 
