@@ -30,6 +30,13 @@ TAO_Leader_Follower::follower_available (void) const
   return !this->follower_set_.empty ();
 }
 
+ACE_INLINE void
+TAO_Leader_Follower::no_leaders_available (void)
+{
+  if (this->new_leader_generator_)
+    this->new_leader_generator_->no_leaders_available ();
+}
+
 ACE_INLINE int
 TAO_Leader_Follower::elect_new_leader (void)
 {
@@ -181,13 +188,6 @@ ACE_INLINE int
 TAO_Leader_Follower::has_clients (void) const
 {
   return this->clients_;
-}
-
-ACE_INLINE void
-TAO_Leader_Follower::no_leaders_available (void)
-{
-  if (this->new_leader_generator_)
-    this->new_leader_generator_->no_leaders_available ();
 }
 
 // ****************************************************************

@@ -485,7 +485,7 @@ server::test_no_bands_client_propagated_poa (CORBA::PolicyList &policies,
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     this->rt_orb_->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                                 0,
+                                                 default_thread_priority,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -622,7 +622,7 @@ server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     this->rt_orb_->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-                                                 0,
+                                                 default_thread_priority,
                                                  ACE_TRY_ENV);
   ACE_CHECK;
 

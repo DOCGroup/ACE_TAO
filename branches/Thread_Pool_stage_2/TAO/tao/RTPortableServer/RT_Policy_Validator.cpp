@@ -272,8 +272,8 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies,
         return;
 
       // If this POA is using a thread pool with lanes, make sure we
-      // have at least one thread lane that corresponds to these
-      // each band.
+      // have at least one thread lane that can provide service for
+      // the specified SERVER_DECLARED priority.
       TAO_Thread_Lane **lanes =
         this->thread_pool_->lanes ();
 
