@@ -114,7 +114,7 @@ try to help you fix the problems.
       <pre>
       CC: WorkShop Compilers 4.2 21 Apr 1997 C++ 4.2 patch 104631-02
       </pre><p>
-      
+
       There are likely to be build problems with older versions or
       different patchlevels.<p>
 
@@ -522,6 +522,11 @@ If you use the GNU GCC g++ compiler please note the following:
       delete it from the installation or to build your own
       compiler with no linker.  Be aware that you still need the
       libraries and includes of gcc.<P>
+
+      NOTE: if you do use the GNU linker, you might need to change
+      the <code>-G</code> flag to <code>-shared</code> in
+      the <code>SOFLAGS</code> definition in your
+      <code>include/makeinclude/platform_macros.GNU</code>.<p>
 
   <LI>Don't get too confused about contradictory statements in
       the gcc documentation. It was written by different
