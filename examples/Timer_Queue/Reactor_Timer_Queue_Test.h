@@ -29,6 +29,7 @@
 class Reactor_Timer_Queue_Test_Driver;
 
 class Input_Handler : public ACE_Event_Handler
+{
   // = TITLE
   //   Implements the handler to be called for input events.  Also has
   //   the logic to handle the different timer queue operations (i.e.,
@@ -38,7 +39,6 @@ class Input_Handler : public ACE_Event_Handler
   //   This class handles the reading of user input from stdin.  Also
   //   has the logic to handle the commands that are to be invoked in
   //   response to the user input.
-{
 public:
   typedef int (Input_Handler::*ACTION) (void *);
 
@@ -87,6 +87,7 @@ private:
 };
 
 class Reactor_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <ACE_Timer_Heap, Input_Handler, Input_Handler::ACTION>
+{
   // = TITLE
   //   Implements a test driver for a reactive timer queue using
   //   <ACE_Reactor>.
@@ -94,7 +95,6 @@ class Reactor_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <ACE_Time
   // = DESCRIPTION
   //   This class implements the logic to test the reactor
   //   implementation of timer queue, using an <ACE_Timer_Heap>.
-{
 public:
   Reactor_Timer_Queue_Test_Driver (void);
   // Sets the input handler <thandler_> with <timer_queue_> from the
@@ -123,9 +123,9 @@ private:
 };
 
 class Reactor_Timer_Handler : public ACE_Event_Handler
+{
   // = TITLE
   //     Target of the reactive timeout operation.
-{
 public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *);
