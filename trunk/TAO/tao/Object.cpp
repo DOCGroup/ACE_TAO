@@ -84,7 +84,7 @@ CORBA_Object::_remove_ref (void)
 {
   if (this->refcount_lock_ != 0)
     {
-      {   
+      {
         ACE_GUARD (TAO_SYNCH_MUTEX, mon, *this->refcount_lock_);
 
         this->refcount_--;
@@ -92,8 +92,8 @@ CORBA_Object::_remove_ref (void)
         if (this->refcount_ != 0)
           return;
       }
-    
-      delete this; 
+
+      delete this;
     }
 }
 
@@ -593,29 +593,6 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
         }
     }
 
-  TAO_Connector_Registry *connector_registry =
-    orb_core->connector_registry ();
-  for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
-    {
-      TAO_Profile *pfile =
-        connector_registry->create_profile (cdr);
-      if (pfile != 0)
-        mp.give_profile (pfile);
-    }
-
-  // Make sure we got some profiles!
-  if (mp.profile_count () != profile_count)
-    {
-      // @@ This occurs when profile creation fails when decoding the
-      //    profile from the IOR.
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_LIB_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
-                         ACE_LIB_TEXT ("profiles while extracting object\n")
-                         ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
-                         ACE_LIB_TEXT ("CDR stream.\n")),
-                        0);
-    }
-
   // Ownership of type_hint is given to TAO_Stub
   // TAO_Stub will make a copy of mp!
 
@@ -624,9 +601,35 @@ operator>> (TAO_InputCDR& cdr, CORBA_Object*& x)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
+      TAO_Connector_Registry *connector_registry =
+        orb_core->connector_registry (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+
+      for (CORBA::ULong i = 0; i != profile_count && cdr.good_bit (); ++i)
+        {
+          TAO_Profile *pfile =
+            connector_registry->create_profile (cdr);
+          if (pfile != 0)
+            mp.give_profile (pfile);
+        }
+
+      // Make sure we got some profiles!
+      if (mp.profile_count () != profile_count)
+        {
+          // @@ This occurs when profile creation fails when decoding the
+          //    profile from the IOR.
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("TAO (%P|%t) ERROR: Could not create all ")
+                             ACE_LIB_TEXT ("profiles while extracting object\n")
+                             ACE_LIB_TEXT ("TAO (%P|%t) ERROR: reference from the ")
+                             ACE_LIB_TEXT ("CDR stream.\n")),
+                            0);
+        }
+
+
       objdata = orb_core->create_stub (type_hint.in (),
                                        mp
-                                        ACE_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
