@@ -180,32 +180,12 @@ else  # ! static_libs
 endif # ! static_libs
 
 CC              = cc$(TOOLENV)
-CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
-                   -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -W -Wall
-CCFLAGS         += $(CFLAGS)
-ifeq (,$(rtti))
-  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
-  #### don't support it.
-  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
-endif # rtti
-DCFLAGS         += -g
-DLD             = $(LD)
-INCLDIRS        += -I$(WIND_BASE)/target/h
-LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
-                  -C $(COMPILE.c) -traditional -- \
-                  -m munch -n nm$(TOOLENV) ld$(TOOLENV)
-LDFLAGS         += -X -r
-#### WindRiver only recommends -O, not -O2, with some CPUs, including
-#### the i386 family.  And -O2 causes some compilation failures.
-OCFLAGS         += -O
-PIC             =
-
 
 #### Tornado II uses egcs
 ifndef ACE_CC
   ifndef COMSPEC
     ifdef ComSpec
-      #### ACE+TAO use COMSPEC, but ComSpec is defined.
+      #### ACE+TAO use COMSPEC, but ComSpec is defined on some WIN32's.
       COMSPEC = $(ComSpec)
     endif # ComSpec
   endif # ! COMPSPEC
@@ -232,6 +212,26 @@ ifeq (egcs,$(findstring egcs,$(ACE_CC_VERSION)))
     CFLAGS += -Wno-uninitialized
   endif # ! exceptions
 endif # egcs
+
+CFLAGS          += -D_REENTRANT -ansi -fno-builtin -fno-defer-pop \
+                   -fvolatile -nostdinc -nostdlib $(PIPE_OPT) -W -Wall
+CCFLAGS         += $(CFLAGS)
+ifeq (,$(rtti))
+  #### Don't use RTTI even with egcs, because Tornado 1.0.x libraries
+  #### don't support it.
+  CCFLAGS += -fno-rtti -DACE_LACKS_RTTI
+endif # rtti
+DCFLAGS         += -g
+DLD             = $(LD)
+INCLDIRS        += -I$(WIND_BASE)/target/h
+LD              = $(PERL_PATH) $(ACE_ROOT)/bin/ace_ld \
+                  -C $(COMPILE.c) -traditional -- \
+                  -m munch -n nm$(TOOLENV) ld$(TOOLENV)
+LDFLAGS         += -X -r
+#### WindRiver only recommends -O, not -O2, with some CPUs, including
+#### the i386 family.  And -O2 causes some compilation failures.
+OCFLAGS         += -O
+PIC             =
 
 
 #### ld can't handle INCLDIRS, so override LINK definitions.
