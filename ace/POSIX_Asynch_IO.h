@@ -735,17 +735,9 @@ private:
   ///         on canceled AIO requests
   int cancel_uncompleted (int flg_notify);
 
-  /// 1 - Accept is registered in ACE_Asynch_Pseudo_Task
-  /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
-  int flg_open_ ;
-
-  /// To prevent ACE_Asynch_Pseudo_Task from deletion
-  /// while we make a call to the ACE_Asynch_Pseudo_Task
-  /// This is extra cost !!!
-  /// we could avoid them if all applications will follow the rule:
-  /// Proactor should be deleted only after deletion all
-  /// AsynchOperation objects connected with it
-  int  task_lock_count_;
+  /// true  - Accept is registered in ACE_Asynch_Pseudo_Task
+  /// false - Accept is deregisted in ACE_Asynch_Pseudo_Task
+  bool flg_open_ ;
 
   /// Queue of Result pointers that correspond to all the pending
   /// accept operations.
@@ -867,10 +859,10 @@ public:
   void set_handle (ACE_HANDLE handle);
 
   /// virtual from ACE_Event_Handler
-  /// Called when accept event comes up on <listen_hanlde>
-  int handle_input (ACE_HANDLE handle);
+  /// The default action on handle_input() and handle_exception is to
+  /// return -1. Since that's what we want to do, just reuse them.
+  /// handle_output(), however, is where successful connects are reported.
   int handle_output (ACE_HANDLE handle);
-  int handle_exception (ACE_HANDLE handle);
 
   /// virtual from ACE_Event_Handler
   int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
@@ -881,31 +873,22 @@ private:
                  const ACE_Addr & local_sap,
                  int reuse_addr);
 
-  int post_result (ACE_POSIX_Asynch_Connect_Result *result, int flg_post);
+  int post_result (ACE_POSIX_Asynch_Connect_Result *result, bool flg_post);
 
   /// Cancel uncompleted connect operations.
   /**
    *  @arg flg_notify  Indicates whether or not we should send notification
-   *                   about canceled accepts.  If this is 0, don't send
-   *                   notifications about canceled connects.  If 1, notify
+   *                   about canceled accepts.  If this is false, don't send
+   *                   notifications about canceled connects.  If true, notify
    *                   user about canceled connects according POSIX
    *                   standards we should receive notifications on canceled
    *                   AIO requests.
    */
-  int cancel_uncompleted (int flg_notify, ACE_Handle_Set & set);
+  int cancel_uncompleted (bool flg_notify, ACE_Handle_Set &set);
 
-  int flg_open_ ;
-  /// 1 - Connect is registered in ACE_Asynch_Pseudo_Task
-  /// 0 - Aceept is deregisted in ACE_Asynch_Pseudo_Task
-
-
-  /// to prevent ACE_Asynch_Pseudo_Task from deletion
-  /// while we make a call to the ACE_Asynch_Pseudo_Task
-  /// This is extra cost !!!
-  /// we could avoid them if all applications will follow the rule:
-  /// Proactor should be deleted only after deletion all
-  ///  AsynchOperation objects connected with it
-  int  task_lock_count_;
+  bool flg_open_ ;
+  /// true  - Connect is registered in ACE_Asynch_Pseudo_Task
+  /// false - Aceept is deregisted in ACE_Asynch_Pseudo_Task
 
   typedef ACE_Map_Manager<ACE_HANDLE, ACE_POSIX_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
@@ -914,14 +897,12 @@ private:
   typedef MAP_MANAGER::ITERATOR MAP_ITERATOR;
   typedef MAP_MANAGER::ENTRY MAP_ENTRY;
 
-  /// Map of Result pointers that correspond to all the <accept>'s
-  /// pending.
+  /// Map of Result pointers that correspond to all the pending connects.
   MAP_MANAGER result_map_;
 
-  /// The lock to protect the result queue which is shared. The queue
+  /// The lock to protect the result map which is shared. The queue
   /// is updated by main thread in the register function call and
-  /// through the auxillary thread  in the deregister fun. So let us
-  /// mutex it.
+  /// through the auxillary thread  in the asynch pseudo task.
   ACE_SYNCH_MUTEX lock_;
 };
 

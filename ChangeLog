@@ -1,3 +1,20 @@
+Mon Feb 28 17:10:41 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/Asynch_Pseudo_Task.{h cpp}: Removed all the flg_active_ and
+	  finish locking stuff. Use the thr_count() value to tell if the
+	  thread is running, and don't try to interlock cleanup activities
+	  with other classes. It's messy and doesn't work right. There are
+	  too many race conditions between closing handles and closing down
+	  this object.
+	  Corrected ACE_LIB_TEXT use instead of
+	  ACE_TEXT, and added missing commas between some strings.
+
+	* ace/POSIX_Asynch_IO.{h cpp}:
+	* ace/WIN32_Asynch_IO.{h cpp}: Don't try to interlock against the
+	  Asynch_Pseudo_Task. If it's going, it's going. Only hold the lock
+	  around access to the connection/handle map since that's accessed
+	  from the asynch pseudo task thread as well as the caller's.
+
 Mon Feb 28 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
@@ -12,7 +29,7 @@ Mon Feb 28 09:59:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 Mon Feb 28 11:10:58 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.h: Made Acknowledge::Queue
-	a friend of Acknowledge. Hopefully this will help Sun C++ 5.4.
+	  a friend of Acknowledge. Hopefully this will help Sun C++ 5.4.
 
 Sun Feb 27 08:51:23 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
