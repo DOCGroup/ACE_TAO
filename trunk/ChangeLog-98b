@@ -13,6 +13,8 @@ Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Misc/context_switch_time.cpp (main):
           don't print suspend-resume results if the suspend-resume
           test isn't run (because thr_suspend isn't supported).
+          Process command line options before calulating hi-res timer
+          scale factor.
 
         * ace/OS.h: replaced ENOTSUP with EDEADLK in a comment,
           to fix a copy-and-paste error.
