@@ -405,8 +405,6 @@ JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &resu
 
 // #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 // template class ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>;
-#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+// #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 // #pragma instantiate ACE_Singleton<JAWS_VFS, ACE_SYNCH_MUTEX>
 // #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
