@@ -15,8 +15,6 @@
 #ifndef TAO_BE_VISITOR_OBJREF_TYPECODE_H
 #define TAO_BE_VISITOR_OBJREF_TYPECODE_H
 
-#include "ace/pre.h"
-
 namespace TAO
 {
 
@@ -66,7 +64,5 @@ namespace TAO
   };
 
 }
-
-#include "ace/post.h"
 
 #endif  /* TAO_BE_VISITOR_OBJREF_TYPECODE_H */
