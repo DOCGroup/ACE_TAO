@@ -32,7 +32,7 @@ public:
     Map_Item ();
     ~Map_Item ();
 
-    operator const char * const & (void) const;
+    operator const char * (void) const;
     Map_Item & operator= (char *);
     Map_Item & operator= (const char *);
     Map_Item & operator= (const Map_Item &);
