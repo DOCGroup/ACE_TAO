@@ -1,3 +1,16 @@
+Fri Apr  9 22:18:08 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* tao/Servant_Base.h :
+	* tao/Server_Request.i :
+	* tao/Operation_Table.h :
+	* tao/Servant_Base.cpp:
+	* tao/Server_Request.cpp :
+	* tao/Operation_Table.cpp :
+	
+	Reverted the earlier changes related to saving strlen calculation
+	on the critical path.
+
 Fri Apr  9 17:49:25 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Server_Request.h:
