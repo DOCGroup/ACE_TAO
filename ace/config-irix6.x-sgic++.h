@@ -8,7 +8,7 @@
 #define ACE_CONFIG_IRIX6X_H
 
 // Include basic (non-threaded) configuration
-#include <ace/config-irix6.x-sgic++-nothreads.h>
+#include "ace/config-irix6.x-sgic++-nothreads.h"
 
 // Add threading support
 

@@ -1,6 +1,8 @@
 # $Id$
 
-# Irix 6.2 with GNU C++
+# Irix 6.X with GNU C++
+
+include $(ACE_ROOT)/include/makeinclude/platform_irix6.x_common.GNU
 
 debug = 1
 optimize = 1
