@@ -66,16 +66,12 @@
 // used within try blocks.
 # define ACE_THROW(EXCEPTION) throw EXCEPTION
 // Throwing an exception when the function reqires a return value.
-# if defined (WIN32)
 #   define ACE_THROW_RETURN(EXCEPTION, RETV) \
       do \
         { \
           throw EXCEPTION; \
           return RETV; \
         } while (0)
-# else /* WIN32 */
-#   define ACE_THROW_RETURN(EXCEPTION) throw EXCEPTION
-# endif /* WIN32 */
 
 // For compilers with native exceptions, we can simply use
 // try to try. ;-)  do {} while (0) is required to avoid
