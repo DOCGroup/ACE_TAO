@@ -1,3 +1,8 @@
+Thu Dec 23 11:52:46 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* utils/NamingViewer/NamingViewer.dsp: Updated directory settings
+	  for the project.
+
 Thu Dec 23 08:39:50 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/ORB.cpp: with DEC cxx, disable using std::set_unexpected
