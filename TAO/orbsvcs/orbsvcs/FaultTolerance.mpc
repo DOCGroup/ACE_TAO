@@ -24,7 +24,6 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup {
       FT_FaultDetectorFactoryC.cpp
       FT_ReplicationManagerS.cpp
       FT_ReplicationManagerC.cpp
-      FaultTolerance
     }
   }
 }

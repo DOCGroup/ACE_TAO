@@ -65,8 +65,8 @@ private:
    * @name Pre-initialize property Names.
    *
    * These properties are pre-initialized once to reduce property
-   * validation overhead.  Note that the InitialNumberMembers and
-   * MinimumNumberMembers properties are not validated since there are
+   * validation overhead.  Note that the InitialNumberReplicas and
+   * MinimumNumberReplicas properties are not validated since there are
    * no restrictions imposed by TAO's PortableGroup implementation
    * regarding the number of such members.
    */

@@ -20,6 +20,18 @@ module PortableGroup
 {
   typeprefix PortableGroup "omg.org";
 
+  /// MembershipStyle
+  const string PG_MEMBERSHIP_STYLE = "org.omg.PortableGroup.MembershipStyle";
+
+  /// InitialNumberReplicas
+  const string PG_INITIAL_NUMBER_REPLICAS = "org.omg.PortableGroup.InitialNumberReplicas";
+
+  /// MinimumNumberReplicas
+  const string PG_MINIMUM_NUMBER_REPLICAS = "org.omg.PortableGroup.MinimumNumberReplicas";
+
+  /// Factories
+  const string PG_FACTORIES = "org.omg.PortableGroup.Factories";
+
   // Specification for Interoperable Object Group References
   typedef string GroupDomainId;
   typedef unsigned long long ObjectGroupId;
@@ -64,8 +76,8 @@ module PortableGroup
   const MembershipStyleValue MEMB_INF_CTRL = 1;
 
   typedef FactoryInfos FactoriesValue;
-  typedef unsigned short InitialNumberMembersValue;
-  typedef unsigned short MinimumNumberMembersValue;
+  typedef unsigned short InitialNumberReplicasValue;
+  typedef unsigned short MinimumNumberReplicasValue;
 
   exception InterfaceNotFound {};
   exception ObjectGroupNotFound {};

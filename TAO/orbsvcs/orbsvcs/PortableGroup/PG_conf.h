@@ -43,16 +43,16 @@ const PortableGroup::MembershipStyleValue TAO_PG_MEMBERSHIP_STYLE =
   PortableGroup::MEMB_INF_CTRL;
 #endif  /* TAO_PG_INITIAL_NUMBER_MEMBERS */
 
-#ifndef TAO_PG_INITIAL_NUMBER_MEMBERS
+#ifndef TAO_PG_INITIAL_NUMBER_REPLICAS
 /// The default initial number of object group members.
-const PortableGroup::InitialNumberMembersValue TAO_PG_INITIAL_NUMBER_MEMBERS =
+const PortableGroup::InitialNumberReplicasValue TAO_PG_INITIAL_NUMBER_REPLICAS =
   0;
 #endif  /* TAO_PG_INITIAL_NUMBER_MEMBERS */
 
-#ifndef TAO_PG_MINIMUM_NUMBER_MEMBERS
+#ifndef TAO_PG_MINIMUM_NUMBER_REPLICAS
 /// The default minimum number of object group members.
-const PortableGroup::MinimumNumberMembersValue TAO_PG_MINIMUM_NUMBER_MEMBERS =
-  TAO_PG_INITIAL_NUMBER_MEMBERS;
+const PortableGroup::MinimumNumberReplicasValue TAO_PG_MINIMUM_NUMBER_REPLICAS =
+  TAO_PG_INITIAL_NUMBER_REPLICAS;
 #endif  /* TAO_PG_MINIMUM_NUMBER_MEMBERS */
 
 #include /**/ "ace/post.h"

@@ -87,8 +87,8 @@ module FT
   typedef PortableGroup::MembershipStyleValue MembershipStyleValue;
 
   typedef PortableGroup::FactoriesValue FactoriesValue;
-  typedef PortableGroup::InitialNumberMembersValue InitialNumberMembersValue;
-  typedef PortableGroup::MinimumNumberMembersValue MinimumNumberMembersValue;
+  typedef PortableGroup::InitialNumberReplicasValue InitialNumberReplicasValue;
+  typedef PortableGroup::MinimumNumberReplicasValue MinimumNumberReplicasValue;
   typedef PortableGroup::PropertyManager PropertyManager;
   typedef PortableGroup::ObjectGroupManager ObjectGroupManager;
   typedef PortableGroup::GenericFactory GenericFactory;
@@ -104,6 +104,46 @@ module FT
              PrimaryNotSet,
              BadReplicationStyle);
   };
+
+
+  ///////////////////////////////////////////////////
+  // names for properties used in Fault Tolerant CORBA
+
+  /// FT::ReplicationStyle
+  const string FT_REPLICATION_STYLE = "org.omg.ft.ReplicationStyle";
+
+  /// FT::ConsistencyStyle
+  const string FT_CONSISTENCY_STYLE = "org.omg.ft.ConsistencyStyle";
+
+  /// FT::MembershipStyle
+  const string FT_MEMBERSHIP_STYLE = PortableGroup::PG_MEMBERSHIP_STYLE;
+  const MembershipStyleValue MEMB_APP_CTRL = PortableGroup::MEMB_APP_CTRL;
+  const MembershipStyleValue MEMB_INF_CTRL = PortableGroup::MEMB_INF_CTRL;
+
+  /// FT::FaultMonitoringStyle
+  const string FT_FAULT_MONITORING_STYLE = "org.omg.ft.FaultMonitoringStyle";
+
+  /// FT::FaultMonitoringGranularity
+  const string FT_FAULT_MONITORING_GRANULARITY = "org.omg.ft.FaultMonitoringGranularity";
+
+  /// FT::InitialNumberReplicas
+  const string FT_INITIAL_NUMBER_REPLICAS = PortableGroup::PG_INITIAL_NUMBER_REPLICAS;
+
+  /// FT::MinimumNumberReplicas
+  const string FT_MINIMUM_NUMBER_REPLICAS = PortableGroup::PG_MINIMUM_NUMBER_REPLICAS;
+
+  /// Factories
+  const string FT_FACTORIES = PortableGroup::PG_FACTORIES;
+
+  /// FT::FaultMonitoringIntervalAndTimeou
+  const string FT_FAULT_MONITORING_INTERVAL_AND_TIMEOUT = "org.omg.ft.FaultMonitoringIntervalAndTimeout";
+
+  /// FT::CheckpointInterval
+  const string FT_CHECKPOINT_INTERVAL = "org.omg.ft.CheckpointInterval";
+
+  // end of property names from FT CORBA specification
+  ///////////////////////////////////////////////////
+
 
 #else // (not) FT_USES_PORTABLE_GROUP
   interface GenericFactory;

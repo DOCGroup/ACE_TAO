@@ -12,8 +12,6 @@
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================
-// @@ Pre.h is not required here..
-#include "ace/pre.h"
 #include "FT_ReplicationManager.h"
 #include "FT_Property_Validator.h"
 
@@ -37,7 +35,7 @@ ACE_RCSID (FT_ReplicationManager,
            "$Id$")
 
 
-FT_ReplicationManager::FT_ReplicationManager ()
+TAO::FT_ReplicationManager::FT_ReplicationManager ()
   : ior_output_file_(0)
   , nsName_(0)
   , internals_ ()
@@ -53,14 +51,14 @@ FT_ReplicationManager::FT_ReplicationManager ()
   //       by whatever code instantiates this ReplicationManager.
 }
 
-FT_ReplicationManager::~FT_ReplicationManager (void)
+TAO::FT_ReplicationManager::~FT_ReplicationManager (void)
 {
 }
 
 //////////////////////////////////////////////////////
 // FT_ReplicationManager public, non-CORBA methods
 
-int FT_ReplicationManager::parse_args (int argc, char * argv[])
+int TAO::FT_ReplicationManager::parse_args (int argc, char * argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:q");
   int c;
@@ -89,12 +87,12 @@ int FT_ReplicationManager::parse_args (int argc, char * argv[])
   return 0;
 }
 
-const char * FT_ReplicationManager::identity () const
+const char * TAO::FT_ReplicationManager::identity () const
 {
   return identity_.c_str();
 }
 
-int FT_ReplicationManager::write_IOR()
+int TAO::FT_ReplicationManager::write_IOR()
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (ior_output_file_, "w");
@@ -114,7 +112,7 @@ int FT_ReplicationManager::write_IOR()
 }
 
 int
-FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
+TAO::FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
                              ACE_ENV_ARG_DECL)
 {
   InternalGuard guard (internals_);
@@ -186,6 +184,10 @@ FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
     this_name_.length (1);
     this_name_[0].id = CORBA::string_dup (nsName_);
 
+    //@@ Do NOT use _this() here.  Need to use the POA with which we
+    // were activated to get the IOR.  Another reason not to use the
+    // TAO_ORB_Manager; it does not give us much flexibility w.r.t.
+    // POA usage.  -- Steve Totten
     naming_context_->rebind (this_name_, _this()
                             ACE_ENV_ARG_PARAMETER);
     ACE_TRY_CHECK;
@@ -200,32 +202,32 @@ FT_ReplicationManager::init (TAO_ORB_Manager & orbManager
 
 /// Registers the Fault Notifier with the Replication Manager.
 void
-FT_ReplicationManager::register_fault_notifier (
+TAO::FT_ReplicationManager::register_fault_notifier (
     FT::FaultNotifier_ptr fault_notifier
     ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  this->fault_notifier_ = fault_notifier;
+  this->fault_notifier_ = FT::FaultNotifier::_duplicate (fault_notifier);
 }
 
 
 /// Returns the reference of the Fault Notifier.
 FT::FaultNotifier_ptr
-FT_ReplicationManager::get_fault_notifier (
+TAO::FT_ReplicationManager::get_fault_notifier (
     ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 ACE_THROW_SPEC ((
     CORBA::SystemException
   , FT::InterfaceNotFound
 ))
 {
-  return this->fault_notifier_;
+  return FT::FaultNotifier::_duplicate (fault_notifier_.in());
 }
 
 //////////////////////////////////////////////////////
 // PortableGroup::PropertyManager methods
 
 void
-FT_ReplicationManager::set_default_properties (
+TAO::FT_ReplicationManager::set_default_properties (
     const PortableGroup::Properties & props
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -238,18 +240,17 @@ FT_ReplicationManager::set_default_properties (
 }
 
 PortableGroup::Properties *
-FT_ReplicationManager::get_default_properties (
+TAO::FT_ReplicationManager::get_default_properties (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return
     this->property_manager_.get_default_properties (
       ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-FT_ReplicationManager::remove_default_properties (
+TAO::FT_ReplicationManager::remove_default_properties (
     const PortableGroup::Properties & props
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -262,7 +263,7 @@ FT_ReplicationManager::remove_default_properties (
 }
 
 void
-FT_ReplicationManager::set_type_properties (
+TAO::FT_ReplicationManager::set_type_properties (
     const char *type_id,
     const PortableGroup::Properties & overrides
     ACE_ENV_ARG_DECL)
@@ -277,7 +278,7 @@ FT_ReplicationManager::set_type_properties (
 }
 
 PortableGroup::Properties *
-FT_ReplicationManager::get_type_properties (
+TAO::FT_ReplicationManager::get_type_properties (
     const char *type_id
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -285,11 +286,10 @@ FT_ReplicationManager::get_type_properties (
   return
     this->property_manager_.get_type_properties (type_id
                                                  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 void
-FT_ReplicationManager::remove_type_properties (
+TAO::FT_ReplicationManager::remove_type_properties (
     const char *type_id,
     const PortableGroup::Properties & props
     ACE_ENV_ARG_DECL)
@@ -304,7 +304,7 @@ FT_ReplicationManager::remove_type_properties (
 }
 
 void
-FT_ReplicationManager::set_properties_dynamically (
+TAO::FT_ReplicationManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Properties & overrides
     ACE_ENV_ARG_DECL)
@@ -320,7 +320,7 @@ FT_ReplicationManager::set_properties_dynamically (
 }
 
 PortableGroup::Properties *
-FT_ReplicationManager::get_properties (
+TAO::FT_ReplicationManager::get_properties (
     PortableGroup::ObjectGroup_ptr object_group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -329,7 +329,6 @@ FT_ReplicationManager::get_properties (
   return
     this->property_manager_.get_properties (object_group
                                             ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
 }
 
 
@@ -338,7 +337,7 @@ FT_ReplicationManager::get_properties (
 
 /// Sets the primary member of a group.
 PortableGroup::ObjectGroup_ptr
-FT_ReplicationManager::set_primary_member (
+TAO::FT_ReplicationManager::set_primary_member (
     FT::ObjectGroup_ptr object_group,
     const FT::Location & the_location
     ACE_ENV_ARG_DECL)
@@ -350,11 +349,16 @@ ACE_THROW_SPEC ((
   , FT::BadReplicationStyle
 ))
 {
-  return (FT::ObjectGroup_ptr)0;
+	// not yes implemented
+	{
+		int _TODO_must_implement_set_primary_;
+	}
+  return (FT::ObjectGroup::_nil ());
+
 }
 
 PortableGroup::ObjectGroup_ptr
-FT_ReplicationManager::create_member (
+TAO::FT_ReplicationManager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     const char * type_id,
@@ -377,7 +381,7 @@ FT_ReplicationManager::create_member (
 }
 
 PortableGroup::ObjectGroup_ptr
-FT_ReplicationManager::add_member (
+TAO::FT_ReplicationManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
     CORBA::Object_ptr member
@@ -395,7 +399,7 @@ FT_ReplicationManager::add_member (
 }
 
 PortableGroup::ObjectGroup_ptr
-FT_ReplicationManager::remove_member (
+TAO::FT_ReplicationManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location
     ACE_ENV_ARG_DECL)
@@ -410,7 +414,7 @@ FT_ReplicationManager::remove_member (
 }
 
 PortableGroup::Locations *
-FT_ReplicationManager::locations_of_members (
+TAO::FT_ReplicationManager::locations_of_members (
     PortableGroup::ObjectGroup_ptr object_group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -422,7 +426,7 @@ FT_ReplicationManager::locations_of_members (
 }
 
 PortableGroup::ObjectGroups *
-FT_ReplicationManager::groups_at_location (
+TAO::FT_ReplicationManager::groups_at_location (
     const PortableGroup::Location & the_location
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -433,7 +437,7 @@ FT_ReplicationManager::groups_at_location (
 }
 
 PortableGroup::ObjectGroupId
-FT_ReplicationManager::get_object_group_id (
+TAO::FT_ReplicationManager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -445,7 +449,7 @@ FT_ReplicationManager::get_object_group_id (
 }
 
 PortableGroup::ObjectGroup_ptr
-FT_ReplicationManager::get_object_group_ref (
+TAO::FT_ReplicationManager::get_object_group_ref (
     PortableGroup::ObjectGroup_ptr object_group
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -457,7 +461,7 @@ FT_ReplicationManager::get_object_group_ref (
 }
 
 CORBA::Object_ptr
-FT_ReplicationManager::get_member_ref (
+TAO::FT_ReplicationManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location
     ACE_ENV_ARG_DECL)
@@ -476,7 +480,7 @@ FT_ReplicationManager::get_member_ref (
 // PortableGroup::GenericFactory methods
 
 CORBA::Object_ptr
-FT_ReplicationManager::create_object (
+TAO::FT_ReplicationManager::create_object (
     const char * type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out
@@ -491,19 +495,20 @@ FT_ReplicationManager::create_object (
 {
   PortableGroup::Criteria new_criteria (the_criteria);
 
-  CORBA::Object_ptr obj =
-    this->generic_factory_.create_object (type_id,
+  //@@ I've corrected the following code.  -- Steve Totten
+  //@@ Also, can we really use the TAO_PG_GenericFactory
+  // implementation to create an object group?
+  CORBA::Object_var obj = CORBA::Object::_nil ();
+  obj = this->generic_factory_.create_object (type_id,
                                           new_criteria,
                                           factory_creation_id
                                           ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  ACE_CHECK_RETURN (CORBA::Object::_nil (obj));
-
-  return obj;
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  return obj._retn();
 }
 
 void
-FT_ReplicationManager::delete_object (
+TAO::FT_ReplicationManager::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
       factory_creation_id
     ACE_ENV_ARG_DECL)
@@ -517,7 +522,7 @@ FT_ReplicationManager::delete_object (
 
 // Returns a dummy IOGR for unit tests
 CORBA::Object_ptr
-FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+TAO::FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
 {
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "Creating an IOGR for the Unit Tests.\n"));
@@ -552,12 +557,13 @@ FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       }
 
       // Create a few fictitious IORs
+      //@@ Corrected to use corbaloc ObjectURL syntax.  -- Steve Totten
       CORBA::Object_var name1 =
-        orb_->string_to_object ("iiop://acme.cs.wustl.edu:6060/xyz"
+        orb_->string_to_object ("corbaloc:iiop:acme.cs.wustl.edu:6060/xyz"
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
       CORBA::Object_var name2 =
-        orb_->string_to_object ("iiop://tango.cs.wustl.edu:7070/xyz"
+        orb_->string_to_object ("corbaloc::iiop:tango.cs.wustl.edu:7070/xyz"
                                 ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
@@ -620,7 +626,14 @@ FT_ReplicationManager::create_test_iogr (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     }
   ACE_ENDTRY;
 
+  //@@ Add a final ACE_CHECK_RETURN in case there was an "exception".
+  // -- Steve Totten
+  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
   ACE_DEBUG ((LM_DEBUG, "---------------------------------------------\n"));
 
-  return test_iogr_;
+  //@@ Object_var (test_iogr_) must give up ownership to return IOGR
+  // as an Object_ptr.  -- Steve Totten
+  return test_iogr_._retn();
 }
+

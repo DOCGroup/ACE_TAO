@@ -498,7 +498,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
   tag_component.object_group_ref_version = 0;
 
   // Set the property
-  TAO::PG_Utils::set_tagged_component (object_group.in (),
+  TAO::PG_Utils::set_tagged_component (object_group,
                                        tag_component);
   ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
@@ -585,7 +585,8 @@ TAO_PG_ObjectGroupManager::object_group (const PortableServer::ObjectId & oid)
 {
   //TODO -- need to fix this code. The LoadBalancer uses this.
   //        Need to implement some sort of objectId-to-ObjectGroup nmap.
-  // int _todo_fix_temporarily_disabled_code_;
+  int _todo_fix_temporarily_disabled_code_;
+}
 #if 0
   TAO_PG_ObjectGroup_Map_Entry * group_entry = 0;
   if (this->object_group_map_.find (group_id, group_entry) == 0)

@@ -8,7 +8,7 @@ ACE_RCSID (PortableGroup,
            "$Id$")
 
 
-FT_Property_Validator::FT_Property_Validator (void)
+TAO::FT_Property_Validator::FT_Property_Validator (void)
   : replication_style_ (1),
     membership_style_ (1),
     consistency_style_ (1),
@@ -36,13 +36,13 @@ FT_Property_Validator::FT_Property_Validator (void)
 }
 
 
-FT_Property_Validator::~FT_Property_Validator (void)
+TAO::FT_Property_Validator::~FT_Property_Validator (void)
 {
 }
 
 
 void
-FT_Property_Validator::validate_property (
+TAO::FT_Property_Validator::validate_property (
     const PortableGroup::Properties & props
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
@@ -136,7 +136,7 @@ FT_Property_Validator::validate_property (
 }
 
 void
-FT_Property_Validator::validate_criteria (
+TAO::FT_Property_Validator::validate_criteria (
     const PortableGroup::Properties & props
     ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
