@@ -138,12 +138,12 @@ CORBA_Request::poll_response (CORBA::Environment &ACE_TRY_ENV)
 
 
 // Default constructor.
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void) 
+CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (void)
 {
 }
 
 // Constructor using a maximum length value.
-CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong maximum) 
+CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (CORBA::ULong maximum)
   : TAO_Unbounded_Base_Sequence (maximum, allocbuf (maximum))
 {
 }
@@ -160,8 +160,8 @@ CORBA_ORB_RequestSeq::CORBA_ORB_RequestSeq (const CORBA_ORB_RequestSeq &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   CORBA::Request_ptr *tmp1 = allocbuf (this->maximum_);
-  CORBA::Request_ptr * const tmp2 = 
-    ACE_reinterpret_cast (CORBA::Request_ptr * ACE_CAST_CONST, 
+  CORBA::Request_ptr * const tmp2 =
+    ACE_reinterpret_cast (CORBA::Request_ptr * ACE_CAST_CONST,
                           rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -181,8 +181,8 @@ CORBA_ORB_RequestSeq::operator= (const CORBA_ORB_RequestSeq &rhs)
       if (this->maximum_ < rhs.maximum_)
         {
           // free the old buffer
-          CORBA::Request_ptr *tmp = 
-            ACE_reinterpret_cast (CORBA::Request_ptr *, 
+          CORBA::Request_ptr *tmp =
+            ACE_reinterpret_cast (CORBA::Request_ptr *,
                                   this->buffer_);
           freebuf (tmp);
           this->buffer_ = allocbuf (rhs.maximum_);
@@ -193,11 +193,11 @@ CORBA_ORB_RequestSeq::operator= (const CORBA_ORB_RequestSeq &rhs)
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  CORBA::Request_ptr *tmp1 = 
-    ACE_reinterpret_cast (CORBA::Request_ptr *, 
+  CORBA::Request_ptr *tmp1 =
+    ACE_reinterpret_cast (CORBA::Request_ptr *,
                           this->buffer_);
-  CORBA::Request_ptr * const tmp2 = 
-    ACE_reinterpret_cast (CORBA::Request_ptr * ACE_CAST_CONST, 
+  CORBA::Request_ptr * const tmp2 =
+    ACE_reinterpret_cast (CORBA::Request_ptr * ACE_CAST_CONST,
                           rhs.buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
@@ -206,7 +206,7 @@ CORBA_ORB_RequestSeq::operator= (const CORBA_ORB_RequestSeq &rhs)
   return *this;
 }
 
-CORBA_ORB_RequestSeq::~CORBA_ORB_RequestSeq (void) 
+CORBA_ORB_RequestSeq::~CORBA_ORB_RequestSeq (void)
 {
   this->_deallocate_buffer ();
 }
@@ -220,13 +220,13 @@ CORBA_ORB_RequestSeq::operator[] (CORBA::ULong i)
                        "operator[] - subscript out of range"),
                       0);
 
-  CORBA::Request_ptr *tmp = 
+  CORBA::Request_ptr *tmp =
     ACE_reinterpret_cast (CORBA::Request_ptr *,
                           this->buffer_);
   return tmp[i];
 }
 
-const CORBA::Request_ptr 
+const CORBA::Request*
 CORBA_ORB_RequestSeq::operator[] (CORBA::ULong i) const
 {
   if (i >= this->maximum_)
@@ -235,8 +235,8 @@ CORBA_ORB_RequestSeq::operator[] (CORBA::ULong i) const
                        "operator[] - subscript out of range"),
                       0);
 
-  CORBA::Request_ptr * const tmp = 
-    ACE_reinterpret_cast (CORBA::Request_ptr * ACE_CAST_CONST, 
+  CORBA::Request_ptr * const tmp =
+    ACE_reinterpret_cast (CORBA::Request_ptr * ACE_CAST_CONST,
                           this->buffer_);
 
   return tmp[i];
@@ -248,7 +248,7 @@ CORBA_ORB_RequestSeq::allocbuf (CORBA::ULong size)
   return new CORBA::Request_ptr[size];
 }
 
-void 
+void
 CORBA_ORB_RequestSeq::freebuf (CORBA::Request_ptr *buffer)
 {
   delete [] buffer;
@@ -261,7 +261,7 @@ CORBA_ORB_RequestSeq::_allocate_buffer (CORBA::ULong length)
 
   if (this->buffer_ != 0)
     {
-      CORBA::Request_ptr *old = 
+      CORBA::Request_ptr *old =
         ACE_reinterpret_cast (CORBA::Request_ptr *,
                               this->buffer_);
 
@@ -275,13 +275,13 @@ CORBA_ORB_RequestSeq::_allocate_buffer (CORBA::ULong length)
   this->buffer_ = tmp;
 }
 
-void 
+void
 CORBA_ORB_RequestSeq::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
 
-  CORBA::Request_ptr *tmp = 
+  CORBA::Request_ptr *tmp =
     ACE_reinterpret_cast (CORBA::Request_ptr *,
                           this->buffer_);
 
@@ -305,7 +305,7 @@ CORBA_ORB_RequestSeq::get_buffer (CORBA::Boolean orphan)
         }
       else
         {
-          result = ACE_reinterpret_cast (CORBA::Request_ptr *, 
+          result = ACE_reinterpret_cast (CORBA::Request_ptr *,
                                          this->buffer_);
         }
     }
@@ -329,11 +329,11 @@ CORBA_ORB_RequestSeq::get_buffer (CORBA::Boolean orphan)
 const CORBA::Request_ptr *
 CORBA_ORB_RequestSeq::get_buffer (void) const
 {
-  return ACE_reinterpret_cast (const CORBA::Request_ptr * ACE_CAST_CONST, 
+  return ACE_reinterpret_cast (const CORBA::Request_ptr * ACE_CAST_CONST,
                                this->buffer_);
 }
 
-void 
+void
 CORBA_ORB_RequestSeq::replace (CORBA::ULong max,
                                CORBA::ULong length,
                                CORBA::Request_ptr *data,
@@ -344,7 +344,7 @@ CORBA_ORB_RequestSeq::replace (CORBA::ULong max,
 
   if (this->buffer_ && this->release_ == 1)
     {
-      CORBA::Request_ptr *tmp = 
+      CORBA::Request_ptr *tmp =
         ACE_reinterpret_cast(CORBA::Request_ptr *,
                              this->buffer_);
       freebuf (tmp);
