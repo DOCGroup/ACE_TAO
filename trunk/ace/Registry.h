@@ -62,10 +62,10 @@ public:
   /// Separator for components in a name
   static const ACE_TCHAR *STRING_SEPARATOR;
 
-  /// Convert a <name> to a <string>
+  /// Convert a @a name to a @c string
   static ACE_TString make_string (const Name &name);
 
-  /// Convert a <string> to a <name>
+  /// Convert a @a string to a @c name
   static Name make_name (const ACE_TString &string);
 
   /// There are two types of bindings
@@ -111,7 +111,7 @@ public:
     Binding_Type type_;
   };
 
-  // A list of bindings
+  /// A list of bindings
   typedef ACE_Unbounded_Set<Binding> Binding_List;
 
   // Forward declaration of iterator
@@ -200,24 +200,24 @@ public:
     // The following interfaces are for objects
 
     /**
-     * Insert <object> with <name> into <this> context
-     * This will fail if <name> already exists
+     * Insert @a object with @a name into @c this context.
+     * This will fail if @a name already exists
      * (Name version)
      */
     int bind_new (const Name &name,
                   const Object &object);
 
     /**
-     * Insert <object> with <name> into <this> context
-     * This will fail if <name> already exists
+     * Insert @a object with @a name into @c this context
+     * This will fail if @a name already exists
      * (String version)
      */
     int bind_new (const ACE_TString &name,
                   const Object &object);
 
     /**
-     * Insert or update <object> with <name> into <this> context
-     * This will not fail if <name> already exists
+     * Insert or update @a object with @a name into @c this context
+     * This will not fail if @a name already exists
      * (Name version)
      */
     int bind (const Name &name,
@@ -259,7 +259,7 @@ public:
 
     // The following interfaces are for Naming Context
 
-    /// Create new <naming_context>
+    /// Create new @c naming_context
     int new_context (Naming_Context &naming_context);
 
     /**
@@ -344,7 +344,6 @@ public:
     /// This gives back a listing of all entries in <this> context.
     int list (Binding_List &list);
 
-
     // Some other necessary functions which are
     // not part of the CORBA interface
 
@@ -354,7 +353,6 @@ public:
     /// Close the handle of the context
     /// Note: <close> does not call <flush>
     int close (void);
-
 
     // Accessors
 
@@ -492,7 +490,7 @@ public:
       public:
         Context_Iteration (Binding_Iterator &iterator);
 
-        /// Next <how_many> entries
+        /// Next @a how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
       };
@@ -502,7 +500,7 @@ public:
       public:
         Iteration_Complete (Binding_Iterator &iterator);
 
-        /// Next <how_many> entries
+        /// Next @a how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
       };
@@ -552,7 +550,7 @@ public:
                       const ACE_TCHAR *machine_name = 0);
 
 private:
-  /// Check if <machine_name> is the local host
+  /// Check if @a machine_name is the local host
   static int is_local_host (const ACE_TCHAR *machine_name);
 };
 
