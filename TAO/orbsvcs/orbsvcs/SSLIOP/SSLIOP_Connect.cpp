@@ -319,7 +319,7 @@ TAO_SSLIOP_Server_Connection_Handler::handle_input_i (ACE_HANDLE,
 }
 
 ACE_HANDLE
-TAO_IIOP_Server_Connection_Handler::fetch_handle (void)
+TAO_SSLIOP_Server_Connection_Handler::fetch_handle (void)
 {
   return this->get_handle ();
 }
