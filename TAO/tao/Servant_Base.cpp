@@ -385,8 +385,8 @@ TAO_DynamicImplementation::_create_stub (CORBA::Environment &ACE_TRY_ENV)
   TAO_POA_Current_Impl *poa_current_impl =
     TAO_TSS_RESOURCES::instance ()->poa_current_impl_;
 
-  if (poa_current_impl != 0 &&
-      this == poa_current_impl->servant ())
+  if (poa_current_impl == 0 ||
+      this != poa_current_impl->servant ())
     {
       ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
                         0);
