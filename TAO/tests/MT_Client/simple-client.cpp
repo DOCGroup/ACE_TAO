@@ -82,6 +82,7 @@ main (int argc, char *argv[])
         }
 
       server->shutdown (ACE_TRY_ENV);
+      ACE_TRY_ENV;
     }
   ACE_CATCHANY
     {

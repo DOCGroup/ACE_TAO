@@ -16,12 +16,10 @@ Callback_i::shutdown (CORBA::Boolean is_clean,
   if (is_clean == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n%a"));
+      return;
     }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-      this->orb_->shutdown (0, ACE_TRY_ENV);
-    }
+  ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
+  this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 // ****************************************************************
@@ -53,12 +51,11 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean,
   if (is_clean == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown %a\n"));
+      return;
     }
-  else
-    {
-      ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-      this->orb_->shutdown (0, ACE_TRY_ENV);
-    }
+
+  ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
+  this->orb_->shutdown (0, ACE_TRY_ENV);
 }
 
 void
