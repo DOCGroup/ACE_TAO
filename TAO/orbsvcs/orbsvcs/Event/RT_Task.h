@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -18,24 +18,23 @@
 //
 // ============================================================================
 
-#ifndef ACE_RT_TASK_H
+#if !defined (ACE_RT_TASK_H)
 #define ACE_RT_TASK_H
 
 #include "ace/Task.h"
-
 #include "orbsvcs/RtecSchedulerC.h"
 
 class TAO_ORBSVCS_Export ACE_RT_Thread_Manager : public ACE_Thread_Manager
-// = TITLE
-//   
-// = DESCRIPTION
+  // = TITLE
+  //   
+  // = DESCRIPTION
 {
 public:
   ACE_RT_Thread_Manager (void);
   // Default construction.
 
   void suspend_spawns (void);
-  // Any threads spawned will be suspended until unsuspend_spawns is
+  // Any threads spawned will be suspended until <unsuspend_spawns> is
   // called.
 
   void unsuspend_spawns (void);
@@ -82,22 +81,22 @@ public:
 // In Synch_T.h:
 // #define ACE_MT_SYNCH ACE_Thread_Mutex,ACE_Condition_Thread_Mutex
 
-typedef ACE_Task<ACE_MT_SYNCH> ACE_ES_TASK;
-typedef ACE_Message_Queue<ACE_MT_SYNCH> ACE_ES_QUEUE;
+typedef ACE_Task<ACE_SYNCH> ACE_ES_TASK;
+typedef ACE_Message_Queue<ACE_SYNCH> ACE_ES_QUEUE;
 
 class TAO_ORBSVCS_Export ACE_RT_Task : public ACE_ES_TASK
-// = TITLE
-//   ACE Real-Time Task
-//   
-// = DESCRIPTION
-//    Real-Time Active Object that integrates with a global scheduler
-//    and Event Service.  For now, none of the management methods are
-//    synchronized.  If it turns out that multiple threads will be
-//    calling the management methods, then we can add
-//    synchronization.  For the most part, RT_Task threads should be
-//    dequeueing commands from the message queue.  Only one thread
-//    should be calling any management methods.
 {
+  // = TITLE
+  //   ACE Real-Time Task
+  //   
+  // = DESCRIPTION
+  //    Real-Time Active Object that integrates with a global
+  //    scheduler and Event Service.  For now, none of the management
+  //    methods are synchronized.  If it turns out that multiple
+  //    threads will be calling the management methods, then we can
+  //    add synchronization.  For the most part, RT_Task threads
+  //    should be dequeueing commands from the message queue.  Only
+  //    one thread should be calling any management methods.
   friend ACE_RT_Thread_Manager;
 public:
   ACE_RT_Task (void);
