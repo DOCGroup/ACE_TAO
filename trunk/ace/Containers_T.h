@@ -743,6 +743,10 @@ public:
   void dump (void) const;
   // Delegates to ACE_Double_Linked_List.
 
+  int remove (ACE_DLList_Node *n);
+  // Delegates to ACE_Double_Linked_List.
+
+
   // = Initialization and termination methods.
 
   ACE_DLList (ACE_Allocator *alloc = 0);
@@ -784,6 +788,10 @@ public:
 
   void dump (void) const;
   // Delegates to ACE_Double_Linked_List_Iterator.
+
+private:
+
+  ACE_DLList<T> &list_;
 
 };
 

@@ -378,12 +378,12 @@ ACE_Array_Iterator<T>::done (void) const
 }
 
 template <class T> ACE_INLINE void
-ACE_DLList<T>::operator= (ACE_DLList<T> &l) 
+ACE_DLList<T>::operator= (ACE_DLList<T> &l)
 {
-  *(ACE_DLList_Base *) this = l; 
+  *(ACE_DLList_Base *) this = l;
 }
 
-template <class T> ACE_INLINE int 
+template <class T> ACE_INLINE int
 ACE_DLList<T>::get (T *&item, size_t index)
 {
   ACE_DLList_Node *node;
@@ -392,15 +392,23 @@ ACE_DLList<T>::get (T *&item, size_t index)
   return result;
 }
 
-template <class T> ACE_INLINE void 
+template <class T> ACE_INLINE void
 ACE_DLList<T>::dump (void) const
-{ 
-  ACE_DLList_Base::dump (); 
+{
+  ACE_DLList_Base::dump ();
+}
+
+template <class T> ACE_INLINE int
+ACE_DLList<T>::remove (ACE_DLList_Node *n)
+{
+  int result = ACE_DLList_Base::remove (n);
+  ACE_DES_FREE (n, this->allocator_->free, ACE_DLList_Node);
+  return result;
 }
 
 template <class T> ACE_INLINE
 ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc )
-  : ACE_DLList_Base (alloc) 
+  : ACE_DLList_Base (alloc)
 {
 }
 
@@ -411,14 +419,15 @@ ACE_DLList<T>::ACE_DLList (ACE_DLList<T> &l)
 }
 
 template <class T> ACE_INLINE
-ACE_DLList<T>::~ACE_DLList (void) 
-{ 
-  while (this->delete_head ()) ; 
+ACE_DLList<T>::~ACE_DLList (void)
+{
+  while (this->delete_head ()) ;
 }
 
 template <class T> ACE_INLINE
 ACE_DLList_Iterator<T>::ACE_DLList_Iterator (ACE_DLList<T> &l)
-  : ACE_DLList_Iterator_Base ((ACE_DLList_Base &)l) 
+  : ACE_DLList_Iterator_Base ((ACE_DLList_Base &)l),
+    list_ (l)
 {
 }
 
@@ -434,14 +443,11 @@ ACE_DLList_Iterator<T>::remove (void)
 {
   ACE_DLList_Node *temp = ACE_DLList_Iterator_Base::next ();
   ACE_DLList_Iterator_Base::advance ();
-  int result = this->dllist_.remove (temp);
-  delete temp;
-  return result;
+  return this->list_.remove (temp);
 }
 
-template <class T> ACE_INLINE void 
+template <class T> ACE_INLINE void
 ACE_DLList_Iterator<T>::dump (void) const
-{ 
-  ACE_DLList_Iterator_Base::dump (); 
+{
+  ACE_DLList_Iterator_Base::dump ();
 }
-
