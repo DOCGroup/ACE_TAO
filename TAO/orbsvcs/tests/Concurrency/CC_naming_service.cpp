@@ -1,4 +1,4 @@
-// $Id$
+// $Id
 
 // ============================================================================
 //
@@ -21,19 +21,17 @@
 
 ACE_RCSID(Concurrency, CC_naming_service, "$Id$")
 
-CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &_env)
-  : naming_context_ (0),
-    cc_factory_key_ (0),
-    orb_ (0),
-    factory_ (0)
+  CC_naming_service::CC_naming_service (CORBA::ORB_var orb, CORBA::Environment &_env)
+    : cc_factory_key_ (0),
+      orb_ (0),
+      factory_ (0)
 {
   this->Init(orb, _env);
   instance_ = this;
 }
 
 CC_naming_service::CC_naming_service(void)
-  : naming_context_ (0),
-    cc_factory_key_ (0),
+  : cc_factory_key_ (0),
     orb_ (0),
     factory_ (0)
 {
@@ -80,7 +78,7 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
           CosNaming::Name ns_name (1);
           ns_name.length (1);
           ns_name[0].id = CORBA::string_dup (name);
-          obj = naming_context_->resolve (ns_name, TAO_TRY_ENV);
+          obj = my_name_client_->resolve (ns_name, TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
       else
@@ -89,9 +87,12 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
           ns_name.length (2);
           ns_name[0].id = CORBA::string_dup (c_name);
           ns_name[1].id = CORBA::string_dup (name);
-          obj = naming_context_->resolve (ns_name, TAO_TRY_ENV);
+          obj = my_name_client_->resolve (ns_name, TAO_TRY_ENV);
           TAO_CHECK_ENV;
         }
+      if (CORBA::is_nil (obj.in ()) )
+	ACE_DEBUG((LM_DEBUG,
+		   "OBJ was nill (aieee)\n"));
     }
   TAO_CATCHANY
     {
@@ -105,8 +106,8 @@ CC_naming_service::get_obj_from_name (char *c_name, char *name,
 
 void
 CC_naming_service::bind_name (char *n,
-                             CORBA::Object_ptr obj,
-                             CORBA::Environment &_env)
+			      CORBA::Object_ptr obj,
+			      CORBA::Environment &_env)
 {
   ACE_DEBUG ((LM_DEBUG, "CC_Client::bind_name\n"));
 
@@ -115,9 +116,9 @@ CC_naming_service::bind_name (char *n,
       CosNaming::Name ns_name (1);
       ns_name.length (1);
       ns_name[0].id = CORBA::string_dup (n);
-      naming_context_->bind (ns_name,
-                            obj,
-                            TAO_TRY_ENV);
+      my_name_client_->bind (ns_name,
+			     obj,
+			     TAO_TRY_ENV);
       TAO_CHECK_ENV;
     }
   TAO_CATCHANY
@@ -138,17 +139,14 @@ CC_naming_service::init_naming_service (void)
 {
   TAO_TRY
     {
-      CORBA::Object_var naming_obj =
-        this->orb_->resolve_initial_references ("NameService");
-
-      if (CORBA::is_nil (naming_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to resolve the Name Service.\n"),
-                          -1);
-      this->naming_context_ =
-        CosNaming::NamingContext::_narrow (naming_obj.in (),
-                                           TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      // Initialize the naming services
+      // Normally, init () would take argc and argv as arguments but
+      // in this situation, they can only be passed dummy values
+      if (my_name_client_.init (orb_, 0, 0) != 0)
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize "
+			   "the TAO_Naming_Client. \n"),
+			  -1);
 
       CORBA::Object_var factory_obj = get_obj_from_name ("CosConcurrency",
                                                          "LockSetFactory",
