@@ -159,7 +159,7 @@ Client::set_stream (ACE_SOCK_Stream & control)
 
 Globals::Globals (void)
   :ready_cond_ (ready_mtx_),
-   hostname_ (""),
+   hostname_ (0),
    port_ (0)
 {
 }
@@ -174,6 +174,7 @@ Globals::parse_args (int argc,
   this->strategy_ = TTCP_REACTIVE;
   this->block_size_ = 1;
   this->number_ = 10;
+  this->hostname_ = ACE_OS::strdup ("");
   while ((c = opts ()) != -1)
     switch (c)
       {

@@ -7,6 +7,6 @@
 #include "orbsvcs/AV/sfp.h"
 #include "tao/TAO.h"
 
-static char *server_addr = "localhost:10000";
+static char *server_addr;
 
 #endif /* _COMMON_H_ */
