@@ -144,7 +144,7 @@ Quoter_Life_Cycle_Service_Server::init (int argc,
                                       TAO_TRY_ENV);
       TAO_CHECK_ENV;
       ACE_DEBUG ((LM_DEBUG,
-                  "Bound the Quoter GenericFactory to the Quoter Naming Context.\n"));
+                  "Bound the Quoter Life Cycle Service to the Quoter Naming Context.\n"));
     }
   TAO_CATCHANY
     {

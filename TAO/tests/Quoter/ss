@@ -38,6 +38,15 @@ if [ -s /tmp/pids$login ]; then
   kill $pids
 fi
 
+
+ps -ef | grep Service | grep $login | grep -v grep | cut -c10-17 > /tmp/pids$login
+
+if [ -s /tmp/pids$login ]; then
+  pids=`cat /tmp/pids$login`
+  kill $pids
+fi
+
+
 # stop here if "ss clean" was called
 if [ $1 ]; then 
   if [ $1 =  "clean" ]; then
@@ -54,17 +63,19 @@ fi
 echo // Logfile for the script "ss" which startes Name, Scheduling and Event Service  > /tmp/logfile_$login
 
 nameserviceport=`expr 20023 + $uid`
-serverport=`expr 60023 + $uid`
-factoryfinderport=`expr 100023 + $uid`
-genericfactoryport=`expr 110023 + $uid`
-clientport=`expr 90023 + $uid`
+serverport=`expr 20024 + $uid`
+factoryfinderport=`expr 20025 + $uid`
+# the next port number is an exception, because we have nested call-backs
+genericfactoryport=0     #   `expr 20026 + $uid`
+lifecycleserviceport=`expr 20027 + $uid`
+clientport=`expr 20028 + $uid`
 
 cd $TAO_ROOT/orbsvcs/Naming_Service
-./Naming_Service -ORBport $nameserviceport -ORBobjrefstyle URL>> /tmp/logfile_$login 2>&1  &
+./Naming_Service -ORBport $nameserviceport >> /tmp/logfile_$login 2>&1  &
 
 sleep 2
 
-IOR=`cat /tmp/logfile_$login | grep iiop | cut -c22-300 | cut -f1 -d">" `
+IOR=`cat /tmp/logfile_$login | grep IOR | cut -c22-300 | cut -f1 -d">" `
 
 echo // The IOR of the Naming Service: $IOR
 
@@ -73,19 +84,27 @@ echo // Started Naming Service on port $nameserviceport
 cd $TAO_ROOT/tests/Quoter
 ./server -ORBnameserviceior $IOR -ORBport $serverport >> /tmp/logfile_$login  2>&1 &
 
-sleep 2 
-
 echo // Started server on port $serverport
+
+sleep 2 
 
 ./Factory_Finder -ORBnameserviceior $IOR -ORBport $factoryfinderport >> /tmp/logfile_$login 2>&1 &
 
-sleep 2
 
 echo // Started Factory Finder on port $factoryfinderport
+
+sleep 2
+
+./Life_Cycle_Service -ORBnameserviceior $IOR -ORBport $lifecycleserviceport >>  /tmp/logfile_$login 2>&1 &
+
+echo // Started the Life Cycle Service on port $lifecycleserviceport
+
+sleep 2
 
 ./Generic_Factory -ORBnameserviceior $IOR -ORBport $genericfactoryport >> /tmp/logfile_$login 2>&1 &
 
 echo // Started Generic Factory on port $genericfactoryport
+
 
 echo "// Enjoy the use ;-)"
 echo call the client:
@@ -93,6 +112,6 @@ echo ..
 ps -ef | grep mk1 | grep ORBnameserviceior
 echo ..
 echo ..
-./client -ORBnameserviceior $IOR -ORBport $clientport
+ ./client -ORBnameserviceior $IOR -ORBport $clientport
 
 cd $old_dir

@@ -15,7 +15,7 @@
 
 #include "Criteria_Evaluator.h"
 
-Quoter_Criteria_Evaluator::Quoter_Criteria_Evaluator (const CosLifeCycle::Criteria criteria)
+Quoter_Criteria_Evaluator::Quoter_Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
 : criteria_ (criteria)
 {
 }
@@ -72,7 +72,7 @@ Quoter_Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
 
   for (unsigned int i = 0; i < criteria_.length(); i++)
   {
-    if (ACE_OS::strcmp (member_name, criteria_[i].name))
+    if (ACE_OS::strcmp (member_name, criteria_[i].name) == 0)
     {
       return &(criteria_[i].value);
     }
@@ -81,13 +81,13 @@ Quoter_Criteria_Evaluator::getCriteriaMember (const CORBA::String member_name)
 }
 
 
-
+/*
 void 
 Quoter_Criteria_Evaluator::setCriteria (const CosLifeCycle::Criteria & criteria,
 					CORBA::Environment &_tao_environment)
 {
   criteria_ = criteria;
-}
+}*/
 
 
 
