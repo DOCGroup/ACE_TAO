@@ -1,3 +1,16 @@
+Mon Jul 26 15:06:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.i:
+	* ace/Map_Manager.i:
+	  Had to cast some return values to avoid MSVC signed/unsigned
+	  mismatch type warnings (level 4).
+
+	* ace/config-win32.h:
+	  Added ACE_HAS_STD_TEMPLATE_SPECIALIZATION define, so that
+	  ACE_TEMPLATE_SPECIALIZATION macro adds the necessart
+	  'template <>' for MSVC, and so averts many many level 4
+	  warnings.
+
 Mon Jul 26 14:10:56 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* ace/DLL.cpp (get_handle): Changed the check of <become_owner>
