@@ -22,6 +22,7 @@
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 #include "orbsvcs/ESF/ESF_Worker.h"
 #include "Container_T.h"
+#include "Object.h"
 
 /**
  * @class TAO_Notify_Find_Worker_T
