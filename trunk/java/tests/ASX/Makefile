@@ -16,7 +16,8 @@ doc:
 files =	 MessageQueueTest.java \
 	 TaskTest.java \
 	 PriorityBufferTest.java \
-	 ThreadPoolTest.java
+	 ThreadPoolTest.java \
+	 BufferStreamTest.java
 
 packages = tests.ASX
 
