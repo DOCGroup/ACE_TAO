@@ -4,7 +4,7 @@
 
 ACE_RCSID (Manage_object_group,
            server,
-           "$Id$");
+           "$Id$")
 
 int
 main (int argc, char *argv[])
