@@ -9,6 +9,12 @@ Wed May 13 06:58:38 1998  David L. Levine  <levine@cs.wustl.edu>
           decode.cpp,encode.cpp,skip.cpp:
           changed ~0 to ~0u to avoid signed/unsigned comparisons.
 
+        * tao/IIOP_Interpreter.cpp (calc_seq_attributes):
+          replaced TAO_Unbounded_Sequence<CORBA::Long> with
+          TAO_Unbounded_String_Sequence.  For unknown reasons,
+          GreenHills couldn't compile it without this change.
+          Thanks to Carlos for providing the fix.
+
         * many *.{h,i,cpp,idl} files:  inserted RCS keyword string.
 
         * tests/Param_Test/tests.cpp:  moved some return statements
