@@ -12,6 +12,7 @@
 #include "tao/Invocation.h"
 #include "tao/Connector_Registry.h"
 #include "tao/debug.h"
+#include "tao/Remote_Object_Proxy_Broker.h"
 
 #if (TAO_HAS_INTERFACE_REPOSITORY == 1)
 #include "tao/InterfaceC.h"
@@ -30,8 +31,10 @@ CORBA_Object::~CORBA_Object (void)
 }
 
 CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
-                            CORBA::Boolean collocated)
+                            CORBA::Boolean collocated,
+                            TAO_Abstract_ServantBase *servant)
   : is_collocated_ (collocated),
+    servant_ (servant),
     is_local_ (0),
     protocol_proxy_ (protocol_proxy),
     refcount_ (1),
@@ -40,6 +43,10 @@ CORBA_Object::CORBA_Object (TAO_Stub *protocol_proxy,
   // Notice that the refcount_ above is initialized to 1 because
   // the semantics of CORBA Objects are such that obtaining one
   // implicitly takes a reference.
+
+  // By default the proxy broker is set to the one 
+  // that always goes remote.
+  this->proxy_broker_ = the_tao_remote_object_proxy_broker ();
 }
 
 void
@@ -59,6 +66,12 @@ CORBA_Object::_tao_any_destructor (void *x)
 {
   CORBA_Object_ptr tmp = ACE_static_cast(CORBA_Object_ptr,x);
   CORBA::release (tmp);
+}
+
+TAO_Abstract_ServantBase*
+CORBA_Object::_servant (void) const
+{
+  return this->servant_;
 }
 
 // IS_A ... ask the object if it's an instance of the type whose
@@ -86,74 +99,18 @@ CORBA_Object::_is_a (const CORBA::Char *type_id,
 
   if (this->is_local_)
     ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
-
-  if (this->_stubobj ()->type_id.in () != 0
-      && ACE_OS::strcmp (type_id,
-                         this->_stubobj ()->type_id.in ()) == 0)
-    return 1;
-
+  
   CORBA::Boolean _tao_retval = 0;
+  
+  // Get the right Proxy Implementation.
+  TAO_Object_Proxy_Impl &the_proxy = 
+    this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
-  TAO_Stub *istub = this->_stubobj ();
-  if (istub == 0)
-    ACE_THROW_RETURN (CORBA::INTERNAL (
-                        CORBA_SystemException::_tao_minor_code (
-                          TAO_DEFAULT_MINOR_CODE,
-                          EINVAL),
-                        CORBA::COMPLETED_NO),
-                      _tao_retval);
-
-
-  TAO_GIOP_Twoway_Invocation _tao_call (
-      istub,
-      "_is_a",
-      5,
-      istub->orb_core ()
-    );
-
-
-  // Loop until we succeed or we raise an exception.
-  // @@ Nanbor: Do we still need to clear the environment variable?
-  //  ACE_TRY_ENV.clear ();
-  for (;;)
-    {
-      _tao_call.start (ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-
-      _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                               ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      TAO_OutputCDR &_tao_out = _tao_call.out_stream ();
-      if (!(
-          (_tao_out << type_id)
-      ))
-        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
-
-      int _invoke_status =
-        _tao_call.invoke (0, 0, ACE_TRY_ENV);
-      ACE_CHECK_RETURN (_tao_retval);
-
-      if (_invoke_status == TAO_INVOKE_RESTART)
-        continue;
-      // if (_invoke_status == TAO_INVOKE_EXCEPTION)
-        // cannot happen
-      if (_invoke_status != TAO_INVOKE_OK)
-      {
-        ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                          CORBA::COMPLETED_YES),
-                          _tao_retval);
-
-      }
-      break;
-    }
-  TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-  if (!(_tao_in >> CORBA::Any::to_boolean (_tao_retval)))
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_DEFAULT_MINOR_CODE,
-                                      CORBA::COMPLETED_YES),
-                      _tao_retval);
+  // Preform the Call.
+  _tao_retval = the_proxy._is_a (this, type_id, ACE_TRY_ENV);
+  ACE_TRY_CHECK;
+  
   return _tao_retval;
 }
 
@@ -254,6 +211,17 @@ CORBA::Object::_tao_QueryInterface (ptr_arith_t type)
   return 0;
 }
 
+void 
+CORBA::Object::_proxy_broker (TAO_Object_Proxy_Broker *proxy_broker)
+{
+  this->proxy_broker_ = proxy_broker;
+}
+
+TAO_Object_Proxy_Broker *CORBA::Object::_proxy_broker (void)
+{
+  return this->proxy_broker_;
+}
+
 // @@ This doesn't seemed to be used anyplace! It should go away!! FRED
 void
 CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
@@ -289,71 +257,15 @@ CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
   CORBA::Boolean _tao_retval = 0;
 
-  ACE_TRY
-    {
-      // Must catch exceptions, if the server raises a
-      // CORBA::OBJECT_NOT_EXIST then we must return 1, instead of
-      // propagating the exception.
-      TAO_Stub *istub = this->_stubobj ();
-      if (istub == 0)
-        ACE_THROW_RETURN (CORBA::INTERNAL (
-                            CORBA_SystemException::_tao_minor_code (
-                              TAO_DEFAULT_MINOR_CODE,
-                              EINVAL),
-                            CORBA::COMPLETED_NO),
-                          _tao_retval);
+  // Get the right Proxy.
+  TAO_Object_Proxy_Impl &the_proxy = 
+    this->proxy_broker_->select_proxy (this, ACE_TRY_ENV);
+  ACE_TRY_CHECK;
 
-
-      TAO_GIOP_Twoway_Invocation _tao_call (
-                istub,
-          "_non_existent",
-          13,
-          istub->orb_core ()
-        );
-
-
-      // ACE_TRY_ENV.clear ();
-      for (;;)
-        {
-          _tao_call.start (ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          CORBA::Short flag = TAO_TWOWAY_RESPONSE_FLAG;
-
-          _tao_call.prepare_header (ACE_static_cast (CORBA::Octet, flag),
-                                    ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          int _invoke_status =
-            _tao_call.invoke (0, 0, ACE_TRY_ENV);
-          ACE_TRY_CHECK;
-
-          if (_invoke_status == TAO_INVOKE_RESTART)
-            continue;
-          ACE_ASSERT (_invoke_status != TAO_INVOKE_EXCEPTION);
-          if (_invoke_status != TAO_INVOKE_OK)
-            {
-              ACE_THROW_RETURN (CORBA::UNKNOWN (TAO_DEFAULT_MINOR_CODE,
-                                                CORBA::COMPLETED_YES),
-                                _tao_retval);
-            }
-          break;
-        }
-      TAO_InputCDR &_tao_in = _tao_call.inp_stream ();
-      if (!(
-          (_tao_in >> CORBA::Any::to_boolean (_tao_retval))
-        ))
-        ACE_THROW_RETURN (CORBA::MARSHAL (), _tao_retval);
-    }
-  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
-    {
-      _tao_retval = 1;
-    }
-  ACE_CATCHANY
-    {
-      ACE_RE_THROW;
-    }
-  ACE_ENDTRY;
+  // Perform the Call.
+  _tao_retval = the_proxy._non_existent (this, ACE_TRY_ENV);
+  ACE_TRY_CHECK;
+  
   return _tao_retval;
 }
 

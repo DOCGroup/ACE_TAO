@@ -213,6 +213,28 @@ public:
     DIRECT        // Collocated calls invoke operation on Servant directly.
   };
 
+  enum TAO_Collocation_Strategies
+  {
+    REMOTE_STRATEGY = 0,    // i.e. no collocation.
+
+    THRU_POA_STRATEGY = 1,  // Calls to the collocated object are 
+                            // forwarded by the POA. 
+
+    DIRECT_STRATEGY = 2     // Calls to the collocated object are 
+                            // made directly to its servant.
+  };
+  
+  enum 
+  {
+    COLLOCATION_STRATEGIES_NUM = 3
+  };
+
+  static TAO_Collocation_Strategies collocation_strategy (CORBA::Object_ptr object);
+  // This methods give the right collocation strategy, if any,  
+  // to be used to perform a method invokation on the given object. 
+  // (Note that No-Collocation is a special case of collocation).
+
+
   // = Get the default codeset translators.
   //   In most configurations these are just <nil> objects, but they
   //   can be set to something different if the native character sets

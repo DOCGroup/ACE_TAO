@@ -27,6 +27,8 @@
 #include "ace/pre.h"
 
 #include "tao/corbafwd.h"
+#include "tao/Abstract_Servant_Base.h"
+#include "tao/Object_Proxy_Broker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -82,6 +84,8 @@ public:
 
   virtual CORBA::Boolean _is_local (void) const;
   // Is this a local object?
+
+  virtual TAO_Abstract_ServantBase*_servant (void) const;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -219,11 +223,18 @@ public:
   // = TAO extensions
 
   CORBA_Object (TAO_Stub *p = 0,
-                CORBA::Boolean collocated = 0);
-  // constructor
+                CORBA::Boolean collocated = 0,
+                TAO_Abstract_ServantBase *servant = 0);
 
+                
   virtual TAO_Stub *_stubobj (void) const;
   // get the underlying stub object
+
+  virtual void _proxy_broker (TAO_Object_Proxy_Broker *proxy_broker);
+  // Sets the proxy broker.
+
+  virtual TAO_Object_Proxy_Broker *_proxy_broker (void);
+  // Gets the proxy broker.
 
   virtual void _use_locate_requests (CORBA::Boolean use_it);
   // the the object to use a locate request for the first call to
@@ -243,9 +254,17 @@ protected:
   CORBA::Boolean is_collocated_;
   // Flag to indicate collocation.  It is 0 except for collocated
   // objects.
+  
+  TAO_Abstract_ServantBase *servant_;
+  // Servant pointer.  It is 0 except for collocated objects.
 
   CORBA::Boolean is_local_;
   // Specify whether this is a local object or not.
+
+  TAO_Object_Proxy_Broker *proxy_broker_;
+  // Pointer to the Proxy Broker i.e. the instance
+  // that takes care of getting the right proxy
+  // for performing a given call.
 
 private:
   TAO_Stub *protocol_proxy_;

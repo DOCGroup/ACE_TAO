@@ -5,7 +5,7 @@
 #include "Object_Adapter.h"
 
 #include "tao/ORB_Core.h"
-#include "tao/Stub.h"
+#include "tao/Stub.h"  
 
 #if !defined (__ACE_INLINE__)
 # include "Collocated_Object.i"
@@ -16,13 +16,13 @@ ACE_RCSID(tao, Object, "$Id")
 TAO_Collocated_Object::~TAO_Collocated_Object (void)
 {
 }
-
+/*
 TAO_ServantBase *
 TAO_Collocated_Object::_servant (void) const
 {
   return this->servant_;
 }
-
+*/
 TAO_Collocated_Object *
 TAO_Collocated_Object::_narrow (CORBA::Object_ptr object,
                                 CORBA::Environment &)
