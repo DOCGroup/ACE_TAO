@@ -1,3 +1,9 @@
+Sun Aug  3 17:33:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_codegen.cpp: The skeleton files needed an extra
+	  include if dynamic_hash is used. This was needed due to the
+	  recent refactoring. 
+
 Sat Aug 02 17:35:44 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Notify/Method_Request_Dispatch_T.h (class
