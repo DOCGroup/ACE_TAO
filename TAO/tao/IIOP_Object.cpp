@@ -158,13 +158,11 @@ IIOP::Profile::set (const ACE_INET_Addr &addr,
     return -1;
   else
     {
-      const char *host = 0;
+      const char *host_name = temphost;
       if (TAO_ORB_Core_instance ()->orb_params ()->use_dotted_decimal_addresses ())
-        host = addr.get_host_addr ();
-      else
-        host = temphost;
+        host_name = addr.get_host_addr ();
 
-      return this->set (host,
+      return this->set (host_name,
                         addr.get_port_number (),
                         key,
                         &addr);
