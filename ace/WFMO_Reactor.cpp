@@ -1192,16 +1192,18 @@ ACE_WFMO_Reactor::complex_dispatch_handler (int index,
     this->handler_rep_.current_info ()[index];
   
   // Upcall
-  if (this->upcall (current_info.event_handler_,
-		    current_info.io_handle_, 
-		    event_handle,
-		    current_info.network_events_) == -1)
-    this->handler_rep_.unbind (event_handle, ACE_Event_Handler::ALL_EVENTS_MASK);
-  
+  ACE_Reactor_Mask problems = this->upcall (current_info.event_handler_,
+                                            current_info.io_handle_, 
+                                            event_handle,
+                                            current_info.network_events_);
+
+  if (problems != ACE_Event_Handler::NULL_MASK)
+    this->handler_rep_.unbind (event_handle, problems);  
+
   return 0;
 }
 
-int
+ACE_Reactor_Mask
 ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
 			  ACE_HANDLE io_handle, 
 			  ACE_HANDLE event_handle, 
@@ -1209,50 +1211,60 @@ ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
 {
   // This method figures out what exactly has happened to the socket
   // and then calls appropriate methods.
-  int result = 0;
+  ACE_Reactor_Mask problems = ACE_Event_Handler::NULL_MASK;
   WSANETWORKEVENTS events;
   
   if (::WSAEnumNetworkEvents ((SOCKET) io_handle,
 			      event_handle,
 			      &events) == SOCKET_ERROR)
-    return -1;
+    // Remove all masks
+    return ACE_Event_Handler::ALL_EVENTS_MASK;
   else
     {
       long actual_events = events.lNetworkEvents;
 
-      if (result != -1 && interested_events & actual_events & FD_READ)
-	result = event_handler->handle_input (io_handle);
+      if (interested_events & actual_events & FD_READ)
+	if (event_handler->handle_input (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
 
-      if (result != -1 && interested_events & actual_events & FD_CLOSE)
-	result = event_handler->handle_input (io_handle);
+      if (interested_events & actual_events & FD_CLOSE)
+	if (event_handler->handle_input (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::READ_MASK);
 
-      if (result != -1 && interested_events & actual_events & FD_WRITE)
-	result = event_handler->handle_output (io_handle);
+      if (interested_events & actual_events & FD_WRITE)
+	if (event_handler->handle_output (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::WRITE_MASK);
 
-      if (result != -1 && interested_events & actual_events & FD_OOB)
-	result = event_handler->handle_exception (io_handle);
+      if (interested_events & actual_events & FD_OOB)
+	if (event_handler->handle_exception (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::EXCEPT_MASK);
 
-      if (result != -1 && interested_events & actual_events & FD_ACCEPT)
-	result = event_handler->handle_input (io_handle);
+      if (interested_events & actual_events & FD_ACCEPT)
+	if (event_handler->handle_input (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::ACCEPT_MASK);
       
-      if (result != -1 && interested_events & actual_events & FD_CONNECT)
+      if (interested_events & actual_events & FD_CONNECT)
 	{
 	  if (events.iErrorCode[FD_CONNECT_BIT] == 0)
 	    // Successful connect
-	    result = event_handler->handle_output (io_handle);
+	    if (event_handler->handle_output (io_handle) == -1)
+              ACE_SET_BITS (problems, ACE_Event_Handler::CONNECT_MASK);
 	  else
 	    // Unsuccessful connect
-	    result = event_handler->handle_input (io_handle);
+	    if (event_handler->handle_input (io_handle) == -1)
+              ACE_SET_BITS (problems, ACE_Event_Handler::CONNECT_MASK);
 	}
       
-      if (result != -1 && interested_events & actual_events & FD_QOS)
-	result = event_handler->handle_qos (io_handle);
+      if (interested_events & actual_events & FD_QOS)
+	if (event_handler->handle_qos (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::QOS_MASK);
       
-      if (result != -1 && interested_events & actual_events & FD_GROUP_QOS)
-	result = event_handler->handle_group_qos (io_handle);
+      if (interested_events & actual_events & FD_GROUP_QOS)
+	if (event_handler->handle_group_qos (io_handle) == -1)
+          ACE_SET_BITS (problems, ACE_Event_Handler::GROUP_QOS_MASK);
     }
 
-  return result;
+  return problems;
 }
 
 int 

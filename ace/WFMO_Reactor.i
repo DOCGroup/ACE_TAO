@@ -282,9 +282,9 @@ ACE_INLINE int
 ACE_WFMO_Reactor_Handler_Repository::changes_required (void)
 {
   // Check if handles have be scheduled for additions or removal
-  return this->handles_to_be_added_ > 0     ||
-    this->handles_to_be_deleted_ > 0   ||
-    this->handles_to_be_suspended_ > 0 ||
+  return this->handles_to_be_added_ > 0 ||
+    this->handles_to_be_deleted_ > 0    ||
+    this->handles_to_be_suspended_ > 0  ||
     this->handles_to_be_resumed_ > 0;
 }
 

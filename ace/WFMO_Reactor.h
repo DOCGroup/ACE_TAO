@@ -908,10 +908,10 @@ protected:
   // Dispatches a single handler.  Returns 0 on success, -1 if the
   // handler was removed.
 
-  virtual int upcall (ACE_Event_Handler *event_handler,
-		      ACE_HANDLE io_handle,
-		      ACE_HANDLE event_handle,
-		      long interested_events);
+  virtual ACE_Reactor_Mask upcall (ACE_Event_Handler *event_handler,
+                                   ACE_HANDLE io_handle,
+                                   ACE_HANDLE event_handle,
+                                   long interested_events);
 
   virtual int calculate_timeout (ACE_Time_Value *time);
   // Used to caluculate the next timeout
