@@ -1,3 +1,21 @@
+Sun Jun 13 23:38:02 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	Quest for TAO try macros free TAO:
+
+	* tao/deep_copy.cpp:
+	* tao/decode.cpp:
+	* tao/Typecode.{i,cpp}: 
+	* tao/Object.cpp: Commented out calls to ACE_TRY_ENV.clear ().  We
+	  shouldn't depend on them for correct execution of programs.
+	  Changed the use of env to ACE try macros.
+
+	* tao/Marshal.cpp (make_marshal_object): Changed to use ACE try
+	  macros.
+
+	* tao/Exception.cpp (item): Replaced TAO_IN_ENV with ACE_TRY_ENV
+	  and commented out ACE_TRY_ENV.clear () since we shouldn't depend
+	  on clearing up the environment to make it works correctly.
+
 Sun Jun 13 23:29:22 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.{h,cpp}
