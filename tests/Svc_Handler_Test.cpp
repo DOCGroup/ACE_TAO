@@ -124,24 +124,27 @@ main (int argc, ACE_TCHAR *argv[])
                          ACE_TEXT ("connect failed for %p\n"),
                          file.get_path_name ()),
                         1);
-    char buf[17];
+    char buf[ACE_Log_Record::MAXLOGMSGLEN + 1];
     ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
     ACE_FILE_Info info;
     file_io.get_info (info);
     ACE_DEBUG ((LM_DEBUG, "file size = %d\n", info.size_));
 
-    for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, sizeof buf)) > 0; )
-      ACE_DEBUG ((LM_DEBUG, "%*s", n_bytes, buf));
+    for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_Log_Record::MAXLOGMSGLEN)) > 0; )
+      {
+        buf[n_bytes] = '\0';
+        ACE_DEBUG ((LM_DEBUG, "%s", buf));
+      }
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
 
-    file_io.close ();
     if (file_io.unlink () == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("unlink failed for %p\n"),
                          file.get_path_name ()),
                         1);
+    // Destructor of svc_handler will close file_io.
   }
 
   ACE_END_TEST;
