@@ -12,7 +12,8 @@ Mon Apr 12 17:13:37 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 		Works fine on Unix platforms.
 	* orbsvcs/tests/AVStreams/benchmark/child_process.cpp:
 	  Added the new file which has just the main() for the child
-	  process.
+	  process. Thanks to David Hooker <DHooker@uniview.net> for
+	  reporting the errors.
 	
 	* orbsvcs/orbsvcs/AV/AVStreams_i_T.{h,cpp}: Moved the
 	TAO_StreamEndpoint classes from AVStreams_i.{h,cpp} as it was made
