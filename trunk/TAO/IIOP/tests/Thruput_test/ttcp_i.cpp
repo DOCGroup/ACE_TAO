@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ttcp_i.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(Thruput_test, ttcp_i, "$Id$")
 
