@@ -1,3 +1,11 @@
+Mon Aug 23 16:57:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/RPC/README:
+	* performance-tests/RPC/client.cpp:
+	  Changed the options to make it more consistent with other tests
+	  like this one.
+	  Added a README file
+
 Mon Aug 23 16:53:00 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Makefile:
