@@ -84,7 +84,8 @@ CPP_SRCS += \
         Event/EC_And_Filter \
         Event/EC_Channel_Destroyer \
         Event/EC_Lifetime_Utils \
-        Event/EC_Proxy_Disconnector
+        Event/EC_Proxy_Disconnector \
+	Event/EC_Event_Limit
 
 CPP_SRCS += \
         Event_Utilities \
@@ -121,9 +122,9 @@ include $(ACE_ROOT)/include/makeinclude/all_in_one.GNU
 #       Local targets (and local hacks)
 #----------------------------------------------------------------------------
 
-LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs
+LDFLAGS += -L$(TAO_ROOT)/tao -L$(TAO_ROOT)/orbsvcs/orbsvcs -L/opt/lib -ldsui
 CPPFLAGS += -I$(TAO_ROOT) -I$(TAO_ROOT)/orbsvcs \
-        -I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF
+        -I$(TAO_ROOT)/orbsvcs/orbsvcs/ESF -I/opt/include
 
 ifeq ($(shared_libs),1)
 ifneq ($(SHLIB),)
