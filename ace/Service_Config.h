@@ -395,6 +395,10 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// Process a file containing a list of service configuration
+  /// directives.
+  static int process_file (const ACE_TCHAR file[]);
+
   /// Process one service configuration <directive>, which is passed as
   /// a string.  Returns the number of errors that occurred.
   static int process_directive (const ACE_TCHAR directive[]);
