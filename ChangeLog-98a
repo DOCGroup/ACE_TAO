@@ -1,5 +1,27 @@
 Wed Apr  8 01:09:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Malloc_T: Added a new ACE_Static_Allocator class, which is
+ 	  highly optimized for allocations where (1) all the memory size
+ 	  is known in advance and (2) no deletions are done.  This class
+ 	  will ultimately be used in TAO to improve it's startup
+ 	  performance for operation tables initialization.
+
+	* tests/Hash_Map_Manager_Test.cpp: Enhanced the test so that it
+ 	  uses the new ACE_Static_Allocator feature.
+
+	* ace/OS: Added support for the rename() method.  Thanks to Ganesh
+ 	  Pai for suggesting this.
+
+	* ace/config-win32-common.h,
+	      config-sunos*.h:
+	      config-irix-6*.h:
+          Enable the ACE_HAS_WILDCARD_BIND macro.
+
+	* ace/ACE.cpp: Modified the bind_port() method so that it is more
+ 	  efficient on platforms that interpret a 0 port to bind() as a
+ 	  request for the kernel to select the port.  Thanks to Chris
+ 	  Cleeland for pointing this out.
+
 	* ace/Hash_Map_Manager: Made a bunch of minor changes to fix some
  	  subtle deadlocks with intra-class locking.
 

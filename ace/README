@@ -211,6 +211,7 @@ ACE_HAS_USING_KEYWORD			Compiler supports the new using keyword for C++ namespac
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in ACE_NOTSUP.  Useful for tracking down origin of ACE_NOTSUP.
 ACE_HAS_VOIDPTR_MMAP			Platform requires void * for mmap().
 ACE_HAS_VOIDPTR_SOCKOPT			OS/compiler uses void * arg 4 setsockopt() rather than const char *
+ACE_HAS_WILDCARD_BIND                   The bind() call will select the port if it's 0.
 ACE_HAS_WIN32_TRYLOCK			The Win32 platform support TryEnterCriticalSection() (WinNT 4.0 and beyond)
 ACE_HAS_WINSOCK2			The Win32 platform supports WinSock 2.0
 ACE_HAS_XLI 				Platform has the XLI version of TLI
