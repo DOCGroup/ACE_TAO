@@ -1,3 +1,23 @@
+Wed Oct 16 12:08:21 2002  Steve Huston  <shuston@riverace.com>
+
+        * examples/C++NPv2/AC_CLD.mak:
+        * examples/C++NPv2/AIO_CLD.mak
+        * examples/C++NPv2/CLD.mak:
+        * examples/C++NPv2/Configurable_Logging_Server.mak:
+        * examples/C++NPv2/display_logfile.mak:
+        * examples/C++NPv2/Reactor_Logging_Server.mak:
+        * examples/C++NPv2/Select_Reactor_Logging_Server.mak:
+        * examples/C++NPv2/SLDex.mak:
+        * examples/C++NPv2/SLD.mak:
+        * examples/C++NPv2/SR_Configurable_Logging_Server.mak:
+        * examples/C++NPv2/TPCLS.mak:
+        * examples/C++NPv2/TPLS.mak:
+        * examples/C++NPv2/TP_Reactor_Logging_Server.mak:
+          Renamed from *.mak to Makefile.* to avoid looking like an
+          exported MSVC project NMAKE file.
+
+        * examples/C++NPv2/Makefile: Changed to process new Makefile names.
+
 Wed Oct 16 11:02:41 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* ace/High_Res_Timer.cpp (get_cpuinfo): Removed the recalibration of
