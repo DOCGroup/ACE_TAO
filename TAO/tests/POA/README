@@ -53,3 +53,9 @@ Object Adapter (POA) interfaces and their usage scenarios.
                 This program tests for deactivation and
                 etherealization of reference counted and non reference
                 counted servants.
+
+        . Persistent_ID 
+
+                This test checks the combination of PERSISTENT &
+                SYSTEM_ID POA policies.
+

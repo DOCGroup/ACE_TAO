@@ -8,6 +8,7 @@
 # Example: TAO\examples\foo\run_test.pl: !MINIMUM !ST
 
 tests/run_test.pl
+examples/Reactor/WFMO_Reactor/run_test.pl
 
 TAO/tests/Param_Test/run_test.pl: !MINIMUM
 TAO/tests/Param_Test/run_test_dii.pl: !MINIMUM
@@ -78,6 +79,7 @@ TAO/tests/NestedUpcall/Triangle_Test/run_test.pl
 TAO/tests/Nested_Event_Loop/run_test.pl
 TAO/tests/POA/Identity/run_test.pl
 TAO/tests/POA/Excessive_Object_Deactivations/run_test.pl
+TAO/tests/POA/Persistent_ID/run_test.pl
 TAO/tests/POA/Etherealization/run_test.pl: !MINIMUM
 TAO/tests/POA/Object_Reactivation/run_test.pl: !ST
 TAO/tests/POA/POA_Destruction/run_test.pl
@@ -189,4 +191,3 @@ TAO/orbsvcs/tests/Security/Secure_Invocation/run_test.pl: SSL
 TAO/orbsvcs/tests/Security/SecurityLevel1/run_test.pl: SSL
 TAO/orbsvcs/tests/Miop/McastHello/run_test.pl: !MINIMUM !STATIC !SUNCC5_1
 TAO/tests/Two_Objects/run_test.pl: !ST
-examples/Reactor/WFMO_Reactor/run_test.pl
