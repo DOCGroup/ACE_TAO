@@ -1,3 +1,10 @@
+Wed Jun 18 10:54:18 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Allow scoped assignments to be applied to directories as well as
+          listed mpc files.
+
 Wed Jun 18 15:19:17 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/OS.h:
