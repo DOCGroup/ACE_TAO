@@ -1,3 +1,15 @@
+Thu Aug 19 17:13:22 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * CIDLC/Literals.cpp:
+        * CIDLC/Literals.hpp:
+        * CIDLC/ServantHeaderGenerator.cpp:
+        * CIDLC/ServantSourceGenerator.cpp:
+        * CIDLC/TypeNameEmitter.cpp:
+        * CIDLC/TypeNameEmitter.hpp:
+        
+          Added code generation for the set_attributes() method called
+          on the servant by the deployer.
+
 Thu Aug 19 16:09:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* DAnCE/ciao/Container_Base.h:

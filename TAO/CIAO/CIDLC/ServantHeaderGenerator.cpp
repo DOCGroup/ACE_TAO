@@ -1228,10 +1228,15 @@ namespace
          << t.scoped_name ().scope_name () << "::CCM_" << t.name ()
          << "_ptr executor," << endl
          << "::Components::CCMHome_ptr home," << endl
-         << "::CIAO::Session_Container *c);" << endl;
+         << "::CIAO::Session_Container *c);" << endl << endl;
 
-      os << "virtual ~" << t.name () << "_Servant (void);"
+      os << "virtual ~" << t.name () << "_Servant (void);" 
          << endl << endl;
+         
+      os << "virtual void" << endl
+         << "set_attributes (" << endl
+         << "const ::Components::ConfigValues &descr" << endl
+         << STRS[ENV_SRC] << ");" << endl << endl;
 
       os << "// Supported operations." << endl << endl;
 
