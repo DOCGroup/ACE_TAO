@@ -397,7 +397,7 @@ static CORBA::Boolean
 catpoop (CORBA::String string,
         CORBA::Environment &env)
 {
-  CORBA::Boolean  b = CORBA::B_FALSE;
+  CORBA::Boolean b = 0;
   if (!string || !*string)
     return 0;
 
