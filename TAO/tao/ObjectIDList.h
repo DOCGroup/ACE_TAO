@@ -13,7 +13,7 @@
 #ifndef OBJECTIDLIST_H_
 #define OBJECTIDLIST_H_
 
-#include "tao/corba.h"
+#include "tao/corbafwd.h"
 #include "tao/Sequence.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -2,6 +2,7 @@
 
 #include "tao/IOR_LookupTable.h"
 #include "tao/ObjectIDList.h"
+#include "tao/Exception.h"
 #include "tao/debug.h"
 
 ACE_RCSID(tao, IOR_TableLookup, "$Id$")

@@ -229,8 +229,6 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
 
   return TAO_Transport_Mux_Strategy::bind_dispatcher (request_id,
                                                       rd);
-
-  return 0;
 }
 
 int
