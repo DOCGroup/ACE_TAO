@@ -27,10 +27,10 @@ Mon Sep 29 22:29:46 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 	* ace/Reactor_Impl.h (reset_new_handle): 
 	* ace/Select_Reactor.{h,i} (reset_new_handle): 
 	* ace/WFMO_Reactor.{h,i} (reset_new_handle): Added this new method
-	  so we can determine whether the implementation of the reactor
-	  requires us to decouple the event a handle inherit from
-	  accept/connect.  This scheme doesn't depend on the RTTI support
-	  of compilers.  Thanks to Irfan for the tips.
+ 	  so we can determine whether the implementation of the reactor
+ 	  requires us to decouple the event a handle inherit from accept.
+  	  This scheme doesn't depend on the RTTI support of compilers.
+  	  Thanks to Irfan for the tips.
 
 Mon Sep 29 21:28:02 1997    <irfan@TWOSTEP>
 
