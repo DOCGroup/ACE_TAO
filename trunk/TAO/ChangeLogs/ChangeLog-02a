@@ -1,3 +1,12 @@
+Fri Jan  7 11:52:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.h:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	  Fixed bug where discriminator in a union with an
+	  explicit default case was not getting set after
+	  transmission. Thanks to Hugh Arnold <harnold@itginc.com>
+	  for reporting this bug.
+
 Thu Jan 06 22:26:42 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao: Minimum CORBA in TAO meant a minimum POA.  This
