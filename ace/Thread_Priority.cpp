@@ -206,7 +206,7 @@ ACE_Thread_Priority::convert_to_os_priority (void)
 //
 // might be adapted to other flavours of POSIX threads...
 //
-// Please note that this has only been tested for POSIX 1003.1C threads,
+// Please note that this has only been tested for POSIX 1003.1c threads,
 // and may cause problems with other PThreads flavors!
 
 /* mapping of
