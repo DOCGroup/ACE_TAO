@@ -49,7 +49,7 @@ public:
 
 private:
   FTRT::SequenceNumber sequence_num_;
-  ACE_Thread_Mutex* mutex_;
+  ACE_Recursive_Thread_Mutex* mutex_;
 };
 
 #endif
