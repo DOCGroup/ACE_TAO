@@ -1,5 +1,14 @@
 Sat Jul  5 14:19:20 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* Renamed the client directory "clients" to reflect the fact that
+ 	  we've got multiple client tests now.  Also, moved the original
+ 	  contents of the client directory into a new clients/Blobby
+ 	  directory and added Caching and WebSTONE.
+
+	* Moved the ChangeLog from the ./server directory into the ./JAWS
+ 	  directory since we want to apply ChangeLog entries to all
+ 	  aspects of JAWS, not just the server.
+
 	* HTTP_Server.cpp (open): Added THR_DETACHED as a flag to
  	  activate().  This should prevent a memory leak that was
  	  occurring since no thread was ever "joining" the threads that
