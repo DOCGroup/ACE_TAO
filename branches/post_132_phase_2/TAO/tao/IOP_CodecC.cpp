@@ -20,7 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:314
 
 
 #include "IOP_CodecC.h"
@@ -44,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// be/be_visitor_interface/interface_cs.cpp:63
 
 int IOP::Codec::_tao_class_id = 0;
 
@@ -91,8 +91,17 @@ tao_IOP_Codec_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_IOP_Codec_marshal (
+    IOP::Codec_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+// be/be_interface.cpp:722
 
 // *************************************************************
 // IOP::Codec_var
@@ -218,7 +227,7 @@ IOP::Codec_var::tao_upcast (void *src)
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+// be/be_interface.cpp:1031
 
 // *************************************************************
 // IOP::Codec_out
@@ -280,7 +289,7 @@ IOP::Codec_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:225
+// be/be_visitor_interface/interface_cs.cpp:236
 
 IOP::Codec::Codec (void)
 {}
@@ -374,8 +383,14 @@ const char* IOP::Codec::_interface_repository_id (void) const
   return "IDL:omg.org/IOP/Codec:1.0";
 }
 
+CORBA::Boolean
+IOP::Codec::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::InvalidTypeForEncoding::InvalidTypeForEncoding (void)
   : CORBA::UserException (
@@ -470,7 +485,7 @@ CORBA::TypeCode_ptr IOP::Codec::InvalidTypeForEncoding::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec_InvalidTypeForEncoding[] =
 {
@@ -489,7 +504,7 @@ static const CORBA::Long _oc_IOP_Codec_InvalidTypeForEncoding[] =
   ACE_NTOHL (0x64696e67), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/Codec/InvalidTypeForEncoding:1.0
-  23,
+    23,
   ACE_NTOHL (0x496e7661), 
   ACE_NTOHL (0x6c696454), 
   ACE_NTOHL (0x79706546), 
@@ -497,7 +512,7 @@ static const CORBA::Long _oc_IOP_Codec_InvalidTypeForEncoding[] =
   ACE_NTOHL (0x636f6469), 
   ACE_NTOHL (0x6e670000),  // name = InvalidTypeForEncoding
   0, // member count
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding (
     CORBA::tk_except,
@@ -511,7 +526,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding (
   &_tc_TAO_tc_IOP_Codec_InvalidTypeForEncoding;
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::FormatMismatch::FormatMismatch (void)
   : CORBA::UserException (
@@ -606,7 +621,7 @@ CORBA::TypeCode_ptr IOP::Codec::FormatMismatch::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec_FormatMismatch[] =
 {
@@ -623,13 +638,13 @@ static const CORBA::Long _oc_IOP_Codec_FormatMismatch[] =
   ACE_NTOHL (0x61746368), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/Codec/FormatMismatch:1.0
-  15,
+    15,
   ACE_NTOHL (0x466f726d), 
   ACE_NTOHL (0x61744d69), 
   ACE_NTOHL (0x736d6174), 
   ACE_NTOHL (0x63680000),  // name = FormatMismatch
   0, // member count
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_FormatMismatch (
     CORBA::tk_except,
@@ -643,7 +658,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_FormatMismatch (
   &_tc_TAO_tc_IOP_Codec_FormatMismatch;
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 IOP::Codec::TypeMismatch::TypeMismatch (void)
   : CORBA::UserException (
@@ -738,7 +753,7 @@ CORBA::TypeCode_ptr IOP::Codec::TypeMismatch::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec_TypeMismatch[] =
 {
@@ -754,13 +769,13 @@ static const CORBA::Long _oc_IOP_Codec_TypeMismatch[] =
   ACE_NTOHL (0x736d6174), 
   ACE_NTOHL (0x63683a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/Codec/TypeMismatch:1.0
-  13,
+    13,
   ACE_NTOHL (0x54797065), 
   ACE_NTOHL (0x4d69736d), 
   ACE_NTOHL (0x61746368), 
   ACE_NTOHL (0x0),  // name = TypeMismatch
   0, // member count
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_TypeMismatch (
     CORBA::tk_except,
@@ -774,7 +789,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_Codec_TypeMismatch (
   &_tc_TAO_tc_IOP_Codec_TypeMismatch;
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Codec[] =
 {
@@ -787,10 +802,10 @@ static const CORBA::Long _oc_IOP_Codec[] =
   ACE_NTOHL (0x436f6465), 
   ACE_NTOHL (0x633a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/Codec:1.0
-  6,
+    6,
   ACE_NTOHL (0x436f6465), 
   ACE_NTOHL (0x63000000),  // name = Codec
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_IOP_Codec (
     CORBA::tk_objref,
@@ -810,7 +825,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_EncodingFormat[] =
 {
@@ -825,12 +840,12 @@ static const CORBA::Long _oc_IOP_EncodingFormat[] =
   ACE_NTOHL (0x466f726d), 
   ACE_NTOHL (0x61743a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/EncodingFormat:1.0
-  15,
+    15,
   ACE_NTOHL (0x456e636f), 
   ACE_NTOHL (0x64696e67), 
   ACE_NTOHL (0x466f726d), 
   ACE_NTOHL (0x61740000),  // name = EncodingFormat
-  CORBA::tk_short,
+    CORBA::tk_short,
 
 };
 
@@ -852,7 +867,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_Encoding[] =
 {
@@ -866,15 +881,15 @@ static const CORBA::Long _oc_IOP_Encoding[] =
   ACE_NTOHL (0x64696e67), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/Encoding:1.0
-  9,
+    9,
   ACE_NTOHL (0x456e636f), 
   ACE_NTOHL (0x64696e67), 
   ACE_NTOHL (0x0),  // name = Encoding
   3, // member count
-  7,
+    7,
   ACE_NTOHL (0x666f726d), 
   ACE_NTOHL (0x61740000),  // name = format
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   68, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     35,
@@ -887,12 +902,12 @@ static const CORBA::Long _oc_IOP_Encoding[] =
     ACE_NTOHL (0x466f726d), 
     ACE_NTOHL (0x61743a31), 
     ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/EncodingFormat:1.0
-    15,
+        15,
     ACE_NTOHL (0x456e636f), 
     ACE_NTOHL (0x64696e67), 
     ACE_NTOHL (0x466f726d), 
     ACE_NTOHL (0x61740000),  // name = EncodingFormat
-    CORBA::tk_short,
+        CORBA::tk_short,
 
 
   14,
@@ -900,14 +915,14 @@ static const CORBA::Long _oc_IOP_Encoding[] =
   ACE_NTOHL (0x725f7665), 
   ACE_NTOHL (0x7273696f), 
   ACE_NTOHL (0x6e000000),  // name = major_version
-  CORBA::tk_octet,
+    CORBA::tk_octet,
 
   14,
   ACE_NTOHL (0x6d696e6f), 
   ACE_NTOHL (0x725f7665), 
   ACE_NTOHL (0x7273696f), 
   ACE_NTOHL (0x6e000000),  // name = minor_version
-  CORBA::tk_octet,
+    CORBA::tk_octet,
 
 };
 
@@ -929,7 +944,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void IOP::Encoding::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -938,7 +953,7 @@ void IOP::Encoding::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:61
+// be/be_visitor_interface/interface_cs.cpp:63
 
 int IOP::CodecFactory::_tao_class_id = 0;
 
@@ -985,8 +1000,17 @@ tao_IOP_CodecFactory_upcast (
   return *tmp;
 }
 
+CORBA::Boolean
+tao_IOP_CodecFactory_marshal (
+    IOP::CodecFactory_ptr p,
+    TAO_OutputCDR &strm
+  )
+{
+  return p->marshal (strm);
+}
+
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:721
+// be/be_interface.cpp:722
 
 // *************************************************************
 // IOP::CodecFactory_var
@@ -1112,7 +1136,7 @@ IOP::CodecFactory_var::tao_upcast (void *src)
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_interface.cpp:1030
+// be/be_interface.cpp:1031
 
 // *************************************************************
 // IOP::CodecFactory_out
@@ -1174,7 +1198,7 @@ IOP::CodecFactory_out::operator-> (void)
 }
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/interface_cs.cpp:225
+// be/be_visitor_interface/interface_cs.cpp:236
 
 IOP::CodecFactory::CodecFactory (void)
 {}
@@ -1268,8 +1292,14 @@ const char* IOP::CodecFactory::_interface_repository_id (void) const
   return "IDL:omg.org/IOP/CodecFactory:1.0";
 }
 
+CORBA::Boolean
+IOP::CodecFactory::marshal (TAO_OutputCDR &)
+{
+  return 0;
+}
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/exception_cs.cpp:63
+// be/be_visitor_exception/exception_cs.cpp:63
 
 IOP::CodecFactory::UnknownEncoding::UnknownEncoding (void)
   : CORBA::UserException (
@@ -1364,7 +1394,7 @@ CORBA::TypeCode_ptr IOP::CodecFactory::UnknownEncoding::_type (void) const
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_CodecFactory_UnknownEncoding[] =
 {
@@ -1383,13 +1413,13 @@ static const CORBA::Long _oc_IOP_CodecFactory_UnknownEncoding[] =
   ACE_NTOHL (0x64696e67), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/CodecFactory/UnknownEncoding:1.0
-  16,
+    16,
   ACE_NTOHL (0x556e6b6e), 
   ACE_NTOHL (0x6f776e45), 
   ACE_NTOHL (0x6e636f64), 
   ACE_NTOHL (0x696e6700),  // name = UnknownEncoding
   0, // member count
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory_UnknownEncoding (
     CORBA::tk_except,
@@ -1403,7 +1433,7 @@ static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory_UnknownEncoding (
   &_tc_TAO_tc_IOP_CodecFactory_UnknownEncoding;
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_CodecFactory[] =
 {
@@ -1418,12 +1448,12 @@ static const CORBA::Long _oc_IOP_CodecFactory[] =
   ACE_NTOHL (0x746f7279), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/CodecFactory:1.0
-  13,
+    13,
   ACE_NTOHL (0x436f6465), 
   ACE_NTOHL (0x63466163), 
   ACE_NTOHL (0x746f7279), 
   ACE_NTOHL (0x0),  // name = CodecFactory
-};
+  };
 
 static CORBA::TypeCode _tc_TAO_tc_IOP_CodecFactory (
     CORBA::tk_objref,
@@ -1443,40 +1473,33 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+// be/be_visitor_interface/any_op_cs.cpp:52
 
-// Copying version.
+// Copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     IOP::Codec_ptr _tao_elem
   )
 {
-  _tao_any._tao_replace (
-      IOP::_tc_Codec,
-      1,
-      IOP::Codec::_duplicate (_tao_elem),
-      IOP::Codec::_tao_any_destructor
-    );
-  
-  _tao_any.contains_local (1);
+  IOP::Codec_ptr _tao_objptr =
+    IOP::Codec::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
 }
 
-// Non-copying version.
+// Non-copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     IOP::Codec_ptr *_tao_elem
   )
 {
-  _tao_any._tao_replace (
+  TAO::Any_Impl_T<IOP::Codec>::insert (
+      _tao_any,
+      IOP::Codec::_tao_any_destructor,
       IOP::_tc_Codec,
-      1,
-      *_tao_elem,
-      IOP::Codec::_tao_any_destructor
+      *_tao_elem
     );
-  
-  _tao_any.contains_local (1);
 }
 
 CORBA::Boolean
@@ -1485,49 +1508,26 @@ operator>>= (
     IOP::Codec_ptr &_tao_elem
   )
 {
-  ACE_TRY_NEW_ENV
-  {
-    _tao_elem = IOP::Codec::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_Codec
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-    
-    _tao_elem =
-      ACE_reinterpret_cast (
-          IOP::Codec_ptr,
-          ACE_const_cast (void *, _tao_any.value ())
-        );
-      
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  _tao_elem = IOP::Codec::_nil ();
-  return 0;
+  return
+    TAO::Any_Impl_T<IOP::Codec>::extract (
+        _tao_any,
+        IOP::Codec::_tao_any_destructor,
+        IOP::_tc_Codec,
+        _tao_elem
+      );
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<IOP::Codec,IOP::Codec_var>;
+  template class TAO::Any_Impl_T<IOP::Codec>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<IOP::Codec,IOP::Codec_var>
+# pragma instantiate TAO_Object_Manager<IOP::Codec, IOP::Codec_var>
+# pragma instantiate TAO::Any_Impl_T<IOP::Codec>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1535,16 +1535,12 @@ void operator<<= (
     const IOP::Encoding &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_Encoding,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::Encoding>::insert_copy (
+      _tao_any,
+      IOP::Encoding::_tao_any_destructor,
+      IOP::_tc_Encoding,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -1553,19 +1549,12 @@ void operator<<= (
     IOP::Encoding *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_Encoding,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::Encoding::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::Encoding>::insert (
+      _tao_any,
+      IOP::Encoding::_tao_any_destructor,
+      IOP::_tc_Encoding,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -1586,108 +1575,50 @@ CORBA::Boolean operator>>= (
     const IOP::Encoding *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_Encoding
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (_tao_result == 0)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast (
-            const IOP::Encoding*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::Encoding *tmp;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::Encoding,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_Encoding,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::Encoding::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::Encoding>::extract (
+        _tao_any,
+        IOP::Encoding::_tao_any_destructor,
+        IOP::_tc_Encoding,
+        _tao_elem
+      );
 }
 
-// TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:52
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::Encoding>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::Encoding>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
-// Copying version.
+// TAO_IDL - Generated from
+// be/be_visitor_interface/any_op_cs.cpp:52
+
+// Copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     IOP::CodecFactory_ptr _tao_elem
   )
 {
-  _tao_any._tao_replace (
-      IOP::_tc_CodecFactory,
-      1,
-      IOP::CodecFactory::_duplicate (_tao_elem),
-      IOP::CodecFactory::_tao_any_destructor
-    );
-  
-  _tao_any.contains_local (1);
+  IOP::CodecFactory_ptr _tao_objptr =
+    IOP::CodecFactory::_duplicate (_tao_elem);
+  _tao_any <<= &_tao_objptr;
 }
 
-// Non-copying version.
+// Non-copying insertion.
 void
 operator<<= (
     CORBA::Any &_tao_any,
     IOP::CodecFactory_ptr *_tao_elem
   )
 {
-  _tao_any._tao_replace (
+  TAO::Any_Impl_T<IOP::CodecFactory>::insert (
+      _tao_any,
+      IOP::CodecFactory::_tao_any_destructor,
       IOP::_tc_CodecFactory,
-      1,
-      *_tao_elem,
-      IOP::CodecFactory::_tao_any_destructor
+      *_tao_elem
     );
-  
-  _tao_any.contains_local (1);
 }
 
 CORBA::Boolean
@@ -1696,44 +1627,21 @@ operator>>= (
     IOP::CodecFactory_ptr &_tao_elem
   )
 {
-  ACE_TRY_NEW_ENV
-  {
-    _tao_elem = IOP::CodecFactory::_nil ();
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_CodecFactory
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-    
-    _tao_elem =
-      ACE_reinterpret_cast (
-          IOP::CodecFactory_ptr,
-          ACE_const_cast (void *, _tao_any.value ())
-        );
-      
-    return 1;
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  _tao_elem = IOP::CodecFactory::_nil ();
-  return 0;
+  return
+    TAO::Any_Impl_T<IOP::CodecFactory>::extract (
+        _tao_any,
+        IOP::CodecFactory::_tao_any_destructor,
+        IOP::_tc_CodecFactory,
+        _tao_elem
+      );
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
     defined (ACE_HAS_GNU_REPO)
   template class TAO_Object_Manager<IOP::CodecFactory,IOP::CodecFactory_var>;
+  template class TAO::Any_Impl_T<IOP::CodecFactory>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-# pragma instantiate TAO_Object_Manager<IOP::CodecFactory,IOP::CodecFactory_var>
+# pragma instantiate TAO_Object_Manager<IOP::CodecFactory, IOP::CodecFactory_var>
+# pragma instantiate TAO::Any_Impl_T<IOP::CodecFactory>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

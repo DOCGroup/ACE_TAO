@@ -92,7 +92,8 @@ CORBA::Object::Object (IOP::IOR *ior,
 
 }
 
-// Too tired to do this check in every method properly!
+// Too lazy to do this check in every method properly! This is useful
+// only  for lazily evaluated IOR's
 #define TAO_OBJECT_IOR_EVALUATE \
 if (!this->is_evaluated_) \
   { \
@@ -110,6 +111,9 @@ if (!this->is_evaluated_) \
 void
 CORBA::Object::_add_ref (void)
 {
+  if (this->is_local_)
+    return;
+
   ACE_ASSERT (this->refcount_lock_ != 0);
 
   ACE_GUARD (ACE_Lock ,
@@ -122,6 +126,9 @@ CORBA::Object::_add_ref (void)
 void
 CORBA::Object::_remove_ref (void)
 {
+  if (this->is_local_)
+    return;
+
   ACE_ASSERT (this->refcount_lock_ != 0);
 
   {
@@ -129,10 +136,10 @@ CORBA::Object::_remove_ref (void)
                mon,
                *this->refcount_lock_);
 
-    this->refcount_--;
+  this->refcount_--;
 
-    if (this->refcount_ != 0)
-      return;
+  if (this->refcount_ != 0)
+    return;
   }
 
   ACE_ASSERT (this->refcount_ == 0);

@@ -20,7 +20,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:314
+// be/be_codegen.cpp:314
 
 
 #include "IOP_IORC.h"
@@ -44,7 +44,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_ProfileId[] =
 {
@@ -58,11 +58,11 @@ static const CORBA::Long _oc_IOP_ProfileId[] =
   ACE_NTOHL (0x696c6549), 
   ACE_NTOHL (0x643a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
-  10,
+    10,
   ACE_NTOHL (0x50726f66), 
   ACE_NTOHL (0x696c6549), 
   ACE_NTOHL (0x64000000),  // name = ProfileId
-  CORBA::tk_ulong,
+    CORBA::tk_ulong,
 
 };
 
@@ -84,7 +84,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_TaggedProfile[] =
 {
@@ -99,15 +99,15 @@ static const CORBA::Long _oc_IOP_TaggedProfile[] =
   ACE_NTOHL (0x6f66696c), 
   ACE_NTOHL (0x653a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/TaggedProfile:1.0
-  14,
+    14,
   ACE_NTOHL (0x54616767), 
   ACE_NTOHL (0x65645072), 
   ACE_NTOHL (0x6f66696c), 
   ACE_NTOHL (0x65000000),  // name = TaggedProfile
   2, // member count
-  4,
+    4,
   ACE_NTOHL (0x74616700),  // name = tag
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
@@ -119,11 +119,11 @@ static const CORBA::Long _oc_IOP_TaggedProfile[] =
     ACE_NTOHL (0x696c6549), 
     ACE_NTOHL (0x643a312e), 
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
-    10,
+        10,
     ACE_NTOHL (0x50726f66), 
     ACE_NTOHL (0x696c6549), 
     ACE_NTOHL (0x64000000),  // name = ProfileId
-    CORBA::tk_ulong,
+        CORBA::tk_ulong,
 
 
   13,
@@ -131,12 +131,29 @@ static const CORBA::Long _oc_IOP_TaggedProfile[] =
   ACE_NTOHL (0x696c655f), 
   ACE_NTOHL (0x64617461), 
   ACE_NTOHL (0x0),  // name = profile_data
-  CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
+    CORBA::tk_alias, // typecode kind for typedefs
+  76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_octet,
+    31,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f63), 
+    ACE_NTOHL (0x74657453), 
+    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+        9,
+    ACE_NTOHL (0x4f637465), 
+    ACE_NTOHL (0x74536571), 
+    ACE_NTOHL (0x0),  // name = OctetSeq
+        CORBA::tk_sequence, // typecode kind
+    12, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      CORBA::tk_octet,
 
-    0U,
+      0U,
+
 
 };
 
@@ -158,7 +175,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void IOP::TaggedProfile::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -166,73 +183,8 @@ void IOP::TaggedProfile::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#if !defined (_IOP_TAGGEDPROFILE__TAO_SEQ_OCTET_CS_)
-#define _IOP_TAGGEDPROFILE__TAO_SEQ_OCTET_CS_
-
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// IOP::TaggedProfile::_tao_seq_Octet
-// *************************************************************
-
-IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (void)
-{}
-
-IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
-{}
-
-IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Octet *buffer,
-    CORBA::Boolean release
-  )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
-{}
-
-IOP::TaggedProfile::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
-{}
-
-IOP::TaggedProfile::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
-{}
-
-void IOP::TaggedProfile::_tao_seq_Octet::_tao_any_destructor (void *_tao_void_pointer)
-{
-  _tao_seq_Octet *tmp = ACE_static_cast (_tao_seq_Octet*, _tao_void_pointer);
-  delete tmp;
-}
-
-#endif /* end #if !defined */
-
-// TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_IOR[] =
 {
@@ -244,23 +196,23 @@ static const CORBA::Long _oc_IOP_IOR[] =
   ACE_NTOHL (0x494f502f), 
   ACE_NTOHL (0x494f523a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/IOR:1.0
-  4,
+    4,
   ACE_NTOHL (0x494f5200),  // name = IOR
   2, // member count
-  8,
+    8,
   ACE_NTOHL (0x74797065), 
   ACE_NTOHL (0x5f696400),  // name = type_id
-  CORBA::tk_string, 
+    CORBA::tk_string, 
   0U, // string length
   9,
   ACE_NTOHL (0x70726f66), 
   ACE_NTOHL (0x696c6573), 
   ACE_NTOHL (0x0),  // name = profiles
-  CORBA::tk_sequence, // typecode kind
-  200, // encapsulation length
+    CORBA::tk_sequence, // typecode kind
+  264, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    184, // encapsulation length
+    248, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       34,
       ACE_NTOHL (0x49444c3a), 
@@ -272,15 +224,15 @@ static const CORBA::Long _oc_IOP_IOR[] =
       ACE_NTOHL (0x6f66696c), 
       ACE_NTOHL (0x653a312e), 
       ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/TaggedProfile:1.0
-      14,
+            14,
       ACE_NTOHL (0x54616767), 
       ACE_NTOHL (0x65645072), 
       ACE_NTOHL (0x6f66696c), 
       ACE_NTOHL (0x65000000),  // name = TaggedProfile
       2, // member count
-      4,
+            4,
       ACE_NTOHL (0x74616700),  // name = tag
-      CORBA::tk_alias, // typecode kind for typedefs
+            CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
@@ -292,11 +244,11 @@ static const CORBA::Long _oc_IOP_IOR[] =
         ACE_NTOHL (0x696c6549), 
         ACE_NTOHL (0x643a312e), 
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ProfileId:1.0
-        10,
+                10,
         ACE_NTOHL (0x50726f66), 
         ACE_NTOHL (0x696c6549), 
         ACE_NTOHL (0x64000000),  // name = ProfileId
-        CORBA::tk_ulong,
+                CORBA::tk_ulong,
 
 
       13,
@@ -304,12 +256,29 @@ static const CORBA::Long _oc_IOP_IOR[] =
       ACE_NTOHL (0x696c655f), 
       ACE_NTOHL (0x64617461), 
       ACE_NTOHL (0x0),  // name = profile_data
-      CORBA::tk_sequence, // typecode kind
-      12, // encapsulation length
+            CORBA::tk_alias, // typecode kind for typedefs
+      76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        CORBA::tk_octet,
+        31,
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x412f4f63), 
+        ACE_NTOHL (0x74657453), 
+        ACE_NTOHL (0x65713a31), 
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+                9,
+        ACE_NTOHL (0x4f637465), 
+        ACE_NTOHL (0x74536571), 
+        ACE_NTOHL (0x0),  // name = OctetSeq
+                CORBA::tk_sequence, // typecode kind
+        12, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          CORBA::tk_octet,
 
-        0U,
+          0U,
+
 
 
     0U,
@@ -334,7 +303,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void IOP::IOR::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -343,7 +312,7 @@ void IOP::IOR::_tao_any_destructor (void *_tao_void_pointer)
 }
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:100
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -402,7 +371,7 @@ IOP::IOR::_TAO_Unbounded_Sequence_IOP_IOR__tao_seq_TaggedProfile::~_TAO_Unbounde
 #define _IOP_IOR__TAO_SEQ_TAGGEDPROFILE_CS_
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:249
 
 // *************************************************************
 // IOP::IOR::_tao_seq_TaggedProfile
@@ -464,7 +433,7 @@ void IOP::IOR::_tao_seq_TaggedProfile::_tao_any_destructor (void *_tao_void_poin
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_ComponentId[] =
 {
@@ -478,11 +447,11 @@ static const CORBA::Long _oc_IOP_ComponentId[] =
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x7449643a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/ComponentId:1.0
-  12,
+    12,
   ACE_NTOHL (0x436f6d70), 
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x74496400),  // name = ComponentId
-  CORBA::tk_ulong,
+    CORBA::tk_ulong,
 
 };
 
@@ -504,7 +473,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_TaggedComponent[] =
 {
@@ -519,15 +488,15 @@ static const CORBA::Long _oc_IOP_TaggedComponent[] =
   ACE_NTOHL (0x6d706f6e), 
   ACE_NTOHL (0x656e743a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/TaggedComponent:1.0
-  16,
+    16,
   ACE_NTOHL (0x54616767), 
   ACE_NTOHL (0x6564436f), 
   ACE_NTOHL (0x6d706f6e), 
   ACE_NTOHL (0x656e7400),  // name = TaggedComponent
   2, // member count
-  4,
+    4,
   ACE_NTOHL (0x74616700),  // name = tag
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     32,
@@ -539,11 +508,11 @@ static const CORBA::Long _oc_IOP_TaggedComponent[] =
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x7449643a), 
     ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/ComponentId:1.0
-    12,
+        12,
     ACE_NTOHL (0x436f6d70), 
     ACE_NTOHL (0x6f6e656e), 
     ACE_NTOHL (0x74496400),  // name = ComponentId
-    CORBA::tk_ulong,
+        CORBA::tk_ulong,
 
 
   15,
@@ -551,12 +520,29 @@ static const CORBA::Long _oc_IOP_TaggedComponent[] =
   ACE_NTOHL (0x6f6e656e), 
   ACE_NTOHL (0x745f6461), 
   ACE_NTOHL (0x74610000),  // name = component_data
-  CORBA::tk_sequence, // typecode kind
-  12, // encapsulation length
+    CORBA::tk_alias, // typecode kind for typedefs
+  76, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_octet,
+    31,
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x434f5242), 
+    ACE_NTOHL (0x412f4f63), 
+    ACE_NTOHL (0x74657453), 
+    ACE_NTOHL (0x65713a31), 
+    ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+        9,
+    ACE_NTOHL (0x4f637465), 
+    ACE_NTOHL (0x74536571), 
+    ACE_NTOHL (0x0),  // name = OctetSeq
+        CORBA::tk_sequence, // typecode kind
+    12, // encapsulation length
+      TAO_ENCAP_BYTE_ORDER, // byte order
+      CORBA::tk_octet,
 
-    0U,
+      0U,
+
 
 };
 
@@ -578,7 +564,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void IOP::TaggedComponent::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -586,73 +572,8 @@ void IOP::TaggedComponent::_tao_any_destructor (void *_tao_void_pointer)
   delete tmp;
 }
 
-#if !defined (_IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET_CS_)
-#define _IOP_TAGGEDCOMPONENT__TAO_SEQ_OCTET_CS_
-
-// TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
-
-// *************************************************************
-// IOP::TaggedComponent::_tao_seq_Octet
-// *************************************************************
-
-IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (void)
-{}
-
-IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (CORBA::ULong max)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max)
-{}
-
-IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (
-    CORBA::ULong max,
-    CORBA::ULong length,
-    CORBA::Octet *buffer,
-    CORBA::Boolean release
-  )
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (max, length, buffer, release)
-{}
-
-IOP::TaggedComponent::_tao_seq_Octet::_tao_seq_Octet (const _tao_seq_Octet &seq)
-  : 
-
-#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-TAO_Unbounded_Sequence<CORBA::Octet>
-#else /* TAO_USE_SEQUENCE_TEMPLATES */
-TAO_Unbounded_Sequence<CORBA::Octet>
-
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
- (seq)
-{}
-
-IOP::TaggedComponent::_tao_seq_Octet::~_tao_seq_Octet (void) // dtor
-{}
-
-void IOP::TaggedComponent::_tao_seq_Octet::_tao_any_destructor (void *_tao_void_pointer)
-{
-  _tao_seq_Octet *tmp = ACE_static_cast (_tao_seq_Octet*, _tao_void_pointer);
-  delete tmp;
-}
-
-#endif /* end #if !defined */
-
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:100
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -711,7 +632,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_MultipleComponentProfile::~_TAO_Unbounded_Seque
 #define _IOP_MULTIPLECOMPONENTPROFILE_CS_
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:249
 
 // *************************************************************
 // IOP::MultipleComponentProfile
@@ -773,7 +694,7 @@ void IOP::MultipleComponentProfile::_tao_any_destructor (void *_tao_void_pointer
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_MultipleComponentProfile[] =
 {
@@ -791,7 +712,7 @@ static const CORBA::Long _oc_IOP_MultipleComponentProfile[] =
   ACE_NTOHL (0x66696c65), 
   ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IOP/MultipleComponentProfile:1.0
-  25,
+    25,
   ACE_NTOHL (0x4d756c74), 
   ACE_NTOHL (0x69706c65), 
   ACE_NTOHL (0x436f6d70), 
@@ -799,11 +720,11 @@ static const CORBA::Long _oc_IOP_MultipleComponentProfile[] =
   ACE_NTOHL (0x7450726f), 
   ACE_NTOHL (0x66696c65), 
   ACE_NTOHL (0x0),  // name = MultipleComponentProfile
-  CORBA::tk_sequence, // typecode kind
-  200, // encapsulation length
+    CORBA::tk_sequence, // typecode kind
+  264, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    184, // encapsulation length
+    248, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       36,
       ACE_NTOHL (0x49444c3a), 
@@ -815,15 +736,15 @@ static const CORBA::Long _oc_IOP_MultipleComponentProfile[] =
       ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e743a), 
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/TaggedComponent:1.0
-      16,
+            16,
       ACE_NTOHL (0x54616767), 
       ACE_NTOHL (0x6564436f), 
       ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e7400),  // name = TaggedComponent
       2, // member count
-      4,
+            4,
       ACE_NTOHL (0x74616700),  // name = tag
-      CORBA::tk_alias, // typecode kind for typedefs
+            CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
@@ -835,11 +756,11 @@ static const CORBA::Long _oc_IOP_MultipleComponentProfile[] =
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x7449643a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/ComponentId:1.0
-        12,
+                12,
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74496400),  // name = ComponentId
-        CORBA::tk_ulong,
+                CORBA::tk_ulong,
 
 
       15,
@@ -847,12 +768,29 @@ static const CORBA::Long _oc_IOP_MultipleComponentProfile[] =
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x745f6461), 
       ACE_NTOHL (0x74610000),  // name = component_data
-      CORBA::tk_sequence, // typecode kind
-      12, // encapsulation length
+            CORBA::tk_alias, // typecode kind for typedefs
+      76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        CORBA::tk_octet,
+        31,
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x412f4f63), 
+        ACE_NTOHL (0x74657453), 
+        ACE_NTOHL (0x65713a31), 
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+                9,
+        ACE_NTOHL (0x4f637465), 
+        ACE_NTOHL (0x74536571), 
+        ACE_NTOHL (0x0),  // name = OctetSeq
+                CORBA::tk_sequence, // typecode kind
+        12, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          CORBA::tk_octet,
 
-        0U,
+          0U,
+
 
 
     0U,
@@ -877,7 +815,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:100
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -936,7 +874,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentList::~_TAO_Unbounded_Sequence_I
 #define _IOP_TAGGEDCOMPONENTLIST_CS_
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:249
 
 // *************************************************************
 // IOP::TaggedComponentList
@@ -998,7 +936,7 @@ void IOP::TaggedComponentList::_tao_any_destructor (void *_tao_void_pointer)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_TaggedComponentList[] =
 {
@@ -1014,17 +952,17 @@ static const CORBA::Long _oc_IOP_TaggedComponentList[] =
   ACE_NTOHL (0x656e744c), 
   ACE_NTOHL (0x6973743a), 
   ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/TaggedComponentList:1.0
-  20,
+    20,
   ACE_NTOHL (0x54616767), 
   ACE_NTOHL (0x6564436f), 
   ACE_NTOHL (0x6d706f6e), 
   ACE_NTOHL (0x656e744c), 
   ACE_NTOHL (0x69737400),  // name = TaggedComponentList
-  CORBA::tk_sequence, // typecode kind
-  200, // encapsulation length
+    CORBA::tk_sequence, // typecode kind
+  264, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    184, // encapsulation length
+    248, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       36,
       ACE_NTOHL (0x49444c3a), 
@@ -1036,15 +974,15 @@ static const CORBA::Long _oc_IOP_TaggedComponentList[] =
       ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e743a), 
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/TaggedComponent:1.0
-      16,
+            16,
       ACE_NTOHL (0x54616767), 
       ACE_NTOHL (0x6564436f), 
       ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e7400),  // name = TaggedComponent
       2, // member count
-      4,
+            4,
       ACE_NTOHL (0x74616700),  // name = tag
-      CORBA::tk_alias, // typecode kind for typedefs
+            CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
@@ -1056,11 +994,11 @@ static const CORBA::Long _oc_IOP_TaggedComponentList[] =
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x7449643a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/ComponentId:1.0
-        12,
+                12,
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74496400),  // name = ComponentId
-        CORBA::tk_ulong,
+                CORBA::tk_ulong,
 
 
       15,
@@ -1068,12 +1006,29 @@ static const CORBA::Long _oc_IOP_TaggedComponentList[] =
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x745f6461), 
       ACE_NTOHL (0x74610000),  // name = component_data
-      CORBA::tk_sequence, // typecode kind
-      12, // encapsulation length
+            CORBA::tk_alias, // typecode kind for typedefs
+      76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        CORBA::tk_octet,
+        31,
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x412f4f63), 
+        ACE_NTOHL (0x74657453), 
+        ACE_NTOHL (0x65713a31), 
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+                9,
+        ACE_NTOHL (0x4f637465), 
+        ACE_NTOHL (0x74536571), 
+        ACE_NTOHL (0x0),  // name = OctetSeq
+                CORBA::tk_sequence, // typecode kind
+        12, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          CORBA::tk_octet,
 
-        0U,
+          0U,
+
 
 
     0U,
@@ -1098,7 +1053,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:100
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -1157,7 +1112,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_TaggedComponentSeq::~_TAO_Unbounded_Sequence_IO
 #define _IOP_TAGGEDCOMPONENTSEQ_CS_
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:249
 
 // *************************************************************
 // IOP::TaggedComponentSeq
@@ -1219,7 +1174,7 @@ void IOP::TaggedComponentSeq::_tao_any_destructor (void *_tao_void_pointer)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_TaggedComponentSeq[] =
 {
@@ -1235,17 +1190,17 @@ static const CORBA::Long _oc_IOP_TaggedComponentSeq[] =
   ACE_NTOHL (0x656e7453), 
   ACE_NTOHL (0x65713a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/TaggedComponentSeq:1.0
-  19,
+    19,
   ACE_NTOHL (0x54616767), 
   ACE_NTOHL (0x6564436f), 
   ACE_NTOHL (0x6d706f6e), 
   ACE_NTOHL (0x656e7453), 
   ACE_NTOHL (0x65710000),  // name = TaggedComponentSeq
-  CORBA::tk_sequence, // typecode kind
-  200, // encapsulation length
+    CORBA::tk_sequence, // typecode kind
+  264, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
-    184, // encapsulation length
+    248, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       36,
       ACE_NTOHL (0x49444c3a), 
@@ -1257,15 +1212,15 @@ static const CORBA::Long _oc_IOP_TaggedComponentSeq[] =
       ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e743a), 
       ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/TaggedComponent:1.0
-      16,
+            16,
       ACE_NTOHL (0x54616767), 
       ACE_NTOHL (0x6564436f), 
       ACE_NTOHL (0x6d706f6e), 
       ACE_NTOHL (0x656e7400),  // name = TaggedComponent
       2, // member count
-      4,
+            4,
       ACE_NTOHL (0x74616700),  // name = tag
-      CORBA::tk_alias, // typecode kind for typedefs
+            CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         32,
@@ -1277,11 +1232,11 @@ static const CORBA::Long _oc_IOP_TaggedComponentSeq[] =
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x7449643a), 
         ACE_NTOHL (0x312e3000),  // repository ID = IDL:omg.org/IOP/ComponentId:1.0
-        12,
+                12,
         ACE_NTOHL (0x436f6d70), 
         ACE_NTOHL (0x6f6e656e), 
         ACE_NTOHL (0x74496400),  // name = ComponentId
-        CORBA::tk_ulong,
+                CORBA::tk_ulong,
 
 
       15,
@@ -1289,12 +1244,29 @@ static const CORBA::Long _oc_IOP_TaggedComponentSeq[] =
       ACE_NTOHL (0x6f6e656e), 
       ACE_NTOHL (0x745f6461), 
       ACE_NTOHL (0x74610000),  // name = component_data
-      CORBA::tk_sequence, // typecode kind
-      12, // encapsulation length
+            CORBA::tk_alias, // typecode kind for typedefs
+      76, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
-        CORBA::tk_octet,
+        31,
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x434f5242), 
+        ACE_NTOHL (0x412f4f63), 
+        ACE_NTOHL (0x74657453), 
+        ACE_NTOHL (0x65713a31), 
+        ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/CORBA/OctetSeq:1.0
+                9,
+        ACE_NTOHL (0x4f637465), 
+        ACE_NTOHL (0x74536571), 
+        ACE_NTOHL (0x0),  // name = OctetSeq
+                CORBA::tk_sequence, // typecode kind
+        12, // encapsulation length
+          TAO_ENCAP_BYTE_ORDER, // byte order
+          CORBA::tk_octet,
 
-        0U,
+          0U,
+
 
 
     0U,
@@ -1319,7 +1291,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_ServiceId[] =
 {
@@ -1333,11 +1305,11 @@ static const CORBA::Long _oc_IOP_ServiceId[] =
   ACE_NTOHL (0x69636549), 
   ACE_NTOHL (0x643a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ServiceId:1.0
-  10,
+    10,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x69636549), 
   ACE_NTOHL (0x64000000),  // name = ServiceId
-  CORBA::tk_ulong,
+    CORBA::tk_ulong,
 
 };
 
@@ -1359,7 +1331,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_ServiceContext[] =
 {
@@ -1374,17 +1346,17 @@ static const CORBA::Long _oc_IOP_ServiceContext[] =
   ACE_NTOHL (0x6f6e7465), 
   ACE_NTOHL (0x78743a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/ServiceContext:1.0
-  15,
+    15,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x69636543), 
   ACE_NTOHL (0x6f6e7465), 
   ACE_NTOHL (0x78740000),  // name = ServiceContext
   2, // member count
-  11,
+    11,
   ACE_NTOHL (0x636f6e74), 
   ACE_NTOHL (0x6578745f), 
   ACE_NTOHL (0x69640000),  // name = context_id
-  CORBA::tk_alias, // typecode kind for typedefs
+    CORBA::tk_alias, // typecode kind for typedefs
   60, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     30,
@@ -1396,11 +1368,11 @@ static const CORBA::Long _oc_IOP_ServiceContext[] =
     ACE_NTOHL (0x69636549), 
     ACE_NTOHL (0x643a312e), 
     ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ServiceId:1.0
-    10,
+        10,
     ACE_NTOHL (0x53657276), 
     ACE_NTOHL (0x69636549), 
     ACE_NTOHL (0x64000000),  // name = ServiceId
-    CORBA::tk_ulong,
+        CORBA::tk_ulong,
 
 
   13,
@@ -1408,7 +1380,7 @@ static const CORBA::Long _oc_IOP_ServiceContext[] =
   ACE_NTOHL (0x6578745f), 
   ACE_NTOHL (0x64617461), 
   ACE_NTOHL (0x0),  // name = context_data
-  CORBA::tk_sequence, // typecode kind
+    CORBA::tk_sequence, // typecode kind
   12, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_octet,
@@ -1435,7 +1407,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:67
+// be/be_visitor_structure/structure_cs.cpp:66
 
 void IOP::ServiceContext::_tao_any_destructor (void *_tao_void_pointer)
 {
@@ -1447,7 +1419,7 @@ void IOP::ServiceContext::_tao_any_destructor (void *_tao_void_pointer)
 #define _IOP_SERVICECONTEXT__TAO_SEQ_OCTET_CS_
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:249
 
 // *************************************************************
 // IOP::ServiceContext::_tao_seq_Octet
@@ -1509,7 +1481,7 @@ void IOP::ServiceContext::_tao_seq_Octet::_tao_any_destructor (void *_tao_void_p
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/gen_unbounded_sequence_cs.cpp:101
+// be/be_visitor_sequence/gen_unbounded_sequence_cs.cpp:100
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
 
@@ -1568,7 +1540,7 @@ IOP::_TAO_Unbounded_Sequence_IOP_ServiceContextList::~_TAO_Unbounded_Sequence_IO
 #define _IOP_SERVICECONTEXTLIST_CS_
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:250
+// be/be_visitor_sequence/sequence_cs.cpp:249
 
 // *************************************************************
 // IOP::ServiceContextList
@@ -1630,7 +1602,7 @@ void IOP::ServiceContextList::_tao_any_destructor (void *_tao_void_pointer)
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IOP_ServiceContextList[] =
 {
@@ -1646,13 +1618,13 @@ static const CORBA::Long _oc_IOP_ServiceContextList[] =
   ACE_NTOHL (0x78744c69), 
   ACE_NTOHL (0x73743a31), 
   ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/ServiceContextList:1.0
-  19,
+    19,
   ACE_NTOHL (0x53657276), 
   ACE_NTOHL (0x69636543), 
   ACE_NTOHL (0x6f6e7465), 
   ACE_NTOHL (0x78744c69), 
   ACE_NTOHL (0x73740000),  // name = ServiceContextList
-  CORBA::tk_sequence, // typecode kind
+    CORBA::tk_sequence, // typecode kind
   208, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     CORBA::tk_struct, // typecode kind
@@ -1668,17 +1640,17 @@ static const CORBA::Long _oc_IOP_ServiceContextList[] =
       ACE_NTOHL (0x6f6e7465), 
       ACE_NTOHL (0x78743a31), 
       ACE_NTOHL (0x2e300000),  // repository ID = IDL:omg.org/IOP/ServiceContext:1.0
-      15,
+            15,
       ACE_NTOHL (0x53657276), 
       ACE_NTOHL (0x69636543), 
       ACE_NTOHL (0x6f6e7465), 
       ACE_NTOHL (0x78740000),  // name = ServiceContext
       2, // member count
-      11,
+            11,
       ACE_NTOHL (0x636f6e74), 
       ACE_NTOHL (0x6578745f), 
       ACE_NTOHL (0x69640000),  // name = context_id
-      CORBA::tk_alias, // typecode kind for typedefs
+            CORBA::tk_alias, // typecode kind for typedefs
       60, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         30,
@@ -1690,11 +1662,11 @@ static const CORBA::Long _oc_IOP_ServiceContextList[] =
         ACE_NTOHL (0x69636549), 
         ACE_NTOHL (0x643a312e), 
         ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/IOP/ServiceId:1.0
-        10,
+                10,
         ACE_NTOHL (0x53657276), 
         ACE_NTOHL (0x69636549), 
         ACE_NTOHL (0x64000000),  // name = ServiceId
-        CORBA::tk_ulong,
+                CORBA::tk_ulong,
 
 
       13,
@@ -1702,7 +1674,7 @@ static const CORBA::Long _oc_IOP_ServiceContextList[] =
       ACE_NTOHL (0x6578745f), 
       ACE_NTOHL (0x64617461), 
       ACE_NTOHL (0x0),  // name = context_data
-      CORBA::tk_sequence, // typecode kind
+            CORBA::tk_sequence, // typecode kind
       12, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         CORBA::tk_octet,
@@ -1732,7 +1704,7 @@ TAO_NAMESPACE_DEFINE (
 TAO_NAMESPACE_END
 
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1740,16 +1712,12 @@ void operator<<= (
     const IOP::TaggedProfile &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedProfile,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedProfile>::insert_copy (
+      _tao_any,
+      IOP::TaggedProfile::_tao_any_destructor,
+      IOP::_tc_TaggedProfile,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -1758,19 +1726,12 @@ void operator<<= (
     IOP::TaggedProfile *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedProfile,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::TaggedProfile::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedProfile>::insert (
+      _tao_any,
+      IOP::TaggedProfile::_tao_any_destructor,
+      IOP::_tc_TaggedProfile,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -1791,75 +1752,24 @@ CORBA::Boolean operator>>= (
     const IOP::TaggedProfile *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_TaggedProfile
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (_tao_result == 0)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast (
-            const IOP::TaggedProfile*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::TaggedProfile *tmp;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::TaggedProfile,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_TaggedProfile,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::TaggedProfile::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::TaggedProfile>::extract (
+        _tao_any,
+        IOP::TaggedProfile::_tao_any_destructor,
+        IOP::_tc_TaggedProfile,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::TaggedProfile>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::TaggedProfile>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1867,16 +1777,12 @@ void operator<<= (
     const IOP::IOR &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_IOR,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::IOR>::insert_copy (
+      _tao_any,
+      IOP::IOR::_tao_any_destructor,
+      IOP::_tc_IOR,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -1885,19 +1791,12 @@ void operator<<= (
     IOP::IOR *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_IOR,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::IOR::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::IOR>::insert (
+      _tao_any,
+      IOP::IOR::_tao_any_destructor,
+      IOP::_tc_IOR,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -1918,75 +1817,24 @@ CORBA::Boolean operator>>= (
     const IOP::IOR *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_IOR
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (_tao_result == 0)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast (
-            const IOP::IOR*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::IOR *tmp;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::IOR,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_IOR,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::IOR::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::IOR>::extract (
+        _tao_any,
+        IOP::IOR::_tao_any_destructor,
+        IOP::_tc_IOR,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::IOR>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::IOR>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -1994,16 +1842,12 @@ void operator<<= (
     const IOP::TaggedComponent &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedComponent,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedComponent>::insert_copy (
+      _tao_any,
+      IOP::TaggedComponent::_tao_any_destructor,
+      IOP::_tc_TaggedComponent,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -2012,19 +1856,12 @@ void operator<<= (
     IOP::TaggedComponent *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedComponent,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::TaggedComponent::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedComponent>::insert (
+      _tao_any,
+      IOP::TaggedComponent::_tao_any_destructor,
+      IOP::_tc_TaggedComponent,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -2045,75 +1882,24 @@ CORBA::Boolean operator>>= (
     const IOP::TaggedComponent *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_TaggedComponent
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (_tao_result == 0)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast (
-            const IOP::TaggedComponent*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::TaggedComponent *tmp;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::TaggedComponent,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_TaggedComponent,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::TaggedComponent::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::TaggedComponent>::extract (
+        _tao_any,
+        IOP::TaggedComponent::_tao_any_destructor,
+        IOP::_tc_TaggedComponent,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::TaggedComponent>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::TaggedComponent>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2121,16 +1907,12 @@ void operator<<= (
     const IOP::MultipleComponentProfile &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_MultipleComponentProfile,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>::insert_copy (
+      _tao_any,
+      IOP::MultipleComponentProfile::_tao_any_destructor,
+      IOP::_tc_MultipleComponentProfile,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -2139,19 +1921,12 @@ void operator<<= (
     IOP::MultipleComponentProfile *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_MultipleComponentProfile,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::MultipleComponentProfile::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>::insert (
+      _tao_any,
+      IOP::MultipleComponentProfile::_tao_any_destructor,
+      IOP::_tc_MultipleComponentProfile,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -2160,8 +1935,8 @@ CORBA::Boolean operator>>= (
     IOP::MultipleComponentProfile *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast(
-      const IOP::MultipleComponentProfile*&,
+  return _tao_any >>= ACE_const_cast (
+      const IOP::MultipleComponentProfile *&,
       _tao_elem
     );
 }
@@ -2172,75 +1947,24 @@ CORBA::Boolean operator>>= (
     const IOP::MultipleComponentProfile *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_MultipleComponentProfile
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast(
-            const IOP::MultipleComponentProfile*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::MultipleComponentProfile *tmp = 0;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::MultipleComponentProfile,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_MultipleComponentProfile,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::MultipleComponentProfile::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>::extract (
+        _tao_any,
+        IOP::MultipleComponentProfile::_tao_any_destructor,
+        IOP::_tc_MultipleComponentProfile,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::MultipleComponentProfile>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2248,16 +1972,12 @@ void operator<<= (
     const IOP::TaggedComponentList &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedComponentList,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>::insert_copy (
+      _tao_any,
+      IOP::TaggedComponentList::_tao_any_destructor,
+      IOP::_tc_TaggedComponentList,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -2266,19 +1986,12 @@ void operator<<= (
     IOP::TaggedComponentList *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedComponentList,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::TaggedComponentList::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>::insert (
+      _tao_any,
+      IOP::TaggedComponentList::_tao_any_destructor,
+      IOP::_tc_TaggedComponentList,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -2287,8 +2000,8 @@ CORBA::Boolean operator>>= (
     IOP::TaggedComponentList *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast(
-      const IOP::TaggedComponentList*&,
+  return _tao_any >>= ACE_const_cast (
+      const IOP::TaggedComponentList *&,
       _tao_elem
     );
 }
@@ -2299,75 +2012,24 @@ CORBA::Boolean operator>>= (
     const IOP::TaggedComponentList *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_TaggedComponentList
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast(
-            const IOP::TaggedComponentList*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::TaggedComponentList *tmp = 0;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::TaggedComponentList,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_TaggedComponentList,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::TaggedComponentList::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>::extract (
+        _tao_any,
+        IOP::TaggedComponentList::_tao_any_destructor,
+        IOP::_tc_TaggedComponentList,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::TaggedComponentList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2375,16 +2037,12 @@ void operator<<= (
     const IOP::TaggedComponentSeq &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedComponentSeq,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>::insert_copy (
+      _tao_any,
+      IOP::TaggedComponentSeq::_tao_any_destructor,
+      IOP::_tc_TaggedComponentSeq,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -2393,19 +2051,12 @@ void operator<<= (
     IOP::TaggedComponentSeq *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_TaggedComponentSeq,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::TaggedComponentSeq::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>::insert (
+      _tao_any,
+      IOP::TaggedComponentSeq::_tao_any_destructor,
+      IOP::_tc_TaggedComponentSeq,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -2414,8 +2065,8 @@ CORBA::Boolean operator>>= (
     IOP::TaggedComponentSeq *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast(
-      const IOP::TaggedComponentSeq*&,
+  return _tao_any >>= ACE_const_cast (
+      const IOP::TaggedComponentSeq *&,
       _tao_elem
     );
 }
@@ -2426,75 +2077,24 @@ CORBA::Boolean operator>>= (
     const IOP::TaggedComponentSeq *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_TaggedComponentSeq
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast(
-            const IOP::TaggedComponentSeq*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::TaggedComponentSeq *tmp = 0;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::TaggedComponentSeq,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_TaggedComponentSeq,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::TaggedComponentSeq::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>::extract (
+        _tao_any,
+        IOP::TaggedComponentSeq::_tao_any_destructor,
+        IOP::_tc_TaggedComponentSeq,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::TaggedComponentSeq>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/any_op_cs.cpp:54
+// be/be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2502,16 +2102,12 @@ void operator<<= (
     const IOP::ServiceContext &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_ServiceContext,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::ServiceContext>::insert_copy (
+      _tao_any,
+      IOP::ServiceContext::_tao_any_destructor,
+      IOP::_tc_ServiceContext,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -2520,19 +2116,12 @@ void operator<<= (
     IOP::ServiceContext *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_ServiceContext,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::ServiceContext::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::ServiceContext>::insert (
+      _tao_any,
+      IOP::ServiceContext::_tao_any_destructor,
+      IOP::_tc_ServiceContext,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -2553,75 +2142,24 @@ CORBA::Boolean operator>>= (
     const IOP::ServiceContext *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_ServiceContext
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (_tao_result == 0)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast (
-            const IOP::ServiceContext*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::ServiceContext *tmp;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::ServiceContext,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_ServiceContext,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::ServiceContext::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::ServiceContext>::extract (
+        _tao_any,
+        IOP::ServiceContext::_tao_any_destructor,
+        IOP::_tc_ServiceContext,
+        _tao_elem
+      );
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::ServiceContext>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::ServiceContext>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
 // TAO_IDL - Generated from 
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
+// be/be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -2629,16 +2167,12 @@ void operator<<= (
     const IOP::ServiceContextList &_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << _tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_ServiceContextList,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin ()
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::ServiceContextList>::insert_copy (
+      _tao_any,
+      IOP::ServiceContextList::_tao_any_destructor,
+      IOP::_tc_ServiceContextList,
+      _tao_elem
+    );
 }
 
 // Non-copying insertion.
@@ -2647,19 +2181,12 @@ void operator<<= (
     IOP::ServiceContextList *_tao_elem
   )
 {
-  TAO_OutputCDR stream;
-  
-  if (stream << *_tao_elem)
-    {
-      _tao_any._tao_replace (
-          IOP::_tc_ServiceContextList,
-          TAO_ENCAP_BYTE_ORDER,
-          stream.begin (),
-          1,
-          _tao_elem,
-          IOP::ServiceContextList::_tao_any_destructor
-        );
-    }
+  TAO::Any_Dual_Impl_T<IOP::ServiceContextList>::insert (
+      _tao_any,
+      IOP::ServiceContextList::_tao_any_destructor,
+      IOP::_tc_ServiceContextList,
+      _tao_elem
+    );
 }
 
 // Extraction to non-const pointer (deprecated).
@@ -2668,8 +2195,8 @@ CORBA::Boolean operator>>= (
     IOP::ServiceContextList *&_tao_elem
   )
 {
-  return _tao_any >>= ACE_const_cast(
-      const IOP::ServiceContextList*&,
+  return _tao_any >>= ACE_const_cast (
+      const IOP::ServiceContextList *&,
       _tao_elem
     );
 }
@@ -2680,168 +2207,24 @@ CORBA::Boolean operator>>= (
     const IOP::ServiceContextList *&_tao_elem
   )
 {
-  _tao_elem = 0;
-  
-  ACE_TRY_NEW_ENV
-  {
-    CORBA::TypeCode_var type = _tao_any.type ();
-    
-    CORBA::Boolean _tao_result =
-      type->equivalent (
-          IOP::_tc_ServiceContextList
-          ACE_ENV_ARG_PARAMETER
-        );
-    ACE_TRY_CHECK;
-    
-    if (!_tao_result)
-      {
-        return 0; // not equivalent
-      }
-    
-    if (_tao_any.any_owns_data ())
-      {
-        _tao_elem = ACE_static_cast(
-            const IOP::ServiceContextList*,
-            _tao_any.value ()
-          );
-        
-        return 1;
-      }
-    else
-      {
-        IOP::ServiceContextList *tmp = 0;
-        ACE_NEW_RETURN (
-            tmp,
-            IOP::ServiceContextList,
-            0
-          );
-        
-        TAO_InputCDR stream (
-            _tao_any._tao_get_cdr (),
-            _tao_any._tao_byte_order ()
-          );
-        
-        if (stream >> *tmp)
-          {
-            ((CORBA::Any *)&_tao_any)->_tao_replace (
-                IOP::_tc_ServiceContextList,
-                1,
-                ACE_static_cast (void *, tmp),
-                IOP::ServiceContextList::_tao_any_destructor
-              );
-            
-            _tao_elem = tmp;
-            return 1;
-          }
-        else
-          {
-            delete tmp;
-          }
-      }
-  }
-  ACE_CATCHANY
-  {
-  }
-  ACE_ENDTRY;
-  
-  return 0;
+  return
+    TAO::Any_Dual_Impl_T<IOP::ServiceContextList>::extract (
+        _tao_any,
+        IOP::ServiceContextList::_tao_any_destructor,
+        IOP::_tc_ServiceContextList,
+        _tao_elem
+      );
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)  || \
+    defined (ACE_HAS_GNU_REPO)
+  template class TAO::Any_Dual_Impl_T<IOP::ServiceContextList>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+# pragma instantiate TAO::Any_Dual_Impl_T<IOP::ServiceContextList>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
-
-#if !defined _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_CPP_
-#define _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_CPP_
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const IOP::TaggedProfile::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      {
-        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::TaggedProfile::_tao_seq_Octet *)&_tao_sequence);
-        if (oseq->mb ())
-          return strm.write_octet_array_mb (oseq->mb ());
-        else
-          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-      }
-      
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-  
-  return 0;
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    IOP::TaggedProfile::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return 0;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return 1;
-        }
-      
-      // Retrieve all the elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      if (ACE_BIT_DISABLED (strm.start ()->flags (),
-      ACE_Message_Block::DONT_DELETE))
-      {
-        TAO_ORB_Core* orb_core = strm.orb_core ();
-        if (orb_core != 0 &&
-        strm.orb_core ()->resource_factory ()->
-        input_cdr_allocator_type_locked () == 1)
-        {
-          TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-            ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-          oseq->replace (_tao_seq_len, strm.start ());
-          oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-          strm.skip_bytes (_tao_seq_len);
-          return 1;
-        }
-      }
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-  
-  return 0;
-}
-
-#endif /* _TAO_CDR_OP_IOP_TaggedProfile__tao_seq_Octet_CPP_ */
-
-// TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:102
 
 #if !defined _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_CPP_
 #define _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_CPP_
@@ -2912,100 +2295,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IOP_IOR__tao_seq_TaggedProfile_CPP_ */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
-
-#if !defined _TAO_CDR_OP_IOP_TaggedComponent__tao_seq_Octet_CPP_
-#define _TAO_CDR_OP_IOP_TaggedComponent__tao_seq_Octet_CPP_
-
-CORBA::Boolean operator<< (
-    TAO_OutputCDR &strm,
-    const IOP::TaggedComponent::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
-  if (strm << _tao_seq_len)
-    {
-      // Encode all elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      {
-        TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-          ACE_static_cast (TAO_Unbounded_Sequence<CORBA::Octet>*, (IOP::TaggedComponent::_tao_seq_Octet *)&_tao_sequence);
-        if (oseq->mb ())
-          return strm.write_octet_array_mb (oseq->mb ());
-        else
-          return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-      }
-      
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.write_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-  
-  return 0;
-}
-
-CORBA::Boolean operator>> (
-    TAO_InputCDR &strm,
-    IOP::TaggedComponent::_tao_seq_Octet &_tao_sequence
-  )
-{
-  CORBA::ULong _tao_seq_len;
-  
-  if (strm >> _tao_seq_len)
-    {
-      // Add a check to the length of the sequence
-      // to make sure it does not exceed the length
-      // of the stream. (See bug 58.)
-      if (_tao_seq_len > strm.length ())
-        {
-          return 0;
-        }
-      
-      // Set the length of the sequence.
-      _tao_sequence.length (_tao_seq_len);
-      
-      // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
-        {
-          return 1;
-        }
-      
-      // Retrieve all the elements.
-      
-#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-      if (ACE_BIT_DISABLED (strm.start ()->flags (),
-      ACE_Message_Block::DONT_DELETE))
-      {
-        TAO_ORB_Core* orb_core = strm.orb_core ();
-        if (orb_core != 0 &&
-        strm.orb_core ()->resource_factory ()->
-        input_cdr_allocator_type_locked () == 1)
-        {
-          TAO_Unbounded_Sequence<CORBA::Octet> *oseq = 
-            ACE_static_cast(TAO_Unbounded_Sequence<CORBA::Octet>*, &_tao_sequence);
-          oseq->replace (_tao_seq_len, strm.start ());
-          oseq->mb ()->wr_ptr (oseq->mb()->rd_ptr () + _tao_seq_len);
-          strm.skip_bytes (_tao_seq_len);
-          return 1;
-        }
-      }
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_seq_len);
-#else /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-      return strm.read_octet_array (_tao_sequence.get_buffer (), _tao_sequence.length ());
-    
-#endif /* TAO_NO_COPY_OCTET_SEQUENCES == 0 */
-    }
-  
-  return 0;
-}
-
-#endif /* _TAO_CDR_OP_IOP_TaggedComponent__tao_seq_Octet_CPP_ */
-
-// TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:102
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -3071,7 +2361,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:102
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -3137,7 +2427,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:102
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -3203,7 +2493,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:102
 
 #if !defined _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_CPP_
 #define _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_CPP_
@@ -3296,7 +2586,7 @@ CORBA::Boolean operator>> (
 #endif /* _TAO_CDR_OP_IOP_ServiceContext__tao_seq_Octet_CPP_ */
 
 // TAO_IDL - Generated from
-// C:\work\ACE+TAO\Branch\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:103
+// be/be_visitor_sequence/cdr_op_cs.cpp:102
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
