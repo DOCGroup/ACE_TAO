@@ -1,40 +1,45 @@
+Fri Jul 28 11:29:08 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * README: added brief discussion of how PACE helps
+          insulate applications from the OS.
+
 Fri Jul 28 06:28:26 2000  John Heitmann  <jwh1@cs.wustl.edu>
 
-	* pace/posix/dirent.inl
-	* pace/posix/grp.inl
-	* pace/posix/pwd.inl
-	* pace/posix/signal.inl
-	  Got rid of PACE_HAS_PTHREAD_SEMANTICS not supported code
-	  in favor of platform specific modifications.
+        * pace/posix/dirent.inl
+        * pace/posix/grp.inl
+        * pace/posix/pwd.inl
+        * pace/posix/signal.inl
+          Got rid of PACE_HAS_PTHREAD_SEMANTICS not supported code
+          in favor of platform specific modifications.
 
 Thu Jul 27 15:02:53 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/utility.h:
+        * pace/config/utility.h:
 
-	  Clean up comments.
+          Clean up comments.
 
 Thu Jul 27 14:04:47 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/defines.h:
+        * pace/config/defines.h:
 
-	  Removed #include "temp.h".
+          Removed #include "temp.h".
 
 Thu Jul 27 13:50:48 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/constants.h:
+        * pace/config/constants.h:
 
-	  Moved contents of pace/config/temp.h to constants.h.
-	  Some of this probably shouldn't be in contstants.h.
+          Moved contents of pace/config/temp.h to constants.h.
+          Some of this probably shouldn't be in contstants.h.
 
-	* pace/config/temp.h:
+        * pace/config/temp.h:
 
-	  Removed.
+          Removed.
 
 Thu Jul 27 13:03:29 2000  Luther J Baker  <luther@cs.wustl.edu>
 
-	* pace/config/constants.h (PACE_ONE_SECOND_IN_NSECS):
+        * pace/config/constants.h (PACE_ONE_SECOND_IN_NSECS):
 
-	  Typo!
+          Typo!
 
 Thu Jul 27 12:33:55 2000  David L. Levine <levine@cs.wustl.edu>
 
