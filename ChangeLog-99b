@@ -1,3 +1,12 @@
+Fri Feb 26 23:58:46 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.{h,i,cpp}:
+	  Added some read- and write-pointer alignment
+	  functions, as proposed by Carlos. Also deleted some
+	  ACE_OutputCDR members that weren't being used. 
+	  Checked the build on NT and suncc. Must come up with 
+	  some kind of test for these new functions.
+
 Fri Feb 26 21:56:05 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Makefile: moved ACE_COMPONENTS to after include
