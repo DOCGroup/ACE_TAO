@@ -1,30 +1,19 @@
-This is the cubit example that uses hand-generated stubs and
-skeletons.  Once we've got a real DII C++ mapping in TAO, we'll modify
-this to use that mapping.
+This is the cubit example that makes DII requests. It uses the
+server in IDL_Cubit (actually the Cubit factory). A DII request is
+made on the Cubit factory (it's IOR is displayed when the server is run)
+to get the current Cubit object. Then the operations are called on that
+Cubit object usign DII requests.
 
-You can either run the server in the background in the same window as
-the client or open a separate window for the client and server.
-
-server:
--------
-
-% svr [-d] -ORBhost <serverhost> [-orbport <portnum>]
-
-When the server is started and you have used the -d flag, you should
-see as the first line of output something that looks like
-iiop:1.0//serverhost:10013/key00.  You will need this when you run the
-client.
-
-Using -d turns on debugging messages.  It is additive, i.e., the more
--d options provided, the more debugging you can get.  At the moment,
-only 2 levels of debugging are implemented, and more than 2 -d options
-are ignored.
-
-client:
--------
-
-% clnt [-d] -n <iterations> -O <IOR string displayed by server>
+Open a separate window (in IDL_Cubit) and run the server, then run the 
+client in DII_Cubit. No nameservice functionality yet, so you have to
+manually type in the IOR for now :-(
 
 In another window (on the same machine or a different machine) type in
-client -O IIOP where IIOP is the name that the server gave you.
+client -i <IOR> where IOR is the displayed factory IOR. To make typing
+a little easier, run the server with [-ORBobjrefstyle url] so the 
+displayed string will be shorter and easier to copy.
+
+Default number of loops for the timing tests is 250, but it can be set
+from the command line following [-n <# of loops>]. Other arguments are 
+supported, as shown in parse_args in client.cpp.
 
