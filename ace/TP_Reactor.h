@@ -32,7 +32,7 @@
 #include "ace/pre.h"
 
 #include "ace/Select_Reactor.h"
-#include "ace/Log_Msg.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -70,6 +70,61 @@ private:
   ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &))
   ACE_UNIMPLEMENTED_FUNC (ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &))
 };
+
+
+/**
+ * @class ACE_TP_Token_Guard
+ *
+ * @brief A helper class that helps grabbing, releasing  and waiting
+ * on tokens for a thread that tries calling handle_events ().
+ *
+ * In short, this class will be owned by one thread by creating on the
+ * stack. This class gives the status of the ownership of the token
+ * and manages the ownership
+ */
+
+class ACE_Export ACE_TP_Token_Guard
+{
+public:
+
+  /// Constructor that will grab the token for us
+  ACE_TP_Token_Guard (ACE_SELECT_REACTOR_TOKEN &token,
+                      ACE_Time_Value *max_wait_time,
+                      int &result);
+
+  /// Destructor. This will release the token if it hasnt been
+  /// released till this point
+  ~ACE_TP_Token_Guard (void);
+
+  /// Release the token ..
+  void release_token (void);
+
+  /// Returns whether the thread that created this object ownes the
+  /// token or not.
+  int is_owner (void);
+
+private:
+
+  /// A helper method that grabs the token for us, after which the
+  /// thread that owns that can do some actual work.
+  int grab_token (ACE_Time_Value *max_wait_time);
+
+private:
+
+  /// The Select Reactor token.
+  ACE_SELECT_REACTOR_TOKEN &token_;
+
+  /// Flag that indicate whether the thread that created this object
+  /// owns the token or not. A value of 0 indicates that this class
+  /// hasnt got the token (and hence the thread) and a value of 1
+  /// vice-versa.
+  int owner_;
+
+private:
+
+  ACE_UNIMPLEMENTED_FUNC (ACE_TP_Token_Guard (void))
+};
+
 
 /**
  * @class ACE_TP_Reactor
@@ -218,11 +273,11 @@ protected:
   /// signal, timer, notification handlers or return possibly 1 I/O
   /// handler for dispatching. In the most common use case, this would
   /// return 1 I/O handler for dispatching
-  int get_event_for_dispatching ();
+  int get_event_for_dispatching (ACE_Time_Value *max_wait_time);
 
-  /// A helper method that grabs the token for us, after which we can
-  /// do some actual work.
-  int grab_token (ACE_Time_Value *max_wait_time);
+  int dispatch_signals (void);
+
+
 
 private:
   /// Deny access since member-wise won't work...

@@ -14,6 +14,51 @@ ACE_RCSID(ace, TP_Reactor, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE (ACE_TP_Reactor)
 
+int
+ACE_TP_Token_Guard::grab_token (ACE_Time_Value *max_wait_time)
+{
+  ACE_TRACE ("ACE_TP_Token_Guard::grab_token");
+
+  // The order of these events is very subtle, modify with care.
+
+  // Try to grab the lock.  If someone if already there, don't wake
+  // them up, just queue up in the thread pool.
+  int result = 0;
+
+  if (max_wait_time)
+    {
+      ACE_Time_Value tv = ACE_OS::gettimeofday ();
+      tv += *max_wait_time;
+
+      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
+                                                  0,
+                                                  &tv));
+    }
+  else
+    {
+      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
+    }
+
+  // Now that this thread owns the token let us make
+  // Check for timeouts and errors.
+  if (result == -1)
+    {
+      if (errno == ETIME)
+        return 0;
+      else
+        return -1;
+    }
+
+  // We got the token and so let us mark ourseleves as owner
+  this->owner_ = 1;
+
+  return result;
+}
+
+/************************************************************************/
+// Methods for ACE_TP_Reactor
+/************************************************************************/
+
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
                                 int mask_signals)
@@ -61,43 +106,59 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 {
   ACE_TRACE ("ACE_TP_Reactor::handle_events");
 
+  int result = 0;
+
   // Stash the current time -- the destructor of this object will
   // automatically compute how much time elpased since this method was
   // called.
   ACE_Countdown_Time countdown (max_wait_time);
 
-  int result = this->grab_token (max_wait_time);
+  // Instantiate the token guard which will try grabbing the token for
+  // this thread.
+  ACE_TP_Token_Guard guard (this->token_,
+                            max_wait_time,
+                            result);
+
+  // If the guard is NOT the owner just return the retval
+  if (!guard.is_owner ())
+    return result;
 
   // Update the countdown to reflect time waiting for the token.
   countdown.update ();
 
-  // Check for timeouts and errors.
-  if (result == -1)
-    {
-      if (errno == ETIME)
-        return 0;
-      else
-        return -1;
-    }
 
   // After acquiring the lock, check if we have been deactivated.  If
   // we are deactivated, simply return without handling further
   // events.
   if (this->deactivated_)
     {
-      ACE_MT (this->token_.release ());
       return -1;
     }
 
   // We got the lock, lets handle some events. We collect the events
   // that we need to handle. We release the token and then handle
   // those events that needs handling.
-  int event_count = this->get_event_for_dispatching (max_wait_time);
+  int event_count =
+    this->get_event_for_dispatching (max_wait_time);
 
 
-  // @@ Look for signals that needs dispatching
-  // @@ Timeouts that need dispatching, if any timeouts, just return
-  // @@ after dispatching
+  // Dispatch signals
+  if (event_count == -1)
+    {
+      // Looks like we dont do any upcalls in dispatch signals. If at
+      // a later point of time, we decide to handle signals we have to
+      // release the lock before we make any upcalls.. What is here
+      // now is not the right thing...
+      return this->dispatch_signals ();
+    }
+
+  // If there are no signals and if we had received a proper
+  // event_count then first look at dispatching timeouts. We need to
+  // handle timers early since they may have higher latency
+  // constraints than I/O handlers.  Ideally, the order of
+  // dispatching should be a strategy...
+  this->dispatch_timers ();
+
   // @@ Notify that needs dispatching, if any, just return after
   // dispatching.
   // @@ Socket events
@@ -208,39 +269,7 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   // existing notion of handles in <dispatch_set_> may no longer be
   // correct.
 
-  // First check for interrupts.
-  if (active_handle_count == -1)
-    {
-      // Bail out -- we got here since <select> was interrupted.
-      if (ACE_Sig_Handler::sig_pending () != 0)
-        {
-          ACE_Sig_Handler::sig_pending (0);
 
-#if 0
-          // Not sure if this should be done in the TP_Reactor
-          // case... leave it out for now.   -Steve Huston 22-Aug-00
-
-          // If any HANDLES in the <ready_set_> are activated as a
-          // result of signals they should be dispatched since
-          // they may be time critical...
-          active_handle_count = this->any_ready (dispatch_set);
-#else
-          active_handle_count = 0;
-#endif
-
-          // Record the fact that the Reactor has dispatched a
-          // handle_signal() method.  We need this to return the
-          // appropriate count below.
-          signal_occurred = 1;
-        }
-      else
-        return -1;
-    }
-
-  // Handle timers early since they may have higher latency
-  // constraints than I/O handlers.  Ideally, the order of
-  // dispatching should be a strategy...
-  this->dispatch_timer_handlers (handlers_dispatched);
 
   // If either the state has changed as a result of timer
   // expiry, or there are no handles ready for dispatching,
@@ -427,32 +456,43 @@ ACE_TP_Reactor::get_event_for_dispatching (ACE_Time_Value *max_wait_time)
 
 
 int
-ACE_TP_Reactor::grab_token (ACE_Time_Value *max_wait_time)
+ACE_TP_Reactor::dispatch_signals (void)
 {
-  ACE_TRACE ("ACE_TP_Reactor::grab_token");
-
-  // The order of these events is very subtle, modify with care.
-
-  // Try to grab the lock.  If someone if already there, don't wake
-  // them up, just queue up in the thread pool.
-  int result = 0;
-
-  if (max_wait_time)
+  // First check for interrupts.
+  // Bail out -- we got here since <select> was interrupted.
+  if (ACE_Sig_Handler::sig_pending () != 0)
     {
-      ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      tv += *max_wait_time;
+      ACE_Sig_Handler::sig_pending (0);
 
-      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
-                                                  0,
-                                                  &tv));
-    }
-  else
-    {
-      ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook));
+      // This piece of code comes from the old TP_Reactor. We did not
+      // handle signals at all then. If we happen to handle signals
+      // in the TP_Reactor, we should then start worryiung about this
+      // - Bala 21-Aug- 01
+#if 0
+      // Not sure if this should be done in the TP_Reactor
+      // case... leave it out for now.   -Steve Huston 22-Aug-00
+
+      // If any HANDLES in the <ready_set_> are activated as a
+      // result of signals they should be dispatched since
+      // they may be time critical...
+      active_handle_count = this->any_ready (dispatch_set);
+#else
+      active_handle_count = 0;
+#endif
+
+      // Record the fact that the Reactor has dispatched a
+      // handle_signal() method.  We need this to return the
+      // appropriate count.
+      return 1;
     }
 
-  return result;
+
+
+  return -1;
+
 }
+
+
 
 
 int
@@ -471,40 +511,4 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
 {
   ACE_ERROR ((LM_ERROR,
               ACE_LIB_TEXT ("ACE_TP_Reactor::notify_handle: Wrong version of notify_handle() gets called")));
-}
-
-ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info (void)
-{
-  this->reset ();
-}
-
-void
-ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
-                           ACE_Event_Handler *event_handler,
-                           ACE_Reactor_Mask mask,
-                           ACE_EH_PTMF callback)
-{
-  this->dispatch_ = 1;
-
-  this->handle_ = handle;
-  this->event_handler_ = event_handler;
-  this->mask_ = mask;
-  this->callback_ = callback;
-}
-
-void
-ACE_EH_Dispatch_Info::reset (void)
-{
-  this->dispatch_ = 0;
-
-  this->handle_ = ACE_INVALID_HANDLE;
-  this->event_handler_ = 0;
-  this->mask_ = ACE_Event_Handler::NULL_MASK;
-  this->callback_ = 0;
-}
-
-int
-ACE_EH_Dispatch_Info::dispatch (void) const
-{
-  return this->dispatch_;
 }

@@ -1,3 +1,14 @@
+Tue Aug 21 17:21:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/TP_Reactor.i:
+	* ace/TP_Reactor.h:
+	* ace/TP_Reactor.cpp: Made lots of changes which havent been
+	  compiled yet.  Added a new class ACE_TP_Token_Guard that helps
+	  in obtaining and releasing tokens. Moved the grab_token () from
+	  the ACE_TP_Reactor class to the TP_Token_Guard class. Added a
+	  new method for handling signals. They havent been compiled yet
+	  and this checkin is to put files from work to my home box.
+
 Tue Aug 21 07:58:42 2001 Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/TP_Reactor.i:
