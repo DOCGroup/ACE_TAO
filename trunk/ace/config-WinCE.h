@@ -27,6 +27,10 @@
 # define ACE_HAS_WINCE 1
 #endif
 
+// We need these libraries to build:
+#pragma comment(lib,"corelibc.lib")
+#pragma comment(linker, "/nodefaultlib:oldnames.lib")
+
 // Unicode is the OS standard string type for WinCE.
 #ifdef ACE_HAS_UNICODE
 # undef ACE_HAS_UNICODE

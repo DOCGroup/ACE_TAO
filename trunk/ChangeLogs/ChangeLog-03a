@@ -1,8 +1,18 @@
+Tue Jan 14 14:56:12 2003  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-win32-common.h: For WinCE, don't include wce.h unless
+          building with MFC. wce.h is an MFC file.
+
+        * ace/config-WinCE.h: Add pragmas to link _with_ corelibc.lib and
+          _without_ oldnames.lib. These weren't needed with WinCE 3/PocketPC
+          (but they don't hurt) and are needed for WinCE .NET. The ATL headers
+          do these pragmas, but we don't want to add a dependency on ATL.
+
 Tue Jan 14 11:07:06 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* bin/generate_export_file.pl: Added a patch from
 	  Gonzalo Diethelm <gonzalo.diethelm@aditiva.com> which generates
-	  an empty $Id$.
+	  an empty CVS Id string.
 
 Mon Jan 13 12:53:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

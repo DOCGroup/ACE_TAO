@@ -390,12 +390,14 @@ typedef unsigned long long ACE_UINT64;
 // This is necessary since MFC users apparently can't #include
 // <windows.h> directly.
 #if defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
-# include /**/ <afxwin.h>   /* He is doing MFC */
+#  include /**/ <afxwin.h>   /* He is doing MFC */
 // Windows.h will be included via afxwin.h->afx.h->afx_ver_.h->afxv_w32.h
 // #define      _INC_WINDOWS  // Prevent winsock.h from including windows.h
+#  if defined (ACE_HAS_WINCE)
+#    include /**/ <wce.h>
+#  endif /* ACE_HAS_WINCE */
 #elif defined (ACE_HAS_WINCE)
-# include /**/ <windows.h>
-# include /**/ <wce.h>
+#  include /**/ <windows.h>
 #endif
 
 #if !defined (_INC_WINDOWS)     /* Already include windows.h ? */
