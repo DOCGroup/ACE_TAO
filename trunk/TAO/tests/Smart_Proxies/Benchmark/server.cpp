@@ -116,8 +116,9 @@ main (int argc, char *argv[])
       Test_i servant (orb.in ());      
       // Obtain RootPOA.
       CORBA::Object_var object =
-        orb->resolve_initial_references ("RootPOA", 
+        orb->resolve_initial_references ("RootPOA",
                                          ACE_TRY_ENV);
+      ACE_TRY_CHECK;
       
       PortableServer::POA_var root_poa = 
         PortableServer::POA::_narrow (object.in (),
