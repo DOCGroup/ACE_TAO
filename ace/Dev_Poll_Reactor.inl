@@ -8,8 +8,7 @@ ACE_INLINE
 ACE_Dev_Poll_Event_Tuple::ACE_Dev_Poll_Event_Tuple (void)
   : event_handler (0),
     mask (ACE_Event_Handler::NULL_MASK),
-    suspended (0),
-    refcount (1)
+    suspended (0)
 {
 }
 
@@ -93,57 +92,29 @@ ACE_Dev_Poll_Reactor_Handler_Repository::size (void) const
   return this->max_size_;
 }
 
-ACE_INLINE unsigned long
-ACE_Dev_Poll_Reactor_Handler_Repository::add_ref (ACE_HANDLE handle)
-{
-  // ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::add_ref");
-
-  // Caller provides synchronization
-
-  if (this->handle_in_range (handle))
-    return this->handlers_[handle].refcount++;
-
-  return 0;
-}
-
-ACE_INLINE unsigned long
-ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref (ACE_HANDLE handle)
-{
-  // ACE_TRACE ("ACE_Dev_Poll_Reactor_Handler_Repository::remove_ref");
-
-  // Caller provides synchronization
-
-  if (this->handle_in_range (handle))
-    {
-      unsigned long & refcount = this->handlers_[handle].refcount;
-
-      ACE_ASSERT  (refcount > 0);
-
-      refcount--;
-
-      if (refcount != 0)
-        return refcount;
-
-      // Reference count dropped to zero.  Remove the event handler
-      // from the repository.
-      this->unbind (handle);
-    }
-
-  return 0;
-}
-
 // -----------------------------------------------------------------
 
 ACE_INLINE
-ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard (
-  ACE_Dev_Poll_Reactor_Handler_Repository &repository,
-  ACE_HANDLE handle)
-  : repository_ (repository),
-    handle_ (handle)
+ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
+  (ACE_Event_Handler *eh,
+   bool do_incr)
+  : eh_ (eh),
+    refcounted_ (false)
 {
-  // Caller must provide synchronization.
+  if (eh == 0)
+    return;
 
-  (void) repository.add_ref (handle);
+  this->refcounted_ =
+    eh->reference_counting_policy ().value () ==
+    ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
+
+  if (do_incr && this->refcounted_)
+    eh->add_reference ();
+
+  /**
+   * The below comments were here when I replaced the old refcount
+   * scheme was replaced. They may still need addressing.   -Steve Huston
+   */
 
   /**
    * @todo Suspend the handler so that other threads will not cause
@@ -171,14 +142,23 @@ ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard (
 ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard (void)
 {
-  // Caller must provide synchronization.
+  if (this->refcounted_ && this->eh_ != 0)
+    this->eh_->remove_reference ();
 
-  (void) this->repository_.remove_ref (this->handle_);
-
+  /**
+   * The below comments were here when I replaced the old refcount
+   * scheme was replaced. They may still need addressing.   -Steve Huston
+   */
   /**
    * @todo Resume the handler so that other threads will be allowed to
    *       dispatch the handler.
    */
+}
+
+ACE_INLINE void
+ACE_Dev_Poll_Handler_Guard::release (void)
+{
+  this->eh_ = 0;
 }
 
 // ---------------------------------------------------------------------

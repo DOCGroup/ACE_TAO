@@ -12,8 +12,8 @@
 //
 //    This test tries to represents what happens in the ORB wrt to
 //    event handlers, reactors, timer queues, threads, and connection
-//    caches, minus the other complexities.  The following three
-//    Reactors are tested: Select, TP, and WFMO.
+//    caches, minus the other complexities.  The following reactors
+//    are tested: Select, TP, WFMO, and Dev Poll (if enabled).
 //
 //    The test checks proper use and shutting down of client-side
 //    event handlers when it is used by invocation threads and/or
@@ -32,6 +32,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/SOCK_Acceptor.h"
@@ -51,6 +52,7 @@ static const int message_size = 26;
 static int test_select_reactor = 1;
 static int test_tp_reactor = 1;
 static int test_wfmo_reactor = 1;
+static int test_dev_poll_reactor = 1;
 static int debug = 0;
 static int number_of_connections = 5;
 static int max_nested_upcall_level = 10;
@@ -1217,7 +1219,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:f:g:k:l:m:n:o:uz:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:f:g:k:l:m:n:o:uz:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -1232,6 +1234,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'c':
           test_wfmo_reactor = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'd':
+          test_dev_poll_reactor = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'f':
           number_of_connections = ACE_OS::atoi (get_opt.opt_arg ());
@@ -1264,6 +1269,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("\t[-a test Select Reactor] (defaults to %d)\n")
                       ACE_TEXT ("\t[-b test TP Reactor] (defaults to %d)\n")
                       ACE_TEXT ("\t[-c test WFMO Reactor] (defaults to %d)\n")
+                      ACE_TEXT ("\t[-d test Dev Poll Reactor] (defaults to %d)\n")
                       ACE_TEXT ("\t[-f number of connections] (defaults to %d)\n")
                       ACE_TEXT ("\t[-g close timeout] (defaults to %d)\n")
                       ACE_TEXT ("\t[-k make invocations] (defaults to %d)\n")
@@ -1277,6 +1283,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       test_select_reactor,
                       test_tp_reactor,
                       test_wfmo_reactor,
+                      test_dev_poll_reactor,
                       number_of_connections,
                       close_timeout,
                       make_invocations,
@@ -1340,6 +1347,20 @@ run_main (int argc, ACE_TCHAR *argv[])
                                  event_loop_thread_not_required);
       ACE_UNUSED_ARG (test);
     }
+
+#if defined (ACE_HAS_EVENT_POLL)
+
+  if (test_dev_poll_reactor)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n\nTesting Dev Poll Reactor....\n\n"));
+
+      test<ACE_Dev_Poll_Reactor> test (perform_nested_upcalls,
+                                       event_loop_thread_not_required);
+      ACE_UNUSED_ARG (test);
+    }
+
+#endif
 
 #if defined (ACE_WIN32)
 

@@ -29,6 +29,8 @@
 // The sys_epoll interface was introduced in Linux kernel 2.5.45.
 // Don't support backported versions since they appear to be buggy.
 // The obsolete ioctl()-based interface is no longer supported.
+#if 0
+// linux/version.h may not be accurate. It's not for Fedora Core 2...
 # include /**/ <linux/version.h>
 # if LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45)
 #   undef ACE_HAS_EVENT_POLL
@@ -36,6 +38,7 @@
 #   error Linux kernel 2.5.45 or better is required.
 # endif  /* LINUX_VERSION_CODE < KERNEL_VERSION (2,5,45) */
 #endif  /* ACE_HAS_EVENT_POLL */
+#endif
 
 #if defined (ACE_HAS_EVENT_POLL) && defined (ACE_HAS_DEV_POLL)
 #  error ACE_HAS_EVENT_POLL and ACE_HAS_DEV_POLL are mutually exclusive.
@@ -55,7 +58,9 @@
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
+#if defined (ACE_HAS_DEV_POLL)
 struct pollfd;
+#endif
 
 /**
  * @class ACE_Dev_Poll_Event_Tuple
@@ -91,23 +96,6 @@ public:
 
   /// Flag that states whether or not the event handler is suspended.
   char suspended;
-
-  /// The number of outstanding upcalls occurring on the above event
-  /// handler.
-  /**
-   * @todo The reference count should really be maintained within the
-   *       event handler.  This approach was taken to allow for
-   *       backward compatibility and quick implementation.  One
-   *       approach for maintaining backward compatibility while
-   *       implementing reference counting within the event handler is
-   *       to create an ACE_Ref_Counted_Event_Handler "mix-in" class
-   *       that concrete ACE_Event_Handlers can inherit from
-   *       (i.e. multiple inheritance).  Thus, legacy non-reference
-   *       counted event handlers need not pay for reference counting
-   *       resources.
-   */
-  unsigned long refcount;
-
 };
 
 // ---------------------------------------------------------------------
@@ -188,10 +176,10 @@ public:
 
   /**
    * Called by a thread when it wants to unblock the Reactor_Impl.
-   * This wakeups the Reactor_Impl if currently blocked.  Pass over
-   * both the Event_Handler *and* the mask to allow the caller to
+   * This wakes up the Reactor_Impl if currently blocked.  Pass over
+   * both the Event_Handler and the mask to allow the caller to
    * dictate which Event_Handler method the Reactor_Impl will
-   * invoke.  The ACE_Time_Value indicates how long to blocking
+   * invoke.  The ACE_Time_Value indicates how long to block
    * trying to notify the Reactor_Impl.  If timeout == 0, the
    * caller will block until action is possible, else will wait until
    * the relative time specified in *timeout elapses).
@@ -215,16 +203,15 @@ public:
   /// the Reactor_Impl.
   virtual ACE_HANDLE notify_handle (void);
 
-  /// Verify whether the buffer has dispatchable info  or not.
+  /// Verify whether the buffer has dispatchable info or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
 
-  /// Handle one of the notify call on the handle.  This could be
+  /// Handle one notify call represented in @a buffer.  This could be
   /// because of a thread trying to unblock the Reactor_Impl.
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
-  /// Read one of the notify call on the handle into the
-  /// buffer. This could be because of a thread trying to unblock
-  /// the Reactor_Impl.
+  /// Read one notify call on the handle into @a buffer.
+  /// This could be because of a thread trying to unblock the Reactor_Impl.
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 
@@ -392,21 +379,6 @@ public:
   /// Remove all the (@c ACE_HANDLE, @c ACE_Event_Handler) tuples.
   int unbind_all (void);
 
-  /// Increase the reference count on the event handler corresponding
-  /// to the given file descriptor.
-  /**
-   * @return Returns the updated reference count.
-   */
-  unsigned long add_ref (ACE_HANDLE handle);
-
-  /// Decrease the reference count on the event handler corresponding
-  /// to the given file descriptor.
-  /**
-   * @return Returns the updated reference count.
-   */
-  unsigned long remove_ref (ACE_HANDLE handle);
-  //@}
-
   /**
    * @name Sanity Checking
    *
@@ -499,7 +471,7 @@ public:
                         ACE_Reactor_Notify *notify = 0,
                         int mask_signals = 1);
 
-  /// Initialize ACE_Dev_Poll_Reactor with size "@a size."
+  /// Initialize ACE_Dev_Poll_Reactor with size @a size.
   /**
    * @note On Unix platforms, the @a size parameter should be as large
    *       as the maximum number of file descriptors allowed for a
@@ -759,9 +731,11 @@ public:
    * @see reset_timer_interval()
    *
    * @param event_handler  event handler to schedule on reactor
-   * @param arg   argument passed to the handle_timeout() method of  event_handler
-   * @param delay  time interval after which the timer will expire
-   * @param interval  time interval after which the timer will be automatically rescheduled
+   * @param arg   argument passed to the handle_timeout() method of
+   *              event_handler.
+   * @param delay  time interval after which the timer will expire.
+   * @param interval  time interval for which the timer will be
+   *                  automatically rescheduled.
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
@@ -785,19 +759,19 @@ public:
                             int dont_call_handle_close = 1);
 
   /**
-   * Cancel the single Event_Handler that matches the <timer_id> value
-   * (which was returned from the schedule method).  If arg is
+   * Cancel the single event handler that matches the @a timer_id value
+   * (which was returned from the schedule method).  If @a arg is
    * non-NULL then it will be set to point to the ``magic cookie''
-   * argument passed in when the Event_Handler was registered.  This
+   * argument passed in when the event handler was registered.  This
    * makes it possible to free up the memory and avoid memory leaks.
-   * Returns 1 if cancellation succeeded and 0 if the <timer_id>
+   * Returns 1 if cancellation succeeded and 0 if the @a timer_id
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
                             const void **arg = 0,
                             int dont_call_handle_close = 1);
 
-  // = High-level Event_Handler scheduling operations
+  // = High-level event handler scheduling operations
 
   /// Add <masks_to_be_added> to the <event_handler>'s entry.
   /// <event_handler> must already have been registered.
@@ -1185,12 +1159,14 @@ public:
 
   /// Constructor
   /**
-   * The constructor increments the reference count on the event
-   * handler corresponding to the given handle.
+   * The constructor checks to see if @a eh is a reference-counted handler and
+   * remember that for later. If @a eh is reference counted, its reference
+   * count is incremented unless @a do_incr is false.
+   * @a do_incr should be false if the reference count was incremented
+   * independently of this guard, for example, on a notify handler since
+   * the reference count is incremented when the notify is queued.
    */
-  ACE_Dev_Poll_Handler_Guard (
-    ACE_Dev_Poll_Reactor_Handler_Repository &repository,
-    ACE_HANDLE handle);
+  ACE_Dev_Poll_Handler_Guard (ACE_Event_Handler *eh, bool do_incr = true);
 
   /// Destructor
   /**
@@ -1199,14 +1175,17 @@ public:
    */
   ~ACE_Dev_Poll_Handler_Guard (void);
 
+  /// Release the event handler from this guard; when the destructor is
+  /// called, the handler's reference count will not be decremented.
+  void release (void);
+
 private:
 
-  /// Reference to the handler repository containing the event handler
-  /// used during the upcall.
-  ACE_Dev_Poll_Reactor_Handler_Repository &repository_;
+  /// The event handler being managed.
+  ACE_Event_Handler *eh_;
 
-  /// Handle corresponding to the event being dispatched.
-  ACE_HANDLE handle_;
+  /// true if eh_ is a reference-counted handler.
+  bool refcounted_;
 
 };
 

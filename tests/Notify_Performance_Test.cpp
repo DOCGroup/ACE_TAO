@@ -26,6 +26,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
 
@@ -44,6 +45,9 @@ static int opt_wfmo_reactor = 0;
 
 // Use the Select_Reactor
 static int opt_select_reactor = 0;
+
+// Use the Dev_Poll_Reactor
+static int opt_dev_poll_reactor = 0;
 
 // Pass data through the notify call
 static int opt_pass_notify_data = 0;
@@ -106,6 +110,12 @@ create_reactor (void)
     {
       ACE_NEW (impl, ACE_Select_Reactor);
     }
+  else if (opt_dev_poll_reactor)
+    {
+#if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
+      ACE_NEW (impl, ACE_Dev_Poll_Reactor);
+#endif /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
+    }
   ACE_Reactor *reactor = 0;
   ACE_NEW (reactor, ACE_Reactor (impl));
   ACE_Reactor::instance (reactor);
@@ -119,6 +129,8 @@ print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
     reactor_type = ACE_TEXT ("WFMO_Reactor");
   else if (opt_select_reactor)
     reactor_type = ACE_TEXT ("Select_Reactor");
+  else if (opt_dev_poll_reactor)
+    reactor_type = ACE_TEXT ("Dev_Poll_Reactor");
   else
     reactor_type = ACE_TEXT ("Platform's default Reactor");
 
@@ -154,11 +166,14 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Notify_Performance_Test"));
 
-  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("swdc:l:"));
+  ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("pswdc:l:"));
 
   for (int c; (c = getopt ()) != -1; )
     switch (c)
       {
+      case 'p':
+        opt_dev_poll_reactor = 1;
+        break;
       case 's':
         opt_select_reactor = 1;
         break;
@@ -185,7 +200,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // If we are using other that the default implementation, we must
   // clean up.
-  if (opt_select_reactor || opt_wfmo_reactor)
+  if (opt_select_reactor || opt_wfmo_reactor || opt_dev_poll_reactor)
     {
       auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
       impl = auto_impl;

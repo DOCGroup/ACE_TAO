@@ -24,6 +24,7 @@
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 
@@ -34,6 +35,7 @@ ACE_RCSID(tests, MT_Reference_Counted_Notify_Test, "$Id$")
 static int test_select_reactor = 1;
 static int test_tp_reactor = 1;
 static int test_wfmo_reactor = 1;
+static int test_dev_poll_reactor = 1;
 static int test_empty_notify = 1;
 static int test_simple_notify = 1;
 static int test_reference_counted_notify = 1;
@@ -62,26 +64,46 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (void)
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler() is %d\n",
-                this->reference_count_.value ()));
+    ACE_DEBUG
+      ((LM_DEBUG,
+        ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
+        ACE_TEXT ("is %d\n"),
+        this->reference_count_.value ()));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
-                this->reference_count_.value ()));
+    ACE_DEBUG
+      ((LM_DEBUG,
+        ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
+        ACE_TEXT ("is %d\n"),
+        this->reference_count_.value ()));
+
+  if (0 != this->reference_count_.value ())
+    ACE_ERROR
+      ((LM_ERROR,
+        ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
+        ACE_TEXT ("should be 0 but is %d\n"),
+        this->reference_count_.value ()));
 }
 
 int
 Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Reference count in Reference_Counted_Event_Handler::handle_input() is %d\n",
-                this->reference_count_.value ()));
+    ACE_DEBUG
+      ((LM_DEBUG,
+        ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
+        ACE_TEXT ("handle_input() is %d\n"),
+        this->reference_count_.value ()));
+
+  if (2 != this->reference_count_.value ())
+    ACE_ERROR
+      ((LM_ERROR,
+        ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
+        ACE_TEXT ("handle_input() should be 2 but is %d\n"),
+        this->reference_count_.value ()));
 
   return 0;
 }
@@ -94,7 +116,7 @@ Reference_Counted_Event_Handler::add_reference (void)
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count after add_reference() is %d\n",
+                ACE_TEXT ("Reference count after add_reference() is %d\n"),
                 this->reference_count_.value ()));
 
   return reference_count;
@@ -108,7 +130,7 @@ Reference_Counted_Event_Handler::remove_reference (void)
 
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Reference count after remove_reference() is %d\n",
+                ACE_TEXT ("Reference count after remove_reference() is %d\n"),
                 reference_count));
 
   return reference_count;
@@ -131,15 +153,13 @@ Simple_Event_Handler::Simple_Event_Handler (int notifies)
   : notifies_ (notifies)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler()\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Event_Handler()\n")));
 }
 
 Simple_Event_Handler::~Simple_Event_Handler (void)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                "~Simple_Event_Handler()\n"));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Simple_Event_Handler()\n")));
 }
 
 int
@@ -147,7 +167,7 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
-                "Simple_Event_Handler::handle_input()\n"));
+                ACE_TEXT ("Simple_Event_Handler::handle_input()\n")));
 
   this->notifies_--;
 
@@ -195,7 +215,7 @@ Event_Loop_Thread::svc (void)
 
       if (debug)
         ACE_DEBUG ((LM_DEBUG,
-                    "Event Loop iteration %d....\n",
+                    ACE_TEXT ("Event Loop iteration %d....\n"),
                     counter));
 
       this->reactor_.handle_events ();
@@ -251,8 +271,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
 {
   if (test_empty_notify)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting empty notifies....\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting empty notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
       ACE_Reactor reactor (&impl, 0);
@@ -265,8 +284,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
 
   if (test_simple_notify)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting simple notifies....\n\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting simple notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
       ACE_Reactor reactor (&impl, 0);
@@ -282,7 +300,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
   if (test_reference_counted_notify)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\n\nTesting reference counted notifies....\n\n"));
+                  ACE_TEXT ("\n\nTesting reference counted notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
       ACE_Reactor reactor (&impl, 0);
@@ -301,7 +319,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:e:f:g:z:"));
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("a:b:c:d:e:f:g:z:"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -316,6 +334,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'c':
           test_wfmo_reactor = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'd':
+          test_dev_poll_reactor = ACE_OS::atoi (get_opt.opt_arg ());
           break;
         case 'e':
           test_empty_notify = ACE_OS::atoi (get_opt.opt_arg ());
@@ -335,6 +356,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("\t[-a test Select Reactor] (defaults to %d)\n")
                       ACE_TEXT ("\t[-b test TP Reactor] (defaults to %d)\n")
                       ACE_TEXT ("\t[-c test WFMO Reactor] (defaults to %d)\n")
+                      ACE_TEXT ("\t[-d test Dev Poll Reactor] (defaults to %d)\n")
                       ACE_TEXT ("\t[-e test empty notify] (defaults to %d)\n")
                       ACE_TEXT ("\t[-f test simple notify] (defaults to %d)\n")
                       ACE_TEXT ("\t[-g test reference counted notify] (defaults to %d)\n")
@@ -344,6 +366,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                       test_select_reactor,
                       test_tp_reactor,
                       test_wfmo_reactor,
+                      test_dev_poll_reactor,
                       test_empty_notify,
                       test_simple_notify,
                       test_reference_counted_notify,
@@ -386,6 +409,19 @@ run_main (int argc, ACE_TCHAR *argv[])
       test<ACE_TP_Reactor> test (extra_iterations_not_needed);
       ACE_UNUSED_ARG (test);
     }
+
+#if defined (ACE_HAS_EVENT_POLL)
+
+  if (test_dev_poll_reactor)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "\n\nTesting Dev Poll Reactor....\n\n"));
+
+      test<ACE_Dev_Poll_Reactor> test (extra_iterations_not_needed);
+      ACE_UNUSED_ARG (test);
+    }
+
+#endif
 
 #if defined (ACE_WIN32)
 

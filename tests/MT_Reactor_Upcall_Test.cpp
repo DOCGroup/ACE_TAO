@@ -24,6 +24,7 @@
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
@@ -329,6 +330,17 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Reactor tp_reactor (&tp_reactor_impl);
 
   test_reactor_upcall (tp_reactor);
+
+#if defined (ACE_HAS_EVENT_POLL)
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
+
+  ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
+  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+
+  test_reactor_upcall (dev_poll_reactor);
+
+#endif /* ACE_HAS_EVENT_POLL */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
