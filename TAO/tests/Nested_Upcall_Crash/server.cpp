@@ -1,6 +1,7 @@
 // $Id$
 
 #include "Server_Peer.h"
+#include "Clock_Ticks.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
 #include "ace/Get_Opt.h"
@@ -197,7 +198,7 @@ Sleeper::handle_timeout (ACE_Time_Value const & ,
                          void const *)
 {
   // ACE_DEBUG((LM_DEBUG, "(%P|%t) - Sleeper::handle_timeout()\n"));
-  ACE_Time_Value clk_tck (0, 1000000 / HZ);
+  ACE_Time_Value clk_tck (0, Clock_Ticks::get_usecs_per_tick ());
   this->orb_->perform_work(clk_tck);
 
   return 0;
