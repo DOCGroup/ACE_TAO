@@ -53,7 +53,6 @@ ACE_Process::~ACE_Process (void)
   // Free resources allocated in kernel.
   ACE_OS::close (this->process_info_.hThread);
   ACE_OS::close (this->process_info_.hProcess);
-
 #endif /* ACE_WIN32 */
 }
 
@@ -157,7 +156,7 @@ ACE_Process::start (char *argv[], char *envp[])
     return -1;
 #else /* ACE_WIN32 */
   // Fork the new process.
-  this->child_id_ = ACE_OS::fork ();
+  this->child_id_ = ACE_OS::fork (argv == 0 ? "child" : argv[1]);
 
   switch (this->child_id_)
     {
@@ -193,9 +192,11 @@ ACE_Process::start (char *argv[], char *envp[])
 	    // If the execv fails, this child needs to exit.
 	    ACE_OS::exit (errno);
 	}
+      return 0;
+      /* NOTREACHED */
     default:
       // Server process.  The fork succeeded.
-      return 0;
+      return this->child_id_;
     }
 #endif /* ACE_WIN32 */
 }

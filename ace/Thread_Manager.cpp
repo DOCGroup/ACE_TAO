@@ -15,6 +15,30 @@ void
 ACE_Thread_Manager::dump (void) const
 {
   ACE_TRACE ("ACE_Thread_Manager::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
+  ACE_DEBUG ((LM_DEBUG, "\nmax_table_size_ = %d", this->max_table_size_));
+  ACE_DEBUG ((LM_DEBUG, "\ncurrent_count_ = %d", this->current_count_));
+
+  for (size_t i = 0; i < this->current_count_; i++)
+    this->thr_table_[i].dump ();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
+
+void
+ACE_Thread_Descriptor::dump (void) const
+{
+  ACE_TRACE ("ACE_Thread_Descriptor::dump");
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, "\nthr_id_ = %d", this->thr_id_));
+  ACE_DEBUG ((LM_DEBUG, "\nthr_handle_ = %d", this->thr_handle_));
+  ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
+  ACE_DEBUG ((LM_DEBUG, "\nthr_state_ = %d", this->thr_state_));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
@@ -225,7 +249,7 @@ ACE_Thread_Manager::spawn (ACE_THR_FUNC func,
 // Create N new threads running FUNC.
 
 int 
-ACE_Thread_Manager::spawn_n (int n, 
+ACE_Thread_Manager::spawn_n (size_t n, 
 			     ACE_THR_FUNC func, 
 			     void *args, 
 			     long flags,

@@ -24,14 +24,6 @@ class ACE_Export ACE_Process_Descriptor
   //    Information for controlling groups of processs.
 {
 friend class ACE_Process_Manager;
-public:
-  enum Process_State
-  {
-    IDLE,
-    SPAWNED,
-    RUNNING,
-    TERMINATED
-  };
 private:
 
   ACE_Process_Descriptor (void);
@@ -42,13 +34,9 @@ private:
   gid_t grp_id_;
   // Unique group ID.
 
-  Process_State proc_state_;
-  // Current state of the process.
+  void dump (void) const;
+  // Dump the state of an object.
 };
-
-// Forward declaration.
-
-class ACE_Process_Control;
 
 class ACE_Export ACE_Process_Manager
   // = TITLE
@@ -92,17 +80,15 @@ public:
   // Block until there are no more processs running or <timeout>
   // expires.  Returns 0 on success and -1 on failure.
 
-  // = Kill methods (send signals...).
-  int kill_all (int signum);
-  // Send signum to all stopped processs 
   int kill (pid_t, int signum);
   // Kill a single process.
-  int kill_grp (int grp_id, int signum);
-  // Kill a group of processs.
 
-  // = Set/get group ids for a particular process id.
-  int set_grp (pid_t, int grp_id);
-  int get_grp (pid_t, int &grp_id);
+  int remove (pid_t pid);
+  // Remove process <pid> from the table.  This is typically called by
+  // a signal handler that has just reaped <SIGCHILD>.
+
+  int reap (pid_t pid = -1, int *stat_loc = 0, int options = WNOHANG);
+  // Reap a <SIGCHLD> by calling <ACE_OS::waitpid>.
 
   void dump (void) const;
   // Dump the state of an object.
@@ -114,7 +100,7 @@ private:
   int resize (size_t);
   // Resize the pool of Process_Descriptors.
 
-  int find (pid_t p_id);
+  int find_proc (pid_t p_id);
   // Locate the index of the table slot occupied by <p_id>.  Returns
   // -1 if <p_id> is not in the table doesn't contain <p_id>.
 
@@ -122,26 +108,9 @@ private:
   // Insert a process in the table (checks for duplicates).
   // Omitting the process handle won't work on Win32...
 
-  int append_proc (pid_t p_id, ACE_Process_Descriptor::Process_State);
+  int append_proc (pid_t p_id);
   // Append a process in the table (adds at the end, growing the table
   // if necessary).
-
-  void remove_proc (int i);	
-  // Remove process from the table. 
-
-  // = The following four methods implement a simple scheme for
-  // operating on a collection of processs atomically.
-
-  typedef int (ACE_Process_Manager::*PROC_FUNC)(int, int);
-
-  int apply_grp (int grp_id, PROC_FUNC, int = 0);
-  // Apply <func> to all members of the table that match the <grp_id>.
-
-  int apply_all (PROC_FUNC, int = 0);
-  // Apply <func> to all members of the table.
-
-  int kill_proc (int i, int signum);
-  // Send signal <signum> to the process at index <i>.
 
   ACE_Process_Descriptor *proc_table_;
   // Vector that describes process state within the Process_Manager.
@@ -152,44 +121,12 @@ private:
 
   size_t current_count_;
   // Current number of processs we are managing.
-};
 
-class ACE_Export ACE_Process_Control
-  // = TITLE
-  //     Used to keep track of a process's activities within its entry
-  //     point function.
-{
-public:
-  ACE_Process_Control (ACE_Process_Manager *tm, int insert = 0);
-  // Initialize the process control object.  If INSERT != 0, then
-  // register the process with the ProcessManager.
-
-  ~ACE_Process_Control (void);
-  // Implicitly kill the process on exit and remove it from its
-  // associated ProcessManager.
-
-  void *exit (void *status);
-  // Explicitly kill the process on exit and remove it from its
-  // associated ProcessManager.
-
-  void *status (void *status);
-  // Set the exit status (and return existing status).
-
-  void *status (void);
-  // Get the current exit status.
-
-  void dump (void) const;
-  // Dump the state of an object.
-
-  ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
-private:
-  ACE_Process_Manager *tm_;
-  // Pointer to the process manager for this block of code.
-
-  void *status_;
-  // Keeps track of the exit status for the process.
+  // = ACE_Thread_Mutex and condition variable for synchronizing termination.
+#if defined (ACE_HAS_THREADS)
+  ACE_Thread_Mutex lock_;
+  ACE_Condition_Thread_Mutex zero_cond_;
+#endif /* ACE_HAS_THREADS */
 };
 
 #if defined (__ACE_INLINE__)

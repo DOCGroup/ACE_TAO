@@ -1,4 +1,22 @@
+Mon Apr 14 00:02:39 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/Process.cpp: Replaced the use of ACE_OS::fork(void) with
+ 	  ACE_OS::fork(const char *) so that we can pass in the name of
+ 	  the process we're exec'ing.
+
+	* examples/Threads/process_manager.cpp: Added a test program that
+ 	  exercises the features of the new ACE_Process_Manager.
+
+	* ace/Process_Manager: Finished a rudimentary implementation of
+ 	  ACE_Process_Manager.  There's still plenty of work to be done on
+ 	  this, however...
+
+	* ace/Thread_Manager.cpp (dump): Added dump() methods for
+ 	  ACE_Thread_Descriptor and ACE_Thread_Manager.
+
 Sun Apr 13 11:40:26 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/OS: Added a getpgid() call to ACE_OS.
 
 	* ace/Thread_Manager: Changed the 'int n' of spawn_n() to size_t n
  	  since this is more appropriate because we can't spawn a negative

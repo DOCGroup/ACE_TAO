@@ -9,13 +9,35 @@
 #include "ace/Process_Manager.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Process_Control)
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
+
+void
+ACE_Process_Descriptor::dump (void) const
+{
+  ACE_TRACE ("ACE_Process_Descriptor::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, "\nproc_id_ = %d", this->proc_id_));
+  ACE_DEBUG ((LM_DEBUG, "\ngrp_id_ = %d", this->grp_id_));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
+}
 
 void
 ACE_Process_Manager::dump (void) const
 {
   ACE_TRACE ("ACE_Process_Manager::dump");
+
+  ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
+
+  ACE_DEBUG ((LM_DEBUG, "\nmax_table_size_ = %d", this->max_table_size_));
+  ACE_DEBUG ((LM_DEBUG, "\ncurrent_count_ = %d", this->current_count_));
+
+  for (size_t i = 0; i < this->current_count_; i++)
+    this->proc_table_[i].dump ();
+
+  ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 ACE_Process_Descriptor::ACE_Process_Descriptor (void)
@@ -28,7 +50,6 @@ ACE_Process_Manager::resize (size_t size)
 {
   ACE_TRACE ("ACE_Process_Manager::resize");
 
-  ACE_TRACE ("ACE_Thread_Manager::resize");
   ACE_Process_Descriptor *temp;
   
   ACE_NEW_RETURN (temp, ACE_Process_Descriptor[size], -1);
@@ -112,15 +133,27 @@ ACE_Process_Manager::start (char *argv[],
   // Create a new process, potentially causing an exec(), as well.
   // This API clearly needs to be improved to pass more information
   // in...
-  pid_t pid = ACE_Process process (argv,
-				   ACE_INVALID_HANDLE,
-				   ACE_INVALID_HANDLE,
-				   ACE_INVALID_HANDLE,
-				   envp);
-  if (pid == -1)
-    return -1;
+
+  ACE_Process process;
+
+  process.set_handles (ACE_INVALID_HANDLE,
+		       ACE_INVALID_HANDLE,
+		       ACE_INVALID_HANDLE);
+
+  pid_t pid = process.start (argv, envp);
+
+  // Only include the pid in the parent's table.
+  if (pid == -1 || pid == 0)
+    return pid;
   else
-    return this->append_proc (pid);
+    {
+      ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+      if (this->append_proc (pid) == -1)
+	return -1;
+      else
+	return pid;
+    }
 }
 
 // Create N new processs running FUNC.
@@ -132,20 +165,26 @@ ACE_Process_Manager::start_n (size_t n,
 {
   ACE_TRACE ("ACE_Process_Manager::spawn_n");
 
+#if 0
+  // This doesn't work (yet).
   for (size_t i = 0; i < n; i++)
     if (this->start (argv, envp) == -1)
       return -1;
 
   return 0;
-
+#else
+  ACE_UNUSED_ARG (n);
+  ACE_UNUSED_ARG (argv);
+  ACE_UNUSED_ARG (envp);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* 0 */
 }
 
 // Append a process into the pool (does not check for duplicates).
 // Must be called with locks held.
 
 int
-ACE_Process_Manager::append_proc (pid_t pid,
-				  ACE_Process_Descriptor::Process_State proc_state)
+ACE_Process_Manager::append_proc (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::append_proc");
 
@@ -156,12 +195,11 @@ ACE_Process_Manager::append_proc (pid_t pid,
     return -1;
   else
     {
-      ACE_Thread_Descriptor &proc_desc = 
+      ACE_Process_Descriptor &proc_desc = 
 	this->proc_table_[this->current_count_];
 
       proc_desc.proc_id_ = pid;
-      proc_desc.proc_id_ = 
-      proc_desc.proc_state_ = proc_state;
+      proc_desc.grp_id_ = ACE_OS::getpgid (pid);
 
       this->current_count_++;
       return 0;
@@ -172,171 +210,98 @@ ACE_Process_Manager::append_proc (pid_t pid,
 // allow them to be inserted twice).
 
 int
-ACE_Process_Manager::insert_proc (pid_t t_id)
+ACE_Process_Manager::insert_proc (pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::insert_proc");
-  return -1;
+
+#if 0
+  // Check for duplicates and bail out if they're already
+  // registered...
+  if (this->find_proc (pid) != -1)
+    return -1;
+
+  return this->append_proc (pid);
+#else
+  ACE_UNUSED_ARG (pid);
+  ACE_NOTSUP_RETURN (-1);
+#endif 
 }
 
 // Remove a process from the pool.  Must be called with locks held.
 
-void
-ACE_Process_Manager::remove_proc (int i)
+int
+ACE_Process_Manager::remove (pid_t pid)
 {
-  ACE_TRACE ("ACE_Process_Manager::remove_proc");
+  ACE_TRACE ("ACE_Process_Manager::remove");
+
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
+
+  int i = this->find_proc (pid);
+
+  if (i == -1)
+    return -1;
+  else
+    {
+      this->current_count_--;
+
+      if (this->current_count_ > 0)
+	// Compact the table by moving the last item into the slot vacated
+	// by the index being removed (this is a structure assignment).
+	this->proc_table_[i] = this->proc_table_[this->current_count_];
+
+#if defined (ACE_HAS_THREADS)
+      // Tell all waiters when there are no more threads left in the pool.
+      if (this->current_count_ == 0)
+	this->zero_cond_.broadcast ();
+#endif /* ACE_HAS_THREADS */
+      return 0;
+    }
 }
 
 int
-ACE_Process_Manager::resume_proc (int i)
-{
-  ACE_TRACE ("ACE_Process_Manager::resume_proc");
-  return -1;
-}
-
-int
-ACE_Process_Manager::suspend_proc (int i)
-{
-  ACE_TRACE ("ACE_Process_Manager::suspend_proc");
-
-  return -1;
-}
-
-int
-ACE_Process_Manager::kill_proc (int i, int signum)
+ACE_Process_Manager::kill (pid_t pid, int signum)
 {
   ACE_TRACE ("ACE_Process_Manager::kill_proc");
 
-  return -1;
+  // Check for duplicates and bail out if they're already
+  // registered...
+  int i = this->find_proc (pid);
+
+  if (i == -1)
+    return -1;
+  else
+    {
+      int result = ACE_OS::kill (this->proc_table_[i].proc_id_,
+				 signum);
+
+      if (result == -1)
+	{ 
+	  // We need to save this across calls to remove_thr() since that
+	  // call may reset errno.
+	  int error = errno;
+
+	  this->remove (this->proc_table_[i].proc_id_); 
+	  errno = error; 
+	  return -1; 
+	} 
+      else 
+	return 0; 
+    }
 }
 
-// Locate the index in the table associated with <t_id>.  Must be
+// Locate the index in the table associated with <pid>.  Must be
 // called with the lock held.
 
 int 
-ACE_Process_Manager::find (pid_t t_id)
+ACE_Process_Manager::find_proc (pid_t pid)
 {
-  ACE_TRACE ("ACE_Process_Manager::find");
+  ACE_TRACE ("ACE_Process_Manager::find_proc");
+
+  for (size_t i = 0; i < this->current_count_; i++)
+    if (pid == this->proc_table_[i].proc_id_)
+      return i;
+
   return -1;    
-}
-
-// Suspend a single process.
-
-int 
-ACE_Process_Manager::suspend (pid_t t_id)
-{
-  ACE_TRACE ("ACE_Process_Manager::suspend");
-  return -1;
-}
-
-// Resume a single process.
-
-int 
-ACE_Process_Manager::resume (pid_t t_id)
-{
-  ACE_TRACE ("ACE_Process_Manager::resume");
-  return -1;
-}
-
-// Kill a single process.
-int 
-ACE_Process_Manager::kill (pid_t t_id, int signum)
-{
-  ACE_TRACE ("ACE_Process_Manager::kill");
-  return -1;
-}
-
-// Get group ids for a particular process id.
-
-int 
-ACE_Process_Manager::get_grp (pid_t t_id, int &grp_id)
-{
-  ACE_TRACE ("ACE_Process_Manager::get_grp");
-  return -1;
-}
-
-// Set group ids for a particular process id.
-
-int 
-ACE_Process_Manager::set_grp (pid_t t_id, int grp_id)
-{
-  ACE_TRACE ("ACE_Process_Manager::set_grp");
-  return -1;
-}
-
-// Suspend a group of processs.
-
-int
-ACE_Process_Manager::apply_grp (int grp_id, 
-			       PROC_FUNC func,
-			       int arg)
-{
-  ACE_TRACE ("ACE_Process_Manager::apply_grp");
-  return -1;
-}
-
-int 
-ACE_Process_Manager::suspend_grp (int grp_id)
-{
-  ACE_TRACE ("ACE_Process_Manager::suspend_grp");
-  return -1;
-}
-
-// Resume a group of processs.
-
-int 
-ACE_Process_Manager::resume_grp (int grp_id)
-{
-  ACE_TRACE ("ACE_Process_Manager::resume_grp");
-  return -1;
-}
-
-// Kill a group of processs.
-
-int 
-ACE_Process_Manager::kill_grp (int grp_id, int signum)
-{
-  ACE_TRACE ("ACE_Process_Manager::kill_grp");
-  return -1;
-}
-
-int
-ACE_Process_Manager::apply_all (PROC_FUNC func, int arg)
-{
-  ACE_TRACE ("ACE_Process_Manager::apply_all");
-  return -1;
-}
-
-// Resume all processs that are suspended.
-
-int 
-ACE_Process_Manager::resume_all (void)
-{
-  ACE_TRACE ("ACE_Process_Manager::resume_all");
-  return -1;
-}
-
-int 
-ACE_Process_Manager::suspend_all (void)
-{
-  ACE_TRACE ("ACE_Process_Manager::suspend_all");
-  return -1;
-}
-
-int 
-ACE_Process_Manager::kill_all (int sig)
-{
-  ACE_TRACE ("ACE_Process_Manager::kill_all");
-  return -1;
-}
-
-// Must be called when process goes out of scope to clean up its table
-// slot.
-
-void *
-ACE_Process_Manager::exit (void *status)
-{
-  ACE_TRACE ("ACE_Process_Manager::exit");
-  return 0;
 }
 
 // Wait for all the processs to exit.
@@ -345,36 +310,30 @@ int
 ACE_Process_Manager::wait (ACE_Time_Value *timeout)
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
-  return -1;
-}
 
-void
-ACE_Process_Control::dump (void) const
-{
-  ACE_TRACE ("ACE_Process_Control::dump");
-}
+#if defined (ACE_HAS_THREADS)
+  ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-// Initialize the process controller.
+  while (this->current_count_ > 0)
+    if (this->zero_cond_.wait (timeout) == -1)
+      return -1;
+#else
+  ACE_UNUSED_ARG (timeout);
+#endif /* ACE_HAS_THREADS */
 
-ACE_Process_Control::ACE_Process_Control (ACE_Process_Manager *t, 
-					  int insert)
-{
-  ACE_TRACE ("ACE_Process_Control::ACE_Process_Control");
-}
-
-// Automatically kill process on exit.
-
-ACE_Process_Control::~ACE_Process_Control (void)
-{
-  ACE_TRACE ("ACE_Process_Control::~ACE_Process_Control");
-}
-
-// Exit from process (but clean up first).
-
-void *
-ACE_Process_Control::exit (void *exit_status)
-{
-  ACE_TRACE ("ACE_Process_Control::exit");
   return 0;
 }
 
+// Reap a <SIGCHLD> by calling <ACE_OS::waitpid>.
+
+int 
+ACE_Process_Manager::reap (pid_t pid, int *stat_loc, int options)
+{
+  ACE_TRACE ("ACE_Process_Manager::reap");
+
+  pid = ACE_OS::waitpid (pid, stat_loc, options);
+
+  if (pid != -1)
+    this->remove (pid);
+  return pid;
+}
