@@ -188,36 +188,43 @@ main (int argc, char **argv)
     return parse_args_result;
   
   int i = 1;
-  run_test<Foo, Foo_var> (orb, 
-                          IOR[i++], 
-                          env,
-                          0,
-                          Foo_var ());
-  run_test<Outer::Foo, Outer::Foo_var> (orb, 
-                                        IOR[i++], 
-                                        env,
-                                        0,
-                                        Outer::Foo_var ());
-  run_test<Outer::Inner::Foo, Outer::Inner::Foo_var> (orb, 
-                                                      IOR[i++], 
-                                                      env,
-                                                      0,
-                                                      Outer::Inner::Foo_var ());
-  run_test<Foo, Foo_var> (orb, 
-                          IOR[i++], 
-                          env,
-                          0,
-                          Foo_var ());
-  run_test<Outer::Foo, Outer::Foo_var> (orb, 
-                                        IOR[i++], 
-                                        env,
-                                        0,
-                                        Outer::Foo_var ());
-  run_test<Outer::Inner::Foo, Outer::Inner::Foo_var> (orb, 
-                                                      IOR[i++], 
-                                                      env,
-                                                      0,
-                                                      Outer::Inner::Foo_var ());
+
+  run_test (orb, 
+            IOR[i++], 
+            env,
+            (Foo *) 0,
+            Foo_var ());
+
+  run_test (orb, 
+            IOR[i++], 
+            env,
+            (Outer::Foo *) 0,
+            Outer::Foo_var ());
+
+  run_test (orb, 
+            IOR[i++], 
+            env,
+            (Outer::Inner::Foo *) 0,
+            Outer::Inner::Foo_var ());
+
+  run_test (orb, 
+            IOR[i++], 
+            env,
+            (Foo *) 0,
+            Foo_var ());
+
+  run_test (orb, 
+            IOR[i++], 
+            env,
+            (Outer::Foo *) 0,
+            Outer::Foo_var ());
+
+  run_test (orb, 
+            IOR[i++], 
+            env,
+            (Outer::Inner::Foo *) 0,
+            Outer::Inner::Foo_var ());
+
   return 0;
 }
 
