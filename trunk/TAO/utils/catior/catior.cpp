@@ -289,9 +289,9 @@ catior (CORBA::String str,
         // encapsulation...
         CORBA::Octet iiop_version_major, iiop_version_minor;
         if (! (str.read_octet (iiop_version_major)
-              && iiop_version_major == IIOP::MY_MAJOR
+              && iiop_version_major == TAO_IIOP_Profile::DEF_IIOP_MAJOR
               && str.read_octet (iiop_version_minor)
-              && iiop_version_minor <= IIOP::MY_MINOR))
+              && iiop_version_minor <= TAO_IIOP_Profile::DEF_IIOP_MINOR))
           {
             ACE_DEBUG ((LM_DEBUG,
                         "detected new v%d.%d IIOP profile",
