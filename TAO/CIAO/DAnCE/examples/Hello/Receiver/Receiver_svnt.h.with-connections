@@ -319,7 +319,7 @@ namespace Receiver_Impl
   namespace CIAO_GLUE_Hello
   {
     class RECEIVER_SVNT_Export ReceiverHome_Servant
-      : public virtual CIAO::Swapping_Servant_Home_Impl<
+      : public virtual CIAO::Swapping_Home_Servant_Impl<
           POA_Hello::ReceiverHome,
           ::Hello::CCM_ReceiverHome,
           ::Hello::CCM_ReceiverHome_var,
@@ -332,7 +332,7 @@ namespace Receiver_Impl
     {
       public:
       /// Hack for VC6.
-      typedef CIAO::Swapping_Servant_Home_Impl<
+      typedef CIAO::Swapping_Home_Servant_Impl<
           POA_Hello::ReceiverHome,
           ::Hello::CCM_ReceiverHome,
           ::Hello::CCM_ReceiverHome_var,

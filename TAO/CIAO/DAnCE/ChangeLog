@@ -1,3 +1,14 @@
+Fri Mar 11 16:46:17 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * ciao/Swapping_Servant_Home_Impl_Base.cpp:
+        * ciao/Swapping_Servant_Home_Impl_Base.h:
+        * ciao/Swapping_Servant_Home_Impl_T.cpp:
+        * ciao/Swapping_Servant_Home_Impl_T.h:
+
+          Changed the name of the class Swapping_Servant_Home_Impl
+          to Swapping_Home_Servant_Impl, to follow the naming
+          convention.
+
 Fri Mar 11 13:55:17 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
 	* Config_Handlers/DP_Handler.cpp
@@ -6,7 +17,7 @@ Fri Mar 11 13:55:17 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* Config_Handlers/PSPE_Handler.cpp
 
 	Some cosmetic fixes and silenced a couple warnings.
-	
+
 	* Config_Handlers/Basic_Deployment_Data.cpp
 	* Config_Handlers/Basic_Deployment_Data.hpp
 	* Config_Handlers/ccd.cpp
@@ -29,7 +40,7 @@ Fri Mar 11 13:55:17 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	New XSC handlers compiled using the soon to be cut 0.6.1 release of XSC.
 
 	This silences a number of warnings from GCC.
-	
+
 Fri Mar 11 16:29:30 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ciao/Container_Base.h:
@@ -46,7 +57,7 @@ Fri Mar 11 16:29:30 (IST) 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu
 	* ciao/Swapping_Container.h:
 	* examples/Hello/Sender/Sender_svnt.cpp.with-connections:
 
-	  Left @@ comments for Jai and some for Gan. 
+	  Left @@ comments for Jai and some for Gan.
 
 Thu Mar 10 13:46:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
 
@@ -54,8 +65,8 @@ Thu Mar 10 13:46:21 2005  Will Otte <wotte@dre.vanderbilt.edu>
 	* XSCRT/ExtendedTypeInfo.ipp
 
 	  Updated the XSCRT runtime to the latest version to fix warnings
-	  in VC7. 
-	
+	  in VC7.
+
 Thu Mar 10 10:29:32 2005  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * Config_Handlers/BasicSP.cdp:

@@ -16,14 +16,14 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::Swapping_Servant_Home_Impl (
+                    COMP_SVNT>::Swapping_Home_Servant_Impl (
       EXEC * exe,
       Session_Container * c, const char* obj_id, const char* repo_id)
     : Home_Servant_Impl_Base (c),
@@ -39,14 +39,14 @@ namespace CIAO
             typename COMP_EXEC,
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
                     COMP_VAR,
                     COMP_EXEC,
                     COMP_EXEC_VAR,
-                    COMP_SVNT>::~Swapping_Servant_Home_Impl (void)
+                    COMP_SVNT>::~Swapping_Home_Servant_Impl (void)
   {
     const DYNAMIC_SERVANT_MAP_ITERATOR end = 
       this->dynamic_servant_map_.end ();
@@ -75,7 +75,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -110,7 +110,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   Components::CCMObject_ptr
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -137,7 +137,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   COMP *
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -176,7 +176,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   COMP *
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -236,7 +236,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
@@ -264,7 +264,7 @@ namespace CIAO
             typename COMP_EXEC_VAR,
             typename COMP_SVNT>
   void
-  Swapping_Servant_Home_Impl<BASE_SKEL,
+  Swapping_Home_Servant_Impl<BASE_SKEL,
                     EXEC,
                     EXEC_VAR,
                     COMP,
