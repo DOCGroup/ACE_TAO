@@ -18,8 +18,8 @@
 //
 // ============================================================================
 
-ACE_RCSID (be_visitor_operation, 
-           ami_handler_reply_stub_operation_cs, 
+ACE_RCSID (be_visitor_operation,
+           ami_handler_reply_stub_operation_cs,
            "$Id$")
 
 // ************************************************************
@@ -89,7 +89,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   *os << be_nl << "void" << be_nl;
 
   // Get the scope name.
-  be_decl *parent = 
+  be_decl *parent =
     be_scope::narrow_from_scope (node->defined_in ())->decl ();
 
   if (!parent)
@@ -167,7 +167,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "_tao_reply_handler_object =" << be_idt_nl;
 
   *os << parent->full_name ();
-  *os << "::_narrow(_tao_reply_handler ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
+  *os << "::_narrow (_tao_reply_handler ACE_ENV_ARG_PARAMETER);" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl

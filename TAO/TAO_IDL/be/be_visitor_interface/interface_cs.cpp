@@ -258,63 +258,28 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // The _narrow method
-
-  *os << node->full_name () << "_ptr" << be_nl << node->full_name ()
-      << "::_narrow (" << be_idt << be_idt_nl;
-
-  if (node->is_abstract ())
+  if (this->gen_xxx_narrow ("narrow",
+                            node) == false)
     {
-      *os << "CORBA::AbstractBase_ptr";
-    }
-  else
-    {
-      *os << "CORBA::Object_ptr";
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "_narrow () method codegen failed\n"),
+                        -1);
     }
 
-  *os << " _tao_objref" << be_nl
-      << "ACE_ENV_ARG_DECL"
-      << (node->is_local () ? "_NOT_USED" : "")
-      << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl;
-
-  if (node->is_local ())
+  // The _unchecked_narrow method
+  if (this->gen_xxx_narrow ("unchecked_narrow",
+                            node) == false)
     {
-      *os << "if (CORBA::is_nil (_tao_objref))" << be_idt_nl
-          << "{" << be_idt_nl
-          << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
-          << "}" << be_uidt_nl << be_nl
-          << node->local_name () << "_ptr proxy =" << be_idt_nl
-          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref);"
-          << be_uidt_nl << be_nl
-          << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
-          << "}" << be_nl << be_nl;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_interface_cs::"
+                         "visit_interface - "
+                         "_unchecked_narrow () method codegen"
+                         " failed\n"),
+                        -1);
     }
-  else
-    {
-      *os << "return" << be_idt_nl;
 
-      if (!node->is_abstract ())
-        {
-          *os << "TAO::Narrow_Utils<"
-              << node->local_name () << ">::narrow (";
-        }
-      else
-        {
-          *os << "TAO::AbstractBase_Narrow_Utils<"
-              << node->local_name () << ">::narrow (";
-        }
-
-      *os << be_idt << be_idt_nl
-          << "_tao_objref," << be_nl
-          << "\"" << node->repoID () << "\"," << be_nl
-          << node->flat_client_enclosing_scope ()
-          << node->base_proxy_broker_name ()
-          << "_Factory_function_pointer" << be_nl
-          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_uidt << be_uidt << be_uidt_nl
-          << "}" << be_nl << be_nl;
-    }
 
   // The _duplicate method
   *os << node->full_name () << "_ptr" << be_nl
@@ -476,6 +441,73 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   return 0;
 }
 
+bool
+be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
+                                         be_interface *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+
+  *os << node->full_name () << "_ptr" << be_nl
+      << node->full_name () << "::_" << pre << " ("
+      << be_idt << be_idt_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr";
+    }
+
+  *os << " _tao_objref" << be_nl
+      << "ACE_ENV_ARG_DECL"
+      << (node->is_local () ? "_NOT_USED" : "")
+      << be_uidt_nl
+      << ")" << be_uidt_nl
+      << "{" << be_idt_nl;
+
+  if (node->is_local ())
+    {
+      *os << "if (CORBA::is_nil (_tao_objref))" << be_idt_nl
+          << "{" << be_idt_nl
+          << "return " << node->local_name () << "::_nil ();" << be_uidt_nl
+          << "}" << be_uidt_nl << be_nl
+          << node->local_name () << "_ptr proxy =" << be_idt_nl
+          << "dynamic_cast<" << node->local_name () << "_ptr> (_tao_objref);"
+          << be_uidt_nl << be_nl
+          << "return " << node->local_name () << "::_duplicate (proxy);" << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+  else
+    {
+      *os << "return" << be_idt_nl;
+
+      if (!node->is_abstract ())
+        {
+          *os << "TAO::Narrow_Utils<"
+              << node->local_name () << ">::" << pre << " (";
+        }
+      else
+        {
+          *os << "TAO::AbstractBase_Narrow_Utils<"
+              << node->local_name () << ">::" << pre <<" (";
+        }
+
+      *os << be_idt << be_idt_nl
+          << "_tao_objref," << be_nl
+          << "\"" << node->repoID () << "\"," << be_nl
+          << node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer" << be_nl
+          << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+          << ");" << be_uidt << be_uidt << be_uidt_nl
+          << "}" << be_nl << be_nl;
+    }
+
+  return true;
+}
+
 int
 be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
                                                   be_interface *base,
@@ -538,4 +570,3 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
 
   return 0;
 }
-
