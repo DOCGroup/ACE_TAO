@@ -72,7 +72,7 @@
 
 // COM stuff
 #include "tao/compat/objbase.h"
-#include "tao/compat/initguid.h"
+// #include "tao/compat/initguid.h"
 
 // For some reason, PC compilers don't implement "natural" alignment,
 // but only use fixed alignment policies.  The following #pragmas
