@@ -137,9 +137,6 @@ ORB_CORE_FILES = \
   LF_Follower.cpp \
   LF_Follower_Auto_Ptr.cpp \
   LF_Follower_Auto_Adder.cpp \
-  Reactor_Registry.cpp \
-  Single_Reactor.cpp \
-  Reactor_Per_Priority.cpp \
   params.cpp \
   Resource_Factory.cpp \
   Server_Strategy_Factory.cpp \
@@ -176,9 +173,9 @@ ORB_CORE_FILES = \
   TAO_Singleton_Manager.cpp \
   DLL_ORB.cpp \
   Endpoint_Selector_Factory.cpp \
-  Thread_Lane_Resources \
-  Thread_Lane_Resources_Manager \
-  Default_Thread_Lane_Resources_Manager
+  Thread_Lane_Resources.cpp \
+  Thread_Lane_Resources_Manager.cpp \
+  Default_Thread_Lane_Resources_Manager.cpp
 
 
 # Build a libtool library, libTAO.la for installation in libdir.
@@ -346,15 +343,12 @@ HEADER_FILES = \
   Principal.h \
   Profile.h \
   Protocol_Factory.h \
-  Reactor_Per_Priority.h \
-  Reactor_Registry.h \
   Resource_Factory.h \
   Sequence.h \
   Sequence_T.h \
   Servant_Base.h \
   Server_Strategy_Factory.h \
   Services.h \
-  Single_Reactor.h \
   Stub.h \
   Sync_Strategies.h \
   TAO.h \
@@ -485,13 +479,10 @@ INLINE_FILES = \
   PollableC.i \
   PollableS.i \
   PollableS_T.i \
-  Pool_Per_Endpoint.i \
   Principal.i \
   Priority_Mapping.i \
   Profile.i \
   RT_Current.i \
-  Reactor_Per_Priority.i \
-  Reactor_Registry.i \
   Reply_Dispatcher.i \
   Synch_Reply_Dispatcher.i \
   Asynch_Reply_Dispatcher.i \
@@ -499,7 +490,6 @@ INLINE_FILES = \
   Sequence_T.i \
   Servant_Base.i \
   Services.i \
-  Single_Reactor.i \
   Stub.i \
   Sync_Strategies.i \
   TAO_Singleton.inl \

@@ -5,8 +5,8 @@
 #include "RT_Mutex.h"
 #include "Priority_Mapping_Manager.h"
 #include "tao/ORB_Core.h"
-#include "RTCORBA/Thread_Pool.h"
-#include "RTCORBA/RT_Thread_Lane_Resources_Manager.h"
+#include "tao/RTCORBA/Thread_Pool.h"
+#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "RT_ORB.i"

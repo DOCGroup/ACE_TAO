@@ -56,6 +56,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/IFR_BaseC.o .obj/IFR_BaseC.so .shobj/IFR_BaseC.o .shobj/IFR_BaseC.so: IFR_BaseC.cpp IFR_BaseC.h \
  $(ACE_ROOT)/ace/pre.h \
  ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -338,6 +341,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/IFR_BasicC.o .obj/IFR_BasicC.so .shobj/IFR_BasicC.o .shobj/IFR_BasicC.so: IFR_BasicC.cpp IFR_BasicC.h \
  $(ACE_ROOT)/ace/pre.h \
  IFR_BaseC.h ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -620,6 +626,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/IFR_ExtendedC.o .obj/IFR_ExtendedC.so .shobj/IFR_ExtendedC.o .shobj/IFR_ExtendedC.so: IFR_ExtendedC.cpp IFR_ExtendedC.h \
  $(ACE_ROOT)/ace/pre.h \
  IFR_BasicC.h IFR_BaseC.h ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -902,6 +911,9 @@ CPPFLAGS += -I$(TAO_ROOT)
 .obj/IFR_ComponentsC.o .obj/IFR_ComponentsC.so .shobj/IFR_ComponentsC.o .shobj/IFR_ComponentsC.so: IFR_ComponentsC.cpp IFR_ComponentsC.h \
  $(ACE_ROOT)/ace/pre.h \
  ifr_client_export.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1188,6 +1200,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/IFR_Client_Adapter.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
+ $(ACE_ROOT)/ace/config-sunos5.7.h \
+ $(ACE_ROOT)/ace/config-sunos5.6.h \
+ $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
