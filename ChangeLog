@@ -1,3 +1,35 @@
+Mon Jun 19 19:44:05 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/Makefile (ssl):
+
+	  Fixed conditional so that the SSL wrappers are built when SSL is
+	  not explicitly disabled, i.e. when the "ssl" make variable is
+	  not equal to zero.  Note that the default is not to build the
+	  SSL wrappers.
+	  
+	* ace/OS.i (thr_yield):
+
+	  Corrected typo in comment.
+
+	* m4/platform.m4 (ACE_CPPFLAGS):
+
+	  Define necessary feature test macros on the command line, not in
+	  the configuration header.  This allows ACE applications to
+	  utilize those macro definitions without having to worry about
+	  header inclusion ordering.
+
+	  (ACE_DEFAULT_SELECT_REACTOR_SIZE):
+
+          It is no longer necessary to hard-code the default reactor size
+          for older Linux kernels that had a file descriptor limit less
+          than FD_SETSIZE since the Select Reactor now falls back on the
+          run-time file descriptor limit for the given process.
+
+	  (ACE_HAS_IRIX62_THREADS):
+
+	  Removed redundant definition.  Only define
+	  ACE_HAS_IRIX62_THREADS for IRIX 6.2.
+
 Mon Jun 19 17:33:28 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Removed the special case check for
