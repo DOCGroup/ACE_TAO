@@ -1,3 +1,8 @@
+Mon Oct 12 09:23:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * netsvcs/lib/Name_Handler.cpp (lists_entries): one more try
+          to fix the egcs 1.1b bug:  removed the ptmf temporary entirely.
+
 Sun Oct 11 17:33:22 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Synch.cpp: Fixed a typo, s/lock_/process_lock_/.  Thanks to
@@ -11,7 +16,7 @@ Sun Oct 11 08:19:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * netsvcs/lib/Name_Handler.cpp (lists_entries): replaced
           switch statement with a multi-branch if statement, to
-          avoid Internal compiler error 980331 with egcs 1.1 (2.91.57)
+          avoid Internal compiler error 980331 with egcs 1.1b (2.91.57)
           (on Linux/alpha).
 
 Sat Oct 10 18:30:02 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
