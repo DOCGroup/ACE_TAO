@@ -1,6 +1,18 @@
+Wed Jun 23 20:23:01 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAO/MT_Cubit/run_test.pl:
+
+	  Increased the client time-out value from 60 seconds to 120
+	  seconds since the client may take longer to finish on heavily
+	  loaded machines.
+
+	  Minor cosmetic update (-ORBgioplite --> -ORBGIOPlite) to be more 
+	  consistent with the "published" TAO ORB options.  Both will
+	  work, however.
+
 Wed Jun 23 17:38:52 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/tests/ImplRepo/IR_Helper.cpp:Fixed warnings in the build.
+	* orbsvcs/tests/ImplRepo/IR_Helper.cpp: Fixed warnings in the build.
 
 Wed Jun 23 19:15:48 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
 
