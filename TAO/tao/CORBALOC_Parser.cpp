@@ -369,39 +369,38 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point,
   if (!end_point || !*end_point)
     return -1; // Failure
 
+  const char *protocol[] = {"rir:"};
+  size_t slot = ACE_OS::strchr (end_point, '/') - end_point;
+  size_t colon_slot = ACE_OS::strchr (end_point, ':') - end_point;
+  size_t len0 = ACE_OS::strlen (protocol[0]);
+
   // Lets first check if it is a valid protocol:
-  if (!(ACE_OS::strncmp (end_point,
-                       iiop_prefix,
-                       sizeof iiop_prefix - 1) == 0) ||
-
-      (ACE_OS::strncmp (end_point,
-                        shmiop_prefix,
-                        sizeof shmiop_prefix - 1) == 0) ||
-
-      (ACE_OS::strncmp (end_point,
-                        uiop_prefix,
-                        sizeof uiop_prefix - 1) == 0) ||
-
-      (ACE_OS::strncmp (end_point,
-                        rir_prefix,
-                        sizeof rir_prefix - 1) == 0))
+  if (colon_slot != 0 && 
+      !((ACE_OS::strncmp (end_point,
+                         iiop_prefix,
+                         sizeof iiop_prefix - 1) == 0) ||
+      
+        (ACE_OS::strncmp (end_point,
+                          shmiop_prefix,
+                          sizeof shmiop_prefix - 1) == 0) ||
+        
+        (ACE_OS::strncmp (end_point,
+                          uiop_prefix,
+                          sizeof uiop_prefix - 1) == 0) ||
+      
+        (ACE_OS::strncmp (end_point,
+                          rir_prefix,
+                          sizeof rir_prefix - 1) == 0)))
     {
-
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) ")
                   ACE_TEXT ("no usable transport protocol ")
                   ACE_TEXT ("was found.\n")));
-
+      
       ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
                                           CORBA::COMPLETED_NO),
                         -1);
     }
-
-  const char *protocol[] = {"rir:"};
-
-  size_t slot = ACE_OS::strchr (end_point, '/') - end_point;
-
-  size_t len0 = ACE_OS::strlen (protocol[0]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
@@ -420,6 +419,8 @@ TAO_CORBALOC_Parser::parse_string (const char *ior,
 {
   /// MProfile which consists of the profiles for each endpoint.
   TAO_MProfile mprofile;
+ 
+  cout << __FILE__ << __LINE__ << endl;
 
   // Skip the prefix.  We know it is there because this method is only
   // called if match_prefix() returns 1.
