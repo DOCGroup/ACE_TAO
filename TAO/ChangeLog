@@ -1,3 +1,11 @@
+Wed Jul 31 16:04:33 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Makefile (DIRS):
+
+	  Temporarily removed LoadBalancing test directory from the list
+	  of directories to make.  It depends on the old Load Balancer
+	  which is in the process of being phased out.
+
 Wed Jul 31 17:53:40 2002  Irfan Pyarali  <irfan@oomworks.com>
 
 	* tests\RTCORBA\Thread_Pool\run_test.pl (run_clients): Fixed an
