@@ -121,7 +121,7 @@ else
 ACELIB      = -lACEns
 endif
 
-LIBS	    += -ltli_r -ldl
+LIBS	    += $(ACELIB) -ltli_r -ldl
 
 # Default OCCFLAGS builds common code for all RS/6000 architectures but
 # this can be set to optimize for your particular computer. The commented
