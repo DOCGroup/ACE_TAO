@@ -231,7 +231,8 @@ Cubit_Client::cube_union (void)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "cube union ..."));
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG, "cube union ..."));
       u.l (u.l () * u.l () * u.l ()) ;
 
       if (u.l () != r.l ())
@@ -269,7 +270,8 @@ Cubit_Client::cube_union (void)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, "cube union ..."));
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG, "cube union ..."));
       u.cm ().l = u.cm ().l * u.cm ().l * u.cm ().l;
       u.cm ().s = u.cm ().s * u.cm ().s * u.cm ().s;
       u.cm ().o = u.cm ().o * u.cm ().o * u.cm ().o;
@@ -308,10 +310,11 @@ Cubit_Client::cube_short (int i)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "cube short:  %d --> %d\n",
-                  arg_short,
-                  ret_short));
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "cube short:  %d --> %d\n",
+                    arg_short,
+                    ret_short));
       arg_short = arg_short * arg_short * arg_short;
 
       if (arg_short != ret_short)
@@ -386,8 +389,10 @@ Cubit_Client::cube_octet (int i)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "cube octet:  %d --> %d\n", arg_octet, ret_octet));
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "cube octet:  %d --> %d\n",
+                    arg_octet, ret_octet));
       arg_octet = arg_octet * arg_octet * arg_octet;
       if (arg_octet != ret_octet) {
         ACE_DEBUG ((LM_DEBUG,
@@ -423,9 +428,11 @@ Cubit_Client::cube_long (int i)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "cube long:  %d --> %d\n",
-                  arg_long, ret_long));
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "cube long:  %d --> %d\n",
+                    arg_long,
+                    ret_long));
       arg_long = arg_long * arg_long * arg_long;
 
       if (arg_long != ret_long)
@@ -467,8 +474,9 @@ Cubit_Client::cube_struct (int i)
     }
   else
     {
-      ACE_DEBUG ((LM_DEBUG,
-                  "cube struct ..."));
+      if (TAO_debug_level > 2)
+        ACE_DEBUG ((LM_DEBUG,
+                    "cube struct ..."));
       arg_struct.l = arg_struct.l * arg_struct.l * arg_struct.l;
       arg_struct.s = arg_struct.s * arg_struct.s * arg_struct.s;
       arg_struct.o = arg_struct.o * arg_struct.o * arg_struct.o;

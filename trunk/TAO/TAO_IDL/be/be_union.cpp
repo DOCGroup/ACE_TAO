@@ -647,7 +647,7 @@ be_union::gen_encapsulation (void)
   TAO_NL  nl;        // end line
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
   long i, arrlen;
-  long *arr;  // an array holding string names converted to array of longs
+  ACE_UINT32 *arr;
   be_type *discrim;
 
   cs = cg->client_stubs ();

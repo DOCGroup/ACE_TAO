@@ -147,7 +147,7 @@ protected:
   virtual void compute_prefix (void);
   // computes the prefix for the repoID
 
-  virtual int tc_name2long (const char *name, long *&, long &);
+  virtual int tc_name2long (const char *name, ACE_UINT32 *&, long &);
   // name represented as a padded array of longs
 
   virtual long repoID_encap_len (void);
