@@ -1,30 +1,35 @@
+Thu Jun 18 19:32:30 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Token.cpp (dump): commented out print of owner_.  Is
+          there a portable way to print an ACE_thread_t via ACE_DEBUG?
+
 Thu Jun 18 18:46:00 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* ace/Timeprobe.h: 
-	* ace/Timeprobe_T.h: 
-	* ace/Timeprobe_T.cpp: 
-	  Added methods to print the absolute values, this can be used to
-	  mix the results of several processes: por example on Sparcs the
-	  high-res timer is a CPU register so the value is consistent
-	  across processes, there are some potential problems with
-	  multiple CPUs, but that's not our case.
+        * ace/Timeprobe.h:
+        * ace/Timeprobe_T.h:
+        * ace/Timeprobe_T.cpp:
+          Added methods to print the absolute values, this can be used to
+          mix the results of several processes: por example on Sparcs the
+          high-res timer is a CPU register so the value is consistent
+          across processes, there are some potential problems with
+          multiple CPUs, but that's not our case.
 
 Thu Jun 18 16:25:28 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/Threads/task_five.cpp (main): Extracted out the body of
- 	  the test loop so that the delete[] gets called everytime the
- 	  body gets executed.
+        * examples/Threads/task_five.cpp (main): Extracted out the body of
+          the test loop so that the delete[] gets called everytime the
+          body gets executed.
 
-	* ace/Thread_Manager.cpp (ACE_EXECUTE_OP,kill): We need to guard
- 	  against non-existing target thread after searching the thread
- 	  table.  Thanks to Savas Parastatidis
- 	  <Savas.Parastatidis@ncl.ac.uk> for noticing the problem.
+        * ace/Thread_Manager.cpp (ACE_EXECUTE_OP,kill): We need to guard
+          against non-existing target thread after searching the thread
+          table.  Thanks to Savas Parastatidis
+          <Savas.Parastatidis@ncl.ac.uk> for noticing the problem.
 
 Thu Jun 18 09:23:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/config-win32-common.h: Fixed the inclusion of winsock
- 	  related files. Thanks to Ernesto Guisado
- 	  <eguisado@saincotrafico.com> for suggesting this.
+        * ace/config-win32-common.h: Fixed the inclusion of winsock
+          related files. Thanks to Ernesto Guisado
+          <eguisado@saincotrafico.com> for suggesting this.
 
 Wed Jun 17 22:47:50 1998  David L. Levine  <levine@cs.wustl.edu>
 
