@@ -37,6 +37,7 @@ Test_Var_Struct::Test_Var_Struct (void)
 Test_Var_Struct::~Test_Var_Struct (void)
 {
   CORBA::string_free (this->opname_);
+  this->opname_ = 0;
   // the other data members will be freed as they are "_var"s and objects
   // (rather than pointers to objects)
 }
@@ -57,7 +58,7 @@ Test_Var_Struct::init_parameters (Param_Test_ptr objref,
   ACE_UNUSED_ARG (env);
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) gen->gen_long ();
+  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the sequence
   this->in_.dummy1 = gen->gen_string ();
@@ -105,11 +106,11 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
                     CORBA::B_FALSE);
 
   CORBA::Any inout_arg (Param_Test::_tc_Var_Struct, 
-                        (void *) &this->inout_.in (), 
+                        &this->inout_.inout (), 
                         CORBA::B_FALSE);
 
   CORBA::Any out_arg (Param_Test::_tc_Var_Struct, 
-                      this->dii_out_, 
+                      0,//this->dii_out_, 
                       CORBA::B_FALSE);
 
   // add parameters
@@ -119,33 +120,36 @@ Test_Var_Struct::add_args (CORBA::NVList_ptr param_list,
 
   // add return value
   retval->item (0, env)->value ()->replace (Param_Test::_tc_Var_Struct,
-                                            0,
+                                            0,//this->dii_ret_,
                                             CORBA::B_FALSE, // does not own
                                             env);
   return 0;
 }
 
 CORBA::Boolean
-Test_Var_Struct::check_validity (void)
+Test_Var_Struct::check_validity_engine (Param_Test::Var_Struct the_in,
+                                        Param_Test::Var_Struct the_inout,
+                                        Param_Test::Var_Struct the_out,
+                                        Param_Test::Var_Struct the_ret)
 {
   CORBA::Boolean flag = 0;
-  if ((!ACE_OS::strcmp (this->in_.dummy1, this->inout_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->out_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy1, this->ret_->dummy1)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->inout_->dummy2)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->out_->dummy2)) &&
-      (!ACE_OS::strcmp (this->in_.dummy2, this->ret_->dummy2)) &&
-      (this->in_.seq.length () == this->inout_->seq.length ()) &&
-      (this->in_.seq.length () == this->out_->seq.length ()) &&
-      (this->in_.seq.length () == this->ret_->seq.length ()))
+  if ((!ACE_OS::strcmp (the_in.dummy1, the_inout.dummy1)) &&
+      (!ACE_OS::strcmp (the_in.dummy1, the_out.dummy1)) &&
+      (!ACE_OS::strcmp (the_in.dummy1, the_ret.dummy1)) &&
+      (!ACE_OS::strcmp (the_in.dummy2, the_inout.dummy2)) &&
+      (!ACE_OS::strcmp (the_in.dummy2, the_out.dummy2)) &&
+      (!ACE_OS::strcmp (the_in.dummy2, the_ret.dummy2)) &&
+      (the_in.seq.length () == the_inout.seq.length ()) &&
+      (the_in.seq.length () == the_out.seq.length ()) &&
+      (the_in.seq.length () == the_ret.seq.length ()))
     {
       flag = 1; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < the_in.seq.length () && flag; i++)
         {
-          if (ACE_OS::strcmp (this->in_.seq[i], this->inout_->seq[i]) ||
-              ACE_OS::strcmp (this->in_.seq[i], this->out_->seq[i]) ||
-              ACE_OS::strcmp (this->in_.seq[i], this->ret_->seq[i]))
+          if (ACE_OS::strcmp (the_in.seq[i], the_inout.seq[i]) ||
+              ACE_OS::strcmp (the_in.seq[i], the_out.seq[i]) ||
+              ACE_OS::strcmp (the_in.seq[i], the_ret.seq[i]))
             // not equal
             flag = 0;
         }
@@ -154,29 +158,26 @@ Test_Var_Struct::check_validity (void)
 }
 
 CORBA::Boolean
+Test_Var_Struct::check_validity (void)
+{
+  return check_validity_engine (this->in_,
+                                this->inout_.in (),
+                                this->out_.in (),
+                                this->ret_.in ());
+}
+
+CORBA::Boolean
 Test_Var_Struct::check_validity (CORBA::Request_ptr req)
 {
   CORBA::Environment env;
 
-#if 0
-  this->inout_ = new Param_Test::Var_Struct (*(Param_Test::Var_Struct *) req->arguments
-                                         ()->item (1, env)->value ()->value ());
-  this->out_ = new Param_Test::Var_Struct (*(Param_Test::Var_Struct *) req->arguments
-                                       ()->item (2, env)->value ()->value ());
-  this->ret_ = new Param_Test::Var_Struct (*(Param_Test::Var_Struct *)req->result
-                                       ()->value ()->value ());
-#endif
+  *req->arguments ()->item (2, env)->value () >>= this->dii_out_;
+  *req->result ()->value () >>= this->dii_ret_;
 
-  Param_Test::Var_Struct *inout_holder, *out_holder, *ret_holder;
-  *req->arguments ()->item (1, env)->value () >>= inout_holder;
-  *req->arguments ()->item (2, env)->value () >>= out_holder;
-  *req->result ()->value () >>= ret_holder;
-
-//  this->inout_ = inout_holder;
-  this->out_ = out_holder;
-  this->ret_ = ret_holder;
-
-  return this->check_validity ();
+  return this->check_validity_engine (this->in_,
+                                      this->inout_.in (),
+                                      *this->dii_out_,
+                                      *this->dii_ret_);
 }
 
 void
