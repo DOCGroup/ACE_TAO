@@ -26,7 +26,7 @@ my(%vals)  = ('ACE_ROOT'     => '$(top_srcdir)',
               'TAO_ROOT'     => '$(top_srcdir)',
               'ACE_BUILDDIR' => '$(top_builddir)',
               'TAO_BUILDDIR' => '$(top_builddir)',
-              'TAO_IDL'      => '$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl' . "\n" .
+              'TAO_IDL'      => 'ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl' . "\n" .
                                 'TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf',
              );
 my(%addon) = ('ACE_ROOT'     => {'TAO_ROOT'     => '/..',
