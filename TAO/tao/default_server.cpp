@@ -107,11 +107,12 @@ TAO_Default_Server_Strategy_Factory::tokenize (char *flag_string)
 int
 TAO_Default_Server_Strategy_Factory::init (int argc, char *argv[])
 {
-  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance();
+  TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
   
-  if ((this->parse_args (argc, argv) == 0)
-      && (reactive_strategy_.open (orb_core->reactor ()) == 0)
-      && (threaded_strategy_.open (orb_core->thr_mgr (), this->thread_flags_) == 0))
+  if (this->parse_args (argc, argv) == 0
+      && reactive_strategy_.open (orb_core->reactor ()) == 0
+      && threaded_strategy_.open (orb_core->thr_mgr (),
+				   this->thread_flags_) == 0)
     return 0;
   else
     return -1;

@@ -10,8 +10,8 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
   // The following are based on the units of global_scale_factor_
   // being 1/microsecond.  Therefore, dividing by it converts
   // clock ticks to microseconds.
-  tv.sec ((long) (hrt / global_scale_factor_) / 1000000);
-  tv.usec ((long) (hrt / global_scale_factor_) % 1000000);
+  tv.sec ((long) (hrt / global_scale_factor_) / ACE_ONE_SECOND_IN_USECS);
+  tv.usec ((long) (hrt / global_scale_factor_) % ACE_ONE_SECOND_IN_USECS);
 }
 
 
@@ -45,7 +45,7 @@ ACE_High_Res_Timer::gettime (void)
       ACE_Time_Value tv = ACE_OS::gettimeofday ();
       // Return the time in microseconds because the global_scale_factor_
       // is 1.
-      return tv.sec () * 1000000 + tv.usec ();
+      return tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ();
     }
 #endif /* ACE_WIN32 */
 

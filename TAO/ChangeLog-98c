@@ -1,3 +1,26 @@
+Sun Oct 12 15:38:35 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao/orbobj.cpp (perform_work): Updated the run() and perform_work()
+	  methods to take optional ACE_Time_Value *'s and to return error
+	  flags if things go wrong.
+
+	* tao/orbobj.h (CORBA_ORB): Changed the set_up_for_listening()
+ 	  call to open(), which is more consistent with other usage in
+ 	  ACE/TAO.
+
+	* tao/orbobj: Changed the name client_acceptor_ to peer_acceptor_
+ 	  to reflect the fact that the connection model is more generic
+ 	  than the notion of client/server interactions (which really take
+ 	  place as the result of particular communication roles).
+
+	* tao/corba.h: Moved the order of #includes around so that
+	  "connect.h" is included before "client_factory.h"
+
+	* tao/connect.h: Moved the typedef of the ACE_Strategy_Connector<>
+ 	  from the TAO_Client_Strategy_Factory into the global space and
+ 	  renamed it TAO_CONNECTOR file so that it will be equivalent with
+ 	  the TAO_ACCEPTOR.
+
 Thu Oct  9 23:17:37 1997  Douglas C. Schmidt  <schmidt@merengue.cs.wustl.edu>
 
 	* tao/giop.cpp (invoke): If an error occurs, make sure to mark the

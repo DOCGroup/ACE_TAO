@@ -52,7 +52,7 @@ public:
 				      ACE_SYNCH_RW_MUTEX>
           CACHED_CONNECT_STRATEGY;
 
-  virtual TAO_Client_Strategy_Factory::CONNECTOR *connector (void);
+  virtual TAO_CONNECTOR *connector (void);
   // Return a pointer to a connector using appropriate strategies.
 
   // = Service Configurator hooks.
@@ -64,8 +64,6 @@ public:
   
 private:
 
-  // @@ Chris, please add comments to these members.
-
 #if defined (TAO_HAS_CLIENT_CONCURRENCY)
   // @@ Chris, shouldn't this always be "potentially" the case, even
   // if a client didn't want to use it?
@@ -73,7 +71,9 @@ private:
   CONCURRENCY_STRATEGY *concurrency_strategy_;
 #endif /* TAO_HAS_CLIENT_CONCURRENCY */
 
-  CONNECTOR connector_;
+  // @@ Chris, please add comments to these members.
+
+  TAO_CONNECTOR connector_;
 
   NULL_CREATION_STRATEGY null_creation_strategy_;
 

@@ -107,10 +107,6 @@ typedef const struct timespec * ACE_TIMESPEC_PTR;
 #include /**/ <malloc.h>
 #endif /* ACE_LACKS_MALLOC_H */
 
-// Don't put this in the class since it will expand the size!  Also,
-// can't make this an enum due to compiler bugs on some platforms...
-static const long ONE_SECOND = 1000000L;
-
 // Returns the value of the object as a timeval.
 
 ACE_INLINE
@@ -143,7 +139,7 @@ ACE_Time_Value::set (double d)
   // ACE_TRACE ("ACE_Time_Value::set");
   long l = (long) d;
   this->tv_.tv_sec = l;
-  this->tv_.tv_usec = (long) ((d - (double) l) * 1000000);
+  this->tv_.tv_usec = (long) ((d - (double) l) * ACE_ONE_SECOND_IN_USECS);
   this->normalize ();
 }
 
@@ -158,9 +154,11 @@ ACE_Time_Value::set (const timespec_t &tv)
   // ACE_TRACE ("ACE_Time_Value::set");
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   this->tv_.tv_sec = tv.tv_sec;
+  // Convert nanoseconds into microseconds.
   this->tv_.tv_usec = tv.tv_nsec / 1000;
 #else
   this->tv_.tv_sec = tv.ts_sec;
+  // Convert nanoseconds into microseconds.
   this->tv_.tv_usec = tv.ts_nsec / 1000;
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
 
@@ -242,9 +240,11 @@ ACE_Time_Value::operator timespec_t () const
   timespec_t tv;
 #if ! defined(ACE_HAS_BROKEN_TIMESPEC_MEMBERS)
   tv.tv_sec = this->tv_.tv_sec;
+  // Convert nanoseconds into microseconds.
   tv.tv_nsec = this->tv_.tv_usec * 1000;
 #else
   tv.ts_sec = this->tv_.tv_sec;
+  // Convert nanoseconds into microseconds.
   tv.ts_nsec = this->tv_.tv_usec * 1000;
 #endif /* ACE_HAS_BROKEN_TIMESPEC_MEMBERS */
   return tv;
@@ -2241,7 +2241,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 #elif defined (VXWORKS)
   int ticks_per_sec = ::sysClkRateGet ();
   int ticks = tv.sec() * ticks_per_sec +
-              tv.usec () * ticks_per_sec / 1000000;
+              tv.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::semTake (s->sema_, ticks), ace_result_), int, -1);
 #endif /* ACE_HAS_STHREADS */
 #else
@@ -5518,7 +5518,7 @@ ACE_OS::ualarm (u_int usecs, u_int interval)
   return ::ualarm (usecs, interval);
 #elif !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (interval);
-  return ::alarm (usecs * 1000000);
+  return ::alarm (usecs * ACE_ONE_SECOND_IN_USECS);
 #else
   ACE_UNUSED_ARG (usecs);
   ACE_UNUSED_ARG (interval);
@@ -5533,8 +5533,8 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
   // ACE_TRACE ("ACE_OS::ualarm");
 
 #if defined (ACE_HAS_UALARM)
-  u_int usecs = (tv.sec () * 1000000) + tv.usec ();
-  u_int interval = (tv_interval.sec () * 1000000) + tv_interval.usec ();
+  u_int usecs = (tv.sec () * ACE_ONE_SECOND_IN_USECS) + tv.usec ();
+  u_int interval = (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
   return ::ualarm (usecs, interval);
 #elif !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (tv_interval);
@@ -6913,7 +6913,7 @@ ACE_OS::gethrtime (void)
   ::read_real_time(&tb, TIMEBASE_SZ);
   ::time_base_to_time(&tb, TIMEBASE_SZ);
 
-  return tb.tb_high * 1000000000L + tb.tb_low;
+  return tb.tb_high * ACE_ONE_SECOND_IN_NSECS + tb.tb_low;
 #elif defined (linux)
 # if defined (ACE_HAS_PENTIUM)
   ACE_hrtime_t now;
@@ -6938,7 +6938,7 @@ ACE_OS::gethrtime (void)
   return now;
 # else
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
-  return now.msec () * 1000000L /* nanoseconds/millsecond */;
+  return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
 # endif /* ACE_HAS_PENTIUM || __alpha */
 #elif defined (ACE_WIN32) && defined (ACE_HAS_PENTIUM)
   // Issue the RDTSC assembler instruction to get the number of clock
@@ -6977,10 +6977,10 @@ ACE_OS::gethrtime (void)
 
   ACE_OS::clock_gettime (CLOCK_REALTIME, &ts);
 
-  return ts.tv_sec * 1000000000 + ts.tv_nsec;
+  return ts.tv_sec * ACE_ONE_SECOND_IN_NSECS + ts.tv_nsec;
 #else
   const ACE_Time_Value now = ACE_OS::gettimeofday ();
-  return now.msec () * 1000000L /* nanoseconds/millsecond */;
+  return now.msec () * 1000000L /* Turn millseconds into nanoseconds */;
 #endif /* ACE_HAS_HI_RES_TIMER */
 }
 
@@ -7194,7 +7194,7 @@ ACE_OS::sleep (u_int seconds)
 {
   // ACE_TRACE ("ACE_OS::sleep");
 #if defined (ACE_WIN32)
-  ::Sleep (seconds * 1000);
+  ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
   return 0;
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
