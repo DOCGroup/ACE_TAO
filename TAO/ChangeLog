@@ -1,3 +1,64 @@
+Mon Jul 21 15:41:09 2003  Pradeep Gore  <pradeep@oomworks.com>
+
+	Added an example to show how to use ThreadPools with
+	RT-Notification.
+	
+	* orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer.dsp:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer.h:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Consumer_Client.h:
+	* orbsvcs/examples/Notify/ThreadPool/Makefile:
+	* orbsvcs/examples/Notify/ThreadPool/ORB_Objects.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/ORB_Objects.h:
+	* orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
+	* orbsvcs/examples/Notify/ThreadPool/README:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.dsp:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier.h:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+	* orbsvcs/examples/Notify/ThreadPool/Supplier_Client.h:
+	* orbsvcs/examples/Notify/ThreadPool/ThreadPool.dsp:
+	* orbsvcs/examples/Notify/ThreadPool/ThreadPool.mpc:
+	* orbsvcs/examples/Notify/ThreadPool/client.conf:
+	* orbsvcs/examples/Notify/ThreadPool/notify.conf:
+	* orbsvcs/examples/Notify/ThreadPool/run_test.pl:
+
+	  Added. See README for details.
+
+	* orbsvcs/examples/Notify/Notify_Examples.dsw:
+	* orbsvcs/examples/Notify/Makefile:
+	
+	  Added ThreadPool example
+	
+	* orbsvcs/orbsvcs/Event_Forwarder.idl:
+
+  	  Make all the forwarding methods as oneways.
+	  This change is due to the following reason:
+	  When the event receiving thread makes a two-way invocation to
+	  transfer the event propagation to the dispatching thread, the
+	  receving thread gets blocked waiting for the 2-way to complete,
+	  essentially making the event propagation synchronous. By making
+	  this method a oneway, the receving thread can make progress on
+	  other events entering the system while the dispatching thread
+	  continues with its dispatching efforts.
+	  
+ 	* orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+ 	* orbsvcs/orbsvcs/Notify/POA_Helper.h:
+
+	  Moved the <id_factory_> helper member to the
+	  TAO_Notify_POA_Helper::activate method scope as a static
+	  variable. This change allows a Notification wide unique ID to be
+	  assigned to each object created. This solves the pesky problem
+	  of say e.g. 2 different POA's in the Notification generating the same
+	  ID for its Proxy Objects. Though this is consistent with the
+	  spec., in practice it is more convinient for each and every object
+	  to have a unique id.
+	
+	* orbsvcs/orbsvcs/Notify/Find_Worker_T.h:
+	  Include "Object.h"
+
 Mon Jul 21 16:28:46 2003 Stephen Torri  <storri@cs.wustl.edu>
 
 	* TAO/TAOACE.dsw:
