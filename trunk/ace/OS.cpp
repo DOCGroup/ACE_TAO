@@ -3865,17 +3865,19 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
     ACE_UNUSED_ARG (inst);
 
 
-#       if defined (ACE_HAS_STDARG_THR_DEST)
+#       if defined (ACE_HAS_PTHREADS_DRAFT4)
+#         if defined (ACE_HAS_STDARG_THR_DEST)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
-#       elif defined (ACE_HAS_PTHREADS_DRAFT4)
+#         else  /* ! ACE_HAS_STDARG_THR_DEST */
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#         endif /* ! ACE_HAS_STDARG_THR_DEST */
 #       elif defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #       else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          ace_result_),
                        int, -1);
-#       endif /* ACE_HAS_STDARG_THR_DEST */
+#       endif /* ACE_HAS_PTHREADS_DRAFT4 */
 #     elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
@@ -3931,17 +3933,19 @@ ACE_OS::thr_keycreate (ACE_thread_key_t *key,
 #   elif defined (ACE_HAS_PTHREADS)
     ACE_UNUSED_ARG (inst);
 
-#     if defined (ACE_HAS_STDARG_THR_DEST)
+#     if defined (ACE_HAS_PTHREADS_DRAFT4)
+#       if defined (ACE_HAS_STDARG_THR_DEST)
     ACE_OSCALL_RETURN (::pthread_keycreate (key, (void (*)(...)) dest), int, -1);
-#     elif defined (ACE_HAS_PTHREADS_DRAFT4)
+#       else  /* ! ACE_HAS_STDARG_THR_DEST */
     ACE_OSCALL_RETURN (::pthread_keycreate (key, dest), int, -1);
+#       endif /* ! ACE_HAS_STDARG_THR_DEST */
 #     elif defined (ACE_HAS_PTHREADS_DRAFT6)
     ACE_OSCALL_RETURN (::pthread_key_create (key, dest), int, -1);
 #     else
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          ace_result_),
                        int, -1);
-#     endif /* ACE_HAS_STDARG_THR_DEST */
+#     endif /* ACE_HAS_PTHREADS_DRAFT4 */
 
 #   elif defined (ACE_HAS_STHREADS)
     ACE_UNUSED_ARG (inst);
