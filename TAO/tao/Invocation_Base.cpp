@@ -94,9 +94,9 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                                                 op_details);
 
             status =
-              synch.communicate (this->args_,
-                                 this->number_args_
-                                 ACE_ENV_ARG_PARAMETER);
+              synch.remote_oneway (this->args_,
+                                   this->number_args_
+                                   ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
           }
         else if (this->type_ == TAO_TWOWAY_INVOCATION
@@ -109,12 +109,10 @@ Invocation_Base::Invocation_Base (CORBA::Object *target,
                                                 op_details);
 
             status =
-              synch.communicate (this->args_,
-                                 this->number_args_
-                                 ACE_ENV_ARG_PARAMETER);
+              synch.remote_twoway (this->args_,
+                                   this->number_args_
+                                   ACE_ENV_ARG_PARAMETER);
             ACE_CHECK;
-
-            cout << "Status is " << (int) status << endl;
           }
         else if (this->type_ == TAO_TWOWAY_INVOCATION
                  && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)

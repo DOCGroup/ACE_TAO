@@ -277,7 +277,7 @@ TAO_IIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 }
 
 TAO_Transport *
-TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
+TAO_IIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                                      TAO_Transport_Descriptor_Interface &desc,
                                      ACE_Time_Value *max_wait_time)
 {

@@ -1,3 +1,17 @@
+Wed Jul  9 14:33:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/Remote_Invocation.cpp (TAO): 
+	* tao/Remote_Invocation.h: Added some error checking in
+	  send_message (). 
+
+	* tao/Synch_Invocation.h:
+	* tao/Synch_Invocation.cpp: Changed the names of communicate in
+	  twoway and oneway invcation classes as remote_oneway and
+	  remote_twoway. Seems like the method communicate () in both
+	  classes seem to have a problem.
+
+	* tao/IIOP_Connector.cpp: Fixed a unused variable warning.
+
 Wed Jul  9 12:43:37 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Synch_Invocation.cpp (TAO): Got the semantics of

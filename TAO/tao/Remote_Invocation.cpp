@@ -22,7 +22,7 @@ namespace TAO
 
   void
   Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec
-		                       ACE_ENV_ARG_DECL)
+                                       ACE_ENV_ARG_DECL)
   {
     TAO_Profile *pfile =
       this->resolver_.profile ();
@@ -106,21 +106,30 @@ namespace TAO
       }
   }
 
-  void
-  Remote_Invocation::send_message (short message_semantics,
-                                   TAO_OutputCDR &out_stream
-                                   ACE_ENV_ARG_DECL)
+  Invocation_Status
+  Remote_Invocation::send_message (TAO_OutputCDR &cdr,
+                                   short message_semantics
+                                   ACE_ENV_ARG_DECL_NOT_USED)
   {
     int retval =
       this->resolver_.transport ()->send_request (
         this->resolver_.stub (),
         this->resolver_.stub ()->orb_core (),
-        out_stream,
+        cdr,
         message_semantics,
         0);
 
-    // Exception handling...
-    cout << "Data Sent and the retval is " << retval << endl;
-  }
+    if (retval != 0)
+      {
+        if (TAO_debug_level > 2)
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Synch_Twoway_Invocation::send_message - ")
+                      ACE_TEXT ("failure while sending message \n")));
 
+        // Need to close connections..
+
+        return TAO_INVOKE_RESTART;
+      }
+    return TAO_INVOKE_SUCCESS;
+  }
 }
