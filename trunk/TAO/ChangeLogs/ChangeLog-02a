@@ -1,3 +1,11 @@
+Tue Jan 15 09:08:17 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.cpp: 
+	* tests/Portable_Interceptors/IORInterceptor/FOO_IORInterceptor.h: 
+	  Added new methods to class FOO_IORInterceptor to go along with
+	  the added methods in PortableInterceptor::IORInterceptor. Missed
+	  committing in the first round.
+	
 Tue Jan 15 08:55:52 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tao/ORB_Core.cpp (create_stub_object): 

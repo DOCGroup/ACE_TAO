@@ -68,8 +68,29 @@ public:
       PortableInterceptor::IORInfo_ptr info
       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
-  //@}
 
+  virtual void components_established (
+      PortableInterceptor::IORInfo_ptr info
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void adapter_manager_state_changed (
+      PortableInterceptor::AdapterManagerId id,
+      PortableInterceptor::AdapterState state
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  virtual void adapter_state_changed (
+      const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
+      PortableInterceptor::AdapterState state
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+
+  //@}
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
