@@ -1,58 +1,64 @@
+Sat Jul 25 14:15:46 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Scheduler.cpp: removed
+          ACE_{Read,Write)_Guard<ACE_SYNCH_MUTEX> template instantiations
+          because they're in libTAO.
+
 Sat Jul 25 13:56:45 1998  Carlos O'Ryan  <coryan@JIG>
 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	  Generate a #line directive which is accepted by more compilers.
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Generate a #line directive which is accepted by more compilers.
 
 Fri Jul 24 21:44:09 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Exception.i: 
-	* tao/Exception.cpp: 
-	  ExceptionList was not releasing the TypeCodes in its destructor,
-	  this produced a memory leak at shutdown, because there is a list
-	  with the standard exceptions typecodes.
-	  A similar problem ocurred with the CORBA::_tc_* exceptions.
-	  NOTE: Purify-4.0.1 on Solaris 2.5 gets confused by these fixes
-	  and reports bogus FNH and memory leak problems. The bug is
-	  triggered by an interaction with TAO's use of the Service
-	  Configurator to dynamically load libTAO, apparently when using
-	  Purify the library static constructors are called two times; the
-	  problem does not ocurr when *not* using purify or when not
-	  loading the library. To test the latter just run a TAO test
-	  (like $TAO_ROOT/tests/Param_Test) with and without the option
-	  "-ORBsvcconf /dev/null".  Verifying the purify confusion
-	  requires more work, try stopping in one of the static
-	  constructors (like TypeCodes), then set a breakpoint for the
-	  same constructor at the same address and continue the program,
-	  when TAO loads the library you will see the constructor executed
-	  again; this will *not* happen when running without purify.
+        * tao/Exception.i:
+        * tao/Exception.cpp:
+          ExceptionList was not releasing the TypeCodes in its destructor,
+          this produced a memory leak at shutdown, because there is a list
+          with the standard exceptions typecodes.
+          A similar problem ocurred with the CORBA::_tc_* exceptions.
+          NOTE: Purify-4.0.1 on Solaris 2.5 gets confused by these fixes
+          and reports bogus FNH and memory leak problems. The bug is
+          triggered by an interaction with TAO's use of the Service
+          Configurator to dynamically load libTAO, apparently when using
+          Purify the library static constructors are called two times; the
+          problem does not ocurr when *not* using purify or when not
+          loading the library. To test the latter just run a TAO test
+          (like $TAO_ROOT/tests/Param_Test) with and without the option
+          "-ORBsvcconf /dev/null".  Verifying the purify confusion
+          requires more work, try stopping in one of the static
+          constructors (like TypeCodes), then set a breakpoint for the
+          same constructor at the same address and continue the program,
+          when TAO loads the library you will see the constructor executed
+          again; this will *not* happen when running without purify.
 
-	* tao/Object_Table.h: 
-	* tao/Object_Table.cpp: 
-	  Removed static object, now it is a member of the class.
+        * tao/Object_Table.h:
+        * tao/Object_Table.cpp:
+          Removed static object, now it is a member of the class.
 
-	* tao/Typecode.cpp: 
-	  Removed outdated comments.
+        * tao/Typecode.cpp:
+          Removed outdated comments.
 
-	* tests/Param_Test/svc.conf: 
-	  Removed obsolete comments, the web page describes the options in
-	  more detail.
+        * tests/Param_Test/svc.conf:
+          Removed obsolete comments, the web page describes the options in
+          more detail.
 
-	* orbsvcs/orbsvcs/Event/Event_Channel.cpp: 
-	  Fixed delete of (void*). Thanks to John Mulhern
-	  <9107@mn3.lawson.lawson.com> for reporting this.
+        * orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+          Fixed delete of (void*). Thanks to John Mulhern
+          <9107@mn3.lawson.lawson.com> for reporting this.
 
-	* tests/Param_Test/any.cpp: 
-	  Fixed ambiguous call to >>= also reported by John Mulhern
+        * tests/Param_Test/any.cpp:
+          Fixed ambiguous call to >>= also reported by John Mulhern
 
-	* orbsvcs/orbsvcs/Makefile: 
-	  The maintaince of the .PRECIOUS directives for IDL generated
-	  files was becoming a nightmare, it is automated now.
-	  Some IDL files include others, we need to add an explicit
-	  dependency in those cases.
+        * orbsvcs/orbsvcs/Makefile:
+          The maintaince of the .PRECIOUS directives for IDL generated
+          files was becoming a nightmare, it is automated now.
+          Some IDL files include others, we need to add an explicit
+          dependency in those cases.
 
-	* TAO_IDL/driver/drv_preproc.cpp: 
-	  Added a #lineno "filename" directive to the temporary files, so
-	  the IDL compiler can generate better error messages.
+        * TAO_IDL/driver/drv_preproc.cpp:
+          Added a #lineno "filename" directive to the temporary files, so
+          the IDL compiler can generate better error messages.
 
 Fri Jul 24 17:00:09 1998  David L. Levine  <levine@cs.wustl.edu>
 
