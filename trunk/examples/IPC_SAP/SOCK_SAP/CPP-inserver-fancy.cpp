@@ -8,6 +8,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Singleton.h"
+#include "ace/Synch.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
 
@@ -21,7 +22,7 @@ class Handler_Factory
   // = TITLE
   //   Creates the oneway or twoway handlers.
 public:
-  Handler_Factory (int argc, char *argv[]);
+  Handler_Factory (void);
   // Constructor.
 
   ~Handler_Factory (void);
@@ -45,9 +46,6 @@ private:
 
   static Handler *make_oneway_handler (ACE_HANDLE);
   // Create a oneway handler.
-
-  u_short port_;
-  // Port number we're listening on.
 
   ACE_SOCK_Acceptor twoway_acceptor_;
   // Twoway acceptor factory.
@@ -204,6 +202,7 @@ Options::parse_args (int argc, char *argv[])
                            "(%P|%t) usage: %n [-p <port>] [-v]"),
                           -1);
       }
+
   return 0;
 }
 
@@ -479,7 +478,7 @@ Handler_Factory::init_acceptors (void)
 
 int
 Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
-                                 Handler * (*handler_factory) (ACE_HANDLE, int),
+                                 Handler * (*handler_factory) (ACE_HANDLE),
                                  const char *handler_type)
 {
   ACE_SOCK_Stream new_stream;
@@ -555,7 +554,7 @@ Handler_Factory::handle_events (void)
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) %p\n",
                     "select"));
-      else if (result == 0 && this->verbose_)
+      else if (result == 0 && OPTIONS::instance ()->verbose ())
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) select timed out\n"));
       else 
@@ -582,7 +581,8 @@ main (int argc, char *argv[])
 {
   OPTIONS::instance ()->parse_args (argc, argv);
 
-  Handler_Factory server (void);
-
+  Handler_Factory server;
+  
   return server.handle_events ();
 }
+
