@@ -40,6 +40,10 @@ public:
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
 
+  virtual int visit_component (be_component *node);
+
+  virtual int visit_component_fwd (be_component_fwd *node);
+
   virtual int visit_eventtype (be_eventtype *node);
 
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);

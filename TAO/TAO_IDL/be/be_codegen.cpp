@@ -1476,8 +1476,11 @@ TAO_CodeGen::gen_stub_src_includes (void)
   // Includes whatever arg helper template classes that may be needed.
   this->gen_arg_file_includes (this->client_stubs_);
 
+  // strcmp() is used with interfaces and exceptions.
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                       idl_global->decls_seen_masks.interface_seen_))
+                       idl_global->decls_seen_masks.interface_seen_)
+      || ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                          idl_global->decls_seen_masks.exception_seen_))
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
