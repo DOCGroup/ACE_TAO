@@ -26,12 +26,17 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:301
+// be\be_codegen.cpp:302
 
 
 #include "htiop_endpointsC.h"
 #include "tao/CDR.h"
-#include "tao/Typecode.h"
+#include "tao/Null_RefCount_Policy.h"
+#include "tao/TypeCode_Constants.h"
+#include "tao/Alias_TypeCode.h"
+#include "tao/Sequence_TypeCode.h"
+#include "tao/String_TypeCode.h"
+#include "tao/Struct_TypeCode.h"
 #include "tao/Any_Dual_Impl_T.h"
 
 #if defined (__BORLANDC__)
@@ -43,7 +48,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:64
+// be\be_visitor_arg_traits.cpp:69
 
 // Arg traits specializations.
 namespace TAO
@@ -52,56 +57,30 @@ namespace TAO
 
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/struct_typecode.cpp:34
 
-static const CORBA::Long _oc_HTIOP_Endpoint_Info[] =
-{
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  28,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x4854494f), 
-  ACE_NTOHL (0x505f456e), 
-  ACE_NTOHL (0x64706f69), 
-  ACE_NTOHL (0x6e745f49), 
-  ACE_NTOHL (0x6e666f3a), 
-  ACE_NTOHL (0x312e3000),  // repository ID = IDL:HTIOP_Endpoint_Info:1.0
-    20,
-  ACE_NTOHL (0x4854494f), 
-  ACE_NTOHL (0x505f456e), 
-  ACE_NTOHL (0x64706f69), 
-  ACE_NTOHL (0x6e745f49), 
-  ACE_NTOHL (0x6e666f00),  // name = HTIOP_Endpoint_Info
-  3, // member count
-    5,
-  ACE_NTOHL (0x686f7374), 
-  ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string, 
-  0U, // string length
-  5,
-  ACE_NTOHL (0x706f7274), 
-  ACE_NTOHL (0x0),  // name = port
-    CORBA::tk_short,
-
-  5,
-  ACE_NTOHL (0x68746964), 
-  ACE_NTOHL (0x0),  // name = htid
-    CORBA::tk_string, 
-  0U, // string length
-};
-
-static CORBA::TypeCode _tc_TAO_tc_HTIOP_Endpoint_Info (
-    CORBA::tk_struct,
-    sizeof (_oc_HTIOP_Endpoint_Info),
-    (char *) &_oc_HTIOP_Endpoint_Info,
-    0,
-    sizeof (HTIOP_Endpoint_Info)
-  );
-
-::CORBA::TypeCode_ptr _tc_HTIOP_Endpoint_Info =
-  &_tc_TAO_tc_HTIOP_Endpoint_Info;
+static TAO::TypeCode::Struct_Field<char const *> _tao_fields_HTIOP_Endpoint_Info[] =
+  {
+    { "host", &CORBA::_tc_string },
+    { "port", &CORBA::_tc_short },
+    { "htid", &CORBA::_tc_string }
+    
+  };
+static TAO::TypeCode::Struct<char const *,
+                             TAO::TypeCode::Struct_Field<char const *> const *,
+                             CORBA::tk_struct,
+                             TAO::Null_RefCount_Policy>
+  _tao_tc_HTIOP_Endpoint_Info (
+    "IDL:HTIOP_Endpoint_Info:1.0",
+    "HTIOP_Endpoint_Info",
+    _tao_fields_HTIOP_Endpoint_Info,
+    3);
+  
+::CORBA::TypeCode_ptr const _tc_HTIOP_Endpoint_Info =
+  &_tao_tc_HTIOP_Endpoint_Info;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/structure_cs.cpp:66
+// be\be_visitor_structure/structure_cs.cpp:68
 
 void 
 HTIOP_Endpoint_Info::_tao_any_destructor (
@@ -114,7 +93,7 @@ HTIOP_Endpoint_Info::_tao_any_destructor (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/sequence_cs.cpp:65
+// be\be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_HTIOPENDPOINTSEQUENCE_CS_)
 #define _HTIOPENDPOINTSEQUENCE_CS_
@@ -167,81 +146,41 @@ void HTIOPEndpointSequence::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// be/be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/alias_typecode.cpp:31
 
-static const CORBA::Long _oc_HTIOPEndpointSequence[] =
+
+
+// TAO_IDL - Generated from
+// be\be_visitor_typecode/typecode_defn.cpp:743
+
+namespace TAO
 {
-    TAO_ENCAP_BYTE_ORDER, // byte order
-  30,
-  ACE_NTOHL (0x49444c3a), 
-  ACE_NTOHL (0x4854494f), 
-  ACE_NTOHL (0x50456e64), 
-  ACE_NTOHL (0x706f696e), 
-  ACE_NTOHL (0x74536571), 
-  ACE_NTOHL (0x75656e63), 
-  ACE_NTOHL (0x653a312e), 
-  ACE_NTOHL (0x30000000),  // repository ID = IDL:HTIOPEndpointSequence:1.0
-    22,
-  ACE_NTOHL (0x4854494f), 
-  ACE_NTOHL (0x50456e64), 
-  ACE_NTOHL (0x706f696e), 
-  ACE_NTOHL (0x74536571), 
-  ACE_NTOHL (0x75656e63), 
-  ACE_NTOHL (0x65000000),  // name = HTIOPEndpointSequence
-    CORBA::tk_sequence, // typecode kind
-  136, // encapsulation length
-    TAO_ENCAP_BYTE_ORDER, // byte order
-    CORBA::tk_struct, // typecode kind
-    120, // encapsulation length
-      TAO_ENCAP_BYTE_ORDER, // byte order
-      28,
-      ACE_NTOHL (0x49444c3a), 
-      ACE_NTOHL (0x4854494f), 
-      ACE_NTOHL (0x505f456e), 
-      ACE_NTOHL (0x64706f69), 
-      ACE_NTOHL (0x6e745f49), 
-      ACE_NTOHL (0x6e666f3a), 
-      ACE_NTOHL (0x312e3000),  // repository ID = IDL:HTIOP_Endpoint_Info:1.0
-            20,
-      ACE_NTOHL (0x4854494f), 
-      ACE_NTOHL (0x505f456e), 
-      ACE_NTOHL (0x64706f69), 
-      ACE_NTOHL (0x6e745f49), 
-      ACE_NTOHL (0x6e666f00),  // name = HTIOP_Endpoint_Info
-      3, // member count
-            5,
-      ACE_NTOHL (0x686f7374), 
-      ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string, 
-      0U, // string length
-      5,
-      ACE_NTOHL (0x706f7274), 
-      ACE_NTOHL (0x0),  // name = port
-            CORBA::tk_short,
+  namespace TypeCode
+  {
+    TAO::TypeCode::Sequence<TAO::Null_RefCount_Policy>
+      HTIOPEndpointSequence_0 (
+        CORBA::tk_sequence,
+        &_tc_HTIOP_Endpoint_Info,
+        0U);
+      
+    ::CORBA::TypeCode_ptr const tc_HTIOPEndpointSequence_0 =
+      &HTIOPEndpointSequence_0;
+    
+  }
+}
 
-      5,
-      ACE_NTOHL (0x68746964), 
-      ACE_NTOHL (0x0),  // name = htid
-            CORBA::tk_string, 
-      0U, // string length
-
-    0U,
-
-};
-
-static CORBA::TypeCode _tc_TAO_tc_HTIOPEndpointSequence (
-    CORBA::tk_alias,
-    sizeof (_oc_HTIOPEndpointSequence),
-    (char *) &_oc_HTIOPEndpointSequence,
-    0,
-    sizeof (HTIOPEndpointSequence)
-  );
-
-::CORBA::TypeCode_ptr _tc_HTIOPEndpointSequence =
-  &_tc_TAO_tc_HTIOPEndpointSequence;
+static TAO::TypeCode::Alias<char const *,
+                            TAO::Null_RefCount_Policy>
+  _tao_tc_HTIOPEndpointSequence (
+    "IDL:HTIOPEndpointSequence:1.0",
+    "HTIOPEndpointSequence",
+    &TAO::TypeCode::tc_HTIOPEndpointSequence_0);
+  
+::CORBA::TypeCode_ptr const _tc_HTIOPEndpointSequence =
+  &_tao_tc_HTIOPEndpointSequence;
 
 // TAO_IDL - Generated from 
-// be/be_visitor_structure/any_op_cs.cpp:54
+// be\be_visitor_structure/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -299,7 +238,7 @@ CORBA::Boolean operator>>= (
 }
 
 // TAO_IDL - Generated from 
-// be/be_visitor_sequence/any_op_cs.cpp:54
+// be\be_visitor_sequence/any_op_cs.cpp:54
 
 // Copying insertion.
 void operator<<= (
@@ -310,7 +249,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<HTIOPEndpointSequence>::insert_copy (
       _tao_any,
       HTIOPEndpointSequence::_tao_any_destructor,
-      _tc_HTIOPEndpointSequence,
+      TAO::TypeCode::tc_HTIOPEndpointSequence_0,
       _tao_elem
     );
 }
@@ -324,7 +263,7 @@ void operator<<= (
   TAO::Any_Dual_Impl_T<HTIOPEndpointSequence>::insert (
       _tao_any,
       HTIOPEndpointSequence::_tao_any_destructor,
-      _tc_HTIOPEndpointSequence,
+      TAO::TypeCode::tc_HTIOPEndpointSequence_0,
       _tao_elem
     );
 }
@@ -351,13 +290,13 @@ CORBA::Boolean operator>>= (
     TAO::Any_Dual_Impl_T<HTIOPEndpointSequence>::extract (
         _tao_any,
         HTIOPEndpointSequence::_tao_any_destructor,
-        _tc_HTIOPEndpointSequence,
+        TAO::TypeCode::tc_HTIOPEndpointSequence_0,
         _tao_elem
       );
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_structure/cdr_op_cs.cpp:61
+// be\be_visitor_structure/cdr_op_cs.cpp:61
 
 CORBA::Boolean operator<< (
     TAO_OutputCDR &strm,
@@ -382,7 +321,7 @@ CORBA::Boolean operator>> (
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_sequence/cdr_op_cs.cpp:96
+// be\be_visitor_sequence/cdr_op_cs.cpp:96
 
 #if !defined _TAO_CDR_OP_HTIOPEndpointSequence_CPP_
 #define _TAO_CDR_OP_HTIOPEndpointSequence_CPP_
@@ -397,7 +336,7 @@ CORBA::Boolean operator<< (
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -407,7 +346,7 @@ CORBA::Boolean operator<< (
       return _tao_marshal_flag;
     }
   
-  return 0;
+  return false;
 }
 
 CORBA::Boolean operator>> (
@@ -424,7 +363,7 @@ CORBA::Boolean operator>> (
       // of the stream. (See bug 58.)
       if (_tao_seq_len > strm.length ())
         {
-          return 0;
+          return false;
         }
       
       // Set the length of the sequence.
@@ -433,11 +372,11 @@ CORBA::Boolean operator>> (
       // If length is 0 we return true.
       if (0 >= _tao_seq_len) 
         {
-          return 1;
+          return true;
         }
       
       // Retrieve all the elements.
-      CORBA::Boolean _tao_marshal_flag = 1;
+      CORBA::Boolean _tao_marshal_flag = true;
       
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
@@ -448,7 +387,7 @@ CORBA::Boolean operator>> (
     
     }
   
-  return 0;
+  return false;
 }
 
 #endif /* _TAO_CDR_OP_HTIOPEndpointSequence_CPP_ */
