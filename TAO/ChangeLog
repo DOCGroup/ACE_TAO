@@ -9,12 +9,12 @@ Wed June 25 14:46:19 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	  file or endpoints are not specified then the connection manager
 	  uses INADDR_ANY for the endpoints.
 
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Sender.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Sender.cpp:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Receiver.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Receiver.cpp:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Distributer.h:
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Distributer.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/receiver.cpp:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.h:
+	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/distributer.cpp:
 	  Added additional parameter -a <address_file> to the command line
 	  arguments to specify the endpoint address file from which to
 	  load the flow endpoint addresses. Also, made a call to the
