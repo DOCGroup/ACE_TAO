@@ -41,7 +41,7 @@ TAO_NS_ProxySupplier_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>;
  *
  *
  */
-class TAO_Notify_Export TAO_NS_SequenceProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_SequenceProxyPushSupplier : public virtual TAO_NS_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
 {
   friend class TAO_NS_Builder;
 

@@ -1,11 +1,5 @@
 // $Id$
 
-ACE_INLINE TAO_NS_Admin::ADMIN_TYPE
-TAO_NS_Admin::type (void)
-{
-  return this->type_;
-}
-
 ACE_INLINE TAO_NS_FilterAdmin&
 TAO_NS_Admin::filter_admin (void)
 {

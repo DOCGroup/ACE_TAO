@@ -21,7 +21,6 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "Admin.h"
-#include "Destroy_Callback.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,9 +35,9 @@
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
  *
  */
-class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_CosNotifyChannelAdmin::SupplierAdmin, public virtual TAO_NS_Admin, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_SupplierAdmin : public virtual POA_CosNotifyChannelAdmin::SupplierAdmin
+                                             , public virtual TAO_NS_Admin
 {
-  friend class TAO_NS_Builder;
 public:
   /// Constuctor
   TAO_NS_SupplierAdmin (void);
@@ -46,14 +45,14 @@ public:
   /// Destructor
   ~TAO_NS_SupplierAdmin ();
 
-  /// Return servant
-  virtual PortableServer::Servant servant (void);
+  /// Init
+  void init (TAO_NS_EventChannel *ec ACE_ENV_ARG_DECL);
 
   /// ServantBase refcount methods.
   virtual void _add_ref (ACE_ENV_SINGLE_ARG_DECL);
   virtual void _remove_ref (ACE_ENV_SINGLE_ARG_DECL);
 
-  /// TAO_NS_Destroy_Callback methods
+  /// Release
   virtual void release (void);
 
 protected:

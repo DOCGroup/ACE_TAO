@@ -21,9 +21,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Event.h"
-#include "Supplier.h"
 #include "Proxy.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
+
+class TAO_NS_SupplierAdmin;
+class TAO_NS_Supplier;
 
 /**
  * @class TAO_NS_ProxyConsumer
@@ -40,6 +42,9 @@ public:
   /// Destructor
   ~TAO_NS_ProxyConsumer ();
 
+  /// Init
+  void init (TAO_NS_SupplierAdmin* supplier_admin ACE_ENV_ARG_DECL);
+
   /// Connect
   void connect (TAO_NS_Supplier* supplier ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
@@ -53,6 +58,9 @@ public:
   /// Shutdown  (TAO_NS_Container_T method)
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Destroy this object.
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Start event propagation.
   virtual void push (TAO_NS_Event_var &event);
 
@@ -65,7 +73,14 @@ public:
   /// Return 1 if connected
   int is_connected (void);
 
+  /// The SA parent.
+  TAO_NS_SupplierAdmin* supplier_admin (void);
+
 protected:
+  ///= Data Members.
+  /// The SA parent.
+  TAO_NS_SupplierAdmin* supplier_admin_;
+
   /// The Supplier that we're connect to.
   TAO_NS_Supplier* supplier_;
 };

@@ -20,13 +20,15 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Method_Request.h"
-#include "Types.h"
 #include "EventTypeSeq.h"
+#include "Refcountable.h"
+
+class TAO_NS_Proxy;
 
 /**
  * @class TAO_NS_Method_Request_Updates
  *
- * @brief
+ * @brief Command Object to send updates to proxys.
  *
  */
 class TAO_Notify_Export TAO_NS_Method_Request_Updates : public TAO_NS_Method_Request

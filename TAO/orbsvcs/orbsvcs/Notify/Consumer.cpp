@@ -11,12 +11,6 @@ ACE_RCSID(RT_Notify, TAO_NS_Consumer, "$Id$")
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "tao/debug.h"
-#include "ProxySupplier.h"
-#include "Proxy.h"
-#include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
 
 TAO_NS_Consumer::TAO_NS_Consumer (TAO_NS_ProxySupplier* proxy)
   :proxy_ (proxy), event_collection_ (0), is_suspended_ (0)

@@ -55,6 +55,10 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::get_qos (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->TAO_NS_Object::get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -65,6 +69,9 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & qo
                    CosNotification::UnsupportedQoS
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+
   this->TAO_NS_Object::set_qos (qos ACE_ENV_ARG_PARAMETER);
 }
 
@@ -88,6 +95,10 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::add_filter (CosNotifyFilter::Filter_ptr new_filter
                    CORBA::SystemException
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->filter_admin_.add_filter (new_filter ACE_ENV_ARG_PARAMETER);
 }
 
@@ -101,6 +112,9 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::remove_filter (
                    CosNotifyFilter::FilterNotFound
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+
   this->filter_admin_.remove_filter (filter ACE_ENV_ARG_PARAMETER);
 }
 
@@ -111,6 +125,10 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::get_filter (CosNotifyFilter::FilterID filter ACE_E
                    CosNotifyFilter::FilterNotFound
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
+
   return this->filter_admin_.get_filter (filter ACE_ENV_ARG_PARAMETER);
 }
 
@@ -120,6 +138,10 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::get_all_filters (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+  ACE_CHECK_RETURN (0);
+
   return this->filter_admin_.get_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
@@ -129,6 +151,9 @@ TAO_NS_Proxy_T<SERVANT_TYPE>::remove_all_filters (ACE_ENV_SINGLE_ARG_DECL)
                    CORBA::SystemException
                    ))
 {
+  ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
+                      CORBA::INTERNAL ());
+
   this->filter_admin_.remove_all_filters (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 

@@ -21,8 +21,9 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
-#include "../orbsvcs/Notify/Service.h"
 #include "../orbsvcs/Notify/CosNotify_Initializer.h"
+
+class TAO_Notify_Service;
 
 #define NOTIFY_KEY "NotifyEventChannelFactory"
 #define NOTIFY_CHANNEL_NAME "NotifyEventChannel"
@@ -49,7 +50,7 @@ private:
   // The orb
 };
 
-class TAO_Notify_Service
+class TAO_Notify_Service_Driver
 {
   // = TITLE
   //   Notify_Service
@@ -59,10 +60,10 @@ class TAO_Notify_Service
 
  public:
   // = Initialization and termination methods.
-  TAO_Notify_Service (void);
+  TAO_Notify_Service_Driver (void);
   // Constructor.
 
-  virtual ~TAO_Notify_Service (void);
+  virtual ~TAO_Notify_Service_Driver (void);
   // Destructor.
 
   int init (int argc, ACE_TCHAR *argv[]
@@ -86,7 +87,7 @@ protected:
                 ACE_ENV_ARG_DECL);
   // initialize the ORB.
 
-  TAO_NS_Service* notify_service_;
+  TAO_Notify_Service* notify_service_;
 
   int resolve_naming_service (ACE_ENV_SINGLE_ARG_DECL);
   // Resolve the naming service.

@@ -22,7 +22,6 @@
 #include "ace/Atomic_Op.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "tao/orbconf.h"
-#include "Types.h"
 #include "PropertySeq.h"
 #include "Property_T.h"
 #include "Property.h"

@@ -21,7 +21,6 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "../ProxyConsumer_T.h"
-#include "../Destroy_Callback.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)
@@ -36,7 +35,7 @@
  * @brief
  *
  */
-class TAO_Notify_Export TAO_NS_SequenceProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>, public TAO_NS_Destroy_Callback
+class TAO_Notify_Export TAO_NS_SequenceProxyPushConsumer : public virtual TAO_NS_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>
 {
   friend class TAO_NS_Builder;
 public:

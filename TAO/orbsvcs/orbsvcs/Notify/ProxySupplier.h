@@ -24,6 +24,7 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 
 class TAO_NS_Consumer;
+class TAO_NS_ConsumerAdmin;
 
 /**
  * @class TAO_NS_ProxySupplier
@@ -42,8 +43,8 @@ public:
   /// Destructor
   virtual ~TAO_NS_ProxySupplier ();
 
-  /// Init method.
-  virtual void init_ps (ACE_ENV_SINGLE_ARG_DECL);
+  /// Init
+  virtual void init (TAO_NS_ConsumerAdmin* consumer_admin ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_NS_Consumer* consumer ACE_ENV_ARG_DECL)
@@ -63,6 +64,9 @@ public:
   /// Override TAO_NS_Container_T::shutdown  method
   virtual int shutdown (ACE_ENV_SINGLE_ARG_DECL);
 
+  /// Destroy this object.
+  virtual void destroy (ACE_ENV_SINGLE_ARG_DECL);
+
   /// Override, TAO_NS_Proxy::qos_changed to apply MaxEventssPerConsumer QoS.
   virtual void qos_changed (const TAO_NS_QoSProperties& qos_properties);
 
@@ -72,9 +76,17 @@ public:
   /// Access the Consumer
   TAO_NS_Consumer* consumer (void);
 
-protected:
   /// Return 1 if connected
   int is_connected (void);
+
+  /// The CA parent.
+  TAO_NS_ConsumerAdmin* consumer_admin (void);
+
+protected:
+
+  ///= Data Members.
+  /// The CA parent.
+  TAO_NS_ConsumerAdmin* consumer_admin_;
 
   /// The Consumer that we're connect to.
   TAO_NS_Consumer* consumer_;

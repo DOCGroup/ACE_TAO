@@ -10,10 +10,6 @@ ACE_RCSID(RT_Notify, TAO_NS_Supplier, "$Id$")
 
 #include "ProxyConsumer.h"
 #include "Proxy.h"
-#include "Admin.h"
-#include "EventChannel.h"
-#include "EventChannelFactory.h"
-#include "Notify_Service.h"
 
 TAO_NS_Supplier::TAO_NS_Supplier (TAO_NS_ProxyConsumer* proxy)
   :proxy_ (proxy)
