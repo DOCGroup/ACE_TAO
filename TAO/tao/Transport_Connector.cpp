@@ -9,6 +9,8 @@
 #include "Connect_Strategy.h"
 #include "Client_Strategy_Factory.h"
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 # include "Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
@@ -116,9 +118,7 @@ TAO_Connector::make_mprofile (const char *string,
   for (int i = ior_index; i < objkey_index; ++i)
     {
       if (ior[i] == endpoint_delimiter)
-        {
-          profile_count++;
-        }
+        ++profile_count;
     }
 
   // Tell the MProfile object how many Profiles it should hold.

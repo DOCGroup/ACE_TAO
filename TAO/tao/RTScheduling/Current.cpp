@@ -1,4 +1,3 @@
-//$Id$
 #include "Current.h"
 #include "Distributable_Thread.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
@@ -7,6 +6,8 @@
 #include "tao/TSS_Resources.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (RTScheduling,
            Current,
@@ -38,10 +39,9 @@ TAO_RTScheduler_Current::init (TAO_ORB_Core* orb
   RTCORBA::Current_ptr current;
   ACE_NEW_THROW_EX (current,
                     TAO_RT_Current (orb),
-                    CORBA::NO_MEMORY (
-                                      CORBA::SystemException::_tao_minor_code (
-                                       TAO_DEFAULT_MINOR_CODE,
-                                       ENOMEM),
+                    CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (
+                                        TAO_DEFAULT_MINOR_CODE,
+                                        ENOMEM),
                                       CORBA::COMPLETED_NO));
   this->rt_current_ = current;
 }
@@ -66,10 +66,11 @@ TAO_RTScheduler_Current::dt_hash (void)
 
 
 void
-TAO_RTScheduler_Current::begin_scheduling_segment(const char * name,
-                                                  CORBA::Policy_ptr sched_param,
-                                                  CORBA::Policy_ptr implicit_sched_param
-                                                  ACE_ENV_ARG_DECL)
+TAO_RTScheduler_Current::begin_scheduling_segment (
+    const char * name,
+    CORBA::Policy_ptr sched_param,
+    CORBA::Policy_ptr implicit_sched_param
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    RTScheduling::Current::UNSUPPORTED_SCHEDULING_DISCIPLINE))
 {

@@ -5,9 +5,13 @@
 #include "CORBA_String.h"
 #include "Typecode.h"
 
+#include "ace/Guard_T.h"
+
+
 ACE_RCSID (tao,
            Any_Impl,
            "$Id$")
+
 
 TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
                          CORBA::TypeCode_ptr tc)

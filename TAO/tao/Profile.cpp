@@ -8,13 +8,19 @@
 #include "ORB_Core.h"
 #include "Client_Strategy_Factory.h"
 
+#include "ace/ACE.h"
+#include "ace/OS_NS_string.h"
+
+
 #if !defined (__ACE_INLINE__)
 #include "Profile.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Profile,
            "$Id$")
+
 
 // ****************************************************************
 TAO_Profile::TAO_Profile (CORBA::ULong tag,

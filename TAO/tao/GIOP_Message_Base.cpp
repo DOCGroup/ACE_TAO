@@ -603,16 +603,14 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                    generator_parser);
 
   // A buffer that we will use to initialise the CDR stream
+#if defined (ACE_HAS_PURIFY)
+  char repbuf[ACE_CDR::DEFAULT_BUFSIZE] = { 0 };
+#else
   char repbuf[ACE_CDR::DEFAULT_BUFSIZE];
-
-#if defined(ACE_HAS_PURIFY)
-  (void) ACE_OS::memset (repbuf,
-                         '\0',
-                         sizeof repbuf);
 #endif /* ACE_HAS_PURIFY */
 
   // Initialze an output CDR on the stack
-  // NOTE: Dont jump to a conclusion as to why we are using the
+  // NOTE: Don't jump to a conclusion as to why we are using the
   // inpout_cdr and hence the  global pool here. These pools will move
   // to the lanes anyway at some point of time. Further, it would have
   // been awesome to have this in TSS. But for some reason the cloning

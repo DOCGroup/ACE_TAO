@@ -6,13 +6,17 @@
 #include "tao/Transport.h"
 #include "tao/Profile.h"
 #include "tao/Codeset_Translator_Factory.h"
+#include "tao/debug.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Codeset_Registry.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao, 
-           Codeset_Manager, 
+
+ACE_RCSID (tao,
+           Codeset_Manager,
            "$Id$")
+
 
 // These numbers are assigned by the OpenGroup, a database is
 // available at
@@ -199,12 +203,12 @@ TAO_Codeset_Manager::generate_service_context (TAO_Operation_Details &opd,
   // Assuming the TCS values from Transport will be defaulted
   TAO_Codeset_Translator_Factory *tf = trans.char_translator ();
 
-  codeset_cntx.char_data = 
+  codeset_cntx.char_data =
     tf ? tf->tcs () : this->codeset_info_.ForCharData.native_code_set;
 
   tf = trans.wchar_translator ();
 
-  codeset_cntx.wchar_data = 
+  codeset_cntx.wchar_data =
     tf ? tf->tcs () : this->codeset_info_.ForWcharData.native_code_set;
 
   if (TAO_debug_level > 2)
@@ -328,7 +332,7 @@ TAO_Codeset_Manager::add_char_translator (const char *name)
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("(%P|%t) Unable to add Codeset ")
                          ACE_LIB_TEXT ("factories for %s: %m\n"),
-                         ACE_TEXT_CHAR_TO_TCHAR (name)), 
+                         ACE_TEXT_CHAR_TO_TCHAR (name)),
                         -1);
     }
 

@@ -36,6 +36,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
+#include "ace/Static_Object_Lock.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed to set ACE_LOG_MSG::msg_ostream()
@@ -44,6 +45,7 @@
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
 
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "ORB_Core.i"
@@ -2086,6 +2088,7 @@ TAO_ORB_Core::destroy_interceptors (ACE_ENV_SINGLE_ARG_DECL)
           this->ior_interceptor_adapter_->destroy_interceptors (
               ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_TRY_CHECK;
+
           this->ior_interceptor_adapter_ = 0;
         }
 

@@ -3,9 +3,6 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
-#include "ace/Malloc.h"
-#include "ace/SString.h"
-
 #include "Exception.h"
 #include "Environment.h"
 #include "Any_SystemException.h"
@@ -13,7 +10,14 @@
 #include "Typecode.h"
 #include "ORB_Constants.h"
 #include "TC_Constants_Forward.h"
+#include "CORBA_String.h"
+#include "CDR.h"
 #include "debug.h"
+
+#include "ace/Malloc.h"
+#include "ace/SString.h"
+#include "ace/OS_NS_string.h"
+
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed for ostream& operator<< (ostream &os, const CORBA::Exception &e)
@@ -146,8 +150,8 @@ CORBA::Exception::_type (void) const
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_LIB_TEXT ("This TAO-specific method is now")
-                  ACE_LIB_TEXT (" deprecated and will be removed")
+                  ACE_LIB_TEXT ("This TAO-specific method (Exception::_type())")
+                  ACE_LIB_TEXT (" is now deprecated and will be removed")
                   ACE_LIB_TEXT (" in future versions.\n")));
     }
 

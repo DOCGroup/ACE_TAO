@@ -12,11 +12,10 @@
 # include "ValueBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
-ACE_RCSID (tao,
+
+ACE_RCSID (Valuetype,
            ValueBase,
            "$Id$")
-
-
 
 
 // Static operations in namespace CORBA.
@@ -490,18 +489,6 @@ CORBA::DefaultValueRefCountBase::_tao_refcount_value (void)
 
   return _tao_reference_count_;
 }
-
-// ===========================================================
-
-// Some constants.
-
-const CORBA::ULong TAO_OBV_GIOP_Flags::Value_tag_base    = 0x7fffff00L;
-const CORBA::ULong TAO_OBV_GIOP_Flags::Value_tag_sigbits = 0xffffff00L;
-const CORBA::ULong TAO_OBV_GIOP_Flags::Codebase_url      = 1;
-const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_sigbits = 0x00000006L;
-const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_none    = 0;
-const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_single  = 2;
-const CORBA::ULong TAO_OBV_GIOP_Flags::Type_info_list    = 6;
 
 // ===========================================================
 

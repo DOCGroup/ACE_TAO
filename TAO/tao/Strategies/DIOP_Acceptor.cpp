@@ -13,6 +13,7 @@
 #include "tao/Codeset_Manager.h"
 
 #include "ace/Auto_Ptr.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
 #include "DIOP_Acceptor.i"
@@ -20,7 +21,7 @@
 
 #include "ace/os_include/os_netdb.h"
 
-ACE_RCSID (tao,
+ACE_RCSID (Strategies,
            DIOP_Acceptor,
            "$Id$")
 

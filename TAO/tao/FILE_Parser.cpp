@@ -10,11 +10,16 @@
 #include "FILE_Parser.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Malloc_Base.h"
+#include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
 
-ACE_RCSID (tao, 
-           FILE_Parser, 
+
+ACE_RCSID (tao,
+           FILE_Parser,
            "$Id$")
+
 
 TAO_FILE_Parser::~TAO_FILE_Parser (void)
 {
@@ -41,7 +46,7 @@ TAO_FILE_Parser::parse_string (const char *ior,
   const char *filename =
     ior + sizeof (::file_prefix)+1;
 
-  FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename), 
+  FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename),
                               ACE_LIB_TEXT("r"));
 
   if (file == 0)

@@ -147,8 +147,8 @@ namespace TAO
    *   invocation as a twoway invocation (more or less)
    *
    */
-  class TAO_Export Synch_Oneway_Invocation :
-    public Synch_Twoway_Invocation
+  class TAO_Export Synch_Oneway_Invocation
+    : public Synch_Twoway_Invocation
   {
   public:
     /// Constructor used by TAO::Invocation_Adapter

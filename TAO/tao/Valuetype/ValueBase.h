@@ -15,14 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "valuetype_export.h"
+#include "tao/Valuetype/valuetype_export.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "Value_VarOut_T.h"
+#include "tao/Valuetype/Value_CORBA_methods.h"
+#include "tao/Valuetype/Value_VarOut_T.h"
 
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
@@ -44,9 +45,6 @@ namespace CORBA
   typedef ValueFactoryBase *ValueFactory;
 
   class ValueBase;
-
-  extern TAO_Valuetype_Export void add_ref (ValueBase *);
-  extern TAO_Valuetype_Export void remove_ref (ValueBase *);
 
   typedef TAO_Value_Var_T<ValueBase> ValueBase_var;
   typedef TAO_Value_Out_T<ValueBase> ValueBase_out;
@@ -181,29 +179,28 @@ namespace CORBA
  *
  * @see CORBA 2.3 -- Section 15.3.4
  */
-class TAO_Valuetype_Export TAO_OBV_GIOP_Flags
+namespace TAO_OBV_GIOP_Flags
 {
-public:
-  static const CORBA::ULong Value_tag_base;
-  static const CORBA::ULong Value_tag_sigbits;
-  static const CORBA::ULong Codebase_url;
-  static const CORBA::ULong Type_info_sigbits;
-  static const CORBA::ULong Type_info_none;
-  static const CORBA::ULong Type_info_single;
-  static const CORBA::ULong Type_info_list;
+  const CORBA::ULong Value_tag_base    = 0x7fffff00L;
+  const CORBA::ULong Value_tag_sigbits = 0xffffff00L;
+  const CORBA::ULong Codebase_url      = 1;
+  const CORBA::ULong Type_info_sigbits = 0x00000006L;
+  const CORBA::ULong Type_info_none    = 0;
+  const CORBA::ULong Type_info_single  = 2;
+  const CORBA::ULong Type_info_list    = 6;
 
-  static CORBA::Boolean is_null_ref           (CORBA::ULong);
-  static CORBA::Boolean is_value_tag          (CORBA::ULong);
-  static CORBA::Boolean has_codebase_url      (CORBA::ULong);
-  static CORBA::Boolean has_no_type_info      (CORBA::ULong);
-  static CORBA::Boolean has_single_type_info  (CORBA::ULong);
-  static CORBA::Boolean has_list_type_info    (CORBA::ULong);
-  static CORBA::Boolean is_chunked            (CORBA::ULong);
-  static CORBA::Boolean is_indirection_tag    (CORBA::ULong);
-  static CORBA::Boolean is_indirection        (CORBA::ULong);
-  static CORBA::Boolean is_block_size         (CORBA::ULong);
-  static CORBA::Boolean is_end_tag            (CORBA::ULong);
-};
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::ULong);
+  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::ULong);
+}
 
 TAO_Valuetype_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::ValueBase *);

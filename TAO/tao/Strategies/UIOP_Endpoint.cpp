@@ -1,23 +1,27 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-
 #include "UIOP_Endpoint.h"
 #include "UIOP_Connection_Handler.h"
+
 #include "tao/ORB_Constants.h"
+
+#include "ace/OS_NS_string.h"
+
 
 #if TAO_HAS_UIOP == 1
 
-ACE_RCSID(Strategies, UIOP_Endpoint, "$Id$")
+
+ACE_RCSID (Strategies,
+           UIOP_Endpoint,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "UIOP_Endpoint.i"
 #endif /* __ACE_INLINE__ */
 
+
 TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
                                       CORBA::Short priority)
-  : TAO_Endpoint (TAO_TAG_UIOP_PROFILE,
-                  priority)
+  : TAO_Endpoint (TAO_TAG_UIOP_PROFILE, priority)
     , object_addr_ (addr)
     , next_ (0)
 {

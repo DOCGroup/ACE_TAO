@@ -7,10 +7,13 @@
 #include "tao/Typecode.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (tao,
            Any_Unknown_IDL_Type,
            "$Id$")
+
 
 TAO::Unknown_IDL_Type::Unknown_IDL_Type (
     CORBA::TypeCode_ptr tc,

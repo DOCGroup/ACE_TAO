@@ -43,7 +43,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
     {
       r->profile (r->stub ()->profile_in_use ());
 
-      size_t endpoint_count =
+      const size_t endpoint_count =
         r->profile ()->endpoint_count ();
 
       TAO_Endpoint *ep =

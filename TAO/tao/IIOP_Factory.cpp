@@ -1,11 +1,15 @@
 #include "IIOP_Factory.h"
 #include "IIOP_Acceptor.h"
 #include "IIOP_Connector.h"
+#include "IOP_IORC.h"
+
 #include "ace/OS_NS_strings.h"
+
 
 ACE_RCSID (tao,
            IIOP_Factory,
            "$Id$")
+
 
 static const char prefix_[] = "iiop";
 

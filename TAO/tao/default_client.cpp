@@ -19,10 +19,13 @@
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (tao,
            default_client,
            "$Id$")
+
 
 TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   : profile_lock_type_ (TAO_THREAD_LOCK)

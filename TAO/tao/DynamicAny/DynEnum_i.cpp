@@ -1,9 +1,11 @@
-/* -*- C++ -*- */
 // $Id$
 
 #include "DynEnum_i.h"
 #include "DynAnyFactory.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+
+#include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (DynamicAny,
            DynEnum_i,
@@ -114,7 +116,7 @@ TAO_DynEnum_i::get_as_string (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  const char *retval = 
+  const char *retval =
     this->type_.in ()->member_name (this->value_
                                     ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (0);
@@ -130,7 +132,7 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULong count = 
+  CORBA::ULong count =
     this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
@@ -177,7 +179,7 @@ TAO_DynEnum_i::set_as_ulong (CORBA::ULong value_as_ulong
       DynamicAny::DynAny::InvalidValue
     ))
 {
-  CORBA::ULong max = 
+  CORBA::ULong max =
     this->type_.in ()->member_count (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 

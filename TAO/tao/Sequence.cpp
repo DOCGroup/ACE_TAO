@@ -6,17 +6,22 @@
 #include "tao/Sequence.i"
 #endif /* __ACE_INLINE__ */
 
+#include "Exception.h"
+
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 # include "ace/Message_Block.h"
 #endif /* (TAO_NO_COPY_OCTET_SEQUENCES == 1) */
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
-#include "Exception.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_Memory.h"
+
 
 ACE_RCSID (tao,
            Sequence,
            "$Id$")
+
 
 // *************************************************************
 // Operations for class TAO_Base_Sequence
@@ -58,9 +63,9 @@ check_bounds(
                     "Access error in TAO_Sequence file=%s, line=%u, "
                     "idx=%u, max=%u\n",
                  ACE_TEXT_CHAR_TO_TCHAR (filename), lineno, tao_idx, tao_max));
-  
-      // @@TODO: When we have a hook setup, we can totally ignore this or 
-      // even remove this. 
+
+      // @@TODO: When we have a hook setup, we can totally ignore this or
+      // even remove this.
 #if defined (ACE_HAS_EXCEPTIONS)
       ACE_THROW (CORBA::BAD_PARAM ());
       ACE_OS::abort ();

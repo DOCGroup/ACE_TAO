@@ -95,9 +95,9 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
   // print a warning and exit because any options
   // are useless
   if (this->factory_disabled_) {
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_LIB_TEXT("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
-                ACE_LIB_TEXT("Default Resource Factory is disabled\n")));
+    ACE_DEBUG ((LM_WARNING,
+                ACE_LIB_TEXT ("TAO (%P|%t) Warning: Resource_Factory options ignored\n")
+                ACE_LIB_TEXT ("Advanced Resource Factory is disabled\n")));
     return 0;
   }
   this->options_processed_ = 1;
@@ -111,7 +111,7 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
     ACE_Dynamic_Service<TAO_Resource_Factory>::instance ("Resource_Factory");
   if (default_resource_factory != 0)
     {
-      default_resource_factory->disable_factory();
+      default_resource_factory->disable_factory ();
     }
 
   ACE_Arg_Shifter arg_shifter (argc, argv);
@@ -249,7 +249,8 @@ TAO_Advanced_Resource_Factory::init (int argc, ACE_TCHAR** argv)
 int
 TAO_Advanced_Resource_Factory::load_default_protocols (void)
 {
-  int r = this->TAO_Default_Resource_Factory::load_default_protocols ();
+  const int r =
+    this->TAO_Default_Resource_Factory::load_default_protocols ();
 
   this->protocol_factories_ =
     this->TAO_Default_Resource_Factory::protocol_factories_;

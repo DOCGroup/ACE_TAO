@@ -1,14 +1,18 @@
-#include "tao/Environment.h"
-#include "tao/ORB_Core.h"
-#include "tao/Exception.h"
+#include "Environment.h"
+#include "ORB_Core.h"
+#include "Exception.h"
+
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Environment.i"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Environment,
            "$Id$")
+
 
 CORBA::Environment::Environment (void)
   : exception_ (0)

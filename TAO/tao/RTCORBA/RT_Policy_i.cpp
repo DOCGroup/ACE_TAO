@@ -8,13 +8,17 @@
 #include "tao/Policy_Manager.h"
 #include "tao/debug.h"
 
+#include "ace/OS_NS_string.h"
+
 #if ! defined (__ACE_INLINE__)
 #include "RT_Policy_i.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (TAO,
+
+ACE_RCSID (RTCORBA,
            RT_Policy_i,
            "$Id$")
+
 
 // ****************************************************************
 

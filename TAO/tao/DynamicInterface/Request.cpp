@@ -6,13 +6,16 @@ ACE_RCSID (DynamicInterface,
            Request,
            "$Id$")
 
-#include "ExceptionList.h"
 #include "DII_Invocation_Adapter.h"
 #include "DII_Arguments.h"
+
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/NVList.h"
 #include "tao/Any_Unknown_IDL_Type.h"
+
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Request.inl"
@@ -63,7 +66,9 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::Flags flags,
                          CORBA::ExceptionList_ptr exceptions
                          ACE_ENV_ARG_DECL_NOT_USED)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+  : target_ (CORBA::Object::_duplicate (obj)),
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    opname_ (CORBA::string_dup (op)),
     args_ (CORBA::NVList::_duplicate (args)),
     result_ (CORBA::NamedValue::_duplicate (result)),
     flags_ (flags),
@@ -76,9 +81,6 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     response_received_ (0),
     byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
-  this->target_ = CORBA::Object::_duplicate (obj);
-  this->opname_ = CORBA::string_dup (op);
-
   if (this->exceptions_.in () == 0)
     {
       CORBA::ExceptionList *tmp = 0;
@@ -93,7 +95,9 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
                          CORBA::ORB_ptr orb,
                          const CORBA::Char *op
                          ACE_ENV_ARG_DECL_NOT_USED)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
+  : target_ (CORBA::Object::_duplicate (obj)),
+    orb_ (CORBA::ORB::_duplicate (orb)),
+    opname_ (CORBA::string_dup (op)),
     flags_ (0),
     // env_ (env),
     contexts_ (0),
@@ -103,9 +107,6 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
     response_received_ (0),
     byte_order_ (TAO_ENCAP_BYTE_ORDER)
 {
-  this->target_ = CORBA::Object::_duplicate (obj);
-  this->opname_ = CORBA::string_dup (op);
-
   CORBA::ExceptionList *tmp = 0;
   ACE_NEW (tmp,
            CORBA::ExceptionList);
@@ -140,7 +141,7 @@ CORBA::Request::~Request (void)
 void
 CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Boolean argument_flag =
+  const CORBA::Boolean argument_flag =
     this->args_->_lazy_has_arguments ();
 
   size_t number_args = 0;
@@ -186,7 +187,7 @@ CORBA::Request::invoke (ACE_ENV_SINGLE_ARG_DECL)
 void
 CORBA::Request::send_oneway (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Boolean argument_flag =
+  const CORBA::Boolean argument_flag =
     this->args_->_lazy_has_arguments ();
 
   size_t number_args = 0;
@@ -234,7 +235,7 @@ CORBA::Request::send_deferred (ACE_ENV_SINGLE_ARG_DECL)
     this->response_received_ = 0;
   }
 
-  CORBA::Boolean argument_flag = this->args_->count () ? 1 : 0;
+  const CORBA::Boolean argument_flag = this->args_->count () ? 1 : 0;
 
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -297,7 +298,7 @@ CORBA::Request::poll_response (ACE_ENV_SINGLE_ARG_DECL)
   if (!this->response_received_)
     {
       // If we're single-threaded, the application could starve the ORB,
-      // and the response never gets received, so let the ORB do an 
+      // and the response never gets received, so let the ORB do an
       // atom of work, if necessary, each time we poll.
       ACE_Time_Value tv (0, 0);
       (void) this->orb_->perform_work (&tv ACE_ENV_ARG_PARAMETER);

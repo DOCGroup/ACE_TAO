@@ -1,15 +1,17 @@
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "IIOP_Profile.h"
 #include "Environment.h"
 #include "ORB_Core.h"
 #include "debug.h"
 #include "IIOP_EndpointsC.h"
 
-ACE_RCSID(TAO,
-          IIOP_Profile,
-          "$Id$")
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
+
+
+ACE_RCSID (tao,
+           IIOP_Profile,
+           "$Id$")
+
 
 #if !defined (__ACE_INLINE__)
 # include "IIOP_Profile.i"

@@ -11,9 +11,14 @@
 #include "CORBANAME_Parser.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID (tao, 
-           CORBANAME_Parser, 
+#include "ace/Log_Msg.h"
+#include "ace/OS_NS_string.h"
+
+
+ACE_RCSID (tao,
+           CORBANAME_Parser,
            "$Id$")
+
 
 TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser (void)
 {
