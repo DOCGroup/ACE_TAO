@@ -248,6 +248,15 @@ public:
    * these two methods in the  TP_Reactor to keep some compilers
    * silent.
    */
+  virtual int register_handler (int signum,
+                                ACE_Event_Handler *new_sh,
+                                ACE_Sig_Action *new_disp = 0,
+                                ACE_Event_Handler **old_sh = 0,
+                                ACE_Sig_Action *old_disp = 0);
+
+  virtual int register_handler (const ACE_Sig_Set &sigset,
+                                ACE_Event_Handler *new_sh,
+                                ACE_Sig_Action *new_disp = 0);
   /**
    * Remove the ACE_Event_Handler currently associated with <signum>.
    * <sigkey> is ignored in this implementation since there is only
