@@ -1,5 +1,7 @@
 Sat Apr 24 23:03:31 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
+	* ace/config-linux-lxpthreads.h:
+ 	Removed ACE_HAS_AIO_CALLS. Even simple aio calls test is hanging. 
 
 	* ACE_wrappers/ace/POSIX_Asynch_IO.cpp
 	* ACE_wrappers/ace/POSIX_Asynch_IO.h
