@@ -1,3 +1,33 @@
+Fri Jun  5 16:02:54 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/CDR.h: 
+	* tao/CDR.i: 
+	* tao/CDR.cpp: 
+	  The output CDR class uses the Data_Block directly to minimize
+	  memory allocation.
+	  This has taken the count of memory allocations to 4 on the
+	  client side and 4 on the server side.
+
+	* tao/GIOP.cpp: 
+	  OutputCDR::stream() now returns a const message block.
+
+	* tests/Param_Test/client.cpp: 
+	* tests/Param_Test/driver.h: 
+	* tests/Param_Test/driver.cpp: 
+	* tests/Param_Test/options.h: 
+	* tests/Param_Test/options.cpp: 
+	* tests/Param_Test/param_test.idl: 
+	* tests/Param_Test/param_test_i.h: 
+	* tests/Param_Test/param_test_i.cpp: 
+	  It is now possible to shutdown the server using a method, this
+	  is useful to test memory leaks because the client can request a
+	  clean shutdown (using the option -x).
+
+	* TAO_IDL/be/be_visitor_operation.cpp: 
+	  For some types the return values were not deleted at the end of
+	  the upcall. I'm using T_var classes to automatically release the
+	  memory.
+
 Fri Jun  5 12:22:44 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tao/debug.{h,cpp}: Added TAO_orbdebug flag so TAO code

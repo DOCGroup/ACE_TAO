@@ -250,12 +250,12 @@ public:
   // Returns 0 if an error has ocurred, the only expected error is to
   // run out of memory.
 
-  ACE_Message_Block* begin (void) const;
+  const ACE_Message_Block* begin (void) const;
   // Return the start of the message block chain for this CDR stream.
   // NOTE: The complete CDR stream is represented by a chain of
   // message blocks.
 
-  ACE_Message_Block* end (void) const;
+  const ACE_Message_Block* end (void) const;
   // Return the last message in the chain that is is use.
 
   const char* buffer (void) const;
@@ -316,7 +316,7 @@ private:
   // for that case, but that would be too platform dependent.
 
 private:
-  ACE_Message_Block* start_;
+  ACE_Message_Block start_;
   // The start of the chain of message blocks.
 
   ACE_Message_Block* current_;
