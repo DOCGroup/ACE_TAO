@@ -65,7 +65,7 @@ Notify_Sequence_Push_Consumer::_connect (
 void
 Notify_Sequence_Push_Consumer::push_structured_events (
                           const CosNotification::EventBatch& events
-                          ACE_ENV_ARG_DECL_NOT_USED /*ACE_ENV_SINGLE_ARG_PARAMETER*/)
+                          ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong length = events.length ();
@@ -103,10 +103,11 @@ Notify_Sequence_Push_Consumer::push_structured_events (
   this->count_++;
   if (this->count_ > this->high_)
     {
-      this->done_ = 2;
+      this->done_ = 1;
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Sequence Consumer (%P|%t): ERROR: too "
                             "many events received.\n")));
+      ACE_THROW (CORBA::INTERNAL ());
     }
   else if (this->count_ == this->low_)
     {
