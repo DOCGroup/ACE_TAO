@@ -43,6 +43,17 @@ public:
 
 // ****************************************************************
 
+class TAO_Export TAO_RW_Connect_Creation_Strategy : public ACE_Creation_Strategy<TAO_Client_Connection_Handler>
+{
+public:
+  TAO_RW_Connect_Creation_Strategy (ACE_Thread_Manager * = 0);
+
+  virtual int make_svc_handler (TAO_Client_Connection_Handler *&sh);
+  // Makes TAO_RW_Client_Connection_Handlers
+};
+
+// ****************************************************************
+
 class TAO_Default_Client_Strategy_Factory : public TAO_Client_Strategy_Factory
 {
   // = TITLE
@@ -86,7 +97,8 @@ private:
   enum Client_Connection_Handler_Type
   {
     MT_CLIENT_CONNECTION_HANDLER,
-    ST_CLIENT_CONNECTION_HANDLER
+    ST_CLIENT_CONNECTION_HANDLER,
+    RW_CLIENT_CONNECTION_HANDLER
   };
 
   Client_Connection_Handler_Type client_connection_handler_;
