@@ -1,3 +1,8 @@
+Tue Apr 16 11:12:55 2002  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* orbsvcs/tests/Miop/McastHello/Makefile (IDL_SRC): 
+	  Updated dependencies.
+
 Tue Apr 16 07:26:18 2002  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (create_object): 
