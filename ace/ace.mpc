@@ -405,7 +405,6 @@ project(ACE) : acedefaults, aceversion, core, qt_moc, qt_reactor {
       Module.cpp
       Obstack_T.cpp
       Pair_T.cpp
-      Refcounted_Auto_Ptr.cpp
       RB_Tree.cpp
       Select_Reactor_T.cpp
       Singleton.cpp
