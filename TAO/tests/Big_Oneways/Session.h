@@ -17,9 +17,7 @@
 #endif  /* ACE_HAS_THREADS */
 
 #if defined (_MSC_VER)
-# if (_MSC_VER >= 1200)
-#  pragma warning(push)
-# endif /* _MSC_VER >= 1200 */
+# pragma warning(push)
 # pragma warning (disable:4250)
 #endif /* _MSC_VER */
 
@@ -115,7 +113,7 @@ private:
   Barrier barrier_;
 };
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1200)
+#if defined(_MSC_VER)
 # pragma warning(pop)
 #endif /* _MSC_VER */
 
