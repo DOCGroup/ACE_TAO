@@ -1914,7 +1914,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 ACE_INLINE int
 ACE_OS::mutex_lock (ACE_mutex_t *m)
 {
-  ACE_TRACE ("ACE_OS::mutex_lock");
+  // ACE_TRACE ("ACE_OS::mutex_lock");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
@@ -2216,7 +2216,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
 ACE_INLINE int
 ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 {
-  ACE_TRACE ("ACE_OS::thread_mutex_lock");
+  // ACE_TRACE ("ACE_OS::thread_mutex_lock");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
   return ACE_OS::mutex_lock (m);
