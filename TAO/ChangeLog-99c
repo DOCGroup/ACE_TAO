@@ -1,24 +1,33 @@
+Wed Jul 14 11:44:46 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU: on WIN32 hosts, attempt to set the
+          CPP_LOCATION environment variable if it had not been
+          set.  Requires Bourne shell and sed.  If those requirements
+          aren't met, at least the user might find out sooner rather
+          than later that CPP_LOCATION must be set on WIN32.
+
 Wed Jul 14 09:44:39 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/param_test/idl:
-	* TAO/tests/Param_Test/var_struct.cpp:
-	  Added some members to the struct - types smaller than 4 bytes between
-	  the dynamic types and a double at the beginning. Also added the checks
-	  in test_validity(). This will test more thoroughly for a recurrence of
-	  the alignment problems that were recently fixed.
+        * TAO/tests/Param_Test/param_test/idl:
+        * TAO/tests/Param_Test/var_struct.cpp:
+          Added some members to the struct - types smaller than 4 bytes
+          between the dynamic types and a double at the beginning. Also
+          added the checks in test_validity(). This will test more
+          thoroughly for a recurrence of the alignment problems that
+          were recently fixed.
 
 Wed Jul 14 02:27:44 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/Collocation/Coll_Tester.cpp:
-	* tests/Collocation/Coll_Tester.h:
-	* tests/Collocation/Collocation.dsp:
-	* tests/Collocation/Collocation.dsw:
-	* tests/Collocation/Diamond.idl:
-	* tests/Collocation/Diamond_i.cpp:
-	* tests/Collocation/Diamond_i.h:
-	* tests/Collocation/README:
-	* tests/Collocation/main.cpp:
-	* tests/Collocation/svc.conf: New collocation support sanity check.
+        * tests/Collocation/Coll_Tester.cpp:
+        * tests/Collocation/Coll_Tester.h:
+        * tests/Collocation/Collocation.dsp:
+        * tests/Collocation/Collocation.dsw:
+        * tests/Collocation/Diamond.idl:
+        * tests/Collocation/Diamond_i.cpp:
+        * tests/Collocation/Diamond_i.h:
+        * tests/Collocation/README:
+        * tests/Collocation/main.cpp:
+        * tests/Collocation/svc.conf: New collocation support sanity check.
 
 Tue Jul 13 22:09:31 1999  David L. Levine  <levine@cs.wustl.edu>
 
@@ -43,7 +52,7 @@ Tue Jul 13 21:43:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           received its reply and another time to become the leader; in
           that case the second signal is lost and nobody becomes the
           leader. Thanks to Marina for helping debug and test this
-	  problem.
+          problem.
 
         * orbsvcs/tests/Simple_Naming/client.cpp:
           Work around IRIX/MIPSPro bug.
