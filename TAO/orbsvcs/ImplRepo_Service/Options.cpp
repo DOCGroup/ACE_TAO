@@ -8,7 +8,8 @@ Options::Options ()
 : debug_ (1),
   ior_output_file_ (0),
   config_ (0),
-  startup_timeout_ (5)
+  startup_timeout_ (5),
+  ping_interval_ (0, 200)
 {
   // Nothing
 }
@@ -108,6 +109,11 @@ Options::startup_timeout (void) const
   return this->startup_timeout_;
 }
 
+const ACE_Time_Value &
+Options::ping_interval (void) const
+{
+  return this->startup_timeout_;
+}
 
 ACE_Configuration *
 Options::config () const

@@ -1,3 +1,18 @@
+Fri Apr 21 19:41:20 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_i.h:
+        * TAO/orbsvcs/ImplRepo_Service/Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Options.h:
+
+          The ImR now pings a server right after starting it up.  It will
+          not forward the client until after the server responds to a ping
+          (or times out).  This prevents annoying race conditions where a
+          server can notify the ImR but not be ready for requests yet.
+          Thanks to Steve Totten <totten_s@ociweb.com> and Chanaka 
+          Liyanaarachchi <chanaka@ociweb.com> for providing examples and
+          info on what was happening.
+
 Fri Apr 21 18:40:12 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/MProfile/test_i.cpp:

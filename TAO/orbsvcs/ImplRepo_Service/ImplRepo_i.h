@@ -165,6 +165,12 @@ private:
   // Implementation of activate_server.  <check_startup> is a flag to check 
   // the activation mode before attempting to start it.  
 
+  void start_server_i (const char *server,
+                       CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::CannotActivate));
+  // This method starts the server process.
+
   ACE_Process_Manager process_mgr_;
   // The Process Manager.
 

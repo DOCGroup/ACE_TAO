@@ -138,7 +138,6 @@ ImplRepo_i::activate_server_i (const char *server,
                      ImplementationRepository::Administration::CannotActivate))
 {
   int start = 0;
-  int spawned_pid = 0;
   ACE_TString server_object_ior, location;
 
   if (OPTIONS::instance()->debug () >= 1)
@@ -215,105 +214,13 @@ ImplRepo_i::activate_server_i (const char *server,
       // Make sure the activation allows us to start it up.
       if (activation == Server_Info::MANUAL && check_startup)
         ACE_THROW_RETURN (CORBA::TRANSIENT (
-            CORBA_SystemException::_tao_minor_code (TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION, 0),
-            CORBA::COMPLETED_NO),
+            CORBA_SystemException::_tao_minor_code (
+              TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION, 0),
+            CORBA::COMPLETED_NO), 
           "");
 
-      // Check to see if it is already starting up
-      int startup_val = this->repository_.starting_up (server, 1);
-
-      if (startup_val == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Error: Cannot find startup info for server <%s>\n",
-                      server));
-          ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), "");
-        }
-
-      if (startup_val == 0)
-        {
-          if (startup.length () == 0)
-            {
-              // If there is no startup information, throw a transient exception
-              ACE_ERROR ((LM_ERROR,
-                          "Error: No startup information for server <%s>\n",
-                          server));
-              // @@ (brunsch) Should this be a more specific transient exception?
-              ACE_THROW_RETURN (CORBA::TRANSIENT (), "");
-            }
-
-
-          if (OPTIONS::instance()->debug () >= 1)
-            ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
-
-          ACE_Process_Options proc_opts;
-
-          proc_opts.command_line (startup.c_str ());
-          proc_opts.working_directory (working.c_str ());
-
-          for (size_t i = 0; i < environment.length(); ++i)
-            proc_opts.setenv (environment[i].name.in (), environment[i].value.in ());
-
-          spawned_pid = this->process_mgr_.spawn (proc_opts);
-
-          if (spawned_pid == ACE_INVALID_PID)
-            {
-              ACE_ERROR ((LM_ERROR,
-                         "Error: Cannot activate server <%s> using <%s>\n",
-                          server,
-                          startup.c_str ()));
-              ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("Process Creation Failed")),
-                                "");
-            }
-          else if (OPTIONS::instance ()->debug () >= 2)
-            ACE_DEBUG ((LM_DEBUG, "Process ID is %d\n", spawned_pid));
-         
-        }
-
-      // Now that the server has been started up, we need to go back into the event
-      // loop so we can get the reponse or handle other requests
-      TAO_ORB_Core *orb_core = this->orb_->orb_core ();
-
-      int starting_up;
-
-      ACE_Time_Value timeout = OPTIONS::instance ()->startup_timeout ();
-
-      while ((starting_up = this->repository_.starting_up (server)) == 1)
-        {
-          if (OPTIONS::instance()->debug () >= 2)
-            ACE_DEBUG ((LM_DEBUG, "activate_server: Going into handle_events\n"));
-
-          int result = orb_core->reactor ()->handle_events (&timeout);
-
-          if (result == 0 && timeout == ACE_Time_Value::zero)
-            {
-              this->repository_.starting_up (server, 0);
-              ACE_ERROR ((LM_ERROR,
-                         "Error: Cannot activate server <%s> using <%s>, terminating it.\n",
-                          server,
-                          startup.c_str ()));
-
-              // Kill the server
-              this->process_mgr_.terminate (spawned_pid);
-             
-              ACE_THROW_RETURN (ImplementationRepository::Administration::CannotActivate (CORBA::string_dup ("Timeout")),
-                                "");
-            }
-        }
-
-      if (OPTIONS::instance()->debug () >= 2)
-        ACE_DEBUG ((LM_DEBUG, "activate_server: Got out of handle_events loop\n"));
-
-      // Check to see if it disappeared on us
-      if (starting_up == -1)
-        {
-          ACE_ERROR ((LM_ERROR,
-                      "Error: Cannot find startup info for server <%s>\n",
-                      server));
-          ACE_THROW_RETURN (ImplementationRepository::Administration::NotFound (), "");
-        }
-
-      // Now it should be started up.
+      this->start_server_i (server);
+      ACE_CHECK_RETURN ("");
     }
 
   if (this->repository_.get_running_info (server, location, server_object_ior) != 0)
@@ -336,6 +243,235 @@ ImplRepo_i::activate_server_i (const char *server,
 
   return location;
 }
+
+
+// Starts the server process
+
+void
+ImplRepo_i::start_server_i (const char *server,
+                            CORBA::Environment &ACE_TRY_ENV)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     ImplementationRepository::Administration::CannotActivate))
+{
+  int spawned_pid = 0;
+  ACE_TString logical, startup, working;
+  ImplementationRepository::EnvironmentList environment;
+  Server_Info::ActivationMode activation;
+  if (this->repository_.get_startup_info (server,
+                                          logical,
+                                          startup,
+                                          environment,
+                                          working,
+                                          activation) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Cannot find startup info for server <%s>\n",
+                  server));
+      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_CHECK;
+    }
+
+  // Check to see if it is already starting up
+  int startup_val = this->repository_.starting_up (server, 1);
+
+  if (startup_val == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Cannot find startup info for server <%s>\n",
+                  server));
+      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_CHECK;
+    }
+
+  if (startup_val == 0)
+    {
+      if (startup.length () == 0)
+        {
+          // If there is no startup information, throw an exception
+          ACE_ERROR ((LM_ERROR,
+                      "Error: No startup information for server <%s>\n",
+                      server));
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+            (CORBA::string_dup ("No startup information")));
+          ACE_CHECK;
+        }
+
+
+      if (OPTIONS::instance()->debug () >= 1)
+        ACE_DEBUG ((LM_DEBUG, "Starting %s\n", server));
+
+      ACE_Process_Options proc_opts;
+
+      proc_opts.command_line (startup.c_str ());
+      proc_opts.working_directory (working.c_str ());
+
+      for (size_t i = 0; i < environment.length(); ++i)
+        proc_opts.setenv (environment[i].name.in (), environment[i].value.in ());
+
+      spawned_pid = this->process_mgr_.spawn (proc_opts);
+
+      if (spawned_pid == ACE_INVALID_PID)
+        {
+          ACE_ERROR ((LM_ERROR,
+                     "Error: Cannot activate server <%s> using <%s>\n",
+                      server,
+                      startup.c_str ()));
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+            (CORBA::string_dup ("Process Creation Failed")));
+          ACE_CHECK;
+        }
+      else if (OPTIONS::instance ()->debug () >= 2)
+        ACE_DEBUG ((LM_DEBUG, "Process ID is %d\n", spawned_pid));
+    }
+
+  // Now that the server has been started up, we need to go back into the event
+  // loop so we can get the reponse or handle other requests
+  TAO_ORB_Core *orb_core = this->orb_->orb_core ();
+
+  int starting_up;
+
+  ACE_Time_Value timeout = OPTIONS::instance ()->startup_timeout ();
+
+  while ((starting_up = this->repository_.starting_up (server)) == 1)
+    {
+      if (OPTIONS::instance()->debug () >= 2)
+        ACE_DEBUG ((LM_DEBUG, "activate_server: Going into handle_events\n"));
+
+      int result = orb_core->reactor ()->handle_events (&timeout);
+
+      if (result == 0 && timeout == ACE_Time_Value::zero)
+        {
+          this->repository_.starting_up (server, 0);
+          ACE_ERROR ((LM_ERROR,
+                     "Error: Cannot activate server <%s> using <%s>, "
+                     "terminating it.\n",
+                      server,
+                      startup.c_str ()));
+
+          // Kill the server
+          this->process_mgr_.terminate (spawned_pid);
+       
+          ACE_THROW(ImplementationRepository::Administration::CannotActivate 
+            (CORBA::string_dup ("Timeout")));
+          ACE_CHECK;
+        }
+    }
+
+  if (OPTIONS::instance()->debug () >= 2)
+    ACE_DEBUG ((LM_DEBUG, "activate_server: Got out of handle_events loop\n"));
+
+  // Check to see if it disappeared on us
+  if (starting_up == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Cannot find startup info for server <%s>\n",
+                  server));
+      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+      ACE_CHECK;
+    }
+
+  // Now check to see if it is responding yet:
+
+  ACE_Time_Value end = ACE_OS::gettimeofday () 
+                       + OPTIONS::instance ()->startup_timeout ();
+
+  ACE_TString server_object_ior, location;
+
+  // Find out if it is already running
+  if (this->repository_.get_running_info (server, location, server_object_ior) != 0)
+    {
+      // If we had problems getting the server_object_ior, probably meant that
+      // there is no <server> registered
+      ACE_ERROR ((LM_ERROR,
+                  "Error: Cannot find ServerObject IOR for server <%s>\n",
+                  server));
+      ACE_THROW (ImplementationRepository::Administration::NotFound ());
+    }
+
+  ImplementationRepository::ServerObject_var server_ping_object;
+
+  ACE_TRY_EX (ping1)
+    {
+      CORBA::Object_var object =
+      this->orb_->string_to_object (server_object_ior.c_str (),
+                                      ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (ping1);
+
+      server_ping_object =
+        ImplementationRepository::ServerObject::_narrow (object.in (), 
+                                                         ACE_TRY_ENV);
+      ACE_TRY_CHECK_EX (ping1);
+
+      if (CORBA::is_nil (server_ping_object.in ()))
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "Error: Invalid ServerObject IOR: <%s>\n",
+                      server_object_ior.c_str ()));
+          ACE_THROW (ImplementationRepository::Administration::NotFound ());
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_ERROR ((LM_ERROR,
+                 "Error: Cannot activate server <%s>, "
+                 "terminating it (Server Ping Object failed).\n",
+                  server));
+
+      // Kill the server
+      this->process_mgr_.terminate (spawned_pid);
+
+      ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+        (CORBA::string_dup ("Server Ping Object failed")));
+    }
+  ACE_ENDTRY;
+  ACE_CHECK;
+  
+  while (ACE_OS::gettimeofday () > end)
+    {
+      ACE_TRY_EX (ping2);
+        {
+          // Check to see if we can ping it
+          server_ping_object->ping (ACE_TRY_ENV);
+          ACE_TRY_CHECK_EX (ping2);
+        }
+      ACE_CATCH (CORBA::TRANSIENT, transient)
+        {
+          if (ACE_OS::gettimeofday () > end)
+            {
+              ACE_ERROR ((LM_ERROR,
+                         "Error: Timeout while activating server <%s>, "
+                         "terminating it.\n",
+                          server));
+
+              // Kill the server
+              this->process_mgr_.terminate (spawned_pid);
+   
+              ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+                          (CORBA::string_dup ("Timeout")));
+            }
+
+          // Sleep between sending ping.
+          ACE_OS::sleep (OPTIONS::instance ()->ping_interval ());
+        }
+      ACE_CATCHANY
+        {
+          ACE_ERROR ((LM_ERROR,
+                     "Error: Cannot activate server <%s>, "
+                     "terminating it (ping timed out).\n",
+                      server));
+
+          // Kill the server
+          this->process_mgr_.terminate (spawned_pid);
+   
+          ACE_THROW (ImplementationRepository::Administration::CannotActivate 
+                       (CORBA::string_dup ("Ping timed out")));
+        }
+      ACE_ENDTRY;
+      ACE_CHECK;
+    }
+}
+
+                     
 
 // Adds an entry to the Repository about this <server>
 
@@ -1067,7 +1203,7 @@ ImplRepo_i::shutdown_server (const char *server,
               ACE_ERROR ((LM_ERROR,
                           "Error: Invalid ServerObject IOR: <%s>\n",
                           server_object_ior.c_str ()));
-              ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
+              ACE_THROW (ImplementationRepository::Administration::NotFound ());
             }
 
           // Call shutdown
@@ -1080,7 +1216,7 @@ ImplRepo_i::shutdown_server (const char *server,
               ACE_ERROR ((LM_ERROR,
                          "Error: Could not update information for unknown server <%s>\n",
                          server));
-              ACE_TRY_THROW (ImplementationRepository::Administration::NotFound ());
+              ACE_THROW (ImplementationRepository::Administration::NotFound ());
             }
         }
       ACE_CATCHANY
