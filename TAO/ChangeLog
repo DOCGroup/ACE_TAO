@@ -1,3 +1,34 @@
+Mon Dec 23 22:33:56 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	A slight redesign of the changes applied to fix BUG 1276. The
+        redesign was motivated due to a  drop in our performance. 
+	
+	* tao/Reply_Dispatcher.cpp:
+	* tao/Reply_Dispatcher.h:
+	* tao/Reply_Dispatcher.i: Did a slight redesign of how timeouts are
+	  handled.  This was necessitated since the previous design made
+	  things slow. Though none of the synchronization primitives were
+	  used for normal cases ie. invocations without timeouts, we still
+	  created them for every invocation. Creation of synchronizaton
+	  primitives actually made things slow, and they have now been
+	  removed. 
+	
+	* tao/Muxed_TMS.cpp: Removed calls to start_dispatch () and
+	  end_dispatch () on the Reply_Dispatcher. 
+	
+	* tao/Invocation.cpp: We now do a synchronization on the internal
+	  lock used by Muxed_TMS strategy so that no two threads are
+	  active on the Reply_Handler at the same time. This, though not
+	  very elegant, provides the same effect as the changes in "Sun
+	  Dec 22 11:26:30 2002  Balachandran Natarajan
+	  <bala@isis-server.isis.vanderbilt.edu>". The gist of the changes
+	  mentioned above have still been retained. 
+
+	* tao/Exclusive_TMS.cpp: Removed calls to start_dispatch and
+	  end_dispatch () on the Reply_Dispatcher. 
+	
+	  These changes should get our performance back on track.
+
 Mon Dec 23 18:21:51 2002  Pradeep Gore  <pradeep@oomworks.com>
 
  	* orbsvcs/tests/Notify/Blocking/Notify_Structured_Push_Consumer.cpp:
