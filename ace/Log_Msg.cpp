@@ -1089,6 +1089,18 @@ ACE_Log_Msg::dec (void)
 }
 
 int
+ACE_Log_Msg::trace_depth (void)
+{
+  return this->trace_depth_;
+}
+
+void
+ACE_Log_Msg::trace_depth (int depth)
+{
+  this->trace_depth_ = depth;
+}
+
+int
 ACE_Log_Msg::trace_active (void)
 {
   return this->trace_active_;
