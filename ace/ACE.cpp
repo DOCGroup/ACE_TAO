@@ -2379,7 +2379,7 @@ ACE::format_hexdump (const char *buffer,
       for (i = size % 16; i < 16; i++)
         {
           ACE_OS::sprintf (obuf,
-                           ACE_LIB_TEXT ("   "));
+                           ACE_LIB_TEXT ("  "));
           obuf += 3;
           textver[i] = ' ';
         }

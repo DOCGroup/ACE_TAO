@@ -1,3 +1,10 @@
+Tue Mar  6 16:58:17 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/ACE.cpp (format_hexdump): The format_hexdump () was missing
+	  a space if the remaining message that needs dumping was less
+	  than 16 bytes. Thansk to Johnny Willemsen"
+	  <johnny.willemsen@meco.nl> for giving this fix.
+
 Tue Mar  6 11:25:53 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * bin/PerlACE/Process_Unix.pm:
