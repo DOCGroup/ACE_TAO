@@ -17,6 +17,8 @@
 
 #include "ace/Array_Base.h"
 #include "ciao/CIAO_Server_Export.h"
+#include "ciao/CCM_ContainerC.h"
+#include "ciao/Deployment_CoreC.h"
 
 #include "tao/PortableServer/Key_Adapters.h"
 #include "ace/Hash_Map_Manager_T.h"
@@ -75,6 +77,8 @@ namespace CIAO
       ACE_THROW_SPEC ((CORBA::SystemException));
 
     void update_servant_map (PortableServer::ObjectId &oid,
+                             ::Components::CCMHome_ptr home,
+                             ::Components::EnterpriseComponent_ptr ec,
                              Dynamic_Component_Servant_Base* servant
                              ACE_ENV_ARG_DECL);
 
