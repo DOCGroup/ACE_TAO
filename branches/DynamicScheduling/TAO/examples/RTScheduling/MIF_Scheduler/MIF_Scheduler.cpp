@@ -496,22 +496,14 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       ACE_Message_Block* msg;
       ready_que_.dequeue_head (msg);
       run_dt = ACE_dynamic_cast (DT*, msg);
-      if (run_dt->msg_priority () >= new_dt->msg_priority ())
-	{
-	  ready_que_.enqueue_prio (new_dt);
+      if (run_dt->msg_priority () == 100)
 	  run_dt->resume ();
-	  new_dt->suspend ();
-	}
-      else 
-	{
-	  ready_que_.enqueue_prio (run_dt);
-	  delete new_dt;
-	}
+      else ready_que_.enqueue_prio (run_dt);
     }
+  ready_que_.enqueue_prio (new_dt);
+  new_dt->suspend ();
   //resume_main ();
   lock_.release ();
-
-
 }
 
 void
