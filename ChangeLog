@@ -1,3 +1,8 @@
+Wed Dec 15 10:04:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_gnuwin32_common.GNU:
+          Set GL flags to the correct values
+
 Tue Dec 14 19:53:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_cygwin32.GNU:
