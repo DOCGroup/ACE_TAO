@@ -16,6 +16,7 @@
 // only mutual exclusion relates to reference counting and
 // construction.
 
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 

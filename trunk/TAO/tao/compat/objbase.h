@@ -18,6 +18,10 @@
 #ifndef	_compobj_h
 #define	_compobj_h
 
+#  if !defined(ACE_OS_H)
+#    error You did not include "ace/OS.h" before objbase.h.  This will break on WIN32 platforms.
+#  endif
+
 //
 // Random data types that come from Microsoft's APIs.
 //

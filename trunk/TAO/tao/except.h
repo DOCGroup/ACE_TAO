@@ -19,7 +19,7 @@
 #if !defined (TAO_EXCEPT_H)
 #  define TAO_EXCEPT_H
 
-#  include "ace/OS.h"
+#  include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #  include "ace/Synch.h"
 
 #  include <objbase.h>

@@ -10,17 +10,18 @@
 // the modules knowing about IIOP.  In the future, a looser coupling
 // between OA initialiszation and protocol components is desired.
 
-#include "orb.h"
-#include "boa.h"
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
+#include <objbase.h>
+#include <initguid.h>
+
+#include "tao/orb.h"
+#include "tao/boa.h"
 
 // XXX this should not know implementation or other details of any
 // protocol modules!  This is an implementation shortcut only.
 
-#include "iioporb.h"
-#include "roa.h"
-
-#include <objbase.h>
-#include <initguid.h>
+#include "tao/iioporb.h"
+#include "tao/roa.h"
 
 
 // {A201E4C8-F258-11ce-9598-0000C07CA898}
@@ -133,26 +134,6 @@ void CORBA_BOA::dispatch (CORBA_OctetSeq &key,
   TAO_Skeleton skel;  // pointer to function pointer for the operation
   CORBA_Object_ptr obj;  // object that will be looked up based on the key
   CORBA_String  opname;
-
-#if 0
-  CORBA_OctetSeq *obj_key;
-
-  // this whole thing doesn't seem to be right since the context will
-  // be the key of just one object
-  obj_key = (CORBA_OctetSeq *) context;
-
-  if (obj_key->length != key.length
-      || ACE_OS::memcmp (obj_key->buffer, key.buffer,
-			 obj_key->length) != 0) {
-    env.exception (new CORBA_OBJECT_NOT_EXIST (COMPLETED_NO) );
-#ifdef	DEBUG
-    if (TAO_debug_level) 
-      dmsg_opaque ("request to nonexistent object, key = ",
-		   key.buffer, key.length);
-#endif
-    return;
-  }
-#endif /* 0 */
 
   // Get the skeleton
 

@@ -7,6 +7,7 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
+#include "ace/OS.h"    // WARNING! This MUST come before objbase.h on WIN32!
 #include <objbase.h>
 #include <initguid.h>
 
