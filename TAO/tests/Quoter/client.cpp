@@ -119,9 +119,9 @@ Quoter_Client::run (void)
   ACE_DEBUG ((LM_DEBUG, "ACE Hardware = %i\n", q));
 
   CosLifeCycle::Criteria criteria;
-  CORBA::Object_var quoterObj_var = this->quoter_->copy (factoryFinder_var_, 
-                                         criteria,
-                                         this->env_);
+  CORBA::Object_var quoterObj_var = this->quoter_->copy (factory_Finder_var_, 
+                                                         criteria,
+                                                         this->env_);
   if (this->env_.exception () != 0)
   {
     this->env_.print_exception ("with copy.");
@@ -220,7 +220,7 @@ Quoter_Client::init_naming_service (void)
     CosNaming::Name quoterFactoryFinderName (2);
     quoterFactoryFinderName.length (2);
     quoterFactoryFinderName[0].id = CORBA::string_dup ("IDL_Quoter");
-    quoterFactoryFinderName[1].id = CORBA::string_dup ("QuoterFactoryFinder");
+    quoterFactoryFinderName[1].id = CORBA::string_dup ("Quoter_Factory_Finder");
 
     ACE_DEBUG ((LM_DEBUG, "Trying to resolve the Quoter Factory Finder!\n"));
 
@@ -231,12 +231,12 @@ Quoter_Client::init_naming_service (void)
 
     ACE_DEBUG ((LM_DEBUG, "Resolved the Quoter Factory Finder!\n"));
     
-    factoryFinder_var_ =
-      Stock::QuoterFactoryFinder::_narrow (factory_obj.in (), 
-                                      TAO_TRY_ENV);
+    factory_Finder_var_ =
+      Stock::Quoter_Factory_Finder::_narrow (factory_obj.in (), 
+                                             TAO_TRY_ENV);
     TAO_CHECK_ENV;
    
-    if (CORBA::is_nil (factoryFinder_var_.in ()))
+    if (CORBA::is_nil (factory_Finder_var_.in ()))
       ACE_ERROR_RETURN ((LM_ERROR,
       " could not resolve quoter factory in Naming service <%s>\n"),
       -1);
@@ -251,7 +251,7 @@ Quoter_Client::init_naming_service (void)
     
     // Find an appropriate factory over there.
     CosLifeCycle::Factories_ptr factories_ptr = 
-        factoryFinder_var_->find_factories (factoryName, TAO_TRY_ENV);
+        factory_Finder_var_->find_factories (factoryName, TAO_TRY_ENV);
 
     if (factories_ptr == 0)
       ACE_ERROR_RETURN ((LM_ERROR,
