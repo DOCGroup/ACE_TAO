@@ -1,3 +1,8 @@
+Thu Jan  8 15:50:59 1998  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* TAO_IDL/be/be_state_operation.cpp: 
+	  Added support for native as return type.
+
 Thu Jan  8 13:20:11 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/ast/Makefile: 
