@@ -34,7 +34,7 @@ PLAYpara Video_Server::para;
 // %% maybe put this in some class?
 // this sends one frame
 int
-play_send (void)
+play_send (int debug)
 {
 
   //  ACE_DEBUG((LM_DEBUG,"play_send: sending the frame \n"));
@@ -43,14 +43,19 @@ play_send (void)
   int curHeader = Video_Timer_Global::timerHeader;
   char * sp;
     
-  if (VIDEO_SINGLETON::instance ()->preGroup != curGroup || curFrame != VIDEO_SINGLETON::instance ()->preFrame)
+  if (VIDEO_SINGLETON::instance ()->preGroup != curGroup || 
+      curFrame != VIDEO_SINGLETON::instance ()->preFrame)
     {
       int sendStatus = -1;
       int frameStep = 1;
+      if (debug)
+        cerr << " curgroup = " << curGroup << endl ;
       if (curGroup == 0)
         {
+      
           int i = curFrame + 1;
-          while (i < VIDEO_SINGLETON::instance ()->firstPatternSize && !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
+          while (i < VIDEO_SINGLETON::instance ()->firstPatternSize && 
+                 !VIDEO_SINGLETON::instance ()->firstSendPattern[i])
             {
               frameStep ++;
               i++;
@@ -68,6 +73,9 @@ play_send (void)
         }
       if (curGroup == 0)
         {
+          if (debug)
+            cerr << "first : " <<
+              VIDEO_SINGLETON::instance ()->firstSendPattern[curFrame] << endl;
           if (VIDEO_SINGLETON::instance ()->firstSendPattern[curFrame])
             sendStatus = 0;
           else /*  (!VIDEO_SINGLETON::instance ()->firstVIDEO_SINGLETON::instance ()->SendVIDEO_SINGLETON::Instance ()->Pattern[curFrame]) */
@@ -83,6 +91,8 @@ play_send (void)
                 }
               else
                 sendStatus = -1;
+              if (debug)
+                cerr << "SendStatus = " << sendStatus << endl;
             }
         }
       else if (sp[curFrame]) /* curGroup > 0 */
@@ -231,13 +241,15 @@ Video_Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
       switch (VIDEO_SINGLETON::instance ()->state)
         {
           // %% you probably dont need to use instance here
-        case VIDEO_SINGLETON::instance ()->VIDEO_PLAY:
+        case Video_Global::VIDEO_PLAY:
           play_send ();
           break;
-          // %% you probably dont need to use instance here
-          // %% this should probably be split into VIDEO_FAST_{FORWARD,BACKWARD}
-        case VIDEO_SINGLETON::instance ()->VIDEO_FAST:
-          // this handles *both* the backward and forward play case!
+        case Video_Global::VIDEO_FAST_FORWARD:
+          // this handles the forward play case!
+          fast_play_send ();
+          break;
+        case Video_Global::VIDEO_FAST_BACKWARD:
+          // this handles the backward play case!
           fast_play_send ();
           break;
         default:
@@ -273,11 +285,12 @@ Video_Data_Handler::handle_input (ACE_HANDLE handle)
   
   switch (VIDEO_SINGLETON::instance ()->state)
     {
-    case VIDEO_SINGLETON::instance ()->VIDEO_PLAY:
+    case Video_Global::VIDEO_PLAY:
       GetFeedBack ();
-      play_send (); // simulating the for loop in vs.cpp
+      play_send (); // simulating the for loop in playvideo () in vs.cpp
       break;
-    case VIDEO_SINGLETON::instance ()->VIDEO_FAST:
+    case Video_Global::VIDEO_FAST_FORWARD:
+    case Video_Global::VIDEO_FAST_BACKWARD:
       GetFeedBack ();
       fast_play_send (); // simulating the for loop in fast_play
       break;
@@ -312,7 +325,7 @@ Video_Control_Handler::handle_input (ACE_HANDLE handle)
       return 1;
     }
     
-  if (VIDEO_SINGLETON::instance ()->state == VIDEO_SINGLETON::instance ()->VIDEO_PLAY)
+  if (VIDEO_SINGLETON::instance ()->state == Video_Global::VIDEO_PLAY)
     {
       fprintf (stderr,"Video_Control_Handler::handle_input () \n");
 
@@ -338,7 +351,7 @@ Video_Control_Handler::handle_input (ACE_HANDLE handle)
 #endif
         Video_Timer_Global::StopTimer();
         
-        VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->INVALID;
+        VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
         // We need to call the read_cmd of the Video_Server to simulate
         // the control going to a switch..
         Video_Server::read_cmd ();
@@ -376,7 +389,10 @@ Video_Control_Handler::handle_input (ACE_HANDLE handle)
         }
       play_send ();// simulating the for loop in vs.cpp
     }
-  else if (VIDEO_SINGLETON::instance ()->state == VIDEO_SINGLETON::instance ()->VIDEO_FAST)
+  else if ((VIDEO_SINGLETON::instance ()->state ==
+           Video_Global::VIDEO_FAST_FORWARD) ||
+           (VIDEO_SINGLETON::instance ()->state ==
+           Video_Global::VIDEO_FAST_BACKWARD ))
     {
       result = Video_Server::CmdRead((char *)&VIDEO_SINGLETON::instance ()->cmd, 1);
       if (result != 0)
@@ -400,7 +416,7 @@ Video_Control_Handler::handle_input (ACE_HANDLE handle)
       VIDEO_SINGLETON::instance ()->cmdsn = ntohl(VIDEO_SINGLETON::instance ()->cmdsn);
 #endif
       Video_Timer_Global::StopTimer();
-      VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->INVALID;
+      VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
       Video_Server::read_cmd ();
       return 0;
     }
@@ -431,6 +447,7 @@ Video_Server::Video_Server (int ctr_fd,
 // send data packets and recieve feedback packets
 // from the client
 // the reactor_ also gets initialized here
+int
 Video_Server::init (int ctr_fd,
                     int data_fd,
                     int rttag,
@@ -439,6 +456,7 @@ Video_Server::init (int ctr_fd,
   this->reactor_ = ACE_Reactor::instance ();
 
   // %% new the sig handler also here
+  // %% use ACE_NEW_RETURN
   this->data_handler_ = new Video_Data_Handler (data_fd);
   this->control_handler_ = new Video_Control_Handler (ctr_fd);
   this->sig_handler_ = new Video_Sig_Handler ();
@@ -553,7 +571,7 @@ Video_Server::read_cmd (void)
     }
   fprintf(stderr, "VS got VIDEO_SINGLETON::instance ()->cmd %d\n", VIDEO_SINGLETON::instance ()->cmd);
     
-  VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->INVALID;
+  VIDEO_SINGLETON::instance ()->state = Video_Global::INVALID;
   switch (VIDEO_SINGLETON::instance ()->cmd)
     {
     case CmdPOSITION:
@@ -568,18 +586,15 @@ Video_Server::read_cmd (void)
         return result;
       break;
     case CmdFF:
-      // %% maybe you dont need instance here ?
-      VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->VIDEO_FAST;
+      VIDEO_SINGLETON::instance ()->state = Video_Global::VIDEO_FAST_FORWARD;
       Video_Server::fast_forward ();
       break;
     case CmdFB:
-      // %% maybe you dont need instance here ?
-      VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->VIDEO_FAST;
+      VIDEO_SINGLETON::instance ()->state = Video_Global::VIDEO_FAST_BACKWARD;
       Video_Server::fast_backward ();
       break;
     case CmdPLAY:
-      // %% maybe you dont need instance here ?
-      VIDEO_SINGLETON::instance ()->state = VIDEO_SINGLETON::instance ()->VIDEO_PLAY;
+      VIDEO_SINGLETON::instance ()->state = Video_Global::VIDEO_PLAY;
       result = Video_Server::play ();
       break;
     case CmdCLOSE:
@@ -663,7 +678,7 @@ Video_Server::play (void)
   Video_Timer_Global::StartTimer ();
 
   // Sends the first frame of the video...
-  result = play_send ();
+  result = play_send (1);
   return 0;
 }
 
@@ -877,24 +892,24 @@ int
 Video_Server::position (void)
 {
   int result;
-  POSITIONpara para;
+  POSITIONpara pos_para;
   /*
   fprintf(stderr, "POSITION . . .\n");
   */
-  result = CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&pos_para, sizeof(pos_para));
   if (result != 0)
     return result;
 
   if (VIDEO_SINGLETON::instance ()->live_source) return 0;
   
 #ifdef NeedByteOrderConversion
-  para.VIDEO_SINGLETON::instance ()->nextGroup = ntohl(para.VIDEO_SINGLETON::instance ()->nextGroup);
-  para.sn = ntohl(para.sn);
+  pos_para.nextGroup = ntohl(pos_para.nextGroup);
+  pos_para.sn = ntohl(pos_para.sn);
 #endif
   
-  CheckGroupRange(para.nextGroup);
-  VIDEO_SINGLETON::instance ()->cmdsn = para.sn;
-  result = SendPacket(VIDEO_SINGLETON::instance ()->numS>1 || para.nextGroup == 0, para.nextGroup, 0, 0);
+  CheckGroupRange(pos_para.nextGroup);
+  VIDEO_SINGLETON::instance ()->cmdsn = pos_para.sn;
+  result = SendPacket(VIDEO_SINGLETON::instance ()->numS>1 || pos_para.nextGroup == 0, pos_para.nextGroup, 0, 0);
   Video_Server::read_cmd ();
   return result;
 }
@@ -903,33 +918,33 @@ int
 Video_Server::step_video()
 {
   int group;
-  STEPpara para;
+  STEPpara step_para;
   int tag = 0;
   int result;
 
-  result = CmdRead((char *)&para, sizeof(para));
+  result = CmdRead((char *)&step_para, sizeof(step_para));
   if (result != 0)
     return result;
 #ifdef NeedByteOrderConversion
-  para.sn = ntohl(para.sn);
-  para.VIDEO_SINGLETON::instance ()->nextFrame = ntohl(para.VIDEO_SINGLETON::instance ()->nextFrame);
+  step_para.sn = ntohl(step_para.sn);
+  step_para.VIDEO_SINGLETON::instance ()->nextFrame = ntohl(step_para.VIDEO_SINGLETON::instance ()->nextFrame);
 #endif
 
-  VIDEO_SINGLETON::instance ()->cmdsn = para.sn;
+  VIDEO_SINGLETON::instance ()->cmdsn = step_para.sn;
 
   if (!VIDEO_SINGLETON::instance ()->live_source) {
-    if (para.nextFrame >= VIDEO_SINGLETON::instance ()->numF)  /* send SEQ_END */
+    if (step_para.nextFrame >= VIDEO_SINGLETON::instance ()->numF)  /* send SEQ_END */
     {
       tag = 1;
-      para.nextFrame --;
+      step_para.nextFrame --;
     }
     /*
-    fprintf(stderr, "STEP . . .frame-%d\n", para.VIDEO_SINGLETON::instance ()->nextFrame);
+    fprintf(stderr, "STEP . . .frame-%d\n", step_para.VIDEO_SINGLETON::instance ()->nextFrame);
     */
-    CheckFrameRange(para.nextFrame);
-    group = FrameToGroup(&para.nextFrame);
+    CheckFrameRange(step_para.nextFrame);
+    group = FrameToGroup(&step_para.nextFrame);
     if (VIDEO_SINGLETON::instance ()->precmd != CmdSTEP && !tag ) {
-      result = SendReferences(group, para.nextFrame);
+      result = SendReferences(group, step_para.nextFrame);
       if (result < 0 )
         return result;
     }
@@ -937,10 +952,10 @@ Video_Server::step_video()
   if (VIDEO_SINGLETON::instance ()->live_source) StartPlayLiveVideo();
   
   if (VIDEO_SINGLETON::instance ()->live_source) {
-    SendPicture(&para.nextFrame);
+    SendPicture(&step_para.nextFrame);
   }
   else if (VIDEO_SINGLETON::instance ()->video_format == VIDEO_MPEG1) {
-    SendPacket(VIDEO_SINGLETON::instance ()->numS>1, group, tag ? VIDEO_SINGLETON::instance ()->numF : para.nextFrame, 0);
+    SendPacket(VIDEO_SINGLETON::instance ()->numS>1, group, tag ? VIDEO_SINGLETON::instance ()->numF : step_para.nextFrame, 0);
   }
   else {
     fprintf(stderr, "VS: wierd1\n");
@@ -1031,3 +1046,15 @@ Video_Server::stat_sent(void)
   Video_Server::read_cmd ();
   return 0;
 }
+
+// Destructor
+Video_Server::~Video_Server ()
+{
+  if (this->data_handler_ != 0)
+    delete this->data_handler_ ;
+  if (this->control_handler_ != 0)
+    delete this->control_handler_ ;
+  if (this->sig_handler_ != 0)
+    delete this->sig_handler_ ;
+}
+
