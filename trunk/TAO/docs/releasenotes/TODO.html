@@ -399,6 +399,8 @@
 	  <LI>The spec (2.2 or 2.3?) will add a
 	    <CODE>equivalent</CODE> method to check for structural
 	    equivalence modulo aliases
+            <BR>[DONE] The equivalent method has been added and is
+            used in the Any >>= operator, as implied by CORBA 2.3.
 	  <P></LI>
 	</UL>
       <P></LI>
@@ -426,18 +428,23 @@
 	  example the Trading service passes all kinds of data in
 	  Anys.  The current version seems to be working , so this is
 	  not a high priority task.
+          <BR>[DONE] ORB code has been fixed, and a complex_any test
+          has been added to Param_Test to check this kind of thing.
 	</P>
       </LI>
 
       <LI><P><B>IDL Compiler:</B> Include a regression test to verify
 	  that <CODE>octet</CODE> is <B>not</B> a valid discriminator
 	  for unions
+          <BR>[STATUS] IDL compiler does output an error message in that
+          case, but it also core dumps, so more work needs to be done.
 	</P>
       </LI>
 
       <LI><P><B>IDL Compiler:</B> CORBA 2.2 does not allow
           <CODE>octets</CODE> as
 	  constants, yet the IDL compiler does not complain about it.
+          <BR>[DONE] CORBA 2.3 allows octet constants.
 	</P>
       </LI>
 
@@ -498,6 +505,9 @@
       <LI><P><B>IDL Compiler:</B> We must also check that oneways do
           not contain any <CODE>out</CODE> or <CODE>inout</CODE>
           parameters.
+          <BR>[DONE] IDL compiler outputs the appropriate error message
+          if a oneway method contains a non-void return type, an inout
+          or an out parameter.
         </P>
       </LI>
 
