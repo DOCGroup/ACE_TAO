@@ -27,6 +27,8 @@ class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
 
+  typedef ACE_Task<ACE_MT_SYNCH> inherited;
+
 	/*
 	   Provide an enumeration for the default pool size.  By doing this, other objects
 	   can use the value when they want a default.
@@ -45,11 +47,28 @@ public:
 	 */
 	int open( int _pool_size = default_pool_size_ );
 
+    /*
+       Some compilers will complain that our open() above attempts to
+       override a virtual function in the baseclass.  We have no
+       intention of overriding that method but in order to keep the
+       compiler quiet we have to add this method as a pass-thru to the 
+       baseclass method.
+    */
+	virtual int open(void * _void_data)
+		{ return inherited::open(_void_data); }
+
 	/*
 	   When you're done wit the thread pool, you have to have some way to shut it down.
 	   This is what close() is for.
 	 */
-	int close(void);
+    int close( void );
+
+    /*
+      Just like open() we have to provide a bogus method that will
+      invoke the baseclass close() to keep some compilers quiet.
+    */
+    virtual int close( u_long flags )
+        { return inherited::close(flags); }
 
 	/*
 	   To use the thread pool, you have to put some unit of work into it.  Since we're
@@ -60,6 +79,14 @@ public:
 	 */
 	int enqueue( ACE_Event_Handler * _handler );
 
+	/*
+	   Another handy ACE template is ACE_Atomic_Op<>.  When parameterized, this allows
+	   is to have a thread-safe counting object.  The typical arithmetic operators are
+	   all internally thread-safe so that you can share it across threads without worrying
+	   about any contention issues.
+	 */
+	typedef ACE_Atomic_Op<ACE_Mutex,int> counter_t;
+
 protected:
 
 	/*
@@ -69,14 +96,6 @@ protected:
 	   handle_input() on some object.
 	 */
 	int svc(void);
-
-	/*
-	   Another handy ACE template is ACE_Atomic_Op<>.  When parameterized, this allows
-	   is to have a thread-safe counting object.  The typical arithmetic operators are
-	   all internally thread-safe so that you can share it across threads without worrying
-	   about any contention issues.
-	 */
-	typedef ACE_Atomic_Op<ACE_Mutex,int> counter_t;
 
 	/*
 	   We use the atomic op to keep a count of the number of threads in which our svc()

@@ -1,3 +1,11 @@
+Tue Sep 29 19:16:57 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
+
+	* docs/tutorials/007/thread_pool.h
+	* docs/tutorials/007/thread_pool.cpp
+	Added virtual methods for open() and close() that match the
+	baseclass.  This will keep some compilers from complaining about a 
+	partial-overload attempt.  Thanks to Bob McWhirter for catching this.
+
 Tue Sep 29 16:13:10 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Strategies_T: 
@@ -14,7 +22,8 @@ Tue Sep 29 13:09:49 1998  Sergio Flores  <sergio@tango.cs.wustl.edu>
 
 Tue Sep 29 14:04:49 EDT 1998  James CE Johnson  <jcej@lads.com>
 
-        * docs/tutorials/013/page08.html:  Removed link to message_queue
+        * docs/tutorials/013/page08.html:  Removed link to message_queue.
+	Thanks to Jeff Hellzen for pointing this out.
 
 Tue Sep 29 11:05:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
