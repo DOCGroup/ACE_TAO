@@ -11,7 +11,6 @@
 #endif /* ACE_HAS_INLINED_OS_CALLS */
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_TSS_EMULATION)
-# include "ace/Containers.h"
 # include "ace/Synch_T.h" /* for ACE_TSS */
 # if defined (ACE_WIN32)
 #   include "ace/Thread_Manager.h"
@@ -1468,6 +1467,10 @@ ACE_TSS_Info::ACE_TSS_Info (ACE_thread_key_t key,
 }
 
 ACE_TSS_Info::ACE_TSS_Info (void)
+  : key_ (ACE_OS::NULL_key),
+    destructor_ (0),
+    tss_obj_ (0),
+    thread_count_ (-1)
 {
 // ACE_TRACE ("ACE_TSS_Info::ACE_TSS_Info");
 }
@@ -1618,8 +1621,8 @@ protected:
 
 private:
   // Array of <ACE_TSS_Info> objects.
-  typedef ACE_Array<ACE_TSS_Info> ACE_TSS_TABLE;
-  typedef ACE_Array_Iterator<ACE_TSS_Info> ACE_TSS_TABLE_ITERATOR;
+  typedef ACE_TSS_Info ACE_TSS_TABLE[ACE_DEFAULT_THREAD_KEYS];
+  typedef ACE_TSS_Info *ACE_TSS_TABLE_ITERATOR;
 
   ACE_TSS_TABLE table_;
   // Table of <ACE_TSS_Info>'s.
@@ -1654,7 +1657,7 @@ ACE_TSS_Cleanup::exit (void * /* status */)
 {
   // ACE_TRACE ("ACE_TSS_Cleanup::exit");
 
-  ACE_TSS_Info *key_info = 0;
+  ACE_TSS_Info *key_info = table_;
   ACE_TSS_Info info_arr[ACE_DEFAULT_THREAD_KEYS];
   int info_ix = 0;
 
@@ -1666,9 +1669,9 @@ ACE_TSS_Cleanup::exit (void * /* status */)
     // Iterate through all the thread-specific items and free them all
     // up.
 
-    for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-         iter.next (key_info) != 0;
-         iter.advance ())
+    for (unsigned int i = 0;
+         i < ACE_DEFAULT_THREAD_KEYS;
+         ++key_info, ++i)
       {
         if (! key_info->key_in_use ()) continue;
 
@@ -1746,12 +1749,13 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
   // something might be wrong.
 {
   ACE_thread_key_t key_arr[ACE_DEFAULT_THREAD_KEYS];
-  ACE_TSS_Info *key_info = 0;
-  int idx = 0;
+  ACE_TSS_Info *key_info = table_;
+  unsigned int idx = 0;
+  unsigned int i;
 
-  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-       iter.next (key_info) != 0;
-       iter.advance ())
+  for (i = 0;
+       i < ACE_DEFAULT_THREAD_KEYS;
+       ++key_info, ++i)
 #if defined (ACE_HAS_TSS_EMULATION)
     if (key_info->key_ != in_use_key_)
 #endif /* ACE_HAS_TSS_EMULATION */
@@ -1764,7 +1768,7 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
       // want to access it again.
       key_arr [idx++] = key_info->key_;
 
-  for (int i = 0; i < idx; i++)
+  for (i = 0; i < idx; i++)
     if (key_arr[i] != ACE_OS::NULL_key)
 #if defined (ACE_HAS_TSS_EMULATION)
       ACE_OS::thr_keyfree (key_arr[i]);
@@ -1778,7 +1782,7 @@ ACE_TSS_Cleanup::free_all_keys_left (void)
 }
 
 ACE_TSS_Cleanup::ACE_TSS_Cleanup (void)
-  : table_ (ACE_DEFAULT_THREAD_KEYS, ACE_TSS_Info (ACE_OS::NULL_key))
+  : table_ ()
   , in_use_ ()
 #if defined (ACE_HAS_TSS_EMULATION)
     // ACE_TSS_Emulation::total_keys () provides the value of the next
@@ -1825,7 +1829,15 @@ ACE_TSS_Cleanup::insert (ACE_thread_key_t key,
   ACE_TSS_CLEANUP_GUARD
 
   ACE_KEY_INDEX (key_index, key);
-  return this->table_.set (ACE_TSS_Info (key, destructor, inst), key_index);
+  if (key_index < ACE_DEFAULT_THREAD_KEYS)
+    {
+      table_[key_index] = ACE_TSS_Info (key, destructor, inst);
+      return 0;
+    }
+  else
+    {
+      return -1;
+    }
 }
 
 int
@@ -1835,7 +1847,7 @@ ACE_TSS_Cleanup::remove (ACE_thread_key_t key)
   ACE_TSS_CLEANUP_GUARD
 
   ACE_KEY_INDEX (key_index, key);
-  if (key_index <= this->table_.size ())
+  if (key_index < ACE_DEFAULT_THREAD_KEYS)
     {
       // "Remove" the TSS_Info table entry by zeroing out its key_ and
       // destructor_ fields.  Also, keep track of the number threads
@@ -1862,16 +1874,16 @@ ACE_TSS_Cleanup::detach (void *inst)
 {
   ACE_TSS_CLEANUP_GUARD
 
-  ACE_TSS_Info *key_info = 0;
+  ACE_TSS_Info *key_info = table_;
   int success = 0;
   int ref_cnt = 0;
 
   // Mark the key as detached in the TSS_Info table.
   // It only works for the first key that "inst" owns.
   // I don't know why.
-  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-       iter.next (key_info) != 0;
-       iter.advance ())
+  for (unsigned int i = 0;
+       i < ACE_DEFAULT_THREAD_KEYS;
+       ++key_info, ++i)
     {
       if (key_info->tss_obj_ == inst)
         {
@@ -1924,13 +1936,12 @@ ACE_TSS_Cleanup::key_used (ACE_thread_key_t key)
 void
 ACE_TSS_Cleanup::dump (void)
 {
-  ACE_TSS_Info *key_info = 0;
-
   // Iterate through all the thread-specific items and dump them all.
 
-  for (ACE_TSS_TABLE_ITERATOR iter (this->table_);
-       iter.next (key_info) != 0;
-       iter.advance ())
+  ACE_TSS_Info *key_info = table_;
+  for (unsigned int i = 0;
+       i < ACE_DEFAULT_THREAD_KEYS;
+       ++key_info, ++i)
     key_info->dump ();
 }
 
@@ -2086,16 +2097,8 @@ ACE_TSS_Emulation::tss_close ()
 # endif /* ACE_HAS_TSS_EMULATION */
 
 # if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Array<ACE_TSS_Info>;
-template class ACE_Array_Base<ACE_TSS_Info>;
-template class ACE_Array_Iterator<ACE_TSS_Info>;
-template class ACE_Node<ACE_TSS_Ref>;
 template class ACE_TSS<ACE_TSS_Keys>;
 # elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#   pragma instantiate ACE_Array<ACE_TSS_Info>
-#   pragma instantiate ACE_Array_Base<ACE_TSS_Info>
-#   pragma instantiate ACE_Array_Iterator<ACE_TSS_Info>
-#   pragma instantiate ACE_Node<ACE_TSS_Ref>
 #   pragma instantiate ACE_TSS<ACE_TSS_Keys>
 # endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
