@@ -74,6 +74,7 @@ BSC32=bscmake.exe
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 # ADD LINK32 aced.lib TAO.lib orbsvcs.lib /nologo /subsystem:console /pdb:"DOVEMIBx.pdb" /debug /machine:I386 /out:"DOVEMIBx.exe" /pdbtype:sept /libpath:"..\..\..\..\..\ace" /libpath:"..\..\..\..\tao" /libpath:"..\..\..\orbsvcs"
+# SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
 
@@ -83,7 +84,47 @@ LINK32=link.exe
 # Name "DOVEMIBx - Win32 Debug"
 # Begin Source File
 
-SOURCE=.\DOVEMIB.cpp
+SOURCE=.\any_test.idl
+
+!IF  "$(CFG)" == "DOVEMIBx - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "DOVEMIBx - Win32 Debug"
+
+# Begin Custom Build - Invoking TAO_IDL compiler
+InputPath=.\any_test.idl
+InputName=any_test
+
+BuildCmds= \
+	..\..\..\..\tao_idl\tao_idl $(InputName).idl
+
+"$(InputName)S.i" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.cpp" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+
+"$(InputName)S.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+   $(BuildCmds)
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\any_test_i.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\any_testC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\any_testS.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\AnyAnalyser.cpp
 # End Source File
 # Begin Source File
 
@@ -119,6 +160,18 @@ BuildCmds= \
 # Begin Source File
 
 SOURCE=.\NavWeapC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Node.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\PrintVisitor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\svr.cpp
 # End Source File
 # End Target
 # End Project
