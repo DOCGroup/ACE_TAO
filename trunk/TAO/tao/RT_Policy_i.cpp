@@ -548,7 +548,7 @@ TAO_ClientProtocolPolicy::_tao_encode (TAO_OutputCDR &out_cdr)
        i++)
     {
       is_write_ok =
-        (out_cdr << protocols_[i].protocol_type)
+        (out_cdr << this->protocols_[i].protocol_type)
         &&
         this->protocols_[i].orb_protocol_properties->_tao_encode (out_cdr)
         &&
@@ -563,34 +563,31 @@ TAO_ClientProtocolPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 {
   CORBA::ULong length;
   CORBA::Boolean is_read_ok = in_cdr >> length;
-
+  
   this->protocols_.length (length);
-  RTCORBA::ProtocolProperties *protocol_properties;
 
   for (CORBA::ULong i = 0; (i < length) && is_read_ok; i++)
     {
-      IOP::ProfileId id;
-      is_read_ok = in_cdr >> id;
+      is_read_ok = in_cdr >> this->protocols_[i].protocol_type;
 
-      protocol_properties =
-        TAO_Protocol_Properties_Factory::create_orb_protocol_property (id);
+      this->protocols_[i].orb_protocol_properties =
+        TAO_Protocol_Properties_Factory::create_orb_protocol_property 
+        (this->protocols_[i].protocol_type);
 
       this->protocols_[i].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property (id);
-
-      if (is_read_ok && protocol_properties != 0 )
-        {
-          this->protocols_[i].orb_protocol_properties = protocol_properties;
-
-          if (is_read_ok && (this->protocols_[i].orb_protocol_properties.ptr () == 0))
-            is_read_ok =
-              this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
-
-          if (is_read_ok
-              && (this->protocols_[i].transport_protocol_properties.ptr () == 0))
-            is_read_ok =
-              this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
-        }
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property 
+        (this->protocols_[i].protocol_type);
+      
+      if (is_read_ok 
+          && (this->protocols_[i].orb_protocol_properties.ptr () == 0))
+        is_read_ok =
+          this->protocols_[i].orb_protocol_properties->_tao_decode (in_cdr);
+      
+      if (is_read_ok
+          && (this->protocols_[i].transport_protocol_properties.ptr () == 0))
+        is_read_ok =
+          this->protocols_[i].transport_protocol_properties->_tao_decode (in_cdr);
+      
     }
 
   return is_read_ok;
@@ -603,6 +600,20 @@ TAO_GIOP_Properties::TAO_GIOP_Properties (void)
 
 TAO_GIOP_Properties::~TAO_GIOP_Properties (void)
 {
+}
+
+CORBA::Boolean 
+TAO_GIOP_Properties::_tao_encode (TAO_OutputCDR &out_cdr)
+{
+  ACE_UNUSED_ARG (out_cdr);
+  return 1;
+}
+
+CORBA::Boolean 
+TAO_GIOP_Properties::_tao_decode (TAO_InputCDR &in_cdr)
+{ 
+  ACE_UNUSED_ARG (in_cdr);
+  return 1;
 }
 
 // ****************************************************************

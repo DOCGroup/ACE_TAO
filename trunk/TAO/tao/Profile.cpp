@@ -59,9 +59,12 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
           buf += iterator->length ();
         }
 
+      //policy_value_seq[i] = pv;
+      
       // Reset the CDR buffer index so that the buffer can
       // be reused for the next conversion.
 
+      //out_CDR.reset ();
     }
   
   TAO_OutputCDR out_CDR;
@@ -75,7 +78,6 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
   out_CDR << policy_value_seq;
  
   length = out_CDR.total_length ();
-  ACE_DEBUG ((LM_DEBUG, "CDR Length: %d\n", length));
 
   tagged_component.component_data.length(length);
   buf = tagged_component.component_data.get_buffer ();
@@ -87,20 +89,18 @@ TAO_Profile::policies (CORBA::PolicyList *policy_list)
     {
 
       i_length = iterator->length ();
-      ACE_DEBUG ((LM_DEBUG, "Iterator Length: %d\n", i_length));
       ACE_OS::memcpy (buf, iterator->rd_ptr (), iterator->length ());
 
       buf += iterator->length ();
   
       i_length = iterator->length ();
-      ACE_DEBUG ((LM_DEBUG, "Iterator Length: %d\n", i_length));
     }
 
   // Eventually we add the TaggedComponent to the TAO_TaggedComponents
   // member variable.
-  this->tagged_components_.set_component (tagged_component);
-  this->are_policies_parsed_ = 1;
-  
+  tagged_components_.set_component (tagged_component);
+  are_policies_parsed_ = 1;
+
 #else /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   ACE_UNUSED_ARG (policy_list);
@@ -114,9 +114,8 @@ TAO_Profile::policies (void)
 {
 #if (TAO_HAS_CORBA_MESSAGING == 1)
   
-  ACE_DEBUG ((LM_DEBUG, "TAO_Profile::policies Decoder called.\n"));
   CORBA::PolicyList *policies = this->stub_->base_profiles ().policy_list ();
-  if (!this->are_policies_parsed_
+  if (!are_policies_parsed_
       && (policies->length () == 0))
     // None has already parsed the policies.
     {
@@ -150,8 +149,7 @@ TAO_Profile::policies (void)
           CORBA::Policy *policy = 0;
           CORBA::ULong length = policy_value_seq.length ();
 
-          // Get the policy list from the MProfile.
-          CORBA::PolicyList *policies = stub_->base_profiles ().policy_list ();
+          // Set the policy list length.
           policies->length (length);
 
           for (CORBA::ULong i = 0; i < length; i++)
@@ -189,7 +187,7 @@ TAO_Profile::policies (void)
 
 #endif /* (TAO_HAS_CORBA_MESSAGING == 1) */
 
-  return *(this->stub_->base_profiles ().policy_list ());
+  return *(stub_->base_profiles ().policy_list ());
 }
 
 void
@@ -201,7 +199,7 @@ TAO_Profile::the_stub (TAO_Stub *stub)
 TAO_Stub*
 TAO_Profile::the_stub (void)
 {
-  return this->stub_;
+  return stub_;
 }
 
 // ****************************************************************

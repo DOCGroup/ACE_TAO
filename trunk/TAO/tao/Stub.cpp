@@ -629,7 +629,7 @@ TAO_Stub::exposed_priority_banded_connection (void)
       RTCORBA::PriorityBandedConnectionPolicy *pbc_policy = 0;
 
       pbc_policy =
-        RTCORBA::PriorityBandedConnectionPolicy::_narrow (pbc_policy);
+        RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (pbc_policy))
         {
@@ -665,7 +665,7 @@ TAO_Stub::exposed_client_protocol (void)
       RTCORBA::ClientProtocolPolicy *cp_policy = 0;
 
       cp_policy =
-        RTCORBA::ClientProtocolPolicy::_narrow (cp_policy);
+        RTCORBA::ClientProtocolPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (cp_policy))
         {

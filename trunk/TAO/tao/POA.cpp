@@ -3952,10 +3952,12 @@ TAO_POA::client_exposed_policies (CORBA::Short object_priority,
 
   CORBA::PolicyList *client_exposed_policies = 0;
   ACE_NEW_THROW_EX (client_exposed_policies,
-                    CORBA::PolicyList (client_exposed_fixed_policies.length ()),
+                    CORBA::PolicyList (),
                     CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (0);
+  
+  client_exposed_policies->length (client_exposed_fixed_policies.length ());
 
   for (CORBA::ULong i = 0;
        i < client_exposed_fixed_policies.length ();
