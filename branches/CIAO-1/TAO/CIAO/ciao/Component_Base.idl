@@ -4,6 +4,15 @@
  * @@ Compile this file with:
  *
  *     tao_idl -Gv -I W:/ACE_wrappers/TAO -I W:/ACE_wrappers/TAO/orbsvcs/orbsvcs Component_Base.idl
+ *
+ * This file will be split into
+ *  CIAO_Base.pidl
+ *  CIAO_Event.pidl
+ *  CIAO_Component.pidl
+ *  CIAO_Transaction.pidl
+ *  CIAO_Container.pidl
+ *  CIAO_Container_Ex.pidl
+ *  CIAO_Deployment.pidl
  */
 
 //  import ::CORBA
