@@ -99,6 +99,18 @@ ACE_RAPI_Session::source_port (const u_short &source_port)
   this->source_port_ = source_port;
 }
 
+ACE_INLINE ACE_INET_Addr* 
+ACE_RAPI_Session::source_addr (void) const
+{
+  return this->src_addr_;
+}
+  
+ACE_INLINE void 
+ACE_RAPI_Session::source_addr (ACE_INET_Addr* source_addr)
+{
+  this->src_addr_ = source_addr;
+}
+
 // RAPI version. Returned value = 100 * major-version + minor-version.
 ACE_INLINE int
 ACE_RAPI_Session::version (void)
@@ -192,6 +204,18 @@ ACE_INLINE void
 ACE_GQoS_Session::source_port (const u_short &source_port)
 {
   this->source_port_ = source_port;
+}
+
+ACE_INLINE ACE_INET_Addr* 
+ACE_GQoS_Session::source_addr (void) const
+{
+  return this->src_addr_;
+}
+  
+ACE_INLINE void 
+ACE_GQoS_Session::source_addr (ACE_INET_Addr* source_addr)
+{
+  this->src_addr_ = source_addr;
 }
 
 // GQoS version.
