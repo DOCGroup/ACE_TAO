@@ -48,7 +48,7 @@ public:
   ~TAO_Notify_ProxyConsumer ();
 
   /// init: overrides Topology_Object method
-  virtual void init (Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
+  virtual void init (TAO_Notify::Topology_Parent * topology_parent ACE_ENV_ARG_DECL);
 
   /// Connect
   void connect (TAO_Notify_Supplier* supplier ACE_ENV_ARG_DECL)

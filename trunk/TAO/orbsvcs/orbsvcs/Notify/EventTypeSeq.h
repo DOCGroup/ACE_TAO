@@ -42,7 +42,7 @@ public:
   TAO_Notify_EventTypeSeq & operator = (const TAO_Notify_EventTypeSeq & rhs);
 
   /// Preprocess the types added and removed.
-  void init (TAO_Notify_EventTypeSeq& added, TAO_Notify_EventTypeSeq& removed);
+  void add_and_remove (TAO_Notify_EventTypeSeq& added, TAO_Notify_EventTypeSeq& removed);
 
   /// Populate this sequence with the intersection of rhs and lhs.
   void intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs);

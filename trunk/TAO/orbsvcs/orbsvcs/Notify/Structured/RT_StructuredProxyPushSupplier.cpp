@@ -37,7 +37,7 @@ TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ser
 
 CORBA::Object_ptr
 TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant ,
-                                                     CORBA::Long ACE_ENV_ARG_DECL)
+                                                     CORBA::Long ACE_ENV_ARG_DECL_NOT_USED)
 {
    return CORBA::Object::_nil ();
 }

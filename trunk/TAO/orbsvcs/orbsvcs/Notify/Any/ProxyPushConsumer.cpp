@@ -122,7 +122,7 @@ TAO_Notify_ProxyPushConsumer::load_attrs (const TAO_Notify::NVPList& attrs)
       ACE_TRY_CHECK;
       this->updates_off_ = save_updates;
     }
-    ACE_CATCHANY
+    ACE_CATCHALL
     {
       ACE_ASSERT(0);
     }
