@@ -1,3 +1,15 @@
+Mon Mar  8 16:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* ASNMP/tests/tests.mpc:
+	* ASNMP/asnmp/asnmp.mpc:
+	* ASNMP/examples/get/get.mpc:
+	* ASNMP/examples/next/next.mpc:
+	* ASNMP/examples/set/set.mpc:
+	* ASNMP/examples/trap/trap.mpc:
+	* ASNMP/examples/walk/walk.mpc:
+	  Added missing file extensions. This prevented resulted in project
+          files that did nothing.
+
 Mon Mar  8 16:14:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* ace/Thread_Manager.cpp:
