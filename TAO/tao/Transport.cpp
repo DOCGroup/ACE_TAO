@@ -267,6 +267,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
       ACE_ASSERT (synch_message.all_data_sent ());
       ACE_ASSERT (synch_message.next () == 0);
       ACE_ASSERT (synch_message.prev () == 0);
+      bytes_transferred = total_length;
       return 1;  // Empty queue, message was sent..
     }
 
@@ -309,7 +310,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
   else if (stub->sync_strategy ().must_queue (queue_empty))
     try_sending_first = 0;
 
-  size_t byte_count = 0;
   ssize_t n;
 
   TAO_Flushing_Strategy *flushing_strategy =
@@ -317,14 +317,16 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
 
   if (try_sending_first)
     {
+      size_t byte_count = 0;
       // ... in this case we must try to send the message first ...
 
+      size_t total_length = message_block->total_length ();
       if (TAO_debug_level > 6)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - Transport[%d]::send_message_i, "
-                      "trying to send the message\n",
-                      this->id ()));
+                      "trying to send the message (ml = %d)\n",
+                      this->id (), total_length));
         }
 
       // @@ I don't think we want to hold the mutex here, however if
@@ -334,9 +336,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
       n = this->send_message_block_chain_i (message_block,
                                             byte_count,
                                             max_wait_time);
-      if (n == 0)
-        return -1; // EOF
-      else if (n == -1)
+      if (n == -1)
         {
           // ... if this is just an EWOULDBLOCK we must schedule the
           // message for later, if it is ETIME we still have to send
@@ -350,7 +350,7 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
         }
 
       // ... let's figure out if the complete message was sent ...
-      if (message_block->total_length () == byte_count)
+      if (total_length == byte_count)
         {
           // Done, just return.  Notice that there are no allocations
           // or copies up to this point (though some fancy calling
@@ -359,6 +359,23 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
           // be fast.
           return 0;
         }
+
+      if (TAO_debug_level > 6)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Transport[%d]::send_message_i, "
+                      "partial send %d / %d bytes\n",
+                      this->id (), byte_count, total_length));
+        }
+
+      // ... part of the data was sent, need to figure out what piece
+      // of the message block chain must be queued ...
+      while (message_block != 0 && message_block->length () == 0)
+        message_block = message_block->cont ();
+
+      // ... at least some portion of the message block chain should
+      // remain ...
+      ACE_ASSERT (message_block != 0);
     }
 
   // ... either the message must be queued or we need to queue it
@@ -376,7 +393,6 @@ TAO_Transport::send_message_i (TAO_Stub *stub,
   ACE_NEW_RETURN (queued_message,
                   TAO_Asynch_Queued_Message (message_block),
                   -1);
-  queued_message->bytes_transferred (byte_count);
   queued_message->push_back (this->head_, this->tail_);
 
   // ... if the queue is full we need to activate the output on the
@@ -1009,8 +1025,8 @@ TAO_Transport::cleanup_queue (size_t byte_count)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Transport::cleanup_queue, "
-                      "byte_count = %d, head_is_empty = %d\n",
-                      byte_count, (this->head_ == 0)));
+                      "byte_count = %d\n",
+                      byte_count));
         }
 
       // Update the state of the first message
@@ -1020,8 +1036,9 @@ TAO_Transport::cleanup_queue (size_t byte_count)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Transport::cleanup_queue, "
-                      "after transfer, byte_count = %d, all_sent = %d\n",
-                      byte_count, i->all_data_sent ()));
+                      "after transfer, bc = %d, all_sent = %d, ml = %d\n",
+                      byte_count, i->all_data_sent (),
+                      i->message_length ()));
         }
 
       // ... if all the data was sent the message must be removed from

@@ -1,60 +1,86 @@
+Tue May  8 13:28:36 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+        * tao/Transport.cpp (send_message_i):
+          Correct buffer manipulation for messages queued after part of
+          their data was sent, we cannot simply create a
+          TAO_Asynch_Queued_Message and invoke bytes_transferred() because
+          the message block chain is modified as part of the send()
+          attempt.
+          What we do now is a little different: the message block chain is
+          modified as data is transferred, only the portion that has not
+          been sent is put in the queue.  So, the fix is also a slight
+          optimization.
+          Improve the debugging messages for this code path.
+          Fix the treatment of a return status of 0 from
+          send_message_block_chain_i(), this indicates a partial send, not
+          an EOF.
+
+        * tao/Transport.cpp (send_message_block_chain_i):
+          If the message was completely sent we should set the
+          bytes_transferred argument correctly.
+
+        * tao/Synch_Queued_Message.cpp (bytes_transferred):
+          Update the message blocks that are completely sent, this is used
+          by higher layers to detect what portion of the message block
+          chain, if any, has to be queued.
+
 Tue May  8 10:06:58 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (parse_string): 
-	  Removed a debug statement that missed the final cleanup before
-	  the commit.
+        * tao/CORBALOC_Parser.cpp (parse_string):
+          Removed a debug statement that missed the final cleanup before
+          the commit.
 
 Tue May  8 09:42:02 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
-	* tao/CORBALOC_Parser.cpp (check_prefix): 
-	  Provided another test case for the null prefix 
-	  in the check_prefix list.
+        * tao/CORBALOC_Parser.cpp (check_prefix):
+          Provided another test case for the null prefix
+          in the check_prefix list.
 
 Tue May  8 08:56:32 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Object_Ref_Table.cpp (TAO_Object_Ref_Table):
+        * tao/Object_Ref_Table.cpp (TAO_Object_Ref_Table):
 
-	  Reverted the change "Tue May  8 09:01:13 2001  Balachandran
-	  Natarajan  <bala@cs.wustl.edu>".  The call to destroy() was
-	  correct since not all applications call ORB::shutdown() (or
-	  ORB::destroy()).  In such cases, memory leaks will occur since
-	  the object reference table destroy() method is not explicitly
-	  called.
+          Reverted the change "Tue May  8 09:01:13 2001  Balachandran
+          Natarajan  <bala@cs.wustl.edu>".  The call to destroy() was
+          correct since not all applications call ORB::shutdown() (or
+          ORB::destroy()).  In such cases, memory leaks will occur since
+          the object reference table destroy() method is not explicitly
+          called.
 
-	  (destroy):
+          (destroy):
 
-	  The correct fix for the problem was to call unbind_all() on the
-	  underlying hash table in the destroy() method.  Doing so makes
-	  it safe to call the destroy() method more than once.
+          The correct fix for the problem was to call unbind_all() on the
+          underlying hash table in the destroy() method.  Doing so makes
+          it safe to call the destroy() method more than once.
 
 Tue May  8 10:02:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Reverted this change "Tue May  8 07:32:15 2001
-	  Balachandran Natarajan". The problem on Linux builds seems to be
-	  a manifestation from the problem that was fixed in this change
-	  "Tue May  8 09:01:13 2001  Balachandran Natarajan". 
+        * tao/ORB_Core.cpp: Reverted this change "Tue May  8 07:32:15 2001
+          Balachandran Natarajan". The problem on Linux builds seems to be
+          a manifestation from the problem that was fixed in this change
+          "Tue May  8 09:01:13 2001  Balachandran Natarajan".
 
 Tue May  8 09:01:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Object_Ref_Table.cpp (~TAO_Object_Ref_Table): Removed a
-	  destroy () from the destructor. The destroy () has already been
-	  invoked during ORB_Core::shutdown (). The second call to destroy
-	  ()  really caused havoc in Win32 builds.
+        * tao/Object_Ref_Table.cpp (~TAO_Object_Ref_Table): Removed a
+          destroy () from the destructor. The destroy () has already been
+          invoked during ORB_Core::shutdown (). The second call to destroy
+          ()  really caused havoc in Win32 builds.
 
 Tue May  8 08:17:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.h: Added a TAO_Export to TAO_ORB_Core_Auto_Ptr
-	  class.  Thanks to Johnny Willemson for reporting this.
+        * tao/ORB_Core.h: Added a TAO_Export to TAO_ORB_Core_Auto_Ptr
+          class.  Thanks to Johnny Willemson for reporting this.
 
 Tue May  8 07:32:15 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp: Fixed a problem when the client connection
-	  handler is RW. The ORB_Core takes responsibility for closing the
-	  connections. It does so by getting the handles in an Unbounded
-	  Set. When the ORB_Core gets destroyed, the destructor of the
-	  Unbounded set is called. This creates problems as the allocators
-	  have already been removed. We now destroy the list by calling
-	  reset () before the ORB_Core gets destroyed.
+        * tao/ORB_Core.cpp: Fixed a problem when the client connection
+          handler is RW. The ORB_Core takes responsibility for closing the
+          connections. It does so by getting the handles in an Unbounded
+          Set. When the ORB_Core gets destroyed, the destructor of the
+          Unbounded set is called. This creates problems as the allocators
+          have already been removed. We now destroy the list by calling
+          reset () before the ORB_Core gets destroyed.
 
 Mon May  7 20:30:17 2001  Carlos O'Ryan  <coryan@uci.edu>
 
