@@ -49,8 +49,8 @@ namespace TAO
       {
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
-	    // Perform invocations on the servant through the servant's ORB.
-	    CORBA::ORB_var servant_orb = this->stub ()->servant_orb_ptr ();
+            // Perform invocations on the servant through the servant's ORB.
+            CORBA::ORB_var servant_orb = this->stub ()->servant_orb_ptr ();
             TAO_ORB_Core * const orb_core = servant_orb->orb_core ();
 
             TAO_ServerRequest request (orb_core,
@@ -60,12 +60,12 @@ namespace TAO
             TAO_Request_Dispatcher * const dispatcher =
               orb_core->request_dispatcher ();
 
-	    // Retain ownership of the servant's ORB_Core in case
-	    // another thread attempts to destroy it (e.g. via
-	    // CORBA::ORB::destroy()) before this thread complete the
-	    // invocation.
-	    orb_core->_incr_refcnt ();
-	    TAO_ORB_Core_Auto_Ptr my_orb_core (orb_core);
+            // Retain ownership of the servant's ORB_Core in case
+            // another thread attempts to destroy it (e.g. via
+            // CORBA::ORB::destroy()) before this thread complete the
+            // invocation.
+            orb_core->_incr_refcnt ();
+            TAO_ORB_Core_Auto_Ptr my_orb_core (orb_core);
 
             dispatcher->dispatch (orb_core,
                                   request,
