@@ -116,7 +116,6 @@ test_boundaries (void)
   ACE_ASSERT (count == handle_set.num_set ());
 }
 
-#if !defined (CHORUS)
 static void
 test_performance (size_t max_handles,
 		  size_t max_iterations)
@@ -149,6 +148,25 @@ test_performance (size_t max_handles,
 
   timer.elapsed_time (et);
 
+#if defined (ACE_LACKS_FLOATING_POINT)
+  ACE_DEBUG ((LM_DEBUG,
+	      "real time = %u secs\n",
+	      et.real_time));
+
+#if defined (ACE_LACKS_LONGLONG_T)
+  ACE_U_LongLong tmp = et.real_time;
+  tmp *= (ACE_UINT32) 1000000;
+  ACE_DEBUG ((LM_DEBUG,
+	      "time per each of the %d calls = %u usecs\n",
+	      count,
+	      tmp / count));
+#else
+  ACE_DEBUG ((LM_DEBUG,
+	      "time per each of the %d calls = %u usecs\n",
+	      count,
+	      et.real_time * 1000000u / count));
+#endif
+#else  /* ! ACE_LACKS_FLOATING_POINT */
   ACE_DEBUG ((LM_DEBUG,
 	      "real time = %f secs, user time = %f secs, system time = %f secs\n",
 	      et.real_time,
@@ -158,9 +176,9 @@ test_performance (size_t max_handles,
   ACE_DEBUG ((LM_DEBUG,
 	      "time per each of the %d calls = %f usecs\n",
 	      count,
-	      (et.real_time / double (count)) * 1000000));
+	      et.real_time / double (count) * 1000000));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
 }
-#endif /* ! CHORUS */
 
 int
 main (int argc, char *argv[])
@@ -173,14 +191,7 @@ main (int argc, char *argv[])
 
   test_duplicates (count);
   test_boundaries ();
-#if !defined (CHORUS)
-  // Chorus loses its lunch on the floating point arithmetic.  It
-  // can't even printf using a %f, %e, or %g format specifier.  It
-  // just prints "f", "e", or "g", respectively.  Maybe something has
-  // to be done to configure it for floating point?  Until we figure
-  // it out, don't bother with the performance test.
   test_performance (max_handles, max_iterations);
-#endif /* ! CHORUS */
 
   ACE_END_TEST;
   return 0;
