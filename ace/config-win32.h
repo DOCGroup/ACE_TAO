@@ -58,6 +58,10 @@
         #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB	1
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 
+#if !defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
+        #define ACE_HAS_BROKEN_NESTED_TEMPLATES
+#endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
+
 // Uncomment this out if you want to use STRICT type checking.
 // It is disabled by default because it will break existing application code.
 //  Setting applies to  : building ACE, linking with ACE 

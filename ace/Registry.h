@@ -530,8 +530,6 @@ public:
   };
 };
 
-
-
 class ACE_Export ACE_Predefined_Naming_Contexts
   // = TITLE
   //     A factory for predefined registries, which exist by default
@@ -553,6 +551,13 @@ private:
   static int is_local_host (LPCTSTR machine_name);
   // Check if <machine_name> is the local host
 };
+
+// Fix me!  Shouldn't have to define this stuff 
+
+#if defined (ACE_HAS_BROKEN_NESTED_TEMPLATES)
+  typedef ACE_Registry::Name_Component Name_Component;
+  typedef ACE_Registry::Binding Binding;
+#endif /* ACE_HAS_BROKEN_NESTED_TEMPLATES */
 
 #endif /* ACE_WIN32 */
 #endif /* ACE_REGISTRY_H */
