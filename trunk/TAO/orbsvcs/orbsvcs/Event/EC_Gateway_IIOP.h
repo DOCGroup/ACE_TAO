@@ -90,11 +90,28 @@ public:
                                 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
+  /**
+   * Cleanup all consumer proxies we have without trying to tell the
+   * consumer that we are going to disconnect. This can be used to cleanup
+   * the consumer proxy administration in case we know that the consumers
+   * are all unreachable.
+   */
+  void cleanup_consumer_proxies (ACE_ENV_SINGLE_ARG_DECL);
+
 private:
-  void close_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
+  void close_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  void disconnect_supplier_proxy_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  void disconnect_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL);
+
+  void cleanup_consumer_proxies_i (ACE_ENV_SINGLE_ARG_DECL);
 
   void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub
                           ACE_ENV_ARG_DECL);
+
+  void push_to_consumer (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
+                         const RtecEventComm::EventSet& event ACE_ENV_ARG_DECL);
 
 protected:
   /// Do the real work in init()
@@ -124,7 +141,7 @@ protected:
 
   /// The event channel acting as consumer of this gateway
   RtecEventChannelAdmin::EventChannel_var consumer_ec_;
- 
+
   /// Our RT_Infos for the event channel that is the supplier.
   RtecBase::handle_t supplier_info_;
   /// Our RT_Infos for the event channel that is the consumer.
