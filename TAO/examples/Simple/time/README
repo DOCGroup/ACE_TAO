@@ -11,8 +11,6 @@ JACE's GetOpt class to parse the command line arguments.  See
 
 for more details.
 
-NOTE: this example will not work with -DTAO_HAS_MINIMUM_CORBA.
-
 server:
 -------
 
