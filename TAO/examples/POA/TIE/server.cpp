@@ -178,11 +178,9 @@ main (int argc, char **argv)
       FILE *output_file_4 = ACE_OS::fopen ("ior_4", "w");
 
       if (output_file_1)
-        {
-          cout << "I am here " << endl;
         ACE_OS::fprintf (output_file_1, 
                          "%s",
-                         first_ior.in ());}
+                         first_ior.in ());
       if (output_file_2)
         ACE_OS::fprintf (output_file_2, 
                          "%s",
