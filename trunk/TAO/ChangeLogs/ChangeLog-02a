@@ -1,3 +1,8 @@
+Tue Mar 21 10:00:11 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Utils.cpp (convert_CORBA_to_GIOP_exception): Removed
+	  unnecessary ACE_DEBUG statements.
+
 Mon Mar 20 19:59:45 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Copy_On_Write.cpp:
