@@ -130,8 +130,10 @@ public:
   virtual int fini (void) const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
-  // Get/set the link pointer.
+  // Get the link pointer.
   ACE_Module_Type *link (void) const;
+
+  // Set the link pointer.
   void link (ACE_Module_Type *);
 
   /// Dump the state of an object.
