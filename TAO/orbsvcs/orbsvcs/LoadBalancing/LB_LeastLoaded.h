@@ -33,11 +33,33 @@ namespace TAO_LB
    *
    * Defaults defined by the Load Balancing specification.
    */
+  //@{
   const CORBA::Float LL_DEFAULT_CRITICAL_THRESHOLD = 0;
   const CORBA::Float LL_DEFAULT_REJECT_THRESHOLD = 0;
   const CORBA::Float LL_DEFAULT_TOLERANCE = 1;
   const CORBA::Float LL_DEFAULT_DAMPENING = 0;
   const CORBA::Float LL_DEFAULT_PER_BALANCE_LOAD = 0;
+  //@}
+
+  /**
+   * @name TAO-specific LeastLoaded strategy parameters.
+   *
+   * Parameters internal to TAO's LeastLoaded strategy
+   * implementation.
+   */
+  //@{
+  /// Percentage difference between two load values that determines
+  /// whether the loads are considered equivalent.
+  /**
+   * If the percent difference between two loads, i.e.:
+   *   (Old Load - New Load) / New Load
+   * is less than or equal to this value, the two loads will be
+   * considered equivalent.  In such a case, an object group member
+   * residing at the location corresponding to one of the two loads
+   * will be selected at random.
+   */
+  const CORBA::Float LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF = 0.01;  // 1%
+  //@}
 }
 
 /**

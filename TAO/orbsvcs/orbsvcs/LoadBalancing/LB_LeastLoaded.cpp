@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "LB_LeastLoaded.h"
 #include "LB_LoadMap.h"
 #include "LB_Random.h"
@@ -211,6 +209,10 @@ TAO_LB_LeastLoaded::next_member (
 
   if (found_location)
     {
+//       ACE_DEBUG ((LM_DEBUG,
+//                   "RETURNING REFERENCE FOR LOCATION \"%s\"\n",
+//                   location[0].id.in ()));
+
       return load_manager->get_member_ref (object_group,
                                            location
                                            ACE_ENV_ARG_PARAMETER);
@@ -340,7 +342,7 @@ TAO_LB_LeastLoaded::get_location (
   ACE_ENV_ARG_DECL)
 {
   CORBA::Float min_load = FLT_MAX;  // Start out with the largest
-                                    // possible.
+                                    // positive value.
 
   CORBA::ULong location_index = 0;
   CORBA::Boolean found_location = 0;
@@ -374,14 +376,16 @@ TAO_LB_LeastLoaded::get_location (
 
 //           ACE_DEBUG ((LM_DEBUG,
 //                       "LOC = %u"
-//                       "\tCOND = %d"
+//                       "\tC = %d"
 //                       "\treject = %f"
-//                       "\tload = %f\n",
+//                       "\tload = %f\n"
+//                       "\tmin_load = %f\n",
 //                       i,
 //                       (this->reject_threshold_ == 0
 //                        || load.value < this->reject_threshold_),
 //                       this->reject_threshold_,
-//                       load.value));
+//                       load.value,
+//                       min_load));
 
           if ((this->reject_threshold_ == 0
                || load.value < this->reject_threshold_)
@@ -391,10 +395,94 @@ TAO_LB_LeastLoaded::get_location (
 //                           "**** LOAD == %f\n",
 //                           load.value));
 
-              min_load = load.value;
-              location_index = i;
-              found_location = 1;
+              if (i > 0 && load.value != 0)
+                {
+                  /*
+                    percent difference =
+                      (min_load - load.value) / load.value
+                      == (min_load / load.value) - 1
+
+                      The latter form is used to avoid a potential
+                      arithmetic overflow problem, such as when
+                      (min_load - load.value) > FLT_MAX, assuming that
+                      either load.value is negative and min_load is
+                      positive, or vice versa.
+                  */
+                  const CORBA::Float percent_diff =
+                    (min_load / load.value) - 1;
+
+                  /*
+                    A "thundering herd" phenomenon may occur when
+                    location loads are basically the same (e.g. only
+                    differ by a very small amount), where one object
+                    group member ends up receiving the majority of
+                    requests from different clients.  In order to
+                    prevent a single object group member from
+                    receiving such request bursts, one of two equally
+                    loaded locations is chosen at random.  Thanks to
+                    Carlos, Marina and Jody at ATD for coming up with
+                    this solution to this form of the thundering herd
+                    problem.
+
+                    See the documentation for
+                    TAO_LB::LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF in
+                    LB_LeastLoaded.h for additional information.
+                  */
+                  if (percent_diff <= TAO_LB::LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF)
+                    {
+                      // Prevent integer arithmetic overflow.
+                      const CORBA::Float NUM_MEMBERS = 2;
+
+                      // n == 0:  Use previously selected location.
+                      // n == 1:  Use current location.
+                      const CORBA::ULong n =
+                        ACE_static_cast (CORBA::ULong,
+                                         NUM_MEMBERS * ACE_OS::rand ()
+                                         / (RAND_MAX + 1.0));
+
+                      ACE_ASSERT (n == 0 || n == 1);
+
+                      if (n == 1)
+                        {
+                          min_load = load.value;
+                          location_index = i;
+                          found_location = 1;
+
+//                           ACE_DEBUG ((LM_DEBUG,
+//                                       "** NEW MIN_LOAD == %f\n",
+//                                       min_load));
+                        }
+
+//                       if (n == 0)
+//                         ACE_DEBUG ((LM_DEBUG, "^^^^^ PREVIOUS LOCATION\n"));
+//                       else
+//                         ACE_DEBUG ((LM_DEBUG, "^^^^^ CURRENT LOCATION\n"));
+
+                    }
+                  else
+                    {
+                      min_load = load.value;
+                      location_index = i;
+                      found_location = 1;
+
+//                       ACE_DEBUG ((LM_DEBUG,
+//                                   "***** NEW MIN_LOAD == %f\n",
+//                                   min_load));
+                    }
+                }
+              else
+                {
+                  min_load = load.value;
+                  location_index = i;
+                  found_location = 1;
+
+//                   ACE_DEBUG ((LM_DEBUG,
+//                               "NEW MIN_LOAD == %f\n",
+//                               min_load));
+                }
             }
+
+          // ACE_DEBUG ((LM_DEBUG, "NEW MIN_LOAD == %f\n", min_load));
         }
       ACE_CATCH (CosLoadBalancing::LocationNotFound, ex)
         {
@@ -407,7 +495,7 @@ TAO_LB_LeastLoaded::get_location (
 
 //   ACE_DEBUG ((LM_DEBUG,
 //               "FOUND_LOAD     == %u\n"
-//               "FOUND_LOCATION = %u\n",
+//               "FOUND_LOCATION == %u\n",
 //               found_load,
 //               found_location));
 
@@ -420,6 +508,8 @@ TAO_LB_LeastLoaded::get_location (
         location = locations[location_index];
       else if (this->reject_threshold_ != 0)
         ACE_THROW_RETURN (CORBA::TRANSIENT (), 0);
+
+//       ACE_DEBUG ((LM_DEBUG, "LOCATION ID == %s\n", location[0].id.in ()));
     }
 
 //   ACE_DEBUG ((LM_DEBUG, "LOCATED = %u\n", location_index));

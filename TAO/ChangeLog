@@ -1,3 +1,63 @@
+Wed Dec 10 16:39:25 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* tao/Synch_Invocation.cpp (handle_system_exception):
+
+	  Corrected repository IDs for non-fatal system exceptions being
+	  detected (TRANSIENT, OBJ_ADAPTER, NO_RESPONSE).  The
+	  "IDL:omg.org/CORBA/" prefix and ":1.0" suffix were missing, thus
+	  preventing code that should have been run in the presence of
+	  these exceptions from being run.
+
+	  Attempt to try another profile in the non-fatal exception case.
+	  This fixes a problem where valid profiles were not retried when
+	  they should have been.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.h
+	  (LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF):
+
+	  New constant used in thundering herd fix described below.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp (get_location):
+
+	  Fixed problem where least loaded object group member was not
+	  always selected, thus reducing scalability.
+
+	  If two locations have loads that differ by a "small" amount
+	  (i.e. LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF), choose one of them
+	  at random.  This helps alleviate a thundering herd phenomenon
+	  that could occur when an object group member becomes available
+	  for request handling.  Thanks to Carlos, Marina and Jody at ATD
+	  for coming up with this solution to this form of the thundering
+	  herd problem.
+
+	* orbsvcs/orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.cpp
+	  (receive_request_service_contexts):
+
+	  Always allow LoadMonitor and LoadAlert operations to proceed
+	  regardless of the alert condition.  Addresses a problem where it
+	  was not possible to disable alert states and query loads from a
+	  LoadMonitor collocated with a server once a load alert was
+	  enabled.
+
+	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.h:
+
+	  Improved documentation of some class members.
+	
+	* orbsvcs/performance-tests/LoadBalancing/ORBInitializer.cpp:
+
+	  Cosmetic change.
+
+	* orbsvcs/performance-tests/LoadBalancing/RPS_Monitor.cpp (loads):
+
+	  If the elapsed-time is zero, set the load to zero to prevent a
+	  division-by-zero error.
+
+	* orbsvcs/performance-tests/LoadBalancing/Roundtrip.cpp
+	  (test_method):
+
+	  Commented out a bunch of code that should not be used when
+	  performing benchmarks.
+
 Wed Dec 10 13:58:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
 	* tao/default_client.cpp (parse_args): Corrected erroneous option
@@ -7,26 +67,26 @@ Wed Dec 10 13:58:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	* tao/IIOP_Transport.cpp (recv): Corrected method name printed in
 	  debug message.
 
-	* tao/GIOP_Message_Base.cpp: 
-        * tao/GIOP_Message_Base.h: 
-        * tao/GIOP_Message_Base.i: 
-        * tao/GIOP_Message_Generator_Parser_Impl.inl: 
-        * tao/GIOP_Message_Lite.cpp: 
-        * tao/GIOP_Message_Lite.h: 
-        * tao/GIOP_Message_State.cpp: 
-        * tao/GIOP_Message_State.h: 
-        * tao/GIOP_Message_State.inl: 
-        * tao/Incoming_Message_Queue.cpp: 
-        * tao/Incoming_Message_Queue.h: 
-        * tao/Incoming_Message_Queue.inl: 
-        * tao/Pluggable_Messaging.h: 
-        * tao/Transport.cpp: 
-        * tao/Transport.h: 
+	* tao/GIOP_Message_Base.cpp:
+        * tao/GIOP_Message_Base.h:
+        * tao/GIOP_Message_Base.i:
+        * tao/GIOP_Message_Generator_Parser_Impl.inl:
+        * tao/GIOP_Message_Lite.cpp:
+        * tao/GIOP_Message_Lite.h:
+        * tao/GIOP_Message_State.cpp:
+        * tao/GIOP_Message_State.h:
+        * tao/GIOP_Message_State.inl:
+        * tao/Incoming_Message_Queue.cpp:
+        * tao/Incoming_Message_Queue.h:
+        * tao/Incoming_Message_Queue.inl:
+        * tao/Pluggable_Messaging.h:
+        * tao/Transport.cpp:
+        * tao/Transport.h:
         * tao/orbconf.h:
 	* tao/Strategies/DIOP_Transport.cpp
 	* tao/Strategies/SHMIOP_Transport.cpp
 	* tao/Strategies/SHMIOP_Transport.h
-	
+
 	  Integrated aggregate fix to infamous Parse Magic Bytes (PMB)
  	  problem.  The fix was originally developed in OCI's repository
  	  and migrated here.  An overall description of the problem and
@@ -108,7 +168,7 @@ Tue Mar 18 14:57:07 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	* tao/RTCORBA/RT_ORBInitializer.h:
 	* tao/RTCORBA/RT_ORB_Loader.cpp:
 	* tao/RTCORBA/RT_Protocols_Hooks.cpp:
-	
+
 	  Merged in changes from TAO 1.3.1.  The actual tag for the merge
 	  was pmb_branch_mainline_mergeout_1.  The command was
 
@@ -191,7 +251,7 @@ Mon Mar 17 11:09:00 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	  the queue.  Also, removed old code leftover from when the
 	  incoming queue could have partial GIOP messages in it.  Finally,
 	  insured that the return value matched previous requirements.
-	  
+
 
 Thu Mar  6 15:27:14 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
@@ -264,7 +324,7 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	  Make message_type() static.
 
 	* TAO/tao/GIOP_Message_Generator_Parser_Impl.inl:
-	
+
 	  Reimplement check_revision() to be exact about which GIOP
 	  revisions are okay.  This is different from before where it
 	  loosely assumed that everything was valid unless it want higher
@@ -459,9 +519,9 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 	* TAO/tests/InterOp-Naming/INS_test_client.cpp:
 
           Changes that don't appear to be related in any way to PMB...
-  
-----------------------------------------  
-    
+
+----------------------------------------
+
 Wed Dec 10 15:12:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
@@ -703,10 +763,17 @@ Mon Dec  8 19:33:03 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tao/Synch_Invocation.cpp:
 
+<<<<<<< ChangeLog
+	  Fixed a minor problem with reinvocation. We were not handling
+	  errors properly, more precisely the restart errors if they show
+	  up during wait_for_reply (). Thanks to Milan Cvetkovic for
+	  motivating this change.
+=======
           Fixed a minor problem with reinvocation. We were not handling
           errors properly, more precisely the retsrat errors if they show
           up during wait_for_reply (). Thanks to Milan Cvetkovic for
           motivating this change.
+>>>>>>> 1.3209
 
         * tao/Messaging/Asynch_Invocation.cpp:
 

@@ -1,4 +1,4 @@
-//$Id$
+// $Id$
 
 #include "Synch_Invocation.h"
 #include "Profile_Transport_Resolver.h"
@@ -21,16 +21,19 @@
 # include "Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Synch_Invocation,
            "$Id$")
 
+
 namespace TAO
 {
-  Synch_Twoway_Invocation::Synch_Twoway_Invocation (CORBA::Object_ptr otarget,
-                                                    Profile_Transport_Resolver &resolver,
-                                                    TAO_Operation_Details &detail,
-                                                    bool response_expected)
+  Synch_Twoway_Invocation::Synch_Twoway_Invocation (
+    CORBA::Object_ptr otarget,
+    Profile_Transport_Resolver &resolver,
+    TAO_Operation_Details &detail,
+    bool response_expected)
     : Remote_Invocation (otarget,
                          resolver,
                          detail,
@@ -103,11 +106,10 @@ namespace TAO
 
         countdown.update ();
 
-        s =
-          this->send_message (cdr,
-                              TAO_Transport::TAO_TWOWAY_REQUEST,
-                              max_wait_time
-                              ACE_ENV_ARG_PARAMETER);
+        s = this->send_message (cdr,
+                                TAO_Transport::TAO_TWOWAY_REQUEST,
+                                max_wait_time
+                                ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -117,7 +119,7 @@ namespace TAO
         // before we leave.
         if (s == TAO_INVOKE_RESTART)
           {
-            Invocation_Status tmp =
+            const Invocation_Status tmp =
               this->receive_other_interception (ACE_ENV_SINGLE_ARG_PARAMETER);
             ACE_TRY_CHECK;
 
@@ -214,7 +216,7 @@ namespace TAO
     ACE_CATCHANY
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus status =
+        const PortableInterceptor::ReplyStatus status =
           this->handle_any_exception (&ACE_ANY_EXCEPTION
                                       ACE_ENV_ARG_PARAMETER);
         ACE_TRY_CHECK;
@@ -223,7 +225,7 @@ namespace TAO
             status == PortableInterceptor::TRANSPORT_RETRY)
           s = TAO_INVOKE_RESTART;
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
-            || status == PortableInterceptor::USER_EXCEPTION)
+                 || status == PortableInterceptor::USER_EXCEPTION)
 #endif /*TAO_HAS_INTERCEPTORS*/
           ACE_RE_THROW;
       }
@@ -232,7 +234,7 @@ namespace TAO
     ACE_CATCHALL
       {
 #if TAO_HAS_INTERCEPTORS == 1
-        PortableInterceptor::ReplyStatus st =
+        const PortableInterceptor::ReplyStatus st =
           this->handle_all_exception (ACE_ENV_SINGLE_ARG_PARAMETER);
         ACE_TRY_CHECK;
 
@@ -266,12 +268,12 @@ namespace TAO
      * exception. Success alone is returned through the return value.
      */
 
-    int reply_error =
+    const int reply_error =
       this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time,
                                                             rd);
     if (TAO_debug_level > 0 && max_wait_time != 0)
       {
-        CORBA::ULong msecs = max_wait_time->msec ();
+        const CORBA::ULong msecs = max_wait_time->msec ();
 
         ACE_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Synch_Twoway_Invocation::wait_for_reply, "
@@ -298,24 +300,26 @@ namespace TAO
         if (errno == ETIME)
           {
             // If the unbind succeeds then thrown an exception to the
-            // application, else just collect the reply and dispatch that to the
-            // application.
-            // NOTE: A fragile synchronization is provided when using the Muxed
-            // Transport strategy. We could infact be a follower thread getting
-            // timedout in the LF whereas the dispatching thread could be
-            // on the reply_dispatcher that we created. This would lead bad
-            // crashes. To get around that, the call to unbind_dispatcher ()
-            // will wait on the lock on the Muxed_Transport_Strategy if
+            // application, else just collect the reply and dispatch
+            // that to the application.
+            //
+            // NOTE: A fragile synchronization is provided when using
+            // the Muxed Transport strategy. We could infact be a
+            // follower thread getting timedout in the LF whereas the
+            // dispatching thread could be on the reply_dispatcher
+            // that we created. This would lead bad crashes. To get
+            // around that, the call to unbind_dispatcher () will wait
+            // on the lock on the Muxed_Transport_Strategy if
             // dispatching has started. This is fragile.
             if (bd.unbind_dispatcher () == 0)
               {
                 // Just a timeout with completed_maybe, don't close
                 // the connection or  anything
                 ACE_THROW_RETURN (CORBA::TIMEOUT (
-                    CORBA::SystemException::_tao_minor_code (
-                        TAO_TIMEOUT_RECV_MINOR_CODE,
-                        errno),
-                    CORBA::COMPLETED_MAYBE),
+                                    CORBA::SystemException::_tao_minor_code (
+                                      TAO_TIMEOUT_RECV_MINOR_CODE,
+                                      errno),
+                                    CORBA::COMPLETED_MAYBE),
                                   TAO_INVOKE_FAILURE);
               }
           }
@@ -325,7 +329,8 @@ namespace TAO
             this->resolver_.transport ()->close_connection ();
             this->resolver_.stub ()->reset_profiles ();
 
-            return this->orb_core ()->service_raise_comm_failure (
+            return
+              this->orb_core ()->service_raise_comm_failure (
                 this->details_.request_service_context ().service_info (),
                 this->resolver_.profile ()
                 ACE_ENV_ARG_PARAMETER);
@@ -518,8 +523,7 @@ namespace TAO
                                                     ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
   {
-    Reply_Guard mon (this,
-                     TAO_INVOKE_FAILURE);
+    Reply_Guard mon (this, TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
       ACE_DEBUG ((LM_DEBUG,
@@ -548,33 +552,51 @@ namespace TAO
                           TAO_INVOKE_FAILURE);
       }
 
-    {
-      // Start the special case for FTCORBA.
-      /**
-       * There has been a unanimous view that this is not the right way
-       * to do things. But a need to be compliant is forcing us into
-       * this.
-       */
-      if (((ACE_OS_String::strcmp (type_id.in (),
-                                  "TRANSIENT") == 0) ||
-           (ACE_OS_String::strcmp (type_id.in (),
-                                  "OBJ_ADAPTER") == 0) ||
-           (ACE_OS_String::strcmp (type_id.in (),
-                                  "NO_RESPONSE") == 0)) &&
-          (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
+    // Special handling for non-fatal system exceptions.
+    //
+    // Note that we are careful to retain "at most once" semantics.
+    if ((ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/TRANSIENT:1.0")   == 0 ||
+         ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
+         ACE_OS_String::strcmp (type_id.in (),
+                                "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0) &&
+        (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
+      {
         {
-         Invocation_Status s =
-           this->orb_core ()->service_raise_transient_failure (
-             this->details_.request_service_context ().service_info (),
-             this->resolver_.profile ()
-             ACE_ENV_ARG_PARAMETER);
-         ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
+          // Start the special case for FTCORBA.
+          /**
+           * There has been a unanimous view that this is not the
+           * right way to do things. But a need to be compliant is
+           * forcing us into this.
+           */
+          const Invocation_Status s =
+            this->orb_core ()->service_raise_transient_failure (
+              this->details_.request_service_context ().service_info (),
+              this->resolver_.profile ()
+              ACE_ENV_ARG_PARAMETER);
+          ACE_CHECK_RETURN (TAO_INVOKE_FAILURE);
 
-         if (s == TAO_INVOKE_RESTART)
-           return s;
-         // else fall through and raise an exception.
+          if (s == TAO_INVOKE_RESTART)
+            return s;
         }
-    }
+
+        // Attempt profile retry.
+        /**
+         * @note A location forwarding loop may occur where a client
+         *       is bounced from the original target to the forwarded
+         *       target and back if the application is not equipped to
+         *       handle retries of previously called targets.  TAO may
+         *       be able to help in this case but it ultimately ends
+         *       up being an application issue.
+         */
+        if (this->resolver_.stub ()->next_profile_retry ())
+          {
+            return TAO_INVOKE_RESTART;
+          }
+
+        // Fall through and raise an exception.
+      }
 
     CORBA::SystemException *ex =
       TAO_Exceptions::create_system_exception (type_id.in ()
@@ -591,15 +613,16 @@ namespace TAO
                         TAO_INVOKE_FAILURE);
       }
 
-    ex->minor (minor);
-    ex->completed (CORBA::CompletionStatus (completion));
-
 #if defined (TAO_HAS_EXCEPTIONS)
     // Without this, the call to create_system_exception() above
     // causes a memory leak. On platforms without native exceptions,
     // the CORBA::Environment class manages the memory.
     auto_ptr<CORBA::SystemException> safety (ex);
 #endif
+
+    ex->minor (minor);
+    ex->completed (CORBA::CompletionStatus (completion));
+
     if (TAO_debug_level > 4)
       ACE_DEBUG ((LM_DEBUG,
                   "TAO (%P|%t) - Synch_Twoway_Invocation::"
@@ -612,19 +635,16 @@ namespace TAO
 
     return TAO_INVOKE_SYSTEM_EXCEPTION;
   }
-/*================================================================================*/
 
-  Synch_Oneway_Invocation::Synch_Oneway_Invocation (CORBA::Object_ptr otarget,
-                                                    Profile_Transport_Resolver &r,
-                                                    TAO_Operation_Details &d)
-    : Synch_Twoway_Invocation (otarget,
-                               r,
-                               d,
-                               false)
+  // =========================================================================
+
+  Synch_Oneway_Invocation::Synch_Oneway_Invocation (
+    CORBA::Object_ptr otarget,
+    Profile_Transport_Resolver &r,
+    TAO_Operation_Details &d)
+    : Synch_Twoway_Invocation (otarget, r, d, false)
   {
   }
-
-
 
   Invocation_Status
   Synch_Oneway_Invocation::remote_oneway (ACE_Time_Value *max_wait_time
@@ -638,7 +658,6 @@ namespace TAO
 
     if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER) ||
         response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
-
       return Synch_Twoway_Invocation::remote_twoway (max_wait_time
                                                      ACE_ENV_ARG_PARAMETER);
 
