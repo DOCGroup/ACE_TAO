@@ -31,7 +31,7 @@
 
 #include "tao/Typecode.h"
 
-#include "log_export.h"
+#include "log_serv_export.h"
 
 class TAO_ETCL_Constraint;
 class TAO_ETCL_Literal_Constraint;
@@ -42,7 +42,7 @@ class TAO_Log_Property_Constraint;
  *
  * @brief "ETCL" Visitor for the Log queries.
  */
-class TAO_Log_Export TAO_Log_Constraint_Visitor :
+class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
   public TAO_ETCL_Constraint_Visitor
 {
 public:

@@ -1,35 +1,83 @@
 // -*- MPC -*-
 // $Id$
 
-project(DsLogAdmin) : orbsvcslib, core, etcl, dynamicany, svc_utils {
+project(DsLogAdmin) : orbsvcslib, core {
   sharedname   = TAO_DsLogAdmin
-  idlflags    += -Wb,export_macro=TAO_Log_Export -Wb,export_include=orbsvcs/Log/log_export.h
   dynamicflags = TAO_LOG_BUILD_DLL
-  tagchecks   += Log
-  pch_header   =
-  pch_source   =
+
+  idlflags    += -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h
 
   IDL_Files {
     DsLogAdmin.idl
     DsLogNotification.idl
   }
 
+  Source_Files {
+    DsLogAdminC.cpp
+    DsLogNotificationC.cpp
+  }
+
+  Header_Files {
+    DsLogAdminC.h
+    DsLogNotificationC.h
+  }
+
+  Inline_Files {
+    DsLogAdminC.inl
+    DsLogNotificationC.inl
+  }
+    
+  // explicit Resource_Files to avoid including _Skel & _Serv rc files.
+  Resource_Files {
+    DsLogAdmin.rc
+  }
+}
+
+
+project(DsLogAdmin_Skel) : orbsvcslib, core, dslogadmin, portableserver {
+  sharedname   = TAO_DsLogAdmin_Skel
+  dynamicflags = TAO_LOG_SKEL_BUILD_DLL
+
+  IDL_Files {
+  } 
+
+  Source_Files {
+    DsLogAdminS.cpp
+    DsLogNotificationS.cpp
+  }
+
+  Header_Files {
+    DsLogAdminS.h
+    DsLogNotificationS.h
+  }
+
+  Inline_Files {
+    DsLogAdminS.inl
+    DsLogNotificationS.inl
+  }
+}
+
+
+project(DsLogAdmin_Serv) : orbsvcslib, core, dslogadmin_skel, dynamicany, etcl {
+  sharedname   = TAO_DsLogAdmin_Serv
+  dynamicflags = TAO_LOG_SERV_BUILD_DLL
+  tagchecks   += Log
+
+  IDL_Files {
+  }
+
   Source_Files(ORBSVCS_COMPONENTS) {
     DsLogAdmin {
-      DsLogAdminC.cpp
-      DsLogAdminS.cpp
-      DsLogNotificationC.cpp
-      DsLogNotificationS.cpp
-      Log/PersistStore.cpp
-      Log/LogRecordStore.cpp
       Log/BasicLogFactory_i.cpp
-      Log/Iterator_i.cpp
       Log/BasicLog_i.cpp
-      Log/Log_i.cpp
+      Log/Iterator_i.cpp
       Log/LogMgr_i.cpp
-      Log/Log_Constraint_Visitors.cpp
-      Log/Log_Constraint_Interpreter.cpp
       Log/LogNotification.cpp
+      Log/LogRecordStore.cpp
+      Log/Log_Constraint_Interpreter.cpp
+      Log/Log_Constraint_Visitors.cpp
+      Log/Log_i.cpp
+      Log/PersistStore.cpp
     }
   }
 }

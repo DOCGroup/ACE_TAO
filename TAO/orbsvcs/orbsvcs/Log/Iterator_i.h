@@ -41,7 +41,7 @@
  *
  * @brief Iterator to get LogRecords for the log via a query.
  */
-class TAO_Log_Export TAO_Iterator_i : 
+class TAO_Log_Serv_Export TAO_Iterator_i : 
   public POA_DsLogAdmin::Iterator,
   public virtual PortableServer::RefCountServantBase
 {

@@ -26,7 +26,7 @@
 
 #include "orbsvcs/DsLogNotificationS.h"
 
-#include "log_export.h"
+#include "log_serv_export.h"
 
 
 /**
@@ -37,7 +37,7 @@
  * This implementation attempts to conform to the telecom
  * logging specification.
  */
-class TAO_Log_Export TAO_LogNotification
+class TAO_Log_Serv_Export TAO_LogNotification
 {
 
 public:

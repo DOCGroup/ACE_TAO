@@ -27,7 +27,7 @@
 #include "orbsvcs/DsNotifyLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
 
-#include "notifylog_export.h"
+#include "notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1200)

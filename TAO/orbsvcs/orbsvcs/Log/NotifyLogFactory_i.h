@@ -43,7 +43,7 @@ class TAO_NotifyLogNotification;
  *
  * @brief The NotifyLogFactory is a factory that is used to create NotifyLogs which are event-aware.
  */
-class TAO_NotifyLog_Export TAO_NotifyLogFactory_i :
+class TAO_NotifyLog_Serv_Export TAO_NotifyLogFactory_i :
   public POA_DsNotifyLogAdmin::NotifyLogFactory,
   public TAO_LogMgr_i
 {

@@ -1,5 +1,5 @@
 // $Id$
-project: namingexe, dseventlogadmin {
+project: namingexe, dseventlogadmin_serv {
   exename   = Event_Logging_Service
   includes += $(TAO_ROOT)/orbsvcs
 }
