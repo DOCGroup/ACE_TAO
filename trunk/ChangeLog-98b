@@ -1,3 +1,8 @@
+Sun Jul 12 13:25:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE-INSTALL.html: Separated the Linux RedHat 5.1 and 5.0
+          discussions into different paragraphs.
+
 Sat Jul 11 14:25:58 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Timer_Queue_Adapter.cpp: moved the ACE_RCSID inside the
