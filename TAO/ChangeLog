@@ -1,3 +1,14 @@
+Thu Jan 29 11:23:50 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp (gen_stub_src_includes):
+        
+          Moved the conditional code generation for abstract interface
+          related filed outside the scope of the check for non-local
+          operations. While it is very likely that an abstract interface
+          declaration will contain at least one operation, it is not
+          required by IDL. Thanks to Yavannadil <yavannadil@yahoo.com>
+          for reporting the problem.
+
 Thu Jan 29 09:36:11 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/orb.idl:

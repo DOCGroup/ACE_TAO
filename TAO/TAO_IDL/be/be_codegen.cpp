@@ -1474,21 +1474,21 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Exception_Data.h");
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Invocation_Adapter.h");
+    }
 
-      // Any abstract interface present will probably have an operation.
-      if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
-                           idl_global->decls_seen_masks.abstract_iface_seen_))
-        {
-          this->gen_standard_include (
-              this->client_stubs_,
-              "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
-            );
+  // Any abstract interface present will probably have an operation.
+  if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
+                        idl_global->decls_seen_masks.abstract_iface_seen_))
+    {
+      this->gen_standard_include (
+          this->client_stubs_,
+          "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
+        );
 
-          this->gen_standard_include (
-              this->client_stubs_,
-              "tao/Valuetype/AbstractBase_T.h"
-            );
-        }
+      this->gen_standard_include (
+          this->client_stubs_,
+          "tao/Valuetype/AbstractBase_T.h"
+        );
     }
 
   if (be_global->ami_call_back () == I_TRUE)
