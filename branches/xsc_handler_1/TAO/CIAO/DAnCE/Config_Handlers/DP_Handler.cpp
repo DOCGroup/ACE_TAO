@@ -5,8 +5,11 @@
 #include "ADD_Handler.h"
 #include "MDD_Handler.h"
 #include "IDD_Handler.h"
+#include "ID_Handler.h"
 #include "cdp.hpp"
 #include "Singleton_IDREF_Map.h"
+
+#include "DP_PCD_Handler.h"
 
 ACE_RCSID (Config_Handlers,
            DP_Handler,
@@ -77,23 +80,8 @@ namespace CIAO
 	    CORBA::string_dup (this->dp_.UUID ().c_str ());
 	}
 
-      // Get the connection info from the PCD_Handler.
-      // This looks different from the others because PCD_Handler only offers
-      // a void function.
-      for (DeploymentPlan::connection_const_iterator cstart = this->dp_.begin_connection ();
-	   cstart != this->dp_.end_connection ();
-	   ++cstart)
-	{
-	  // where does this length () method come from??
-	  CORBA::ULong len = 
-	    this->idl_dp_->connection.length ();
 
-	  this->idl_dp_->connection.length (len + 1);
-
-	  PCD_Handler::get_PlanConnection_Description ( 
-            *cstart, 
-            this->idl_dp_->connection [len]);
-	}
+      DP_PCD_Handler::plan_connection_descrs (this->dp_, this->idl_dp_->connection);
 
       // Similar thing for dependsOn
       for (DeploymentPlan::dependsOn_const_iterator dstart = this->dp_.begin_dependsOn ();
@@ -105,10 +93,13 @@ namespace CIAO
 	  
 	  this->idl_dp_->dependsOn.length (len + 1);
 
-	  ID_Handler::getImplementationDependency (
-	    *cstart,
-	    this->idl_dp_->dependsOn [len]);
+	  ID_Handler::get_ImplementationDependency (
+             this->idl_dp_->dependsOn [len],
+             *dstart);
+
 	}
+      
+      /* @@ Not needed at this time...
 
       // ... and the property stuff
       for (DeploymentPlan::infoProperty_const_iterator pstart = this->dp_.begin_infoProperty ();
@@ -124,7 +115,7 @@ namespace CIAO
 	    *pstart,
 	    this->idl_dp_->infoProperty [len]);
 	}
-      
+      */
       // *************************
       // Steve's stuff ends here
       // *************************
@@ -135,7 +126,13 @@ namespace CIAO
           this->idl_dp_->realizes);
 
       if (!this->retval_)
-        return this->retval_;
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) DP_Handler: "
+                      "Error parting Component Interface Descriptor."));
+          return false;
+        }
+      
 
       this->retval_ =
         ADD_Handler::artifact_deployment_descrs (
@@ -143,23 +140,38 @@ namespace CIAO
           this->idl_dp_->artifact);
 
       if (!this->retval_)
-        return this->retval_;
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) DP_Handler: "
+                      "Error parting Artifact Deployment Descriptior."));
+          return false;
+        }
 
       this->retval_ =
         MDD_Handler::mono_deployment_descriptions (
-          this->dp_.implementation (),
+          this->dp_,
           this->idl_dp_->implementation);
 
       if (!this->retval_)
-        return this->retval_;
-
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) DP_Handler: "
+                      "Error parting Monolithic Deployment Decriptions."));
+          return false;
+        }
+      
       this->retval_ =
         IDD_Handler::instance_deployment_descrs (
           this->dp_,
           this->idl_dp_->instance);
 
       if (!this->retval_)
-        return this->retval_;
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) DP_Handler: "
+                      "Error parting Instance Deployment Decriptions."));
+          return false;
+        }
 
       return this->retval_;
     }

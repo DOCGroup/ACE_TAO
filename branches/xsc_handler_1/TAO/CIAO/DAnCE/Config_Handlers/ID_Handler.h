@@ -54,9 +54,9 @@ namespace CIAO
       ID_Handler (void);
       virtual ~ID_Handler (void);
 
-      void get_ImplementationDependency (
+      static void get_ImplementationDependency (
           Deployment::ImplementationDependency& toconfig,
-          ImplementationDependency& desc);
+          const ImplementationDependency& desc);
 
       ImplementationDependency impl_dependency (
           const ::Deployment::ImplementationDependency& src);

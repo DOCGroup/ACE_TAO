@@ -14,9 +14,8 @@ namespace CIAO
 {
   namespace Config_Handlers
   {
-    ADD_Handler::IDREF_MAP idref_map_ ();
-    ADD_Handler::POS_MAP pos_map_ ();   
-
+    IDREF_Base ADD_Handler::IDREF;
+    
     bool
     ADD_Handler::artifact_deployment_descrs (
         const DeploymentPlan &src,
@@ -114,13 +113,21 @@ namespace CIAO
       if (src.id_p ())
         {
           ACE_CString cstr (src.id ().c_str ());
-
-          bool retval = bind_ref (cstr,pos);
+          
+          bool retval = ADD_Handler::IDREF.bind_ref (cstr,pos);
           if (!retval)
             {
               return false;
             }
         }
+      else
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) Warning: ADD %s has no idref.\n",
+                      src.name ().c_str ()));
+        }
+      
+                      
 #if 0
       // @@ MAJO: Don't know how to handle this.
       if (src.deployRequirement_p ())
@@ -181,58 +188,6 @@ namespace CIAO
       return add;       
     }
 
-
-    bool
-    ADD_Handler::bind_ref (ACE_CString& id, size_t index)
-    {
-      int retval =
-        idref_map_->bind (id, index);
-      
-      pos_map_->bind (index,id);
-
-      if (retval < 0)
-        return false;
-
-      return true;
-    }
-
-    bool
-    ADD_Handler::find_ref (const ACE_CString& id, size_t val)
-    {
-      int retval =
-        idref_map_->find (id, val);
-
-      if (retval < 0)
-        return false;
-
-      return true;
-    }
-    
-    bool
-    ADD_Handler::find_ref (const size_t id, ACE_CString& val)
-    {
-      int retval =
-        pos_map_->find (id,val);
-
-      if (retval < 0)
-        return false;
-
-      return true;
-    }
-
-    bool
-    ADD_Handler::unbind_refs (void)
-    {
-      int retval =
-        idref_map_->unbind_all ();
- 
-      pos_map_->unbind_all ();
-   
-      if (retval < 0)
-        return false;
-
-      return true;
-    }
     
 
   }

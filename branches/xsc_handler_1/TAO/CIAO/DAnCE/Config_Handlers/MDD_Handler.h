@@ -11,8 +11,9 @@
 #ifndef CIAO_CONFIG_HANDLERS_MDD_Handler_H
 #define CIAO_CONFIG_HANDLERS_MDD_Handler_H
 #include /**/ "ace/pre.h"
-
+#include "tao/Basic_Types.h"
 #include "Config_Handlers_Export.h"
+#include "IDREF_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +33,8 @@ namespace CIAO
   namespace Config_Handlers
   {
     class MonolithicDeploymentDescription;
-
+    class DeploymentPlan;
+    
     /*
      * @class MDD_Handler
      *
@@ -48,13 +50,16 @@ namespace CIAO
     {
     public:
       static bool mono_deployment_descriptions (
-          const MonolithicDeploymentDescription& src,
+          const DeploymentPlan &src,
           Deployment::MonolithicDeploymentDescriptions &dest);
 
+      static IDREF_Base IDREF;
+      
     private:
       static bool mono_deployment_description (
           const MonolithicDeploymentDescription& desc,
-          Deployment::MonolithicDeploymentDescription& toconfig);
+          Deployment::MonolithicDeploymentDescription& toconfig,
+          CORBA::ULong pos);
     };
   }
 }

@@ -21,15 +21,10 @@ namespace CIAO
     void
     ID_Handler::get_ImplementationDependency (
                     Deployment::ImplementationDependency& toconfig,
-                    ImplementationDependency& desc)
+                    const ImplementationDependency& desc)
     {
-
-
-
       toconfig.requiredType=
            CORBA::string_dup (desc.requiredType ().c_str ());
-
-
     }
 
     ImplementationDependency
