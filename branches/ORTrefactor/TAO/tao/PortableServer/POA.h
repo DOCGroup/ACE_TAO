@@ -133,13 +133,20 @@ protected:
 class ServerObject_i;
 class TAO_Acceptor_Filter;
 class TAO_Acceptor_Registry;
-class TAO_ObjectReferenceTemplate_Adapter_Factory;
+
 
 namespace PortableInterceptor
 {
   class IORInfo;
   typedef IORInfo *IORInfo_ptr;
 }
+
+namespace TAO
+{
+  class ObjectReferenceTemplate_Adapter;
+}
+
+class TAO_ObjectReferenceTemplate_Adapter_Factory;
 
 /**
  * @class TAO_POA
@@ -269,6 +276,8 @@ public:
   PortableInterceptor::AdapterName *adapter_name (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  // @@ Johnny, why are the following two methods public?
+  // Can't you make the IORInfo class private?
   /// Accessor methods to ObjectReferenceTemplate
   PortableInterceptor::ObjectReferenceTemplate *get_adapter_template (void);
 
@@ -550,9 +559,9 @@ public:
 
   CORBA::Boolean waiting_destruction (void) const;
 
-  static void objectreferencetemplate_adapter_factory_name (const char *name);
+  static void ort_adapter_factory_name (const char *name);
 
-  static const char *objectreferencetemplate_adapter_factory_name (void);
+  static const char *ort_adapter_factory_name (void);
 
   CORBA::Object_ptr invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL);
 
@@ -612,7 +621,7 @@ protected:
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
   void adapter_state_changed (
-      const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
       PortableInterceptor::AdapterState state
       ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -874,7 +883,7 @@ protected:
                                ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  TAO_ObjectReferenceTemplate_Adapter *
+  TAO::ObjectReferenceTemplate_Adapter *
     object_reference_template_adapter (void);
 
   TAO_ObjectReferenceTemplate_Adapter_Factory *
@@ -943,7 +952,7 @@ protected:
   CORBA::OctetSeq id_;
 
   /// Pointer to the object reference template adapter.
-  TAO_ObjectReferenceTemplate_Adapter *ort_adapter_;
+  TAO::ObjectReferenceTemplate_Adapter *ort_adapter_;
 
   /// Adapter can be accepting, rejecting etc.
   PortableInterceptor::AdapterState adapter_state_;
@@ -1107,7 +1116,7 @@ public:
    * objectreferencefactory_adapter_factory_name() will be called to set
    * the value to "Concrete_ObjectReferenceTemplate_Adapter_Factory".
    */
-  ACE_CString objectreferencetemplate_adapter_factory_name_;
+  CORBA::String_var ort_adapter_factory_name_;
 
 private:
   /// Constructor.

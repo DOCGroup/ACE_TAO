@@ -1,3 +1,38 @@
+Mon Aug 23 18:33:59 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* tao/Thread_Per_Connection_Handler.cpp:
+
+	  Fixed a compile error with the latest version of ACE. This has
+	  been fixed in the main trunk. 
+	
+	* tao/IORInterceptor/IORInterceptor_List.cpp:
+	* tao/IORInterceptor/IORInterceptor_List.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Factory_Impl.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Factory_Impl.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Impl.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Impl.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_Adapter_Impl.inl:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_i.cpp:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_i.h:
+	* tao/ObjRefTemplate/ObjectReferenceTemplate_i.inl:
+	* tao/PortableServer/ObjectReferenceTemplate_Adapter.cpp:
+	* tao/PortableServer/ObjectReferenceTemplate_Adapter.h:
+	* tao/PortableServer/ObjectReferenceTemplate_Adapter_Factory.h:
+	* tao/PortableServer/POA.cpp:
+	* tao/PortableServer/POA.h:
+
+	  Added a number of comments and suggestions for Johnny. The
+	  significant among them are:
+
+	  - adding implementations in the TAO namespace. The TAO_* naming
+	    should be killed. 
+	  
+	  - Make the names of the classes and file names shorter. The
+	    existing makes things harder to read and find the relation
+	    ships. I have done a few. I have left the rest for Johnny as
+	    homework :-)
+
+
 Mon Aug 23 12:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IORInterceptor/IORInterceptor_List.cpp:

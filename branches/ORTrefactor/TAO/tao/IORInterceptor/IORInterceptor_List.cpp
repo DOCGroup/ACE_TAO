@@ -54,7 +54,7 @@ TAO_IORInterceptor_List::add_interceptor (
 
 void
 TAO_IORInterceptor_List::adapter_state_changed (
-  const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+  const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
   PortableInterceptor::AdapterState state
   ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))

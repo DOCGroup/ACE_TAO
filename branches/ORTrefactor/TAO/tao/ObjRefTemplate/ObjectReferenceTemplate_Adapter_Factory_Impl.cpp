@@ -13,14 +13,14 @@ TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::
 {
 }
 
-TAO_ObjectReferenceTemplate_Adapter *
+TAO::ObjectReferenceTemplate_Adapter *
 TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::create (
     ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  TAO_ObjectReferenceTemplate_Adapter_Impl * new_ort_adapter;
+  TAO::ObjectReferenceTemplate_Adapter_Impl * new_ort_adapter;
   ACE_NEW_THROW_EX (new_ort_adapter,
-                    TAO_ObjectReferenceTemplate_Adapter_Impl,
+                    TAO::ObjectReferenceTemplate_Adapter_Impl,
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
@@ -29,7 +29,7 @@ TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::create (
 
 void
 TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::destroy (
-    TAO_ObjectReferenceTemplate_Adapter * adapter
+    TAO::ObjectReferenceTemplate_Adapter * adapter
     ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -43,8 +43,7 @@ TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::destroy (
 int
 TAO_ObjectReferenceTemplate_Adapter_Factory_Impl::Initializer (void)
 {
-  TAO_POA::objectreferencetemplate_adapter_factory_name (
-      "Concrete_ObjectReferenceTemplate_Adapter_Factory"
+  TAO_POA::ort_adapter_factory_name ("Concrete_ObjectReferenceTemplate_Adapter_Factory"
     );
 
   return

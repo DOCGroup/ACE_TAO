@@ -61,7 +61,7 @@ TAO_Thread_Per_Connection_Handler::activate (long flags,
 int
 TAO_Thread_Per_Connection_Handler::svc (void)
 {
-  ACE_Flag_Manip::clr_flags (
+  ACE::clr_flags (
       this->ch_->transport ()->event_handler_i ()->get_handle (),
       ACE_NONBLOCK);
 
