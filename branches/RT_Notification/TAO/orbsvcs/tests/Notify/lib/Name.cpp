@@ -5,7 +5,7 @@
 ACE_RCSID(lib, TAO_Name, "$id$")
 
 #define TAO_NS_DECLARE_NAME(target, name) \
-const char* const TAO_NS_Name::##target = ACE_TEXT (name);
+const char* const TAO_NS_Name::target = ACE_TEXT (name);
 
 TAO_NS_DECLARE_NAME (command_builder,"Command_Builder")
 TAO_NS_DECLARE_NAME (root_poa,"RootPOA")
