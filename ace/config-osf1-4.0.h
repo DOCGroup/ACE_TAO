@@ -156,11 +156,14 @@
 #define ACE_HAS_SVR4_SIGNAL_T
 #define ACE_HAS_SYSCALL_H
 #define ACE_HAS_SYSV_IPC
-#if (ACE_MT_SAFE != 0)
+#if (ACE_MT_SAFE == 0)
+// clearerr is not defined when _REENTRANT is not defined
+#define ACE_LACKS_CLEARERR
+#else  /* ACE_MT_SAFE != 0 */
 #define ACE_HAS_THREADS
 #define ACE_HAS_THREAD_SPECIFIC_STORAGE
 #define ACE_LACKS_THREAD_STACK_ADDR
-#endif
+#endif  /* ACE_MT_SAFE != 0 */
 #define ACE_HAS_TIUSER_H
 #define ACE_HAS_TLI
 #define ACE_HAS_TLI_PROTOTYPES
