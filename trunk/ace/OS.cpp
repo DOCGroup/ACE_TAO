@@ -1703,7 +1703,7 @@ u_int ACE_TSS_Emulation::total_keys_ = 0;
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_ [ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX] = { 0 };
 
-#if defined(ACE_USE_NATIVE_KEYS)
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 
 int ACE_TSS_Emulation::key_created_ = 0;
 
@@ -1776,7 +1776,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[])
 
   return old_ts_storage;
 }
-#endif /* ACE_USE_NATIVE_KEYS */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 void *
 ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
@@ -1797,23 +1797,22 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
 
   return (void *) tss_base;
 #   else  /* ! ACE_PSOS */
-#     if ! defined (VXWORKS)
-  // On VxWorks, don't check to see if the field is 0.  It isn't always,
-  // specifically, when a program is run directly by the shell (without
-  // spawning a new task) after another program has been run.
+#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+        // On VxWorks, in particular, don't check to see if the field
+        // is 0.  It isn't always, specifically, when a program is run
+        // directly by the shell (without spawning a new task) after
+        // another program has been run.
 
-#       if defined(ACE_USE_NATIVE_KEYS)
   if (tss_base (ts_storage) == 0)
-#       else
-  if (tss_base () == 0)
-#       endif
     {
-#     endif /* ! VXWORKS */
-#     if !defined(ACE_USE_NATIVE_KEYS)
-      tss_base() = ts_storage;
+#     else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
+  ACE_UNUSED_ARG (ts_storage);
+#     endif /* ! ACE_HAS_THREAD_SPECIFI_STORAGE */
+#     if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+        tss_base() = ts_storage;
 #     endif
       // Zero the entire TSS array.  Do it manually instead of using
-      // memset, for optimum speed.
+      // memset, for optimum speed.  Though, memset may be faster :-)
       void **tss_base_p = tss_base ();
       for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
         {
@@ -1821,21 +1820,16 @@ ACE_TSS_Emulation::tss_open (void *ts_storage[ACE_TSS_THREAD_KEYS_MAX])
         }
 
       return tss_base ();
-#     if ! defined (VXWORKS)
+#     if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
     }
   else
     {
       return 0;
     }
-#     endif /* ! VXWORKS */
+#     endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #   endif /* ! ACE_PSOS */
 }
 
-#   if !defined (VXWORKS) && !defined(ACE_USE_NATIVE_KEYS)
-// FOR TESTING ONLY!
-void **
-ACE_TSS_Emulation::tss_collection_ [ACE_TSS_Emulation::ACE_TSS_THREADS_MAX] = { 0 };
-#   endif /* VXWORKS */
 # endif /* ACE_HAS_TSS_EMULATION */
 
 # if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
@@ -3130,7 +3124,7 @@ ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 # endif /* ! ACE_HAS_STHREADS */
 }
 
-# if defined(ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+# if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 int
 ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
 {
@@ -3161,7 +3155,7 @@ ACE_OS::thr_setspecific (ACE_OS_thread_key_t key, void *data)
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
 }
-# endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
+# endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 int
 ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
@@ -3246,7 +3240,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 # endif /* ACE_HAS_THREADS */
 }
 
-# if defined(ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+# if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 int
 ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
 #   if defined (ACE_HAS_THR_C_DEST)
@@ -3299,7 +3293,7 @@ ACE_OS::thr_keycreate (ACE_OS_thread_key_t *key,
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_THREADS */
 }
-# endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
+# endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 int
 ACE_OS::thr_keycreate (ACE_thread_key_t *key,

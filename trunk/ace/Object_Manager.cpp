@@ -210,10 +210,10 @@ ACE_Object_Manager::init (void)
                                 ACE_TOKEN_INVARIANTS_CREATION_LOCK)
         ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
                                 ACE_TSS_CLEANUP_LOCK)
-#       if defined (ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+#       if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
           ACE_PREALLOCATE_OBJECT (ACE_Recursive_Thread_Mutex,
                                   ACE_TSS_BASE_LOCK)
-#       endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
+#       endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 #     endif /* ACE_MT_SAFE */
 
       // Do this after the allocation of ACE_STATIC_OBJECT_LOCK.  It
@@ -346,10 +346,10 @@ ACE_Object_Manager::fini (void)
                                     ACE_TOKEN_INVARIANTS_CREATION_LOCK)
     ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                     ACE_TSS_CLEANUP_LOCK)
-#     if defined (ACE_HAS_TSS_EMULATION) && defined(ACE_USE_NATIVE_KEYS)
+#     if defined (ACE_HAS_TSS_EMULATION) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
       ACE_DELETE_PREALLOCATED_OBJECT (ACE_Recursive_Thread_Mutex,
                                       ACE_TSS_BASE_LOCK)
-#     endif /* ACE_HAS_TSS_EMULATION && ACE_USE_NATIVE_KEYS */
+#     endif /* ACE_HAS_TSS_EMULATION && ACE_HAS_THREAD_SPECIFIC_STORAGE */
 # endif /* ACE_MT_SAFE */
 #endif /* ! ACE_HAS_STATIC_PREALLOCATION */
 

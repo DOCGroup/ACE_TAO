@@ -5477,7 +5477,7 @@ ACE_OS::thr_self (void)
 
 #if defined (ACE_HAS_TSS_EMULATION)
 
-#if defined(ACE_USE_NATIVE_KEYS)
+#if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 ACE_INLINE int
 ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
 {
@@ -5513,7 +5513,6 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
   *data = ::TlsGetValue (key);
 #   if !defined (ACE_HAS_WINCE)
   if (*data == 0 && (errno = ::GetLastError ()) != NO_ERROR)
-
     return -1;
   else
 #   endif /* ACE_HAS_WINCE */
@@ -5528,24 +5527,25 @@ ACE_OS::thr_getspecific (ACE_OS_thread_key_t key, void **data)
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
 }
-#endif /* ACE_USE_NATIVE_KEYS */
+#endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
-#if !defined(ACE_USE_NATIVE_KEYS)
+#if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 ACE_INLINE
 void **&
 ACE_TSS_Emulation::tss_base ()
 {
 # if defined (VXWORKS)
-  return ((void **&) taskIdCurrent->spare4);
-#elif defined (ACE_PSOS)
+  return (void **&) taskIdCurrent->spare4;
+# elif defined (ACE_PSOS)
   // not supported
   long x=0;   //JINLU
   return (void **&) x;
 # else
-  return tss_collection_ [ACE_OS::thr_self ()];
+  // Uh oh.
+  ACE_NOTSUP_RETURN (0);
 # endif /* VXWORKS */
 }
-#endif /* !ACE_USE_NATIVE_KEYS */
+#endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 ACE_INLINE
 u_int
