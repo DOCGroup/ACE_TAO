@@ -33,7 +33,7 @@ Usage: mwc.pl [-global <file>] [-include <directory>]
        -noreldefs    Do not try to generate default relative definitions.
        -type         Specifies the type of project file to generate.  This
                      option can be used multiple times to generate multiple
-                     types.
+                     types.  If -type is not used, it defaults to 'gnu'.
 
 The default global input file
 (ACE_wrappers/bin/MakeProjectCreator/config/global.mpb) is used if -global
@@ -103,4 +103,4 @@ Usage: mpc.pl [-global <file>] [-include <directory>]
        -noreldefs    Do not try to generate default relative definitions.
        -type         Specifies the type of project file to generate.  This
                      option can be used multiple times to generate multiple
-                     types.
+                     types.  If -type is not used, it defaults to 'gnu'.

@@ -33,7 +33,10 @@ sub new {
                          'version'  => 1.1,
                          'types'    => {},
                          'creators' => \@creators,
+                         'signif'   => 3,
+                         'default'  => $creators[0],
                         }, $class;
+
   return $self;
 }
 
@@ -66,6 +69,7 @@ sub usageAndExit {
   print STDERR ">]\n" .
                (" " x (length($base) + 8)) . "[files]\n\n";
 
+  my($default) = lc(substr($self->{'default'}, 0, $self->{'signif'}));
   print STDERR
 "       -global       Specifies the global input file.  Values stored\n" .
 "                     within this file are applied to all projects.\n" .
@@ -84,7 +88,7 @@ sub usageAndExit {
 "       -noreldefs    Do not try to generate default relative definitions.\n" .
 "       -type         Specifies the type of project file to generate.  This\n" .
 "                     option can be used multiple times to generate multiple\n" .
-"                     types.\n";
+"                     types.  If -type is not used, it defaults to '$default'.\n";
 
   exit(0);
 }
@@ -118,12 +122,11 @@ sub run {
   my(@input)      = ();
   my(@generators) = ();
   my($status)     = 0;
-  my($default)    = undef;
   my($template)   = undef;
   my(%ti)         = ();
   my($dynamic)    = 1;
   my($static)     = 1;
-  my($signif)     = 3;
+  my($signif)     = $self->{'signif'};
   my(%relative)   = ();
   my($reldefs)    = 1;
 
@@ -133,9 +136,6 @@ sub run {
   foreach my $creator (@$creators) {
     my($tag) = lc(substr($creator, 0, $signif));
     $self->{'types'}->{$tag} = $creator;
-    if (!defined $default) {
-      $default = $creator;
-    }
     require "$creator.pm";
   }
 
@@ -242,7 +242,7 @@ sub run {
     push(@input, "");
   }
   if (!defined $generators[0]) {
-    push(@generators, $default);
+    push(@generators, $self->{'default'});
   }
   if (!defined $global) {
     $global = $self->{'path'} . "/config/global.mpb";
@@ -273,7 +273,7 @@ sub run {
     foreach my $name (@generators) {
       my($generator) = $name->new($global, \@include, $template,
                                   \%ti, $dynamic, $static, \%relative,
-                                  \&progress);
+                                  (-t 1 ? \&progress : undef));
       print "Generating output using " .
             ($file eq "" ? "default input" : $file) . "\n";
       print "Start Time: " . scalar(localtime(time())) . "\n";
