@@ -606,7 +606,7 @@ CosEvent_Service::run (void)
 int
 CosEvent_Service::shutdown (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       if (!this->cos_ec_->_nil ())

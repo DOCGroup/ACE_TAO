@@ -87,7 +87,7 @@ CosEC_Multiple::init_ORB  (int argc, char *argv [])
 int
 CosEC_Multiple::init_CosEC (void)
 {
-  ACE_DECLARE_NEW_CORBA_ENV
+  ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
       // Initialization of the naming service.
