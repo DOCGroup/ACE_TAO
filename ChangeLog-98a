@@ -4,7 +4,7 @@ Mon Dec  1 14:01:02 1997  Darrell Brunsch <brunsch@cs.wustl.edu>
           ace/Log_Record.h ace/OS.h, ace/stdcpp.h:
 
 		  Changed use of ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION in stdcpp.h
-          to include iostream when the above is #defined as 1.  Made
+          to include iostream when the above is #defined.  Made
           changes to other files to accommodate this change.
 
 Mon Dec 01 12:15:00 1997    <irfan@TWOSTEP>
