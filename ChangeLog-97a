@@ -1,3 +1,9 @@
+Fri Apr 25 17:17:06 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create): Fixed the fix from Thilo so that it
+ 	  compiled properly on Linux.  Hopefully I didn't break his, and I
+ 	  should have detected the problem earlier.  Mea culpa.
+
 Fri Apr 25 12:45:23 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/OS.h: Added a new macro called ACE_HAS_SIG_MACROS for the
