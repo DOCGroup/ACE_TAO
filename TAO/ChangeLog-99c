@@ -1,9 +1,16 @@
+Tue Sep 21 18:05:21 1999  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/Trading/Simple_Dynamic.h: Fix for the Trader tests
+	  failing - Reverted the change made to the data member 'T' in the
+	  TAO_Simple_Dynamic_Property class.Now the Trader tests will work
+	  on all platforms but will not link on on sunos g++ 2.7.2.3.
+
 Tue Sep 21 16:56:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/nslist/Makefile: The Makefile should depend on the Naming
 	  service, not on the Time service.  Thanks to Paul Calabrese
  	  <calabrese_p@ociweb.com> for reporting this.
-	
+
 	* utils/nslist/nslist.cpp (show_chunk): Added a patch that fixed a
 	  problem where names containing a non-blank value for the kind
  	  field were raising exceptions.  Thanks to Paul Calabrese
@@ -16,7 +23,7 @@ Tue Sep 21 16:38:02 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 	  Request constructor before initializing. This allows
 	  the caller to put these values into _vars. Thanks to
 	  Philippe Merle <Philippe.Merle@lifl.fr> for pointing
-	  out this memory management bug and sending in a fix. 
+	  out this memory management bug and sending in a fix.
 
 Mon Sep 21 16:25:00 1999  Michael Kircher  <Michael.Kircher@mchp.siemens.de>
 
