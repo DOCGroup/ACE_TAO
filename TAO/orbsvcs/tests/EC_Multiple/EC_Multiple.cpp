@@ -57,7 +57,8 @@ Test_ECG::Test_ECG (void)
 void
 print_priority_info (const char *const name)
 {
-#if defined (sun) || defined (__osf__)
+#if defined (ACE_HAS_PTHREADS) || defined (sun)
+#if defined (ACE_HAS_PTHREADS)
   struct sched_param param;
   int policy, status;
 
@@ -83,6 +84,7 @@ print_priority_info (const char *const name)
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
+#endif /* ACE_HAS_PTHREADS */
 
 #ifdef sun
   // Find what scheduling class the thread's LWP is in.
@@ -108,7 +110,7 @@ print_priority_info (const char *const name)
                   sched_params.priority ()));
     }
 #endif /* sun */
-#endif /* sun || Digital Unix 4.0 */
+#endif /* ACE_HAS_PTHREADS */
 }
 
 
