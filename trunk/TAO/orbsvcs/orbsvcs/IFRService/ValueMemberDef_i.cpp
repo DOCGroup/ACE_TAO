@@ -3,6 +3,8 @@
 
 #include "Repository_i.h"
 #include "ValueMemberDef_i.h"
+#include "IDLType_i.h"
+#include "IFR_Service_Utils_T.h"
 
 ACE_RCSID (IFRService, 
            ValueMemberDef_i, 
@@ -27,25 +29,6 @@ TAO_ValueMemberDef_i::def_kind (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   return CORBA::dk_ValueMember;
 }
 
-void
-TAO_ValueMemberDef_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  TAO_IFR_WRITE_GUARD;
-
-  this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
-  ACE_CHECK;
-
-  this->destroy_i (ACE_ENV_SINGLE_ARG_PARAMETER);
-}
-
-void
-TAO_ValueMemberDef_i::destroy_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  // TODO
-}
-
 CORBA::Contained::Description *
 TAO_ValueMemberDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
@@ -59,11 +42,48 @@ TAO_ValueMemberDef_i::describe (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Contained::Description *
-TAO_ValueMemberDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_ValueMemberDef_i::describe_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  CORBA::ValueMember vm;
+  TAO_IFR_Desc_Utils<CORBA::ValueMember,
+                     TAO_ValueMemberDef_i>::fill_desc_begin_ex (
+                                                vm,
+                                                this->repo_,
+                                                this->section_key_
+                                                ACE_ENV_ARG_PARAMETER
+                                              );
+  ACE_CHECK_RETURN (0);
+
+  ACE_TString holder;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "type_path",
+                                            holder);
+  CORBA::Object_var obj = 
+    TAO_IFR_Service_Utils::path_to_ir_object (holder,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  vm.type_def = CORBA::IDLType::_narrow (obj.in ()
+                                         ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
+
+  CORBA::ULong val = 0;
+  this->repo_->config ()->get_integer_value  (this->section_key_,
+                                              "access",
+                                              val);
+  vm.access = ACE_static_cast (CORBA::Visibility,
+                               val);
+
+  CORBA::Contained::Description *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  CORBA::Contained::Description,
+                  0);
+
+  retval->kind = CORBA::dk_ValueMember;
+  retval->value <<= vm;
+  return retval;
 }
 
 CORBA::TypeCode_ptr
@@ -79,11 +99,17 @@ TAO_ValueMemberDef_i::type (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueMemberDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_ValueMemberDef_i::type_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  ACE_TString holder;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "type_path",
+                                            holder);
+  TAO_IDLType_i *impl =
+    TAO_IFR_Service_Utils::path_to_idltype (holder,
+                                            this->repo_);
+  return impl->type_i (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CORBA::IDLType_ptr
@@ -99,11 +125,21 @@ TAO_ValueMemberDef_i::type_def (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::IDLType_ptr
-TAO_ValueMemberDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_ValueMemberDef_i::type_def_i (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  ACE_TString holder;
+  this->repo_->config ()->get_string_value (this->section_key_,
+                                            "type_path",
+                                            holder);
+  CORBA::Object_var obj =
+    TAO_IFR_Service_Utils::path_to_ir_object (holder,
+                                              this->repo_
+                                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (CORBA::IDLType::_nil ());
+
+  return CORBA::IDLType::_narrow (obj.in ()
+                                  ACE_ENV_ARG_PARAMETER);
 }
 
 void
@@ -121,11 +157,14 @@ TAO_ValueMemberDef_i::type_def (CORBA::IDLType_ptr type_def
 }
 
 void
-TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr /* type_def */
-                                  ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */)
+TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def
+                                  ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
+  const char *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
+  this->repo_->config ()->set_string_value (this->section_key_,
+                                            "type_path",
+                                            path);
 }
 
 CORBA::Visibility
@@ -141,11 +180,15 @@ TAO_ValueMemberDef_i::access (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Visibility
-TAO_ValueMemberDef_i::access_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */ )
+TAO_ValueMemberDef_i::access_i (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
-  return 0;
+  CORBA::ULong val = 0;
+  this->repo_->config ()->get_integer_value (this->section_key_,
+                                             "access",
+                                             val);
+  return ACE_static_cast (CORBA::Visibility,
+                          val);
 }
 
 void
@@ -158,14 +201,16 @@ TAO_ValueMemberDef_i::access (CORBA::Visibility access
   this->update_key (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
 
-  this->access (access
-                ACE_ENV_ARG_PARAMETER);
+  this->access_i (access
+                  ACE_ENV_ARG_PARAMETER);
 }
 
 void
-TAO_ValueMemberDef_i::access_i (CORBA::Visibility /* access */
-                                ACE_ENV_ARG_DECL_NOT_USED /* ACE_ENV_SINGLE_ARG_PARAMETER */ )
+TAO_ValueMemberDef_i::access_i (CORBA::Visibility access
+                                ACE_ENV_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  // TODO
+  this->repo_->config ()->set_integer_value (this->section_key_,
+                                             "access",
+                                             access);
 }

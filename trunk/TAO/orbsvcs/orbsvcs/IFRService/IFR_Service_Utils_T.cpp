@@ -299,14 +299,11 @@ TAO_Port_Utils<T>::create_entry (const char *id,
 
 template<typename T>
 void
-TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean is_multiple,
-                                    ACE_Configuration *config,
-                                    ACE_Configuration_Section_Key &key)
+TAO_Port_Utils<T>::set_is_multiple (CORBA::Boolean /* is_multiple */,
+                                    ACE_Configuration * /*config */,
+                                    ACE_Configuration_Section_Key & /* key */)
 {
   /// Do nothing for eveything except UsesDef.
-  ACE_UNUSED_ARG (is_multiple);
-  ACE_UNUSED_ARG (config);
-  ACE_UNUSED_ARG (key);
 }
 
 #endif /* TAO_IFR_SERVICE_UTILS_T_CPP */
