@@ -1,3 +1,8 @@
+Mon Sep  3 09:44:46 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* ace/Select_Reactor_Base.cpp: Fixed a warning in Implicit
+	  template builds.
+
 Mon Sep  3 08:21:36 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/ACE.cpp: Replaced L with ACE_TEXT_WIDE.
