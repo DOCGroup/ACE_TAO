@@ -1,0 +1,331 @@
+// $Id$
+
+#ifndef METRICS_IDL
+#define METRICS_IDL
+
+#include "TimeBase.idl"
+#include "RtecScheduler.idl"
+#pragma prefix ""
+
+module Metrics
+{
+  // Types
+
+  enum TIMEPROBE_EVENT_TYPE
+  {
+    WORK_START,
+    WORK_STOP,
+    WORK_SUSPEND,
+    WORK_RESUME
+  };
+
+  typedef TIMEPROBE_EVENT_TYPE TIMEPROBE_EVENT_TYPE_t;
+
+  typedef TimeBase::TimeT Time;  // time type
+  typedef sequence<RtecScheduler::handle_t> Handle_Set_t;  // handle sequence
+
+  struct QoSParameter_t
+    // = TITLE
+    //   Describes the monitored QoS for an "RT_Operation".
+    //
+    // = DESCRIPTION
+    //   The deadline success and failure counts for an operation.
+  {
+    RtecScheduler::handle_t handle;
+    // The handle of the operation for which the information is stored
+
+    string entry_point;
+    // The name of the operation for which the information is stored
+
+    unsigned long deadlines_made;
+    // The number of deadlines successfully met.
+
+    unsigned long deadlines_missed;
+    // The number of deadlines missed.
+
+    unsigned long operations_cancelled;
+    // The number of operations cancelled.
+
+    short is_hrt;
+    // Indicates whether or not the operation is hard real-time.
+  };
+
+  typedef sequence<QoSParameter_t> QoSParameter_Set;
+
+
+  struct QoSData
+    // = TITLE
+    //   Describes the monitored QoS for the visualization browser.
+    //
+    // = DESCRIPTION
+    //   Aggregate success, failure, and cancellation counts the operations.
+  {
+    long hrt_deadlines_made;
+    // The number of hard real-time deadlines successfully met.
+
+    long hrt_deadlines_missed;
+    // The number of hard real-time deadlines missed.
+
+    long hrt_operations_cancelled;
+    // The number of hard real-time operations that were cancelled.
+
+    long srt_deadlines_made;
+    // The number of soft real-time deadlines successfully met.
+
+    long srt_deadlines_missed;
+    // The number of soft real-time deadlines missed.
+
+    long srt_operations_cancelled;
+    // The number of soft real-time operations that were cancelled.
+  };
+
+  struct UtilData
+    // = TITLE
+    //   Describes the monitored QoS for the visualization browser.
+    //
+    // = DESCRIPTION
+    //   Aggregate success, failure, and cancellation counts the operations.
+  {
+    double hrt_op_utilization;
+    // The percentage of the time spent in hard real-time operations.
+
+    double srt_op_utilization;
+    // The percentage of the time spent in soft real-time operations.
+
+    double queue_utilization;
+    // The percentage of the time spent managing queues.
+  };
+
+  struct ProbeIdentity_t
+    // = TITLE
+    //   Describes the identity of a timeprobe.
+    //
+    // = DESCRIPTION
+    //   The name and identifier for a timeprobe.
+  {
+    unsigned long probe_id;
+    // The unique identifier for the timeprobe.
+
+    string probe_name;
+    // The name of the timeprobe.
+  };
+
+  typedef sequence<ProbeIdentity_t> ProbeIdentity_Set;
+
+  struct TimeprobeParameter_t
+    // = TITLE
+    //   Describes the monitored data for a timeprobe.
+    //
+    // = DESCRIPTION
+    //   The duration of an interval for a timeprobe.
+  {
+    unsigned long probe_id;
+    // The name of the timeprobe that collected the data.
+
+    short is_operation;
+    // Indicates whether or not the data are for an operation.
+
+    short is_hrt;
+    // Indicates whether or not an operation is hard real-time.
+
+    short is_full_interval;
+    // Indicates whether or not the time reported is for the entire
+    // interval measured by the time probe.
+
+    short cross_thread_probe;
+    // Indicates whether or not the time reported is for the entire
+    // interval measured by the time probe.
+
+    Time start_event_time;
+    // The start of the event for sorting purposes.
+
+    Time stop_event_time;
+    // The start of the event for sorting purposes.
+
+    Time interval;
+    // The elapsed time within the timeprobe.
+  };
+
+  typedef sequence<TimeprobeParameter_t> TimeprobeParameter_Set;
+
+
+  // Exceptions
+
+  exception SYNCHRONIZATION {};
+  // A synchronization error occurred in a method.
+
+  exception INTERNAL {};
+  // An error occurred in an internal data structure.
+
+  exception INTERNAL_0 {};
+  exception INTERNAL_1 {};
+  exception INTERNAL_2 {};
+  exception INTERNAL_3 {};
+  exception INTERNAL_4 {};
+  exception INTERNAL_5 {};
+  exception INTERNAL_6 {};
+  exception INTERNAL_7 {};
+  exception INTERNAL_8 {};
+  // These are to track down an infrequently reproducible
+  // error, and should be removed eventually.
+
+  exception NIL_LOGGER {};
+  // An operation was passed a nil logger pointer.
+
+  // Interfaces
+
+  interface QoSLogger
+    // = TITLE
+    //   This interface provides access to a QoS logger.
+    //
+    // = DESCRIPTION
+    //   This interface allows clients log monitored QoS information.
+  {
+    oneway void send_banner (in string banner);
+    // Sends a banner to the  logger, which is recorded in the
+    // output log and communicated to the visualization browser.
+
+    oneway void log_aggregate_QoS (in Metrics::QoSParameter_Set qos_set,
+                                   in Time interval);
+    // Reports the aggregate QoS information for all operations
+    // to the passed QoS logger.
+
+    oneway void set_identities (in Metrics::ProbeIdentity_Set identity_set);
+    // Binds the names of various timeprobes to their identifiers so 
+    // that ids alone can be used (for efficiency) in passing data.
+
+    oneway void set_identity (in Metrics::ProbeIdentity_t identity);
+    // Binds the names of various timeprobes to their identifiers so 
+    // that ids alone can be used (for efficiency) in passing data.
+
+    oneway void log_timeprobe_data (in Metrics::TimeprobeParameter_Set data_set,
+                                    in Time interval);
+    // Reports timeprobe data collected since last run.
+  };
+
+
+  interface QoSMonitor
+    // = TITLE
+    //   This interface provides access to a QoS data monitor.
+    //
+    // = DESCRIPTION
+    //   This interface allows objects to store and query monitored
+    //   QoS information.
+  {
+    void report_made_deadline (in RtecScheduler::handle_t handle)
+      raises (INTERNAL_0);
+    // Report a successful upcall.
+
+    void report_missed_deadline (in RtecScheduler::handle_t handle)
+      raises (INTERNAL_1);
+    // Report an unsuccessful upcall.
+
+    void reset_statistics (in RtecScheduler::handle_t handle)
+      raises (INTERNAL_7, INTERNAL_8);
+    // Resets the aggregate QoS information for the given
+    // operation handle.
+
+    void get_aggregate_QoS (in RtecScheduler::handle_t handle,
+                            out Metrics::QoSParameter_t qos)
+      raises (INTERNAL_2, INTERNAL_3);
+    // Retrieves the aggregate QoS information for the given
+    // operation handle.
+
+    void get_aggregate_QoS_set (in Metrics::Handle_Set_t handle_set,
+                                out Metrics::QoSParameter_Set qos_set)
+      raises (INTERNAL_4, INTERNAL_5);
+    // Retrieves the aggregate QoS information for all operations
+    // in the passed handle set.
+  };
+
+
+  interface ReportingQoSMonitor : QoSMonitor
+    // = TITLE
+    //   This interface provides access to a QoS data monitor.
+    //
+    // = DESCRIPTION
+    //   This interface allows objects to report monitored
+    //   QoS information to a QoS logger.
+  {
+    void report_aggregate_QoS (in Metrics::QoSLogger logger,
+                               in Metrics::Time interval)
+      raises (NIL_LOGGER, INTERNAL_6);
+    // Reports the aggregate QoS information for all operations
+    // to the passed QoS logger.
+  };
+
+  interface FrameManager
+    // = TITLE
+    //   This interface provides access to a QoS data monitor.
+    //
+    // = DESCRIPTION
+    //   This interface allows objects to query or report monitored
+    //   QoS information that was collected by QoS monitoring adapters.
+  {
+    short register_period (in RtecScheduler::Period_t p)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Binds the period to the internal frame map, with a new frame data
+    // structure.  Returns 0 if a new entry is bound successfully,
+    // returns 1 if an attempt is made to bind an existing entry, and
+    // returns -1 if failures occur.
+
+    short update_all_frames_with_time (in Time tv)
+      raises (SYNCHRONIZATION);
+    // Updates time frames, based on the passed time value.
+
+    short update_all_frames ()
+      raises (SYNCHRONIZATION);
+    // Updates time frames, based on the current time as of the call.
+
+    short update_frame_with_time (in RtecScheduler::Period_t p, in Time tv)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Updates the passed period's time frame, based on the passed time
+    // value.
+
+    short update_frame (in RtecScheduler::Period_t p)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Updates the passed period's time frame, based on the current time
+    // as of the call.
+
+    short reset_all_frames_with_time (in Time tv)
+      raises (SYNCHRONIZATION);
+    // Resets time frames, based on the passed time value.
+
+    short reset_all_frames ()
+      raises (SYNCHRONIZATION);
+    // Resets time frames, based on the current time as of the call.
+
+    short reset_frame_with_time (in RtecScheduler::Period_t p, in Time tv)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Resets the passed period's start-of-frame, based on the passed time
+    // value.
+
+    short reset_frame (in RtecScheduler::Period_t p)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Resets the passed period's start-of-frame, based on the current time
+    // as of the call.
+
+    short get_start_time (in RtecScheduler::Period_t p, out Time start)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Gets the start time for the period's current frame.
+
+    short get_end_time (in RtecScheduler::Period_t p, out Time end)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Gets the end time for the period's current frame.
+
+    short get_frame_id (in RtecScheduler::Period_t p, out unsigned long id)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Gets the locally unique identifier for the period's current frame.
+
+    short get_frame_data (in RtecScheduler::Period_t p, out Time start,
+                          out Time end, out unsigned long id)
+      raises (INTERNAL, SYNCHRONIZATION);
+    // Gets the start time, end time, and id for the period's current frame.
+  };
+
+};
+
+#endif /* METRICS_IDL */
+
+
+

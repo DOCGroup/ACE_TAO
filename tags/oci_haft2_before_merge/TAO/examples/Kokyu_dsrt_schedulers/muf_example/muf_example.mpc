@@ -1,0 +1,17 @@
+project(muf_server): kokyu_dsrt_scheduler_server {
+  exename = muf_server
+  Source_Files {
+    test_i.cpp
+    server.cpp
+  }
+}
+
+project(muf_client): orbsvcsexe, kokyu_dsrt_scheduler_client {
+  exename = muf_client
+  libs += TAO_Svc_Utils
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+}
+

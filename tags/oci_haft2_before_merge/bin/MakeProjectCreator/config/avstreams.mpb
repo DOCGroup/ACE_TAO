@@ -1,0 +1,7 @@
+project: property, naming {
+  after     += AV
+  libs      += TAO_AV
+  comps     += AV
+  tagchecks += AV
+}
+

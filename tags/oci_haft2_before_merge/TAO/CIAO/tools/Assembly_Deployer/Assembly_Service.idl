@@ -1,0 +1,15 @@
+// $Id$
+
+#include "CCM_Deployment.idl"
+
+module CIAO
+{
+
+  interface Assembly_Service
+  {
+    Components::Deployment::AssemblyFactory get_assemblyfactory ();
+
+    oneway void shutdown ();
+  };
+
+};

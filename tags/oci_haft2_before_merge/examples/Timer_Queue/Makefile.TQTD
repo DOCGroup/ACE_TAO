@@ -1,0 +1,42 @@
+#----------------------------------------------------------------------------
+# $Id$
+#
+# Makefile for the Timer library. Part of misc Service_Configurator examples
+#----------------------------------------------------------------------------
+
+#----------------------------------------------------------------------------
+#       Local macros
+#----------------------------------------------------------------------------
+
+LIB     = libTQTD.a
+SHLIB   = libTQTD.$(SOEXT)
+FILES   = Async_Timer_Queue_Test \
+          Reactor_Timer_Queue_Test \
+          Thread_Timer_Queue_Test \
+          Driver
+LSRC    = $(addsuffix .cpp,$(FILES))
+
+LIBS   += $(ACELIB)
+
+BUILD   = $(VLIB) $(VSHLIB)
+
+#----------------------------------------------------------------------------
+#       Include macros and targets
+#----------------------------------------------------------------------------
+
+include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(ACE_ROOT)/include/makeinclude/macros.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.common.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.nonested.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.lib.GNU
+include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+
+#----------------------------------------------------------------------------
+#       Local targets
+#----------------------------------------------------------------------------
+
+ifeq ($(shared_libs),1)
+ifneq ($(SHLIB),)
+CPPFLAGS     += -DACE_BUILD_SVC_DLL
+endif
+endif

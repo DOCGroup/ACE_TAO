@@ -1,0 +1,7 @@
+// $Id$
+
+project : portableserver, core {
+  sharedname    = TAO_Utils
+  dynamicflags  = TAO_UTILS_BUILD_DLL
+  include_dir   = tao/Utils
+}

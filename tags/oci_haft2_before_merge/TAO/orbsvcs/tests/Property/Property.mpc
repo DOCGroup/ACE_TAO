@@ -1,0 +1,12 @@
+project(*server): namingexe, property {
+  Source_Files {
+    server.cpp
+  }
+}
+
+project(*client): namingexe, property {
+  Source_Files {
+    client.cpp
+  }
+}
+

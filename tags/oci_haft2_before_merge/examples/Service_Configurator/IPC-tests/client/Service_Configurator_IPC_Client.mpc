@@ -1,0 +1,60 @@
+project(*local dgram) : aceexe {
+  exename = localdgram
+  Source_Files {
+    local_dgram_client_test.cpp
+  }
+}
+project(*local fifo) : aceexe {
+  exename = localfifo
+  Source_Files {
+    local_fifo_client_test.cpp
+  }
+}
+project(*local pipe) : aceexe {
+  exename = localpipe
+  Source_Files {
+    local_pipe_client_test.cpp
+  }
+}
+project(*local spipe) : aceexe {
+  exename = localspipe
+  Source_Files {
+    local_spipe_client_test.cpp
+  }
+}
+project(*local stream) : aceexe {
+  exename = localstream
+  Source_Files {
+    local_stream_client_test.cpp
+  }
+}
+project(*remote dgram) : aceexe {
+  exename = remotedgram
+  Source_Files {
+    remote_dgram_client_test.cpp
+  }
+}
+project(*remote service directory) : aceexe {
+  exename = remoteservicedirectory
+  Source_Files {
+    remote_service_directory_test.cpp
+  }
+}
+project(*remote stream) : aceexe {
+  exename = remotestream
+  Source_Files {
+    remote_stream_client_test.cpp
+  }
+}
+project(*remote thr_stream) : aceexe {
+  exename = remotethr_stream
+  Source_Files {
+    remote_thr_stream_client_test.cpp
+  }
+}
+project(*broadcast) : aceexe {
+  exename = remotebroadcast
+  Source_Files {
+    broadcast_client_test.cpp
+  }
+}

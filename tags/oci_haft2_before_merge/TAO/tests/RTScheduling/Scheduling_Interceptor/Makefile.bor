@@ -1,0 +1,24 @@
+#----------------------------------------------------------------------------
+#       Borland Workspace
+#----------------------------------------------------------------------------
+
+!include <$(ACE_ROOT)\include\makeinclude\make_flags.bor>
+
+all:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Server.bor all
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Client.bor all
+
+clean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Server.bor clean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Client.bor clean
+
+realclean:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Server.bor realclean
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Client.bor realclean
+
+install:
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Server.bor install
+	$(MAKE) -$(MAKEFLAGS) $(MAKE_FLAGS) -f Scheduler_Interceptor_Client.bor install
+
+regenerate:
+	perl /project/charanga/irfan/ACE_wrappers/bin/mwc.pl -type borland

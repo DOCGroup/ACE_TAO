@@ -1,0 +1,19 @@
+project(*Notify Sequence Supplier): notifytest {
+  exename = Sequence_Supplier
+
+  Source_Files {
+    Sequence_Supplier.cpp
+  }
+}
+
+project(*Notify Sequence Consumer): notifytest {
+  exename = Sequence_Consumer
+
+  Source_Files {
+    goC.cpp
+    common.cpp
+    Notify_Sequence_Push_Consumer.cpp
+    Sequence_Consumer.cpp
+  }
+}
+

@@ -1,0 +1,15 @@
+project(*Server): messaging, taoexe, portableserver {
+  Source_Files {
+    Oneway_Receiver.cpp
+    Shutdown_Helper.cpp
+    server.cpp
+  }
+}
+
+project(*Client): messaging, taoexe, portableserver {
+  Source_Files {
+    TestC.cpp
+    client.cpp
+  }
+}
+

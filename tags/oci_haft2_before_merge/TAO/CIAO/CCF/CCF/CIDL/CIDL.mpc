@@ -1,0 +1,45 @@
+// $Id$
+project {
+
+  staticname = CIDL
+
+  // @@ (diego) This hack is needed because MPC doesn't generate
+  // static-only projects for gnuace
+  verbatim(gnuace, top) {
+        static_libs_only = 1
+  }
+
+  includes += ../..  $(UTILITY_ROOT) $(BOOST_ROOT)
+
+  Source_Files {
+    SemanticAction/Composition.cpp
+    LexicalAnalyzer.cpp
+    Parser.cpp
+    SyntaxTree/Composition.cpp
+    SyntaxTree/HomeExecutor.cpp
+    Traversal/Composition.cpp
+    Traversal/HomeExecutor.cpp
+  }
+
+  Header_Files {
+    SemanticAction/Impl/Composition.hpp
+    SemanticAction/Impl/Elements.hpp
+    SemanticAction/Impl/Factory.hpp
+    SemanticAction/Impl/HomeExecutor.hpp
+    SemanticAction/Composition.hpp
+    SemanticAction/Elements.hpp
+    SemanticAction/Factory.hpp
+    SemanticAction/HomeExecutor.hpp
+    LexicalAnalyzer.hpp
+    Parser.hpp
+    SemanticAction.hpp
+    SyntaxTree.hpp
+    Token.hpp
+    Traversal.hpp
+    SyntaxTree/Composition.hpp
+    SyntaxTree/HomeExecutor.hpp
+    Traversal/Composition.hpp
+    Traversal/HomeExecutor.hpp
+  }
+
+}

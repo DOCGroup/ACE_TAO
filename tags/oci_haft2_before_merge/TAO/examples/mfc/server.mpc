@@ -1,0 +1,24 @@
+project(MFC Server): namingexe, mfc {
+  pch_header = StdAfx.h
+  pch_source = StdAfx.cpp
+
+  Source_Files {
+    MainFrm.cpp
+    server.cpp
+    serverDoc.cpp
+    serverView.cpp
+    w32_test_impl.cpp
+  }
+
+  Header_Files {
+    Resource.h
+  }
+
+  Resource_Files {
+    server.rc
+    res/server.ico
+    res/server.rc2
+    res/serverDoc.ico
+    res/Toolbar.bmp
+  }
+}

@@ -1,0 +1,24 @@
+#
+# Makefile for building ACE
+#
+
+!ifndef	BUILD
+BUILD =	all
+!endif
+
+!if $(BUILD) ==	all
+
+DIRS = \
+        ace \
+        examples \
+        performance-tests \
+        tests \
+        ACEXML \
+        ACEXML\tests
+
+!else
+!error Please set your BUILD variable to either "all".
+!endif
+
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

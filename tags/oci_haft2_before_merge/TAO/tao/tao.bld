@@ -1,0 +1,84 @@
+#!build
+default:
+	library
+	:defines=DEBUG
+Any.cpp
+	C++
+CDR.cpp
+	C++
+Client_Strategy_Factory.cpp
+	C++
+Connect.cpp
+	C++
+debug.cpp
+	C++
+decode.cpp
+	C++
+deep_copy.cpp
+	C++
+deep_free.cpp
+	C++
+default_client.cpp
+	C++
+default_server.cpp
+	C++
+encode.cpp
+	C++
+Exception.cpp
+	C++
+GIOP.cpp
+	C++
+CDR_Interpreter.cpp
+	C++
+IIOP_Object.cpp
+	C++
+IIOP_ORB.cpp
+	C++
+Marshal.cpp
+	C++
+NVList.cpp
+	C++
+Object.cpp
+	C++
+Object_KeyC.cpp
+	C++
+Object_Table.cpp
+	C++
+Operation_Table.cpp
+	C++
+ORB.cpp
+	C++
+ORB_Core.cpp
+	C++
+params.cpp
+	C++
+POA.cpp
+	C++
+PortableServerC.cpp
+	C++
+Principal.cpp
+	C++
+Request.cpp
+	C++
+Sequence.cpp
+	C++
+Servant_Base.cpp
+	C++
+Server_Request.cpp
+	C++
+Server_Strategy_Factory.cpp
+	C++
+Stub.cpp
+	C++
+TAO.cpp
+	C++
+TAO_Internal.cpp
+	C++
+Timeprobe.cpp
+	C++
+Typecode.cpp
+	C++
+Typecode_Constants.cpp
+	C++
+timetest.cpp
+	C++

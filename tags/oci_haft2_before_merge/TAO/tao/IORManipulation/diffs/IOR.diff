@@ -1,0 +1,35 @@
+--- orig/IORC.h	Wed Feb  6 13:29:21 2002
++++ IORC.h	Wed Feb  6 13:30:34 2002
+@@ -23,13 +23,20 @@
+ #define _TAO_IDL_ORIG_IORC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
++
++#ifndef TAO_IORMANIP_SAFE_INCLUDE
++#error "You should not include IORC.h directly, use IORManip_Loader.h"
++#endif /* !TAO_IORMANIP_SAFE_INCLUDE */
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
+ #include "ior_manip_export.h"
++#include "tao/Exception.h"
++#include "tao/Object.h"
++#include "tao/Sequence.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+ #undef TAO_EXPORT_MACRO
+--- orig/IORC.cpp	Wed Feb  6 13:29:21 2002
++++ IORC.cpp	Wed Feb  6 13:30:56 2002
+@@ -19,7 +19,7 @@
+ // Information about TAO is available at:
+ //     http://www.cs.wustl.edu/~schmidt/TAO.html
+ 
+-#include "IORC.h"
++#include "IORManip_Loader.h"
+ 
+ #include "tao/Stub.h"
+ #include "tao/Invocation.h"

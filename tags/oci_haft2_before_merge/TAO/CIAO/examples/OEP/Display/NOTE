@@ -1,0 +1,54 @@
+$Id$ -*- Text -*-
+
+The root directory of this example (the directory this note resides)
+contains only facets and eventtype that are shared by all components
+under various subdirectories.  Therefore, there's no actualy executor
+implementations for these interfaces instead, the example stop at the
+servant glue code library which can be used by the actualy component
+implementation.
+
+I'm not sure, at this point, how we can handle this (where neither
+actualy component definition nor cidl definition are available)
+situation with CIDL compiler.  It looks like we should be able to pass
+a bunch of IDL definitions thru CIDL compiler and get the equivalent
+executor interfaces automatically.  But we'll have to see.
+
+To try out this example, read the following document taken from a
+short note I wrote for a snapshot release:
+
+     This is a multiple-component example.  RateGen component
+     subdirectory contains a run_test.pl that you can use to
+     instantiate a component instance, like you would do with the
+     Hello example.  The other components require collaboration with
+     other components and I don't have client programs to test them
+     out individually.
+
+     This example also lets you compose all the components into a
+     distributed application using the Assembly_Deployer.  Change
+     directory to
+
+        $CIAO_ROOT/examples/handcrafted/Display/descriptors
+
+     and take a look at the file: NOTE.txt.  This file describes the
+     steps to compose the application using various different
+     configurations and composition specs.
+
+* There are MSVC 6 workspaces and projects available in the workspace.
+  Some of them also contain UNIX makefiles.  If you can not find the
+  Makefiles for unix platform you are using, you can use mwc to create
+  them.  For examples, to compile the multi-component example, use the
+  following:
+
+        $ cd $CIAO_ROOT/examples/handcrafted/Display
+        $ $(ACE_ROOT)/bin/mwc.pl
+        $ make
+
+  To regenerate VC6 dsp files, do:
+
+        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > $(ACE_ROOT)/bin/mwc.pl -type vc6
+
+  Likewise, to regenerate VC7.NET project files, do:
+
+        > cd $CIAO_ROOT/examples/handcrafted/Display
+        > $(ACE_ROOT)/bin/mwc.pl -type vc7

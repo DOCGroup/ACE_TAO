@@ -1,0 +1,5 @@
+project: acedefaults, aceversion {
+  after    += ACE
+  libs     += ACE
+  libout    = $(ACE_ROOT)/lib 
+}

@@ -1,0 +1,238 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id$ -->
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Venkita Subramonian">
+   <meta name="GENERATOR" content="Mozilla/4.79 [en] (Windows NT 5.0; U) [Netscape]">
+   <title>Fault Tolerant Real-Time Event Service</title>
+</head>
+<body>
+
+<center>
+<h2>
+Fault Tolerant Real-time Event Service</h2></center>
+
+<h3>
+Introduction</h3>
+The Fault Tolerant Real-time Event Service provides the fault tolerant
+capability to the TAO Real-time Event Service. Essentially, it allows you
+to start several event services in different machines. These event services
+form an object group which can be treated as a logical event service by
+clients. The clients only communicate with the primary (leader) of the
+object group. The rest event channels in the object group are called backups.
+Once the primary dies, one of the backups will assume the reponsibility
+of primary and this process is transparent to the clients.
+<p>The key to provide fault tolerance to event channels is to replicate
+the states of primary to its backups. There are two kinds of states in
+the event channels, transient and persistent. A transient state in the
+event channels is the events which are yet to be delivered to the consumers.
+Those events are hard to replicate because the time scale is too small.
+They might be delivered late or out of scope if we tried to replicate the
+events. However, the subscription information occurs at a suitable
+time scale for replication, and is in fact more essential for the delivery
+of events since it establishes a kind of connectivity from suppliers to
+consumers. Therefore, we only replicate the subscriptions
+<p>Once the primary receives the subscription requests from the clients,
+it will replicate the requests to the backup event channels.In order to
+provide time bounds on replication, we introduce the concept of transaction
+depth. If we say the transaction depth is n, that means a subscription
+method invocation has to be blocked until the first n replicas complete
+the subscription operation, illustrated by the assured-replicate arc in
+the figure. Other replicas can get the state change via a so called soft-replicate
+which conceptually means the replication is not assured to complete before
+the subscription operation returns.&nbsp; So, if the soft-replicate fails
+due to loss of the primary, we will have only the assured depth of replication.
+The clients are allowed to configure the transaction depth to tradeoff
+reliability and responsiveness. Furthermore, it is necessary to roll back
+an operation in some replicas if the transaction depth can not be met.
+In addition, we can use either two-way or AMI calls for assured-replication
+and one-way operations for soft-replication.
+<p><b><font color="#FF6666">Important Note</font> :</b> In current stage,
+the Fault Tolerant Event Service can only be made under <a href="../../../bin/MakeProjectCreator/README">MPC</a> build. The
+conventional makefiles are yet to be supported. In other words, you should
+use $ACE_ROOT/bin/mwc.pl to generate makefiles for ACE and TAO before you can
+build it. See <a href="../../../bin/MakeProjectCreator/USAGE">here</a> for the instruction of using mwc.pl.
+<br>&nbsp;
+<h3>
+Programs</h3>
+There are serveral programs in $TAO_ROOT/orbsvcs/FTRT_Event_Servce directory:
+<p>ftrt_eventservice : Located under $TAO_ROOT/orbsvcs/FTRT_Event_Servce/Event_Service
+directory. It implements the functionality of fault tolerant event
+channel. It can be started directly or&nbsp; be started by the ftrtec_factory_service.
+<p>ftrtec_factory_service :  Located under $TAO_ROOT/orbsvcs/FTRT_Event_Servce/Factory_Service
+directory. It is a program used to spawn the ftrt_eventservice
+process. The process it create can be controled through "test.cfg" whose
+contents should begin with the repository id of EventChannel followed by
+the executable path of ftrt_eventservice.
+<p>ftrtec_gateway_service : Located under $TAO_ROOT/orbsvcs/FTRT_Event_Servce/Gateway_Service
+directory.  It is an intermediator program between the ftrt_eventservice
+and the clients which do not support FT CORBA.
+<p>consumer : A shell script to start the consumer test program. The actual
+consumer pragram is in $TAO_ROOT/orbsvcs/tests/FtRtEvent.
+<p>supplier : A shell script to start the supplier test program. The actual
+supplier pragram is in $TAO_ROOT/orbsvcs/orbsvcs/tests/FtRtEvent.
+<p>ftec : a shell script to start ftrt_eventservice.
+<br>&nbsp;
+<h3>
+Quick start:</h3>
+&nbsp; Run the applications as follows:
+<br>&nbsp;
+<p>&nbsp; 1. Start Naming_Service
+<p>
+<br>&nbsp;&nbsp; $ $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -m 1
+<br>&nbsp;&nbsp;&nbsp;&nbsp; or you can use the shell script NameService
+in this directory to start it.
+<p>&nbsp; 2. Start the ftrt_eventservice. Use the "-p" option to start
+it as a primary and
+<br>&nbsp;&nbsp;&nbsp;&nbsp; use the "-j" option to start it as a backup.
+<p>&nbsp; $ cd $TAO_ROOT/orbsvcs/FTRT_Event_Service
+<br>&nbsp; $ ./ftec -p
+<br>&nbsp; $ ./ftec -j
+<br>&nbsp; $ ./ftec -j
+<br>&nbsp;
+<p>&nbsp; 3. Start the consumer and supplier.
+<p>&nbsp; $ ./consumer
+<br>&nbsp; $ ./supplier
+<br>&nbsp;
+<h3>
+How do we add a new FTRTEC to the system?</h3>
+&nbsp; Just use
+<p>&nbsp; ./ftec -j
+<p>&nbsp; The newly created process will contact to the naming service
+and then join to
+<br>&nbsp; the existing object group.
+<br>&nbsp;
+<h3>
+Is there any adjustable options for FTRTEC?</h3>
+&nbsp; Here is the list of options for the ftec script
+<p>&nbsp; -sciop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Use SCIOP for CORBA communication
+<br>&nbsp; -sctp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Use SCTP for fault detection
+<br>&nbsp; -hb n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Specify the heart beat interval in sec
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+for SCTP connection, this option also activate sctp option.
+<br>&nbsp; -ami&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Use AMI call for replication messages (The default is
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+two-way CORBA call for replication)
+<br>&nbsp; -p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+activate as a primary replica.
+<br>&nbsp; -j&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+activate as a backup replica.
+<br>&nbsp;
+<p>&nbsp;Below are some options that are used for the consumer and supplier
+<br>&nbsp;&nbsp;&nbsp; test scripts.
+<p>&nbsp; -sciop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Use SCIOP for CORBA communication. This requires that the Naming
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Service and ftec are also started using SCIOP transport protocol.
+<p>&nbsp; -d n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Specify the transaction depth. The transaction depth indicates the
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+number of replicas that must complete the subscription request before
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+the request can return.
+<p>&nbsp; -t f.f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+For supplier only. Specify the time interval between event sending
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+in seconds, this value should be a float point.
+<p>&nbsp;If you the naming service are not running at the same machine
+with above programs, you can always set the environmental variables NameServiceIOR
+before starting the ftec, consumer or supplier.
+<br>&nbsp;
+<h3>
+How do I start the FTRTEC using ftrtec_factory_service?</h3>
+The ftrtec_factory_service is a small program that can instaniate a ftrt_eventservice
+on demand. It exports the FT::GenericFactory interface to its client. There
+are two ways that&nbsp; you can get the IOR for the factory object. 1)
+specify the name you want the factory&nbsp; register to the naming service
+and then get the IOR from the naming service by the name. 2) output the
+IOR to a file when the factory starts. Here are the options
+<p>&nbsp;&nbsp;&nbsp; ftrtec_factory_service :
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -i id_string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The id field of the name that is used to register to the naming service
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -k kind_string&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+The kind field of the name that is used to register to the naming service
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -o output_filename&nbsp;&nbsp;&nbsp;
+The output file name for the factory IOR.
+<p>Once you get the IOR for the factory, you can use create_object to intantiate
+the ftrt_eventservice.
+<br>Here are the parameters in create_object() to control how ftrt_eventservice
+is created.
+<p>&nbsp;&nbsp; type_id : this value should be "IDL:FtRtecEventChannelAdmin/EventChannel:1.0"
+<br>&nbsp;&nbsp; the_criteria : the_criteria is a sequence of Property
+which in term consists of "nam" and "value". Below a a list of possible
+nam and values.
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER COLS=2 WIDTH="100%" >
+<tr>
+<td>nam</td>
+
+<td>value</td>
+</tr>
+
+<tr>
+<td>FTEC_MEMBERSHIP</td>
+
+<td>PRIMARY
+<br>BACKUP
+<br>NONE</td>
+</tr>
+
+<tr>
+<td>FTEC_DETECTOR_TRANSPORT_PROTOCL</td>
+
+<td>TCP
+<br>SCTP</td>
+</tr>
+
+<tr>
+<td>FTEC_HEART_BEAT</td>
+
+<td>the heart beat value in sec. (Note, you have to specify it using string,
+i.e. the_criteria[0].value &lt;&lt;= "5");</td>
+</tr>
+
+<tr>
+<td>FTEC_REPLICATION_STRATEGY</td>
+
+<td>AMI
+<br>(If not specified, the ftrt_eventservice use default two-way call for
+replication)
+<br>&nbsp;</td>
+</tr>
+
+<tr>
+<td>NameServieIOR</td>
+
+<td>the corbaloc representation for the naming service
+<br>&nbsp;</td>
+</tr>
+</table>
+
+<p>&nbsp;Any nam string started with "-" will be used as a command line
+option to start ftrt_eventservice. For example, if you specfiy the name
+as "-ORBEndpoint" and value as "sciop://" then the ftrt_eventservice can
+be started using sciop.
+<br>&nbsp;
+<h3>
+How do I use the ftrtec_gateway_service program ?</h3>
+The FTRTEC uses some features in FT CORBA that requires every client to
+use FT ORB to work. If your&nbsp; client is written based other ORBs other
+than TAO. You cannot get the desired fault tolerance feature. In this case
+you can have the ftec_gateway as an intermediator between the FTRTEC and
+you client program.
+<br>For example, if you have an existing client called my_supplier.
+<p>&nbsp;&nbsp;&nbsp; # setting up the event channel group as previously
+stated.
+<p>&nbsp;&nbsp;&nbsp; $ftrtec_gateway_service -o gateway.ior&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+## start the gateway and output the IOR of the gateway to a file
+<br>&nbsp;&nbsp;&nbsp; $my_supplier -i file://gateway.ior&nbsp; ## start
+the supplier using the gateway
+<br>&nbsp;
+</body>
+</html>

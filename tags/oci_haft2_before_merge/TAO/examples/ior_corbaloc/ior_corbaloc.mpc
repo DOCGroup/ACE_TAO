@@ -1,0 +1,21 @@
+project(*server): namingexe {
+  Source_Files {
+    status_i.cpp
+    server.cpp
+  }
+}
+
+project(*client): namingexe {
+  Source_Files {
+    ior_corbaloc_client_i.cpp
+    client.cpp
+  }
+}
+
+project(*corbaname client): namingexe {
+  Source_Files {
+    status_i.cpp
+    corbaname_client.cpp
+  }
+}
+

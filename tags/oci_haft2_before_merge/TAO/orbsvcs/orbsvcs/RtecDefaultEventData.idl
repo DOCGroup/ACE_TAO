@@ -1,0 +1,76 @@
+/**
+ * @file RtecDefaultEventData.idl
+ *
+ * @brief Define the RtecBase module
+ *
+ * $Id$
+ *
+ * TAO's Real-time Event Service is described in:
+ *
+ * http://doc.ece.uci.edu/~coryan/EC/
+ *
+ * @author Carlos O'Ryan <coryan@uci.edu>
+ */
+
+#ifndef TAO_RTEC_DEFAULTEVENTDATA_IDL
+#define TAO_RTEC_DEFAULTEVENTDATA_IDL
+
+#pragma prefix ""
+
+/// Define one of the common event payloads
+typedef sequence<octet> EventPayload;
+
+/**
+ * @brief User defined Event Data
+ *
+ *
+ * This structure defines the default payload in TAO's Real-time Event
+ * Service.
+ *
+ * Users wanting maximum flexibility can use an Any, users that only
+ * have one type of event may use structures, other users may preffer
+ * union, trying to strike a balance between performance and
+ * flexibility.  Users willing to implement their own marshalling may
+ * use a sequence of octets.
+ *
+ * The Event Service is completely transparent as to the contents of
+ * this structure.
+ */
+struct RtecEventData
+{
+#ifndef TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE
+  /// Add padding to align the octet sequence contents
+  /**
+   * This fields ensures that the contents of the octet sequence
+   * following are always aligned to an 8-byte boundary.
+   * Such alignment allows application developers to implement custom
+   * demarshaling from the octet sequence without requiring any data
+   * copies.
+   *
+   * This is how this works:
+   * - The last field in the header is an 8-byte unsigned long, hence
+       the header finishes on an 8 byte boundary.
+   *  - The pad1 long has 4 bytes.
+   * - The length in the octet sequence adds another 4 bytes.
+   * - Thus the data in the octet sequence starts on an 8 bytes
+   *    boundary too.
+   */
+  long pad1;
+
+  /// Octet sequence payload.
+  /**
+   * This is the payload used more often by high-performance
+   * applications.
+   */
+  EventPayload payload;
+#endif /* TAO_LACKS_EVENT_CHANNEL_OCTET_SEQUENCE */
+
+#ifndef TAO_LACKS_EVENT_CHANNEL_ANY
+  /// Use a CORBA any type as payload.
+  any any_value;
+#endif /* TAO_LACKS_EVENT_CHANNEL_ANY */
+};
+
+#pragma prefix ""
+
+#endif /* TAO_RTEC_DEFAULTEVENTDATA_IDL */

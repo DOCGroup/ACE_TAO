@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<!-- Converted from ./performance-tests/Throughput/svc.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <!--  -->
+ <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
+ <!--  -->
+ <static id="Advanced_Resource_Factory" params="-ORBresources global -ORBInputCDRAllocator null -ORBReactorType select_st -ORBReactorMaskSignals 0 -ORBConnectionCacheLock null -ORBFlushingStrategy blocking"/>
+ <static id="Client_Strategy_Factory" params="-ORBProfileLock null -ORBClientConnectionHandler RW"/>
+ <static id="Server_Strategy_Factory" params="-ORBPOALock null -ORBAllowReactivationOfSystemids 0"/>
+</ACE_Svc_Conf>

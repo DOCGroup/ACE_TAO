@@ -1,0 +1,6 @@
+project : aceexe {
+  after    += Synch_Lib
+  libs     += Synch_Lib
+  libpaths += ../Synch_Lib
+  includes += ..
+}
