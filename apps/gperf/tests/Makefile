@@ -57,6 +57,10 @@ all:
 	$(CXX) $(CCFLAGS) -o pout pinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
 	./pout -v < $(srcdir)/pascal.gperf > pascal.out
 	-diff -b $(srcdir)/pascal.exp pascal.out
+	$(GPERF) -m -M -J -c -C -D -E -T -a -o -p -L C++ < $(srcdir)/idl.gperf > iinset.cpp
+	$(CXX) $(CCFLAGS) -o iout iinset.cpp test.o $(LDFLAGS) $(VLDLIBS)
+	./iout -v < $(srcdir)/idl.gperf > idl.out
+	-diff -b $(srcdir)/idl.exp idl.out
 # these next 5 are demos that show off the generated code
 	$(GPERF) -p -j1 -o -t -N is_reserved_word -k1,3,'$$' < $(srcdir)/c-parse.gperf | egrep -v 'ing time is ' > test-1.out
 	-diff -b $(srcdir)/test-1.exp test-1.out
