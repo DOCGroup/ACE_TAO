@@ -30,6 +30,9 @@ endif # ! optimize
 ifndef rtti
   rtti = 1
 endif # ! rtti
+ifndef versioned_so
+  versioned_so = 0
+endif # ! versioned_so
 
 shared_libs =
 static_libs = 1
@@ -341,8 +344,6 @@ LDFLAGS         += -X -r
 #### the i386 family.  And -O2 causes some compilation failures.
 OCFLAGS         += -O
 PIC             =
-
-SONAME =
 
 # Test for template instantiation, add to SOFLAGS if SONAME set, 
 # add -E to LDFLAGS if using GNU ld

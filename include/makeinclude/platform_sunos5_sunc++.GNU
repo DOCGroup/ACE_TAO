@@ -53,7 +53,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
-
+ifeq (,$(versioned_so))
+  versioned_so = 1
+endif
 tk_reactor = 0
 ace_with_x11 = 0
 
@@ -217,9 +219,11 @@ RANLIB          = echo
 SOFLAGS         += -G $(CPPFLAGS)
 
 # The correct flags to pass to the linker for ELF dynamic shared library
-# versioning
+# versioning. This knows that wrapper_macros.GNU will set versioned_so to
+# 1 if it's not set. So, the only way SOFLAGS should _not_ get this is if
+# versioned_so has been explicitly disabled.
 #
-ifneq ($(SONAME),)
+ifeq ($(versioned_so),1)
   SOFLAGS += -h $(SONAME)
 endif
 

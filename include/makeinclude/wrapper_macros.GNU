@@ -226,7 +226,9 @@ ifeq ($(versioned_so),1)
 
   # Name that will be written into the dynamic library
   #
-  SONAME = $(SHLIB)$(SOVERSION)
+  ifndef SONAME
+    SONAME = $(SHLIB)$(SOVERSION)
+  endif # SONAME
 endif # versioned_so
 
 #----------------------------------------------------------------------------

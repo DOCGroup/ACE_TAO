@@ -28,6 +28,9 @@ endif
 ifeq (,$(buildbits))
   buildbits = native
 endif
+ifeq (,$(versioned_so))
+  versioned_so = 0
+endif
 ifeq (,$(with_ld))
   with_ld = aix
 endif
@@ -79,10 +82,8 @@ SOFLAGS        += -shared -Wl,-bexpall # -Wl,-bloadmap:lib.map
 LIBS           += -ltli_r -ldl
 ARFLAGS         = cruv
 RANLIB          = ranlib
-SONAME		=
-SOVERSION	=
 
-# Test for template instantiation, add to SOFLAGS if SONAME set, 
+# Test for template instantiation, add to SOFLAGS if versioned_so set, 
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU

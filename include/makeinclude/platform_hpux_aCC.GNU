@@ -33,6 +33,9 @@ endif
 ifeq (,$(threads))
   threads = 1
 endif
+ifeq (,$(versioned_so))
+  versioned_so = 0
+endif
 
 # First, extract the OS version number.
 HPVERS_WORDS := $(subst ., ,$(shell uname -r))
@@ -141,8 +144,6 @@ endif
 endif
 
 SOEXT		= sl
-SONAME		=
-SOVERSION	=
 
 ifeq ($(buildbits),32)
 CCFLAGS		+= +DA1.1 +DS1.1

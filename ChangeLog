@@ -1,3 +1,29 @@
+Fri Oct 17 16:21:39 2003  Steve Huston  <shuston@riverace.com>
+
+	* include/makeinclude/wrapper_macros.GNU: Only set SONAME if
+	  platform_macros.GNU didn't.
+
+	* include/makeinclude/platform_g++_common.GNU: Conditionalize
+	  addition of SONAME to SOFLAGS based on versioned_so, not on
+	  SONAME's content. However, even with versioned_so, don't try to
+	  add SOFLAGS stuff if with_ld is openbsd - it doesn't support it.
+
+	* include/makeinclude/platform_aix_g++.GNU:
+	* include/makeinclude/platform_hpux_aCC.GNU:
+	* include/makeinclude/platform_hpux_gcc.GNU:
+	* include/makeinclude/platform_macosx.GNU:
+	* include/makeinclude/platform_vxworks5.x_g++.GNU: Set versioned_so
+	  to 0 by default to avoid shared lib version tagging rather
+	  than set SONAME to blank.
+
+	* include/makeinclude/platform_openbsd.GNU: Set with_ld to openbsd
+	  to tell platform_g++_common.GNU not to add the ldname options
+	  even if versioned_so is enabled.
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU: Add shared lib
+	  option to SOFLAGS if versioned_so is 1. Set versioned_so to 1
+	  by default.
+
 Fri Oct 17 06:48:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS.h:
