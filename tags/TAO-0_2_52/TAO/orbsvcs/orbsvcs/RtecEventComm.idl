@@ -1,0 +1,107 @@
+//
+// $Id$
+//
+
+#include "CosTimeBase.idl"
+
+// Remove the prefix definition...
+// @@ TODO Is this the "Right Thing"? AFAIK the spec does not mention
+// if pragmas should survive the file scope...
+#pragma prefix ""
+
+module RtecEventComm {
+
+  // = TITLE
+  //   User defined Event Data.
+  //
+  // = DESCRIPTION
+  //   The Event payload is defined by this type.
+  //   Users wanting maximum flexibility can use an Any,
+  //   users that only have one type of event may use structures,
+  //   other users may preffer union, trying to strike a balance
+  //   between performance and flexibility.
+  //   Users willing to implement their own marshalling may use a
+  //   sequence of octet.
+
+  typedef sequence<octet> EventPayload;
+  struct EventData {
+    long x;
+    long y;
+
+    double pad0;
+    long   pad1;
+    // This two objects ensure that the encapsulated stream below is
+    // properly aligned; this makes the decoding of the payload more
+    // efficient because we can use the usual demarshalling code
+    // (without making extra copies).
+
+    EventPayload payload;
+
+#if !defined (TAO_LACKS_EVENT_CHANNEL_ANY)
+    any any_value;
+#endif /* TAO_LACKS_EVENT_CHANNEL_ANY */
+  };
+
+  typedef TimeBase::TimeT Time;
+
+  typedef long EventSourceID;
+  typedef long EventType;
+
+  struct EventHeader
+  {
+    // = TITLE
+    //   The Event Header
+    //
+    // = DESCRIPTION
+    //   Each event carries some information to do filtering,
+    //   correlation, etc.
+    EventType type;
+    // The event type.
+    // This may be different from the discriminator in the EventData
+    // union above, the motivation is to allow filtering by data
+    // contents: different event types are assigned to different data
+    // contents though they use the same discriminator.
+
+    EventSourceID source;
+    // Some way to identify the supplier.
+
+    long ttl;
+    // The "Time To Live" count, each time an EC process the event it
+    // decreases the TTL field, when it gets to zero the message is no
+    // longer forwarded.
+
+    Time creation_time;
+    Time ec_recv_time;
+    Time ec_send_time;
+    // Some timestamps, they actually belong in the payload, for some
+    // kind of measument event.
+  };
+
+  struct Event
+  {
+    // = TITLE
+    //   The Event structure.
+    //
+    // = DESCRIPTION
+    //   Events are represented by this structure, it is simply a
+    //   header,data pair. 
+    // 
+    EventHeader header;
+
+    EventData data;
+    // The event payload.
+  };
+  typedef sequence<Event> EventSet;
+
+  interface PushConsumer {
+    oneway void push (in EventSet data);
+    void disconnect_push_consumer(); 
+  };
+
+  interface PushSupplier {
+    void disconnect_push_supplier();
+  };
+
+};
+
+
