@@ -41,7 +41,7 @@ private:
 ACE_Thread_Mutex Task_Test::lock_;
 
 int 
-Task_Test::open (void *args)
+Task_Test::open (void *)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Task_Test::lock_, -1);
 
@@ -53,7 +53,7 @@ Task_Test::open (void *args)
 }
 
 int 
-Task_Test::close (u_long flags)
+Task_Test::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, Task_Test::lock_, -1);
 
@@ -66,8 +66,8 @@ Task_Test::close (u_long flags)
 }
 
 int 
-Task_Test::put (ACE_Message_Block *mb, 
-		ACE_Time_Value *tv)
+Task_Test::put (ACE_Message_Block *,
+		ACE_Time_Value *)
 {
   return 0;
 }
@@ -93,7 +93,7 @@ Task_Test::svc (void)
 int 
 main (int argc, char *argv[])
 {
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : default_threads;
+  n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : default_threads;
   int n_iterations = argc > 2 ? ACE_OS::atoi (argv[2]) : default_iterations;
 
   Task_Test **task_array = new Task_Test *[n_threads];

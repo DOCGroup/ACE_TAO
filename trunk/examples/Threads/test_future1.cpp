@@ -180,7 +180,7 @@ Scheduler::~Scheduler (void)
 
 // open
 int 
-Scheduler::open (void *args)
+Scheduler::open (void *)
 {
   task_count++;
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s open\n", this->name_));
@@ -189,7 +189,7 @@ Scheduler::open (void *args)
 
 // close
 int 
-Scheduler::close (u_long flags)
+Scheduler::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s close\n", this->name_));
   task_count--;
@@ -198,7 +198,7 @@ Scheduler::close (u_long flags)
 
 // put... ??
 int 
-Scheduler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+Scheduler::put (ACE_Message_Block *, ACE_Time_Value *)
 {
   return 0;
 }
@@ -303,7 +303,7 @@ static int n_iterations = 50000;
 static int n_loops = 100;
 
 int
-main (int argc, char *argv[]) 
+main (int, char *[]) 
 {
   Scheduler *andres, *peter, *helmut, *matias;
 

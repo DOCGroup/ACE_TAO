@@ -76,7 +76,7 @@ Test_Task::open (void *args)
 }
 
 int 
-Test_Task::close (u_long flags)
+Test_Task::close (u_long)
 {
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, lock_, -1);
 
@@ -87,7 +87,7 @@ Test_Task::close (u_long flags)
 }
 
 int 
-Test_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
+Test_Task::put (ACE_Message_Block *, ACE_Time_Value *)
 {
   return 0;
 }

@@ -51,8 +51,6 @@ reader (void *arg)
 static void *
 writer (void *arg)
 {
-  int result;
-
   int& data = *(int *) arg;
 
   ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
