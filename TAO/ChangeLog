@@ -1,3 +1,9 @@
+Thu Jul 25 09:53:27 2002  Paul Calabrese  <calabrese_p@ociweb.com>
+
+        * tests/Nested_Upcall_Crash/Nested_Upcall_Crash.mpc:
+
+          Add missing files to projects.
+
 Thu Jul 25 08:09:24 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Nested_Upcall_Crash/scavenger.cpp: Fixed a unreachable
