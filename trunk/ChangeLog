@@ -1,3 +1,9 @@
+Thu Oct 31 19:15:49 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ACEXML/common/Attributes.h: Added the missing inclusion of
+	  ACEXML_Export.h and the #pragma once directive.  Thanks to Paul
+	  Marquis <pmarquis@pobox.com> for reporting this.
+
 Thu Oct 31 12:57:10 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/OS.i (fstat): Added check for FILE_ATTRIBUTE_DIRECTORY on
