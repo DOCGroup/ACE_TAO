@@ -6,6 +6,13 @@ Sun Aug  9 19:08:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  corresponding ACE_Allocator_Adapter<> because it is already
 	  instantiated in ACE.
 
+	* tao/ORB.cpp: 
+	  Added missing instantiation of
+	  ACE_Guard<ACE_Cached_Connector_Lock>, event it is not directly
+	  used in TAO it is used by the ACE_Cached_Connector<> (when
+	  instantiated using that lock) and some compilers do no recursive
+	  instantiation.
+
 Sun Aug  9 18:20:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 	* tests/Simple/client_static.dsp:
