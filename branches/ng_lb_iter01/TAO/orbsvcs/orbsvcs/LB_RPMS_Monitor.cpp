@@ -9,7 +9,8 @@ ACE_RCSID (LoadBalancing,
            "$Id$")
 
 TAO_LB_RPMS_Monitor::TAO_LB_RPMS_Monitor (void)
-  : interceptor_ (0)
+  : interceptor_ (0),
+    safe_interceptor_ ()
 {
 }
 
@@ -22,7 +23,7 @@ TAO_LB_RPMS_Monitor::init (CORBA::Environment &ACE_TRY_ENV)
   ACE_NEW (this->interceptor_,
            TAO_LB_RPMS_Monitor_Interceptor);
 
-  PortableInterceptor::ServerRequestInterceptor_var tmp = this->interceptor_;
+  this->safe_interceptor_ = this->interceptor_;
 
   TAO_LB_RPMS_Monitor_ORBInitializer *initializer = 0;
   ACE_NEW (initializer,
