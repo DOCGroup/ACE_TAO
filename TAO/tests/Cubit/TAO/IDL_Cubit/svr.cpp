@@ -22,6 +22,7 @@
 static int num_of_objs = 1;
 
 // Parses the command line arguments and returns an error status
+static FILE* ior_output_file = 0;
 
 static int
 parse_args (int argc, char *argv[])
@@ -38,12 +39,20 @@ parse_args (int argc, char *argv[])
       case 'n':	// number of cubit objects we hold
         num_of_objs = ACE_OS::atoi (get_opts.optarg);
         break;
+      case 'o':
+        ior_output_file = ACE_OS::fopen (get_opts.optarg, "w");
+        if (ior_output_file == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.optarg), -1);
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-d]"
                            " [-n] <num of cubit objects>"
+			   " [-o] <ior_output_file>"
                            "\n", argv [0]), 1);
       }
 
@@ -121,7 +130,11 @@ main (int argc, char *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
 		  "The IOR is: <%s>\n", str.in ()));
-
+      if (ior_output_file)
+        {
+          ACE_OS::fprintf (ior_output_file, "%s", str.in());
+          ACE_OS::fclose (ior_output_file);
+        }
       poa_manager->activate (TAO_TRY_ENV);
       TAO_CHECK_ENV;
 
