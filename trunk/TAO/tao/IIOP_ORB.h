@@ -55,13 +55,21 @@ public:
   // one, otherwise, return 0.
 
   // = ACCESSORS
-  void use_omg_ior_format (CORBA::Boolean ior);
+  void _use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.
-  CORBA::Boolean use_omg_ior_format (void);
+  CORBA::Boolean _use_omg_ior_format (void);
   // Get the IOR flag.
+
+  void _optimize_collocation_objects (CORBA::Boolean opt);
+  // Set collocation optimization status.
+  CORBA::Boolean _optimize_collocation_objects (void);
+  // Get collocation optimization status.
 
 private:
   CORBA::Boolean use_omg_ior_format_;
+  // Decides whether to use the URL notation or to use IOR notation.
+
+  CORBA::Boolean optimize_collocation_objects_;
   // Decides whether to use the URL notation or to use IOR notation.
 
   ACE_Unbounded_Set<ACE_INET_Addr> collocation_record_;

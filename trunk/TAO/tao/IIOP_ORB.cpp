@@ -74,13 +74,16 @@ IIOP_ORB::object_to_string (CORBA::Object_ptr obj,
         }
 
       *cp = 0;
-      IIOP_Object *iiopobj;
-       if (obj->QueryInterface (IID_IIOP_Object, (void **) &iiopobj) != TAO_NOERROR)
+      if (this->optimize_collocation_objects_)
         {
-          env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
-          return 0;
+          IIOP_Object *iiopobj;
+          if (obj->QueryInterface (IID_IIOP_Object, (void **) &iiopobj) != TAO_NOERROR)
+            {
+              env.exception (new CORBA_DATA_CONVERSION (CORBA::COMPLETED_NO));
+              return 0;
+            }
+          this->_register_collocation (iiopobj->profile.object_addr ());
         }
-       this->_register_collocation (iiopobj->profile.object_addr ());
       return string;
     }
   else
@@ -281,6 +284,7 @@ iiop_string_to_object (CORBA::String string,
 
   // Create the CORBA level proxy.
   TAO_ServantBase *servant = TAO_ORB_Core_instance ()->orb ()->_get_collocated_servant (data);
+
   CORBA_Object *obj = new CORBA_Object (data, servant, servant != 0);
 
   // Clean up in case of error
@@ -317,14 +321,16 @@ IIOP_ORB::string_to_object (CORBA::String str,
 int
 IIOP_ORB::_register_collocation (ACE_Addr &addr)
 {
-  return this->collocation_record_.insert ((ACE_INET_Addr&) addr);
+  if (this->optimize_collocation_objects_)
+    return this->collocation_record_.insert ((ACE_INET_Addr&) addr);
+  else
+    return 0;
 }
 
 TAO_ServantBase *
 IIOP_ORB::_get_collocated_servant (STUB_Object *sobj)
 {
-
-  if (sobj != 0)
+  if (this->optimize_collocation_objects_ && sobj != 0)
     {
       IIOP_Object *iiopobj;
       // Make sure users passed in an IIOP_Object otherwise, we don't know what to do next.
