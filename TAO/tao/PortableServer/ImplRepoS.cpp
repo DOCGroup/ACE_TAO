@@ -54,7 +54,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 12:41:49 */
+/* starting time is 17:40:16 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -125,10 +125,10 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
   static const class TAO_operation_db_entry  wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},
-      {"ping", 	&POA_ImplementationRepository::ServerObject::ping_skel},
+      {"ping",  &POA_ImplementationRepository::ServerObject::ping_skel},
       {"_is_a",  &POA_ImplementationRepository::ServerObject::_is_a_skel},
       {"",0},{"",0},
-      {"shutdown", 	&POA_ImplementationRepository::ServerObject::shutdown_skel},
+      {"shutdown",      &POA_ImplementationRepository::ServerObject::shutdown_skel},
       {"",0},
       {"_interface",  &POA_ImplementationRepository::ServerObject::_interface_skel},
       {"",0},{"",0},
@@ -149,7 +149,7 @@ TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable::lookup (const ch
     }
   return 0;
 }
-/* ending time is 12:41:49 */
+/* ending time is 17:40:16 */
 static TAO_ImplementationRepository_ServerObject_Perfect_Hash_OpTable tao_ImplementationRepository_ServerObject_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -396,14 +396,14 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::_TAO_S
 {
   for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     this->proxy_cache_[i] = 0;
-  
+
 }
 
 POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::~_TAO_ServerObject_Strategized_Proxy_Broker (void)
 {
   for (int i = 0; i < TAO_Collocation_Strategies::CS_LAST; ++i)
     delete this->proxy_cache_[i];
-  
+
 }
 
 ImplementationRepository::_TAO_ServerObject_Proxy_Impl&
@@ -414,25 +414,25 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::select
 {
   int strategy =
     TAO_ORB_Core::collocation_strategy (object);
-  
+
   if (this->proxy_cache_[strategy] != 0)
     return *this->proxy_cache_[strategy];
-  
+
   this->create_proxy (strategy, ACE_TRY_ENV);
   ACE_CHECK_RETURN (*this->proxy_cache_[strategy]);
-  
+
   return *this->proxy_cache_[strategy];
-  
+
 }
 
-void 
+void
 POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::create_proxy (
     int strategy,
     CORBA::Environment &ACE_TRY_ENV
   )
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->mutex_);
-  
+
   if (this->proxy_cache_[strategy] == 0)
     {
       switch (strategy)
@@ -445,7 +445,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::create
           );
           ACE_CHECK;
           break;
-          
+
         case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -454,7 +454,7 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::create
           );
           ACE_CHECK;
           break;
-          
+
         case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
@@ -464,9 +464,9 @@ POA_ImplementationRepository::_TAO_ServerObject_Strategized_Proxy_Broker::create
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -591,7 +591,7 @@ void POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::ping  (
     )->ping (
           ACE_TRY_ENV
         );
-  
+
 }
 
 void POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::shutdown  (
@@ -608,7 +608,7 @@ void POA_ImplementationRepository::_TAO_ServerObject_Direct_Proxy_Impl::shutdown
     )->shutdown (
           ACE_TRY_ENV
         );
-  
+
 }
 
 
@@ -641,12 +641,12 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
   POA_ImplementationRepository::ServerObject *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::ServerObject *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
   
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -699,6 +699,9 @@ void POA_ImplementationRepository::ServerObject::ping_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -713,12 +716,12 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
   POA_ImplementationRepository::ServerObject *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::ServerObject *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
   
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -771,6 +774,9 @@ void POA_ImplementationRepository::ServerObject::shutdown_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -788,10 +794,10 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
   CORBA::String_var value;
   if (!(_tao_in >> value.out ()))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
@@ -799,7 +805,7 @@ void POA_ImplementationRepository::ServerObject::_is_a_skel (
 }
 
 void POA_ImplementationRepository::ServerObject::_non_existent_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
@@ -808,7 +814,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
@@ -816,7 +822,7 @@ void POA_ImplementationRepository::ServerObject::_non_existent_skel (
 }
 
 void POA_ImplementationRepository::ServerObject::_interface_skel (
-    TAO_ServerRequest &_tao_server_request, 
+    TAO_ServerRequest &_tao_server_request,
     void * _tao_object_reference,
     void * /* Servant_Upcall */,
     CORBA::Environment &ACE_TRY_ENV
@@ -825,26 +831,26 @@ void POA_ImplementationRepository::ServerObject::_interface_skel (
   POA_ImplementationRepository::ServerObject *_tao_impl = (POA_ImplementationRepository::ServerObject *) _tao_object_reference;
   CORBA_InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
-  
+
   TAO_IFR_Client_Adapter *_tao_adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ()
       );
-    
+
   if (_tao_adapter == 0)
     {
       ACE_THROW (CORBA::INTF_REPOS ());
     }
-  
+
   ACE_TRY
     {
       _tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       _tao_server_request.init_reply ();
-      
+
       TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-      
+
       _tao_result =
         _tao_adapter->interfacedef_cdr_insert (
             _tao_out,
@@ -856,7 +862,7 @@ void POA_ImplementationRepository::ServerObject::_interface_skel (
       _tao_adapter->dispose (_tao_retval);
     }
   ACE_ENDTRY;
-  
+
   if (_tao_result == 0)
     {
       ACE_THROW (CORBA::MARSHAL ());
@@ -870,7 +876,7 @@ CORBA::Boolean POA_ImplementationRepository::ServerObject::_is_a (
 {
   const char *base_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:ImplementationRepository/ServerObject:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
@@ -897,6 +903,7 @@ void POA_ImplementationRepository::ServerObject::_dispatch (TAO_ServerRequest &r
                                      this,
                                      ACE_TRY_ENV);
 }
+
 
 const char* POA_ImplementationRepository::ServerObject::_interface_repository_id (void) const
 {
@@ -933,7 +940,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 12:41:49 */
+/* starting time is 17:40:16 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -1037,7 +1044,7 @@ TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable::lookup (const 
     }
   return 0;
 }
-/* ending time is 12:41:49 */
+/* ending time is 17:40:16 */
 static TAO_ImplementationRepository_Administration_Perfect_Hash_OpTable tao_ImplementationRepository_Administration_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -2999,9 +3006,6 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA::String_var server;
   if (!(
@@ -3011,6 +3015,9 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3065,6 +3072,9 @@ void POA_ImplementationRepository::Administration::activate_server_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3080,9 +3090,6 @@ void POA_ImplementationRepository::Administration::register_server_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA::String_var server;
   ImplementationRepository::StartupOptions options;
@@ -3094,6 +3101,9 @@ void POA_ImplementationRepository::Administration::register_server_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3150,6 +3160,9 @@ void POA_ImplementationRepository::Administration::register_server_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3165,9 +3178,6 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA::String_var server;
   ImplementationRepository::StartupOptions options;
@@ -3179,6 +3189,9 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3235,6 +3248,9 @@ void POA_ImplementationRepository::Administration::reregister_server_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3250,9 +3266,6 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA::String_var server;
   if (!(
@@ -3262,6 +3275,9 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3316,6 +3332,9 @@ void POA_ImplementationRepository::Administration::remove_server_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3331,9 +3350,6 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA::String_var server;
   if (!(
@@ -3343,6 +3359,9 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3397,6 +3416,9 @@ void POA_ImplementationRepository::Administration::shutdown_server_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3412,9 +3434,6 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::String_var _tao_retval;
   CORBA::String_var server;
   CORBA::String_var addr;
@@ -3428,6 +3447,9 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3496,6 +3518,9 @@ void POA_ImplementationRepository::Administration::server_is_running_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3511,9 +3536,6 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
     CORBA::String_var server;
   if (!(
@@ -3523,6 +3545,9 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3577,6 +3602,9 @@ void POA_ImplementationRepository::Administration::server_is_shutting_down_skel 
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3592,9 +3620,6 @@ void POA_ImplementationRepository::Administration::find_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::String_var server;
   ImplementationRepository::ServerInformation_var info;
   if (!(
@@ -3604,6 +3629,9 @@ void POA_ImplementationRepository::Administration::find_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3666,6 +3694,9 @@ void POA_ImplementationRepository::Administration::find_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3681,9 +3712,6 @@ void POA_ImplementationRepository::Administration::list_skel (
   POA_ImplementationRepository::Administration *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::Administration *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::ULong how_many;
   ImplementationRepository::ServerInformationList_var server_list;
     ImplementationRepository::ServerInformationIterator_var server_iterator;
@@ -3694,6 +3722,9 @@ void POA_ImplementationRepository::Administration::list_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -3759,6 +3790,9 @@ void POA_ImplementationRepository::Administration::list_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -3886,6 +3920,7 @@ void POA_ImplementationRepository::Administration::_dispatch (TAO_ServerRequest 
                                      ACE_TRY_ENV);
 }
 
+
 const char* POA_ImplementationRepository::Administration::_interface_repository_id (void) const
 {
   return "IDL:ImplementationRepository/Administration:1.0";
@@ -3921,7 +3956,7 @@ private:
 public:
  const TAO_operation_db_entry * lookup (const char *str, unsigned int len);
 };
-/* starting time is 12:41:49 */
+/* starting time is 17:40:17 */
 /* C++ code produced by gperf version 2.8 (ACE version) */
 /* Command-line: /export/project/valinor/ossama/ACE_wrappers/bin/gperf -m -M -J -c -C -D -E -T -f 0 -F 0 -a -o -t -p -K opname_ -L C++ -Z TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable -N lookup  */
 unsigned int
@@ -4015,7 +4050,7 @@ TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable::loo
     }
   return 0;
 }
-/* ending time is 12:41:49 */
+/* ending time is 17:40:17 */
 static TAO_ImplementationRepository_ServerInformationIterator_Perfect_Hash_OpTable tao_ImplementationRepository_ServerInformationIterator_optable;
 
 #if (TAO_HAS_INTERCEPTORS == 1)
@@ -4223,7 +4258,7 @@ TAO_ServerRequestInfo_ImplementationRepository_ServerInformationIterator_destroy
   Dynamic::ParameterList *parameter_list =
     TAO_RequestInfo_Util::make_parameter_list (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return parameter_list;
 }
 
@@ -4248,7 +4283,7 @@ TAO_ServerRequestInfo_ImplementationRepository_ServerInformationIterator_destroy
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any, ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   return result_any;
 }
 
@@ -4336,7 +4371,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
           );
           ACE_CHECK;
           break;
-          
+
         case TAO_Collocation_Strategies::CS_DIRECT_STRATEGY:
           ACE_NEW_THROW_EX (
               this->proxy_cache_[strategy],
@@ -4345,7 +4380,7 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
           );
           ACE_CHECK;
           break;
-          
+
         case TAO_Collocation_Strategies::CS_REMOTE_STRATEGY:
         default:
           ACE_NEW_THROW_EX (
@@ -4355,9 +4390,9 @@ POA_ImplementationRepository::_TAO_ServerInformationIterator_Strategized_Proxy_B
           );
           ACE_CHECK;
           break;
-        
+
       }
-    
+
   }
 }
 
@@ -4508,7 +4543,7 @@ void POA_ImplementationRepository::_TAO_ServerInformationIterator_Direct_Proxy_I
     )->destroy (
           ACE_TRY_ENV
         );
-  
+
 }
 
 
@@ -4542,9 +4577,6 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::ServerInformationIterator *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
     CORBA::Boolean _tao_retval = 0;
   CORBA::ULong how_many;
   ImplementationRepository::ServerInformationList_var server_list;
@@ -4555,6 +4587,9 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
 
 
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -4620,6 +4655,9 @@ void POA_ImplementationRepository::ServerInformationIterator::next_n_skel (
     ))
     ACE_THROW (CORBA::MARSHAL());
 
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -4634,12 +4672,12 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl =
     ACE_static_cast (POA_ImplementationRepository::ServerInformationIterator *, _tao_object_reference);
   
-  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
-    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
-  
   _tao_server_request.argument_flag (0);
   
 #if (TAO_HAS_INTERCEPTORS == 1)
+  TAO_Object_Adapter::Servant_Upcall *_tao_upcall =
+    ACE_static_cast (TAO_Object_Adapter::Servant_Upcall *, _tao_servant_upcall);
+  
   TAO_ServerRequestInterceptor_Adapter _tao_vfr (
       _tao_server_request.orb_core ()->server_request_interceptors (),
       _tao_server_request.interceptor_count ()
@@ -4663,7 +4701,7 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
           ACE_TRY_ENV
         );
       TAO_INTERCEPTOR_CHECK;
-      
+
 #if (TAO_HAS_INTERCEPTORS == 1)
       ri.reply_status (PortableInterceptor::SUCCESSFUL);
       _tao_vfr.send_reply (&ri, ACE_TRY_ENV);
@@ -4692,6 +4730,9 @@ void POA_ImplementationRepository::ServerInformationIterator::destroy_skel (
   
   _tao_server_request.init_reply ();
   
+  // In case _tao_servant_upcall is not used in this function
+  ACE_UNUSED_ARG (_tao_servant_upcall);
+  
   // In case ACE_TRY_ENV is not used in this function
   ACE_UNUSED_ARG (ACE_TRY_ENV);
 }
@@ -4709,10 +4750,10 @@ void POA_ImplementationRepository::ServerInformationIterator::_is_a_skel (
   CORBA::String_var value;
   if (!(_tao_in >> value.out ()))
     ACE_THROW (CORBA::MARSHAL ());
-  
+
   _tao_retval = _tao_impl->_is_a (value.in (), ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
@@ -4729,7 +4770,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_non_existent_skel
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl = (POA_ImplementationRepository::ServerInformationIterator *) _tao_object_reference;
   CORBA::Boolean _tao_retval = _tao_impl->_non_existent (ACE_TRY_ENV);
   ACE_CHECK;
-  
+
   _tao_server_request.init_reply ();
   TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
   if (!(_tao_out << CORBA::Any::from_boolean (_tao_retval)))
@@ -4746,26 +4787,26 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
   POA_ImplementationRepository::ServerInformationIterator *_tao_impl = (POA_ImplementationRepository::ServerInformationIterator *) _tao_object_reference;
   CORBA_InterfaceDef_ptr _tao_retval = 0;
   CORBA::Boolean _tao_result = 0;
-  
+
   TAO_IFR_Client_Adapter *_tao_adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ()
       );
-    
+
   if (_tao_adapter == 0)
     {
       ACE_THROW (CORBA::INTF_REPOS ());
     }
-  
+
   ACE_TRY
     {
       _tao_retval = _tao_impl->_get_interface (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      
+
       _tao_server_request.init_reply ();
-      
+
       TAO_OutputCDR &_tao_out = _tao_server_request.outgoing ();
-      
+
       _tao_result =
         _tao_adapter->interfacedef_cdr_insert (
             _tao_out,
@@ -4777,7 +4818,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_interface_skel (
       _tao_adapter->dispose (_tao_retval);
     }
   ACE_ENDTRY;
-  
+
   if (_tao_result == 0)
     {
       ACE_THROW (CORBA::MARSHAL ());
@@ -4791,7 +4832,7 @@ CORBA::Boolean POA_ImplementationRepository::ServerInformationIterator::_is_a (
 {
   const char *base_id = CORBA::_tc_Object->id (ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
-  
+
   if (
     (!ACE_OS::strcmp ((char *)value, "IDL:ImplementationRepository/ServerInformationIterator:1.0")) ||
     (!ACE_OS::strcmp ((char *)value, base_id)))
@@ -4818,6 +4859,7 @@ void POA_ImplementationRepository::ServerInformationIterator::_dispatch (TAO_Ser
                                      this,
                                      ACE_TRY_ENV);
 }
+
 
 const char* POA_ImplementationRepository::ServerInformationIterator::_interface_repository_id (void) const
 {
