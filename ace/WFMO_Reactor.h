@@ -97,6 +97,7 @@ class ACE_Export ACE_WFMO_Reactor_Handler_Repository
 {
 public:
   friend class ACE_WFMO_Reactor;
+  friend class ACE_WFMO_Reactor_Test;
 
   /**
    * @class Common_Info

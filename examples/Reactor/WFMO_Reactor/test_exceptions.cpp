@@ -4,14 +4,14 @@
 //
 // = LIBRARY
 //    examples
-// 
+//
 // = FILENAME
 //    test_exceptions.cpp
 //
 // = DESCRIPTION
 //
 //    This test application tests the state of WFMO_Reactor when
-//    exceptions occurs when executing user callbacks. 
+//    exceptions occurs when executing user callbacks.
 //
 //    The thread count in WFMO_Reactor is used to ensure that state of
 //    WFMO_Reactor is not fouled up when exceptions occur in user code.
@@ -20,12 +20,12 @@
 //
 // = AUTHOR
 //    Irfan Pyarali
-// 
+//
 // ============================================================================
 
 #include "ace/WFMO_Reactor.h"
 
-ACE_RCSID(ReactorEx, test_exceptions, "$Id$")
+ACE_RCSID(WFMO_Reactor, test_exceptions, "$Id$")
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -65,21 +65,21 @@ public:
   {
     for (int i = 1; i <= 10; i++)
       {
-	ACE_DEBUG ((LM_DEBUG,
-                    "Active threads in WFMO_Reactor (before handle_events) = %d\n", 
-		    wfmo_reactor.active_threads_));
-	ACE_SEH_TRY 
-	  {
-	    wfmo_reactor.handle_events ();
-	  }
-	ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER)
-	  {
-	    ACE_DEBUG ((LM_DEBUG,
+        ACE_DEBUG ((LM_DEBUG,
+                    "Active threads in WFMO_Reactor (before handle_events) = %d\n",
+                    wfmo_reactor.active_threads_));
+        ACE_SEH_TRY
+          {
+            wfmo_reactor.handle_events ();
+          }
+        ACE_SEH_EXCEPT (EXCEPTION_EXECUTE_HANDLER)
+          {
+            ACE_DEBUG ((LM_DEBUG,
                         "Exception occurred\n"));
-	  }
-	ACE_DEBUG ((LM_DEBUG,
-                    "Active threads in WFMO_Reactor (after handle_events) = %d\n", 
-		    wfmo_reactor.active_threads_));
+          }
+        ACE_DEBUG ((LM_DEBUG,
+                    "Active threads in WFMO_Reactor (after handle_events) = %d\n",
+                    wfmo_reactor.active_threads_));
       }
   }
 };
@@ -95,4 +95,3 @@ main (int, char *[])
 
   return 0;
 }
-
