@@ -1,3 +1,8 @@
+Wed Apr 15 12:19:36 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/deep_copy.cpp (deep_copy): We need a return if no error was
+ 	  found.
+
 Wed Apr 15 09:28:16 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tao/Stub.h: 
