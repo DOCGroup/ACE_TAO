@@ -14,7 +14,9 @@ $status = 0;
 
 $SV = new PerlACE::Process ("server", "-o $iorfile");
 $CL1 = new PerlACE::Process ("client", "-k file://$iorfile -x");
-$CL2 = new PerlACE::Process ("client", "-ORBSvcConf reactor.conf -k file://$iorfile");
+# Use a single thread in this test, because the strategy is only for
+# single threaded cases
+$CL2 = new PerlACE::Process ("client", "-ORBSvcConf reactor.conf -n 1 -k file://$iorfile");
 $CL3 = new PerlACE::Process ("client", "-ORBSvcConf blocked.conf -k file://$iorfile");
 
 
