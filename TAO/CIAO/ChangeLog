@@ -1,3 +1,10 @@
+Wed Nov 17 17:46:44 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * examples/Hello/Receiver/Receiver.idl:
+        
+          Added 'uses multiple' receptacle to test code generation
+          and compilation.
+
 Sat Nov 13 18:04:36 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DAnCE/examples/Hello/Hello_Base/Hello_Base.idl:
