@@ -97,7 +97,7 @@ for ($i = 0; $i <= $#ARGV; $i++)
 
 @types = ("short", "ulonglong", "ubstring", "bdstring", "fixed_struct",
           "ub_strseq", "bd_strseq",
-          "var_struct", "nested_struct",
+          "var_struct", "nested_struct", "recursive_struct",
           "ub_struct_seq", "bd_struct_seq",
           "any", "objref", "objref_sequence", "objref_struct",
           "any_sequence",
