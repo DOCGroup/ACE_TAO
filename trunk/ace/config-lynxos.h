@@ -29,6 +29,7 @@
   // PowerPC libraries don't seem to have alloca ()
 # define ACE_HAS_ALLOCA
 # define ACE_HAS_ALLOCA_H
+# define ACE_HAS_PENTIUM
 #endif /* x86 */
 
 // System include files are not in sys/, this gets rid of warning.
