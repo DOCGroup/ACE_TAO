@@ -257,10 +257,10 @@ TAO_IIOP_Interpreter::skip_long (TAO_InputCDR *stream)
 
 size_t
 TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
-				       TAO_InputCDR* stream,
-				       CORBA::TCKind kind,
-				       size_t &alignment,
-				       CORBA::Environment &env)
+                                       TAO_InputCDR* stream,
+                                       CORBA::TCKind kind,
+                                       size_t &alignment,
+                                       CORBA::Environment &env)
 {
   CORBA::ULong temp;
   // Just a temporary to retrieve CORBA::TCKind variables as ULong's
@@ -317,12 +317,12 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (CORBA::TypeCode_ptr tc,
         }
 
       size_t size = TAO_IIOP_Interpreter::table_[kind].calc_ (&nested,
-							      alignment,
-							      env);
+                                                              alignment,
+                                                              env);
       if (env.exception () != 0)
-	{
-	  return 0;
-	}
+        {
+          return 0;
+        }
 
       // Check for garbage at end of parameter lists, or other cases
       // where parameters and the size allocated to them don't jive.
@@ -415,14 +415,14 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
 
   CORBA::TCKind kind = (CORBA::TCKind) temp;
 
-  if (kind != ~0)
+  if (kind != (CORBA::TCKind) ~0u)
     {
       return TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i
-	(tc,
-	 stream,
-	 kind,
-	 alignment,
-	 env);
+        (tc,
+         stream,
+         kind,
+         alignment,
+         env);
     }
 
   // Get indirection, sanity check it, set up new stream pointing
@@ -454,10 +454,10 @@ TAO_IIOP_Interpreter::calc_nested_size_and_alignment (CORBA::TypeCode_ptr tc,
   kind = (CORBA::TCKind) temp;
 
   return TAO_IIOP_Interpreter::calc_nested_size_and_alignment_i (tc,
-						&indirected_stream,
-						kind,
-						alignment,
-						env);
+                                                &indirected_stream,
+                                                kind,
+                                                alignment,
+                                                env);
 }
 
 // Given typecode bytes for a structure (or exception), figure out its
@@ -821,8 +821,8 @@ TAO_IIOP_Interpreter::calc_array_attributes (TAO_InputCDR *stream,
 
 size_t
 TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
-					   size_t &alignment,
-					   CORBA::Environment &env)
+                                           size_t &alignment,
+                                           CORBA::Environment &env)
 {
   CORBA::TCKind kind;
 
@@ -835,7 +835,7 @@ TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       return 0;
     }
 
-  if (temp == ~0)
+  if (temp == ~0u)
     {
       // Get indirection, sanity check it, set up new stream pointing
       // there.
@@ -845,12 +845,12 @@ TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       // stream's length.  ULONG_MAX is too much!
       CORBA::Long offset;
       if (!stream->read_long (offset)
-	  || offset >= -8
-	  || ((-offset) & 0x03) != 0)
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return 0;
-	}
+          || offset >= -8
+          || ((-offset) & 0x03) != 0)
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
       // Notice how we change the sign of the offset to estimate the
       // maximum size.
       TAO_InputCDR indirected_stream (*stream, -offset, offset);
@@ -858,11 +858,11 @@ TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       // Fetch indirected-to TCKind; this *cannot* be an indirection
       // again because multiple indirections are non-complaint.
       if (indirected_stream.read_ulong (temp) == CORBA::B_FALSE
-	  || temp == ~0)
-	{
-	  env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
-	  return 0;
-	}
+          || temp == ~0u)
+        {
+          env.exception (new CORBA::BAD_TYPECODE (CORBA::COMPLETED_NO));
+          return 0;
+        }
     }
 
   kind = ACE_static_cast(CORBA::TCKind, temp);
@@ -884,7 +884,7 @@ TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       alignment = 1;
 #else
       alignment =
-	(char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+        (char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
 #endif /* TAO_HAS_FIXED_BYTE_ALIGNMENT */
     }
   else
@@ -896,7 +896,7 @@ TAO_IIOP_Interpreter::calc_seq_attributes (TAO_InputCDR *stream,
       alignment = 1;
 #else
       alignment =
-	(char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
+        (char*)&align.two - (char*)&align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE;
 #endif /* TAO_HAS_FIXED_BYTE_ALIGNMENT */
     }
   return size;
@@ -989,3 +989,9 @@ TAO_IIOP_Interpreter::match_value (CORBA::TCKind kind,
 
   return retval;
 }
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class TAO_Unbounded_Sequence<CORBA::Long>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate TAO_Unbounded_Sequence<CORBA::Long>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -137,7 +137,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
       // constants.  We use those to reduce memory consumption and
       // heap access ... also, to speed things up!
       if ((kind < CORBA::TC_KIND_COUNT) ||
-          (kind == ~(CORBA::ULong)0))
+          (kind == ~0u))
         {
           // Either a non-constant typecode or an indirected typecode.
           switch (kind)
@@ -156,7 +156,7 @@ TAO_Marshal_TypeCode::skip (CORBA::TypeCode_ptr,
             break;
 
             // Indirected typecodes, illegal at "top level".
-            case ~0:
+            case ~0u:
               {
                 // skip the long indicating the encapsulation offset,
                 continue_skipping = stream->skip_long ();
@@ -269,7 +269,7 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
 
         // get the profile ID tag
         if ( (continue_skipping = stream->read_ulong (tag)) == CORBA::B_FALSE)
-	  continue;
+          continue;
 
         if (tag != TAO_IOP_TAG_INTERNET_IOP)
           {
@@ -282,22 +282,22 @@ TAO_Marshal_ObjRef::skip (CORBA::TypeCode_ptr,
         // context for it, and tell the "parent" stream that this data
         // isn't part of it any more.
 
-	CORBA::ULong encap_len;
+        CORBA::ULong encap_len;
         // ProfileData is encoded as a sequence of octet. So first get
         // the length of the sequence.
         // Create the decoding stream from the encapsulation in the
         // buffer, and skip the encapsulation.
-	if ( (continue_skipping = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
-	  continue;
+        if ( (continue_skipping = stream->read_ulong (encap_len)) == CORBA::B_FALSE)
+          continue;
 
         TAO_InputCDR str (*stream, encap_len);
 
-	continue_skipping =
-	  str.good_bit ()
-	  && stream->skip_bytes (encap_len);
+        continue_skipping =
+          str.good_bit ()
+          && stream->skip_bytes (encap_len);
 
-	if (!continue_skipping)
-	  continue;
+        if (!continue_skipping)
+          continue;
 
         // Read and verify major, minor versions, ignoring IIOP
         // profiles whose versions we don't understand.

@@ -170,7 +170,7 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
 
           // Indirected typecodes can't occur at "top level" like
           // this, only nested inside others!
-        case ~0:
+        case ~0u:
           dmsg ("indirected typecode at top level!");
           continue_encoding = CORBA::B_FALSE;
           break;
@@ -189,8 +189,8 @@ TAO_Marshal_TypeCode::encode (CORBA::TypeCode_ptr,
           {
             // simply encode the encapsulation
             continue_encoding = stream->write_ulong (tc2->length_);
-	    continue_encoding = continue_encoding
-	      && stream->write_octet_array ((CORBA::Octet*)tc2->buffer_, tc2->length_);
+            continue_encoding = continue_encoding
+              && stream->write_octet_array ((CORBA::Octet*)tc2->buffer_, tc2->length_);
           }
         }
     }
@@ -222,8 +222,8 @@ TAO_Marshal_Principal::encode (CORBA::TypeCode_ptr,
       continue_encoding = stream->write_long (p->id.length ());
 
       continue_encoding = continue_encoding &&
-	stream->write_octet_array (p->id.get_buffer (),
-				   p->id.length ());
+        stream->write_octet_array (p->id.get_buffer (),
+                                   p->id.length ());
     }
   else
     continue_encoding = stream->write_long (0);
@@ -310,17 +310,17 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
 
       hostlen = ACE_OS::strlen ((char *) profile->host);
       CORBA::ULong encap_len =
-	1                              // byte order
-	+ 1                            // version major
-	+ 1                            // version minor
-	+ 1                            // pad byte
-	+ 4                            // sizeof (strlen)
-	+ hostlen + 1                  // strlen + null
-	+ (~hostlen & 01)              // optional pad byte
-	+ 2                            // port
-	+ ( hostlen & 02)              // optional pad short
-	+ 4                            // sizeof (key length)
-	+ profile->object_key.length (); // key length.
+        1                              // byte order
+        + 1                            // version major
+        + 1                            // version minor
+        + 1                            // pad byte
+        + 4                            // sizeof (strlen)
+        + hostlen + 1                  // strlen + null
+        + (~hostlen & 01)              // optional pad byte
+        + 2                            // port
+        + ( hostlen & 02)              // optional pad short
+        + 4                            // sizeof (key length)
+        + profile->object_key.length (); // key length.
       stream->write_ulong (encap_len);
 
 #if 0
@@ -349,10 +349,10 @@ TAO_Marshal_ObjRef::encode (CORBA::TypeCode_ptr,
       // length.
       size_t final_len = stream->length ();
       ACE_DEBUG ((LM_DEBUG, "ObjRef::encode: "
-		  "stored_len = %d, "
-		  "real_len = %d\n",
-		  encap_len,
-		  final_len - current_len));
+                  "stored_len = %d, "
+                  "real_len = %d\n",
+                  encap_len,
+                  final_len - current_len));
 #endif /* 0 */
 
       return CORBA::TypeCode::TRAVERSE_CONTINUE;
@@ -705,7 +705,7 @@ TAO_Marshal_String::encode (CORBA::TypeCode_ptr tc,
   if (env.exception () == 0)
     {
       if (stream->write_string (str))
-	return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        return CORBA::TypeCode::TRAVERSE_CONTINUE;
     }
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
@@ -761,9 +761,9 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
 
                             case CORBA::tk_short:
                             case CORBA::tk_ushort:
-			      continue_encoding = continue_encoding &&
-				stream->write_short_array
-				((CORBA::Short*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_short_array
+                                ((CORBA::Short*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
@@ -773,9 +773,9 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                             case CORBA::tk_float:
                             case CORBA::tk_enum:
                               // For primitives, compute the size only once
-			      continue_encoding = continue_encoding &&
-				stream->write_long_array
-				((CORBA::Long*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_long_array
+                                ((CORBA::Long*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
@@ -784,18 +784,18 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                             case CORBA::tk_longlong:
                             case CORBA::tk_ulonglong:
                               // For primitives, compute the size only once
-			      continue_encoding = continue_encoding &&
-				stream->write_longlong_array
-				((CORBA::LongLong*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_longlong_array
+                                ((CORBA::LongLong*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
                             case CORBA::tk_boolean:
                               // For primitives, compute the size only once
-			      continue_encoding = continue_encoding &&
-				stream->write_boolean_array
-				((CORBA::Boolean*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_boolean_array
+                                ((CORBA::Boolean*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
@@ -803,27 +803,27 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                             case CORBA::tk_char:
                             case CORBA::tk_octet:
                               // For primitives, compute the size only once
-			      continue_encoding = continue_encoding &&
-				stream->write_octet_array
-				((CORBA::Octet*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_octet_array
+                                ((CORBA::Octet*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
                             case CORBA::tk_longdouble:
                               // For primitives, compute the size only once
-			      continue_encoding = continue_encoding &&
-				stream->write_longdouble_array
-				((CORBA::LongDouble*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_longdouble_array
+                                ((CORBA::LongDouble*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
 
                             case CORBA::tk_wchar:
                               // For primitives, compute the size only once
-			      continue_encoding = continue_encoding &&
-				stream->write_wchar_array
-				((CORBA::WChar*)value, bounds);
+                              continue_encoding = continue_encoding &&
+                                stream->write_wchar_array
+                                ((CORBA::WChar*)value, bounds);
                               if (continue_encoding == CORBA::B_TRUE)
                                 return CORBA::TypeCode::TRAVERSE_CONTINUE;
                               break;
@@ -843,7 +843,7 @@ TAO_Marshal_Sequence::encode (CORBA::TypeCode_ptr tc,
                             case CORBA::tk_except:
                             case CORBA::tk_wstring:
                               // For those aggregate types whose size
-			      // is constant, we compute it only once
+                              // is constant, we compute it only once
                               while (bounds-- && retval == CORBA::TypeCode::TRAVERSE_CONTINUE)
                                 {
                                   retval = stream->encode (tc2, value, 0, env);
@@ -910,83 +910,83 @@ TAO_Marshal_Array::encode (CORBA::TypeCode_ptr tc,
                 case CORBA::tk_void:
                   return CORBA::TypeCode::TRAVERSE_CONTINUE;
 
-		case CORBA::tk_short:
-		case CORBA::tk_ushort:
-		  continue_encoding = continue_encoding &&
-		    stream->write_short_array
-		    ((CORBA::Short*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_short:
+                case CORBA::tk_ushort:
+                  continue_encoding = continue_encoding &&
+                    stream->write_short_array
+                    ((CORBA::Short*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_long:
-		case CORBA::tk_ulong:
-		case CORBA::tk_float:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_long_array
-		    ((CORBA::Long*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_long:
+                case CORBA::tk_ulong:
+                case CORBA::tk_float:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_long_array
+                    ((CORBA::Long*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_double:
-		case CORBA::tk_longlong:
-		case CORBA::tk_ulonglong:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_longlong_array
-		    ((CORBA::LongLong*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_double:
+                case CORBA::tk_longlong:
+                case CORBA::tk_ulonglong:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_longlong_array
+                    ((CORBA::LongLong*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_boolean:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_boolean_array
-		    ((CORBA::Boolean*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_boolean:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_boolean_array
+                    ((CORBA::Boolean*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_char:
-		case CORBA::tk_octet:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_octet_array
-		    ((CORBA::Octet*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_char:
+                case CORBA::tk_octet:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_octet_array
+                    ((CORBA::Octet*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_longdouble:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_longdouble_array
-		    ((CORBA::LongDouble*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_longdouble:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_longdouble_array
+                    ((CORBA::LongDouble*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_wchar:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_wchar_array
-		    ((CORBA::WChar*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
+                case CORBA::tk_wchar:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_wchar_array
+                    ((CORBA::WChar*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
 
-		case CORBA::tk_enum:
-		  // For primitives, compute the size only once
-		  continue_encoding = continue_encoding &&
-		    stream->write_long_array
-		    ((CORBA::Long*)value, bounds);
-		  if (continue_encoding == CORBA::B_TRUE)
-		    return CORBA::TypeCode::TRAVERSE_CONTINUE;
-		  break;
-		  // handle all aggregate types here
+                case CORBA::tk_enum:
+                  // For primitives, compute the size only once
+                  continue_encoding = continue_encoding &&
+                    stream->write_long_array
+                    ((CORBA::Long*)value, bounds);
+                  if (continue_encoding == CORBA::B_TRUE)
+                    return CORBA::TypeCode::TRAVERSE_CONTINUE;
+                  break;
+                  // handle all aggregate types here
 
                 case CORBA::tk_any:
                 case CORBA::tk_TypeCode:
@@ -1253,17 +1253,17 @@ TAO_Marshal_WString::encode (CORBA::TypeCode_ptr tc,
       // if it is an unbounded string or if the length is less than the
       // bounds for an unbounded string
       if ((bounds == 0) || (len <= bounds))
-	{
-	  // Encode the string, followed by a NUL character.
+        {
+          // Encode the string, followed by a NUL character.
 
-	  for (continue_encoding = stream->write_ulong (len + 1);
-	       continue_encoding != CORBA::B_FALSE && *str;
-	       continue_encoding = stream->write_wchar (*str++))
-	    continue;
+          for (continue_encoding = stream->write_ulong (len + 1);
+               continue_encoding != CORBA::B_FALSE && *str;
+               continue_encoding = stream->write_wchar (*str++))
+            continue;
 
-	  stream->write_wchar (0);
-	  return CORBA::TypeCode::TRAVERSE_CONTINUE;
-	}
+          stream->write_wchar (0);
+          return CORBA::TypeCode::TRAVERSE_CONTINUE;
+        }
     }
   return CORBA::TypeCode::TRAVERSE_STOP;
 }
