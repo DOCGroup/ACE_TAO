@@ -1,3 +1,9 @@
+Mon Jun 18 18:58:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
+
+        * tests/ior_corbaloc/run_test.pl:
+
+          Minor fix to eliminate one failing test.
+
 Mon Jun 18 13:01:32 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Policy_Set.cpp:

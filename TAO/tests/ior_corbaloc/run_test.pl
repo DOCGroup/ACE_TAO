@@ -20,7 +20,8 @@ $status = 0;
 $sleeptime = 8;
 
 @iorfile = ("ns1.ior",
-            "ns2.ior");
+            "ns2.ior",
+            "ns2.ior" );
 
 $def_port = 2809;
 @ns_orb_port=( 12000 + PerlACE::uniqueid (),
@@ -50,8 +51,9 @@ $test_number = 0;
 # Client uses ior in a file to bootstrap to the server.
 
 @SR = (new PerlACE::Process ("server"),
+       new PerlACE::Process ("server"),
        new PerlACE::Process ("server"));
-@SR_NAME=( "STATUS", "STATUS1");
+@SR_NAME=( "STATUS", "STATUS1", "STATUS");
 
 $CL = new PerlACE::Process ("client");
 $CN_CL = new PerlACE::Process ("corbaname_client");
@@ -75,13 +77,17 @@ for($i=0; $i <= $#NS; $i++){
     $NS[$i]->Kill (); 
     exit 1;
   }
-
-  $SR[$i]->Arguments ("-ORBInitRef NameService=file://$iorfile[$i] $SR_NAME[$i]");
-  $SR[$i]->Spawn ();
-
 }
 
-sleep 1;
+sleep 2;
+
+for($i=0; $i <= $#SR; $i++){
+  print "Spawning server with name $SR_NAME[$i]\n";
+  $SR[$i]->Arguments ("-ORBInitRef NameService=file://$iorfile[$i] $SR_NAME[$i]");
+  $SR[$i]->Spawn ();
+}
+
+sleep 5;
 
 
 print "\n======= Running corbaloc: tests\n";
@@ -127,6 +133,10 @@ if ($nameservice != 0) {
   print STDERR "ERROR: name server $i returned $nameservice\n";
   $status = 1;
 }
+}
+
+
+for($i=0; $i <= $#SR; $i++){
 $server = $SR[$i]->TerminateWaitKill (10);
 if ($server != 0) {
   print STDERR "ERROR: server $i returned $server\n";
