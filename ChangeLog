@@ -1,3 +1,8 @@
+Wed Oct 29 14:06:45 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
+
+	* Kokyu/Kokyu_defs.{h,i}: Added default constructor for
+	  ConfigInfo, which puts in default values.  
+
 Wed Oct 29 12:02:41 2003  Steve Huston  <shuston@riverace.com>
 
 	* bin/MakeProjectCreator/templates/automake.mpd: Change the
