@@ -81,7 +81,6 @@ client: $(addprefix $(VDIR),$(SIMPLE_CLT_OBJS))
 
 realclean: clean
 	-$(RM) -r Event_TypesC.* Event_TypesS.* Event_TypesS_T.*
-	rm -r Event_TypesC.* Event_TypesS.* Event_TypesS_T.*
 
 #----------------------------------------------------------------------------
 #       Dependencies
