@@ -98,6 +98,71 @@ FILE                    linux   lynxos  sunos   win32
   mq_setattr()                                  x
   mq_unlink()                                   x
 .............................................................
+<pthread.h>
+  pthread_atfork()                              x
+  pthread_attr_destroy()                        x
+  pthread_attr_getdetachstate()                 x
+  pthread_attr_getinheritsched()                x
+  pthread_attr_getschedparam()                  x
+  pthread_attr_getschedpolicy()                 x
+  pthread_attr_getscope()                       x
+  pthread_attr_getstackaddr()                   x
+  pthread_attr_getstacksize()                   x
+  pthread_attr_init()                           x
+  pthread_attr_setdetachstate()                 x
+  pthread_attr_setinheritsched()                x
+  pthread_attr_setschedparam()                  x
+  pthread_attr_setschedpolicy()                 x
+  pthread_attr_setscope()                       x
+  pthread_attr_setstackaddr()                   x
+  pthread_attr_setstacksize()                   x
+  pthread_cancel()                              x
+  pthread_cleanup_push()                        x
+  pthread_cleanup_pop()                         x
+  pthread_cond_broadcast()                      x
+  pthread_cond_destroy()                        x
+  pthread_cond_init()                           x
+  pthread_cond_signal()                         x
+  pthread_cond_timedwait()                      x
+  pthread_cond_wait()                           x
+  pthread_condattr_destroy()                    x
+  pthread_condattr_getpshared()                 x
+  pthread_condattr_init()                       x
+  pthread_condattr_setpshared()                 x
+  pthread_create()                              x
+  pthread_detach()                              x
+  pthread_equal()                               x
+  pthread_exit()                                x
+  pthread_getschedparam()                       x
+  pthread_getspecific()                         x
+  pthread_join()                                x
+  pthread_key_create()                          x
+  pthread_key_delete()                          x
+  pthread_kill()                                x
+  pthread_mutex_destroy()                       x
+  pthread_mutex_getprioceiling()                x
+  pthread_mutex_init()                          x
+  pthread_mutex_lock()                          x
+  pthread_mutex_setprioceiling()                x
+  pthread_mutex_trylock()                       x
+  pthread_mutex_unlock()                        x
+  pthread_mutexattr_destroy()                   x
+  pthread_mutexattr_getprioceiling()            x
+  pthread_mutexattr_getprotocol()               x
+  pthread_mutexattr_setprioceiling()            x
+  pthread_mutexattr_setprotocol()               x
+  pthread_mutexattr_getpshared()                x
+  pthread_mutexattr_init()                      x
+  pthread_mutexattr_setpshared()                x
+  pthread_once()                                x
+  pthread_self()                                x
+  pthread_setcancelstate()                      x
+  pthread_setcanceltype()                       x
+  pthread_setschedparam()                       x
+  pthread_setspecific()                         x
+  pthread_sigmask()                             x
+  pthread_testcancel()                          x
+.............................................................
 <pwd.h>
   getpwuid()                                    x
   getpwuid_r()                                  x
