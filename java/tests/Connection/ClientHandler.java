@@ -31,7 +31,8 @@ public class ClientHandler extends SvcHandler
 
   public void run ()
     {
-      DataInputStream in = new DataInputStream (System.in);
+      BufferedReader in = new BufferedReader(new InputStreamReader(System.in)); 
+
       String msg;
       StringBuffer ack = new StringBuffer ();
       int ack_len;

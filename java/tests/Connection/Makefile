@@ -1,4 +1,5 @@
 # Makefile
+# $Id$
  
 .SUFFIXES: .java .class
 
@@ -16,7 +17,8 @@ doc:
 files =	 ServerHandler.java \
 	 ClientHandler.java \
 	 ConnectorTest.java \
-	 AcceptorTest.java
+	 AcceptorTest.java \
+         HTTPHelperTest.java
 
 packages = tests.Connection
 
