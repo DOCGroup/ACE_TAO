@@ -19,14 +19,6 @@
 //
 // ============================================================================
 
-
-// The ACE_DISABLE_AUTOCONF_LONGLONG macro is used in "anomalous" cases,
-// such as in this test.  It is not meant for general use and only meant
-// to be used with ACE+autoconf!
-// ACE_DISABLE_AUTOCONF_LONGLONG must be defined *before* including the
-// configuration header.
-#define ACE_DISABLE_AUTOCONF_LONGLONG
-
 // Note, for this test the config.h file *must* come first!
 #include "ace/inc_user_config.h"
 
