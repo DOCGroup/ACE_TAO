@@ -1,3 +1,11 @@
+Tue Apr 18 03:17:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/corba.h: Included "tao/LocalObject" in this file.
+
+	* tao/LocalObject.h:
+	* tao/LocalObject.cpp: Changed <_is_a> operation back to throw
+	  NO_IMPLEMENT exception.
+
 Tue Apr 18 02:03:12 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/be/be_interface.cpp:
