@@ -24,7 +24,7 @@
 #include "Util_Thread.h"
 
 #if defined (CHORUS)
-#include "/project/doc/mvme/pccTimer.h"
+#include "pccTimer.h"
 #endif /* CHORUS */
 
 #if defined (VME_DRIVER)
