@@ -1,4 +1,4 @@
-//$Id$ 
+//$Id$
 
 #ifndef SPK_HANDLER_C
 #define SPK_HANDLER_C
@@ -9,8 +9,10 @@
 
 using CIAO::Config_Handler::Utils;
 
-Deployment::SatisfierPropertyKind
-CIAO::Config_Handler::SPK_Handler::process_SatisfierPropertyKind (DOMNodeIterator * iter)
+void
+CIAO::Config_Handler::SPK_Handler::
+process_SatisfierPropertyKind (DOMNodeIterator * iter,
+                               Deployment::SatisfierPropertyKind &kind)
 {
   // -- SatisfierPropertyKind enum
   XStr quantity  ("Quantity");
@@ -20,24 +22,24 @@ CIAO::Config_Handler::SPK_Handler::process_SatisfierPropertyKind (DOMNodeIterato
   XStr attribute ("Attribute");
   XStr selection ("Selection");
 
-  XStr kind = XStr (Utils::parse_string (iter));
-  if (kind == quantity)
-     return Deployment::Quantity;
-  else if (kind = capacity)
-     return Deployment::Capacity;
-  else if (kind == minimum)
-     return Deployment::Minimum;
-  else if (kind == maximum)
-     return Deployment::Maximum;
-  else if (kind == attribute)
-      return Deployment::Attribute;
-  else if (kind == selection)
-      return Deployment::Selection;
-  
+  XStr kind_str = XStr (Utils::parse_string (iter));
+  if (kind_str == quantity)
+     kind = Deployment::Quantity;
+  else if (kind_str = capacity)
+     kind = Deployment::Capacity;
+  else if (kind_str == minimum)
+     kind = Deployment::Minimum;
+  else if (kind_str == maximum)
+     kind = Deployment::Maximum;
+  else if (kind_str == attribute)
+     kind = Deployment::Attribute;
+  else if (kind_str == selection)
+     kind = Deployment::Selection;
+
   // Something wrong here.. Throw exception
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Config_Handler::SPK_Handler::process_SPK \
-               illegal <SatisfierPropertyKind> value found \n")); 
+               illegal <SatisfierPropertyKind> value found \n"));
   ACE_THROW (CORBA::INTERNAL ());
 }
 

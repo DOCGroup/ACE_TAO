@@ -16,7 +16,7 @@ using std::cerr;
 using std::endl;
 
 
-namespace CIAO 
+namespace CIAO
 {
   namespace Config_Handler
   {
@@ -43,7 +43,7 @@ namespace CIAO
     }
 
     /// handle the connection resource deployment description and populate it
-    void CRDD_Handler::process_ConnectionResourceDeploymentDescription 
+    void CRDD_Handler::process_ConnectionResourceDeploymentDescription
     (::Deployment::ConnectionResourceDeploymentDescription &crdd)
     {
       // This is bogus and should be replaced later.
@@ -79,7 +79,8 @@ namespace CIAO
             {
               // delegate the populating process
               // @@should avoid this copy - Andy @@
-              crdd.resourceValue = Any_Handler::process_Any (this->iter_);
+              // Arvind: Resolved
+              Any_Handler::process_Any (this->iter_, crdd.resourceValue);
             }
           else
             {
@@ -91,7 +92,7 @@ namespace CIAO
     }
 
     /// handle resource usage attribute
-    void CRDD_Handler::process_targetName (const XMLCh* name, 
+    void CRDD_Handler::process_targetName (const XMLCh* name,
                                            ::Deployment::ConnectionResourceDeploymentDescription &crdd)
     {
       if (name)
@@ -101,7 +102,7 @@ namespace CIAO
     }
 
     /// handle requirement name attribute
-    void CRDD_Handler::process_requirementName (const XMLCh* name, 
+    void CRDD_Handler::process_requirementName (const XMLCh* name,
                                                ::Deployment::ConnectionResourceDeploymentDescription &crdd)
     {
       if (name)
@@ -111,7 +112,7 @@ namespace CIAO
     }
 
     /// handle resource name attribute
-    void CRDD_Handler::process_resourceName (const XMLCh* name, 
+    void CRDD_Handler::process_resourceName (const XMLCh* name,
                                             ::Deployment::ConnectionResourceDeploymentDescription &crdd)
     {
       if (name)
@@ -125,4 +126,3 @@ namespace CIAO
 }
 
 #endif /* CRDD_HANDLER_C */
-

@@ -42,7 +42,8 @@ namespace CIAO
     class Config_Handler_Export Any_Handler
     {
     public:
-      static ::CORBA::Any &process_Any (DOMNodeIterator * iter);
+      static void process_Any (DOMNodeIterator * iter,
+                               ::CORBA::Any &any_obj);
       // process elements of type Deployment:Any in the descriptor files
     };
   }

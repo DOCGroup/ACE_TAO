@@ -15,7 +15,7 @@ project (Config_Handlers) : taolib {
     ID_Handler.cpp
     CEPE_Handler.cpp
     CRDD_Handler.cpp
-    DP_Handler.cpp
+    //DP_Handler.cpp
     ERE_Handler.cpp
     IDD_Handler.cpp
     IRDD_Handler.cpp
