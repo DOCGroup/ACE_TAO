@@ -2,6 +2,7 @@
 
 #include "concrete_classes.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Containers_T.h"
 
 ACE_RCSID(IFR_Service, tmplinst, "$Id$")
 
