@@ -1,3 +1,10 @@
+Mon Mar 01 16:54:02 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp,Object_Manager.cpp: fixed ObjMan state logic to
+          ensure that the ACE_Object_Manager is fini'd before the
+          ACE_OS_Object_Manager, even when both are static objects.
+          Thanks to Carlos for reporting this problem.
+
 Mon Mar 01 14:05:46 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.6.24 released.
