@@ -12,7 +12,8 @@ Mon Apr 26 07:18:23 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
           A tests on our linux system demonstrated that when we removed
           the non win32 version of ACE_APPEND_LOG things works again
           on Linux. This non win32 version did close the file stream
-          and this seems not logically.
+          and this seems not logically. Thanks to Martin Corino
+          <mcorino@remedy.nl> for reporting this.
 
 Sun Apr 25 23:17:26 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
