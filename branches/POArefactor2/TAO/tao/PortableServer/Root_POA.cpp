@@ -2109,12 +2109,12 @@ TAO_Root_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
   TAO::Portable_Server::Temporary_Creation_Time poa_creation_time;
 
   return TAO_Root_POA::parse_key (object_key,
-                             poa_system_name,
-                             user_id,
-                             is_root,
-                             is_persistent,
-                             is_system_id,
-                             poa_creation_time);
+                                  poa_system_name,
+                                  user_id,
+                                  is_root,
+                                  is_persistent,
+                                  is_system_id,
+                                  poa_creation_time);
 }
 
 TAO_Object_Adapter &

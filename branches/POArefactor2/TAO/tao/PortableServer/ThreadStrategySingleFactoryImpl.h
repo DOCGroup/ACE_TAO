@@ -10,8 +10,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORYIMPL_H
-#define TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORYIMPL_H
+#ifndef TAO_PORTABLESERVER_THREADPOLICYSINGLESTRATEGYFACTORYIMPL_H
+#define TAO_PORTABLESERVER_THREADPOLICYSINGLESTRATEGYFACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
@@ -29,11 +29,11 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadStrategyFactoryImpl
+    class TAO_PortableServer_Export ThreadStrategySingleFactoryImpl
        : public virtual ThreadStrategyFactory
     {
     public:
-      virtual ~ThreadStrategyFactoryImpl (void);
+      virtual ~ThreadStrategySingleFactoryImpl (void);
 
       /// Create a new servant retention strategy
       virtual ThreadStrategy* create (
@@ -42,12 +42,12 @@ namespace TAO
       virtual void destroy (ThreadStrategy *strategy);
     };
 
-    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategyFactoryImpl)
-    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategyFactoryImpl)
+    ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingleFactoryImpl)
+    ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingleFactoryImpl)
   }
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
-#endif /* TAO_PORTABLESERVER_THREADPOLICYSTRATEGYFACTORYIMPL_H */
+#endif /* TAO_PORTABLESERVER_THREADPOLICYSINGLESTRATEGYFACTORYIMPL_H*/

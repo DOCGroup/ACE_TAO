@@ -2,8 +2,6 @@
 
 #include "ThreadStrategyFactoryImpl.h"
 #include "ThreadStrategy.h"
-#include "ThreadStrategySingle.h"
-#include "ThreadStrategyORBControl.h"
 #include "ace/Dynamic_Service.h"
 
 ACE_RCSID (PortableServer,
@@ -30,19 +28,24 @@ namespace TAO
       {
         case ::PortableServer::SINGLE_THREAD_MODEL :
         {
-/*          strategy =
-            ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategySingle");
+          ThreadStrategyFactory *thread_strategy_factory =
+            ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
 
-          if (strategy == 0)
+          if (thread_strategy_factory == 0)
             {
               ACE_Service_Config::process_directive (
-                ACE_TEXT("dynamic ThreadStrategy Service_Object *")
-                ACE_TEXT("TAO_PortableServer:_make_ThreadStrategySingle()"));
+                ACE_TEXT("dynamic ThreadStrategyFactory Service_Object *")
+                ACE_TEXT("TAO_PortableServer:_make_ThreadStrategySingleFactoryImpl()"));
 
-              strategy =
-                ACE_Dynamic_Service<ThreadStrategy>::instance ("ThreadStrategySingle");
-            }*/
-          ACE_NEW_RETURN (strategy, ThreadStrategySingle, 0);
+              thread_strategy_factory =
+                ACE_Dynamic_Service<ThreadStrategyFactory>::instance ("ThreadStrategySingleFactory");
+            }
+
+          if (thread_strategy_factory != 0)
+            {
+              strategy = thread_strategy_factory->create (value);
+            }
+
           break;
         }
         case ::PortableServer::ORB_CTRL_MODEL :
@@ -64,6 +67,13 @@ namespace TAO
       }
 
       return strategy;
+    }
+
+    void
+    ThreadStrategyFactoryImpl::destroy (ThreadStrategy *strategy)
+    {
+      // todo, cleanup the strategy. Problem is now that at this moment I
+      // just don't know the derived strategy we get here.
     }
 
     ACE_STATIC_SVC_DEFINE (

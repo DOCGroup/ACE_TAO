@@ -32,6 +32,7 @@
 
 #include "tao/PortableServer/ThreadPolicyValueORBControl.h"
 #include "tao/PortableServer/ThreadPolicyValueSingle.h"
+#include "tao/PortableServer/ThreadStrategySingleFactoryImpl.h"
 
 #include "tao/PortableServer/ThreadStrategyORBControl.h"
 #include "tao/PortableServer/ThreadStrategySingle.h"
@@ -220,6 +221,10 @@ TAO_POA_Initializer::init (void)
 
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_ThreadStrategyFactoryImpl
+    );
+
+  ACE_Service_Config::process_directive (
+      TAO::Portable_Server::ace_svc_desc_ThreadStrategySingleFactoryImpl
     );
 
   ACE_Service_Config::process_directive (

@@ -36,8 +36,11 @@ namespace TAO
     {
     public:
       /// Create a new servant retention strategy
-      virtual ThreadStrategy* create (
+      virtual ThreadStrategy *create (
         ::PortableServer::ThreadPolicyValue value) = 0;
+
+      /// Cleanup the given strategy instance
+      virtual void destroy (ThreadStrategy *strategy) = 0;
     };
   }
 }
