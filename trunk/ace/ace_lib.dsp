@@ -151,7 +151,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /YX /FD WIN32" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "_WINDOWS" /FD /D /MTd WIN32" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " _DEBUG" /D "_WINDOWS" /FD /D /MTd WIN32" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -174,7 +174,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /YX /FD WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "_WINDOWS" /FD /D WIN32" /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " NDEBUG" /D "_WINDOWS" /FD /D WIN32" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -197,7 +197,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\STL" /I "..\\ /D" /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD WIN32" /c
-# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "_DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D /MTd WIN32" /c
+# ADD CPP /nologo /Gt0 /W3 /GX /Zi /Od /Gy /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " _DEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D /MTd WIN32" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -220,7 +220,7 @@ LIB32=link.exe -lib
 # PROP Target_Dir ""
 CPP=cl.exe
 # ADD BASE CPP /nologo /Gt0 /W3 /GX /O1 /I "..\STL" /I "..\\ /D" /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /YX /FD WIN32" /c
-# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D "NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D WIN32" /c
+# ADD CPP /nologo /MT /Gt0 /W3 /GX /O1 /I "..\\ /D ACE_HAS_DLL=0 /D __ACE_INLINE__=0 /D " NDEBUG" /D "_WINDOWS" /D "UNICODE" /FD /D WIN32" /c
 # SUBTRACT CPP /YX
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo /o".\ace.bsc"
@@ -3476,6 +3476,29 @@ SOURCE=.\Token_Manager.cpp
 # Begin Source File
 
 SOURCE=.\Token_Request_Reply.cpp
+
+!IF  "$(CFG)" == "ACE static library - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Unicode Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Release"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Debug"
+
+!ELSEIF  "$(CFG)" == "ACE static library - Win32 Alpha Unicode Release"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\TP_Reactor.cpp
 
 !IF  "$(CFG)" == "ACE static library - Win32 Debug"
 
