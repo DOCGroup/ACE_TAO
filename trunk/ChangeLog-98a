@@ -1,5 +1,8 @@
 Fri Dec  5 13:03:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* examples/Reactor/Dgram/CODgram.cpp: Also updated the CODgram
+ 	  test to be just like the Dgram test.
+
 	* examples/Reactor/Dgram/Dgram.cpp (main): Fixed a bug where it
  	  was sending a huge buffer instead of just the string size.
   	  Also, exit once we've finished the send.  Finally, revised the

@@ -21,14 +21,10 @@ public:
 
   virtual int handle_timeout (const ACE_Time_Value & tv, 
 			      const void *arg = 0);
-
-  int timeouts_;
-  // Number of timeouts thus far.
 };
 
 AAL_CP::AAL_CP (const ACE_INET_Addr &local_addr)
-  : ACE_SOCK_Dgram (local_addr),
-    timeouts_ (0)
+  : ACE_SOCK_Dgram (local_addr)
 {
 }
 
@@ -61,7 +57,6 @@ int
 AAL_CP::handle_timeout (const ACE_Time_Value &, const void *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) timed out for aa1\n"));
-  this->timeouts_++;
   return 0;
 }
 
@@ -70,7 +65,11 @@ run_test (u_short localport,
           const char *remotehost,
           u_short remoteport)
 {
-  AAL_CP aal (localport);
+  ACE_INET_Addr remote_addr (remoteport,
+                             remotehost);
+  ACE_INET_Addr local_addr (localport);
+
+  AAL_CP aal (local_addr);
 
   // Read data from other side.
   if (ACE_Reactor::instance ()->register_handler 
@@ -82,10 +81,6 @@ run_test (u_short localport,
   char buf[BUFSIZ];
   ACE_OS::strcpy (buf, "Data to transmit");
   size_t len = ACE_OS::strlen (buf);
-
-  ACE_INET_Addr remote_addr (remoteport,
-                             remotehost);
-  ACE_INET_Addr local_addr (localport);
 
   if (localport == port1)	
     {
