@@ -85,7 +85,8 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       // to remain dangling. Hence we save a handle to the original
       // allocated buffer.
 
-      this->non_aligned_buffer_ = new char [length + 4];
+      ACE_NEW (this->non_aligned_buffer_,
+               char [length + 4]);
 
       // No parent. We are free standing.
       ptr_arith_t temp = (ptr_arith_t) non_aligned_buffer_;
@@ -99,12 +100,10 @@ CORBA_TypeCode::CORBA_TypeCode (CORBA::TCKind kind,
       this->orb_owns_ = CORBA::B_FALSE;
     }
   else
-    {
-      // We are a child. We do not allocate a new buffer, but share it
-      // with our parent. We know that our parent's buffer was
-      // properly aligned.
-      this->buffer_ = buffer;
-    }
+    // We are a child. We do not allocate a new buffer, but share it
+    // with our parent. We know that our parent's buffer was
+    // properly aligned.
+    this->buffer_ = buffer;
 }
 
 // Destructor.  For "indirected" typecodes and children, the typecode
@@ -114,6 +113,7 @@ void
 CORBA_TypeCode::operator delete (void* p)
 {
   CORBA::TypeCode_ptr tc = (CORBA_TypeCode *) p;
+
   if (!tc->orb_owns_)
     ::delete p;
 }
@@ -434,9 +434,8 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              {
-                this->tc_member_name_list_ [i] = 0; // not owned by us
-              }
+              this->tc_member_name_list_ [i] = 0; // not owned by us
+
             delete [] this->tc_member_name_list_;
           }
         break;
@@ -449,9 +448,8 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              {
-                this->tc_member_name_list_ [i] = 0; // not owned by us
-              }
+              this->tc_member_name_list_ [i] = 0; // not owned by us
+
             delete [] this->tc_member_name_list_;
           }
 
@@ -461,12 +459,11 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              {
-                // free up the memory allocated for the typecode only if it has a parent
-                if (this->tc_member_type_list_[i]->parent_)
-                  delete this->tc_member_type_list_[i];
-              }
-            // now free up the array
+              // free up the memory allocated for the typecode only if it has a parent
+              if (this->tc_member_type_list_[i]->parent_)
+                delete this->tc_member_type_list_[i];
+
+            // Now free up the array.
             delete [] this->tc_member_type_list_;
           }
         this->tc_member_count_ = 0;
@@ -475,11 +472,12 @@ TC_Private_State::~TC_Private_State (void)
     case CORBA::tk_sequence:
     case CORBA::tk_array:
     case CORBA::tk_alias:
-      // delete the content type only if it has a parent i.e., if it is not
-      // acquired from the pool of constant or predefined typecodes
-      if (this->tc_content_type_known_)
-        if (this->tc_content_type_->parent_)
-          delete this->tc_content_type_;
+      // Delete the content type only if it has a parent i.e., if it
+      // is not acquired from the pool of constant or predefined
+      // typecodes.
+      if (this->tc_content_type_known_ 
+          && this->tc_content_type_->parent_)
+        delete this->tc_content_type_;
       break;
     case CORBA::tk_union:
       {
@@ -489,9 +487,8 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              {
-                this->tc_member_name_list_ [i] = 0; // not owned by us
-              }
+              this->tc_member_name_list_ [i] = 0; // not owned by us
+
             delete [] this->tc_member_name_list_;
           }
 
@@ -501,13 +498,12 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              {
-                // free up the memory allocated for the typecode if it has a
-                // parent that owns it
-                if (this->tc_member_type_list_[i]->parent_)
-                  delete this->tc_member_type_list_[i];
-              }
-            // now free up the array
+              // free up the memory allocated for the typecode if it has a
+              // parent that owns it
+              if (this->tc_member_type_list_[i]->parent_)
+                delete this->tc_member_type_list_[i];
+
+            // Now free up the array.
             delete [] this->tc_member_type_list_;
           }
         if (this->tc_member_label_list_known_)
@@ -515,10 +511,9 @@ TC_Private_State::~TC_Private_State (void)
             for (CORBA::ULong i = 0;
                  i < this->tc_member_count_;
                  i++)
-              {
-                // free up the label (Any_ptr)
-                delete this->tc_member_label_list_[i];
-              }
+              // Free up the label (Any_ptr).
+              delete this->tc_member_label_list_[i];
+
             delete [] this->tc_member_label_list_;
           }
         this->tc_member_count_ = 0;
@@ -698,7 +693,7 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
     if (ACE_OS::strcmp (my_id, tc_id)) // not same
       return 0;
 
-  // compare names if they exist
+  // Compare names if they exist.
   if (ACE_OS::strlen (my_name) > 1 && ACE_OS::strlen (tc_name) > 1)
     if (ACE_OS::strcmp (my_name, tc_name)) // not same
       return 0;
@@ -2485,7 +2480,9 @@ CORBA::TypeCode::private_alignment (CORBA::Environment &env)
 
   stream.setup_encapsulation (buffer_, (size_t) length_);
 
-  (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream, alignment, env);
+  (void) TAO_IIOP_Interpreter::table_[kind_].calc_ (&stream,
+                                                    alignment,
+                                                    env);
   private_state_->tc_alignment_known_ = CORBA::B_TRUE;
   private_state_->tc_alignment_ = alignment;
   return alignment;

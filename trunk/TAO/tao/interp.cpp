@@ -6,7 +6,7 @@
 
 #include "tao/corba.h"
 
-Table_Element CORBA_TypeCode::table_[CORBA::TC_KIND_COUNT] =
+Table_Element TAO_IIOP_Interpreter::table_[CORBA::TC_KIND_COUNT] =
 {
   { 0, 1, 0 },                            // CORBA::tk_null
   { 0, 1, 0 },                            // CORBA::tk_void
@@ -122,8 +122,8 @@ Table_Element CORBA_TypeCode::table_[CORBA::TC_KIND_COUNT] =
 
   #define setup_entry(x,t) \
     { \
-      CORBA_TypeCode::table_ [t].size = sizeof (x); \
-      CORBA_TypeCode::table_ [t].alignment_ = 1; \
+      CORBA_IIOP_Interpreter::table_ [t].size = sizeof (x); \
+      CORBA_IIOP_Interpreter::table_ [t].alignment_ = 1; \
     }
 #else  /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
   // unix, ACE_WIN32, VXWORKS, __Lynx__, at least
@@ -138,8 +138,8 @@ Table_Element CORBA_TypeCode::table_[CORBA::TC_KIND_COUNT] =
   #define setup_entry(x,t) \
     { \
       align_struct_ ## t       align; \
-      CORBA_TypeCode::table_ [t].size = sizeof (x); \
-      CORBA_TypeCode::table_ [t].alignment_ = \
+      CORBA_IIOP_Interpreter::table_ [t].size = sizeof (x); \
+      CORBA_IIOP_Interpreter::table_ [t].alignment_ = \
       (char *) &align.two - (char *) &align.one - TAO_MAXIMUM_NATIVE_TYPE_SIZE; \
     }
 #endif /* ! TAO_HAS_FIXED_BYTE_ALIGNMENT */
