@@ -1,3 +1,12 @@
+Mon Oct 18 17:45:29 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Naming/Graph.cpp:
+	* examples/APG/Naming/Temperature_Grapher.cpp: Don't attempt to
+	  compile the few parts of this that use std::list (the
+	  Graphable_Element_List typedef) without implicit template
+	  instantiation. It's too much trouble to try to follow the
+	  various platforms' incantations.
+
 Mon Oct 18 17:18:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-dmc.h:
