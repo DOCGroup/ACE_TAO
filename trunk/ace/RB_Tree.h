@@ -387,9 +387,19 @@ public:
   /// @deprecated
   void clear (void);
 
+  /// Recursively tests the invariant red-black properties at each
+  /// node of the tree.  Returns 0 if invariant holds, else -1.
+  int test_invariant (void);
+
 protected:
 
   // = Protected methods. These should only be called with locks held.
+
+  /// Recursively tests the invariant red-black properties at each
+  /// node of the tree.  Returns 0 if invariant holds, else -1.
+  int test_invariant_recurse (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x,
+                              int & expected_black_height,
+                              int measured_black_height);
 
   /// Method for right rotation of the tree about a given node.
   void RB_rotate_right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
@@ -398,7 +408,8 @@ protected:
   void RB_rotate_left (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
 
   /// Method for restoring Red-Black properties after deletion.
-  void RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x);
+  void RB_delete_fixup (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x,
+                        ACE_RB_Tree_Node<EXT_ID, INT_ID> * parent);
 
   /// Method to find the successor node of the given node in the tree.
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *
@@ -481,6 +492,14 @@ protected:
   /// Removes the item associated with the given key from the tree and
   /// destroys it.
   int remove_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *z);
+
+  /// Recursive function to dump the state of an object.
+  void dump_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> *node) const;
+
+  /// Function to dump node contents.   Does nothing in its
+  /// basic form, but template specialization can be used to
+  /// provide definitions for various EXT_ID and INT_ID types.
+  void dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const;
 
 private:
 

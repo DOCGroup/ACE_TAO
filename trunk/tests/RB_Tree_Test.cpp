@@ -28,6 +28,8 @@
 
 #include "test_config.h" /* Include first to enable ACE_ASSERT. */
 #include "ace/RB_Tree.h"
+#include "ace/SString.h"
+
 #include "RB_Tree_Test.h"
 
 ACE_RCSID(tests, RB_Tree_Test, "$Id$")
@@ -62,6 +64,7 @@ static int int_str_index [] = {7, 6, 5, 4, 3, 2, 1, 0}; // RL inorder
 static int str_int_index [] = {4, 6, 2, 7, 5, 3, 1, 0}; // RL BFS
 static int str_str_index [] = {4, 2, 1, 0, 3, 6, 5, 7}; // LR preorder
 
+
 int
 main (int, ACE_TCHAR *[])
 {
@@ -92,6 +95,282 @@ main (int, ACE_TCHAR *[])
   int_str_test.run_test ();
   str_int_test.run_test ();
   str_str_test.run_test ();
+
+// ======= Stress Test contributed by Klaus H. Wolf <hw@cyland.com> ==================
+
+  ACE_RB_Tree<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex> tree;
+
+  tree.bind (ACE_CString ("51"),  1);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("13"),  2);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("36"),  3);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("15"),  4);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("22"),  5);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("25"),  6);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("42"),  7);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("48"),  8);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("03"),  9);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("56"), 10);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("28"), 11);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("55"), 12);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("21"), 13);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("62"), 14);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("18"), 15);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("20"), 16);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("26"), 17);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("29"), 18);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("50"), 19);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("05"), 20);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("59"), 21);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("65"), 22);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("66"), 23);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("45"), 24);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("34"), 25);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("27"), 26);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("40"), 27);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("30"), 28);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("64"), 29);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("11"), 30);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("16"), 31);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("47"), 32);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("10"), 33);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("37"), 34);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("09"), 35);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("54"), 36);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("23"), 37);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("44"), 38);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("19"), 39);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("00"), 40);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("04"), 41);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("63"), 42);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("08"), 43);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("39"), 44);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("31"), 45);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("02"), 46);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("33"), 47);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("60"), 48);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("61"), 49);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("57"), 50);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("43"), 51);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("46"), 52);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("38"), 53);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("01"), 54);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("12"), 55);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("24"), 56);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("52"), 57);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("07"), 58);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("14"), 59);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("06"), 60);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("58"), 61);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("49"), 62);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("17"), 63);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("53"), 64);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("32"), 65);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("35"), 66);
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.bind (ACE_CString ("41"), 67);
+  ACE_ASSERT (tree.test_invariant () == 0);
+
+  tree.unbind (ACE_CString ("51"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("13"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("36"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("15"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("22"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("25"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("42"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("48"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("03"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("56"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("28"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("55"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("21"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("62"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("18"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("20"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("26"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("29"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("50"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("05"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("59"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("65"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("66"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("45"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("34"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("27"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("40"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("30"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("64"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("11"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("16"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("47"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("10"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("37"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("09"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("54"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("23"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("44"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("19"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("00"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("04"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("63"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("08"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("39"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("31"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("02"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("33"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("60"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("61"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("57"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("43"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("46"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("38"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("01"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("12"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("24"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("52"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("07"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("14"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("06"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("58"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("49"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("17"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("53"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("32"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("35"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+  tree.unbind (ACE_CString ("41"));
+  ACE_ASSERT (tree.test_invariant () == 0);
+
+// ======== End Stress Test ===================
 
   ACE_END_TEST;
   return 0;
@@ -280,6 +559,11 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_ite
 
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_RB_Tree<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Node<ACE_CString, int>;
+template class ACE_RB_Tree_Iterator_Base<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Iterator<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
+template class ACE_RB_Tree_Reverse_Iterator<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Test<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<int, int>;
@@ -305,9 +589,15 @@ template class ACE_RB_Tree_Iterator_Base<const char *, const char *, ACE_Less_Th
 template class ACE_RB_Tree_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Reverse_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
 template class ACE_Less_Than<int>;
+template class ACE_Less_Than<ACE_CString>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
+#pragma instantiate ACE_RB_Tree<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Node<ACE_CString, int>
+#pragma instantiate ACE_RB_Tree_Iterator_Base<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Iterator<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree_Reverse_Iterator<ACE_CString, int, ACE_Less_Than<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Test<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<int, int>
@@ -333,5 +623,6 @@ template class ACE_Less_Than<int>;
 #pragma instantiate ACE_RB_Tree_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Reverse_Iterator<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_Less_Than<int>
+#pragma instantiate ACE_Less_Than<ACE_CString>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

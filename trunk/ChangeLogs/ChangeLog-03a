@@ -1,3 +1,17 @@
+Sat Dec 30 15:10:00 2000  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/RB_Tree.{cpp, h, i}
+          tests/RB_Tree_Test.cpp: Fixed a bug in RB_delete_fixup that occurs when
+          the pointer to be fixed up is zero - solution is to pass in a pointer to
+          its parent, and maintain the parent pointer and fixup pointer in tandem
+          during the fixup function.  Also added a few functions to test the red-black
+          invariant(s) at each node of the tree, and added an invariant test call after
+          each bind and unbind in a new stress test in RB_Tree_Test.cpp.
+
+          Thanks to Klaus H. Wolf <hw@cyland.com> for pointing out the problem and for
+          contributing the stress test (which in a slightly modified form is now part
+          of the RB_Tree_Test.cpp code) that reproduced the problem.
+
 Sat Dec 30 11:12:08 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Hash_Map_Manager_T.h:
