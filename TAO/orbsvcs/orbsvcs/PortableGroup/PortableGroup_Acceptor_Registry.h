@@ -41,13 +41,13 @@ class TAO_PortableGroup_Export TAO_PortableGroup_Acceptor_Registry
 {
 public:
 
+  /**
+   * @struct Entry
+   *
+   * @brief Value field of the portable group acceptor registry.
+   */
   struct Entry
   {
-    // = TITLE
-    //     Value field of the portable group acceptor registry.
-    //
-    // = DESCRIPTION
-
     /// Pointer to the acceptor for this GroupId.
     TAO_Acceptor *acceptor;
 
