@@ -7,7 +7,7 @@ Fri Feb 28 07:49:00 2003  Chad Elliott  <elliott_c@ociweb.com>
           template method to collect the lines with possible line
           continuation.
 
-Fri Feb 28 12:33:01 UTC 2003  Ossama Othman  <ossama@uci.edu>
+Fri Feb 28 12:33:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SString.cpp:
           Also do the explicit template instantiations
