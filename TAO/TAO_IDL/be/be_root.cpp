@@ -2,7 +2,7 @@
 //
 // = LIBRARY
 //    TAO IDL
-// 
+//
 // = FILENAME
 //    be_root.cpp
 //
@@ -12,9 +12,9 @@
 //
 // = AUTHOR
 //    Copyright 1994-1995 by Sun Microsystems, Inc.
-//    and 
+//    and
 //    Aniruddha Gokhale
-// 
+//
 // ============================================================================
 
 #include	"idl.h"
@@ -31,16 +31,8 @@ be_root::be_root (UTL_ScopedName *n, UTL_StrList *p)
   : AST_Root (n, p),
     AST_Decl (AST_Decl::NT_root, n, p),
     UTL_Scope (AST_Decl::NT_root)
-    
+
 {
-  // computes the repoID
-  compute_repoID ();
-
-  // computes the fully scoped name
-  compute_fullname ();
-
-  // compute the flattened fully scoped name 
-  compute_flatname ();
 }
 
 // =====================================================
@@ -50,16 +42,6 @@ be_root::be_root (UTL_ScopedName *n, UTL_StrList *p)
 // Starting point for the code generation. Called inside BE_produce ()
 int be_root::gen_idl2cplusplus_mapping (void)
 {
-  int i;  // loop index
-  UTL_ScopeActiveIterator	*si;  // instance of a scope iterator
-  AST_Decl			*d;   // points to an individual node in the
-				      // chain of nodes in the current scope
-
-  // Macro to avoid "warning: unused parameter" type warning.
-  ACE_UNUSED_ARG (d);
-  ACE_UNUSED_ARG (si);
-  ACE_UNUSED_ARG (i);
-
   // this is the main starting point from which the files are generated. We
   // delegate the task of code generation to a special Code Generation
   // object. This allows a number of different front ends to access the services
@@ -67,7 +49,7 @@ int be_root::gen_idl2cplusplus_mapping (void)
 
   // C++ mapping involves producing 6 files. These include the client and
   // server side headers, the client and server side inlines, as well as client
-  // stubs and server skeletons. 
+  // stubs and server skeletons.
   if (this->gen_client_header () == -1)
     {
       ACE_ERROR ((LM_ERROR, "be_root: Error generating client header file: %s\n",
@@ -206,8 +188,8 @@ int be_root::gen_server_header (void)
   // delegate the task of code generation to the scope
   if (be_scope::gen_server_header () == -1)
     {
-      ACE_ERROR ((LM_ERROR, 
-                  "be_root: server code generation for scope failed\n")); 
+      ACE_ERROR ((LM_ERROR,
+                  "be_root: server code generation for scope failed\n"));
       return -1;
     }
 

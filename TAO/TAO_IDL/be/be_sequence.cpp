@@ -136,10 +136,6 @@ be_sequence::gen_client_header (void)
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-      ch = cg->client_header ();
-
-      ch->indent (); // start with the current indentation level
-
       // first create a name for ourselves. We defer name creation for
       // ourselves to this point since named sequences should get the name
       // of the typedef node, else some other technique of name generation
@@ -150,6 +146,18 @@ be_sequence::gen_client_header (void)
                              "be_sequence::gen_client_header - name creation failed\n"),
                             -1);
         }
+
+      ch = cg->client_header ();
+
+      // generate the ifdefined macro for the sequence type
+      ch->gen_ifdef_macro (this->flatname ());
+
+      *ch << "// *************************************************************"
+          << nl;
+      *ch << "// class " << this->local_name () << nl;
+      *ch << "// *************************************************************\n\n";
+
+      ch->indent (); // start with the current indentation level
 
       *ch << "class " << this->local_name () << nl;
       *ch << "{" << nl;
@@ -186,7 +194,7 @@ be_sequence::gen_client_header (void)
       // slightly different as shown below
       if (this->unbounded_)
         {
-          *ch << local_name () << " (const CORBA::ULong max);" << nl;
+          *ch << local_name () << " (CORBA::ULong max);" << nl;
           *ch << local_name () << " (CORBA::ULong max, CORBA::ULong length, " << nl;
         }
       else
@@ -198,7 +206,7 @@ be_sequence::gen_client_header (void)
       *ch << "\t";
       if (s->gen_code (bt, this) == -1)
         return -1;
-      *ch << " value, CORBA::Boolean release=CORBA::B_FALSE);" << nl;
+      *ch << " *value, CORBA::Boolean release=CORBA::B_FALSE);" << nl;
       *ch << local_name () << "(const " << local_name () <<
         " &); // copy constructor" << nl;
       *ch << "~" << this->local_name () << " (void);" << nl;
@@ -235,21 +243,9 @@ be_sequence::gen_client_header (void)
       *ch << "CORBA::Boolean release_;\n";
       ch->decr_indent ();
       *ch << "};\n";
+      ch->indent ();
       *ch << "typedef " << this->local_name () << "* "
-	  << this->local_name () << "_ptr;" << nl;
-
-      // generate the var and out types
-      if (this->gen_var_defn () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_sequence::gen_client_hdr - _var defn failed\n"), -1);
-        }
-      if (this->gen_out_defn () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "be_sequence::gen_client_hdr - _out defn failed\n"), -1);
-        }
-      cg->pop ();
+	  << this->local_name () << "_ptr;\n";
 
       // Generate the typecode decl
       if (this->is_nested ())
@@ -266,6 +262,32 @@ be_sequence::gen_client_header (void)
           *ch << "extern CORBA::TypeCode_ptr " << this->tc_name
             ()->last_component () << ";\n\n";
         }
+
+      ch->gen_endif (); // endif macro
+
+      // generate the ifdefined macro for the var type
+      ch->gen_ifdef_macro (this->flatname (), "_var");
+
+      // generate the var and out types
+      if (this->gen_var_defn () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_sequence::gen_client_hdr - _var defn failed\n"), -1);
+        }
+      ch->gen_endif ();
+
+      // generate the ifdefined macro for the var type
+      ch->gen_ifdef_macro (this->flatname (), "_out");
+
+      if (this->gen_out_defn () == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_sequence::gen_client_hdr - _out defn failed\n"), -1);
+        }
+      ch->gen_endif ();
+
+      cg->pop ();
+
       this->cli_hdr_gen_ = I_TRUE;
     } // if (cli_hdr_gen_)
   return 0;
@@ -284,7 +306,7 @@ be_sequence::gen_client_stubs (void)
       // retrieve a singleton instance of the code generator
       TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
-      cs = cg->client_stubs ();
+      cs = cg->client_stubs (); // retrieve the client stubs stream
 
       // retrieve base type
       bt = be_type::narrow_from_decl (this->base_type ());
@@ -311,6 +333,89 @@ be_sequence::gen_client_stubs (void)
           ACE_ERROR_RETURN ((LM_ERROR,
                 "be_sequence::gen_client_stubs - invalid state\n"), -1);
         }
+
+      *cs << "// *************************************************************"
+          << nl;
+      *cs << "// class " << this->name () << nl;
+      *cs << "// *************************************************************\n\n";
+
+      // copy constructor
+      cs->indent ();
+      *cs << "// copy constructor" << nl;
+      *cs << this->name () << "::" << this->local_name () <<
+        " (const " << this->name () << " &seq)" << nl;
+      *cs << "\t: maximum_ (seq.maximum_)," << nl;
+      *cs << "\t  length_ (seq.length_)," << nl;
+      *cs << "\t  buffer_ (" << this->name () << "::allocbuf (seq.maximum_)),"
+          << nl;
+      *cs << "\t  release_ (1) // we always own it" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      // copy each element
+      *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
+      *cs << "\tthis->buffer_[i] = seq.buffer_[i];\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
+
+      // destructor
+      cs->indent ();
+      *cs << "// destructor" << nl;
+      *cs << this->name () << "::~" << this->local_name () << " (void)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      *cs << "if (this->release_) // we own the buffer" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      // only for obj references and strings, we need to free each individual
+      // element
+      switch (bt->node_type ())
+        {
+        case AST_Decl::NT_interface:
+        case AST_Decl::NT_interface_fwd:
+        case AST_Decl::NT_string:
+          {
+            // XXXASG - TODO (tricky)
+          }
+          break;
+        default:
+          break;
+        }
+      // call freebuf
+      *cs << this->name () << "::freebuf (this->buffer_);\n";
+      cs->decr_indent ();
+      *cs << "}\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
+
+      // assignment operator
+      cs->indent ();
+      *cs << "// assignment operator" << nl;
+      *cs << this->name () << "& " << nl;
+      *cs << this->name () << "::operator=" <<
+        " (const " << this->name () << " &seq)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      // check for equality
+      *cs << "if (this == &seq) return *this;" << nl;
+      // otherwise, if release flag, free the buffer
+      *cs << "if (this->release_)" << nl;
+      *cs << "{\n";
+      cs->incr_indent ();
+      *cs << this->name () << "::freebuf (this->buffer_);\n";
+      cs->decr_indent ();
+      *cs << "}" << nl;
+
+      *cs << "this->length_ = seq.length_;" << nl;
+      *cs << "this->maximum_ = seq.maximum_;" << nl;
+      *cs << "this->buffer_ = " << this->name () << "::allocbuf (seq.maximum_),"
+          << nl;
+      *cs << "this->release_ =1; // we always own it" << nl;
+      // copy each element
+      *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
+      *cs << "\tthis->buffer_[i] = seq.buffer_[i];" << nl;
+      *cs << "return *this;\n";
+      cs->decr_indent ();
+      *cs << "}\n\n";
 
       // generate the typecode information here
       cs->indent (); // start from current indentation level
@@ -420,7 +525,126 @@ be_sequence::gen_client_inline (void)
       *ci << "}\n\n";
 
       // default constructor
+      ci->indent ();
+      *ci << "//default constructor" << nl;
+      *ci << "ACE_INLINE " << nl;
+      *ci << this->name () << "::" << this->local_name () << " (void)" << nl;
+      // for bounded and unbounded, initialize the data members differently
+      if (this->unbounded_)
+        {
+          *ci << "\t: maximum_ (0)," << nl;
+          *ci << "\t  length_ (0)," << nl;
+          *ci << "\t  buffer_ (0)," << nl;
+          *ci << "\t  release_ (0) // does not own" << nl;
+        }
+      else
+        {
+          *ci << "\t: maximum_ (" << this->max_size () << ")," << nl;
+          *ci << "\t  length_ (0)," << nl;
+          *ci << "\t  buffer_ (" << this->name () << "::allocbuf (" <<
+            this->max_size () << "))," << nl;
+          *ci << "\t  release_ (1) // owns" << nl;
+        }
+      *ci << "{}\n\n";
 
+      // constructor only for unbounded seq. This takes in "max length"
+      if (this->unbounded_)
+        {
+          ci->indent ();
+          *ci << "// constructot for unbounded seq" << nl;
+          *ci << "ACE_INLINE " << nl;
+          *ci << this->name () << "::" << this->local_name () <<
+            "(CORBA::ULong max )" << nl;
+          *ci << "\t: maximum_ (max)," << nl;
+          *ci << "\t  length_ (0)," << nl;
+          *ci << "\t  buffer_ (" << this->name () << "::allocbuf (max))," << nl;
+          *ci << "\t  release_ (1) // owns" << nl;
+          *ci << "{}\n\n";
+        }
+
+      // constructor that takes in the data buffer
+      // XXXASG - may not work for seq of strings or obj refs
+      ci->indent ();
+      *ci << "// constructor from data buffer" << nl;
+      *ci << "ACE_INLINE " << nl;
+      *ci << this->name () << "::" << this->local_name ();
+      // depending on whether we are bounded ot not, the constructor has
+      // different sets of parameters
+      if (this->unbounded_)
+        {
+          *ci << " (CORBA::ULong max, CORBA::ULong length, " << nl;
+        }
+      else
+        {
+          // bounded seq does not take the "max" argument
+          *ci << " (CORBA::ULong length, " << nl;
+        }
+      *ci << "\t";
+      if (s->gen_code (bt, this) == -1)
+        return -1;
+      *ci << " *value, CORBA::Boolean release)" << nl;
+      // for unbounded we have the additional max parameter
+      if (this->unbounded_)
+        {
+          *ci << "\t: maximum_ (max)," << nl;
+        }
+      else
+        {
+          *ci << "\t: maximum_ (" << this->max_size () << ")," << nl;
+        }
+      *ci << "\t  length_ (length)," << nl;
+      *ci << "\t  buffer_ (value)," << nl;
+      *ci << "\t  release_ (release) // ownership depends on release" << nl;
+      *ci << "{}\n\n";
+
+      // the maximum method
+      ci->indent ();
+      *ci << "ACE_INLINE CORBA::ULong" << nl;
+      *ci << this->name () << "::maximum (void) const" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->maximum_;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // the length method
+      ci->indent ();
+      *ci << "ACE_INLINE CORBA::ULong" << nl;
+      *ci << this->name () << "::length  (void) const" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->length_;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // set the length
+      ci->indent ();
+      *ci << "ACE_INLINE void" << nl;
+      *ci << this->name () << "::length (CORBA::ULong length)" << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "this->length_ = length;\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // subscript operators (1) read-only, (2) read/write
+      ci->indent ();
+      *ci << "ACE_INLINE ";
+      if (s->gen_code (bt, this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+             "be_sequence - base type code gen failure\n"), -1);
+        }
+      *ci << " &" << nl;
+      *ci << this->name () << "::operator[] (CORBA::ULong index) // read/write"
+         << nl;
+      *ci << "{\n";
+      ci->incr_indent ();
+      *ci << "return this->buffer_[index];\n";
+      ci->decr_indent ();
+      *ci << "}\n\n";
+
+      // generate the implementations for the _var and _impl classes
       if (this->gen_var_impl () == -1)
         {
           ACE_ERROR ((LM_ERROR, "be_sequence: _var impl code gen failed\n"));
@@ -476,6 +700,12 @@ be_sequence::gen_var_defn (void)
   TAO_CodeGen *cg = TAO_CODEGEN::instance ();
 
   ch = cg->client_header ();
+
+  *ch << "// *************************************************************"
+      << nl;
+  *ch << "// class " << this->name () << "_var" << nl;
+  *ch << "// *************************************************************\n\n";
+
   cg->push (TAO_CodeGen::TAO_SEQUENCE_BODY_CH);
   s = cg->make_state ();
 
