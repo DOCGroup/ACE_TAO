@@ -8,6 +8,7 @@
 #include "EDF_Scheduler.h"
 #include <sys/types.h>
 #include <sys/mman.h>
+#include "cpuload.h"
 
 #if defined (ACE_HAS_DSUI)
 #include <ace/Counter.h>
@@ -77,64 +78,13 @@ Complex_Server_i::test_method2 (CORBA::Long exec_duration ACE_ENV_ARG_DECL)
               "Request in thread %t, prio = %d,"
               "exec duration = %u\n", prio, exec_duration));
 
-  static CORBA::ULong prime_number = 9619899;
+timer.start();
+timeval tv;
 
-  ACE_Time_Value compute_count_down_time (exec_duration, 0);
-  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+tv.tv_sec = exec_duration/1000;
+tv.tv_usec = (exec_duration%1000)*1000;
 
-  //Applicable only for CV based implementations
-  //yield every 1 sec
-  ACE_Time_Value yield_interval (50,0);
-
-  ACE_Time_Value yield_count_down_time (yield_interval);
-  ACE_Countdown_Time yield_count_down (&yield_count_down_time);
-
-  timer.start ();
-  int j=0;
-  while (compute_count_down_time > ACE_Time_Value::zero)
-    {
-      ACE::is_prime (prime_number,
-		     2,
-		     prime_number / 2);
-
-      ++j;
-
-#ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0)
-        {
-          ACE_DEBUG ((LM_DEBUG,
-            "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration));
-        }
-#endif
-      if (j%1000 == 0)
-        {
-//          ACE_Time_Value run_time = ACE_OS::gettimeofday ();
-//          task_stats_.sample (ACE_UINT64 (run_time.msec ()), guid);
-        }
-
-      compute_count_down.update ();
-
-      if (enable_yield_)
-        {
-          yield_count_down.update ();
-          if (yield_count_down_time <= ACE_Time_Value::zero)
-            {
-              CORBA::Policy_var sched_param_policy =
-                CORBA::Policy::_duplicate (current_->
-                                           scheduling_parameter(ACE_ENV_SINGLE_ARG_PARAMETER));
-
-              const char * name = 0;
-
-              CORBA::Policy_ptr implicit_sched_param = 0;
-              current_->update_scheduling_segment (name,
-                                                   sched_param_policy.in (),
-                                                   implicit_sched_param
-                                                   ACE_ENV_ARG_PARAMETER);
-              yield_count_down_time = yield_interval;
-              yield_count_down.start ();
-            }
-        }
-    }
+CPULoad::run(tv);
 
   timer.stop ();
   timer.elapsed_time (elapsed_time);
