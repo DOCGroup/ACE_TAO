@@ -1518,16 +1518,15 @@ CORBA::ORB_init (int &argc,
                                       CORBA::COMPLETED_NO));
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
+  TAO_ORB_Core_Auto_Ptr safe_oc (oc);
+
   // Initialize the ORB Core instance.
-  int result = oc->init (argc, argv);
+  int result = safe_oc.get ()->init (argc, argv, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Check for errors and return 0 if error.
   if (result == -1)
-    {
-      oc->fini ();
-
       ACE_THROW_RETURN (CORBA::BAD_PARAM (), CORBA::ORB::_nil ());
-    }
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
@@ -1536,13 +1535,12 @@ CORBA::ORB_init (int &argc,
 
   // Before returning remember to store the ORB into the table...
   if (TAO_ORB_Table::instance ()->bind (orbid, oc) != 0)
-    {
-      oc->fini ();
+    ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
+                                       CORBA::COMPLETED_NO),
+                      CORBA::ORB::_nil ());
 
-      ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
-                                         CORBA::COMPLETED_NO),
-                        CORBA::ORB::_nil ());
-    }
+  // It is safe to release the ORB_Core from the auto_ptr now.
+  oc = safe_oc.release ();
 
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.

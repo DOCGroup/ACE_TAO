@@ -73,9 +73,6 @@ public:
   ~TAO_ORB_Core_TSS_Resources (void);
   // destructor
 
-  int owns_resources_;
-  // Set to 1 if this object owns the resources below
-
   // = The rest of the resources are not currently in use, just a plan
   //   for the future...
 
@@ -127,6 +124,7 @@ class TAO_Export TAO_ORB_Core
   //   Resource_Factory will simply return a pointer to the global
   //   instance.
   //
+  friend class TAO_ORB_Core_Auto_Ptr;
   friend class TAO_ORB_Table;
   friend CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          char *argv[],
@@ -334,7 +332,7 @@ public:
   int get_thread_priority (CORBA::Short &priority);
   int set_thread_priority (CORBA::Short  priority);
   // Accessor and modifier to the current thread priority, used to
-  // implement the RTCOBA::Current interface, but it is faster for
+  // implement the RTCORBA::Current interface, but it is faster for
   // some critical components.
   // If TAO_HAS_RT_CORBA is not defined the operations are noops.
 
@@ -379,7 +377,7 @@ public:
 
   TAO_Stub *create_stub_object (const TAO_ObjectKey &key,
                                 const char *type_id,
-                                CORBA_Environment &ACE_TRY_ENV =
+                                CORBA::Environment &ACE_TRY_ENV =
                                     TAO_default_environment ());
   // Makes sure that the ORB is open and then creates a TAO_Stub
   // based on the endpoint.
@@ -394,7 +392,7 @@ protected:
                          ACE_CString &iiop_endpoint);
   // Set the endpoint
 
-  int init (int &argc, char **argv);
+  int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
   // Initialize the guts of the ORB Core.  It is intended that this be
   // called by <CORBA::ORB_init>.
 
@@ -410,11 +408,10 @@ protected:
   TAO_Object_Adapter *object_adapter_i (void);
   // Get <Object Adapter>, assume the lock is held...
 
-  ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources*);
-  ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources*);
-  // Implement the input_cdr_dbblock_allocator() routines using
-  // pre-fetched TSS resources, this minimizes the number of calls to
-  // them.
+  ACE_Allocator *input_cdr_dblock_allocator_i (TAO_ORB_Core_TSS_Resources *);
+  ACE_Allocator *input_cdr_buffer_allocator_i (TAO_ORB_Core_TSS_Resources *);
+  // Implement the input_cdr_*_allocator() routines using pre-fetched
+  // TSS resources.  This minimizes the number of calls to them.
 
   int open (CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
@@ -561,7 +558,39 @@ protected:
   // Flag which denotes that the open method was called.
 
   TAO_Priority_Mapping *priority_mapping_;
-  // The priority mapping..
+  // The priority mapping.
+
+  int svc_config_argc_;
+  // The number of arguments in the service configurator argument vector.
+
+  CORBA::String *svc_config_argv_;
+  // The argument vector for the service configurator.
+};
+
+// ****************************************************************
+
+// Define a TAO_ORB_Core auto_ptr class
+class TAO_ORB_Core_Auto_Ptr
+{
+  // = TITLE
+  //     Implements the draft C++ standard auto_ptr abstraction.
+  //     This class allows one to work ORB_Core Objects *Only*!
+public:
+  // = Initialization and termination methods
+  /* explicit */ TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
+  TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &ap);
+  TAO_ORB_Core_Auto_Ptr &operator= (TAO_ORB_Core_Auto_Ptr &rhs);
+  ~TAO_ORB_Core_Auto_Ptr (void);
+
+  // = Accessor methods.
+  TAO_ORB_Core &operator *() const;
+  TAO_ORB_Core *get (void) const;
+  TAO_ORB_Core *release (void);
+  void reset (TAO_ORB_Core *p = 0);
+  TAO_ORB_Core *operator-> () const;
+
+protected:
+  TAO_ORB_Core *p_;
 };
 
 // ****************************************************************

@@ -153,11 +153,10 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_INET_Addr addr;
 
-  if (ACE_OS::strchr (address,
-                      ':') == 0)
+  if (ACE_OS::strchr (address, ':') == address)
     {
-      // Assume the address is a port number or port name and obtain
-      // the fully qualified domain name.
+      // The address is a port number or port name, and obtain the
+      // fully qualified domain name.  No hostname was specified.
 
       char buffer[MAXHOSTNAMELEN + 1];
       if (addr.get_host_name (buffer,
@@ -165,7 +164,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
         return -1;
 
       // First convert the port into a usable form.
-      if (addr.set (address) != 0)
+      if (addr.set (address + sizeof (':')) != 0)
         return -1;
 
       // Now reset the port and set the host.
@@ -174,7 +173,15 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                     1) != 0)
         return -1;
     }
+  else if (ACE_OS::strchr (address, ':') == 0)
+    {
+      // The address is a hostname.  No port was specified, so assume
+      // port zero (port will be chosen for us).
+      if (addr.set ((unsigned short) 0, address) != 0)
+        return -1;
+    }
   else if (addr.set (address) != 0)
+    // Host and port were specified.
     return -1;
 
   return this->open_i (orb_core, addr);

@@ -284,7 +284,7 @@ ACE_INLINE void
 TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::reset");
-  if (this->get () != p)
+  if (this->get () != p && this->get () != 0)
     this->get ()->_decr_refcnt ();
   this->p_ = p;
 }
