@@ -748,59 +748,44 @@ be_valuetype::accept (be_visitor *visitor)
   return visitor->visit_valuetype (this);
 }
 
-ACE_CDR::ULong 
+ACE_CDR::ULong
 be_valuetype::data_members_count (AST_Field::Visibility vis)
 {
   ACE_CDR::ULong count = 0;
 
-  // proceed if the number of members in our scope is greater than 0
-  if (this->nmembers () > 0)
-    {      
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      0);
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      AST_Decl *d = si.item ();
 
-      // continue until each element is visited
-      for (;!si->is_done ();si->next())
+      if (!d)
         {
-          AST_Decl *d = si->item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_valuetype::data_members_count - "
+                             "bad node in this scope\n"), 0);
+        }
 
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((
-                  LM_ERROR,
-                  "(%N:%l) be_valuetype::data_members_count - "
-                  "bad node in this scope\n"), 0);
-            }
+      AST_Field *field = AST_Field::narrow_from_decl (d);
 
-          AST_Field *field = AST_Field::narrow_from_decl (d);
+      if (!field)
+        {
+          continue;
+        }
 
-          if (!field)
-            {
-              continue;     
-            }
-
-          if (vis != AST_Field::vis_NA)
-            {
-              if (vis == field->visibility ()) ++count;
-            }
-          else
-            {
-              ++count;
-            }
-
-        } // end of for loop
-
-      delete si;
-    }
+      if (vis != AST_Field::vis_NA)
+        {
+          if (vis == field->visibility ()) ++count;
+        }
+      else
+        {
+          ++count;
+        }
+    } // end of for loop
   return count;
 }
 
-idl_bool 
+idl_bool
 be_valuetype::in_recursion (AST_Type *node)
 {
   if (node == 0)
@@ -808,70 +793,63 @@ be_valuetype::in_recursion (AST_Type *node)
       node = this;
     }
 
-  // Proceed if the number of members in our scope is greater than 0.
-  if (this->nmembers () > 0)
-    {      
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator si (this,
-                                  UTL_Scope::IK_decls);
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
+    {
+      AST_Decl *d = si.item ();
 
-      // Continue until each element is visited.
-      for (; !si.is_done (); si.next())
+      if (!d)
         {
-          AST_Decl *d = si.item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_valuetype::in_recursion - "
+                             "bad node in this scope\n"),
+                            0);
+        }
 
-          if (!d)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_valuetype::in_recursion - "
-                                 "bad node in this scope\n"), 
-                                0);
-            }
+      AST_Field *field = AST_Field::narrow_from_decl (d);
 
-          AST_Field *field = AST_Field::narrow_from_decl (d);
+      if (!field)
+        {
+          continue;
+        }
 
-          if (!field)
-            {
-              continue;
-            }
+      AST_Type *type = field->field_type ();
 
-          AST_Type *type = field->field_type ();
+      // A valuetype may contain itself as a member. This will not
+      // cause a problem when checking if the valuetype itself is
+      // recursive, but if another valuetype contains a recursive
+      // one, the string compare below is not sufficient, and we
+      // will go into an infinite recursion of calls to in_recursion ;-).
+      // The check below will catch that use case.
+      if (this == type)
+        {
+          return 1;
+        }
 
-          // A valuetype may contain itself as a member. This will not
-          // cause a problem when checking if the valuetype itself is
-          // recursive, but if another valuetype contains a recursive
-          // one, the string compare below is not sufficient, and we
-          // will go into an infinite recursion of calls to in_recursion ;-).
-          // The check below will catch that use case.
-          if (this == type)
-            {
-              return 1;
-            }
-          
-          if (!type)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_valuetype::in_recursion - "                  
-                                 "bad base type\n"), 
-                                0);
-            }
+      if (!type)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_valuetype::in_recursion - "
+                             "bad base type\n"),
+                            0);
+        }
 
-          // IDL doesn't have such a feature as name reuse so
-          // just compare fully qualified names.      
-          if (!ACE_OS::strcmp (node->full_name (),
-                               type->full_name ()))
-            {
-              return 1;
-            }
+      // IDL doesn't have such a feature as name reuse so
+      // just compare fully qualified names.
+      if (!ACE_OS::strcmp (node->full_name (),
+                           type->full_name ()))
+        {
+          return 1;
+        }
 
-          // Now hand over to our field type.
-          if (type->in_recursion (node))
-            {
-              return 1;
-            }
+      // Now hand over to our field type.
+      if (type->in_recursion (node))
+        {
+          return 1;
+        }
 
-        } // end of for loop
-    }
+    } // end of for loop
 
   return 0;
 }

@@ -150,57 +150,43 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
   // Now our customized valuetype is created, we have to
   // add now the operations and attributes to the scope.
 
-  if (node->nmembers () > 0)
+  this->elem_number_ = 0;
+
+  // initialize an iterator to iterate thru our scope
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
-
-      this->elem_number_ = 0;
-      // continue until each element is visited
-      while (!si->is_done ())
+      AST_Decl *d = si.item ();
+      if (!d)
         {
-          AST_Decl *d = si->item ();
-          if (!d)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_amh_pre_proc::"
+                             "visit_interface - "
+                             "bad node in this scope\n"),
+                            0);
+        }
+
+      if (d->node_type () == AST_Decl::NT_attr)
+        {
+          be_attribute *attribute = be_attribute::narrow_from_decl (d);
+
+          if (!attribute)
             {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_amh_pre_proc::"
-                                 "visit_interface - "
-                                 "bad node in this scope\n"),
-                                0);
-
+              return 0;
             }
+        }
+      else
+        {
+          be_operation* operation = be_operation::narrow_from_decl (d);
 
-          if (d->node_type () == AST_Decl::NT_attr)
+          if (operation)
             {
-              be_attribute *attribute = be_attribute::narrow_from_decl (d);
-
-              if (!attribute)
-                {
-                  return 0;
-                }
+              this->create_response_handler_operation (operation,
+                                                       response_handler);
             }
-          else
-            {
-              be_operation* operation = be_operation::narrow_from_decl (d);
-
-              if (operation)
-                {
-                  this->create_response_handler_operation (operation,
-                                                           response_handler);
-                }
-
-            }
-
-          si->next ();
-        } // end of while loop
-
-      delete si;
-    } // end of if
+        }
+    }
   return 1;
 }
 
@@ -260,49 +246,36 @@ be_visitor_amh_pre_proc::create_response_handler_operation (be_operation *node,
 
   // Iterate over the arguments and put all the out and inout arguments
   // into the new method.
-  if (node->nmembers () > 0)
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      0);
+      AST_Decl *d = si.item ();
 
-      // continue until each element is visited
-      while (!si->is_done ())
+      if (!d)
         {
-          AST_Decl *d = si->item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_amh_pre_proc::"
+                             "create_response_handler_operation - "
+                             "bad node in this scope\n"),
+                            -1);
 
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_amh_pre_proc::"
-                                 "create_response_handler_operation - "
-                                 "bad node in this scope\n"),
-                                -1);
+        }
 
-            }
+      //be_decl *arg = be_decl::narrow_from_decl (d);
+      AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
 
-          //be_decl *arg = be_decl::narrow_from_decl (d);
-          AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
+      if (original_arg->direction () == AST_Argument::dir_INOUT ||
+          original_arg->direction () == AST_Argument::dir_OUT)
+        {
+          // Create the argument
+          be_argument *arg = new be_argument (AST_Argument::dir_IN,
+                                              original_arg->field_type (),
+                                              original_arg->name ());
 
-          if (original_arg->direction () == AST_Argument::dir_INOUT ||
-              original_arg->direction () == AST_Argument::dir_OUT)
-            {
-              // Create the argument
-              be_argument *arg = new be_argument (AST_Argument::dir_IN,
-                                                  original_arg->field_type (),
-                                                  original_arg->name ());
-
-              operation->add_argument_to_scope (arg);
-            }
-          si->next ();
-        } // end of while loop
-
-      delete si;
-    } // end of if
+          operation->add_argument_to_scope (arg);
+        }
+    }
 
   operation->set_defined_in (response_handler);
 

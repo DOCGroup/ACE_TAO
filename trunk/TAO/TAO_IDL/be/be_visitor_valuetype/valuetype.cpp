@@ -49,123 +49,99 @@ be_visitor_valuetype::visit_valuetype (be_valuetype *)
 int
 be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 {
-  // proceed if the number of members in our scope is greater than 0
-  if (node->nmembers () > 0)
+  int n_processed = 0;
+
+  this->elem_number_ = 0;
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      int n_processed = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      this->elem_number_ = 0;
+      AST_Decl *d = si.item ();
 
-      // continue until each element is visited
-      for (;!si->is_done ();si->next())
+      if (!d)
         {
-          AST_Decl *d = si->item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "bad node in this scope\n"), -1);
+        }
 
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), -1);
+      AST_Field *field = AST_Field::narrow_from_decl (d);
 
-            }
-
-          AST_Field *field = AST_Field::narrow_from_decl (d);
-
-          if (field && field->visibility() == AST_Field::vis_PRIVATE)
-            {
-              continue;      // ignore private fields in this run
-              // AST_Attribute derives from AST_Field, so test for
-              // vis_PRIVATE is ok (the attribute has it set to vis_NA)
-            }
-
-          be_decl *bd = be_decl::narrow_from_decl (d);
-          // set the scope node as "node" in which the code is being
-          // generated so that elements in the node's scope can use it
-          // for code generation
-
-          this->ctx_->scope (node->decl ());
-
-          // set the node to be visited
-          this->ctx_->node (bd);
-          this->elem_number_++;
-
-          if (bd == 0 || bd->accept (this) == -1)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"), -1);
-
-            }
-        } // end of for loop
-
-      delete si;
-
-      // next run with private fields only
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      this->elem_number_ = 0;
-      // continue until each element is visited
-      for (;!si->is_done ();si->next())
+      if (field && field->visibility() == AST_Field::vis_PRIVATE)
         {
-          AST_Decl *d = si->item ();
+          continue;      // ignore private fields in this run
+          // AST_Attribute derives from AST_Field, so test for
+          // vis_PRIVATE is ok (the attribute has it set to vis_NA)
+        }
 
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), -1);
+      be_decl *bd = be_decl::narrow_from_decl (d);
+      // set the scope node as "node" in which the code is being
+      // generated so that elements in the node's scope can use it
+      // for code generation
 
-            }
+      this->ctx_->scope (node->decl ());
 
-          AST_Field *field = AST_Field::narrow_from_decl (d);
+      // set the node to be visited
+      this->ctx_->node (bd);
+      this->elem_number_++;
 
-          if (!field ||
-              (field && field->visibility() != AST_Field::vis_PRIVATE))
-            {
-              continue;      // only private fields in this run
-            }
+      if (bd == 0 || bd->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "codegen for scope failed\n"), -1);
+          
+        }
+    } // end of for loop
 
-          ++ n_processed;
+  this->elem_number_ = 0;
+  for (UTL_ScopeActiveIterator sj (node, UTL_Scope::IK_decls);
+       !sj.is_done ();
+       sj.next())
+    {
+      AST_Decl *d = sj.item ();
 
-          if (n_processed == 1)
-            {
-              this->begin_private ();
-            }
+      if (!d)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "bad node in this scope\n"), -1);
+        }
 
-          be_decl *bd = be_decl::narrow_from_decl (d);
-          // set the scope node as "node" in which the code is being
-          // generated so that elements in the node's scope can use it
-          // for code generation
+      AST_Field *field = AST_Field::narrow_from_decl (d);
 
-          this->ctx_->scope (node->decl ());
+      if (!field ||
+          (field && field->visibility() != AST_Field::vis_PRIVATE))
+        {
+          continue;      // only private fields in this run
+        }
 
-          // set the node to be visited
-          this->ctx_->node (bd);
-          this->elem_number_++;
+      ++ n_processed;
 
-          if (bd == 0 || bd->accept (this) == -1)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"),
-                                -1);
+      if (n_processed == 1)
+        {
+          this->begin_private ();
+        }
 
-            }
-        } // end of for loop
+      be_decl *bd = be_decl::narrow_from_decl (d);
+      // set the scope node as "node" in which the code is being
+      // generated so that elements in the node's scope can use it
+      // for code generation
 
-      delete si;
-    } // end of if
+      this->ctx_->scope (node->decl ());
+
+      // set the node to be visited
+      this->ctx_->node (bd);
+      this->elem_number_++;
+
+      if (bd == 0 || bd->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "codegen for scope failed\n"),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -673,55 +649,44 @@ be_visitor_valuetype::visit_field (be_field *)
 int
 be_visitor_valuetype::gen_pd (be_valuetype *node)
 {
-  // proceed if the number of members in our scope is greater than 0
-  if (node->nmembers () > 0)
+  int n_processed = 0;
+
+  this->elem_number_ = 0;
+
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next())
     {
-      // initialize an iterator to iterate thru our scope
-      UTL_ScopeActiveIterator *si;
-      int n_processed = 0;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-      this->elem_number_ = 0;
-      // continue until each field is visited
-      for (;!si->is_done ();si->next())
+      AST_Decl *d = si.item ();
+      if (!d)
         {
-          AST_Decl *d = si->item ();
-          if (!d)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"), -1);
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "bad node in this scope\n"), -1);
+        }
+      be_field *field = be_field::narrow_from_decl (d);
+      if (!field)
+        {
+          continue;
+        }
+      ++ n_processed;
+      // set the scope node as "node" in which the code is being
+      // generated so that elements in the node's scope can use it
+      // for code generation
 
-            }
-          be_field *field = be_field::narrow_from_decl (d);
-          if (!field)
-            {
-              continue;
-            }
-          ++ n_processed;
-          // set the scope node as "node" in which the code is being
-          // generated so that elements in the node's scope can use it
-          // for code generation
+      this->ctx_->scope (node->decl ());
 
-          this->ctx_->scope (node->decl ());
+      // set the node to be visited
+      this->ctx_->node (field);
+      this->elem_number_++;
 
-          // set the node to be visited
-          this->ctx_->node (field);
-          this->elem_number_++;
+      if (this->gen_field_pd (field) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "codegen for scope failed\n"), -1);
 
-          if (this->gen_field_pd (field) == -1)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "codegen for scope failed\n"), -1);
-
-            }
-        } // end of for loop
-      delete si;
+        }
     }
   return 0;
 }

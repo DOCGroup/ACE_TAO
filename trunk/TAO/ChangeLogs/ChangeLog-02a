@@ -1,3 +1,34 @@
+Fri Jan 25 11:34:35 2002  Carlos O'Ryan  <coryan@uci.edu>
+
+	* TAO_IDL/ast/ast_operation.cpp:
+	* TAO_IDL/be/be_generator.cpp:
+	* TAO_IDL/be/be_operation.cpp:
+	* TAO_IDL/be/be_scope.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_valuetype.cpp:
+	* TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+	* TAO_IDL/be/be_visitor_scope.cpp:
+	* TAO_IDL/be/be_visitor_interface/amh_sh.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/remote_proxy_impl_cs.cpp:
+	* TAO_IDL/be/be_visitor_root/root_sth.cpp:
+	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_ch.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp:
+	* TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+	  For some mystifying reason many UTL_ScopeActiveIterator
+	  instances were created on the heap, and immediately deleted (or
+	  not, leaking memory.)
+	  Funny enough the language has a perfectly usable feature for
+	  that kind of behavior, it is called "automatic variables".
+	  Also, several while()-loops were really for()-loops in disguise,
+	  changed them to make the behavior more obvious.
+
 Fri Jan 25 10:40:03 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/Security/SecurityLevel1/client.dsp:

@@ -656,45 +656,31 @@ be_structure::gen_out_impl (char *,
 int
 be_structure::compute_size_type (void)
 {
-  UTL_ScopeActiveIterator *si = 0;
-  AST_Decl *d = 0;
-  be_decl *bd = 0;
-
-  if (this->nmembers () > 0)
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // If there are elements in this scope,
-      // instantiate a scope iterator.
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (this,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!(si->is_done ()))
+      // Get the next AST decl node.
+      AST_Decl *d = si.item ();
+      be_decl *bd = be_decl::narrow_from_decl (d);
+      if (bd != 0)
         {
-          // Get the next AST decl node.
-          d = si->item ();
-          bd = be_decl::narrow_from_decl (d);
-          if (bd != 0)
-            {
-              // Our sizetype depends on the sizetype of our members. Although
-              // previous value of sizetype may get overwritten, we are
-              // guaranteed by the "size_type" call that once the value reached
-              // be_decl::VARIABLE, nothing else can overwrite it.
-              this->size_type (bd->size_type ());
+          // Our sizetype depends on the sizetype of our
+          // members. Although previous value of sizetype may get
+          // overwritten, we are guaranteed by the "size_type" call
+          // that once the value reached be_decl::VARIABLE, nothing
+          // else can overwrite it.
+          this->size_type (bd->size_type ());
 
-              // While we're iterating, we might as well do this one too.
-              this->has_constructor (bd->has_constructor ());
-            }
-          else
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          "WARNING (%N:%l) be_structure::compute_size_type - "
-                          "narrow_from_decl returned 0\n"));
-            }
-          si->next ();
+          // While we're iterating, we might as well do this one too.
+          this->has_constructor (bd->has_constructor ());
         }
-
-      delete si;
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "WARNING (%N:%l) be_structure::compute_size_type - "
+                      "narrow_from_decl returned 0\n"));
+        }
     }
 
   return 0;

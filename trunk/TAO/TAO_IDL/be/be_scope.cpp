@@ -71,27 +71,18 @@ be_scope::decl (void)
 void
 be_scope::destroy (void)
 {
-  AST_Decl *i = 0;
-  UTL_ScopeActiveIterator *iter = 0;
-
-  ACE_NEW (iter,
-           UTL_ScopeActiveIterator (this,
-                                    IK_decls));
-
-  while (!iter->is_done ())
+  for (UTL_ScopeActiveIterator iter (this, IK_decls);
+       !iter.is_done ();
+       iter.next ())
     {
-      i = iter->item ();
+      AST_Decl *i = iter.item ();
       i->destroy ();
       delete i;
       i = 0;
-      iter->next ();
     }
-
-  delete iter;
-
-// Still some glitches, but the call should eventually
-// be made here.
-//  UTL_Scope::destroy ();
+  // Still some glitches, but the call should eventually
+  // be made here.
+  //  UTL_Scope::destroy ();
 }
 
 int

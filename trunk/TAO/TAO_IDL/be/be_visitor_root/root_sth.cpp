@@ -68,59 +68,50 @@ be_visitor_root_sth::init (void)
 int
 be_visitor_root_sth::visit_scope (be_scope *node)
 {
-  // Proceed if the number of members in our scope is greater than 0.
-  if (node->nmembers () > 0)
+  for (UTL_ScopeActiveIterator si (node,
+                                   UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
-      // Initialize an iterator to iterate over our scope.
-      UTL_ScopeActiveIterator si (node,
-                                  UTL_Scope::IK_decls);
-      // Continue until each element is visited.
-      while (!si.is_done ())
+      AST_Decl *d = si.item ();
+
+      if (d == 0)
         {
-          AST_Decl *d = si.item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root_sth::visit_scope - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
 
-          if (d == 0)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_root_sth::visit_scope - "
-                                 "bad node in this scope\n"),
-                                -1);
+      AST_Decl::NodeType nt = d->node_type ();
 
-            }
+      // These are the onlh types we're interested in.
+      if (nt != AST_Decl::NT_module
+          && nt != AST_Decl::NT_interface)
+        {
+          continue;
+        }
 
-          AST_Decl::NodeType nt = d->node_type ();
+      be_decl *bd = be_decl::narrow_from_decl (d);
 
-          // These are the onlh types we're interested in.
-          if (nt != AST_Decl::NT_module
-              && nt != AST_Decl::NT_interface)
-            {
-              si.next ();
-              continue;
-            }
+      // Set the scope node as "node" in which the code is being
+      // generated so that elements in the node's scope can use it
+      // for code generation.
+      this->ctx_->scope (node->decl ());
 
-          be_decl *bd = be_decl::narrow_from_decl (d);
+      // Set the node to be visited.
+      this->ctx_->node (bd);
 
-          // Set the scope node as "node" in which the code is being
-          // generated so that elements in the node's scope can use it
-          // for code generation.
-          this->ctx_->scope (node->decl ());
+      // Send the visitor.
+      if (bd == 0 || bd->accept (this) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_root_sth::visit_scope - "
+                             "codegen for scope failed\n"),
+                            -1);
 
-          // Set the node to be visited.
-          this->ctx_->node (bd);
-
-          // Send the visitor.
-          if (bd == 0 || bd->accept (this) == -1)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_root_sth::visit_scope - "
-                                 "codegen for scope failed\n"),
-                                -1);
-
-            }
-
-          si.next ();
-        } // End of while loop.
-    } // End of if.
+        }
+    }
 
   return 0;
 }
@@ -212,4 +203,3 @@ be_visitor_root_sth::visit_interface (be_interface *node)
 
   return 0;
 }
-

@@ -227,36 +227,24 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   *os << "proxy." << node->local_name ()
       << " (" << be_idt << be_idt_nl << "this";
 
-  if (node->nmembers () > 0)
+  for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
     {
+      AST_Decl *d = si.item ();
 
-      // Initialize an iterator to iterate over our scope.
-      UTL_ScopeActiveIterator *si;
-      ACE_NEW_RETURN (si,
-                      UTL_ScopeActiveIterator (node,
-                                               UTL_Scope::IK_decls),
-                      -1);
-
-      while (!si->is_done ())
+      if (d == 0)
         {
-          AST_Decl *d = si->item ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_scope::visit_scope - "
+                             "bad node in this scope\n"),
+                            -1);
+        }
 
-          if (d == 0)
-            {
-              delete si;
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "(%N:%l) be_visitor_scope::visit_scope - "
-                                 "bad node in this scope\n"),
-                                -1);
+      be_decl *decl = be_decl::narrow_from_decl (d);
 
-            }
-
-                *os << "," << be_nl;
-          be_decl *decl = be_decl::narrow_from_decl (d);
-
-                *os << decl->local_name();
-                si->next ();
-              }
+      *os << "," << be_nl
+          << decl->local_name();
     }
 
   if (!be_global->exception_support ())
