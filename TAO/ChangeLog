@@ -1,3 +1,8 @@
+Sun Feb  8 08:14:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* docs/tutorials/Quoter/On_Demand_Activation/Quoter_On_Demand_Activation.mpc: 
+	  Do not build if minimum_corba is enabled.
+
 Sat Feb  7 22:09:50 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/Makefile*:
