@@ -46,7 +46,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/OS.h \
  $(ACE_ROOT)/ace/config.h \
- $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/iosfwd.h \
  $(ACE_ROOT)/ace/OS.i \
  $(ACE_ROOT)/ace/Trace.h \
  $(ACE_ROOT)/ace/Log_Msg.h \
@@ -69,8 +69,8 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/IOStream.h \
  $(ACE_ROOT)/ace/Handle_Set.h \
  $(ACE_ROOT)/ace/Handle_Set.i \
+ $(ACE_ROOT)/ace/streams.h \
  $(ACE_ROOT)/ace/IOStream_T.h \
- $(ACE_ROOT)/ace/IOStream_T.i \
- $(ACE_ROOT)/ace/IOStream_T.cpp
+ $(ACE_ROOT)/ace/IOStream_T.i
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
