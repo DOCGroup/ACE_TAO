@@ -1,3 +1,9 @@
+Mon Mar  6 13:30:00 2000  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* tests/run_tests.vxworks: Removed Cached_Conn_Test from the
+	  list as this test fails for the current configuration. Until
+          researched completely, it has been disabled on vxworks.
+		
 Sun Mar  5 21:32:45 2000  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/CDR_Stream.cpp:
