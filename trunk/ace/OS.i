@@ -2143,7 +2143,20 @@ ACE_OS::gethostbyname (const char *name)
 {
   // ACE_TRACE ("ACE_OS::gethostbyname");
 #if defined (VXWORKS)
-  ACE_NOTSUP_RETURN (0);
+  // not thread safe!
+  static hostent ret;
+  static char *hostaddr[2];
+
+  if ((hostaddr[0] = (char *) ::hostGetByName ((char *) name)) < 0)
+    return 0;
+  hostaddr[1] = 0;
+
+  ret.h_name = (char *) name;  /* might not be official: just echo input arg */
+  ret.h_addrtype = AF_INET;
+  ret.h_length = IP_ADDR_LEN;
+  ret.h_addr_list = hostaddr;
+
+  return &ret;
 #elif defined (ACE_HAS_NONCONST_GETBY)
   char lname[::strlen (name) + 1];
   ACE_OS::strcpy (lname, name);
@@ -2633,12 +2646,13 @@ ACE_OS::inet_addr (const char *name)
   // ACE_TRACE ("ACE_OS::inet_addr");
 #if defined (VXWORKS)
 
-  u_long retval = 0;
+  u_long ret = 0;
   u_int segment;
+  bool valid = true;
 
   for (u_int i = 0; i < 4; ++i)
     {
-      retval <<= 8;
+      ret <<= 8;
       if (*name != '\0')
 	{
 	  segment = 0;
@@ -2648,7 +2662,13 @@ ACE_OS::inet_addr (const char *name)
 	      segment *= 10;
 	      segment += *name++ - '0';
 	    }
-	  retval |= segment;
+          if (*name != '.' && *name != '\0')
+            {
+              valid = false;
+              break;
+            }
+
+	  ret |= segment;
 
 	  if (*name == '.')
 	    {
@@ -2656,7 +2676,7 @@ ACE_OS::inet_addr (const char *name)
 	    }
 	}
     }
-  return (long) htonl (retval);
+  return valid ? (long) htonl (ret) : -1L;
 #elif defined (ACE_HAS_NONCONST_GETBY)
   char _name[::strlen (name) + 1];
   ACE_OS::strcpy (_name, name);
