@@ -2,15 +2,16 @@
 
 #include "tao/Tagged_Components.h"
 #include "tao/Profile.h"
-#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Tagged_Components.i"
 #endif /* ! __ACE_INLINE__ */
 
+
 ACE_RCSID (tao,
            Tagged_Components,
            "$Id$")
+
 
 void
 TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)

@@ -7,7 +7,7 @@
 
 #include "tao/Exception.h"
 #include "tao/Environment.h"
-#include "tao/ORB.h"
+
 #include "tao/BoundsC.h"
 #include "tao/debug.h"
 #include "tao/Typecode.h"

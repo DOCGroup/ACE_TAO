@@ -20,8 +20,8 @@
 
 #include "be_visitor_typecode/typecode_decl.h"
 
-ACE_RCSID (be_visitor_exception, 
-           exception_ch, 
+ACE_RCSID (be_visitor_exception,
+           exception_ch,
            "$Id$")
 
 // ******************************************************
@@ -64,7 +64,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_exception_ch::"
                          "visit_exception - "
-                         "codegen for scope failed\n"), 
+                         "codegen for scope failed\n"),
                         -1);
     }
 
@@ -93,7 +93,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   *os << "virtual CORBA::Exception *"
       << "_tao_duplicate (void) const;\n" << be_nl
-      << "virtual void _raise (void);\n" << be_nl
+      << "virtual void _raise (void) const;\n" << be_nl
       << "virtual void _tao_encode (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &" << be_nl
       << "ACE_ENV_ARG_DECL" << be_uidt_nl
@@ -116,7 +116,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception::"
                              "visit_exception - "
-                             "codegen for ctor failed\n"), 
+                             "codegen for ctor failed\n"),
                             -1);
         }
     }
@@ -126,7 +126,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   if (be_global->tc_support ())
     {
-      *os << be_nl << be_nl 
+      *os << be_nl << be_nl
           << "virtual CORBA::TypeCode_ptr _type (void) const;";
     }
 
@@ -142,7 +142,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_exception_ch::"
                              "visit_exception - "
-                             "TypeCode declaration failed\n"), 
+                             "TypeCode declaration failed\n"),
                             -1);
         }
     }

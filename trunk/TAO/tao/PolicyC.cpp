@@ -155,7 +155,7 @@ CORBA::PolicyError::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::PolicyError::_raise (void)
+void CORBA::PolicyError::_raise (void) const
 {
   TAO_RAISE (*this);
 }
@@ -383,7 +383,7 @@ CORBA::InvalidPolicies::_tao_duplicate (void) const
   return result;
 }
 
-void CORBA::InvalidPolicies::_raise (void)
+void CORBA::InvalidPolicies::_raise (void) const
 {
   TAO_RAISE (*this);
 }
