@@ -10,28 +10,35 @@ use PerlACE::Run_Test;
 
 $iorfile = PerlACE::LocalFile ("obj.ior");
 unlink $iorfile;
+
+$lm_ior = "lm.ior";
+unlink $lm_ior;
+
 $status = 0;
 
 $init_ref = "-ORBInitRef LoadManager=file://lm.ior";
 
 $LM = new PerlACE::Process ("../../../LoadBalancer/LoadManager", "-o lm.ior");
+$SV = new PerlACE::Process ("server", $init_ref);
+$CL = new PerlACE::Process ("client", " -k file://$iorfile");
 
 $LM->Spawn ();
 
-$SV = new PerlACE::Process ("server");
-$CL = new PerlACE::Process ("client", " -k file://$iorfile");
-
-$SV->Arguments ($init_ref);
+if (PerlACE::waitforfile_timed ("lm.ior", 5) == -1) {
+    print STDERR "ERROR: cannot find file LoadManager IOR: lm.ior\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
 
 $SV->Spawn ();
 
-if (PerlACE::waitforfile_timed ($iorfile, 5) == -1) {
-    print STDERR "ERROR: cannot find file <$iorfile>\n";
+if (PerlACE::waitforfile_timed ($iorfile, 10) == -1) {
+    print STDERR "ERROR: cannot find server file <$iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
-} 
+}
 
-$client = $CL->SpawnWaitKill (300);
+$client = $CL->SpawnWaitKill (100);
 
 if ($client != 0) {
     print STDERR "ERROR: client returned $client\n";
@@ -45,6 +52,15 @@ if ($server != 0) {
     $status = 1;
 }
 
+$load_manager = $LM->WaitKill (10);
+
+if ($load_manager != 0) {
+    print STDERR "ERROR: LoadManager returned $load_manager\n";
+    $status = 1;
+}
+
+
 unlink $iorfile;
+unlink $lm_ior;
 
 exit $status;

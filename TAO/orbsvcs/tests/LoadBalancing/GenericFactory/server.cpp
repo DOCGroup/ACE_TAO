@@ -64,6 +64,16 @@ main (int argc, char *argv[])
 
       if (basic_test.register_servant (&basic_servant2, loc2) == -1)
         return 1;
+
+      // @@ Jai, where's your orb->run() call?  You're client can't
+      //    make invocations on the servants without it!  Presumably,
+      //    the code should look like this:
+      //
+      //    basic_test.orb ()->run (ACE_ENV_SINGLE_ARG_PARAMETER);
+      //    ACE_TRY_CHECK;
+      //
+      //    Note that you'll need the ACE_TRY_NEW_ENV block if you run
+      //    the ORB here.
     }
   ACE_CATCHANY
     {

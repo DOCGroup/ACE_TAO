@@ -1,3 +1,19 @@
+Thu Oct  3 18:26:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/run_test.pl:
+
+	  Fixed problem where server process was not spawned with correct
+	  command line arguments.  The server must know what the
+	  LoadManager's IOR is.
+
+	  Give time for the LoadManager to create its IOR file before
+	  spawning the server process.
+
+	* orbsvcs/tests/LoadBalancing/GenericFactory/client.cpp (main):
+	* orbsvcs/tests/LoadBalancing/GenericFactory/server.cpp (main):
+
+	  More comments for Jai.
+
 Thu Oct  3 18:04:56 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/tests/LoadBalancing/GenericFactory/Basic.h:
