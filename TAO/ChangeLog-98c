@@ -1,67 +1,3 @@
-Fri Jan 30 13:15:10 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
-
-	* Makefile (RELEASE_FILES): Added rules.tao.GNU and taoconfig.mk
- 	to this...missing in release 0.1.0.
-
-Fri Jan 30 11:55:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* orbsvcs/tests/Logger/Logger.dsw:
-	* orbsvcs/tests/Logger/{server,client}.dsp: Added new project file. 
-	
-	* orbsvcs/tests/Logger/svr.cpp: 
-	* orbsvcs/tests/Logger/clnt.cpp: 
-	* orbsvcs/tests/Logger/logger_i.h: 
-	* orbsvcs/tests/Logger/logger_i.cpp: Changed <iostream.h> to
- 	  "ace/streams.h".  We should always use "ace/streams.h".
-
-Fri Jan 30 11:42:10 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
-
-	* docs/releasenotes/orbcore.html: Updated to reflect
- 	characteristics of the latest release as well as what we have to
- 	look forwrd to.
-
-	* announcement: Added this boilerplate for release announcement.
-  	Actually, it's a sciprt which can be piped to something like
- 	'mailx'.
-
-Fri Jan 30 01:55:59 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
-
-	* tests/Cubit/COOL/IDL_Cubit/README: 
-	* tests/Cubit/COOL/IDL_Cubit/Makefile:
-	* tests/Cubit/COOL/IDL_Cubit/client.cpp:
-	* tests/Cubit/COOL/IDL_Cubit/client.h:
-	* tests/Cubit/COOL/IDL_Cubit/cubit.idl:
-	* tests/Cubit/COOL/IDL_Cubit/cubit_i.cpp:
-	* tests/Cubit/COOL/IDL_Cubit/cubit_i.h:
-	* tests/Cubit/COOL/IDL_Cubit/server.cpp:	
-	* tests/Cubit/COOL/IDL_Cubit/tmplinst.cpp: Added test code for
- 	Chorus COOL ORB, for the IDL Cubit example.
-
-	* tests/Thruput/COOL/README: 
-	* tests/Thruput/COOL/Makefile:
-	* tests/Thruput/COOL/client.cpp:
-	* tests/Thruput/COOL/server.cpp:
-	* tests/Thruput/COOL/ttcp.idl:
-	* tests/Thruput/COOL/ttcp_decl.h:
-	* tests/Thruput/COOL/ttcp_i.cpp:
-	* tests/Thruput/COOL/ttcp_i.h:	
-	* tests/Thruput/COOL/utils.cpp: Added test code for Chorus COOL
- 	ORB, for the Thruput example.
-
-	* tests/Thruput/TAO/ttcp_decl.h: Make declarations of variables
- 	consistent with definition.  Changed srcDataSize from CORBA::ULong
- 	to unsigned long.
-
-	* tests/Thruput/TAO/Makefile: Updated to use rules.tao.GNU.  and
- 	taoconfig.mk.  This was suggested by a change Carlos O'Ryan did to
- 	the long lost Thruput_test directory.
-
-Thu Jan 29 23:10:05 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
-
-	* orbsvcs/tests/Simple_Naming/clnt.cpp (CosNaming_Client):
- 	  Reordered the constructor initializations to match the class
- 	  definition.
-
 Thu Jan 29 20:10:33 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* TAO version 0.1.0, released Thu Jan 29 20:10:33 1998.
@@ -161,20 +97,6 @@ Wed Jan 28 15:35:37 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tests/Makefile:
 	* tests/Cubit/Makefile:
 	  Fixed Makefiles so we can invoke the top level Makefile safely.
-
-Wed Jan 28 13:45:16 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
-
-	* tests/POA/Default_Server/{client,server}.dsp: Updated project
- 	  files.
-
-	* tests/Cubit/TAO/MT_Cubit/client.dsp: Added CubitS.cpp to
- 	  client.dsp.
-
-	* tests/POA/Generic_Servant/{client,server}.dsp: Added idl
- 	  compilation rules.
-
-	* tests/Parem_Test/{client,server}.dsp: Updated idl file
- 	  compilation rules.  Added Parem_TestS.cpp to client project.
 
 Wed Jan 28 14:25:29 1998  Chris Cleeland  <cleeland@cs.wustl.edu>
 

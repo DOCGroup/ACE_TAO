@@ -18,7 +18,7 @@
 //
 // ============================================================================
 
-#include "ace/streams.h"
+#include <iostream.h>
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/LoggerS.h"
 #include "logger_i.h"

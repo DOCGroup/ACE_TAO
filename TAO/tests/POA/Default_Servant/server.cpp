@@ -1,21 +1,3 @@
-// $Id$
-//
-//===================================================================
-//  = LIBRARY
-//      TAO/tests/POA/Default_Servant/server
-//
-//  = FILENAME
-//      server.cpp
-//
-//  = DESCRIPTION
-//      A server program for the File IDL module
-//
-//  = AUTHOR
-//     Irfan Pyarali
-//
-//====================================================================
-
-
 #include "ace/streams.h"
 #include "File_i.h"
 
@@ -24,7 +6,6 @@ main (int argc, char **argv)
 {
   CORBA::Environment env;
 
-  // Initialize the ORB
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
   if (env.exception () != 0)
     {
@@ -32,10 +13,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Get the Root POA object reference
   CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
 
-  // Narrow the object reference to a POA reference
   PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in (), env);
   if (env.exception () != 0)
     {
@@ -88,7 +67,6 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Create a File System Implementation object in first_poa
   FileImpl::System file_system_impl (first_poa.in ());
 
   PortableServer::ObjectId_var file_system_oid =
@@ -110,7 +88,7 @@ main (int argc, char **argv)
       env.print_exception ("PortableServer::POA::id_to_reference");
       return -1;
     }
-  // Get the IOR for the "FileSystem" object
+  
   CORBA::String_var file_system_ior =
     orb->object_to_string (file_system.in (), env);
   if (env.exception () != 0)
@@ -119,10 +97,8 @@ main (int argc, char **argv)
       return -1;
     }
 
-  ACE_DEBUG((LM_DEBUG,"%s\n",
-	     file_system_ior.in ()));
+  cout << file_system_ior.in () << endl;
 
-  // set the state of the poa_manager to active i.e ready to process requests
   poa_manager->activate (env);
   if (env.exception () != 0)
     {
@@ -130,11 +106,9 @@ main (int argc, char **argv)
       return -1;
     }
 
-  // Run the ORB
   if (orb->run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CORBA::ORB::run"), -1);
 
-  // Destroy the rootPOA and its children
   root_poa->destroy (CORBA::B_TRUE, 
                      CORBA::B_TRUE, 
                      env);
@@ -146,5 +120,3 @@ main (int argc, char **argv)
 
   return 0;
 }
-
-

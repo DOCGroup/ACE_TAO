@@ -5,7 +5,7 @@
 
 
 #include "orbsvcs/LoggerS.h"
-#include "ace/streams.h"
+#include <iostream.h>
 #include <string.h>
 
 
