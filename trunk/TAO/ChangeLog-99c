@@ -1,3 +1,8 @@
+Fri Nov 19 17:30:45 1999  Krishnakumar Elakkara Pathayapura  <krish@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Makefile: 
+	  Added Log to the build
+
 Thu Nov 18 22:32:55 1999  Marina Spivak  <marina@cs.wustl.edu>
 
 	* tao/Direct_Priority_Mapping.cpp
