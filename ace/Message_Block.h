@@ -165,6 +165,12 @@ public:
   // <this> and return 0.  Behavior is undefined if reference count <
   // 0.
 
+  static ACE_Message_Block *release (ACE_Message_Block *mb);
+  // This behaves like the non-static method <release>, except that it
+  // checks if <mb> is 0.  This is similar to <CORBA::release>, which
+  // is useful if you want to eliminate lots of checks for NULL
+  // pointers before calling <release> on them.  Returns <mb>.
+
   // = Operations on Message data 
 
   int copy (const char *buf, size_t n);

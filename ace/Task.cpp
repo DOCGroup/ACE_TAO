@@ -123,24 +123,6 @@ ACE_Task_Base::ACE_Task_Base (ACE_Thread_Manager *thr_man)
 {
 }
 
-// Get the current group id.
-int
-ACE_Task_Base::grp_id (void)
-{
-  ACE_TRACE ("ACE_Task_Base::grp_id");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1));
-  return this->grp_id_;
-}
-
-// Set the current group id.
-void
-ACE_Task_Base::grp_id (int id)
-{
-  ACE_TRACE ("ACE_Task_Base::grp_id");
-  ACE_MT (ACE_GUARD (ACE_Thread_Mutex, ace_mon, this->lock_));
-  this->grp_id_ = id;
-}
-
 // Suspend a task.
 int 
 ACE_Task_Base::suspend (void)

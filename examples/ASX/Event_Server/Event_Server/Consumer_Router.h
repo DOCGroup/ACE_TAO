@@ -1,46 +1,49 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* The interface between one or more consumers and an Event Server ACE_Stream */
-
 #if !defined (_CONSUMER_ROUTER_H)
 #define _CONSUMER_ROUTER_H
 
-#include "ace/Thread_Manager.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "Peer_Router.h"
 
-#if defined (ACE_HAS_THREADS)
-
-class Consumer_Handler; /* Forward declaration... */
-
-typedef ACE_HANDLE CONSUMER_KEY;
-
-typedef Peer_Router<Consumer_Handler, CONSUMER_KEY> CONSUMER_ROUTER;
-
-class Consumer_Handler : public Peer_Handler<CONSUMER_ROUTER, CONSUMER_KEY>
+class Consumer_Router : public Peer_Router
+  // = TITLE
+  //     Provides the interface between one or more Consumers and the
+  //     Event Server ACE_Stream.  
 {
 public:
-  Consumer_Handler (ACE_Thread_Manager *tm = 0);
-  virtual int open (void *);
-};
-
-class Consumer_Router : public CONSUMER_ROUTER
-{
-public:
-  Consumer_Router (ACE_Thread_Manager *thr_manager);
+  Consumer_Router (Peer_Router_Context *prc);
+  // Initialization method.
 
 protected:
-  /* ACE_Task hooks. */
-  virtual int open (void *a = 0);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc (void);
+  // = ACE_Task hooks.
 
-  /* Dynamic linking hooks */
+  // All of these methods are called via base class pointers by the
+  // ACE Stream apparatus.  Therefore, we can put them in the
+  // protected section.
+
+  virtual int open (void *a = 0);
+  // Called by the Stream to initialize the router.
+
+  virtual int close (u_long flags = 0);
+  // Called by the Stream to shutdown the router.
+
+  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
+  // Called by the Consumer_Handler to pass a message to the Router.
+  // The Router queues up this message, which is then processed in the
+  // <svc> method in a separate thread.
+
+  virtual int svc (void);
+  // Runs in a separate thread to dequeue messages and pass them up
+  // the stream.
+
+  // = Dynamic linking hooks.
+
   virtual int info (char **info_string, size_t length) const;
+  // Returns information about this service.
 };
-#endif /* ACE_HAS_THREADS */
+
 #endif /* _CONSUMER_ROUTER_H */

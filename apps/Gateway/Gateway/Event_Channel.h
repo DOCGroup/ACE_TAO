@@ -18,6 +18,11 @@
 #define ACE_EVENT_CHANNEL
 
 #include "Proxy_Handler_Connector.h"
+#include "Proxy_Handler_Acceptor.h"
+#include "Consumer_Dispatch_Set.h"
+#include "Event_Forwarding_Discriminator.h"
+
+typedef ACE_Null_Mutex MAP_MUTEX;
 
 class ACE_Svc_Export ACE_Event_Channel_Options
   // = TITLE
@@ -36,9 +41,28 @@ public:
 
   int socket_queue_size_;
   // Size of the socket queue (0 means "use default").
+
+  enum
+  {
+    REACTIVE = 0,
+    OUTPUT_MT = 1,
+    INPUT_MT = 2
+  };
+
+  u_long threading_strategy_;
+  // i.e., REACTIVE, OUTPUT_MT, and/or INPUT_MT.
+
+  u_short acceptor_port_;
+  // Port used to accept connections from Peers.
+
+  int connector_role_;
+  // Enabled if we are playing the role of the Connector.
+
+  int acceptor_role_;
+  // Enabled if we are playing the role of the Connector.
 };
 
-class ACE_Svc_Export ACE_Event_Channel : public ACE_Task<SYNCH_STRATEGY>
+class ACE_Svc_Export ACE_Event_Channel : public ACE_Task<ACE_MT_SYNCH>
   // = TITLE
   //    Define a generic Event_Channel.
   //
@@ -68,10 +92,10 @@ public:
   // Reinitiate a connection asynchronously when the Peer fails.
 
   int bind_proxy (Proxy_Handler *);
-  // Bind the <Proxy_Handler> to the <connection_map_>.
+  // Bind the <Proxy_Handler> to the <proxy_map_>.
 
-  int find_proxy (ACE_INT32 conn_id, Proxy_Handler *&);
-  // Locate the <Proxy_Handler> with <conn_id>.
+  int find_proxy (ACE_INT32 proxy_id, Proxy_Handler *&);
+  // Locate the <Proxy_Handler> with <proxy_id>.
 
   int subscribe (const Event_Key &event_addr, 
 		 Consumer_Dispatch_Set *cds);
@@ -85,8 +109,11 @@ public:
   ACE_Event_Channel_Options &options (void);
   // Points to the Event_Channel options.
 
-  int initiate_connections (void);
-  // Initiate connections to the peers.
+  void initiate_connector (void);
+  // Actively initiate connections to the Peers.
+
+  void initiate_acceptor (void);
+  // Passively initiate Peer acceptor.
 
 private:
   virtual int svc (void);
@@ -95,24 +122,26 @@ private:
   int parse_args (int argc, char *argv[]);
   // Parse the command-line arguments.
 
+  int compute_performance_statistics (void);
+  // Perform timer-based performance profiling.
+
   virtual int handle_timeout (const ACE_Time_Value &, 
 			      const void *arg);
-  // Perform timer-based performance profiling.
+  // Periodically callback to perform timer-based performance
+  // profiling.
 
   Proxy_Handler_Connector connector_;
   // Used to establish the connections actively.
 
-  // Proxy_Handler_Acceptor acceptor_;
+  Proxy_Handler_Acceptor acceptor_;
   // Used to establish the connections passively.
 
   // = Make life easier by defining typedefs.
-  // Note that Proxy_Handler is assumed to the base class of
-  // SUPPLIER_PROXY and CONSUMER_PROXY.
-  typedef ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX> CONNECTION_MAP;
-  typedef ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX> CONNECTION_MAP_ITERATOR;
-  typedef ACE_Map_Entry<ACE_INT32, Proxy_Handler *> CONNECTION_MAP_ENTRY;
+  typedef ACE_Map_Manager<ACE_INT32, Proxy_Handler *, MAP_MUTEX> PROXY_MAP;
+  typedef ACE_Map_Iterator<ACE_INT32, Proxy_Handler *, MAP_MUTEX> PROXY_MAP_ITERATOR;
+  typedef ACE_Map_Entry<ACE_INT32, Proxy_Handler *> PROXY_MAP_ENTRY;
 
-  CONNECTION_MAP connection_map_;
+  PROXY_MAP proxy_map_;
   // Table that maps Connection IDs to Proxy_Handler *'s.
 
   Event_Forwarding_Discriminator efd_;

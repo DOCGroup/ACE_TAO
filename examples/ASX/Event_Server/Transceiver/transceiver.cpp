@@ -1,16 +1,62 @@
-// Test program for the event transceiver.  This program can play the
 // $Id$
 
+// Test program for the event transceiver.  This program can play the
 // role of either Consumer or Supplier.  You can terminate this
 // program by typing ^C....
-
 
 #include "ace/Service_Config.h"
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Get_Opt.h"
 
-#if defined (ACE_HAS_THREADS)
+// Port number of event server.
+static u_short port_number;
+
+// Name of event server.
+static char *host_name;
+
+// Are we playing the Consumer ('C') or Supplier ('S') role?
+static char role = 'S';
+
+// Handle the command-line arguments.
+
+static void 
+parse_args (int argc, char *argv[])
+{
+  ACE_Get_Opt get_opt (argc, argv, "Ch:p:S");
+
+  port_number = ACE_DEFAULT_SERVER_PORT;
+  host_name = ACE_DEFAULT_SERVER_HOST;
+
+  for (int c; (c = get_opt ()) != -1; )
+    switch (c)
+      {
+      case 'C':
+	role = c;
+	break;
+      case 'h':
+	host_name = get_opt.optarg;
+	break;
+      case 'p':
+	port_number = ACE_OS::atoi (get_opt.optarg);
+	break;
+      case 'S':
+	role = c;
+	break;
+      default:
+	ACE_ERROR ((LM_ERROR, 
+		    "usage: %n [-p portnum] [-h host_name]\n%a", 1));
+	/* NOTREACHED */
+	break;
+      }
+
+  // Increment by 1 if we're the supplier to mirror the default
+  // behavior of the Event_Server (which sets the Consumer port to
+  // ACE_DEFAULT_SERVER_PORT and the Supplier port to
+  // ACE_DEFAULT_SERVER_PORT + 1).
+  if (role == 'S' && port_number == ACE_DEFAULT_SERVER_PORT)
+    port_number++;
+}
 
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   // = TITLE
@@ -34,6 +80,9 @@ public:
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Close down via SIGINT.
 
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  // Close down the event loop.
+
 private:
   int receiver (void);
   // Reads data from socket and writes to ACE_STDOUT.
@@ -41,6 +90,14 @@ private:
   int forwarder (void);
   // Writes data from ACE_STDIN to socket.
 };
+
+int 
+Event_Transceiver::handle_close (ACE_HANDLE,
+				 ACE_Reactor_Mask)
+{
+  ACE_Service_Config::end_reactor_event_loop ();  
+  return 0;
+}
 
 // Close down via SIGINT.
 
@@ -71,8 +128,7 @@ int
 Event_Transceiver::open (void *)
 {
   if (ACE_Service_Config::reactor ()->register_handler
-      (this->peer ().get_handle (), 
-       this,
+      (this->peer ().get_handle (), this,
        ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
   else if (ACE::register_stdin_handler (this,
@@ -95,7 +151,8 @@ Event_Transceiver::handle_input (ACE_HANDLE handle)
 int
 Event_Transceiver::forwarder (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) entering transceiver forwarder\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) entering %s forwarder\n",
+	      role == 'C' ? "Consumer" : "Supplier"));
 
   char buf[BUFSIZ];
   ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
@@ -104,14 +161,16 @@ Event_Transceiver::forwarder (void)
   if (n <= 0 || this->peer ().send_n (buf, n) != n)
     result = -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving transceiver forwarder\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving %s forwarder\n",
+	      role == 'C' ? "Consumer" : "Supplier"));
   return result;
 }
 
 int
 Event_Transceiver::receiver (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) entering transceiver receiver\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) entering %s receiver\n",
+	      role == 'C' ? "Consumer" : "Supplier"));
 
   char buf[BUFSIZ];
 
@@ -121,41 +180,9 @@ Event_Transceiver::receiver (void)
   if (n <= 0 || ACE_OS::write (ACE_STDOUT, buf, n) != n)
     result = -1;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving transceiver receiver\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) leaving %s receiver\n",
+	      role == 'C' ? "Consumer" : "Supplier"));
   return result;
-}
-
-// Port number of event server.
-static u_short port_number;
-
-// Name of event server.
-static char *host_name;
-
-// Handle the command-line arguments.
-
-static void 
-parse_args (int argc, char *argv[])
-{
-  ACE_Get_Opt get_opt (argc, argv, "h:p:");
-
-  port_number = ACE_DEFAULT_SERVER_PORT;
-  host_name = ACE_DEFAULT_SERVER_HOST;
-
-  for (int c; (c = get_opt ()) != -1; )
-    switch (c)
-      {
-      case 'h':
-	host_name = get_opt.optarg;
-	break;
-      case 'p':
-	port_number = ACE_OS::atoi (get_opt.optarg);
-	break;
-      default:
-	ACE_ERROR ((LM_ERROR, 
-		    "usage: %n [-p portnum] [-h host_name]\n%a", 1));
-	/* NOTREACHED */
-	break;
-      }
 }
 
 int 
@@ -169,7 +196,8 @@ main (int argc, char *argv[])
   ACE_Connector<Event_Transceiver, ACE_SOCK_CONNECTOR> connector;
   Event_Transceiver transceiver;
 
-  if (connector.connect (&transceiver, ACE_INET_Addr (port_number, host_name)) == -1)
+  if (connector.connect (&transceiver, 
+			 ACE_INET_Addr (port_number, host_name)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", host_name), 1);
 
   // Run event loop until either the event server shuts down or we get
@@ -177,11 +205,3 @@ main (int argc, char *argv[])
   ACE_Service_Config::run_reactor_event_loop ();
   return 0;
 }
-#else
-int 
-main (void)
-{
-  ACE_ERROR ((LM_ERROR, "test not defined for this platform\n"));
-  return 0;
-}
-#endif /* ACE_HAS_THREADS */

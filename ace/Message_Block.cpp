@@ -114,7 +114,7 @@ ACE_Message_Block::~ACE_Message_Block (void)
 	delete [] this->base_;
     }
   if (this->cont_)
-    delete this->cont_;
+    this->cont_->release ();
   this->prev_ = 0;
   this->next_ = 0;
 }
@@ -316,7 +316,16 @@ ACE_Message_Block::release (void)
   return result; 
 }
 
-ACE_INLINE ACE_Message_Block *
+/* static */ ACE_Message_Block *
+ACE_Message_Block::release (ACE_Message_Block *mb)
+{
+  if (mb)
+    return mb->release ();
+  else
+    return 0;
+}
+
+ACE_Message_Block *
 ACE_Message_Block::duplicate (void)
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");

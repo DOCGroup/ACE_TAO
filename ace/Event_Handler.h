@@ -43,20 +43,20 @@ public:
   {
     LO_PRIORITY = 0,
     HI_PRIORITY = 10,
-    NULL_MASK   = 0,
+    NULL_MASK = 0,
 #if defined (ACE_USE_POLL)
-    READ_MASK   = POLLIN,
-    WRITE_MASK  = POLLOUT,
+    READ_MASK = POLLIN,
+    WRITE_MASK = POLLOUT,
     EXCEPT_MASK = POLLPRI,
 #else /* USE SELECT */
-    READ_MASK   = 0x1,
-    WRITE_MASK  = 0x4,
+    READ_MASK = 0x1,
+    WRITE_MASK = 0x4,
     EXCEPT_MASK = 0x2,
 #endif /* ACE_USE_POLL */
     ACCEPT_MASK = 0x8,
-    ALL_EVENTS_MASK    = READ_MASK | WRITE_MASK | EXCEPT_MASK | ACCEPT_MASK,
-    RWE_MASK    = ALL_EVENTS_MASK,
-    DONT_CALL   = 0x100
+    ALL_EVENTS_MASK = READ_MASK | WRITE_MASK | EXCEPT_MASK | ACCEPT_MASK,
+    RWE_MASK = ALL_EVENTS_MASK,
+    DONT_CALL = 0x100
   };
 
   virtual ~ACE_Event_Handler (void);
@@ -70,9 +70,9 @@ public:
   // Set the I/O handle.
 
   // = Priority runs from MIN_PRIORITY (which is the "lowest priority") to MAX_PRIORITY (which is the "highest priority").
-  virtual int get_priority (void) const;
+  virtual int priority (void) const;
   // Get the priority of the Event_Handler.
-  virtual void set_priority (int priority);
+  virtual void priority (int priority);
   // Set the priority of the Event_Handler.
 
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -89,7 +89,7 @@ public:
 			      const void *arg = 0);
   // Called when timer expires.
 
-  virtual int handle_close (ACE_HANDLE fd, 
+  virtual int handle_close (ACE_HANDLE handle,
 			    ACE_Reactor_Mask close_mask);
   // Called when object is removed from the ACE_Reactor
 

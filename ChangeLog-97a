@@ -1,0 +1,86 @@
+Thu Jan  2 00:42:21 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* examples/ASX/Event_Server: Completely rewrote and retested the
+ 	  ACE Event Server example.  The new code is *much* easier to
+ 	  understand, has many more comments, is more robust, and compiles
+ 	  much faster since I removed many of the templates.
+
+	* examples/ASX/Event_Server/Tranceiver/tranceiver.cpp: Fixed the
+ 	  tranceiver so that it shuts down correctly when the Event_Server
+ 	  exits.
+
+	* examples/Connection/non_blocking/CPP-connector.cpp: Fixed a
+ 	  problem where we were trying to select() on ACE_STDIN on Win32.
+  	  Naturally, this doesn't work, so we used the
+ 	  ACE::register_stdin_handler() to fix this.  Thanks to
+ 	  Samuel_Bercovici <Samuel_Bercovici_at_EFT__AD2@mail.icomverse.com>
+	  for reporting this.
+
+	* examples/ASX/Event_Server/Event_Server/Options: Changed the
+ 	  Options class to be a Singleton...
+
+	* ace/Task.h: Added "const" method qualifier to accessor methods
+ 	  like is_reader() and is_writer().
+
+Wed Jan  1 00:10:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Message_Block: Added a new static release() method that
+ 	  behaves like the non-static method release(), except that it
+ 	  checks if <mb> is 0.  This is similar to CORBA::release(), which
+ 	  is useful if you want to eliminate lots of checks for NULL
+ 	  pointers before calling release() on them.
+
+	* Updated all places in ACE where we use
+ 	  ACE_Event_Handler::READ_MASK when we should be using
+ 	  ACE_Event_Handler::ACCEPT_MASK.
+
+	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+ 	  Changed the name of the acceptor class from Handle_Thr_Stream to
+ 	  Handle_Thr_Acceptor, which is more accurate.
+
+	* ace/Reactor: Since we've now got an
+ 	  ACE_Event_Handler::ACCEPT_MASK (intended primarily to accept
+ 	  connections asynchronously using Win32 overlapped I/O) we can
+ 	  now use this with the ACE_Reactor, as well.  In particular, any
+ 	  time that we are registering a "passive-mode" socket acceptor we
+ 	  can now specify ACE_Event_Handler::ACCEPT_MASK.  This is much
+ 	  more intuitive than using the READ_MASK (which never made any
+ 	  sense...).  The ACE_Reactor now treats the ACCEPT_MASK as a
+ 	  READ_MASK internally, so you can still use READ_MASK if you'd
+ 	  like (i.e., this change doesn't break any existing code).
+
+	* ace/Event_Handler: Changed "get_priority" and "set_priority" to
+ 	  simply "priority(void)" and "priority(int)" to be more
+ 	  consistent with other parts of ACE.
+
+	* apps/Gateway/Gateway: Updated the Gateway so that the
+	  concurrency strategies can now be specified on the
+	  command-line (or in the svc.conf file), rather than being
+	  determined at compile-time.  This is much more flexible.
+	  See the ./apps/Gateway/Gateway/README file for details.
+
+	* apps/Gateway/Gateway: Verified that all the multi-threading
+ 	  strategies still work.
+
+	* ace/Message_Block.cpp (ACE_Message_Block): Make sure that we
+ 	  "release" the continuation field, rather than delete it, since
+ 	  its reference count may be > 1.
+
+	* ace/Log_Msg.cpp (log): Change the abort_prog logic a bit so that
+ 	  we always print a message to stderr if we're exiting,
+ 	  regardless...  Thanks to David Levine for pointing this out.
+
+	* apps/Gateway/Gateway: Moved all of the configuration file
+ 	  parsing logic *outside* of the Event_Channel into the Gateway
+ 	  class so that we wouldn't have unnecessary dependencies.
+
+	* apps/Gateway/Gateway: Redesigned the Gateway so that the
+ 	  Proxy_Handlers (i.e., the Consumer_Proxy and Supplier_Proxy)
+ 	  most of their work to the Event_Channel.  This "lightweight
+ 	  proxy" design is an improvement since it is now possible to
+ 	  emulate the COS Event Channel semantics within the Event_Channel
+ 	  "kernel."
+
+	* Happy new year!  Let's start a new ChangeLog to celebrate the
+	  new year.
+

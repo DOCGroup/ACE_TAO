@@ -15,24 +15,25 @@ class Gateway : public ACE_Service_Object
   //     This implementation uses the <ACE_Event_Channel> as the basis
   //     for the <Gateway> routing.
 {
-public:
+protected:
   // = Service configurator hooks.
   virtual int init (int argc, char *argv[]);
   // Perform initialization.
 
   virtual int fini (void);
-  // Perform termination.
+  // Perform termination when unlinked dynamically.
 
   virtual int info (char **, size_t) const;
   // Return info about this service.
 
-  int parse_connection_config_file (void);
-  // Parse the connection configuration file.
+  // = Configuration methods.
+  int parse_proxy_config_file (void);
+  // Parse the proxy configuration file.
 
   int parse_consumer_config_file (void);
   // Parse the consumer configuration file.
 
-protected:
+  // = Lifecycle management methods.
   int handle_input (ACE_HANDLE);
   // Shut down the Gateway when input comes in from the controlling
   // console.
@@ -44,17 +45,18 @@ protected:
   // Parse gateway configuration arguments obtained from svc.conf
   // file.
 
-  char connection_config_file_[MAXPATHLEN + 1];
+  char proxy_config_file_[MAXPATHLEN + 1];
   // Name of the connection configuration file.
 
   char consumer_config_file_[MAXPATHLEN + 1];
   // Name of the consumer map configuration file.
 
   ACE_Event_Channel event_channel_;
-  // The Event Channel routes events from Supplier(s) to Consumer(s).
+  // The Event Channel routes events from Supplier(s) to Consumer(s)
+  // using <Supplier_Proxy> and <Consumer_Proxy> objects.
 
-  int active_connector_role_;
-  // Enabled if we are playing the role of the active Connector.
+  Proxy_Handler_Factory proxy_handler_factory_;
+  // Creates the appropriate type of <Proxy_Handlers>.
 
   int debug_;
   // Are we debugging?
@@ -91,41 +93,64 @@ Gateway::handle_input (ACE_HANDLE h)
 int
 Gateway::parse_args (int argc, char *argv[])
 {
-  ACE_OS::strcpy (this->connection_config_file_, "connection_config");
+  // Assign defaults.
+  ACE_OS::strcpy (this->proxy_config_file_, "proxy_config");
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
-  this->active_connector_role_ = 1;
   this->debug_ = 0;
 
-  ACE_Get_Opt get_opt (argc, argv, "bc:dpr:q:w:", 0);
+  ACE_Get_Opt get_opt (argc, argv, "abC:cdP:pq:t:w:", 0);
 
-  for (int c; (c = get_opt ()) != -1; )
+  for (int c; (c = get_opt ()) != EOF; )
     {
       switch (c)
 	{
+	case 'a': // We are (also?) playing the Acceptor role.
+	  this->event_channel_.options ().acceptor_role_ = 1;
+	  break;
+
 	case 'b': // Use blocking connection establishment.
 	  this->event_channel_.options ().blocking_semantics_ = 0;
 	  break;
-	case 'c':
-	  ACE_OS::strncpy (this->connection_config_file_, 
+	case 'C': // Use a different proxy config filename.
+	  ACE_OS::strncpy (this->proxy_config_file_, 
 			   get_opt.optarg, 
-			   sizeof this->connection_config_file_);
+			   sizeof this->proxy_config_file_);
 	  break;
-	case 'd':
+	case 'c': // We are (also?) playing the Connector role.
+	  this->event_channel_.options ().connector_role_ = 1;
+	  break;
+	case 'd': // We are debugging.
 	  this->debug_ = 1;
 	  break;
-	case 'p':
-	  // We are not playing the active Connector role.
-	  this->active_connector_role_ = 0;
-	  break;
-	case 'q':
-	  this->event_channel_.options ().socket_queue_size_ = 
-	    ACE_OS::atoi (get_opt.optarg);
-	  break;
-	case 'r':
+	case 'P': // Use a different consumer config filename.
 	  ACE_OS::strncpy (this->consumer_config_file_,
 			   get_opt.optarg, 
 			   sizeof this->consumer_config_file_);
 	  break;
+	case 'p': // Use a different acceptor port.
+	  this->event_channel_.options ().acceptor_port_ = 
+	    ACE_OS::atoi (get_opt.optarg);
+	  break;
+	case 'q': // Use a different socket queue size.
+	  this->event_channel_.options ().socket_queue_size_ = 
+	    ACE_OS::atoi (get_opt.optarg);
+	  break;
+	case 't': // Use a different threading strategy.
+	  {
+	    for (char *flag = ACE_OS::strtok (get_opt.optarg, "|");
+		 flag != 0;
+		 flag = ACE_OS::strtok (0, "|"))
+	      {
+		if (ACE_OS::strcmp (flag, "OUTPUT_MT") == 0)
+		  ACE_SET_BITS (this->event_channel_.options ().threading_strategy_, 
+				ACE_Event_Channel_Options::OUTPUT_MT);
+		else if (ACE_OS::strcmp (flag, "INPUT_MT") == 0)
+		  ACE_SET_BITS (this->event_channel_.options ().threading_strategy_, 
+				ACE_Event_Channel_Options::INPUT_MT);
+	      }
+
+	    break;
+	  }
 	case 'w': // Time performance for a designated amount of time.
 	  this->event_channel_.options ().performance_window_ = 
 	    ACE_OS::atoi (get_opt.optarg);
@@ -143,10 +168,6 @@ Gateway::parse_args (int argc, char *argv[])
 int
 Gateway::init (int argc, char *argv[])
 {
-  // Initialize the Event_Channel.
-  if (this->event_channel_.open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "open"), -1);
-
   // Parse the "command-line" arguments.
   this->parse_args (argc, argv);
 
@@ -165,30 +186,40 @@ Gateway::init (int argc, char *argv[])
       (0, this, ACE_Event_Handler::READ_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
 
-  if (this->active_connector_role_)
+  // If this->performance_window_ > 0 start a timer.
+
+  if (this->event_channel_.options ().performance_window_ > 0)
     {
-      // Parse the connection configuration file.
-      this->parse_connection_config_file ();
-
-      // Parse the consumer map config file and build the consumer
-      // map.
-      this->parse_consumer_config_file ();
-
-      // Initiate connections with the peers.
-      this->event_channel_.initiate_connections ();
+      if (ACE_Service_Config::reactor ()->schedule_timer 
+	  (&this->event_channel_, 0, 
+	   this->event_channel_.options ().performance_window_) == -1)
+	ACE_ERROR ((LM_ERROR, "(%t) %p\n", "schedule_timer"));
+      else
+	ACE_DEBUG ((LM_DEBUG, "starting timer for %d seconds...\n", 
+		   this->event_channel_.options ().performance_window_));
     }
 
-  return 0;
+  if (this->event_channel_.options ().connector_role_)
+    {
+      // Parse the proxy configuration file.
+      this->parse_proxy_config_file ();
+
+      // Parse the consumer config file and build the event forwarding
+      // discriminator.
+      this->parse_consumer_config_file ();
+    }
+
+  // Initialize the Event_Channel.
+  return this->event_channel_.open ();
 }
 
-// This method is automatically called when the gateway is shutdown.
-// It closes down the Event Channel.
+// This method is automatically called when the Gateway is shutdown.
 
 int
 Gateway::fini (void)
 {
-  this->event_channel_.close ();
-  return 0;
+  // Close down the event channel.
+  return this->event_channel_.close ();
 }
 
 // Returns information on the currently active service. 
@@ -208,61 +239,49 @@ Gateway::info (char **strp, size_t length) const
   return ACE_OS::strlen (buf);
 }
 
-// Parse and build the connection table.
+// Parse and build the proxy table.
 
 int
-Gateway::parse_connection_config_file (void)
+Gateway::parse_proxy_config_file (void)
 {
-  // File that contains the consumer map configuration information.
-  Connection_Config_File_Parser connection_file;
-  Connection_Config_File_Entry entry;
+  // File that contains the proxy configuration information.
+  Proxy_Config_File_Parser proxy_file;
   int file_empty = 1;
   int line_number = 0;
 
-  if (connection_file.open (this->connection_config_file_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", this->connection_config_file_), -1);
+  if (proxy_file.open (this->proxy_config_file_) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR, 
+		       "(%t) %p\n", 
+		       this->proxy_config_file_), 
+		      -1);
 
   // Read config file one line at a time.
-  while (connection_file.read_entry (entry, line_number) != FP::EOFILE)
+  for (Proxy_Config_Info pci;
+       proxy_file.read_entry (pci, line_number) != FP::EOFILE;
+       )
     {
       file_empty = 0;
 
       if (this->debug_)
-	ACE_DEBUG ((LM_DEBUG, "(%t) conn id = %d, host = %s, remote port = %d, "
-		    "proxy role = %c, max retry timeout = %d, local port = %d\n",
-		    entry.conn_id_, 
-		    entry.host_, 
-		    entry.remote_port_, 
-		    entry.proxy_role_,
-		    entry.max_retry_delay_, 
-		    entry.local_port_));
+	ACE_DEBUG ((LM_DEBUG, 
+		    "(%t) conn id = %d, host = %s, remote port = %d, proxy role = %c, "
+		    "max retry timeout = %d, local port = %d, priority = %d\n",
+		    pci.proxy_id_, 
+		    pci.host_, 
+		    pci.remote_port_, 
+		    pci.proxy_role_,
+		    pci.max_retry_timeout_, 
+		    pci.local_port_,
+		    pci.priority_));
 
-      Proxy_Handler *proxy_handler = 0;
+      pci.event_channel_ = &this->event_channel_;
 
-      // Initialize the entry's peer addressing info.
+      // Create the appropriate type of Proxy.
+      Proxy_Handler *proxy_handler = 
+	this->proxy_handler_factory_.make_proxy_handler (pci);
 
-      ACE_INET_Addr remote_addr (entry.remote_port_, entry.host_);
-      ACE_INET_Addr local_addr (entry.local_port_);
-
-      // The next few lines of code are dependent on whether we are
-      // making an Supplier_Proxy or an Consumer_Proxy.
-
-      if (entry.proxy_role_ == 'C') // Configure a Consumer_Proxy.
-	ACE_NEW_RETURN (proxy_handler,
-			CONSUMER_PROXY (this->event_channel_, remote_addr, 
-					local_addr, entry.conn_id_),
-			-1);
-      else // proxy_role == 'S', so configure a Supplier_Proxy.
-	ACE_NEW_RETURN (proxy_handler,
-			SUPPLIER_PROXY (this->event_channel_, remote_addr, 
-					local_addr, entry.conn_id_),
-			-1);
-
-      // The following code is common to both Supplier_Proxys_ and
-      // Consumer_Proxys.
-
-      // Initialize max timeout.
-      proxy_handler->max_timeout (entry.max_retry_delay_);
+      if (proxy_handler == 0)
+	ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_proxy_handler"), -1);
 
       // Bind the new Proxy_Handler to the connection ID.
       this->event_channel_.bind_proxy (proxy_handler);
@@ -279,7 +298,6 @@ Gateway::parse_consumer_config_file (void)
 {
   // File that contains the consumer event forwarding information.
   Consumer_Config_File_Parser consumer_file;
-  Consumer_Config_File_Entry  entry;  
   int file_empty = 1;
   int line_number = 0;
 
@@ -287,43 +305,46 @@ Gateway::parse_consumer_config_file (void)
     ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", this->consumer_config_file_), -1);
 
   // Read config file line at a time.
-  while (consumer_file.read_entry (entry, line_number) != FP::EOFILE)
+  for (Consumer_Config_Info cci;
+       consumer_file.read_entry (cci, line_number) != FP::EOFILE);
+       )
     {
       file_empty = 0;
 
       if (this->debug_)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "(%t) conn id = %d, logical id = %d, payload = %d, "
+	  ACE_DEBUG ((LM_DEBUG, "(%t) conn id = %d, supplier id = %d, payload = %d, "
 		      "number of consumers = %d\n",
-		      entry.conn_id_, 
-		      entry.supplier_id_, 
-		      entry.type_,
-		      entry.total_consumers_));
-	  for (int i = 0; i < entry.total_consumers_; i++)
+		      cci.proxy_id_, 
+		      cci.supplier_id_, 
+		      cci.type_,
+		      cci.total_consumers_));
+
+	  for (int i = 0; i < cci.total_consumers_; i++)
 	    ACE_DEBUG ((LM_DEBUG, "(%t) destination[%d] = %d\n",
-		       i, entry.consumers_[i]));
+		       i, cci.consumers_[i]));
 	}
 
       Consumer_Dispatch_Set *dispatch_set;
       ACE_NEW_RETURN (dispatch_set, Consumer_Dispatch_Set, -1);
 
-      Event_Key event_addr (entry.conn_id_, 
-			    entry.supplier_id_, 
-			    entry.type_);
+      Event_Key event_addr (cci.proxy_id_, 
+			    cci.supplier_id_, 
+			    cci.type_);
 
       // Add the Consumers to the Dispatch_Set.
-      for (int i = 0; i < entry.total_consumers_; i++)
+      for (int i = 0; i < cci.total_consumers_; i++)
 	{
 	  Proxy_Handler *proxy_handler = 0;
 
 	  // Lookup destination and add to Consumer_Dispatch_Set set
 	  // if found.
-	  if (this->event_channel_.find_proxy (entry.consumers_[i], 
+	  if (this->event_channel_.find_proxy (cci.consumers_[i], 
 					       proxy_handler) != -1)
 	    dispatch_set->insert (proxy_handler);
 	  else
 	    ACE_ERROR ((LM_ERROR, "(%t) not found: destination[%d] = %d\n", 
-		       i, entry.consumers_[i]));
+		       i, cci.consumers_[i]));
 	}
 
       this->event_channel_.subscribe (event_addr, dispatch_set);

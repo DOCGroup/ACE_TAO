@@ -1,8 +1,7 @@
-#if !defined (CPP_CONNECTOR_C)
 // $Id$
 
+#if !defined (CPP_CONNECTOR_C)
 #define CPP_CONNECTOR_C
-
 
 #include "CPP-connector.h"
                                                         
@@ -27,7 +26,8 @@ Peer_Handler<PR_ST_2>::open (void *)
   this->action_ = &Peer_Handler<PR_ST_2>::connected;
 
   if (this->reactor ())
-    this->reactor ()->register_handler (this, ACE_Event_Handler::WRITE_MASK);
+    this->reactor ()->register_handler 
+      (this, ACE_Event_Handler::WRITE_MASK);
   else
     {
       while (this->connected () != -1)
@@ -48,10 +48,11 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::disconnecting (void)
 {
   char buf[BUFSIZ];
-  int n;
+  ssize_t n = this->peer ().recv (buf, sizeof buf);
 
-  if ((n = this->peer ().recv (buf, sizeof buf)) > 0)
+  if (n > 0)
     ACE_OS::write (ACE_STDOUT, buf, n);
+
   this->action_ = &Peer_Handler<PR_ST_2>::idle;
   return -1;
 }
@@ -67,12 +68,12 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::connected (void)
 {
   char buf[BUFSIZ];
-  int  n;
 
   ACE_DEBUG ((LM_DEBUG, "please enter input..: "));
       
-  if ((n = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0
-      && this->peer ().send_n (buf, n) != n)
+  ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+
+  if (n > 0 && this->peer ().send_n (buf, n) != n)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "write failed"), -1);
   else if (n == 0) /* Explicitly close the connection. */
     {
@@ -89,13 +90,12 @@ template <PR_ST_1> int
 Peer_Handler<PR_ST_2>::stdio (void)
 {
   char buf[BUFSIZ];
-  int  n;
 
-  ACE_DEBUG ((LM_DEBUG, "stdio!\n"));
-
-  ACE_DEBUG ((LM_DEBUG, "please enter input..: "));
+  ACE_DEBUG ((LM_DEBUG, "stdio!\nplease enter input..: "));
       
-  if ((n = ACE_OS::read (ACE_STDIN, buf, sizeof buf)) > 0)
+  ssize_t n = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
+
+  if (n > 0)
     {
       ACE_OS::write (ACE_STDOUT, buf, n);
       return 0;
@@ -125,13 +125,20 @@ Peer_Handler<PR_ST_2>::handle_close (ACE_HANDLE,
 				     ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG, "closing down (%d)\n", mask));
+
+  // When the socket closes down, then we'll switch over to reading
+  // from stdin and writing to stdout.
   if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK))
     {
       this->action_ = &Peer_Handler<PR_ST_2>::stdio;
       this->peer ().close ();
       ACE_OS::rewind (stdin);
-      return this->reactor () && this->reactor ()->register_handler 
-	(ACE_STDIN, this, ACE_Event_Handler::READ_MASK);
+
+      if (this->reactor ())
+	return ACE::register_stdin_handler 
+	  (this, this->reactor (), ACE_Service_Config::thr_mgr ());
+      else
+	return 0;
     }
   else if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK))
     delete this;
@@ -167,8 +174,11 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
   this->inherited::open (ACE_Service_Config::reactor ());
 
   char *r_addr = argc > 1 ? argv[1] : 
-    ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST, ACE_DEFAULT_SERVER_PORT_STR);
-  ACE_Time_Value timeout (argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_TIMEOUT);
+    ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST, 
+			ACE_DEFAULT_SERVER_PORT_STR);
+  ACE_Time_Value timeout (argc > 2 
+			  ? ACE_OS::atoi (argv[2]) 
+			  : ACE_DEFAULT_TIMEOUT);
   char *l_addr = argc > 3 ? argv[3] : ACE_DEFAULT_LOCAL_PORT_STR;
 
   // Handle signals through the ACE_Reactor.

@@ -20,12 +20,15 @@
 #include "ace/OS.h"
 #include "File_Parser.h"
 
-class Connection_Config_File_Entry
+// Forward declaration.
+class ACE_Event_Channel;
+
+class Proxy_Config_Info
   // = TITLE
   //     Stores connection configuration information.
 {
 public:
-  ACE_INT32 conn_id_;
+  ACE_INT32 proxy_id_;
   // Connection id for this Proxy_Handler.
 
   char host_[BUFSIZ];
@@ -37,23 +40,31 @@ public:
   char proxy_role_;
   // 'S' (supplier) or 'C' (consumer).
 
-  ACE_INT32 max_retry_delay_;
+  ACE_INT32 max_retry_timeout_;
   // Maximum amount of time to wait for reconnecting.
   
   u_short local_port_;
   // Our local port number.
+
+  ACE_INT32 priority_;
+  // Priority by which different Consumers and Suppliers should be
+  // serviced.
+
+  ACE_Event_Channel *event_channel_;
+  // We just need a place to store this until we can pass it along
+  // when creating a Proxy_Handler.
 };
 
-class Connection_Config_File_Parser : public File_Parser<Connection_Config_File_Entry>
+class Proxy_Config_File_Parser : public File_Parser<Proxy_Config_Info>
   // = TITLE
   //     Parser for the Proxy_Handler Connection file.
 {
 public:
   virtual FP::Return_Type
-    read_entry (Connection_Config_File_Entry &entry, int &line_number);
+    read_entry (Proxy_Config_Info &entry, int &line_number);
 };
 
-class Consumer_Config_File_Entry
+class Consumer_Config_Info
   // = TITLE
   //     Stores the information in a Consumer Map entry.
 {
@@ -62,7 +73,7 @@ public:
     MAX_CONSUMERS = 1000 // Total number of multicast consumers.
   };
 
-  ACE_INT32 conn_id_;
+  ACE_INT32 proxy_id_;
   // Connection id for this proxy.
 
   ACE_INT32 supplier_id_;
@@ -78,13 +89,13 @@ public:
   // Total number of these consumers.
 };  
 
-class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_File_Entry>
+class Consumer_Config_File_Parser : public File_Parser<Consumer_Config_Info>
   // = TITLE
   //     Parser for the Consumer Map file.
 {
 public:
   virtual FP::Return_Type
-    read_entry (Consumer_Config_File_Entry &entry, int &line_number);
+    read_entry (Consumer_Config_Info &entry, int &line_number);
 };
 
 #endif /* _CONFIG_FILES */

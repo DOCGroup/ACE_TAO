@@ -34,7 +34,7 @@ Logging_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 Logging_Acceptor::~Logging_Acceptor (void)
 {
   this->handle_close (ACE_INVALID_HANDLE, 
-		      ACE_Event_Handler::READ_MASK);
+		      ACE_Event_Handler::ACCEPT_MASK);
 }
 
 // Returns underlying device descriptor.

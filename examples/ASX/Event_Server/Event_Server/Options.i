@@ -4,24 +4,24 @@
 /* Option manager for ustreams */
 
 inline void   
-Options::supplier_port (char *port)
+Options::supplier_port (u_short port)
 {
   this->supplier_port_ = port;
 }
 
-inline char *
+inline u_short
 Options::supplier_port (void)
 {
   return this->supplier_port_;
 }
 
 inline void   
-Options::consumer_port (char *port)
+Options::consumer_port (u_short port)
 {
   this->consumer_port_ = port;
 }
 
-inline char *
+inline u_short
 Options::consumer_port (void)
 {
   return this->consumer_port_;

@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-/* Handle connections from remote INET connections. */
+// Handle connections from remote INET connections.
 
 #if !defined (_HANDLE_THR_STREAM_H)
 #define _HANDLE_THR_STREAM_H
@@ -12,12 +12,12 @@
 #if defined (ACE_HAS_THREADS)
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-class Handle_Thr_Stream : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
+class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
   // = Initialization and termination.
-  Handle_Thr_Stream (void);
-  ~Handle_Thr_Stream (void);
+  Handle_Thr_Acceptor (void);
+  ~Handle_Thr_Acceptor (void);
 
   // = Dynamic linking hooks.
   virtual int init (int argc, char *argv[]);
@@ -25,7 +25,7 @@ public:
   virtual int fini (void);
 
 private:
-  typedef Handle_Thr_Stream<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> inherited;
+  typedef Handle_Thr_Acceptor<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> inherited;
 
   static u_short DEFAULT_PORT_;
 

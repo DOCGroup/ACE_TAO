@@ -38,6 +38,8 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
 #	Local targets
 #----------------------------------------------------------------------------
 
+INCLDIRS += -I../Gateway
+
 #----------------------------------------------------------------------------
 #	Dependencies
 #----------------------------------------------------------------------------
@@ -59,7 +61,6 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/Log_Priority.h \
  $(WRAPPER_ROOT)/ace/Log_Record.i \
  $(WRAPPER_ROOT)/ace/ACE.i \
- Peer.h \
  $(WRAPPER_ROOT)/ace/Service_Config.h \
  $(WRAPPER_ROOT)/ace/Service_Object.h \
  $(WRAPPER_ROOT)/ace/Shared_Object.h \
@@ -72,20 +73,12 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Simple.i \
  $(WRAPPER_ROOT)/ace/SV_Semaphore_Complex.i \
  $(WRAPPER_ROOT)/ace/Synch_T.h \
- $(WRAPPER_ROOT)/ace/Set.h \
- $(WRAPPER_ROOT)/ace/Proactor.h \
- $(WRAPPER_ROOT)/ace/Message_Block.h \
- $(WRAPPER_ROOT)/ace/Malloc.h \
- $(WRAPPER_ROOT)/ace/Malloc_T.h \
- $(WRAPPER_ROOT)/ace/Memory_Pool.h \
  $(WRAPPER_ROOT)/ace/Signal.h \
- $(WRAPPER_ROOT)/ace/Mem_Map.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.h \
- $(WRAPPER_ROOT)/ace/Timer_Queue.i \
- $(WRAPPER_ROOT)/ace/ReactorEx.h \
- $(WRAPPER_ROOT)/ace/Token.h \
+ $(WRAPPER_ROOT)/ace/Set.h \
  $(WRAPPER_ROOT)/ace/Reactor.h \
  $(WRAPPER_ROOT)/ace/Handle_Set.h \
+ $(WRAPPER_ROOT)/ace/Timer_Queue.h \
+ $(WRAPPER_ROOT)/ace/Token.h \
  $(WRAPPER_ROOT)/ace/Pipe.h \
  $(WRAPPER_ROOT)/ace/Pipe.i \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.h \
@@ -99,18 +92,26 @@ include		$(WRAPPER_ROOT)/include/makeinclude/rules.local.GNU
  $(WRAPPER_ROOT)/ace/INET_Addr.h \
  $(WRAPPER_ROOT)/ace/SOCK_Stream.i \
  $(WRAPPER_ROOT)/ace/Reactor.i \
+ $(WRAPPER_ROOT)/ace/Proactor.h \
+ $(WRAPPER_ROOT)/ace/Message_Block.h \
+ $(WRAPPER_ROOT)/ace/Malloc.h \
+ $(WRAPPER_ROOT)/ace/Malloc_T.h \
+ $(WRAPPER_ROOT)/ace/Memory_Pool.h \
+ $(WRAPPER_ROOT)/ace/Mem_Map.h \
+ $(WRAPPER_ROOT)/ace/ReactorEx.h \
+ $(WRAPPER_ROOT)/ace/Message_Queue.h \
+ $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
+ $(WRAPPER_ROOT)/ace/Strategies.h \
+ $(WRAPPER_ROOT)/ace/Strategies_T.h \
  $(WRAPPER_ROOT)/ace/Svc_Conf_Tokens.h \
  $(WRAPPER_ROOT)/ace/Svc_Handler.h \
  $(WRAPPER_ROOT)/ace/Synch_Options.h \
  $(WRAPPER_ROOT)/ace/Task.h \
  $(WRAPPER_ROOT)/ace/Task_T.h \
- $(WRAPPER_ROOT)/ace/Message_Queue.h \
- $(WRAPPER_ROOT)/ace/IO_Cntl_Msg.h \
  $(WRAPPER_ROOT)/ace/Acceptor.h \
- $(WRAPPER_ROOT)/ace/Strategies.h \
  $(WRAPPER_ROOT)/ace/Acceptor.i \
  $(WRAPPER_ROOT)/ace/SOCK_Acceptor.h \
  $(WRAPPER_ROOT)/ace/Map_Manager.h \
- Event.h
+ ../Gateway/Event.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

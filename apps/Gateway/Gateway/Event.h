@@ -36,18 +36,18 @@ public:
   Event_Key (ACE_INT32 cid = -1, 
 	      u_char sid = 0, 
 	      u_char type = 0)
-    : conn_id_ (cid), 
+    : proxy_id_ (cid), 
       supplier_id_ (sid), 
       type_ (type) {}
 
   int operator== (const Event_Key &event_addr) const
   {
-    return this->conn_id_ == event_addr.conn_id_ 
+    return this->proxy_id_ == event_addr.proxy_id_ 
       && this->supplier_id_ == event_addr.supplier_id_
       && this->type_ == event_addr.type_;
   }
 
-  ACE_INT32 conn_id_;
+  ACE_INT32 proxy_id_;
   // Unique connection identifier that denotes a particular
   // Proxy_Handler.
 
