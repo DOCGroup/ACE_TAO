@@ -1,3 +1,8 @@
+Wed Jul  3 11:09:31 2002  Steve Huston  <shuston@riverace.com>
+
+        * tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+          Change thread function to return ACE_THR_FUNC_RETURN, not void *.
+
 Tue Jul 02 21:43:53 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ACEXML/common/XMLFilterImpl.h: One more pre/post mismatch.
