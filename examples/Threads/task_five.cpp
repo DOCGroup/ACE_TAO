@@ -1,123 +1,129 @@
 // $Id$
 
-// Stress testing tread creation using ACE_Task.
-
+// Stress testing thread creation and thread cancellation using
+// ACE_Task.  
+//
 // Author: Detlef Becker <Detlef.Becker@med.siemens.de>
 
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
 
-class TestTask : public ACE_Task<ACE_MT_SYNCH>
+static const int DEFAULT_TASKS = 1000;
+
+class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-   TestTask(ACE_Thread_Manager *thrmgr = ACE_Service_Config::thr_mgr ());
-   ~TestTask() {};
+  Test_Task (ACE_Thread_Manager *thrmgr = ACE_Service_Config::thr_mgr ());
+  ~Test_Task (void) {};
 
-   int open (void * = 0);
-   int svc (void);
-   int close (u_long);
-   int shutdownRq(void);
-   int synch();
+  int open (void * = 0);
+  int svc (void);
+  int close (u_long);
+  int shutdown (void);
+  int synch (void);
 };
 
-TestTask::TestTask(ACE_Thread_Manager *thrmgr)
-: ACE_Task<ACE_MT_SYNCH> (thrmgr)
+Test_Task::Test_Task (ACE_Thread_Manager *thrmgr)
+  : ACE_Task<ACE_MT_SYNCH> (thrmgr)
 {
 }
 
 int
-TestTask::open (void *)
+Test_Task::open (void *)
 {
    return this->activate ();
 }
 
 int
-TestTask::svc (void)
+Test_Task::svc (void)
 {
-   while (!thr_mgr_->testcancel(ACE_OS::thr_self()))
-     {
-       ACE_Time_Value sleep_time (0, 350000);
-       ACE_OS::sleep (sleep_time);
-     }
-   return 0;
+  while (thr_mgr_->testcancel (ACE_OS::thr_self ()) == 0)
+    // Sleep for 350 msecs.
+    ACE_OS::sleep (ACE_Time_Value (0, 350000));
+
+  return 0;
 }
 
 int
-TestTask::close (u_long)
+Test_Task::close (u_long)
 {
-   return 0;
+  ACE_DEBUG ((LM_DEBUG, "(%t) closing down\n"));
+  return 0;
 }
 
 int
-TestTask::shutdownRq (void)
+Test_Task::shutdown (void)
 {
-   return thr_mgr_->cancel_grp(grp_id_);
+  return thr_mgr_->cancel_grp (grp_id_);
 }
 
 int
-TestTask::synch (void)
+Test_Task::synch (void)
 {
-   return thr_mgr_->wait_grp(grp_id_);
+  return thr_mgr_->wait_grp (grp_id_);
 }
 
 int
-main (int, char *[])
+main (int argc, char *argv[])
 {
-        const int       numTasks = 1000;
-        unsigned int loopCnt = 0;
-        unsigned int errCnt = 0;
+  const int n_tasks = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_TASKS;
+  u_int loop_count = 0;
+  u_int error_count = 0;
 
   ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
 
-  TestTask      *TaskArrPtr;
+  Test_Task *task_array;
 
-  while (1)
-  {
-          int ii;
-          TaskArrPtr = new TestTask[numTasks];
+  for (;;)
+    {
+      int i;
+      task_array = new Test_Task[n_tasks];
 
-          cout << "Opening Tasks!" << loopCnt
-               << " " << errCnt << endl;
+      ACE_DEBUG ((LM_DEBUG,
+                  "Opening Tasks, loop count = %d, error count = %d\n",
+                  loop_count,
+                  error_count));
 
-          for (ii =0; ii < numTasks; ii++)
+      for (i = 0; i < n_tasks; i++)
+        task_array[i].open ();
+
+      ACE_OS::sleep (1);
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Cancelling Tasks, loop count = %d, error count = %d\n",
+                  loop_count,
+                  error_count));
+
+      for (i = 0; i < n_tasks; i++)
+        task_array[i].shutdown ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                  "Synching Tasks, loop count = %d, error count = %d\n",
+                  loop_count,
+                  error_count));
+
+      for (i = 0; i < n_tasks; i++)
+        if (-1 == task_array[i].synch ())
           {
-                  TaskArrPtr[ii].open();
+            ACE_ERROR ((LM_ERROR,
+                        "Error in synch! loop count = %d, error count = %d\n",
+                        loop_count,
+                        error_count));
+            error_count++;
           }
 
-          ACE_OS::sleep (1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "thr_mgr->wait ();! loop count = %d, error count = %d\n",
+                  loop_count,
+                  error_count));
 
-          cout << "Cancelling Tasks!" << loopCnt
-               << " " << errCnt << endl;
+      // Wait for all the threads to finish.
+      thr_mgr->wait ();
 
-          for (ii = 0; ii < numTasks; ii++)
-          {
-                  TaskArrPtr[ii].shutdownRq();
-          }
-
-          cout << "Synching Tasks!" << loopCnt
-               << " " << errCnt << endl;
-
-          for (ii = 0; ii < numTasks; ii++)
-          {
-                  if (-1 == TaskArrPtr[ii].synch())
-                  {
-                          cout << "Error in synch! " << loopCnt
-                               << " " << errCnt << " " << ii << endl;
-                          errCnt++;
-                  }
-          }
-
-          cout << "thr_mgr->wait ();!" << loopCnt
-               << " " << errCnt << endl;
-
-          thr_mgr->wait ();
-
-          delete [] TaskArrPtr;
-
-          loopCnt++;
-
-  }
+      delete [] task_array;
+      loop_count++;
+    }
 
   return 0;
 }
