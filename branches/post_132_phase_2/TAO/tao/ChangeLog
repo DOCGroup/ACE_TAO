@@ -3,7 +3,7 @@ Fri Mar 07 09:49:35 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 	* TAO_IDL/be/be_codegen.cpp:
 	* TAO_IDL/be_visitor_operation/thru_poa_proxy_impl_ss.cpp: Changed
 	  the generated code to call object_key () on the stub object
-	  within the CORBA::Object instead of callong _object_key (). 
+	  within the CORBA::Object instead of calling _object_key (). 
 
 Mon Mar 03 14:07:10 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
