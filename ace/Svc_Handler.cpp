@@ -85,7 +85,8 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::operator new (size_t n)
   ACE_TRACE ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::operator new");
   // Allocate the memory and store it (usually in thread-specific
   // storage, depending on config flags).
-  return ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance ()->set (::new char[n]);
+  ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance ()->set ();
+  return ::new char[n];
 }
 
 template <PR_ST_1, ACE_SYNCH_1> void
@@ -132,7 +133,10 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_2>::ACE_Svc_Handler (ACE_Thread_Manager *tm,
   // in the April '96 issue of the C++ Report.  We've spruced it up to
   // work correctly in multi-threaded programs by using our ACE_TSS
   // class.
-  this->dynamic_ = ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->is_dynamic (this);
+  this->dynamic_ = ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->is_dynamic ();
+  if (this->dynamic_)
+    // Make sure to reset the flag
+    ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_2>::instance()->reset ();
   this->closing_ = 0;
 }
 
