@@ -54,7 +54,7 @@ main (int, ACE_TCHAR *[])
 
   ACE_DLL dll;
   int retval = dll.open (OBJ_PREFIX
-                         ACE_TEXT ("DLL_Testd")
+                         ACE_TEXT ("DLL_Test")
                          OBJ_SUFFIX);
   if (retval != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
