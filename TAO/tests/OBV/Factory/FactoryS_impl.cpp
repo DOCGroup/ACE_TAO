@@ -11,36 +11,36 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb)
 {
 }
 
-OBV_FactoryTest::BaseValue * 
-Test_impl::get_base_value (TAO_ENV_ARG_NOT_USED)
+OBV_FactoryTest::BaseValue *
+Test_impl::get_base_value (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::BaseValue* ret_val = 0;
-  ACE_NEW_RETURN (ret_val, 
+  ACE_NEW_RETURN (ret_val,
                   OBV_OBV_FactoryTest::BaseValue,
                   0);
 
   return ret_val;
 }
 
-OBV_FactoryTest::Value1 * 
-Test_impl::get_value1 (TAO_ENV_ARG_NOT_USED)
+OBV_FactoryTest::Value1 *
+Test_impl::get_value1 (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::Value1* ret_val = 0;
-  ACE_NEW_RETURN (ret_val, 
+  ACE_NEW_RETURN (ret_val,
                   OBV_OBV_FactoryTest::Value1,
                   0);
 
   return ret_val;
 }
 
-OBV_FactoryTest::Value2 * 
-Test_impl::get_value2 (TAO_ENV_ARG_NOT_USED)
+OBV_FactoryTest::Value2 *
+Test_impl::get_value2 (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   OBV_FactoryTest::Value2* ret_val = 0;
-  ACE_NEW_RETURN (ret_val, 
+  ACE_NEW_RETURN (ret_val,
                   Value2_impl,
                   0);
 
@@ -48,7 +48,7 @@ Test_impl::get_value2 (TAO_ENV_ARG_NOT_USED)
 }
 
 void
-Test_impl::shutdown (TAO_ENV_SINGLE_ARG_PARAMETER)
+Test_impl::shutdown (TAO_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->orb_->shutdown (0 TAO_ENV_ARG_PARAMETER);
