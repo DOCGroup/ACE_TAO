@@ -291,9 +291,10 @@ TAO_POA::TAO_POA (const TAO_POA::String &name,
     }
 
   // Add self to Object Adapter class.
-  result = this->object_adapter ().bind_poa (this->folded_name_,
-                                             this,
-                                             this->system_name_.out ());
+  result =
+    this->object_adapter ().bind_poa (this->folded_name_,
+                                      this,
+                                      this->system_name_.out ());
   if (result != 0)
     {
       // Remove from POA Manager in case of errors. No checks of
@@ -1296,9 +1297,10 @@ TAO_POA::activate_object_i (PortableServer::Servant servant,
   // and enters the Object Id and the specified servant in the Active
   // Object Map. The Object Id is returned.
   PortableServer::ObjectId_var user_id;
-  if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                         priority,
-                                                                         user_id.out ()) != 0)
+  if (this->active_object_map ().
+      bind_using_system_id_returning_user_id (servant,
+                                              priority,
+                                              user_id.out ()) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         0);
@@ -1779,7 +1781,8 @@ TAO_POA::check_poa_manager_state (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 CORBA::Object_ptr
-TAO_POA::create_reference_i (const char *intf
+TAO_POA::create_reference_i (const char *intf,
+                             CORBA::Short priority
                              ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
@@ -1792,25 +1795,37 @@ TAO_POA::create_reference_i (const char *intf
                         CORBA::Object::_nil ());
     }
 
-  /// @@ What to do: Get an user_id. For this, first get a system id
-  ///    and conver that to a user id.
-  PortableServer::ObjectId *user_id;
-  ACE_NEW_THROW_EX (user_id,
-                    PortableServer::ObjectId,
-                    CORBA::NO_MEMORY ());
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  // This operation creates an object reference that encapsulates a
+  // POA-generated Object Id value and the specified interface
+  // repository id. This operation does not cause an activation to
+  // take place. The resulting reference may be passed to clients, so
+  // that subsequent requests on those references will cause the
+  // appropriate servant manager to be invoked, if one is
+  // available. The generated Object Id value may be obtained by
+  // invoking POA::reference_to_id with the created reference.
+
+  PortableServer::ObjectId_var system_id;
+  PortableServer::ObjectId user_id;
 
   // Do the following if we going to retain this object in the active
   // object map.
   if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
     {
-      if (this->active_object_map
-          ().bind_using_system_id_returning_user_id (
-              0,
-              this->cached_policies ().server_priority (),
-              user_id) != 0)
+      if (this->active_object_map ().
+          bind_using_system_id_returning_system_id (0,
+                                                    priority,
+                                                    system_id.out ()) != 0)
         {
-         ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+
+      // Find user id from system id.
+      if (this->active_object_map ().
+          find_user_id_using_system_id (system_id.in (),
+                                        user_id) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             CORBA::Object::_nil ());
         }
     }
@@ -1818,33 +1833,39 @@ TAO_POA::create_reference_i (const char *intf
     {
       // Otherwise, it is the NON_RETAIN policy.  Therefore, any ol'
       // object id will do (even an empty one).
-      PortableServer::ObjectId *any_id;
-      ACE_NEW_THROW_EX (any_id,
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId,
                         CORBA::NO_MEMORY ());
       ACE_CHECK_RETURN (CORBA::Object::_nil ());
 
-      user_id = any_id;
+      system_id = sys_id;
+
+      // User id is the same as system id.
+      user_id = system_id.in ();
     }
 
-  this->caller_key_to_object_ = 0;
+  // Remember params for potentially invoking <key_to_object> later.
+  this->key_to_object_params_.set (system_id,
+                                   intf,
+                                   0,
+                                   1,
+                                   priority);
 
-  const PortableInterceptor::ObjectId *obj_id =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
+  const PortableInterceptor::ObjectId &user_oid =
+    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
                           user_id);
 
-  CORBA::Object_var object =
-    this->obj_ref_factory_->make_object (intf,
-                                         *obj_id
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return object._retn ();
+  // Ask the ORT to create the object.
+  return this->obj_ref_factory_->make_object (intf,
+                                              user_oid
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
 TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
-                                     const char *intf
+                                     const char *intf,
+                                     CORBA::Short priority
                                      ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    PortableServer::POA::WrongPolicy))
@@ -1865,19 +1886,63 @@ TAO_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
                         CORBA::Object::_nil ());
     }
 
-  this->caller_key_to_object_ = 0;
+  // This operation creates an object reference that encapsulates the
+  // specified Object Id and interface repository Id values. This
+  // operation does not cause an activation to take place.  The
+  // resulting reference may be passed to clients, so that subsequent
+  // requests on those references will cause the object to be
+  // activated if necessary, or the default servant used, depending on
+  // the applicable policies.
 
-  const PortableInterceptor::ObjectId *obj_id =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
-                          &user_id);
+  PortableServer::Servant servant = 0;
+  PortableServer::ObjectId_var system_id;
 
-  CORBA::Object_var obj_ptr =
-    this->obj_ref_factory_->make_object (intf,
-                                         *obj_id
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
+  // Do the following if we going to retain this object in the active
+  // object map.
+  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
+    {
+      // @@ We need something that can find the system id using
+      // appropriate strategy, at the same time, return the servant if
+      // one is available.  Before we have that function,
+      // <create_reference_with_id_i> basically generates broken
+      // collocated object when DIRECT collocation strategy is used.
 
-  return obj_ptr._retn ();
+      if (this->active_object_map ().find_system_id_using_user_id (user_id,
+                                                                   priority,
+                                                                   system_id.out ()) != 0)
+        {
+          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
+                            CORBA::Object::_nil ());
+        }
+    }
+  else
+    {
+      // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
+      // is the same as system id.
+      PortableServer::ObjectId *sys_id;
+      ACE_NEW_THROW_EX (sys_id,
+                        PortableServer::ObjectId (user_id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (CORBA::Object::_nil ());
+
+      system_id = sys_id;
+    }
+
+  // Remember params for potentially invoking <key_to_object> later.
+  this->key_to_object_params_.set (system_id,
+                                   intf,
+                                   servant,
+                                   1,
+                                   priority);
+
+  const PortableInterceptor::ObjectId &user_oid =
+    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
+                          user_id);
+
+  // Ask the ORT to create the object.
+  return this->obj_ref_factory_->make_object (intf,
+                                              user_oid
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::ObjectId *
@@ -1922,9 +1987,10 @@ TAO_POA::servant_to_id_i (PortableServer::Servant servant
       // or we have the UNIQUE_ID policy and we are not in the active
       // object map.
       PortableServer::ObjectId_var user_id;
-      if (this->active_object_map ().bind_using_system_id_returning_user_id (servant,
-                                                                             this->cached_policies_.server_priority (),
-                                                                             user_id.out ()) != 0)
+      if (this->active_object_map ().
+          bind_using_system_id_returning_user_id (servant,
+                                                  this->cached_policies_.server_priority (),
+                                                  user_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -2035,9 +2101,10 @@ TAO_POA::servant_to_system_id_i (PortableServer::Servant servant,
       // or we xhave the UNIQUE_ID policy and we are not in the active
       // object map.
       PortableServer::ObjectId_var system_id;
-      if (this->active_object_map ().bind_using_system_id_returning_system_id (servant,
-                                                                               priority,
-                                                                               system_id.out ()) != 0)
+      if (this->active_object_map ().
+          bind_using_system_id_returning_system_id (servant,
+                                                    priority,
+                                                    system_id.out ()) != 0)
         {
           ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                             0);
@@ -2086,9 +2153,9 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
   // reference. The real requirement here is that a reference is
   // produced that will behave appropriately (that is, yield a
   // consistent Object Id value when asked politely).
-
-  CORBA::Short priority = TAO_INVALID_PRIORITY;
-  PortableServer::ObjectId_var id =
+  CORBA::Short priority =
+    this->cached_policies_.server_priority ();
+  PortableServer::ObjectId_var system_id =
     this->servant_to_system_id (servant,
                                 priority
                                 ACE_ENV_ARG_PARAMETER);
@@ -2096,27 +2163,31 @@ TAO_POA::servant_to_reference (PortableServer::Servant servant
 
   PortableServer::ObjectId user_id;
 
+  // This operation requires the RETAIN, therefore don't worry about
+  // the NON_RETAIN case.
   if (this->active_object_map ().
-      find_user_id_using_system_id (id.in (),
+      find_user_id_using_system_id (system_id.in (),
                                     user_id) != 0)
     {
       ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
                         CORBA::Object::_nil ());
     }
 
-  this->caller_key_to_object_ = 1;
+  // Remember params for potentially invoking <key_to_object> later.
+  this->key_to_object_params_.set (system_id,
+                                   servant->_interface_repository_id (),
+                                   servant,
+                                   1,
+                                   priority);
 
-  const PortableInterceptor::ObjectId *obj_id =
-    ACE_reinterpret_cast (const PortableInterceptor::ObjectId *,
-                          &user_id);
+  const PortableInterceptor::ObjectId &user_oid =
+    ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
+                          user_id);
 
-  CORBA::Object_var object =
-    this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
-                                         *obj_id
-                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-  return object._retn ();
+  // Ask the ORT to create the object.
+  return this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
+                                              user_oid
+                                              ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::Servant
@@ -2445,16 +2516,21 @@ TAO_POA::id_to_reference_i (const PortableServer::ObjectId &id
         system_id.out (),
         priority) == 0)
     {
-      // Create object key.
-      TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
+      // Remember params for potentially invoking <key_to_object> later.
+      this->key_to_object_params_.set (system_id,
+                                       servant->_interface_repository_id (),
+                                       servant,
+                                       1,
+                                       priority);
 
-      // Ask the ORB to create you a reference
-      return this->key_to_object (key.in (),
-                                  servant->_interface_repository_id (),
-                                  servant,
-                                  1,
-                                  priority
-                                  ACE_ENV_ARG_PARAMETER);
+      const PortableInterceptor::ObjectId &user_oid =
+        ACE_reinterpret_cast (const PortableInterceptor::ObjectId &,
+                              id);
+
+      // Ask the ORT to create the object.
+      return this->obj_ref_factory_->make_object (servant->_interface_repository_id (),
+                                                  user_oid
+                                                  ACE_ENV_ARG_PARAMETER);
     }
   else
     // If the Object Id value is not active in the POA, an
@@ -2725,10 +2801,11 @@ TAO_POA::locate_servant_i (const char *operation,
           // Object Map so that subsequent requests with the same
           // ObjectId value will be delivered directly to that servant
           // without invoking the servant manager.
-          int result = this->active_object_map ().rebind_using_user_id_and_system_id (servant,
-                                                                                      poa_current_impl.object_id (),
-                                                                                      system_id,
-                                                                                      servant_upcall.active_object_map_entry_);
+          int result = this->active_object_map ().
+            rebind_using_user_id_and_system_id (servant,
+                                                poa_current_impl.object_id (),
+                                                system_id,
+                                                servant_upcall.active_object_map_entry_);
           if (result != 0)
             {
               ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
@@ -3335,116 +3412,21 @@ TAO_Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 CORBA::Object_ptr
-TAO_POA::invoke_key_to_object (const char *intf,
-                               PortableServer::ObjectId &user_id
-                               ACE_ENV_ARG_DECL)
+TAO_POA::invoke_key_to_object (ACE_ENV_SINGLE_ARG_DECL)
 {
-  CORBA::Short priority;
-
-  if (this->caller_key_to_object_ == 1)
-    {
-      priority = TAO_INVALID_PRIORITY;
-    }
-  else
-    {
-      priority = this->cached_policies ().server_priority ();
-    }
-
-  /// @@@ Get to the system id from the passed in user id.
-
-  // This operation creates an object reference that encapsulates the
-  // specified Object Id and interface repository Id values. This
-  // operation does not cause an activation to take place.  The
-  // resulting reference may be passed to clients, so that subsequent
-  // requests on those references will cause the object to be
-  // activated if necessary, or the default servant used, depending on
-  // the applicable policies.
-
-  //  PortableServer::Servant servant = 0;
-  PortableServer::ObjectId_var system_id;
-
-  // Do the following if we going to retain this object in the active
-  // object map.
-  if (this->cached_policies_.servant_retention () == PortableServer::RETAIN)
-    {
-      // @@ We need something that can find the system id using
-      // appropriate strategy, at the same time, return the servant if
-      // one is available.  Before we have that function,
-      // <create_reference_with_id_i> basically generates broken
-      // collocated object when DIRECT collocation strategy is used.
-
-      if (this->active_object_map ().find_system_id_using_user_id (user_id,
-                                                                   priority,
-                                                                   system_id.out ()) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
-        }
-    }
-  else
-    {
-      // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
-      // is the same as system id.
-      PortableServer::ObjectId *sys_id;
-      ACE_NEW_THROW_EX (sys_id,
-                        PortableServer::ObjectId (user_id),
-                        CORBA::NO_MEMORY ());
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-
-      system_id = sys_id;
-    }
+  PortableServer::ObjectId_var &system_id =
+    *this->key_to_object_params_.system_id_;
 
   // Create object key.
-  TAO::ObjectKey_var key = this->create_object_key (system_id.in ());
+  TAO::ObjectKey_var key =
+    this->create_object_key (system_id.in ());
 
-  CORBA::Object_var object = 0;
-
-  if (this->caller_key_to_object_ == 1)
-    {
-      PortableServer::ObjectId user_id;
-
-      if (this->active_object_map ().
-          find_user_id_using_system_id (system_id.in (),
-                                        user_id) != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
-        }
-
-      PortableServer::Servant servant = 0;
-
-      int result = this->active_object_map
-        ().find_servant_using_user_id (user_id,
-                                       servant);
-
-      if (result != 0)
-        {
-          ACE_THROW_RETURN (CORBA::OBJ_ADAPTER (),
-                            CORBA::Object::_nil ());
-        }
-
-      /// @@ Servant to reference
-      // Ask the ORB to create you a reference
-      object = this->key_to_object (key.in (),
-                                    intf,
-                                    servant,
-                                    1,
-                                    priority
-                                    ACE_ENV_ARG_PARAMETER);
-    }
-  else
-    {
-      // Ask the ORB to create you a reference
-      object = this->key_to_object (key.in (),
-                                    intf,
-                                    0,
-                                    1,
-                                    priority
-                                    ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (CORBA::Object::_nil ());
-    }
-
-  return object._retn ();
+  return this->key_to_object (key.in (),
+                              this->key_to_object_params_.type_id_,
+                              this->key_to_object_params_.servant_,
+                              this->key_to_object_params_.collocated_,
+                              this->key_to_object_params_.priority_
+                              ACE_ENV_ARG_PARAMETER);
 }
 
 CORBA::Object_ptr
@@ -4142,6 +4124,20 @@ TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
 }
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
+
+void
+TAO_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
+                                    const char *type_id,
+                                    TAO_ServantBase *servant,
+                                    CORBA::Boolean collocated,
+                                    CORBA::Short priority)
+{
+  this->system_id_ = &system_id;
+  this->type_id_ = type_id;
+  this->servant_ = servant;
+  this->collocated_ = collocated;
+  this->priority_ = priority;
+}
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
