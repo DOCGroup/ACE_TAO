@@ -26,19 +26,17 @@ namespace TMCast
 
   public:
 
-    MTQueue (size_t hint = 0)
+    MTQueue ()
         : mutexp_ (new MutexType),
           mutex_ (*mutexp_),
-          // queue_ (hint),
           queue_ (),
           signal_ (false)
     {
     }
 
-    MTQueue (MutexType& mutex, size_t hint = 0)
+    MTQueue (MutexType& mutex)
         : mutexp_ (),
           mutex_ (mutex),
-          // queue_ (hint),
           queue_ (),
           signal_ (false)
     {
