@@ -1833,28 +1833,38 @@ operator<< (TAO_OutputCDR& cdr,
       return 0;
     }
 
-  ACE_TRY_NEW_ENV
+  int byte_order =
+    cdr.do_byte_swap () ? !ACE_CDR_BYTE_ORDER : ACE_CDR_BYTE_ORDER;
+
+  if (byte_order == x._tao_byte_order ())
     {
-      TAO_InputCDR input (x._tao_get_cdr (),
-                          x._tao_byte_order ());
+      cdr.write_octet_array_mb (x._tao_get_cdr ());
+    }
+  else
+    {
+      ACE_TRY_NEW_ENV
+        {
+          TAO_InputCDR input (x._tao_get_cdr (),
+                              x._tao_byte_order ());
 
-      CORBA::TypeCode::traverse_status status =
-        TAO_Marshal_Object::perform_append (tc.in (),
-                                            &input,
-                                            &cdr
-                                            ACE_ENV_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+          CORBA::TypeCode::traverse_status status =
+            TAO_Marshal_Object::perform_append (tc.in (),
+                                                &input,
+                                                &cdr
+                                                ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
 
-      if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+          if (status != CORBA::TypeCode::TRAVERSE_CONTINUE)
+            {
+              return 0;
+            }
+        }
+      ACE_CATCH (CORBA_Exception, ex)
         {
           return 0;
         }
+      ACE_ENDTRY;
     }
-  ACE_CATCH (CORBA_Exception, ex)
-    {
-      return 0;
-    }
-  ACE_ENDTRY;
   return 1;
 }
 
