@@ -1,0 +1,145 @@
+/**
+@page run_test_howto How to write a run_test.pl
+
+ACE/TAO's auto_builds expect run_test.pl's to follow some guidelines
+that are needed to keep the auto_builds from hanging and to make
+sure the run_test.pl works on all platforms
+
+- The run_test must not hang or block.
+- The run_test must clean up any temporary files when it is done.  
+- The run_test must not require any user input
+- The run_test should return a non-zero value if the test failed
+
+Following is an example
+
+@subsection example Example
+
+@verbatim
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+# -*- perl -*-
+
+use lib '../../../bin';
+use PerlACE::Run_Test;
+use Cwd;
+
+$server_ior = $getcwd . "/server.ior";
+unlink $server_ior;
+
+$SV = new PerlACE::Process ("server", "-o $server_ior");
+
+$SV->Spawn ();
+
+if (PerlACE::waitforfile_timed ($server_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$server_ior>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
+
+$CL = new PerlACE::Process ("client", " -k file://$server_ior ");
+
+$client = $CL->SpawnWaitKill (60);
+$server = $SV->WaitKill (5);
+
+unlink $server_ior;
+ 
+if ($server != 0 || $client != 0) {
+    exit 1;
+}
+
+exit 0;
+@endverbatim
+
+@subsection details Example Details
+
+@verbatim
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
+
+# $Id$
+@endverbatim
+
+This is the standard header stuff.  The eval is a trick used
+to get the perl script to run if it a unix shell treats it as
+a shell script.
+
+The CVS ID string is the usual one we put in.
+
+@verbatim
+use lib '../../../bin';
+use PerlACE::Run_Test;
+@endverbatim
+
+The use lib line is used to tell Perl where the PerlACE modules are.
+It should be a relative path to the bin directory.
+
+And PerlACE::Run_Test is a module to be used by all run_test.pl's.
+It does a couple of things, including parsing some common command
+line arguments (like -Config and -ExeSubDir) and also brings in
+the PerlACE::Process module.
+
+@verbatim
+use Cwd;
+
+$server_ior = $getcwd . "/server.ior";
+
+unlink $server_ior;
+@endverbatim
+
+Because of the way tests work on chorus, we need to have a fully 
+qualified path to all *.ior and *.conf files.  We unlink the file
+immediately because we use PerlACE::waitforfile_timed later.
+
+@verbatim
+$SV = new PerlACE::Process ("server", "-o $server_ior");
+
+$SV->Spawn ();
+@endverbatim
+
+The PerlACE::Process is constructed with an executable and 
+arguments.  @note Unlike the old Process module, the process
+isn't started until one of the Spawn's is called.
+
+@verbatim
+if (PerlACE::waitforfile_timed ($server_ior, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$server_ior>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+} 
+@endverbatim
+
+The PerlACE::waitforfile_timed method waits until the file is
+created.  In this way, we know when to start the client.
+
+@verbatim
+$CL = new PerlACE::Process ("client", " -k file://$server_ior ");
+
+$client = $CL->SpawnWaitKill (60);
+$server = $SV->WaitKill (5);
+@endverbatim
+
+Here are two more methods on the PerlACE::Process object.
+SpawnWaitKill will start the process and wait for the specified
+number of seconds for the process to end.  If the time limit
+is reached, it will kill the process.  WaitKill will do the same,
+but is used after the process is already spawned.
+
+@verbatim
+unlink $server_ior;
+ 
+if ($server != 0 || $client != 0) {
+    exit 1;
+}
+ 
+exit 0;
+@endverbatim
+
+And finally, we just check the return codes of the server and 
+client and return 1 from this perl script if they aren't 0.
+
+This return code is used by the auto_run_tests.pl script.
+*/
