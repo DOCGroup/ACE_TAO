@@ -6,6 +6,12 @@
 // @@ Notice: [ciao module name] can expand to either CIAO_GLUE or
 //    CIAO_GLUE_[module name] as defined in the header file.
 
+/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/// @@@ Notice that all component and interface names need to be
+/// fully qualified as we are creating a new namespace for the CIAO's
+/// container glue code.
+/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 //////////////////////////////////////////////////////////////////
 // Facet Glue Code implementation
 // @@ We are assuming that these facets are declared under the same

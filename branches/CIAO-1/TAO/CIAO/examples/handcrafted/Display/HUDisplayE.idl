@@ -30,6 +30,5 @@ module HUDisplay
    */
   local interface CCM_position : position
   {
-    long pos ();
   };
 };

@@ -9,14 +9,14 @@
 //    implementation for a session component should look like.
 //
 //    The generated filename for files using this template shoule be
-//       [idl-basename]GS.h         GS --> GlueSession
+//       [idl-basename]_svnt.h
 //
 // @author Nanbor Wang <nanbor@cs.wustl.edu>
 //
 // ===========================================================
 
-#ifndef CIAO_GLUE_SESSION_[idl-basename]GS_H
-#define CIAO_GLUE_SESSION_[idl-basename]GS_H
+#ifndef CIAO_GLUE_SESSION_[idl-basename]_SVNT_H
+#define CIAO_GLUE_SESSION_[idl-basename]_SVNT_H
 #include "ace/pre.h"
 
 #include "[idl-name]S.h"        // Source in the skeletons for component
@@ -24,16 +24,16 @@
 #include "[idl-name]EC.h"       // Source in the executor mapping
                                 // that component implementations use
 #include "ciao/Container_Base.h" //Source in the container interface definitions
-#include "[SERVANT]_export.h"   // Generated export decl
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/// @@@ Notice that all component and interface names may need to be
+/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+/// @@@ Notice that all component and interface names need to be
 /// fully qualified as we are creating a new namespace for the CIAO's
 /// container glue code.
-
+/// @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 ##if component is defined withing a [module name]
 namespace CIAO_GLUE_[module_name]
@@ -60,7 +60,7 @@ namespace CIAO_GLUE
   public:
     // Constructor and destructor.
     [facet type]_Servant (CCM_[facet type]_ptr executor,
-                          ::Components::CCMContext_ptr ctx_);
+                          ::Components::CCMContext_ptr ctx);
     ~[facet tyep]_Servant ();
 
 ##  foreach [operation] in (all facet operations)
@@ -620,9 +620,9 @@ namespace CIAO_GLUE
 #endif
 
 #if defined (__ACE_INLINE__)
-# include "[idl-basename]GS.inl"
+# include "[idl-basename]_SVNT.inl"
 #endif /* __ACE_INLINE__ */
 
 
 #include "ace/post.h"
-#endif /* CIAO_GLUE_SESSION_[idl-basename]GS_H */
+#endif /* CIAO_GLUE_SESSION_[idl-basename]_SVNT_H */

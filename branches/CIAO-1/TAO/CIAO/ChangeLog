@@ -1,6 +1,21 @@
-Tue Mar 11 15:18:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+Tue Mar 11 22:47:06 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-Tue Mar 11 14:55:50 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+	* examples/handcrafted/Display/HUDisplayE.idl: Removed redundant
+	  operations that have already been defined in the facet interface.
+
+	* examples/handcrafted/Display/HUDisplay_svnt.cpp:
+	* examples/handcrafted/Display/HUDisplay_svnt.h:
+	* examples/handcrafted/Display/HUDisplay_svnt.inl: Added hand
+	  generated code based on the glue code template in
+
+	    docs/templates/
+
+	* docs/templates/CIAO_Glue_Session_Template.cpp:
+	* docs/templates/CIAO_Glue_Session_Template.h:
+	* docs/templates/CIAO_Glue_Session_Template.inl: Updated template
+	  code based on results from hand generated code.
+
+Tue Mar 11 15:18:52 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/generate_component_mpc.pl: Added this new to auto-generate
 	  the mpc files for a single component implementation.  The mpc
