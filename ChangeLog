@@ -1,3 +1,10 @@
+Sat Jan 17 19:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* tests/INET_Addr_Test_IPV6.cpp:
+	* tests/Proactor_Test_IPV6.cpp:
+	* tests/SOCK_Send_Recv_Test_IPV6.cpp:
+	  Fixed incorrect doxygen file tag.
+
 Sat Jan 17 19:35:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/C++NPv2/AC_CLD_export.h:
