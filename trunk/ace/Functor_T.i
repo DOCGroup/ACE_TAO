@@ -11,8 +11,7 @@
 //
 // = DESCRIPTION
 //    Inlinable method definitions for templatized classes
-//    implementing the GOF Command Pattern, also known as functors
-//    or function objects.
+//    implementing the GOF Command Pattern, or STL-style functors.
 //
 // = AUTHOR
 //    Chris Gill           <cdgill@cs.wustl.edu>
@@ -23,23 +22,34 @@
 //    Douglas C. Schmidt   <schmidt@cs.wustl.edu> and
 //    Sergio Flores-Gaitan <sergio@cs.wustl.edu>
 //
+//    and on STL-style functor implementations originally done by
+//
+//    Irfan Pyarali  <irfan@cs.wustl.edu>
+//
 // ============================================================================
 
 
-// Invokes the less than function object.
+/////////////////////////////////
+// STL-style Functor Templates //
+/////////////////////////////////
 
-template <class OPERAND1, class OPERAND2> ACE_INLINE int
-ACE_Less_Than_Functor<OPERAND1, OPERAND2>::execute (const OPERAND1 &operand1,
-                                                    const OPERAND2 &operand2)
+template <class TYPE> ACE_INLINE u_long
+ACE_Hash<TYPE>::operator () (const TYPE &t) const
 {
-  return (operand1 < operand2) ? 1 : 0;
+  return t.hash ();
 }
 
-// Creates another object of the same type.
-
-template <class OPERAND1, class OPERAND2> ACE_INLINE
-ACE_Const_Binary_Functor_Base<OPERAND1, OPERAND2> *
-ACE_Less_Than_Functor<OPERAND1, OPERAND2>::clone ()
+template <class TYPE> ACE_INLINE int
+ACE_Equal_To<TYPE>::operator () (const TYPE &lhs,
+                                 const TYPE &rhs) const
 {
-  return new ACE_Less_Than_Functor<OPERAND1, OPERAND2>;
+  return lhs == rhs;
 }
+
+template <class TYPE> ACE_INLINE int
+ACE_Less_Than<TYPE>::operator () (const TYPE &lhs,
+                                  const TYPE &rhs) const
+{
+  return (lhs < rhs) ? 1 : 0;
+}
+

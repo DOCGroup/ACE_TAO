@@ -2,19 +2,6 @@
 
 #include "ace/Synch.h"
 
-template <class TYPE> ACE_INLINE u_long
-ACE_Hash<TYPE>::operator () (const TYPE &t)
-{
-  return t.hash ();
-}
-
-template <class TYPE> ACE_INLINE int
-ACE_Equal_To<TYPE>::operator () (const TYPE &lhs,
-                                 const TYPE &rhs)
-{
-  return lhs == rhs;
-}
-
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> ACE_INLINE
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Manager_Ex (size_t size,
                                                                                                     ACE_Allocator *alloc)

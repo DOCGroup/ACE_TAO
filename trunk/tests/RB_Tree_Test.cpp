@@ -10,12 +10,14 @@
 //
 // = DESCRIPTION
 //    This is a test to verify and illustrate the use of the ACE_RB_Tree
-//    and ACE_RB_Tree_Iterator classes.  Two different less than comparison 
-//    function object types are demonstrated for native key types int (for 
-//    which the native < operator is sufficient) and char * (for which the
-//    native < operator is not sufficient).  An RB tree for each of the four
-//    possible type parameter combinations over int and char * is constructed
-//    and filled in, and the resulting order checked via an iterator.
+//    and ACE_RB_Tree_Iterator classes.  Two different key and item types are 
+//    used in order to demonstrate specialization of the ACE_Less_Than 
+//    comparison function object template: int (for which the native < 
+//    operator is sufficient), and char * (for which < operator semantics must
+//    be replaced by strcmp semantics).  An RB tree for each of the four 
+//    possible type parameter permutations over int and char * is constructed
+//    and filled in, and the resulting order is checked via an iterator over 
+//    each.
 //
 // = AUTHOR
 //    Chris Gill <cdgill@cs.wustl.edu>
@@ -52,33 +54,6 @@ static int str_str_index [] = {4, 2, 1, 0, 3, 6, 5, 7}; // LR preorder
 // Number of entries placed in each tree.
 static int RB_TREE_TEST_ENTRIES = 8;
 
-class RB_Test_String_Less_Than_Functor : 
-  public ACE_Const_Binary_Functor_Base<char *, char *>
-{
-  // = TITLE
-  //    Defines a class template that allows us to invoke a binary less than 
-  //    function over two parameterized types without knowing anything about 
-  //    the function and operand objects except their types.
-  //
-  // = DESCRIPTION
-  //    This class depends on the definition 
-  //    objects of the paramterized types.  A class can invoke such 
-  //    an operation without knowing anything about it, or its implementation.
-  //
-public:
-
-  virtual int execute (char * const & operand1,
-	               char * const & operand2)
-      {return (ACE_OS::strcmp (operand1, operand2) < 0) ? 1 : 0;}
-  // Invokes the function object.
-
-  virtual ACE_Const_Binary_Functor_Base<char *, char *> * clone ()
-      {return new RB_Test_String_Less_Than_Functor;}
-  // Creates another object of the same type.
-};
-
-
-
 int
 main (int, ASYS_TCHAR *[])
 {
@@ -87,14 +62,13 @@ main (int, ASYS_TCHAR *[])
   // Local variables used to index arrays.
   int i, k;
 
-  // Construct four RB_Trees, using the default comparison semantics for those
-  // keyed with int, and using a custom comparison function object for those
-  // keyed with char *.
-  RB_Test_String_Less_Than_Functor strcmp_functor;
-  ACE_RB_Tree<int, int> int_int_tree;
-  ACE_RB_Tree<int, char *> int_str_tree;
-  ACE_RB_Tree<char *, int> str_int_tree (&strcmp_functor);
-  ACE_RB_Tree<char *, char *> str_str_tree (&strcmp_functor);
+  // Construct four RB_Trees.  Specialization of the ACE_Less_Than template
+  // for character strings performs strcmp style string comparisons rather
+  // than < operator comparison of the pointers themselves.
+  ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_tree;
+  ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_tree;
+  ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_tree;
+  ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_tree;
 
   // Fill in each tree with the key and item from the appropriate arrays,
   // using the shuffle indexes to create different insertion orders.
@@ -130,10 +104,10 @@ main (int, ASYS_TCHAR *[])
     }
 
   // Construct an iterator for each of the trees.
-  ACE_RB_Tree_Iterator<int, int> int_int_iter (int_int_tree);
-  ACE_RB_Tree_Iterator<int, char *> int_str_iter (int_str_tree);
-  ACE_RB_Tree_Iterator<char *, int> str_int_iter (str_int_tree);
-  ACE_RB_Tree_Iterator<char *, char *> str_str_iter (str_str_tree);
+  ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> int_int_iter (int_int_tree);
+  ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex> int_str_iter (int_str_tree);
+  ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex> str_int_iter (str_int_tree);
+  ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex> str_str_iter (str_str_tree);
 
   // Iterate over each of the trees, making sure their entries
   // are in the same relative order (i.e., the integers and strings
@@ -229,38 +203,30 @@ main (int, ASYS_TCHAR *[])
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Const_Binary_Functor_Base<char *, char *>;
-template class ACE_Const_Binary_Functor_Base<int, int>;
-template class ACE_Less_Than_Functor<char *, char *>;
-template class ACE_Less_Than_Functor<int, int>;
-template class ACE_RB_Tree<int, int>;
+template class ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<int, int>;
-template class ACE_RB_Tree_Iterator<int, int>;
-template class ACE_RB_Tree<int, char *>;
+template class ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<int, char *>;
-template class ACE_RB_Tree_Iterator<int, char *>;
-template class ACE_RB_Tree<char *, int>;
+template class ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+template class ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<char *, int>;
-template class ACE_RB_Tree_Iterator<char *, int>;
-template class ACE_RB_Tree<char *, char *>;
+template class ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>;
+template class ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
 template class ACE_RB_Tree_Node<char *, char *>;
-template class ACE_RB_Tree_Iterator<char *, char *>;
+template class ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Const_Binary_Functor_Base<char *, char *>
-#pragma instantiate ACE_Const_Binary_Functor_Base<int, int>
-#pragma instantiate ACE_Less_Than_Functor<char *, char *>
-#pragma instantiate ACE_Less_Than_Functor<int, int>
-#pragma instantiate ACE_RB_Tree<int, int>
+#pragma instantiate ACE_RB_Tree<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<int, int>
-#pragma instantiate ACE_RB_Tree_Iterator<int, int>
-#pragma instantiate ACE_RB_Tree<int, char *>
+#pragma instantiate ACE_RB_Tree_Iterator<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<int, char *>
-#pragma instantiate ACE_RB_Tree_Iterator<int, char *>
-#pragma instantiate ACE_RB_Tree<char *, int>
+#pragma instantiate ACE_RB_Tree_Iterator<int, char *, ACE_Less_Than<int>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<char *, int>
-#pragma instantiate ACE_RB_Tree_Iterator<char *, int>
-#pragma instantiate ACE_RB_Tree<char *, char *>
+#pragma instantiate ACE_RB_Tree_Iterator<char *, int, ACE_Less_Than<char *>, ACE_Null_Mutex>
+#pragma instantiate ACE_RB_Tree<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
 #pragma instantiate ACE_RB_Tree_Node<char *, char *>
-#pragma instantiate ACE_RB_Tree_Iterator<char *, char *>
+#pragma instantiate ACE_RB_Tree_Iterator<char *, char *, ACE_Less_Than<char *>, ACE_Null_Mutex>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 

@@ -80,7 +80,7 @@ CC              = dcc -tMC68060FS:psos
 #     describe the target board. The object format is F for ELF, E for COFF,
 #     or N for GNU/VxWorks. The floating point support is H for hardware
 #     support, S for software support, or N for no floating point support
-CFLAGS += -D__DIAB -D__DIAB_42p0 -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSINCL)
+CFLAGS += -D__DIAB -D__DIAB_42a -Xkill-opt=0x400 -Xno-old-style -Xlint $(PSOSINCL)
 
 # C Compiler Debug Flags (passed iff debug == 1)
 # -# prints subprograms with arguments as they are executed
@@ -137,11 +137,11 @@ DCCFLAGS         +=  $(DCFLAGS)
 
 # Dynamic Linker
 # DLD             = dld
-DLD             = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/app.lnk
+DLD             = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/ram.lnk
 
 # Static Linker
 # LD              = dld
-LD              = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/app.lnk
+LD              = dplus -tMC68060FS:psos -Wm$(PSS_BSP)/ram.lnk
 
 # Static Linker Flags
 # -L<path> adds a directory path to the linker search path

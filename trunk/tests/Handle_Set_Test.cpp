@@ -98,7 +98,9 @@ test_boundaries (void)
   ACE_Handle_Set_Iterator i1 (handle_set);
 
   while ((handle = i1 ()) != ACE_INVALID_HANDLE)
-    ACE_ASSERT (!ASYS_TEXT ("this shouldn't get called since the set is empty!\n"));
+    {
+      ACE_ASSERT (ASYS_TEXT ("this shouldn't get called since the set is empty!\n") == 0);
+    }
 
   // Insert the vector of HANDLEs into the set.
 

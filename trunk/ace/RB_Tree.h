@@ -96,7 +96,7 @@ private:
   // Pointer to node's right child.
 };
 
-template <class KEY, class T>
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree
 {
   // = TITLE
@@ -105,26 +105,24 @@ class ACE_RB_Tree
   //   1990, MIT, chapter 14.
   //
   // = Description
-  //   Optional flag passed to constructor indicates whether or not the
-  //   passed functor should be deleted by the ACE_RB_Tree's destructor.
+  //   If an ACE allocator is passed to the RB_Tree constructor, it is used 
+  //   for all dynamic allocations done by the tree.
 public:
   // = Initialization and termination methods.
-  ACE_RB_Tree (ACE_Const_Binary_Functor_Base<KEY, KEY> *less_than_functor = 0,
-               int free_functor = 0);
+  ACE_RB_Tree ();
   // Constructor.
 
-  ACE_RB_Tree (const ACE_RB_Tree<KEY, T> &rbt);
+  ACE_RB_Tree (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &rbt);
   // Copy constructor.
 
   virtual ~ACE_RB_Tree (void);
   // Destructor.
 
-  void operator= (const ACE_RB_Tree<KEY, T> &rbt);
+  void operator= (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &rbt);
   // Assignment operator.
 
   virtual int lessthan (const KEY &k1, const KEY &k2);
-  // Less than comparison function for keys.  Default implementation returns 1
-  // if k1 < k2, and 0 otherwise.
+  // Less than comparison function for keys, using comparison functor.
 
   T* find (const KEY &k);
   // Returns a pointer to the item corresponding to the
@@ -196,22 +194,19 @@ public:
   ACE_RB_Tree_Node<KEY, T> *root_;
   // The root of the tree.
 
-  ACE_Const_Binary_Functor_Base<KEY, KEY> *less_than_functor_;
-  // "Less than" functor for comparing nodes in the tree.
+  COMPARE_KEYS compare_keys_;
+  // Comparison functor for comparing nodes in the tree.
 
-  int free_functor_;
-  // Flag indicating whether or not to delete functor in destructor
-  // and assignment operator.
 };
 
-template <class KEY, class T>
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Iterator
 {
   // = TITLE
   //   Implements an iterator for a Red-Black Tree ADT.
 public:
   // = Initialization and termination methods.
-  ACE_RB_Tree_Iterator (const ACE_RB_Tree<KEY, T> &tree);
+  ACE_RB_Tree_Iterator (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &tree);
   // Constructor.
 
   ~ACE_RB_Tree_Iterator (void);
@@ -244,13 +239,13 @@ private:
 
   // Explicitly prevent assignment and copy construction of iterators.
   ACE_UNIMPLEMENTED_FUNC (
-    ACE_RB_Tree_Iterator (const ACE_RB_Tree_Iterator<KEY, T> &))
+    ACE_RB_Tree_Iterator (const ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> &))
   ACE_UNIMPLEMENTED_FUNC (
-    void operator = (const ACE_RB_Tree_Iterator<KEY, T> &))
+    void operator = (const ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> &))
 
   // Private members.
 
-  const ACE_RB_Tree<KEY, T> &tree_;
+  const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &tree_;
   // Reference to the ACE_RB_Tree over which we're iterating.
 
   ACE_RB_Tree_Node <KEY, T> *node_;

@@ -56,35 +56,21 @@ ACE_RB_Tree_Node<KEY, T>::~ACE_RB_Tree_Node ()
 
 // Constructor.
 
-template <class KEY, class T>
-ACE_RB_Tree<KEY, T>::ACE_RB_Tree (
-  ACE_Const_Binary_Functor_Base<KEY, KEY> *less_than_functor,
-  int free_functor)
-  : root_ (0),
-    less_than_functor_ (less_than_functor),
-    free_functor_ (free_functor)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree ()
+  : root_ (0)
 {
-  if (less_than_functor_ == 0)
-    {
-      less_than_functor_ = new ACE_Less_Than_Functor<KEY, KEY>;
-      free_functor_ = 1;
-    }
 }
 
 
 // Copy constructor.
 
-template <class KEY, class T>
-ACE_RB_Tree<KEY, T>::ACE_RB_Tree (const ACE_RB_Tree<KEY, T> &rbt)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &rbt)
   : root_ (0)
 {
-  // Make a copy of the comparison functor.
-  less_than_functor_ = (rbt.less_than_functor_ == 0)
-                       ? 0 : rbt.less_than_functor_->clone ();
-  free_functor_ = 1;
-
   // Make a deep copy of the passed tree.
-  ACE_RB_Tree_Iterator<KEY, T> iter(rbt);
+  ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> iter(rbt);
   for (iter.first (); iter.is_done () == 0; iter.next ())
   {
     insert (*(iter.key ()), *(iter.item ()));
@@ -94,15 +80,9 @@ ACE_RB_Tree<KEY, T>::ACE_RB_Tree (const ACE_RB_Tree<KEY, T> &rbt)
 
 // Destructor.
 
-template <class KEY, class T>
-ACE_RB_Tree<KEY, T>::~ACE_RB_Tree ()
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree ()
 {
-  // Free the comparison functor if needed.
-  if (free_functor_)
-    {
-      delete less_than_functor_;
-    }
-
   // Clear away all nodes in the tree.
   clear ();
 }
@@ -110,25 +90,14 @@ ACE_RB_Tree<KEY, T>::~ACE_RB_Tree ()
 
 // Assignment operator.
 
-template <class KEY, class T> void
-ACE_RB_Tree<KEY, T>::operator = (const ACE_RB_Tree<KEY, T> &rbt)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::operator = (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &rbt)
 {
-  // Free the comparison functor if needed.
-  if (free_functor_)
-    {
-      delete less_than_functor_;
-    }
-
-  // Make a copy of the passed tree's comparison functor.
-  less_than_functor_ = (rbt.less_than_functor_ == 0)
-                       ? 0 : rbt.less_than_functor_->clone ();
-  free_functor_ = 1;
-
   // Clear out the existing tree.
   clear ();
 
   // Make a deep copy of the passed tree.
-  ACE_RB_Tree_Iterator<KEY, T> iter(rbt);
+  ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> iter(rbt);
   for (iter.first (); iter.is_done () == 0; iter.next ())
   {
     insert (*(iter.key ()), *(iter.item ()));
@@ -138,27 +107,18 @@ ACE_RB_Tree<KEY, T>::operator = (const ACE_RB_Tree<KEY, T> &rbt)
 // Less than comparison function for keys, default
 // functor implementation returns 1 if k1 < k2, 0 otherwise.
 
-template <class KEY, class T> int
-ACE_RB_Tree<KEY, T>::lessthan (const KEY &k1, const KEY &k2)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> int
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::lessthan (const KEY &k1, const KEY &k2)
 {
-  if (less_than_functor_ == 0)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,  ASYS_TEXT ("%p\n"),
-                         ASYS_TEXT ("\nNull comparison functor pointer.\n")),
-                        0);
-    }
-  else
-    {
-      return less_than_functor_->execute (k1, k2);
-    }
+      return this->compare_keys_ (k1, k2);
 }
 
 
 // Returns a pointer to the item corresponding to the
 // given key, or 0 if it cannot find the key in the tree.
 
-template <class KEY, class T> T*
-ACE_RB_Tree<KEY, T>::find (const KEY &k)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> T*
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find (const KEY &k)
 {
   // Find the closest matching node, if there is one.
   ACE_RB_Tree_Node<KEY, T> *current = find_node (k);
@@ -196,8 +156,8 @@ ACE_RB_Tree<KEY, T>::find (const KEY &k)
 // the returned pointer addresses the existing item
 // associated with the existing key.
 
-template <class KEY, class T>  T*
-ACE_RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  T*
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::insert (const KEY &k, const T &t)
 {
   // Find the closest matching node, if there is one.
   ACE_RB_Tree_Node<KEY, T> *current = find_node (k);
@@ -301,8 +261,8 @@ ACE_RB_Tree<KEY, T>::insert (const KEY &k, const T &t)
 // and successfully destroyed it, 0 if it did not find the
 // item, or -1 if an error occurred.
 
-template <class KEY, class T>  int
-ACE_RB_Tree<KEY, T>::remove (const KEY &k)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  int
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::remove (const KEY &k)
 {
   // Find a matching node, if there is one.
   ACE_RB_Tree_Node<KEY, T> *x, *z;
@@ -375,8 +335,8 @@ ACE_RB_Tree<KEY, T>::remove (const KEY &k)
 
 // Method for right rotation of the tree about a given node.
 
-template <class KEY, class T>  void
-ACE_RB_Tree<KEY, T>::RB_rotate_right (ACE_RB_Tree_Node<KEY, T> * x)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  void
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tree_Node<KEY, T> * x)
 {
   if (! x)
   {
@@ -423,8 +383,8 @@ ACE_RB_Tree<KEY, T>::RB_rotate_right (ACE_RB_Tree_Node<KEY, T> * x)
 
 // Method for left rotation of the tree about a given node.
 
-template <class KEY, class T> void
-ACE_RB_Tree<KEY, T>::RB_rotate_left (ACE_RB_Tree_Node<KEY, T> * x)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rotate_left (ACE_RB_Tree_Node<KEY, T> * x)
 {
   if (! x)
   {
@@ -471,8 +431,8 @@ ACE_RB_Tree<KEY, T>::RB_rotate_left (ACE_RB_Tree_Node<KEY, T> * x)
 
 // Method for restoring Red-Black properties after deletion.
 
-template <class KEY, class T>  void
-ACE_RB_Tree<KEY, T>::RB_delete_fixup (ACE_RB_Tree_Node<KEY, T> * x)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>  void
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_delete_fixup (ACE_RB_Tree_Node<KEY, T> * x)
 {
   while ((x) && (x->parent ()) && (x->color () == ACE_RB_Tree_Node_Base::BLACK))
   {
@@ -555,8 +515,8 @@ ACE_RB_Tree<KEY, T>::RB_delete_fixup (ACE_RB_Tree_Node<KEY, T> * x)
 // if the tree is not empty and there is no such match,
 // or 0 if the tree is empty.
 
-template <class KEY, class T> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T>::find_node (const KEY &k)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::find_node (const KEY &k)
 {
   ACE_RB_Tree_Node<KEY, T> *current = root_;
 
@@ -604,8 +564,8 @@ ACE_RB_Tree<KEY, T>::find_node (const KEY &k)
 
 // Rebalance the tree after insertion of a node.
 
-template <class KEY, class T> void
-ACE_RB_Tree<KEY, T>::RB_rebalance (ACE_RB_Tree_Node<KEY, T> * x)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> void
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_rebalance (ACE_RB_Tree_Node<KEY, T> * x)
 {
   ACE_RB_Tree_Node<KEY, T> *y = 0;
 
@@ -679,8 +639,8 @@ ACE_RB_Tree<KEY, T>::RB_rebalance (ACE_RB_Tree_Node<KEY, T> * x)
 
 // Method to find the successor node of the given node in the tree.
 
-template <class KEY, class T> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T>::RB_tree_successor (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor (ACE_RB_Tree_Node<KEY, T> *x) const
 {
   if (x->right ())
   {
@@ -700,8 +660,8 @@ ACE_RB_Tree<KEY, T>::RB_tree_successor (ACE_RB_Tree_Node<KEY, T> *x) const
 
 // Method to find the predecessor node of the given node in the tree.
 
-template <class KEY, class T> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T>::RB_tree_predecessor (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor (ACE_RB_Tree_Node<KEY, T> *x) const
 {
   if (x->left ())
   {
@@ -721,8 +681,8 @@ ACE_RB_Tree<KEY, T>::RB_tree_predecessor (ACE_RB_Tree_Node<KEY, T> *x) const
 
 // Method to find the minimum node of the subtree rooted at the given node.
 
-template <class KEY, class T> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T>::RB_tree_minimum (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_minimum (ACE_RB_Tree_Node<KEY, T> *x) const
 {
   while ((x) && (x->left ()))
   {
@@ -735,8 +695,8 @@ ACE_RB_Tree<KEY, T>::RB_tree_minimum (ACE_RB_Tree_Node<KEY, T> *x) const
 
 // Method to find the maximum node of the subtree rooted at the given node.
 
-template <class KEY, class T> ACE_RB_Tree_Node<KEY, T> *
-ACE_RB_Tree<KEY, T>::RB_tree_maximum (ACE_RB_Tree_Node<KEY, T> *x) const
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK> ACE_RB_Tree_Node<KEY, T> *
+ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK>::RB_tree_maximum (ACE_RB_Tree_Node<KEY, T> *x) const
 {
   while ((x) && (x->right ()))
   {
@@ -749,15 +709,15 @@ ACE_RB_Tree<KEY, T>::RB_tree_maximum (ACE_RB_Tree_Node<KEY, T> *x) const
 
 
 
-/////////////////////////////////////////////////
-// template class ACE_RB_Tree_Iterator<KEY, T> //
-/////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+// template class ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK> //
+//////////////////////////////////////////////////////////
 
 
 // Constructor.
 
-template <class KEY, class T>
-ACE_RB_Tree_Iterator<KEY, T>::ACE_RB_Tree_Iterator (const ACE_RB_Tree<KEY, T> &tree)
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Iterator (const ACE_RB_Tree<KEY, T, COMPARE_KEYS, ACE_LOCK> &tree)
   : tree_ (tree), node_ (0)
 {
   // Position the iterator at the first node in the tree.
@@ -767,8 +727,8 @@ ACE_RB_Tree_Iterator<KEY, T>::ACE_RB_Tree_Iterator (const ACE_RB_Tree<KEY, T> &t
 
 // Destructor.
 
-template <class KEY, class T>
-ACE_RB_Tree_Iterator<KEY, T>::~ACE_RB_Tree_Iterator ()
+template <class KEY, class T, class COMPARE_KEYS, class ACE_LOCK>
+ACE_RB_Tree_Iterator<KEY, T, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Iterator ()
 {
 }
 
