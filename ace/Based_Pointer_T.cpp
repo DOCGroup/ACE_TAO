@@ -1,21 +1,23 @@
 // $Id$
 
-#if !defined (ACE_BASED_POINTER_T_CPP)
+#ifndef ACE_BASED_POINTER_T_CPP
 #define ACE_BASED_POINTER_T_CPP
 
 #include "ace/Based_Pointer_Repository.h"
 #include "ace/Based_Pointer_T.h"
 
 template <class CONCRETE>
-ACE_Based_Pointer<CONCRETE>::ACE_BasedPointer (void)
+ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
   : target_ (0),
     base_offset_ (0)
 {
+  void *base_addr = 0;
+
   // Find the base address associated with our <this> pointer.  Note
   // that it's ok for <find> to return 0, which simply indicates that
   // the address is not in memory-mapped virtual address space.
-  void *base_addr =
-    ACE_BASED_POINTER_REPOSITORY::instance ()->find (this);
+  ACE_BASED_POINTER_REPOSITORY::instance ()->find (this, 
+                                                   base_addr);
   this->base_offset_ = (char *) this - (char *) base_addr;
 }
 

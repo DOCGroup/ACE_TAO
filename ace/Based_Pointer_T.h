@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_BASED_POINTER_T_H)
+#ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
 
 #if defined (_MSC_VER)

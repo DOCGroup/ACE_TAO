@@ -10,6 +10,7 @@
 
 BIN     = test_malloc \
 	  test_persistence \
+	  test_position_independent_malloc \
 	  test_multiple_mallocs
 
 FILES   = Malloc \
@@ -57,8 +58,7 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- Malloc.h \
- $(ACE_ROOT)/ace/Malloc.h \
+ Malloc.h $(ACE_ROOT)/ace/Malloc.h \
  $(ACE_ROOT)/ace/Malloc_Base.h \
  $(ACE_ROOT)/ace/Malloc.i \
  $(ACE_ROOT)/ace/Malloc_T.h \
@@ -112,7 +112,6 @@ include	$(ACE_ROOT)/include/makeinclude/rules.local.GNU
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
  $(ACE_ROOT)/ace/Log_Record.i \
- $(ACE_ROOT)/ace/Get_Opt.i \
- Options.h
+ $(ACE_ROOT)/ace/Get_Opt.i Options.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
