@@ -3,6 +3,9 @@ Wed May  7 22:49:05 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tests/Faults/run_test.pl: Added thread-per-connection config to
 	  be tested in our daily builds.
 
+	* tests/Faults/server.conf: A conf file to be used in
+	  thread-per-connection configuration.
+
 Wed May 07 22:32:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp (svc_i): Incremented the refcount of
