@@ -72,8 +72,9 @@ class  FT_TagFTHeartbeatEnabledTaggedComponent_var;
 struct FT_HeartbeatPolicyValue;
 class  FT_HeartbeatPolicyValue_var;
 
-
 class FT_Name;
+class FT_Name_var;
+class FT_Name_out;
 
 class   FT_HeartbeatPolicy;
 class   FT_HeartbeatPolicy_var;
@@ -102,6 +103,10 @@ class  FT_Property_out;
 class FT_Properties;
 class FT_Properties_var;
 class FT_Properties_out;
+
+class FT_Location;
+class FT_Location_var;
+class FT_Location_out;
 
 class FT_Locations;
 class FT_Locations_var;
@@ -261,6 +266,14 @@ TAO_NAMESPACE FT
   typedef FaultNotifier *FaultNotifier_ptr;
 
   typedef FT_Name Name;
+  typedef FT_Name_var Name_var;
+  typedef FT_Name_out Name_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Name;
+
+  typedef Name Location;
+  typedef Name_var Location_var;
+  typedef Name_out Location_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Location;
 
   typedef char * TypeId;
   typedef CORBA::String_var TypeId_var;
