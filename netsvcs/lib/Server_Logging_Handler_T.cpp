@@ -18,10 +18,15 @@ COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LM
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR>
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::ACE_Server_Logging_Handler_T 
   (ACE_Thread_Manager *,
-   LMR const& receiver) 
-    : receiver_ (receiver, ACE_CString (" ", 1)) // Initialize the CString to something
-                                                 // that is not the empty string to avoid
-                                                 // problmes when calling fast_rep()
+   LMR const &receiver) 
+   // Initialize the CString to something that is not the empty string
+   // to avoid problems when calling fast_rep()
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
+  : receiver_ (receiver, ACE_CString (" ", 1)) 
+#else
+  : receiver_ (receiver),
+    host_name_ (ACE_CString (" ", 1)         
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 {
 }
 
@@ -34,6 +39,17 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::hand
   int result = this->handle_logging_record ();
   return result > 0 ? result : -1;
 }
+
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR> const char *
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::host_name (void)
+{ 
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
+  return this->receiver_.m_.fast_rep ();
+#else
+  return this->host_name_.fast_rep ();
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */  
+}
+
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_1, class LMR> int
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::handle_logging_record (void)
@@ -52,11 +68,11 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::hand
     {
     case -1:
       ACE_ERROR_RETURN ((LM_ERROR, "%p at host %s\n",
-			"server logger", this->host_name()), -1);      
+			"server logger", this->host_name ()), -1);      
       /* NOTREACHED */
     case 0:
       ACE_ERROR_RETURN ((LM_ERROR, "closing log daemon at host %s\n",
-			this->host_name()), -1);	
+			this->host_name ()), -1);
       /* NOTREACHED */
     case sizeof (ssize_t):
       {
@@ -71,14 +87,14 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::hand
 	n = this->peer ().recv_n ((void *) &lp, len);
 	if (n != len)
 	  ACE_ERROR_RETURN ((LM_ERROR, "len = %d, %p at host %s\n",
-			    n, "server logger", this->host_name()), -1);
+			    n, "server logger", this->host_name ()), -1);
 	/* NOTREACHED */
 	  
 	lp.decode ();
 
 	if (lp.length () == n)
   {
-    receiver().log_record(this->host_name(), lp);
+    receiver().log_record(this->host_name (), lp);
     // Send the log record to the log message receiver for
     // processing.
   }
@@ -89,7 +105,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::hand
       }
     default:
       ACE_ERROR_RETURN ((LM_ERROR, "%p at host %s\n",
-			"server logger", this->host_name()), -1);
+			"server logger", this->host_name ()), -1);
       /* NOTREACHED */
     }
 
@@ -112,8 +128,14 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::open
   if (this->peer ().get_remote_addr (client_addr) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_remote_addr"), -1);
   
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
   this->receiver_.m_ = ACE_CString (client_addr.get_host_name (),
 				    MAXHOSTNAMELEN + 1);
+#else
+  this->host_name_ = ACE_CString (client_addr.get_host_name (),
+				  MAXHOSTNAMELEN + 1);
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
+
 
   ACE_DEBUG ((LM_DEBUG, "(%t) accepted connection from host %s on fd %d\n",
 	      client_addr.get_host_name (), this->peer ().get_handle ()));
@@ -123,8 +145,29 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_2, LMR>::open
 
 template<class SLH, class LMR, class SST>
 ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::ACE_Server_Logging_Acceptor_T (void) 
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
   : receiver_ (LMR (), SST ())
+#else
+  : receiver_ (LMR ()),
+    schedule_strategy_ (SST ())
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 {
+}
+
+template<class SLH, class LMR, class SST> LMR &
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::receiver (void)
+{ 
+  return receiver_; 
+}
+
+template<class SLH, class LMR, class SST> SST &
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::scheduling_strategy (void)
+{ 
+#if !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES)
+  return receiver_.m_;
+#else
+  return schedule_strategy_;
+#endif /* ACE_HAS_BROKEN_HPUX_TEMPLATES */
 }
 
 template<class SLH, class LMR, class SST> int
