@@ -1,192 +1,204 @@
+Wed Sep 01 10:45:15 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.{h,cpp} (ACE_OS_Object_Manager::init,fini): replaced
+          use of ACE_ERROR with a new, private method (print_error_message).
+          If one of the operations in init () fails, then the Log_Msg
+          instance might not work properly.  Thanks to Alain Magloire
+          <alain@qnx.com> for noting this.
+
+          print_error_message also consolidates the common const char
+          strings into one place.  This entire changes reduces the size
+          of OS.o by about 900 bytes.
+
 Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Reactor_Notify_Test.cpp: Only run the iterations in
-	  this test for 2000 times, not 10000 times.
+        * tests/Reactor_Notify_Test.cpp: Only run the iterations in
+          this test for 2000 times, not 10000 times.
 
 Wed Sep  1 07:41:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (wait):
-	  An ACE_NEW_RETURN needed ACE_INVALID_PID for the return
-	  value instead of ACE_INVALID_HANDLE.
+        * ace/Process_Manager.cpp (wait):
+          An ACE_NEW_RETURN needed ACE_INVALID_PID for the return
+          value instead of ACE_INVALID_HANDLE.
 
 Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Process_Manager_Test.cpp: Made some minor changes in 
-	  this test so that it'll compile.  We still need to update it so
- 	  it'll run correctly with the new version of ACE_Process_Manager,
- 	  however.
+        * tests/Process_Manager_Test.cpp: Made some minor changes in
+          this test so that it'll compile.  We still need to update it so
+          it'll run correctly with the new version of ACE_Process_Manager,
+          however.
 
-	* ace/Process_Manager: Integrated the latest and greatest
-	  ACE_Process_Manager from Dave Madden <dhm@mersenne.com>.  This
- 	  should now work relatively transparently on all OS platforms
- 	  that support processes.  We'll be adding a new
- 	  Process_Manager_Test.cpp shortly...
+        * ace/Process_Manager: Integrated the latest and greatest
+          ACE_Process_Manager from Dave Madden <dhm@mersenne.com>.  This
+          should now work relatively transparently on all OS platforms
+          that support processes.  We'll be adding a new
+          Process_Manager_Test.cpp shortly...
 
-	* tests/Reactor_Notify_Test.cpp: Modified this test to exercise
-	  the new user-level notification queueing in the ACE_Reactor.
+        * tests/Reactor_Notify_Test.cpp: Modified this test to exercise
+          the new user-level notification queueing in the ACE_Reactor.
 
 Tue Aug 31 16:05:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp (handle_close): Added an ACE_UNUSED_ARG
-	  to keep the compiler from warning that the "handle" parameter
- 	  isn't used.
+        * ace/Process_Manager.cpp (handle_close): Added an ACE_UNUSED_ARG
+          to keep the compiler from warning that the "handle" parameter
+          isn't used.
 
-	* ace/OS.h: Added a new #defined called
-	  ACE_REACTOR_NOTIFICATION_ARRAY_SIZE that designates the size of
- 	  the array of ACE_Notification_Buffers used by the new Reactor
- 	  user-level notification queue feature.
+        * ace/OS.h: Added a new #defined called
+          ACE_REACTOR_NOTIFICATION_ARRAY_SIZE that designates the size of
+          the array of ACE_Notification_Buffers used by the new Reactor
+          user-level notification queue feature.
 
-	* ace/Select_Reactor_Base: Added support for a user-level
-	  notification queue that can buffer very large amounts of pending
- 	  notifications, i.e., well beyond the 64 kbyte limit imposed by
- 	  the use of a socket.  This feature is only enabled if
- 	  ACE_HAS_REACTOR_NOTIFICATION_QUEUE is enabled in a config.h
- 	  file.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
- 	  for suggesting this and contributing a prototype implementation.
+        * ace/Select_Reactor_Base: Added support for a user-level
+          notification queue that can buffer very large amounts of pending
+          notifications, i.e., well beyond the 64 kbyte limit imposed by
+          the use of a socket.  This feature is only enabled if
+          ACE_HAS_REACTOR_NOTIFICATION_QUEUE is enabled in a config.h
+          file.  Thanks to Detlef Becker <Detlef.Becker@med.siemens.de>
+          for suggesting this and contributing a prototype implementation.
 
 Tue Aug 31 20:10:49 1999  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* ace/OS.h: Added the ACE_HAS_NO_THROW_SPEC check in order to
-	  suppress the generation of throw specs to placate some compilers
- 	  and make it easier for CORBA developers to by lazy wrt C++
- 	  exception throw specs ;-).  Thank to Andreas Geisler
- 	  <Andreas.Geisler@erls.siemens.de> for suggesting this addition
+        * ace/OS.h: Added the ACE_HAS_NO_THROW_SPEC check in order to
+          suppress the generation of throw specs to placate some compilers
+          and make it easier for CORBA developers to by lazy wrt C++
+          exception throw specs ;-).  Thank to Andreas Geisler
+          <Andreas.Geisler@erls.siemens.de> for suggesting this addition
 
 1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	  Modified the ACE GQoS test to use a single handler registered
- 	  for QOS_MASK|READ_MASK instead of two separate handlers. Had to
- 	  remove the following files and add other files.
-  
-	* ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
-	* ACE_wrappers/examples/QOS/Read_Handler.h
-	* ACE_wrappers/examples/QOS/QOS_Event_Handler.h
-	* ACE_wrappers/examples/QOS/Read_Handler.cpp
+          Modified the ACE GQoS test to use a single handler registered
+          for QOS_MASK|READ_MASK instead of two separate handlers. Had to
+          remove the following files and add other files.
 
-	  Added the following files :
+        * ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
+        * ACE_wrappers/examples/QOS/Read_Handler.h
+        * ACE_wrappers/examples/QOS/QOS_Event_Handler.h
+        * ACE_wrappers/examples/QOS/Read_Handler.cpp
 
-	  The Sender event handler is only registered for QOS events. It
- 	  uses the ACE_OS::sendto () as soon as it receives a QOS event.
-  
-	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp
-	* ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.h
+          Added the following files :
 
-	  The Receiver event handler is registered for both QOS as well as
- 	  READ events since it has to initially wait for a PATH RSVP
- 	  message from the sender (QOS event, finally!!) and then read
- 	  from the same QOS enabled socket.
-  
-	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
-	* ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
+          The Sender event handler is only registered for QOS events. It
+          uses the ACE_OS::sendto () as soon as it receives a QOS event.
 
-	  The client and server have been modified to subscribe to the
- 	  same multicast session. The RSVP SP on the receiver side sends
- 	  RESV messages at the earliest indication of QOS parameters AND
- 	  existence of a matching PATH state. This state is found only if
- 	  a multicast socket has been created (by the sender) with a
- 	  matching "multicast session" address.
-	
-	* ACE_wrappers/examples/QOS/server.cpp: 
-	* ACE_wrappers/examples/QOS/client.cpp:
+        * ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.cpp
+        * ACE_wrappers/examples/QOS/Sender_QOS_Event_Handler.h
 
-	  Modified the following to incorporate the removal and addition
- 	  of files listed above.
+          The Receiver event handler is registered for both QOS as well as
+          READ events since it has to initially wait for a PATH RSVP
+          message from the sender (QOS event, finally!!) and then read
+          from the same QOS enabled socket.
 
-	* ACE_wrappers/examples/QOS/QOS.dsw 
-	* ACE_wrappers/examples/QOS/client.dsp
-	* ACE_wrappers/examples/QOS/server.dsp 
+        * ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
+        * ACE_wrappers/examples/QOS/Receiver_QOS_Event_Handler.cpp
+
+          The client and server have been modified to subscribe to the
+          same multicast session. The RSVP SP on the receiver side sends
+          RESV messages at the earliest indication of QOS parameters AND
+          existence of a matching PATH state. This state is found only if
+          a multicast socket has been created (by the sender) with a
+          matching "multicast session" address.
+
+        * ACE_wrappers/examples/QOS/server.cpp:
+        * ACE_wrappers/examples/QOS/client.cpp:
+
+          Modified the following to incorporate the removal and addition
+          of files listed above.
+
+        * ACE_wrappers/examples/QOS/QOS.dsw
+        * ACE_wrappers/examples/QOS/client.dsp
+        * ACE_wrappers/examples/QOS/server.dsp
 
 Tue Aug 31 16:05:14 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Malloc_T,
-  	* ace/Malloc: For historical reasons, we'd had a nested class
-	  called ACE_Malloc_Control_Block within ACE_Malloc_Header.  This
- 	  was redundant and confusing, so I merged the fields of
- 	  ACE_Malloc_Control_Block into ACE_Malloc_Header.  In addition, I
- 	  also added a constructor that initialized the fields to 0 so
- 	  that we won't have problems with Purify complaining about
- 	  uninitialized memory reads.  Thanks to Carlos for reporting
- 	  this.
+        * ace/Malloc_T,
+        * ace/Malloc: For historical reasons, we'd had a nested class
+          called ACE_Malloc_Control_Block within ACE_Malloc_Header.  This
+          was redundant and confusing, so I merged the fields of
+          ACE_Malloc_Control_Block into ACE_Malloc_Header.  In addition, I
+          also added a constructor that initialized the fields to 0 so
+          that we won't have problems with Purify complaining about
+          uninitialized memory reads.  Thanks to Carlos for reporting
+          this.
 
 Tue Aug 31 15:54:56 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
-	* ace/Process_Manager.h: There was a bizarre default value
-	  for the pid parameter, which was helping to cause ambiguity
- 	  warnings from the C++ compiler.  I've removed this.
+        * ace/Process_Manager.h: There was a bizarre default value
+          for the pid parameter, which was helping to cause ambiguity
+          warnings from the C++ compiler.  I've removed this.
 
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* build/egcs/tests/Cached_Accept_Conn_Test.h: Moved the template
-	  class into the header file so that IBM C++ will be happy.
+        * build/egcs/tests/Cached_Accept_Conn_Test.h: Moved the template
+          class into the header file so that IBM C++ will be happy.
 
-	* tests/Cached_*_Test.h: Updated these files to include the proper
-	  descriptive information.
+        * tests/Cached_*_Test.h: Updated these files to include the proper
+          descriptive information.
 
-	* tests/Upgradable_RW_Test.h: Cleaned up the formatting for this
-	  test.  
+        * tests/Upgradable_RW_Test.h: Cleaned up the formatting for this
+          test.
 
-	* tests/Cached_Accept_Conn_Test.cpp,
-  	* tests/Cached_Conn_Test.cpp,
-  	* tests/Conn_Test.cpp,
-  	* tests/DLList_Test.cpp,
-	* tests/Hash_Map_Manager_Test.cpp:
-	  Fixed some "order of definition" problems caused by the
- 	  workarounds for SunC++ 5.0 -g bugs.  Also replaced the use of
- 	  ADDR and STRING with ACE_ADDR and ACE_STRING to avoid potential
- 	  clashes with symbols in the global name space.  Thanks to David
- 	  for reporting this.
+        * tests/Cached_Accept_Conn_Test.cpp,
+        * tests/Cached_Conn_Test.cpp,
+        * tests/Conn_Test.cpp,
+        * tests/DLList_Test.cpp,
+        * tests/Hash_Map_Manager_Test.cpp:
+          Fixed some "order of definition" problems caused by the
+          workarounds for SunC++ 5.0 -g bugs.  Also replaced the use of
+          ADDR and STRING with ACE_ADDR and ACE_STRING to avoid potential
+          clashes with symbols in the global name space.  Thanks to David
+          for reporting this.
 
 1999-08-31  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ACE_wrappers/examples/QOS/server.cpp
-	* ACE_wrappers/examples/QOS/client.cpp
-	* ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
-	* ACE_wrappers/examples/QOS/QosEvent.h
-	* ACE_wrappers/examples/QOS/Read_Handler.h
-	* ACE_wrappers/examples/QOS/QOS_Event_Handler.h
-	* ACE_wrappers/examples/QOS/Read_Handler.cpp
-	* ACE_wrappers/examples/QOS/QOS.dsw
-	* ACE_wrappers/examples/QOS/client.dsp
-	* ACE_wrappers/examples/QOS/server.dsp:
-	  These files test the new ACE GQoS features, which 
-	  implement IntServ features over WinNT 2000.
+        * ACE_wrappers/examples/QOS/server.cpp
+        * ACE_wrappers/examples/QOS/client.cpp
+        * ACE_wrappers/examples/QOS/QOS_Event_Handler.cpp
+        * ACE_wrappers/examples/QOS/QosEvent.h
+        * ACE_wrappers/examples/QOS/Read_Handler.h
+        * ACE_wrappers/examples/QOS/QOS_Event_Handler.h
+        * ACE_wrappers/examples/QOS/Read_Handler.cpp
+        * ACE_wrappers/examples/QOS/QOS.dsw
+        * ACE_wrappers/examples/QOS/client.dsp
+        * ACE_wrappers/examples/QOS/server.dsp:
+          These files test the new ACE GQoS features, which
+          implement IntServ features over WinNT 2000.
 
 Tue Aug 31 14:47:54 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ACE-INSTALL.html: Added a note on building egcs with the
-	  -fsquangle option contributed by Skye Sweeney
- 	  <ssweeney@sanders.com>.
-	
+        * ACE-INSTALL.html: Added a note on building egcs with the
+          -fsquangle option contributed by Skye Sweeney
+          <ssweeney@sanders.com>.
+
 Tue Aug 31 00:16:34 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* bin/clone.cpp: Modified this program so that it'll work more
-	  flexibly with symbolic links.  In particular, clone can now
- 	  generate symbolic links with relative pathnames to the source.
-  	  Thus, you can now call it like this:
+        * bin/clone.cpp: Modified this program so that it'll work more
+          flexibly with symbolic links.  In particular, clone can now
+          generate symbolic links with relative pathnames to the source.
+          Thus, you can now call it like this:
 
-	  % clone -s ../../foo .
+          % clone -s ../../foo .
 
-	  and all of the cloned links will properly refer to ../../foo
- 	  (adding the appropriate number of extra '..'s to handle
- 	  directory nesting).  Thanks to Jonathan Biggar <jon@biggar.org>
- 	  for these fixes.
+          and all of the cloned links will properly refer to ../../foo
+          (adding the appropriate number of extra '..'s to handle
+          directory nesting).  Thanks to Jonathan Biggar <jon@biggar.org>
+          for these fixes.
 
-	* ace/Process.cpp: Need to #include "ace/Signal.h".
+        * ace/Process.cpp: Need to #include "ace/Signal.h".
 
-	* Added a series of fixes that allow ACE to build and 
-	  run cleanly with SunC++ 5.0 and Solaris 7 even when debugging is
- 	  NOT enabled.  These changes require moving the explicit template
- 	  instantiations from the BOTTOM of the *.cpp files to near the
- 	  top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
- 	  this.
- 
-	* ace/Process_Manager.cpp: Fixed some warnings.  Thanks to
-	  Carlos for reporting this.
+        * Added a series of fixes that allow ACE to build and
+          run cleanly with SunC++ 5.0 and Solaris 7 even when debugging is
+          NOT enabled.  These changes require moving the explicit template
+          instantiations from the BOTTOM of the *.cpp files to near the
+          top.  Thanks to Robert Shewan <rshew@peri.com> for reporting
+          this.
+
+        * ace/Process_Manager.cpp: Fixed some warnings.  Thanks to
+          Carlos for reporting this.
 
 Mon Aug 30 21:14:46 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process_Manager.cpp: Added the destructor for
- 	  ACE_Process_Descriptor.  Thanks to David for reporting this.
+        * ace/Process_Manager.cpp: Added the destructor for
+          ACE_Process_Descriptor.  Thanks to David for reporting this.
 
 Mon Aug 30 17:20:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
