@@ -81,10 +81,12 @@ Ptest::run (void)
       if (this->query_ == 1)
         {
           this->query (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
       else
         {
           this->populate (ACE_TRY_ENV);
+          ACE_TRY_CHECK;
         }
     }
   ACE_CATCHANY
