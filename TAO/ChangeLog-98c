@@ -1,3 +1,8 @@
+Thu Oct 15 22:06:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_args.cpp: Fixed the help message to print the
+	new options -H linear_search and -H binary_search.
+
 Thu Oct 15 21:20:56 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/AVStreams.idl: Uncommented the previously
