@@ -1,3 +1,29 @@
+Fri May 28 22:45:01 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/Wait_Strategy.h:
+	* tao/Wait_Strategy.cpp:
+	  The Wait_On_Reactor strategy uses a flag to wait until the
+	  complete reply has been received.
+	  A first cut at the Wait_On_Leader_Follower model. It is a little 
+	  further ahead than the previous version, but it does not work
+	  yet. I just want to share the code with Alex.
+
+	* tao/Invocation.cpp:
+	  More @@ comments
+
+	* tao/IIOP_Transport.cpp:
+	  The register_handler method only does that if the reactor and
+	  the ORB_Core reactor do not match.
+	  Added several @@ comments.
+
+	* tao/Pluggable.cpp:
+	* tao/IIOP_Transport.h:
+	* tao/Connect.cpp:
+	  Minor cosmetic fixes.
+
+	* tao/Makefile:
+	  Updated dependencies.
+
 Fri May 28 18:39:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Reactor/Makefile:

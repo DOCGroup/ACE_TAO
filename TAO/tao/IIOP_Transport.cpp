@@ -149,7 +149,7 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
                                          int /* twoway */)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_SEND_REQUEST_START);
-  
+
   return TAO_GIOP::send_request (this, stream, orb_core);
 }
 
@@ -164,6 +164,9 @@ TAO_IIOP_Client_Transport::send_request (TAO_ORB_Core *orb_core,
 int
 TAO_IIOP_Client_Transport::handle_client_input (int block)
 {
+  // @@ Alex: it should be possible to make this code generic and move 
+  //    it to the GIOP class or something similar....
+
   // When we multiplex several invocations over a connection we need
   // to allocate the CDR stream *here*, but when there is a single
   // request over a connection the CDR stream can be pre-allocated on
@@ -176,6 +179,20 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   // factory simply allocates a new one, in the Exclusive case the
   // factory returns a pointer to the pre-allocated CDR.
   //
+  // @@ Alex: I thought some more about this, and here is how i would
+  //    like to do it: this class keeps a CDR stream for the "current" 
+  //    message beign received. Initially the CDR is 0, when the
+  //    handle_client_input() is called the first time then we go to
+  //    the muxer to obtain the CDR stream.
+  //    - The exclusive Muxer returns the CDR stream pre-allocated by
+  //      the invocation.
+  //    - The shared Muxer returns a new CDR stream.
+  //    Once all the data has been received the reply handler takes
+  //    charge of the CDR stream, or actually of its message block,
+  //    which is referenced counted and thus can be efficiently
+  //    removed.
+  //    Do I make any sense?
+
   // Receive the message. Get also the GIOP version number.
   // <recv_message> is non-blocking!!!!
   //
@@ -197,13 +214,13 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
 
   // Get the CDR stream for reading the input.
   TAO_InputCDR* cdr = this->input_cdr_stream ();
-  
+
   // @@ Exclsive RMS instead of giving the CDR given by the Invocation
   //    class, it should give the preallocated CDR so that it can give
   //    that CDR to the invocation back, if there is a valid reply or
   //    it can just forget it, if there was a close connection message
   //    or something. (Alex).
-  
+
   // If RMS not expecting any message, handle the unexpected data.
   if (cdr == 0)
     return this->check_unexpected_data ();
@@ -303,7 +320,7 @@ TAO_IIOP_Client_Transport::handle_client_input (int block)
   // That way we don't need to keep state in the dispatch_reply
   // object, careful about the lifetime of the reply_ctx and CDR
   // objects because they allocate memory....
-  
+
   // Handle the reply.
   if (reply_dispatcher->dispatch_reply () == -1)
     return -1;
@@ -320,6 +337,9 @@ int
 TAO_IIOP_Client_Transport::register_handler (void)
 {
   ACE_Reactor *r = this->orb_core ()->reactor ();
+  if (r == this->client_handler ()->reactor ())
+    return 0;
+
   return r->register_handler (this->client_handler (),
                               ACE_Event_Handler::READ_MASK);
 }
@@ -328,14 +348,14 @@ int
 TAO_IIOP_Client_Transport::suspend_handler (void)
 {
   return this->orb_core ()->reactor ()->suspend_handler
-    (this->client_handler ()); 
+    (this->client_handler ());
 }
 
 int
 TAO_IIOP_Client_Transport::resume_handler (void)
 {
   return this->orb_core ()->reactor ()->resume_handler
-    (this->client_handler ()); 
+    (this->client_handler ());
 }
 
 int

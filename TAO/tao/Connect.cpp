@@ -840,7 +840,7 @@ TAO_Client_Connection_Handler::transport (void)
   return this->iiop_transport_;
 }
 
-// @@ Should I do something here to enable non-blocking?? (Alex). 
+// @@ Should I do something here to enable non-blocking?? (Alex).
 
 int
 TAO_Client_Connection_Handler::open (void *)
@@ -885,8 +885,8 @@ TAO_Client_Connection_Handler::open (void *)
   // operation fails we are out of luck (some platforms do not support
   // it and return -1).
 
-  // Register the handler with the Reactor if necessary. 
-  return this->transport ()->wait_strategy ()->register_handler (this);
+  // Register the handler with the Reactor if necessary.
+  return this->transport ()->wait_strategy ()->register_handler ();
 }
 
 int
@@ -901,7 +901,7 @@ TAO_Client_Connection_Handler::send_request (TAO_ORB_Core *,
 int
 TAO_Client_Connection_Handler::handle_input (ACE_HANDLE)
 {
-  // Call the waiter to handle the input. 
+  // Call the waiter to handle the input.
   return this->iiop_transport_->wait_strategy ()->handle_input ();
 }
 
@@ -1059,7 +1059,7 @@ TAO_ST_Client_Connection_Handler::open (void *something)
   if (result != 0)
     return result;
 
-  // Now we must register ourselves with the reactor for input events 
+  // Now we must register ourselves with the reactor for input events
   // which will detect GIOP Reply messages and EOF conditions.
   ACE_Reactor *r = TAO_ORB_Core_instance ()->reactor ();
   return r->register_handler (this,

@@ -32,15 +32,15 @@ class TAO_ORB_Core;
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
   // = TITLE
-  //   This class acts as a bridge class to the transport specific 
-  //   connection handler (handler_).  
+  //   This class acts as a bridge class to the transport specific
+  //   connection handler (handler_).
   //
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
   TAO_IIOP_Transport (TAO_IIOP_Handler_Base *handler,
                       TAO_ORB_Core *orb_core);
-  // Base object's creator method. 
+  // Base object's creator method.
 
   ~TAO_IIOP_Transport (void);
   // Default destructor.
@@ -54,7 +54,7 @@ public:
   void resume_connection (ACE_Reactor *reactor);
   // Calls the reactors resume_handler on behalf of the corresponding
   // connection handler.
-  
+
   int idle (void);
   // Idles the corresponding connection handler.
 
@@ -103,7 +103,7 @@ public:
   virtual int send_request (TAO_ORB_Core *orb_core ,
                             TAO_OutputCDR &stream,
                             int twoway);
-  // Default action to be taken for send request. Returns -1.  
+  // Default action to be taken for send request. Returns -1.
 
 protected:
   TAO_IIOP_Handler_Base *handler_;
@@ -119,7 +119,7 @@ class TAO_Export TAO_IIOP_Client_Transport : public TAO_IIOP_Transport
   // = TITLE
   //   The Transport class used for Client side communication with a
   //   server.
-  // 
+  //
   // = DESCRIPTION
   //   @@ Fred, please fill in here.
 public:
@@ -147,19 +147,19 @@ public:
   // Read and handle the reply. Returns 0 when there is Short Read on
   // the connection. Returns 1 when the full reply is read and
   // handled. If <block> is 1, then reply is read in a blocking
-  // manner. 
-  
+  // manner.
+
   virtual int register_handler (void);
   // Register the handler with the reactor. This will be called by the
-  // Wait Strategy if Reactor is used  for that strategy. 
+  // Wait Strategy if Reactor is used  for that strategy.
 
   virtual int suspend_handler (void);
-  // Suspend the handler from the reactor. This will be called by the 
-  // Wait Strategy if Reactor is used  for that strategy. 
+  // Suspend the handler from the reactor. This will be called by the
+  // Wait Strategy if Reactor is used  for that strategy.
 
   virtual int resume_handler (void);
-  // Resume the handler from the reactor. This will be called by the 
-  // Wait Strategy if Reactor is used  for that strategy. 
+  // Resume the handler from the reactor. This will be called by the
+  // Wait Strategy if Reactor is used  for that strategy.
 
 protected:
   int check_unexpected_data (void);
@@ -187,7 +187,7 @@ public:
   // Default destructor
 
   TAO_Server_Connection_Handler *server_handler (void);
-  //  Return a pointer to the underlying connection handler. 
+  //  Return a pointer to the underlying connection handler.
 
 //  virtual int send_response (TAO_OutputCDR &response);
   // @@ Fred, should this method be removed?

@@ -21,7 +21,8 @@ TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
 
 // Constructor.
 TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
-  : TAO_Wait_Strategy (transport)
+  : TAO_Wait_Strategy (transport),
+    reply_received_ (0)
 {
 }
 
@@ -35,8 +36,6 @@ TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
 int
 TAO_Wait_On_Reactor::wait (void)
 {
-  int result = 0;
-
   // @@ Alex: I assume the reactor was not changing inside of the
   //    loop, so I took it out, the code is more readable that way
   //    too.
@@ -44,53 +43,37 @@ TAO_Wait_On_Reactor::wait (void)
     this->transport_->orb_core ()->reactor ();
 
   // Do the event loop, till there are no events and no errors.
-  while (result == 0)
+
+  int result = 0;
+  this->reply_received_ = 0;
+  while (this->reply_received_ == 0 && result >= 0)
     {
-      // Do the event loop.
       result = reactor->handle_events (/* timeout */);
     }
 
-  return result;
+  if (result == -1)
+    return -1;
+
+  return 0;
 }
 
 int
 TAO_Wait_On_Reactor::handle_input (void)
 {
-  int result = 0;
+  int result = this->transport_->handle_client_input (0);
 
-
-  // @@ Alex: There is no *way* another thread can use the same
-  //    reactor because this class only work in single threaded
-  //    environments.
-
-  // Temporarily remove ourself from notification so that if
-  // another sub event loop is in effect still waiting for its
-  // response, it doesn't spin tightly gobbling up CPU.
-  result = this->transport_->suspend_handler ();
-  if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:TAO_Wait_On_Reactor::handle_input:%p\n",
-                       "suspend_handler failed"),
-                      -1);
-
-  // Ask the Transport object to read the input without blocking.
-  result = this->transport_->handle_client_input (0);
   if (result == -1)
     return -1;
 
-  // Resume the handler.
-  if (this->transport_->resume_handler () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:TAO_Wait_On_Reactor::handle_input:%p\n",
-                       "resume_handler failed"),
-                      -1);
+  if (result == 1)
+    this->reply_received_ = 1;
 
   return 0;
 }
 
 // Register the handler with the Reactor.
 int
-TAO_Wait_On_Reactor::register_handler (TAO_IIOP_Handler_Base *handler)
+TAO_Wait_On_Reactor::register_handler (void)
 {
   return this->transport_->register_handler ();
 }
@@ -109,7 +92,7 @@ TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower (TAO_Transport *transpo
     calling_thread_ (ACE_OS::NULL_thread),
     cond_response_available_ (0),
     expecting_response_ (0),
-    input_available_ (0)
+    reply_received_ (0)
 {
 }
 
@@ -123,191 +106,132 @@ TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
 int
 TAO_Wait_On_Leader_Follower::wait (void)
 {
-  int result = 0;
-
-#if 0
   // @@ Do we need this code? (Alex).
+  // @@ Alex: yes, the same connection may be used in multiple
+  //    threads, each with its own reactor.
 
-  ACE_Reactor *r = this->transport_->orb_core ()->reactor ();
+  // Cache the ORB core, it won't change and is used multiple times
+  // below:
 
-  if (this->handler_reactor () != r)
-    {
-          ACE_Reactor_Mask mask =
-            ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
-          this->reactor ()->remove_handler (this, mask);
+  TAO_ORB_Core* orb_core = 
+    this->transport_->orb_core ();
 
-          r->register_handler (this,
-                               ACE_Event_Handler::READ_MASK);
-    }
-#endif /* 0 */
+  this->transport_->register_handler ();
 
   // Obtain the lock.
-  if (this->transport_->orb_core ()->leader_follower_lock ().acquire() == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
-                       "Failed to get the lock.\n"),
-                      -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    orb_core->leader_follower_lock (), -1);
 
   // Set the state so that we know we're looking for a response.
+  // @@ Alex: maybe this should be managed by the Demux strategy?
+  // @@ Alex: this should be set *before* we enter this function,
+  //    actually before we *send* the request, otherwise we can run
+  //    into the following race condition:
+  //    + Thread A is running the event loop
+  //    + Thread B sends the request.
+  //    + Before B sets this flag thread A receives the response.
+  // IMHO the send_request method in the transport should invoke a
+  // method in the Wait_Strategy so we can set the flag on time (and
+  // while holding the L-F lock).
   this->expecting_response_ = 1;
 
   // Remember in which thread the client connection handler was running
   this->calling_thread_ = ACE_Thread::self ();
 
   // Check if there is a leader, but the leader is not us
-  if (this->transport_->orb_core ()->leader_available () &&
-      !this->transport_->orb_core ()->I_am_the_leader_thread ())
+  if (orb_core->leader_available () && !orb_core->I_am_the_leader_thread ())
     {
       // = Wait as a follower.
 
-      // wait as long as no input is available and/or
-      // no leader is available
-      while (!this->input_available_ &&
-             this->transport_->orb_core ()->leader_available ())
+      // wait until we have input available or there is no leader, in
+      // which case we must become the leader anyway....
+      // @@ Alex: I am uncertain about how many condition variables
+      //    should we have, should there be one-per-thread (after all
+      //    the thread blocks on the condition variable) or there
+      //    should be one per-connection.  I think the first case is
+      //    the "Right Thing"[tm]
+      ACE_SYNCH_CONDITION* cond =
+        this->cond_response_available ();
+
+      // Add ourselves to the list, do it only once because we can
+      // wake up multiple times from the CV loop
+      if (orb_core->add_follower (cond) == -1)
+        ACE_ERROR ((LM_ERROR,
+                    "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
+                    "Failed to add a follower thread\n"));
+
+      while (!this->reply_received_ && orb_core->leader_available ())
         {
-          ACE_SYNCH_CONDITION* cond =
-            this->cond_response_available ();
-          if (this->transport_->orb_core ()->add_follower (cond) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
-                        "Failed to add a follower thread\n"));
-          cond->wait ();
+          if (cond == 0 || cond->wait () == -1)
+            return -1;
         }
 
       // Now somebody woke us up to become a leader or to handle
       // our input. We are already removed from the follower queue.
-      if (this->input_available_)
+      if (this->reply_received_)
         {
-          // There is input waiting for me.
+          // We have received our reply, it is time to return control
+          // to the application....
 
-          /// Release the lock.
-          if (this->transport_->orb_core ()->leader_follower_lock ().release () == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
-                               "Failed to release the lock.\n"),
-                              -1);
-
-          // The following variables are safe, because we are not
-          // registered with the reactor any more.
-          this->input_available_ = 0;
+          // But first reset our state in case we are invoked again...
+          this->reply_received_ = 0;
           this->expecting_response_ = 0;
           this->calling_thread_ = ACE_OS::NULL_thread;
 
-          // Ready to receive the input message.
-          // @@ Is it ok to read it blockingly. (Alex).
-          result = this->transport_->handle_client_input (1);
-
-          // Resume the handler.
-          if (this->transport_->resume_handler () == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
-                               "<resume_handler> failed.\n"),
-                              -1);
-
-          // We should have read the whole message.
-          if (result != 1)
-            ACE_ERROR_RETURN ((LM_WARNING,
-                               "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
-                               "Input message was not read fully.\n"),
-                              -1);
           return 0;
         }
     }
 
-  // Become a leader, because there is no leader or we have to
-  // update to a leader or we are doing nested upcalls in this
-  // case we do increase the refcount on the leader in
-  // TAO_ORB_Core.
+  // The only way to reach this point is if we must become the leader,
+  // because there is no leader or we have to update to a leader or we
+  // are doing nested upcalls in this case we do increase the refcount
+  // on the leader in TAO_ORB_Core.
 
   // This might increase the refcount of the leader.
-  this->transport_->orb_core ()->set_leader_thread ();
+  orb_core->set_leader_thread ();
 
   // Release the lock.
-  if (this->transport_->orb_core ()->leader_follower_lock ().release () == -1)
+  if (ace_mon.release () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
                        "Failed to release the lock.\n"),
                       -1);
 
   // Become owner of the reactor.
-  this->transport_->orb_core ()->reactor ()->owner (ACE_Thread::self ());
+  orb_core->reactor ()->owner (ACE_Thread::self ());
 
   // Run the reactor event loop.
 
-  result = 0;
+  int result = 0;
 
-  while (result != -1 && !this->input_available_)
-    result = this->transport_->orb_core ()->reactor ()->handle_events ();
+  while (result == 0 && !this->reply_received_)
+    result = orb_core->reactor ()->handle_events ();
 
+  // Wake up the next leader, we cannot do that in handle_input,
+  // because the woken up thread would try to get into
+  // handle_events, which is at the time in handle_input still
+  // occupied. But do it before checking the error in <result>, even
+  // if there is an error in our input we should continue running the
+  // loop in anothe rthread.
+
+  if (orb_core->unset_leader_wake_up_follower () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO:%N:%l:(%P|%t):TAO_Client_Connection_Handler::send_request: "
+                       "Failed to unset the leader and wake up a new follower.\n"),
+                      -1);
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
                        "handle_events failed.\n"),
                       -1);
 
-  // Wake up the next leader, we cannot do that in handle_input,
-  // because the woken up thread would try to get into
-  // handle_events, which is at the time in handle_input still
-  // occupied.
-
-  if (this->transport_->orb_core ()->unset_leader_wake_up_follower () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Client_Connection_Handler::send_request: "
-                       "Failed to unset the leader and wake up a new follower.\n"),
-                      -1);
-
-  // Make use reusable
-  this->input_available_ = 0;
+  // Make us reusable
+  this->reply_received_ = 0;
   this->expecting_response_ = 0;
   this->calling_thread_ = ACE_OS::NULL_thread;
 
   return 0;
 
-#if 0
-  // Grab leader follower lock.
-  ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                            ace_mon,
-                            this->transport_->orb_core ()->leader_follower_lock (),
-                            -1));
-
-  // Bind the reply handler.
-
-  TAO_Leader_Follower_Reply_Handler rh (..);
-
-  rrs->bind (this->request_id, &rh);
-
-  // Check if we need to become the leader.
-  if (!this->transport_->orb_core ()->leader_available ())
-    {
-      // This might increase the refcount of the leader.
-      this->transport_->orb_core ()->set_leader_thread ();
-
-      // Do the reactor event loop.
-      this->transport_->orb_core ()->reactor ()->owner (ACE_Thread::self ());
-
-      result = 0;
-
-      while (result != -1)
-        result = this->transport_->orb_core ()->reactor ()->handle_events ();
-
-      if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%N:%l:(%P | %t):TAO_Wait_On_Leader_Follower::wait: "
-                           "Reactor::handle_events failed.\n"),
-                          -1);
-    }
-  else
-    {
-      // Block on condition variable.
-      ACE_SYNCH_CONDITION* cond =
-        this->cond_response_available ();
-      if (this->transport_->orb_core ()->add_follower (cond) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%N:%l:(%P|%t) TAO_Wait_On_Leader_Follower::wait: "
-                    "Failed to add a follower thread\n"));
-      cond->wait ();
-    }
-#endif /* 0 */
 }
 
 // Handle the input.
@@ -316,130 +240,149 @@ TAO_Wait_On_Leader_Follower::wait (void)
 int
 TAO_Wait_On_Leader_Follower::handle_input (void)
 {
-  int result = 0;
+  TAO_ORB_Core* orb_core =
+    this->transport_->orb_core ();
 
   // Obtain the lock.
-  if (this->transport_->orb_core ()->leader_follower_lock ().acquire () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::handle_input: "
-                       "Failed to get the lock.\n"),
-                      -1);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon,
+                    orb_core->leader_follower_lock (), -1);
 
-#if 0
-  // @@ Later (Alex).
-
+  // A message is received but not data was sent, flag this as an
+  // error, but we should do more....
+  // @@ Alex: this could be a CloseConnection message or something
+  //    similar, has to be handled...
   if (!this->expecting_response_)
-    {
-      // we got something, but did not want.
-      // @@ wake up an other thread, we are lost
+    return -1;
 
-      if (this->orb_core_->leader_follower_lock ().release () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-                           "Failed to release the lock.\n"),
-                          -1);
-      return this->check_unexpected_data ();
+  // Receive any data that is available, without blocking...
+  int result = this->transport_->handle_client_input (0);
+
+  // Severe error, abort....
+  if (result == -1)
+    return -1;
+
+  // Bata was read, but there the reply has not been completely
+  // received...
+  if (result == 0)
+    return 0;
+
+  // All the data is here!
+  this->reply_received_ = 1;
+
+  if (ACE_OS::thr_equal (this->calling_thread_, ACE_Thread::self ()))
+    {
+      // We are the leader thread, simply return 1 to terminate the
+      // event loop....
+      return 1;
     }
-#endif /* 0 */
 
-  if (ACE_OS::thr_equal (this->calling_thread_,
-                         ACE_Thread::self ()))
+  // We are not the leader thread, but we have our data, wake up
+  // ourselves and then return 0 so the leader thread can continue
+  // doing its job....
+
+  // At this point we might fail to remove the follower, because
+  // it has been already chosen to become the leader, so it is
+  // awake and will get this too.
+  ACE_SYNCH_CONDITION* cond =
+    this->cond_response_available ();
+
+  // Ignore any errors, may have been removed by another thread...
+  (void) orb_core->remove_follower (cond);
+
+  if (cond == 0 || cond->signal () == -1)
     {
-      // We are now a leader getting its response.
-
-      // Set the flag on.
-      this->input_available_ = 1;
-
-      // Release the lock.
-      if (this->transport_->orb_core ()->leader_follower_lock ().release () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) TAO_Client_Connection_Handler::handle_input: "
-                           "Failed to release the lock.\n"),
-                          -1);
-
-      // Suspend the handler. <resume_handler> is called in
-      // TAO_GIOP_Invocation::invoke
-      if (this->transport_->suspend_handler () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::handle_input: "
-                           "<suspend_handler> failed\n"),
-                          -1);
-
-      // Ask the transport object to read the message. But we should
-      // not block on receiving the whole reply.
-
-      // @@ Are the states such as message_size and message_offset
-      //    thread safe, in the Transport object? (Alex).
-      result = this->transport_->handle_client_input (0);
-
-      // Resume the handler.
-      if (this->transport_->resume_handler () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::handle_input: "
-                           "<resume_handler> failed\n"),
-                          -1);
-
-      // Return the result.
-      return result;
-    }
-  else
-    {
-      // We are a leader, which got a response for one of the
-      // followers, which means we are now a thread running the wrong
-      // Client_Connection_Handler
-
-      // At this point we might fail to remove the follower, because
-      // it has been already chosen to become the leader, so it is
-      // awake and will get this too.
-      ACE_SYNCH_CONDITION* cond =
-        this->cond_response_available ();
-
-      this->transport_->orb_core ()->remove_follower (cond);
-
-      // Release the lock.
-      if (this->transport_->orb_core ()->leader_follower_lock ().release () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::handle_input: "
-                           "Failed to release the lock.\n"),
-                          -1);
-
-      // We should wake suspend the thread before we wake him up.
-      // resume_handler is called in TAO_GIOP_Invocation::invoke.
-      if (this->transport_->suspend_handler () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::handle_input: "
-                           "<suspend_handler> failed\n"),
-                          -1);
-
-      // @@ TODO (Michael): We might be able to optimize this in
-      // doing the suspend_handler as last thing, but I am not sure
-      // if a race condition would occur.
-
-      // Obtain the lock.
-      if (this->transport_->orb_core ()->leader_follower_lock ().acquire () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::handle_input: "
-                           "Failed to acquire the lock.\n"),
-                          -1);
-
-      // The thread was already selected to become a leader, so we
-      // will be called again.
-      this->input_available_ = 1;
-      cond->signal ();
-
-      // Release the lock.
-      if (this->transport_->orb_core ()->leader_follower_lock ().release () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::handle_input: "
-                           "Failed to release the lock.\n"),
-                          -1);
+      // Yikes, what do we do here????
       return 0;
     }
+
+  return 0;
 }
+
+// ****************************************************************
+// remove this code ASAP, but not before that ;-)
+#if 0
+{
+  /// Release the lock.
+  if (orb_core->leader_follower_lock ().release () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
+                       "Failed to release the lock.\n"),
+                      -1);
+  
+  // The following variables are safe, because we are not
+  // registered with the reactor any more.
+  
+  // Ready to receive the input message.
+  // @@ Is it ok to read it blockingly. (Alex).
+  int result = this->transport_->handle_client_input (1);
+        
+  // Resume the handler.
+  if (this->transport_->resume_handler () == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "TAO:%N:%l:(%P|%t): TAO_Wait_On_Leader_Follower::wait: "
+                       "<resume_handler> failed.\n"),
+                      -1);
+  
+  // We should have read the whole message.
+  if (result != 1)
+    ACE_ERROR_RETURN ((LM_WARNING,
+                       "TAO:%N:%l:(%P|%t):TAO_Wait_On_Leader_Follower::wait: "
+                       "Input message was not read fully.\n"),
+                      -1);
+  return 0;
+}
+#endif
+#if 0
+// Grab leader follower lock.
+ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                          ace_mon,
+                          this->transport_->orb_core ()->leader_follower_lock (),
+                          -1));
+
+// Bind the reply handler.
+
+TAO_Leader_Follower_Reply_Handler rh (..);
+
+rrs->bind (this->request_id, &rh);
+
+// Check if we need to become the leader.
+if (!this->transport_->orb_core ()->leader_available ())
+{
+  // This might increase the refcount of the leader.
+  this->transport_->orb_core ()->set_leader_thread ();
+  
+  // Do the reactor event loop.
+  this->transport_->orb_core ()->reactor ()->owner (ACE_Thread::self ());
+      
+  result = 0;
+  
+  while (result != -1)
+    result = this->transport_->orb_core ()->reactor ()->handle_events ();
+  
+  if (result == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%N:%l:(%P | %t):TAO_Wait_On_Leader_Follower::wait: "
+                       "Reactor::handle_events failed.\n"),
+                      -1);
+}
+else
+{
+  // Block on condition variable.
+  ACE_SYNCH_CONDITION* cond =
+    this->cond_response_available ();
+  if (this->transport_->orb_core ()->add_follower (cond) == -1)
+    ACE_ERROR ((LM_ERROR,
+                "%N:%l:(%P|%t) TAO_Wait_On_Leader_Follower::wait: "
+                "Failed to add a follower thread\n"));
+  cond->wait ();
+}
+#endif /* 0 */
+
+// ****************************************************************
 
 // Register the handler.
 int
-TAO_Wait_On_Leader_Follower::register_handler (TAO_IIOP_Handler_Base *)
+TAO_Wait_On_Leader_Follower::register_handler (void)
 {
   return 0;
 }
@@ -522,7 +465,7 @@ TAO_Wait_On_Read::handle_input (void)
 
 // No-op.
 int
-TAO_Wait_On_Read::register_handler (TAO_IIOP_Handler_Base *)
+TAO_Wait_On_Read::register_handler (void)
 {
   return 0;
 }

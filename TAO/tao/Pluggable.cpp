@@ -31,7 +31,7 @@ TAO_Transport::TAO_Transport (TAO_ORB_Core *orb_core)
   orb_core_ = orb_core;
 
   // Create WS now.
-  this->ws_ = orb_core->client_factory ()->create_wait_strategy (this); 
+  this->ws_ = orb_core->client_factory ()->create_wait_strategy (this);
 
   // Create RMS now.
   this->rms_ = orb_core->client_factory ()->create_request_mux_strategy ();
@@ -59,7 +59,7 @@ TAO_Transport::input_cdr_stream (TAO_InputCDR *cdr)
 }
 
 // @@ Do you need an accessor? Or is the CDR stream simply passed by
-//    the RMS to the right target.  We should go to the RMS and obtain 
+//    the RMS to the right target.  We should go to the RMS and obtain
 //    the CDR stream from it, that way we can implement an optimized
 //    version of the RMS that uses a single CDR stream allocated from
 //    the stack.
@@ -112,7 +112,7 @@ TAO_Transport::incr_message_offset (CORBA::Long bytes_transferred)
 }
 
 // Set the flag to indicate whether the input message was read fully
-// or no. 
+// or no.
 void
 TAO_Transport::message_received (int received)
 {

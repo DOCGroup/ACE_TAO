@@ -170,7 +170,7 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
     {
       // Get the current profile.
       this->profile_ = this->stub_->profile_in_use ();
-      
+
       // Get the transport object.
 
       if (this->transport_ != 0)
@@ -186,9 +186,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
         ACE_THROW (CORBA::TRANSIENT ());
     }
 
-  // @@ Alex: we must check this, it seems that it would be cleaner if 
+  // @@ Alex: we must check this, it seems that it would be cleaner if
   //    the Transport's ORB_Core was initialized way in advance...
-  
+
   // @@ Done (Alex).
 
   // Init the transport object with the orb core resource.
@@ -197,9 +197,9 @@ TAO_GIOP_Invocation::start (CORBA::Boolean is_roundtrip,
   // Init the input message states in the transport object.
   // This is necessary for the round trip call only. But it is ok to
   // do this in all cases.
-  // @@ Alex: I think we should keep the "reading" state (message_size 
+  // @@ Alex: I think we should keep the "reading" state (message_size
   //    and offset) separate from the writing state, i.e. those
-  //    variables should only be set by the handle_input() method and 
+  //    variables should only be set by the handle_input() method and
   //    its friends...
   this->transport_->message_size (0);
   this->transport_->message_received (0);
@@ -769,7 +769,7 @@ TAO_GIOP_Twoway_Invocation::invoke_i (CORBA::Environment &ACE_TRY_ENV)
   //    Client_Strategy_Factory or something later. (Alex).
 
   // Wait for the reply. We should wait till we receive the reply
-  // fully. 
+  // fully.
   // @@ Check for return value -1 here !!! (Alex).
   while (!this->transport_->message_received ())
     this->transport_->wait_for_reply ();
