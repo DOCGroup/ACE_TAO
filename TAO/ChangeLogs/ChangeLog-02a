@@ -1,3 +1,8 @@
+Mon Nov 26 13:45:19 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
+	  Added new template declarations.
+
 Mon Nov 26 15:01:38 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * docs/compiler.html:
@@ -65,6 +70,7 @@ Wed Nov 21 16:50:16 2001  Craig Rodrigues  <crodrigu@bbn.com>
 	* orbsvcs/tests/AVStreams/Multiple_Flows:  Test multiple flows in
 	  the AV Service.
 
+>>>>>>> 1.4464
 Wed Nov 21 12:52:37 2001  Jaiganesh Balasubramanian  <jai@balar.ece.uci.edu>
 
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
