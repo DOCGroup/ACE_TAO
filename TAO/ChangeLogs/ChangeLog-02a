@@ -1,3 +1,22 @@
+Wed May 24 22:14:03 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/tests/Notify/Makefile:
+	* orbsvcs/tests/Notify/Basic/Makefile:
+	* orbsvcs/tests/Notify/Basic/Updates.h:
+	* orbsvcs/tests/Notify/Basic/Updates.cpp:
+	* orbsvcs/tests/Notify/Basic/README:
+	  Added files for the Basic tests.
+	  The Updates test is under construction.
+
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.h:
+	* orbsvcs/tests/Notify/lib/Notify_Test_Client.cpp:
+	* orbsvcs/tests/Notify/lib/Makefile:
+	  Added a generic test driver for the Notify tests.
+
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+	* orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+	  Some code review corrections.
+
 Wed May 24 19:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 	* orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
@@ -9,15 +28,15 @@ Wed May 24 19:23:05 2000  Carlos O'Ryan  <coryan@uci.edu>
 
 Wed May 24 20:48:51 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile: 
-	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp: 
-	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/Makefile:
+	* orbsvcs/tests/AVStreams/mpeg/source/server/Property_Exporter.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Audio_Control_i.cpp:
+	* orbsvcs/tests/AVStreams/mpeg/source/mpeg_server/Video_Control_State.cpp:
 	  Fixed minor compile errors
-	
-	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp: 
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
 	  Fixed undefined sybol reference errors
-	
+
 
 Wed May 24 17:53:12 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
 
