@@ -1,71 +1,76 @@
+Wed Sep 01 19:46:30 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/check_build_logs: allow log directory (-l option argument)
+          to start with anything except -.
+
 Wed Sep  1 17:15:25 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
-	* ace/Arg_Shifter.cpp (get_current_parameter): Removed egcs
-	  warnings by making <difference> int and also cleaned up the
-	  code.
+        * ace/Arg_Shifter.cpp (get_current_parameter): Removed egcs
+          warnings by making <difference> int and also cleaned up the
+          code.
 
 Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: Fixed a typo
-	  where ACE_reinterpret_cast() was misspelled.	Thanks to
-	  David for reporting this.
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: Fixed a typo
+          where ACE_reinterpret_cast() was misspelled.  Thanks to
+          David for reporting this.
 
-	* examples/QOS/server.cpp: "ACE"-ified this example.
+        * examples/QOS/server.cpp: "ACE"-ified this example.
 
-	* tests: Added a new test called CDR_File_Test, which 
-	  exercises the ACE_CDR_Stream features in conjunction with file
- 	  I/O.  Thanks to Giga Giguashvili <gregoryg@ParadigmGeo.com>.
+        * tests: Added a new test called CDR_File_Test, which
+          exercises the ACE_CDR_Stream features in conjunction with file
+          I/O.  Thanks to Giga Giguashvili <gregoryg@ParadigmGeo.com>.
 
-	* ace/OS: Added a new method called ACE_OS::filesize() that
-	  takes a LPCTSTR so that we can pass a file name to this.
+        * ace/OS: Added a new method called ACE_OS::filesize() that
+          takes a LPCTSTR so that we can pass a file name to this.
 
-	* ace/config-win32-borland.h: Changed ACE_CC_COMPILER to
-	  CPP32.EXE on the recommendation of Christopher Kohlhoff
- 	  <chris@kohlhoff.com>.
+        * ace/config-win32-borland.h: Changed ACE_CC_COMPILER to
+          CPP32.EXE on the recommendation of Christopher Kohlhoff
+          <chris@kohlhoff.com>.
 
-	* ace/Synch.h: Updated the documentation of ACE_Semaphore::remove()
-	  to clarify that it should only be called by one thread to avoid
- 	  race conditions.  Thanks to Clarence Bishop
- 	  <clarence.bishop@na.marconicomms.com> for mentioning this.
-  
+        * ace/Synch.h: Updated the documentation of ACE_Semaphore::remove()
+          to clarify that it should only be called by one thread to avoid
+          race conditions.  Thanks to Clarence Bishop
+          <clarence.bishop@na.marconicomms.com> for mentioning this.
+
 1999-09-01  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* ACE_wrappers/ace/OS.h:
-	* ACE_wrappers/ace/OS.i:
-	  Added a wrapper ACE_OS::enum_protocols () for WSAEnumProtocols().
-	  Tested this function with the ACE QOS test.
+        * ACE_wrappers/ace/OS.h:
+        * ACE_wrappers/ace/OS.i:
+          Added a wrapper ACE_OS::enum_protocols () for WSAEnumProtocols().
+          Tested this function with the ACE QOS test.
 
-	* examples/QOS/client.cpp: 
-	* examples/QOS/server.cpp: 
-	  Replaced the occurences of WSAEnumProtocols with
- 	  ACE_OS::enum_protocols () and successfully ran the QOS test.	
+        * examples/QOS/client.cpp:
+        * examples/QOS/server.cpp:
+          Replaced the occurences of WSAEnumProtocols with
+          ACE_OS::enum_protocols () and successfully ran the QOS test.
 
 Wed Sep  1 15:51:41 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/OS.i: Ensure that ACE_OS::localtime_r() does the "Right
-	  Thing"[TM], i.e., returns the pointer in the buffer provided by
- 	  the user, even if there's no native support for localtime_r() on
- 	  the OS platform.  In addition, added an ACE_OS_GUARD for this
- 	  use-case so that we don't have race conditions in MT programs.
-  	  This necessitated moving the localtime_r() wrapper facade into
- 	  the OS.cpp file.  Thanks to Jody Hagins <jody@atdesk.com> for
- 	  these suggestions.
+        * ace/OS.i: Ensure that ACE_OS::localtime_r() does the "Right
+          Thing"[TM], i.e., returns the pointer in the buffer provided by
+          the user, even if there's no native support for localtime_r() on
+          the OS platform.  In addition, added an ACE_OS_GUARD for this
+          use-case so that we don't have race conditions in MT programs.
+          This necessitated moving the localtime_r() wrapper facade into
+          the OS.cpp file.  Thanks to Jody Hagins <jody@atdesk.com> for
+          these suggestions.
 
-	* ace/SV_Semaphore_Complex: Improved the documentation a bit
-	  based on comments from Herbert <herbert@shym.com>.
+        * ace/SV_Semaphore_Complex: Improved the documentation a bit
+          based on comments from Herbert <herbert@shym.com>.
 
 Wed Sep  1 15:15:00 1999  Luther Baker  <ljb1@cs.wustl.edu>
 
-	* ace/Arg_Shifter.h: Added function (get_current_parameter(offset)
-	  to return parameters that may be mangled with flags.
+        * ace/Arg_Shifter.h: Added function (get_current_parameter(offset)
+          to return parameters that may be mangled with flags.
 
-	* ace/Arg_Shifter.cpp: Implemented function above.
+        * ace/Arg_Shifter.cpp: Implemented function above.
 
 Wed Sep  1 14:50:48 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Added definitions for _O_BINARY, _O_TEXT, and _O_RAW
-	  if they are not defined.   Thanks to Kevin Lyda
-	  <kevin.lyda@trintech.com> for pointing this out.
+        * ace/OS.h: Added definitions for _O_BINARY, _O_TEXT, and _O_RAW
+          if they are not defined.   Thanks to Kevin Lyda
+          <kevin.lyda@trintech.com> for pointing this out.
 
 Wed Sep  1 14:30:58 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -73,47 +78,47 @@ Wed Sep  1 14:30:58 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Wed Sep  1 11:18:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/Reactor_Notify_Test.cpp: Fixed an erroneous use of =
-	  rather than != and added another pair of explicit template
- 	  instantiations for ACE_Auto_Basic_Ptr<>.  Thanks to Carlos for
- 	  reporting this.
+        * tests/Reactor_Notify_Test.cpp: Fixed an erroneous use of =
+          rather than != and added another pair of explicit template
+          instantiations for ACE_Auto_Basic_Ptr<>.  Thanks to Carlos for
+          reporting this.
 
-	* ace/Process_Manager.cpp (handle_close): Removed a warning
-	  about unused parameter.  Thanks to David for reporting this.
+        * ace/Process_Manager.cpp (handle_close): Removed a warning
+          about unused parameter.  Thanks to David for reporting this.
 
-	* tests/Reactor_Notify_Test.cpp: I needed to add
+        * tests/Reactor_Notify_Test.cpp: I needed to add
 
-	  #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+          #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-	  rather than
+          rather than
 
-	  #else
+          #else
 
 Wed Sep 01 11:55:31 1999  Steve Huston  <shuston@riverace.com>
 
         * ace/CORBA_Handler.{h cpp} (ACE_ST_CORBA_Handler): Made the
           ACE_ST_CORBA_Handler instance get cleaned up via object manager
- 	  at rundown, giving it a chance to clean up it's reactor
- 	  registrations and reset its Orbix callbacks.  Also added a new
- 	  capability of allowing the ACE_ST_CORBA_Handler to daisy-chain
- 	  the Orbix callbacks - this is only enabled if
- 	  ACE_TAKEOVER_ORBIX_CALLBACKS is set in the config.h file, and
- 	  its use is highly discouraged unless you really know what you're
- 	  doing and can account for all of the callbacks.
+          at rundown, giving it a chance to clean up it's reactor
+          registrations and reset its Orbix callbacks.  Also added a new
+          capability of allowing the ACE_ST_CORBA_Handler to daisy-chain
+          the Orbix callbacks - this is only enabled if
+          ACE_TAKEOVER_ORBIX_CALLBACKS is set in the config.h file, and
+          its use is highly discouraged unless you really know what you're
+          doing and can account for all of the callbacks.
 
 Wed Sep  1 11:18:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	  Thanks to David for reporting this.
+          Thanks to David for reporting this.
 
-	* tests/run_tests.lst: Disabled the Process_Manager_Test
-	  until it's stable.  Thanks to David for reporting this.
+        * tests/run_tests.lst: Disabled the Process_Manager_Test
+          until it's stable.  Thanks to David for reporting this.
 
 Wed Sep  1 00:05:04 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/config-win32-borland.h: Added a #define for ACE_CC_COMPILER
-	  so that things will work properly on Borland.  Thanks to
- 	  Goldshtain Dmitry <goldshtain.dmitry@usa.net> and Adrian
- 	  Mercieca <adrian@anvil.co.uk> for reporting this.
+        * ace/config-win32-borland.h: Added a #define for ACE_CC_COMPILER
+          so that things will work properly on Borland.  Thanks to
+          Goldshtain Dmitry <goldshtain.dmitry@usa.net> and Adrian
+          Mercieca <adrian@anvil.co.uk> for reporting this.
 
 Wed Sep 01 10:45:15 1999  David L. Levine  <levine@cs.wustl.edu>
 
