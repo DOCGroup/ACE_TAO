@@ -1,7 +1,16 @@
-Thu Nov 11 11:24:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+Thu Nov 11 17:17:48 2004  Arvind S. Krishna  <arvindk@dre.vanderbilt.edu>
+
+        * ciao/Servant_Activator.cpp:
+        * DAnCE/examples/BasicSP/BMDisplay/BMDisplay_exec.cpp:
+        * DAnCE/examples/BasicSP/BMClosedED/BMClosedED_exec.cpp:
+        * DAnCE/examples/BasicSP/BMDevice/BMDevice_exec.cpp:
+        * docs/tutorial/Hello/hello_exec.cpp:
+          Fixed warnings in the scoreboard from RH8 NoInline build
+
+        Thu Nov 11 11:24:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ServantSourceGenerator.cpp:
-        
+
           In the generated servant method populate_port_tables(),
           added the line 'ACE_ENV_ARG_NOT_USED;' to avoid an
           unused parameter warning if there happens to be no
@@ -10,7 +19,7 @@ Thu Nov 11 11:24:05 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 Thu Nov 11 10:50:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/ExecImplSourceGenerator.cpp:
-        
+
           Fixed incorrect generation of environment arg macro.
           Thanks to Chad Elliott <elliott_c@ociweb.com> for
           pointing out the mistake.
