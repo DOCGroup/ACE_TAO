@@ -23,6 +23,8 @@
 #include "pace/errno.h"
 int errno;
 
+# define PACE_POSIX_ERROR_RETVAL -1
+
 # define PACE_ERRNO_NO_SUPPORT_RETURN(FAILVALUE) \
 return ( (errno = ENOTSUP), FAILVALUE)
 
