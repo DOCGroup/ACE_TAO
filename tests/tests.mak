@@ -4,9 +4,9 @@
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
 !IF "$(CFG)" == ""
-CFG=Timeprobe_Test - Win32 Debug
-!MESSAGE No configuration specified.  Defaulting to Timeprobe_Test - Win32\
- Debug.
+CFG=MT_Reactor_Timer_Test - Win32 Debug
+!MESSAGE No configuration specified.  Defaulting to MT_Reactor_Timer_Test -\
+ Win32 Debug.
 !ENDIF 
 
 !IF "$(CFG)" != "Handle_Set_Test - Win32 Debug" && "$(CFG)" !=\
@@ -38,7 +38,6 @@ CFG=Timeprobe_Test - Win32 Debug
  "Reactor_Exceptions_Test - Win32 Debug" && "$(CFG)" !=\
  "Priority_Task_Test - Win32 Debug" && "$(CFG)" !=\
  "Sigset_Ops_Test - Win32 Debug" && "$(CFG)" !=\
- "Message_Queue_Notifications_Test.cpp - Win32 Debug" && "$(CFG)" !=\
  "Enum_Interfaces_Test - Win32 Debug" && "$(CFG)" !=\
  "Hash_Map_Manager_Test - Win32 Debug" && "$(CFG)" !=\
  "Semaphore_Test - Win32 Debug" && "$(CFG)" != "Atomic_Op_Test - Win32 Debug" &&\
@@ -50,12 +49,18 @@ CFG=Timeprobe_Test - Win32 Debug
  "SOCK_Connector_Test - Win32 Debug" && "$(CFG)" !=\
  "Basic_Types_Test - Win32 Debug" && "$(CFG)" != "Env_Value_Test - Win32 Debug"\
  && "$(CFG)" != "OrdMultiSet_Test - Win32 Debug" && "$(CFG)" !=\
- "Timeprobe_Test - Win32 Debug"
+ "Timeprobe_Test - Win32 Debug" && "$(CFG)" !=\
+ "Message_Queue_Notifications_Test - Win32 Debug" && "$(CFG)" !=\
+ "DLList_Test - Win32 Debug" && "$(CFG)" != "High_Res_Timer_Test - Win32 Debug"\
+ && "$(CFG)" != "Dynamic_Priority_Test - Win32 Debug" && "$(CFG)" !=\
+ "Thread_Pool_Reactor_Test - Win32 Debug" && "$(CFG)" !=\
+ "Upgradable_RW_Test - Win32 Debug" && "$(CFG)" !=\
+ "MT_Reactor_Timer_Test - Win32 Debug"
 !MESSAGE Invalid configuration "$(CFG)" specified.
 !MESSAGE You can specify a configuration when running NMAKE on this makefile
 !MESSAGE by defining the macro CFG on the command line.  For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "tests.mak" CFG="Timeprobe_Test - Win32 Debug"
+!MESSAGE NMAKE /f "tests.mak" CFG="MT_Reactor_Timer_Test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
@@ -132,8 +137,6 @@ CFG=Timeprobe_Test - Win32 Debug
  "Win32 (x86) Console Application")
 !MESSAGE "Sigset_Ops_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
-!MESSAGE "Message_Queue_Notifications_Test.cpp - Win32 Debug" (based on\
- "Win32 (x86) Console Application")
 !MESSAGE "Enum_Interfaces_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
 !MESSAGE "Hash_Map_Manager_Test - Win32 Debug" (based on\
@@ -162,6 +165,20 @@ CFG=Timeprobe_Test - Win32 Debug
  "Win32 (x86) Console Application")
 !MESSAGE "Timeprobe_Test - Win32 Debug" (based on\
  "Win32 (x86) Console Application")
+!MESSAGE "Message_Queue_Notifications_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "DLList_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "High_Res_Timer_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Dynamic_Priority_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Thread_Pool_Reactor_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "Upgradable_RW_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
+!MESSAGE "MT_Reactor_Timer_Test - Win32 Debug" (based on\
+ "Win32 (x86) Console Application")
 !MESSAGE 
 !ERROR An invalid configuration is specified.
 !ENDIF 
@@ -173,7 +190,7 @@ NULL=nul
 !ENDIF 
 ################################################################################
 # Begin Project
-# PROP Target_Last_Scanned "Timeprobe_Test - Win32 Debug"
+# PROP Target_Last_Scanned "MT_Reactor_Timer_Test - Win32 Debug"
 CPP=cl.exe
 RSC=rc.exe
 
@@ -213,8 +230,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -273,8 +288,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -333,8 +346,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -393,8 +404,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -453,8 +462,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -513,8 +520,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -573,8 +578,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -633,8 +636,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -693,8 +694,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -753,8 +752,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -813,8 +810,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -873,8 +868,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -933,8 +926,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -993,8 +984,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1053,8 +1042,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1113,8 +1100,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1173,8 +1158,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1233,8 +1216,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1293,8 +1274,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1353,8 +1332,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1413,8 +1390,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1473,8 +1448,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1533,8 +1506,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1593,8 +1564,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1653,8 +1622,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1713,8 +1680,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1773,8 +1738,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1833,8 +1796,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1893,8 +1854,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -1953,8 +1912,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2013,8 +1970,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2073,8 +2028,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2133,8 +2086,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2193,8 +2144,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2253,8 +2202,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2313,8 +2260,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2374,8 +2319,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2435,8 +2378,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2495,8 +2436,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2515,67 +2454,6 @@ LINK32_OBJS= \
 	"$(INTDIR)\Sigset_Ops_Test.obj"
 
 "$(OUTDIR)\Sigset_Ops_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
-    $(LINK32) @<<
-  $(LINK32_FLAGS) $(LINK32_OBJS)
-<<
-
-!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test.cpp - Win32 Debug"
-
-# PROP BASE Use_MFC 0
-# PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir "Message_Queue_Notifications_Test.cpp\Debug"
-# PROP BASE Intermediate_Dir "Message_Queue_Notifications_Test.cpp\Debug"
-# PROP BASE Target_Dir "Message_Queue_Notifications_Test.cpp"
-# PROP Use_MFC 0
-# PROP Use_Debug_Libraries 1
-# PROP Output_Dir "."
-# PROP Intermediate_Dir "Debug"
-# PROP Target_Dir "Message_Queue_Notifications_Test.cpp"
-OUTDIR=.\.
-INTDIR=.\Debug
-
-ALL : "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.exe"
-
-CLEAN : 
-	-@erase "$(INTDIR)\Message_Queue_Notifications_Test.cpp.obj"
-	-@erase "$(INTDIR)\vc40.idb"
-	-@erase "$(INTDIR)\vc40.pdb"
-	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.exe"
-	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.ilk"
-	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.cpp.pdb"
-
-"$(OUTDIR)" :
-    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
-
-"$(INTDIR)" :
-    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
-
-# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
-# SUBTRACT CPP /YX
-CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
- "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
-# ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
-BSC32=bscmake.exe
-# ADD BASE BSC32 /nologo
-# ADD BSC32 /nologo
-BSC32_FLAGS=/nologo /o"$(OUTDIR)/Message_Queue_Notifications_Test.cpp.bsc" 
-BSC32_SBRS= \
-	
-LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
-# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
-LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
- /pdb:"$(OUTDIR)/Message_Queue_Notifications_Test.cpp.pdb" /debug /machine:I386\
- /out:"$(OUTDIR)/Message_Queue_Notifications_Test.cpp.exe" 
-LINK32_OBJS= \
-	"$(INTDIR)\Message_Queue_Notifications_Test.cpp.obj"
-
-"$(OUTDIR)\Message_Queue_Notifications_Test.cpp.exe" : "$(OUTDIR)" $(DEF_FILE)\
- $(LINK32_OBJS)
     $(LINK32) @<<
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
@@ -2616,8 +2494,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2676,8 +2552,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2736,8 +2610,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2796,8 +2668,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2856,8 +2726,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2916,8 +2784,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -2976,8 +2842,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3037,8 +2901,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3071,10 +2933,10 @@ LINK32_OBJS= \
 # PROP BASE Target_Dir "Thread_Mutex_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir ""
+# PROP Output_Dir "."
 # PROP Intermediate_Dir "Debug"
 # PROP Target_Dir "Thread_Mutex_Test"
-OUTDIR=.
+OUTDIR=.\.
 INTDIR=.\Debug
 
 ALL : "$(OUTDIR)\Thread_Mutex_Test.exe"
@@ -3087,6 +2949,9 @@ CLEAN :
 	-@erase "$(OUTDIR)\Thread_Mutex_Test.ilk"
 	-@erase "$(OUTDIR)\Thread_Mutex_Test.pdb"
 
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
 "$(INTDIR)" :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
@@ -3095,8 +2960,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3155,8 +3018,6 @@ CLEAN :
 # SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
  "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3211,12 +3072,10 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
- "_CONSOLE" /Fp"$(INTDIR)/Basic_Types_Test.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3271,12 +3130,10 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
- "_CONSOLE" /Fp"$(INTDIR)/Env_Value_Test.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3331,12 +3188,10 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
- "_CONSOLE" /Fp"$(INTDIR)/OrdMultiSet_Test.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3391,12 +3246,10 @@ CLEAN :
     if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
 CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
- "_CONSOLE" /Fp"$(INTDIR)/Timeprobe_Test.pch" /YX /Fo"$(INTDIR)/"\
- /Fd"$(INTDIR)/" /c 
-CPP_OBJS=.\Debug/
-CPP_SBRS=.\.
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
 # ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -3419,7 +3272,418 @@ LINK32_OBJS= \
   $(LINK32_FLAGS) $(LINK32_OBJS)
 <<
 
+!ELSEIF  "$(CFG)" == "Message_Queue_Notifications_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Message_Queue_Notifications_Test\Debug"
+# PROP BASE Intermediate_Dir "Message_Queue_Notifications_Test\Debug"
+# PROP BASE Target_Dir "Message_Queue_Notifications_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Message_Queue_Notifications_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Message_Queue_Notifications_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\Message_Queue_Notifications_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.exe"
+	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.ilk"
+	-@erase "$(OUTDIR)\Message_Queue_Notifications_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Message_Queue_Notifications_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Message_Queue_Notifications_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Message_Queue_Notifications_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\Message_Queue_Notifications_Test.obj"
+
+"$(OUTDIR)\Message_Queue_Notifications_Test.exe" : "$(OUTDIR)" $(DEF_FILE)\
+ $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "DLList_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "DLList_Test\Debug"
+# PROP BASE Intermediate_Dir "DLList_Test\Debug"
+# PROP BASE Target_Dir "DLList_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "DLList_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\DLList_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\DLList_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\DLList_Test.exe"
+	-@erase "$(OUTDIR)\DLList_Test.ilk"
+	-@erase "$(OUTDIR)\DLList_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/DLList_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/DLList_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/DLList_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\DLList_Test.obj"
+
+"$(OUTDIR)\DLList_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "High_Res_Timer_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "High_Res_Timer_Test\Debug"
+# PROP BASE Intermediate_Dir "High_Res_Timer_Test\Debug"
+# PROP BASE Target_Dir "High_Res_Timer_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "High_Res_Timer_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\High_Res_Timer_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\High_Res_Timer_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\High_Res_Timer_Test.exe"
+	-@erase "$(OUTDIR)\High_Res_Timer_Test.ilk"
+	-@erase "$(OUTDIR)\High_Res_Timer_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/High_Res_Timer_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/High_Res_Timer_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/High_Res_Timer_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\High_Res_Timer_Test.obj"
+
+"$(OUTDIR)\High_Res_Timer_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "Dynamic_Priority_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Dynamic_Priority_Test\Debug"
+# PROP BASE Intermediate_Dir "Dynamic_Priority_Test\Debug"
+# PROP BASE Target_Dir "Dynamic_Priority_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Dynamic_Priority_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Dynamic_Priority_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\Dynamic_Priority_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\Dynamic_Priority_Test.exe"
+	-@erase "$(OUTDIR)\Dynamic_Priority_Test.ilk"
+	-@erase "$(OUTDIR)\Dynamic_Priority_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Dynamic_Priority_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Dynamic_Priority_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Dynamic_Priority_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\Dynamic_Priority_Test.obj"
+
+"$(OUTDIR)\Dynamic_Priority_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "Thread_Pool_Reactor_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Thread_Pool_Reactor_Test\Debug"
+# PROP BASE Intermediate_Dir "Thread_Pool_Reactor_Test\Debug"
+# PROP BASE Target_Dir "Thread_Pool_Reactor_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Thread_Pool_Reactor_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Thread_Pool_Reactor_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\Thread_Pool_Reactor_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\Thread_Pool_Reactor_Test.exe"
+	-@erase "$(OUTDIR)\Thread_Pool_Reactor_Test.ilk"
+	-@erase "$(OUTDIR)\Thread_Pool_Reactor_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Thread_Pool_Reactor_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Thread_Pool_Reactor_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Thread_Pool_Reactor_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\Thread_Pool_Reactor_Test.obj"
+
+"$(OUTDIR)\Thread_Pool_Reactor_Test.exe" : "$(OUTDIR)" $(DEF_FILE)\
+ $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "Upgradable_RW_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "Upgradable_RW_Test\Debug"
+# PROP BASE Intermediate_Dir "Upgradable_RW_Test\Debug"
+# PROP BASE Target_Dir "Upgradable_RW_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "Upgradable_RW_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\Upgradable_RW_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\Upgradable_RW_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\Upgradable_RW_Test.exe"
+	-@erase "$(OUTDIR)\Upgradable_RW_Test.ilk"
+	-@erase "$(OUTDIR)\Upgradable_RW_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/Upgradable_RW_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/Upgradable_RW_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/Upgradable_RW_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\Upgradable_RW_Test.obj"
+
+"$(OUTDIR)\Upgradable_RW_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
+!ELSEIF  "$(CFG)" == "MT_Reactor_Timer_Test - Win32 Debug"
+
+# PROP BASE Use_MFC 0
+# PROP BASE Use_Debug_Libraries 1
+# PROP BASE Output_Dir "MT_Reactor_Timer_Test\Debug"
+# PROP BASE Intermediate_Dir "MT_Reactor_Timer_Test\Debug"
+# PROP BASE Target_Dir "MT_Reactor_Timer_Test"
+# PROP Use_MFC 0
+# PROP Use_Debug_Libraries 1
+# PROP Output_Dir "."
+# PROP Intermediate_Dir "Debug"
+# PROP Target_Dir "MT_Reactor_Timer_Test"
+OUTDIR=.\.
+INTDIR=.\Debug
+
+ALL : "$(OUTDIR)\MT_Reactor_Timer_Test.exe"
+
+CLEAN : 
+	-@erase "$(INTDIR)\MT_Reactor_Timer_Test.obj"
+	-@erase "$(INTDIR)\vc40.idb"
+	-@erase "$(INTDIR)\vc40.pdb"
+	-@erase "$(OUTDIR)\MT_Reactor_Timer_Test.exe"
+	-@erase "$(OUTDIR)\MT_Reactor_Timer_Test.ilk"
+	-@erase "$(OUTDIR)\MT_Reactor_Timer_Test.pdb"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+"$(INTDIR)" :
+    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
+
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /c
+# SUBTRACT CPP /YX
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I ".." /D "WIN32" /D "_DEBUG" /D\
+ "_CONSOLE" /Fo"$(INTDIR)/" /Fd"$(INTDIR)/" /c 
+# ADD BASE RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
+BSC32=bscmake.exe
+# ADD BASE BSC32 /nologo
+# ADD BSC32 /nologo
+BSC32_FLAGS=/nologo /o"$(OUTDIR)/MT_Reactor_Timer_Test.bsc" 
+BSC32_SBRS= \
+	
+LINK32=link.exe
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
+# ADD LINK32 ..\ace\aced.lib /nologo /subsystem:console /debug /machine:I386
+LINK32_FLAGS=..\ace\aced.lib /nologo /subsystem:console /incremental:yes\
+ /pdb:"$(OUTDIR)/MT_Reactor_Timer_Test.pdb" /debug /machine:I386\
+ /out:"$(OUTDIR)/MT_Reactor_Timer_Test.exe" 
+LINK32_OBJS= \
+	"$(INTDIR)\MT_Reactor_Timer_Test.obj"
+
+"$(OUTDIR)\MT_Reactor_Timer_Test.exe" : "$(OUTDIR)" $(DEF_FILE) $(LINK32_OBJS)
+    $(LINK32) @<<
+  $(LINK32_FLAGS) $(LINK32_OBJS)
+<<
+
 !ENDIF 
+
+CPP_OBJS=.\Debug/
+CPP_SBRS=.\.
 
 .c{$(CPP_OBJS)}.obj:
    $(CPP) $(CPP_PROJ) $<  
@@ -3461,9 +3725,11 @@ DEP_CPP_HANDL=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -3500,6 +3766,9 @@ DEP_CPP_HANDL=\
 	"..\ace/Profile_Timer.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -3512,7 +3781,6 @@ DEP_CPP_HANDL=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Time_Value.h"\
@@ -3537,6 +3805,7 @@ SOURCE=.\Mem_Map_Test.cpp
 DEP_CPP_MEM_M=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -3547,6 +3816,8 @@ DEP_CPP_MEM_M=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
@@ -3563,10 +3834,23 @@ DEP_CPP_MEM_M=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -3601,9 +3885,11 @@ DEP_CPP_NAMIN=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -3657,6 +3943,9 @@ DEP_CPP_NAMIN=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SOCK.h"\
 	"..\ace/SOCK.i"\
 	"..\ace/SOCK_Connector.h"\
@@ -3680,7 +3969,6 @@ DEP_CPP_NAMIN=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Time_Value.h"\
@@ -3720,9 +4008,11 @@ DEP_CPP_REACT=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -3758,6 +4048,9 @@ DEP_CPP_REACT=\
 	"..\ace/Reactor_Impl.h"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -3770,7 +4063,6 @@ DEP_CPP_REACT=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Timer_Queue.h"\
@@ -3809,9 +4101,11 @@ DEP_CPP_REACTO=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -3843,6 +4137,9 @@ DEP_CPP_REACTO=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -3870,6 +4167,9 @@ DEP_CPP_REACTO=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -3893,7 +4193,6 @@ DEP_CPP_REACTO=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -3930,6 +4229,7 @@ SOURCE=.\SString_Test.cpp
 DEP_CPP_SSTRI=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -3940,6 +4240,8 @@ DEP_CPP_SSTRI=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
@@ -3954,10 +4256,23 @@ DEP_CPP_SSTRI=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -3979,6 +4294,7 @@ SOURCE=.\Time_Value_Test.cpp
 DEP_CPP_TIME_=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -3989,6 +4305,8 @@ DEP_CPP_TIME_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
@@ -4003,10 +4321,23 @@ DEP_CPP_TIME_=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -4039,9 +4370,11 @@ DEP_CPP_TIMER=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4076,6 +4409,9 @@ DEP_CPP_TIMER=\
 	"..\ace/Profile_Timer.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -4088,7 +4424,6 @@ DEP_CPP_TIMER=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Time_Value.h"\
@@ -4142,9 +4477,11 @@ DEP_CPP_UPIPE=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4178,6 +4515,9 @@ DEP_CPP_UPIPE=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -4205,6 +4545,9 @@ DEP_CPP_UPIPE=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SPIPE.h"\
 	"..\ace/SPIPE.i"\
 	"..\ace/SPIPE_Acceptor.h"\
@@ -4238,7 +4581,6 @@ DEP_CPP_UPIPE=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -4294,9 +4636,11 @@ DEP_CPP_PRIOR=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4328,6 +4672,9 @@ DEP_CPP_PRIOR=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -4352,6 +4699,9 @@ DEP_CPP_PRIOR=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -4372,7 +4722,6 @@ DEP_CPP_PRIOR=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -4404,6 +4753,7 @@ SOURCE=.\Time_Service_Test.cpp
 DEP_CPP_TIME_S=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -4414,6 +4764,8 @@ DEP_CPP_TIME_S=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
@@ -4430,10 +4782,23 @@ DEP_CPP_TIME_S=\
 	"..\ace/OS.i"\
 	"..\ace/Process.h"\
 	"..\ace/Process.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -4468,9 +4833,11 @@ DEP_CPP_SPIPE=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4503,6 +4870,9 @@ DEP_CPP_SPIPE=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SPIPE.h"\
 	"..\ace/SPIPE.i"\
 	"..\ace/SPIPE_Acceptor.h"\
@@ -4524,7 +4894,6 @@ DEP_CPP_SPIPE=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -4561,9 +4930,11 @@ DEP_CPP_BUFFE=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4595,6 +4966,9 @@ DEP_CPP_BUFFE=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -4622,6 +4996,9 @@ DEP_CPP_BUFFE=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -4648,7 +5025,6 @@ DEP_CPP_BUFFE=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -4697,9 +5073,11 @@ DEP_CPP_BARRI=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4730,6 +5108,9 @@ DEP_CPP_BARRI=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -4742,7 +5123,6 @@ DEP_CPP_BARRI=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -4779,9 +5159,11 @@ DEP_CPP_READE=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4814,6 +5196,9 @@ DEP_CPP_READE=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -4826,7 +5211,6 @@ DEP_CPP_READE=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -4863,9 +5247,11 @@ DEP_CPP_RECUR=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4898,6 +5284,9 @@ DEP_CPP_RECUR=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -4910,7 +5299,6 @@ DEP_CPP_RECUR=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -4947,9 +5335,11 @@ DEP_CPP_TASK_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -4981,6 +5371,9 @@ DEP_CPP_TASK_=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -5008,6 +5401,9 @@ DEP_CPP_TASK_=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -5031,7 +5427,6 @@ DEP_CPP_TASK_=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -5079,9 +5474,11 @@ DEP_CPP_THREA=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5112,6 +5509,9 @@ DEP_CPP_THREA=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -5124,7 +5524,6 @@ DEP_CPP_THREA=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -5162,9 +5561,11 @@ DEP_CPP_TSS_T=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5195,6 +5596,9 @@ DEP_CPP_TSS_T=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -5207,7 +5611,6 @@ DEP_CPP_TSS_T=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -5245,9 +5648,11 @@ DEP_CPP_THREAD=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5279,6 +5684,9 @@ DEP_CPP_THREAD=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -5306,6 +5714,9 @@ DEP_CPP_THREAD=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -5329,7 +5740,6 @@ DEP_CPP_THREAD=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -5379,9 +5789,11 @@ DEP_CPP_FUTUR=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5415,12 +5827,15 @@ DEP_CPP_FUTUR=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
 	"..\ace/Message_Queue_T.h"\
 	"..\ace/Message_Queue_T.i"\
-	"..\ace/Method_Request.h"\
+	"..\ace/Method_Object.h"\
 	"..\ace/Module.cpp"\
 	"..\ace/Module.h"\
 	"..\ace/Module.i"\
@@ -5443,6 +5858,9 @@ DEP_CPP_FUTUR=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -5466,7 +5884,6 @@ DEP_CPP_FUTUR=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -5516,9 +5933,11 @@ DEP_CPP_TOKEN=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5575,6 +5994,9 @@ DEP_CPP_TOKEN=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SOCK.h"\
 	"..\ace/SOCK.i"\
 	"..\ace/SOCK_Connector.h"\
@@ -5598,7 +6020,6 @@ DEP_CPP_TOKEN=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -5646,9 +6067,11 @@ DEP_CPP_MESSA=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5682,6 +6105,9 @@ DEP_CPP_MESSA=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -5706,6 +6132,9 @@ DEP_CPP_MESSA=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -5726,7 +6155,6 @@ DEP_CPP_MESSA=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -5769,9 +6197,11 @@ DEP_CPP_MAP_M=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -5822,6 +6252,9 @@ DEP_CPP_MAP_M=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -5835,7 +6268,6 @@ DEP_CPP_MAP_M=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Time_Value.h"\
@@ -5864,6 +6296,7 @@ SOURCE=.\Pipe_Test.cpp
 DEP_CPP_PIPE_=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -5874,6 +6307,8 @@ DEP_CPP_PIPE_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/Get_Opt.h"\
 	"..\ace/Get_Opt.i"\
 	"..\ace/inc_user_config.h"\
@@ -5894,10 +6329,23 @@ DEP_CPP_PIPE_=\
 	"..\ace/Pipe.i"\
 	"..\ace/Process.h"\
 	"..\ace/Process.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -5950,6 +6398,9 @@ DEP_CPP_PROCE=\
 	"..\ace/OS.i"\
 	"..\ace/Process.h"\
 	"..\ace/Process.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -5962,7 +6413,6 @@ DEP_CPP_PROCE=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
@@ -5997,9 +6447,11 @@ DEP_CPP_SV_SH=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -6030,6 +6482,9 @@ DEP_CPP_SV_SH=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -6042,7 +6497,6 @@ DEP_CPP_SV_SH=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
@@ -6077,9 +6531,11 @@ DEP_CPP_MM_SH=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -6113,6 +6569,9 @@ DEP_CPP_MM_SH=\
 	"..\ace/Shared_Memory_MM.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -6125,7 +6584,6 @@ DEP_CPP_MM_SH=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -6162,9 +6620,11 @@ DEP_CPP_SERVI=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -6206,6 +6666,9 @@ DEP_CPP_SERVI=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -6219,7 +6682,6 @@ DEP_CPP_SERVI=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Timer_Queue.h"\
@@ -6260,9 +6722,11 @@ DEP_CPP_SOCK_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -6299,6 +6763,9 @@ DEP_CPP_SOCK_=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SOCK.h"\
 	"..\ace/SOCK.i"\
 	"..\ace/SOCK_Acceptor.h"\
@@ -6321,7 +6788,6 @@ DEP_CPP_SOCK_=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -6359,9 +6825,11 @@ DEP_CPP_MESSAG=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -6395,6 +6863,9 @@ DEP_CPP_MESSAG=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -6424,6 +6895,9 @@ DEP_CPP_MESSAG=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -6447,7 +6921,6 @@ DEP_CPP_MESSAG=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -6496,9 +6969,11 @@ DEP_CPP_REACTOR=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -6535,6 +7010,9 @@ DEP_CPP_REACTOR=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -6554,6 +7032,11 @@ DEP_CPP_REACTOR=\
 	"..\ace/Reactor_Impl.h"\
 	"..\ace/Select_Reactor.h"\
 	"..\ace/Select_Reactor.i"\
+	"..\ace/Select_Reactor_Base.h"\
+	"..\ace/Select_Reactor_Base.i"\
+	"..\ace/Select_Reactor_T.cpp"\
+	"..\ace/Select_Reactor_T.h"\
+	"..\ace/Select_Reactor_T.i"\
 	"..\ace/Service_Config.h"\
 	"..\ace/Service_Config.i"\
 	"..\ace/Service_Object.h"\
@@ -6566,6 +7049,9 @@ DEP_CPP_REACTOR=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -6589,7 +7075,6 @@ DEP_CPP_REACTOR=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -6599,6 +7084,9 @@ DEP_CPP_REACTOR=\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
 	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Heap.h"\
+	"..\ace/Timer_Heap_T.cpp"\
+	"..\ace/Timer_Heap_T.h"\
 	"..\ace/Timer_Queue.h"\
 	"..\ace/Timer_Queue_T.cpp"\
 	"..\ace/Timer_Queue_T.h"\
@@ -6644,9 +7132,11 @@ DEP_CPP_IOSTR=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Dynamic.h"\
 	"..\ace/Dynamic.i"\
 	"..\ace/Event_Handler.h"\
@@ -6688,6 +7178,9 @@ DEP_CPP_IOSTR=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -6754,7 +7247,6 @@ DEP_CPP_IOSTR=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -6808,9 +7300,11 @@ DEP_CPP_PROCES=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Dynamic.h"\
 	"..\ace/Dynamic.i"\
 	"..\ace/Event_Handler.h"\
@@ -6850,6 +7344,9 @@ DEP_CPP_PROCES=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -6916,7 +7413,6 @@ DEP_CPP_PROCES=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -6974,9 +7470,11 @@ DEP_CPP_CONN_=\
 	"..\ace/Connector.cpp"\
 	"..\ace/Connector.h"\
 	"..\ace/Connector.i"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Dynamic.h"\
 	"..\ace/Dynamic.i"\
 	"..\ace/Event_Handler.h"\
@@ -7021,6 +7519,9 @@ DEP_CPP_CONN_=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -7087,7 +7588,6 @@ DEP_CPP_CONN_=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -7137,9 +7637,11 @@ DEP_CPP_SIMPL=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -7166,12 +7668,18 @@ DEP_CPP_SIMPL=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -7184,7 +7692,6 @@ DEP_CPP_SIMPL=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
@@ -7222,9 +7729,11 @@ DEP_CPP_REACTOR_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -7264,6 +7773,9 @@ DEP_CPP_REACTOR_=\
 	"..\ace/Reactor_Impl.h"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SOCK.h"\
 	"..\ace/SOCK.i"\
 	"..\ace/SOCK_Dgram.h"\
@@ -7280,7 +7792,6 @@ DEP_CPP_REACTOR_=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -7322,9 +7833,11 @@ DEP_CPP_PRIORI=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -7356,6 +7869,9 @@ DEP_CPP_PRIORI=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -7385,6 +7901,9 @@ DEP_CPP_PRIORI=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -7408,7 +7927,6 @@ DEP_CPP_PRIORI=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -7445,55 +7963,6 @@ SOURCE=.\Sigset_Ops_Test.cpp
 DEP_CPP_SIGSE=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
-	"..\ace/Auto_Ptr.cpp"\
-	"..\ace/Auto_Ptr.h"\
-	"..\ace/Auto_Ptr.i"\
-	"..\ace/Basic_Types.h"\
-	"..\ace/Basic_Types.i"\
-	"..\ace/config-win32-borland.h"\
-	"..\ace/config-win32-common.h"\
-	"..\ace/config-win32.h"\
-	"..\ace/config-WinCE.h"\
-	"..\ace/config.h"\
-	"..\ace/inc_user_config.h"\
-	"..\ace/iosfwd.h"\
-	"..\ace/Log_Msg.h"\
-	"..\ace/Log_Priority.h"\
-	"..\ace/Log_Record.h"\
-	"..\ace/Log_Record.i"\
-	"..\ace/Malloc_Base.h"\
-	"..\ace/Managed_Object.cpp"\
-	"..\ace/Managed_Object.h"\
-	"..\ace/Managed_Object.i"\
-	"..\ace/Object_Manager.h"\
-	"..\ace/Object_Manager.i"\
-	"..\ace/OS.h"\
-	"..\ace/OS.i"\
-	"..\ace/SString.h"\
-	"..\ace/SString.i"\
-	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
-	"..\ace/Trace.h"\
-	"..\ace/ws2tcpip.h"\
-	"..\tests/test_config.h"\
-	
-
-"$(INTDIR)\Sigset_Ops_Test.obj" : $(SOURCE) $(DEP_CPP_SIGSE) "$(INTDIR)"
-
-
-# End Source File
-# End Target
-################################################################################
-# Begin Target
-
-# Name "Message_Queue_Notifications_Test.cpp - Win32 Debug"
-################################################################################
-# Begin Source File
-
-SOURCE=.\Message_Queue_Notifications_Test.cpp.cpp
-DEP_CPP_MSGQU=\
-	"..\ace/ACE.h"\
-	"..\ace/ACE.i"\
 	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
@@ -7505,113 +7974,45 @@ DEP_CPP_MSGQU=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
-	"..\ace/Containers.h"\
-	"..\ace/Containers.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
-	"..\ace/Free_List.cpp"\
-	"..\ace/Free_List.h"\
-	"..\ace/Free_List.i"\
-	"..\ace/Handle_Set.h"\
-	"..\ace/Handle_Set.i"\
-	"..\ace/Hash_Map_Manager.cpp"\
-	"..\ace/Hash_Map_Manager.h"\
 	"..\ace/inc_user_config.h"\
-	"..\ace/IO_Cntl_Msg.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
 	"..\ace/Log_Priority.h"\
 	"..\ace/Log_Record.h"\
 	"..\ace/Log_Record.i"\
-	"..\ace/Malloc.h"\
-	"..\ace/Malloc.i"\
 	"..\ace/Malloc_Base.h"\
-	"..\ace/Malloc_T.cpp"\
-	"..\ace/Malloc_T.h"\
-	"..\ace/Malloc_T.i"\
 	"..\ace/Managed_Object.cpp"\
 	"..\ace/Managed_Object.h"\
 	"..\ace/Managed_Object.i"\
-	"..\ace/Mem_Map.h"\
-	"..\ace/Mem_Map.i"\
-	"..\ace/Memory_Pool.h"\
-	"..\ace/Memory_Pool.i"\
-	"..\ace/Message_Block.h"\
-	"..\ace/Message_Block.i"\
-	"..\ace/Message_Queue.h"\
-	"..\ace/Message_Queue.i"\
-	"..\ace/Message_Queue_T.cpp"\
-	"..\ace/Message_Queue_T.h"\
-	"..\ace/Message_Queue_T.i"\
-	"..\ace/Module.cpp"\
-	"..\ace/Module.h"\
-	"..\ace/Module.i"\
 	"..\ace/Object_Manager.h"\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
-	"..\ace/Reactor.h"\
-	"..\ace/Reactor.i"\
-	"..\ace/Reactor_Impl.h"\
-	"..\ace/Service_Config.h"\
-	"..\ace/Service_Config.i"\
-	"..\ace/Service_Object.h"\
-	"..\ace/Service_Object.i"\
-	"..\ace/Service_Repository.h"\
-	"..\ace/Service_Repository.i"\
-	"..\ace/Service_Types.h"\
-	"..\ace/Service_Types.i"\
-	"..\ace/Shared_Object.h"\
-	"..\ace/Shared_Object.i"\
-	"..\ace/Signal.h"\
-	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
-	"..\ace/Strategies.h"\
-	"..\ace/Strategies.i"\
-	"..\ace/Strategies_T.cpp"\
-	"..\ace/Strategies_T.h"\
-	"..\ace/Strategies_T.i"\
-	"..\ace/Stream_Modules.cpp"\
-	"..\ace/Stream_Modules.h"\
-	"..\ace/Stream_Modules.i"\
 	"..\ace/streams.h"\
 	"..\ace/SV_Semaphore_Complex.h"\
 	"..\ace/SV_Semaphore_Complex.i"\
 	"..\ace/SV_Semaphore_Simple.h"\
 	"..\ace/SV_Semaphore_Simple.i"\
-	"..\ace/Svc_Conf_Tokens.h"\
 	"..\ace/Synch.h"\
 	"..\ace/Synch.i"\
-	"..\ace/Synch_Options.h"\
-	"..\ace/Synch_Options.i"\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
-	"..\ace/Task.h"\
-	"..\ace/Task.i"\
-	"..\ace/Task_T.cpp"\
-	"..\ace/Task_T.h"\
-	"..\ace/Task_T.i"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
-	"..\ace/Thread_Manager.h"\
-	"..\ace/Thread_Manager.i"\
-	"..\ace/Timer_Queue.h"\
-	"..\ace/Timer_Queue_T.cpp"\
-	"..\ace/Timer_Queue_T.h"\
-	"..\ace/Timer_Queue_T.i"\
 	"..\ace/Trace.h"\
-	"..\ace/WFMO_Reactor.h"\
-	"..\ace/WFMO_Reactor.i"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
 	
 
-"$(INTDIR)\Message_Queue_Notifications_Test.cpp.obj" : $(SOURCE) $(DEP_CPP_MSGQU)\
- "$(INTDIR)"
+"$(INTDIR)\Sigset_Ops_Test.obj" : $(SOURCE) $(DEP_CPP_SIGSE) "$(INTDIR)"
 
 
 # End Source File
@@ -7629,6 +8030,7 @@ DEP_CPP_ENUM_=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -7639,6 +8041,8 @@ DEP_CPP_ENUM_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/INET_Addr.h"\
 	"..\ace/INET_Addr.i"\
@@ -7655,10 +8059,23 @@ DEP_CPP_ENUM_=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -7691,9 +8108,11 @@ DEP_CPP_HASH_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -7737,6 +8156,9 @@ DEP_CPP_HASH_=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -7750,7 +8172,6 @@ DEP_CPP_HASH_=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Timer_Queue.h"\
@@ -7790,9 +8211,11 @@ DEP_CPP_SEMAP=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -7825,6 +8248,9 @@ DEP_CPP_SEMAP=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -7837,7 +8263,6 @@ DEP_CPP_SEMAP=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -7890,6 +8315,9 @@ DEP_CPP_ATOMI=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -7902,7 +8330,6 @@ DEP_CPP_ATOMI=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
@@ -7939,9 +8366,11 @@ DEP_CPP_MT_SO=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -7978,6 +8407,9 @@ DEP_CPP_MT_SO=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SOCK.h"\
 	"..\ace/SOCK.i"\
 	"..\ace/SOCK_Acceptor.h"\
@@ -8000,7 +8432,6 @@ DEP_CPP_MT_SO=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -8046,9 +8477,11 @@ DEP_CPP_PRIORIT=\
 	"..\ace/Connector.cpp"\
 	"..\ace/Connector.h"\
 	"..\ace/Connector.i"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Dynamic.h"\
 	"..\ace/Dynamic.i"\
 	"..\ace/Event_Handler.h"\
@@ -8093,6 +8526,9 @@ DEP_CPP_PRIORIT=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -8114,6 +8550,11 @@ DEP_CPP_PRIORIT=\
 	"..\ace/Reactor_Impl.h"\
 	"..\ace/Select_Reactor.h"\
 	"..\ace/Select_Reactor.i"\
+	"..\ace/Select_Reactor_Base.h"\
+	"..\ace/Select_Reactor_Base.i"\
+	"..\ace/Select_Reactor_T.cpp"\
+	"..\ace/Select_Reactor_T.h"\
+	"..\ace/Select_Reactor_T.i"\
 	"..\ace/Service_Config.h"\
 	"..\ace/Service_Config.i"\
 	"..\ace/Service_Object.h"\
@@ -8165,7 +8606,6 @@ DEP_CPP_PRIORIT=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -8176,6 +8616,9 @@ DEP_CPP_PRIORIT=\
 	"..\ace/Thread_Manager.h"\
 	"..\ace/Thread_Manager.i"\
 	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Heap.h"\
+	"..\ace/Timer_Heap_T.cpp"\
+	"..\ace/Timer_Heap_T.h"\
 	"..\ace/Timer_Queue.h"\
 	"..\ace/Timer_Queue_T.cpp"\
 	"..\ace/Timer_Queue_T.h"\
@@ -8226,9 +8669,11 @@ DEP_CPP_REACTOR_P=\
 	"..\ace/Connector.cpp"\
 	"..\ace/Connector.h"\
 	"..\ace/Connector.i"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Dynamic.h"\
 	"..\ace/Dynamic.i"\
 	"..\ace/Event_Handler.h"\
@@ -8275,6 +8720,9 @@ DEP_CPP_REACTOR_P=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -8296,6 +8744,11 @@ DEP_CPP_REACTOR_P=\
 	"..\ace/Reactor_Impl.h"\
 	"..\ace/Select_Reactor.h"\
 	"..\ace/Select_Reactor.i"\
+	"..\ace/Select_Reactor_Base.h"\
+	"..\ace/Select_Reactor_Base.i"\
+	"..\ace/Select_Reactor_T.cpp"\
+	"..\ace/Select_Reactor_T.h"\
+	"..\ace/Select_Reactor_T.i"\
 	"..\ace/Service_Config.h"\
 	"..\ace/Service_Config.i"\
 	"..\ace/Service_Object.h"\
@@ -8347,7 +8800,6 @@ DEP_CPP_REACTOR_P=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Task.h"\
 	"..\ace/Task.i"\
 	"..\ace/Task_T.cpp"\
@@ -8358,6 +8810,9 @@ DEP_CPP_REACTOR_P=\
 	"..\ace/Thread_Manager.h"\
 	"..\ace/Thread_Manager.i"\
 	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Heap.h"\
+	"..\ace/Timer_Heap_T.cpp"\
+	"..\ace/Timer_Heap_T.h"\
 	"..\ace/Timer_Queue.h"\
 	"..\ace/Timer_Queue_T.cpp"\
 	"..\ace/Timer_Queue_T.h"\
@@ -8400,9 +8855,11 @@ DEP_CPP_NOTIF=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -8443,6 +8900,9 @@ DEP_CPP_NOTIF=\
 	"..\ace/Memory_Pool.i"\
 	"..\ace/Message_Block.h"\
 	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
 	"..\ace/Message_Queue.h"\
 	"..\ace/Message_Queue.i"\
 	"..\ace/Message_Queue_T.cpp"\
@@ -8461,6 +8921,11 @@ DEP_CPP_NOTIF=\
 	"..\ace/Reactor_Impl.h"\
 	"..\ace/Select_Reactor.h"\
 	"..\ace/Select_Reactor.i"\
+	"..\ace/Select_Reactor_Base.h"\
+	"..\ace/Select_Reactor_Base.i"\
+	"..\ace/Select_Reactor_T.cpp"\
+	"..\ace/Select_Reactor_T.h"\
+	"..\ace/Select_Reactor_T.i"\
 	"..\ace/Service_Config.h"\
 	"..\ace/Service_Config.i"\
 	"..\ace/Service_Object.h"\
@@ -8473,6 +8938,9 @@ DEP_CPP_NOTIF=\
 	"..\ace/Shared_Object.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/Strategies.h"\
@@ -8493,12 +8961,14 @@ DEP_CPP_NOTIF=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
 	"..\ace/Thread_Manager.i"\
 	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Heap.h"\
+	"..\ace/Timer_Heap_T.cpp"\
+	"..\ace/Timer_Heap_T.h"\
 	"..\ace/Timer_Queue.h"\
 	"..\ace/Timer_Queue_T.cpp"\
 	"..\ace/Timer_Queue_T.h"\
@@ -8540,9 +9010,11 @@ DEP_CPP_THREAD_=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -8573,6 +9045,9 @@ DEP_CPP_THREAD_=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -8585,7 +9060,6 @@ DEP_CPP_THREAD_=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Thread_Manager.h"\
@@ -8613,6 +9087,7 @@ DEP_CPP_SOCK_C=\
 	"..\ace/ACE.i"\
 	"..\ace/Addr.h"\
 	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -8623,6 +9098,8 @@ DEP_CPP_SOCK_C=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/INET_Addr.h"\
 	"..\ace/INET_Addr.i"\
@@ -8641,6 +9118,9 @@ DEP_CPP_SOCK_C=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SOCK.h"\
 	"..\ace/SOCK.i"\
 	"..\ace/SOCK_Connector.h"\
@@ -8652,7 +9132,17 @@ DEP_CPP_SOCK_C=\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Time_Value.h"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
@@ -8675,6 +9165,7 @@ SOURCE=.\Basic_Types_Test.cpp
 DEP_CPP_BASIC=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -8685,6 +9176,8 @@ DEP_CPP_BASIC=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
@@ -8699,10 +9192,23 @@ DEP_CPP_BASIC=\
 	"..\ace/Object_Manager.i"\
 	"..\ace/OS.h"\
 	"..\ace/OS.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -8724,6 +9230,7 @@ SOURCE=.\Env_Value_Test.cpp
 DEP_CPP_ENV_V=\
 	"..\ace/ACE.h"\
 	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
 	"..\ace/Auto_Ptr.cpp"\
 	"..\ace/Auto_Ptr.h"\
 	"..\ace/Auto_Ptr.i"\
@@ -8737,6 +9244,8 @@ DEP_CPP_ENV_V=\
 	"..\ace/Env_Value_T.cpp"\
 	"..\ace/Env_Value_T.h"\
 	"..\ace/Env_Value_T.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
 	"..\ace/inc_user_config.h"\
 	"..\ace/iosfwd.h"\
 	"..\ace/Log_Msg.h"\
@@ -8753,10 +9262,23 @@ DEP_CPP_ENV_V=\
 	"..\ace/OS.i"\
 	"..\ace/Process.h"\
 	"..\ace/Process.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
-	"..\ace/sys_conf.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
 	"..\ace/ws2tcpip.h"\
 	"..\tests/test_config.h"\
@@ -8789,9 +9311,11 @@ DEP_CPP_ORDMU=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -8822,6 +9346,9 @@ DEP_CPP_ORDMU=\
 	"..\ace/OS.i"\
 	"..\ace/Signal.h"\
 	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
 	"..\ace/SString.h"\
 	"..\ace/SString.i"\
 	"..\ace/streams.h"\
@@ -8834,7 +9361,6 @@ DEP_CPP_ORDMU=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Trace.h"\
@@ -8869,9 +9395,11 @@ DEP_CPP_TIMEP=\
 	"..\ace/config-win32.h"\
 	"..\ace/config-WinCE.h"\
 	"..\ace/config.h"\
-	"..\ace/Containers.cpp"\
 	"..\ace/Containers.h"\
 	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
 	"..\ace/Event_Handler.h"\
 	"..\ace/Event_Handler.i"\
 	"..\ace/Free_List.cpp"\
@@ -8919,7 +9447,6 @@ DEP_CPP_TIMEP=\
 	"..\ace/Synch_T.cpp"\
 	"..\ace/Synch_T.h"\
 	"..\ace/Synch_T.i"\
-	"..\ace/sys_conf.h"\
 	"..\ace/Thread.h"\
 	"..\ace/Thread.i"\
 	"..\ace/Timeprobe.h"\
@@ -8932,6 +9459,924 @@ DEP_CPP_TIMEP=\
 	
 
 "$(INTDIR)\Timeprobe_Test.obj" : $(SOURCE) $(DEP_CPP_TIMEP) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Message_Queue_Notifications_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Message_Queue_Notifications_Test.cpp
+DEP_CPP_MESSAGE=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	
+
+"$(INTDIR)\Message_Queue_Notifications_Test.obj" : $(SOURCE) $(DEP_CPP_MESSAGE)\
+ "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "DLList_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\DLList_Test.cpp
+DEP_CPP_DLLIS=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	
+
+"$(INTDIR)\DLList_Test.obj" : $(SOURCE) $(DEP_CPP_DLLIS) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "High_Res_Timer_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\High_Res_Timer_Test.cpp
+DEP_CPP_HIGH_=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Sched_Params.h"\
+	"..\ace/Sched_Params.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Trace.h"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	
+
+"$(INTDIR)\High_Res_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_HIGH_) "$(INTDIR)"
+
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Dynamic_Priority_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Dynamic_Priority_Test.cpp
+
+!IF  "$(CFG)" == "Dynamic_Priority_Test - Win32 Debug"
+
+DEP_CPP_DYNAM=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Sched_Params.h"\
+	"..\ace/Sched_Params.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	
+
+"$(INTDIR)\Dynamic_Priority_Test.obj" : $(SOURCE) $(DEP_CPP_DYNAM) "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Thread_Pool_Reactor_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Thread_Pool_Reactor_Test.cpp
+
+!IF  "$(CFG)" == "Thread_Pool_Reactor_Test - Win32 Debug"
+
+DEP_CPP_THREAD_P=\
+	"..\ace/Acceptor.cpp"\
+	"..\ace/Acceptor.h"\
+	"..\ace/Acceptor.i"\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Addr.h"\
+	"..\ace/Addr.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
+	"..\ace/Dynamic.h"\
+	"..\ace/Dynamic.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/INET_Addr.h"\
+	"..\ace/INET_Addr.i"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/IPC_SAP.h"\
+	"..\ace/IPC_SAP.i"\
+	"..\ace/Local_Tokens.h"\
+	"..\ace/Local_Tokens.i"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Map_Manager.cpp"\
+	"..\ace/Map_Manager.h"\
+	"..\ace/Map_Manager.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Select_Reactor.h"\
+	"..\ace/Select_Reactor.i"\
+	"..\ace/Select_Reactor_Base.h"\
+	"..\ace/Select_Reactor_Base.i"\
+	"..\ace/Select_Reactor_T.cpp"\
+	"..\ace/Select_Reactor_T.h"\
+	"..\ace/Select_Reactor_T.i"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SOCK.h"\
+	"..\ace/SOCK.i"\
+	"..\ace/SOCK_Acceptor.h"\
+	"..\ace/SOCK_Acceptor.i"\
+	"..\ace/SOCK_Connector.h"\
+	"..\ace/SOCK_Connector.i"\
+	"..\ace/SOCK_IO.h"\
+	"..\ace/SOCK_IO.i"\
+	"..\ace/SOCK_Stream.h"\
+	"..\ace/SOCK_Stream.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Svc_Handler.cpp"\
+	"..\ace/Svc_Handler.h"\
+	"..\ace/Svc_Handler.i"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Heap.h"\
+	"..\ace/Timer_Heap_T.cpp"\
+	"..\ace/Timer_Heap_T.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Token.h"\
+	"..\ace/Token.i"\
+	"..\ace/TP_Reactor.h"\
+	"..\ace/TP_Reactor.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	"..\tests/Thread_Pool_Reactor_Test.h"\
+	
+
+"$(INTDIR)\Thread_Pool_Reactor_Test.obj" : $(SOURCE) $(DEP_CPP_THREAD_P)\
+ "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "Upgradable_RW_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\Upgradable_RW_Test.cpp
+
+!IF  "$(CFG)" == "Upgradable_RW_Test - Win32 Debug"
+
+DEP_CPP_UPGRA=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Get_Opt.h"\
+	"..\ace/Get_Opt.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/High_Res_Timer.h"\
+	"..\ace/High_Res_Timer.i"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Profile_Timer.h"\
+	"..\ace/Profile_Timer.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Time_Value.h"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	".\Upgradable_RW_Test.h"\
+	
+
+"$(INTDIR)\Upgradable_RW_Test.obj" : $(SOURCE) $(DEP_CPP_UPGRA) "$(INTDIR)"
+
+
+!ENDIF 
+
+# End Source File
+# End Target
+################################################################################
+# Begin Target
+
+# Name "MT_Reactor_Timer_Test - Win32 Debug"
+################################################################################
+# Begin Source File
+
+SOURCE=.\MT_Reactor_Timer_Test.cpp
+DEP_CPP_MT_RE=\
+	"..\ace/ACE.h"\
+	"..\ace/ACE.i"\
+	"..\ace/Atomic_Op.i"\
+	"..\ace/Auto_Ptr.cpp"\
+	"..\ace/Auto_Ptr.h"\
+	"..\ace/Auto_Ptr.i"\
+	"..\ace/Basic_Types.h"\
+	"..\ace/Basic_Types.i"\
+	"..\ace/config-win32-borland.h"\
+	"..\ace/config-win32-common.h"\
+	"..\ace/config-win32.h"\
+	"..\ace/config-WinCE.h"\
+	"..\ace/config.h"\
+	"..\ace/Containers.h"\
+	"..\ace/Containers.i"\
+	"..\ace/Containers_T.cpp"\
+	"..\ace/Containers_T.h"\
+	"..\ace/Containers_T.i"\
+	"..\ace/Event_Handler.h"\
+	"..\ace/Event_Handler.i"\
+	"..\ace/Free_List.cpp"\
+	"..\ace/Free_List.h"\
+	"..\ace/Free_List.i"\
+	"..\ace/Handle_Set.h"\
+	"..\ace/Handle_Set.i"\
+	"..\ace/Hash_Map_Manager.cpp"\
+	"..\ace/Hash_Map_Manager.h"\
+	"..\ace/inc_user_config.h"\
+	"..\ace/IO_Cntl_Msg.h"\
+	"..\ace/iosfwd.h"\
+	"..\ace/Log_Msg.h"\
+	"..\ace/Log_Priority.h"\
+	"..\ace/Log_Record.h"\
+	"..\ace/Log_Record.i"\
+	"..\ace/Malloc.h"\
+	"..\ace/Malloc.i"\
+	"..\ace/Malloc_Base.h"\
+	"..\ace/Malloc_T.cpp"\
+	"..\ace/Malloc_T.h"\
+	"..\ace/Malloc_T.i"\
+	"..\ace/Managed_Object.cpp"\
+	"..\ace/Managed_Object.h"\
+	"..\ace/Managed_Object.i"\
+	"..\ace/Mem_Map.h"\
+	"..\ace/Mem_Map.i"\
+	"..\ace/Memory_Pool.h"\
+	"..\ace/Memory_Pool.i"\
+	"..\ace/Message_Block.h"\
+	"..\ace/Message_Block.i"\
+	"..\ace/Message_Block_T.cpp"\
+	"..\ace/Message_Block_T.h"\
+	"..\ace/Message_Block_T.i"\
+	"..\ace/Message_Queue.h"\
+	"..\ace/Message_Queue.i"\
+	"..\ace/Message_Queue_T.cpp"\
+	"..\ace/Message_Queue_T.h"\
+	"..\ace/Message_Queue_T.i"\
+	"..\ace/Module.cpp"\
+	"..\ace/Module.h"\
+	"..\ace/Module.i"\
+	"..\ace/Object_Manager.h"\
+	"..\ace/Object_Manager.i"\
+	"..\ace/OS.h"\
+	"..\ace/OS.i"\
+	"..\ace/Pipe.h"\
+	"..\ace/Pipe.i"\
+	"..\ace/Reactor.h"\
+	"..\ace/Reactor.i"\
+	"..\ace/Reactor_Impl.h"\
+	"..\ace/Service_Config.h"\
+	"..\ace/Service_Config.i"\
+	"..\ace/Service_Object.h"\
+	"..\ace/Service_Object.i"\
+	"..\ace/Service_Repository.h"\
+	"..\ace/Service_Repository.i"\
+	"..\ace/Service_Types.h"\
+	"..\ace/Service_Types.i"\
+	"..\ace/Shared_Object.h"\
+	"..\ace/Shared_Object.i"\
+	"..\ace/Signal.h"\
+	"..\ace/Signal.i"\
+	"..\ace/Singleton.cpp"\
+	"..\ace/Singleton.h"\
+	"..\ace/Singleton.i"\
+	"..\ace/SString.h"\
+	"..\ace/SString.i"\
+	"..\ace/Strategies.h"\
+	"..\ace/Strategies.i"\
+	"..\ace/Strategies_T.cpp"\
+	"..\ace/Strategies_T.h"\
+	"..\ace/Strategies_T.i"\
+	"..\ace/Stream_Modules.cpp"\
+	"..\ace/Stream_Modules.h"\
+	"..\ace/Stream_Modules.i"\
+	"..\ace/streams.h"\
+	"..\ace/SV_Semaphore_Complex.h"\
+	"..\ace/SV_Semaphore_Complex.i"\
+	"..\ace/SV_Semaphore_Simple.h"\
+	"..\ace/SV_Semaphore_Simple.i"\
+	"..\ace/Svc_Conf_Tokens.h"\
+	"..\ace/Synch.h"\
+	"..\ace/Synch.i"\
+	"..\ace/Synch_Options.h"\
+	"..\ace/Synch_Options.i"\
+	"..\ace/Synch_T.cpp"\
+	"..\ace/Synch_T.h"\
+	"..\ace/Synch_T.i"\
+	"..\ace/Task.h"\
+	"..\ace/Task.i"\
+	"..\ace/Task_T.cpp"\
+	"..\ace/Task_T.h"\
+	"..\ace/Task_T.i"\
+	"..\ace/Thread.h"\
+	"..\ace/Thread.i"\
+	"..\ace/Thread_Manager.h"\
+	"..\ace/Thread_Manager.i"\
+	"..\ace/Timer_Queue.h"\
+	"..\ace/Timer_Queue_T.cpp"\
+	"..\ace/Timer_Queue_T.h"\
+	"..\ace/Timer_Queue_T.i"\
+	"..\ace/Trace.h"\
+	"..\ace/WFMO_Reactor.h"\
+	"..\ace/WFMO_Reactor.i"\
+	"..\ace/ws2tcpip.h"\
+	"..\tests/test_config.h"\
+	".\MT_Reactor_Timer_Test.h"\
+	
+
+"$(INTDIR)\MT_Reactor_Timer_Test.obj" : $(SOURCE) $(DEP_CPP_MT_RE) "$(INTDIR)"
 
 
 # End Source File
