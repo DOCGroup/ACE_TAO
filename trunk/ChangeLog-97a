@@ -1,5 +1,7 @@
 Thu Jun 26 01:34:46 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
 
+	* performance-tests/Misc/misc.{mak,mdp}: Added makefile for NT.
+	
 	* ace/{FILE,DEV}.{h,i}: Added the disable(int signum) function to
  	  prevent NT from disabling a FILE/DEV using socket calls.
 
