@@ -302,6 +302,9 @@ public:
   int set (u_short port_number,
            ace_in_addr_t ip_addr,
            int encode = 1);
+  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
+  int set (const ace_sockaddr_in_t *,
+	   int len);
 #endif
 
   /**
@@ -312,10 +315,6 @@ public:
   int set (const char port_name[],
 	   ace_in_addr_t ip_addr,
            const char protocol[] = "tcp");
-
-  /// Creates an <ACE_INET_Addr> from a sockaddr_in structure.
-  int set (const ace_sockaddr_in_t *,
-	   int len);
 
 private:
   /// Underlying representation.
