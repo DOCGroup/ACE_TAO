@@ -900,6 +900,7 @@ CORBA::Boolean
 IR_Iterator::next_n (CORBA::ULong how_many,
                      ImplementationRepository::ServerInformationList_out server_list,
                      CORBA::Environment &ACE_TRY_ENV)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_NEW_THROW_EX (server_list,
                     ImplementationRepository::ServerInformationList (0),
@@ -949,5 +950,6 @@ IR_Iterator::next_n (CORBA::ULong how_many,
 // Destroys the iterator.
 
 void IR_Iterator::destroy (CORBA::Environment &ACE_TRY_ENV)
+   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 }
