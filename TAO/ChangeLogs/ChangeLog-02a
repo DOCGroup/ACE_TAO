@@ -1,3 +1,8 @@
+Fri Feb  4 00:22:51 2000  Pradeep Gore  <pradeep@danzon.cs.wustl.edu>
+
+	* docs/releasenotes/index.html:
+	  added a section for the Notification Service.
+
 Thu Feb  3 19:06:58 2000  Ossama Othman  <ossama@uci.edu>
 
 	* tests/DSI_Gateway/test_dsi.cpp (invoke):
