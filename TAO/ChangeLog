@@ -1,13 +1,19 @@
+Fri Feb 13 07:24:47 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/examples/RtEC/Schedule/RtEC_Schedule.mpc:
+
+          Inherit from rtoldevent to fix link errors.
+
 Thu Feb 12 23:39:44 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/SECIOP.idl:
+        * orbsvcs/orbsvcs/SECIOP.idl:
 
-	  Removed this unused file to avoid potential confusion.  It is a
-	  vestige of early TAO CORBA security service CVS commits.  The
-	  plan was to implement SECIOP very soon after the introduction of
-	  this file.  Due to time and resource constraints, and lack of
-	  funding, the SECIOP protocol was never implemented.  Thanks to
-	  Brian R. Mendel for pointing out this problem.
+          Removed this unused file to avoid potential confusion.  It is a
+          vestige of early TAO CORBA security service CVS commits.  The
+          plan was to implement SECIOP very soon after the introduction of
+          this file.  Due to time and resource constraints, and lack of
+          funding, the SECIOP protocol was never implemented.  Thanks to
+          Brian R. Mendel for pointing out this problem.
 
 Thu Feb 12 15:41:42 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
