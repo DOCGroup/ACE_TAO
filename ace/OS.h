@@ -264,7 +264,6 @@ class ACE_Timeout_Manager;
 #   elif defined(__rtems__)
 #     include "ace/os_include/os_fcntl.h"  // <sys/file.h>
 #     include "ace/os_include/sys/os_resource.h"
-#     include "ace/os_include/sys/os_fcntl.h"
 #     include "ace/os_include/sys/os_time.h"
 #     include "ace/os_include/sys/os_utsname.h"
 #     include "ace/os_include/sys/os_wait.h"
