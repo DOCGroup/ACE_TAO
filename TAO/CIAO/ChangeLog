@@ -1,3 +1,11 @@
+Wed Jun  2 10:31:27 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/tests/Config_Handlers/handler_test.mpb:
+	* DnC/Config_Handlers/Config_Handlers.mpc:
+	  Updated these two file to make it compile with working on the
+	  system like Debian or RedHat which have the pre-build binary
+	  installed instead of xerces source.
+
 Wed Jun  2 00:48:30 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/Config_Handlers/CAD_Handler.cpp:

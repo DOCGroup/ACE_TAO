@@ -4,7 +4,7 @@ project : taoexe, ciao_deployment_stub {   // , portableserver, typecodefactory 
   requires += dnc
   dynamicflags   = CONFIG_HANDLER_BUILD_DLL
   macros   += XML_USE_PTHREADS
-  includes += $(XERCESCROOT)/include $(ACE_ROOT)/TAO/CIAO/DnC
-  libpaths += $(XERCESCROOT)/lib // $(ACE_ROOT)/lib 
+  includes += $(XERCESCROOT)/include /usr/include $(ACE_ROOT)/TAO/CIAO/DnC
+  libpaths += $(XERCESCROOT)/lib /usr/lib // $(ACE_ROOT)/lib 
   libs     += xerces-c Config_Handlers // Deployment_stub Deployment_svnt
 }
