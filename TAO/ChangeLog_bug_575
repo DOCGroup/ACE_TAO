@@ -1,3 +1,9 @@
+Tue Jul  3 17:09:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Strategies/SHMIOP_Transport.cpp: Fixed a bug in
+	  consolidate_message (). The IDL_Cubit tests work fine with the
+	  SHMIOP & UIOP transports.
+
 Tue Jul  3 16:29:06 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/SHMIOP_Connection_Handler.cpp:
