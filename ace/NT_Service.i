@@ -1,6 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
+ACE_INLINE
 ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
                                 DWORD service_type,
                                 DWORD controls_mask) :
@@ -15,11 +16,12 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
   svc_status_.dwCheckPoint = 0;
 }
 
+ACE_INLINE
 ACE_NT_Service::~ACE_NT_Service (void)
 {
 }
 
-void
+ACE_INLINE void
 ACE_NT_Service::svc_handle(const SERVICE_STATUS_HANDLE new_svc_handle)
 {
   this->svc_handle_ = new_svc_handle;
