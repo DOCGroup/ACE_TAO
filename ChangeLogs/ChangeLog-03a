@@ -1,5 +1,9 @@
 Wed Apr 11 08:04:21 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
 
+	* include/makeinclude/platform_linux.GNU: By default, we build
+	  ACE+TAO with exceptions enabled on Linux.  Thanks to Craig
+ 	  Rodrigues <crodrigu@bbn.com> for motivating this change.
+
 	* ace/SString.i (operator+): Fixed an "inlined before use" warning.
 	  Thanks to Bala for reporting this.
 
