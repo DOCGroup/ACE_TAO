@@ -1,5 +1,7 @@
 $Id$
 
+@@ Michael, can you please give a brief overview of what this test "tests"?!
+
 Documentation for the Forwarding example.
 
 run it as follows:
@@ -8,7 +10,8 @@ server -o server1 -ORBport 10040 -ORBobjrefstyle url
 server -f server1 -o server2 -ORBport 10041 -ORBobjrefstyle url
 client -f server2 -i 5
 
-This will set up two servers, of which the second one is called first, for
-the first to calls, then a forwarding message is called on the first server.
-After that the last two calls are called on the first server.
+This will set up two servers, of which the second one is called first,
+for the first to calls, then a forwarding message is called on the
+first server.  After that the last two calls are called on the first
+server.
 

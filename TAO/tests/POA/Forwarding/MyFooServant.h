@@ -9,8 +9,7 @@
 //     Defines MyFooServant class for the Foo interface
 //
 // = AUTHOR
-//     Irfan Pyarali
-//     Michael Kircher
+//     Irfan Pyarali and Michael Kircher
 //
 //=============================================================================
 
@@ -22,7 +21,9 @@
 
 class MyFirstFooServant : public POA_Foo
 {
- public:
+  // = TITLE
+  // @@ Michael, please comment me.
+public:
   // constructor - takes a POA and a value parameter
   MyFirstFooServant (PortableServer::POA_ptr poa,
                      CORBA::Long value,
@@ -47,10 +48,11 @@ protected:
   CORBA::Object_var forward_to_;
 };
 
-
 class MySecondFooServant : public POA_Foo
 {
- public:
+  // = TITLE
+  // @@ Michael, please comment me.
+public:
   // constructor - takes a POA and a value parameter
   MySecondFooServant (MyFooServantLocator *locator,
                       CORBA::Long value);
