@@ -89,6 +89,17 @@ public:
   // Encodes the value into the undelying CDR stream based on the
   // TypeCode parameter.
 
+  void prepare_header (CORBA::Boolean is_roundtrip,
+              CORBA_Environment &ACE_TRY_ENV =
+                    TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
+  // Initialize the Request header.
+  // The <message_size> field of the GIOP header is left blank and
+  // must be filled later.
+  // The function only returns once a connection has been succesfully
+  // established *OR* all profiles have been tried.  In that case it
+  // raises the CORBA::TRANSIENT exception.
+
   IOP::ServiceContextList& service_info (void);
   // Accessor to the request ServiceContextList.  Only valid when
   // sending a request message.
@@ -104,12 +115,7 @@ protected:
                     TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
   // Establishes a connection to the remote server, initializes
-  // the GIOP and Request headers in the output CDR.
-  // The <message_size> field of the GIOP header is left blank and
-  // must be filled later.
-  // The function only returns once a connection has been succesfully
-  // established *OR* all profiles have been tried.  In that case it
-  // raises the CORBA::TRANSIENT exception.
+  // the GIOP headers in the output CDR.
 
   int invoke (CORBA::Boolean is_roundtrip,
               CORBA_Environment &ACE_TRY_ENV =
