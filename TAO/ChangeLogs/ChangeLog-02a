@@ -1,3 +1,26 @@
+Sat Feb 17 19:21:54 2001  Darrell Brunsch <brunsch@uci.edu>
+
+        * orbsvcs/tests/Notify/Basic/Basic.dsw:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsw:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsw:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsw:
+
+          Added workspaces for these directories to make it easier to
+          compile each of these directories separately.
+
+        * orbsvcs/tests/Notify/Basic/AdminProperties_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/ConnectDisconnect.dsp:
+        * orbsvcs/tests/Notify/Basic/Events_Test.dsp:
+        * orbsvcs/tests/Notify/Basic/IdAssignment.dsp:
+        * orbsvcs/tests/Notify/Basic/LifeCycleTest.dsp:
+        * orbsvcs/tests/Notify/Basic/Simple.dsp:
+        * orbsvcs/tests/Notify/Basic/Updates.dsp:
+        * orbsvcs/tests/Notify/lib/TAO_NotifyTests.dsp:
+        * orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen.dsp:
+        * orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.dsp:
+
+          Fixed the multiple problems in these project files.
+
 Sat Feb 17 13:39:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Single_Read/test_i.cpp: Added a sleep between incoming
