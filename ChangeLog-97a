@@ -1,3 +1,9 @@
+Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/OS.i and OS.cpp: uninlined functions that use varargs, because
+	  they usually won't get inlined anyways.
+
+
 Fri Jan 17 01:16:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/OS.h: Added an equivalent set of
@@ -30,24 +36,24 @@ Thu Jan 16 17:03:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 Thu Jan 16 15:51:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* Dump.cpp (register_object): initialized "slot" so that g++ doesn't
-	  complain about uninitialized use
+	  complain about uninitialized use.
 
 	* Reactor.cpp (initialized): use ACE_GUARD_RETURN instead of
 	  ACE_GUARD because the function returns a value;
 	  (find): initialize "i" if handle is out of range so that g++
-	  doesn't complain about uninitialized use
+	  doesn't complain about uninitialized use.
 
-	* Service_Repository.cpp (remove): removed unused variable "handle"
+	* Service_Repository.cpp (remove): removed unused variable "handle".
 
 	* Thread_Manager.h: made destructor virtual now that spawn_i () is
-	  virtual
+	  virtual.
 
 	* Timer_Heap.cpp: changed some int loop indicies to size_t to
-	  make sure that comparisons are consistently signed or unsigned
+	  make sure that comparisons are consistently signed or unsigned.
 
 	* OS.h, config-vxworks*.h: removed ACE_HAS_GREENHILLS_SOCKETS
 	  ACE macro because the code it wrapped applies to all VxWorks
-	  compilers, not just GreenHills
+	  compilers, not just GreenHills.
 
 Wed Jan 15 02:06:21 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
