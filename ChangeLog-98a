@@ -1,3 +1,9 @@
+Sun Apr 12 11:51:46 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (thr_create):
+	* ace/Thread_Manager.cpp (spawn_i): Removed directive
+	  ACE_NO_THREAD_ADAPTER and its related code.
+
 Sat Apr 11 22:20:51 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/Thread_Manager_Test.cpp (main): Don't check execute result
@@ -36,7 +42,7 @@ Sat Apr 11 12:46:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 Fri Apr 10 02:42:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Log_Msg.{h,cpp} (log_hexdump): 
+	* ace/Log_Msg.{h,cpp} (log_hexdump):
 	* ace/ACE.{h,cpp} (format_hexdump): The buffer to be hex-dumped should
 	  always be of type (const char *) no matter we have UNICODE
  	  system strings or not.
@@ -54,7 +60,7 @@ Fri Apr 10 02:42:35 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 	  windows messages.
 
 	* ace/Log_Msg.cpp (log): Specialized CE support.
-	  
+
 	* windoezCE: The template windows program that receives ACE
 	  messages.  See CE-Status or README file for more info.
 
@@ -79,7 +85,7 @@ Fri Apr 10 00:04:03 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	  Changed the timer mechanism to use this new method rather than
  	  posting to the completion port directly.
-	
+
   	  Thanks to Jason Katz <Jason@rtswireless.com> for the
  	  improvements.
 
