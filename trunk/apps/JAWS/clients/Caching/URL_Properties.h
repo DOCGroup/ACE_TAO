@@ -117,17 +117,20 @@ public:
   int operator!= (const ACE_URL_Offer &rhs) const;
   // Inequality operator.
 
-  const char *url (void) const;
+  ACE_WString *url_rep (void);
+  const ACE_WString *url (void) const;
   // Get URL string.
 
   void url (const char *url);
+  void url (const ACE_USHORT16 *url);
   // Set URL.
 
   ACE_URL_Property_Seq &url_properties (void);
   // Get properties of this offer.
   
   void url_properties (const ACE_URL_Property_Seq &prop);
-  // Set properties of this offer.
+  // Set properties of this offer.  This operation
+  // virtually get a copy of the passed in prop.
 
   // Some helper functions for encoding and decoding.
   size_t bsize (void) const;
@@ -144,13 +147,16 @@ public:
   // Dump this object for debug.
 
 protected:
-  char *url_;
+  ACE_WString *url_;
   // URL of this offer.
 
   ACE_URL_Property_Seq prop_;
   // Properties associate with this offer.
 
 private:
+  static char NULL_STRING;
+  // A constant null string.
+
   //  ACE_UNIMPLEMENTED_FUNC (ACE_URL_Offer (void))
   // Do not allow access to default constructor
 };

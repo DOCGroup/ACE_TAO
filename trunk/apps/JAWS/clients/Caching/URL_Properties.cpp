@@ -14,6 +14,8 @@
 #include "ace/OS.h"
 #include "ace/Auto_Ptr.h"
 
+char ACE_URL_Offer::NULL_STRING = '\0';
+
 template <class T>
 size_t ace_array_bsize (T &x)
 {
@@ -45,13 +47,10 @@ void ace_array_decode (void *buf, T &x)
     }
 }
 
-void wstring_dump (const char *n, ACE_WString *wstr)
+ACE_URL_Property::~ACE_URL_Property (void)
 {
-  if (wstr == 0)
-    ACE_DEBUG ((LM_DEBUG, "%s: %x\n", n, wstr));
-  else
-    ACE_DEBUG ((LM_DEBUG, "%s: %x  (\"%s\")\n", n, wstr,
-		ACE_Auto_Basic_Array_Ptr<char> (wstr->char_rep ()).get ()));
+  delete this->name_;
+  delete this->value_;
 }
 
 void
@@ -88,15 +87,27 @@ void
 ACE_URL_Property::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  wstring_dump ("\n   name_", this->name_);
-  wstring_dump ("  value_", this->value_);
+  if (this->name_->length () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n", 
+		  ACE_Auto_Basic_Array_Ptr<char> (this->name_->char_rep ()).get ()));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG, "\n   name_:  \"\"\n"));
+  if (this->value_->length () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
+		  ACE_Auto_Basic_Array_Ptr<char> (this->value_->char_rep ()).get ()));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG, "   value_:  \"\"\n"));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
 size_t
 ACE_URL_Offer::bsize (void) const
 {
-  size_t sum = ACE_OS::strlen (this->url_) + 1;
+  size_t sum = (this->url_->length () + 1) * sizeof (ACE_USHORT16);
   sum += ::ace_array_bsize (this->prop_);
   return sum;
 }
@@ -107,9 +118,13 @@ ACE_URL_Offer::encode (void *buf) const
   ACE_UINT32 *s_buf = (ACE_UINT32 *) buf;
   *s_buf = htonl (this->prop_.size ());
 
-  size_t len = ACE_OS::strlen (this->url_) + 1;
-  ACE_OS::memcpy ((void *) ((char *) buf + sizeof (ACE_UINT32)),
-		  this->url_, len);
+  size_t len = (this->url_->length () + 1) * sizeof (ACE_USHORT16);
+  ACE_USHORT16 *w_buf = (ACE_USHORT16 *) ((char *) buf + sizeof (ACE_UINT32));
+
+  ACE_OS::memcpy ((void *) w_buf,
+		  this->url_->fast_rep (), len);
+  for (int i = 0; w_buf[i] != 0; i++)
+    w_buf[i] = htons (w_buf[i]);
 
   len += sizeof (ACE_UINT32);
   ::ace_array_encode ((void *) ((char *) buf + len), this->prop_);
@@ -119,15 +134,17 @@ ACE_URL_Offer *
 ACE_URL_Offer::decode (void *buf)
 {
   size_t a_size = (size_t) ntohl ((ACE_UINT32 *) buf);
-  this->url ((const char *) buf + sizeof (ACE_UINT32));
+  ACE_USHORT16 *url = (ACE_USHORT16 *) ((char *) buf + sizeof (ACE_UINT32));
+  for (int i = 0; url[i] != 0; i++)
+    url[i] = ntohs (url[i]);
+  this->url (url);
 
   ACE_URL_Property_Seq prop_seq (a_size);
   this->url_properties (prop_seq);
-  // Set this property array to correct size.
   
-  ::ace_array_decode ((void *)((char *) buf + ACE_OS::strlen (this->url ())
-			       + 1 + sizeof (ACE_UINT32)),
-		      this->prop_);
+  ::ace_array_decode ((void *)((char *) buf + (this->url_->length () + 1) *
+			       sizeof (ACE_USHORT16) + sizeof (ACE_UINT32)),
+ 		      this->prop_);
   return this;
 }
 
@@ -135,10 +152,37 @@ void
 ACE_URL_Offer::dump (void) const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACE_DEBUG ((LM_DEBUG, "\n URL: %s\n", this->url_));
+  if (this->url_->length () > 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n", 
+		  ACE_Auto_Basic_Array_Ptr<char> (this->url_->char_rep ()).get ()));
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
   for (int i = 0; i < this->prop_.size (); i++)
     this->prop_[i].dump ();
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class ACE_Auto_Basic_Array_Ptr<char>;
+template class ACE_Array<ACE_URL_Property>;
+template class ACE_Array<ACE_URL_Offer>;
+template size_t ace_array_bsize (ACE_Array<ACE_URL_Property> &);
+template void  ace_array_encode (void *, ACE_Array<ACE_URL_Property> &);
+template void  ace_array_decode (void *, ACE_Array<ACE_URL_Property> &);
+template size_t ace_array_bsize (ACE_Array<ACE_URL_Offer> &);
+template void  ace_array_encode (void *, ACE_Array<ACE_URL_Offer> &);
+template void  ace_array_decode (void *, ACE_Array<ACE_URL_Offer> &);
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate ACE_Auto_Basic_Array_Ptr<char>
+#pragma instantiate ACE_Array<ACE_URL_Property>
+#pragma instantiate ACE_Array<ACE_URL_Offer>
+#pragma instantiate size_t ace_array_bsize (ACE_Array<ACE_URL_Property> &)
+#pragma instantiate void  ace_array_encode (void *, ACE_Array<ACE_URL_Property> &)
+#pragma instantiate void  ace_array_decode (void *, ACE_Array<ACE_URL_Property> &)
+#pragma instantiate size_t ace_array_bsize (ACE_Array<ACE_URL_Offer> &)
+#pragma instantiate void  ace_array_encode (void *, ACE_Array<ACE_URL_Offer> &)
+#pragma instantiate void  ace_array_decode (void *, ACE_Array<ACE_URL_Offer> &)
+#endif /*ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 #endif /* ACE_URL_PROPERTIES_C */
