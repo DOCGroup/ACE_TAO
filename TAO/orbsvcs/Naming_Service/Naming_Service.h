@@ -87,6 +87,9 @@ protected:
   size_t time_;
   // After how long the server should stop listening to requests (in
   // seconds).
+
+  int multicast_;
+  // If not zero multicast is enabled.
 };
 
 #endif /* TAO_NAMING_SERVICE_H */
