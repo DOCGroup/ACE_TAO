@@ -55,7 +55,7 @@ typedef TAO_NS_Supplier_T<TAO_NS_StructuredPushSupplier_Traits> TAO_NS_Structure
 /**
  * @class TAO_NS_StructuredPushSupplier
  *
- * @brief
+ * @brief StructuredPushSupplier Implementation.
  *
  */
 class TAO_NOTIFY_TEST_Export TAO_NS_StructuredPushSupplier : public TAO_NS_StructuredPushSupplier_Base

@@ -55,7 +55,7 @@ typedef TAO_NS_Consumer_T<TAO_NS_StructuredPushConsumer_Traits> TAO_NS_Structure
 /**
  * @class TAO_NS_StructuredPushConsumer
  *
- * @brief
+ * @brief StructuredPushConsumer Implementation.
  *
  */
 class TAO_NOTIFY_TEST_Export TAO_NS_StructuredPushConsumer : public TAO_NS_StructuredPushConsumer_Base

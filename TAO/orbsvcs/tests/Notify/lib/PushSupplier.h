@@ -55,7 +55,7 @@ typedef TAO_NS_Supplier_T<TAO_NS_PushSupplier_Traits> TAO_NS_PushSupplier_Base;
 /**
  * @class TAO_NS_PushSupplier
  *
- * @brief
+ * @brief PushSupplier Implementation.
  *
  */
 class TAO_NOTIFY_TEST_Export TAO_NS_PushSupplier : public TAO_NS_PushSupplier_Base

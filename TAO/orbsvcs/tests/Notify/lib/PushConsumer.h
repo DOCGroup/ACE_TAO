@@ -55,7 +55,7 @@ typedef TAO_NS_Consumer_T<TAO_NS_PushConsumer_Traits> TAO_NS_PushConsumer_Base;
 /**
  * @class TAO_NS_PushConsumer
  *
- * @brief
+ * @brief PushConsumer implementation.
  *
  */
 class TAO_NOTIFY_TEST_Export TAO_NS_PushConsumer : public TAO_NS_PushConsumer_Base

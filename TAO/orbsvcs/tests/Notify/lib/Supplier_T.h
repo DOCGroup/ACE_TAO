@@ -40,7 +40,7 @@ class TAO_NS_SupplierAdmin_Ext_Traits
 /**
  * @class TAO_NS_Supplier_T
  *
- * @brief
+ * @brief Base template to implement Suppliers.
  *
  */
 template <class Supplier_Traits>
