@@ -17,10 +17,15 @@ namespace TAO
 {
   FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor (void)
     : name_ ("TAO_FT_ClientRequest_Interceptor")
-      , uuid_ (ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ())
+      , uuid_ (0)
       , lock_ (0)
       , retention_id_ (0)
   {
+    ACE_Utils::UUID_GENERATOR::instance ()->init ();
+
+    this->uuid_ =
+      ACE_Utils::UUID_GENERATOR::instance ()->generateUUID ();
+
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<ACE_SYNCH_MUTEX>);

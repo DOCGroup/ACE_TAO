@@ -1,3 +1,10 @@
+Sun Sep 28 11:01:59 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:  
+
+	  Initialized the UUID generator before generating an UUID for the
+	  interceptor. 
+
 Thu Sep 25 23:15:06 2003  George Edwards <g.edwards@vanderbilt.edu>
 
         * tests/OBV/Supports/Supports_Test_impl.cpp:
