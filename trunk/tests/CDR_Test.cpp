@@ -1,5 +1,5 @@
 // $Id$
-//
+
 // ============================================================================
 //
 // = LIBRARY
@@ -12,8 +12,8 @@
 //    Checks the functionality of the ACE CDR streams.
 //
 // = AUTHORS
-//    Istvan Buki
-//    Jeff Parsons
+//    Istvan Buki <istvan.buki@euronet.be> and 
+//    Jeff Parsons <parsons@cs.wustl.edu>
 //
 // ============================================================================
 
@@ -38,7 +38,8 @@ struct CDR_Test_Types
   const char *str;
   double d;
 
-  enum {
+  enum 
+  {
     ARRAY_SIZE = 10
   };
 
@@ -46,16 +47,21 @@ struct CDR_Test_Types
 };
 
 CDR_Test_Types::CDR_Test_Types (void)
-  : o (1), s (2), l (4), str ("abc"), d (8)
+  : o (1),
+    s (2),
+    l (4),
+    str ("abc"),
+    d (8)
 {
-  for (int i = 0; i < CDR_Test_Types::ARRAY_SIZE; ++i)
-    {
-      a[i] = i;
-    }
+  for (int i = 0;
+       i < CDR_Test_Types::ARRAY_SIZE;
+       ++i)
+    a[i] = i;
 }
 
 static int
-test_put (ACE_OutputCDR &cdr, CDR_Test_Types &test_types)
+test_put (ACE_OutputCDR &cdr,
+          CDR_Test_Types &test_types)
 {
   for (int i = 0; i < n; ++i)
     {
@@ -171,29 +177,29 @@ test_get (ACE_InputCDR &cdr, const CDR_Test_Types &test_types)
 }
 
 static int
-short_stream (void )
+short_stream (void)
 {
   // counter
-  unsigned int i;
+  u_int i;
 
   // Build an output stream
   ACE_OutputCDR os;
 
   // Basic types for output
-  char            ch  = 'A';
+  char ch = 'A';
   ACE_CString str ("Test String");
-  short           s   = -123;
-  unsigned short  us  =  123;
-  long            l   = -65800L;
-  unsigned long   ul  =  65800UL;
-  float           f   =  1.23f;
-  double          d   =  123.456789;
+  short s = -123;
+  u_short us =  123;
+  long l = -65800L;
+  u_long ul =  65800UL;
+  float f =  1.23f;
+  double d =  123.456789;
 
   // Arrays for output
-  short     s_array[3] = { -1, 0, 1 };
-  long      l_array[3] = { -345678, 0, 345678 };
-  float     f_array[3] = { -1.23f, 0.0f, 1.23f };
-  double    d_array[3] = { -123.456789, 0.0, 123.456789 };
+  short s_array[3] = { -1, 0, 1 };
+  long l_array[3] = { -345678, 0, 345678 };
+  float f_array[3] = { -1.23f, 0.0f, 1.23f };
+  double d_array[3] = { -123.456789, 0.0, 123.456789 };
 
   ACE_OutputCDR::from_char fc (ch);
   os << fc;
@@ -210,7 +216,7 @@ short_stream (void )
   os.write_double_array (d_array, 3);
 
   const ACE_Message_Block *out_mb = os.begin ();
-  unsigned int len = out_mb->length ();
+  u_int len = out_mb->length ();
 
   // Create an input stream (copy constructor)
   ACE_InputCDR is (os);
@@ -236,20 +242,20 @@ short_stream (void )
     }
 
   // Basic types for input
-  char            ch1 = '\0';
-  ACE_CString     str1;
-  short           s1 = 0;
-  unsigned short  us1 = 0;
-  long            l1 = 0L;
-  unsigned long   ul1 = 0UL;
-  float           f1 = 0.0f;
-  double          d1 = 0.0;
+  char ch1 = '\0';
+  ACE_CString str1;
+  short s1 = 0;
+  u_short us1 = 0;
+  long l1 = 0L;
+  u_long ul1 = 0UL;
+  float f1 = 0.0f;
+  double d1 = 0.0;
   
   // Arrays for input
-  short     s_array1[3];
-  long      l_array1[3];
-  float     f_array1[3];
-  double    d_array1[3];
+  short s_array1[3];
+  long l_array1[3];
+  float f_array1[3];
+  double d_array1[3];
 
   ACE_DEBUG ((LM_DEBUG,
               "Checking operators and arrays\n\n"));
@@ -388,9 +394,7 @@ main (int argc, char *argv[])
               "Testing ACE CDR functions - short stream\n\n"));
 
   if (short_stream () != 0 )
-    {
-      return 1;
-    }
+    return 1;
 
   ACE_DEBUG ((LM_DEBUG,
               "Short stream - no errors\n\n"
@@ -402,22 +406,25 @@ main (int argc, char *argv[])
       CDR_Test_Types test_types;
 	  
       if (test_put (output, test_types) != 0)
-	{
-	  return 1;
-        }
+        return 1;
+
       ACE_InputCDR input (output);
       if (debug > 0)
 	{
-	  ACE_DEBUG ((LM_DEBUG, "Output CDR: \n"));
-	  ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
-	  ACE_DEBUG ((LM_DEBUG, "Input CDR: \n"));
-	  ACE_HEX_DUMP ((LM_DEBUG, input.rd_ptr(), 64));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "Output CDR: \n"));
+	  ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
+	  ACE_DEBUG ((LM_DEBUG,
+                      "Input CDR: \n"));
+	  ACE_HEX_DUMP ((LM_DEBUG,
+                         input.rd_ptr(),
+                         64));
 	}
 
       if (test_get (input, test_types) != 0)
-	{
-	  return 1;
-	}
+        return 1;
     }
       
   ACE_DEBUG ((LM_DEBUG,
