@@ -37,7 +37,7 @@ main (int, char *[])
   ACE_OS::unlink (ACE_DEFAULT_BACKING_STORE);
 
   ACE_Process_Options server_options;
-  server_options.command_line ("./server");
+  server_options.command_line ("./server -ORBport 0 -ORBobjrefstyle url");
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
@@ -53,7 +53,7 @@ main (int, char *[])
   ACE_OS::sleep (5);
 
   ACE_Process_Options clerk_options;
-  clerk_options.command_line ("./client");
+  clerk_options.command_line ("./client -ORBport 0 -ORBobjrefstyle url");
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)
