@@ -75,6 +75,9 @@ TAO/orbsvcs/tests/Event/Performance/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_Custom_Marshal/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_Throughput/run_test.pl: !ST !MINIMUM
 TAO/orbsvcs/tests/EC_MT_Mcast/run_test.pl:!ST !MINIMUM !STATIC
+TAO/orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:!MINIMUM
+TAO/orbsvcs/tests/FaultTolerance/IOGR/run_test.pl:!MINIMUM
+TAO/orbsvcs/tests/FaultTolerance/IOGRManipulation/run_test.pl:!MINIMUM
 TAO/orbsvcs/tests/ImplRepo/run_test.pl: !MINIMUM
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: SANDBOX
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM
