@@ -20,13 +20,16 @@ foreach my $process (qw(unbounded_value_sequence_ut
                         Bounded_Simple_Types
                         Unbounded_String)) {
 
-  # Not all the binaries are generated in all configurations.
-  next unless -x $process;
 
-  print "Running $process ...";
   my $P = new PerlACE::Process ($process,
                                 '--log_level=nothing '
                                 .'--report_level=no');
+  my $executable = $P->Executable;
+
+  # Not all the binaries are generated in all configurations.
+  next unless -x $executable;
+
+  print "Running $process ...";
   my $result = $P->SpawnWaitKill(30);
   if ($result != -1) {
     print "SUCCESS\n";

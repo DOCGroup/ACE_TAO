@@ -1,3 +1,10 @@
+Fri Sep 24 12:39:19 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tests/Sequence_Unit_Tests/run_test.pl:
+        
+          Replacement script supplied by Carlos O'Ryan that handles
+          the Windows executable file extensions.
+
 Fri Sep 24 12:28:04 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* tests/Sequence_Unit_Tests/string_sequence_element.hpp:
