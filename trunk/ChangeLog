@@ -1,3 +1,12 @@
+Sun Jul 11 10:52:06 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/SOCK_Acceptor.cpp (shared_open): ACE_SOCK_Acceptor::shared_open()
+	  was binding its passive-mode socket to INADDR_ANY whenever a
+ 	  wildcard is specified for the port.  Fixed this so that it uses
+ 	  whatever the actual address is (which could very well still be
+ 	  INADDR_ANY).  Thanks to Kobi Cohen-Arazi <kcarazi@finjan.com>
+ 	  and Ed Mulholland <emulholl@atl.lmco.com> for this solution.
+
 Sun Jul 11 06:33:12 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
