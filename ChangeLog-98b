@@ -27,6 +27,13 @@ Tue Nov 24 09:34:58 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/OS.h: replaced ENOTSUP with EDEADLK in a comment,
           to fix a copy-and-paste error.
 
+        * ace/Stats.* (mean): removed caching.  It didn't account for
+          the fact that it could be called with different scale
+          factors.  (std_dev): fixed sum_of_squares calculation to
+          always use 64-bit arithmetic.  (print_summary): if the
+          std dev calculation overflows, retry with smaller scale
+          factor, until 0 is reached.
+
 Mon Nov 24 03:30:36 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/DLL_Wrapper_Test.cpp: Added a test example for the DLL
