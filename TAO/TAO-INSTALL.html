@@ -80,14 +80,12 @@ GNU Make can be obtained from various places in source form. <P>
 
 <H3>On Windows NT</H3>
 
-To compile <CODE>TAO_IDL</CODE> on NT, you may need to set the
-environment variable <CODE>CPP_PATH</CODE> to where CL.exe is
-installed on your machine.  By default, we set this variable to
-"C:/Program Files/DevStudio/VC/bin".  Your location may vary, however.
-Notice that if you forget to set this variable before compiling
-<CODE>TAO_IDL</CODE>, you can use <CODE>CPP_LOCATION</CODE> to specify
-the absolute pathname to CL.exe. We set it to "C:/Program
-Files/DevStudio/VC/bin/CL.exe" when we do use it.<P>
+<P><CODE>TAO_IDL</CODE> on NT will look for the Microsoft Visual C++ 
+compiler as "C:\Program Files\DevStudio\VC\bin\CL.EXE".  If this 
+compiler is located elsewhere (or if using a different compiler)
+add a variable CPP_LOCATION to your environment.  This variable will
+override the default.
+</P>
 
 Remember to <a href="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE-INSTALL.html">set 
 up ACE</A> before building TAO.

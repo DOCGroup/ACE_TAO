@@ -1,11 +1,11 @@
 Thu Jun 25 11:57:27 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp
-	(visit_union): We were "memset"ing the return value to 0. In our
-	changed scenario where the Union class now derives from a base
-	class, this memsetting results in the vptr becoming 0. This was
-	causing seg faults. Thanks to Carlos for his help in the debugging
-	efforts.
+	  (visit_union): We were "memset"ing the return value to 0. In our
+	  changed scenario where the Union class now derives from a base
+	  class, this memsetting results in the vptr becoming 0. This was
+	  causing seg faults. Thanks to Carlos for his help in the debugging
+	  efforts.
 
 Thu Jun 25 11:18:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -13,6 +13,9 @@ Thu Jun 25 11:18:32 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 	  The location now defaults to "C:\Program Files\DevStudio\bin\cl.exe".
 	  If this is not the case, then use the environment variable
 	  CPP_LOCATION to override it.
+
+	* TAO-INSTALL.html:  Changed the paragraph that talked about
+	  CPP_PATH to mention the default and CPP_LOCATION.
 
 Thu Jun 25 10:53:12 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
