@@ -34,6 +34,9 @@ PLATFORM_GL_CPPFLAGS=
 PLATFORM_GL_LIBS=-lMesaGL
 PLATFORM_GL_LDFLAGS=
 
+PLATFORM_AIO_SUPPORT = \
+  $(shell test -e /usr/lib/librt.so && echo -DACE_HAS_AIO_CALLS)
+
 ifeq ($(NO_IMPLICIT_TEMPLATES),)
       NO_IMPLICIT_TEMPLATES = -fno-implicit-templates
 endif
@@ -41,7 +44,8 @@ endif
 CC      = gcc
 CXX     = g++
 CFLAGS  += -Wall -pipe \
-           -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
+           -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT \
+           $(PLATFORM_AIO_SUPPORT)
 CCFLAGS += $(CFLAGS) $(NO_IMPLICIT_TEMPLATES)
 DCFLAGS += -g
 DLD     = $(CXX)
