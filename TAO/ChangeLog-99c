@@ -1,8 +1,23 @@
+Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
+  
+	* TAO/orbsvcs/orbsvcs/: Modified Makefile.bor to include new
+	  source files, and to ensure tao_idl is executed for all .idl
+ 	  files before compiling any .cpp files. This change should also
+ 	  make it easier to keep the makefile up to date.
+
+	  [ Note that the tao_idl flag "-I..\..\tao" added in the last
+ 	  release has been removed. After further discussions with Mike
+ 	  Gingell it was determined that the cause of the problem was
+ 	  actually an incorrect TAO_ROOT environment variable. Fixing this
+ 	  removed the need for the extra flag. ]
+
+        * TAO/tao: Added files ImplRepo[CS].cpp to Makefile.bor.
+  
 Thu Dec 23 12:06:42 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* utils/NamingViewer/StdAfx.h: Moved the inclusion of corba.h.
 	  ACE headers must come first to avoid conflicts among MFC and
-	  non-MFC windows header files.
+ 	  non-MFC windows header files.
 
 	  Added macro check against ACE's MFC support.
 

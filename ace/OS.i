@@ -89,10 +89,6 @@ extern "C" void * _dlsym (void *, const char *);
 # include /**/ <sysent.h>
 #endif /* ACE_HAS_SYSENT_H_*/
 
-#if defined (ACE_HAS_SYS_FILIO_H)
-# include /**/ <sys/filio.h>
-#endif /* ACE_HAS_SYS_FILIO_H */
-
 #if defined (ACE_HAS_SVR4_GETTIMEOFDAY)
 # if !defined (m88k) && !defined (SCO)
 extern "C" int gettimeofday (struct timeval *tp, void * = 0);

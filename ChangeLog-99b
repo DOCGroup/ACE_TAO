@@ -1,3 +1,33 @@
+Thu Dec 23 12:16:38 1999  Christopher Kohlhoff <chris@kohlhoff.com>
+  
+        * ace: Added missing files Capabilities.cpp and Configuration.cpp
+	  to $ACE_ROOT/ace/Makefile.bor.
+
+	* ACE/tests: Added new tests Auto_IncDec_Test and
+	  Capabilities_test to Makefile.bor.
+
+	* ACE/tests: Fixed syntax error in a Borland C++Builder specific
+	  section of Auto_IncDec_Test.cpp.
+
+        * ACE/tests: Fixed Malloc_Test so that it does not fail with
+	  Borland C++Builder. 
+
+	* ACE/tests/ Changed run_tests.bat so that it does not invoke
+	  ACE_Init_Test when run with the "bor" command line
+ 	  argument. This test uses MFC and need not be built or run.
+	
+Thu Dec 23 11:46:38 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>  
+
+	* ace/OS.h: Moved
+  
+          #if defined (ACE_HAS_SYS_FILIO_H)
+	  # include /**/ <sys/filio.h>
+	  #endif /* ACE_HAS_SYS_FILIO_H */
+
+	  from OS.i to OS.h so that the FIONREAD macro will be defined for
+ 	  the ACE_SOCK_Dgram::recv() method even if inline = 0.  Thanks to
+ 	  Alain Sauron <sauron@syseca.thomson-csf.com> for reporting this.
+
 Wed Dec 22 11:29:43 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* bin/auto_compile_win32.pl: Renamed ImplRepo.dsw to
