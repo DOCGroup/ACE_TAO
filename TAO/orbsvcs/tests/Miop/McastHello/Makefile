@@ -246,9 +246,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  TestC.i \
-  $(ACE_ROOT)/ace/Get_Opt.h \
+  TestC.i $(ACE_ROOT)/ace/Get_Opt.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
@@ -260,8 +261,7 @@ realclean: clean
   $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/server.o .obj/server.so .shobj/server.o .shobj/server.so: server.cpp McastHello.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TestS.h TestC.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -453,6 +453,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -479,19 +481,10 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(ACE_ROOT)/ace/Get_Opt.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroup/portablegroup_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/tao/GIOPC.h \
-  $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/PortableGroupC.i
+  $(ACE_ROOT)/ace/Get_Opt.i
 
 .obj/McastHello.o .obj/McastHello.so .shobj/McastHello.o .shobj/McastHello.so: McastHello.cpp McastHello.h \
-  $(ACE_ROOT)/ace/pre.h \
-  TestS.h TestC.h \
+  $(ACE_ROOT)/ace/pre.h TestS.h TestC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -683,6 +676,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -894,9 +889,10 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  TestC.i \
-  $(TAO_ROOT)/tao/Stub.h \
+  TestC.i $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
   $(TAO_ROOT)/tao/MProfile.h \
@@ -1199,6 +1195,8 @@ realclean: clean
   $(TAO_ROOT)/tao/PollableC.h \
   $(TAO_ROOT)/tao/PollableC.i \
   $(TAO_ROOT)/tao/MessagingC.i \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
+  $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   TestC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
@@ -1270,7 +1268,7 @@ realclean: clean
   $(TAO_ROOT)/tao/Adapter.h \
   $(TAO_ROOT)/tao/Adapter.i \
   $(TAO_ROOT)/tao/PortableServer/Default_Policy_Validator.h \
-  $(TAO_ROOT)/tao/PortableServer/Policy_Validator.h \
+  $(TAO_ROOT)/tao/Policy_Validator.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policy_Set.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policies.h \
   $(TAO_ROOT)/tao/PortableServer/POA_Policies.i \

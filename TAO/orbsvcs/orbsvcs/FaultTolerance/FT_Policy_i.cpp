@@ -199,6 +199,7 @@ TAO_FT_Heart_Beat_Enabled_Policy::heartbeat_enabled_policy_value (
 CORBA::Policy_ptr
 TAO_FT_Heart_Beat_Enabled_Policy::create (const CORBA::Any& val
                                           TAO_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::Boolean value;
 
