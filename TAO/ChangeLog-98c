@@ -1,3 +1,9 @@
+Fri Apr  3 17:15:22 1998  Steve Huston  <shuston@riverace.com>
+
+	* TAO_IDL/Makefile: The sources that go into the compiler are
+	  listed in SRC, not LSRC.  This matches a change in ACE's
+	  include/makeinclude/rules.bin.GNU.
+
 Fri Apr  3 17:07:18 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
 
 	* tao/TAO_Internal.cpp (FAKE_SVC_ENTRY): 	
