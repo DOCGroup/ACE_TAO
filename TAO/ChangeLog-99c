@@ -1,3 +1,12 @@
+Mon Sep 13 17:51:26 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* $ACE_ROOT/bin/run_all_list.pm: The following were removed from
+	  the run list because they do not compile with minimum CORBA:
+
+	  - TAO/examples/POA/FindPOA
+	  - TAO/examples/POA/NewPOA
+	  - TAO/performance-tests/Latency
+
 Mon Sep 13 15:31:40 1999  Luther J Baker  <ljb1@cs.wustl.edu>
 
 	* tao/ORB_Core.cpp (init): Update method to use the new
