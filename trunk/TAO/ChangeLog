@@ -1,3 +1,10 @@
+Fri Nov  1 19:12:49 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tao/Makefile.dirs: Added tao/Utils directory to the list of
+	  directories. Need to add this directory for Win32 and
+	  Borland. Need to make sure that they are fine on one before
+	  propoagating things to others.
+
 Fri Nov  1 19:06:45 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Utils/Auto_Functor.cpp:
