@@ -454,6 +454,5 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*
 template class ACE_Hash_Map_Entry<ACE_INET_Addr,ACE_RMCast_UDP_Proxy*>;
 template class ACE_Equal_To<ACE_INET_Addr>;
 template class ACE_Hash<ACE_INET_Addr>;
-template class ACE_SOCK_Dgram_Mcast_Ex<ACE_SDM_DEFOPT_LOCK>;
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -1,3 +1,7 @@
+Mon Jun 24 12:07:00 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* ace/RMCast/RMCast_IO_UDP.cpp: Remove ACE_SOCK_Dgram_Ex template instantiation.
+
 Mon Jun 24 03:26:10 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/AttributesImpl.cpp(isDuplicate):
