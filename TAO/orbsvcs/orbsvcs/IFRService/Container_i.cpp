@@ -2670,7 +2670,7 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
       CORBA::ULongLong x;
       cdr.read_ulonglong (x);
       // We could lose data here.
-      result = ACE_static_cast (u_int, x);
+      result = ACE_U64_TO_U32 (x);
       break;
     }
     case CORBA::tk_enum:
