@@ -93,6 +93,17 @@ public:
   virtual TAO_Endpoint *endpoint (void);
 
   /**
+   * Override parse_string() from the base class to update the ssl
+   * endpoint's iiop endpoint once the base class has completed parsing
+   * the string.
+   *@par
+   * Initialize this object using the given input string.
+   * Url-style string contain only one endpoint.
+   */
+  virtual void parse_string (const char *string
+                             ACE_ENV_ARG_DECL);
+
+  /**
    * Add <endp> to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
    * <endp>.  If <endp>'s <iiop_endpoint_> member is not 0, it is

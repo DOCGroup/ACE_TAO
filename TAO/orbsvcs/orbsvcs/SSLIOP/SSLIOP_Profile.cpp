@@ -328,3 +328,13 @@ TAO_SSLIOP_Profile::decode_endpoints (void)
   // TAO_TAG_SSL_ENDPOINTS component, failure to find it is an error.
   return -1;
 }
+
+void
+TAO_SSLIOP_Profile::parse_string (const char *ior
+                                  ACE_ENV_ARG_DECL)
+{
+   TAO_IIOP_Profile::parse_string (ior
+                                   ACE_ENV_ARG_PARAMETER);
+
+    this->ssl_endpoint_.iiop_endpoint(&this->endpoint_, 1);
+}
