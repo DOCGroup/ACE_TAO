@@ -4,7 +4,7 @@
 // The following configuration file contains the defines
 // common to all Borland compilers.
 
-#if !defined (ACE_WIN32_BORLAND_H)
+#ifndef ACE_WIN32_BORLAND_H
 #define ACE_WIN32_BORLAND_H
 
 #if defined(__BORLANDC__)

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_STRATEGIES_T_H)
+#ifndef ACE_STRATEGIES_T_H
 #define ACE_STRATEGIES_T_H
 
 #include "ace/Strategies.h"

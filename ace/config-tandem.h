@@ -15,7 +15,7 @@
 // So this config is done to get things to start to work it isn't finished.
 // Janne (Jan.Perman@osd.Ericsson.se)
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

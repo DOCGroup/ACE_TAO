@@ -4,7 +4,7 @@
 // The following configuration file is designed to work
 // for SunOS4 platforms using the Lucid 3.2 compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #define ACE_LACKS_GETPGID

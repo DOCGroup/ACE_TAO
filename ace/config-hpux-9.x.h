@@ -4,7 +4,7 @@
 // The following configuration file is designed to work
 // for HP platforms running HP/UX 9.x.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // Compiling for HPUX.

@@ -3,7 +3,7 @@
 
 // for SunOS4 platforms using the GNU g++ compiler
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

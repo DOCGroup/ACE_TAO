@@ -14,7 +14,7 @@
 // 
 // ===========================================================================
 
-#if !defined (ACE_SOCK_DGRAM_H)
+#ifndef ACE_SOCK_DGRAM_H
 #define ACE_SOCK_DGRAM_H
 
 #include "ace/SOCK.h"

@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SERVICE_OBJECT_H)
+#ifndef ACE_SERVICE_OBJECT_H
 #define ACE_SERVICE_OBJECT_H
 
 #include "ace/Shared_Object.h"

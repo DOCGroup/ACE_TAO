@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SPIPE_H)
+#ifndef ACE_SPIPE_H
 #define ACE_SPIPE_H
 
 #include "ace/IPC_SAP.h"

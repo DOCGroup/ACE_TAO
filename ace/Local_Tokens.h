@@ -36,7 +36,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_LOCAL_MUTEX_H)
+#ifndef ACE_LOCAL_MUTEX_H
 #define ACE_LOCAL_MUTEX_H
 
 #include "ace/Synch_T.h"

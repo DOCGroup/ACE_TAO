@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_MALLOC_T_H)
+#ifndef ACE_MALLOC_T_H
 #define ACE_MALLOC_T_H
 
 #include "ace/ACE.h"

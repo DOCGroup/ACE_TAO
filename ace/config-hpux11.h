@@ -6,7 +6,7 @@
 // needed for HP-UX 11.x itself.  The compiler-specific information is in
 // config-hpux-11.x-<compiler>.h - they include this file.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #error "You need to use a compiler-specific .h file - they include this file"
 #endif
 

@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SPIPE_CONNECTOR_H)
+#ifndef ACE_SPIPE_CONNECTOR_H
 #define ACE_SPIPE_CONNECTOR_H
 
 #include "ace/SPIPE_Stream.h"

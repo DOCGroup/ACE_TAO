@@ -10,7 +10,7 @@
 // support 64-bit or kernel threads.  So, though this file has the C++ info
 // in it, it's copied from the 10.x file and hasn't been verified.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 // There are 2 compiler-specific sections, plus a 3rd for common to both.

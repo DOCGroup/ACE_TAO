@@ -19,7 +19,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_MULTIPLEXOR_H)
+#ifndef ACE_MULTIPLEXOR_H
 #define ACE_MULTIPLEXOR_H
 
 #include "ace/Module.h"

@@ -1,6 +1,6 @@
 // $Id$
 
-#if !defined (ACE_CONFIG_MIT_PTHREAD_H)
+#ifndef ACE_CONFIG_MIT_PTHREAD_H
 #define ACE_CONFIG_MIT_PTHREAD_H
 
 // Platform uses int for select() rather than fd_set.

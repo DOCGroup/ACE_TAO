@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_TIMER_HEAP_H)
+#ifndef ACE_TIMER_HEAP_H
 #define ACE_TIMER_HEAP_H
 
 #include "ace/Timer_Heap_T.h"

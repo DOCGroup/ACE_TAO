@@ -6,7 +6,7 @@
 // 1) The GNU/Cygnus g++ compiler that is shipped with Tornado 1.0.1.
 // 2) The GreenHills 1.8.8 (not 1.8.7!!!!) compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if ! defined (__ACE_INLINE__)

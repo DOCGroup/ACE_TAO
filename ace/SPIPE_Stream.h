@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SPIPE_STREAM_H)
+#ifndef ACE_SPIPE_STREAM_H
 #define ACE_SPIPE_STREAM_H
 
 #include "ace/SPIPE.h"

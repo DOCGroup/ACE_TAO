@@ -4,7 +4,7 @@
 // The following configuration file contains the defines
 // common to all Win32/MSVC/MFC combinations.
 
-#if !defined (ACE_WIN32_COMMON_H)
+#ifndef ACE_WIN32_COMMON_H
 #define ACE_WIN32_COMMON_H
 
 // ---------------- platform features or lack of them -------------

@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_SHARED_MALLOC_MM_H)
+#ifndef ACE_SHARED_MALLOC_MM_H
 #define ACE_SHARED_MALLOC_MM_H
 
 #include "ace/Shared_Memory.h"

@@ -16,7 +16,7 @@
 
 #include "ace/ACE.h"
 
-#if !defined (ACE_MESSAGE_BLOCK_H)
+#ifndef ACE_MESSAGE_BLOCK_H
 #define ACE_MESSAGE_BLOCK_H
 
 #include "ace/Malloc.h"

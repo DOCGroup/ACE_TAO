@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_IO_CNTL_MSG_H)
+#ifndef ACE_IO_CNTL_MSG_H
 #define ACE_IO_CNTL_MSG_H
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

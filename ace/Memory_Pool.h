@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_MEMORY_POOL_H)
+#ifndef ACE_MEMORY_POOL_H
 #define ACE_MEMORY_POOL_H
 
 #include "ace/ACE.h"

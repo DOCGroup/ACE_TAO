@@ -4,7 +4,7 @@
 // The following configuration file is designed to work for SunOS4
 // platforms using the SunC++ 3.0.x compiler.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 
 #define ACE_LACKS_GETPGID
 // Optimize ACE_Handle_Set for select().

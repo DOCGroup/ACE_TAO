@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_TOKEN_INVARIANTS_H)
+#ifndef ACE_TOKEN_INVARIANTS_H
 #define ACE_TOKEN_INVARIANTS_H
 
 #include "ace/Synch.h"

@@ -24,7 +24,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_FUNCTOR_T_H)
+#ifndef ACE_FUNCTOR_T_H
 #define ACE_FUNCTOR_T_H
 
 #include "ace/Functor.h"

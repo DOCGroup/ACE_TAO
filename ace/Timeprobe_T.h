@@ -1,6 +1,7 @@
+/* -*- C++ -*- */
 // $Id$
 
-#if !defined (ACE_TIMEPROBE_T_H)
+#ifndef ACE_TIMEPROBE_T_H
 #define ACE_TIMEPROBE_T_H
 
 #include "ace/OS.h"

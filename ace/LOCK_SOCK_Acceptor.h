@@ -13,7 +13,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_LOCK_SOCK_ACCEPTOR_H)
+#ifndef ACE_LOCK_SOCK_ACCEPTOR_H
 #define ACE_LOCK_SOCK_ACCEPTOR_H
 
 #include "ace/SOCK_Acceptor.h"

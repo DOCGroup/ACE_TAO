@@ -14,7 +14,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_MAP_MANAGER_H)
+#ifndef ACE_MAP_MANAGER_H
 #define ACE_MAP_MANAGER_H
 
 #include "ace/OS.h"

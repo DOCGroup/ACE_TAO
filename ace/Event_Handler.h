@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_EVENT_HANDLER_H)
+#ifndef ACE_EVENT_HANDLER_H
 #define ACE_EVENT_HANDLER_H
 
 #include "ace/ACE.h"

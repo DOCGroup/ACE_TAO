@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_ENV_VALUE_T_H)
+#ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
 
 #include "ace/OS.h"		// Need to get ACE_static_cast definition

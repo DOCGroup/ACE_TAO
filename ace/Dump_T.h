@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_DUMP_T_H)
+#ifndef ACE_DUMP_T_H
 #define ACE_DUMP_T_H
 
 #include "ace/Dump.h"

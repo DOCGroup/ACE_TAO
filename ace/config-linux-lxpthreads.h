@@ -25,7 +25,7 @@
 	(They were a little out of date when I last was there
 	however.) */
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #include "ace/config-linux-common.h"

@@ -10,7 +10,7 @@
 // the cxx -pthread or -threads option was specified.  By 4.0a the version
 // is meant that is called "V4.0 464" by uname -a.
 
-#if !defined (ACE_CONFIG_H)
+#ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
 
 #if !defined (__ACE_INLINE__)

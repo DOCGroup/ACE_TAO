@@ -15,7 +15,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_SOCK_DGRAM_MCAST_H)
+#ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
 
 #include "ace/SOCK_Dgram.h"

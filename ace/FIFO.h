@@ -14,7 +14,7 @@
 // 
 // ============================================================================
 
-#if !defined (ACE_FIFO_H)
+#ifndef ACE_FIFO_H
 #define ACE_FIFO_H
 
 #include "ace/IPC_SAP.h"

@@ -24,7 +24,7 @@
 //
 // ============================================================================
 
-#if !defined (ACE_IOSFWD_H)
+#ifndef ACE_IOSFWD_H
 #define ACE_IOSFWD_H
 
 #include "ace/inc_user_config.h"
