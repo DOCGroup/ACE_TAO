@@ -1,3 +1,48 @@
+Tue Feb 17 03:32:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/ACE.*: Changes for Windows CE just keeps going and going and
+ 	  going...  All following functions are member functions of class
+	  ACE. 
+
+	  This member funcion has wchar version _only_ when
+ 	  ACE_HAS_UNICODE_ONLY is defined:
+
+	               timestamp
+
+	  I've added wchar version of the following member functions:
+
+	               strecpy
+		       strsplit_r
+		       strrepl
+		       basename
+		       execname
+		       format_hexdump
+		       
+	  These functions are not defined on CE because they make no sense
+	  on CE.
+  
+                       strenvdup
+		       daemonize
+
+	  There is no stdin defined on CE.  Before we implement a stdin
+	  for CE, these functions don't make any sense.  
+	
+		       read_adapter
+		       register_stdin_handler
+		       remove_stdin_handler
+
+	  Changing these functions to UNICODE will need to change the
+	  svc.conf parser.  Therefore, I'll leave them to a later point.
+
+	               ldopen
+		       ldfind
+
+	* ace/README: Added a new directive ACE_HAS_UNICODE_ONLY which
+	  indicates that most APIs must use wchar instead of char.  (Note
+	  that on WinCE, only WinSock functions use the traditional char
+	  interfaces.  Most other functions only support wchar
+	  interfaces, include str* functions.)
+
 Mon Feb 16 14:57:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Priority_Task_Test.cpp (open): fallback to minimum
