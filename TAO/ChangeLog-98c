@@ -1,17 +1,23 @@
+Tue Jul 21 12:09:40 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* tests/NestedUpcall/MT_Client_Test/run_test.pl:
+	* tests/NestedUpcall/Reactor/run_test.pl:
+	* tests/NestedUpcall/Triangle_Test/run_test.pl:
+	  Added new perl scripts for the tests.
+
 Tue Jul 21 12:02:41 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp : 
-		Added code so that the client can accept -ORB arguments on
-		the command line. The main thread blocks on a condition
-		variable until the high priority thread does the argument 
-		parsing and changes the global Task_State . The main
-		thread then creates the low priority threads.
+	  Added code so that the client can accept -ORB arguments on
+	  the command line. The main thread blocks on a condition
+	  variable until the high priority thread does the argument 
+	  parsing and changes the global Task_State . The main
+	  thread then creates the low priority threads.
 	
-	* tests/Cubit/TAO/MT_Cubit/client.cpp
-	(do_priority_inversion_test): 	
-		Added code for the main thread to block on a condition
-	variable after activating the high priority thread until the high
-	priority thread wakes it up. 
+	* tests/Cubit/TAO/MT_Cubit/client.cpp (do_priority_inversion_test): 	
+	  Added code for the main thread to block on a condition
+	  variable after activating the high priority thread until the high
+	  priority thread wakes it up. 
 	
 Tue Jul 21 10:00:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
@@ -91,13 +97,13 @@ Mon Jul 20 16:55:54 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 Mon Jul 20 15:08:11 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-        * TAO_IDL/driver/drv_args.cpp (DRV_parse_args):  Added a "#if
-        !defined (ACE_HAS_GPERF)" so that IDL Compiler will use Dynamic
-        Hashing if gperf is not found but -P option is specified.
+	* TAO_IDL/driver/drv_args.cpp (DRV_parse_args):  Added a "#if
+	  !defined (ACE_HAS_GPERF)" so that IDL Compiler will use Dynamic
+	  Hashing if gperf is not found but -P option is specified.
 
-        * TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Fixed
-        the ACE_Process' command line to use absolute path
-        <$ACE/apps/gperf/src/gperf>.
+	* TAO_IDL/be/be_interface.cpp (gen_perfect_hash_methods): Fixed
+	  the ACE_Process' command line to use absolute path
+	  <$ACE/apps/gperf/src/gperf>.
 
 Mon Jul 20 13:00:41 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
@@ -131,41 +137,40 @@ Mon Jul 20 11:15:52 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
 Mon Jul 20 10:57:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
-      * tao/Connect.cpp: Changed the handle_locate method completely
-        to try to upcall to the non_existent method. This method
-        is not part of the standard, is TAO internal. We know
-        that this method is supported by each TAO Object. So
-        if we fail we know the object is not there. If we succeed,
-        the object is available and if we get forward_request
-        exception we will forward the call.
+	* tao/Connect.cpp: Changed the handle_locate method completely
+	  to try to upcall to the non_existent method. This method
+	  is not part of the standard, is TAO internal. We know
+	  that this method is supported by each TAO Object. So
+	  if we fail we know the object is not there. If we succeed,
+	  the object is available and if we get forward_request
+	  exception we will forward the call.
 
-      * tao/IIOP_Object.{h,i,cpp}: Added code to branch to do a conditonal
-        locate request, depending on two flags. One tells to
-        use it at all the other tells if it is the first call-
-        because we want to do it only on the first call.
+	* tao/IIOP_Object.{h,i,cpp}: Added code to branch to do a conditonal
+	  locate request, depending on two flags. One tells to 
+	  use it at all the other tells if it is the first call- 
+	  because we want to do it only on the first call.
 
-      * tao/Invocation.{h,i,cpp}: Added code to the start method,
-        which branches into different CDR stream generation,
-        depending on the kind of message we want to send. The two
-        options right now are: Request and LocateRequest.
-        A new subclass has been introduces: TAO_GIOP_
-        LocateRequest_Invocation, which is similar to the
-        Twoway subclass but does a locate request. It has its own
-        invoke method and does not call the common invoke method.
-        Closing of a connection is the same in all the three cases
-        (oneway, twoway, locate_request), I factored the code out
-        into a close_connection method.
+	* tao/Invocation.{h,i,cpp}: Added code to the start method,
+	  which branches into different CDR stream generation,
+	  depending on the kind of message we want to send. The two
+	  options right now are: Request and LocateRequest.
+	  A new subclass has been introduces: TAO_GIOP_
+	  LocateRequest_Invocation, which is similar to the
+	  Twoway subclass but does a locate request. It has its own
+	  invoke method and does not call the common invoke method.
+	  Closing of a connection is the same in all the three cases
+	  (oneway, twoway, locate_request), I factored the code out
+	  into a close_connection method.
 
-      * tao/Object.{h,cpp}: Added a method call to activate
-        the locate request on the first call after the activation.
-        The locate request will be done only once unless it is activated
-        a second time.
+	* tao/Object.{h,cpp}: Added a method call to activate
+	  the locate request on the first call after the activation.
+	  The locate request will be done only once unless it is activated
+	  a second time.
 
-      * TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Changed
-        the code generation of the non_existent method. It accepts
-        only one parameter, not two. So I changed the param_count
-        from 2 to 1.
-
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp: Changed
+	  the code generation of the non_existent method. It accepts
+	  only one parameter, not two. So I changed the param_count 
+	  from 2 to 1.
 
 Mon Jul 20 10:35:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -195,13 +200,13 @@ Mon Jul 20 10:20:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 Mon Jul 20 06:52:02 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
         * TAO_IDL/be/be_visitor_array/{array_ch, array_ci, array_cs}.cpp:
-        Added support for anonymous arrays. This is yet to be tested
+          Added support for anonymous arrays. This is yet to be tested
 
         * TAO_IDL/be/be_visitor_field/field_ch.cpp: Handled anonymous
-        array declaration in structures.
+          array declaration in structures.
 
-        *Note* that although the above changes were made a couple of weeks
-        back I have not been able to test them.
+          *Note* that although the above changes were made a couple of weeks
+          back I have not been able to test them.
 
 Sun Jul 19 22:58:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -253,8 +258,8 @@ Sat Jul 18 17:31:29 1998  Nagarajan Surendran  <naga@cs.wustl.edu>
         * tests/Cubit/Hardpack/IDL_Cubit/Makefile:
         * tests/Cubit/Hardpack/IDL_Cubit/README:
         * tests/Cubit/Hardpack/IDL_Cubit/initref.cfg:
-                Added these files for the IDL_Cubit test for the Hardpack
-        ORB.
+          Added these files for the IDL_Cubit test for the Hardpack
+          ORB.
 
 Sat Jul 18 15:44:59 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
@@ -277,13 +282,13 @@ Sat Jul 18 15:44:59 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * orbsvcs/Trading_Service/Trading_Service.cpp:
         * orbsvcs/Trading_Service/Makefile:
 
-        Fixed g++ 2.7.2 compilation warnings/errors. Note: the tests and
-        applications, although they compile now with g++ 2.7.2, don't link
-        properly because the g++ linker is baffled by the profuse
-        virtual/multiple inheritance in the skeletons generated from the
-        CosTrading.idl file, and can't find the copy constructors it
-        autogenerated. The solution is to have the IDL compiler generate
-        explicit copy constructors for these skeleton classes.
+          Fixed g++ 2.7.2 compilation warnings/errors. Note: the tests and
+          applications, although they compile now with g++ 2.7.2, don't link
+          properly because the g++ linker is baffled by the profuse
+          virtual/multiple inheritance in the skeletons generated from the
+          CosTrading.idl file, and can't find the copy constructors it
+          autogenerated. The solution is to have the IDL compiler generate
+          explicit copy constructors for these skeleton classes.
 
 Sat Jul 18 15:39:42 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -301,8 +306,8 @@ Sat Jul 18 14:19:48 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
         * tao/orbconf.h:
         * orbsvcs/orbsvcs/Makefile:
         * orbsvcs/orbsvcs/CosTrading.idl:
-        Moved the definition of TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG into
-        orbconf.h and CosTrading.idl, and out of the orbsvcs Makefile.
+          Moved the definition of TAO_HAS_OBJECT_IN_STRUCT_MARSHAL_BUG into
+          orbconf.h and CosTrading.idl, and out of the orbsvcs Makefile.
 
 Sat Jul 18 14:12:00 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
