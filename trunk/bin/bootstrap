@@ -170,6 +170,7 @@ if test -d m4; then
   else
     test -f man/man3/Makefile.am || echo 'man/man3/Makefile.am is missing!'
     test -f man/html/Makefile.am || echo 'man/html/Makefile.am is missing!'
+    exit 1;
   fi  # test -f man/man3/Makefile.am && test -f man/html/Makefile.am
 
   # Update the NEWS file
