@@ -411,6 +411,12 @@ public:
   // methods only return information about the first block in the
   // chain.
 
+  int align_write_ptr (size_t alignment);
+  // Utility function to allow the user more flexibility.
+  // Pads the stream up to the nearest <alignment>-byte boundary.
+  // Argument MUST be a power of 2.
+  // Returns 0 on success and -1 on failure.
+
 private:
   ACE_OutputCDR (const ACE_OutputCDR& rhs);
   ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
@@ -468,10 +474,6 @@ private:
 
   ACE_Message_Block *current_;
   // The current block in the chain were we are writing.
-
-  ACE_Allocator *buffer_allocator_;
-  ACE_Allocator *data_block_allocator_;
-  // Allocators for stream growth.
 
   int do_byte_swap_;
   // If not zero swap bytes at writing so the created CDR stream byte
@@ -680,6 +682,12 @@ public:
 
   size_t length (void) const;
   // Return how many bytes are left in the stream.
+
+  int align_read_ptr (size_t alignment);
+  // Utility function to allow the user more flexibility.
+  // Skips up to the nearest <alignment>-byte boundary.
+  // Argument MUST be a power of 2.
+  // Returns 0 on success and -1 on failure.
 
 private:
   CDR::Boolean read_1 (CDR::Octet *x);

@@ -245,7 +245,7 @@ ACE_OutputCDR::grow_and_adjust (size_t size,
 
   // Now we are ready to set buf..
   // recompute the position....
-  buf = ptr_align_binary (this->current_->wr_ptr(), align);
+  buf = ptr_align_binary (this->current_->wr_ptr (), align);
   this->current_->wr_ptr (buf + size);
   return 0;
 }
