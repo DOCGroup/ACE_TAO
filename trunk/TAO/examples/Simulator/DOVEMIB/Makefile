@@ -1,13 +1,11 @@
 #----------------------------------------------------------------------------
 #
-#	$Id$
+#       $Id$
 #
-#	Top-level Makefile for the ACE-ified Sun Ref. implementation
-#	of IIOP ORB
 #----------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------
-#	Local macros
+#       Local macros
 #----------------------------------------------------------------------------
 
 ifndef TAO_ROOT
@@ -30,7 +28,7 @@ VBIN = $(BIN:%=%$(VAR))
 LDLIBS= -lorbsvcs -lTAO
 
 #----------------------------------------------------------------------------
-#	Include macros and targets
+#       Include macros and targets
 #----------------------------------------------------------------------------
 
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -42,7 +40,7 @@ include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 include $(TAO_ROOT)/taoconfig.mk
 
 #----------------------------------------------------------------------------
-#	Local targets
+#       Local targets
 #----------------------------------------------------------------------------
 
 LDFLAGS += -L$(TAO_ROOT)/orbsvcs/orbsvcs -L$(TAO_ROOT)/tao
@@ -51,12 +49,14 @@ CPPFLAGS += -I$(TAO_ROOT)/orbsvcs -I$(TAO_ROOT) $(TSS_ORB_FLAG)#-H
 $(IDL_SRC): NavWeap.idl
 	$(TAO_ROOT)/TAO_IDL/tao_idl NavWeap.idl
 
-DOVEMIB:	$(addprefix $(VDIR),$(MIB_OBJS))
-		$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
+NavWeap.idl: ../NavWeap.idl
+	@cp -p $< .
 
+DOVEMIB: $(addprefix $(VDIR),$(MIB_OBJS))
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(VLDLIBS)
 
 realclean: clean
-	-/bin/rm -rf 
+	-/bin/rm -rf NavWeap.idl NavWeap[CS].* NavWeap[CS]_T.*
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
 # DO NOT PUT ANYTHING AFTER THIS LINE, IT WILL GO AWAY.
