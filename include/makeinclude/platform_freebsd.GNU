@@ -2,27 +2,37 @@
 
 # platform_freebsd.GNU
 
-# ***** Notice: This file is still under testing. *****
-# To be used on FreeBSD platform without pthread support.
+#####################################################
+# Replace 3 with 2 if you are running FreeBSD 2.x.x
+#  ** How do we detect os version here?
+#####################################################
+VERSION = 3
+
+ifneq ($(VERSION),3)
+versioned_so = 1
+endif
+
+optimize = 1
 
 debug = 1
-optimize = 1
-versioned_so = 1
 
 CC              = gcc
 CXX		= g++
-CFLAGS          += -w -fno-strict-prototypes
+CFLAGS          += -Wall -Wpointer-arith -pipe
 CCFLAGS         += $(CFLAGS) -fno-implicit-templates
 DCFLAGS         += -g
-DLD             = ld
+ifeq ($(VERSION),3)
+  LDFLAGS		+= -Wl,-rpath $(ACE_ROOT)/ace
+endif
+DLD             = $(CXX)
 LD		= $(CXX)
-LIBS            += -lstdc++ -lcompat
+LIBS            += -lstdc++
 OCFLAGS         += -O2
-PIC             = -fpic -DPIC
+PIC             = -fpic
 AR              = ar
 ARFLAGS         = ruv
 RANLIB          = ranlib
 
-SOFLAGS = -Bshareable -x /usr/lib/c++rt0.o
+SOFLAGS = $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB = @echo
