@@ -169,6 +169,7 @@ void on_exit_routine(void)
     }
   }
   on_exit_tag = 0;
+  cerr << "Main process sending SIGINT\n";
   kill(0, SIGINT);
 }
 

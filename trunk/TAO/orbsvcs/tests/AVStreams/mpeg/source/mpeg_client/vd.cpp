@@ -404,12 +404,12 @@ void VDprocess(int CTRpid)
       curBlk = NULL;
     }
     p = (VideoPacket*)VBgetMsg();   /* guarranteed to get a Packet */
-    /*
-    printPacket(p);
-    */
-    /*
-    Fprintf(stderr, "VD: got frame %d\n", p->frame);
-    */
+
+    //    printPacket(p);
+
+
+    //    fprintf(stderr, "VD: got frame %d\n", p->frame);
+
     curcmd = shared->cmd;
     curcmdsn = shared->cmdsn;
     if (p->cmdsn != shared->cmdsn || p->cmdsn != curcmdsn)

@@ -112,7 +112,6 @@ char * VBgetMsg()          /* block version */
   if (shared->collectStat && *head == *tail)
     shared->stat.VBemptyTimes ++;
 #endif
-  
   enter_cs(countid);
   enter_cs(sid);
   while (*tail != *head && (*tail)->full == 0)
@@ -124,9 +123,9 @@ char * VBgetMsg()          /* block version */
     exit(1);
   }
   ptr = ((char*)*tail)+sizeof(**tail)+sizeof(VideoMessage);
-  /*
-  fprintf(stderr,"VBgetMsg: buf:%x, msg:%x\n", (int)buf, (int)ptr);
-  */
+
+  //  fprintf(stderr,"VBgetMsg: buf:%x, msg:%x\n", (int)buf, (int)ptr);
+
   return ptr;
 }
 
@@ -413,7 +412,7 @@ void VBprocess(int initSocket, int normalSocket)
     /*
     fprintf(stderr, "VB PEEK1 a msg sn-%d, size-%d, pkt-%d, pktsize-%d\n",
 	    msghd.msgsn, msghd.msgSize, msghd.packetsn, msghd.packetSize);
-    */  
+    */
   start_new_packet:
 
     
