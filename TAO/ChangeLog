@@ -1,3 +1,9 @@
+Fri Mar 25 21:06:16 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+
+	  Regenerated.
+
 Fri Mar 25 11:59:19 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* tao/Makefile.am:

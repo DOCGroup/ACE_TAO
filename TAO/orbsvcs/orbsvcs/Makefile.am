@@ -14,46 +14,28 @@ TAO_ROOT = $(top_srcdir)
 TAO_IDL = ACE_ROOT=$(ACE_ROOT) TAO_ROOT=$(TAO_ROOT) $(TAO_BUILDDIR)/TAO_IDL/tao_idl
 TAO_IDLFLAGS = -Ge 1 -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I$(TAO_ROOT) -I$(srcdir) -g $(ACE_BUILDDIR)/apps/gperf/src/gperf
 
-pkgconfig_DATA =
-lib_LTLIBRARIES =
-CLEANFILES =
-BUILT_SOURCES =
+## Makefile.CosNaming.am
 
-## Makefile.CosNaming_IDL.am
-
-BUILT_SOURCES += \
+BUILT_SOURCES = \
   CosNamingC.inl \
-  CosNamingS.inl \
-  CosNamingS_T.inl \
   CosNamingC.h \
-  CosNamingS.h \
-  CosNamingS_T.h \
   CosNamingC.cpp \
-  CosNamingS.cpp \
   CosNamingS_T.cpp
 
-CLEANFILES += \
+CLEANFILES = \
   CosNaming-stamp \
   CosNamingC.inl \
-  CosNamingS.inl \
-  CosNamingS_T.inl \
   CosNamingC.h \
-  CosNamingS.h \
-  CosNamingS_T.h \
   CosNamingC.cpp \
-  CosNamingS.cpp \
   CosNamingS_T.cpp
 
-CosNamingC.inl CosNamingS.inl CosNamingS_T.inl CosNamingC.h CosNamingS.h CosNamingS_T.h CosNamingC.cpp CosNamingS.cpp CosNamingS_T.cpp: CosNaming-stamp
+CosNamingC.inl CosNamingC.h CosNamingC.cpp CosNamingS_T.cpp: CosNaming-stamp
 
 CosNaming-stamp: $(srcdir)/CosNaming.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Naming_Export -Wb,stub_export_include=orbsvcs/Naming/naming_export.h -Wb,skel_export_macro=TAO_Naming_Skel_Export -Wb,skel_export_include=orbsvcs/Naming/naming_skel_export.h $(srcdir)/CosNaming.idl
 	@touch $@
 
-
-## Makefile.CosNaming.am
-
-lib_LTLIBRARIES += libTAO_CosNaming.la
+lib_LTLIBRARIES = libTAO_CosNaming.la
 
 libTAO_CosNaming_la_CPPFLAGS = \
   -I$(ACE_ROOT) \
@@ -76,12 +58,13 @@ libTAO_CosNaming_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS = \
+  CosNaming.idl \
   CosNamingC.h \
   CosNamingC.inl \
   Naming/Naming_Client.h \
   Naming/naming_export.h
 
-pkgconfig_DATA += TAO_CosNaming.pc
+pkgconfig_DATA = TAO_CosNaming.pc
 
 TAO_CosNaming.pc: ${top_builddir}/config.status ${srcdir}/TAO_CosNaming.pc.in
 	${top_builddir}/config.status --file $@:${srcdir}/TAO_CosNaming.pc.in
@@ -2353,32 +2336,22 @@ EXTRA_DIST += \
   TAO_CosTime.pc.in
 
 
-## Makefile.CosTrading_IDL.am
+## Makefile.CosTrading.am
 
 BUILT_SOURCES += \
   CosTradingC.inl \
-  CosTradingS.inl \
-  CosTradingS_T.inl \
   CosTradingC.h \
-  CosTradingS.h \
-  CosTradingS_T.h \
   CosTradingC.cpp \
-  CosTradingS.cpp \
   CosTradingS_T.cpp
 
 CLEANFILES += \
   CosTrading-stamp \
   CosTradingC.inl \
-  CosTradingS.inl \
-  CosTradingS_T.inl \
   CosTradingC.h \
-  CosTradingS.h \
-  CosTradingS_T.h \
   CosTradingC.cpp \
-  CosTradingS.cpp \
   CosTradingS_T.cpp
 
-CosTradingC.inl CosTradingS.inl CosTradingS_T.inl CosTradingC.h CosTradingS.h CosTradingS_T.h CosTradingC.cpp CosTradingS.cpp CosTradingS_T.cpp: CosTrading-stamp
+CosTradingC.inl CosTradingC.h CosTradingC.cpp CosTradingS_T.cpp: CosTrading-stamp
 
 CosTrading-stamp: $(srcdir)/CosTrading.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTrading.idl
@@ -2386,28 +2359,18 @@ CosTrading-stamp: $(srcdir)/CosTrading.idl
 
 BUILT_SOURCES += \
   CosTradingDynamicC.inl \
-  CosTradingDynamicS.inl \
-  CosTradingDynamicS_T.inl \
   CosTradingDynamicC.h \
-  CosTradingDynamicS.h \
-  CosTradingDynamicS_T.h \
   CosTradingDynamicC.cpp \
-  CosTradingDynamicS.cpp \
   CosTradingDynamicS_T.cpp
 
 CLEANFILES += \
   CosTradingDynamic-stamp \
   CosTradingDynamicC.inl \
-  CosTradingDynamicS.inl \
-  CosTradingDynamicS_T.inl \
   CosTradingDynamicC.h \
-  CosTradingDynamicS.h \
-  CosTradingDynamicS_T.h \
   CosTradingDynamicC.cpp \
-  CosTradingDynamicS.cpp \
   CosTradingDynamicS_T.cpp
 
-CosTradingDynamicC.inl CosTradingDynamicS.inl CosTradingDynamicS_T.inl CosTradingDynamicC.h CosTradingDynamicS.h CosTradingDynamicS_T.h CosTradingDynamicC.cpp CosTradingDynamicS.cpp CosTradingDynamicS_T.cpp: CosTradingDynamic-stamp
+CosTradingDynamicC.inl CosTradingDynamicC.h CosTradingDynamicC.cpp CosTradingDynamicS_T.cpp: CosTradingDynamic-stamp
 
 CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingDynamic.idl
@@ -2415,35 +2378,22 @@ CosTradingDynamic-stamp: $(srcdir)/CosTradingDynamic.idl
 
 BUILT_SOURCES += \
   CosTradingReposC.inl \
-  CosTradingReposS.inl \
-  CosTradingReposS_T.inl \
   CosTradingReposC.h \
-  CosTradingReposS.h \
-  CosTradingReposS_T.h \
   CosTradingReposC.cpp \
-  CosTradingReposS.cpp \
   CosTradingReposS_T.cpp
 
 CLEANFILES += \
   CosTradingRepos-stamp \
   CosTradingReposC.inl \
-  CosTradingReposS.inl \
-  CosTradingReposS_T.inl \
   CosTradingReposC.h \
-  CosTradingReposS.h \
-  CosTradingReposS_T.h \
   CosTradingReposC.cpp \
-  CosTradingReposS.cpp \
   CosTradingReposS_T.cpp
 
-CosTradingReposC.inl CosTradingReposS.inl CosTradingReposS_T.inl CosTradingReposC.h CosTradingReposS.h CosTradingReposS_T.h CosTradingReposC.cpp CosTradingReposS.cpp CosTradingReposS_T.cpp: CosTradingRepos-stamp
+CosTradingReposC.inl CosTradingReposC.h CosTradingReposC.cpp CosTradingReposS_T.cpp: CosTradingRepos-stamp
 
 CosTradingRepos-stamp: $(srcdir)/CosTradingRepos.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h $(srcdir)/CosTradingRepos.idl
 	@touch $@
-
-
-## Makefile.CosTrading.am
 
 lib_LTLIBRARIES += libTAO_CosTrading.la
 
@@ -2471,10 +2421,13 @@ libTAO_CosTrading_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  CosTrading.idl \
   CosTradingC.h \
   CosTradingC.inl \
+  CosTradingDynamic.idl \
   CosTradingDynamicC.h \
   CosTradingDynamicC.inl \
+  CosTradingRepos.idl \
   CosTradingReposC.h \
   CosTradingReposC.inl \
   Trader/trading_export.h
@@ -2618,32 +2571,22 @@ EXTRA_DIST += \
   TAO_CosTrading_Serv.pc.in
 
 
-## Makefile.DsLogAdmin_IDL.am
+## Makefile.DsLogAdmin.am
 
 BUILT_SOURCES += \
   DsLogAdminC.inl \
-  DsLogAdminS.inl \
-  DsLogAdminS_T.inl \
   DsLogAdminC.h \
-  DsLogAdminS.h \
-  DsLogAdminS_T.h \
   DsLogAdminC.cpp \
-  DsLogAdminS.cpp \
   DsLogAdminS_T.cpp
 
 CLEANFILES += \
   DsLogAdmin-stamp \
   DsLogAdminC.inl \
-  DsLogAdminS.inl \
-  DsLogAdminS_T.inl \
   DsLogAdminC.h \
-  DsLogAdminS.h \
-  DsLogAdminS_T.h \
   DsLogAdminC.cpp \
-  DsLogAdminS.cpp \
   DsLogAdminS_T.cpp
 
-DsLogAdminC.inl DsLogAdminS.inl DsLogAdminS_T.inl DsLogAdminC.h DsLogAdminS.h DsLogAdminS_T.h DsLogAdminC.cpp DsLogAdminS.cpp DsLogAdminS_T.cpp: DsLogAdmin-stamp
+DsLogAdminC.inl DsLogAdminC.h DsLogAdminC.cpp DsLogAdminS_T.cpp: DsLogAdmin-stamp
 
 DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogAdmin.idl
@@ -2651,35 +2594,22 @@ DsLogAdmin-stamp: $(srcdir)/DsLogAdmin.idl
 
 BUILT_SOURCES += \
   DsLogNotificationC.inl \
-  DsLogNotificationS.inl \
-  DsLogNotificationS_T.inl \
   DsLogNotificationC.h \
-  DsLogNotificationS.h \
-  DsLogNotificationS_T.h \
   DsLogNotificationC.cpp \
-  DsLogNotificationS.cpp \
   DsLogNotificationS_T.cpp
 
 CLEANFILES += \
   DsLogNotification-stamp \
   DsLogNotificationC.inl \
-  DsLogNotificationS.inl \
-  DsLogNotificationS_T.inl \
   DsLogNotificationC.h \
-  DsLogNotificationS.h \
-  DsLogNotificationS_T.h \
   DsLogNotificationC.cpp \
-  DsLogNotificationS.cpp \
   DsLogNotificationS_T.cpp
 
-DsLogNotificationC.inl DsLogNotificationS.inl DsLogNotificationS_T.inl DsLogNotificationC.h DsLogNotificationS.h DsLogNotificationS_T.h DsLogNotificationC.cpp DsLogNotificationS.cpp DsLogNotificationS_T.cpp: DsLogNotification-stamp
+DsLogNotificationC.inl DsLogNotificationC.h DsLogNotificationC.cpp DsLogNotificationS_T.cpp: DsLogNotification-stamp
 
 DsLogNotification-stamp: $(srcdir)/DsLogNotification.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -I$(TAO_ROOT)/orbsvcs -Wb,stub_export_macro=TAO_Log_Export -Wb,stub_export_include=orbsvcs/Log/log_export.h -Wb,skel_export_macro=TAO_Log_Skel_Export -Wb,skel_export_include=orbsvcs/Log/log_skel_export.h $(srcdir)/DsLogNotification.idl
 	@touch $@
-
-
-## Makefile.DsLogAdmin.am
 
 lib_LTLIBRARIES += libTAO_DsLogAdmin.la
 
@@ -2704,8 +2634,10 @@ libTAO_DsLogAdmin_la_LIBADD = \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  DsLogAdmin.idl \
   DsLogAdminC.h \
   DsLogAdminC.inl \
+  DsLogNotification.idl \
   DsLogNotificationC.h \
   DsLogNotificationC.inl \
   Log/log_export.h
@@ -3759,12 +3691,13 @@ libTAO_FtRtEvent_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FtRtEvent_la_LIBADD = \
-  libTAO_CosNaming.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
+  libTAO_FTORB_Utils.la \
+  libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  libTAO_FTORB_Utils.la \
+  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -3879,12 +3812,13 @@ libTAO_FTRT_EventChannel_la_LDFLAGS = \
 libTAO_FTRT_EventChannel_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_Utils.la \
   libTAO_FtRtEvent.la \
-  libTAO_CosNaming.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
+  libTAO_FTORB_Utils.la \
+  libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  libTAO_FTORB_Utils.la \
+  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -3971,11 +3905,11 @@ libTAO_FT_ClientORB_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FT_ClientORB_la_LIBADD = \
+  libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
-  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  libTAO_FTORB_Utils.la \
+  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -4037,11 +3971,11 @@ libTAO_FT_ServerORB_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_FT_ServerORB_la_LIBADD = \
+  libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
-  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
-  libTAO_FTORB_Utils.la \
+  libTAO_CosNaming.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   $(TAO_BUILDDIR)/tao/libTAO.la \
@@ -4242,12 +4176,12 @@ libTAO_FaultTolerance_la_LDFLAGS = \
 
 libTAO_FaultTolerance_la_LIBADD = \
   libTAO_FT_ServerORB.la \
+  libTAO_FT_ClientORB.la \
+  libTAO_FTORB_Utils.la \
   libTAO_PortableGroup.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
   $(TAO_BUILDDIR)/tao/libTAO_Valuetype.la \
   libTAO_CosNaming.la \
-  libTAO_FT_ClientORB.la \
-  libTAO_FTORB_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_PortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_IORManip.la \
   libTAO_CosNotification.la \
@@ -4589,7 +4523,6 @@ libTAO_RTCORBAEvent_la_LDFLAGS = \
 libTAO_RTCORBAEvent_la_LIBADD = \
   $(TAO_BUILDDIR)/tao/libTAO_RTPortableServer.la \
   $(TAO_BUILDDIR)/tao/libTAO_RTCORBA.la \
-  libTAO_CosNaming.la \
   libTAO_RTEvent.la \
   libTAO_Svc_Utils.la \
   $(TAO_BUILDDIR)/tao/libTAO_Messaging.la \
