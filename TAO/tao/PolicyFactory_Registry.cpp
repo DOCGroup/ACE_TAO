@@ -16,9 +16,9 @@ TAO_PolicyFactory_Registry::TAO_PolicyFactory_Registry (void)
 
 TAO_PolicyFactory_Registry::~TAO_PolicyFactory_Registry (void)
 {
-  TABLE::ITERATOR end = this->factories_.end ();
+  const TABLE::iterator end (this->factories_.end ());
 
-  for (TABLE::ITERATOR i = this->factories_.begin (); i != end; ++i)
+  for (TABLE::iterator i = this->factories_.begin (); i != end; ++i)
     {
       CORBA::release ((*i).int_id_);
     }
@@ -44,8 +44,8 @@ TAO_PolicyFactory_Registry::register_policy_factory (
   PortableInterceptor::PolicyFactory_ptr factory =
     PortableInterceptor::PolicyFactory::_duplicate (policy_factory);
 
-  int result = this->factories_.bind (type,
-                                      factory);
+  const int result = this->factories_.bind (type,
+                                            factory);
 
   if (result == 1)
     {
@@ -101,6 +101,12 @@ TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type
 
   return policy_factory->_create_policy (type
                                          ACE_ENV_ARG_PARAMETER);
+}
+
+bool
+TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType & type) const
+{
+  return (this->factories_.find (type) == 0);
 }
 
 
