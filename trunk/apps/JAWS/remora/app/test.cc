@@ -12,7 +12,7 @@ class Shutdown : public ACE_Event_Handler
 public:
   Shutdown(int& cond) : cond_(cond) {}
   
-  virtual int handle_signal(int, siginfo*, ucontext*)
+  virtual int handle_signal (int, siginfo*, ucontext*)
     {
       this->cond_ = 0;
       return 0;
@@ -23,14 +23,13 @@ private:
   int& cond_;
 };
 
-
 int
 main(int argc, char** argv)
 {
   int lcv = 1;
   ACE_Sig_Handler shutdown;
 
-  shutdown.register_handler(SIGINT, new Shutdown(lcv));
+  shutdown.register_handler (SIGINT, new Shutdown (lcv));
   
   try
     {

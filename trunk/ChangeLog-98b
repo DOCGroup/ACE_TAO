@@ -1,3 +1,9 @@
+Thu Dec 17 12:43:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Removed the use of ACE_DEBUG within handle_signal() methods
+ 	  to avoid portability problems.  Thanks to Susan Liebeskind
+ 	  <susan.liebeskind@gtri.gatech.edu> for reporting this.
+
 Tue Dec 15 14:45:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * *.h: removed () from #pragma implementation argument.
@@ -848,7 +854,7 @@ Mon Nov 23 12:58:47 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
           tests:
           Replaced the improper (though technically correct) use of the
           rd_ptr() with wr_ptr().  Thanks to Susan Liebeskind
-          (susan.liebeskind@gtri.gatech.edu) for reporting this.
+          <susan.liebeskind@gtri.gatech.edu> for reporting this.
 
 Mon Nov 23 10:47:38 1998  David L. Levine  <levine@cs.wustl.edu>
 

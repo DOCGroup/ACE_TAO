@@ -29,10 +29,16 @@ Peer_Handler::open (void *a)
   // Call down to the base class to activate and register this handler
   // with an <ACE_Reactor>.
   if (this->inherited::open (a) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, 
+                       "%p\n", 
+                       "open"), 
+                      -1);
 
   if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "enable"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n", 
+                       "enable"), 
+                      -1);
 
   ACE_Time_Value timeout (Options::instance ()->timeout ());
 
@@ -118,7 +124,8 @@ Peer_Handler::transmit_stdin (void)
       switch (n)
         {
         case 0:
-          ACE_DEBUG ((LM_DEBUG, "stdin closing down\n"));
+          ACE_DEBUG ((LM_DEBUG,
+                      "stdin closing down\n"));
 
           // Take stdin out of the ACE_Reactor so we stop trying to
           // send events.
@@ -130,7 +137,9 @@ Peer_Handler::transmit_stdin (void)
           /* NOTREACHED */
         case -1:
           mb->release ();
-          ACE_ERROR ((LM_ERROR, "%p\n", "read"));
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "read"));
           break;
           /* NOTREACHED */
         default:
@@ -140,7 +149,8 @@ Peer_Handler::transmit_stdin (void)
       return 0;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Must transmit over an opened channel.\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "Must transmit over an opened channel.\n"));
   return -1;
 }
 
@@ -197,10 +207,12 @@ Peer_Handler::handle_output (ACE_HANDLE)
 {
   ACE_Message_Block *mb = 0;
 
-  ACE_DEBUG ((LM_DEBUG, "in handle_output\n"));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_output\n"));
 
   if (this->msg_queue ()->dequeue_head
-      (mb, (ACE_Time_Value *) &ACE_Time_Value::zero) != -1)
+      (mb,
+       (ACE_Time_Value *) &ACE_Time_Value::zero) != -1)
     {
       switch (this->nonblk_put (mb))
         {
@@ -289,8 +301,10 @@ Peer_Handler::send (ACE_Message_Block *mb)
       errno = 0;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "sent %d bytes, total bytes sent = %d\n",
-             n, this->total_bytes_));
+  ACE_DEBUG ((LM_DEBUG,
+              "sent %d bytes, total bytes sent = %d\n",
+              n,
+              this->total_bytes_));
   return n;
 }
 
@@ -433,7 +447,9 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
 int
 Peer_Handler::handle_input (ACE_HANDLE sd)
 {
-  ACE_DEBUG ((LM_DEBUG, "in handle_input, sd = %d\n", sd));
+  ACE_DEBUG ((LM_DEBUG,
+              "in handle_input, sd = %d\n", 
+              sd));
   if (sd == ACE_STDIN) // Handle event from stdin.
     return this->transmit_stdin ();
   else
@@ -483,11 +499,14 @@ Peer_Handler::await_connection_id (void)
   ACE_OS::rewind (stdin);
 
   // Register this handler to receive test events on stdin.
-  if (ACE_Event_Handler::register_stdin_handler (this,
-                                                 ACE_Reactor::instance (),
-                                                 ACE_Thread_Manager::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_stdin_handler"), -1);
-
+  if (ACE_Event_Handler::register_stdin_handler
+      (this,
+       ACE_Reactor::instance (),
+       ACE_Thread_Manager::instance ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%t) %p\n",
+                       "register_stdin_handler"),
+                      -1);
   return 0;
 }
 
@@ -578,10 +597,12 @@ Peer_Handler::handle_close (ACE_HANDLE,
 {
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
-      ACE_DEBUG ((LM_DEBUG, "shutting down Peer on handle %d\n",
+      ACE_DEBUG ((LM_DEBUG,
+                  "shutting down Peer on handle %d\n",
                  this->get_handle ()));
 
-      ACE_Reactor_Mask mask = ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK;
+      ACE_Reactor_Mask mask = 
+        ACE_Event_Handler::DONT_CALL | ACE_Event_Handler::READ_MASK;
 
       // Explicitly remove ourselves for ACE_STDIN (the <ACE_Reactor>
       // removes the HANDLE.  Note that <ACE_Event_Handler::DONT_CALL>
@@ -715,10 +736,6 @@ Peer_Connector::open (ACE_Reactor *, int)
 int
 Peer_Factory::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              "signal %S occurred\n",
-              signum));
-
   if (signum != SIGPIPE)
     // Shut down the main event loop.
     ACE_Reactor::end_event_loop();
@@ -793,7 +810,10 @@ Peer_Factory::init (int argc, char *argv[])
 
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "%p\n",
+                       "register_handler"), 
+                      -1);
 
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR)
       && this->consumer_acceptor_.open

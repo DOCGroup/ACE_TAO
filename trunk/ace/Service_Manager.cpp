@@ -143,17 +143,8 @@ ACE_Service_Manager::get_handle (void) const
 }
 
 int
-ACE_Service_Manager::handle_signal (int sig, siginfo_t *, ucontext_t *)
+ACE_Service_Manager::handle_signal (int, siginfo_t *, ucontext_t *)
 {
-#if defined (ACE_NLOGGING)
-  ACE_UNUSED_ARG (sig);
-#endif /* ACE_NLOGGING */
-
-  ACE_TRACE ("ACE_Service_Manager::handle_signal");
-  if (this->debug_)
-    ACE_DEBUG ((LM_DEBUG,
-                ASYS_TEXT ("got %S\n"),
-                sig));
   return 0;
 }
 

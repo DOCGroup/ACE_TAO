@@ -191,9 +191,13 @@ Connection_Handler::handle_signal (int signum,
 				   siginfo_t *,
 				   ucontext_t *)
 {
+  // @@ Note that this code is not portable to all OS platforms since
+  // it uses print statements within signal handler context.
+
   ACE_DEBUG ((LM_DEBUG,
               "received signal %S\n",
               signum));
+
   this->finished_ = 1;
   return 0;
 }

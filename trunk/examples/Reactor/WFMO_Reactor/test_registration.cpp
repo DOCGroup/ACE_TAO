@@ -68,27 +68,22 @@ int
 Simple_Handler::handle_signal (int signum, siginfo_t *s, ucontext_t *)
 {
   ACE_HANDLE handle = s->si_handle_;
-  ACE_DEBUG ((LM_DEBUG, "Simple_Handler::handle_signal handle = %d\n", handle));
+
   this->handle_signal_count_++;
 
   if (this->handle_signal_count_ == 1)
-    {
-      ACE_DEBUG ((LM_DEBUG, "suspending handle = %d\n", event1_.handle ()));      
-      this->reactor ()->suspend_handler (event1_.handle ());
-    }
+    this->reactor ()->suspend_handler (event1_.handle ());
   else if (this->handle_signal_count_ == 2)
     {
-      ACE_DEBUG ((LM_DEBUG, "resuming handle = %d\n", event1_.handle ()));      
       this->reactor ()->resume_handler (event1_.handle ());
-      ACE_DEBUG ((LM_DEBUG, "suspending handle = %d\n", event2_.handle ()));      
       this->reactor ()->suspend_handler (event2_.handle ());
     }
   else if (this->handle_signal_count_ == 3)
     {
-      ACE_DEBUG ((LM_DEBUG, "removing handle = %d\n", event1_.handle ()));      
-      this->reactor ()->remove_handler (event1_.handle (), ACE_Event_Handler::NULL_MASK);
-      ACE_DEBUG ((LM_DEBUG, "removing handle = %d\n", event2_.handle ()));      
-      this->reactor ()->remove_handler (event2_.handle (), ACE_Event_Handler::NULL_MASK);
+      this->reactor ()->remove_handler (event1_.handle (),
+                                        ACE_Event_Handler::NULL_MASK);
+      this->reactor ()->remove_handler (event2_.handle (),
+                                        ACE_Event_Handler::NULL_MASK);
     }
   return 0;
 }

@@ -36,9 +36,7 @@ public:
 int 
 Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, 
-              "handling signal: %d iterations left\n", 
-              --this->iterations_));
+  --this->iterations_;
 
   if (this->iterations_ == 0)
     ACE_Reactor::end_event_loop ();    

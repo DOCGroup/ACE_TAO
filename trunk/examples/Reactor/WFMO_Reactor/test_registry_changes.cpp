@@ -67,8 +67,6 @@ Event_Handler::~Event_Handler (void)
 int 
 Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Something changed in the Registry\n"));
-
   if (stop_test)
     this->reactor ()->close ();
   else if (::RegNotifyChangeKeyValue (this->context_.key (), // handle of key to watch 
@@ -77,8 +75,8 @@ Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 				      this->event_.handle (), // handle of signaled event 
 				      TRUE // flag for asynchronous reporting  
 				      ) != ERROR_SUCCESS)
-    ACE_ERROR ((LM_ERROR, "RegNotifyChangeKeyValue could not be setup\n"));
-  
+    ACE_ERROR ((LM_ERROR,
+                "RegNotifyChangeKeyValue could not be setup\n"));
   return 0;
 }
 

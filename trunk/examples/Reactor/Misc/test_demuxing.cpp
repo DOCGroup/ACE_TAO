@@ -118,6 +118,8 @@ Sig_Handler::shutdown (ACE_HANDLE, ACE_Reactor_Mask)
 int
 Sig_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
+  // @@ Note that this code is not portable to all OS platforms since
+  // it uses print statements within signal handler context.
   ACE_DEBUG ((LM_DEBUG,
               "(%t) received signal %S\n",
               signum));

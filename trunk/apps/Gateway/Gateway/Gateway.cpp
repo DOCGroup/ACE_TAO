@@ -54,11 +54,8 @@ protected:
 int
 Gateway::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  if (signum > 0)
-    ACE_DEBUG ((LM_DEBUG, "(%t) %S\n", signum));
-
   // Shut down the main event loop.
-  ACE_Reactor::end_event_loop();
+  ACE_Reactor::end_event_loop ();
   return 0;
 }
 

@@ -123,6 +123,8 @@ public:
                   "register_handler"));
   }
 
+  // @@ Note that this code is not portable to all OS platforms since
+  // it does print statements within the signal handler.
   virtual int handle_signal (int signum,
                              siginfo_t *,
                              ucontext_t *)

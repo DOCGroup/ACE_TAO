@@ -68,7 +68,6 @@ ACE_TS_Clerk_Handler::timeout (void)
 int
 ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
-  ACE_TRACE ("ACE_TS_Clerk_Handler::handle_signal");
   return -1;
 }
 

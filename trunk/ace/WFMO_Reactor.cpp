@@ -1847,7 +1847,9 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum,
 		  result = buffer->eh_->handle_exception (ACE_INVALID_HANDLE);
 		  break;
 		default:
-		  ACE_ERROR ((LM_ERROR, ASYS_TEXT ("invalid mask = %d\n"), buffer->mask_));
+		  ACE_ERROR ((LM_ERROR,
+                              ASYS_TEXT ("invalid mask = %d\n"),
+                              buffer->mask_));
 		  break;
 		}
 	      if (result == -1)

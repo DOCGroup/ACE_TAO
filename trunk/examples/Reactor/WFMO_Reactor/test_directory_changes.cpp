@@ -65,7 +65,6 @@ Event_Handler::~Event_Handler (void)
 int 
 Event_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Something changed in this directory\n"));
   ::FindNextChangeNotification (this->handle_);
   if (stop_test)
     this->reactor ()->close ();
