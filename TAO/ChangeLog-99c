@@ -1,3 +1,9 @@
+Fri Feb 19 22:53:19 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* TAO/tao/Pluggable: Began to add support for CORBA operation
+ 	  calls that can timeout.  Thanks to Kevin Royalty
+ 	  <kroyalty@mdc.com> for suggesting this.
+
 Fri Feb 19 21:52:45 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Invocation.cpp: The Twoway_Invocation class was re-fetching
