@@ -3,7 +3,7 @@
 //=============================================================================
 /**
  *  @file    SOCK_SEQPACK_Association.h
- *  
+ *
  *  $Id$
  *
  *  @author  Patrick J. Lardieri <plardier@atl.lmco.com>
