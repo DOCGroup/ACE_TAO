@@ -325,7 +325,10 @@ CIAO_GLUE_BasicSP::BMDevice_Servant::provide_facet (const char * name
                    Components::InvalidName))
 {
   ACE_UNUSED_ARG (name);
-  ACE_THROW_RETURN (::Components::InvalidName (), 0);
+   if (ACE_OS_String::strcmp (name, "data_read") == 0)
+    return this->provide_data_read (ACE_ENV_SINGLE_ARG_PARAMETER);
+
+ ACE_THROW_RETURN (::Components::InvalidName (), 0);
 }
 
 ::Components::FacetDescriptions *
