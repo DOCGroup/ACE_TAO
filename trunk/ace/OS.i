@@ -922,11 +922,16 @@ ACE_OS::gettimeofday (void)
   ::SystemTimeToFileTime (&tsys, &tfile);
   return ACE_Time_Value (tfile);
 #elif defined (ACE_WIN32)
+  FILETIME   tfile;
+  ::GetSystemTimeAsFileTime (&tfile);
+  return ACE_Time_Value (tfile);
+#if 0
   // From Todd Montgomery...
   struct _timeb tb;
   ::_ftime (&tb);
   tv.tv_sec = tb.time;
   tv.tv_usec = 1000 * tb.millitm;
+#endif /* 0 */
 #elif defined (ACE_HAS_AIX_HI_RES_TIMER)
   timebasestruct_t tb;
 
