@@ -1,3 +1,12 @@
+Fri Mar 18 11:48:48 2005  Gan Deng  <dengg@dre.vanderbilt.edu>
+
+	* tao/RTCORBA/RT_Stub.h: 
+
+	  Changed the member variables defined in the RT_Stub class
+	  from pointer type to "_var" type to avoid memory leak.
+	  Thanks Roland Schmimmack <Roland.Schmimmack@gmx.de> for
+	  reporting the memory leak problem.
+
 Fri Mar 18 10:58:48 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* docs/Options.html (below): 
