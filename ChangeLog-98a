@@ -1,13 +1,13 @@
 Fri Dec 26 18:04:06 1997    <nw1@JIG>
 
-	* ace/Containers.h: Added iterator traits for following classes.
-	     ACE_Unbounded_Set
-	     ACE_Unbounded_Queue
-	     ACE_Unbounded_Stack
-	     ACE_Double_Linked_List
-	     ACE_Fixed_Set
-	     ACE_Bounded_Set
-	  Thanks to <???> for recommending this.
+        * ace/Containers.h: Added iterator traits for following classes.
+             ACE_Unbounded_Set
+             ACE_Unbounded_Queue
+             ACE_Unbounded_Stack
+             ACE_Double_Linked_List
+             ACE_Fixed_Set
+             ACE_Bounded_Set
+          Thanks to <???> for recommending this.
 
 Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -15,14 +15,14 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
           config-osf1-4.0-g++.h.  Thanks to Frederic Andres
           <andres@rd.nacsis.ac.jp> for the DCE threads support #defines.
 
+        * ace/config-osf1-4.0-g++.h: removed.  All Digital Unix 4.0 configs
+          are now supported by config-osf1-4.0.h.
+
         * ace/platform_osf1_4.0.GNU: added comment on how to use DCE threads
           instead of POSIX threads.
 
         * ace/OS.i (thr_getprio): don't apply the !defined(ACE_LACKS_SETSCHED)
           check if ACE_HAS_DCETHREADS.
-
-        * ace/OS.i (cond_timedwait): wrapped first arg to ACE_OSCALL in
-          parens because it confused cxx.
 
         * ace/OS.cpp (thr_create): added || ACE_HAS_DCETHREADS to
           #ifndef ACE_LACKS_SETSCHED, so that priority is set with DCETHREADS.
@@ -32,6 +32,9 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Sched_Params.cpp ({next,previous)_priority): added
           ACE_HAS_DCETHREADS check before !defined(ACE_LACKS_SETSCHED).
+
+        * ace/OS.i (cond_timedwait): wrapped first arg to ACE_OSCALL in
+          parens because it confused cxx.
 
         * examples/System_V_IPC/SV_Message_Queues/{,T}MQ_Server.cpp: renamed
           variable msgque because it conflicted with a symbol in the DEC cxx
@@ -43,31 +46,31 @@ Fri Dec 26 12:03:05 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Dec 26 06:44:25 1997    <nw1@JIG>
 
-	* ace/OS.h (ACE_OS::ace_flock_t): Added a new field "lockname_" to
- 	  remember the lock filename.
+        * ace/OS.h (ACE_OS::ace_flock_t): Added a new field "lockname_" to
+          remember the lock filename.
 
-	* ace/OS.i (flock_init,flock_destroy): We need to remember the
- 	  name of the lock file when initializing the lock and unlink the
- 	  file when destroying the lock.
+        * ace/OS.i (flock_init,flock_destroy): We need to remember the
+          name of the lock file when initializing the lock and unlink the
+          file when destroying the lock.
 
 Thu Dec 25 18:08:42 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/XtReactor.cpp: Removed g++ warning about initialization
- 	  order, enabled read/write masks for
- 	  ACE_Event_Handler::CONNECT_MASK; fixed typo that checks a write
- 	  mask, but sets a read mask; removed unused variable "zero."
-  	  Thanks to Eric Newton for these fixes.
+        * ace/XtReactor.cpp: Removed g++ warning about initialization
+          order, enabled read/write masks for
+          ACE_Event_Handler::CONNECT_MASK; fixed typo that checks a write
+          mask, but sets a read mask; removed unused variable "zero."
+          Thanks to Eric Newton for these fixes.
 
 Thu Dec 25 17:17:16 1997    <nw1@JIG>
 
-	* ace/config-win32.h: * ace/config-win32-common.h: Added macro
- 	  definitions not to use C++-styled castings on Win32 by default
-	  so that we don't depend on the RTTI support.
+        * ace/config-win32.h: * ace/config-win32-common.h: Added macro
+          definitions not to use C++-styled castings on Win32 by default
+          so that we don't depend on the RTTI support.
 
 Thu Dec 25 16:18:03 1997    <irfan@PACHANGA>
 
-	* ace/SString.h (ACE_CString and ACE_WString): Added c_str() to
- 	  make it similar to STL's string class.
+        * ace/SString.h (ACE_CString and ACE_WString): Added c_str() to
+          make it similar to STL's string class.
 
 Wed Dec 24 19:59:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -77,7 +80,7 @@ Wed Dec 24 19:59:15 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Dec 24 18:37:49 1997    <nw1@JIG>
 
-	* ace/Synch.i (get_thread_id,get_nesting_level): Added ACE_INLINE.
+        * ace/Synch.i (get_thread_id,get_nesting_level): Added ACE_INLINE.
 
 Wed Dec 24 18:31:31 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -85,9 +88,9 @@ Wed Dec 24 18:31:31 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Dec 24 14:27:33 1997    <nw1@JIG>
 
-	* ace/Synch.{h,i,cpp} (ACE_Recursive_Thread_Mutex): Changed
-	  ACE_Recursive_Thread_Mutex to inherit from ACE_Thread_Mutex on
- 	  Win32 because ACE_Thread_Mutex is already recusive on Win32.
+        * ace/Synch.{h,i,cpp} (ACE_Recursive_Thread_Mutex): Changed
+          ACE_Recursive_Thread_Mutex to inherit from ACE_Thread_Mutex on
+          Win32 because ACE_Thread_Mutex is already recusive on Win32.
 
 Wed Dec 24 08:14:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -111,10 +114,10 @@ Wed Dec 24 08:14:32 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Wed Dec 24 04:25:49 1997    <nw1@DINGO>
 
-	* ace/OS.i (sema_init): Added checking for initial semaphore
- 	  counts and set the semaphore to non-signaled state if the
- 	  initial count is zero.  Changed the internal variable lock from
- 	  a mutex to a thread_mutex (Critical Section.)
+        * ace/OS.i (sema_init): Added checking for initial semaphore
+          counts and set the semaphore to non-signaled state if the
+          initial count is zero.  Changed the internal variable lock from
+          a mutex to a thread_mutex (Critical Section.)
 
 Tue Dec 23 21:06:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
@@ -126,7 +129,7 @@ Tue Dec 23 21:06:14 1997  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Dec 23 19:34:10 1997    <nw1@JIG>
 
-	* ace/OS.i: Added comments for semaphore simulation.
+        * ace/OS.i: Added comments for semaphore simulation.
 
 Tue Dec 23 19:33:59 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -134,80 +137,80 @@ Tue Dec 23 19:33:59 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Tue Dec 23 19:05:32 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/IOStream_Test.cpp (server): Changed sleep(30) to
-	  sleep(5).  This seems more reasonable.  Thanks to
-	  James Johnson for this suggestion.
+        * tests/IOStream_Test.cpp (server): Changed sleep(30) to
+          sleep(5).  This seems more reasonable.  Thanks to
+          James Johnson for this suggestion.
 
 Tue Dec 23 16:43:14 1997  Steve Huston  <shuston@riverace.com>
 
-	* ace/README: Added descriptions for ACE_HAS_PTHREADS_1003_DOT_1C (this
-	  was in use previously but not documented), ACE_HAS_XTI (new; XTI is
-	  the POSIX superset of TLI - this implies ACE_HAS_TLI),
-	  ACE_NEW_THROWS_EXCEPTIONS (new; the compiler throws bad_alloc if
-	  a 'new' memory allocation fails).
+        * ace/README: Added descriptions for ACE_HAS_PTHREADS_1003_DOT_1C (this
+          was in use previously but not documented), ACE_HAS_XTI (new; XTI is
+          the POSIX superset of TLI - this implies ACE_HAS_TLI),
+          ACE_NEW_THROWS_EXCEPTIONS (new; the compiler throws bad_alloc if
+          a 'new' memory allocation fails).
 
-	* ace/Hash_Map_Manager.cpp - Workaround for an aC++ bug in the HP-UX 11
-	  version of the compiler.
+        * ace/Hash_Map_Manager.cpp - Workaround for an aC++ bug in the HP-UX 11
+          version of the compiler.
 
-	* ace/INET_Addr.cpp: Note the failing host name in the error message
-	  from ACE_INET_Addr::ACE_INET_Addr(u_short, const char []).
+        * ace/INET_Addr.cpp: Note the failing host name in the error message
+          from ACE_INET_Addr::ACE_INET_Addr(u_short, const char []).
 
-	* ace/OS.h: Changes made while porting to HP-UX 11:
-	    - If ACE_HAS_PTHREADS_1003_DOT_1C (POSIX.1C), it implies (by
-	      way of POSIX.1C) that these also be set:
-	        ACE_HAS_PTHREAD_SIGMASK
-	        ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
-	      This is intended to make the process of configuring a new
-	      new platform easier.
-	    - If the new config macro ACE_NEW_THROWS_EXCEPTIONS is set, include
-	      the file <new>.  The "proper" thing to do is to include
-	      <stdexcept>; however, at least on HP-UX 11, this will cause
-	      other things to get brought in, like <memory>, which will
-	      screw up auto_ptr.  The day that all this standard library and
-	      STL stuff is finally straight, there will be dancing in the
-	      streets...
-	    - Support including the proper header file for XTI when it's
-	      supposed to use <xti.h> rather than <tiuser.h> (POSIX specifies
-	      XTI, a superset of TLI, to have <xti.h>)
-	    - If ACE_NEW_THROWS_EXCEPTIONS is set, the ACE_NEW and
-	      ACE_NEW_RETURN macros handle the exception.
+        * ace/OS.h: Changes made while porting to HP-UX 11:
+            - If ACE_HAS_PTHREADS_1003_DOT_1C (POSIX.1C), it implies (by
+              way of POSIX.1C) that these also be set:
+                ACE_HAS_PTHREAD_SIGMASK
+                ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
+              This is intended to make the process of configuring a new
+              new platform easier.
+            - If the new config macro ACE_NEW_THROWS_EXCEPTIONS is set, include
+              the file <new>.  The "proper" thing to do is to include
+              <stdexcept>; however, at least on HP-UX 11, this will cause
+              other things to get brought in, like <memory>, which will
+              screw up auto_ptr.  The day that all this standard library and
+              STL stuff is finally straight, there will be dancing in the
+              streets...
+            - Support including the proper header file for XTI when it's
+              supposed to use <xti.h> rather than <tiuser.h> (POSIX specifies
+              XTI, a superset of TLI, to have <xti.h>)
+            - If ACE_NEW_THROWS_EXCEPTIONS is set, the ACE_NEW and
+              ACE_NEW_RETURN macros handle the exception.
 
-	* ace/OS.i: Fixed check for failure in ACE_OS::sema_init.
+        * ace/OS.i: Fixed check for failure in ACE_OS::sema_init.
 
-	* ace/config-hpux11.h:
-	* ace/config-hpux11-hpc++.h: New configs for HP-UX 11.00
+        * ace/config-hpux11.h:
+        * ace/config-hpux11-hpc++.h: New configs for HP-UX 11.00
 
-	* include/makeinclude/platform_hpux11_aCC.GNU: Platform macros for
-	  HP-UX 11.  It is set up for 32-bit build with comments for how to
-	  do a 64-bit build.
+        * include/makeinclude/platform_hpux11_aCC.GNU: Platform macros for
+          HP-UX 11.  It is set up for 32-bit build with comments for how to
+          do a 64-bit build.
 
-	* examples/Makefile: Added Naming to the directory list to build.
+        * examples/Makefile: Added Naming to the directory list to build.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp: Changed test from
-	  ACE_HAS_SVR4_POLL to ACE_HAS_POLL.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-poll.cpp: Changed test from
+          ACE_HAS_SVR4_POLL to ACE_HAS_POLL.
 
-	* examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
-	* examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
-	* examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp: Fixed a char * being
-	  initialized by a string literal.
+        * examples/IPC_SAP/SOCK_SAP/C-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-unserver.cpp:
+        * examples/IPC_SAP/SOCK_SAP/FD-unserver.cpp: Fixed a char * being
+          initialized by a string literal.
 
-	* examples/Map_Manager/test_hash_map_manager.cpp: Added #include
-	  "ace/SString.h"
+        * examples/Map_Manager/test_hash_map_manager.cpp: Added #include
+          "ace/SString.h"
 
-	* examples/Mem_Map/IO-tests/test_io.cpp: Fixed a char * being
-	  initialized by a string literal.  Fixed diagnostic statements.
+        * examples/Mem_Map/IO-tests/test_io.cpp: Fixed a char * being
+          initialized by a string literal.  Fixed diagnostic statements.
 
-	* examples/Naming/test_multiple_contexts.cpp:
-	* examples/Naming/test_non_existent.cpp:
-	* examples/Naming/test_writers.cpp:  Added Id line for CVS.
+        * examples/Naming/test_multiple_contexts.cpp:
+        * examples/Naming/test_non_existent.cpp:
+        * examples/Naming/test_writers.cpp:  Added Id line for CVS.
 
-	* tests/Time_Value_Test.cpp: Added #include "test_config.h"
+        * tests/Time_Value_Test.cpp: Added #include "test_config.h"
 
 Tue Dec 23 16:12:28 1997    <nw1@DINGO>
 
-	* ace/OS.i: Must use ACE_OS::sema_wait instead of waiting on the
-	  singling event when using simulated semaphores.
+        * ace/OS.i: Must use ACE_OS::sema_wait instead of waiting on the
+          singling event when using simulated semaphores.
 
 Tue Dec 23 08:32:00 1997  Chris Gill  <cdgill@cs.wustl.edu>
 
