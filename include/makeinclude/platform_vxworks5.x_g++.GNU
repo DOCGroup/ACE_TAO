@@ -76,6 +76,20 @@ ifeq ($(CPU),)
   CPU = PPC604
 endif # default CPU
 
+ifeq ($(CPU),SH7700)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -m3
+  CCFLAGS += -fno-implicit-templates
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
+  TOOLENV = sh
+else
+ifeq ($(CPU),SH7700LE)
+  BINXSYM_NAME = xsym
+  CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=SH7700 -DBYTE_ORDER=LITTLE_ENDIAN -m3 -ml
+  CCFLAGS += -fno-implicit-templates
+  GCCLIB_DIR = $(HOST_DIR)/lib/gcc-lib/sh-wrs-vxworks/gcc-2.96
+  TOOLENV = sh
+else
 ifeq ($(CPU),PPC403)
   BINXSYM_NAME = xsym
   CFLAGS += -B$(GCCLIB_DIR)/ -DCPU=PPC403 -mcpu=403
@@ -197,6 +211,8 @@ endif # PPC860
 endif # PPC603
 endif # PPC604
 endif # PPC403
+endif # SH7700
+endif # SH7700LE
 
 #### END target CPU-specific settings
 
