@@ -6,8 +6,8 @@ project : ace_x11, ace_gl {
 
   // Depends on configuration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {
-    CPPFLAGS += $(PLATFORM_FL_CPPFLAGS)
-    LIBS += $(PLATFORM_FL_LIBS)
-    LDFLAGS += $(PLATFORM_FL_LDFLAGS)
+    CPPFLAGS += $(PLATFORM_FL_CPPFLAGS) $(PLATFORM_GL_CPPFLAGS) $(PLATFORM_X11_CPPFLAGS)
+    LIBS += $(PLATFORM_FL_LIBS) $(PLATFORM_GL_LIBS) $(PLATFORM_X11_LIBS)
+    LDFLAGS += $(PLATFORM_FL_LDFLAGS) $(PLATFORM_GL_LDFLAGS) $(PLATFORM_GL_LDFLAGS)
   }
 }
