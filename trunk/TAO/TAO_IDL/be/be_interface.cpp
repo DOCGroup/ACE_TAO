@@ -656,9 +656,12 @@ be_interface::gen_var_impl (char *interface_local_name,
   cs->indent (); // start with whatever was our current indent level
 
   *cs << "// *************************************************************"
-      << be_nl;
-  *cs << "// Operations for class " << fname << be_nl;
-  *cs << "// *************************************************************\n\n";
+      << be_nl
+      << "// " << fname << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl
+      << "// *************************************************************"
+      << be_nl << be_nl;
 
   // Default constructor.
   *cs << fname << "::" << lname
@@ -921,104 +924,104 @@ be_interface::gen_out_impl (char *interface_local_name,
   ACE_OS::memset (lname, '\0', NAMEBUFSIZE);
   ACE_OS::sprintf (lname, "%s_out", interface_local_name);
 
-  TAO_OutStream *ci = tao_cg->client_stubs ();
+  TAO_OutStream *cs = tao_cg->client_stubs ();
 
   // Generate the var implementation in the inline file
   // Depending upon the data type, there are some differences which we account
   // for over here.
 
   // Start with whatever was our current indent level.
-  ci->indent ();
+  cs->indent ();
 
-  *ci << "// *************************************************************"
+  *cs << "// *************************************************************"
       << be_nl
-      << "// fname" << be_nl
-      << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl
+      << "// " << fname << be_nl
+      << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl
       << "// *************************************************************"
       << be_nl << be_nl;
 
       // Constructor from a _ptr.
-  *ci << fname << "::" << lname
+  *cs << fname << "::" << lname
       << " ("  << interface_local_name
       << "_ptr &p)" << be_nl;
-  *ci << "  : ptr_ (p)" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "this->ptr_ = ::" << interface_full_name
+  *cs << "  : ptr_ (p)" << be_nl;
+  *cs << "{" << be_idt_nl;
+  *cs << "this->ptr_ = ::" << interface_full_name
       << "::_nil ();" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // Constructor from _var &.
-  *ci << fname << "::" << lname
+  *cs << fname << "::" << lname
       << " (" << interface_local_name
       << "_var &p) // constructor from _var" << be_nl;
-  *ci << "  : ptr_ (p.out ())" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "CORBA::release (this->ptr_);" << be_nl;
-  *ci << "this->ptr_ = ::" << interface_full_name
+  *cs << "  : ptr_ (p.out ())" << be_nl;
+  *cs << "{" << be_idt_nl;
+  *cs << "CORBA::release (this->ptr_);" << be_nl;
+  *cs << "this->ptr_ = ::" << interface_full_name
       << "::_nil ();" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // Copy constructor.
-  *ci << fname << "::" << lname
+  *cs << fname << "::" << lname
       << " (const ::" << interface_full_name
       << "_out &p) // copy constructor" << be_nl;
-  *ci << "  : ptr_ (ACE_const_cast (" << interface_local_name
+  *cs << "  : ptr_ (ACE_const_cast (" << interface_local_name
       << "_out &, p).ptr_)" << be_nl;
-  *ci << "{}" << be_nl << be_nl;
+  *cs << "{}" << be_nl << be_nl;
 
   // Assignment operator from _out &.
-  *ci << "::" << fname
+  *cs << "::" << fname
       << " &" << be_nl;
-  *ci << fname << "::operator= (const ::" << interface_full_name
+  *cs << fname << "::operator= (const ::" << interface_full_name
       << "_out &p)" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "this->ptr_ = ACE_const_cast (" << interface_local_name
+  *cs << "{" << be_idt_nl;
+  *cs << "this->ptr_ = ACE_const_cast (" << interface_local_name
       << "_out&, p).ptr_;" << be_nl;
-  *ci << "return *this;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << "return *this;" << be_uidt_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // Assignment operator from _var.
-  *ci << fname << " &" << be_nl;
-  *ci << fname << "::operator= (const ::" << interface_full_name
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (const ::" << interface_full_name
       << "_var &p)" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "this->ptr_ = ::" << interface_full_name
+  *cs << "{" << be_idt_nl;
+  *cs << "this->ptr_ = ::" << interface_full_name
       << "::_duplicate (p.ptr ());" << be_nl;
-  *ci << "return *this;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << "return *this;" << be_uidt_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // Assignment operator from _ptr.
-  *ci << fname << " &" << be_nl;
-  *ci << fname << "::operator= (" << interface_local_name
+  *cs << fname << " &" << be_nl;
+  *cs << fname << "::operator= (" << interface_local_name
       << "_ptr p)" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "this->ptr_ = p;" << be_nl;
-  *ci << "return *this;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << "{" << be_idt_nl;
+  *cs << "this->ptr_ = p;" << be_nl;
+  *cs << "return *this;" << be_uidt_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // Other extra methods - cast operator ().
-  *ci << fname << "::operator ::" << interface_full_name
+  *cs << fname << "::operator ::" << interface_full_name
       << "_ptr &() // cast" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << "{" << be_idt_nl;
+  *cs << "return this->ptr_;" << be_uidt_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // ptr function.
-  *ci << "::" << interface_full_name
+  *cs << "::" << interface_full_name
       << "_ptr &" << be_nl;
-  *ci << fname << "::ptr (void) // ptr" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}" << be_nl << be_nl;
+  *cs << fname << "::ptr (void) // ptr" << be_nl;
+  *cs << "{" << be_idt_nl;
+  *cs << "return this->ptr_;" << be_uidt_nl;
+  *cs << "}" << be_nl << be_nl;
 
   // operator->
-  *ci << "::" << interface_full_name
+  *cs << "::" << interface_full_name
       << "_ptr" << be_nl;
-  *ci << fname << "::operator-> (void)" << be_nl;
-  *ci << "{" << be_idt_nl;
-  *ci << "return this->ptr_;" << be_uidt_nl;
-  *ci << "}\n\n";
+  *cs << fname << "::operator-> (void)" << be_nl;
+  *cs << "{" << be_idt_nl;
+  *cs << "return this->ptr_;" << be_uidt_nl;
+  *cs << "}\n\n";
 
   return 0;
 }
