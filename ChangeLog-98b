@@ -92,8 +92,8 @@ Mon Nov 09 21:31:56 1998  David L. Levine  <levine@cs.wustl.edu>
 Mon Nov  9 02:52:11 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/Signal.cpp: handle_close() wasn't being called when
-          handle_signal() returns -1.  It is now...  Thanks to Vincentini
-          Emanuele <arena.sci.univr.it> for reporting this.
+ 	  handle_signal() returns -1.  It is now...  Thanks to Vicentini
+ 	  Emanuele <arena.sci.univr.it> for reporting this.
 
         * ace/Event_Handler.h (ACE_Event_Handler): Added a SIGNAL_MASK so
           that we can pass this to handle_close() when handle_signal()
