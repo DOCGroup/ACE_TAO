@@ -26,7 +26,7 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// be/be_codegen.cpp:338
 
 
 #include "IIOPC.h"
@@ -41,41 +41,42 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IIOP_ListenPoint[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   33,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x2f4c6973),
-  ACE_NTOHL (0x74656e50),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x2f4c6973), 
+  ACE_NTOHL (0x74656e50), 
+  ACE_NTOHL (0x6f696e74), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
     12,
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x656e506f),
+  ACE_NTOHL (0x4c697374), 
+  ACE_NTOHL (0x656e506f), 
   ACE_NTOHL (0x696e7400),  // name = ListenPoint
   2, // member count
     5,
-  ACE_NTOHL (0x686f7374),
+  ACE_NTOHL (0x686f7374), 
   ACE_NTOHL (0x0),  // name = host
-    CORBA::tk_string,
+    CORBA::tk_string, 
   0U, // string length
   5,
-  ACE_NTOHL (0x706f7274),
+  ACE_NTOHL (0x706f7274), 
   ACE_NTOHL (0x0),  // name = port
     CORBA::tk_ushort,
 
@@ -95,13 +96,21 @@ namespace IIOP
     &_tc_TAO_tc_IIOP_ListenPoint;
 }
 
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/structure_cs.cpp:66
 
+void 
+IIOP::ListenPoint::_tao_any_destructor (
+    void *_tao_void_pointer
+  )
+{
+  ListenPoint *_tao_tmp_pointer =
+    ACE_static_cast (ListenPoint *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
 
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+// TAO_IDL - Generated from 
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_IIOP_LISTENPOINTLIST_CS_)
 #define _IIOP_LISTENPOINTLIST_CS_
@@ -142,29 +151,38 @@ IIOP::ListenPointList::ListenPointList (
 IIOP::ListenPointList::~ListenPointList (void)
 {}
 
+void IIOP::ListenPointList::_tao_any_destructor (
+    void * _tao_void_pointer
+  )
+{
+  ListenPointList * _tao_tmp_pointer =
+    ACE_static_cast (ListenPointList *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
+
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IIOP_ListenPointList[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   37,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x2f4c6973),
-  ACE_NTOHL (0x74656e50),
-  ACE_NTOHL (0x6f696e74),
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x2f4c6973), 
+  ACE_NTOHL (0x74656e50), 
+  ACE_NTOHL (0x6f696e74), 
+  ACE_NTOHL (0x4c697374), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPointList:1.0
     16,
-  ACE_NTOHL (0x4c697374),
-  ACE_NTOHL (0x656e506f),
-  ACE_NTOHL (0x696e744c),
+  ACE_NTOHL (0x4c697374), 
+  ACE_NTOHL (0x656e506f), 
+  ACE_NTOHL (0x696e744c), 
   ACE_NTOHL (0x69737400),  // name = ListenPointList
     CORBA::tk_sequence, // typecode kind
   116, // encapsulation length
@@ -173,27 +191,27 @@ static const CORBA::Long _oc_IIOP_ListenPointList[] =
     100, // encapsulation length
       TAO_ENCAP_BYTE_ORDER, // byte order
       33,
-      ACE_NTOHL (0x49444c3a),
-      ACE_NTOHL (0x6f6d672e),
-      ACE_NTOHL (0x6f72672f),
-      ACE_NTOHL (0x49494f50),
-      ACE_NTOHL (0x2f4c6973),
-      ACE_NTOHL (0x74656e50),
-      ACE_NTOHL (0x6f696e74),
-      ACE_NTOHL (0x3a312e30),
+      ACE_NTOHL (0x49444c3a), 
+      ACE_NTOHL (0x6f6d672e), 
+      ACE_NTOHL (0x6f72672f), 
+      ACE_NTOHL (0x49494f50), 
+      ACE_NTOHL (0x2f4c6973), 
+      ACE_NTOHL (0x74656e50), 
+      ACE_NTOHL (0x6f696e74), 
+      ACE_NTOHL (0x3a312e30), 
       ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
             12,
-      ACE_NTOHL (0x4c697374),
-      ACE_NTOHL (0x656e506f),
+      ACE_NTOHL (0x4c697374), 
+      ACE_NTOHL (0x656e506f), 
       ACE_NTOHL (0x696e7400),  // name = ListenPoint
       2, // member count
             5,
-      ACE_NTOHL (0x686f7374),
+      ACE_NTOHL (0x686f7374), 
       ACE_NTOHL (0x0),  // name = host
-            CORBA::tk_string,
+            CORBA::tk_string, 
       0U, // string length
       5,
-      ACE_NTOHL (0x706f7274),
+      ACE_NTOHL (0x706f7274), 
       ACE_NTOHL (0x0),  // name = port
             CORBA::tk_ushort,
 
@@ -217,55 +235,55 @@ namespace IIOP
 }
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_IIOP_BiDirIIOPServiceContext[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   45,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x49494f50),
-  ACE_NTOHL (0x2f426944),
-  ACE_NTOHL (0x69724949),
-  ACE_NTOHL (0x4f505365),
-  ACE_NTOHL (0x72766963),
-  ACE_NTOHL (0x65436f6e),
-  ACE_NTOHL (0x74657874),
-  ACE_NTOHL (0x3a312e30),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x49494f50), 
+  ACE_NTOHL (0x2f426944), 
+  ACE_NTOHL (0x69724949), 
+  ACE_NTOHL (0x4f505365), 
+  ACE_NTOHL (0x72766963), 
+  ACE_NTOHL (0x65436f6e), 
+  ACE_NTOHL (0x74657874), 
+  ACE_NTOHL (0x3a312e30), 
   ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/BiDirIIOPServiceContext:1.0
     24,
-  ACE_NTOHL (0x42694469),
-  ACE_NTOHL (0x7249494f),
-  ACE_NTOHL (0x50536572),
-  ACE_NTOHL (0x76696365),
-  ACE_NTOHL (0x436f6e74),
+  ACE_NTOHL (0x42694469), 
+  ACE_NTOHL (0x7249494f), 
+  ACE_NTOHL (0x50536572), 
+  ACE_NTOHL (0x76696365), 
+  ACE_NTOHL (0x436f6e74), 
   ACE_NTOHL (0x65787400),  // name = BiDirIIOPServiceContext
   1, // member count
     14,
-  ACE_NTOHL (0x6c697374),
-  ACE_NTOHL (0x656e5f70),
-  ACE_NTOHL (0x6f696e74),
+  ACE_NTOHL (0x6c697374), 
+  ACE_NTOHL (0x656e5f70), 
+  ACE_NTOHL (0x6f696e74), 
   ACE_NTOHL (0x73000000),  // name = listen_points
     CORBA::tk_alias, // typecode kind for typedefs
   192, // encapsulation length
     TAO_ENCAP_BYTE_ORDER, // byte order
     37,
-    ACE_NTOHL (0x49444c3a),
-    ACE_NTOHL (0x6f6d672e),
-    ACE_NTOHL (0x6f72672f),
-    ACE_NTOHL (0x49494f50),
-    ACE_NTOHL (0x2f4c6973),
-    ACE_NTOHL (0x74656e50),
-    ACE_NTOHL (0x6f696e74),
-    ACE_NTOHL (0x4c697374),
-    ACE_NTOHL (0x3a312e30),
+    ACE_NTOHL (0x49444c3a), 
+    ACE_NTOHL (0x6f6d672e), 
+    ACE_NTOHL (0x6f72672f), 
+    ACE_NTOHL (0x49494f50), 
+    ACE_NTOHL (0x2f4c6973), 
+    ACE_NTOHL (0x74656e50), 
+    ACE_NTOHL (0x6f696e74), 
+    ACE_NTOHL (0x4c697374), 
+    ACE_NTOHL (0x3a312e30), 
     ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPointList:1.0
         16,
-    ACE_NTOHL (0x4c697374),
-    ACE_NTOHL (0x656e506f),
-    ACE_NTOHL (0x696e744c),
+    ACE_NTOHL (0x4c697374), 
+    ACE_NTOHL (0x656e506f), 
+    ACE_NTOHL (0x696e744c), 
     ACE_NTOHL (0x69737400),  // name = ListenPointList
         CORBA::tk_sequence, // typecode kind
     116, // encapsulation length
@@ -274,27 +292,27 @@ static const CORBA::Long _oc_IIOP_BiDirIIOPServiceContext[] =
       100, // encapsulation length
         TAO_ENCAP_BYTE_ORDER, // byte order
         33,
-        ACE_NTOHL (0x49444c3a),
-        ACE_NTOHL (0x6f6d672e),
-        ACE_NTOHL (0x6f72672f),
-        ACE_NTOHL (0x49494f50),
-        ACE_NTOHL (0x2f4c6973),
-        ACE_NTOHL (0x74656e50),
-        ACE_NTOHL (0x6f696e74),
-        ACE_NTOHL (0x3a312e30),
+        ACE_NTOHL (0x49444c3a), 
+        ACE_NTOHL (0x6f6d672e), 
+        ACE_NTOHL (0x6f72672f), 
+        ACE_NTOHL (0x49494f50), 
+        ACE_NTOHL (0x2f4c6973), 
+        ACE_NTOHL (0x74656e50), 
+        ACE_NTOHL (0x6f696e74), 
+        ACE_NTOHL (0x3a312e30), 
         ACE_NTOHL (0x0),  // repository ID = IDL:omg.org/IIOP/ListenPoint:1.0
                 12,
-        ACE_NTOHL (0x4c697374),
-        ACE_NTOHL (0x656e506f),
+        ACE_NTOHL (0x4c697374), 
+        ACE_NTOHL (0x656e506f), 
         ACE_NTOHL (0x696e7400),  // name = ListenPoint
         2, // member count
                 5,
-        ACE_NTOHL (0x686f7374),
+        ACE_NTOHL (0x686f7374), 
         ACE_NTOHL (0x0),  // name = host
-                CORBA::tk_string,
+                CORBA::tk_string, 
         0U, // string length
         5,
-        ACE_NTOHL (0x706f7274),
+        ACE_NTOHL (0x706f7274), 
         ACE_NTOHL (0x0),  // name = port
                 CORBA::tk_ushort,
 
@@ -318,13 +336,21 @@ namespace IIOP
     &_tc_TAO_tc_IIOP_BiDirIIOPServiceContext;
 }
 
+// TAO_IDL - Generated from 
+// be/be_visitor_structure/structure_cs.cpp:66
+
+void 
+IIOP::BiDirIIOPServiceContext::_tao_any_destructor (
+    void *_tao_void_pointer
+  )
+{
+  BiDirIIOPServiceContext *_tao_tmp_pointer =
+    ACE_static_cast (BiDirIIOPServiceContext *, _tao_void_pointer);
+  delete _tao_tmp_pointer;
+}
+
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_structure/structure_cs.cpp:66
-
-
-
-// TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_IIOP_ListenPointList_CPP_
 #define _TAO_CDR_OP_IIOP_ListenPointList_CPP_
@@ -335,20 +361,20 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-
+  
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm << _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
     }
-
+  
   return 0;
 }
 
@@ -358,7 +384,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-
+  
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -368,35 +394,35 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-
+      
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-
+      
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len)
+      if (0 >= _tao_seq_len) 
         {
           return 1;
         }
-
+      
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-
+      
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i]);
         }
-
+      
       return _tao_marshal_flag;
-
+    
     }
-
+  
   return 0;
 }
 
 #endif /* _TAO_CDR_OP_IIOP_ListenPointList_CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -435,8 +461,8 @@ CORBA::Boolean operator>> (
         IIOP::ListenPoint
       >;
 
-#if !defined (_IIOP_LISTENPOINTLIST_EXPLICIT_CS_)
-#define _IIOP_LISTENPOINTLIST_EXPLICIT_CS_
+#if !defined (_IIOP_LISTENPOINT__EXPLICIT_CS_)
+#define _IIOP_LISTENPOINT__EXPLICIT_CS_
 
   template class
     TAO_Unbounded_Sequence<
@@ -498,8 +524,8 @@ CORBA::Boolean operator>> (
         IIOP::ListenPoint \
       >
 
-#if !defined (_IIOP_LISTENPOINTLIST_CS_)
-#define _IIOP_LISTENPOINTLIST_CS_
+#if !defined (_IIOP_LISTENPOINT__EXPLICIT_CS_)
+#define _IIOP_LISTENPOINT__EXPLICIT_CS_
 
 # pragma instantiate \
     TAO_Unbounded_Sequence< \
@@ -524,4 +550,5 @@ CORBA::Boolean operator>> (
         IIOP::BiDirIIOPServiceContext_var \
       >
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
+

@@ -203,7 +203,7 @@ TAO::Collocation_Proxy_Broker *
       &_tao_retval,
       &_tao_policy_type
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -212,10 +212,10 @@ TAO::Collocation_Proxy_Broker *
       17,
       this->the_TAO_DomainManager_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.excp ());
-  
+
   return _tao_retval.retn ();
 }
 
@@ -254,13 +254,28 @@ CORBA::DomainManager::_narrow (
 }
 
 CORBA::DomainManager_ptr
+CORBA::DomainManager::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL
+  )
+{
+  return
+    TAO::Narrow_Utils<DomainManager>::unchecked_narrow (
+        _tao_objref,
+        "IDL:omg.org/CORBA/DomainManager:1.0",
+        CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+CORBA::DomainManager_ptr
 CORBA::DomainManager::_duplicate (DomainManager_ptr obj)
 {
   if (! CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -308,7 +323,7 @@ CORBA::DomainManager::marshal (TAO_OutputCDR &cdr)
 
 // Traits specializations for CORBA::ConstructionPolicy.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ConstructionPolicy_ptr
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_duplicate (
     CORBA::ConstructionPolicy_ptr p
@@ -317,7 +332,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_duplicate (
   return CORBA::ConstructionPolicy::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_release (
     CORBA::ConstructionPolicy_ptr p
@@ -326,14 +341,14 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::ConstructionPolicy_ptr
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_nil (void)
 {
   return CORBA::ConstructionPolicy::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_marshal (
     CORBA::ConstructionPolicy_ptr p,
@@ -344,7 +359,7 @@ TAO::Objref_Traits<CORBA::ConstructionPolicy>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker * 
+TAO::Collocation_Proxy_Broker *
 (*CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -365,25 +380,25 @@ void CORBA::ConstructionPolicy::make_domain_manager (
     {
       ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
     }
-  
+
   if (this->the_TAO_ConstructionPolicy_Proxy_Broker_ == 0)
     {
       CORBA_ConstructionPolicy_setup_collocation (
           this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
         );
     }
-  
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits<CORBA::InterfaceDef>::in_arg_val _tao_object_type (object_type);
   TAO::Arg_Traits<ACE_InputCDR::to_boolean>::in_arg_val _tao_constr_policy (constr_policy);
-  
+
   TAO::Argument *_tao_signature [] =
     {
       &_tao_retval,
       &_tao_object_type,
       &_tao_constr_policy
     };
-  
+
   TAO::Invocation_Adapter _tao_call (
       this,
       _tao_signature,
@@ -392,7 +407,7 @@ void CORBA::ConstructionPolicy::make_domain_manager (
       19,
       this->the_TAO_ConstructionPolicy_Proxy_Broker_
     );
-  
+
   _tao_call.invoke (0, 0 ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
@@ -411,7 +426,7 @@ CORBA::ConstructionPolicy::CORBA_ConstructionPolicy_setup_collocation (int collo
       this->the_TAO_ConstructionPolicy_Proxy_Broker_ =
         ::CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer (this);
     }
-  
+
   this->CORBA_Policy_setup_collocation (collocated);
 }
 
@@ -434,13 +449,28 @@ CORBA::ConstructionPolicy::_narrow (
 }
 
 CORBA::ConstructionPolicy_ptr
+CORBA::ConstructionPolicy::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL
+  )
+{
+  return
+    TAO::Narrow_Utils<ConstructionPolicy>::unchecked_narrow (
+        _tao_objref,
+        "IDL:omg.org/CORBA/ConstructionPolicy:1.0",
+        CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer
+        ACE_ENV_ARG_PARAMETER
+      );
+}
+
+CORBA::ConstructionPolicy_ptr
 CORBA::ConstructionPolicy::_duplicate (ConstructionPolicy_ptr obj)
 {
   if (! CORBA::is_nil (obj))
     {
       obj->_add_ref ();
     }
-  
+
   return obj;
 }
 
@@ -487,7 +517,7 @@ CORBA::ConstructionPolicy::marshal (TAO_OutputCDR &cdr)
   return (cdr << this);
 }
 
-// TAO_IDL - Generated from 
+// TAO_IDL - Generated from
 // be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_DOMAINMANAGERLIST_CS_)
@@ -552,21 +582,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if ((strm >> obj.inout ()) == 0)
     {
       return 0;
     }
-  
+
   typedef ::CORBA::DomainManager RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_DomainManager_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 
@@ -588,21 +618,21 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::Object_var obj;
-  
+
   if ((strm >> obj.inout ()) == 0)
     {
       return 0;
     }
-  
+
   typedef ::CORBA::ConstructionPolicy RHS_SCOPED_NAME;
-  
+
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (
         obj.in (),
         CORBA__TAO_ConstructionPolicy_Proxy_Broker_Factory_function_pointer
       );
-    
+
   return 1;
 }
 
@@ -618,21 +648,21 @@ CORBA::Boolean operator<< (
   )
 {
   CORBA::ULong _tao_seq_len = _tao_sequence.length ();
-  
+
   if (strm << _tao_seq_len)
     {
       // Encode all elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag =
             _tao_sequence[i].in ()->marshal (strm);
         }
-      
+
       return _tao_marshal_flag;
     }
-  
+
   return 0;
 }
 
@@ -642,7 +672,7 @@ CORBA::Boolean operator>> (
   )
 {
   CORBA::ULong _tao_seq_len;
-  
+
   if (strm >> _tao_seq_len)
     {
       // Add a check to the length of the sequence
@@ -652,28 +682,28 @@ CORBA::Boolean operator>> (
         {
           return 0;
         }
-      
+
       // Set the length of the sequence.
       _tao_sequence.length (_tao_seq_len);
-      
+
       // If length is 0 we return true.
-      if (0 >= _tao_seq_len) 
+      if (0 >= _tao_seq_len)
         {
           return 1;
         }
-      
+
       // Retrieve all the elements.
       CORBA::Boolean _tao_marshal_flag = 1;
-      
+
       for (CORBA::ULong i = 0; i < _tao_seq_len && _tao_marshal_flag; ++i)
         {
           _tao_marshal_flag = (strm >> _tao_sequence[i].out ());
         }
-      
+
       return _tao_marshal_flag;
-    
+
     }
-  
+
   return 0;
 }
 
@@ -729,7 +759,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         CORBA::DomainManager
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::DomainManager
@@ -754,7 +784,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T<
         CORBA::ConstructionPolicy
       >;
-  
+
   template class
     TAO_Objref_Out_T<
         CORBA::ConstructionPolicy
@@ -857,7 +887,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         CORBA::DomainManager
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::DomainManager
@@ -882,7 +912,7 @@ CORBA::Boolean operator>> (
     TAO_Objref_Var_T< \
         CORBA::ConstructionPolicy
       >
-  
+
 # pragma instantiate \
     TAO_Objref_Out_T< \
         CORBA::ConstructionPolicy
@@ -932,5 +962,4 @@ CORBA::Boolean operator>> (
 
 #endif /* end #if !defined */
 
-#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 
-
+#endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

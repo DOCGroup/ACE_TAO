@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Dynamic_ParameterList_I_
 #define _TAO_CDR_OP_Dynamic_ParameterList_I_
@@ -45,7 +45,7 @@ CORBA::Boolean TAO_Export operator>> (
 #endif /* _TAO_CDR_OP_Dynamic_ParameterList_I_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_ci.cpp:81
+// be/be_visitor_sequence/cdr_op_ci.cpp:81
 
 #if !defined _TAO_CDR_OP_Dynamic_ExceptionList_I_
 #define _TAO_CDR_OP_Dynamic_ExceptionList_I_

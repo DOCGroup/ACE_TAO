@@ -27,7 +27,7 @@
 
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/cdr_op_ci.cpp:71
+// be/be_visitor_exception/cdr_op_ci.cpp:71
 
 ACE_INLINE
 CORBA::Boolean operator<< (

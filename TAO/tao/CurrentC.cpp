@@ -26,11 +26,11 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be/be_codegen.cpp:338
 
 
 #include "CurrentC.h"
-#include "Typecode.h"
+#include "tao/Typecode.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -41,22 +41,22 @@
 #include "CurrentC.i"
 #endif /* !defined INLINE */
 
-#include "ace/OS_NS_string.h"
-
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
 }
 
+
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for CORBA::Current.
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION CORBA::Current_ptr
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+CORBA::Current_ptr
 TAO::Objref_Traits<CORBA::Current>::tao_duplicate (
     CORBA::Current_ptr p
   )
@@ -64,7 +64,8 @@ TAO::Objref_Traits<CORBA::Current>::tao_duplicate (
   return CORBA::Current::_duplicate (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION void
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+void
 TAO::Objref_Traits<CORBA::Current>::tao_release (
     CORBA::Current_ptr p
   )
@@ -72,13 +73,15 @@ TAO::Objref_Traits<CORBA::Current>::tao_release (
   CORBA::release (p);
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION CORBA::Current_ptr
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+CORBA::Current_ptr
 TAO::Objref_Traits<CORBA::Current>::tao_nil (void)
 {
   return CORBA::Current::_nil ();
 }
 
-ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION CORBA::Boolean
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
+CORBA::Boolean
 TAO::Objref_Traits<CORBA::Current>::tao_marshal (
     CORBA::Current_ptr p,
     TAO_OutputCDR & cdr
@@ -88,7 +91,7 @@ TAO::Objref_Traits<CORBA::Current>::tao_marshal (
 }
 
 // Function pointer for collocation factory initialization.
-TAO::Collocation_Proxy_Broker *
+TAO::Collocation_Proxy_Broker * 
 (*CORBA__TAO_Current_Proxy_Broker_Factory_function_pointer) (
     CORBA::Object_ptr obj
   ) = 0;
@@ -98,6 +101,14 @@ CORBA::Current::Current (void)
 
 CORBA::Current::~Current (void)
 {}
+
+void 
+CORBA::Current::_tao_any_destructor (void *_tao_void_pointer)
+{
+  Current *_tao_tmp_pointer =
+    ACE_static_cast (Current *, _tao_void_pointer);
+  CORBA::release (_tao_tmp_pointer);
+}
 
 CORBA::Current_ptr
 CORBA::Current::_narrow (
@@ -109,10 +120,27 @@ CORBA::Current::_narrow (
     {
       return Current::_nil ();
     }
-
+  
   Current_ptr proxy =
     dynamic_cast<Current_ptr> (_tao_objref);
+  
+  return Current::_duplicate (proxy);
+}
 
+CORBA::Current_ptr
+CORBA::Current::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Current::_nil ();
+    }
+  
+  Current_ptr proxy =
+    dynamic_cast<Current_ptr> (_tao_objref);
+  
   return Current::_duplicate (proxy);
 }
 
@@ -123,7 +151,7 @@ CORBA::Current::_duplicate (Current_ptr obj)
     {
       obj->_add_ref ();
     }
-
+  
   return obj;
 }
 
@@ -174,16 +202,16 @@ static const CORBA::Long _oc_CORBA_Current[] =
 {
     TAO_ENCAP_BYTE_ORDER, // byte order
   30,
-  ACE_NTOHL (0x49444c3a),
-  ACE_NTOHL (0x6f6d672e),
-  ACE_NTOHL (0x6f72672f),
-  ACE_NTOHL (0x434f5242),
-  ACE_NTOHL (0x412f4375),
-  ACE_NTOHL (0x7272656e),
-  ACE_NTOHL (0x743a312e),
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x434f5242), 
+  ACE_NTOHL (0x412f4375), 
+  ACE_NTOHL (0x7272656e), 
+  ACE_NTOHL (0x743a312e), 
   ACE_NTOHL (0x30000000),  // repository ID = IDL:omg.org/CORBA/Current:1.0
     8,
-  ACE_NTOHL (0x43757272),
+  ACE_NTOHL (0x43757272), 
   ACE_NTOHL (0x656e7400),  // name = Current
   };
 
@@ -202,7 +230,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
