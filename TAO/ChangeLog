@@ -1,3 +1,20 @@
+Wed Apr 23 17:05:10 2003  Irfan Pyarali  <irfan@oomworks.com>
+
+        * tests/Bug_1020_Basic_Regression/Bug_1020_Basic_Regression.dsw:
+        * tests/Bug_1020_Basic_Regression/client.dsp:
+        * tests/Bug_1020_Basic_Regression/server.dsp:
+        * tests/Bug_1020_Regression/Bug_1020_Regression.dsw:
+        * tests/Bug_1020_Regression/client.dsp:
+        * tests/Bug_1020_Regression/server.dsp:
+
+	  Reinstated these files.  These two tests should compile on VC6
+	  now that config-win32-msvc-6.h file has been updated and the -GR
+	  flag has been added to the project files.
+
+	* tests\RTCORBA\RTCORBA-test-configurations.xls: 
+
+	  Updated test configuration details.
+
 Wed Apr 23 15:51:47 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Sequence_T.h:
