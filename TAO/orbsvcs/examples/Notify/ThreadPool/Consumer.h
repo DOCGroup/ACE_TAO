@@ -21,17 +21,17 @@
 #include "ace/SString.h"
 
 /**
- * @class TAO_Notify_Consumer
+ * @class TAO_Notify_ThreadPool_Consumer
  *
  * @brief Consumer
  *
  */
 
-class TAO_Notify_Consumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
+class TAO_Notify_ThreadPool_Consumer : public POA_CosNotifyComm::StructuredPushConsumer, public PortableServer::RefCountServantBase
 {
 public:
   /// Constuctor
-  TAO_Notify_Consumer (TAO_Notify_ORB_Objects& orb_objects);
+  TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects);
 
   /// Init
   void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, int proxy_supplier_thread_count, int max_events, long delay ACE_ENV_ARG_DECL);
@@ -45,7 +45,7 @@ public:
 protected:
   // = Methods
   /// Destructor
-  virtual ~TAO_Notify_Consumer (void);
+  virtual ~TAO_Notify_ThreadPool_Consumer (void);
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.

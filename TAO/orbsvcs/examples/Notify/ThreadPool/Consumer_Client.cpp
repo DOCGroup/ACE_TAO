@@ -9,9 +9,9 @@
 #include "tao/ORB_Core.h"
 #include "ace/Sched_Params.h"
 
-ACE_RCSID(Notify, TAO_Notify_Consumer_Client, "$id$")
+ACE_RCSID(Notify, TAO_Notify_ThreadPool_Consumer_Client, "$id$")
 
-TAO_Notify_Consumer_Client::TAO_Notify_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
+TAO_Notify_ThreadPool_Consumer_Client::TAO_Notify_ThreadPool_Consumer_Client (TAO_Notify_ORB_Objects& orb_objects)
   : orb_objects_ (orb_objects)
   , consumer_ (0)
   , proxy_supplier_thread_count_ (0)
@@ -20,12 +20,12 @@ TAO_Notify_Consumer_Client::TAO_Notify_Consumer_Client (TAO_Notify_ORB_Objects& 
 {
 }
 
-TAO_Notify_Consumer_Client::~TAO_Notify_Consumer_Client ()
+TAO_Notify_ThreadPool_Consumer_Client::~TAO_Notify_ThreadPool_Consumer_Client ()
 {
 }
 
 int
-TAO_Notify_Consumer_Client::parse_args (int argc, char *argv[])
+TAO_Notify_ThreadPool_Consumer_Client::parse_args (int argc, char *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -61,7 +61,7 @@ TAO_Notify_Consumer_Client::parse_args (int argc, char *argv[])
 }
 
 void
-TAO_Notify_Consumer_Client::init (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer_Client::init (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -104,14 +104,14 @@ TAO_Notify_Consumer_Client::init (ACE_ENV_SINGLE_ARG_DECL)
   ACE_CHECK;
 
   // Create a Consumer
-  this->consumer_ = new TAO_Notify_Consumer (this->orb_objects_);
+  this->consumer_ = new TAO_Notify_ThreadPool_Consumer (this->orb_objects_);
 
   // Initialize it.
   this->consumer_->init (rt_poa, consumer_admin, this->proxy_supplier_thread_count_, this->max_events_, this->delay_ ACE_ENV_ARG_PARAMETER);
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
 {
   PortableServer::POA_var rt_poa;
 
@@ -176,19 +176,19 @@ TAO_Notify_Consumer_Client::create_rt_poa (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-TAO_Notify_Consumer_Client::run (ACE_ENV_SINGLE_ARG_DECL)
+TAO_Notify_ThreadPool_Consumer_Client::run (ACE_ENV_SINGLE_ARG_DECL)
 {
   this->consumer_->run (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
-TAO_Notify_Consumer_Client::dump_stats (void)
+TAO_Notify_ThreadPool_Consumer_Client::dump_stats (void)
 {
   this->consumer_->dump_throughput ();
 }
 
 int
-TAO_Notify_Consumer_Client::svc (void)
+TAO_Notify_ThreadPool_Consumer_Client::svc (void)
 {
   ACE_TRY_NEW_ENV
     {
@@ -232,7 +232,7 @@ main (int argc, char *argv [])
 
       TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
 
-      TAO_Notify_Consumer_Client client (orb_objects);
+      TAO_Notify_ThreadPool_Consumer_Client client (orb_objects);
 
       if (client.parse_args (argc, argv) != 0)
         {
