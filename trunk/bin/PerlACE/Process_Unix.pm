@@ -36,7 +36,7 @@ for(my $i = 0; $i <= $#ARGV; $i++) {
 
 ###############################################################################
 
-### Constructor
+### Constructor and Destructor
 
 sub new  
 {
@@ -52,6 +52,17 @@ sub new
     
     bless ($self, $class);
     return $self;
+}
+
+sub DESTROY
+{
+    my $self = shift;
+    
+    if ($self->{RUNNING} == 1) {
+        print STDERR "ERROR: <", $self->{EXECUTABLE}, 
+                     "> still running upon object destruction\n";
+        $self->Kill ();             
+    }
 }
 
 ###############################################################################

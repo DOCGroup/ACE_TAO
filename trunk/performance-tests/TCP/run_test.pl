@@ -7,26 +7,28 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib '../../bin';
 use PerlACE::Run_Test;
-use Cwd;
 
-my $SV = new PerlACE::Process ("tcp_test", "-s");
+$SV = new PerlACE::Process ("tcp_test", "-s");
+$CL = new PerlACE::Process ("tcp_test", "-c localhost -i 50000 -b 64");
+
+$status = 0;
 
 $SV->Spawn ();
 
 sleep 5;
 
-$CL = new PerlACE::Process ("tcp_test", " -c localhost -i 50000 -b 64");
+$client = $CL->SpawnWaitKill (60);
 
-$CL->Spawn (60);
-
-$client = $CL->WaitKill (60);
 $server = $SV->WaitKill (5);
 
-unlink $iorfile;
-
-if ($server != 0 || $client != 0) {
-  print "ERROR: non-zero status returned by the server or client\n";
-  exit 1;
+if ($server != 0) {
+    print "ERROR: server returned $server\n";
+    $status = 1;
 }
 
-exit 0;
+if ($client != 0) {
+    print "ERROR: client returned $client\n";
+    $status = 1;
+}
+
+exit $status;
