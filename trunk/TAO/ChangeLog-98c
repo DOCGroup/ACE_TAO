@@ -1,3 +1,9 @@
+Wed Oct 28 07:35:20 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp (validate_included_idl_files):
+	Fixed the g++ warning. Thanks to David Levine for letting me
+	know this.
+
 Wed Oct 28 00:09:52 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* TAO_IDL/be/be_codegen.cpp: 
