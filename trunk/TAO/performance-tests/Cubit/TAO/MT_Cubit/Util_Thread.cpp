@@ -47,6 +47,9 @@ Util_Thread::run_computations (void)
 {
   while (this->done_ == 0)
     {
+      // See if this number is prime. 2 and CUBIT_ARBIT_NUMBER / 2 are
+      // the recommended values for min_factor and max_factor, as
+      // explained in ACE.h (is_prime).
       ACE::is_prime (CUBIT_ARBIT_NUMBER,
                      2,
                      CUBIT_ARBIT_NUMBER / 2);
