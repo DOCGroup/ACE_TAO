@@ -1,3 +1,8 @@
+Thu Jun 15 16:03:11 2000  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_lynxos.GNU: removed
+          -mthreads from CFLAGS with LynxOS 3.1.0.
+
 Thu Jun 15 15:56:27 2000  Michael Ravits <miquel@bitsmart.com>
 
         * ace/OS_String.inl (strtoul): removed cast to unsigned

@@ -66,6 +66,7 @@ ifeq (2.5.0,$(VERSION))
   #       warning: internal compiler error: debugging info corrupted
   optimize = 0
   ACE_HAS_GNUG_PRE_2_8 = 1
+  CFLAGS += -mthreads
 else
   optimize = 1
 
@@ -74,13 +75,21 @@ else
   ACE_HAS_GNUG_PRE_2_8 = 0
 endif # VERSION
 
+ifeq (3.0.0,$(VERSION))
+  CFLAGS += -mthreads
+endif # 3.0.0
+
+ifeq (3.0.1,$(VERSION))
+  CFLAGS += -mthreads
+endif # 3.0.1
+
 ifeq (3.1.0,$(VERSION))
   CFLAGS += -I/usr/lynx/$(VERSION)/usr/include
 endif # 3.1.0
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -mthreads -pipe -ansi -Wpointer-arith
+CFLAGS          += -pipe -ansi -Wpointer-arith
 #### -Winline complains a lot with -O2.
 #### CFLAGS          += -Winline
 #### LynxOS 3.0.0's g++ has a lot of warnings about non-virtual base class
