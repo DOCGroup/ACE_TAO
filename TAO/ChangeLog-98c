@@ -1,3 +1,10 @@
+Wed Mar 18 21:43:46 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* tao/typecode.cpp: private_equal method had a big error. I had
+	forgotten break statements after every case in the switch
+	statement. So no matter what, the last result which returned
+	"TRUE" used to be returned. This is now fixed.
+
 Wed Mar 18 21:32:24 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.1.8, released Wed Mar 18 21:32:24 1998.
