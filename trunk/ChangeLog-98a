@@ -1,3 +1,16 @@
+Fri Apr  3 10:40:10 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.cpp (invoke): We were using AfxGetThread to determine
+	  whether a thread was created with AfxBeginThread or
+	  _beginthreadex.  This seemed to cause some subtle problem with
+	  MSVC 4.2.  Since we always cached the Thread_Descriptor in TSS
+	  now, we can just check how a thread was created and use the
+	  appropriate thread exiting method.
+
+	* ace/Thread_Manager.{h,i} (flags): Added this new access function
+	  into ACE_Thread_Descriptor to get the creation flags for a
+	  thread.
+
 Fri Apr 03 10:01:32 1998  Steve Huston  <shuston@riverace.com>
 
 	* ace/ACE.cpp (handle_timed_complete): On AIX, always check a
