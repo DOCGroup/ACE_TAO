@@ -11,38 +11,55 @@ bgcolor="#ffffff">
 <HR><P>
 <H3>TAO Interoperable Naming Service</H3>
 
-This service allows the ORB to be administratively configured to return
-object references from CORBA::ORB::resolve_initial_references () for
-non-locality constrained objects. The service also introduces the
-iioploc and iiopname IOR formats that may be used for bootstrapping to
-services not available as ORB install time defaults.
-
-<P>Point of contact: <a href="mailto: vishal@cs.wustl.edu">Vishal Kachroo</a> 
+The Interoperable Naming Service (INS) service allows the ORB to be
+configured administratively to return object references from
+<CODE>CORBA::ORB::resolve_initial_references</CODE> for non-locality
+constrained objects.  The service also introduces the
+<CODE>iioploc</CODE> and <CODE>iiopname</CODE> IOR formats, which can
+be used to bootstrap services not available at ORB installation time.
 <P>
 
-<HR align=left width=80% ><P>
-<H4>How does resolve_initial_references () work ?</H4>
-Following is the order of evaluation for a service, within resolve_initial_references
-() : <br>
-<img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">- <A HREF="#oir">ORBInitRef</A> <br>
-<img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">- <A HREF="#odir">ORBDefaultInitRef</A> <br>
-<img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">- ORB Default Settings <br>
-<img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">- Multicast to Service <p>
-
-The ORB uses an abstraction of ACE_Hash_Map_Manager to keep track of the ObjectID:IOR
-mappings specified at commandline. The IOR could be in any of IOR,
-iiop, or iioploc format. If the ORB fails to get the IOR using the
-command line parameters or the default settings, it multicasts to
-resolve the service. The Naming Service acts as an IIOP Agent to
-respond with the IOR for the given service name. If the service to be
-resolved happens to be the Naming Service or the Trading Service, the
-ORB checks the environment variables prior to using multicast.<p>
-
-<img width=200 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif"><img width=723 height=529 src="http://www.cs.wustl.edu/~schmidt/gifs/interop-naming.gif"><p>
+This document presents an overview of TAO's INS implementation and
+addresses common questions. <P>
 
 <HR align=left width=80% ><P>
+<H4>How does <CODE>resolve_initial_references</CODE> work ?</H4><P>
 
-<H4>ORB Parameters used for configuration</H4>
+The following is the order that <CODE>resolve_initial_references</CODE>
+locates a service: <P>
+
+<OL>
+<LI><A HREF="#oir">ORBInitRef</A> <br>
+<LI><A HREF="#odir">ORBDefaultInitRef</A> <br>
+<LI>ORB Default Settings <br>
+<LI>Multicast to Service <p>
+</OL>
+
+TAO uses the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE_wrappers/man/html/ACE_Hash_Map_Manager.html">ACE_Hash_Map_Manager</A>
+to keep track of the ObjectID:IOR mappings specified on the
+command-line. The IOR could be in <CODE>IOR</CODE>, <CODE>iiop</CODE>,
+or <CODE>iioploc</CODE> format.  If the ORB fails to resolve the IOR
+using the command-line parameters or the default settings, it uses UDP
+multicast to resolve the service. <P>
+
+The Naming Service process acts as an IIOP Agent to respond with the
+IOR for the given service name. If the service being resolved is the
+Naming Service or the Trading Service, TAO checks the appropriate <A
+HREF="Options.html#ev">environment variables</A> prior to using
+multicast to obtain the appropriate port number or IOR.<p>
+
+The following diagram illustrates the order in which these various
+components interact. <P>
+
+<img width=200 height=5
+src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif"><img width=723
+height=529
+src="http://www.cs.wustl.edu/~schmidt/gifs/interop-naming.gif"><p>
+
+<HR align=left width=80% ><P>
+
+<H4>ORB Parameters Used for Configuration</H4>
 <A NAME="oir"></A>
 <DL>
 <DT> <img alt="o" src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif">
@@ -50,40 +67,41 @@ ORB checks the environment variables prior to using multicast.<p>
 The ORB initial reference argument allows specification of an
     arbitrary object reference for an initial service. The format is :
     <p>
-    -ORBInitRef [ObjectID]=[ObjectURL] <p>
-    Examples of use are : <p>
-    <i>  <img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">-ORBInitRef </i> NameService=IOR:0002342344AB345 ...<br>
-    <i>  <img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">-ORBInitRef </i> MyServiceID=iioploc://tango.cs.wustl.edu:87777/myService <p>
+    <CODE>-ORBInitRef [ObjectID]=[ObjectURL]</CODE> <p>
+    Examples of use are: <p>
+    <CODE>-ORBInitRef  NameService=IOR:0002342344AB345</CODE> ...<br>
+    <CODE>-ORBInitRef MyServiceID=iioploc://tango.cs.wustl.edu:87777/myService </CODE><p>
 
     This mechanism allows an ORB to be configured with new initial
     service Object IDs that were not defined when the ORB was
     installed. The ObjectURL can be any of the URL schemes supported
-    by CORBA::ORB::string_to_object ().<p>
+    by <CODE>CORBA::ORB::string_to_object</CODE>.<p>
 
     <A NAME="odir"></A>
 <DT> <img alt="o" src="http://www.cs.wustl.edu/~schmidt/gifs/misc/redball.gif"><B><FONT COLOR="#000000">
 -ORBDefaultInitRef :</FONT></B></LI>
 The ORB default initial reference argument assists in resolution of
     initial references not explicitly specified with
-    -ORBInitRef. -ORBDefaultInitRef requires a URL that, after
+    <CODE>-ORBInitRef</CODE>. <CODE>-ORBDefaultInitRef</CODE> requires a URL that, after
     appending a slash '/' and a stringified object key, forms a new
     URL to identify an initial object reference. <p>
-    For Example : <br>
-    <img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif"> <i> -ORBDefaultInitRef
-    </i> iioploc://tango.cs.wustl.edu:89899,merengue.cs.wustl.edu:99990 <p>
-    A call to resolve_initial_references ("NameService") with this
-    argument results in a new multiple profile URL equivalent to the following: <br>
-    <img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">iioploc://tango.cs.wustl.edu:89899/NameService <br>
-    <img width=50 height=5 src="http://www.cs.wustl.edu/~schmidt/gifs/space.gif">iioploc://merengue.cs.wustl.edu:99990/NameService <p>
+    For example: <P>
+    <CODE>-ORBDefaultInitRef
+    iioploc://tango.cs.wustl.edu:89899,merengue.cs.wustl.edu:99990</CODE> <p>
+
+    A call to <CODE>resolve_initial_references ("NameService")</CODE> with this
+    argument results in a new multiple profile URL equivalent to the following: <P>
+    <CODE>iioploc://tango.cs.wustl.edu:89899/NameService</CODE> <br>
+    <CODE>iioploc://merengue.cs.wustl.edu:99990/NameService</CODE> <p>
     
-    The URL is passed to CORBA::ORB::string_to_object () to obtain the
+    The URL is passed to <CODE>CORBA::ORB::string_to_object</CODE> to obtain the
     initial reference for the service.
 </DL>
 
 <HR align=left width=80% ><P>
 
 <H4>iioploc:// IOR format</H4>
-The CORBA::ORB::string_to_object () now understands the iioploc://
+The <CODE>CORBA::ORB::string_to_object</CODE> now understands the <CODE>iioploc://</CODE>
 format IORs. These are user-friendly multiple end-point IORs. For
 example - <p>
  <img width=50 height=5

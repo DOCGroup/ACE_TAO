@@ -9,9 +9,8 @@
 <body text="#000000" bgcolor="#FFFFFF" link="#000FFF" vlink="#FF0F0F">
 
 <hr>
-<center>
 <h3>
-Configuring TAO's Components</h3></center>
+Configuring TAO's Components</h3>
 
 <h3> Overview</h3>
 
@@ -29,7 +28,7 @@ Service Configurator</a> framework. Thus, options are specified in the
 familiar <tt>svc.conf</tt> file (if you want to use a different file
 name, use the <tt><a href="Options.html#svcfonf">-ORBsvcconf</a></tt>
 option).  You can also setup default configurations for your programs.
-Please see <b><a href="#programming">Programming Considerations</a>
+Please see the <a href="#programming">Programming Considerations</a>
 for more detailed discussion on this.</p>
 
 <hr>
@@ -90,9 +89,9 @@ Each configuration has the following information:</li>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="70%" >
 <tr ALIGN=LEFT>
-<th>Typical Use&nbsp;</th>
+<th>Typical Use</th>
 
-<td>A brief description of the scenario and its typical use.&nbsp;</td>
+<td>A brief description of the scenario and its typical use.</td>
 </tr>
 
 <tr ALIGN=LEFT>
@@ -151,10 +150,8 @@ Each configuration has the following information:</li>
 <li>
 <a NAME="concurrency"></a><b>Server concurrency strategy</b> specifies
 the concurrency strategy an ORB uses. It says nothing about how many ORBs
-(or, threads) are there in a process.</li>
+(or, threads) are there in a process.</li><P>
 
-<br>&nbsp;
-<p>&nbsp;
 <ul>
 <li>
 <tt>reactive</tt>: The ORB handles requests reactively, i.e., the ORB runs
@@ -162,8 +159,6 @@ in one thread and service multiple requests/connections simultaneously
 using "<tt>select</tt>" call. You can have multiple ORBs accepting requests
 reactively and running in separate threads.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <li>
 <tt>thread-per-connection</tt>: The ORB handles new connections by spawning
 a new thread whose job is to service requests coming from the connection.
@@ -171,15 +166,11 @@ The new threads inherits all properties from the ORB threads (see below.)</li>
 
 <li>
 <tt>thread-pool</tt> (not yet implemented): ... to be continued ...</li>
-
-<br>&nbsp;
-<p>&nbsp;</ul>
+</UL><P>
 
 <li>
-<a NAME="orb"></a><b>ORB and other resources.</b></li>
+<a NAME="orb"></a><b>ORB and other resources.</b></li><P>
 
-<br>&nbsp;
-<p>&nbsp;
 <ul>
 <li>
 <tt>global</tt>: There's only one ORB process-wide. <tt>ORB_init () </tt>must
@@ -190,52 +181,41 @@ be called only once. Every thread accesses the same ORB.</li>
 for spawning the ORB threads and setting up the ORB by calling <tt>ORB_init
 ()</tt> for each ORB threads. Any ORB spawned thread (i.e., thru thread-per-connection)
 shares the same resource the spawning ORB uses.</li>
-
-<br>&nbsp;
-<p>&nbsp;</ul>
+</ul><P>
 
 <li>
-<a NAME="poa"></a><b>POA.</b></li>
+<a NAME="poa"></a><b>POA.</b></li><P>
 
-<br>&nbsp;
-<p>&nbsp;
 <ul>
 <li>
 <tt>global</tt>: All ORBs share the same POA. The advantage of using a
 global POA is that once an object is registered to the POA under an ORB,
 it can be externalized from other ORB.</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <li>
 per ORB (<tt>tss</tt>): Each ORB has its own POA, which means, the programmer
 should also instantiate the POA for each ORB (otherwise, a default RootPOA
 gets created, which might not be what you what and thus, is discouraged.)</li>
-
-<br>&nbsp;
-<p>&nbsp;</ul>
+</ul><P>
 
 <li>
-<a NAME="coltbl"></a><b>Collocation Table:</b> <sup>*</sup>Care must be
+<a NAME="coltbl"></a><b>Collocation Table:</b> Care must be
 taken when using CORBA objects to control the ORB directly. For you are
 actually executing the collocated object, not in the object's ORB context,
-but in the calling ORB's context.</li>
+but in the calling ORB's context.</li><P>
 
-<br>&nbsp;
-<p>&nbsp;
 <ul>
 <li>
 <tt>global</tt>: Process keeps a global collocation table which contains
-tuples of listening endpoint and its corresponding RootPOA.</li>
+tuples of listening endpoint and its corresponding RootPOA.</li><P>
 
 <li>
 per ORB (<tt>tss</tt>): At this moment, since TAO only supports one listening
 endpoint per ORB, there is no per-ORB collocation Table. Checking of collocated
 objects is done by comparing object's IIOP profile and the calling ORB's
-listening endpoint.</li>
+listening endpoint.</li><P>
 
-<br>&nbsp;
-<p>&nbsp;</ul>
+</ul>
 
 <li>
 <a NAME="iiopprofile"></a><b>Forwarding IIOP Profile:</b> In the case of
@@ -249,42 +229,30 @@ to do this might be performance reasons in cases, where no forwarding is
 used or no multithreading with access to shared <tt>CORBA::Object</tt>'s.
 Deactivating forces the ORB to use a null mutex, which does introduce only
 a very small overhead, compared with overhead introduced by a regular mutex
-lock.</li>
+lock.</li><P>
 
 <li>
 <a NAME="orbsvcs"></a><b>orbsvcs Library:</b> By default, the TAO orbsvcs
 library contains all of the services that TAO currently supports. To reduce
 build time and library size, you can exclude unused services. To do that,
-define a <tt>TAO_ORBSVCS</tt> variable using one of these approaches:</li>
+define a <tt>TAO_ORBSVCS</tt> variable using one of these approaches:</li><P>
 
-<br>&nbsp;
-<p>&nbsp;
 <ol>
 <li>
 In your <tt>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</tt> file,</li>
 
-<br>&nbsp;
-<p>&nbsp;
 <li>
-On the make command line, <i>e.g.</i>,</li>
-
-<br>&nbsp;
-<p>&nbsp;
-<pre>
-<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; make TAO_ORBSVCS=Naming
-</tt></pre>
+On the make command line, <i>e.g.</i>,</li><BR>
+<tt>make TAO_ORBSVCS=Naming</tt><BR>
 or
-<br>&nbsp;
-<br>&nbsp;
 <li>
 Set (and export) a <tt>TAO_ORBSVCS</tt> environment variable.</li>
 
-<br>&nbsp;
-<p>&nbsp;</ol>
+</ol><P>
 Please see the <code><a href="../orbsvcs/orbsvcs/Makefile">ORBSVCS
 Makefile</a></code> for the default setting of <code>TAO_ORBSVCS</code>.<p>
 
-Please note this limitation:
+Please note the following limitation: <P>
 <ol>
   <li>We currently don't check for interdependencies between services.
     For example, if you build the CosEvent service, you must also
@@ -294,11 +262,13 @@ Please note this limitation:
 
 <hr>
 <h3>
-<a NAME="examples"></a>Configuration Example</h3>
+<a NAME="examples"></a>Configuration Examples</h3>
+
+The following are common ORB configurations used by TAO applications.<P>
 
 <ul>
 <li>
-<a NAME="reactive"></a>Single-threaded, reactive model.</li>
+<a NAME="reactive"></a>Single-threaded, reactive model.</li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr>
@@ -341,12 +311,11 @@ when the requests (1) take a fixed, relatively uniform amount of time and
 <br><tt>TAO_Server_Strategy_Factory</tt>: <tt>-ORBconcurrency reactive</tt></td>
 </tr>
 </table>
-Check out the <tt><a href="../tests/Param_Test/">Param_Test</a></tt>for
-an example of this configuration.
-<br>&nbsp;
-<br>&nbsp;
+<P>Check out the <tt><a
+href="../tests/Param_Test/">Param_Test</a></tt> for
+an example of this configuration. <P>
 <li>
-<a NAME="tpc"></a>Multiple threads, thread-per-connection model.</li>
+<a NAME="tpc"></a>Multiple threads, thread-per-connection model.</li> <P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>
@@ -391,23 +360,21 @@ them. Other threads handle requests for established connections.</td>
 <br><tt>TAO_Server_Strategy_Factory</tt>: <tt>-ORBconcurrency thread-per-connection</tt></td>
 </tr>
 </table>
+<P>
 <tt><a href="../performance-tests/Cubit/TAO/IDL_Cubit/">IDL_Cubit</a></tt>
 is a good example on using <i>multiple threads, thread-per-connection</i>
-configuration.
-<br>&nbsp;
-<br>&nbsp;
+configuration.<P>
 <li>
-Multiple threads, ORB-per-thread model.<a NAME="multiorb"></a></li>
+<P>Multiple threads, ORB-per-thread model.<a NAME="multiorb"></a></li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>
 <th>Typical Use</th>
 
-<td>In this configuration, there multiple ORBs per process each running
-in its own thread. Each thread handles requests reactively. It's good for
-hard real-time applications that require different thread priorities for
-the various ORBs.</td>
-</tr>
+<td>In this configuration, there multiple ORBs per process each
+running in its own thread. Each thread handles requests
+reactively. It's good for hard real-time applications that require
+different thread priorities for the various ORBs.</td> </tr>
 
 <tr ALIGN=LEFT>
 <th>Number of Threads</th>
@@ -440,9 +407,10 @@ the various ORBs.</td>
 <br><tt>TAO_Server_Strategy_Factory</tt>: <tt>-ORBconcurrency reactive</tt></td>
 </tr>
 </table>
+<P>
 
 <li>
-Multiple threads, ORB-per-thread, thread-per-connection model.<a NAME="multiorb-tpc"></a></li>
+Multiple threads, ORB-per-thread, thread-per-connection model.<a NAME="multiorb-tpc"></a></li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>
@@ -485,13 +453,12 @@ threads which service requests form establiched connections.</td>
 <br><tt>TAO_Server_Strategy_Factory</tt>: <tt>-ORBconcurrency thread-per-connection</tt></td>
 </tr>
 </table>
+<P>
 <tt><a href="../performance-tests/Cubit/TAO/MT_Cubit/">MT_Cubit</a></tt>
 is a good example on using <i>multiple threads, ORB-per-thread, and thread-per-connection</i>
-configuration.
-<br>&nbsp;
-<br>&nbsp;
+configuration.<P>
 <li>
-<a NAME="tpool"></a>Multiple threads, thread-pool model. (Not yet implemented.)</li>
+<a NAME="tpool"></a>Multiple threads, thread-pool model. (Not yet implemented.)</li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>
@@ -527,9 +494,9 @@ movement between threads.</td>
 </tr>
 </table>
 
-<li>
+<P><li>
 Multiple threads, ORB-per-thread, thread-pool model.<a NAME="multiorb-tpool"></a>
-(Not yet implemented.)</li>
+(Not yet implemented.)</li><P>
 
 <table BORDER=2 CELLSPACING=2 CELLPADDING=0 WIDTH="90%" >
 <tr ALIGN=LEFT>
@@ -568,9 +535,10 @@ Multiple threads, ORB-per-thread, thread-pool model.<a NAME="multiorb-tpool"></a
 <h3>
 Programming Considerations<a NAME="programming"></a></h3>
 
+  There are several ways to pass option flags into TAO's
+  components. <P>
+
 <ul>
-  There are several different ways to pass option flags into TAO's
-  components.
 
   <li><p>The plain vanilla approach is do nothing.  All TAO components
       use their default settings as described in <a
@@ -595,7 +563,7 @@ Programming Considerations<a NAME="programming"></a></h3>
       application cannot find a svc.conf file, it will configure TAO's
       components using the default settings.  You can still use a
       <code>svc.conf</code> file or use <code>-ORBsvcconf</code>
-      option to tune up the program</p>.
+      option to tune the program.<P>
 
   <li><p>TAO programs evaluate the configuration settings in the following
       order,</p>
@@ -656,7 +624,8 @@ Programming Considerations<a NAME="programming"></a></h3>
 <h3>
 Configuration for homogenous systems<a NAME="homogenous"></a></h3>
 
-<ul><b>Compile time options</b><a NAME="homogenous_compile"></a>
+<ul>
+<LI><b>Compile-time options</b><a NAME="homogenous_compile"></a>
 <p>Many real-time applications run on homogenous environments, TAO (and
 ACE) can take advantage of this fact by simplifying the server side demarshaling;
 to enable this feature you have to edit the <tt>$ACE_ROOT/ace/OS.h</tt>
@@ -671,7 +640,9 @@ options for TAO, the macros <tt>TAO_DEFAULT_RESOURCE_FACTORY_ARGS</tt>,
 can be used for those purposes. If the footprint size is an issue users
 may consider writing custom strategy factories that only create the right
 strategies, this eliminates the parsing code for the different options.
-<p><b>Runtime options</b><a NAME="homogenous_runtime"></a>
+
+<p>
+<LI><b>Run-time options</b><a NAME="homogenous_runtime"></a>
 <p>If the only ORB running is TAO and there is no need to be IIOP interoperable
 the option <tt>-ORBgioplite</tt> can be used to reduce the message size
 and the processing time.
@@ -682,14 +653,15 @@ don't need to do any name resolution. The compile-time define <tt>TAO_USES_DOTTE
 in <tt>$TAO_ROOT/tao/orbconf.h</tt> to make this the default behavior.</ul>
 
 <hr>
-<center>
-<h3>
-Hints</h3></center>
+<h3>Hints</h3>
+
 Choosing the right configuration is hard and, of course, depends on your
 application. In the following section we will attempt to describe some
 motivations for features in TAO, hopefully that can guide you through the
 choice of your configuration options.
-<ul><b>ORB-per-thread</b> The main motivation behind this options is to
+<ul>
+
+<LI><b>ORB-per-thread</b> The main motivation behind this options is to
 minimize priority invertion, since threads share no ORB resources no locking
 is required and thus, priority is preserved in most cases (assuming proper
 support from the OS). If you are not too concerned about priority inversion
@@ -706,40 +678,44 @@ policy for the dynamic servants and the root poa (with no locking) for
 the majority of the servants.
 <p>As the reader will note this is a delicate configuration option, the
 rule of thumb should be <b>not</b> to use ORB-per-thread unless it is really
-required.
-<li>
-<b>Collocation tables</b> Why could the application what a non-global collocation
-table? If objects are to serve requests only at a well known priority the
-application can be configured with the ORB-per-thread option, and the object
-is activated only in the thread (ORB) corresponding to the desired priority.
-But using a global table would subert the priority assignment (because
-calls would run at the priority of the client).</li>
+required. <P>
 
 <li>
-<b>Single-threaded vs. Multi-threaded Connection Handlers</b> The <tt>Client_Connection_Handler</tt>
-is the component in TAO that writes the requests to the underlying transport
-socket; this is also the component that reads the response back from the
-server.</li>
 
-<p><br>While waiting for this response new requests to the local ORB can
-arrive, this is the so-called nested upcall support. TAO supports two mechanisms
-for handling nested upcalls, the default uses the leader-follower model
-to allow multiple threads to wait on a single reactor for several concurrent
-requests; sometimes this configuration can be an overkill, if only one
-thread is using a reactor at the same time a lighter weight implementation
-can be used.
-<p>This configuration is controled by the <tt>-ORBclientconnectionhandler</tt>
-option, good opportunities to use this option are:
-<ul>
-<li>
-Single threaded servers</li>
+<b>Collocation tables</b> Why could the application what a non-global
+collocation table? If objects are to serve requests only at a well
+known priority the application can be configured with the
+ORB-per-thread option, and the object is activated only in the thread
+(ORB) corresponding to the desired priority.  But using a global table
+would subert the priority assignment (because calls would run at the
+priority of the client).</li><P>
+
+<li> <b>Single-threaded vs. Multi-threaded Connection Handlers</b> The
+<tt>Client_Connection_Handler</tt> is the component in TAO that writes
+the requests to the underlying transport socket; this is also the
+component that reads the response back from the server.</li>
+
+<p>
+
+While waiting for this response new requests to the local ORB can
+arrive, this is the so-called nested upcall support. TAO supports two
+mechanisms for handling nested upcalls, the default uses the
+leader-follower model to allow multiple threads to wait on a single
+reactor for several concurrent requests; sometimes this configuration
+can be an overkill, if only one thread is using a reactor at the same
+time a lighter weight implementation can be used.  <p>This
+configuration is controled by the <tt>-ORBclientconnectionhandler</tt>
+option, good opportunities to use this option are:<P>
+
+ <ul> <li> Single
+threaded servers</li>
 
 <li>
 Servers running in ORB-per-thread mode</li>
 
 <li>
 Pure clients that will never receive a request</li>
-</ul>
+</ul><P>
 
 <li>
 <b>Allocator for input CDR streams</b> Normally the application has no
@@ -748,22 +724,23 @@ access to this buffer, and it is only used on the demarshaling of arguments
 tss</tt>" option since it will allocate memory from a thread specific allocator
 and it will not need locks to manage that memory.</li>
 
-<p><br>In some cases the user <i>may</i> gain access to the CDR stream
+<p>In some cases the user <i>may</i> gain access to the CDR stream
 buffer: TAO makes no copies when demarshaling octet sequences, instead
-the octet sequence simply points to the CDR buffer, since the octet sequence
-does not own this buffer a copy must be made if the user wants to keep
-the buffer after the upcall.
-<p>The user can, however, increase the reference count on the CDR stream
-buffer, thus allowing her to extend the lifetime of this buffer. Still
-passing this buffer to another thread and attempting to release it in that
-thread will result in some memory leak or corruption. Users willing to
-use this feature of TAO can still do so, <b>if</b> they use a global allocator
-for their input CDR stream, but that will introduce extra locking on the
-critical path.
-<p>As the reader can see this is an option that has limited applicability
-and requires careful consideration of the tradeoffs involved.</ul>
+the octet sequence simply points to the CDR buffer, since the octet
+sequence does not own this buffer a copy must be made if the user
+wants to keep the buffer after the upcall.
+
+<p>The user can, however, increase the reference count on the CDR
+stream buffer, thus allowing her to extend the lifetime of this
+buffer. Still passing this buffer to another thread and attempting to
+release it in that thread will result in some memory leak or
+corruption. Users willing to use this feature of TAO can still do so,
+<b>if</b> they use a global allocator for their input CDR stream, but
+that will introduce extra locking on the critical path.  <p>As the
+reader can see this is an option that has limited applicability and
+requires careful consideration of the tradeoffs involved.</ul>
 
 <hr>
-<p>Back to the TAO <a href="components.html">components documentation</a>.&nbsp;<!--#include virtual="/~schmidt/cgi-sig.html" -->
+<p>Back to the TAO <a href="components.html">components documentation</a>.<!--#include virtual="/~schmidt/cgi-sig.html" -->
 </body>
 </html>
