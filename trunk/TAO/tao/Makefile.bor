@@ -160,6 +160,7 @@ OBJFILES = \
 	$(OBJDIR)\Remote_Object_Proxy_Impl.obj \
 	$(OBJDIR)\Reply_Dispatcher.obj \
 	$(OBJDIR)\RequestInfo_Util.obj \
+        $(OBJDIR)\Request_Dispatcher.obj \
 	$(OBJDIR)\Resource_Factory.obj \
 	$(OBJDIR)\Resume_Handle.obj \
 	$(OBJDIR)\Sequence.obj \
