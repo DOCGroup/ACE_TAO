@@ -372,7 +372,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
             if (result == -1)
               ACE_ERROR_RETURN ((LM_ERROR,"TAO_AV_Core::init_Forward_flows: Acceptor_registry open failed\n"),-1);
             end = address_flow_set.end ();
-            for (start = address_flow_set.begin ();
+            for (TAO_AV_FlowSpecSetItor start = address_flow_set.begin ();
                  start != end; ++start)
               {
                 TAO_FlowSpec_Entry *entry = (*start);
@@ -422,7 +422,13 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                                                   (*connect)->carrier_protocol_str (),
                                                   local_addr,
                                                   local_control_addr);
-
+	/*	
+		ACE_Addr *addr;
+		if ((addr = (*connect)->get_peer_addr ()) != 0)
+		  {
+		    entry.set_peer_addr (addr);
+		  };
+	*/
                 int len = new_flowspec.length ();
                 if (i == len)
                   new_flowspec.length (len+1);
