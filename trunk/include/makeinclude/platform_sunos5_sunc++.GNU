@@ -24,7 +24,8 @@ CFLAGS          += -mt
 #### -pta instantiates all template members, which makes libraries bigger.
 #### But, it's supposed to put each member into it's own .o, so executable
 #### size should not be penalized.
-CCFLAGS         += $(CFLAGS) -pta
+#### We've commented -pta out for the moment to see if it works.
+CCFLAGS         += $(CFLAGS) # -pta
 DCFLAGS         += -g
 DLD             = $(CXX)
 

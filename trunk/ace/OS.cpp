@@ -2557,7 +2557,7 @@ ACE_OS::thr_exit (void *status)
 # elif defined (ACE_HAS_WTHREADS)
     // Can't call it here because on NT, the thread is exited
     // directly by ACE_Thread_Adapter::invoke ().
-    //   ACE_TSS_Cleanup::instance ()->exit (status);
+    // ACE_TSS_Cleanup::instance ()->exit (status);
 # elif defined (VXWORKS)
     ACE_hthread_t tid;
     ACE_OS::thr_self (tid);

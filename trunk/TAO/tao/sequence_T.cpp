@@ -18,10 +18,12 @@ TAO_Unbounded_Sequence<T>::
 TAO_Unbounded_Sequence (const TAO_Unbounded_Sequence<T> &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
-  T* tmp1 = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
-  T* tmp2 = ACE_reinterpret_cast(T*, rhs.buffer_);
+  T *tmp1 = TAO_Unbounded_Sequence<T>::allocbuf (this->maximum_);
+  T *tmp2 = ACE_reinterpret_cast (T *const, rhs.buffer_);
+
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
+
   this->buffer_ = tmp1;
 }
 
@@ -44,14 +46,14 @@ TAO_Unbounded_Sequence<T>::operator=
 	}
     }
   else
-    {
-      this->buffer_ =
-	TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
-    }
+    this->buffer_ =
+      TAO_Unbounded_Sequence<T>::allocbuf (rhs.maximum_);
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  T* tmp1 = ACE_reinterpret_cast(T*,this->buffer_);
-  T* tmp2 = ACE_reinterpret_cast(T*,rhs.buffer_);
+  T *tmp1 = ACE_reinterpret_cast (T *, this->buffer_);
+  T *tmp2 = ACE_reinterpret_cast (T *const, rhs.buffer_);
+
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     tmp1[i] = tmp2[i];
 
@@ -231,9 +233,9 @@ TAO_Unbounded_Object_Sequence<T>::
 TAO_Unbounded_Object_Sequence (const TAO_Unbounded_Object_Sequence<T> &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
-  T* *tmp1 = TAO_Unbounded_Object_Sequence<T>::allocbuf (this->maximum_);
+  T **tmp1 = TAO_Unbounded_Object_Sequence<T>::allocbuf (this->maximum_);
+  T **tmp2 = ACE_reinterpret_cast (T ** const, rhs.buffer_);
 
-  T* *tmp2 = ACE_reinterpret_cast(T* *,rhs.buffer_);
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
 
@@ -257,7 +259,8 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
 
   if (this->release_)
     {
-      T* *tmp = ACE_reinterpret_cast(T* *,this->buffer_);
+      T **tmp = ACE_reinterpret_cast (T **,this->buffer_);
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
 	{
 	  CORBA::release (tmp[i]);
@@ -271,14 +274,14 @@ operator= (const TAO_Unbounded_Object_Sequence<T> &rhs)
 	}
     }
   else
-    {
-      this->buffer_ =
-	TAO_Unbounded_Object_Sequence<T>::allocbuf (rhs.maximum_);
-    }
+    this->buffer_ =
+      TAO_Unbounded_Object_Sequence<T>::allocbuf (rhs.maximum_);
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  T* *tmp1 = ACE_reinterpret_cast(T* *,this->buffer_);
-  T* *tmp2 = ACE_reinterpret_cast(T* *,rhs.buffer_);
+  T **tmp1 = ACE_reinterpret_cast (T **, this->buffer_);
+  T **tmp2 = ACE_reinterpret_cast (T **const, rhs.buffer_);
+
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = T::_duplicate (tmp2[i]);
 
@@ -289,8 +292,10 @@ template <class T> T* *
 TAO_Unbounded_Object_Sequence<T>::allocbuf (CORBA::ULong nelems)
 {
   T* *buf = new T*[nelems];
-  for (CORBA::ULong i=0; i < nelems; i++)
+
+  for (CORBA::ULong i = 0; i < nelems; i++)
     buf[i] = T::_nil ();
+
   return buf;
 }
 
@@ -300,12 +305,12 @@ TAO_Unbounded_Object_Sequence<T>::freebuf (T* *buffer)
   if (buffer == 0)
     return;
 
-  // {orbos/97-05-15:16.11}
-  // The freebuf function ensures that the destructor for each element
-  // is called before the buffer is destroyed, except for string
-  // elements, which are freed using string_free(), and object
-  // reference elements, which are freed using release(). The freebuf
-  // function will ignore null pointers passed to it.
+  // {orbos/97-05-15:16.11} The freebuf function ensures that the
+  // destructor for each element is called before the buffer is
+  // destroyed, except for string elements, which are freed using
+  // string_free(), and object reference elements, which are freed
+  // using release(). The freebuf function will ignore null pointers
+  // passed to it.
 
   // @@ How are we supposed to implement that! We don't know the
   // length of the buffer here.

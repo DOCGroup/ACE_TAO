@@ -1,3 +1,25 @@
+Mon Mar  2 12:59:19 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* netsvcs/lib/Log_Message_Receiver.cpp
+ 	  (Log_Message_Receiver_Impl): Removed some stray inline keywords.
+  	  Thanks to Russ Noseworthy <rnosewor@objectsciences.com> for
+ 	  reporting this.
+
+	* ace/OS.i (sigwait): Added support for POSIX sigwait().  Thanks
+ 	  to Russ Noseworthy <rnosewor@objectsciences.com> for reporting
+ 	  this.
+
+	* ace/Containers.cpp (done): 
+	  ace/Map_Manager.cpp (done): Corrected some misplaced "consts" in
+ 	  the ACE_static_cast macro.  Thanks to Russ Noseworthy
+ 	  <rnosewor@objectsciences.com> for reporting this.
+
+	* include/makeinclude/platform_sunos5_sunc++.GNU (CXX): Commented
+ 	  out the -pta option since it might not be necessary.  If this
+ 	  breaks code then we'll need to reevaluate this change.  Thanks
+ 	  to Russ Noseworthy <rnosewor@objectsciences.com> for suggesting
+ 	  this.
+
 Mon Mar 02 09:13:26 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-sunos5.5-sunc++-4.x.h: replaced ACE_PAGE_SIZE with

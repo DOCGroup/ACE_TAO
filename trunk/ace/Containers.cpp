@@ -1131,14 +1131,14 @@ ACE_Fixed_Set_Iterator<T, SIZE>::done (void) const
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::done");
 
-  return ACE_static_cast(size_t, this->next_) >= this->s_.cur_size_;
+  return ACE_static_cast (const size_t, this->next_) >= this->s_.cur_size_;
 }
 
 template <class T, size_t SIZE> int
 ACE_Fixed_Set_Iterator<T, SIZE>::next (T *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator<T, SIZE>::next");
-  if (ACE_static_cast(size_t, this->next_) < this->s_.cur_size_)
+  if (ACE_static_cast (size_t, this->next_) < this->s_.cur_size_)
     {
       item = &this->s_.search_structure_[this->next_].item_;
       return 1;

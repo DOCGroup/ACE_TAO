@@ -56,7 +56,7 @@ template <class T> ACE_INLINE const T &
 TAO_Unbounded_Sequence<T>::operator[] (CORBA::ULong i) const
 {
   ACE_ASSERT (i < this->maximum_);
-  T* tmp = ACE_reinterpret_cast(T*,this->buffer_);
+  T *tmp = ACE_reinterpret_cast (T *, this->buffer_);
   return tmp[i];
 }
 
@@ -176,7 +176,7 @@ template <class T> ACE_INLINE TAO_Object_Manager<T>
 TAO_Unbounded_Object_Sequence<T>::operator[] (CORBA::ULong index) const
 {
   ACE_ASSERT (index < this->maximum_);
-  T** tmp = ACE_reinterpret_cast (T**, this->buffer_);
+  T **tmp = ACE_reinterpret_cast (T **const, this->buffer_);
   return Manager (tmp + index, this->release_);
 }
 

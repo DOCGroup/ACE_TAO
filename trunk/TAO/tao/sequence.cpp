@@ -76,10 +76,11 @@ TAO_Unbounded_String_Sequence (const TAO_Unbounded_String_Sequence &rhs)
   : TAO_Unbounded_Base_Sequence (rhs)
 {
   char* *tmp1 = TAO_Unbounded_String_Sequence::allocbuf (this->maximum_);
+  char* *tmp2 = ACE_reinterpret_cast (char **const, rhs.buffer_);
 
-  char* *tmp2 = ACE_reinterpret_cast(char* *,rhs.buffer_);
   for (CORBA::ULong i = 0; i < rhs.length_; ++i)
     tmp1[i] = CORBA::string_dup (tmp2[i]);
+
   this->buffer_ = tmp1;
 }
 
@@ -97,12 +98,14 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
 
   if (this->release_)
     {
-      char* *tmp = ACE_reinterpret_cast(char* *,this->buffer_);
+      char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
 	{
 	  CORBA::string_free (tmp[i]);
 	  tmp[i] = 0;
 	}
+
       if (this->maximum_ < rhs.maximum_)
 	{
           // free the older buffer
@@ -112,14 +115,13 @@ operator= (const TAO_Unbounded_String_Sequence &rhs)
 	}
     }
   else
-    {
-      this->buffer_ =
-	TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
-    }
+    this->buffer_ =
+      TAO_Unbounded_String_Sequence::allocbuf (rhs.maximum_);
+
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  char* *tmp1 = ACE_reinterpret_cast(char* *,this->buffer_);
-  char* *tmp2 = ACE_reinterpret_cast(char* *,rhs.buffer_);
+  char **tmp1 = ACE_reinterpret_cast (char **, this->buffer_);
+  char **tmp2 = ACE_reinterpret_cast (char **const, rhs.buffer_);
   for (CORBA::ULong i=0; i < rhs.length_; ++i)
     tmp1[i] = CORBA::string_dup (tmp2[i]);
 
@@ -163,19 +165,19 @@ TAO_Unbounded_String_Sequence::_allocate_buffer (CORBA::ULong length)
 
   if (this->buffer_ != 0)
     {
-      char* *old = ACE_reinterpret_cast(char**,this->buffer_);
+      char* *old = ACE_reinterpret_cast (char **, this->buffer_);
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
-	{
-	  // Only call duplicate when we did not own the previous
-	  // buffer, since after this method we own it we must also
-	  // own the objects.  If we already own the objects there is
-	  // no need to copy them, if we did we would also have to
-	  // remove the old instances.
-	  if (!this->release_)
-	    tmp [i] = CORBA::string_dup (old[i]);
-	  else
-	    tmp [i] = old[i];
-	}
+        // Only call duplicate when we did not own the previous
+        // buffer, since after this method we own it we must also
+        // own the objects.  If we already own the objects there is
+        // no need to copy them, if we did we would also have to
+        // remove the old instances.
+        if (!this->release_)
+          tmp [i] = CORBA::string_dup (old[i]);
+        else
+          tmp [i] = old[i];
+
       if (this->release_)
 	delete[] old;
     }
@@ -187,7 +189,9 @@ TAO_Unbounded_String_Sequence::_deallocate_buffer (void)
 {
   if (this->buffer_ == 0 || this->release_ == 0)
     return;
-  char* *tmp = ACE_reinterpret_cast (char**,this->buffer_);
+
+  char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
+
   for (CORBA::ULong i = 0;
        i < this->length_;
        ++i)
@@ -195,6 +199,7 @@ TAO_Unbounded_String_Sequence::_deallocate_buffer (void)
       CORBA::string_free (tmp[i]);
       tmp[i] = 0;
     }
+
   TAO_Unbounded_String_Sequence::freebuf (tmp);
   this->buffer_ = 0;
 }
@@ -203,7 +208,7 @@ void
 TAO_Unbounded_String_Sequence::_shrink_buffer (CORBA::ULong nl,
 					       CORBA::ULong ol)
 {
-  char* *tmp = ACE_reinterpret_cast (char**,this->buffer_);
+  char **tmp = ACE_reinterpret_cast (char **, this->buffer_);
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
       CORBA::string_free (tmp[i]);

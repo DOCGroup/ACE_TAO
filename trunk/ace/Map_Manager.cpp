@@ -627,7 +627,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::done (void) const
 
   return this->map_man_->search_structure_ == 0
     // Note that this->next_ is never negative at this point...
-    || ACE_static_cast(size_t, this->next_) >= this->map_man_->cur_size_
+    || ACE_static_cast (const size_t, this->next_) >= this->map_man_->cur_size_
     || this->next_ <= -1;
 }
 
