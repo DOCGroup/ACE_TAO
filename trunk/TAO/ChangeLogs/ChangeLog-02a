@@ -1,3 +1,16 @@
+Mon Jan 14 10:01:12 2002  Ossama Othman  <ossama@uci.edu>
+
+	* tao/PortableServer/PortableServerC.i
+	  (tao_PortableServer_IdUniquenessPolicy_narrow):
+
+	  Fixed incorrect use of TAO_ENV_ARG_PARAMETER where
+	  TAO_ENV_ARG_DECL was expected.
+
+	* tao/PortableServer/POA.cpp (reference_to_ids):
+
+	  Fixed incorrect use of PortableServer::IDs::_nil().  There is no
+	  such thing.  Zero is the correct value.
+
 Mon Jan 14 10:32:09 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/FaultTolerance/IOGRManipulation/IOGRTest.dsp:

@@ -3556,12 +3556,12 @@ TAO_POA::reference_to_ids (CORBA::Object_ptr the_ref
 
   PortableServer::IDs *id_list =
     hooks->reference_to_ids (*this, the_ref TAO_ENV_ARG_PARAMETER);
-  ACE_CHECK_RETURN (PortableServer::IDs::_nil ());
+  ACE_CHECK_RETURN (0);
 
   return id_list;
 }
 
-void 
+void
 TAO_POA::associate_reference_with_id (CORBA::Object_ptr ref,
                                       const PortableServer::ObjectId & oid
                                       TAO_ENV_ARG_DECL)
@@ -3580,7 +3580,7 @@ TAO_POA::associate_reference_with_id (CORBA::Object_ptr ref,
   ACE_CHECK;
 }
 
-void 
+void
 TAO_POA::disassociate_reference_with_id (CORBA::Object_ptr ref,
                                          const PortableServer::ObjectId & oid
                                          TAO_ENV_ARG_DECL)
