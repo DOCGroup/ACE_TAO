@@ -1,5 +1,9 @@
 Mon Dec 17 10:09:55 2001  Venkita Subramonian  <venkita@cs.wustl.edu>
 
+	* orbsvcs/tests/Sched_Conf/Sched_Conf_Anomalies.cpp:
+
+	  Fixed compile errors.
+
 	* orbsvcs/orbsvcs/Event/ECG_Mcast_EH.cpp:
 	  orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
 	
