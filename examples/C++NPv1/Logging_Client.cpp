@@ -133,7 +133,7 @@ int main (int argc, char *argv[])
 
   for (;;) {
 
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && (ACE_USES_STD_NAMESPACE_ FOR_STDCPP_LIB == 0)
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB == 0)
     string user_input;
     getline (cin, user_input, '\n');
 #else
