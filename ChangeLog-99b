@@ -1,3 +1,15 @@
+Wed Sep 01 11:55:31 1999  Steve Huston  <shuston@riverace.com>
+
+        * ace/CORBA_Handler.{h cpp} (ACE_ST_CORBA_Handler): Made the
+          ACE_ST_CORBA_Handler instance get cleaned up via object manager
+          at rundown, giving it a chance to clean up it's reactor
+          registrations and reset its Orbix callbacks.
+          Also added a new capability of allowing the ACE_ST_CORBA_Handler
+          to daisy-chain the Orbix callbacks - this is only enabled if
+          ACE_TAKEOVER_ORBIX_CALLBACKS is set in the config.h file, and
+          its use is highly discouraged unless you really know what you're
+          doing and can account for all of the callbacks.
+
 Wed Sep  1 11:18:26 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tests/run_tests.lst: Disabled the Process_Manager_Test
