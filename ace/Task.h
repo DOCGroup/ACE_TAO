@@ -92,7 +92,7 @@ public:
 			int force_active = 0,
 			u_int priority = 0,
 			int grp_id = -1,
-			ACE_Task_Base *task = NULL); 
+			ACE_Task_Base *task = 0); 
   // Turn the task into an active object, i.e., having <n_threads> of
   // control, all running at the <priority> level with the same
   // <grp_id>, all of which invoke <Task::svc>.  Returns -1 if failure
