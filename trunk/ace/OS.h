@@ -3303,9 +3303,7 @@ extern "C"
 // No reason to #include this if the platform lacks support for SHMEM
 #       include /**/ <sys/shm.h>
 #     endif /* ACE_LACKS_SYSV_SHMEM */
-#     if ! defined (__MACOSX__)
-#       include /**/ <sys/sem.h>
-#     endif /* ! defined (__MACOSX__) */
+#     include /**/ <sys/sem.h>
 #     include /**/ <sys/file.h>
 #     include /**/ <sys/time.h>
 #     include /**/ <sys/resource.h>

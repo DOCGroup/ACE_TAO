@@ -902,13 +902,13 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
 #if ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) \
     && !defined(__MINGW32__)
-#if defined (__FreeBSD__) || defined(__QNX__)
+#if defined (__FreeBSD__) || defined(__QNX__) || defined(__APPLE__)
    extern const int sys_nerr;
 #elif defined (__CYGWIN32__)
 #  define sys_nerr _sys_nerr
 #else
    extern int sys_nerr;
-#endif /* !__FreeBSD__ && !__QNX__ */
+#endif /* !__FreeBSD__ && !__QNX__ && !__APPLE__ */
 #endif /* ! (defined(__BORLANDC__) && __BORLANDC__ >= 0x0530) */
   typedef void (*PTF)(...);
 
