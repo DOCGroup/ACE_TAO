@@ -31,7 +31,7 @@
 #include "tao/Any_Basic_Impl_T.h"
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyType[] =
 {
@@ -59,7 +59,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyType (
     sizeof (_oc_CORBA_PolicyType),
     (char *) &_oc_CORBA_PolicyType,
     0,
-    sizeof (CORBA::PolicyType)
+    0
   );
 
 namespace CORBA
@@ -69,7 +69,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyList[] =
 {
@@ -116,7 +116,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyList (
     sizeof (_oc_CORBA_PolicyList),
     (char *) &_oc_CORBA_PolicyList,
     0,
-    sizeof (CORBA::PolicyList)
+    0
   );
 
 namespace CORBA
@@ -126,7 +126,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_PolicyTypeSeq[] =
 {
@@ -178,7 +178,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_PolicyTypeSeq (
     sizeof (_oc_CORBA_PolicyTypeSeq),
     (char *) &_oc_CORBA_PolicyTypeSeq,
     0,
-    sizeof (CORBA::PolicyTypeSeq)
+    0
   );
 
 namespace CORBA
@@ -188,7 +188,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from
-// be\be_visitor_typecode/typecode_defn.cpp:290
+// be\be_visitor_typecode/typecode_defn.cpp:295
 
 static const CORBA::Long _oc_CORBA_SetOverrideType[] =
 {
@@ -227,7 +227,7 @@ static CORBA::TypeCode _tc_TAO_tc_CORBA_SetOverrideType (
     sizeof (_oc_CORBA_SetOverrideType),
     (char *) &_oc_CORBA_SetOverrideType,
     0,
-    sizeof (CORBA::SetOverrideType)
+    0
   );
 
 namespace CORBA
