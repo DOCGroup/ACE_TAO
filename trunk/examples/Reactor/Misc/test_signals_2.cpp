@@ -98,6 +98,8 @@
 
 
 #include "ace/Reactor.h"
+#include "ace/WFMO_Reactor.h"
+#include "ace/Select_Reactor.h"
 
 class Sig_Handler_1 : public ACE_Event_Handler
 {
@@ -191,7 +193,12 @@ main (int argc, char *[])
   // allow 1 handler per-signal.
   ACE_Sig_Handlers multi_handlers;
 
-  ACE_Reactor reactor (argc > 1 ? &multi_handlers: 0);
+#if defined (ACE_WIN32)
+  ACE_WFMO_Reactor reactor_impl (argc > 1 ? &multi_handlers : (ACE_Sig_Handler *) 0);
+#else
+  ACE_Select_Reactor reactor_impl (argc > 1 ? &multi_handlers : (ACE_Sig_Handler *) 0);
+#endif /* ACE_WIN32 */
+  ACE_Reactor reactor (&reactor_impl);
 
   if (argc > 1)
     {

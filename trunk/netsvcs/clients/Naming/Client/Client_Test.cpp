@@ -4,6 +4,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Thread_Manager.h"
 #include "Client_Test.h"
 
 class ACE_Svc_Export Client_Test : public ACE_Service_Object

@@ -3,6 +3,7 @@
 // Test out the mechanisms provided by the ACE_Process_Manager.
 
 #include "ace/Service_Config.h"
+#include "ace/Thread_Manager.h"
 #include "ace/Process_Manager.h"
 #include "ace/Get_Opt.h"
 
