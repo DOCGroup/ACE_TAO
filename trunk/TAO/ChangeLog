@@ -1,3 +1,16 @@
+Wed Apr 14 07:43:18 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOPA.cpp:
+        * tao/GIOPC.{h,cpp,i}:
+          Regenerated
+
+        * tao/GIOPA.h:
+          Removed
+
+        * tao/tao.mpc:
+          GIOPA.cpp was not listed, but GIOPC.app was twice in the file list,
+          corrected this.
+
 Wed Apr 14 06:49:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/tao_idl.mpc:
