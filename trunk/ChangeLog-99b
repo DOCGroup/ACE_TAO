@@ -1,3 +1,12 @@
+Wed Apr 21 16:41:08 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Reactor_Performance_Test.cpp (main): added 10 second
+          time limit to run_event_loop () call.  That prevents the
+          test from hanging forever if some of the connections
+          are lost.
+
+        * tests/run_tests.sh: enabled Reactor_Performance_Test on LynxOS.
+
 Wed Apr 21 16:35:21 1999  Steve Huston  <shuston@riverace.com>
 
         * tests/New_Fail_Test.cpp: Test to be sure that the ACE_NEW[_RETURN]
