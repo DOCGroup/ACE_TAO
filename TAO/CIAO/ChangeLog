@@ -1,3 +1,9 @@
+Fri Aug 20 16:01:55 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        
+          Fixed typo in source file name.
+
 Fri Aug 20 10:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE/ciao/Container_Base.h:
