@@ -55,7 +55,8 @@ public:
 
   test_var test_;
 
-  ACE_Auto_Event event_;
+  ACE_Auto_Event pre_invoke_event_;
+  ACE_Auto_Event post_invoke_event_;
 };
 
 void
@@ -126,13 +127,13 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
 
   if (ACE_OS::strcmp (name.in (), "first") == 0)
     {
-      second_task.event_.signal ();
-      first_task.event_.wait ();
+      second_task.pre_invoke_event_.signal ();
+      first_task.pre_invoke_event_.wait ();
     }
   else
     {
-      first_task.event_.signal ();
-      second_task.event_.wait ();
+      first_task.pre_invoke_event_.signal ();
+      second_task.pre_invoke_event_.wait ();
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -160,13 +161,13 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
 
   if (ACE_OS::strcmp (name.in (), "first") == 0)
     {
-      second_task.event_.signal ();
-      first_task.event_.wait ();
+      second_task.post_invoke_event_.signal ();
+      first_task.post_invoke_event_.wait ();
     }
   else
     {
-      first_task.event_.signal ();
-      second_task.event_.wait ();
+      first_task.post_invoke_event_.signal ();
+      second_task.post_invoke_event_.wait ();
     }
 
   ACE_DEBUG ((LM_DEBUG,
