@@ -307,9 +307,9 @@ namespace TAO
                                                   sync_scope);
 
     if (has_synchronization)
-      op.response_flags (sync_scope);
+      op.response_flags (CORBA::Octet (sync_scope));
     else
-      op.response_flags (Messaging::SYNC_WITH_TRANSPORT);
+      op.response_flags (CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT));
 
     TAO::Synch_Oneway_Invocation synch (this->target_,
                                         r,
