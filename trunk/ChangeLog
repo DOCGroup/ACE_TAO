@@ -1,3 +1,11 @@
+Mon Oct 20 13:31:36 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/nmake.mpd:
+
+          Remove the dependency on the pch generated file from the object
+          target.  It is unnecessary and causes problems with the /YX
+          option.
+
 Mon Oct 20 16:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/create_ace_build.pl:
@@ -22,53 +30,53 @@ Mon Oct 20 16:38:12 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
 Sun Oct 19 21:25:59 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* performance-tests/SCTP/hist.cpp: Fixed fuzz errors. Include
-	  "ace/os_include/os_math.h" instead of math.h.
+        * performance-tests/SCTP/hist.cpp: Fixed fuzz errors. Include
+          "ace/os_include/os_math.h" instead of math.h.
 
 Sun Oct 19 21:16:44 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* apps/JAWS3/http/HTTP_Service_Handler.h: 
-	* apps/JAWS3/http/HTTP_Service_Handler.cpp: 
-	* apps/JAWS3/small/SS_Service_Handler.cpp: 
-	* apps/JAWS3/small/SS_Service_Handler.h: Fixed Fuzz errors.
+        * apps/JAWS3/http/HTTP_Service_Handler.h:
+        * apps/JAWS3/http/HTTP_Service_Handler.cpp:
+        * apps/JAWS3/small/SS_Service_Handler.cpp:
+        * apps/JAWS3/small/SS_Service_Handler.h: Fixed Fuzz errors.
 
 Sun Oct 19 20:36:50 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* Kokyu/docs/Kokyu.html:
-	* Kokyu/docs/kokyu1.jpg:
-	* Kokyu/docs/kokyu2.jpg:
-	* Kokyu/docs/KokyuEC.jpg:	
-	* Kokyu/Kokyu.html:
-	* Kokyu/kokyu1.jpg:
-	* Kokyu/kokyu2.jpg:
-	* Kokyu/KokyuEC.jpg: Moved these files to Kokyu/docs. Thanks to
-	  Bala for pointing this out.
+        * Kokyu/docs/Kokyu.html:
+        * Kokyu/docs/kokyu1.jpg:
+        * Kokyu/docs/kokyu2.jpg:
+        * Kokyu/docs/KokyuEC.jpg:
+        * Kokyu/Kokyu.html:
+        * Kokyu/kokyu1.jpg:
+        * Kokyu/kokyu2.jpg:
+        * Kokyu/KokyuEC.jpg: Moved these files to Kokyu/docs. Thanks to
+          Bala for pointing this out.
 
 Fri Oct 17 16:21:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/wrapper_macros.GNU: Only set SONAME if
-	  platform_macros.GNU didn't.
+        * include/makeinclude/wrapper_macros.GNU: Only set SONAME if
+          platform_macros.GNU didn't.
 
-	* include/makeinclude/platform_g++_common.GNU: Conditionalize
-	  addition of SONAME to SOFLAGS based on versioned_so, not on
-	  SONAME's content. However, even with versioned_so, don't try to
-	  add SOFLAGS stuff if with_ld is openbsd - it doesn't support it.
+        * include/makeinclude/platform_g++_common.GNU: Conditionalize
+          addition of SONAME to SOFLAGS based on versioned_so, not on
+          SONAME's content. However, even with versioned_so, don't try to
+          add SOFLAGS stuff if with_ld is openbsd - it doesn't support it.
 
-	* include/makeinclude/platform_aix_g++.GNU:
-	* include/makeinclude/platform_hpux_aCC.GNU:
-	* include/makeinclude/platform_hpux_gcc.GNU:
-	* include/makeinclude/platform_macosx.GNU:
-	* include/makeinclude/platform_vxworks5.x_g++.GNU: Set versioned_so
-	  to 0 by default to avoid shared lib version tagging rather
-	  than set SONAME to blank.
+        * include/makeinclude/platform_aix_g++.GNU:
+        * include/makeinclude/platform_hpux_aCC.GNU:
+        * include/makeinclude/platform_hpux_gcc.GNU:
+        * include/makeinclude/platform_macosx.GNU:
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: Set versioned_so
+          to 0 by default to avoid shared lib version tagging rather
+          than set SONAME to blank.
 
-	* include/makeinclude/platform_openbsd.GNU: Set with_ld to openbsd
-	  to tell platform_g++_common.GNU not to add the ldname options
-	  even if versioned_so is enabled.
+        * include/makeinclude/platform_openbsd.GNU: Set with_ld to openbsd
+          to tell platform_g++_common.GNU not to add the ldname options
+          even if versioned_so is enabled.
 
-	* include/makeinclude/platform_sunos5_sunc++.GNU: Add shared lib
-	  option to SOFLAGS if versioned_so is 1. Set versioned_so to 1
-	  by default.
+        * include/makeinclude/platform_sunos5_sunc++.GNU: Add shared lib
+          option to SOFLAGS if versioned_so is 1. Set versioned_so to 1
+          by default.
 
 Fri Oct 17 06:48:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -77,9 +85,9 @@ Fri Oct 17 06:48:15 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Oct 16 21:18:06 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 
-	* bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
-	  Added rtscheduling as a base project. This should take care of
-	  link problems in cygwin build.
+        * bin/MakeProjectCreator/config/kokyu_dsrt_schedulers.mpb:
+          Added rtscheduling as a base project. This should take care of
+          link problems in cygwin build.
 
 Thu Oct 16 18:08:01 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 

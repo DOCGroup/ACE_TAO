@@ -218,7 +218,7 @@ CPP_SWITCHES=/nologo <%if(add_compile)%><%add_compile%> <%endif%><%if(optimize)%
 <%foreach(source_files)%>
 SOURCE=.\<%source_file%>
 
-"$(INTDIR)\<%basenoextension(source_file)%>.obj" : $(SOURCE) "$(INTDIR)"<%if(pch_header)%> "$(INTDIR)\<%noextension(pch_header)%>.pch"<%endif%>
+"$(INTDIR)\<%basenoextension(source_file)%>.obj" : $(SOURCE) "$(INTDIR)"
 <%if(basename_found)%>
 	$(CPP) $(CPP_PROJ) $(SOURCE)
 <%endif%>
