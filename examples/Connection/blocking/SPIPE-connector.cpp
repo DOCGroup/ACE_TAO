@@ -179,3 +179,20 @@ IPC_Client::parse_args (int argc, char *argv[])
 
 
 #endif /* SPIPE_CONNECTOR */
+
+
+#if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
+template class ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>;
+template class ACE_Guard<ACE_RW_Mutex>;
+template class ACE_Map_Iterator<int, ACE_Svc_Tuple<Peer_Handler> *, ACE_RW_Mutex>;
+template class ACE_Map_Manager<int, ACE_Svc_Tuple<Peer_Handler> *, ACE_RW_Mutex>;
+template class ACE_Message_Queue<ACE_NULL_SYNCH>;
+template class ACE_Module<ACE_NULL_SYNCH>;
+template class ACE_Read_Guard<ACE_RW_Mutex>;
+template class ACE_Svc_Handler<ACE_SPIPE_STREAM, ACE_NULL_SYNCH>;
+template class ACE_Svc_Tuple<Peer_Handler>;
+template class ACE_TSS<ACE_Dynamic>;
+template class ACE_Task<ACE_NULL_SYNCH>;
+template class ACE_Thru_Task<ACE_NULL_SYNCH>;
+template class ACE_Write_Guard<ACE_RW_Mutex>;
+#endif /* ACE_TEMPLATES_REQUIRE_SPECIALIZATION */
