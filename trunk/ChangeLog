@@ -1,3 +1,12 @@
+Sun Jun 20 12:17:08 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* bin/MakeProjectCreator/config/event.mpb:
+	* bin/MakeProjectCreator/config/ftrtevent.mpb:
+
+	  The base projects require minimum CORBA support to be disabled.
+	  Projects that depend on these base projects must be aware of
+	  this.  Added an "avoids += minimum_corba" entry.
+
 Sun Jun 20 18:27:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/APG/ThreadManagement/Priorities.cpp:
