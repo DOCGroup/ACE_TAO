@@ -29,6 +29,10 @@
 #define TAO_REACTOR ACE_Select_Reactor
 #endif /* TAO_REACTOR */
 
+#if !defined (TAO_NULL_LOCK_REACTOR)
+#define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
+#endif /* TAO_NULL_LOCK_REACTOR */
+
 // Users should override this stuff if they don't want to use the
 // default ACE Socket wrappers.  This makes it possible to change
 // TAO's transport mechanism wholesale by making a few minor changes
