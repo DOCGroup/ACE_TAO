@@ -73,6 +73,9 @@ public:
   /// Override, Peer::qos_changed
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const;
+
 protected:
   /// When the pacing interval is used, handle_timeout () is called by
   /// the reactor.

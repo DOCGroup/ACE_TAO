@@ -17,6 +17,7 @@ ACE_RCSID (Notify, TAO_Notify_SequencePushConsumer, "$Id$")
 #include "../Method_Request_Event.h"
 #include "../Timer.h"
 #include "../Proxy.h"
+#include "../Properties.h"
 
 TAO_Notify_SequencePushConsumer::TAO_Notify_SequencePushConsumer (TAO_Notify_ProxySupplier* proxy)
   : TAO_Notify_Consumer (proxy), pacing_interval_ (ACE_Time_Value::zero), timer_id_ (-1), buffering_strategy_ (0),
@@ -194,4 +195,24 @@ TAO_Notify_SequencePushConsumer::push (const CosNotification::EventBatch& event_
       this->pacing_interval_ = ACE_Time_Value::zero;
     }
   ACE_ENDTRY;
+}
+bool
+TAO_Notify_SequencePushConsumer::get_ior (ACE_CString & iorstr) const
+{
+  bool result = false;
+  CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+  {
+    CORBA::String_var ior = orb->object_to_string(this->push_consumer_.in() ACE_ENV_ARG_PARAMETER);
+    ACE_TRY_CHECK;
+    iorstr = ACE_static_cast (const char *, ior.in ());
+    result = true;
+  }
+  ACE_CATCHANY
+  {
+    ACE_ASSERT(0);
+  }
+  ACE_ENDTRY;
+  return result;
 }

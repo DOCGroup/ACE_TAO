@@ -51,6 +51,8 @@ public:
   /// Release
   virtual void release (void);
 
+  virtual const char * get_proxy_type_name (void) const;
+
 protected:
   ///= CosNotifyChannelAdmin::ProxyPushConsumer methods
 

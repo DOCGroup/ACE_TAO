@@ -57,6 +57,9 @@ public:
   /// Push <event> to this consumer.
   virtual void push (const CosNotification::StructuredEvent& event ACE_ENV_ARG_DECL);
 
+  /// Retrieve the ior of this peer
+  virtual bool get_ior (ACE_CString & iorstr) const;
+
 protected:
   /// The Consumer
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
