@@ -884,7 +884,7 @@ be_interface::gen_operation_table (void)
         char *temp_file = 0;
         ACE_NEW_RETURN (temp_file,
                         char [ACE_OS::strlen (this->flatname ()) +
-                             ACE_OS::strlen (".gperf")],
+                             ACE_OS::strlen (".gperf") + 1],
                         -1);
         ACE_OS::sprintf (temp_file, "%s.gperf", this->flatname ());
 
@@ -1436,8 +1436,13 @@ be_interface::cleanup_gperf_temp_file (void)
   ACE_OS::unlink (cg->gperf_input_filename ());
 
   // Delete the filename ptr.
+  // @@ Alex: this looks like very bad style for me, IMHO you should
+  // add a method to the TAO_CodeGen class that cleanups this name,
+  // notice that after this code executes the state of <cg> is
+  // corrupted, its pointer to the <gperf_input_filename> is now
+  // invalid...
   char *fname = cg->gperf_input_filename ();
-  delete fname;
+  delete[] fname;
 }
 
 int
