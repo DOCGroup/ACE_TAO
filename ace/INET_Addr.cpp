@@ -356,18 +356,6 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
-#if defined (VXWORKS)
-  ACE_UNUSED_ARG (len);
-  int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
-                               hostname);
-  if (error == OK)
-    return 0;
-  else
-    {
-      errno = error;
-      return -1;
-    }
-#else
   if (this->inet_addr_.sin_addr.s_addr == INADDR_ANY)
     {
       if (ACE_OS::hostname (hostname, len) == -1)
@@ -377,6 +365,18 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
     }
   else
     {
+#if defined (VXWORKS)
+      ACE_UNUSED_ARG (len);
+      int error = ::hostGetByAddr ((int) this->inet_addr_.sin_addr.s_addr,
+                                   hostname);
+      if (error == OK)
+        return 0;
+      else
+        {
+          errno = error;
+          return -1;
+        }
+#else
       hostent hentry;
       int a_len = sizeof this->inet_addr_.sin_addr.s_addr;
       int error = 0;
@@ -413,8 +413,8 @@ ACE_INET_Addr::get_host_name (char hostname[], size_t len) const
               return 0;
             }
         }
-    }
 #endif /* VXWORKS */
+    }
 }
 
 // Return the character representation of the hostname.
