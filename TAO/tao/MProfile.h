@@ -40,7 +40,7 @@ class TAO_Export TAO_MProfile
   //   TAO_Stub accepts ownership of an MProfile it also assumes
   //   responsibility for controling access (i.e. locking).
 public:
-  // = Initalization and termination methods.
+  // = Initialization and termination methods.
   TAO_MProfile (CORBA::ULong sz = 0);
 
   TAO_MProfile (const TAO_MProfile &mprofiles);
