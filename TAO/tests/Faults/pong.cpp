@@ -87,7 +87,8 @@ run_client (CORBA::ORB_ptr orb,
         }
       ACE_CATCH (CORBA::TRANSIENT, t)
         {
-          ACE_DEBUG ((LM_DEBUG, "Ignoring transient exception\n"));
+          if (TAO_debug_level > 0)
+            ACE_DEBUG ((LM_DEBUG, "Ignoring transient exception\n"));
           // ACE_PRINT_EXCEPTION (t, reason);
           ACE_OS::sleep (tv);
         }

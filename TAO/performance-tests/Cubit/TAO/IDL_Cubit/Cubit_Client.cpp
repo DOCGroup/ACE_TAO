@@ -147,6 +147,7 @@ Cubit_Client::Cubit_Client (int shutdown)
   : cubit_factory_key_ (0),
     loop_count_ (250),
     shutdown_ (shutdown),
+    quiet_ (0),
     cubit_ (Cubit::_nil ()),
     call_count_ (0),
     error_count_ (0),
@@ -206,7 +207,7 @@ Cubit_Client::read_ior (const char *filename)
 int
 Cubit_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "b:t:z:ovdn:f:k:xs");
+  ACE_Get_Opt get_opts (argc_, argv_, "b:t:z:ovdn:f:k:xsq");
   int c = 0;
   int result = 0;
   unsigned int test_mask = 0;
@@ -282,6 +283,9 @@ Cubit_Client::parse_args (void)
       case 'x':
         ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
         this->shutdown_ = 1;
+        break;
+      case 'q':
+        this->quiet_ = 1;
         break;
       case '?':
       default:
@@ -1149,39 +1153,51 @@ Cubit_Client::print_stats (const char *call_name,
               "%s:\n",
               call_name));
 
-  if (this->call_count_ > 0 && this->error_count_ == 0)
+  if (this->quiet_)
     {
-#if defined (ACE_LACKS_FLOATING_POINT)
-      // elapsed_time.real_time is in units of microseconds.
-      const u_int calls_per_sec =
-        this->call_count_ * 1000000u / elapsed_time.real_time;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "\treal_time\t= %u ms,\n"
-                  "\t%u calls/second\n",
-                  elapsed_time.real_time / 1000u,
-                  calls_per_sec));
-#else  /* ! ACE_LACKS_FLOATING_POINT */
-      // elapsed_time.real_time is in units of seconds.
-      double calls_per_sec = this->call_count_ / elapsed_time.real_time;
-
-      ACE_DEBUG ((LM_DEBUG,
-                  "\treal_time\t= %0.06f ms, \n\t"
-                  "user_time\t= %0.06f ms, \n\t"
-                  "system_time\t= %0.06f ms\n"
-                  "\t%0.00f calls/second\n",
-                  elapsed_time.real_time < 0.0 ? 0.0
-                  : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
-                  elapsed_time.user_time < 0.0 ? 0.0
-                  : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
-                  elapsed_time.system_time < 0.0 ? 0.0
-                  : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
-                  calls_per_sec < 0.0 ? 0.0 : calls_per_sec));
-#endif /* ! ACE_LACKS_FLOATING_POINT */
+      return;
     }
-  else
-    ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Call count zero or error ocurred.\n"));
+
+  if (!this->quiet_)
+    {
+      if (this->call_count_ > 0 && this->error_count_ == 0)
+        {
+#if defined (ACE_LACKS_FLOATING_POINT)
+          // elapsed_time.real_time is in units of microseconds.
+          const u_int calls_per_sec =
+            this->call_count_ * 1000000u / elapsed_time.real_time;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "\treal_time\t= %u ms,\n"
+                      "\t%u calls/second\n",
+                      elapsed_time.real_time / 1000u,
+                      calls_per_sec));
+#else  /* ! ACE_LACKS_FLOATING_POINT */
+          // elapsed_time.real_time is in units of seconds.
+          double calls_per_sec =
+            this->call_count_ / elapsed_time.real_time;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      "\treal_time\t= %0.06f ms, \n\t"
+                      "user_time\t= %0.06f ms, \n\t"
+                      "system_time\t= %0.06f ms\n"
+                      "\t%0.00f calls/second\n",
+                      elapsed_time.real_time < 0.0 ? 0.0
+                      : elapsed_time.real_time * ACE_ONE_SECOND_IN_MSECS,
+                      elapsed_time.user_time < 0.0 ? 0.0
+                      : elapsed_time.user_time * ACE_ONE_SECOND_IN_MSECS,
+                      elapsed_time.system_time < 0.0 ? 0.0
+                      : elapsed_time.system_time * ACE_ONE_SECOND_IN_MSECS,
+                      calls_per_sec < 0.0 ? 0.0 : calls_per_sec));
+#endif /* ! ACE_LACKS_FLOATING_POINT */
+        }
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "\tNo time stats printed."
+                      "  Call count zero or error ocurred.\n"));
+        }
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "\t%d calls, %d errors\n",

@@ -106,7 +106,7 @@ class RND_Supplier
   // = DESCRIPTION
   //
 public:
-  RND_Supplier (void);
+  RND_Supplier (int verbose);
   // Constructor
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
@@ -131,10 +131,14 @@ private:
 
   ACE_SYNCH_MUTEX lock_;
   // Synch
+
+  int verbose_;
+  // Be verbose about the progress of the test
 };
 
 inline
-RND_Supplier::RND_Supplier (void)
+RND_Supplier::RND_Supplier (int verbose)
+  :  verbose_ (verbose)
 {
 }
 
@@ -181,6 +185,9 @@ private:
 
   int max_recursion_;
   // Maximum recursion
+
+  int verbose_;
+  // Be verbose about the progress of the test
 
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin_;

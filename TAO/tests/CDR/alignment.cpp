@@ -43,7 +43,7 @@ int main(int, char*[])
       CORBA::ULong len;
 
       input.read_ulong (len);
-      
+
       if (len != i)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -51,7 +51,7 @@ int main(int, char*[])
                       " got %d, expected %d\n",
                       len, i));
         }
-      
+
       ACE_Message_Block read_mb (len + ACE_CDR::MAX_ALIGNMENT);
       ACE_CDR::mb_align (&mb);
       mb.wr_ptr (len);

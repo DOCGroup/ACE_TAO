@@ -1,3 +1,43 @@
+Fri May 12 20:35:25 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Buffered_Oneways/client.cpp:
+	* examples/Buffered_Oneways/test_i.cpp:
+	* examples/POA/On_Demand_Loading/Servant_Manager.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Consumer_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Supplier_Driver.cpp:
+	* orbsvcs/tests/EC_Throughput/ECT_Throughput.cpp:
+	* orbsvcs/tests/Event/Basic/Observer.cpp:
+	* orbsvcs/tests/Event/Basic/Random.cpp:
+	* orbsvcs/tests/Event/Basic/Random.h:
+	* orbsvcs/tests/Event/Basic/Shutdown.cpp:
+	* orbsvcs/tests/Event/Basic/Shutdown.h:
+	* orbsvcs/tests/Event/Basic/run_test.pl:
+	* orbsvcs/tests/Trading/TT_Info.cpp:
+	* orbsvcs/tests/Trading/run_test.pl:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+	* performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.h:
+	* performance-tests/Cubit/TAO/IDL_Cubit/run_test.pl:
+	* tests/CDR/alignment.cpp:
+	* tests/CDR/allocator.cpp:
+	* tests/CDR/basic_types.cpp:
+	* tests/CDR/growth.cpp:
+	* tests/CDR/run_test.pl:
+	* tests/CDR/tc.cpp:
+	* tests/DSI_Gateway/client.cpp:
+	* tests/DSI_Gateway/test_i.cpp:
+	* tests/Faults/ping_i.cpp:
+	* tests/Faults/pong.cpp:
+	* tests/MT_Server/test_i.cpp:
+	* tests/POA/Identity/Identity.cpp:
+	* tests/Timed_Buffered_Oneways/client.cpp:
+	* tests/Timed_Buffered_Oneways/test_i.cpp:
+	  Many tests were too noisy for the auto_compile builds, making it
+	  hard to find real errors.
+	  Cleaned up their output and limited to just enough information
+	  to know what failed when something actually does.
+
 Fri May 12 16:33:42 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tests/Policies/Manipulation.dsp:

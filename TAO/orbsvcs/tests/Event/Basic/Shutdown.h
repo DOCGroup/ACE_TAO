@@ -55,6 +55,9 @@ public:
 
 
 private:
+  int consumer_disconnects_;
+  int supplier_disconnects_;
+  // Number of consumer and supplier disconnect messages.
 };
 
 #endif /* EC_SHUTDOWN_H */
