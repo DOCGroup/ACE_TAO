@@ -20,7 +20,6 @@ use Creator;
 use TemplateInputReader;
 use TemplateParser;
 use FeatureParser;
-use ArrayHandle;
 
 use vars qw(@ISA);
 @ISA = qw(Creator);
@@ -241,19 +240,19 @@ sub parse_line {
           }
 
           if ($status) {
-            ## Now add in the features that have been defined
-            $self->{$typecheck} = 0;
-            $self->{'type_specific_assign'} = {};
-            ($status, $errorString) = $self->process_features();
-
-            if ($status) {
-              ## If the feature added any type specific assignments
-              ## then we need to processs them before we write the project
-              $self->process_type_specific_assignments();
+#            ## Now add in the features that have been defined
+#            $self->{$typecheck} = 0;
+#            $self->{'type_specific_assign'} = {};
+#            ($status, $errorString) = $self->process_features();
+#
+#            if ($status) {
+#              ## If the feature added any type specific assignments
+#              ## then we need to processs them before we write the project
+#              $self->process_type_specific_assignments();
 
               ## End of project; Write out the file.
               ($status, $errorString) = $self->write_project();
-            }
+#            }
 
             foreach my $key (keys %{$self->{'valid_components'}}) {
               delete $self->{$key};
@@ -446,7 +445,7 @@ sub parse_line {
     }
     elsif ($values[0] eq 'feature') {
       $self->{'feature_defined'} = 1;
-      $self->save_feature($ih, $values[1]);
+      $self->process_feature($ih, $values[1]);
       if ($self->{'feature_defined'}) {
         $errorString = "ERROR: Did not find the end of the feature";
         $status = 0;
@@ -662,77 +661,84 @@ sub parse_verbatim {
 }
 
 
-sub save_feature {
-  my($self)  = shift;
-  my($fh)    = shift;
-  my($names) = shift;
-  my(@lines) = ("project {\n");
-  my($curly) = 1;
+#sub save_feature {
+#  my($self)  = shift;
+#  my($fh)    = shift;
+#  my($names) = shift;
+#  my(@lines) = ("project {\n");
+#  my($curly) = 1;
+#
+#  while($_ = $fh->getline()) {
+#    my($line) = $self->strip_line($_);
+#    push(@lines, "$line\n");
+#
+#    ## This is a very simplistic way of finding the end of
+#    ## the feature definition.  It will work as long as no spurious
+#    ## open curly braces are counted.
+#    if ($line =~ /{$/) {
+#      ++$curly;
+#    }
+#    elsif ($line =~ /^}$/) {
+#      --$curly;
+#    }
+#    if ($curly == 0) {
+#      $self->{'feature_defined'} = 0;
+#      last;
+#    }
+#  }
+#  push(@{$self->{'feature_definitions'}}, [ $names, \@lines ]);
+#}
 
-  while($_ = $fh->getline()) {
-    my($line) = $self->strip_line($_);
-    push(@lines, "$line\n");
 
-    ## This is a very simplistic way of finding the end of
-    ## the feature definition.  It will work as long as no spurious
-    ## open curly braces are counted.
-    if ($line =~ /{$/) {
-      ++$curly;
-    }
-    elsif ($line =~ /^}$/) {
-      --$curly;
-    }
-    if ($curly == 0) {
-      $self->{'feature_defined'} = 0;
-      last;
-    }
-  }
-  push(@{$self->{'feature_definitions'}}, [ $names, \@lines ]);
-}
-
-
-sub process_features {
+sub process_feature {
   my($self)   = shift;
+  my($fh)     = shift;
+  my($names)  = shift;
   my($status) = 1;
   my($error)  = '';
 
-  foreach my $feature (@{$self->{'feature_definitions'}}) {
-    my($names, $lines) = @$feature;
-    my($requires) = '';
-    my($avoids)   = '';
-    foreach my $name (@$names) {
-      if ($name =~ /^!\s*(.*)$/) {
-        if ($avoids ne '') {
-          $avoids .= ' ';
-        }
-        $avoids .= $1;
+  my($requires) = '';
+  my($avoids)   = '';
+  foreach my $name (@$names) {
+    if ($name =~ /^!\s*(.*)$/) {
+      if ($avoids ne '') {
+        $avoids .= ' ';
       }
-      else {
-        if ($requires ne '') {
-          $requires .= ' ';
-        }
-        $requires .= $name;
-      }
+      $avoids .= $1;
     }
-
-    if ($self->check_features($requires, $avoids)) {
-      my($ah) = new ArrayHandle($lines);
-      push(@{$self->{'reading_parent'}}, "feature $requires $avoids");
-      my($line) = '';
-      while($_ = $ah->getline()) {
-        ($status, $error) = $self->collect_line($ah, \$line, $_);
-
-        if (!$status) {
-          last;
-        }
+    else {
+      if ($requires ne '') {
+        $requires .= ' ';
       }
-      pop(@{$self->{'reading_parent'}});
-    }
-
-    if (!$status) {
-      last;
+      $requires .= $name;
     }
   }
+
+  if ($self->check_features($requires, $avoids)) {
+    $self->{'feature_defined'} = 0;
+    $self->{$self->{'type_check'}} = 1;
+  }
+  else {
+    my($curly) = 1;
+    while($_ = $fh->getline()) {
+      my($line) = $self->strip_line($_);
+
+      ## This is a very simplistic way of finding the end of
+      ## the feature definition.  It will work as long as no spurious
+      ## open curly braces are counted.
+      if ($line =~ /{$/) {
+        ++$curly;
+      }
+      elsif ($line =~ /^}$/) {
+        --$curly;
+      }
+      if ($curly == 0) {
+        $self->{'feature_defined'} = 0;
+        last;
+      }
+    }
+  }
+
   return $status, $error;
 }
 
