@@ -1,3 +1,8 @@
+Wed Mar 29 14:56:29 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/orbconf.h: Fixed a TAO_HAS_MINIMUM_CORBA check that I missed
+	  last time.
+
 Tue Mar 28 19:22:33 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* rules.tao.GNU: Updated the definition of TAO_HAS_MINIMUM_CORBA.

@@ -377,7 +377,7 @@ enum MCAST_SERVICEID
 #if !defined (TAO_HAS_UIOP)
 #  if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 #    define TAO_HAS_UIOP 0
-#  elif defined (TAO_HAS_MINIMUM_CORBA)
+#  elif (TAO_HAS_MINIMUM_CORBA==1)
 #    define TAO_HAS_UIOP 0
 #  else
 #    define TAO_HAS_UIOP 1
