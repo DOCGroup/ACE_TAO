@@ -75,7 +75,7 @@
 // with different parameters.
 # define __INCineth
 
-#elif defined (__DCPLUSPLUS__)
+#elif defined (__DCPLUSPLUS__) || defined (__DCC__)
   // Diab 4.2a or later.
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
     // We define it with a -D with make depend.
@@ -85,11 +85,7 @@
   // Diab doesn't support VxWorks' iostream libraries.
 # define ACE_LACKS_IOSTREAM_TOTALLY
 
-  // #include <new.h> causes strange compilation errors in
-  // the system header files.
-# define ACE_LACKS_NEW_H
-
-#else  /* ! __GNUG__ && ! ghs */
+#else  /* ! __GNUG__ && ! ghs && !__DCC__ */
 # error unsupported compiler on VxWorks
 #endif /* ! __GNUG__ && ! ghs */
 
