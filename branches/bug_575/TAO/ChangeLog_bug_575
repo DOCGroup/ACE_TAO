@@ -9,6 +9,9 @@ Tue Jul 03 15:45:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Strategies/TAO_Strategies.dsp: Removed the
 	  GIOP_NonReactive_* files.
 
+	* tao/Resume_Handle.cpp: Fixed a bug in resume_handle (). If we
+	  have a null ORB_Core we just dont resume the handle.
+
 Mon Jul 02 23:16:03 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Transport.cpp:
