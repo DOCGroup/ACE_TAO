@@ -255,6 +255,7 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.h"\
 	{$(INCLUDE)}"\ace\Timer_Queue_T.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
 	
 NODEP_CPP_MAIN_=\
@@ -438,6 +439,7 @@ DEP_CPP_MAIN_=\
 	{$(INCLUDE)}"\ace\Token_Request_Reply.h"\
 	{$(INCLUDE)}"\ace\Token_Request_Reply.i"\
 	{$(INCLUDE)}"\ace\Trace.h"\
+	{$(INCLUDE)}"\ace\Version.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.h"\
 	{$(INCLUDE)}"\ace\WFMO_Reactor.i"\
 	{$(INCLUDE)}"\ace\ws2tcpip.h"\
