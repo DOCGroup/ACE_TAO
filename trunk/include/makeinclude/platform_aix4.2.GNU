@@ -15,10 +15,12 @@ static_libs = 1
 CC	    = xlC
 CXX	    = xlC_r
 CCFLAGS     += $(CFLAGS)
-DCFLAGS     += -g
+DCFLAGS     += -g -qcheck=nobounds:div:null -qinitauto=5F
 DLD	    = makeC++SharedLib_r
 LD          = $(CXX)
-CPPFLAGS    += -qxcall -qtempinc -qcheck=nobounds:div:null  -M -qlanglvl=ansi -qextchk -qflag=w:w -qinfo 
+# -qextchk is handy, but produces false type mismatches when linking
+# netsvcs with 3.1.4, so it's disabled.  IBM reports this fixed in 3.6.4.
+CPPFLAGS    += -qtempinc -qlanglvl=ansi -qflag=w:w -qinfo
 SHLIBA      = $(SHLIB:lib%.so=lib%shr.a)
 ifdef SHLIB
 ACELIB      = -lACEshr
