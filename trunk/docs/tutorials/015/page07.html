@@ -64,13 +64,16 @@ int <font color=#008888>Server::run</font>(void)
 {
     ACE_DEBUG ((LM_DEBUG, "<font color=green>(%P|%t) starting up server daemon\n</font>"));
 
-    ACE_Time_Value timeout(2);
-
         <font color=red>// Here's the basic event loop.  I have a 2-second timeout on</font>
         <font color=red>// the handle_events() so that we don't have to wait too long</font>
         <font color=red>// when we set the finished_ flag.</font>
     while (!finished_)
     {
+         <font color=red>// Some (all?) platforms return the "<font color=green>remaining time</font>" in the</font>
+         <font color=red>// timeout parameter.  If we don't reset it each time, we</font>
+         <font color=red>// will end up with a 100% CPU spin loop!</font>
+        ACE_Time_Value timeout(2);
+
         <font color=#008888>ACE_Reactor::instance</font>()->handle_events (&timeout);
     }
 

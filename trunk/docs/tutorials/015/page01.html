@@ -32,7 +32,14 @@ level code first and then go into the details of the protocol stream
 and it's helper objects.  If the stream stuff in the application logic 
 is confusing then just read on by and come back to it after the later
 discussions.
-
+<P>
+Disclaimer:
+<br>
+Several folks have reported problems with this tutorial on Win32.  I
+have the fixes in mind but may not get them in place until 2/8 or so.
+What it amounts to is using the ACE_Select_Reactor for all platforms.
+Win32 defaults to ACE_WFMO_Reactor and that seems to be causing some
+or all of the problems.
 <P>
 <font size=-1>* Ok, I didn't really implement encryption and
         compression objects.  I'll leave that as a thought

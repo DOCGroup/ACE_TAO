@@ -28,3 +28,6 @@ SHAR : #
 
 UNSHAR : #
 	sh combine.shar
+
+CLEAN : realclean
+	rm -f hdr bodies *.pre *.pst
