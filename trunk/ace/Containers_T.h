@@ -246,6 +246,10 @@ class ACE_Unbounded_Stack
   //
   // = DESCRIPTION
   //     This implementation of an unbounded Stack uses a linked list.
+  //     If you use the <insert> or <remove> methods you should keep
+  //     in mind that duplicate entries aren't allow.  In general,
+  //     therefore, you should avoid the use of these methods since
+  //     they aren't really part of the ADT stack.
 public:
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
@@ -296,7 +300,7 @@ public:
   int insert (const T &new_item);
   // Insert <new_item> into the Stack at the head (but doesn't allow
   // duplicates).  Returns -1 if failures occur, 1 if item is already
-  // present, else 0.
+  // present (i.e., no duplicates are allowed), else 0.
 
   int remove (const T &item);
   // Remove <item> from the Stack.  Returns 0 if it removes the item,
