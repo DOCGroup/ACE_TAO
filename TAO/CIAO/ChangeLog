@@ -1,3 +1,11 @@
+Mon Nov 24 14:21:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ciao/Container_Base.cpp:
+        * ciao/ServerActivator_Impl.cpp:
+        * ciao/Server_init.cpp:
+        
+          Added missing ACE includes.
+
 Mon Nov 24 13:39:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * CIDLC/Collectors.hpp:
