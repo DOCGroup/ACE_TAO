@@ -1,3 +1,17 @@
+Mon Jun 21 23:25:59 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/Colocated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/Federated_Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/RTCORBA_Baseline.mpc:
+	* orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/RTCORBA_Callback.mpc:
+	* orbsvcs/performance-tests/RTEvent/Roundtrip/Roundtrip.mpc:
+	* orbsvcs/performance-tests/RTEvent/TCP_Baseline/TCP_Baseline.mpc:
+
+	  Added "avoids += minimum_corba" entry.  The RTEC_Perf library
+	  these projects depend on cannot be built when minimum CORBA
+	  support is enabled so don't build thse projects in the minimum
+	  CORBA case either.
+
 Mon Jun 21 09:04:23 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_init.cpp:
