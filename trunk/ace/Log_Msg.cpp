@@ -96,9 +96,7 @@ private:
 
 #if !defined (VXWORKS)
   // Holds a list of all <ACE_Log_Msg> instances.  <instances_>
-  // requires global construction/destruction.  If that's a problem,
-  // could change it to a pointer and allocate it dynamically when
-  // lock_ is allocated.
+  // requires global construction/destruction.
   static ACE_Log_Msg_Set *instances_;
 #endif /* ! VXWORKS */
 };
@@ -106,7 +104,10 @@ private:
 int
 ACE_Log_Msg_Manager::open ()
 {
-  ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
+  if (ACE_Log_Msg_Manager::instances_ == 0)
+    {
+      ACE_NEW_RETURN_I (ACE_Log_Msg_Manager::instances_, ACE_Log_Msg_Set, 0);
+    }
   return 1;
 }
 
@@ -1292,5 +1293,3 @@ template class ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>;
 #pragma instantiate ACE_Unbounded_Set<ACE_Log_Msg *>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_Log_Msg *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
-
-
