@@ -1,3 +1,8 @@
+Thu Aug 28 17:51:57 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_interface/strategized_proxy_broker_ss.cpp:
+	  Changed the code generation for collocated calls.
+
 Thu Aug 28 16:50:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Abstract_Servant_Base.h (_find): Added a new _find () method
