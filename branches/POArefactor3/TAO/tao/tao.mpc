@@ -364,6 +364,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     CORBANAME_Parser.h
     CORBA_String.h
     CurrentC.h
+    CurrentS.h
     debug.h
     default_client.h
     Default_Collocation_Resolver.h
@@ -510,6 +511,7 @@ project(TAO) : acelib, core, tao_output, taodefaults, pidl, extra_core {
     PolicyC.h
     PolicyFactory_Registry.h
     Policy_ForwardC.h
+    Policy_ForwardS.h
     Policy_Manager.h
     Policy_Set.h
     PolicyS.h

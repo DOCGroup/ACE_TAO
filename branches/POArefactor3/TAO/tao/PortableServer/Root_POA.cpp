@@ -825,7 +825,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
        iterator != this->children_.end ();
        ++iterator)
     {
-      TAO_POA * const child_poa = (*iterator).int_id_;
+      TAO_Root_POA * const child_poa = (*iterator).int_id_;
 
       TAO::ORT_Adapter * const adapter = child_poa->ORT_adapter_i ();
 

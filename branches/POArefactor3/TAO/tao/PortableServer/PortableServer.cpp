@@ -88,24 +88,6 @@ TAO_POA_Initializer::init (void)
     );
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyDefaultServant
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-#if (TAO_HAS_MINIMUM_POA == 0)
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyServantManager
-    );
-#endif /* TAO_HAS_MINIMUM_POA == 0 */
-
-  ACE_Service_Config::process_directive (
-      TAO::Portable_Server::ace_svc_desc_RequestProcessingStrategyAOMOnly
-    );
-
-  // Policy Values
-
   ACE_Service_Config::process_directive (
       TAO::Portable_Server::ace_svc_desc_IdAssignmentStrategySystem
     );
