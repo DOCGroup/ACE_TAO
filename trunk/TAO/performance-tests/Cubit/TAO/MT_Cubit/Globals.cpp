@@ -3,7 +3,8 @@
 #include "Globals.h"
 
 Globals::Globals (void)
-  : ior_file (0),
+  : thr_create_flags (THR_BOUND),
+    ior_file (0),
     base_port (0),
     num_of_objs (2),
     thread_per_rate (0),
@@ -83,9 +84,12 @@ Globals::sched_fifo_init (void)
                                               ACE_SCOPE_PROCESS)))
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_DEBUG ((LM_MAX,
-                    "User is not superuser, "
-                    "so remain in time-sharing class\n"));
+        {
+          ACE_DEBUG ((LM_MAX,
+                      "User is not superuser, "
+                      "so remain in time-sharing class\n"));
+          return 1;
+        }
       else
         ACE_ERROR_RETURN ((LM_ERROR,
                            "%n: ACE_OS::sched_params failed\n%a"),
@@ -96,6 +100,8 @@ Globals::sched_fifo_init (void)
                      "Test will not run.  This platform doesn't seem to have threads.\n"),
                     -1);
 #endif /* ACE_HAS_THREADS */
+
+  ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_SCHED_FIFO);
   return 0;
 }
 
