@@ -834,6 +834,9 @@ ACE_Object_Manager_Base::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+  delete internal_lock_;
+  internal_lock_ = 0;
+
   delete singleton_null_lock_;
   singleton_null_lock_ = 0;
 
@@ -852,9 +855,6 @@ ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
 
   delete registered_objects_;
   registered_objects_ = 0;
-
-  delete internal_lock_;
-  internal_lock_ = 0;
 }
 
 ACE_Object_Manager::~ACE_Object_Manager (void)
