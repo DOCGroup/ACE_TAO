@@ -35,15 +35,16 @@ public class DoubleVisComp extends Canvas implements VisComp
   private float local_max_ = 0;
   private boolean max_increased_ = false;
   
-  public DoubleVisComp(String title, int max_value)
+  public DoubleVisComp()
   {
     super();
 
     plot_ = new Queue();
     spacing_ = MIN_SPACING;
-    title_ = title;
-    max_value_ = max_value;
-    old_max_value_ = max_value;
+    title_ = "";
+    max_value_ = 1;
+    // max_value_ = max_value;
+    old_max_value_ = max_value_;
     
     java.util.Random rand = new java.util.Random (System.currentTimeMillis());
     float hue_ = rand.nextFloat();
@@ -62,20 +63,30 @@ public class DoubleVisComp extends Canvas implements VisComp
     this.setBackground(new_color);
     this.setForeground(Color.white);
   }
+
+
+  public void setName (String title) {
+      title_ = title;
+  }
   
-  public int getProperty ()
-    {
+  public int getProperty () {
       return Properties.DOUBLE;
     }
 
-  public Dimension getMinimumSize ()
-    {
+  public Dimension getMinimumSize () {
       return new Dimension (75, 75);
     }
 
-  public Dimension getPreferredSize ()
-    {
+  public Dimension getPreferredSize () {
       return new Dimension (175, 175);
+    }
+  
+  public String getName() {
+    return title_;
+  }
+
+  public int getMax() {
+      return old_max_value_;
     }
 
   public void update(java.util.Observable observable, java.lang.Object obj)
@@ -182,15 +193,6 @@ public class DoubleVisComp extends Canvas implements VisComp
     update(g);
   }
 
-  public String getKey()
-  {
-    return title_;
-  }
-
-  public int getMax()
-    {
-      return old_max_value_;
-    }
 
   private int normalize(int height, float coord)
   {
