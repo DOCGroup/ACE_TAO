@@ -1,7 +1,6 @@
 // SOCK_Connector.cpp
 // $Id$
 
-
 #define ACE_BUILD_DLL
 #include "ace/SOCK_Connector.h"
 #include "ace/Handle_Set.h"
@@ -9,7 +8,7 @@
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Connector.i"
-#endif
+#endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
 ACE_RCSID(ace, SOCK_Connector, "$Id$")
 
@@ -52,7 +51,9 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
     {
       sockaddr *laddr = (sockaddr *) local_sap.get_addr ();
       size_t size = local_sap.get_size ();
-      result = ACE_OS::bind (new_stream.get_handle (), laddr, size);
+      result = ACE_OS::bind (new_stream.get_handle (),
+                             laddr,
+                             size);
 
       if (result == -1)
 	{
