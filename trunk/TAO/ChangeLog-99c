@@ -9,6 +9,8 @@ Sun Nov 28 17:26:54 1999  Ossama Othman  <othman@cs.wustl.edu>
                 --enable-minimum-corba  enable minimum CORBA support
                 --enable-rt-corba       enable Real-Time CORBA support
 
+	  Other minor updates.
+	
 	* tao/Makefile.am:
 
 	  Added orb.idl and Policy.pidl to the of headers to be installed.
