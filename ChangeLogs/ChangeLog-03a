@@ -1,3 +1,8 @@
+Fri Jul 28 10:23:03 2000  David L. Levine <levine@cs.wustl.edu>
+
+        * Makefile (DIRS, CLONE, CONTROLLED_FILES, RELEASE_LIB_FILES):
+          added PACE, so that it will be in ACE 5.1.6.
+
 Fri Jul 28 07:42:50 2000  David L. Levine <levine@cs.wustl.edu>
 
         * tests/Makefile: build CDR_Array_Test, even on LynxOS.
