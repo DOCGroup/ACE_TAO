@@ -1,3 +1,9 @@
+Tue Aug 24 19:59:18 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ace/config-netbsd.h:
+
+	  Fixed typo in last change, add back typedef for ACE_UINT64.
+
 Tue Aug 24 19:32:07 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ace/config-netbsd.h:
