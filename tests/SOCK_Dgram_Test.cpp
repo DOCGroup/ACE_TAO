@@ -24,6 +24,8 @@
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/Log_Msg.h"
+#include "ace/Time_Value.h"
+#include "ace/OS_NS_unistd.h"
 
 #define SERVER_PORT 20000
 #define TEST_DATA ACE_TEXT ("UDP Open Test")
