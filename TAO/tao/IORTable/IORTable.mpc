@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_IORTable
+  libs       = TAO
+  dllflags   = TAO_IORTABLE_BUILD_DLL
+  libout     = ..
+}

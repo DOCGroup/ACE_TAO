@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_IORManip
+  libs       = TAO
+  dllflags   = TAO_IORMANIP_BUILD_DLL
+  libout     = ..
+}

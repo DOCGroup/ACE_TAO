@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_PortableServer
+  libs       = TAO
+  dllflags   = TAO_PORTABLESERVER_BUILD_DLL
+  libout     = ..
+}

@@ -1,0 +1,33 @@
+project: server {
+  depends  += Messaging
+  idlflags -= -Sc
+  idlflags += -GC
+  libs     += TAO_Messaging
+
+  Source_Files {
+    ami_test_i.cpp
+    server.cpp
+  }  
+}
+ 
+project(client): server {
+  depends  += Messaging
+  idlflags -= -Sc
+  idlflags += -GC
+  libs     += TAO_Messaging
+
+  Source_Files {
+    client.cpp
+  }  
+}
+
+project(simple_client): server {
+  depends  += Messaging
+  idlflags -= -Sc
+  idlflags += -GC
+  libs     += TAO_Messaging
+
+  Source_Files {
+    simple_client.cpp
+  }  
+}

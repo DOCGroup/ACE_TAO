@@ -1,0 +1,26 @@
+configurations  = Release Debug
+type_is_binary  = 1
+type_is_dynamic = 1
+common_defines  = WIN32 _WINDOWS
+pch_defines     = ACE_USING_PCH
+
+Release {
+  use_debug_libraries   = 0
+  compile_flags         = /W3 /GX /O2 /MD /Zi /Ob2
+  defines               = NDEBUG
+  compile_flags_removed = /YX
+  output_dir            = Release
+  intermediate_dir      = Release
+  debug_switch          =
+}
+
+Debug {
+  use_debug_libraries   = 1
+  compile_flags         = /W3 /Gm /GX /Zi /Od /MDd /Gy
+  defines               = _DEBUG
+  compile_flags_removed = /Fr /YX
+  intermediate_dir      = Debug
+  lib_modifier          = d
+  pdb                   = 1
+}
+

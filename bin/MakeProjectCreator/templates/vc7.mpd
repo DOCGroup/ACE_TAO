@@ -1,0 +1,195 @@
+<?xml version="<%xml_version("1.0")%>" encoding = "<%encoding("Windows-1252")%>"?>
+<VisualStudioProject
+        ProjectType="Visual C++"
+        Version="7.00"
+        Name="<%project_name%>"
+        ProjectGUID="<%guid%>"
+        SccProjectName=""
+        SccLocalPath="">
+        <Platforms>
+                <Platform
+                        Name="<%platform("Win32")%>"/>
+        </Platforms>
+        <Configurations>
+<%foreach(configurations)%>
+                <Configuration
+                        Name="<%configuration%>|<%platform%>"
+                        OutputDirectory="<%if(type_is_dynamic)%><%libout%><%else%><%output_dir%><%endif%>"
+                        IntermediateDirectory="<%intermediate_dir%>"
+                        ConfigurationType="<%configuration_type("2")%>"
+                        UseOfMFC="<%use_mfc("0")%>"
+                        ATLMinimizesCRunTimeLibraryUsage="FALSE">
+                        <Tool
+                                Name="VCCLCompilerTool"
+<%if(optimization)%>
+                                Optimization="<%optimization%>"
+<%endif%>
+                                InlineFunctionExpansion="<%inline("1")%>"
+                                AdditionalIncludeDirectories="<%foreach(includes)%><%include%><%fornotlast(",")%><%endfor%>"
+                                PreprocessorDefinitions="<%if(type_is_dynamic)%><%foreach(dllflags)%><%dllflag%>;<%endfor%><%endif%><%if(need_libflags)%><%foreach(libflags)%><%libflag%>;<%endfor%><%endif%><%if(pch_header)%><%foreach(pch_defines)%><%pch_define%>;<%endfor%><%endif%><%foreach(defines common_defines)%><%define%><%fornotlast(";")%><%endfor%>"
+                                StringPooling="<%string_pooling("TRUE")%>"
+                                RuntimeLibrary="<%runtime_library%>"
+                                EnableFunctionLevelLinking="TRUE"
+                                RuntimeTypeInfo="<%rtti("TRUE")%>"
+<%if(pch_header)%>
+                                UsePrecompiledHeader="3"
+                                PrecompiledHeaderThrough="<%pch_header%>"
+                                PrecompiledHeaderFile="<%intermediate_dir%>\<%noextension(pch_header)%>.pch"
+<%endif%>
+                                AssemblerListingLocation="<%intermediate_dir%>"
+                                ObjectFile="<%intermediate_dir%>"
+<%if(pdb)%>
+                                ProgramDatabaseFile="<%if(type_is_dynamic)%><%dllout%>\<%sharedname%><%lib_modifier%>.pdb<%endif%><%if(exename)%><%if(install)%><%install%><%else%><%output_dir%><%endif%>\<%exename%>.pdb<%endif%><%if(type_is_static)%><%output_dir%>\<%sharedname%><%lib_modifier%>.lib<%endif%>"
+<%endif%>
+                                WarningLevel="<%warning_level("3")%>"
+                                SuppressStartupBanner="TRUE"
+                                DebugInformationFormat="<%debug_format("3")%>"
+                                CompileAs="0"/>
+                       <Tool
+                                Name="VCLinkerTool"
+                                AdditionalOptions="/MACHINE:<%machine("I386")%>"
+                                OutputFile="<%if(sharedname)%><%dllout%>\<%sharedname%><%lib_modifier%>.dll<%endif%><%if(exename)%><%if(install)%><%install%>\<%endif%><%exename%>.exe<%endif%><%if(type_is_static)%><%libout%>\<%staticname%><%lib_modifier%>.lib<%endif%>"
+                                Version="<%version("1.0")%>"
+                                LinkIncremental="<%incremental("0")%>"
+                                SuppressStartupBanner="TRUE"
+                                AdditionalLibraryDirectories="<%foreach(libpaths)%><%libpath%><%fornotlast(";")%><%endfor%>"
+<%if(debug)%>
+                                GenerateDebugInformation="TRUE"
+<%endif%>
+                                SubSystem="<%subsystem("2")%>"
+<%if(type_is_dynamic)%>
+                                ImportLibrary="<%sharedname%><%lib_modifier%>.lib"
+<%endif%>
+                       />
+                       <Tool
+                                Name="VCPostBuildEventTool"/>
+                       <Tool
+                                Name="VCPreBuildEventTool"/>
+                       <Tool
+                                Name="VCPreLinkEventTool"/>
+                       <Tool
+                                Name="VCResourceCompilerTool"
+                                PreprocessorDefinitions="<%foreach(defines)%><%define%><%fornotlast(";")%><%endfor%>"
+                                Culture="<%culture("1033")%>"/>
+                </Configuration>
+<%endfor%>
+        </Configurations>
+        <Files>
+<%if(source_files)%>
+                <Filter
+                        Name="Source Files"
+                        Filter="cpp;cxx;cc;c;C">
+<%if(pch_source)%>
+                        <File
+                               RelativePath=".\<%pch_source%>">
+<%foreach(configurations)%>
+                                <FileConfiguration
+                                        Name="<%configuration%>|<%platform%>"
+                                        <Tool
+                                                Name="VCCLCompilerTool"
+                                                UsePrecompiledHeader="1"/>
+                                </FileConfiguration
+<%endfor%>
+                        </File>
+                </Filter>
+<%endif%>
+<%foreach(source_files)%>
+                        <File
+                                RelativePath=".\<%source_file%>">
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+<%if(header_files)%>
+                <Filter
+                        Name="Header Files"
+                        Filter="h;hpp;hxx;hh">
+<%if(pch_header)%>
+                          <File
+                                 RelativePath=".\<%pch_header%>">
+                          </File>
+<%endif%>
+<%foreach(header_files)%>
+                        <File
+                                RelativePath=".\<%header_file%>">
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+<%if(idl_files)%>
+                <Filter
+                        Name="IDL Files"
+                        Filter="idl">
+<%foreach(idl_files)%>
+                        <File
+                                RelativePath=".\<%idl_file%>">
+<%foreach(configurations)%>
+                                <FileConfiguration
+                                        Name="<%configuration%>|<%platform%>">
+                                        <Tool
+                                               Name="VCCustomBuildTool"
+                                               Description="Invoking TAO_IDL Compiler on <%idl_file%>"
+                                               CommandLine="<%tao_idl_exe("$(ACE_ROOT)\\bin\\tao_idl")%> <%idlflags("-Sc")%> <%idl_file%>"
+                                               Outputs="<%noextension(idl_file)%>C.h;<%noextension(idl_file)%>C.i;<%noextension(idl_file)%>C.cpp;<%noextension(idl_file)%>S.h;<%noextension(idl_file)%>S.i;<%noextension(idl_file)%>S.cpp;<%noextension(idl_file)%>S_T.h;<%noextension(idl_file)%>S_T.i;<%noextension(idl_file)%>S_T.cpp"
+                                </FileConfiguration>
+<%endfor%>
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+<%if(inline_files)%>
+                <Filter
+                        Name="Inline Files"
+                        Filter="i;inl">
+<%foreach(inline_files)%>
+                        <File
+                                RelativePath=".\<%inline_file%>">
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+<%if(template_files)%>
+                <Filter
+                        Name="Template Files"
+                        Filter="">
+<%foreach(template_files)%>
+                        <File
+                                RelativePath=".\<%template_file%>">
+<%foreach(configurations)%>
+                                <FileConfiguration
+                                        Name="<%configuration%>|<%platform%>"
+                                        ExcludeFromBuild="TRUE">
+                                        <Tool
+                                               Name="VCCLCompilerTool"/>
+                                </FileConfiguration>
+<%endfor%>
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+<%if(documentation_files)%>
+                <Filter
+                        Name="Documentation Files"
+                        Filter="">
+<%foreach(documentation_files)%>
+                        <File
+                                RelativePath=".\<%documentation_file%>">
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+<%if(resource_files)%>
+                <Filter
+                        Name="Resource Files"
+                        Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg">
+<%foreach(resource_files)%>
+                        <File
+                                RelativePath=".\<%resource_file%>">
+                        </File>
+<%endfor%>
+                </Filter>
+<%endif%>
+        </Files>
+        <Globals>
+        </Globals>
+</VisualStudioProject>

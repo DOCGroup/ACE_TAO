@@ -1,0 +1,44 @@
+configurations     = Release Debug "Static Release" "Static Debug"
+type_is_binary     = 1
+common_defines     = WIN32 _CONSOLE
+pch_defines        = ACE_USING_PCH
+configuration_type = 1
+subsystem          = 1
+pdb                = 1
+
+Release {
+  defines          = NDEBUG
+  output_dir       = Release
+  intermediate_dir = Release
+  runtime_library  = 2
+}
+
+Debug {
+  optimization     = 0
+  debug            = 1
+  defines          = _DEBUG
+  intermediate_dir = Debug
+  lib_modifier     = d
+  runtime_library  = 3
+}
+
+Static Release {
+  defines          = NDEBUG
+  output_dir       = Static_Release
+  intermediate_dir = Static_Release
+  lib_modifier     = s
+  need_libflags    = 1
+  runtime_library  = 2
+}
+
+Static Debug {
+  optimization     = 0
+  debug            = 1
+  defines          = _DEBUG
+  output_dir       = Static_Debug
+  intermediate_dir = Static_Debug
+  lib_modifier     = sd
+  need_libflags    = 1
+  runtime_library  = 3
+}
+

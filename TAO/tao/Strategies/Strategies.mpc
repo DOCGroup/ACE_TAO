@@ -1,0 +1,6 @@
+project : taolib {
+  sharedname = TAO_Strategies
+  libs       = TAO
+  dllflags   = TAO_STRATEGIES_BUILD_DLL
+  libout     = ..
+}

@@ -17,7 +17,7 @@
 
 #include "PortableServerC.h"
 #include "tao/corbafwd.h"
-#include "ace/Map.h"
+#include "ace/Map_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
