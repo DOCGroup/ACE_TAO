@@ -1993,8 +1993,6 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
 //   this->gen_standard_include (stream,
 //                               "tao/TypeCode.h");
 
-
-
   this->gen_standard_include (stream,
                               "tao/Null_RefCount_Policy.h");
 
@@ -2007,7 +2005,7 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
                               "tao/Alias_TypeCode.h");
 
   this->gen_cond_file_include (idl_global->enum_seen_,
-                               "tao/TypeCode_Non_Default_Case.h",
+                               "tao/TypeCode_Enumerator.h",
                                stream);
 
   this->gen_cond_file_include (idl_global->enum_seen_,
@@ -2037,6 +2035,10 @@ TAO_CodeGen::gen_typecode_includes (TAO_OutStream * stream)
       | idl_global->aggregate_seen_,
       "tao/Struct_TypeCode.h",
       stream);
+
+  this->gen_cond_file_include (idl_global->union_seen_,
+                               "tao/TypeCode_Non_Default_Case.h",
+                               stream);
 
   this->gen_cond_file_include (idl_global->union_seen_,
                                "tao/Union_TypeCode.h",

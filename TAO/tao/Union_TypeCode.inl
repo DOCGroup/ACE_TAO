@@ -36,9 +36,9 @@ TAO::TypeCode::Union<StringType,
 }
 
 template <typename StringType, typename CaseArrayType, class RefCountPolicy>
-ACE_INLINE TAO::TypeCode::Union<StringType,
-                                CaseArrayType,
-                                RefCountPolicy>::case_type const &
+ACE_INLINE typename TAO::TypeCode::Union<StringType,
+                                         CaseArrayType,
+                                         RefCountPolicy>::case_type const &
 TAO::TypeCode::Union<StringType,
                      CaseArrayType,
                      RefCountPolicy>::the_case (CORBA::ULong index) const

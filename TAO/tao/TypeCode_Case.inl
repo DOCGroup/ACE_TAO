@@ -35,7 +35,7 @@ TAO::TypeCode::Case<STRING_TYPE>::marshal (
   TAO_OutputCDR & cdr) const
 {
   return
-    this->marshal_label ()
+    this->marshal_label (cdr)
     && (cdr << this->name ())
     && (cdr << this->type ());
 }
