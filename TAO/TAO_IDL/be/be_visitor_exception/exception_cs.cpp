@@ -149,13 +149,13 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
     }
 
   *os << node->name () << " *" << be_nl;
-  *os << node->name () << "::_downcast (CORBA::Exception *exc)" << be_nl;
+  *os << node->name () << "::_downcast (CORBA::Exception *_tao_excp)" << be_nl;
   *os << "{" << be_idt_nl;
   *os << "if (!ACE_OS::strcmp (\"" << node->repoID ()
-      << "\", exc->_rep_id ()))" << be_idt_nl;
+      << "\", _tao_excp->_rep_id ()))" << be_idt_nl;
   *os << "{" << be_idt_nl;
   *os << "return ACE_dynamic_cast (" << node->local_name ()
-      << " *, exc);" << be_uidt_nl;
+      << " *, _tao_excp);" << be_uidt_nl;
   *os << "}" << be_uidt_nl;
   *os << "else" << be_idt_nl;
   *os << "{" << be_idt_nl;
