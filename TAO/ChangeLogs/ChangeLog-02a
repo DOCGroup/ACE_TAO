@@ -1,3 +1,85 @@
+Mon Apr  1 14:42:45 2002  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * TAO_IDL/ast/ast_valuetype.cpp:
+        * TAO_IDL/ast/ast_valuetype_fwd.cpp:
+        * TAO_IDL/include/ast_valuetype.h:
+        * TAO_IDL/include/ast_valuetype_fwd.h:
+
+	  New files containing the new front end classes
+	  AST_ValueType and AST_ValueTypeFwd
+
+        * TAO_IDL/Makefile.FE:
+        * TAO_IDL/TAO_IDL_FE.bor:
+        * TAO_IDL/TAO_IDL_FE_DLL.dsp:
+        * TAO_IDL/TAO_IDL_FE_LIB.dsp:
+        * TAO_IDL/ast/Makefile.am:
+        * TAO_IDL/ast/ast_decl.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/ast/ast_interface.cpp:
+        * TAO_IDL/ast/ast_interface_fwd.cpp:
+        * TAO_IDL/ast/ast_module.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/be/Makefile.am:
+        * TAO_IDL/be/be_generator.cpp:
+        * TAO_IDL/be/be_scope.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_valuetype.cpp:
+        * TAO_IDL/be/be_valuetype_fwd.cpp:
+        * TAO_IDL/be/be_visitor_amh_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_ami_pre_proc.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_unbounded_obj_sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ci.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+        * TAO_IDL/be_include/Makefile.am:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/be_include/be_valuetype.h:
+        * TAO_IDL/be_include/be_valuetype_fwd.h:
+        * TAO_IDL/be_include/be_visitor_argument.h:
+        * TAO_IDL/be_include/be_visitor_argument/post_upcall_ss.h:
+        * TAO_IDL/driver/Makefile.am:
+        * TAO_IDL/fe/Makefile.am:
+        * TAO_IDL/fe/fe_interface_header.cpp:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/Makefile.am:
+        * TAO_IDL/include/ast_component.h:
+        * TAO_IDL/include/ast_decl.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/include/ast_interface.h:
+        * TAO_IDL/include/ast_interface_fwd.h:
+        * TAO_IDL/include/ast_module.h:
+        * TAO_IDL/include/fe_interface_header.h:
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/include/utl_err.h:
+        * TAO_IDL/include/utl_scope.h:
+        * TAO_IDL/narrow/narrow.cpp:
+        * TAO_IDL/util/utl_err.cpp:
+        * TAO_IDL/util/utl_scope.cpp:
+
+	  Changes, additions and deletions occurring as a consequence 
+	  of the new class files created as listed above. In particular,
+	  value types now conform to the constraints on inheritance
+	  and interface support that have been recently agreed upon by
+	  the OMG and which will soon be added officially to CORBA. 
+	  Thanks to Jonathan Biggar <jon@floorboard.com> for passing
+	  along the results of this recent OMG agreement.
+
 Tue Mar 26 19:42:11 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
         * TAO_IDL/ast/ast_constant.cpp:
