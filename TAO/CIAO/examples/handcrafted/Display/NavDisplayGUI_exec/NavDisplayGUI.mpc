@@ -2,6 +2,8 @@
 project(NavDisplayGUI_exec) : ciao_server {
   depends   += NavDisplay_exec
   sharedname = NavDisplayGUI_exec
+// @@ Notice: Currently, we need to manually change the following Qt library
+//            to qt-mt230nc.lib if you are compiling on Win32.
   lit_libs  += qt-mt
   libs      += NavDisplay_stub NavDisplay_svnt HUDisplay_stub HUDisplay_svnt
   libpaths  += .. ../NavDisplay $(QTDIR)/lib
@@ -15,6 +17,7 @@ project(NavDisplayGUI_exec) : ciao_server {
   }
 
   Source_Files {
+        NavDisplayEIC.cpp
         AddNavUnitCmd.cpp
         DetailView.cpp
         MapView.cpp

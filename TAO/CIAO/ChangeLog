@@ -1,3 +1,21 @@
+Mon May 26 21:13:10 2003  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tools/Simple_Component_Server/Simple_Server.idl:
+	  Changed to include "ciao/CCM_Component.idl".  Subdir name to is
+	  now required.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.cpp:
+	  Removed.  This file should be generated from the IDL file.
+
+	* examples/handcrafted/Display/NavDisplayGUI_exec/NavDisplayEIC.mpc:
+	  Added NavDisplayEIC.cpp into source file list.  Also documented
+	  the necessary changes to generated win32 makefiles/projects for
+	  compiling this component on win32.
+
+	* examples/handcrafted/Hello/run_test.pl: Added the use of the new
+	  PerlACE::Process::Normalize_Executable_Name so we can test this
+	  stuff with release builds.
+
 Fri May 23 22:17:36 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* examples/handcrafted/BasicSP/BMClosedED/BMClosedEDE.idl:
