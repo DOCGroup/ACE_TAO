@@ -14,6 +14,9 @@ public class ImageSender
     this.parent_ = parent;
   }
 
+  // ****************** 
+  // Currently bombs if it's not in an http or / format
+  //
   public void open (Image image, String url)
   {
     this.image_ = image;
@@ -46,7 +49,17 @@ public class ImageSender
       }
   }
 
+  // Maintain compatibility 
   public int send ()
+    {
+      return send(null);
+    }
+
+  /*******************************************
+   * The authenication string allows the PUT command to work if the server
+   * accepts the basic HTTP 1.1 encryption scheme
+   *******************************************/
+  public int send (String authentication)
   {
     ImageByteCounter byteCounter = new ImageByteCounter ("", this.image_, this.parent_);
     //    StatusIndicator indicator = new StatusIndicator ("");
@@ -70,7 +83,12 @@ public class ImageSender
       }
       */
 
-    GIFHandler gifHandler = new GIFHandler (this.filename_, this.image_, length);
+    GIFHandler gifHandler;
+    if (authentication == null)
+      gifHandler = new GIFHandler (this.filename_, this.image_, length);
+    else
+      gifHandler = new GIFHandler (this.filename_, this.image_, length, authentication);
+
     try
       {
 	// Connect to the server and send the image

@@ -144,11 +144,17 @@ public class ImageApp extends Applet
     return 0;
   }
 
+  // maintain compatibility
   public void saveFile (String url)
+    {
+      this.saveFile (url, null);
+    }
+
+  public void saveFile (String url, String authentication)
   {
     ImageSender imageSender = new ImageSender (this);
     imageSender.open (this.imageCanvas_.getImage (), url);
-    int bytesSent = imageSender.send ();
+    int bytesSent = imageSender.send (authentication);
     if (bytesSent == -1)
       DialogManager.popDialog (DialogType.NOT_SUPPORTED,
 			       "Server does not support uploading or URL not found");
@@ -167,8 +173,10 @@ public class ImageApp extends Applet
     // Check if the filename has been previously specified and
     // if not then check if the user has specified the name of the
     // config file
-    if (this.configFile_ == null)
+    if (this.configFile_ == null) {
       this.configFile_ = getParameter ("configFile");
+      System.out.println ("Configuration File (1): " + this.configFile_);
+    }
     if (this.configFile_ == null)
       this.configFile_ = "http://www.cs.wustl.edu/~pjain/java/ACE_wrappers/java/ImageProcessing/framework/filter.conf";
 
