@@ -70,22 +70,22 @@ public:
   Oid& operator=( const Oid &oid);
   // assignment to another oid object overloaded
 
-  friend int operator==( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export int operator==( const Oid &lhs,const Oid &rhs);
   // equal operator overloaded
 
-  friend int operator!=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export int operator!=( const Oid &lhs,const Oid &rhs);
   // not equal operator overloaded
 
-  friend int operator<( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export int operator<( const Oid &lhs,const Oid &rhs);
   // less than < overloaded
 
-  friend int operator<=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export int operator<=( const Oid &lhs,const Oid &rhs);
   // less than <= overloaded
 
-  friend int operator>( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export int operator>( const Oid &lhs,const Oid &rhs);
   // greater than > overloaded
 
-  friend int operator>=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export int operator>=( const Oid &lhs,const Oid &rhs);
   // greater than >= overloaded
 
   Oid& operator+=( const char *a);

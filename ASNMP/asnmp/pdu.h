@@ -89,19 +89,19 @@ public:
   const char *agent_error_reason();
   // return the complete error info from this pdu
 
-  friend void set_error_status( Pdu *pdu, const int status);
+  friend ASNMP_Export void set_error_status( Pdu *pdu, const int status);
   // set the error status
 
   int get_error_index() const;
   // return the error index
 
-  friend void set_error_index( Pdu *pdu, const int index);
+  friend ASNMP_Export void set_error_index( Pdu *pdu, const int index);
   // set the error index
 
-  friend void clear_error_status( Pdu *pdu);
+  friend ASNMP_Export void clear_error_status( Pdu *pdu);
   // clear error status
 
-  friend void clear_error_index( Pdu *pdu);
+  friend ASNMP_Export void clear_error_index( Pdu *pdu);
   // clear error index
 
   unsigned long get_request_id() const;
@@ -187,7 +187,7 @@ public:
 };
 
 
-class VbIter
+class ASNMP_Export VbIter
   // = TITLE
   //      Utility class to iterate once through a PDU varbind list
 {
