@@ -1,3 +1,12 @@
+Wed Jan  5 13:40:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/default_client.{h,cpp,i}:
+        * tao/default_server.{h,cpp,i}:
+          Removed i file and updated h/cpp file.
+
+        * orbsvcs/orbsvcs/Makefile.am
+          Updated for changes above
+
 Wed Jan  5 11:50:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Notify/Builder.{h,cpp,inl}:
