@@ -765,8 +765,8 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   char *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
-  Param_Test::Short_Seq_ptr ub_short_sequence;
-  Param_Test::Bounded_Short_Seq_ptr bd_short_sequence;
+  Param_Test::Short_Seq *ub_short_sequence;
+  Param_Test::Bounded_Short_Seq *bd_short_sequence;
   Param_Test::Fixed_Struct *fixed_structure;
   Param_Test::Big_Union *big_union;
 
