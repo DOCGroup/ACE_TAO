@@ -1,23 +1,31 @@
+Fri Jul 03 17:02:49 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * bin/make_release (create_kit): remove any existing .zip
+          files before trying to create new ones, because they get
+          in the way.  Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for reporting the problem
+          with new ACE+TAO.tar.gz's not being created.
+
 Fri Jul  3 14:24:59 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* apps/gperf/src/gperf.dsw:
-	* apps/gperf/src/gperf.dsp:
-	* apps/gperf/src/gperf_lib.dsp:
-	  Added MSVC5 Project files
+        * apps/gperf/src/gperf.dsw:
+        * apps/gperf/src/gperf.dsp:
+        * apps/gperf/src/gperf_lib.dsp:
+          Added MSVC5 Project files
 
-	* apps/gperf/src/Key_List.cpp:
-	* apps/gperf/src/Options.h:
-	* apps/gperf/src/Options.cpp:
-	  There was a enumeration CONST, and MSVC5 didn't like it.  I 
-	  renamed it to CONSTANT.
+        * apps/gperf/src/Key_List.cpp:
+        * apps/gperf/src/Options.h:
+        * apps/gperf/src/Options.cpp:
+          There was a enumeration CONST, and MSVC5 didn't like it.  I
+          renamed it to CONSTANT.
 
-	* apps/gperf/src/new.cpp
-	  Changed a variable from int to size_t to get rid of a MSVC 
-	  warning.
+        * apps/gperf/src/new.cpp
+          Changed a variable from int to size_t to get rid of a MSVC
+          warning.
 
-	  NOTE:  I tried out some tests and even though gperf compiles
-	         on NT, it doesn't seem to work correctly yet.  That
-		 will come later.
+          NOTE:  I tried out some tests and even though gperf compiles
+                 on NT, it doesn't seem to work correctly yet.  That
+                 will come later.
 
 Fri Jul 03 13:47:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -25,8 +33,8 @@ Fri Jul 03 13:47:19 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Jul 03 08:52:13 1998  Steve Huston  <shuston@riverace.com>
 
-	* netsvcs/lib/Name_Handler.{cpp h}: Moved class Naming_Context from
-	  .cpp to .h so that AIX xlC can find it when instantiating templates.
+        * netsvcs/lib/Name_Handler.{cpp h}: Moved class Naming_Context from
+          .cpp to .h so that AIX xlC can find it when instantiating templates.
 
 Thu Jul  2 11:49:16 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
