@@ -1,3 +1,15 @@
+Wed Aug 30 14:18:46 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_global.cpp:
+	* TAO_IDL/ast/ast_decl.cpp:
+
+	  Removed destruction of the pragma list from class
+	  AST_Decl. The pragma list in this class is assigned
+	  from the master list in IDL_GLobalData, and not copied.
+	  Also left a comment to this effect in IDL_GLobalData::destroy.
+	  The IDL compiler was crashing on
+	  TAO/examples/Simulator/Event_Supplier.idl
+
 Wed Aug 30 12:01:21 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Common/Makefile: 
