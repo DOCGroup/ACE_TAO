@@ -241,7 +241,7 @@ private:
 
   void fill_op_desc (ACE_Configuration_Section_Key &key,
                      CORBA::OperationDescription &od,
-                     char *sub_section
+                     const char *sub_section
                      ACE_ENV_ARG_DECL);
 
   void fill_param_desc_seq (ACE_Configuration_Section_Key &key,
@@ -256,12 +256,12 @@ private:
 
   void fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
                           CORBA::ExcDescriptionSeq &eds,
-                          char *sub_section
+                          const char *sub_section
                           ACE_ENV_ARG_DECL);
 
   void fill_exc_desc (ACE_Configuration_Section_Key &key,
                       CORBA::ExceptionDescription &ed,
-                      char *sub_section
+                      const char *sub_section
                       ACE_ENV_ARG_DECL);
 
   void fill_attr_desc_seq (ACE_Configuration_Section_Key &key,

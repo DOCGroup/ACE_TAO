@@ -137,6 +137,8 @@ template class TAO_IFR_Generic_Utils<TAO_UsesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_EmitsDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_PublishesDef_i>;
 template class TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_FinderDef_i>;
+template class TAO_IFR_Generic_Utils<TAO_FactoryDef_i>;
 template class TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>;
@@ -144,6 +146,10 @@ template class TAO_Port_Utils<CORBA::ComponentIR::PublishesDef>;
 template class TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>;
 template class TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>;
 template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
+template class TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ComponentIR::HomeDescription, TAO_HomeDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ExceptionDescription, TAO_ExceptionDef_i>;
+template class TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeDef_i>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -273,6 +279,8 @@ template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_EmitsDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_PublishesDef_i>
 #pragma instantiate TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_FinderDef_i>
+#pragma instantiate TAO_IFR_Generic_Utils<TAO_FactoryDef_i>
 #pragma instantiate TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::ProvidesDescriptionSeq>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ProvidesDef>
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::EmitsDef>
@@ -280,5 +288,9 @@ template class TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>;
 #pragma instantiate TAO_Port_Utils<CORBA::ComponentIR::ConsumesDef>
 #pragma instantiate TAO_IFR_Strseq_Utils<CORBA::RepositoryIdSeq>
 #pragma instantiate TAO_IFR_Strseq_Utils<CORBA::ContextIdSeq>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::OperationDescription, TAO_OperationDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ComponentIR::HomeDescription, TAO_HomeDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ExceptionDescription, TAO_ExceptionDef_i>
+#pragma instantiate TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription, TAO_AttributeDef_i>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
