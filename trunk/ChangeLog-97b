@@ -1,3 +1,10 @@
+Wed Sep 24 10:34:29 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* ace/OS.h: 
+	  Under HP-UX and g++ <dl.h> must be included for dynamic loading,
+	  not <cxxdl.h>; thanks to Warren Thompson (wthompson@altaira.com)
+	  for helping us with this one.
+
 Wed Sep 24 09:36:21 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/Managed_Object.{h,i},Object_Manager.{h,cpp}: removed
