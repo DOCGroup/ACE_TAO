@@ -13,6 +13,10 @@ Mon Mar  2 16:48:59 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* tao/typecode.i: 
 	  Added the _var and _out classes for CORBA_TypeCode.
 
+	* tao/corbacom.h: 
+	  Added the TypeCode_var and TypeCode_out classes to the CORBA
+	  class.
+
 Mon Mar  2 15:39:57 1998  Douglas C. Schmidt  <schmidt@waltz.cs.wustl.edu>
 
 	* tao/sequence_T.h: Added a ptr() accessor to both the

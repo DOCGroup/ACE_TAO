@@ -55,6 +55,8 @@ class CORBA_Any_out;
 //typedef class CORBA_Any *CORBA_Any_ptr;
 
 class CORBA_TypeCode;
+class CORBA_TypeCode_var;
+class CORBA_TypeCode_out;
 //typedef class CORBA_TypeCode *CORBA_TypeCode_ptr;
 
 class CORBA_Exception;
@@ -467,6 +469,8 @@ public:
 
   typedef CORBA_TypeCode TypeCode;
   typedef TypeCode *TypeCode_ptr;
+  typedef CORBA_TypeCode_var TypeCode_var;
+  typedef CORBA_TypeCode_out TypeCode_out;
 
   typedef CORBA_UserException  UserException;
 
