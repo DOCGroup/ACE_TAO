@@ -1,3 +1,10 @@
+Wed Mar 22 09:16:48 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* ace/CDR_Stream.i:
+	  Initialized a local variable inside the << operator
+	  for wstring. It was producing a warning on Linux g++
+	  (charanga).
+
 Tue Mar 21 14:24:07 2000  Chad Elliott <elliott_c@ociweb.com>
 
         * ace/config-chorus.h,
