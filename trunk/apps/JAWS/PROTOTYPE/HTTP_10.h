@@ -37,8 +37,6 @@ public:
 private:
   int parse_request (JAWS_HTTP_10_Request *info, JAWS_Data_Block *data);
 
-  void parse_request_line (JAWS_HTTP_10_Request *info, char *line);
-  void parse_header_line (JAWS_HTTP_10_Request *info, char *line);
 };
 
 // Write the response

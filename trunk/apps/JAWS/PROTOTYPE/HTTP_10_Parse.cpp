@@ -57,7 +57,7 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
           // This needs to be a value that tells the framework that
           // the call is asynchronous, but that we should remain in
           // the current task state.
-          return 1;
+          return 2;
         }
     }
 
@@ -77,7 +77,7 @@ JAWS_HTTP_10_Parse_Task::parse_request (JAWS_HTTP_10_Request *info,
   // Note that RFC 822 does not mention the maximum length of a header
   // line.  So in theory, there is no maximum length.
   // In Apache, they assume that each header line should not exceed
-  // 8K.
+  // 8K.  Who am I to disagree?
 
   int result = info->complete_header_line (mb.rd_ptr ());
 
@@ -85,13 +85,13 @@ JAWS_HTTP_10_Parse_Task::parse_request (JAWS_HTTP_10_Request *info,
     {
       if (!info->got_request_line ())
         {
-          this->parse_request_line (info, mb.rd_ptr ());
+          info->parse_request_line (mb.rd_ptr ());
           while (info->complete_header_line (mb.rd_ptr ()) > 0)
-            this->parse_header_line (info, mb.rd_ptr ());
+            info->parse_header_line (mb.rd_ptr ());
         }
       else if (result > 0)
         do
-          this->parse_header_line (info, mb.rd_ptr ());
+          info->parse_header_line (mb.rd_ptr ());
         while (info->complete_header_line (mb.rd_ptr ()) > 0);
     }
 
@@ -101,18 +101,4 @@ JAWS_HTTP_10_Parse_Task::parse_request (JAWS_HTTP_10_Request *info,
     return info->reset (mb.rd_ptr (), mb.length ());
   else
     return 0;
-}
-
-void
-JAWS_HTTP_10_Parse_Task::parse_request_line (JAWS_HTTP_10_Request *info,
-                                             char *request_line)
-{
-  info->parse_request_line (request_line);
-}
-
-void
-JAWS_HTTP_10_Parse_Task::parse_header_line (JAWS_HTTP_10_Request *info,
-                                             char *header_line)
-{
-  info->parse_header_line (header_line);
 }
