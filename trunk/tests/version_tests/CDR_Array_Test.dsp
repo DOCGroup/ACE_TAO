@@ -1,25 +1,25 @@
-# Microsoft Developer Studio Project File - Name="Buffer_Stream_Test" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="CDR_Array_Test" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=Buffer_Stream_Test - Win32 Release
+CFG=CDR_Array_Test - Win32 Release
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "Buffer_Stream_Test.mak".
+!MESSAGE NMAKE /f "CDR_Array_Test.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "Buffer_Stream_Test.mak" CFG="Buffer_Stream_Test - Win32 Release"
+!MESSAGE NMAKE /f "CDR_Array_Test.mak" CFG="CDR_Array_Test - Win32 Release"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "Buffer_Stream_Test - Win32 Static Debug" (based on "Win32 (x86) Console Application")
-!MESSAGE "Buffer_Stream_Test - Win32 Static Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "Buffer_Stream_Test - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "CDR_Array_Test - Win32 Static Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "CDR_Array_Test - Win32 Static Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "CDR_Array_Test - Win32 Release" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -29,19 +29,19 @@ CFG=Buffer_Stream_Test - Win32 Release
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "Buffer_Stream_Test - Win32 Static Debug"
+!IF  "$(CFG)" == "CDR_Array_Test - Win32 Static Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
-# PROP BASE Output_Dir ".\Buffer_Stream_Test\Static Debug"
-# PROP BASE Intermediate_Dir ".\Buffer_Stream_Test\Static Debug"
-# PROP BASE Target_Dir ".\Buffer_Stream_Test"
+# PROP BASE Output_Dir ".\CDR_Array_Test\Static Debug"
+# PROP BASE Intermediate_Dir ".\CDR_Array_Test\Static Debug"
+# PROP BASE Target_Dir ".\CDR_Array_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir ".\LIB\Debug"
 # PROP Intermediate_Dir ".\LIB\Debug"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Buffer_Stream_Test"
+# PROP Target_Dir ".\CDR_Array_Test"
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../" /D "_DEBUG" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
@@ -54,19 +54,19 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386
 # ADD LINK32 acesd.lib advapi32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Buffer_Stream_Test - Win32 Static Release"
+!ELSEIF  "$(CFG)" == "CDR_Array_Test - Win32 Static Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Buffer_Stream_Test\Static Release"
-# PROP BASE Intermediate_Dir ".\Buffer_Stream_Test\Static Release"
-# PROP BASE Target_Dir ".\Buffer_Stream_Test"
+# PROP BASE Output_Dir ".\CDR_Array_Test\Static Release"
+# PROP BASE Intermediate_Dir ".\CDR_Array_Test\Static Release"
+# PROP BASE Target_Dir ".\CDR_Array_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ".\LIB\Release"
 # PROP Intermediate_Dir ".\LIB\Release"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Buffer_Stream_Test"
+# PROP Target_Dir ".\CDR_Array_Test"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D ACE_HAS_DLL=0 /D ACE_OS_HAS_DLL=0 /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
@@ -79,19 +79,19 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 aces.lib advapi32.lib user32.lib /nologo /subsystem:console /machine:I386 /libpath:"..\..\ace"
 
-!ELSEIF  "$(CFG)" == "Buffer_Stream_Test - Win32 Release"
+!ELSEIF  "$(CFG)" == "CDR_Array_Test - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
-# PROP BASE Output_Dir ".\Buffer_Stream_Test\Release"
-# PROP BASE Intermediate_Dir ".\Buffer_Stream_Test\Release"
-# PROP BASE Target_Dir ".\Buffer_Stream_Test"
+# PROP BASE Output_Dir ".\CDR_Array_Test\Release"
+# PROP BASE Intermediate_Dir ".\CDR_Array_Test\Release"
+# PROP BASE Target_Dir ".\CDR_Array_Test"
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir ".\DLL\Release"
 # PROP Intermediate_Dir ".\DLL\Release"
 # PROP Ignore_Export_Lib 0
-# PROP Target_Dir ".\Buffer_Stream_Test"
+# PROP Target_Dir ".\CDR_Array_Test"
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /YX /c
 # ADD CPP /nologo /MD /W3 /GX /O2 /I "../../" /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /FD /c
 # SUBTRACT CPP /YX
@@ -108,28 +108,16 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "Buffer_Stream_Test - Win32 Static Debug"
-# Name "Buffer_Stream_Test - Win32 Static Release"
-# Name "Buffer_Stream_Test - Win32 Release"
+# Name "CDR_Array_Test - Win32 Static Debug"
+# Name "CDR_Array_Test - Win32 Static Release"
+# Name "CDR_Array_Test - Win32 Release"
 # Begin Group "Source Files"
 
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;hpj;bat;for;f90"
 # Begin Source File
 
-SOURCE=..\Buffer_Stream_Test.cpp
+SOURCE=..\CDR_Array_Test.cpp
 # End Source File
-# End Group
-# Begin Group "Header Files"
-
-# PROP Default_Filter "h;hpp;hxx;hm;inl;fi;fd"
-# Begin Source File
-
-SOURCE=..\test_config.h
-# End Source File
-# End Group
-# Begin Group "Resource Files"
-
-# PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 # End Group
 # End Target
 # End Project
