@@ -65,6 +65,7 @@ Hash_ReplicaControl::handle_timeout (const ACE_Time_Value &,
       this->proxy_->current_load (this->current_load_,
                                   ACE_TRY_ENV);
       ACE_TRY_CHECK;
+      ACE_DEBUG ((LM_DEBUG, "Current_Load = %f\n", this->current_load_));
     }
   ACE_CATCHANY
     {
@@ -83,6 +84,7 @@ Hash_ReplicaControl::request_received (void)
 void
 Hash_ReplicaControl::request_rejected (CORBA::Environment &ACE_TRY_ENV)
 {
+  this->replica_.reject_requests (0);
   ACE_THROW (PortableServer::ForwardRequest (
                  CORBA::Object::_duplicate (this->group_.in ())));
 

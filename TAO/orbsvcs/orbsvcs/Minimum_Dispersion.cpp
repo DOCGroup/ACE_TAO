@@ -117,7 +117,7 @@ Minimum_Dispersion_Strategy::load_changed (ReplicaProxy_Impl *proxy,
   ACE_DEBUG ((LM_DEBUG, "Load[%x] %f %f %f\n",
               proxy, cl, avg, relative_load));
 
-  if (relative_load > 1 + 1.0F / n)
+  if (relative_load > 1 + 1.5F / n)
     {
       proxy->has_high_load_ = 1;
       proxy->control_->high_load_advisory (ACE_TRY_ENV);
