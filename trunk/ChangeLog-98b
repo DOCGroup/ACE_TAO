@@ -1,12 +1,17 @@
+Sun Nov 22 22:07:04 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Functor*: removed trailing // EOF because class2man choked
+          on it.
+
 Sun Nov 22 14:36:26 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* examples/Reactor/Proactor/test_proactor.cpp (open): Updated the
-	test to show the correct way to 'fake' <complete> call. 
+        * examples/Reactor/Proactor/test_proactor.cpp (open): Updated the
+          test to show the correct way to 'fake' <complete> call.
 
 Sun Nov 22 13:57:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Makefile: Added Env_Value_T to the TEMPLATE_FILES macro in
- 	  the Makefile.  Thanks to Ossama for reporting this.
+        * ace/Makefile: Added Env_Value_T to the TEMPLATE_FILES macro in
+          the Makefile.  Thanks to Ossama for reporting this.
 
 Sat Nov 21 14:32:53 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
