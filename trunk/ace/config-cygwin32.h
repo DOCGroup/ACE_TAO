@@ -38,6 +38,7 @@
 #define ACE_LACKS_SYSTIME_H
 #define ACE_LACKS_SYSV_SHMEM
 
+
 #define ACE_HAS_BROKEN_MAP_FAILED
 
 #define ACE_LACKS_SEMBUF_T
@@ -45,6 +46,8 @@
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_RLIMIT
+
+#define ACE_HAS_SELECT_H
 
 #define ACE_LACKS_PRAGMA_ONCE
 
@@ -134,9 +137,6 @@
 
 // Cygwin has no siginfo.h
 #define ACE_LACKS_SIGINFO_H
-// Cygwin has no si_addr
-#define ACE_LACKS_SI_ADDR
-// Struct siginfo_t is not defined (only defined __rtems__ with _POSIX_REALTIME_SIGNALS).
 // Cygwin has no ucontext.h
 #define ACE_LACKS_UCONTEXT_H
 
@@ -162,7 +162,6 @@
 #  define ACE_LACKS_SETSCHED
 #  define ACE_LACKS_SETDETACH
 #  define ACE_LACKS_PTHREAD_CANCEL
-
 #endif  /* ACE_MT_SAFE */
 
 #include "ace/post.h"
