@@ -199,6 +199,7 @@ Server_i::register_with_ir (void)
     proc_opts.working_directory_ = CORBA::string_dup ("");
 
     ImplRepo->register_server ("simpserv", proc_opts, TAO_TRY_ENV);
+    TAO_CHECK_ENV;
   }
   TAO_CATCHANY
   {
