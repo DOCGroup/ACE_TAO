@@ -1,3 +1,13 @@
+Wed Dec 31 06:46:36 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * apps/JAWS3/jaws3.mwc:
+
+          Removed this file.  It is not necessary for two reasons.  1) The
+          jaws3 project will be part of the "apps" workspace.  2) If a
+          workspace with just jaws3 is desired, one could run mwc.pl in the
+          apps/JAWS3 directory to obtain the same results as the removed
+          mwc file.
+
 Wed Dec 31 12:30:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Export/dll.h:
@@ -5,176 +15,176 @@ Wed Dec 31 12:30:11 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Tue Dec 30 18:14:39 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_TLI.inl (t_alloc): For XPG5, the t_alloc() return type
-	  changed from char* to void*, so using ACE_OSCALL_RETURN doesn't
-	  work. Use ACE_OSCALL to control the type and return more closely.
+        * ace/OS_TLI.inl (t_alloc): For XPG5, the t_alloc() return type
+          changed from char* to void*, so using ACE_OSCALL_RETURN doesn't
+          work. Use ACE_OSCALL to control the type and return more closely.
 
-	* ace/Timer_List_T.cpp: Add #include "ace/Guard_T.h to get ACE_Guard.
+        * ace/Timer_List_T.cpp: Add #include "ace/Guard_T.h to get ACE_Guard.
 
-	* apps/Gateway/Gateway/Gateway.cpp: Added #include "ace/OS_NS_stdio.h"
-	  so Visual Age C++ can see ACE_OS::sprintf().
+        * apps/Gateway/Gateway/Gateway.cpp: Added #include "ace/OS_NS_stdio.h"
+          so Visual Age C++ can see ACE_OS::sprintf().
 
-	* apps/Gateway/Gateway/gatewayd.cpp: Add #include "ace/OS_NS_unistd.h"
-	  so Visual Age C++ can see ACE_OS::access().
+        * apps/Gateway/Gateway/gatewayd.cpp: Add #include "ace/OS_NS_unistd.h"
+          so Visual Age C++ can see ACE_OS::access().
 
-	* apps/Gateway/Peer/Options.cpp: Added #include "ace/OS_NS_stdlib.h"
-	  so Visual Age C++ can see ACE_OS::exit(), getenv(), and atoi().
-	  Added #include "ace/OS_Memory.h" to get ACE_NEW_RETURN.
+        * apps/Gateway/Peer/Options.cpp: Added #include "ace/OS_NS_stdlib.h"
+          so Visual Age C++ can see ACE_OS::exit(), getenv(), and atoi().
+          Added #include "ace/OS_Memory.h" to get ACE_NEW_RETURN.
 
-	* apps/Gateway/Peer/Peer.cpp: Added #include "ace/OS_NS_stdio.h"
-	  so Visual Age C++ can see ACE_OS::sprintf() and rewind(). Added
-	  "ace/OS_NS_string.h" to get ACE_OS::strdup().
+        * apps/Gateway/Peer/Peer.cpp: Added #include "ace/OS_NS_stdio.h"
+          so Visual Age C++ can see ACE_OS::sprintf() and rewind(). Added
+          "ace/OS_NS_string.h" to get ACE_OS::strdup().
 
-	* apps/Gateway/Peer/Peer.h: Added #include "ace/Null_Condition.h"
-	  and "ace/Null_Mutex.h" to see the classes invoked via NULL_SYNCH
-	  used in the ACE_Svc_Handler template invocation.
+        * apps/Gateway/Peer/Peer.h: Added #include "ace/Null_Condition.h"
+          and "ace/Null_Mutex.h" to see the classes invoked via NULL_SYNCH
+          used in the ACE_Svc_Handler template invocation.
 
-	* apps/drwho/Options.cpp: Added #include "ace/OS_NS_stdlib.h"
-	  so Visual Age C++ can see ACE_OS::exit(), and atoi().
+        * apps/drwho/Options.cpp: Added #include "ace/OS_NS_stdlib.h"
+          so Visual Age C++ can see ACE_OS::exit(), and atoi().
 
-	* apps/drwho/File_Manager.cpp: Added #include "ace/OS_NS_stdio.h"
-	  so Visual Age C++ can see ACE_OS::tempnam().
+        * apps/drwho/File_Manager.cpp: Added #include "ace/OS_NS_stdio.h"
+          so Visual Age C++ can see ACE_OS::tempnam().
 
-	* apps/gperf/src/Options.cpp: Added #include "ace/OS_NS_stdlib.h"
-	  so Visual Age C++ can see ACE_OS::atoi().
+        * apps/gperf/src/Options.cpp: Added #include "ace/OS_NS_stdlib.h"
+          so Visual Age C++ can see ACE_OS::atoi().
 
-	* examples/ASX/CCM_App/SC_Server.cpp: Add #include "ace/OS_NS_unistd.h"
-	  so Visual Age C++ can see ACE_OS::read().
+        * examples/ASX/CCM_App/SC_Server.cpp: Add #include "ace/OS_NS_unistd.h"
+          so Visual Age C++ can see ACE_OS::read().
 
-	* examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
-	* examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
-	  Add #include "ace/OS_NS_stdio.h" so Visual Age C++ can see
-	  ACE_OS::sprintf().
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.cpp:
+        * examples/ASX/Event_Server/Event_Server/Supplier_Router.cpp:
+          Add #include "ace/OS_NS_stdio.h" so Visual Age C++ can see
+          ACE_OS::sprintf().
 
-	* examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
-	  Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
-	  ACE_OS::strdup().
+        * examples/ASX/Event_Server/Event_Server/Event_Analyzer.cpp:
+          Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
+          ACE_OS::strdup().
 
-	* examples/ASX/Event_Server/Transceiver/transceiver.cpp:
-	  Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
-	  ACE_OS::strcmp().
+        * examples/ASX/Event_Server/Transceiver/transceiver.cpp:
+          Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
+          ACE_OS::strcmp().
 
-	* examples/ASX/Message_Queue/buffer_stream.cpp: Added
-	  #include "ace/OS_NS_string.h" to find ACE_OS::strncpy(),
-	  #include "ace/OS_NS_unistd.h" to find ACE_OS::read() and write(), and
-	  #include "ace/OS_NS_stdio.h" to find ACE_OS::sprintf().
+        * examples/ASX/Message_Queue/buffer_stream.cpp: Added
+          #include "ace/OS_NS_string.h" to find ACE_OS::strncpy(),
+          #include "ace/OS_NS_unistd.h" to find ACE_OS::read() and write(), and
+          #include "ace/OS_NS_stdio.h" to find ACE_OS::sprintf().
 
-	* examples/ASX/Message_Queue/priority_buffer.cpp: Added
-	  #include "ace/OS_NS_stdio.h" to get ACE_OS::puts().
+        * examples/ASX/Message_Queue/priority_buffer.cpp: Added
+          #include "ace/OS_NS_stdio.h" to get ACE_OS::puts().
 
-	* examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
-	* examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
-	  Add #include "ace/OS_NS_stdio.h" so Visual Age C++ can see
-	  ACE_OS::sprintf() and "ace/OS_NS_string.h" to see ACE_OS::strdup().
+        * examples/ASX/UPIPE_Event_Server/Consumer_Router.cpp:
+        * examples/ASX/UPIPE_Event_Server/Supplier_Router.cpp:
+          Add #include "ace/OS_NS_stdio.h" so Visual Age C++ can see
+          ACE_OS::sprintf() and "ace/OS_NS_string.h" to see ACE_OS::strdup().
 
-	* examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp:
-	  Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
-	  ACE_OS::strdup().
+        * examples/ASX/UPIPE_Event_Server/Event_Analyzer.cpp:
+          Add #include "ace/OS_NS_string.h" so Visual Age C++ can see
+          ACE_OS::strdup().
 
-	* examples/C++NPv2/Service_Reporter.cpp: Add #include
-	  "ace/OS_NS_string.h" so Visual Age C++ can find ACE_OS::strcat()
-	  and strlen().
+        * examples/C++NPv2/Service_Reporter.cpp: Add #include
+          "ace/OS_NS_string.h" so Visual Age C++ can find ACE_OS::strcat()
+          and strlen().
 
-	* examples/C++NPv2/Client_Logging_Daemon.cpp: Add #include
-	  "ace/OS_NS_sys_time.h" to find ACE_OS::gettimeofday().
+        * examples/C++NPv2/Client_Logging_Daemon.cpp: Add #include
+          "ace/OS_NS_sys_time.h" to find ACE_OS::gettimeofday().
 
-	* examples/C++NPv2/TP_Logging_Server.cpp: Added #include
-	  "ace/OS_Memory.h" to see ACE_NEW_RETURN and "ace/Guard_T.h" to
-	  get the ACE_GUARD stuff.
+        * examples/C++NPv2/TP_Logging_Server.cpp: Added #include
+          "ace/OS_Memory.h" to see ACE_NEW_RETURN and "ace/Guard_T.h" to
+          get the ACE_GUARD stuff.
 
-	* examples/C++NPv2/TP_Logging_Server.h: Added #include
-	  "ace/Synch.h" to see whatever ACE_SYNCH needs.
+        * examples/C++NPv2/TP_Logging_Server.h: Added #include
+          "ace/Synch.h" to see whatever ACE_SYNCH needs.
 
-	* examples/C++NPv2/SR_Configurable_Logging_Server.cpp: Added #include
-	  "ace/OS_Memory.h" to see ACE_NEW_RETURN.
+        * examples/C++NPv2/SR_Configurable_Logging_Server.cpp: Added #include
+          "ace/OS_Memory.h" to see ACE_NEW_RETURN.
 
-	* examples/C++NPv2/display_logfile.cpp: Add #include
-	  "ace/OS_NS_string.h" to see ACE_OS::strlen() and strnlen().
+        * examples/C++NPv2/display_logfile.cpp: Add #include
+          "ace/OS_NS_string.h" to see ACE_OS::strlen() and strnlen().
 
-	* examples/Connection/misc/test_upipe.h: Added
-	  #include "ace/OS_NS_unistd.h" to find ACE_OS::read().
+        * examples/Connection/misc/test_upipe.h: Added
+          #include "ace/OS_NS_unistd.h" to find ACE_OS::read().
 
-	* examples/IPC_SAP/TLI_SAP/ftp-server.cpp: Add #include
-	  "ace/OS_NS_stdio.h" to find ACE_OS::perror().
+        * examples/IPC_SAP/TLI_SAP/ftp-server.cpp: Add #include
+          "ace/OS_NS_stdio.h" to find ACE_OS::perror().
 
-	* examples/IPC_SAP/TLI_SAP/db-server.cpp: Add #include
-	  "ace/OS_NS_stdio.h" to find ACE_OS::sprintf().
+        * examples/IPC_SAP/TLI_SAP/db-server.cpp: Add #include
+          "ace/OS_NS_stdio.h" to find ACE_OS::sprintf().
 
-	* examples/IPC_SAP/UPIPE_SAP/ex1.cpp: Add #include "ace/OS_NS_string.h"
-	  to find ACE_OS::strcpy().
+        * examples/IPC_SAP/UPIPE_SAP/ex1.cpp: Add #include "ace/OS_NS_string.h"
+          to find ACE_OS::strcpy().
 
-	* examples/Logger/Acceptor-server/server_loggerd.cpp: Added #include
-	  "ace/Null_Mutex.h" and "ace/Test_and_Set.h" to get needed class defs.
+        * examples/Logger/Acceptor-server/server_loggerd.cpp: Added #include
+          "ace/Null_Mutex.h" and "ace/Test_and_Set.h" to get needed class defs.
 
-	* examples/Map_Manager/test_hash_map_manager.cpp: Added #include
-	  "ace/Synch.h" to get whatever ACE_SYNCH is.
+        * examples/Map_Manager/test_hash_map_manager.cpp: Added #include
+          "ace/Synch.h" to get whatever ACE_SYNCH is.
 
-	* examples/Naming/test_open.cpp:
-	* examples/Naming/test_writers.cpp: Added #include "ace/OS_NS_unistd.h"
-	  to get ACE_OS::getpid().
+        * examples/Naming/test_open.cpp:
+        * examples/Naming/test_writers.cpp: Added #include "ace/OS_NS_unistd.h"
+          to get ACE_OS::getpid().
 
-	* examples/Reactor/Dgram/CODgram.cpp: Added #include
-	  "ace/OS_NS_string.h" to get ACE_OS::strcpy().
+        * examples/Reactor/Dgram/CODgram.cpp: Added #include
+          "ace/OS_NS_string.h" to get ACE_OS::strcpy().
 
-	* examples/Reactor/Dgram/Dgram.cpp: Added #include "ace/OS_NS_string.h"
-	  to get ACE_OS::strcpy() and "ace/OS_NS_unistd.h" to get sleep().
+        * examples/Reactor/Dgram/Dgram.cpp: Added #include "ace/OS_NS_string.h"
+          to get ACE_OS::strcpy() and "ace/OS_NS_unistd.h" to get sleep().
 
-	* examples/Reactor/Misc/notification.cpp: Added #include
-	  "ace/OS_NS_unistd.h" to get ACE_OS::read() and sleep().
+        * examples/Reactor/Misc/notification.cpp: Added #include
+          "ace/OS_NS_unistd.h" to get ACE_OS::read() and sleep().
 
-	* examples/Reactor/Misc/test_reactors.cpp: Add #include
-	  "ace/Recursive_Thread_Mutex.h" to get ACE_Recursive_Thread_Mutex def.
+        * examples/Reactor/Misc/test_reactors.cpp: Add #include
+          "ace/Recursive_Thread_Mutex.h" to get ACE_Recursive_Thread_Mutex def.
 
-	* examples/Reactor/Misc/test_signals_2.cpp: Add #include "ace/Signal.h"
-	  to see ACE_Sig_Handlers.
+        * examples/Reactor/Misc/test_signals_2.cpp: Add #include "ace/Signal.h"
+          to see ACE_Sig_Handlers.
 
-	* examples/Reactor/Misc/test_timer_queue.cpp: Add #include
-	  "ace/OS_NS_sys_time.h" to get ACE_OS::gettimeofday().
+        * examples/Reactor/Misc/test_timer_queue.cpp: Add #include
+          "ace/OS_NS_sys_time.h" to get ACE_OS::gettimeofday().
 
-	* examples/Reactor/Multicast/client.cpp: Add #include "ace/OS_Memory.h"
-	  to get ACE_NEW_RETURN and "ace/OS_NS_stdlib.h" to get ACE_OS::atoi().
+        * examples/Reactor/Multicast/client.cpp: Add #include "ace/OS_Memory.h"
+          to get ACE_NEW_RETURN and "ace/OS_NS_stdlib.h" to get ACE_OS::atoi().
 
-	* examples/Reactor/Ntalker/ntalker.cpp: Add #include
-	  "ace/OS_NS_unistd.h" to get ACE_OS::read().
+        * examples/Reactor/Ntalker/ntalker.cpp: Add #include
+          "ace/OS_NS_unistd.h" to get ACE_OS::read().
 
-	* examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client.cpp:
-	* examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
-	* examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
-	  Add #include "ace/OS_NS_stdlib.h" to get ACE_OS::atoi() and exit().
+        * examples/Service_Configurator/IPC-tests/client/remote_thr_stream_client.cpp:
+        * examples/Service_Configurator/IPC-tests/client/remote_dgram_client_test.cpp:
+        * examples/Service_Configurator/IPC-tests/client/broadcast_client_test.cpp:
+          Add #include "ace/OS_NS_stdlib.h" to get ACE_OS::atoi() and exit().
 
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
-	  Add #include "ace/OS_NS_string.h" to get ACE_OS::strdup() and
-	  strncpy().
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_CODgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_FIFO.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Pipe.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Stream.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_Timeout.i:
+          Add #include "ace/OS_NS_string.h" to get ACE_OS::strdup() and
+          strncpy().
 
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i:
-	* examples/Service_Configurator/IPC-tests/server/Handle_R_Broadcast.i:
-	  Add #include "ace/OS_NS_string.h" to get ACE_OS::strdup() and
-	  strncpy(); "ace/OS_NS_unistd.h" to get ACE_OS::read()/write().
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Dgram.i:
+        * examples/Service_Configurator/IPC-tests/server/Handle_R_Broadcast.i:
+          Add #include "ace/OS_NS_string.h" to get ACE_OS::strdup() and
+          strncpy(); "ace/OS_NS_unistd.h" to get ACE_OS::read()/write().
 
-	* examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
-	  Add #include "ace/OS_NS_stdio.h" to get ACE_OS::puts() and sprintf(),
-	  "ace/OS_NS_string.h" and "ace/OS_NS_unistd.h".
+        * examples/Service_Configurator/IPC-tests/server/Handle_Thr_Stream.cpp:
+          Add #include "ace/OS_NS_stdio.h" to get ACE_OS::puts() and sprintf(),
+          "ace/OS_NS_string.h" and "ace/OS_NS_unistd.h".
 
-	* examples/Service_Configurator/IPC-tests/server/server_test.cpp: Added
-	  #include "ace/OS_NS_unistd.h" to get ACE_OS::getpid().
+        * examples/Service_Configurator/IPC-tests/server/server_test.cpp: Added
+          #include "ace/OS_NS_unistd.h" to get ACE_OS::getpid().
 
-	* include/makeinclude/platform_aix_ibm.GNU: Changed -ltli_r to -lxti;
-	  Matches change to ACE_HAS_XTI in:
-	  Mon Dec 29 17:09:29 2003  Steve Huston  <shuston@riverace.com>
+        * include/makeinclude/platform_aix_ibm.GNU: Changed -ltli_r to -lxti;
+          Matches change to ACE_HAS_XTI in:
+          Mon Dec 29 17:09:29 2003  Steve Huston  <shuston@riverace.com>
 
 Tue Dec 30 15:21:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/INET_Addr.cpp (set_interface):
+        * ace/INET_Addr.cpp (set_interface):
 
-	  Check for multicast link local in addition to unicast link local
-	  before calling a if_nametoindex (). Thanks to Andre Kostur
-	  <Andre@incognito.com > for providing the patch.
+          Check for multicast link local in addition to unicast link local
+          before calling a if_nametoindex (). Thanks to Andre Kostur
+          <Andre@incognito.com > for providing the patch.
 
 Tue Dec 30 13:02:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
