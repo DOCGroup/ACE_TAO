@@ -8,6 +8,7 @@
 #include "EC_ProxyConsumer.h"
 #include "EC_ProxySupplier.h"
 #include "EC_SupplierFiltering.h"
+#include "EC_ObserverStrategy.h"
 #include "Timer_Module.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -108,6 +109,18 @@ TAO_EC_Null_Factory::create_timer_module (TAO_EC_Event_Channel *ec)
 
 void
 TAO_EC_Null_Factory::destroy_timer_module (TAO_EC_Timer_Module *x)
+{
+  delete x;
+}
+
+TAO_EC_ObserverStrategy*
+TAO_EC_Null_Factory::create_observer_strategy (TAO_EC_Event_Channel *)
+{
+  return new TAO_EC_Null_ObserverStrategy;
+}
+
+void
+TAO_EC_Null_Factory::destroy_observer_strategy (TAO_EC_ObserverStrategy *x)
 {
   delete x;
 }

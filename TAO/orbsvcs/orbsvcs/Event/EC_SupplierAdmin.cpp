@@ -22,7 +22,7 @@ TAO_EC_SupplierAdmin::~TAO_EC_SupplierAdmin (void)
 void
 TAO_EC_SupplierAdmin::set_default_POA (PortableServer::POA_ptr poa)
 {
-  this->default_POA_ = 
+  this->default_POA_ =
     PortableServer::POA::_duplicate (poa);
 }
 
@@ -36,8 +36,8 @@ void
 TAO_EC_SupplierAdmin::connected (TAO_EC_ProxyPushSupplier *supplier,
 				 CORBA::Environment &ACE_TRY_ENV)
 {
-  ConsumerSetIterator end = this->all_consumers_.end ();
-  for (ConsumerSetIterator i = this->all_consumers_.begin ();
+  ConsumerSetIterator end = this->end ();
+  for (ConsumerSetIterator i = this->begin ();
        i != end;
        ++i)
     {
@@ -49,8 +49,8 @@ void
 TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushSupplier *supplier,
 				    CORBA::Environment &ACE_TRY_ENV)
 {
-  ConsumerSetIterator end = this->all_consumers_.end ();
-  for (ConsumerSetIterator i = this->all_consumers_.begin ();
+  ConsumerSetIterator end = this->end ();
+  for (ConsumerSetIterator i = this->begin ();
        i != end;
        ++i)
     {
@@ -77,7 +77,7 @@ TAO_EC_SupplierAdmin::disconnected (TAO_EC_ProxyPushConsumer *consumer,
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
 TAO_EC_SupplierAdmin::obtain_push_consumer (CORBA::Environment &ACE_TRY_ENV)
 {
-  TAO_EC_ProxyPushConsumer* consumer = 
+  TAO_EC_ProxyPushConsumer* consumer =
     this->event_channel_->create_proxy_push_consumer ();
 
   PortableServer::POA_var poa =

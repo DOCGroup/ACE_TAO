@@ -490,7 +490,7 @@ ACE_EventChannel::ACE_EventChannel (RtecScheduler::Scheduler_ptr scheduler,
     own_factory_ (0),
     module_factory_ (factory)
 {
-  this->scheduler_ = 
+  this->scheduler_ =
     RtecScheduler::Scheduler::_duplicate (scheduler);
 
   this->init (activate_threads);
@@ -507,7 +507,7 @@ ACE_EventChannel::ACE_EventChannel (CORBA::Boolean activate_threads,
     own_factory_ (0),
     module_factory_ (factory)
 {
-  this->scheduler_ = 
+  this->scheduler_ =
     RtecScheduler::Scheduler::_duplicate (ACE_Scheduler_Factory::server ());
   this->init (activate_threads);
 }
@@ -1267,7 +1267,7 @@ ACE_ES_Consumer_Module::disconnecting (ACE_Push_Consumer_Proxy *consumer,
 
   // Create a shutdown message.  When this is dispatched, it will
   // delete the proxy.
-  RtecScheduler::Scheduler_var scheduler = 
+  RtecScheduler::Scheduler_var scheduler =
     this->channel_->scheduler ();
   Shutdown_Consumer *sc =
     new Shutdown_Consumer (this, consumer, scheduler.in ());

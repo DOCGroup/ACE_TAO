@@ -89,6 +89,10 @@ public:
       create_timer_module (TAO_EC_Event_Channel*);
   virtual void
       destroy_timer_module (TAO_EC_Timer_Module*);
+  virtual TAO_EC_ObserverStrategy*
+      create_observer_strategy (TAO_EC_Event_Channel*);
+  virtual void
+      destroy_observer_strategy (TAO_EC_ObserverStrategy*);
   virtual PortableServer::POA_ptr
        consumer_poa (CORBA::Environment& env);
   virtual PortableServer::POA_ptr

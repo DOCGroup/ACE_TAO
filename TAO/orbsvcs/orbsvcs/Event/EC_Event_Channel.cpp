@@ -6,6 +6,7 @@
 #include "EC_ConsumerAdmin.h"
 #include "EC_SupplierAdmin.h"
 #include "Timer_Module.h"
+#include "EC_ObserverStrategy.h"
 
 #if ! defined (__ACE_INLINE__)
 #include "EC_Event_Channel.i"
@@ -18,16 +19,18 @@ TAO_EC_Event_Channel::TAO_EC_Event_Channel (TAO_EC_Factory* factory)
 {
   ACE_ASSERT (this->factory_ != 0);
 
-  this->dispatching_ = 
+  this->dispatching_ =
     this->factory_->create_dispatching (this);
-  this->filter_builder_ = 
+  this->filter_builder_ =
     this->factory_->create_filter_builder (this);
   this->consumer_admin_ =
     this->factory_->create_consumer_admin (this);
-  this->supplier_admin_ = 
+  this->supplier_admin_ =
     this->factory_->create_supplier_admin (this);
-  this->timer_module_ = 
+  this->timer_module_ =
     this->factory_->create_timer_module (this);
+  this->observer_strategy_ = 
+    this->factory_->create_observer_strategy (this);
 }
 
 TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
@@ -42,6 +45,8 @@ TAO_EC_Event_Channel::~TAO_EC_Event_Channel (void)
   this->supplier_admin_ = 0;
   this->factory_->destroy_timer_module (this->timer_module_);
   this->timer_module_ = 0;
+  this->factory_->destroy_observer_strategy (this->observer_strategy_);
+  this->observer_strategy_ = 0;
 }
 
 void
@@ -49,7 +54,7 @@ TAO_EC_Event_Channel::activate (CORBA::Environment& ACE_TRY_ENV)
 {
   this->dispatching_->activate ();
   this->timer_module_->activate ();
-  
+
   PortableServer::POA_var supplier_poa =
     this->factory_->supplier_poa (ACE_TRY_ENV);
   ACE_CHECK;
@@ -88,41 +93,49 @@ TAO_EC_Event_Channel::shutdown (CORBA::Environment& ACE_TRY_ENV)
 
 void
 TAO_EC_Event_Channel::connected (TAO_EC_ProxyPushConsumer* consumer,
-				 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   this->consumer_admin_->connected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
   this->supplier_admin_->connected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
+  this->observer_strategy_->connected (consumer, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushConsumer* consumer,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->consumer_admin_->disconnected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
   this->supplier_admin_->disconnected (consumer, ACE_TRY_ENV);
   ACE_CHECK;
+  this->observer_strategy_->disconnected (consumer, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::connected (TAO_EC_ProxyPushSupplier* supplier,
-				 CORBA::Environment &ACE_TRY_ENV)
+                                 CORBA::Environment &ACE_TRY_ENV)
 {
   this->supplier_admin_->connected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
   this->consumer_admin_->connected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
+  this->observer_strategy_->connected (supplier, ACE_TRY_ENV);
+  ACE_CHECK;
 }
 
 void
 TAO_EC_Event_Channel::disconnected (TAO_EC_ProxyPushSupplier* supplier,
-				    CORBA::Environment &ACE_TRY_ENV)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   this->supplier_admin_->disconnected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
   this->consumer_admin_->disconnected (supplier, ACE_TRY_ENV);
+  ACE_CHECK;
+  this->observer_strategy_->disconnected (supplier, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
@@ -145,16 +158,23 @@ TAO_EC_Event_Channel::destroy (CORBA::Environment &TAO_TRY_ENV)
 }
 
 RtecEventChannelAdmin::Observer_Handle
-TAO_EC_Event_Channel::append_observer (RtecEventChannelAdmin::Observer_ptr,
-                                       CORBA::Environment &)
+TAO_EC_Event_Channel::append_observer (
+       RtecEventChannelAdmin::Observer_ptr observer,
+       CORBA::Environment &ACE_IN_ENV)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_APPEND_OBSERVER))
 {
-  // @@ TODO
-  return 0;
+  return this->observer_strategy_->append_observer (observer, ACE_IN_ENV);
 }
 
 void
-TAO_EC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle,
-                                       CORBA::Environment &)
+TAO_EC_Event_Channel::remove_observer (
+       RtecEventChannelAdmin::Observer_Handle handle,
+       CORBA::Environment &ACE_IN_ENV)
+    TAO_THROW_SPEC ((CORBA::SystemException,
+                     RtecEventChannel::EventChannel::SYNCHRONIZATION_ERROR,
+                     RtecEventChannel::EventChannel::CANT_REMOVE_OBSERVER))
 {
+  this->observer_strategy_->remove_observer (handle, ACE_IN_ENV);
 }
-
