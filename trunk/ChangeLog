@@ -1,3 +1,11 @@
+Wed Aug 27 15:18:49 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* include/makeinclude/wrapper_macros.GNU (CCFLAGS):
+
+	  Do not add "-Wno-uninitialized" to GNU C++ compiler flags.  It
+	  is no longer needed to avoid (apparently) bogus warnings.
+	  Keeping it around hides potentially real problems.
+
 Wed Aug 27 14:23:00 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/USAGE:
