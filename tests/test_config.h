@@ -104,10 +104,10 @@ typedef size_t KEY;
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %T\n", program));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting %s test at %D\n", program));
 
 #define ACE_END_TEST \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n", program)); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %D\n", program)); \
   ace_file_stream.close ()
 
 #define ACE_APPEND_LOG(NAME) \
@@ -115,10 +115,10 @@ typedef size_t KEY;
   ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM); \
   if (ace_file_stream.set_output (program, 1) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set_output failed"), -1); \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting %s test at %T\n", program));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting %s test at %D\n", program));
 
 #define ACE_END_LOG \
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %T\n\n", program)); \
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Ending %s test at %D\n\n", program)); \
   ace_file_stream.close ();
 
 #define ACE_INIT_LOG(NAME) \
