@@ -18,7 +18,8 @@
 
 #include "Receiver_i.h"
 
-Receiver_i::Receiver_i (void) : orb_(0)
+Receiver_i::Receiver_i (void) 
+  : orb_ (0)
 {
 }
 
@@ -28,19 +29,17 @@ Receiver_i::~Receiver_i (void)
 }
 
 void
-Receiver_i::message (const char * msg, CORBA::Environment &_tao_environment)
+Receiver_i::message (const char *msg, 
+                     CORBA::Environment &)
 {
-  ACE_OS::printf(": ");
-  ACE_OS::printf(msg);
-  ACE_OS::printf("\n");
+  ACE_DEBUG ((LM_DEBUG, ": %s\n", msg));
 }
 
 void
-Receiver_i::shutdown (CORBA::Environment &_tao_environment)
+Receiver_i::shutdown (CORBA::Environment &)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n",
-              "Receiver_i is shutting down"));
+              "Receiver_i is shutting down\n"));
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();

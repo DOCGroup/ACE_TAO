@@ -9,15 +9,25 @@ interface Broadcaster
   //   It broadcasts messages received from one registered client to all
   //   its registered clients.
 
-  long register (in Receiver receiver, in string nickname);
-  // registers a Receiver with the chat server.
-  // a registered client must call un_register before it goes away.
-  // returns 0 on success.
+  exception CannotAdd 
+    {
+      string reason_;
+    };
 
-  long un_register (in Receiver receiver);
-  // unregisters a Receiver.
-  // returns 0 on success.
+  exception CannotRemove
+    {
+      string reason_;
+    };
+
+  void add (in Receiver receiver)
+    raises (CannotAdd);
+  // Registers a Receiver with the chat server.  A registered client
+  // must call un_register before it goes away.
+
+  void remove (in Receiver receiver)
+    raises (CannotRemove);
+  // Unregisters a Receiver.
 
   void say (in string text);
-  // say something to all registered clients.
+  // Say something to all registered clients.
 };
