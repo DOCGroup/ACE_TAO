@@ -1,3 +1,8 @@
+Tue Jul 30 16:14:10 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/examples/PSS/Makefile:
+	  Updated dependencies.
+
 Tue Jul 30 12:04:15 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/PSS/PSDL_String.cpp:
