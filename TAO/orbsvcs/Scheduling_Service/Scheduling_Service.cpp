@@ -5,11 +5,26 @@
 
 #include "orbsvcs/CosNamingC.h"
 
+#if defined (TAO_USES_RECONFIG_SCHEDULER)
+
+#include "orbsvcs/Sched/Reconfig_Scheduler.h"
+
+typedef TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy,
+                               ACE_SYNCH_MUTEX>
+        TAO_ORBSVCS_Scheduler_Type;
+
+#else /* ! defined (TAO_USES_RECONFIG_SCHEDULER) */
+
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
 #include "orbsvcs/Sched/Strategy_Scheduler.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 #include "orbsvcs/Sched/Config_Scheduler.h"
+
+typedef ACE_Config_Scheduler TAO_ORBSVCS_Scheduler_Type;
+
+#endif /* defined (TAO_USES_RECONFIG_SCHEDULER) */
+
 
 ACE_RCSID(Scheduling_Service, Scheduling_Service, "$Id$")
 
@@ -81,7 +96,7 @@ int main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       // Create an Scheduling service servant...
-      ACE_Config_Scheduler scheduler_impl;
+      TAO_ORBSVCS_Scheduler_Type scheduler_impl;
       ACE_TRY_CHECK;
 
       RtecScheduler::Scheduler_var scheduler =
@@ -117,3 +132,14 @@ int main (int argc, char *argv[])
 
   return 0;
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+#  if defined (TAO_USES_RECONFIG_SCHEDULER)
+template class TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>;
+#  endif /* defined (TAO_USES_RECONFIG_SCHEDULER) */
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#  if defined (TAO_USES_RECONFIG_SCHEDULER)
+#pragma instantiate TAO_Reconfig_Scheduler<TAO_MUF_Reconfig_Sched_Strategy, ACE_SYNCH_MUTEX>
+#  endif /* defined (TAO_USES_RECONFIG_SCHEDULER) */
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

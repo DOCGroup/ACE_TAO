@@ -1,3 +1,15 @@
+Fri Jul  2 19:30:00 1999  Chris Gill  <cdgill@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Sched/Config_Scheduler.h
+          orbsvcs/orbsvcs/Sched/Strategy_Scheduler.{cpp, h}: Removed
+	  RMS_Dyn scheduling strategy from TAO.
+
+        * orbsvcs/Scheduling_Service/Scheduling_Service.cpp
+          orbsvcs/orbsvcs/Sched/Reconfig_Sched_Utils[_T].{cpp, h, i}
+          orbsvcs/orbsvcs/Sched/Reconfig_Scheduler[_T].{cpp, h, i}:
+	  integrated reconfig scheduler into scheduling service, cleaned
+          up errors: factored template code out into separate files for NT.
+	
 Fri Jul  2 17:50:56 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/{IIOP,UIOP}_Profile.cpp (to_string):
