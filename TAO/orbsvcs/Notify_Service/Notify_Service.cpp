@@ -1,7 +1,8 @@
 // $Id$
 
-#include "ace/Get_Opt.h"
 #include "Notify_Service.h"
+#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
+#include "ace/Get_Opt.h"
 
 Notify_Service::Notify_Service (void)
   : notify_factory_name_ ("NotifyEventChannelFactory")
@@ -24,13 +25,13 @@ Notify_Service::init_ORB  (int& argc, char *argv [],
                                 ACE_TRY_ENV);
   ACE_CHECK;
 
-  CORBA::Object_var poa_object  =
+  CORBA::Object_ptr poa_object  =
     this->orb_->resolve_initial_references("RootPOA",
                                            ACE_TRY_ENV);
   ACE_CHECK;
 
   this->poa_ =
-    PortableServer::POA::_narrow (poa_object.in (),
+    PortableServer::POA::_narrow (poa_object,
                                   ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -59,13 +60,15 @@ Notify_Service::startup (int argc, char *argv[],
   ACE_CHECK;
 
   // Activate the factory
-  obj
-    = this->notify_factory_.get_ref (ACE_TRY_ENV);
+  this->notify_factory_ =
+    TAO_Notify_EventChannelFactory_i::create (this->poa_.in (),
+                                              ACE_TRY_ENV);
   ACE_CHECK;
-  ACE_ASSERT (!CORBA::is_nil (obj.in ()));
+
+  ACE_ASSERT (!CORBA::is_nil (this->notify_factory_.in ()));
 
   CORBA::String_var str =
-    this->orb_->object_to_string (obj.in (), ACE_TRY_ENV);
+    this->orb_->object_to_string (this->notify_factory_.in (), ACE_TRY_ENV);
 
   ACE_DEBUG ((LM_DEBUG,
               "The Notification Event Channel Factory IOR is <%s>\n",
@@ -79,7 +82,7 @@ Notify_Service::startup (int argc, char *argv[],
   name[0].id = CORBA::string_dup (this->notify_factory_name_);
 
   this->naming_->rebind (name,
-                         obj.in (),
+                         this->notify_factory_.in (),
                          ACE_TRY_ENV);
   ACE_CHECK;
 
@@ -122,8 +125,8 @@ Notify_Service::shutdown (CORBA::Environment &ACE_TRY_ENV)
 {
   // Deactivate.
   PortableServer::ObjectId_var oid =
-    this->poa_->servant_to_id (&this->notify_factory_,
-                               ACE_TRY_ENV);
+    this->poa_->reference_to_id (this->notify_factory_.in (),
+                                 ACE_TRY_ENV);
   ACE_CHECK;
 
   // deactivate from the poa.
