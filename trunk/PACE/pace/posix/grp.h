@@ -22,8 +22,18 @@
 extern "C" {
 # endif /* PACE_HAS_CPLUSPLUS */
 
+  /** 
+     PACE's implementation of the POSIX function getgrgid.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
+   */
   PACE_INLINE struct group * pace_getgrgid (pace_gid_t gid);
 
+  /** 
+     PACE's implementation of the POSIX function getgrgid_r.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
+   */
   PACE_INLINE int pace_getgrgid_r (pace_gid_t gid,
                                    struct group * grp,
                                    char * buffer,
@@ -31,8 +41,18 @@ extern "C" {
                                    struct group ** result);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
+  /** 
+     PACE's implementation of the POSIX function getgrnam.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
+   */
   PACE_INLINE struct group * pace_getgrnam (const char * name);
 
+  /** 
+     PACE's implementation of the POSIX function getgrnam_r.
+     See POSIX standard (Internation Standard ISO/IEC 9945-1:1996;
+     IEEE Std 1003.1, 1996 Edition), Section 9.2.1.
+   */
   PACE_INLINE int pace_getgrnam_r (const char * name,
                                    struct group * grp,
                                    char * buffer,
