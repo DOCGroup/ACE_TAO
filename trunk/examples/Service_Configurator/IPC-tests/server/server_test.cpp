@@ -16,13 +16,13 @@ main (int argc, char *argv[])
   ACE_Sig_Adapter sa ((ACE_Sig_Handler_Ex) ACE_Reactor::end_event_loop);
 
   // Register a signal handler.
-  ACE_Reactor::instance()->register_handler (SIGINT, &sa);
+  ACE_Reactor::instance ()->register_handler (SIGINT, &sa);
 
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.
 
   while (ACE_Reactor::event_loop_done() == 0)
-    ACE_Reactor::run_event_loop();
+    ACE_Reactor::run_event_loop ();
 
   return 0;
 }

@@ -43,7 +43,7 @@ consumer (ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue)
         ACE_OS::puts (mb->rd_ptr ());
 
       // Free up the buffer memory and the Message_Block.
-      ACE_Allocator::instance()->free (mb->rd_ptr ());
+      ACE_Allocator::instance ()->free (mb->rd_ptr ());
       mb->release ();
 
       if (length == 0)

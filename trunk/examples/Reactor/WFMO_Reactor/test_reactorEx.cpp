@@ -132,7 +132,7 @@ private:
 Peer_Handler::Peer_Handler (int argc, char *argv[])
   : host_ (0),
     port_ (ACE_DEFAULT_SERVER_PORT),
-    strategy_ (ACE_ReactorEx::instance(), 
+    strategy_ (ACE_ReactorEx::instance (), 
 	       this, 
 	       ACE_Event_Handler::WRITE_MASK)
 {
@@ -192,7 +192,7 @@ Peer_Handler::open (void *)
       ACE_DEBUG ((LM_DEBUG, "accepted.\n"));
     }
 
-  return ACE_Proactor::instance()->initiate 
+  return ACE_Proactor::instance ()->initiate 
     (this, ACE_Event_Handler::READ_MASK);
 }
 
@@ -281,7 +281,7 @@ Peer_Handler::handle_output (ACE_HANDLE fd)
   // Forward the message to the remote peer receiver.
   if (this->getq (mb, &tv) != -1)
     {
-      if (ACE_Proactor::instance()->
+      if (ACE_Proactor::instance ()->
 	  initiate (this, ACE_Event_Handler::WRITE_MASK, mb) == -1)
 	ACE_ERROR ((LM_ERROR, "%p Write initiate.\n", "Peer_Handler"));
     }
@@ -373,13 +373,13 @@ STDIN_Handler::register_thread_exit_hook (void)
 
   // Register ourselves to get called back when our thread exits.
 
-  if (ACE_ReactorEx::instance()->
+  if (ACE_ReactorEx::instance ()->
       register_handler (this, this->thr_handle_) == -1)
     ACE_ERROR ((LM_ERROR, "Exit_Hook Register failed.\n"));
 
   // We're in another thread, so we need to notify the ReactorEx so
   // that it wakes up and waits on the new set of handles.
-  ACE_ReactorEx::instance()->notify ();
+  ACE_ReactorEx::instance ()->notify ();
 }
 
 // The STDIN thread has exited.  This means the user hit ^C.  We can
@@ -417,13 +417,13 @@ main (int argc, char *argv[])
 
   // Register proactor with ReactorEx so that we can demultiplex
   // "waitable" events and I/O operations from a single thread.
-  if (ACE_ReactorEx::instance()->register_handler 
-      (ACE_Proactor::instance()) != 0)
+  if (ACE_ReactorEx::instance ()->register_handler 
+      (ACE_Proactor::instance ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p failed to register Proactor.\n",
 		       argv[0]), -1);
 
   // Run main event demultiplexor.
-  ACE_ReactorEx::run_event_loop();
+  ACE_ReactorEx::run_event_loop ();
 
   return 0;
 }

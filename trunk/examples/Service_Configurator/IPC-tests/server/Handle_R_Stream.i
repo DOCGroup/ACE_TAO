@@ -58,7 +58,7 @@ Handle_R_Stream::init (int argc, char *argv[])
   
   if (this->open (sis) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
-  else if (ACE_Reactor::instance()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler 
 	   (this, ACE_Event_Handler::ACCEPT_MASK) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "registering service with ACE_Reactor\n"), -1);
   return 0;
@@ -67,7 +67,7 @@ Handle_R_Stream::init (int argc, char *argv[])
 ACE_INLINE int 
 Handle_R_Stream::fini (void) 
 {
-  return ACE_Reactor::instance()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler 
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 

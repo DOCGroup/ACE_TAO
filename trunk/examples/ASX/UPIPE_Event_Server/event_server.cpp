@@ -235,7 +235,7 @@ main (int argc, char *argv[])
   // Perform the main event loop waiting for the user to type ^C or to
   // enter a line on the ACE_STDIN.
 
-  ACE_Reactor::run_event_loop();
+  ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG, "main exiting\n"));
 

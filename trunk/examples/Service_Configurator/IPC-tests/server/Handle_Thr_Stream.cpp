@@ -81,7 +81,7 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
 
   // Initialize the Acceptor base class, passing in the desired
   // concurrency strategy.
-  else if (this->open (local_addr, ACE_Reactor::instance(),
+  else if (this->open (local_addr, ACE_Reactor::instance (),
 		       0, 0, &this->thr_strategy_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
   else
@@ -91,7 +91,7 @@ Handle_Thr_Acceptor<SH, PR_AC_2>::init (int argc, char *argv[])
 template <class SH, PR_AC_1> int 
 Handle_Thr_Acceptor<SH, PR_AC_2>::fini (void)
 {
-  return ACE_Reactor::instance()->remove_handler 
+  return ACE_Reactor::instance ()->remove_handler 
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 

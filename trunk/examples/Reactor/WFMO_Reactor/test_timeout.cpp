@@ -53,13 +53,13 @@ main (void)
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  ACE_ReactorEx::instance()->schedule_timer (&handler,
+  ACE_ReactorEx::instance ()->schedule_timer (&handler,
 						    (void *) "Foo",
 						    ACE_Time_Value::zero,
 						    foo_tv);
   // Register a 3 second timer.
   ACE_Time_Value bar_tv (3);
-  ACE_ReactorEx::instance()->schedule_timer (&handler,
+  ACE_ReactorEx::instance ()->schedule_timer (&handler,
 						    (void *) "Bar",
 						    ACE_Time_Value::zero,
 						    bar_tv);

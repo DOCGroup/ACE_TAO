@@ -26,11 +26,11 @@ Quit_Handler::Quit_Handler (void)
 {  
   // Register to trap input from the user.
   if (ACE::register_stdin_handler (this,
-				   ACE_Reactor::instance(),
+				   ACE_Reactor::instance (),
 				   ACE_Thread_Manager::instance ()) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_stdin_handler"));
   // Register to trap the SIGINT signal.
-  else if (ACE_Reactor::instance()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler 
 	   (SIGINT, this) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "register_handler"));
 }
@@ -133,7 +133,7 @@ main (int argc, char *argv[])
     // Perform the main event loop waiting for the user to type ^C or
     // to enter a line on the ACE_STDIN.
 
-    ACE_Reactor::run_event_loop();
+    ACE_Reactor::run_event_loop ();
     // The destructor of event_server will close down the stream and
     // call the close() hooks on all the ACE_Tasks.
   }

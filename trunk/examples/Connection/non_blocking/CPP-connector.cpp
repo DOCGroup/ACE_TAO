@@ -152,7 +152,7 @@ template <class SH, PR_CO_1> int
 IPC_Client<SH, PR_CO_2>::svc (void)
 {
   if (this->reactor ())
-    ACE_Reactor::run_event_loop();
+    ACE_Reactor::run_event_loop ();
 
   return 0;
 }
@@ -173,7 +173,7 @@ template <class SH, PR_CO_1> int
 IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
 {
   // Call down to the CONNECTOR's open() method to do the initialization.
-  this->inherited::open (ACE_Reactor::instance());
+  this->inherited::open (ACE_Reactor::instance ());
 
   char *r_addr = argc > 1 ? argv[1] : 
     ACE_SERVER_ADDRESS (ACE_DEFAULT_SERVER_HOST, 
@@ -184,7 +184,7 @@ IPC_Client<SH, PR_CO_2>::init (int argc, char *argv[])
   char *l_addr = argc > 3 ? argv[3] : ACE_DEFAULT_LOCAL_PORT_STR;
 
   // Handle signals through the ACE_Reactor.
-  if (ACE_Reactor::instance()->register_handler
+  if (ACE_Reactor::instance ()->register_handler
       (SIGINT, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 

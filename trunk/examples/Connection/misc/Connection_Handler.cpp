@@ -115,7 +115,7 @@ Connection_Handler::svc (void)
     }
 
   // Cancel all pending timeouts.
-  ACE_Reactor::instance()->cancel_timer (this);
+  ACE_Reactor::instance ()->cancel_timer (this);
 
   // Remove ourselves from the Reactor.
   this->reactor ()->remove_handler 
@@ -219,7 +219,7 @@ main (int argc, char *argv[])
   // Perform connection service until we receive SIGINT.
 
   while (ACE_Reactor::event_loop_done() == 0)
-    ACE_Reactor::run_event_loop();
+    ACE_Reactor::run_event_loop ();
 
   ACE_DEBUG ((LM_DEBUG, " (%P|%t) shutting down connection server\n"));
 

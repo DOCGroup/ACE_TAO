@@ -177,7 +177,7 @@ main (int argc, char **)
   ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  ACE_Reactor *reactor1 = ACE_Reactor::instance();
+  ACE_Reactor *reactor1 = ACE_Reactor::instance ();
   ACE_Reactor *reactor2 = new ACE_Reactor ();
 
   Test_Task t1[TASK_COUNT];

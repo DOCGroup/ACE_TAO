@@ -90,16 +90,16 @@ IPC_Server<SH, PR_AC_2>::init (int argc, char *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "set"), -1);
   // Call down to the ACCEPTOR's open() method to do the initialization.
   if (this->inherited::open (this->server_addr_, 
-			     use_reactor ? ACE_Reactor::instance() : 0) == -1)
+			     use_reactor ? ACE_Reactor::instance () : 0) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
   // Handle the SIGINT signal through the ACE_Reactor.
-  else if (ACE_Reactor::instance()->register_handler
+  else if (ACE_Reactor::instance ()->register_handler
 	   (SIGINT, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #if !defined (ACE_WIN32)
   // Handle the SIGPIPE signal through the ACE_Reactor.
-  else if (ACE_Reactor::instance()->register_handler 
+  else if (ACE_Reactor::instance ()->register_handler 
 	   (SIGPIPE, &this->done_handler_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "register_handler"), -1);
 #endif /* ACE_WIN32 */
