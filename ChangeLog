@@ -1,3 +1,11 @@
+Tue Dec 30 15:21:16 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/INET_Addr.cpp (set_interface):
+	  
+	  Check for multicast link local in addition to unicast link local
+	  before calling a if_nametoindex (). Thanks to Andre Kostur
+	  <Andre@incognito.com > for providing the patch.
+
 Tue Dec 30 13:02:09 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * ace/ace.mpc:

@@ -898,7 +898,8 @@ int
 ACE_INET_Addr::set_interface (const char *intf_name)
 {
   if (this->get_type () == PF_INET6 &&
-      IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr))
+      (IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
+       IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)))
     {
       this->inet_addr_.in6_.sin6_scope_id =
         ACE_OS::if_nametoindex (intf_name);
