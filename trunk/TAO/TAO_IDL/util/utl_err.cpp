@@ -125,7 +125,9 @@ error_string(UTL_Error::ErrorCode c)
   case UTL_Error::EIDL_EVAL_ERROR:
     return GTDEVEL("expression evaluation error: ");
   case UTL_Error::EIDL_NAME_CASE_ERROR:
-    return GTDEVEL("identifier used with two differing spellings: ");
+    return GTDEVEL("identifier spellings differ only in case: ");
+  case UTL_Error::EIDL_NAME_CASE_WARNING:
+    return GTDEVEL("Warning - identifier spellings differ only in case: ");
   case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
     return GTDEVEL("enumerator expected: ");
   case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
@@ -618,8 +620,8 @@ UTL_Error::enum_val_expected(AST_Union *u, AST_UnionLabel *l)
 // the enum discriminator type
 void
 UTL_Error::enum_val_lookup_failure(AST_Union *u,
-                                AST_Enum *e,
-                                UTL_ScopedName *n)
+                                   AST_Enum *e,
+                                   UTL_ScopedName *n)
 {
   idl_error_header(EIDL_ENUM_VAL_NOT_FOUND, u->line(), u->file_name());
   cerr << " union " << u->local_name()->get_string() << ", ";
@@ -639,6 +641,15 @@ UTL_Error::name_case_error(char *b, char *n)
                    idl_global->filename());
   cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
   idl_global->set_err_count(idl_global->err_count() + 1);
+}
+
+void
+UTL_Error::name_case_warning(char *b, char *n)
+{
+  idl_error_header(EIDL_NAME_CASE_WARNING,
+                   idl_global->lineno(),
+                   idl_global->filename());
+  cerr << "\"" << b << GTDEVEL("\" and ") << "\"" << n << "\"\n";
 }
 
 // Report an ambiguous definition of a name
