@@ -11,7 +11,7 @@
 
 template <class ID_TYPE>
 TAO_Notify_ID_Pool<ID_TYPE>::TAO_Notify_ID_Pool (void)
-  : max_id_ (0)
+  : id_ (0)
 {
   // No-Op.
 }
@@ -25,7 +25,19 @@ TAO_Notify_ID_Pool<ID_TYPE>::~TAO_Notify_ID_Pool ()
 template <class ID_TYPE> ID_TYPE
 TAO_Notify_ID_Pool<ID_TYPE>::get (void)
 {
-  return this->max_id_++;
+  return this->id_++;
+}
+
+template <class ID_TYPE> void
+TAO_Notify_ID_Pool<ID_TYPE>::put (ID_TYPE id )
+{
+  this->active_list_.remove (id);
+}
+
+template <class ID_TYPE> void
+TAO_Notify_ID_Pool<ID_TYPE>::next (void)
+{
+  this->active_list_.insert (this->id_);
 }
 
 template <class ID_TYPE, class ID_TYPE_SEQ>

@@ -17,6 +17,7 @@ TAO_Notify_EventChannelFactory_i::TAO_Notify_EventChannelFactory_i (void)
 TAO_Notify_EventChannelFactory_i::~TAO_Notify_EventChannelFactory_i (void)
 {
   TAO_Notify_Factory::shutdown ();
+  delete this->lock_;
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
@@ -79,7 +80,10 @@ TAO_Notify_EventChannelFactory_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 void
 TAO_Notify_EventChannelFactory_i::event_channel_destroyed (CosNotifyChannelAdmin::ChannelID channel_id)
 {
-  ACE_DEBUG ((LM_DEBUG, "event_channel_destroyed %d\n", channel_id));
+  this->ec_ids_.put (channel_id);
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "event_channel_destroyed %d\n", channel_id));
 }
 
 void TAO_Notify_EventChannelFactory_i::shutdown (CORBA::Environment &ACE_TRY_ENV, CORBA::Boolean destroy_children)
@@ -136,6 +140,7 @@ TAO_Notify_EventChannelFactory_i::create_channel(const CosNotification::QoSPrope
                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyChannelAdmin::EventChannel::_nil ());
 
+  this->ec_ids_.next ();
   return CosNotifyChannelAdmin::EventChannel::_narrow (obj.in ());
 }
 

@@ -16,17 +16,27 @@ TAO_Notify_Filter_i::~TAO_Notify_Filter_i (void)
 {
   ACE_DECLARE_NEW_CORBA_ENV;
   this->remove_all_constraints (ACE_TRY_ENV);
+
+  if (TAO_debug_level > 0)
+    ACE_DEBUG ((LM_DEBUG, "Filter Destroyed\n"));
 }
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_Filter_i::get_ref (CORBA::Environment &ACE_TRY_ENV)
 {
-  CosNotifyFilter::Filter_var filter;
+  PortableServer::POA_var my_POA = _default_POA ();
 
-  filter = _this (ACE_TRY_ENV);
+  PortableServer::ServantBase_var filter_var (this);
+
+  PortableServer::ObjectId_var oid =
+    my_POA->activate_object (this, ACE_TRY_ENV);
   ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
 
-  return filter._retn ();
+  CORBA::Object_var obj =
+    my_POA->id_to_reference (oid.in (), ACE_TRY_ENV);
+  ACE_CHECK_RETURN (CosNotifyFilter::Filter::_nil ());
+
+  return CosNotifyFilter::Filter::_narrow (obj.in (), ACE_TRY_ENV);
 }
 
 char*
@@ -55,45 +65,36 @@ TAO_Notify_Filter_i::add_constraints_i (
        index < constraint_info_seq.length ();
        ++index)
     {
-      Notify_Constraint_Expr* notify_constr_expr = 0;
+      Notify_Constraint_Expr* notify_constr_expr;
 
       ACE_TRY
         {
-          const CosNotifyFilter::ConstraintExp& constr_exp =
-            constraint_info_seq [index].constraint_expression;
-
-          notify_constr_expr = 0;
-
           ACE_NEW_THROW_EX (notify_constr_expr,
                             Notify_Constraint_Expr (),
                             CORBA::NO_MEMORY ());
 
+          const CosNotifyFilter::ConstraintExp& expr =
+            constraint_info_seq[index].constraint_expression;
+
           notify_constr_expr->interpreter.
-            build_tree (constraint_info_seq[index].constraint_expression.constraint_expr.in (),
+            build_tree (expr.constraint_expr.in (),
                         ACE_TRY_ENV);
           ACE_TRY_CHECK;
 
+          notify_constr_expr->constr_expr = expr;
+
+          CosNotifyFilter::ConstraintID cnstr_id = constraint_expr_ids_.get ();
+
           if (constraint_expr_list_.
-              bind (constraint_info_seq[index].constraint_id,
-                    notify_constr_expr) == -1)
+              bind (cnstr_id, notify_constr_expr) == -1)
             ACE_THROW (CORBA::NO_RESOURCES ());
 
-          ACE_UNUSED_ARG (constr_exp);
+          constraint_expr_ids_.next (); // commit this id.
+
         }
       ACE_CATCHANY
         {
-          Notify_Constraint_Expr* undo_info;
-          // Too bad: undo all the memory allocations done so far.
-          delete notify_constr_expr; // first the one that failed us.
-
-          for (u_int i = 0; i < index; i++) // those from previous iterations.
-            {
-              // Unbind from the Hash Table
-              if (constraint_expr_list_.unbind
-                  (constraint_info_seq[index].constraint_id,
-                   undo_info) != -1)
-                delete undo_info;
-            }
+          delete notify_constr_expr; // delete the one that failed us.
           ACE_RE_THROW;
         }
       ACE_ENDTRY;
@@ -126,15 +127,17 @@ TAO_Notify_Filter_i::add_constraints (
   auto_ptr<CosNotifyFilter::ConstraintInfoSeq> auto_infoseq (infoseq);
 
   // populate infoseq
-  for (int pop_index = 0;
+  for (CORBA::ULong pop_index = 0;
        pop_index < constraint_length;
        ++pop_index)
     {
       (*infoseq)[pop_index].constraint_expression =
-        constraint_list [pop_index] ;
+        constraint_list [pop_index];
 
-      // Get an id.
-      (*infoseq)[pop_index].constraint_id = constraint_expr_ids_.get ();
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG, "adding constraint %d, %s",
+                    pop_index, constraint_list [pop_index].
+                    constraint_expr.in ()));
     }
 
   this->add_constraints_i (*infoseq,
@@ -142,6 +145,7 @@ TAO_Notify_Filter_i::add_constraints (
   ACE_CHECK_RETURN (0);
 
   auto_infoseq.release ();
+
   return infoseq;
 }
 
@@ -178,9 +182,12 @@ TAO_Notify_Filter_i::modify_constraints (
 
   for (index = 0; index < modify_list.length (); ++index)
     {
-      if (constraint_expr_list_.unbind (modify_list [index].constraint_id,
-                                        constr_expr) != -1)
+      CosNotifyFilter::ConstraintID cnstr_id = modify_list [index].constraint_id;
+
+      if (constraint_expr_list_.unbind (cnstr_id, constr_expr) != -1)
         constr_saved[index] = constr_expr;
+
+      constraint_expr_ids_.put (cnstr_id);
     }
 
   // now add the new entries.
@@ -196,8 +203,15 @@ TAO_Notify_Filter_i::modify_constraints (
     {
       // restore
       for (index = 0; index < modify_list.length (); ++index)
-        constraint_expr_list_.bind (modify_list [index].constraint_id,
-                                    constr_saved[index]);
+        {
+          CosNotifyFilter::ConstraintID cnstr_id = constraint_expr_ids_.get ();
+
+          if (constraint_expr_list_.bind (cnstr_id,
+                                          constr_saved[index]) == -1)
+            ACE_THROW (CORBA::NO_RESOURCES ());
+
+          constraint_expr_ids_.next (); // commit this id.
+        }
       ACE_RE_THROW;
     }
   ACE_ENDTRY;
@@ -221,14 +235,13 @@ TAO_Notify_Filter_i::modify_constraints (
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Filter_i::get_constraints (
-    const CosNotifyFilter::ConstraintIDSeq & id_list,
-    CORBA::Environment &ACE_TRY_ENV
-  )
+TAO_Notify_Filter_i::get_constraints (const CosNotifyFilter::ConstraintIDSeq & id_list,
+                                      CORBA::Environment &ACE_TRY_ENV
+                                      )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::ConstraintNotFound
-  ))
+                   CORBA::SystemException,
+                   CosNotifyFilter::ConstraintNotFound
+                   ))
 {
   // create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq* infoseq;
@@ -258,12 +271,11 @@ TAO_Notify_Filter_i::get_constraints (
   return infoseq;
 }
 
-CosNotifyFilter::ConstraintInfoSeq * TAO_Notify_Filter_i::get_all_constraints (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+CosNotifyFilter::ConstraintInfoSeq*
+TAO_Notify_Filter_i::get_all_constraints (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
   // create the list that goes out.
   CosNotifyFilter::ConstraintInfoSeq* infoseq;
@@ -273,6 +285,7 @@ CosNotifyFilter::ConstraintInfoSeq * TAO_Notify_Filter_i::get_all_constraints (
                     CORBA::NO_MEMORY ());
   ACE_CHECK_RETURN (0);
 
+  infoseq->length (constraint_expr_list_.current_size());
   CONSTRAINT_EXPR_LIST_ITER iter (constraint_expr_list_);
   CONSTRAINT_EXPR_ENTRY *entry;
 
@@ -281,18 +294,24 @@ CosNotifyFilter::ConstraintInfoSeq * TAO_Notify_Filter_i::get_all_constraints (
       if (iter.next (entry) != 0)
         {
           (*infoseq)[index].constraint_expression =
-            entry->int_id_->constr_expr;
+            ACE_static_cast (const CosNotifyFilter::ConstraintExp,
+                             entry->int_id_->constr_expr);
 
-          // Get an id.
+          /*
+            Why do we cast to a const object?
+            We want to force the TAO_String_Manager to make a copy of the string.
+            It wouldn't unless we coax it to use the correct assignment operator.
+           */
+
           (*infoseq)[index].constraint_id = entry->ext_id_;
         }
     }
+
   return infoseq;
 }
 
-void TAO_Notify_Filter_i::remove_all_constraints (
-                                                  CORBA::Environment & //ACE_TRY_ENV
-                                                  )
+void
+TAO_Notify_Filter_i::remove_all_constraints (CORBA::Environment &/*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))
@@ -300,57 +319,53 @@ void TAO_Notify_Filter_i::remove_all_constraints (
   CONSTRAINT_EXPR_LIST_ITER iter (constraint_expr_list_);
   CONSTRAINT_EXPR_ENTRY *entry;
 
-  ACE_Array<Notify_Constraint_Expr*>
-    constr_saved (constraint_expr_list_.current_size ());
-
   u_int index;
   for (index = 0; iter.done () == 0; iter.advance (), ++index)
     {
       if (iter.next (entry) != 0)
         {
-          constr_saved [index] =
-            entry->int_id_;
+          delete entry->int_id_;
         }
     }
 
-  for (u_int dindex = 0; dindex < index; ++dindex)
-    delete constr_saved [dindex];
+  constraint_expr_list_.unbind_all ();
 }
 
-void TAO_Notify_Filter_i::destroy (
-    CORBA::Environment &ACE_TRY_ENV
-  )
+void
+TAO_Notify_Filter_i::destroy (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
   this->remove_all_constraints (ACE_TRY_ENV);
   ACE_CHECK;
 
-  //TODO: deactivate the object here!
+  PortableServer::POA_var my_POA = _default_POA ();
+
+  PortableServer::ObjectId_var refTemp =
+    my_POA->servant_to_id(this);
+
+  my_POA->deactivate_object(refTemp.in());
 }
 
-CORBA::Boolean TAO_Notify_Filter_i::match (
-                                           const CORBA::Any & /*filterable_data */,
-                                           CORBA::Environment & //ACE_TRY_ENV
-                                           )
+CORBA::Boolean
+TAO_Notify_Filter_i::match (const CORBA::Any & /*filterable_data */,
+                                           CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
                    ))
 {
-  //Add your implementation here
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-CORBA::Boolean TAO_Notify_Filter_i::match_structured (
-                                                      const CosNotification::StructuredEvent & filterable_data,
-                                                      CORBA::Environment & //ACE_TRY_ENV
-  )
+CORBA::Boolean
+TAO_Notify_Filter_i::match_structured (const CosNotification::StructuredEvent & filterable_data, CORBA::Environment & //ACE_TRY_ENV
+                                       )
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::UnsupportedFilterableData
-  ))
+                   CORBA::SystemException,
+                   CosNotifyFilter::UnsupportedFilterableData
+                   ))
 {
   // We want to return true if atleast one constraint matches.
   CONSTRAINT_EXPR_LIST_ITER iter (constraint_expr_list_);
@@ -370,52 +385,44 @@ CORBA::Boolean TAO_Notify_Filter_i::match_structured (
   return 0;
 }
 
-CORBA::Boolean TAO_Notify_Filter_i::match_typed (
-                                                 const CosNotification::PropertySeq & /*filterable_data */,
-                                                 CORBA::Environment & //ACE_TRY_ENV
-                                                 )
+CORBA::Boolean
+TAO_Notify_Filter_i::match_typed (const CosNotification::PropertySeq & /*filterable_data */,CORBA::Environment & ACE_TRY_ENV)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosNotifyFilter::UnsupportedFilterableData
                    ))
 {
-  //Add your implementation here
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-CosNotifyFilter::CallbackID TAO_Notify_Filter_i::attach_callback (
-                                                                  CosNotifyComm::NotifySubscribe_ptr /*callback */,
-    CORBA::Environment & //ACE_TRY_ENV
-  )
+CosNotifyFilter::CallbackID
+TAO_Notify_Filter_i::attach_callback (CosNotifyComm::NotifySubscribe_ptr /*callback */, CORBA::Environment & ACE_TRY_ENV
+                                      )
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
-  //Add your implementation here
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
-void TAO_Notify_Filter_i::detach_callback (
-                                           CosNotifyFilter::CallbackID /*callback*/,
-                                           CORBA::Environment & //ACE_TRY_ENV
-  )
+void
+TAO_Notify_Filter_i::detach_callback (CosNotifyFilter::CallbackID /*callback*/,
+                                      CORBA::Environment & ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException,
-    CosNotifyFilter::CallbackNotFound
-  ))
+                   CORBA::SystemException,
+                   CosNotifyFilter::CallbackNotFound
+                   ))
 {
-  //Add your implementation here
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 }
 
-CosNotifyFilter::CallbackIDSeq * TAO_Notify_Filter_i::get_callbacks (
-                                                                     CORBA::Environment & //ACE_TRY_ENV
-  )
+CosNotifyFilter::CallbackIDSeq*
+TAO_Notify_Filter_i::get_callbacks (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((
-    CORBA::SystemException
-  ))
+                   CORBA::SystemException
+                   ))
 {
-  //Add your implementation here
-  return 0;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
