@@ -1,3 +1,9 @@
+Mon Apr 19 15:24:55 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/TLI_Stream.cpp (ACE_TLI_Stream): Make sure to set the value
+ 	  of rwflag_ to 0 so that purify is happy.  Thanks to Joe Hoffert
+ 	  for reporting this.
+
 Mon Apr 19 14:35:42 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* examples/IPC_SAP/UPIPE_SAP/ex2.cpp (supplier):
@@ -114,7 +120,6 @@ Fri Apr 16 07:52:11 1999  Darrell Brunsch  <brunsch@cs.wustl.edu>
           Marchewka <AndyM@who.net> for returning rusage information
           from elapsed_time.
 
->>>>>>> 4.749
 Thu Apr 15 16:50:21 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: updated discussion of "dir unexpected"
@@ -226,8 +231,6 @@ Wed Apr 14 02:34:13 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
         defined to SIGRTMIN and SIGRTMAX respectively, for POSIX4
         platforms. For others, they are 0.
 
-
->>>>>>> 4.739
 Tue Apr 13 15:29:37 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Object_Manager.cpp: moved ACE_Service_Config signal
