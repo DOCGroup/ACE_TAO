@@ -1,3 +1,9 @@
+Mon Jul 28 15:06:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/WFMO_Reactor.i:
+
+          Fixed typo in preprocessor directive.
+
 Mon Jul 28 19:23:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * ace/WFMO_Reactor.cpp:
