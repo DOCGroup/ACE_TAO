@@ -16,7 +16,7 @@
 #include "pace/unistd.h"
 
 int
-execl (const char* path, const char* arg, ...)
+pace_execl (const char* path, const char* arg, ...)
 {
   int result = 0;
   va_list ap;
@@ -27,7 +27,7 @@ execl (const char* path, const char* arg, ...)
 }
 
 int
-execle (const char* path, const char* arg, ...)
+pace_execle (const char* path, const char* arg, ...)
 {
   int result = 0;
   va_list ap;
@@ -38,7 +38,7 @@ execle (const char* path, const char* arg, ...)
 }
 
 int
-execlp (const char* file, const char* arg,  ...)
+pace_execlp (const char* file, const char* arg,  ...)
 {
   int result = 0;
   va_list ap;
