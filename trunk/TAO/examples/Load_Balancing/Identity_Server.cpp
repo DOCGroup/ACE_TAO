@@ -165,7 +165,7 @@ Identity_Server::create_objects (size_t number_of_objects,
       // Create an id for this servant.
       char id[BUFSIZ];
       ACE_OS::sprintf (id,
-                       "Identity object %d",
+                       "Identity object " ACE_SIZE_T_FORMAT_SPECIFIER,
                        i);
 
       // Create and activate a servant.
