@@ -1,3 +1,15 @@
+Wed Jun 30 06:50:37 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+        
+          Reverted some of the changes in
+          
+          Tue Jun 29 11:13:51 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+          so that TAO_IFR_EXE once again depends on TAO and IFR_Client.
+          MSVC6 seems to think this is necessary. Thanks to Johnny
+          Willemsen <jwillemsen@remedy.nl> for pointing this out.
+
 Wed Jun 30 10:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Redundant_Naming/README:
