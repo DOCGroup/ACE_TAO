@@ -230,11 +230,11 @@ TAO_UIOP_Connector::make_profile (const char *endpoint,
 {
   // The endpoint should be of the form:
   //
-  //    N.n//rendesvouz_point/object_key
+  //    N.n//rendezvous_point/object_key
   //
   // or:
   //
-  //    //rendesvouz_point/object_key 
+  //    //rendezvous_point/object_key 
 
   ACE_NEW_RETURN (profile,
                   TAO_UIOP_Profile (endpoint, ACE_TRY_ENV),
@@ -251,26 +251,21 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 
   // Check for a valid string
   if (!endpoint || !*endpoint)
-    return 1;  // Failure
+    return -1;  // Failure
 
   const char protocol[] = "uiop";
-  // This is valid for any protocol beginning with `iiop'.
-
+  // This is valid for any protocol beginning with `uiop'.
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  if (ACE_OS::strncasecmp (endpoint,
-                           protocol,
-                           ACE_OS::strlen (protocol)) == 0)
+  if (ACE_OS::strcasecmp (endpoint, protocol) == 0)
     {
       return 0;  // Success
     }
-  else
-    {
-      return 1;
-      // Failure: not an UIOP IOR
-      // DO NOT throw an exception here.
-    }
+
+  return -1;
+  // Failure: not an UIOP IOR
+  // DO NOT throw an exception here.
 }
 
 

@@ -42,10 +42,10 @@ class TAO_Export TAO_UIOP_Profile : public TAO_Profile
   // = DESCRIPTION
   //   This class defines the UIOP profile.
 public:
-  // = Currently, TAO supports UIOP 0.0.
+  // = Currently, TAO supports UIOP 1.0.
   enum
     {
-      DEF_UIOP_MAJOR = 0,  // FIXME:  Version numbers?
+      DEF_UIOP_MAJOR = 1,  // FIXME:  Version numbers?
       DEF_UIOP_MINOR = 0
     };
 

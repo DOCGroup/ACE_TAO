@@ -22,9 +22,12 @@ TAO_UIOP_Protocol_Factory::~TAO_UIOP_Protocol_Factory (void)
 int
 TAO_UIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {
-  const ACE_CString this_prefix ("uiop");
+  const char protocol[] = "uiop";
+  // This is valid for any protocol beginning with `uiop'.
 
-  return prefix == this_prefix;
+  // Check for the proper prefix in the IOR.  If the proper prefix isn't
+  // in the IOR then it is not an IOR we can use.
+  return (ACE_OS::strcasecmp (prefix.c_str (), protocol) == 0);
 }
 
 TAO_Acceptor *

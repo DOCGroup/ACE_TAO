@@ -39,8 +39,8 @@ typedef ACE_Concurrency_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_CONCUR
 typedef ACE_Scheduling_Strategy<TAO_UIOP_Server_Connection_Handler> UIOP_SCHEDULING_STRATEGY;
 // *******************************************************************
 
-typedef ACE_Strategy_Acceptor<TAO_UIOP_Server_Connection_Handler,
-                              ACE_LSOCK_ACCEPTOR>
+typedef ACE_Acceptor<TAO_UIOP_Server_Connection_Handler,
+              ACE_LSOCK_ACCEPTOR>
         TAO_UIOP_BASE_ACCEPTOR;
 // was defined in UIOP_Connect.h
 

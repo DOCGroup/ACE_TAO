@@ -43,9 +43,9 @@ int
 TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
                                     TAO_MProfile &mprofile) 
 {
-  ACE_UNIX_Addr new_address;
+  ACE_UNIX_Addr addr;
 
-  if (base_acceptor_.acceptor ().get_local_addr (new_address) == -1)
+  if (base_acceptor_.acceptor ().get_local_addr (addr) == -1)
     return 0;
 
   // we only make one
@@ -58,7 +58,7 @@ TAO_UIOP_Acceptor::create_mprofile (const TAO_ObjectKey &object_key,
 
   TAO_UIOP_Profile *pfile;
   ACE_NEW_RETURN (pfile,
-                  TAO_UIOP_Profile (new_address, object_key),
+                  TAO_UIOP_Profile (addr, object_key),
                   -1);
 
   if (mprofile.give_profile (pfile) == -1)
@@ -99,11 +99,12 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (this->base_acceptor_.open (
                   // orb_core->orb_params ()->addr (),
                   addr,
-                  orb_core->reactor(),
-                  &UIOP_Creation_Strategy_,
-                  &UIOP_Accept_Strategy_,
-                  &UIOP_Concurrency_Strategy_,
-                  &UIOP_Scheduling_Strategy_) != 0)
+                  orb_core->reactor()//,
+//                   &UIOP_Creation_Strategy_,
+//                   &UIOP_Accept_Strategy_,
+//                   &UIOP_Concurrency_Strategy_,
+//                   &UIOP_Scheduling_Strategy_
+                  ) != 0)
     return -1;  // Failure
 
   return 0;  // Success

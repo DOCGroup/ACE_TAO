@@ -241,31 +241,24 @@ TAO_IIOP_Connector::make_profile (const char *endpoint,
 int
 TAO_IIOP_Connector::check_prefix (const char *endpoint)
 {
-  // Parse the given URL style IOR and create an mprofile from it.
-
   // Check for a valid string
   if (!endpoint || !*endpoint)
-    return 1;  // Failure
+    return -1;  // Failure
 
-  const char protocol[] = "iiop";
-  // This is valid for any protocol beginning with `iiop'.
-
+  const char *protocol[] = { "iiop", "iioploc" };
+  // This is valid for any protocol beginning with `iiop' or `iioploc'.
 
   // Check for the proper prefix in the IOR.  If the proper prefix isn't
   // in the IOR then it is not an IOR we can use.
-  if (ACE_OS::strncasecmp (endpoint,
-                           protocol,
-                           ACE_OS::strlen (protocol)) == 0)
+  if (ACE_OS::strcasecmp (endpoint, protocol[0]) == 0 ||
+      ACE_OS::strcasecmp (endpoint, protocol[1]) == 0)
     {
       return 0;  // Success
     }
-  else
-    {
-      return 1;
-      // Failure: not an IIOP IOR
-      // DO NOT throw an exception here.
-    }
-  // @@ Fred&Ossama: Could we just write return 1 outside the else?
+
+  return -1;
+  // Failure: not an IIOP IOR
+  // DO NOT throw an exception here.
 }
 
 

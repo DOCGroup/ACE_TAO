@@ -259,6 +259,13 @@ TAO_UIOP_Profile::set (const ACE_UNIX_Addr& addr)
 
   ACE_OS::strcpy (this->rendezvous_point_, temp_rendezvous_point);
 
+//   ACE_DEBUG ((LM_DEBUG,
+//               "UIOP_Profile::set -- \n"
+//               "   temp_rendezvous_point: <%s>\n"
+//               "   rendezvous_point:      <%s>\n",
+//               temp_rendezvous_point,
+//               this->rendezvous_point_));
+              
   return 0;  // Success
 }
 
@@ -280,6 +287,15 @@ TAO_UIOP_Profile::parse (TAO_InputCDR& cdr,
                          CORBA::Environment &env)
 {
   CORBA::ULong encap_len = cdr.length ();
+
+  if (TAO_debug_level > 0)
+    {
+      char *buf = (char *) cdr.rd_ptr (); // ptr to first buffer
+      ACE_HEX_DUMP ((LM_DEBUG,
+                     (const char*)buf,
+                     encap_len,
+                     "\n"));
+    }
 
   // Read and verify major, minor versions, ignoring UIOP
   // profiles whose versions we don't understand.
@@ -327,6 +343,11 @@ TAO_UIOP_Profile::parse (TAO_InputCDR& cdr,
                   cdr.length (),
                   encap_len));
     }
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "UIOP_Profile --- r point: <%s>\n",
+//               this->rendezvous_point_));
+
   if (cdr.good_bit ())
     return 1;
 
@@ -645,10 +666,8 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
     + 1                            // version minor
     + 1                            // pad byte
     + 4                            // sizeof (strlen)
-    + rendezvous_pointlen + 1                  // strlen + null
-    + (~rendezvous_pointlen & 01)              // optional pad byte
-    + 2                            // port
-    + ( rendezvous_pointlen & 02)              // optional pad short
+    + rendezvous_pointlen + 1      // strlen + null
+    + (~rendezvous_pointlen & 0x3) // optional pad short
     + 4                            // sizeof (key length)
     + this->object_key_.length (); // key length.
   stream.write_ulong (encap_len);
@@ -662,6 +681,10 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
 
   // STRING rendezvous_pointname from profile
   stream.write_string (this->rendezvous_point_);
+
+//   ACE_DEBUG ((LM_DEBUG,
+//               "UIOP_Profile::encode -- rendezvous point: <%s>\n",
+//               this->rendezvous_point_));
 
   // OCTET SEQUENCE for object key
   stream << this->object_key_;
