@@ -218,7 +218,7 @@ order_producer (void *args)
   return 0;
 }
 
-static int  
+static int
 run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
                 const char *send_order,
                 const char *receipt_order)
@@ -424,7 +424,7 @@ performance_producer (void *args)
   return 0;
 }
 
-static int  
+static int
 run_performance_test (u_int min_load,
                       u_int max_load,
                       u_int load_step,
@@ -442,11 +442,11 @@ run_performance_test (u_int min_load,
   // Build a static queue, a deadline based dynamic queue, and a
   // laxity based dynamic queue.
 
-  ACE_Message_Queue<ACE_SYNCH> *static_queue = 
+  ACE_Message_Queue<ACE_SYNCH> *static_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
   ACE_ASSERT (static_queue != 0);
 
-  ACE_Message_Queue<ACE_SYNCH> *deadline_queue = 
+  ACE_Message_Queue<ACE_SYNCH> *deadline_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_deadline_message_queue (max_queue);
   ACE_ASSERT (deadline_queue != 0);
 
@@ -514,7 +514,7 @@ run_performance_test (u_int min_load,
                       -1);
 
       // Allocate array of timing offsets.
-      ACE_NEW_RETURN (time_offsets, 
+      ACE_NEW_RETURN (time_offsets,
                       ACE_Time_Value [load],
                       -1);
 
@@ -522,7 +522,7 @@ run_performance_test (u_int min_load,
       for (i = 0; i < load; ++i)
         {
           // construct a message new block off the heap, to hold a single character
-          ACE_NEW_RETURN (supplier_args.array_[i], 
+          ACE_NEW_RETURN (supplier_args.array_[i],
                           ACE_Message_Block (1),
                           -1);
 
@@ -661,6 +661,8 @@ run_performance_test (u_int min_load,
       ACE_DEBUG ((LM_INFO,
                   "\n"));
 
+      delete [] time_offsets;
+
       // Free all the allocated message blocks.
       for (i = 0; i < load; ++i)
         delete supplier_args.array_[i];
@@ -704,7 +706,7 @@ main (int, ASYS_TCHAR *[])
   }
 
   // Test factory, static message queue.
-  ACE_Message_Queue<ACE_SYNCH> *test_queue = 
+  ACE_Message_Queue<ACE_SYNCH> *test_queue =
     ACE_Message_Queue_Factory<ACE_SYNCH>::create_static_message_queue (max_queue);
   ACE_ASSERT (test_queue != 0);
   run_order_test (test_queue, send_order, static_receipt_order);
