@@ -42,8 +42,8 @@ class TAO_Export CORBA_Exception
   void operator delete (void *p)
   { ::operator delete (p); }
 
-  const char *id (void) const;
-  TAO_CONST CORBA::TypeCode_ptr type (void) const;
+  const char *_id (void) const;
+  TAO_CONST CORBA::TypeCode_ptr _type (void) const;
 
   // = To implement the narrow method.
   virtual int _is_a (const char* repository_id) const;

@@ -291,7 +291,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << node->name () << "::" << node->local_name () << " (const " <<
         node->name () << " &_tao_excp)" << be_nl;
       *os << "\t:CORBA_UserException (" <<
-        "CORBA::TypeCode::_duplicate (_tao_excp.type ()))" << be_nl;
+        "CORBA::TypeCode::_duplicate (_tao_excp._type ()))" << be_nl;
       *os << "{\n";
       os->incr_indent ();
       // assign each individual member
@@ -319,7 +319,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "{\n";
       os->incr_indent ();
       *os << "this->type_ = " <<
-        "CORBA::TypeCode::_duplicate (_tao_excp.type ());\n";
+        "CORBA::TypeCode::_duplicate (_tao_excp._type ());\n";
       // assign each individual member
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
@@ -388,7 +388,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "{\n";
       os->incr_indent ();
       *os << "if (!ACE_OS::strcmp (\"" << node->repoID () <<
-        "\", exc->id ())) // same type" << be_nl;
+        "\", exc->_id ())) // same type" << be_nl;
       *os << "\treturn ACE_dynamic_cast (" << node->name () << "_ptr, exc);" <<
         be_nl;
       *os << "else" << be_nl;
