@@ -15,7 +15,7 @@ endif # ! TAO_ROOT
 
 LDLIBS     =  -lorbsvcs -lTAO
 
-SRC = server.cpp client.cpp
+SRC = server.cpp client.cpp $TAO_ROOT/orbsvcs/orbsvcs/Log/Logger_i/cpp
 
 logger_SERVER_OBJS = server.o
 logger_CLIENT_OBJS = client.o

@@ -1,15 +1,19 @@
 // $Id$
 
+// TAO_MAXLOGMSGLEN must be the same size as ACE_MAXLOGMSGLEN.
+#if !defined TAO_MAXLOGMSGLEN
+#define TAO_MAXLOGMSGLEN 4 * 1024
+#endif /* TAO_MAXLOGMSGLEN */
+
 interface Logger
 {
   // = TITLE
   //   Used to log messages to a logging server.
   //
   // = DESCRIPTION
-  //   @@ This interface is very simple-minded and can certainly be
-  //   improved, e.g., by passing over more interesting logging
-  //   records similar to what we do in <ACE_Log_Msg>.
-  
+  //   This implementation provides a CORBA wrapper around the
+  //   <ACE_Log_Msg> mechanism.
+	  
   enum Log_Priority
   {
     
@@ -50,25 +54,36 @@ interface Logger
     // A panic condition.  This is normally broadcast to all users
 
     LM_MAX
-    // In ACE_Log_Priority, LM_MAX is aliased to LM_EMERGENCY rather than
-    // being a distinct tag, but that is invalid IDL syntax. Make sure to
-    // adjust for this
+    // In <ACE_Log_Priority>, LM_MAX is aliased to LM_EMERGENCY rather than
+    // being a distinct tag, but that is invalid IDL syntax.  We
+    // adjust for this internally.
   };
-  
+
+
+  enum Log_Verbosity
+  {
+    VERBOSE,
+    // Display messages in a verbose manner
+    VERBOSE_LITE,
+    // Display messages in a less verbose manner (i.e., only print
+    // information that can change between calls).
+    SILENT
+    // Do not print messages at all (just leave in thread-specific
+    // storage for later inspection)
+  };
+    
   struct Log_Record
   {
-    Log_Priority   type;      // Type of logging message
-    long           time;      // Timestamp of the sender
-    long           app_id;    // Process id of the sender
-    long           host_addr; // IP address of the sender
-    // @@ Matt, let's make this the same size as the max ACE_Log_Record string. 
-    string         msg_data;  // The logging message
+    Log_Priority type;             // Type of logging message.
+    Log_Verbosity verbosity;       // The verbosity of the logging message
+    long time;                     // Timestamp of the sender.
+    long app_id;                   // Process id of the sender.
+    long host_addr;	           // IP address of the sender.
+    string<TAO_MAXLOGMSGLEN> msg_data; // The logging message.
   };
-
-  oneway void log(in Logger::Log_Record log_rec);
-  // Transmit a Log_Record to the logging server
-
-  //  attribute char verbose;
+  
+  oneway void log (in Logger::Log_Record log_rec);
+  // Transmit a Log_Record to the logging server.
 };
 
 interface Logger_Factory
@@ -77,6 +92,8 @@ interface Logger_Factory
   //   Create a <Logger> of type <name>.
   
   Logger make_logger (in string name);
+  // Returns a new <Logger> instance.  Currently, <name> is unused, but it 
+  // could be used to select the appropriate type of <Logger>.
 };
 
     
