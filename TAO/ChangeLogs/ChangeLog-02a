@@ -1,3 +1,8 @@
+Wed Jul 12 09:46:13 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
+
+        * tao/POAManager.h: added forward declaration of TAO_Object_Adapter
+          to allow compilation on AIX 4.3 with new Visual Age C++ 5.0.
+
 Wed Jul 12 09:37:53 2000  Giga Giguashvili <gregoryg@paradigmgeo.com>
 
         * tao/IORManipulation.cpp: added #include of tao/ORB_Core.h

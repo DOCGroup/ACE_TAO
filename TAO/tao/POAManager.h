@@ -32,6 +32,7 @@
 #include "tao/poa_macros.h"
 
 class TAO_POA;
+class TAO_Object_Adapter;
 // Forward decl.
 
 class TAO_Export TAO_POA_Manager : public POA_PortableServer::POAManager
