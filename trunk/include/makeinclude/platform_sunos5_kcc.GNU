@@ -8,6 +8,10 @@ distrib = 0
 threads = 1
 exceptions = 1
 
+# These are required for KCC 3.4g compiler.
+LDFLAGS += --one_instantiation_per_object
+CCFLAGS += --one_instantiation_per_object
+
 ifeq ($(threads),1)
   CFLAGS += --thread_safe
   LDFLAGS += --thread_safe
