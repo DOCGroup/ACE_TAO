@@ -1,3 +1,10 @@
+Tue May  8 10:02:47 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/ORB_Core.cpp: Reverted this change "Tue May  8 07:32:15 2001
+	  Balachandran Natarajan". The problem on Linux builds seems to be
+	  a manifestation from the problem that was fixed in this change
+	  "Tue May  8 09:01:13 2001  Balachandran Natarajan". 
+
 Tue May  8 09:01:13 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Object_Ref_Table.cpp (~TAO_Object_Ref_Table): Removed a
