@@ -12,24 +12,24 @@
 //
 // ===========================================================
 
-#ifndef <CIAO_Glue_Session_Template>_H
-#define <CIAO_Glue_Session_Template>_H
+#ifndef [CIAO_Glue_Session_Template]_H
+#define [CIAO_Glue_Session_Template]_H
 #include "ace/pre.h"
 
-#include "<idl-name>S.h"        // Source in the skeletons for component
+#include "[idl-name]S.h"        // Source in the skeletons for component
                                 // client-view equivalent interfaces
-#include "<idl-name>EC.h"       // Source in the executor mapping
+#include "[idl-name]EC.h"       // Source in the executor mapping
                                 // that component implementations use
 #include "ciao/Container_Base.h" //Source in the container interface definitions
-#include "<SERVANT>_export.h"   // Generated export decl
+#include "[SERVANT]_export.h"   // Generated export decl
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#if component is defined withing a <module name>
-namespace CIAO_GLUE_<module_name>
+#if component is defined withing a [module name]
+namespace CIAO_GLUE_[module_name]
 {
 #else
 namespace CIAO_GLUE
@@ -45,24 +45,24 @@ namespace CIAO_GLUE
   //    some other CIDL generated files to get the glue code
   //    implementation.
 
-#foreach <facet name> in (all facets defined in the original IDL)
-  class <SERVANT>_Export <facet name>_Servant :
-    : public virtual POA_<facet name>, // full skeleton name here
+#foreach [facet name] in (all facets defined in the original IDL)
+  class [SERVANT]_Export [facet name]_Servant :
+    : public virtual POA_[facet name], // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
   public:
     // Constructor and destructor.
-    <facet name>_Servant (CCM_<facet name>_ptr executor);
-    ~<facet name>_Servant ();
+    [facet name]_Servant (CCM_[facet name]_ptr executor);
+    ~[facet name]_Servant ();
 
-# foreach <operation> in (all facet operations)
+# foreach [operation] in (all facet operations)
     // Generate operation decls.
-# end foreach <operation>
+# end foreach [operation]
 
   protected:
-    CCM_<facet name>_var executor_;
+    CCM_[facet name]_var executor_;
   };
-#end foreach <facet name>
+#end foreach [facet name]
 
   //////////////////////////////////////////////////////////////////
   // EventConsumer Glue Code implementation
@@ -73,34 +73,34 @@ namespace CIAO_GLUE
   //    some other CIDL generated files to get the glue code
   //    implementation.
 
-#foreach <event type> in (all eventtype-s defined in the original IDL)
-  class <SERVANT>_Export <event type>Consumer_Servant :
-    : public virtual POA_<event type>Consumer, // full skeleton name here
+#foreach [event type] in (all eventtype-s defined in the original IDL)
+  class [SERVANT]_Export [event type]Consumer_Servant :
+    : public virtual POA_[event type]Consumer, // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
   public:
     // Constructor and destructor.
-    <event type>Consumer_Servant (CCM_<event type>Consumer_ptr executor);
-    ~<event type>Consumer_Servant ();
+    [event type]Consumer_Servant (CCM_[event type]Consumer_ptr executor);
+    ~[event type]Consumer_Servant ();
 
-# foreach <type> in (<event type> and all its parent eventtype, if any)
-    void push_<type> (in <type> evt);
-# end <type>
+# foreach [type] in ([event type] and all its parent eventtype, if any)
+    void push_[type] (in [type] evt);
+# end [type]
 
     // Inherit from ::Compopnents::EventBConsumerBase
     void push_event (in EventBase ev)
       raises (::Components::BadEventType);
 
   protected:
-    CCM_<event type>Consumer_var executor_;
+    CCM_[event type]Consumer_var executor_;
   };
-#end foreach <facet name>
+#end foreach [facet name]
 
 
   //////////////////////////////////////////////////////////////////
   // Component specific context implementation
-  class <SERVANT>_Export <component name>_Context :
-    public virtual CCM_<component name>_Context
+  class [SERVANT]_Export [component name]_Context :
+    public virtual CCM_[component name]_Context
   // @@ The following line is causing compiler to barf, what gives?
   //    It looks like we need to overwrite _repository_id and
   //    _tao_QueryInterface operations here.
@@ -109,13 +109,13 @@ namespace CIAO_GLUE
   public:
     // We will allow the the servant glue code we generate to access
     // our states.
-    friend class <component name>_Servant;
+    friend class [component name]_Servant;
 
     // Ctor.
-    <component name>_Context ();
+    [component name]_Context ();
 
     // Dtor.
-    virtual ~<component name>_Context ();
+    virtual ~[component name]_Context ();
 
     // We need to overwrite the following method to avoid ambiguity
     // This is strange, but thankfully, this is generated code so it's
@@ -125,22 +125,22 @@ namespace CIAO_GLUE
 
     virtual const char* _interface_repository_id (void) const;
 
-    // Operations for <component name> event source, and
-    // receptacles defined in CCM_<component name>_Context.
+    // Operations for [component name] event source, and
+    // receptacles defined in CCM_[component name]_Context.
 
-#foreach <receptacle name> with <uses type> in (list of all 'uses' interfaces) generate:
-# if <receptacle name> is a simplex receptacle ('uses')
-    <uses type> get_connection_<receptacle name> ();
-# else (<receptacle name> is a multiplex ('uses multiple') receptacle)
-    // <receptacle name>Connections typedef'ed as a sequence of
-    // struct <receptacle name>Connection.
-    <receptacle name>Connections get_connections_<receptacle name> ();
-# endif <receptacle name>
-#end foreach <receptacle name> with <uses type>
+#foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+# if [receptacle name] is a simplex receptacle ('uses')
+    [uses type] get_connection_[receptacle name] ();
+# else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+    // [receptacle name]Connections typedef'ed as a sequence of
+    // struct [receptacle name]Connection.
+    [receptacle name]Connections get_connections_[receptacle name] ();
+# endif [receptacle name]
+#end foreach [receptacle name] with [uses type]
 
-#foreach <event name> with <eventtype> in (list of all event sources) generate:
-    void push_<event name> (in <eventtype> ev);
-#end foreach <event name> with <eventtype>
+#foreach [event name] with [eventtype] in (list of all event sources) generate:
+    void push_[event name] (in [eventtype] ev);
+#end foreach [event name] with [eventtype]
 
     // Operations for ::Components::CCMContext
     virtual ::Components::Principal_ptr get_caller_principal (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
@@ -168,33 +168,33 @@ namespace CIAO_GLUE
     // We need to generate, in protected section, stuff that manage
     // connections and consumers of this component.
 
-#foreach <receptacle name> with <uses type> in (list of all 'uses' interfaces) generate:
-# if <receptacle name> is a simplex receptacle ('uses')
-    // Simplex <receptacle name> connection management operations
-    void connect_<receptacle name> (in <uses type> c)
+#foreach [receptacle name] with [uses type] in (list of all 'uses' interfaces) generate:
+# if [receptacle name] is a simplex receptacle ('uses')
+    // Simplex [receptacle name] connection management operations
+    void connect_[receptacle name] (in [uses type] c)
       raises (::Components::AlreadyConnected,
               ::Components::InvalidConnection);
-    <uses type> disconnect_<receptacle name> ()
+    [uses type] disconnect_[receptacle name] ()
       raises (::Components::NoConnection);
 
-    // Simplex <receptacle name> connection
-    <uses type>_var ciao_uses_<receptacle name>_;
+    // Simplex [receptacle name] connection
+    [uses type]_var ciao_uses_[receptacle name]_;
 
-# else (<receptacle name> is a multiplex ('uses multiple') receptacle)
-    // Multiplex <receptacle name> connection management operations
-    ::Components::Cookie connect_<receptacle name> (in <uses type> c)
+# else ([receptacle name] is a multiplex ('uses multiple') receptacle)
+    // Multiplex [receptacle name] connection management operations
+    ::Components::Cookie connect_[receptacle name] (in [uses type] c)
       raises (::Components::ExceedConnectionLimit,
               ::Components::InvalidConnection);
-    <uses type> disconnect_<receptacle name> (in ::Components::Cookie ck)
+    [uses type] disconnect_[receptacle name] (in ::Components::Cookie ck)
       raises (::Components::InvalidConnection);
 
-    // Multiplex <receptacle name> connections
+    // Multiplex [receptacle name] connections
 
     // @@ TO-DO: Need a fast and simple connection caching mechanism
     // which also allow fast indexing thru "cookie".  I will also need
     // a cookie base class in CIAO core.
-# endif <receptacle name>
-#end foreach <receptacle name> with <uses type>
+# endif [receptacle name]
+#end foreach [receptacle name] with [uses type]
 
     // Other CCMContext specific operations seem quite straightforward
     // to me.  Well, so far.
@@ -202,34 +202,34 @@ namespace CIAO_GLUE
 
   //////////////////////////////////////////////////////////////////
   // Component Servant Glue code implementation
-  class <SERVANT>_Export <component name>_Servant
-    : public virtual POA_<component name>, // full skeleton name here
+  class [SERVANT]_Export [component name]_Servant
+    : public virtual POA_[component name], // full skeleton name here
       public virtual PortableServer::RefCountServantBase
   {
   public:
     // Ctor.
-    <component name>_Servant (CCM_<component name>_ptr executor);
+    [component name]_Servant (CCM_[component name]_ptr executor);
 
     // Dtor.
-    ~<component name>_Servant (void);
+    ~[component name]_Servant (void);
 
-#foreach <operation> in all supported interfaces of own component and all inherited components
+#foreach [operation] in all supported interfaces of own component and all inherited components
 
-    // Generate the <operation> here.
+    // Generate the [operation] here.
 
 #end
 
     // Operations for provides interfaces.
-#foreach <facet name> with <facet type> in (list of all provided interfaces) generate:
-    <facet type>_ptr provide_<facet name> ();
-#end foreach <facet name> with <facet type>
+#foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
+    [facet type]_ptr provide_[facet name] ();
+#end foreach [facet name] with [facet type]
 
     // Operations for receptacles interfaces.
 
     // Operations for consumers interfaces.
-#foreach <consumer name> with <eventtype> in (list of all consumers) generate:
-    <eventtype>Consumer_ptr get_consumer_<consumer name> ();
-#end foreach <facet name> with <facet type>
+#foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+    [eventtype]Consumer_ptr get_consumer_[consumer name] ();
+#end foreach [facet name] with [facet type]
 
     // Operations for emits interfaces.
 
@@ -347,19 +347,19 @@ namespace CIAO_GLUE
 
   protected:
     // My Executor.
-    CCM_<component name>_var executor_;
+    CCM_[component name]_var executor_;
 
     // My Run-time Context.
-    CCM_<component name>_Context_var context_;
+    CCM_[component name]_Context_var context_;
 
     // Cached provided interfaces.
-#foreach <facet name> with <facet type> in (list of all provided interfaces) generate:
-    <facet type>_var provide_<facet name>_;
-#end foreach <facet name> with <facet type>
+#foreach [facet name] with [facet type] in (list of all provided interfaces) generate:
+    [facet type]_var provide_[facet name]_;
+#end foreach [facet name] with [facet type]
 
-#foreach <consumer name> with <eventtype> in (list of all consumers) generate:
-    <eventtype>Consumer_var consumes_<consumer name>_;
-#end foreach <consumer name> with <eventtype>
+#foreach [consumer name] with [eventtype] in (list of all consumers) generate:
+    [eventtype]Consumer_var consumes_[consumer name]_;
+#end foreach [consumer name] with [eventtype]
 
 };
 
@@ -368,17 +368,17 @@ namespace CIAO_GLUE
   // Component Home Glue code implementation
 
   // Foreach component home
-  class <SERVANT>_Export <home name>_Servant :
-    public virtual POA_<home name>, // full skeleton name here
+  class [SERVANT]_Export [home name]_Servant :
+    public virtual POA_[home name], // full skeleton name here
     public virtual PortableServer::RefCountServantBase
   {
   public:
     // Ctor.
-    <home anem>_Servant (CCM_<home name>_ptr exe,
+    [home anem]_Servant (CCM_[home name]_ptr exe,
                        CIAO::Session_Container *c);
 
     // Dtor.
-    ~<home name>_Servant (void);
+    ~[home name]_Servant (void);
 
     // User defined and inherited operations
     // (Factories, Finders, and explicit operations.)
@@ -389,7 +389,7 @@ namespace CIAO_GLUE
                        Components::CreateFailure));
 
     // Operations for Implicit Home interface
-    virtual <component name>_ptr create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual [component name]_ptr create (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException,
                        Components::CreateFailure));
 
@@ -405,14 +405,14 @@ namespace CIAO_GLUE
 
   protected:
     // My Executor.
-    CCM_<home name>_var executor_;
+    CCM_[home name]_var executor_;
 
     // My Container
     CIAO::Session_Container *container_;
   };
 
-  extern "C" <SERVANT>_Export ::PortableServer::Servant
-  create<home name>_Servant (::Components::HomeExecutorBase_ptr p,
+  extern "C" [SERVANT]_Export ::PortableServer::Servant
+  create[home name]_Servant (::Components::HomeExecutorBase_ptr p,
                              CIAO::Session_Container *c
                              ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 #if there are module definitions, preserve them all
@@ -420,9 +420,9 @@ namespace CIAO_GLUE
 #endif
 
 #if defined (__ACE_INLINE__)
-# include "<CIAO_Glue_Session_Template>.inl"
+# include "[CIAO_Glue_Session_Template].inl"
 #endif /* __ACE_INLINE__ */
 
 
 #include "ace/post.h"
-#endif /* <CIAO_Glue_Session_Template>_H */
+#endif /* [CIAO_Glue_Session_Template]_H */
