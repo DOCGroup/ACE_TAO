@@ -110,19 +110,6 @@ int be_visitor_interface_collocated_ss::visit_interface (be_interface *node)
   os->decr_indent ();
   *os << "}\n\n";
 
-  os->indent ();
-  *os << "CORBA::Boolean " << node->full_coll_name ()
-      << "::_is_a (" << be_idt << be_idt_nl
-      << "const char* logical_type_id," << be_nl
-      << "CORBA::Environment &ACE_TRY_ENV" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return this->servant_->_is_a (" << be_idt << be_idt_nl
-      << "logical_type_id," << be_nl
-      << "ACE_TRY_ENV" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
-      << "}\n\n";
-
   if (this->visit_scope (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

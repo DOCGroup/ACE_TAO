@@ -153,7 +153,11 @@ CORBA_Object::_is_collocated (void) const
 CORBA::Boolean
 CORBA_Object::_non_existent (CORBA::Environment &ACE_TRY_ENV)
 {
-    CORBA::Boolean _tao_retval = 0;
+  // If the object is collocated then try locally....
+  if (this->is_collocated_ && this->servant_ != 0)
+    return this->servant_->_non_existent (ACE_TRY_ENV);
+
+  CORBA::Boolean _tao_retval = 0;
 
   TAO_Stub *istub = this->_stubobj ();
   if (istub == 0)

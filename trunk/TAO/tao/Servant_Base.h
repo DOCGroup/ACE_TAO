@@ -44,6 +44,13 @@ public:
   virtual PortableServer::POA_ptr _default_POA (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
   // Returns the default POA for this servant.
 
+  virtual CORBA::Boolean _is_a (const char* logical_type_id,
+                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Local implementation of the CORBA::Object::_is_a method.
+
+  virtual CORBA::Boolean _non_existent (CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
+  // Default <_non_existent>: always returns false.
+
   virtual void *_downcast (const char *repository_id) = 0;
   // Get the correct vtable.
 
@@ -56,10 +63,6 @@ protected:
 
   TAO_ServantBase (const TAO_ServantBase &);
   // Copy constructor, protected so no instances can be created.
-
-  virtual CORBA::Boolean _is_a (const char* logical_type_id,
-                                CORBA_Environment &TAO_IN_ENV = CORBA::default_environment ());
-  // Local implementation of the CORBA::Object::_is_a method.
 
   virtual void _dispatch (CORBA::ServerRequest &request,
                           void *context,
