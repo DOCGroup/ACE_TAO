@@ -97,9 +97,9 @@ main (int argc, char *argv[])
                            "GenericFactory reference is nil.\n"),
                           -1);
 
-      TAO_LoadBalancer::PropertyManager_var property_manager =
-        TAO_LoadBalancer::PropertyManager::_narrow (lb.in (),
-                                                    ACE_TRY_ENV);
+      LoadBalancing::PropertyManager_var property_manager =
+        LoadBalancing::PropertyManager::_narrow (lb.in (),
+                                                 ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       if (CORBA::is_nil (property_manager.in ()))
@@ -111,7 +111,8 @@ main (int argc, char *argv[])
       // Load Balancer for the remainder of this test.
 
       // The FactoryCreationId
-      TAO_LoadBalancer::FactoryCreationId_var factory_creation_id;
+      LoadBalancing::GenericFactory::FactoryCreationId_var
+        factory_creation_id;
 
       // Create a replicated Hasherobject (object group)
       obj = factory->create_object (HasherFactory::repository_type_id (),
