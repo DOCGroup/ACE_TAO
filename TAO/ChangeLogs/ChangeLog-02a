@@ -1,3 +1,9 @@
+Mon Jul 16 11:44:30 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Big_Reply/server.cpp: The reply sent was too huge. The bug
+	  #957 started showing up. Reduced the size of the reply to
+	  approximately 4 MB.
+	
 Mon Jul 16 11:36:00 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
         * tao/Strategies/DIOP_Factory.cpp (requires_explicit_endpoint):
