@@ -57,7 +57,7 @@ CPPFLAGS += -D_REENTRANT -I../include -I. -DCPP_LOCATION=\"$(CXX)\" -DIDL_CFE_VE
 YACC   = yacc
 LEX	= flex
 YFLAGS	= -t -d
-LFLAGS	= -t
+LFLAGS	= -t -Ptao_
 
 # Create the parser and lexer
 y.tab.h y.tab.cpp: idl.yy

@@ -1,5 +1,8 @@
 Thu Apr 23 11:21:46 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* ace/Makefile (Svc_Conf_l.cpp): Added a -Pace_ prefix to the
+ 	  lexer to avoid conflicts.
+
 	* apps/Gateway/Gateway/gatewayd.cpp,
 	  apps/Gateway/Peer/peerd.cpp: Added a check to see if the
 	  svc.conf file exists before trying to parse the arguments.
