@@ -581,19 +581,6 @@ ACE_HAS_RLIMIT_RESOURCE_ENUM            Platform has enum instead of
                                         prototype in sys/resource.h
                                         that differs from the one in
                                         ace/OS.i.*/
-//#define ACE_HAS_GNUC_BROKEN_TEMPLATE_INLINE_FUNCTIONS
-					/*GNUC 2.7.3 mistakenly
-                                        takes the template definition
-                                        as the place where an inline
-                                        function of an argument class
-                                        is first used.*/
-//#define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
-					/*GNU CC < 2.8 is broken for
-                                        template classes. This label
-                                        shortens the template parameter
-                                        list by removing the iterator
-                                        functionality in the
-                                        Cache_Map_Manager class.*/
 //#define ACE_HAS_GNU_CSTRING_H
 					/*Denotes that GNU has cstring.h
                                         as standard which redefines
