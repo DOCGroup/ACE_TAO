@@ -7,16 +7,16 @@ debug = 1
 optimize = 0
 
 CC              = KCC
-CXX		= KCC
-CFLAGS		+=
+CXX		= KCC --no_auto_instantiation -x
+CFLAGS	  += -D_POSIX_THREADS -D_POSIX_THREAD_SAFE_FUNCTIONS -D_REENTRANT
 CCFLAGS		+= $(CFLAGS) -DNULL=0
 DCFLAGS		+= +K0 -g
 DLD             = $(CXX)
 LD		= $(CXX)
-LIBS		+= -ldl 
+LIBS		+= -ldl -lpthread
 OCFLAGS		+= +K3 -O
 PIC             = -fPIC
-AR              = KCC
+AR              = $(CXX)
 ARFLAGS         = -o
 RANLIB          = true
 
