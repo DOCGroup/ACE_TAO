@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 // $Id$
 
 // ===========================================================
@@ -9,7 +10,7 @@
 //    Receiver_i.h
 //
 // = DESCRIPTION
-//    Defines the implementation header for the Receiver interface
+//    Defines the implementation header for the Receiver interface.
 //
 // = AUTHOR
 //    Pradeep Gore <pradeep@cs.wustl.edu>
@@ -27,25 +28,23 @@ class Receiver_i : public POA_Receiver
   //    Receiver object implementation
   //
   // = DESCRIPTION
-  //    This class has methods which are called by the chat server.
-  //
-
+  //    This class has methods that are called by the chat server.
 public:
   // = Initialization and termination methods.
-
   Receiver_i (void);
-  // Constructor
+  // Constructor.
 
   ~Receiver_i (void);
-  // Destructor
+  // Destructor.
 
-  virtual void message (const char *msg, 
+  virtual void message (const char *msg,
                         CORBA::Environment &_tao_environment);
-  // receives a message string
+  // Receives a message string.
 
   virtual void shutdown (CORBA::Environment &_tao_environment);
-  // called when the chat server is going away.
-  // the client implementation should shutdown the chat client in response to this.
+  // Called when the chat server is going away.  The client
+  // implementation should shutdown the chat client in response to
+  // this.
 
   void orb (CORBA::ORB_ptr o);
   // Set the ORB pointer.

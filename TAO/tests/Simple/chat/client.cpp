@@ -2,12 +2,11 @@
 
 // ===========================================================
 //
-//
 // = LIBRARY
 //    TAO/tests/Simple/chat
 //
 // = FILENAME
-//    Chat.cpp
+//    client.cpp
 //
 // = DESCRIPTION
 //    The Chat client program entry point.
@@ -17,32 +16,39 @@
 //
 // ===========================================================
 
-#include "Chat_i.h"
+#include "client_i.h"
 
 int
-main(int argc, char* argv[])
+main (int argc, char *argv[])
 {
-  printf("\n============= Simple Chat ===========\n");
-
-  char *nick = "chat client";
+  char *nick;
 
   if (argc >= 2)
     nick = argv[1];
   else
-    printf("\n usage: Chat <nickname>\n");
+    ACE_ERROR_RETURN ((LM_ERROR,
+		       "\n usage: client <nickname>\n"),
+		      -1);
 
   TAO_TRY
     {
-      Chat_i chat_i ("chat.ior", nick);
+      ACE_DEBUG ((LM_DEBUG,
+		 "\n============= Simple Chat ===========\n"));
 
-      if (chat_i.init (argc, argv) == -1 || chat_i.run () == -1)
-	{
-	  return -1;
-	}
+      ACE_DEBUG ((LM_DEBUG,
+		 "\n============= type 'quit' to exit  ===========\n"));
+
+      // @@ Please make the "chat.ior" an option or something you can
+      // override as a user.
+      Client_i client_i ("chat.ior", nick);
+
+      if (client_i.init (argc, argv) == -1
+	  || client_i.run () == -1)
+	return -1;
     }
   TAO_CATCHANY
     {
-      TAO_TRY_ENV.print_exception ("chat::main\t\n");
+      TAO_TRY_ENV.print_exception ("client::main\t\n");
       return -1;
     }
   TAO_ENDTRY;
