@@ -653,7 +653,13 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                             (ACE_THR_C_FUNC) ace_thread_adapter,
 #endif
                             this,
-                            new_thr_desc);
+                            new_thr_desc
+# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+			    , ACE_LOG_MSG->seh_except_selector()
+			    , ACE_LOG_MSG->seh_except_handler()
+# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+                            );
+
   if (thread_args == 0)
     {
       delete new_thr_desc;
