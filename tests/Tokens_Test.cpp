@@ -104,8 +104,7 @@ run_thread (void *vp)
                           ACE_TEXT ("deadlock detected")));
               goto deadlock;
             }
-          ACE_ERROR ((LM_E
-                      RROR, ACE_TEXT ("(%t) %p renew failed\n"),
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p renew failed\n"),
                       ACE_TEXT ("run_thread")));
           return (void *) -1;
         }
