@@ -409,10 +409,6 @@ SOURCE=.\Reactor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\ReactorEx.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\Read_Buffer.cpp
 # End Source File
 # Begin Source File
@@ -437,6 +433,10 @@ SOURCE=.\Sched_Params.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Select_Reactor.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Service_Config.cpp
 # End Source File
 # Begin Source File
@@ -454,6 +454,10 @@ SOURCE=.\Service_Object.cpp
 # Begin Source File
 
 SOURCE=.\Service_Repository.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Types.cpp
 # End Source File
 # Begin Source File
 
@@ -682,6 +686,10 @@ SOURCE=.\UPIPE_Connector.cpp
 # Begin Source File
 
 SOURCE=.\UPIPE_Stream.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\WFMO_Reactor.cpp
 # End Source File
 # Begin Source File
 
@@ -2008,9 +2016,5 @@ SOURCE=.\Readme
 SOURCE=..\Version
 # End Source File
 # End Group
-# Begin Source File
-
-SOURCE=.\Service_Types.cpp
-# End Source File
 # End Target
 # End Project
