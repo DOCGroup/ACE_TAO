@@ -5,7 +5,6 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 
-
 ACE_RCSID (ImplRepo_Service,
            Server_Repository,
            "$Id$")
@@ -321,8 +320,9 @@ Server_Repository::get_startup_info (
 
       if (fstm->open (OPTIONS::instance ()->file_name ()) != 0)
         {
-          cerr << "Fail to open XML file: trial.xml " << endl;
-          return 1;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_LIB_TEXT ("Fail to open XML file: trial.xml\n ")),
+                            -1);
         }
 
       /// XML case
