@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
 
   <instance>
@@ -8,7 +8,7 @@
 
   <instance>
     <name>Consumer</name>
-    <node>WindowsXP</node>
+    <node>RedHatLinux</node>
   </instance>
 
 </Deployment:DeploymentPlan>

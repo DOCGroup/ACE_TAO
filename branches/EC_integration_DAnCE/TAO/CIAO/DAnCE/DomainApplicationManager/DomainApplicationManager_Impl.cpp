@@ -714,8 +714,8 @@ get_outgoing_connections_i (const char * instname,
                     // and "consumer side port name".
                     if (retv[len].kind == Deployment::rtecEventPublisher ||
                         retv[len].kind == Deployment::rtecEventEmitter ||
-                        retv[len].kind == Deployment::ecEventPublisher ||
-                        retv[len].kind == Deployment::ecEventEmitter ||
+                        retv[len].kind == Deployment::EventPublisher ||
+                        retv[len].kind == Deployment::EventEmitter ||
                         retv[len].kind == Deployment::nsEventPublisher ||
                         retv[len].kind == Deployment::nsEventEmitter)
                       {
@@ -751,14 +751,18 @@ dump_connections (const ::Deployment::Connections & connections)
     ACE_DEBUG ((LM_DEBUG, "instanceName: %s\n", connections[i].instanceName.in ()));
     ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connections[i].portName.in ()));
     ACE_DEBUG ((LM_DEBUG, "portkind: "));
+
     switch (connections[i].kind) {
-    case Deployment::Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
-    case Deployment::SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
-    case Deployment::MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
-    case Deployment::EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
-    case Deployment::EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
-    case Deployment::EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
+      case Deployment::Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
+      case Deployment::SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
+      case Deployment::MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
+      case Deployment::EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
+      case Deployment::EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
+      case Deployment::EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
     }
+
+    ACE_DEBUG ((LM_DEBUG, "consumerCompName: %s\n", connections[i].consumerCompName.in ()));
+    ACE_DEBUG ((LM_DEBUG, "consumerPortName: %s\n", connections[i].consumerPortName.in ()));
 
     // object reference.
     ACE_DEBUG ((LM_DEBUG, "endpoint: \n"));

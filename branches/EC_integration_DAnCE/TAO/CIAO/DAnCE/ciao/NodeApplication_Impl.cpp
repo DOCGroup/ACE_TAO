@@ -61,38 +61,13 @@ CIAO::NodeApplication_Impl::finishLaunch (
 	          // @@ (GD) A place holder where the Event Channel connections
 	          //         should be set up.
               case Deployment::EventEmitter:
-                consumer = Components::EventConsumerBase::
-                  _narrow (providedReference[i].endpoint.in ()
-                          ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
-
-                if (CORBA::is_nil (consumer.in ()))
-                  {
-                    ACE_THROW (Deployment::InvalidConnection ());
-                  }
-
-                comp->connect_consumer(providedReference[i].portName.in (),
-                                       consumer.in ()
-                                       ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
-                break;
-
               case Deployment::EventPublisher:
-                consumer = Components::EventConsumerBase::
-                  _narrow (providedReference[i].endpoint.in ()
-                          ACE_ENV_ARG_PARAMETER);
+                ACE_DEBUG ((LM_DEBUG, "Building direct connection.\n"));
+                this->build_event_connection (providedReference[i], 
+                                              CIAO::DIRECT
+                                              ACE_ENV_ARG_PARAMETER);
                 ACE_TRY_CHECK;
-
-                if (CORBA::is_nil (consumer.in ()))
-				        {              
-				          ACE_THROW (Deployment::InvalidConnection ());
-				        }
-
-                comp->subscribe (providedReference[i].portName.in (),
-                                consumer.in ()
-                                ACE_ENV_ARG_PARAMETER);
-                ACE_TRY_CHECK;
-                break;
+			          break;
 
 			        case Deployment::rtecEventEmitter:
               case Deployment::rtecEventPublisher:
@@ -626,6 +601,22 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
 {
 	  ACE_DEBUG ((LM_DEBUG, "CIAO::NodeApplication_Impl::build_connection ()!!!\n"));
 
+    ACE_DEBUG ((LM_DEBUG, "instanceName: %s\n", connection.instanceName.in ()));
+    ACE_DEBUG ((LM_DEBUG, "portName: %s\n", connection.portName.in ()));
+
+    ACE_DEBUG ((LM_DEBUG, "consumer Component Name: %s\n", connection.consumerCompName.in ()));
+    ACE_DEBUG ((LM_DEBUG, "consumer Port Name: %s\n", connection.consumerPortName.in ()));
+
+    ACE_DEBUG ((LM_DEBUG, "portkind: "));
+    switch (connection.kind) {
+      case Deployment::Facet: ACE_DEBUG ((LM_DEBUG, "Facet\n")); break;
+      case Deployment::SimplexReceptacle: ACE_DEBUG ((LM_DEBUG, "SimplexReceptacle\n")); break;
+      case Deployment::MultiplexReceptacle: ACE_DEBUG ((LM_DEBUG, "MultiplexReceptacle\n")); break;
+      case Deployment::EventEmitter: ACE_DEBUG ((LM_DEBUG, "EventEmitter\n")); break;
+      case Deployment::EventPublisher: ACE_DEBUG ((LM_DEBUG, "EventPublisher\n")); break;
+      case Deployment::EventConsumer: ACE_DEBUG ((LM_DEBUG, "EventConsumer\n")); break;
+    }
+
     // Get the consumer port object reference and put into "consumer"
     Components::EventConsumerBase_var consumer = 
       Components::EventConsumerBase::_narrow (connection.endpoint.in ()
@@ -638,23 +629,25 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
         ACE_THROW (Deployment::InvalidConnection ());
       }
 
-    // Get the consumer component object reference.
-    ACE_CString consumer_comp_name = connection.consumerCompName.in ();
-    Components::CCMObject_ptr sink_objref;
-
-    if (this->component_map_.find (consumer_comp_name, sink_objref) != 0)
-      {
-        ACE_DEBUG ((LM_DEBUG, "Nil sink component object reference\n"));
-        ACE_THROW (Deployment::InvalidConnection ());
-      }
-
     // Get the supplier component object reference.
     ACE_CString supplier_comp_name = connection.instanceName.in ();
     Components::CCMObject_ptr source_objref;
 
+    ACE_DEBUG ((LM_DEBUG, "source component name is: %s\n", supplier_comp_name.c_str ()));
     if (this->component_map_.find (supplier_comp_name, source_objref) != 0)
       {
         ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
+        ACE_THROW (Deployment::InvalidConnection ());
+      }
+
+    // Get the consumer component object reference.
+    ACE_CString consumer_comp_name = connection.consumerCompName.in ();
+    Components::CCMObject_ptr sink_objref;
+
+    ACE_DEBUG ((LM_DEBUG, "sink component name is: %s\n", consumer_comp_name.c_str ()));
+    if (this->component_map_.find (consumer_comp_name, sink_objref) != 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, "Nil sink component object reference\n"));
         ACE_THROW (Deployment::InvalidConnection ());
       }
 
@@ -674,8 +667,8 @@ CIAO::NodeApplication_Impl::build_event_connection (const Deployment::Connection
     //ACE_DEBUG ((LM_DEBUG, "Nil source component object reference\n"));
     //ACE_CString sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
 
-      ACE_CString test_sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
-      ACE_DEBUG ((LM_DEBUG, "The COMPONENT UUID I GOT is: %s\n", test_sid.c_str ()));
+    ACE_CString test_sid = source_objref->component_UUID (ACE_ENV_SINGLE_ARG_DECL);
+    ACE_DEBUG ((LM_DEBUG, "The COMPONENT UUID I GOT is: %s\n", test_sid.c_str ()));
     ACE_CString sid = supplier_comp_name;
     ACE_DEBUG ((LM_DEBUG, "The SUPPLIER COMPONENT NAME is: %s\n", supplier_comp_name.c_str ()));
     ACE_CHECK;
