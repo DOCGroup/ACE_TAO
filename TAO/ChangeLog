@@ -1,3 +1,15 @@
+Wed Aug 21 17:01:48 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/CosLoadBalancing.bor (RESOURCE):
+
+	  Corrected resource filename.
+
+	  (INCLUDES):
+
+	  Corrected inline file extension, i.e. `.inl' instead of `.i'.
+	  The latter extension is deprecated, and will not be used in the
+	  new Load Balancer sources.
+
 Wed Aug 21 16:55:39 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/LoadMonitor.bor (CFLAGS, LIBFILES):
