@@ -1,3 +1,10 @@
+Mon Sep 27 21:16:24 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* bin/fuzz.pl:
+	  Do not complain about @file directives without a filename.
+	  Doxygen assumes the current file as the filename, so it cannot
+	  possibly be inconsistent.
+
 Mon Sep 27 17:44:08 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* bin/MakeProjectCreator/config/orbsvcslib.mpb:
