@@ -1,3 +1,9 @@
+Tue Jan 18 08:17:10 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp (open): Fixed the logic to pass prog_name
+	  rather than logger_key, which fixes a bug with syslog.  Thanks
+ 	  to Robert Iakobashvili <roberti@GoNetworks.com> for this fix.
+
 Mon Jan 17 23:08:20 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
