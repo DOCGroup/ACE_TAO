@@ -65,7 +65,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Strategized Proxy Broker Implementation
   be_visitor *visitor = 0;
-  be_visitor_context ctx; 
+  be_visitor_context ctx;
 
   if (be_global->gen_thru_poa_collocation () ||
       be_global->gen_direct_collocation ())
@@ -73,59 +73,59 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       ctx =  (*this->ctx_);
       ctx.state (TAO_CodeGen::TAO_INTERFACE_STRATEGIZED_PROXY_BROKER_SS);
       visitor = tao_cg->make_visitor (&ctx);
-  
+
       if (!visitor || (node->accept (visitor) == -1))
-	{
-	  delete visitor;
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "be_visitor_interface_cs::"
-			     "visit_interface - "
-			     "codegen for Base Proxy Broker class failed\n"),
-			    -1);
-	}
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
       delete visitor;
-      
+
       // Proxy Broker  Factory Function.
       *os << be_nl
-	  << node->full_base_proxy_broker_name () << " *" << be_nl
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
-	  << "{" << be_idt_nl // idt = 1
-	  << "ACE_UNUSED_ARG (obj);" << be_nl
-	  << "return " 
-	  << node->server_enclosing_scope () << "the" 
-	  << node->strategized_proxy_broker_name ()
-	  << "();" << be_uidt_nl // idt = 0
-	  << "}" << be_nl << be_nl;
-  
-      // Proxy Broker Function Pointer Initializer.
-      *os << "int" << be_nl 
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_Initializer (long _dummy_)" << be_nl
-	  << "{" << be_idt_nl // idt = 1
-	  << "ACE_UNUSED_ARG (_dummy_);" << be_nl << be_nl
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_function_pointer = " 
-	  << be_idt_nl  // idt = 2
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_function;" 
-	  << be_uidt_nl // idt = 1
-	  << be_nl
-	  << "return 0;" << be_uidt_nl // idt = 0
-	  << "}" << be_nl << be_nl;
+          << node->full_base_proxy_broker_name () << " *" << be_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function (CORBA::Object_ptr obj)" << be_nl
+          << "{" << be_idt_nl // idt = 1
+          << "ACE_UNUSED_ARG (obj);" << be_nl
+          << "return "
+          << "::" << node->server_enclosing_scope () << "the"
+          << node->strategized_proxy_broker_name ()
+          << "();" << be_uidt_nl // idt = 0
+          << "}" << be_nl << be_nl;
 
-      
-      *os << "static int " <<  node->flat_client_enclosing_scope () 
-	  << node->base_proxy_broker_name ()
-	  << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_Initializer (ACE_reinterpret_cast (long, "
-	  << node->flat_client_enclosing_scope () << node->base_proxy_broker_name () 
-	  << "_Factory_Initializer));"
-	  << be_uidt_nl << be_nl;
+      // Proxy Broker Function Pointer Initializer.
+      *os << "int" << be_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_Initializer (long _dummy_)" << be_nl
+          << "{" << be_idt_nl // idt = 1
+          << "ACE_UNUSED_ARG (_dummy_);" << be_nl << be_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function_pointer = "
+          << be_idt_nl  // idt = 2
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_function;"
+          << be_uidt_nl // idt = 1
+          << be_nl
+          << "return 0;" << be_uidt_nl // idt = 0
+          << "}" << be_nl << be_nl;
+
+
+      *os << "static int " <<  node->flat_client_enclosing_scope ()
+          << node->base_proxy_broker_name ()
+          << "_Stub_Factory_Initializer_Scarecrow = " << be_idt_nl
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_Initializer (ACE_reinterpret_cast (long, "
+          << node->flat_client_enclosing_scope () << node->base_proxy_broker_name ()
+          << "_Factory_Initializer));"
+          << be_uidt_nl << be_nl;
     }
 
-  
+
   // Proxy Impl Implementations.
   if (be_global->gen_thru_poa_collocation ())
     {
@@ -133,16 +133,16 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_THRU_POA_PROXY_IMPL_SS);
       visitor = tao_cg->make_visitor (&ctx);
-      
+
       if (!visitor || (node->accept (visitor) == -1))
-	{
-	  delete visitor;
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "be_visitor_interface_cs::"
-			     "visit_interface - "
-			     "codegen for Base Proxy Broker class failed\n"),
-			    -1);
-	}
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
       delete visitor;
     }
   if (be_global->gen_direct_collocation ())
@@ -151,16 +151,16 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
       visitor = tao_cg->make_visitor (&ctx);
-      
+
       if (!visitor || (node->accept (visitor) == -1))
-	{
-	  delete visitor;
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "be_visitor_interface_cs::"
-			     "visit_interface - "
-			     "codegen for Base Proxy Broker class failed\n"),
-			    -1);
-	}
+        {
+          delete visitor;
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "be_visitor_interface_cs::"
+                             "visit_interface - "
+                             "codegen for Base Proxy Broker class failed\n"),
+                            -1);
+        }
       delete visitor;
     }
 
@@ -383,8 +383,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_idt_nl // idt = 1
       << "TAO_Stub *stub = this->_create_stub (ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (0);" << be_nl << be_nl;
-  
-  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl 
+
+  *os << "CORBA::Object_ptr tmp = CORBA::Object::_nil ();" << be_nl
       << be_nl
       << "if (stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ())"
       << be_idt_nl // idt = 2
@@ -398,12 +398,12 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "return " << "::" << node->full_name () << "::_unchecked_narrow (obj.in ());"
       << be_uidt_nl // idt = 0
       << "}" << be_nl;
-    
+
   // the _create_collocated_objref method.  If the idl compiler does
   // not generate the type of collocated stub but the orb is asking
   // for it, simply return null so a remote stub will be used.
   // generate the collocated class impl
- 
+
   /*
   if (be_global->gen_thru_poa_collocation ())
     {
@@ -429,7 +429,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
         }
       delete visitor;
     }
-  
+
   if (be_global->gen_direct_collocation ())
     {
       be_visitor_context ctx (*this->ctx_);
