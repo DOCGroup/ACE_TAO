@@ -15,7 +15,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   : preconnects_list_ (),
     endpoints_list_ (),
     mcast_discovery_endpoint_ (),
-    default_init_ref_ (),
+    default_init_ref_ ("mcast://::::"),
     sock_rcvbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     sock_sndbuf_size_ (ACE_DEFAULT_MAX_SOCKET_BUFSIZ),
     nodelay_ (1),
