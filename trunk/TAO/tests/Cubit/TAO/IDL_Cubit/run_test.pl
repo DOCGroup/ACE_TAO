@@ -1,9 +1,10 @@
-#!/pkg/gnu/bin/perl -I../../../../../bin
-#
-# If your perl installation isn't in /pkg/gnu/bin/perl,
-# please make the change accordingly
+#$Id$
+eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
-use Process;
+unshift @INC, '../../../../../bin';
+require Process;
 
 if ($^O eq "MSWin32")
 {
@@ -29,7 +30,7 @@ else
 $nsport = 20000 + $uid;
 $client_port = 0;
 $server_port = 0;
-$iorfile = "cubit_ior";
+$iorfile = "theior";
 
 $SV = Process::Create ("server".$Process::EXE_EXT, 
                        "-ORBport ".$server_port." -ORBnameserviceport ".$nsport." -ORBobjrefstyle url");
