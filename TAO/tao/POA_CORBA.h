@@ -151,7 +151,7 @@ public:
 #if !defined (_CORBA_CURRENT___COLLOCATED_SH_)
 #define _CORBA_CURRENT___COLLOCATED_SH_
 
-  class  _tao_collocated_Current     : public virtual CORBA::Current
+  class  _tao_collocated_Current     : public virtual CORBA_Current
   {
   public:
     _tao_collocated_Current (
