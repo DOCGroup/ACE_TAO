@@ -1,3 +1,12 @@
+Tue Aug 25 18:28:11 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.i (strdup): Changed ::strlen to ACE_OS::strlen so we can
+	  get the actual length for UNICODE strings.  Thanks to Dana
+	  Hackman <upboms@network-one.com> for reporting this.
+
+	  Also, the size of the allocated memory should be
+	  (strlen(s)+1)*sizeof(wchar_t), not strlen(s)*sizeof(wchar_t)+1.
+
 Tue Aug 25 14:33:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * ace/XtReactor.cpp:
