@@ -71,7 +71,6 @@ sub new
     $self->{EXECUTABLE} = shift;
     $self->{ARGUMENTS} = shift;
     $self->{VALGRIND_CMD} = $ENV{"ACE_RUN_VALGRIND_CMD"};
-    $self->{VALGRIND_OPT} = $ENV{"ACE_RUN_VALGRIND_OPT"};
 
     if (!defined $PerlACE::Process::WAIT_DELAY_FACTOR) {
          if (defined $self->{PURIFY_CMD}) {
@@ -223,11 +222,7 @@ sub Spawn ()
         $executable = $self->{VALGRIND_CMD};
         my $basename = basename ($self->{EXECUTABLE});
 
-        my $valgrindoptions = $self->{VALGRIND_OPT};
-        if (!defined $valgrindoptions) {
-           $valgrindoptions = "-q --leak-check=yes --trace-children=yes";
-        }
-        $cmdline = "$executable $valgrindoptions $orig_cmdline"; 
+        $cmdline = "$executable $orig_cmdline"; 
     }
     else {
         $executable = $self->Executable();
