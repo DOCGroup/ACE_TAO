@@ -30,6 +30,12 @@
  Subjects like "ACE bug" or "bug report" are not helpful!
  Also, do _not_ include the word "help" in the Subject!]
 
+ When including your config.h and platform_macros.GNU files as requested
+ below, only include the contents if you use the recommended method of
+ including the platform-specific file in your file. If you use a link
+ to the platform-specific file, simply state which one - DO NOT include
+ an entire platform-specific configuration file in the form.
+
 8<----------8<----------8<----------8<----------8<----------8<----------8<----
 
 To: ace-bugs@cs.wustl.edu
@@ -44,7 +50,8 @@ Subject: [area]: [synopsis]
     TARGET MACHINE and OPERATING SYSTEM, if different from HOST:
     COMPILER NAME AND VERSION (AND PATCHLEVEL):
 
-    CONTENTS OF $ACE_ROOT/ace/config.h:
+    CONTENTS OF $ACE_ROOT/ace/config.h [if you use a link to a platform-
+    specific file, simply state which one]:
 
     CONTENTS OF $ACE_ROOT/include/makeinclude/platform_macros.GNU (unless
     this isn't used in this case, e.g., with Microsoft Visual C++):
