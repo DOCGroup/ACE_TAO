@@ -23,10 +23,20 @@ TAO_QOPPolicy::policy_type (CORBA::Environment & /* ACE_TRY_ENV */)
 }
 
 CORBA::Policy_ptr
-TAO_QOPPolicy::copy (CORBA::Environment & /* ACE_TRY_ENV */)
+TAO_QOPPolicy::copy (CORBA::Environment &ACE_TRY_ENV)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  return CORBA::Policy::_duplicate (this);
+  TAO_QOPPolicy *policy = 0;
+  ACE_NEW_THROW_EX (policy,
+                    TAO_QOPPolicy (this->qop_),
+                    CORBA::NO_MEMORY (
+                      CORBA::SystemException::_tao_minor_code (
+                        TAO_DEFAULT_MINOR_CODE,
+                        ENOMEM),
+                      CORBA::COMPLETED_NO));
+  ACE_CHECK_RETURN (CORBA::Policy::_nil ());
+
+  return policy;
 }
 
 void
