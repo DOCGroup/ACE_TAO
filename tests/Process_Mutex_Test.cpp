@@ -29,7 +29,7 @@ ACE_RCSID(tests, Process_Mutex_Test, "$Id$")
 
 static int release_mutex = 1;
 static int child_process = 0;
-static const char *mutex_name = ACE_DEFAULT_MUTEX;
+static const ACE_TCHAR *mutex_name = ACE_DEFAULT_MUTEX;
 #if defined (__Lynx__)
 static const u_int n_processes = 4;
 #else  /* ! __Lynx__ */
@@ -48,9 +48,9 @@ print_usage_and_die (void)
 
 // Parse the command-line arguments and set options.
 static void
-parse_args (int argc, char *argv[])
+parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, "dcn:");
+  ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dcn:"));
 
   int c;
 
@@ -75,7 +75,7 @@ parse_args (int argc, char *argv[])
 static void
 acquire_release (void)
 {
-  ACE_Process_Mutex mutex (ACE_TEXT_CHAR_TO_TCHAR (mutex_name));
+  ACE_Process_Mutex mutex (mutex_name);
 
   // Make sure the constructor succeeded
   ACE_ASSERT (ACE_LOG_MSG->op_status () == 0);
@@ -83,7 +83,7 @@ acquire_release (void)
   // To see if we really are the only holder of the mutex below,
   // we'll try to create a file with exclusive access. If the file
   // already exists, we're not the only one holding the mutex.
-  char mutex_check[MAXPATHLEN+1];
+  ACE_TCHAR mutex_check[MAXPATHLEN+1];
   ACE_OS::strncpy (mutex_check, mutex_name, MAXPATHLEN);
   ACE_OS::strncat (mutex_check, ACE_TEXT ("_checker"), MAXPATHLEN);
 
@@ -131,7 +131,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Child process code.
   if (child_process)
     {
-      ACE_APPEND_LOG ("Process_Mutex_Test-children");
+      ACE_APPEND_LOG (ACE_TEXT("Process_Mutex_Test-children"));
       acquire_release ();
       ACE_END_LOG;
     }
@@ -144,9 +144,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       // mutex. It is safer then to hold the mutex in main process, and destroy it after
       // children finish. This is temporary solution, and in future pthread base
       // Process_Mutex shall control the destruction of mutex better.
-      ACE_Process_Mutex mutex( ACE_TEXT_CHAR_TO_TCHAR( mutex_name ) );
+      ACE_Process_Mutex mutex( mutex_name );
 #     endif
-      ACE_INIT_LOG ("Process_Mutex_Test-children");
+      ACE_INIT_LOG (ACE_TEXT("Process_Mutex_Test-children"));
 
       ACE_Process_Options options;
       if (release_mutex == 0)
@@ -154,13 +154,13 @@ run_main (int argc, ACE_TCHAR *argv[])
                               ACE_TEXT ("Process_Mutex_Test")
                               ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s -d"),
-                              ACE_TEXT_CHAR_TO_TCHAR (mutex_name));
+                              mutex_name);
       else
         options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                               ACE_TEXT ("Process_Mutex_Test")
                               ACE_PLATFORM_EXE_SUFFIX
                               ACE_TEXT (" -c -n %s"),
-                              ACE_TEXT_CHAR_TO_TCHAR (mutex_name));
+                              mutex_name);
 
       // Spawn <n_processes> child processes that will contend for the
       // lock.
