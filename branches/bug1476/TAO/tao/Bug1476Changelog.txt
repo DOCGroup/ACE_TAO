@@ -1,3 +1,10 @@
+Wed Jul 20 15:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Server_Request.cpp:
+          Updated all ACE_DEBUG and ACE_ERROR macros so that the formatting of
+          messages is the same as in the rest of TAO. This makes reading the
+          logfiles much easier.
+
 Wed Jul 20 14:42:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp (make_connection):
