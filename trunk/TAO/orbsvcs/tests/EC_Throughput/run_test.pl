@@ -11,7 +11,7 @@ use PerlACE::Run_Test;
 $status = 0;
 
 $ec_conf = PerlACE::LocalFile ("ec.conf");
-$ec_mt_conf = PerlACE::LocalFile ("ec_mt_conf");
+$ec_mt_conf = PerlACE::LocalFile ("ec_mt.conf");
 
 print STDERR "================ Collocated tests, single threaded\n";
 
