@@ -1,49 +1,56 @@
+Wed Jun 09 10:11:29 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-g++-common.h: added #define of
+          ACE_NEW_THROWS_EXCEPTIONS, with egcs if ACE_HAS_EXCEPTIONS is
+          #defined.  That allows ACE's New_Fail_Test to pass.  Thanks
+          to Jake Hamby <jehamby@anobject.com> for providing the fix.
+
 Wed Jun  9 00:20:49 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Svc_Conf.y: Don't enable YYDEBUG by default so that we can
- 	  save some space in the generated code.
+        * ace/Svc_Conf.y: Don't enable YYDEBUG by default so that we can
+          save some space in the generated code.
 
-	* ace/OS: Added several more uses of ACE_Errno_Guard, which has
- 	  been enhanced to support assignment.  Thanks to Irfan for
- 	  suggesting this.
+        * ace/OS: Added several more uses of ACE_Errno_Guard, which has
+          been enhanced to support assignment.  Thanks to Irfan for
+          suggesting this.
 
-	* tests/Svc_Handler_Test.cpp: Added a simple test for the new
- 	  buffering feature in ACE_Svc_Handler.
+        * tests/Svc_Handler_Test.cpp: Added a simple test for the new
+          buffering feature in ACE_Svc_Handler.
 
-	* ace/Strategies.cpp: Added an explicit template instantiation for
- 	  ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> since this is now
- 	  used in ACE_Svc_Handler.
+        * ace/Strategies.cpp: Added an explicit template instantiation for
+          ACE_Message_Queue_Iterator <ACE_NULL_SYNCH> since this is now
+          used in ACE_Svc_Handler.
 
-	* ace/Svc_Handler: Added a "buffering" feature to the
- 	  ACE_Svc_Handler.  This feature makes it possible to queue up
- 	  ACE_Message_Blocks in an ACE_Message_Queue until (1) the queue
- 	  is "full" or (2) a period of time elapses, at which point the
- 	  queue is "flushed" via sendv_n() to the peer.
+        * ace/Svc_Handler: Added a "buffering" feature to the
+          ACE_Svc_Handler.  This feature makes it possible to queue up
+          ACE_Message_Blocks in an ACE_Message_Queue until (1) the queue
+          is "full" or (2) a period of time elapses, at which point the
+          queue is "flushed" via sendv_n() to the peer.
 
 Tue Jun  8 22:44:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* Hacked BYACC to generate a parser that doesn't have any
- 	  incorrect const char *'s.  This clears the last major const
- 	  issue in libACE.
+        * Hacked BYACC to generate a parser that doesn't have any
+          incorrect const char *'s.  This clears the last major const
+          issue in libACE.
 
 Tue Jun  8 20:46:05 1999  Matthew J Braun  <mjb2@cs.wustl.edu>
 
-	* ace/Functor.i,h: 
-	  Migrated ACE_Hash template specializations to the ace type
-	  wrappers (ACE_UINT16, etc).
+        * ace/Functor.i,h:
+          Migrated ACE_Hash template specializations to the ace type
+          wrappers (ACE_UINT16, etc).
 
 Tue Jun  8 15:47:06 1999  Douglas C. Schmidt  <schmidt@danzon.cs.wustl.edu>
 
         * ace: Updated most of the places in ACE that can benefit from the
- 	  new ACE_Errno_Guard class.
+          new ACE_Errno_Guard class.
 
-	* ace/OS.h: Added a new ACE_Errno_Guard class that improves
- 	  performance when thread-specific errno must be saved/restored in
- 	  a block of code.  Thanks to Serge Kolgan <skolgan@cisco.com> for
- 	  motivating this.
+        * ace/OS.h: Added a new ACE_Errno_Guard class that improves
+          performance when thread-specific errno must be saved/restored in
+          a block of code.  Thanks to Serge Kolgan <skolgan@cisco.com> for
+          motivating this.
 
-	* ace/Env_Value_T.h: Added a new ACE_Convert() function that works
- 	  for const char *'s.  Thanks to David for reporting this.
+        * ace/Env_Value_T.h: Added a new ACE_Convert() function that works
+          for const char *'s.  Thanks to David for reporting this.
 
 Tue Jun 08 18:08:41 1999  Steve Huston  <shuston@riverace.com>
 
@@ -53,35 +60,35 @@ Tue Jun 08 18:08:41 1999  Steve Huston  <shuston@riverace.com>
           out of the box, and require an IP address string.
 
         * ace/Pipe.cpp: Use the new ACE_LOCALHOST macro instead of a hard
- 	  "localhost" when using a socket to emulate a pipe.  Thanks to
- 	  Bruce Trask <BTRASK@contactsystems.com> for working to get this
- 	  ironed out for PharLap ETS.
+          "localhost" when using a socket to emulate a pipe.  Thanks to
+          Bruce Trask <BTRASK@contactsystems.com> for working to get this
+          ironed out for PharLap ETS.
 
         * README: Added Bruce Trask to the Hall of Fame ;-)
 
         * tests/SOCK_Connector_Test.cpp: Check for failed host lookup
- 	  before trying to connect.  Changed the way sethostent is done on
- 	  AIX 4.3 to work around an apparent bug in AIX 4.3.
+          before trying to connect.  Changed the way sethostent is done on
+          AIX 4.3 to work around an apparent bug in AIX 4.3.
 
 Tue Jun 08 13:46:38 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h (wmain): Added a new macro to tweak the wchat_t version
- 	  of main program entry point to create the non-static
- 	  Object_Manager.  This is only enabled if UNICODE and ACE_WIN32
- 	  is defined (although you can also use wmain under non-UNICODE
- 	  environment).
+        * ace/OS.h (wmain): Added a new macro to tweak the wchat_t version
+          of main program entry point to create the non-static
+          Object_Manager.  This is only enabled if UNICODE and ACE_WIN32
+          is defined (although you can also use wmain under non-UNICODE
+          environment).
 
 Mon Jun 07 14:34:53 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/CORBA_macros.h: The member function for dumping
- 	  TAO_Exception is changed to _tao_print_exception.
+        * ace/CORBA_macros.h: The member function for dumping
+          TAO_Exception is changed to _tao_print_exception.
 
 Tue Jun 08 14:44:07 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Thread_Manager_Test.cpp (main): on Sun only, added 5
- 	  second sleep before the "main thread finished" printout.  It
- 	  might help (but certainly doesn't prevent) avoid an occasional
- 	  thread lib panic on SunOS 5.5 through 5.7.
+          second sleep before the "main thread finished" printout.  It
+          might help (but certainly doesn't prevent) avoid an occasional
+          thread lib panic on SunOS 5.5 through 5.7.
 
 Tue Jun 08 14:01:51 1999  David L. Levine  <levine@cs.wustl.edu>
 
