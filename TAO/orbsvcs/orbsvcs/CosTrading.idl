@@ -13,6 +13,9 @@
 //
 // ========================================================================
 
+#ifndef TAO_TRADING_IDL
+#define TAO_TRADING_IDL
+
 #pragma prefix "omg.org"
 
 module CosTrading
@@ -680,3 +683,5 @@ module CosTradingSequences
   typedef sequence<double> DoubleSeq;
   typedef sequence<string> StringSeq;
 };
+
+#endif /* TAO_TRADING_IDL */

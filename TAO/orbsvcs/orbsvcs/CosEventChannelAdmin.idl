@@ -1,5 +1,8 @@
 // $Id$
 
+#ifndef TAO_EVENTCHANNELADMIN_IDL
+#define  TAO_EVENTCHANNELADMIN_IDL
+
 #include "CosEventComm.idl"
 
 #pragma prefix "omg.org"
@@ -151,3 +154,5 @@ module CosEventChannelAdmin
       // The destroy operation destroys the event channel.
     };
 };
+
+#endif /* TAO_EVENTCHANNELADMIN_IDL */

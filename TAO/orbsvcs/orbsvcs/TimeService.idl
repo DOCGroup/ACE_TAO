@@ -1,6 +1,9 @@
 // -*- C++ -*-
 // $Id$
 
+#ifndef TAO_TIME_IDL
+#define TAO_TIME_IDL
+
 #include "CosTimeBase.idl"
 
 #pragma prefix "omg.org"
@@ -172,3 +175,5 @@ module CosTime
       // This creates a new TIO with the given parameters.
     };
 };
+
+#endif /* TAO_TIME_IDL */

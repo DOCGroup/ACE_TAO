@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-
 // $Id$
 
 // ============================================================================
@@ -11,9 +10,13 @@
 //   AVStreams.idl
 //
 // = AUTHOR
-//    OMG
+//    Sumedh Mungee <sumehd@cs.wustl.edu> and Nagarajan Surendran
+//    <naga@cs.wustl.edu>
 // 
 // ============================================================================
+
+#ifndef TAO_AV_STREAMS_IDL
+#define TAO_AV_STREAMS_IDL
 
 #include "CosPropertyService.idl"
 
@@ -741,11 +744,12 @@ module AVStreams
       raises(InvalidPosition);
   };
 
-// Additional sequences needed for the properties.
+  // Additional sequences needed for the properties.
 
-typedef sequence<FlowConnection> FlowConnection_seq;
-typedef sequence<StreamEndPoint_A> StreamEndPoint_A_seq;
-typedef sequence<StreamEndPoint_B> StreamEndPoint_B_seq;
-typedef sequence<FlowEndPoint> FlowEndPoint_seq;
+  typedef sequence<FlowConnection> FlowConnection_seq;
+  typedef sequence<StreamEndPoint_A> StreamEndPoint_A_seq;
+  typedef sequence<StreamEndPoint_B> StreamEndPoint_B_seq;
+  typedef sequence<FlowEndPoint> FlowEndPoint_seq;
 };
 
+#endif /* TAO_AV_STREAMS_IDL */
