@@ -3,12 +3,12 @@
 # Makefile for building the POA Destuction test
 #
 
-NAME = Destruction
+NAME = Excessive_Object_Deactivations
 
 OBJFILES = \
 	$(OBJDIR)\testC.obj \
 	$(OBJDIR)\testS.obj \
-	$(OBJDIR)\Destruction.obj
+	$(OBJDIR)\Excessive_Object_Deactivations.obj
 
 IDLFILES = \
         $(IDLDIR)\test.idl

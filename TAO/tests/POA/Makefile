@@ -10,9 +10,10 @@
 #	Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = Destruction \
+DIRS  = POA_Destruction \
 	wait_for_completion \
-	Deactivation \
+	Excessive_Object_Deactivations \
+	Object_Reactivation \
 	Non_Servant_Upcalls \
 	Single_Threaded_POA \
 	Identity 

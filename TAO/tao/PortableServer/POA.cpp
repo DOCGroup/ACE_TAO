@@ -4194,7 +4194,7 @@ TAO_POA::key_to_stub_i (const TAO_ObjectKey &key,
   data = this->orb_core_.create_stub_object (key,
                                              type_id,
                                              client_exposed_policies._retn (),
-                                             this->accepor_filter_,
+                                             this->acceptor_filter_,
                                              ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
