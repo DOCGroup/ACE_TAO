@@ -1,3 +1,37 @@
+Sat Aug 24 22:47:22 2002  Christopher Kohlhoff  <chris@kohlhoff.com>
+
+        * include/makeinclude/ace_flags.bor:
+        * include/makeinclude/clean.bor:
+        * include/makeinclude/compiler.bor:
+
+          Updated to support MakeProjectCreator.
+
+        * bin/MakeProjectCreator/config/core.mpb:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/BorlandProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/BorlandWorkspaceCreator.pm:
+        * bin/MakeProjectCreator/templates/bor.mpd:
+
+          Fixed support for Borland makefile generation.
+
+          New "core" config for projects that would typically be installed
+          on production system, i.e. pretty much everything except examples
+          and tests.
+
+          New "include_dir" project attribute used to specify a directory
+          path where header files for the project should be installed.
+
+        * ace/ace.mpc:
+        * ace/QoS/qos.mpc:
+        * ace/RMCast/rmcast.mpc:
+        * ace/SSL/ssl.mpc:
+
+          Added "core" as a base project and added "include_dir" value.
+
+        * apps/gperf/src/gperf.mpc:
+
+          Added "core" as a base project.
+
 Sat Aug 24 16:41:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ACEXML/common/FileCharStream.cpp (get):

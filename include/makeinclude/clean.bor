@@ -57,6 +57,8 @@ realclean:
 	-@del $(TARGET:.exe=.tds) 2>NUL
 	-@del $(TARGET:.dll=.tds) 2>NUL
 	-@del $(TARGET:.dll=.lib) 2>NUL
+	-@del $(OBJDIR)\$(NAME).csm 2>NUL
+	-@del $(OBJDIR)\$(NAME).\#* 2>NUL
 !ifdef CORE_TARGET
 	-@del $(CORE_TARGET) 2>NUL
 	-@del $(CORE_TARGET:.exe=.tds) 2>NUL

@@ -1,28 +1,36 @@
 # Makefile for building the <%if(exename)%><%exename%> exe<%endif%><%if(sharedname)%><%sharedname%> library<%endif%> with Borland C++ Builder
 
+<%if(ssl)%>
+!ifdef SSL_ROOT
+<%endif%>
 NAME = <%if(exename)%><%exename%><%endif%><%if(sharedname)%><%sharedname%><%endif%>
-
+<%if(ssl)%>
+!endif
+<%endif%>
 <%if(idl_files)%>
+
 TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe<%if(idlflags)%> <%idlflags%><%endif%>
 <%endif%>
 
 <%if(source_files)%>
 OBJFILES = \
 <%foreach(source_files)%>
-	$(OBJDIR)\<%noextension(source_file)%>.obj<%fornotlast(" \\")%>
+	$(OBJDIR)\<%basenoextension(source_file)%>.obj<%fornotlast(" \\")%>
 <%endfor%>
 <%endif%>
 <%if(ssl)%>
 
-SSL_LIBS =<%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%>
+EXTERNAL_LIBS =<%foreach(ssl_libs)%> <%ssl_lib%>.lib<%endfor%>
 <%else%>
-SSL_LIBS =
+
+EXTERNAL_LIBS =
 <%endif%>
 
-LIBFILES = $(SSL_LIBS) \
+LIBFILES = \
 <%foreach(libs defaultlibs)%>
-           $(CORE_BINDIR)\<%lib%>.lib<%fornotlast(" \\")%>
+	$(CORE_BINDIR)\<%lib%>$(LIB_DECORATOR).lib \
 <%endfor%>
+	$(EXTERNAL_LIBS)
 <%if(idl_files)%>
 
 IDLFILES = \
@@ -43,36 +51,66 @@ LIB_FLAGS =
 DLL_FLAGS =<%foreach(dllflags)%> -D<%dllflag%>=1<%endfor%>
 !endif
 
-CFLAGS =<%foreach(includes)%> -I<%include%><%endfor%> $(DLL_FLAGS) $(LIB_FLAGS)
-CPPDIR = .
-INCDIR_NAME = .
+CFLAGS = \
+<%foreach(includes)%>
+	-I<%include%> \
+<%endfor%>
+	$(LIB_FLAGS) \
+	$(DLL_FLAGS)
+<%if(pch_header)%>
+
+PCH_HEADER=<%pch_header%>
+<%endif%>
+
+CPPDIR = <%cppdir%>
 <%if(idl_files)%>
+
 IDLDIR = .
 <%endif%>
 <%if(header_files)%>
 
 INCLUDES = \
-<%foreach(header_files template_files)%>
-        <%header_file%><%fornotlast(" \\")%>
+<%foreach(header_files template_files inline_files idl_files)%>
+	<%header_file%><%fornotlast(" \\")%>
 <%endfor%>
+<%if(include_dir)%>
+
+INCDIR_NAME = <%include_dir%>
+<%endif%>
+<%endif%>
+<%if(idl_files)%>
+
+all: idl_src_files
 <%endif%>
 <%if(exename)%>
+<%if(core)%>
+
+!include <$(ACE_ROOT)\include\makeinclude\build_core_exe.bor>
+<%else%>
 <%if(install)%>
 
-INSTALL_THIS_TARGET = 1
+BASE_BINDIR = <%install%>
 <%endif%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
 <%endif%>
+<%endif%>
 <%if(sharedname)%>
+<%if(core)%>
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
+<%else%>
+
+!include <$(ACE_ROOT)\include\makeinclude\build_library.bor>
+<%endif%>
 <%endif%>
 <%if(idl_files)%>
 
 #
 # IDL Build rules
 #
+
+idl_src_files: $(IDLFILES:.idl=C.cpp) $(IDLFILES:.idl=S.cpp)
 
 <%foreach(idl_files)%>
 $(IDLDIR)\<%noextension(idl_file)%>S.cpp $(IDLDIR)\<%noextension(idl_file)%>C.cpp: $(IDLDIR)\<%noextension(idl_file)%>.idl

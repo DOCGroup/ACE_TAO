@@ -13,6 +13,7 @@ package BorlandProjectCreator;
 use strict;
 
 use ProjectCreator;
+use File::Basename;
 
 use vars qw(@ISA);
 @ISA = qw(ProjectCreator);
@@ -35,6 +36,25 @@ sub translate_value {
     $val =~ s/\s+$//;
   }
   return $val;
+}
+
+
+sub fill_value {
+  my($self)  = shift;
+  my($name)  = shift;
+  my($value) = undef;
+
+  if ($name eq "cppdir") {
+    my %dirnames;
+    foreach my $file ($self->get_component_list("source_files")) {
+      my $dirname = dirname($file);
+      $dirname = "." if $dirname eq "";
+      $dirnames{$dirname} = 1;
+    }
+    $value = join(";", sort keys %dirnames);
+  }
+  
+  return $value;
 }
 
 

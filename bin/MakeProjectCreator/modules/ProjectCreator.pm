@@ -58,6 +58,8 @@ my(%validNames) = ('exename'         => 1,
                    'comps'           => 1,
                    'tagname'         => 1,
                    'tagchecks'       => 1,
+                   'include_dir'     => 1,
+                   'core'            => 1,
                   );
 
 ## Deal with these components in a special way

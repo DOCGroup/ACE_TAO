@@ -1,8 +1,9 @@
-project : acelib {
+project : acelib, core {
   sharedname  = ACE
   install     =
   defaultlibs =
   dllflags    = ACE_BUILD_DLL ACE_OS_BUILD_DLL
+  include_dir = ace
 
   Source_Files(ACE_COMPONENTS) {
     OS {

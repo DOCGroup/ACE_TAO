@@ -1,6 +1,7 @@
-project : acelib {
-  depends    = ace
-  sharedname = ACE_RMCast
-  dllflags   = ACE_RMCAST_BUILD_DLL
-  libout     = ..
+project : acelib, core {
+  depends     = ace
+  sharedname  = ACE_RMCast
+  dllflags    = ACE_RMCAST_BUILD_DLL
+  libout      = ..
+  include_dir = ace/RMCast
 }
