@@ -5,6 +5,7 @@
 
 DIRS = \
         lib \
-        Basic
+        Basic \
+        performance-tests
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
