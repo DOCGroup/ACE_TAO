@@ -22,6 +22,7 @@ DIRS  = CDR \
         Multiple_Inheritance \
         MT_Client \
         MT_Server \
+        MT_BiDir \
         FL_Cube \
         POA \
         OBV \
