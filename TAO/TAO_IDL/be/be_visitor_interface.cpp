@@ -77,6 +77,12 @@ be_visitor_interface::visit_attribute (be_attribute *node)
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_COLLOCATED_SS);
       break;
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_TIE_SH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
+      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_TIE_SI);
+      break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
     case TAO_CodeGen::TAO_INTERFACE_CI:
@@ -145,6 +151,8 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_SH:
     case TAO_CodeGen::TAO_INTERFACE_SI:
     case TAO_CodeGen::TAO_INTERFACE_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
     default:
       {
@@ -213,6 +221,8 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
     default:
       {
@@ -283,6 +293,8 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
     default:
       {
@@ -354,6 +366,12 @@ be_visitor_interface::visit_operation (be_operation *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
       ctx.state (TAO_CodeGen::TAO_OPERATION_COLLOCATED_SS);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SH);
+      break;
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
+      ctx.state (TAO_CodeGen::TAO_OPERATION_TIE_SI);
       break;
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CH:
     case TAO_CodeGen::TAO_INTERFACE_ANY_OP_CS:
@@ -430,6 +448,8 @@ be_visitor_interface::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
     default:
       {
@@ -500,6 +520,8 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
     default:
       {
@@ -570,6 +592,8 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_INTERFACE_SS:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SH:
     case TAO_CodeGen::TAO_INTERFACE_COLLOCATED_SS:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SH:
+    case TAO_CodeGen::TAO_INTERFACE_TIE_SI:
       return 0; // nothing to be done
     default:
       {
@@ -1004,24 +1028,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "return \"" << node->repoID () << "\";" << be_uidt_nl
       << "}\n\n";
 
-  os->indent ();
-  // generate the typecode information here
-  os->indent (); // start from current indentation level
-  *os << "static const CORBA::Long _oc_" << node->flatname () << "[] =" <<
-    be_nl;
-  *os << "{\n";
-  os->incr_indent (0);
-  if (node->gen_encapsulation () == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%N:%l) be_visitor_interface_cs::"
-                         "visit_interface - "
-                         "codegen for typecode failed\n"), -1);
-    }
-
-  os->decr_indent ();
-  *os << "};" << be_nl;
-
   // by using a visitor to declare and define the TypeCode, we have the
   // added advantage to conditionally not generate any code. This will be
   // based on the command line options. This is still TO-DO
@@ -1093,8 +1099,9 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // now generate the class definition
   *os << "class " << idl_global->export_macro ()
       << " " << namebuf << " : ";
-  if (node->n_inherits () > 0)  // this interface inherits from other interfaces
+  if (node->n_inherits () > 0)
     {
+      // this interface inherits from other interfaces
       be_interface *intf; // inherited interface
 
       *os << "public virtual ";
@@ -1186,6 +1193,20 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
                         -1);
     }
 
+  // generate the TIE class
+  ctx = *this->ctx_;
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SH);
+  visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_sh::"
+                         "visit_interface - "
+                         "codegen for TIE class failed\n"),
+                        -1);
+    }
+
   *os << "\n";
 
   return 0;
@@ -1226,6 +1247,20 @@ be_visitor_interface_si::visit_interface (be_interface *node)
                          "(%N:%l) be_visitor_interface_si::"
                          "visit_interface - "
                          "codegen for base class skeletons failed\n"), -1);
+    }
+
+  // generate the TIE class
+  be_visitor_context ctx (*this->ctx_);
+  ctx.state (TAO_CodeGen::TAO_INTERFACE_TIE_SI);
+  be_visitor *visitor = tao_cg->make_visitor (&ctx);
+  if (!visitor || (node->accept (visitor) == -1))
+    {
+      delete visitor;
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_sh::"
+                         "visit_interface - "
+                         "codegen for TIE class failed\n"),
+                        -1);
     }
 
   return 0;
@@ -1968,5 +2003,274 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
     }
 
   node->cli_stub_any_op_gen (1);
+  return 0;
+}
+
+// ************************************************************
+// Interface visitor for server header
+// ************************************************************
+
+be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (be_visitor_context *ctx)
+  : be_visitor_interface (ctx)
+{
+}
+
+be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh (void)
+{
+}
+
+int
+be_visitor_interface_tie_sh::visit_interface (be_interface *node)
+{
+  TAO_OutStream *os; // output stream
+  static char namebuf [NAMEBUFSIZE]; // holds the class name
+  static char tiename [NAMEBUFSIZE]; // holds the tie name
+
+  if (node->srv_hdr_gen () || node->imported ())
+    return 0;
+
+  ACE_OS::memset (namebuf, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (tiename, '\0', NAMEBUFSIZE);
+
+  os = this->ctx_->stream ();
+
+  // generate the skeleton class name which will be used to determine the TIE
+  // class name
+
+  // we shall have a POA_ prefix only if we are at the topmost level
+  if (!node->is_nested ())
+    {
+      // we are outermost
+      ACE_OS::sprintf (namebuf, "POA_%s", node->local_name ()->get_string ());
+      ACE_OS::sprintf (tiename, "POA_%s_tie",
+                       node->local_name ()->get_string ());
+    }
+  else
+    {
+      ACE_OS::sprintf (namebuf, "%s", node->local_name ()->get_string ());
+      ACE_OS::sprintf (tiename, "%s_tie",
+                       node->local_name ()->get_string ());
+    }
+
+  // now generate the class definition
+  os->indent (); // start with whatever indentation level we are at
+
+  // Since templates nested inside of classes are broken on most C++ compilers,
+  // we generate code for this inside a conditional macro. The code is
+  // activated only if "namespaces" are supported on the platform
+  if (node->is_nested ())
+    {
+      *os << "\n#if defined (ACE_HAS_USING_KEYWORD)" << be_nl;
+    }
+
+  *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
+  *os << "template <class T>" << be_nl;
+  *os << "class " << idl_global->export_macro ()
+      << " " << tiename << " : public " << namebuf << be_nl;
+  *os << "{" << be_nl
+      << "public:" << be_idt_nl
+      << tiename << " (T &t);" << be_nl
+      << "// the T& ctor" << be_nl
+      << tiename << " (T &t, PortableServer::POA_ptr poa);" << be_nl
+      << "// ctor taking a POA" << be_nl
+      << tiename << " (T *tp, CORBA::Boolean release=1);" << be_nl
+      << "// ctor taking pointer and an ownership flag" << be_nl
+      << tiename << " (T *tp, PortableServer::POA_ptr poa, "
+      << "CORBA::Boolean release=1);" << be_nl
+      << "// ctor with T*, ownership flag and a POA" << be_nl
+      << "~" << tiename << " (void);" << be_nl
+      << "// dtor" << be_nl << be_nl
+      << "// TIE specific functions" << be_nl
+      << "T *_tied_object (void);" << be_nl
+      << "// return the underlying object" << be_nl
+      << "void _tied_object (T &obj);" << be_nl
+      << "// set the underlying object" << be_nl
+      << "void _tied_object (T *obj, CORBA::Boolean release=1);" << be_nl
+      << "// set the underlying object and the ownership flag" << be_nl
+      << "CORBA::Boolean _is_owner (void);" << be_nl
+      << "// do we own it" << be_nl
+      << "void _is_owner (CORBA::Boolean b);" << be_nl
+      << "// set the ownership" << be_nl << be_nl
+      << "// overridden ServantBase operations" << be_nl
+      << "PortableServer::POA_ptr _default_POA (void);\n";
+
+  // generate code for the operations in the scope
+  if (this->visit_scope (node) ==  -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_tie_sh::"
+                         "visit_interface - "
+                         "codegen for scope failed\n"),
+                        -1);
+    }
+
+  *os << be_uidt << "private:" << be_idt_nl
+      << "T *ptr_;" << be_nl
+      << "PortableServer::POA_ptr poa_;" << be_nl
+      << "CORBA::Boolean rel_;" << be_nl << be_nl
+      << "// copy and assignment are not allowed" << be_nl
+      << tiename << " (const " << tiename << " &);" << be_nl
+      << "void operator= (const " << tiename << " &);" << be_uidt_nl
+      << "};\n\n";
+
+  if (node->is_nested ())
+    {
+      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
+    }
+
+  return 0;
+}
+
+// ************************************************************************
+// Interface visitor for server inline
+// ************************************************************************
+
+be_visitor_interface_tie_si::be_visitor_interface_tie_si (be_visitor_context *ctx)
+  : be_visitor_interface (ctx)
+{
+}
+
+be_visitor_interface_tie_si::~be_visitor_interface_tie_si (void)
+{
+}
+
+int
+be_visitor_interface_tie_si::visit_interface (be_interface *node)
+{
+  TAO_OutStream *os; // output stream
+  static char fulltiename [NAMEBUFSIZE]; // holds the class name
+  static char localtiename [NAMEBUFSIZE]; // holds the tie name
+
+  if (node->srv_inline_gen () || node->imported ())
+    return 0;
+
+  ACE_OS::memset (fulltiename, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (localtiename, '\0', NAMEBUFSIZE);
+
+  os = this->ctx_->stream ();
+
+  // generate the skeleton class name which will be used to determine the TIE
+  // class name
+
+  // we are outermost
+  ACE_OS::sprintf (fulltiename, "%s_tie", node->full_skel_name ());
+  if (!node->is_nested ())
+    {
+      ACE_OS::sprintf (localtiename, "POA_%s_tie",
+                       node->local_name ()->get_string ());
+    }
+  else
+    {
+      ACE_OS::sprintf (localtiename, "%s_tie",
+                       node->local_name ()->get_string ());
+    }
+
+  if (node->is_nested ())
+    {
+      *os << "\n#if defined (ACE_HAS_USING_KEYWORD)\n";
+    }
+
+  os->indent (); // start with whatever indentation level we are at
+
+  *os << "template <class T> ACE_INLINE" << be_nl
+      << fulltiename << "<T>::" << localtiename << " (T &t)" << be_nl
+      << "\t: ptr_ (&t)," << be_nl
+      << "\t  poa_ (PortableServer::POA::_nil ())," << be_nl
+      << "\t  rel_ (0)" << be_nl
+      << "{}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE" << be_nl
+      << fulltiename << "<T>::" << localtiename
+      << " (T &t, PortableServer::POA_ptr poa)" << be_nl
+      << "\t: ptr_ (&t)," << be_nl
+      << "\t  poa_ (PortableServer::POA::_duplicate (poa))," << be_nl
+      << "\t  rel_ (0)" << be_nl
+      << "{}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE" << be_nl
+      << fulltiename << "<T>::" << localtiename
+      << " (T *tp, CORBA::Boolean release)" << be_nl
+      << "\t: ptr_ (tp)," << be_nl
+      << "\t  poa_ (PortableServer::POA::_nil ())," << be_nl
+      << "\t  rel_ (release)" << be_nl
+      << "{}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE" << be_nl
+      << fulltiename << "<T>::" << localtiename
+      << " (T *tp, PortableServer::POA_ptr poa, CORBA::Boolean release)"
+      << be_nl
+      << "\t: ptr_ (tp)," << be_nl
+      << "\t  poa_ (PortableServer::POA::_duplicate (poa))," << be_nl
+      << "\t  rel_ (release)" << be_nl
+      << "{}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE" << be_nl
+      << fulltiename << "<T>::~" << localtiename << " (void)" << be_nl
+      << "{" << be_idt_nl
+      << "CORBA::release (this->poa_);" << be_nl
+      << "if (this->rel_) delete this->ptr_;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE T *" << be_nl
+      << fulltiename << "<T>::_tied_object (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return this->ptr_;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE void" << be_nl
+      << fulltiename << "<T>::_tied_object (T &obj)" << be_nl
+      << "{" << be_idt_nl
+      << "if (this->rel_) delete this->ptr_;" << be_nl
+      << "this->ptr_ = &obj;" << be_nl
+      << "this->rel_ = 0;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE void" << be_nl
+      << fulltiename << "<T>::_tied_object (T *obj, "
+      << "CORBA::Boolean release)" << be_nl
+      << "{" << be_idt_nl
+      << "if (this->rel_) delete this->ptr_;" << be_nl
+      << "this->ptr_ = obj;" << be_nl
+      << "this->rel_ = release;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE CORBA::Boolean" << be_nl
+      << fulltiename << "<T>::_is_owner (void)" << be_nl
+      << "{" << be_idt_nl
+      << "return this->rel_;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE void" << be_nl
+      << fulltiename << "<T>::_is_owner (CORBA::Boolean b)" << be_nl
+      << "{" << be_idt_nl
+      << "this->rel_ = b;" << be_uidt_nl
+      << "}" << be_nl << be_nl;
+
+  *os << "template <class T> ACE_INLINE "
+      << "PortableServer::POA_ptr" << be_nl
+      << fulltiename << "<T>::_default_POA (void)" << be_nl
+      << "{" << be_idt_nl
+      << "if (!CORBA::is_nil (this->poa_))" << be_idt_nl
+      << "return this->poa_;" << be_uidt_nl
+      << "else" << be_idt_nl
+      << "return TAO_ORB_Core_instance ()->root_poa ();"
+      << be_uidt << be_uidt_nl
+      << "}\n\n";
+
+  // generate code for the operations in the scope
+  if (this->visit_scope (node) ==  -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "be_visitor_interface_tie_si::"
+                         "visit_interface - "
+                         "codegen for scope failed\n"),
+                        -1);
+    }
+
+  if (node->is_nested ())
+    {
+      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
+    }
+
   return 0;
 }

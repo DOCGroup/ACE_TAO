@@ -105,6 +105,8 @@ public:
     TAO_ATTRIBUTE_PRE_UPCALL_SS,
     TAO_ATTRIBUTE_UPCALL_SS,
     TAO_ATTRIBUTE_POST_UPCALL_SS,
+    TAO_ATTRIBUTE_TIE_SH,
+    TAO_ATTRIBUTE_TIE_SI,
 
     // emitting code for array defn
     TAO_ARRAY_CH,
@@ -172,6 +174,8 @@ public:
     TAO_INTERFACE_COLLOCATED_SS,
     TAO_INTERFACE_ANY_OP_CH,
     TAO_INTERFACE_ANY_OP_CS,
+    TAO_INTERFACE_TIE_SH,
+    TAO_INTERFACE_TIE_SI,
 
     // emitting code for the interface forward declaration
     TAO_INTERFACE_FWD_CH,
@@ -235,6 +239,8 @@ public:
     TAO_OPERATION_RETVAL_POST_UPCALL_SS,     // post upcall processing for
     TAO_OPERATION_ARG_POST_UPCALL_SS,        //   return and argument variables
     TAO_OPERATION_RESULT_SS,                 // XXXASG rm?
+    TAO_OPERATION_TIE_SH,
+    TAO_OPERATION_TIE_SI,
 
     // for predefined type
     TAO_PREDEFINED_TYPE_CH,
