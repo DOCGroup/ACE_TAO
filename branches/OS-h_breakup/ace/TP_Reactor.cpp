@@ -767,7 +767,7 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
       return retval;
     }
 
-  // assert (status >= 0);
+  // ACE_ASSERT (status >= 0);
   return 0;
 }
 

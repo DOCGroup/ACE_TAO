@@ -42,9 +42,9 @@ ACE_gethrtime (void)
   // ACE_U_LongLong doesn't have the same layout as now, so construct
   // it "properly".
   ACE_UINT32 least, most;
-  ACE_OS::memcpy (&least, &now, sizeof (ACE_UINT32));
-  ACE_OS::memcpy (&most, (unsigned char *) &now + sizeof (ACE_UINT32),
-                  sizeof (ACE_UINT32));
+  ACE_OS_String::memcpy (&least, &now, sizeof (ACE_UINT32));
+  ACE_OS_String::memcpy (&most, (unsigned char *) &now + sizeof (ACE_UINT32),
+                         sizeof (ACE_UINT32));
 
   const ACE_hrtime_t ret (least, most);
   return ret;

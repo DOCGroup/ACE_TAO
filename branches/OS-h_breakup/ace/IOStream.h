@@ -13,56 +13,58 @@
 
 
 #ifndef ACE_IOSTREAM_H
-#define ACE_IOSTREAM_H
-#include "ace/pre.h"
+# define ACE_IOSTREAM_H
+# include "ace/pre.h"
 
-#include "ace/config-all.h"
+# include "ace/config-all.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#   pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // This is a temporary restriction - ACE_IOStream is only enabled if the
 // compiler does not supply the standard C++ library (and standard iostreams)
 // or, if it does, the platform is explicitly set to use old iostreams
 // by its config.h file.
 // This restriction is recorded in Bugzilla entry 857.
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
-#  if !defined (ACE_USES_OLD_IOSTREAMS) && !defined (ACE_LACKS_ACE_IOSTREAM)
-#    define ACE_LACKS_ACE_IOSTREAM
-#  endif /* !ACE_USES_OLD_IOSTREAMS && !ACE_LACKS_ACE_IOSTREAM */
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+# if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
+#   if !defined (ACE_USES_OLD_IOSTREAMS) && !defined (ACE_LACKS_ACE_IOSTREAM)
+#     define ACE_LACKS_ACE_IOSTREAM
+#   endif /* !ACE_USES_OLD_IOSTREAMS && !ACE_LACKS_ACE_IOSTREAM */
+# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
-#if !defined (ACE_LACKS_ACE_IOSTREAM)
+# if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#include "ace/OS.h"
-#include "ace/streams.h"
+#   include "ace/ACE_export.h"
+#   include "ace/ace_sys_types.h"
+#   include "ace/Time_Value.h"
+#   include "ace/streams.h"
 
-#if defined (ACE_HAS_STRING_CLASS)
-#if defined (ACE_WIN32) && defined (_MSC_VER)
+#   if defined (ACE_HAS_STRING_CLASS)
+#     if defined (ACE_WIN32) && defined (_MSC_VER)
 typedef CString ACE_IOStream_String;
-#else
-#if !defined (ACE_HAS_STDCPP_STL_INCLUDES)
-#include /**/ <String.h>
+#     else
+#       if !defined (ACE_HAS_STDCPP_STL_INCLUDES)
+#         include /**/ <String.h>
 typedef String ACE_IOStream_String;
-#else
-#include /**/ <string>
+#       else
+#         include /**/ <string>
 
-#if defined(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#         if defined(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 typedef std::string ACE_IOStream_String;
-#else
+#         else
 typedef string ACE_IOStream_String;
-#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
-#endif /* ACE_WIN32 && defined (_MSC_VER) */
+#         endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#       endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
+#     endif /* ACE_WIN32 && defined (_MSC_VER) */
 
-#if defined (__DECCXX_VER)
-# if __DECCXX_VER < 50700000
-#   include /**/ <stl_macros>
-# else
-#   include /**/ <stdcomp>
-# endif /* __DECCXX_VER < 50700000 */
-#endif /* __DECCXX_VER */
+#     if defined (__DECCXX_VER)
+#       if __DECCXX_VER < 50700000
+#         include /**/ <stl_macros>
+#       else
+#         include /**/ <stdcomp>
+#       endif /* __DECCXX_VER < 50700000 */
+#     endif /* __DECCXX_VER */
 
 class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {
@@ -83,12 +85,12 @@ public:
   inline int operator < (const ACE_Quoted_String &s) const {
     return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
   }
-#if defined (ACE_WIN32) && defined (_MSC_VER)
+#     if defined (ACE_WIN32) && defined (_MSC_VER)
   inline int length (void) { return this->GetLength (); }
-#endif /* ACE_WIN32 && defined (_MSC_VER) */
+#     endif /* ACE_WIN32 && defined (_MSC_VER) */
 };
 
-#endif /* ACE_HAS_STRING_CLASS */
+#   endif /* ACE_HAS_STRING_CLASS */
 
 /**
  * @class ACE_Streambuf
@@ -310,7 +312,7 @@ protected:
 
   virtual ACE_HANDLE get_handle (void);
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) && !defined (ACE_USES_OLD_IOSTREAMS)
+#   if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) && !defined (ACE_USES_OLD_IOSTREAMS)
   char *base (void) const
     {
       return cur_mode_ == get_mode_ ? eback_saved_
@@ -336,7 +338,7 @@ protected:
     {
       return pptr () - pbase ();
     }
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#   endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -358,9 +360,9 @@ typedef ostream& (*__omanip_)(ostream&);
 // We will use it below to quickly override most (all?)  iostream get
 // operators.  Notice how the <ipfx> and <isfx> functions are used.
 
-#define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
-#if defined (__KCC) || (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
-#define GET_CODE {                      \
+#   define GET_SIG(MT,DT)          inline virtual MT& operator>> (DT v)
+#   if defined (__KCC) || (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
+#     define GET_CODE {                      \
         if (ipfx (0))                                   \
         {                                               \
                 (*((istream*)this)) >> (v);             \
@@ -368,8 +370,8 @@ typedef ostream& (*__omanip_)(ostream&);
         isfx ();                                        \
         return *this;                                   \
         }
-#else
-#define GET_CODE {                      \
+#   else
+#     define GET_CODE {                      \
         if (ipfx (0))                                   \
         {                                               \
                 iostream::operator>> (v);               \
@@ -377,17 +379,17 @@ typedef ostream& (*__omanip_)(ostream&);
         isfx ();                                        \
         return *this;                                   \
         }
-#endif /* __KCC */
-#define GET_PROT(MT,DT,CODE)    GET_SIG(MT,DT)  CODE
-#define GET_FUNC(MT,DT)         GET_PROT(MT,DT,GET_CODE)
+#   endif /* __KCC */
+#   define GET_PROT(MT,DT,CODE)    GET_SIG(MT,DT)  CODE
+#   define GET_FUNC(MT,DT)         GET_PROT(MT,DT,GET_CODE)
 
 // This macro defines the put operator for class MT into datatype DT.
 // We will use it below to quickly override most (all?)  iostream put
 // operators.  Notice how the <opfx> and <osfx> functions are used.
 
-#define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
-#if defined (__KCC) || (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
-#define PUT_CODE {                      \
+#   define PUT_SIG(MT,DT)          inline virtual MT& operator<< (DT v)
+#   if defined (__KCC) || (defined (__SUNPRO_CC) && __SUNPRO_CC > 0x510)
+#     define PUT_CODE {                      \
         if (opfx ())                                    \
         {                                               \
                 (*((ostream *) this)) << (v);            \
@@ -395,8 +397,8 @@ typedef ostream& (*__omanip_)(ostream&);
         osfx ();                                        \
         return *this;                                   \
         }
-#else
-#define PUT_CODE {                      \
+#   else
+#     define PUT_CODE {                      \
         if (opfx ())                                    \
         {                                               \
                 iostream::operator<< (v);               \
@@ -404,16 +406,16 @@ typedef ostream& (*__omanip_)(ostream&);
         osfx ();                                        \
         return *this;                                   \
         }
-#endif /* __KCC */
-#define PUT_PROT(MT,DT,CODE)    PUT_SIG(MT,DT)  CODE
-#define PUT_FUNC(MT,DT)         PUT_PROT(MT,DT,PUT_CODE)
+#   endif /* __KCC */
+#   define PUT_PROT(MT,DT,CODE)    PUT_SIG(MT,DT)  CODE
+#   define PUT_FUNC(MT,DT)         PUT_PROT(MT,DT,PUT_CODE)
 
 
 // These are necessary in case somebody wants to derive from us and
 // override one of these with a custom approach.
 
-#if defined (ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS)
-#define GET_FUNC_SET0(MT,CODE,CODE2) \
+#   if defined (ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS)
+#     define GET_FUNC_SET0(MT,CODE,CODE2) \
         GET_PROT(MT,short &,CODE) \
         GET_PROT(MT,u_short &,CODE) \
         GET_PROT(MT,int &,CODE) \
@@ -427,8 +429,8 @@ typedef ostream& (*__omanip_)(ostream&);
         GET_PROT(MT,char *,CODE) \
         inline virtual MT& operator>>(__omanip_ func) CODE2 \
         inline virtual MT& operator>>(__manip_ func)  CODE2
-#elif defined (ACE_LACKS_CHAR_RIGHT_SHIFTS)
-#define GET_FUNC_SET0(MT,CODE,CODE2) \
+#   elif defined (ACE_LACKS_CHAR_RIGHT_SHIFTS)
+#     define GET_FUNC_SET0(MT,CODE,CODE2) \
         GET_PROT(MT,short &,CODE) \
         GET_PROT(MT,u_short &,CODE) \
         GET_PROT(MT,int &,CODE) \
@@ -439,8 +441,8 @@ typedef ostream& (*__omanip_)(ostream&);
         GET_PROT(MT,double &,CODE) \
         inline virtual MT& operator>>(__omanip_ func) CODE2 \
         inline virtual MT& operator>>(__manip_ func)  CODE2
-#else
-#define GET_FUNC_SET0(MT,CODE,CODE2) \
+#   else
+#     define GET_FUNC_SET0(MT,CODE,CODE2) \
         GET_PROT(MT,short &,CODE) \
         GET_PROT(MT,u_short &,CODE) \
         GET_PROT(MT,int &,CODE) \
@@ -455,9 +457,9 @@ typedef ostream& (*__omanip_)(ostream&);
         GET_PROT(MT,u_char *,CODE) \
         inline virtual MT& operator>>(__omanip_ func) CODE2 \
         inline virtual MT& operator>>(__manip_ func)  CODE2
-#endif
+#   endif
 
-#define PUT_FUNC_SET0(MT,CODE,CODE2) \
+#   define PUT_FUNC_SET0(MT,CODE,CODE2) \
         PUT_PROT(MT,short,CODE) \
         PUT_PROT(MT,u_short,CODE) \
         PUT_PROT(MT,int,CODE) \
@@ -474,41 +476,41 @@ typedef ostream& (*__omanip_)(ostream&);
         inline virtual MT& operator<<(__omanip_ func) CODE2 \
         inline virtual MT& operator<<(__manip_ func)  CODE2
 
-#if defined (ACE_LACKS_SIGNED_CHAR)
-  #define GET_FUNC_SET1(MT,CODE,CODE2) GET_FUNC_SET0(MT,CODE,CODE2)
-  #define PUT_FUNC_SET1(MT,CODE,CODE2) PUT_FUNC_SET0(MT,CODE,CODE2)
-#else
-#if defined (ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS)
-  #define GET_FUNC_SET1(MT,CODE,CODE2) \
+#   if defined (ACE_LACKS_SIGNED_CHAR)
+#     define GET_FUNC_SET1(MT,CODE,CODE2) GET_FUNC_SET0(MT,CODE,CODE2)
+#     define PUT_FUNC_SET1(MT,CODE,CODE2) PUT_FUNC_SET0(MT,CODE,CODE2)
+#   else
+#     if defined (ACE_LACKS_CHAR_STAR_RIGHT_SHIFTS)
+#       define GET_FUNC_SET1(MT,CODE,CODE2) \
           GET_PROT(MT,signed char &,CODE) \
           GET_FUNC_SET0(MT,CODE,CODE2)
-#else
-  #define GET_FUNC_SET1(MT,CODE,CODE2) \
+#     else
+#       define GET_FUNC_SET1(MT,CODE,CODE2) \
           GET_PROT(MT,signed char &,CODE) \
           GET_PROT(MT,signed char *,CODE) \
           GET_FUNC_SET0(MT,CODE,CODE2)
-#endif
+#     endif
 
-  #define PUT_FUNC_SET1(MT,CODE,CODE2) \
+#     define PUT_FUNC_SET1(MT,CODE,CODE2) \
           PUT_FUNC(MT,signed char) \
           PUT_FUNC(MT,const signed char *) \
           PUT_FUNC_SET0(MT,CODE,CODE2)
-#endif /* ACE_LACKS_SIGNED_CHAR */
+#   endif /* ACE_LACKS_SIGNED_CHAR */
 
-#define GET_MANIP_CODE  { if (ipfx ()) { (*func) (*this); } isfx (); return *this; }
-#define PUT_MANIP_CODE  { if (opfx ()) { (*func) (*this); } osfx (); return *this; }
+#   define GET_MANIP_CODE  { if (ipfx ()) { (*func) (*this); } isfx (); return *this; }
+#   define PUT_MANIP_CODE  { if (opfx ()) { (*func) (*this); } osfx (); return *this; }
 
-#define GET_FUNC_SET(MT)        GET_FUNC_SET1(MT,GET_CODE,GET_MANIP_CODE)
-#define PUT_FUNC_SET(MT)        PUT_FUNC_SET1(MT,PUT_CODE,PUT_MANIP_CODE)
-#define GETPUT_FUNC_SET(MT)     GET_FUNC_SET(MT) PUT_FUNC_SET(MT)
+#   define GET_FUNC_SET(MT)        GET_FUNC_SET1(MT,GET_CODE,GET_MANIP_CODE)
+#   define PUT_FUNC_SET(MT)        PUT_FUNC_SET1(MT,PUT_CODE,PUT_MANIP_CODE)
+#   define GETPUT_FUNC_SET(MT)     GET_FUNC_SET(MT) PUT_FUNC_SET(MT)
 
-#define GET_SIG_SET(MT)         GET_FUNC_SET1(MT,= 0;,= 0;)
-#define PUT_SIG_SET(MT)         PUT_FUNC_SET1(MT,= 0;,= 0;)
-#define GETPUT_SIG_SET(MT)      GET_SIG_SET(MT) PUT_SIG_SET(MT)
+#   define GET_SIG_SET(MT)         GET_FUNC_SET1(MT,= 0;,= 0;)
+#   define PUT_SIG_SET(MT)         PUT_FUNC_SET1(MT,= 0;,= 0;)
+#   define GETPUT_SIG_SET(MT)      GET_SIG_SET(MT) PUT_SIG_SET(MT)
 
 // Include the templates here.
-#include "ace/IOStream_T.h"
-#endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
+#   include "ace/IOStream_T.h"
+# endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
 
-#include "ace/post.h"
+# include "ace/post.h"
 #endif /* ACE_IOSTREAM_H */

@@ -489,7 +489,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t nbytes,
   void *ptr = this->malloc (nbytes);
 
   if (ptr != 0)
-    ACE_OS::memset (ptr, initial_value, nbytes);
+    ACE_OS_String::memset (ptr, initial_value, nbytes);
 
   return ptr;
 }
@@ -583,8 +583,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
       for (NAME_NODE *node = this->cb_ptr_->name_head_;
            node != 0;
            node = node->next_)
-        if (ACE_OS::strcmp (node->name (),
-                            name) == 0)
+        if (ACE_OS_String::strcmp (node->name (),
+                                   name) == 0)
           return node;
     }
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
@@ -606,7 +606,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
   ACE_ALLOCATOR_RETURN (new_node,
                         (NAME_NODE *)
                         this->shared_malloc (sizeof (NAME_NODE) +
-                                             ACE_OS::strlen (name) + 1),
+                                             ACE_OS_String::strlen (name) + 1),
                         -1);
   char *name_ptr = (char *) (new_node + 1);
 
@@ -734,7 +734,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
        curr != 0;
        curr = curr->next_)
     {
-      if (ACE_OS::strcmp (curr->name (), name) == 0)
+      if (ACE_OS_String::strcmp (curr->name (), name) == 0)
         {
           pointer = (char *) curr->pointer_;
 
@@ -785,7 +785,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
   : malloc_ (malloc),
     curr_ (0),
     guard_ (malloc_.lock_),
-    name_ (name != 0 ? ACE_OS::strdup (name) : 0)
+    name_ (name != 0 ? ACE_OS_String::strdup (name) : 0)
 {
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_Iterator_T");
   // Cheap trick to make code simple.
@@ -800,7 +800,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_LIFO_Iterator_T (void)
 {
-  ACE_OS::free ((void *) this->name_);
+  ACE_OS_Memory::free ((void *) this->name_);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
@@ -852,7 +852,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && ACE_OS::strcmp (this->name_,
+         && ACE_OS_String::strcmp (this->name_,
                             this->curr_->name ()) != 0)
     this->curr_ = this->curr_->next_;
 
@@ -878,7 +878,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_It
   : malloc_ (malloc),
     curr_ (0),
     guard_ (malloc_.lock_),
-    name_ (name != 0 ? ACE_OS::strdup (name) : 0)
+    name_ (name != 0 ? ACE_OS_String::strdup (name) : 0)
 {
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_Iterator");
   // Cheap trick to make code simple.
@@ -895,7 +895,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_It
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_FIFO_Iterator_T (void)
 {
-  ACE_OS::free ((void *) this->name_);
+  ACE_OS_Memory::free ((void *) this->name_);
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
@@ -947,8 +947,8 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && ACE_OS::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && ACE_OS_String::strcmp (this->name_,
+                                   this->curr_->name ()) != 0)
     this->curr_ = this->curr_->prev_;
 
   return this->curr_ != 0;

@@ -3,6 +3,9 @@
 
 #include "ace/DEV_Addr.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_String.h"
+#include "ace/ace_stdio.h" // for MAXNAMELEN
+#include "ace/Global_Macros.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.i"
@@ -29,8 +32,8 @@ ACE_DEV_Addr::ACE_DEV_Addr (void)
 {
   ACE_TRACE ("ACE_DEV_Addr::ACE_DEV_Addr");
 
-  (void) ACE_OS::memset ((void *) &this->devname_, 
-			 0, sizeof this->devname_);
+  (void) ACE_OS_String::memset ((void *) &this->devname_, 
+                                0, sizeof this->devname_);
 }
 
 int
@@ -39,13 +42,13 @@ ACE_DEV_Addr::set (const ACE_DEV_Addr &sa)
   this->base_set (sa.get_type (), sa.get_size ());
 
   if (sa.get_type () == AF_ANY)
-    (void) ACE_OS::memset ((void *) &this->devname_,
-                           0,
-                           sizeof this->devname_);
+    (void) ACE_OS_String::memset ((void *) &this->devname_,
+                                  0,
+                                  sizeof this->devname_);
   else
-    (void) ACE_OS::memcpy ((void *) &this->devname_, 
-                           (void *) &sa.devname_, 
-                           sa.get_size ());
+    (void) ACE_OS_String::memcpy ((void *) &this->devname_, 
+                                  (void *) &sa.devname_, 
+                                  sa.get_size ());
   return 0;
 }
 
@@ -73,9 +76,9 @@ ACE_DEV_Addr::operator= (const ACE_DEV_Addr &sa)
   ACE_TRACE ("ACE_DEV_Addr::operator=");
 
   if (this != &sa)
-    (void) ACE_OS::memcpy ((void *) &this->devname_, 
-			   (void *) &sa.devname_, 
-			   sa.get_size ());
+    (void) ACE_OS_String::memcpy ((void *) &this->devname_, 
+                                  (void *) &sa.devname_, 
+                                  sa.get_size ());
   return *this;
 }
 

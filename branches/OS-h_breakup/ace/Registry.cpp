@@ -649,7 +649,7 @@ ACE_Registry::make_name (const ACE_TString &string)
           component.id_ = string.substr (last_position,
                                          new_position - last_position);
           // Skip past the seperator
-          new_position += ACE_OS::strlen (ACE_Registry::STRING_SEPARATOR);
+          new_position += ACE_OS_String::strlen (ACE_Registry::STRING_SEPARATOR);
         }
       else
         {
@@ -1091,7 +1091,8 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 #else
   long result = -1;
 
-  if (machine_name != 0 && ACE_OS::strcmp (ACE_LIB_TEXT ("localhost"), machine_name) == 0)
+  if (machine_name != 0 
+      && ACE_OS_String::strcmp (ACE_LIB_TEXT ("localhost"), machine_name) == 0)
     machine_name = 0;
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
@@ -1121,7 +1122,7 @@ ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
   ACE_TCHAR local_host[MAXHOSTNAMELEN];
   int result = ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR));
   if (result == 0)
-    result = !ACE_OS::strcmp (local_host, machine_name);
+    result = !ACE_OS_String::strcmp (local_host, machine_name);
   else
     result = 0;
   return result;

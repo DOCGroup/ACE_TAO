@@ -35,9 +35,9 @@ ACE_Process::ACE_Process (void)
   exit_code_ (0)
 {
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->process_info_,
-                  0,
-                  sizeof this->process_info_);
+  ACE_OS_String::memset ((void *) &this->process_info_,
+                         0,
+                         sizeof this->process_info_);
 #endif /* ACE_WIN32 */
 }
 
@@ -89,7 +89,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
       int maxlen = 0;
       ACE_TCHAR *cmd_line_buf = options.command_line_buf (&maxlen);
       size_t max_len = ACE_static_cast (size_t, maxlen);
-      size_t curr_len = ACE_OS::strlen (cmd_line_buf);
+      size_t curr_len = ACE_OS_String::strlen (cmd_line_buf);
       ACE_Handle_Set_Iterator h_iter (*set_p);
       // Because the length of the to-be-formatted +H option is not
       // known, and we don't have a snprintf, guess at the space
@@ -506,9 +506,9 @@ ACE_Process_Options::ACE_Process_Options (int ie,
   environment_argv_[0] = 0;
   process_name_[0] = '\0';
 #if defined (ACE_WIN32)
-  ACE_OS::memset ((void *) &this->startup_info_,
-                  0,
-                  sizeof this->startup_info_);
+  ACE_OS_String::memset ((void *) &this->startup_info_,
+                         0,
+                         sizeof this->startup_info_);
   this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
 #endif /* !ACE_HAS_WINCE */
@@ -531,7 +531,7 @@ ACE_Process_Options::inherit_environment (void)
 
   while (existing_environment[slot] != '\0')
     {
-      int len = ACE_OS::strlen (existing_environment + slot);
+      int len = ACE_OS_String::strlen (existing_environment + slot);
 
       // Add the string to our env buffer.
       if (this->setenv_i (existing_environment + slot, len) == -1)
@@ -566,7 +566,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
   while (envp[i])
     {
       if (this->setenv_i (envp[i],
-                          ACE_OS::strlen (envp[i])) == -1)
+                          ACE_OS_String::strlen (envp[i])) == -1)
         return -1;
       i++;
     }
@@ -597,7 +597,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 
   // Append the string to are environment buffer.
   if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+                      ACE_OS_String::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -634,7 +634,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   // Append the string to our environment buffer.
   if (this->setenv_i (stack_buf,
-                      ACE_OS::strlen (stack_buf)) == -1)
+                      ACE_OS_String::strlen (stack_buf)) == -1)
     return -1;
 
 #if defined (ACE_WIN32)
@@ -659,9 +659,9 @@ ACE_Process_Options::setenv_i (ACE_TCHAR *assignment,
     return -1;
 
   // Copy the new environment string.
-  ACE_OS::memcpy (environment_buf_ + environment_buf_index_,
-                  assignment,
-                  len * sizeof (ACE_TCHAR));
+  ACE_OS_String::memcpy (environment_buf_ + environment_buf_index_,
+                         assignment,
+                         len * sizeof (ACE_TCHAR));
 
   // Update the argv array.
   environment_argv_[environment_argv_index_++] =
@@ -768,13 +768,13 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 
   if (argv[i])
     {
-      ACE_OS::strcat (command_line_buf_, argv[i]);
+      ACE_OS_String::strcat (command_line_buf_, argv[i]);
       while (argv[++i])
         {
-          ACE_OS::strcat (command_line_buf_,
-                          ACE_LIB_TEXT (" "));
-          ACE_OS::strcat (command_line_buf_,
-                          argv[i]);
+          ACE_OS_String::strcat (command_line_buf_,
+                                 ACE_LIB_TEXT (" "));
+          ACE_OS_String::strcat (command_line_buf_,
+                                 argv[i]);
         }
     }
 
@@ -826,8 +826,8 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
   // Useless macro.
   va_end (argp);
 
-  ACE_OS::strcpy (this->command_line_buf_,
-                  ACE_TEXT_ANTI_TO_TCHAR (anti_clb));
+  ACE_OS_String::strcpy (this->command_line_buf_,
+                         ACE_TEXT_ANTI_TO_TCHAR (anti_clb));
 
   delete [] anti_clb;
 

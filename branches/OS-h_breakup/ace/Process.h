@@ -14,12 +14,15 @@
 #define ACE_PROCESS_H
 #include "ace/pre.h"
 
-#include "ace/OS.h"
-#include "ace/Handle_Set.h"
+#include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/Handle_Set.h"
+#include "ace/ACE_export.h"
+
 
 /**
  * @class ACE_Process_Options

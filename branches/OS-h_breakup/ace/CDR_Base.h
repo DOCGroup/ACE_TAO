@@ -167,7 +167,7 @@ public:
 
   typedef u_char Octet;
   typedef char Char;
-  typedef ACE_OS::WChar	WChar;
+  typedef ACE_UINT16 WChar;
   typedef ACE_INT16 Short;
   typedef ACE_UINT16 UShort;
   typedef ACE_INT32 Long;

@@ -279,7 +279,7 @@ ACE_INLINE int
 ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
 {
   ACE_TRACE ("ACE_TPQ_Entry::equal_client_id");
-  return (ACE_OS::strcmp (this->client_id (), id) == 0);
+  return (ACE_OS_String::strcmp (this->client_id (), id) == 0);
 }
 
 // ************************************************************
@@ -303,12 +303,12 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
   if (new_name == 0)
     new_name = ACE_LIB_TEXT ("no name");
 
-  int n = ACE_OS::strlen (new_name) + 1;
+  int n = ACE_OS_String::strlen (new_name) + 1;
 
   if (n >= ACE_MAXTOKENNAMELEN)
     n = ACE_MAXTOKENNAMELEN - 1;
 
-  ACE_OS::strsncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
+  ACE_OS_String::strsncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
 }
 
 ACE_INLINE const ACE_TCHAR*
@@ -452,7 +452,7 @@ ACE_Token_Name::operator== (const ACE_Token_Name &rhs) const
   ACE_TRACE ("ACE_Token_Name::operator==");
 
   // the name and type must be the same
-  return (ACE_OS::strcmp (this->token_name_, rhs.name ()) == 0);
+  return (ACE_OS_String::strcmp (this->token_name_, rhs.name ()) == 0);
 }
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */

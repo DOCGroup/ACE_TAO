@@ -48,7 +48,7 @@ ACE_Service_Config::open (int argc,
 ACE_INLINE int
 ACE_Static_Svc_Descriptor::operator== (ACE_Static_Svc_Descriptor &d) const
 {
-  return ACE_OS::strcmp (name_, d.name_) == 0;
+  return ACE_OS_String::strcmp (name_, d.name_) == 0;
 }
 
 // Compare two service descriptors for inequality.

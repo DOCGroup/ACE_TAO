@@ -19,10 +19,10 @@ ACE_Token_Collection::ACE_Token_Collection (int debug,
   if (name == 0)
     name = ACE_LIB_TEXT ("no name");
 
-  ACE_OS::strsncpy (this->name_,
-                    ACE_const_cast (ACE_TCHAR *,
-                                    name),
-                    ACE_MAXTOKENNAMELEN);
+  ACE_OS_String::strsncpy (this->name_,
+                           ACE_const_cast (ACE_TCHAR *,
+                                           name),
+                           ACE_MAXTOKENNAMELEN);
 }
 
 int

@@ -32,7 +32,7 @@ ACE_String_Base<CHAR>::ACE_String_Base (const CHAR *s,
 
   size_t length;
   if (s != 0)
-    length = ACE_OS::strlen (s);
+    length = ACE_OS_String::strlen (s);
   else
     length = 0;
 
@@ -132,7 +132,7 @@ ACE_String_Base<CHAR>::set (const CHAR *s, int release)
 {
   size_t length;
   if (s != 0)
-    length = ACE_OS::strlen (s);
+    length = ACE_OS_String::strlen (s);
   else
     length = 0;
 
@@ -186,7 +186,7 @@ ACE_String_Base<CHAR>::rep (void) const
 
   CHAR *new_string;
   ACE_NEW_RETURN (new_string, CHAR[this->len_ + 1], 0);
-  ACE_OS::strsncpy (new_string, this->rep_, this->len_+1);
+  ACE_OS_String::strsncpy (new_string, this->rep_, this->len_+1);
 
   return new_string;
 }
@@ -211,7 +211,7 @@ ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
   ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
 
   return this->len_ == s.len_
-    && ACE_OS::strncmp (this->rep_, s.rep_, this->len_) == 0;
+    && ACE_OS_String::strncmp (this->rep_, s.rep_, this->len_) == 0;
 }
 
 // Less than comparison operator.
@@ -222,7 +222,7 @@ ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
   ACE_TRACE ("ACE_String_Base<CHAR>::operator <");
 
   return (this->rep_ && s.rep_)
-    ? ACE_OS::strcmp (this->rep_, s.rep_) < 0
+    ? ACE_OS_String::strcmp (this->rep_, s.rep_) < 0
     : ((s.rep_) ? 1 : 0 );
 }
 
@@ -234,7 +234,7 @@ ACE_String_Base<CHAR>::operator > (const ACE_String_Base &s) const
   ACE_TRACE ("ACE_String_Base<CHAR>::operator >");
 
   return (this->rep_ && s.rep_)
-    ? ACE_OS::strcmp (this->rep_, s.rep_) > 0
+    ? ACE_OS_String::strcmp (this->rep_, s.rep_) > 0
     : ((this->rep_) ? 1 : 0 );
 }
 
@@ -258,9 +258,9 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
 
   // Pick smaller of the two lengths and perform the comparison.
   int smaller_length = (this->len_ < s.len_) ? this->len_ : s.len_;
-  int result = ACE_OS::strncmp (this->rep_,
-                                s.rep_,
-                                smaller_length);
+  int result = ACE_OS_String::strncmp (this->rep_,
+                                       s.rep_,
+                                       smaller_length);
 
   if (result != 0 || s.len_ == this->len_)
     return result;
@@ -278,8 +278,8 @@ template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::find (const CHAR *s, int pos) const
 {
   CHAR *substr = this->rep_ + pos;
-  size_t len = ACE_OS::strlen (s);
-  CHAR *pointer = ACE_OS::strnstr (substr, s, len);
+  size_t len = ACE_OS_String::strlen (s);
+  CHAR *pointer = ACE_OS_String::strnstr (substr, s, len);
   if (pointer == 0)
     return ACE_String_Base<CHAR>::npos;
   else
@@ -290,7 +290,7 @@ template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::find (CHAR c, int pos) const
 {
   CHAR *substr = this->rep_ + pos;
-  CHAR *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
+  CHAR *pointer = ACE_OS_String::strnchr (substr, c, this->len_ - pos);
   if (pointer == 0)
     return ACE_String_Base<CHAR>::npos;
   else

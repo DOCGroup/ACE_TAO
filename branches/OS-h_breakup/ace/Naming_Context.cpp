@@ -56,10 +56,10 @@ int
 ACE_Naming_Context::local (void)
 {
   ACE_TRACE ("ACE_Naming_Context::local");
-  return ACE_OS::strcmp (this->netnameserver_host_,
-                         ACE_LIB_TEXT ("localhost")) == 0
-    || ACE_OS::strcmp (this->netnameserver_host_,
-                       this->hostname_) == 0;
+  return ACE_OS_String::strcmp (this->netnameserver_host_,
+                                ACE_LIB_TEXT ("localhost")) == 0
+    || ACE_OS_String::strcmp (this->netnameserver_host_,
+                              this->hostname_) == 0;
 }
 
 int
@@ -416,26 +416,26 @@ ACE_Name_Options::ACE_Name_Options (void)
     verbosity_ (0),
     use_registry_ (0),
     nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
-    nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
+    nameserver_host_ (ACE_OS_String::strdup (ACE_DEFAULT_SERVER_HOST)),
     process_name_ (0),
-    database_ (ACE_OS::strdup (ACE_DEFAULT_LOCALNAME)),
+    database_ (ACE_OS_String::strdup (ACE_DEFAULT_LOCALNAME)),
     base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
   ACE_TRACE ("ACE_Name_Options::ACE_Name_Options");
 
 #if defined (ACE_DEFAULT_NAMESPACE_DIR)
-  this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
+  this->namespace_dir_ = ACE_OS_String::strdup (ACE_DEFAULT_NAMESPACE_DIR);
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
   size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
-  this->namespace_dir_ = ACE_static_cast (ACE_TCHAR *, ACE_OS::malloc (pathsize));
+  this->namespace_dir_ = ACE_static_cast (ACE_TCHAR *, ACE_OS_Memory::malloc (pathsize));
 
   if (ACE_Lib_Find::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_LIB_TEXT ("Temporary path too long, ")
                   ACE_LIB_TEXT ("defaulting to current directory\n")));
-      ACE_OS::strcat (this->namespace_dir_, ACE_LIB_TEXT ("."));
-      ACE_OS::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
+      ACE_OS_String::strcat (this->namespace_dir_, ACE_LIB_TEXT ("."));
+      ACE_OS_String::strcat (this->namespace_dir_, ACE_DIRECTORY_SEPARATOR_STR);
     }
 #endif /* ACE_DEFAULT_NAMESPACE_DIR */
 }
@@ -444,10 +444,10 @@ ACE_Name_Options::~ACE_Name_Options (void)
 {
   ACE_TRACE ("ACE_Name_Options::~ACE_Name_Options");
 
-  ACE_OS::free ((void *) this->nameserver_host_);
-  ACE_OS::free ((void *) this->namespace_dir_ );
-  ACE_OS::free ((void *) this->process_name_ );
-  ACE_OS::free ((void *) this->database_ );
+  ACE_OS_Memory::free ((void *) this->nameserver_host_);
+  ACE_OS_Memory::free ((void *) this->namespace_dir_ );
+  ACE_OS_Memory::free ((void *) this->process_name_ );
+  ACE_OS_Memory::free ((void *) this->database_ );
 }
 
 void
@@ -468,8 +468,8 @@ void
 ACE_Name_Options::namespace_dir (const ACE_TCHAR *dir)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
-  ACE_OS::free ((void *) this->namespace_dir_ );
-  this->namespace_dir_ = ACE_OS::strdup (dir);
+  ACE_OS_Memory::free ((void *) this->namespace_dir_ );
+  this->namespace_dir_ = ACE_OS_String::strdup (dir);
 }
 
 void
@@ -477,16 +477,16 @@ ACE_Name_Options::process_name (const ACE_TCHAR *pname)
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
   const ACE_TCHAR *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
-  ACE_OS::free ((void *) this->process_name_ );
-  this->process_name_ = ACE_OS::strdup (t);
+  ACE_OS_Memory::free ((void *) this->process_name_ );
+  this->process_name_ = ACE_OS_String::strdup (t);
 }
 
 void
 ACE_Name_Options::nameserver_host (const ACE_TCHAR *host)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
-  ACE_OS::free ((void *) this->nameserver_host_);
-  this->nameserver_host_ = ACE_OS::strdup (host);
+  ACE_OS_Memory::free ((void *) this->nameserver_host_);
+  this->nameserver_host_ = ACE_OS_String::strdup (host);
 }
 
 const ACE_TCHAR *
@@ -507,8 +507,8 @@ void
 ACE_Name_Options::database (const ACE_TCHAR *db)
 {
   ACE_TRACE ("ACE_Name_Options::database");
-  ACE_OS::free ((void *) this->database_);
-  this->database_ = ACE_OS::strdup (db);
+  ACE_OS_Memory::free ((void *) this->database_);
+  this->database_ = ACE_OS_String::strdup (db);
 }
 
 char *
@@ -610,11 +610,14 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'c':
         {
-          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("PROC_LOCAL")) == 0)
+          if (ACE_OS_String::strcmp (get_opt.opt_arg (), 
+                                     ACE_LIB_TEXT ("PROC_LOCAL")) == 0)
             this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("NODE_LOCAL")) == 0)
+          else if (ACE_OS_String::strcmp (get_opt.opt_arg (), 
+                                          ACE_LIB_TEXT ("NODE_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_LIB_TEXT ("NET_LOCAL")) == 0)
+          else if (ACE_OS_String::strcmp (get_opt.opt_arg (), 
+                                          ACE_LIB_TEXT ("NET_LOCAL")) == 0)
             this->context (ACE_Naming_Context::NET_LOCAL);
         }
         break;
@@ -640,12 +643,15 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->database (get_opt.opt_arg ());
         break;
       case 'b':
-        this->base_address (ACE_reinterpret_cast (char *, ACE_OS::atoi (get_opt.opt_arg ())));
+        this->base_address (ACE_reinterpret_cast (char *, 
+                                                  ACE_OS::atoi (get_opt.opt_arg ())));
         break;
       case 'T':
-        if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("ON")) == 0)
+        if (ACE_OS_String::strcasecmp (get_opt.opt_arg (), 
+                                       ACE_LIB_TEXT ("ON")) == 0)
           ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_LIB_TEXT ("OFF")) == 0)
+        else if (ACE_OS_String::strcasecmp (get_opt.opt_arg (), 
+                                            ACE_LIB_TEXT ("OFF")) == 0)
           ACE_Trace::stop_tracing ();
         break;
       case 'v':

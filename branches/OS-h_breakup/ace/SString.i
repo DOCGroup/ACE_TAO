@@ -114,7 +114,7 @@ ACE_SString::operator== (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::operator==");
   return this->len_ == s.len_
-    && ACE_OS::strcmp (this->rep_, s.rep_) == 0;
+    && ACE_OS_String::strcmp (this->rep_, s.rep_) == 0;
 }
 
 // Less than comparison operator.
@@ -125,7 +125,7 @@ ACE_SString::operator < (const ACE_SString &s) const
   ACE_TRACE ("ACE_SString::operator <");
 
   return (this->rep_ && s.rep_)
-    ? ACE_OS::strcmp (this->rep_, s.rep_) < 0
+    ? ACE_OS_String::strcmp (this->rep_, s.rep_) < 0
     : ((s.rep_) ? 1 : 0 );
 }
 
@@ -137,7 +137,7 @@ ACE_SString::operator > (const ACE_SString &s) const
   ACE_TRACE ("ACE_SString::operator >");
 
   return (this->rep_ && s.rep_)
-    ? ACE_OS::strcmp (this->rep_, s.rep_) > 0
+    ? ACE_OS_String::strcmp (this->rep_, s.rep_) > 0
     : ((this->rep_) ? 1 : 0 );
 }
 
@@ -154,14 +154,14 @@ ACE_INLINE int
 ACE_SString::compare (const ACE_SString &s) const
 {
   ACE_TRACE ("ACE_SString::compare");
-  return ACE_OS::strcmp (this->rep_, s.rep_);
+  return ACE_OS_String::strcmp (this->rep_, s.rep_);
 }
 
 ACE_INLINE int
 ACE_SString::find (const char *s, int pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strstr (substr, s);
+  char *pointer = ACE_OS_String::strstr (substr, s);
   if (pointer == 0)
     return ACE_SString::npos;
   else
@@ -172,7 +172,7 @@ ACE_INLINE int
 ACE_SString::find (char c, int pos) const
 {
   char *substr = this->rep_ + pos;
-  char *pointer = ACE_OS::strchr (substr, c);
+  char *pointer = ACE_OS_String::strchr (substr, c);
   if (pointer == 0)
     return ACE_SString::npos;
   else
@@ -236,7 +236,7 @@ ACE_INLINE void
 ACE_Auto_String_Free::reset (char* p)
 {
   if (this->p_ != 0)
-    ACE_OS::free (this->p_);
+    ACE_OS_Memory::free (this->p_);
   this->p_ = p;
 }
 

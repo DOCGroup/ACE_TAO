@@ -1,15 +1,17 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/SString.h"
+#include "ace/Trace.h"
+#include "ace/OS_String.h"
+#include "ace/ace_sys_socket.h" // to get AF_DEF
 
 ACE_INLINE void
 ACE_DEV_Addr::set (const ACE_TCHAR *devname)
 {
   ACE_TRACE ("ACE_DEV_Addr::set");
 
-  this->ACE_Addr::base_set (AF_DEV, ACE_OS::strlen (devname));
-  ACE_OS::strsncpy (this->devname_, devname, MAXNAMLEN);
+  this->ACE_Addr::base_set (AF_DEV, ACE_OS_String::strlen (devname));
+  ACE_OS_String::strsncpy (this->devname_, devname, MAXNAMLEN);
 }
 
 // Transform the current address into string format.
@@ -19,7 +21,7 @@ ACE_DEV_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
   ACE_TRACE ("ACE_DEV_Addr::addr_to_string");
 
-  ACE_OS::strsncpy (s, this->devname_, len);
+  ACE_OS_String::strsncpy (s, this->devname_, len);
   return 0;
 }
 
@@ -40,7 +42,7 @@ ACE_DEV_Addr::operator == (const ACE_DEV_Addr &sap) const
 {
   ACE_TRACE ("ACE_DEV_Addr::operator ==");
 
-  return ACE_OS::strcmp (this->devname_, sap.devname_) == 0;
+  return ACE_OS_String::strcmp (this->devname_, sap.devname_) == 0;
 }
 
 // Compare two addresses for inequality.

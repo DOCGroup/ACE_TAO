@@ -718,11 +718,11 @@ ACE_Connector<SVH, PR_CO_2>::info (ACE_TCHAR **strp, size_t length) const
                    ACE_LIB_TEXT ("ACE_Connector"),
                    ACE_LIB_TEXT ("# connector factory\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == 0 && (*strp = ACE_OS_String::strdup (buf)) == 0)
     return -1;
   else
-    ACE_OS::strsncpy (*strp, buf, length);
-  return ACE_OS::strlen (buf);
+    ACE_OS_String::strsncpy (*strp, buf, length);
+  return ACE_OS_String::strlen (buf);
 }
 
 template <class SVH, PR_CO_1>

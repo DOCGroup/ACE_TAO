@@ -2,6 +2,9 @@
 
 #include "ace/Name_Request_Reply.h"
 #include "ace/Log_Msg.h"
+#include "ace/Trace.h"
+#include "ace/Global_Macros.h"
+#include "ace/OS_String.h"
 
 ACE_RCSID(ace, Name_Request_Reply, "$Id$")
 
@@ -49,15 +52,15 @@ ACE_Name_Request::ACE_Name_Request (ACE_INT32 t, // Type of request.
   this->value_  = &this->name_[name_length / sizeof (ACE_USHORT16) ];
   this->type_  = (char *)(&this->value_[value_length / sizeof (ACE_USHORT16)]); //
 
-  (void) ACE_OS::memcpy (this->name_,
-                         name,
-                         name_length);
-  (void) ACE_OS::memcpy (this->value_,
-                         value,
-                         value_length);
-  (void) ACE_OS::memcpy (this->type_,
-                         type,
-                         type_length);
+  (void) ACE_OS_String::memcpy (this->name_,
+                                name,
+                                name_length);
+  (void) ACE_OS_String::memcpy (this->value_,
+                                value,
+                                value_length);
+  (void) ACE_OS_String::memcpy (this->type_,
+                                type,
+                                type_length);
 
   // Compute size of the fixed portion of the message...
   size_t len = sizeof this->transfer_ - sizeof this->transfer_.data_;
@@ -204,9 +207,9 @@ void
 ACE_Name_Request::name (const ACE_USHORT16 *t)
 {
   ACE_TRACE ("ACE_Name_Request::name");
-  (void) ACE_OS::memcpy (this->name_,
-                         t,
-                         this->name_len ());
+  (void) ACE_OS_String::memcpy (this->name_,
+                                t,
+                                this->name_len ());
 }
 
 // = Set/get the value
@@ -223,9 +226,9 @@ ACE_Name_Request::value (const ACE_USHORT16 *c)
 {
   ACE_TRACE ("ACE_Name_Request::value");
 
-  (void) ACE_OS::memcpy (this->value_,
-                         c,
-                         this->value_len());
+  (void) ACE_OS_String::memcpy (this->value_,
+                                c,
+                                this->value_len());
 }
 
 // = Set/get the type
@@ -241,9 +244,9 @@ void
 ACE_Name_Request::type (const char *c)
 {
   ACE_TRACE ("ACE_Name_Request::type");
-  ACE_OS::strsncpy (this->type_,
-                    c,
-                    sizeof this->type_);
+  ACE_OS_String::strsncpy (this->type_,
+                           c,
+                           sizeof this->type_);
 }
 
 // Encode the transfer buffer into network byte order so that it can
@@ -263,17 +266,17 @@ ACE_Name_Request::encode (void *&buf)
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
-      htons (this->transfer_.data_[i]);
+      ACE_HTONS (this->transfer_.data_[i]);
 
   buf = (void *) &this->transfer_;
-  this->transfer_.block_forever_ = htonl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = htonl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_ = htonl (this->transfer_.sec_timeout_);
-  this->transfer_.length_ = htonl (this->transfer_.length_);
-  this->transfer_.msg_type_ = htonl (this->transfer_.msg_type_);
-  this->transfer_.name_len_ = htonl (this->transfer_.name_len_);
-  this->transfer_.value_len_ = htonl (this->transfer_.value_len_);
-  this->transfer_.type_len_ = htonl (this->transfer_.type_len_);
+  this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_ = ACE_HTONL (this->transfer_.sec_timeout_);
+  this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
+  this->transfer_.msg_type_ = ACE_HTONL (this->transfer_.msg_type_);
+  this->transfer_.name_len_ = ACE_HTONL (this->transfer_.name_len_);
+  this->transfer_.value_len_ = ACE_HTONL (this->transfer_.value_len_);
+  this->transfer_.type_len_ = ACE_HTONL (this->transfer_.type_len_);
 
   return len;
 }
@@ -286,14 +289,14 @@ ACE_Name_Request::decode (void)
 {
   ACE_TRACE ("ACE_Name_Request::decode");
   // Decode the fixed-sized portion first.
-  this->transfer_.block_forever_ = ntohl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = ntohl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_ = ntohl (this->transfer_.sec_timeout_);
-  this->transfer_.length_ = ntohl (this->transfer_.length_);
-  this->transfer_.msg_type_ = ntohl (this->transfer_.msg_type_);
-  this->transfer_.name_len_ = ntohl (this->transfer_.name_len_);
-  this->transfer_.value_len_ = ntohl (this->transfer_.value_len_);
-  this->transfer_.type_len_ = ntohl (this->transfer_.type_len_);
+  this->transfer_.block_forever_ = ACE_NTOHL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_NTOHL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_ = ACE_NTOHL (this->transfer_.sec_timeout_);
+  this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
+  this->transfer_.msg_type_ = ACE_NTOHL (this->transfer_.msg_type_);
+  this->transfer_.name_len_ = ACE_NTOHL (this->transfer_.name_len_);
+  this->transfer_.value_len_ = ACE_NTOHL (this->transfer_.value_len_);
+  this->transfer_.type_len_ = ACE_NTOHL (this->transfer_.type_len_);
 
   size_t nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
@@ -301,7 +304,7 @@ ACE_Name_Request::decode (void)
 
   for (size_t i = 0; i < nv_data_len; i++)
     this->transfer_.data_[i] =
-      ntohs (this->transfer_.data_[i]);
+      ACE_NTOHS (this->transfer_.data_[i]);
 
   this->name_ = this->transfer_.data_;
   this->value_ = &this->name_[this->transfer_.name_len_ / sizeof (ACE_USHORT16)];
@@ -505,9 +508,9 @@ ACE_Name_Reply::encode (void *&buf)
   ACE_TRACE ("ACE_Name_Reply::encode");
   int len = this->length (); // Get length *before* marshaling.
 
-  this->transfer_.length_ = htonl (this->transfer_.length_);
-  this->transfer_.type_ = htonl (this->transfer_.type_);
-  this->transfer_.errno_ = htonl (this->transfer_.errno_);
+  this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
+  this->transfer_.type_ = ACE_HTONL (this->transfer_.type_);
+  this->transfer_.errno_ = ACE_HTONL (this->transfer_.errno_);
   buf = (void *) &this->transfer_;
   return len;
 }
@@ -519,9 +522,9 @@ int
 ACE_Name_Reply::decode (void)
 {
   ACE_TRACE ("ACE_Name_Reply::decode");
-  this->transfer_.length_ = ntohl (this->transfer_.length_);
-  this->transfer_.type_ = ntohl (this->transfer_.type_);
-  this->transfer_.errno_ = ntohl (this->transfer_.errno_);
+  this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
+  this->transfer_.type_ = ACE_NTOHL (this->transfer_.type_);
+  this->transfer_.errno_ = ACE_NTOHL (this->transfer_.errno_);
   return 0;
 }
 

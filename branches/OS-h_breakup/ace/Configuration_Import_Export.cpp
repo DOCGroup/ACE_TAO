@@ -46,7 +46,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_LIB_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr (buffer, ACE_LIB_TEXT (']'));
+          ACE_TCHAR* end = ACE_OS_String::strrchr (buffer, ACE_LIB_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
@@ -65,7 +65,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
       if (buffer[0] == ACE_LIB_TEXT ('"'))
         {
           // we have a value
-          ACE_TCHAR* end = ACE_OS::strchr (buffer+1, '"');
+          ACE_TCHAR* end = ACE_OS_String::strchr (buffer+1, '"');
           if (!end)  // no closing quote, not a value so just skip it
             continue;
 
@@ -79,7 +79,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               // string type
               // truncate trailing "
               ++end;
-              ACE_TCHAR* trailing = ACE_OS::strrchr (end, '"');
+              ACE_TCHAR* trailing = ACE_OS_String::strrchr (end, '"');
               if (trailing)
                 *trailing = 0;
               if (config_.set_string_value (section, name, end))
@@ -88,21 +88,21 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
                   return -4;
                 }
             }
-          else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("dword:"), 6) == 0)
+          else if (ACE_OS_String::strncmp (end, ACE_LIB_TEXT ("dword:"), 6) == 0)
             {
               // number type
               ACE_TCHAR* endptr = 0;
-              u_int value = ACE_OS::strtoul (end + 6, &endptr, 16);
+              u_int value = ACE_OS_String::strtoul (end + 6, &endptr, 16);
               if (config_.set_integer_value (section, name, value))
                 {
                   ACE_OS::fclose (in);
                   return -4;
                 }
             }
-          else if (ACE_OS::strncmp (end, ACE_LIB_TEXT ("hex:"), 4) == 0)
+          else if (ACE_OS_String::strncmp (end, ACE_LIB_TEXT ("hex:"), 4) == 0)
             {
               // binary type
-              u_int string_length = ACE_OS::strlen (end + 4);
+              u_int string_length = ACE_OS_String::strlen (end + 4);
               // divide by 3 to get the actual buffer length
               u_int length = string_length / 3;
               u_int remaining = length;
@@ -115,7 +115,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               ACE_TCHAR* endptr = 0;
               while (remaining)
                 {
-                  u_char charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
+                  u_char charin = (u_char) ACE_OS_String::strtoul (inb, &endptr, 16);
                   *out = charin;
                   ++out;
                   --remaining;
@@ -308,7 +308,7 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
     *endp = '\0';
 
   // assume this is a value, read in the value name
-  ACE_TCHAR* end = ACE_OS::strchr (buffer, '=');
+  ACE_TCHAR* end = ACE_OS_String::strchr (buffer, '=');
   if (end)  // no =, not a value so just skip it
     {
       // null terminate the name
@@ -370,7 +370,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
       if (line[0] == ACE_LIB_TEXT ('['))
         {
           // We have a new section here, strip out the section name
-          ACE_TCHAR* end = ACE_OS::strrchr (line, ACE_LIB_TEXT (']'));
+          ACE_TCHAR* end = ACE_OS_String::strrchr (line, ACE_LIB_TEXT (']'));
           if (!end)
             {
               ACE_OS::fclose (in);
@@ -391,7 +391,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
         }
 
       // We have a line; name ends at equal sign.
-      ACE_TCHAR *end = ACE_OS::strchr (line, ACE_LIB_TEXT ('='));
+      ACE_TCHAR *end = ACE_OS_String::strchr (line, ACE_LIB_TEXT ('='));
       if (end == 0)                            // No '='
         {
           ACE_OS::fclose (in);
@@ -399,7 +399,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
         }
       *end++ = '\0';
       ACE_TCHAR *name = this->squish (line);
-      if (ACE_OS::strlen (name) == 0)          // No name; just an '='
+      if (ACE_OS_String::strlen (name) == 0)          // No name; just an '='
         {
           ACE_OS::fclose (in);
           return -3;
@@ -407,7 +407,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
 
       // Now find the start of the value
       ACE_TCHAR *value = this->squish (end);
-      size_t value_len = ACE_OS::strlen (value);
+      size_t value_len = ACE_OS_String::strlen (value);
       if (value_len > 0)
         {
           // ACE 5.2 (and maybe earlier) exported strings may be enclosed
@@ -589,7 +589,7 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
   ACE_TCHAR *cp;
 
   // Start at the end and work backwards over all whitespace.
-  for (cp = src + ACE_OS::strlen (src) - 1;
+  for (cp = src + ACE_OS_String::strlen (src) - 1;
        cp != src;
        --cp)
     if (*cp != ' ' && *cp != '\t' && *cp != '\n' && *cp != '\r')

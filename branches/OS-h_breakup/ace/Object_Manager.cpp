@@ -793,7 +793,7 @@ ACE_Static_Object_Lock::instance (void)
         // Allocate a buffer with malloc, and then use placement
         // new for the object, on the malloc'd buffer.
         void *buffer =
-          ACE_OS::malloc (sizeof (*ACE_Static_Object_Lock_lock));
+          ACE_OS_Memory::malloc (sizeof (*ACE_Static_Object_Lock_lock));
         if (buffer == 0)
           {
             return 0;
@@ -828,7 +828,7 @@ ACE_Static_Object_Lock::cleanup_lock (void)
     // It was malloc'd, so we need to explicitly call the dtor
     // and then free the memory.
     ACE_DES_FREE (ACE_Static_Object_Lock_lock,
-                  ACE_OS::free,
+                  ACE_OS_Memory::free,
                   ACE_Static_Object_Lock_Type);
 # else  /* ! ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK */
     delete ACE_Static_Object_Lock_lock;

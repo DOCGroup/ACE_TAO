@@ -145,7 +145,7 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (const ACE_TCHAR *const &ext_id,
                                               ACE_Filecache_Object *const &int_id,
                                               ACE_Filecache_Hash_Entry *next,
                                               ACE_Filecache_Hash_Entry *prev)
-  : ext_id_ (ext_id ? ACE_OS::strdup (ext_id) : ACE_OS::strdup (ACE_LIB_TEXT (""))),
+  : ext_id_ (ext_id ? ACE_OS_String::strdup (ext_id) : ACE_OS_String::strdup (ACE_LIB_TEXT (""))),
     int_id_ (int_id),
     next_ (next),
     prev_ (prev)
@@ -164,7 +164,7 @@ ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (ACE_Filecache_Hash_Entry *next,
 ACE_TEMPLATE_SPECIALIZATION
 ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry (void)
 {
-  ACE_OS::free ((void *) ext_id_);
+  ACE_OS_Memory::free ((void *) ext_id_);
 }
 
 // We need these template specializations since KEY is defined as a
@@ -181,7 +181,7 @@ ACE_TEMPLATE_SPECIALIZATION
 int
 ACE_Filecache_Hash::equal (const ACE_TCHAR *const &id1, const ACE_TCHAR *const &id2)
 {
-  return ACE_OS::strcmp (id1, id2) == 0;
+  return ACE_OS_String::strcmp (id1, id2) == 0;
 }
 
 #undef ACE_Filecache_Hash
@@ -457,7 +457,7 @@ ACE_Filecache_Object::init (void)
   this->tempname_ = 0;
   this->size_ = 0;
 
-  ACE_OS::memset (&(this->stat_), 0, sizeof (this->stat_));
+  ACE_OS_String::memset (&(this->stat_), 0, sizeof (this->stat_));
 }
 
 ACE_Filecache_Object::ACE_Filecache_Object (void)
@@ -495,7 +495,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   this->init ();
 
   // ASSERT strlen(filename) < sizeof (this->filename_)
-  ACE_OS::strcpy (this->filename_, filename);
+  ACE_OS_String::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::ACE_READING;
   // place ourselves into the READING state
 
@@ -555,7 +555,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
   this->init ();
 
   this->size_ = size;
-  ACE_OS::strcpy (this->filename_, filename);
+  ACE_OS_String::strcpy (this->filename_, filename);
   this->action_ = ACE_Filecache_Object::ACE_WRITING;
 
   // Can we access the file?

@@ -38,9 +38,9 @@ ACE_MEM_Addr::ACE_MEM_Addr (const ACE_TCHAR port_number[])
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
   u_short pn
     = ACE_static_cast (u_short,
-                       ACE_OS::strtoul (port_number,
-                                        NULL,
-                                        10));
+                       ACE_OS_String::strtoul (port_number,
+                                               NULL,
+                                               10));
   this->initialize_local (pn);
 }
 
@@ -97,9 +97,9 @@ ACE_MEM_Addr::string_to_addr (const ACE_TCHAR s[])
 
   u_short pn
     = ACE_static_cast (u_short,
-                       ACE_OS::strtoul (s,
-                                        NULL,
-                                        10));
+                       ACE_OS_String::strtoul (s,
+                                               NULL,
+                                               10));
   return this->set (pn);
 }
 

@@ -606,8 +606,8 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
        iter.advance ())
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
-      if (ACE_OS::strcmp (ssd->name_,
-                          function_name) == 0)
+      if (ACE_OS_String::strcmp (ssd->name_,
+                                 function_name) == 0)
         func = (void *(*)(ACE_Service_Object_Exterminator*)) ssd->alloc_;
     }
 

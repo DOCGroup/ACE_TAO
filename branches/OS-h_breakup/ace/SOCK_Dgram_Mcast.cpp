@@ -373,7 +373,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
                               net_if) == -1)
         return -1;
       multicast_address.imr_interface.s_addr =
-        htonl (interface_addr.get_ip_address ());
+        ACE_HTONL (interface_addr.get_ip_address ());
 #else
       ifreq if_address;
 
@@ -381,7 +381,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
       // Look up the interface by number, not name.
       if_address.ifr_ifno = ACE_OS::atoi (net_if);
 #else
-      ACE_OS::strcpy (if_address.ifr_name, net_if);
+      ACE_OS_String::strcpy (if_address.ifr_name, net_if);
 #endif /* defined (ACE_PSOS) */
 
       if (ACE_OS::ioctl (this->get_handle (),
@@ -398,7 +398,7 @@ ACE_SOCK_Dgram_Mcast::make_multicast_address_i (const ACE_INET_Addr &mcast_addr,
   else
     multicast_address.imr_interface.s_addr = INADDR_ANY;
 
-  multicast_address.IMR_MULTIADDR.s_addr = htonl (mcast_addr.get_ip_address ());
+  multicast_address.IMR_MULTIADDR.s_addr = ACE_HTONL (mcast_addr.get_ip_address ());
   return 0;
 }
 

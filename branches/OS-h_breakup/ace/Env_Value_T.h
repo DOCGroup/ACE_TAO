@@ -26,6 +26,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/OS_String.h"
+
 /**
  * @class ACE_Env_Value
  *
@@ -112,44 +114,44 @@ ACE_Convert (const ACE_TCHAR *s, const ACE_TCHAR *&v)
 inline void
 ACE_Convert (const ACE_TCHAR *s, short &si)
 {
-  si = ACE_static_cast (short, ACE_OS::strtol (s, 0, 10));
+  si = ACE_static_cast (short, ACE_OS_String::strtol (s, 0, 10));
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, u_short &us)
 {
-  us = ACE_static_cast (u_short, ACE_OS::strtol (s, 0, 10));
+  us = ACE_static_cast (u_short, ACE_OS_String::strtol (s, 0, 10));
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, u_int &i)
 {
   i = ACE_static_cast (u_int,
-                       ACE_OS::strtol (s, 0, 10));
+                       ACE_OS_String::strtol (s, 0, 10));
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, long &l)
 {
-  l = ACE_OS::strtol (s, 0, 10);
+  l = ACE_OS_String::strtol (s, 0, 10);
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, int &i)
 {
-  i = ACE_static_cast (int, ACE_OS::strtol (s, 0, 10));
+  i = ACE_static_cast (int, ACE_OS_String::strtol (s, 0, 10));
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, u_long &ul)
 {
-  ul = ACE_OS::strtoul (s, 0, 10);
+  ul = ACE_OS_String::strtoul (s, 0, 10);
 }
 
 inline void
 ACE_Convert (const ACE_TCHAR *s, double &d)
 {
-  d = ACE_OS::strtod (s, 0);
+  d = ACE_OS_String::strtod (s, 0);
 }
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

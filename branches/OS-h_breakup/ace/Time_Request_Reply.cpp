@@ -2,6 +2,8 @@
 
 #include "ace/Time_Request_Reply.h"
 #include "ace/Log_Msg.h"
+#include "ace/Trace.h"
+#include "ace/Global_Macros.h"
 
 ACE_RCSID(ace, Time_Request_Reply, "$Id$")
 
@@ -126,11 +128,11 @@ ACE_Time_Request::encode (void *&buf)
   // Compute the length *before* doing the marshaling.
 
   buf = (void *) &this->transfer_;
-  this->transfer_.block_forever_ = htonl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = htonl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_   = htonl (this->transfer_.sec_timeout_);
-  this->transfer_.msg_type_      = htonl (this->transfer_.msg_type_);
-  this->transfer_.time_          = htonl (this->transfer_.time_);
+  this->transfer_.block_forever_ = ACE_HTONL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_   = ACE_HTONL (this->transfer_.sec_timeout_);
+  this->transfer_.msg_type_      = ACE_HTONL (this->transfer_.msg_type_);
+  this->transfer_.time_          = ACE_HTONL (this->transfer_.time_);
 
   return this->size ();  // Always fixed
 }
@@ -142,11 +144,11 @@ ACE_Time_Request::decode (void)
 {
   ACE_TRACE ("ACE_Time_Request::decode");
   // Decode
-  this->transfer_.block_forever_ = ntohl (this->transfer_.block_forever_);
-  this->transfer_.usec_timeout_  = ntohl (this->transfer_.usec_timeout_);
-  this->transfer_.sec_timeout_   = ntohl (this->transfer_.sec_timeout_);
-  this->transfer_.msg_type_      = ntohl (this->transfer_.msg_type_);
-  this->transfer_.time_          = ntohl (this->transfer_.time_);
+  this->transfer_.block_forever_ = ACE_NTOHL (this->transfer_.block_forever_);
+  this->transfer_.usec_timeout_  = ACE_NTOHL (this->transfer_.usec_timeout_);
+  this->transfer_.sec_timeout_   = ACE_NTOHL (this->transfer_.sec_timeout_);
+  this->transfer_.msg_type_      = ACE_NTOHL (this->transfer_.msg_type_);
+  this->transfer_.time_          = ACE_NTOHL (this->transfer_.time_);
 
   this->time_ = this->transfer_.time_;
   return 0;

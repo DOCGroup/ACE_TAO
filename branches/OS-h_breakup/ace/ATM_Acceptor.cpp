@@ -61,7 +61,7 @@ ACE_ATM_Acceptor::get_local_addr( ACE_ATM_Addr &local_addr )
   }
 
   laddr = ( struct sockaddr_atm *)local_addr.get_addr();
-  ACE_OS::memcpy(( void *)&( laddr -> satm_number ), 
+  ACE_OS_String::memcpy(( void *)&( laddr -> satm_number ), 
                  ( void *)&addr, 
                  ATM_ADDR_SIZE - 1 );
 
@@ -130,7 +130,7 @@ ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
   ((ACE_SOCK_Acceptor *)this) -> set_handle( ret );
 
   /* Set up the address information to become a server */
-  ACE_OS::memset ((void *) &local_atm_addr, 0, sizeof local_atm_addr);
+  ACE_OS_String::memset ((void *) &local_atm_addr, 0, sizeof local_atm_addr);
   local_atm_addr.satm_family = AF_ATM;
   local_atm_addr.satm_number.AddressType = SAP_FIELD_ANY_AESA_REST;
   local_atm_addr.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] 

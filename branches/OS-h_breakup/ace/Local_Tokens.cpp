@@ -149,9 +149,9 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
   if (id == 0)
     return;
 
-  ACE_OS::strsncpy (this->client_id_,
-                    (ACE_TCHAR *) id,
-                    ACE_MAXCLIENTIDLEN);
+  ACE_OS_String::strsncpy (this->client_id_,
+                           (ACE_TCHAR *) id,
+                           ACE_MAXCLIENTIDLEN);
 }
 
 void
@@ -361,7 +361,7 @@ ACE_Token_Proxy_Queue::member (const ACE_TCHAR *id)
   for (ACE_TPQ_Entry *temp = this->head_;
        temp != 0;
        temp = temp->next_)
-    if (ACE_OS::strcmp (temp->client_id (), id) == 0)
+    if (ACE_OS_String::strcmp (temp->client_id (), id) == 0)
       // We found it!
       return 1;
 
@@ -434,9 +434,9 @@ ACE_Mutex_Token::ACE_Mutex_Token (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_Mutex_Token::ACE_Mutex_Token");
 
-  ACE_OS::strsncpy (this->token_name_,
-                    name,
-                    ACE_MAXTOKENNAMELEN);
+  ACE_OS_String::strsncpy (this->token_name_,
+                           name,
+                           ACE_MAXTOKENNAMELEN);
 }
 
 ACE_Mutex_Token::~ACE_Mutex_Token (void)
@@ -673,9 +673,9 @@ ACE_RW_Token::ACE_RW_Token (const ACE_TCHAR *name)
 {
   ACE_TRACE ("ACE_RW_Token::ACE_RW_Token");
 
-  ACE_OS::strsncpy (this->token_name_,
-                    name,
-                    ACE_MAXTOKENNAMELEN);
+  ACE_OS_String::strsncpy (this->token_name_,
+                           name,
+                           ACE_MAXTOKENNAMELEN);
 }
 
 ACE_RW_Token::~ACE_RW_Token (void)
@@ -954,7 +954,7 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
       // If an <id> is specified, return whether it is the owner being
       // returned.
       if ((id != 0) &&
-          (ACE_OS::strcmp (id, this->owner ()->client_id ()) == 0))
+          (ACE_OS_String::strcmp (id, this->owner ()->client_id ()) == 0))
         id_is_owner = 1;
     }
   // The first waiter is a reader, so there can be multiple owning
@@ -973,7 +973,7 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
           stack.push (temp);
 
           if (!id_is_owner && (id != 0) &&
-              (ACE_OS::strcmp (id, temp->client_id ()) == 0))
+              (ACE_OS_String::strcmp (id, temp->client_id ()) == 0))
             id_is_owner = 1;
         }
     }

@@ -1,6 +1,8 @@
 /* -*- C++ -*- */
 // $Id$
 
+//#include "ace/Global_Macros.h"
+
 // Clean up the array (e.g., delete dynamically allocated memory).
 
 template <class T> ACE_INLINE

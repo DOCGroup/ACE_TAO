@@ -352,8 +352,8 @@ public:
   /**
    * Return a dynamically allocated duplicate of <str>, substituting
    * the environment variable if <str[0] == '$'>.  Note that the
-   * pointer is allocated with <ACE_OS::malloc> and must be freed by
-   * <ACE_OS::free>.
+   * pointer is allocated with <ACE_OS_Memory::malloc> and must be freed by
+   * <ACE_OS_Memory::free>.
    */
   static ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
 #endif /* ACE_HAS_WINCE */
@@ -371,11 +371,11 @@ public:
   static void strdelete (char *s);
 
   /// Create a fresh new copy of <str>, up to <n> chars long.  Uses
-  /// <ACE_OS::malloc> to allocate the new string.
+  /// <ACE_OS_Memory::malloc> to allocate the new string.
   static char *strndup (const char *str, size_t n);
 
   /// Create a fresh new copy of <str>, up to <n> chars long.  Uses
-  /// <ACE_OS::malloc> to allocate the new string.
+  /// <ACE_OS_Memory::malloc> to allocate the new string.
   static char *strnnew (const char *str, size_t n);
 
 #if defined (ACE_HAS_WCHAR)

@@ -1,6 +1,7 @@
 // $Id$
 
-#include "Flag_Manip.h"
+#include "ace/Flag_Manip.h"
+#include "ace/OS.h" // for ioctl(), etc...
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Flag_Manip.i"

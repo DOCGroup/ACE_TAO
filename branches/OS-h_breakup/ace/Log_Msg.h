@@ -19,11 +19,16 @@
 // ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
 // pull that one early.
 #include "ace/config-all.h"
-#include "ace/Global_Macros.h"
-#include "ace/Default_Constants.h"
-#include "ace/Log_Priority.h"
-#include "ace/Basic_Types.h"
-#include "ace/OS_Errno.h"
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "ace/ace_sys_param.h"      // for MAXPATHLEN
+#include "ace/Log_Priority.h"       // for ACE_Log_Priority  
+#include "ace/Default_Constants.h"  // for ACE_MAXLOGMSGLEN
+#include "ace/ace_threads.h"        // for ACE_thread_key_t
+#include "ace/ACE_export.h"
 
 // The following ASSERT macro is courtesy of Alexandre Karev
 // <akg@na47sun05.cern.ch>.
@@ -479,8 +484,8 @@ public:
    *  + 'W': print a wide character string
    *  + 'x': print as a hex number
    *  + 'X': print as a hex number
-   *  + 'z': print an ACE_OS::WChar character
-   *  + 'Z': print an ACE_OS::WChar character string
+   *  + 'z': print an ACE_OS_String::WChar character
+   *  + 'Z': print an ACE_OS_String::WChar character string
    *  + '%': print out a single percent sign, '%'
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
@@ -657,6 +662,7 @@ private:
   /// Return the TSS singleton thread descriptor
   static ACE_OS_Thread_Descriptor *thr_desc_hook (void);
 
+  //dah not needed?  
   //friend void ACE_OS::cleanup_tss (const u_int);
 
   // = Disallow these operations.

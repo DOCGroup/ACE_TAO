@@ -313,7 +313,7 @@ ACE_INLINE void
 ACE_Process_Options::working_directory (const char *wd)
 {
 #if !defined(ACE_HAS_WINCE)
-  ACE_OS::strcpy (working_directory_, ACE_TEXT_CHAR_TO_TCHAR (wd));
+  ACE_OS_String::strcpy (working_directory_, ACE_TEXT_CHAR_TO_TCHAR (wd));
 #else
   ACE_UNUSED_ARG (wd);
 #endif /* !ACE_HAS_WINCE */
@@ -324,7 +324,7 @@ ACE_INLINE void
 ACE_Process_Options::working_directory (const wchar_t *wd)
 {
 #if !defined(ACE_HAS_WINCE)
-  ACE_OS::strcpy (working_directory_, ACE_TEXT_WCHAR_TO_TCHAR (wd));
+  ACE_OS_String::strcpy (working_directory_, ACE_TEXT_WCHAR_TO_TCHAR (wd));
 #else
   ACE_UNUSED_ARG (wd);
 #endif /* !ACE_HAS_WINCE */
@@ -334,7 +334,7 @@ ACE_Process_Options::working_directory (const wchar_t *wd)
 ACE_INLINE void
 ACE_Process_Options::process_name (const ACE_TCHAR *p)
 {
-  ACE_OS::strcpy (this->process_name_, p);
+  ACE_OS_String::strcpy (this->process_name_, p);
 }
 
 ACE_INLINE const ACE_TCHAR *

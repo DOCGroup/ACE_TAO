@@ -34,7 +34,10 @@
 
 #if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
 
-#include "ace/OS.h"
+#include "ace/ACE_export.h"
+#include "ace/ace_sys_types.h"
+#include "ace/ace_sys_signal.h"
+#include "ace/ace_sys_socket.h"
 
 // Forward declarations
 class ACE_Proactor;
@@ -1297,6 +1300,7 @@ public:
   };
 };
 
+class ACE_Time_Value;
 
 /**
  * @class ACE_Handler

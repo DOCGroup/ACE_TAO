@@ -80,11 +80,11 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
   // to the syslog daemon.
 
   ACE_TCHAR message[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-  ACE_OS::strcpy (message, log_record.msg_data ());
+  ACE_OS_String::strcpy (message, log_record.msg_data ());
 
-  for (ACE_TCHAR *line = ACE_OS::strtok (message, ACE_LIB_TEXT ("\n"));
+  for (ACE_TCHAR *line = ACE_OS_String::strtok (message, ACE_LIB_TEXT ("\n"));
        line != 0;
-       line = ACE_OS::strtok (0, ACE_LIB_TEXT ("\n")))
+       line = ACE_OS_String::strtok (0, ACE_LIB_TEXT ("\n")))
     {
       // Format the message line.  Note that the processing for
       // VERBOSE is the same as for VERBOSE_LITE, since syslog()

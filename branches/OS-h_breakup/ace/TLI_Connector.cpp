@@ -59,7 +59,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       struct t_bind *localaddr;
 
       localaddr = (struct t_bind *) 
-        ACE_OS::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
+        ACE_OS_TLI::t_alloc (new_stream.get_handle (), T_BIND, T_ADDR);
 
       if (localaddr == 0)
         result = -1;
@@ -84,17 +84,17 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
             {
               void *addr_buf = local_sap.get_addr ();
               localaddr->addr.len = local_sap.get_size ();
-              ACE_OS::memcpy(localaddr->addr.buf,
-                             addr_buf,
-                             localaddr->addr.len);
+              ACE_OS_String::memcpy(localaddr->addr.buf,
+                                    addr_buf,
+                                    localaddr->addr.len);
 
-              if (ACE_OS::t_bind (new_stream.get_handle (),
-                                  localaddr,
-                                  localaddr) == -1)
+              if (ACE_OS_TLI::t_bind (new_stream.get_handle (),
+                                      localaddr,
+                                      localaddr) == -1)
                 result = -1;
 
-              ACE_OS::t_free ((char *) localaddr,
-                              T_BIND);
+              ACE_OS_TLI::t_free ((char *) localaddr,
+                                  T_BIND);
             }
         }
 
@@ -105,13 +105,13 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
         }
     }
   // Let TLI select the local endpoint addr.
-  else if (ACE_OS::t_bind (new_stream.get_handle (), 0, 0) == -1)
+  else if (ACE_OS_TLI::t_bind (new_stream.get_handle (), 0, 0) == -1)
     return -1;
 
   struct t_call *callptr = 0;
 
   callptr = (struct t_call *) 
-    ACE_OS::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR);
+    ACE_OS_TLI::t_alloc (new_stream.get_handle (), T_CALL, T_ADDR);
 
   if (callptr == 0)
     {
@@ -121,15 +121,15 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
 
   void *addr_buf = remote_sap.get_addr ();
   callptr->addr.len = remote_sap.get_size ();
-  ACE_OS::memcpy (callptr->addr.buf,
-                  addr_buf,
-                  callptr->addr.len);
+  ACE_OS_String::memcpy (callptr->addr.buf,
+                         addr_buf,
+                         callptr->addr.len);
   //callptr->addr.buf = (char *) remote_sap.get_addr ();
 
   if (udata != 0)
-    ACE_OS::memcpy ((void *) &callptr->udata, (void *) udata, sizeof *udata);
+    ACE_OS_String::memcpy ((void *) &callptr->udata, (void *) udata, sizeof *udata);
   if (opt != 0)
-    ACE_OS::memcpy ((void *) &callptr->opt, (void *) opt, sizeof *opt);
+    ACE_OS_String::memcpy ((void *) &callptr->opt, (void *) opt, sizeof *opt);
 
   // Connect to remote endpoint.
 #if defined (ACE_HAS_FORE_ATM_XTI)
@@ -144,7 +144,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
         result = -1;
       
       // Do a non-blocking connect.
-      if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
+      if (ACE_OS_TLI::t_connect (new_stream.get_handle (), callptr, 0) == -1)
         {
           result = -1;
           
@@ -162,7 +162,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
         }
     }
   // Do a blocking connect to the server.
-  else if (ACE_OS::t_connect (new_stream.get_handle (), callptr, 0) == -1)
+  else if (ACE_OS_TLI::t_connect (new_stream.get_handle (), callptr, 0) == -1)
     result = -1;
 
   if (result != -1) 
@@ -182,7 +182,7 @@ ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
       new_stream.set_handle (ACE_INVALID_HANDLE);
     }
 
-  if (ACE_OS::t_free ((char *) callptr, T_CALL) == -1)
+  if (ACE_OS_TLI::t_free ((char *) callptr, T_CALL) == -1)
     return -1;
   return result;
 }
@@ -198,7 +198,7 @@ ACE_TLI_Connector::complete (ACE_TLI_Stream &new_stream,
 #if defined (ACE_WIN32)
    if (WaitForSingleObject (new_stream.get_handle(), tv->msec()) == WAIT_OBJECT_0)
     {
-      if (ACE_OS::t_look (new_stream.get_handle()) == T_CONNECT)
+      if (ACE_OS_TLI::t_look (new_stream.get_handle()) == T_CONNECT)
         return t_rcvconnect (new_stream.get_handle(), 0);
       else
         return -1;

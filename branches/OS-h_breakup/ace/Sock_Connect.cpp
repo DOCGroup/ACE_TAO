@@ -70,7 +70,7 @@ get_reg_subkeys (const ACE_TCHAR *key,
     {
       if (subkeyname_len < buf_len - total)
         {
-          ACE_OS::strcpy(buffer + total, subkeyname);
+          ACE_OS_String::strcpy(buffer + total, subkeyname);
           total += subkeyname_len + 1;
           // Reset: was changed by RegEnumKeyEx call.
           subkeyname_len = ACE_MAX_FULLY_QUALIFIED_NAME_LEN + 1;
@@ -337,23 +337,23 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
         return -1;
       else
 #if !defined(_UNICOS)
-        ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
-                        (char *) hp->h_addr,
-                        hp->h_length);
+        ACE_OS_String::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+                               (char *) hp->h_addr,
+                               hp->h_length);
 #else /* _UNICOS */
       {
         ACE_UINT64 haddr;  // a place to put the address
         char * haddrp = (char *) &haddr;  // convert to char pointer
-        ACE_OS::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
+        ACE_OS_String::memcpy(haddrp,(char *) hp->h_addr,hp->h_length);
         ip_addr.sin_addr.s_addr = haddr;
       }
 #endif /* ! _UNICOS */
     }
   else
     {
-      ACE_OS::memset ((void *) &ip_addr, 0, sizeof ip_addr);
+      ACE_OS_String::memset ((void *) &ip_addr, 0, sizeof ip_addr);
 #if !defined(_UNICOS)
-      ACE_OS::memcpy ((void *) &ip_addr.sin_addr,
+      ACE_OS_String::memcpy ((void *) &ip_addr.sin_addr,
                       (void*) &host_addr,
                       sizeof ip_addr.sin_addr);
 #else /* _UNICOS */
@@ -376,9 +376,9 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
       struct sockaddr_in if_addr;
 
       // Compare host ip address with interface ip address.
-      ACE_OS::memcpy (&if_addr,
-                      &ifr->ifr_addr,
-                      sizeof if_addr);
+      ACE_OS_String::memcpy (&if_addr,
+                             &ifr->ifr_addr,
+                             sizeof if_addr);
 
       if (ip_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
         continue;
@@ -427,13 +427,13 @@ ACE_Sock_Connect::get_bcast_addr (ACE_UINT32 &bcast_addr,
                         ACE_LIB_TEXT ("ioctl (get broadaddr)")));
           else
             {
-              ACE_OS::memcpy (ACE_reinterpret_cast(sockaddr_in *, &ip_addr),
-                              ACE_reinterpret_cast(sockaddr_in *, &if_req.ifr_broadaddr),
-                              sizeof if_req.ifr_broadaddr);
+              ACE_OS_String::memcpy (ACE_reinterpret_cast(sockaddr_in *, &ip_addr),
+                                     ACE_reinterpret_cast(sockaddr_in *, &if_req.ifr_broadaddr),
+                                     sizeof if_req.ifr_broadaddr);
 
-              ACE_OS::memcpy ((void *) &host_addr,
-                              (void *) &ip_addr.sin_addr,
-                              sizeof host_addr);
+              ACE_OS_String::memcpy ((void *) &host_addr,
+                                     (void *) &ip_addr.sin_addr,
+                                     sizeof host_addr);
 
               if (handle == ACE_INVALID_HANDLE)
                 ACE_OS::close (s);
@@ -661,7 +661,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
                     while (tempAdapterInfo != 0) {
                         IP_ADDR_STRING* addr = &tempAdapterInfo->IpAddressList;
                         while (addr != 0) {
-                            if (ACE_OS::strcmp(addr->IpAddress.String, invalid_IP) != 0) {
+                            if (ACE_OS_String::strcmp(addr->IpAddress.String, invalid_IP) != 0) {
                                 // skip invalid IP address
                                 ++n_interfaces;
                             }
@@ -683,7 +683,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
                 while (adapterInfo != 0) {
                     IP_ADDR_STRING* addr = &adapterInfo->IpAddressList;
                     while (addr != 0) {
-                        if (ACE_OS::strcmp(addr->IpAddress.String, invalid_IP) != 0) {
+                        if (ACE_OS_String::strcmp(addr->IpAddress.String, invalid_IP) != 0) {
                             addrs[count++] = ACE_INET_Addr((u_short) 0, addr->IpAddress.String);
                         }
                         addr = addr->Next;
@@ -889,8 +889,8 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
                              buf_len))
             continue; // Skip unknown devices.
 
-          if (ACE_OS::strcmp (buffer,
-                              INVALID_TCPIP_DEVICE_ADDR) == 0)
+          if (ACE_OS_String::strcmp (buffer,
+                                     INVALID_TCPIP_DEVICE_ADDR) == 0)
             continue; // Don't count this device
 
           // c. store in hostinfo object array and up the counter
@@ -930,7 +930,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
   ACE_NEW_RETURN (ifs,
                   struct ifreq[num_ifs],
                   -1);
-  ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct ifreq));
+  ACE_OS_String::memset (ifs, 0, num_ifs * sizeof (struct ifreq));
 
   ACE_Auto_Array_Ptr<struct ifreq> p_ifs (ifs);
 
@@ -942,7 +942,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
     }
 
   struct ifconf ifcfg;
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
+  ACE_OS_String::memset (&ifcfg, 0, sizeof (struct ifconf));
   ifcfg.ifc_req = p_ifs.get ();
   ifcfg.ifc_len = num_ifs * sizeof (struct ifreq);
 
@@ -1006,9 +1006,9 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
 
           inAddr.sin_len = pcur->ifr_addr.sa_len;
           inAddr.sin_family = pcur->ifr_addr.sa_family;
-          memcpy((void *)&(inAddr.sin_addr),
-                 (const void *)&(pcur->ifr_addr.sa_data[8]),
-                 sizeof(struct in_addr));
+          ACE_OS_String::memcpy((void *)&(inAddr.sin_addr),
+                                (const void *)&(pcur->ifr_addr.sa_data[8]),
+                                sizeof(struct in_addr));
 
           if (inAddr.sin_addr.s_addr != 0)
             {
@@ -1066,7 +1066,7 @@ ACE_Sock_Connect::get_ip_interfaces (size_t &count,
               // obtained using ':' as the delimiter. Since, using
               // ifAddrGet(), we just get the IP address, I am adding
               // a ":" to get with the general case.
-              ACE_OS::strcat (address, ":");
+              ACE_OS_String::strcat (address, ":");
               addrs[count].set (address);
             }
           else
@@ -1120,7 +1120,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
   struct ifconf ifcfg;
   size_t ifreq_size = num_ifs * sizeof (struct ifreq);
   struct ifreq *p_ifs =
-    (struct ifreq *) ACE_OS::malloc (ifreq_size);
+    (struct ifreq *) ACE_OS_Memory::malloc (ifreq_size);
 
   if (!p_ifs)
     {
@@ -1128,8 +1128,8 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
       return -1;
     }
 
-  ACE_OS::memset (p_ifs, 0, ifreq_size);
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
+  ACE_OS_String::memset (p_ifs, 0, ifreq_size);
+  ACE_OS_String::memset (&ifcfg, 0, sizeof (struct ifconf));
 
   ifcfg.ifc_req = p_ifs;
   ifcfg.ifc_len = ifreq_size;
@@ -1143,7 +1143,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
                      cmd,
                      (caddr_t) &ifcfg) == -1)
     {
-      ACE_OS::free (ifcfg.ifc_req);
+      ACE_OS_Memory::free (ifcfg.ifc_req);
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_LIB_TEXT ("count_interfaces:ioctl:")
                          ACE_LIB_TEXT ("SIOCGIFCONF failed")),
@@ -1177,7 +1177,7 @@ ACE_Sock_Connect::count_interfaces (ACE_HANDLE handle, size_t &how_many)
 #endif /* CHORUS_4 */
     }
 
-  ACE_OS::free (ifcfg.ifc_req);
+  ACE_OS_Memory::free (ifcfg.ifc_req);
   how_many = if_count;
   return 0;
 #else

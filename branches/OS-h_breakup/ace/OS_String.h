@@ -425,6 +425,22 @@ public:
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOUL */
 
   //@}
+  //@{ @name Wide-character strings
+  // @@ UNICODE: (brunsch) Can this be handled better?
+  // The following WChar typedef and functions are used by TAO.  TAO
+  // does not use wchar_t because the size of wchar_t is
+  // platform-dependent. These are to be used for all
+  // manipulate\ions of CORBA::WString.
+  typedef ACE_UINT16 WChar;
+  static u_int wslen (const WChar *);
+  static WChar *wscpy (WChar *,
+                       const WChar *);
+  static int wscmp (const WChar *,
+                    const WChar *);
+  static int wsncmp (const WChar *,
+                     const WChar *,
+                     size_t len);
+  //@}
 
 private:
 

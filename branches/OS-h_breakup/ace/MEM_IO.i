@@ -130,7 +130,7 @@ ACE_MEM_IO::send (const void *buf,
   ACE_MEM_SAP_Node *sbuf = this->deliver_strategy_->acquire_buffer (len);
   if (sbuf == 0)
     return -1;                  // Memory buffer not initialized.
-  ACE_OS::memcpy (sbuf->data (), buf, len);
+  ACE_OS_String::memcpy (sbuf->data (), buf, len);
 
   ///
 
@@ -165,9 +165,9 @@ ACE_MEM_IO::recv (void *buf,
 
       size_t length = (len > buf_len ? buf_len : len);
 
-      ACE_OS::memcpy ((char *) buf + count,
-                      (char *) this->recv_buffer_->data () + this->cur_offset_,
-                      length);
+      ACE_OS_String::memcpy ((char *) buf + count,
+                             (char *) this->recv_buffer_->data () + this->cur_offset_,
+                             length);
       this->cur_offset_ += length;
 //        len -= length;
       count += length;

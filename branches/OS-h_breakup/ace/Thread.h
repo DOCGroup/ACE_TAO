@@ -21,6 +21,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+struct cancel_state
+{
+  int cancelstate;
+  // e.g., PTHREAD_CANCEL_ENABLE, PTHREAD_CANCEL_DISABLE,
+  // PTHREAD_CANCELED.
+
+  int canceltype;
+  // e.g., PTHREAD_CANCEL_DEFERRED and PTHREAD_CANCEL_ASYNCHRONOUS.
+};
+
 /**
  * @class ACE_Thread
  *

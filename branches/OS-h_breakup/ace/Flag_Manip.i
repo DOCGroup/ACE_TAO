@@ -1,6 +1,11 @@
 /* -*- C++ -*- */
 // $Id$
 
+#include "ace/Trace.h"
+#if !defined (ACE_LACKS_FCNTL)
+#  include "ace/OS.h" // for fcntl()
+#endif /* !ACE_LACKS_FCNTL */
+
 // Return flags currently associated with handle.
 
 ASYS_INLINE int

@@ -53,7 +53,7 @@ ACE_TLI::open (const char device[], int oflag, struct t_info *info)
   ACE_TRACE ("ACE_TLI::open");
   if (oflag == 0)
     oflag = O_RDWR;
-  this->set_handle (ACE_OS::t_open ((char *) device, oflag, info));
+  this->set_handle (ACE_OS_TLI::t_open ((char *) device, oflag, info));
 
   return this->get_handle ();
 }
@@ -90,7 +90,7 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
   name.buf    = (char *) sa.get_addr ();
 
   if (ACE_OS::ioctl (this->get_handle (), TI_GETMYNAME, &name) == -1)
-/*  if (ACE_OS::t_getname (this->get_handle (), &name, LOCALNAME) == -1) */
+/*  if (ACE_OS_TLI::t_getname (this->get_handle (), &name, LOCALNAME) == -1) */
     return -1;
   else
     return 0;
@@ -108,7 +108,7 @@ ACE_TLI::close (void)
 
   if (this->get_handle () != ACE_INVALID_HANDLE)
     {
-      result = ACE_OS::t_close (this->get_handle ());
+      result = ACE_OS_TLI::t_close (this->get_handle ());
       this->set_handle (ACE_INVALID_HANDLE);
     }
   return result;
@@ -140,9 +140,9 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   opthdr->level = level;
   opthdr->name  = option;
   opthdr->len   = OPTLEN (optlen);
-  ACE_OS::memcpy (OPTVAL (opthdr), optval, optlen);
+  ACE_OS_String::memcpy (OPTVAL (opthdr), optval, optlen);
 
-  return ACE_OS::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret);
+  return ACE_OS_TLI::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret);
 #else
   ACE_UNUSED_ARG (level);
   ACE_UNUSED_ARG (option);
@@ -176,11 +176,11 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
   opthdr->level = level;
   opthdr->name  = option;
   opthdr->len   = OPTLEN (optlen);
-  if (ACE_OS::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret) == -1)
+  if (ACE_OS_TLI::t_optmgmt (this->get_handle (), &this->so_opt_req, &this->so_opt_ret) == -1)
     return -1;
   else
     {
-      ACE_OS::memcpy (optval, OPTVAL (opthdr), optlen);
+      ACE_OS_String::memcpy (optval, OPTVAL (opthdr), optlen);
       return 0;
     }
 #else

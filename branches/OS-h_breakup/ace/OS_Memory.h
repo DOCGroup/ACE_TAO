@@ -24,10 +24,6 @@
 
 #include "ace/OS_Errno.h"
 
-#if defined (ACE_HAS_PACE)
-# include /**/ "pace/stdlib.h"
-#endif /* ACE_HAS_PACE */
-
 #ifndef ACE_HAS_WINCE
 #include <stddef.h>
 #endif  // ACE_HAS_WINCE
@@ -56,47 +52,26 @@
 // too, so that you guarantee that strdup() calls your desired mallocator
 // and not the system mallocator.
 //
-# if defined (ACE_HAS_PACE)
-#  if !defined (ACE_MALLOC_FUNC)
-#    define ACE_MALLOC_FUNC pace_malloc
-#  endif
-#  if !defined (ACE_CALLOC_FUNC)
-#    define ACE_CALLOC_FUNC pace_calloc
-#  endif
-#  if !defined (ACE_FREE_FUNC)
-#    define ACE_FREE_FUNC pace_free
-#  endif
-#  if !defined (ACE_REALLOC_FUNC)
-#    define ACE_REALLOC_FUNC pace_realloc
-#  endif
 
-#  if defined (ACE_HAS_OLD_MALLOC)
+# if !defined (ACE_MALLOC_FUNC)
+#   define ACE_MALLOC_FUNC ::malloc
+# endif
+# if !defined (ACE_CALLOC_FUNC)
+#   define ACE_CALLOC_FUNC ::calloc
+# endif
+# if !defined (ACE_FREE_FUNC)
+#   define ACE_FREE_FUNC ::free
+# endif
+# if !defined (ACE_REALLOC_FUNC)
+#   define ACE_REALLOC_FUNC ::realloc
+# endif
+
+# if defined (ACE_HAS_OLD_MALLOC)
 typedef char *ACE_MALLOC_T;
-#  else
-typedef void *ACE_MALLOC_T;
-#  endif /* ACE_HAS_OLD_MALLOC */
-
 # else
-
-#  if !defined (ACE_MALLOC_FUNC)
-#    define ACE_MALLOC_FUNC ::malloc
-#  endif
-#  if !defined (ACE_CALLOC_FUNC)
-#    define ACE_CALLOC_FUNC ::calloc
-#  endif
-#  if !defined (ACE_FREE_FUNC)
-#    define ACE_FREE_FUNC ::free
-#  endif
-#  if !defined (ACE_REALLOC_FUNC)
-#    define ACE_REALLOC_FUNC ::realloc
-#  endif
-
-#  if defined (ACE_HAS_OLD_MALLOC)
-typedef char *ACE_MALLOC_T;
-#  else
 typedef void *ACE_MALLOC_T;
-#  endif /* ACE_HAS_OLD_MALLOC */
-#endif /* ACE_HAS_PACE */
+# endif /* ACE_HAS_OLD_MALLOC */
+
 
 /**
  * @class ACE_OS_Memory

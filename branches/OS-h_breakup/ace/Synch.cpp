@@ -208,7 +208,7 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name, ACE_mutexattr_t *arg)
               ACE_OS::close (fd);
               return;
             }
-          this->lockname_ = ACE_OS::strdup (name);
+          this->lockname_ = ACE_OS_String::strdup (name);
           if (this->lockname_ == 0)
             {
               ACE_OS::close (fd);

@@ -208,8 +208,8 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
   int i;
 
   for (i = 0; i < this->current_size_; i++)
-    if (ACE_OS::strcmp (name,
-                        this->service_vector_[i]->name ()) == 0)
+    if (ACE_OS_String::strcmp (name,
+                               this->service_vector_[i]->name ()) == 0)
       break;
 
   if (i < this->current_size_)
@@ -256,8 +256,8 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
 
   // Check to see if this is a duplicate.
   for (i = 0; i < this->current_size_; i++)
-    if (ACE_OS::strcmp (sr->name (),
-                        this->service_vector_[i]->name ()) == 0)
+    if (ACE_OS_String::strcmp (sr->name (),
+                               this->service_vector_[i]->name ()) == 0)
       break;
 
   // Replacing an existing entry

@@ -6,7 +6,7 @@
 ACE_RCSID(ace, Name_Space, "$Id$")
 
 ACE_Name_Binding::ACE_Name_Binding (void)
-  : type_ (ACE_OS::strdup (""))
+  : type_ (ACE_OS_String::strdup (""))
 {
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
@@ -15,7 +15,7 @@ ACE_Name_Binding::ACE_Name_Binding (void)
 ACE_Name_Binding::~ACE_Name_Binding (void)
 {
   ACE_TRACE ("ACE_Name_Binding::~ACE_Name_Binding");
-  ACE_OS::free ((void *) this->type_);
+  ACE_OS_Memory::free ((void *) this->type_);
 }
 
 ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
@@ -23,7 +23,7 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
                                     const char *type)
   : name_ (name),
     value_ (value),
-    type_ (type == 0 ? ACE_OS::strdup ("") : ACE_OS::strdup (type))
+    type_ (type == 0 ? ACE_OS_String::strdup ("") : ACE_OS_String::strdup (type))
 {
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
@@ -31,7 +31,7 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
 ACE_Name_Binding::ACE_Name_Binding (const ACE_Name_Binding &s)
   : name_ (s.name_),
     value_ (s.value_),
-    type_ (ACE_OS::strdup (s.type_))
+    type_ (ACE_OS_String::strdup (s.type_))
 {
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
@@ -43,10 +43,10 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
 
   if (this != &s)
     {
-      ACE_OS::free ((void *) this->type_);
+      ACE_OS_Memory::free ((void *) this->type_);
       this->name_ = s.name_;
       this->value_ = s.value_;
-      this->type_ = ACE_OS::strdup (s.type_);
+      this->type_ = ACE_OS_String::strdup (s.type_);
     }
 }
 
@@ -56,7 +56,7 @@ ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
   ACE_TRACE ("ACE_Name_Binding::operator ==");
   return this->name_ == s.name_
     && this->value_ == s.value_
-    && ACE_OS::strcmp (this->type_, s.type_) == 0;
+    && ACE_OS_String::strcmp (this->type_, s.type_) == 0;
 }
 
 ACE_Name_Space::~ACE_Name_Space (void)

@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Flag_Manip.h"
+#include "ace/ace_stdio.h"
 
 /**
  * @class ACE_FILE_Addr

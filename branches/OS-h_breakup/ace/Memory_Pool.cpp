@@ -198,8 +198,8 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
       // if the user didn't supply one...
 #if defined (ACE_DEFAULT_BACKING_STORE)
       // Create a temporary file.
-      ACE_OS::strcpy (this->backing_store_name_,
-                      ACE_DEFAULT_BACKING_STORE);
+      ACE_OS_String::strcpy (this->backing_store_name_,
+                             ACE_DEFAULT_BACKING_STORE);
 #else /* ACE_DEFAULT_BACKING_STORE */
       if (ACE_Lib_Find::get_temp_dir (this->backing_store_name_,
                                       MAXPATHLEN - 17) == -1)
@@ -212,15 +212,15 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->backing_store_name_,
-                      ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
+      ACE_OS_String::strcat (this->backing_store_name_,
+                             ACE_LIB_TEXT ("ace-malloc-XXXXXX"));
 
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else
-    ACE_OS::strsncpy (this->backing_store_name_,
-                      backing_store_name,
-                      (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+    ACE_OS_String::strsncpy (this->backing_store_name_,
+                             backing_store_name,
+                             (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 
 #if !defined (ACE_WIN32) && !defined (CHORUS)
   if (this->signal_handler_.register_handler (SIGSEGV, this) == -1)
@@ -571,7 +571,7 @@ ACE_Sbrk_Memory_Pool::acquire (size_t nbytes,
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
   // ACE_DEBUG ((LM_DEBUG,  ACE_LIB_TEXT ("(%P|%t) acquiring more chunks, nbytes = %d, rounded_bytes = %d\n"), nbytes, rounded_bytes));
-  void *cp = ACE_OS::sbrk (rounded_bytes);
+  void *cp = ACE_OS_Memory::sbrk (rounded_bytes);
 
   if (cp == MAP_FAILED)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -1044,9 +1044,9 @@ ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_sto
     // the user didn't supply one...
     backing_store_name = ACE_DEFAULT_PAGEFILE_POOL_NAME;
 
-  ACE_OS::strsncpy (this->backing_store_name_,
-                    backing_store_name,
-                    (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
+  ACE_OS_String::strsncpy (this->backing_store_name_,
+                           backing_store_name,
+                           (sizeof this->backing_store_name_ / sizeof (ACE_TCHAR)));
 }
 
 void *

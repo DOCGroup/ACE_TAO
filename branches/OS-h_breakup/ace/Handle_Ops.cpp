@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Handle_Ops.h"
+#include "ace/OS.h"  // for open()
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Handle_Ops.i"

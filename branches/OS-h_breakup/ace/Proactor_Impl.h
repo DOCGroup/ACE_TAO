@@ -20,10 +20,10 @@
 #if ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
 // This only works on Win32 platforms and on Unix platforms supporting
 // aio calls.
-#include "ace/OS.h"
 
+#include "ace/ACE_export.h"
 #include "ace/Asynch_IO.h"
-#include "ace/Reactor.h"
+#include "ace/Event_Handler.h"
 
 /**
  * @class ACE_Proactor_Impl

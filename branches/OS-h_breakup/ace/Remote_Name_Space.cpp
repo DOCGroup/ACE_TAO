@@ -51,7 +51,7 @@ ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
                             value_urep.get (),
                             value.length () * sizeof (ACE_USHORT16),
                             type,
-                            ACE_OS::strlen (type));
+                            ACE_OS_String::strlen (type));
   return this->ns_proxy_.request_reply (request);
 }
 
@@ -69,7 +69,7 @@ ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
                             value_urep.get (),
                             value.length () * sizeof (ACE_USHORT16),
                             type,
-                            ACE_OS::strlen (type));
+                            ACE_OS_String::strlen (type));
   return this->ns_proxy_.request_reply (request);
 }
 
@@ -98,7 +98,7 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
   ACE_NEW_RETURN (type,
                   char[reply.type_len () + 1],
                   -1);
-  ACE_OS::strcpy (type, reply.type ());
+  ACE_OS_String::strcpy (type, reply.type ());
   return 0;
 }
 

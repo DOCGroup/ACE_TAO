@@ -370,9 +370,9 @@ ACE_SString::ACE_SString (const ACE_SString &s)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
-  ACE_OS::memcpy ((void *) this->rep_,
-                  (const void *) s.rep_,
-                  this->len_);
+  ACE_OS_String::memcpy ((void *) this->rep_,
+                         (const void *) s.rep_,
+                         this->len_);
   this->rep_[this->len_] = '\0';
 }
 
@@ -406,7 +406,7 @@ ACE_SString::rep (char *s)
   if (s == 0)
     this->len_ = 0;
   else
-    this->len_ = ACE_OS::strlen (s);
+    this->len_ = ACE_OS_String::strlen (s);
 }
 
 // Constructor that actually copies memory.
@@ -428,9 +428,9 @@ ACE_SString::ACE_SString (const char *s,
     }
   else
     {
-      this->len_ = ACE_OS::strlen (s);
+      this->len_ = ACE_OS_String::strlen (s);
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::strcpy (this->rep_, s);
+      ACE_OS_String::strcpy (this->rep_, s);
     }
 }
 
@@ -471,7 +471,7 @@ ACE_SString::ACE_SString (const char *s,
     {
       this->len_ = len;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
-      ACE_OS::memcpy (this->rep_, s, len);
+      ACE_OS_String::memcpy (this->rep_, s, len);
       this->rep_[len] = '\0'; // Make sure to NUL terminate this!
     }
 }
@@ -493,7 +493,7 @@ ACE_SString::operator= (const ACE_SString &s)
           this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
         }
       this->len_ = s.len_;
-      ACE_OS::strcpy (this->rep_, s.rep_);
+      ACE_OS_String::strcpy (this->rep_, s.rep_);
     }
 
   return *this;

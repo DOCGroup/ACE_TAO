@@ -566,13 +566,13 @@ ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 int
 ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
 {
-  return ACE_OS::memcmp (this->ld, rhs.ld, 16) == 0;
+  return ACE_OS_String::memcmp (this->ld, rhs.ld, 16) == 0;
 }
 
 int
 ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 {
-  return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
+  return ACE_OS_String::memcmp (this->ld, rhs.ld, 16) != 0;
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 

@@ -363,9 +363,9 @@ ACE_Condition<MUTEX>::remove (void)
       ACE_OS::munmap (this->process_cond_,
                       sizeof (ACE_cond_t));
       ACE_OS::shm_unlink (this->condname_);
-      ACE_OS::free (ACE_static_cast (void *,
-                                     ACE_const_cast (ACE_TCHAR *,
-                                                     this->condname_)));
+      ACE_OS_Memory::free (ACE_static_cast (void *,
+                                            ACE_const_cast (ACE_TCHAR *,
+                                                            this->condname_)));
     }
   else if (this->process_cond_)
     {

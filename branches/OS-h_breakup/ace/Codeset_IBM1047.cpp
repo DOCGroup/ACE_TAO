@@ -117,7 +117,7 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
   char *buf;
   if (this->adjust (out, len, 1, buf) == 0)
     {
-      ACE_OS::memcpy (buf, x, len);
+      ACE_OS_String::memcpy (buf, x, len);
 
       for (ACE_CDR::ULong i = 0; i != len; ++i)
         buf[i] = ACE_from_IBM1047[buf[i]];
@@ -224,7 +224,7 @@ ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
 
   if (this->adjust (out, len, 1, buf) == 0)
     {
-      ACE_OS::memcpy (buf, x, len);
+      ACE_OS_String::memcpy (buf, x, len);
 
       for (ACE_CDR::ULong i = 0; i != len; ++i)
         buf[i] = ACE_to_IBM1047[buf[i]];

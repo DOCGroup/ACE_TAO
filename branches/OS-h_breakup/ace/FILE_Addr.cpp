@@ -7,6 +7,8 @@
 #include "ace/FILE_Addr.i"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Lib_Find.h"
+
 ACE_RCSID(ace, FILE_Addr, "$Id$")
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Addr)
@@ -24,8 +26,8 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
     {
 #if defined (ACE_DEFAULT_TEMP_FILE)
       // Create a temporary file.
-      ACE_OS::strcpy (this->filename_,
-                      ACE_DEFAULT_TEMP_FILE);
+      ACE_OS_String::strcpy (this->filename_,
+                             ACE_DEFAULT_TEMP_FILE);
 #else /* ACE_DEFAULT_TEMP_FILE */
       if (ACE_Lib_Find::get_temp_dir (this->filename_, 
                                       MAXPATHLEN - 15) == -1) 
@@ -38,19 +40,19 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
         }
 
       // Add the filename to the end
-      ACE_OS::strcat (this->filename_, ACE_LIB_TEXT ("ace-file-XXXXXX"));
+      ACE_OS_String::strcat (this->filename_, ACE_LIB_TEXT ("ace-file-XXXXXX"));
   
 #endif /* ACE_DEFAULT_TEMP_FILE */
   
       ACE_OS::mktemp (this->filename_);
       this->base_set (AF_FILE,
-                      ACE_OS::strlen (this->filename_) + 1);
+                      ACE_OS_String::strlen (this->filename_) + 1);
     }
   else
     {
-      (void) ACE_OS::strsncpy (this->filename_,
-                               sa.filename_,
-                               sa.get_size ());
+      (void) ACE_OS_String::strsncpy (this->filename_,
+                                      sa.filename_,
+                                      sa.get_size ());
 
       this->base_set (sa.get_type (),
                       sa.get_size ());
@@ -70,10 +72,10 @@ int
 ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 {
   this->ACE_Addr::base_set (AF_FILE,
-                            ACE_OS::strlen (filename) + 1);
-  (void) ACE_OS::strsncpy (this->filename_,
-                           filename,
-                           sizeof this->filename_ / sizeof (ACE_TCHAR));
+                            ACE_OS_String::strlen (filename) + 1);
+  (void) ACE_OS_String::strsncpy (this->filename_,
+                                  filename,
+                                  sizeof this->filename_ / sizeof (ACE_TCHAR));
   return 0;
 }
 
@@ -95,7 +97,7 @@ ACE_FILE_Addr::ACE_FILE_Addr (const ACE_TCHAR *filename)
 int
 ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 {
-  ACE_OS::strsncpy (s, this->filename_, len);
+  ACE_OS_String::strsncpy (s, this->filename_, len);
   return 0;
 }
 

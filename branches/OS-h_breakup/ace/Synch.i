@@ -229,9 +229,9 @@ ACE_Mutex::remove (void)
                ACE_OS::munmap ((void *) this->process_lock_,
                                sizeof (ACE_mutex_t));
                ACE_OS::shm_unlink (this->lockname_);
-               ACE_OS::free (ACE_static_cast (void *,
-                                              ACE_const_cast (ACE_TCHAR *,
-                                                            this->lockname_)));
+               ACE_OS_Memory::free (ACE_static_cast (void *,
+                                                     ACE_const_cast (ACE_TCHAR *,
+                                                                     this->lockname_)));
              }
          }
      }

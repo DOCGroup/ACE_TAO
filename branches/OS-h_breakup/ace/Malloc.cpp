@@ -108,7 +108,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 {
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
   char *n = this->name_;
-  ACE_OS::strcpy (n, name);
+  ACE_OS_String::strcpy (n, name);
   if (next != 0)
     next->prev_ = this;
 }

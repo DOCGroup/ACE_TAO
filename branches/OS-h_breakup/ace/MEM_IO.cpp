@@ -168,17 +168,17 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   ACE_TCHAR server_lock [MAXPATHLEN];
   ACE_TCHAR client_lock [MAXPATHLEN];
   const ACE_TCHAR *basename = ACE::basename (name);
-  //  size_t baselen = ACE_OS::strlen (basename);
+  //  size_t baselen = ACE_OS_String::strlen (basename);
 
   // Building names.  @@ Check buffer overflow?
-  ACE_OS::strcpy (server_sema, basename);
-  ACE_OS::strcat (server_sema, ACE_LIB_TEXT ("_sema_to_server"));
-  ACE_OS::strcpy (client_sema, basename);
-  ACE_OS::strcat (client_sema, ACE_LIB_TEXT ("_sema_to_client"));
-  ACE_OS::strcpy (server_lock, basename);
-  ACE_OS::strcat (server_lock, ACE_LIB_TEXT ("_lock_to_server"));
-  ACE_OS::strcpy (client_lock, basename);
-  ACE_OS::strcat (client_lock, ACE_LIB_TEXT ("_lock_to_client"));
+  ACE_OS_String::strcpy (server_sema, basename);
+  ACE_OS_String::strcat (server_sema, ACE_LIB_TEXT ("_sema_to_server"));
+  ACE_OS_String::strcpy (client_sema, basename);
+  ACE_OS_String::strcat (client_sema, ACE_LIB_TEXT ("_sema_to_client"));
+  ACE_OS_String::strcpy (server_lock, basename);
+  ACE_OS_String::strcat (server_lock, ACE_LIB_TEXT ("_lock_to_server"));
+  ACE_OS_String::strcpy (client_lock, basename);
+  ACE_OS_String::strcat (client_lock, ACE_LIB_TEXT ("_lock_to_client"));
 
   void *to_server_ptr = 0;
   // @@ Here, we assume the shared memory fill will never be resued.
@@ -377,9 +377,9 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
       ssize_t n = 0;
       while (message_block != 0)
         {
-          ACE_OS::memcpy (ACE_static_cast (char *, buf->data ()) + n,
-                          message_block->rd_ptr (),
-                          message_block->length ());
+          ACE_OS_String::memcpy (ACE_static_cast (char *, buf->data ()) + n,
+                                 message_block->rd_ptr (),
+                                 message_block->length ());
           n += message_block->length ();
 
           if (message_block->cont ())

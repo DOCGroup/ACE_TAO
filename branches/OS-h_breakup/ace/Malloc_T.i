@@ -47,7 +47,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
   // addr() call is really not absolutely necessary because of the way
   // ACE_Cached_Mem_Pool_Node's internal structure arranged.
   void *ptr = this->free_list_.remove ()->addr ();
-  ACE_OS::memset (ptr, initial_value, sizeof (T));
+  ACE_OS_String::memset (ptr, initial_value, sizeof (T));
   return ptr;
 }
 
@@ -88,7 +88,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
   // addr() call is really not absolutely necessary because of the way
   // ACE_Cached_Mem_Pool_Node's internal structure arranged.
   void *ptr = this->free_list_.remove ()->addr ();
-  ACE_OS::memset (ptr, initial_value, chunk_size_);
+  ACE_OS_String::memset (ptr, initial_value, chunk_size_);
   return ptr;
 }
 
