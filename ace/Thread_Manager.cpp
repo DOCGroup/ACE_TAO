@@ -266,33 +266,6 @@ ACE_Thread_Descriptor::acquire_release (void)
   ACE_Thread_Descriptor *INDEX = OP; \
 
 ACE_Thread_Descriptor *
-ACE_Thread_Manager::thread_desc_self (void)
-{
-  // This method must be called with lock held.
-
-  // Try to get it from cache.
-  ACE_Thread_Descriptor *desc = ACE_LOG_MSG->thr_desc ();
-
-  // Wasn't in the cache, so we'll have to look it up and cache it.
-  // If ACE_HAS_THREAD_ADAPTER, we are guranteed never need to search
-  // the list.
-  if (desc == 0)
-    {
-      ACE_thread_t id = ACE_OS::thr_self ();
-
-      desc = this->find_thread (id);
-
-      // Thread descriptor adapter might not have been put into the
-      // list yet.
-      if (desc != 0)
-        // Update the TSS cache.
-        ACE_LOG_MSG->thr_desc (desc);
-    }
-
-  return desc;
-}
-
-ACE_Thread_Descriptor *
 ACE_Thread_Manager::thread_descriptor (ACE_thread_t thr_id)
 {
   ACE_TRACE ("ACE_Thread_Manager::thread_descriptor");

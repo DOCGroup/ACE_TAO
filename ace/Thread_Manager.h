@@ -493,9 +493,7 @@ public:
   ACE_Thread_Descriptor *thread_desc_self (void);
   // Get a pointer to the calling thread's own thread_descriptor.
   // This must be called from a spawn thread.  This function will
-  // try to fetch this info from TSS, if it is not cached, then
-  // it will look it up and cache it.
-  // This function must be called with lock held.
+  // fetch the info from TSS.
 
   ACE_Thread_Descriptor *thread_descriptor (ACE_thread_t);
   // Return a pointer to the thread's Thread_Descriptor,
