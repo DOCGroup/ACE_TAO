@@ -1,3 +1,8 @@
+Mon Nov 29 16:03:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
+
+	* ACEXML/common/HttpCharStream.cpp:
+	  Minor change to get rid of warning in GCC 2.96 build.
+
 Mon Nov 29 15:43:12 UTC 2004  Martin Corino  <mcorino@remedy.nl>
 
 	* performance-tests/SCTP/Options_Manager.h:
