@@ -102,12 +102,12 @@ test_i::create_POA (ACE_ENV_SINGLE_ARG_DECL)
   policies[0] =
     this->poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID
                                              ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (test::_nil ());
 
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT
                                         ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+  ACE_CHECK_RETURN (test::_nil ());
 
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -154,7 +154,7 @@ test_i::destroy_POA (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->child_poa_->destroy (1, 0
-                             ACE_ENV_SINGLE_ARG_PARAMETER);
+                             ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
 }
 
