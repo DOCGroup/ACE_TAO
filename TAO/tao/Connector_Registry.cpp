@@ -207,7 +207,7 @@ TAO_Connector_Registry::preprocess_preconnects (TAO_ORB_Core *orb_core,
           ACE_CString protocol_name = i->substring (0, slot);
 
           if (slot != ACE_CString::npos &&
-              slot != ACE_static_cast (int, (i->length () - 3)) &&
+              (slot != ACE_static_cast (int, i->length ()) - 3) &&
               (*factory)->factory ()->match_prefix (protocol_name.c_str ()))
             {
               (*tmp) += i->substring (slot + 3); // +3 due to "://"
