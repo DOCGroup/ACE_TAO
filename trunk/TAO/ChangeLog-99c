@@ -1,3 +1,10 @@
+Sat Jul 17 14:27:57 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* tao/IIOP_Profile.h:
+
+	  Added some missing default CORBA_Envirnoment values (i.e.,
+	  TAO_default_enviroment ()).
+
 Sat Jul 17 12:38:08 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* utils/Makefile: Added nslist to the DIRS built "out-of-the-box".
