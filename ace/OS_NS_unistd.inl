@@ -926,8 +926,7 @@ ACE_INLINE int
 ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
 {
   ACE_OS_TRACE ("ACE_OS::readlink");
-# if defined (ACE_LACKS_READLINK) || \
-     defined (ACE_HAS_WINCE) || defined (ACE_WIN32)
+# if defined (ACE_LACKS_READLINK)
   ACE_UNUSED_ARG (path);
   ACE_UNUSED_ARG (buf);
   ACE_UNUSED_ARG (bufsiz);
