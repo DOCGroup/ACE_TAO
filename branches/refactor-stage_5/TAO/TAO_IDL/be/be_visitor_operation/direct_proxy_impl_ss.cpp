@@ -60,7 +60,7 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   *os << node->local_name () << " (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj," << be_nl
-      << "CORBA::Object_out forward," << be_nl
+      << "CORBA::Object_out," << be_nl
       << "TAO::Argument **";
 
   if (!node->void_return_type () || node->nmembers () > 0)

@@ -659,7 +659,7 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
   // ancestors.
   be_interface *bi = be_interface::narrow_from_decl (base_interface);
   return bi->gen_optable_entries (derived_interface,
-                                  this->skeleton_name_, 
+                                  this->skeleton_name_,
                                   os);
 }
 
@@ -934,7 +934,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_thru_poa_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_thru_poa_proxy_impl_name ()
                       << "::" << d->local_name ();
                 }
@@ -947,7 +947,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_direct_proxy_impl_name ()
                       << "::" << d->local_name ();
                 }
@@ -976,7 +976,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_thru_poa_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_thru_poa_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
@@ -989,7 +989,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_direct_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
@@ -1008,10 +1008,10 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   *os << "{\"_set_" << d->original_local_name ()
                       << "\", &" << full_skeleton_name
                       << "::_set_" << d->local_name () << "_skel,";
-                      
+
                   if (be_global->gen_thru_poa_collocation ())
                     {
-                      *os << " &" 
+                      *os << " &"
                           << derived_interface->full_thru_poa_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
@@ -1024,7 +1024,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
                   if (be_global->gen_direct_collocation ())
                     {
-                      *os << " &" 
+                      *os << " &"
                           << derived_interface->full_direct_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
@@ -1069,7 +1069,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_thru_poa_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_thru_poa_proxy_impl_name ();
                   *os << "::" << d->local_name ();
                 }
@@ -1082,7 +1082,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_direct_proxy_impl_name ();
                   *os << "::" << d->local_name ();
                 }
@@ -1112,7 +1112,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_thru_poa_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_thru_poa_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
@@ -1125,7 +1125,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &" 
+                  *os << " &"
                       << derived_interface->full_direct_proxy_impl_name ()
                       << "::_get_" << d->local_name ();
                 }
@@ -1147,7 +1147,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
                   if (be_global->gen_thru_poa_collocation ())
                     {
-                      *os << " &" 
+                      *os << " &"
                           << derived_interface->full_thru_poa_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
@@ -1160,7 +1160,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
                   if (be_global->gen_direct_collocation ())
                     {
-                      *os << " &" 
+                      *os << " &"
                           << derived_interface->full_direct_proxy_impl_name ()
                           << "::_set_" << d->local_name ();
                     }
@@ -1201,8 +1201,8 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
 
   // Generate the static method corresponding to this method.
   *os << be_nl << be_nl
-      << "ACE_INLINE void" << be_nl 
-      << (direct ? derived->full_direct_proxy_impl_name () 
+      << "ACE_INLINE void" << be_nl
+      << (direct ? derived->full_direct_proxy_impl_name ()
                  : derived->full_thru_poa_proxy_impl_name ())
       << prefix << "::" << d->local_name () << " (" << be_idt << be_idt_nl
       << "CORBA::Object_ptr obj, " << be_nl
@@ -1225,7 +1225,9 @@ be_interface::gen_collocated_skel_body (be_interface *derived,
       << "num_args" << be_nl
       << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
-      << "}";
+      << "}"<< be_nl;
+
+
 }
 
 void
@@ -2078,7 +2080,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
               << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
 
           // Generate the static method corresponding to this method.
-          *os << "static void" << be_nl 
+          *os << "static void" << be_nl
               << d->local_name () << " (" << be_idt << be_idt_nl
               << "CORBA::Object_ptr obj, " << be_nl
               << "CORBA::Object_out obj_forward," << be_nl
@@ -2141,7 +2143,7 @@ be_interface::gen_colloc_op_decl_helper (be_interface *derived,
 
   return 0;
 }
- 
+
 int
 be_interface::gen_colloc_op_defn_helper (be_interface *derived,
                                          be_interface *ancestor,
@@ -2268,7 +2270,7 @@ be_interface::gen_colloc_op_defn_helper (be_interface *derived,
 
   return 0;
 }
- 
+
 int
 be_interface::copy_ctor_helper (be_interface *derived,
                                 be_interface *base,
@@ -2389,7 +2391,7 @@ be_interface::gen_throw_spec (UTL_ExceptList *list,
           << ei.item ()->name ();
     }
 
-  *os << be_uidt_nl 
+  *os << be_uidt_nl
       << throw_spec_close << be_uidt;
 }
 
