@@ -98,7 +98,7 @@ BE_version (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s %s\n",
-              ACE_TEXT ("TAO C++ BE, version")
+              ACE_TEXT ("TAO C++ BE, version"),
               ACE_TEXT (TAO_VERSION)));
 }
 
@@ -109,7 +109,7 @@ DRV_version (void)
               "%s\n"
               "%s %s\n",
               ACE_TEXT (idl_global->prog_name ()),
-              ACE_TEXT ("FE: Based on Sun IDL CFE version")
+              ACE_TEXT ("FE: Based on Sun IDL CFE version"),
               ACE_TEXT (IDL_CFE_VERSION)));
 
   BE_version ();
