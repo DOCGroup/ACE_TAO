@@ -78,8 +78,11 @@ Hello *get_hello (void)
 typedef Hello *(*TC) (void);
 
 int 
-main (void)
+main (int argc, char *argv[])
 { 
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+
   ACE_START_TEST ("DLL_Test");
 
   ACE_DLL ace_dll_obj;
