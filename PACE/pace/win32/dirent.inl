@@ -38,7 +38,7 @@ pace_win32_emulate_opendir (const char * dirname)
   const pace_size_t dir_size = pace_strlen (dirname) + 1;
   dirp->directory_name_ = (char*) pace_malloc (dir_size);
   pace_strcpy (dirp->directory_name_, dirname);
-  dirp->current_handle_ = PACE_WIN32_INVALID_HANDLE;
+  dirp->current_handle_ = PACE_INVALID_HANDLE;
   dirp->started_reading_ = 0;
   return dirp;
 }
@@ -52,10 +52,10 @@ pace_win32_emulate_readdir (PACE_DIR * dirp)
     {
       dirp->current_handle_ = FindFirstFile (dirp->directory_name_,
                                              &(dirp->fdata_));
-      if (dirp->current_handle_ != PACE_WIN32_INVALID_HANDLE)
+      if (dirp->current_handle_ != PACE_INVALID_HANDLE)
         {
           FindClose (dirp->current_handle_);
-          dirp->current_handle_ = PACE_WIN32_INVALID_HANDLE;
+          dirp->current_handle_ = PACE_INVALID_HANDLE;
         }
       else /* Skip "." and ".." */
         {
@@ -69,7 +69,7 @@ pace_win32_emulate_readdir (PACE_DIR * dirp)
             }
           if (retval == 0)
             {
-              dirp->current_handle_ = PACE_WIN32_INVALID_HANDLE;
+              dirp->current_handle_ = PACE_INVALID_HANDLE;
             }
         }
       dirp->started_reading_ = 1;
@@ -80,11 +80,11 @@ pace_win32_emulate_readdir (PACE_DIR * dirp)
                                  &(dirp->fdata_));
       if (retval == 0)
         {
-          dirp->current_handle_ = PACE_WIN32_INVALID_HANDLE;
+          dirp->current_handle_ = PACE_INVALID_HANDLE;
         }
     }
 
-  if (dirp->current_handle_ != PACE_WIN32_INVALID_HANDLE)
+  if (dirp->current_handle_ != PACE_INVALID_HANDLE)
     {
       dirp->dirent_.d_name = dirp->fdata_.cFileName;
       return &(dirp->dirent_);
