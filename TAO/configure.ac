@@ -158,6 +158,7 @@ AM_CONDITIONAL(BUILD_INTERCEPTORS, true)
 AM_CONDITIONAL(BUILD_ACE_UUID, true)
 AM_CONDITIONAL(BUILD_AMI, true)
 AM_CONDITIONAL(BUILD_SSL, false)
+AM_CONDITIONAL(BUILD_ACEXML, true)
 
 
 dnl
@@ -185,6 +186,7 @@ AC_CONFIG_FILES([
   orbsvcs/FT_ReplicationManager/Makefile
   orbsvcs/Fault_Detector/Makefile
   orbsvcs/Fault_Notifier/Makefile
+  orbsvcs/ImplRepo_Service/Makefile
   orbsvcs/IFR_Service/Makefile
   orbsvcs/LifeCycle_Service/Makefile
   orbsvcs/LoadBalancer/Makefile
