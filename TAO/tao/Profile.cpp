@@ -595,7 +595,6 @@ TAO_Profile::supports_multicast (void) const
   return 0;
 }
 
-
 void
 TAO_Profile::addressing_mode (CORBA::Short addr
                               ACE_ENV_ARG_DECL)
@@ -668,12 +667,24 @@ TAO_Profile::parse_string (const char *ior
 }
 
 CORBA::Boolean
-TAO_Profile::is_profile_equivalent_i (const TAO_Profile *other)
+TAO_Profile::is_equivalent (const TAO_Profile *other)
 {
-  return this->orb_core_->is_profile_equivalent (this,
-                                                 other);
+  return
+    other != 0
+    && this->tag () == other->tag ()
+    && this->version_ == other->version ()
+    && this->endpoint_count () == other->endpoint_count ()
+    && this->object_key () == other->object_key ()
+    && this->do_is_equivalent (other)
+    && this->is_equivalent_hook (other);
 }
 
+CORBA::Boolean
+TAO_Profile::is_equivalent_hook (const TAO_Profile *other)
+{
+  // Allow services to apply their own definition of "equivalence."
+  return this->orb_core_->is_profile_equivalent (this, other);
+}
 
 CORBA::ULong
 TAO_Profile::hash_service_i (CORBA::ULong m)
@@ -699,7 +710,7 @@ TAO_Unknown_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_Unknown_Profile::endpoint_count (void)
+TAO_Unknown_Profile::endpoint_count (void) const
 {
   return 0;
 }
@@ -779,15 +790,21 @@ TAO_Unknown_Profile::_key (void) const
 }
 
 CORBA::Boolean
-TAO_Unknown_Profile::is_equivalent (const TAO_Profile* other_profile)
+TAO_Unknown_Profile::do_is_equivalent (const TAO_Profile* other_profile)
 {
-  if (other_profile->tag () != this->tag ())
-    return 0;
+  const TAO_Unknown_Profile * op =
+    ACE_dynamic_cast (const TAO_Unknown_Profile *, other_profile);
 
-  const TAO_Unknown_Profile *op =
-    ACE_dynamic_cast (const TAO_Unknown_Profile*, other_profile);
+  return (CORBA::Boolean) (op == 0 ? 0 : this->body_ == op->body_);
+}
 
-  return (CORBA::Boolean) (this->body_ == op->body_);
+CORBA::Boolean
+TAO_Unknown_Profile::is_equivalent_hook (const TAO_Profile * /* other */)
+{
+  // Override the default implementation since we don't need the
+  // additional checks it performs.
+
+  return 1;
 }
 
 CORBA::ULong
