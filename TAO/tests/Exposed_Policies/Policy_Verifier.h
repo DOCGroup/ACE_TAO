@@ -23,12 +23,14 @@
 // -- App. Specific Include --
 #include "CounterC.h"
 #include "RT_Properties.h"
-#include "Policy_Tester.h"
+
 // -- ACE Include --
 #include "ace/Arg_Shifter.h"
 
 // -- TAO Include --
 #include "tao/corba.h"
+
+#if (TAO_HAS_RT_CORBA == 1)
 
 class Policy_Verifier
 {
@@ -53,6 +55,9 @@ private:
                          CORBA::Environment &ACE_TRY_ENV
                          = TAO_default_environment ());
 
+  CORBA::Boolean check_reference (CORBA::Object_ptr object,
+                                  const char *msg);
+
 private:
 
   CORBA::ORB_var orb_;
@@ -66,5 +71,8 @@ private:
   char base_object_ref_[256];
   char overridden_object_ref_[256];
 };
+
+#endif /* (TAO_HAS_RT_CORBA == 1) */
+
 
 #endif /* POLICY_VERIFIER_H_ */
