@@ -59,73 +59,39 @@ public:
     CORBA::UShort port;
 
     Profile (void);
-    // Default constructor.
-
-    Profile (const Profile &src);
-    // Copy constructor.
+    // Default constructor
 
     Profile (const char *host,
-             const CORBA::UShort port,
-             const char *object_key);
-    // Called by client
-
-    Profile (const char *host,
-             const CORBA::UShort port,
-             const char *object_key,
-             const ACE_INET_Addr &addr);
-    // Called by server.
-
-    Profile (const char *host,
-             const CORBA::UShort port,
+             CORBA::UShort port,
              const TAO_opaque &object_key,
              const ACE_INET_Addr &addr);
     // Called by server.
 
-    Profile (const ACE_INET_Addr &addr,
-             const char *object_key);
-    // Called by client or server.
-
-    Profile (const ACE_INET_Addr &addr,
-             const TAO_opaque &object_key);
-    // Called by client or server.
+    Profile (const Profile &src);
+    // Copy constructor.
 
     ~Profile (void);
     // Destructor.
 
-    void object_addr (const ACE_INET_Addr *);
+    void reset_object_addr (void);
     // Sets <object_addr_> cache from <host> and <port>
 
     ACE_INET_Addr &object_addr (void);
     // Returns the <ACE_INET_Addr> for this profile.
 
-    Profile &operator = (const Profile &src);
+    Profile &operator= (const Profile &src);
     // copy operator
 
-  private:
-    int set (const char *host,
-             const CORBA::UShort port,
-             const ACE_INET_Addr *addr);
-    // Internal helper method (called by the next two methods).
+    int operator== (const Profile &src);
+    // comparison
 
-    int set (const char *host,
-             const CORBA::UShort port,
-             const char *object_key,
-             const ACE_INET_Addr *addr = 0);
-    // Called by server.
+  protected:
 
-    int set (const char *host,
-             const CORBA::UShort port,
-             const TAO_opaque &object_key,
-             const ACE_INET_Addr *addr = 0);
-    // Called by server.
-
-    int set (const ACE_INET_Addr &addr,
-             const char *object_key);
-    // Called by client or server.
-
-    int set (const ACE_INET_Addr &addr,
-             const TAO_opaque &object_key);
-    // Called by client or server.
+    void set (const char *h,
+              CORBA::UShort p,
+              const TAO_opaque &key,
+              const ACE_INET_Addr &addr);
+    // Workhorse
 
     ACE_INET_Addr object_addr_;
     // Cached instance of <ACE_INET_Addr> for use in making
@@ -191,19 +157,11 @@ public:
   // Construct from a repository (type) ID.
 
   IIOP_Object (char *repository_id,
-               const IIOP::Profile &profile);
-  // Construct from a repository ID and a profile ID.
-
-  IIOP_Object (const char *host,
-               const CORBA::UShort p,
-               const char *objkey,
-               char *repository_id = 0);
-  // This constructor will usually be used by the client side.
-
-  IIOP_Object (char *repository_id,
-               const ACE_INET_Addr &addr,
-               const char *objkey);
-  // Constructor used typically by the server side.
+               const char *host,
+               CORBA::UShort port,
+               const TAO_opaque &object_key,
+               const ACE_INET_Addr &addr);
+  // Construct from a repository ID and IIOP profile information.
 
   // = Memory management.
   virtual CORBA::ULong _incr_refcnt (void);

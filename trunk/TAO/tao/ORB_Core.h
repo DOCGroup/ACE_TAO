@@ -145,9 +145,6 @@ public:
                      TAO_POA_Manager *poa_manager = 0,
                      const TAO_POA_Policies *policies = 0);
 
-  ACE_INET_Addr &addr (void);
-  // Accessors for the local address on which we're listening.
-
   int inherit_from_parent_thread (TAO_ORB_Core *p);
   // A spawned thread needs to inherit some properties/objects from
   // the spawning thread in order to serve requests.  Return 0 if
@@ -272,7 +269,13 @@ public:
   // tradeoffs and take a decision.
   //
 
-private:
+protected:
+  int set_endpoint (int dotted_decimal_addresses,
+                    CORBA::UShort port,
+                    ACE_CString &host,
+                    ACE_INET_Addr &rendezvous);
+  // Set the endpoint
+
   int init (int& argc, char ** argv);
   // Initialize the guts of the ORB Core.  It is intended that this be
   // called by <CORBA::ORB_init>.
@@ -313,10 +316,6 @@ private:
 
   TAO_ORB_Parameters *orb_params_;
   // Parameters used by the ORB.
-
-  ACE_INET_Addr *addr_;
-  // The address of the endpoint on which we're listening for
-  // connections and requests.
 
   TAO_ACCEPTOR *acceptor_;
   // The acceptor passively listening for connection requests.
@@ -489,10 +488,6 @@ public:
   virtual TAO_OA_Parameters *get_oa_params (void);
   // Return ORB parameters to be utilized.
 
-  virtual ACE_INET_Addr *get_addr (void);
-  // Return an address to be used for the endpoint for connections and
-  // requests.
-
   virtual CORBA::ORB_ptr get_orb (void);
   // Return an ORB ptr to be utilized.
 
@@ -583,9 +578,6 @@ public:
 
     TAO_OA_Parameters oaparams_;
     // OA Parameters (will go away with new POA impl)
-
-    ACE_INET_Addr addr_;
-    // Address for connection endpoint.
   };
 
   struct App_Allocated

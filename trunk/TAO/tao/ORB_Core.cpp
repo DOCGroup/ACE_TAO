@@ -78,7 +78,6 @@ TAO_ORB_Core::TAO_ORB_Core (void)
     root_poa_ (0),
     oa_params_ (0),
     orb_params_ (0),
-    addr_ (0),
     acceptor_ (0),
     poa_current_ (0),
     resource_factory_ (0),
@@ -155,7 +154,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   ACE_Env_Value<int> defport ("TAO_DEFAULT_SERVER_PORT",
                               TAO_DEFAULT_SERVER_PORT);
-  CORBA::String_var host = CORBA::string_dup ("");
+  ACE_CString host;
   CORBA::UShort port = defport;
   CORBA::Boolean use_ior = 1;
   int cdr_tradeoff = TAO_DEFAULT_CDR_MEMCPY_TRADEOFF;
@@ -166,13 +165,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // template sometime.
 
   // Name Service IOR string.
-  char *ns_ior = 0;
+  ACE_CString ns_ior;
 
   // Name Service port #.
   u_short ns_port = 0;
 
   // Trading Service IOR string.
-  char *ts_ior = 0;
+  ACE_CString ts_ior;
 
   // Trading Service port #.
   u_short ts_port = 0;
@@ -240,8 +239,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
           if (arg_shifter.is_parameter_next())
             {
-              host =
-                CORBA::string_dup (arg_shifter.get_current ());
+              host = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
         }
@@ -252,7 +250,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              ns_ior = CORBA::string_dup (arg_shifter.get_current ());
+              ns_ior = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
         }
@@ -274,7 +272,7 @@ TAO_ORB_Core::init (int &argc, char *argv[])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              ts_ior = CORBA::string_dup (arg_shifter.get_current ());
+              ts_ior = arg_shifter.get_current ();
               arg_shifter.consume_arg ();
             }
         }
@@ -453,28 +451,14 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       }
   }
 #endif  /* DEBUG */
-
+  
+  // Set the endpoint
   ACE_INET_Addr rendezvous;
-
-  // No host specified; find it
-  if (ACE_OS::strlen (host) == 0)
-    {
-      char buffer[MAXHOSTNAMELEN + 1];
-      if (rendezvous.get_host_name (buffer,
-                                    sizeof (buffer)) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%P|%t) TAO_ORB_Core::init failed to resolve local host %p.\n"),
-                          -1);
-
-      host = CORBA::string_dup (buffer);
-    }
-
-  if (rendezvous.set (port, (char *) host) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%P|%t) TAO_ORB_Core::init failed to resolve host %s, %p.\n",
-                       (char*) host,
-                       "reason"),
-                      -1);
+  if (this->set_endpoint (dotted_decimal_addresses,
+                          port, 
+                          host, 
+                          rendezvous) == -1)
+    return -1;
 
 #if defined (SIGPIPE) && !defined (ACE_LACKS_UNIX_SIGNALS)
   // There's really no way to deal with this in a portable manner, so
@@ -564,14 +548,13 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   // determined.
 
   this->orb_params ()->addr (rendezvous);
-  if (ns_ior)
-    this->orb_params ()->name_service_ior (ns_ior);
-  if (ns_port != 0)
-    this->orb_params ()->name_service_port (ns_port);
-  if (ts_ior)
-    this->orb_params ()->trading_service_ior (ts_ior);
-  if (ts_port != 0)
-    this->orb_params ()->trading_service_port (ts_port);
+  this->orb_params ()->host (host);
+  this->orb_params ()->name_service_ior (ns_ior);
+  this->orb_params ()->name_service_port (ns_port);
+  this->orb_params ()->trading_service_ior (ts_ior);
+  this->orb_params ()->trading_service_port (ts_port);
+  this->orb_params ()->use_IIOP_lite_protocol (iiop_lite);
+  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
   if (rcv_sock_size != 0)
     this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
   if (snd_sock_size != 0)
@@ -579,9 +562,6 @@ TAO_ORB_Core::init (int &argc, char *argv[])
   if (cdr_tradeoff >= 0)
     this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
 
-  this->orb_params ()->use_IIOP_lite_protocol (iiop_lite);
-
-  this->orb_params ()->use_dotted_decimal_addresses (dotted_decimal_addresses);
 
   if (this->connector ()->open (this->reactor (),
                                 trf->get_null_creation_strategy (),
@@ -591,6 +571,72 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   if (preconnections)
     this->preconnect (preconnections);
+
+  return 0;
+}
+
+int
+TAO_ORB_Core::set_endpoint (int dotted_decimal_addresses,
+                            CORBA::UShort port,
+                            ACE_CString &host,
+                            ACE_INET_Addr &rendezvous)
+{
+  // No host specified; find it
+  if (host.length () == 0)
+    {
+      char buffer[MAXHOSTNAMELEN + 1];
+      if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) failed to resolve local host %p.\n"),
+                            -1);
+        }
+      else
+        {
+          host = buffer;
+        }
+    }
+
+  // Set the host and port parameters in the address
+  if (rendezvous.set (port, host.c_str ()) == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "(%P|%t) failed to resolve host %s, %p.\n",
+                       host.c_str (),
+                       "reason"),
+                      -1);
+
+  // Set up the hostname so that we can put it into object later on.
+  // This extra step is necessary since the user specified hostname
+  // usually gets expanded to a complete hostname by the conversion.
+  // Example: tango -> tango.cs.wustl.edu
+  if (dotted_decimal_addresses)
+    {
+      const char *temphost = rendezvous.get_host_addr ();
+      if (temphost == 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) failed in get_host_addr () %p.\n"),
+                            -1);
+        }
+      else
+        {
+          host = temphost;
+        }
+    }
+  else
+    {
+      char buffer[MAXHOSTNAMELEN + 1];
+      if (rendezvous.get_host_name (buffer, sizeof (buffer)) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) failed in get_host_name () %p.\n"),
+                            -1);
+        }
+      else
+        {
+          host = buffer;
+        }
+    }
 
   return 0;
 }
@@ -908,10 +954,6 @@ TAO_ORB_Core::inherit_from_parent_thread (TAO_ORB_Core *p)
 
   this->orb_params_ = p->orb_params ();
   // We also need its ORB_Params.
-
-  this->addr_ = &p->addr ();
-  // Grab the address of the endpoint on which we're listening for
-  // connections and requests.
 
   this->acceptor (p->acceptor ());
   // Also grab the acceptor passively listening for connection
@@ -1310,7 +1352,6 @@ IMPLEMENT_PRE_GET_METHOD(get_null_activation_strategy, TAO_NULL_ACTIVATION_STRAT
 IMPLEMENT_APP_GET_METHOD(get_orb, CORBA_ORB_ptr, orb_)
 IMPLEMENT_PRE_GET_METHOD(get_orb_params, TAO_ORB_Parameters *, orbparams_)
 IMPLEMENT_PRE_GET_METHOD(get_oa_params, TAO_OA_Parameters *, oaparams_)
-IMPLEMENT_PRE_GET_METHOD(get_addr, ACE_INET_Addr *, addr_)
 
 TAO_POA *
 TAO_Resource_Factory::get_root_poa (void)

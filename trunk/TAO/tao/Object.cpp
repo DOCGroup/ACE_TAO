@@ -250,7 +250,7 @@ void
 CORBA::Object::_use_locate_requests (CORBA::Boolean use_it)
 {
   IIOP_Object *iiopobj =
-    ACE_dynamic_cast (IIOP_Object*, this->_stubobj ());
+    ACE_dynamic_cast (IIOP_Object *, this->_stubobj ());
   
   if (iiopobj == 0)
     {

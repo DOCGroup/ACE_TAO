@@ -1,3 +1,41 @@
+Wed Dec 30 02:47:46 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/IIOP_Object (Profile): Removed the 1001 different
+ 	  constructors and set() methods of the Profile class.  We are now
+ 	  down to a bare minimum.  Also did a complete make-over of this
+	  class to make it easier and simpler to use.
+
+	  The major change that improved the performance of creating new
+ 	  objects was moving the calls to get_host_name() and
+ 	  get_host_addr() out of the Profile class and into the ORB
+ 	  initialization routine.  This way these functions are only
+ 	  called once per ORB and not once per object.
+
+	* tao/Servant_Base.cpp (_create_stub): Removed the creation of an
+ 	  extra STUB_Object.
+
+	* tao/params.h (TAO_ORB_Parameters): Did a complete make-over of
+ 	  this class to make it easier and simpler to use (memory
+ 	  management issues are now much simpler).
+
+	* tao/ORB_Core.h (TAO_Resource_Factory): Removed the <addr_> from
+ 	  the ORB_Core.  It was already in the orb parameters.
+
+	* tao/Active_Object_Map.i (TAO_Active_Object_Map): Added the
+ 	  deletion of the reverse map.
+
+	* performance-tests/POA/Object_Creation_And_Registration/registration.cpp:   
+	  New test to measure the time it takes to register and activate
+ 	  an object in the POA.
+
+	* examples/POA/DSI/run_test.pl: 
+	* examples/POA/Default_Servant/run_test.pl: 
+	* examples/POA/On_Demand_Loading/run_test.pl: 
+	* examples/POA/On_Demand_Activation/run_test.pl: 
+	* examples/POA/Explicit_Activation/run_test.pl: 
+	
+	  Unlink ior files before starting the server.  
+	
 Wed Dec 30 01:17:42 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tests/DynAny_Test/basic_test.dsp: Fixed project configurations.

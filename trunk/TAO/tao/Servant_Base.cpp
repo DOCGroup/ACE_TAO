@@ -111,10 +111,12 @@ TAO_ServantBase::_create_stub (CORBA_Environment &env)
       if (env.exception () != 0)
 	return 0;
 
-      TAO_ObjectKey_var object_key = object->_key (env);
-      stub = orb_core->orb ()->create_stub_object (object_key.in (),
-                                                   this->_interface_repository_id (), 
-                                                   env);
+      // Get the stub object
+      stub = object->_stubobj ();
+
+      // Increment the reference count since <object> will zap its
+      // stub object on deletion.
+      stub->_incr_refcnt ();
     }
 
   return stub;

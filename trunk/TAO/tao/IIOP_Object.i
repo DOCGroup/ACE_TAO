@@ -8,9 +8,30 @@ IIOP::Version::Version (CORBA::Octet maj, CORBA::Octet min)
 }
 
 ACE_INLINE
-IIOP::Profile::Profile (void)
+IIOP::Profile::Profile (const char *h,
+                        const CORBA::UShort p,
+                        const TAO_opaque &key,
+                        const ACE_INET_Addr &addr)
   : host (0)
 {
+  this->set (h, p, key, addr);
+}
+
+ACE_INLINE
+IIOP::Profile::Profile (void)
+  : host (0),
+    port (0)
+{
+}
+
+ACE_INLINE
+IIOP::Profile::Profile (const IIOP::Profile &src)
+  : host (0)
+{
+  this->set (src.host,
+             src.port,
+             src.object_key,
+             src.object_addr_);
 }
 
 ACE_INLINE
@@ -19,13 +40,31 @@ IIOP::Profile::~Profile (void)
   delete [] this->host;
 }
 
-ACE_INLINE void
-IIOP::Profile::object_addr (const ACE_INET_Addr *addr)
+ACE_INLINE IIOP::Profile &
+IIOP::Profile::operator= (const IIOP::Profile &src)
 {
-  if (addr != 0)
-    this->object_addr_ = *addr;
-  else if (this->host)
-    this->object_addr_.set (this->port, this->host);
+  this->set (src.host,
+             src.port,
+             src.object_key,
+             src.object_addr_);
+  return *this;
+}
+
+ACE_INLINE int
+IIOP::Profile::operator== (const IIOP::Profile &rhs)
+{
+  return 
+    this->object_key == rhs.object_key && 
+    this->port == rhs.port && 
+    ACE_OS::strcmp (this->host, rhs.host) == 0 && 
+    this->iiop_version.minor == rhs.iiop_version.minor && 
+    this->iiop_version.major == rhs.iiop_version.major;
+}
+
+ACE_INLINE void
+IIOP::Profile::reset_object_addr (void)
+{
+  this->object_addr_.set (this->port, this->host);
 }
 
 ACE_INLINE ACE_INET_Addr &
@@ -62,9 +101,12 @@ IIOP_Object::IIOP_Object (char *repository_id)
 
 ACE_INLINE
 IIOP_Object::IIOP_Object (char *repository_id,
-                          const IIOP::Profile &a_profile)
+                          const char *host,
+                          CORBA::UShort port,
+                          const TAO_opaque &object_key,
+                          const ACE_INET_Addr &addr)
   : STUB_Object (repository_id),
-    profile (a_profile),
+    profile (host, port, object_key, addr),
     fwd_profile_ (0),
     fwd_profile_success_ (0),
     refcount_ (1),
@@ -109,7 +151,7 @@ IIOP_Object::set_fwd_profile (IIOP::Profile *new_profile)
     {
       delete this->fwd_profile_;
       ACE_NEW_RETURN (this->fwd_profile_,
-                      IIOP::Profile(),
+                      IIOP::Profile (),
                       0);
       *this->fwd_profile_ = *new_profile;
       // use the copy operator on IIOP_Profile

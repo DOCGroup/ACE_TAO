@@ -447,7 +447,7 @@ TAO_GIOP_Invocation::location_forward (TAO_InputCDR &inp_stream,
   // in order to extract the profile.
 
   IIOP_Object *iiopobj =
-    ACE_dynamic_cast (IIOP_Object*, object_ptr->_stubobj ());
+    ACE_dynamic_cast (IIOP_Object *, object_ptr->_stubobj ());
 
   if (iiopobj == 0)
     {
