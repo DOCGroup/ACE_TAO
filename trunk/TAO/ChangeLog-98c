@@ -1,3 +1,19 @@
+Wed Aug 26 17:00:38 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/Environment.cpp (CORBA_Environment): Disable updating the
+	  default environment for now.  (Per Carlos' instruction.)
+
+	* tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp (run): Don't run the
+	  cube_rti_data test for now.
+
+	* tao/orbconf.h:  Defined TAO_NULL_LOCK_REACTOR as
+	  ACE_Select_Reactor_T<
+	  ACE_Select_Reactor_Token_T<ACE_Noop_Token>>. 
+	
+	* tao/ORB_Core.{h,cpp}: Added a new option '-ORBlockfreereactor'
+	  for TAO_Resource_Factory.  Specify it to 'yes' if you don't want
+	  any locking with the reactor.  Use with care.
+
 Wed Aug 26 17:05:27 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
 	* docs/releasenotes/index.html: Updated the IDL compiler portion,
