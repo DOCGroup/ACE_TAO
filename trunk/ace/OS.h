@@ -2140,7 +2140,7 @@ protected:
 # include /**/ <new.h>
 # include /**/ <signal.h>
 # include /**/ <errno.h>
-#endif /* ACE_HAS_WINCE *.
+#endif /* ACE_HAS_WINCE */
 # include /**/ <limits.h>
 // NOTE: stdarg.h must be #included before stdio.h on LynxOS.
 # include /**/ <stdarg.h>
