@@ -839,6 +839,8 @@ ACE_LACKS_UALARM_PROTOTYPE              Platform/compiler lacks the
                                         Solaris)
 ACE_LACKS_UCONTEXT_H                    Platform lacks the ucontext.h
                                         file
+ACE_LACKS_LINEBUFFERED_STREAMBUF        Platform lacks streambuf
+                                        "unbuffered ()".
 ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h
                                         file (e.g., VxWorks and Win32)
 ACE_LACKS_UNIX_DOMAIN_SOCKETS           ACE platform has no UNIX
