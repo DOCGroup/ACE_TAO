@@ -161,11 +161,10 @@
 // GreenHills C++ 1.8.8 complains that the (a) expression has no effect.  But,
 // it doesn't complain about unused args, so don't bother with them.
 #define ACE_UNUSED_ARG(a)
-#elif defined (__GNUC__)
-// gcc 2.7.2 complains about unused args with -Wall, and complains
-// about "statement with no effect" with (a).  This eliminates the
-// warnings, and no code is generated for the null conditional
-// statement.
+#elif defined (__GNUC__) || defined (ACE_HAS_IRIX62_THREADS)
+// Some compilers complain about "statement with no effect" with (a).
+// This eliminates the warnings, and no code is generated for the null
+// conditional statement.
 #define ACE_UNUSED_ARG(a) {if (&a) /* null */ ;}
 #else
 #define ACE_UNUSED_ARG(a) (a)

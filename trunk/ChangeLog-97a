@@ -32,6 +32,52 @@ Sun Jan 19 11:10:49 1997  David L. Levine  <levine@cs.wustl.edu>
 	  performance-tests/TTCP/Orbix/ttcp_i.cpp (main):
 	  return 0 instead of 42.
 
+Fri Jan 17 11:47:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/OS.h: Added an equivalent set of
+ 	  ACE_LSOCK_{STREAM,ACCEPTOR,CONNECTOR} macros to complement the
+ 	  ones for ACE_SOCK_*.  Thanks to Gonzalo Diethelm
+ 	  <gonzo@ing.puc.cl> for suggesting this.
+
+	* ace/OS.cpp (ACE_Thread_Adapter): Added a new feature that allows
+ 	  logging features to be inherited by threads.  It works with
+ 	  those OSs (e.g., Win32) that use ACE_Thread_Adapter class.  At
+ 	  some point, we might do this for all the OSs.  Thanks to Luca
+ 	  for this.
+
+	* examples/Connection/misc/Connection_Handler.cpp: Added a
+	  new example that illustrates how to use the Acceptor pattern
+	  to create multiple threads, each running its own Reactor.
+
+	* ace/Log_Msg.cpp (dump): Some of the variables in the dump()
+ 	  method have the wrong format specification type. These are:
+ 	  restart_ (%d), flags_ (%x), priority_mask_ (%d).  They are now
+ 	  fixed, thanks to Luca.
+
+	* tests/Priority_Task_Test.cpp (open): Add an ACE_ASSERT to make
+ 	  sure that the tasks activate() correctly.  Thanks to David for
+ 	  finding this.
+
+	* ace/config-linux-lxpthreads.h: Added #defines for
+ 	  ACE_HAS_AUTOMATIC_INIT_FINI and ACE_HAS_SVR4_DYNAMIC_LINKING.
+  	  Thanks to Marius for this.
+
+	* ace/OS.h: Added an equivalent set of
+	  ACE_LSOCK_{STREAM,ACCEPTOR,CONNECTOR} macros to complement the
+ 	  ones for ACE_SOCK_*.  Thanks to Gonzalo Diethelm
+ 	  <gonzo@ing.puc.cl> for suggesting this.
+
+	* ace/Malloc.h: Changed the typedef of ACE_Malloc_Align to a macro
+ 	  called ACE_MALLOC_ALIGN to allow users to override this value in
+ 	  their config.h file.  This is necessary for platforms that don't
+ 	  have "long" word alignments.  Thanks to Fred LaBar
+ 	  <flabar@fallschurch.esys.com> for this suggestion.
+
+	* ace/OS.h: Added an #ifdef check for ACE_HAS_IRIX62_THREADS and
+ 	  if so, we'll use the if (&a) /* null */; } form of the
+ 	  ACE_UNUSED_ARG macro to avoid unnecessary warnings.  Thanks to
+ 	  Fred LaBar <flabar@fallschurch.esys.com> for testing this out.
+
 Fri Jan 17 16:33:25 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* ace/High_Res_Timer.*: added elapsed_time () and get_time ().
@@ -39,8 +85,6 @@ Fri Jan 17 16:33:25 1997  David L. Levine  <levine@cs.wustl.edu>
 	* netsvcs/clients/Tokens/collection/collection.cpp, rw_locks.cpp:
 	  commented out unused variables to avoid compiler warnings; and
 	  return 0 from main ().
-
-Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* include/makeinclude/rules.local.GNU,
 	  netsvcs/lib/Makefile,
@@ -56,17 +100,10 @@ Fri Jan 17 11:45:28 1997  David L. Levine  <levine@cs.wustl.edu>
 
 	* netsvcs/clients/Naming/Client/Client_Test.cpp: commented out
 	  unused parameters and wrapped combined assignments/conditional
-	  values to avoid compiler (g++) warnings.
+	  values to avoid compiler (g++) warnings
 
 	* tests/Priority_Task_Test.cpp: added check for successful thread
 	  spawn, and ACE_NEW_THREAD to svc () so that messages get logged.
-
-Fri Jan 17 01:16:32 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
-
-	* ace/OS.h: Added an equivalent set of
- 	  ACE_LSOCK_{STREAM,ACCEPTOR,CONNECTOR} macros to complement the
- 	  ones for ACE_SOCK_*.  Thanks to Gonzalo Diethelm
- 	  <gonzo@ing.puc.cl> for suggesting this.
 
 Thu Jan 16 17:03:47 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
