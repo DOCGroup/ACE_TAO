@@ -1099,6 +1099,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   ACE_TRACE ("ACE::handle_timed_complete");
   ACE_Handle_Set rd_handles;
   ACE_Handle_Set wr_handles;
+  int need_to_check;
 
 #if defined (ACE_WIN32)
   ACE_Handle_Set ex_handles;
@@ -1129,16 +1130,19 @@ ACE::handle_timed_complete (ACE_HANDLE h,
 	errno = ETIME;
       return ACE_INVALID_HANDLE;
     }
+
   // Check if the handle is ready for reading and the handle is *not*
   // ready for writing, which may indicate a problem.  But we need to
   // make sure...
 #if defined (ACE_WIN32)
-  else if (rd_handles.is_set (h) || ex_handles.is_set (h))
-#elif defined (ACE_HAS_TLI)
-  else if (is_tli && rd_handles.is_set (h) && !wr_handles.is_set (h))
+  need_to_check = (rd_handles.is_set (h) || ex_handles.is_set (h));
 #else
-  else if (rd_handles.is_set (h))
+  if (is_tli)
+    need_to_check = (rd_handles.is_set (h) && !wr_handles.is_set (h));
+  else
+    need_to_check = rd_handles.is_set (h);
 #endif /* ACE_WIN32 */
+  if (need_to_check)
     {
       char dummy;
 
