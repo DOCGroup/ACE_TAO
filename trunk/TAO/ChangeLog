@@ -1,3 +1,9 @@
+Thu Jan  6 12:39:43 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* tao/Makefile.am:
+
+	  Add Adapter_{Factory,Registry}.cpp to ORB_Core defn.
+
 Thu Jan  6 18:27:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/tao.mpc:
