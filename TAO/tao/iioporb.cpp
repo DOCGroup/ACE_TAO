@@ -7,17 +7,9 @@
 // This includes objref stringification/destringification for IIOP
 // object references.
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<string.h>
-#include	<orb.h>
-
-#include	<stdio.h>
-#include	<stdlib.h>
-#include	<ctype.h>
+#include	"orb.h"
 #include	<initguid.h>
-#include	<stub.h>
-
+#include	"stub.h"
 #include	"cdr.h"
 #include	"iioporb.h"
 #include	"iiopobj.h"

@@ -9,7 +9,6 @@
 #include "params.h"
 #include "factories.h"
 #include "orbobj.h"
-
 #include <initguid.h>
 
 // Forward declarations...
@@ -38,9 +37,9 @@ ROA::init (CORBA_ORB_ptr parent,
       return 0;
     }
 
-#if defined (ROA_NEED_REQ_KEY)
+#if defined (ROA_NEEDS_REQ_KEY)
  (void) ACE_Thread::keycreate (&req_key_);
-#endif
+#endif /* ROA_NEEDS_REQ_KEY */
     
   ROA_ptr rp;
   ACE_NEW_RETURN (rp, ROA (parent, env), 0);
@@ -122,9 +121,9 @@ ROA::create (CORBA_OctetSeq &key,
   CORBA_String h = (char*)addr_.get_host_name ();
 
   data = new IIOP_Object (id, IIOP::ProfileBody (ver,
-                                                h,
-                                                addr_.get_port_number (),
-                                                key));
+						 h,
+						 addr_.get_port_number (),
+						 key));
   if (data != 0)
     env.clear ();
   else
@@ -155,7 +154,7 @@ ROA::get_key (CORBA_Object_ptr,
   return 0;
 }
 
-#if defined (ROA_NEED_REQ_KEY)
+#if defined (ROA_NEEDS_REQ_KEY)
 // return the target's key
 //
 // NOTE: as with all "in" parameters to a call, this memory is freed
@@ -181,7 +180,7 @@ ROA::get_client_principal (CORBA_Environment &env)
 
   return request_tsd->requesting_principal;
 }
-#endif
+#endif /* ROA_NEEd_REQ_KEY */
 
 // Used by method code to ask the OA to shut down.
 void
@@ -261,10 +260,6 @@ ROA::get_request (CORBA_BOA::dsi_handler handler,
 		  timeval *timeout,
 		  CORBA_Environment &env)
 {
-#if 0
-  server_endpoint *fd;
-#endif
-
   env.clear ();
 
   // Two bits of OA-private state need to be guarded by a critical
@@ -307,17 +302,19 @@ ROA::get_request (CORBA_BOA::dsi_handler handler,
     // Also, note that the underlying constraint of only allowing a
     // single thread to block_for_connection () call bubbles up here too.
 
-#ifdef	_POSIX_THREADS
-    static int		blocking;	// = 0
+#if defined (ACE_HAS_PTHREADS)
+    static int blocking;	// = 0
 
-    if (blocking) {
-      dmsg ("concurrent TCP_OA::get_request () calls");
-      env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
-      return;
-    } else
+    if (blocking) 
+      {
+	dmsg ("concurrent TCP_OA::get_request () calls");
+	env.exception (new CORBA_IMP_LIMIT (COMPLETED_NO));
+	return;
+      } 
+    else
       blocking = 1;
 
-#endif	// _POSIX_THREADS
+#endif /* ACE_HAS_PTHREADS */
 
     // Get a connection and hand it to method code.
     //
@@ -360,13 +357,9 @@ ROA::get_request (CORBA_BOA::dsi_handler handler,
     // handle GIOP::CancelRequest messages.
     //
 
-#if 0
-    fd = endpoint->block_for_connection (do_thr_create, timeout, env);
-#endif
-
-#ifdef	_POSIX_THREADS
+#if defined (ACE_HAS_PTHREADS)
     blocking = 0;
-#endif	// _POSIX_THREADS
+#endif /* ACE_HAS_PTHREADS */
 
     if (env.exception () != 0) 
       {
@@ -391,7 +384,7 @@ ROA::get_request (CORBA_BOA::dsi_handler handler,
   //
   if (do_thr_create) 
     {
-#ifdef	_POSIX_THREADS
+#ifdef	ACE_HAS_PTHREADS
       // Want to handle it in another thread.  That means handing off
       // a bunch of information to that thread and then having it do
       // the work ... the simplest alternative is to heap-allocate the
@@ -432,7 +425,7 @@ ROA::get_request (CORBA_BOA::dsi_handler handler,
 	     strerror (errcode));
       delete context_;
 
-#endif	// _POSIX_THREADS
+#endif /* ACE_HAS_PTHREADS */
     }
 
   // Handle it in this thread.  We can do it without any need to
@@ -534,9 +527,9 @@ request_dispatcher (GIOP::RequestHeader &req,
   //
   svr_req._opname = req.operation;
 
-#if defined (ROA_NEED_REQ_KEY)
+#if defined (ROA_NEEDS_REQ_KEY)
  (void) ACE_Thread::setspecific (p->oa ().req_key_, &req);
-#endif
+#endif /* ROA_NEEDS_REQ_KEY */
 
   CORBA_BOA_ptr oa = p->oa ();
   CORBA_BOA::dsi_handler ptmf = helper->skeleton_;
@@ -649,9 +642,9 @@ request_forwarder (opaque &target_key,
     return GIOP::OBJECT_FORWARD;
 }
 
-#if ! defined (__ACE_INLINE__)
+#if !defined (__ACE_INLINE__)
 #  include "roa.i"
-#endif
+#endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SPECIALIZATION)
 // Direct

@@ -9,11 +9,6 @@
 // component and have a loose table-driven coupling to ORB/protocol
 // library components.
 
-#include	<assert.h>
-#include	<limits.h>
-#include	<signal.h>
-#include	<string.h>
-
 #include	"orb.h"
 #include	"stub.h"
 #include	"iioporb.h"		// XXX
@@ -321,7 +316,7 @@ CORBA_BOA_ptr CORBA_ORB::BOA_init (int &argc,
   params->upcall (CORBA_BOA::dispatch);
   params->tablesize (tablesize);
 
-#if defined (ROA_NEED_REQ_KEY)
+#if defined (ROA_NEEDS_REQ_KEY)
  (void) ACE_Thread::keycreate (&req_key_);
 #endif
     

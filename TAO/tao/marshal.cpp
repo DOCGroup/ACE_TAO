@@ -19,10 +19,6 @@
 // 
 // ============================================================================
 
-#include <assert.h>
-#include <limits.h>
-#include <string.h>
-
 #include        "orb.h"
 #include        "align.h"
 #include	"cdr.h"

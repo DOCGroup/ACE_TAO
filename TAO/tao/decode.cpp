@@ -20,10 +20,6 @@
 // 
 // ============================================================================
 
-#include <assert.h>
-#include <limits.h>
-#include <string.h>
-
 #include        "orb.h"
 #include	"cdr.h"
 #include	"giop.h"
@@ -280,7 +276,7 @@ TAO_Marshal_TypeCode::decode(
   CORBA_TypeCode_ptr parent = (CORBA_TypeCode_ptr) parent_typecode;
 
   // decode the "kind" field of the typecode
-  continue_decoding = stream->get_ulong ((CORBA_ULong) kind);
+  continue_decoding = stream->get_ulong (kind);
   if (continue_decoding == CORBA_B_TRUE)
     {
       tcp = (CORBA_TypeCode_ptr *) data;  // the data has to be a TypeCode_ptr

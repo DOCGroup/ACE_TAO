@@ -7,15 +7,8 @@
 // THREADING NOTE:  calling thread handles mutual exclusion policy
 // on all of these data structures.
 
-#include <assert.h>
-#include <limits.h>
-#include <string.h>
-#include <stdio.h>
-
+#include "orb.h"
 #include "ace/Log_Msg.h"
-
-#include <orb.h>
-
 #include "cdr.h"
 
 #include <initguid.h>
