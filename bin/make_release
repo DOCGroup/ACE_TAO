@@ -245,8 +245,10 @@ if ($update_versions  &&  "$kit" ne 'ace+tao') {
       mkdir "ACE_wrappers/man/html", 0755  ||
         die "$0: unable to mkdir $stage_dir/ACE_wrappers/man/html\n";
     }
-    &ex ("cd ACE_wrappers  && bin/generate_man_pages")  &&
-      die "$0: failed to generate man pages in $stage_dir/ACE_wrappers\n";
+    if ($generate_man_pages) {
+      &ex ("cd ACE_wrappers  && bin/generate_man_pages")  &&
+        die "$0: failed to generate man pages in $stage_dir/ACE_wrappers\n";
+    }
     &ex ("cd ACE_wrappers  &&  $make ACE-INSTALL")  &&
       die "$0: failed make ACE-INSTALL in $stage_dir/ACE_wrappers\n";
   }
@@ -563,7 +565,7 @@ sub create_kit () {
   my $build_command;
 
   if ($kit eq 'ace'  ||  $kit eq 'ace+tao') {
-    if ("$create_zips") {
+    if ($create_zips) {
       $build_command =
         "$rm ACE.zip ACE-lib.zip; " .
         "$find $release_files $release_filter | $egrep $bin_files | " .
@@ -580,7 +582,7 @@ sub create_kit () {
           "$gzip -9 > ACE-lib.tar.gz && " .
         "$chmod a+r ACE.tar.gz ACE-lib.tar.gz ACE.zip ACE-lib.zip && " .
         "$mv -f ACE.zip ACE-lib.zip $dest &&" .
-        "$mv -f ACE.tar.gz ACE-lib.tar.gz $dest";
+        "$mv -f ACE.tar.gz ACE-lib.tar.gz $dest; ";
     } else {
       $build_command = 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
@@ -588,13 +590,13 @@ sub create_kit () {
         "$find $release_lib_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE-lib.tar.gz && " .
         "$chmod a+r ACE.tar.gz ACE-lib.tar.gz && " .
-        "$mv -f ACE.tar.gz ACE-lib.tar.gz $dest";
+        "$mv -f ACE.tar.gz ACE-lib.tar.gz $dest; ";
     }
   }
   
   if ($kit eq 'ace+tao') {
-    if ("$create_zips") {
-      $build_command =
+    if ($create_zips) {
+      $build_command .=
         "$rm ACE+TAO.zip; " .
         "$find $release_files $release_filter | $egrep $bin_files | " .
           "zip ACE+TAO.zip -q9@ &&" .
@@ -605,7 +607,7 @@ sub create_kit () {
         "$chmod a+r ACE+TAO.tar.gz ACE+TAO.zip && " .
         "$mv -f ACE+TAO.tar.gz ACE+TAO.zip $dest";
     } else {
-      $build_command = 
+      $build_command .= 
         "$find $release_files $release_filter | $cpio -o -H tar | " .
           "$gzip -9 > ACE+TAO.tar.gz && " .
         "$chmod a+r ACE+TAO.tar.gz && " .
