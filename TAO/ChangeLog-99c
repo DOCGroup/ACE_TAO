@@ -21,12 +21,12 @@ Fri Sep  3 23:31:11 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  The actual fix involved only duplicating the returned typecodes
 	  in the implementation of the above three methods in
-	  Typecode.cpp. The other files where checked to find whether the
+	  Typecode.cpp. Other files where checked to find whether the
 	  above methods were used. If used then the Typcode variable need
-	  t realease memory to avoid memory leak. So in the places where
-	  the calls were made the the return value from these methods were
-	  held in T_var to avoid leaks. At the point of checkin
-	  compilation on Sun_EGCS went without any problems. 
+	  t release memory that was returned to avoid memory leak. So in
+	  the places where the calls were made, the return value from
+	  these methods were held in T_var to avoid leaks. At the point of
+	  checkin compilation on Sun_EGCS went without any problems. 
 
 Fri Sep  3 22:52:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
