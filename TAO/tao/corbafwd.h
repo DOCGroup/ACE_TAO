@@ -248,14 +248,12 @@ namespace CORBA
 
   typedef CORBA::Short Visibility;
   typedef CORBA::Short_out Visibility_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_Visibility;
 
   extern TAO_Export const CORBA::Short PRIVATE_MEMBER;
   extern TAO_Export const CORBA::Short PUBLIC_MEMBER;
 
   typedef CORBA::Short ValueModifier;
   typedef CORBA::Short_out ValueModifier_out;
-  extern TAO_Export CORBA::TypeCode_ptr _tc_ValueModifier;
 
   extern TAO_Export const CORBA::Short VM_NONE;
   extern TAO_Export const CORBA::Short VM_CUSTOM;

@@ -13,15 +13,17 @@
 
 #ifndef TAO_VALUETYPE_ADAPTER_IMPL_H
 #define TAO_VALUETYPE_ADAPTER_IMPL_H
+
 #include /**/ "ace/pre.h"
 
 #include "ace/Service_Config.h"
-#include "tao/Valuetype_Adapter.h"
-#include "valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "valuetype_export.h"
+#include "tao/Valuetype_Adapter.h"
 
 /**
  * @class TAO_Valuetype_Adapter_Impl
@@ -36,6 +38,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter
 {
 public:
+  TAO_Valuetype_Adapter_Impl (void);
   virtual ~TAO_Valuetype_Adapter_Impl (void);
 
   virtual CORBA::Object_ptr abstractbase_to_object (

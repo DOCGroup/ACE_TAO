@@ -89,18 +89,8 @@ CORBA::wstring_dup (const WChar *const str)
 
 namespace CORBA
 {
-  // ****************************************************************
-
-//  const CORBA::ServiceType Security = 1;
-
-  // ****************************************************************
-
-  CORBA::TypeCode_ptr _tc_Visibility = 0;
-
   const CORBA::Visibility PRIVATE_MEMBER = 0;
   const CORBA::Visibility PUBLIC_MEMBER  = 1;
-
-  CORBA::TypeCode_ptr _tc_ValueModifier = 0;
 
   const CORBA::ValueModifier VM_NONE        = 0;
   const CORBA::ValueModifier VM_CUSTOM      = 1;
