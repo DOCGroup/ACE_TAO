@@ -181,6 +181,10 @@ ORB_CORE_FILES = \
   Default_Protocols_Hooks \
   Messaging_SyncScopeC \
   Invocation \
+  Invocation_Base \
+  Profile_Transport_Resolver \
+  Remote_Invocation \
+  Synch_Invocation \
   Invocation_Endpoint_Selectors \
   Asynch_Invocation \
   operation_details \

@@ -29,7 +29,7 @@ ACE_RCSID (tao,
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                                         TAO_ORB_Core *orb_core,
-                                        CORBA::Boolean flag)
+                                        CORBA::Boolean )
   : TAO_Transport (IOP::TAG_INTERNET_IOP,
                    orb_core)
   , connection_handler_ (handler)

@@ -21,7 +21,8 @@ namespace TAO
   }
 
   void
-  Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec)
+  Remote_Invocation::init_target_spec (TAO_Target_Specification &target_spec
+		                       ACE_ENV_ARG_DECL)
   {
     TAO_Profile *pfile =
       this->resolver_.profile ();

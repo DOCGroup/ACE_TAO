@@ -31,6 +31,7 @@ class TAO_Endpoint;
 namespace CORBA
 {
   class SystemException;
+  class Environment;
 }
 namespace TAO
 {

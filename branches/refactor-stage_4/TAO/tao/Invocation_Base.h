@@ -26,6 +26,7 @@
 namespace  CORBA
 {
   class Object;
+  class Environment;
   class SystemException;
 }
 
