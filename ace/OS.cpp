@@ -1396,14 +1396,6 @@ ACE_Thread_Adapter::inherit_log_msg (void)
 void *
 ACE_Thread_Adapter::invoke (void)
 {
-#if defined (ACE_HAS_TSS_EMULATION)
-  // As early as we can in the execution of the new thread, allocate
-  // its local TS storage.  Allocate it on the stack, to save dynamic
-  // allocation/dealloction.
-  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
-  ACE_TSS_Emulation::tss_open (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.
   this->inherit_log_msg ();
@@ -1432,11 +1424,6 @@ ACE_Thread_Adapter::invoke (void)
   // If dropped off end, call destructors for thread-specific storage.
   ACE_TSS_Cleanup::instance ()->exit (status);
 
-#if defined (ACE_HAS_TSS_EMULATION)
-  // Close the thread's local TS storage.
-  ACE_TSS_Emulation::tss_close (ts_storage);
-#endif /* ACE_HAS_TSS_EMULATION */
-
 # if defined (ACE_WIN32) && defined (ACE_HAS_MFC) && (ACE_HAS_MFC != 0)
   // Exit the thread.
   // Allow CWinThread-destructor to be invoked from AfxEndThread.
@@ -1462,10 +1449,26 @@ extern "C" void *
 ace_thread_adapter (void *args)
 {
   // ACE_TRACE ("ace_thread_adapter");
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // As early as we can in the execution of the new thread, allocate
+  // its local TS storage.  Allocate it on the stack, to save dynamic
+  // allocation/dealloction.
+  void *ts_storage[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
+  ACE_TSS_Emulation::tss_open (ts_storage);
+#endif /* ACE_HAS_TSS_EMULATION */
+
   ACE_Thread_Adapter *thread_args = (ACE_Thread_Adapter *) args;
 
   // Invoke the user-supplied function with the args.
-  return thread_args->invoke ();
+  void *status = thread_args->invoke ();
+
+#if defined (ACE_HAS_TSS_EMULATION)
+  // Close the thread's local TS storage.
+  ACE_TSS_Emulation::tss_close (ts_storage);
+#endif /* ACE_HAS_TSS_EMULATION */
+
+  return status;
 }
 
 ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func, 
