@@ -393,6 +393,7 @@ Fri Feb 11 13:55:47 2005  J.T. Conklin  <jtc@acorntoolworks.com>
         * m4/config_h.m4:
 
           Define ACE_HAS_ICMP_SUPPORT if host supports raw sockets.
+	  This fixes bugzilla id [2039].
 
 Fri Feb 11 21:33:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
