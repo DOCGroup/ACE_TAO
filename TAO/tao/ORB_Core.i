@@ -218,6 +218,18 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
   this->implrepo_service_ = ir;
 }
 
+ACE_INLINE CORBA::Object_ptr 
+TAO_ORB_Core::typecode_factory (void)
+{
+  return CORBA::Object::_duplicate (this->typecode_factory_);
+}
+
+ACE_INLINE void 
+TAO_ORB_Core::typecode_factory (const CORBA::Object_ptr tf)
+{
+  this->typecode_factory_ = tf;
+}
+
 // ****************************************************************
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
