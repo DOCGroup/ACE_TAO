@@ -1,3 +1,10 @@
+Tue Feb 22 09:52:50 2000  Ossama Othman  <ossama@uci.edu>
+
+	* ace/config-linux-common.h (ACE_HAS_PROC_FS): 
+
+	  A conflict appears when including both <ucontext.h> and
+	  <sys/procfs.h> with recent glibc headers, so don't define it.
+
 Tue Feb 22 09:16:29 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/streams.h: Commented out an inclusion of the file
