@@ -30,11 +30,9 @@ public:
   virtual int visit_attribute (be_attribute *node);
 
 protected:
-  virtual int demarshal_params (be_operation *node);
-
-  int generate_shared_prolog (be_decl *node,
-                              TAO_OutStream *os,
-                              const char *skel_prefix);
+  int generate_shared_prologue (be_decl *node,
+                                TAO_OutStream *os,
+                                const char *skel_prefix);
   int generate_shared_section (be_decl *node,
                                TAO_OutStream *os,
                                int argument_count);

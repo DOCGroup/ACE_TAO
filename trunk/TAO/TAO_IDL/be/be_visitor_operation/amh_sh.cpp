@@ -54,29 +54,41 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  this->generate_shared_prolog (node, os, "");
+  this->generate_shared_prologue (node, os, "");
 
   int argument_count =
     node->count_arguments_with_direction (AST_Argument::dir_IN
                                           | AST_Argument::dir_INOUT);
-  if (argument_count != 0)
-    {
-      *os << "," << be_nl;
-    }
 
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_OPERATION_ARGLIST_OTHERS);
 
   be_visitor_operation_arglist arglist_visitor (&ctx);
-  if (arglist_visitor.visit_scope (node) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) - visit_scope failed\n"), -1);
+  ctx.scope (node);
 
-  if (arglist_visitor.gen_environment_decl (1, node) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N:%l) - gen_environment_decl failed\n"), -1);
+  for (UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
+       !i.is_done ();
+       i.next ())
+    {
+      be_argument *argument =
+        be_argument::narrow_from_decl (i.item ());
+      if (argument == 0
+          || argument->direction () == AST_Argument::dir_OUT)
+        continue;
 
-  *os << be_uidt_nl << ")" << be_uidt;
+      *os << ",";
+      if (argument->accept (&arglist_visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_amh_operation_sh::"
+                             "visit_operation - "
+                             "codegen for upcall args failed\n"),
+                            -1);
+        }
+      *os << be_nl;
+    }
+  *os << "TAO_ENV_ARG_PARAMETER"
+      << be_uidt_nl << ")" << be_uidt;
   if (arglist_visitor.gen_throw_spec (node) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%N:%l) - gen_throe_spec failed\n"), -1);
@@ -89,11 +101,11 @@ int
 be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  this->generate_shared_prolog (node, os, "_get_");
+  this->generate_shared_prologue (node, os, "_get_");
 
   if (!be_global->exception_support ())
     {
-      *os << be_nl << "TAO_ENV_SINGLE_ARG_DECL";
+      *os << "TAO_ENV_SINGLE_ARG_DECL";
     }
   *os << be_uidt_nl << ")" << be_uidt_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException)) = 0;\n" << be_nl;
@@ -101,9 +113,9 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
   if (node->readonly ())
     return 0;
 
-  this->generate_shared_prolog (node, os, "_set_");
+  this->generate_shared_prologue (node, os, "_set_");
 
-  *os << "," << be_nl;
+  *os << ", ";
 
   be_argument the_argument (AST_Argument::dir_IN,
                             node->field_type (),
@@ -127,9 +139,9 @@ be_visitor_amh_operation_sh::visit_attribute (be_attribute *node)
 }
 
 void
-be_visitor_amh_operation_sh::generate_shared_prolog (be_decl *node,
-                                                     TAO_OutStream *os,
-                                                     const char *skel_prefix)
+be_visitor_amh_operation_sh::generate_shared_prologue (be_decl *node,
+                                                       TAO_OutStream *os,
+                                                       const char *skel_prefix)
 {
   os->indent ();
   *os << be_nl << "// TAO_IDL - Generated from "
@@ -178,6 +190,6 @@ be_visitor_amh_operation_sh::generate_shared_prolog (be_decl *node,
   //    be_visitor_interface/amh_sh.cpp
   intf->compute_full_name ("AMH_", "ResponseHandler_ptr", buf);
 
-  *os << buf << " _tao_rh";
+  *os << buf << " _tao_rh" << be_nl;
   delete[] buf;
 }
