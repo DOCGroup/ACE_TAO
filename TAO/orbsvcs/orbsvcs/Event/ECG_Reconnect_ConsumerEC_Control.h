@@ -20,6 +20,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/ORB.h"
+#include "tao/PolicyC.h"
 
 #include "ace/Event_Handler.h"
 
@@ -71,9 +72,9 @@ public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
   TAO_ECG_Reconnect_ConsumerEC_Control (const ACE_Time_Value &rate,
-                                                const ACE_Time_Value &timeout,
-                                                TAO_EC_Gateway_IIOP* gateway,
-                                                CORBA::ORB_ptr orb);
+                                        const ACE_Time_Value &timeout,
+                                        TAO_EC_Gateway_IIOP* gateway,
+                                        CORBA::ORB_ptr orb);
 
   /// Destructor.
   virtual ~TAO_ECG_Reconnect_ConsumerEC_Control (void);
