@@ -133,7 +133,7 @@ void do_testing (int argc, char *argv[], int light)
     {
       const char *p = ACE::basename (name_options->process_name (),
                                      ACE_DIRECTORY_SEPARATOR_CHAR);
-      char s[ACE_OS::strlen ("light") + ACE_OS::strlen (p) + 1];
+      char s[5 /* strlen ("light") */ + MAXNAMELEN + 1];
       ACE_OS::sprintf (s, "light%s", p);
       name_options->database (s);
       ns_context.open (ACE_Naming_Context::PROC_LOCAL, 1);
