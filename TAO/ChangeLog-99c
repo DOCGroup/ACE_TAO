@@ -1,3 +1,18 @@
+Thu Apr 22 13:37:49 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* man/man1/tao_idl.1: 
+
+	Moved tao_idl man page to newly created man page directory.
+
+	* man/man1/TAO.1:
+	* man/man1/TAO_Concurrency_Service.1:
+	* man/man1/TAO_CosEvent_Service.1:
+	* man/man1/TAO_Event_Service.1:
+
+	Started added man pages for TAO and TAO's ORB services.  There are
+	still several more to complete.  Some of the ones listed above need
+	to be revised.
+
 Thu Apr 22 07:53:07 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* examples/POA/Reference_Counted_Servant/Makefile:
@@ -91,6 +106,7 @@ Wed Apr 21 14:45:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
           Added compile-time support for the new Event Channel, just for
           experimentation purposes.
 
+>>>>>>> 1.874
 Wed Apr 21 11:06:57 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.{h,cpp},
