@@ -1,4 +1,3 @@
-
 // -*- C++ -*-
 
 //=============================================================================
@@ -20,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/TAO_Export.h"
+#include "tao/Object_KeyC.h"
 #include "ace/Functor.h"
 #include "ace/Null_Mutex.h"
 
@@ -32,8 +32,6 @@ namespace TAO
 {
 
   // Forward declarations within the namespace..
-
-  class ObjectKey;
   class Refcounted_ObjectKey;
 
   /**
