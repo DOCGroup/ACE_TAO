@@ -77,9 +77,9 @@ main (int argc, char *argv[])
       ACE_Argv_Type_Converter satc (argc, argv);
       CORBA::ORB_var sorb =
         CORBA::ORB_init (satc.get_argc (),
-                         satc.get_TCHAR_argv ()
+                         satc.get_TCHAR_argv (),
+                         ""
                          ACE_ENV_ARG_PARAMETER);
-                         //server_orb.c_str ()
 
       ACE_TRY_CHECK;
 
