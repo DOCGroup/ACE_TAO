@@ -1,3 +1,9 @@
+Mon Apr 15 07:12:12 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* performance-tests/Cubit/TAI/IDL_Cubit/Makefile:
+	* performance-tests/Cubit/TAI/MT_Cubit/Makefile: Fixed the
+	  dependencies that have been generated.
+
 Sun Apr 14 23:05:23 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h:
