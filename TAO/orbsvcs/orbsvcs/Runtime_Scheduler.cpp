@@ -60,7 +60,7 @@ ACE_Runtime_Scheduler::get (RtecScheduler::handle_t handle,
 }
 
 void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
-                                 const RtecScheduler::Criticality criticality,
+                                 RtecScheduler::Criticality criticality,
                                  const RtecScheduler::Time &time,
                                  const RtecScheduler::Time &typical_time,
                                  const RtecScheduler::Time &cached_time,
@@ -68,7 +68,7 @@ void ACE_Runtime_Scheduler::set (RtecScheduler::handle_t handle,
                                  RtecScheduler::Importance importance,
                                  const RtecScheduler::Quantum &quantum,
                                  CORBA::Long threads,
-                                 const RtecScheduler::Info_Type info_type,
+                                 RtecScheduler::Info_Type info_type,
                                  CORBA::Environment &_env)
      TAO_THROW_SPEC ((CORBA::SystemException,
                       RtecScheduler::UNKNOWN_TASK))

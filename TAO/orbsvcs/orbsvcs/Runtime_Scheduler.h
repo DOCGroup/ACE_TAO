@@ -36,7 +36,7 @@ public:
     TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
   virtual void set (RtecScheduler::handle_t handle,
-                    const RtecScheduler::Criticality criticality,
+                    RtecScheduler::Criticality criticality,
                     const RtecScheduler::Time &time,
                     const RtecScheduler::Time &typical_time,
                     const RtecScheduler::Time &cached_time,
@@ -44,7 +44,7 @@ public:
                     RtecScheduler::Importance importance,
                     const RtecScheduler::Quantum &quantum,
                     CORBA::Long threads,
-                    const RtecScheduler::Info_Type info_type,
+                    RtecScheduler::Info_Type info_type,
                     CORBA::Environment &_env)
     TAO_THROW_SPEC ((CORBA::SystemException, RtecScheduler::UNKNOWN_TASK));
 
