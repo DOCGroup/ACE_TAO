@@ -50,8 +50,8 @@ AccountManager_i::open (const char *name,
 
   // If name is already in the map, <find> will assign <result> to the
   // appropriate value.
-  TAO_TRY
-    {
+
+
       if (hash_map_.find (name, result) != 0)
 	{
 	  ACE_DEBUG ((LM_DEBUG,
@@ -85,13 +85,6 @@ AccountManager_i::open (const char *name,
       // Generate an IOR for the result object and register it with
       // the POA.  In case the object already exists then the
       // previously generated IOR is returned.
-
-    }
-  TAO_CATCHANY
-    {
-      _env.print_exception("Exception in OPen");
-    }
-  TAO_ENDTRY;
 
  return result->_this ();
 }
