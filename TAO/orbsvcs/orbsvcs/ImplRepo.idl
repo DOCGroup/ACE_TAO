@@ -19,23 +19,24 @@ module ImplementationRepository
   };
 
   struct EnvironmentVariable
+  // One environment variable/value pair.
   {
     string name;
     string value;
   };
-  // One environment variable/value pair.
 
   struct Address
+  // Specifies the location of the server.
   {
     string host;
     unsigned short port;
   };
-  // Specifies the location of the server.
 
   typedef sequence<EnvironmentVariable> Environment;
   // Complete Environment.
 
   struct StartupOptions
+  // Options used to start up the server.
   {
     string command_line;
     // Startup command (program name and arguments).
@@ -46,12 +47,15 @@ module ImplementationRepository
     string working_directory;
     // Working directory.
   };
-  // Options used to start up the server.
 
   struct ServerInformation
+  // All the information about one server.
   {
     string logical_server;
     // The logical server this server is part of.
+
+    string server;
+    // Server name.
 
     StartupOptions startup;
     // How to start up the server.
@@ -59,7 +63,6 @@ module ImplementationRepository
     Address location;
     // Where the server is located currently.
   };
-  // All the information 
 
   typedef sequence <ServerInformation> ServerInformationList;
 
@@ -145,8 +148,16 @@ module ImplementationRepository
     // The <NotFound> exception is raised when <server> is not found
     // in the Implementation Repository.
 
+    void find (in string server, 
+               out ServerInformation info)
+      raises (NotFound);
+    // Returns the startup information for a given <server>.
+    //
+    // The <NotFound> exception is raised when <server> is not found
+    // in the Implementation Repository.
+
     void list (in unsigned long how_many,
-	       out ServerInformationList server_list,
+               out ServerInformationList server_list,
                out ServerInformationIterator server_iterator);
     // Returns at most <how_many> servers in <server_list>.  If there
     // are additional servers, they can be received through the
