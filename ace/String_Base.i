@@ -209,7 +209,7 @@ ACE_String_Base<CHAR>::operator== (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator==");
 
-  return compare(s) == 0;
+  return compare (s) == 0;
 }
 
 // Less than comparison operator.
@@ -218,7 +218,7 @@ template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::operator < (const ACE_String_Base<CHAR> &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator <");
-  return compare(s) < 0;
+  return compare (s) < 0;
 }
 
 // Greater than comparison operator.
@@ -227,7 +227,7 @@ template <class CHAR> ACE_INLINE int
 ACE_String_Base<CHAR>::operator > (const ACE_String_Base &s) const
 {
   ACE_TRACE ("ACE_String_Base<CHAR>::operator >");
-  return compare(s) > 0;
+  return compare (s) > 0;
 }
 
 
@@ -246,16 +246,14 @@ ACE_String_Base<CHAR>::compare (const ACE_String_Base<CHAR> &s) const
   ACE_TRACE ("ACE_String_Base<CHAR>::compare");
 
   // Pick smaller of the two lengths and perform the comparison.
-  size_t smaller_length = ace_min(this->len_,s.len_);
+  size_t smaller_length = ace_min (this->len_, s.len_);
 
   int result = ACE_OS::memcmp (this->rep_,
                                s.rep_,
                                smaller_length);
 
   if (!result)
-    {
-      result = this->len_ - s.len_;
-    }
+    result = this->len_ - s.len_;
   return result;
 }
 
