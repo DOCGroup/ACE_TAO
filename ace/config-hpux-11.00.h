@@ -378,8 +378,6 @@
 //#define ACE_HAS_SVR4_TLI
 // Platform uses <xti.h>, not tiuser.h
 #define ACE_HAS_XTI
-// But it has _terrno() outside the extern "C" stuff.
-#define ACE_HAS_TIUSER_H_BROKEN_EXTERN_C
 // Platform provides ACE_TLI function prototypes.
 #define ACE_HAS_TLI_PROTOTYPES
 // HP-UX 11.00 (at least at initial releases) has some busted macro defs
