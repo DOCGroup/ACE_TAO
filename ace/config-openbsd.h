@@ -61,6 +61,7 @@
 #define ACE_USES_ASM_SYMBOL_IN_DLSYM
 
 #define ACE_LACKS_UCONTEXT_H
+#define ACE_HAS_UCONTEXT_T
 
 
 // OpenBSD has sigwait defined
