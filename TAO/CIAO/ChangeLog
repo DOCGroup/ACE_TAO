@@ -1,3 +1,9 @@
+Sun Aug 29 19:02:42 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DAnCE/ciao/CCM_Core.mpc: 
+	 
+	  Added valuetype seperately to the Deployment_svnt project. 
+
 Sun Aug 29 18:10:13 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* DAnCE/examples/BasicSP/BMClosedED/BMClosedED_svnt.h:
