@@ -88,7 +88,7 @@ ImplRepo_i::activate_server (const char *server,
                              CORBA::Environment &ACE_TRY_ENV)
 {
   int start = 0;
-  char *ping_ior;
+  ASYS_TCHAR *ping_ior;
   Implementation_Repository::INET_Addr *address =
     new Implementation_Repository::INET_Addr;
   address->port_ = 0;
@@ -219,13 +219,12 @@ ImplRepo_i::register_server (const char *server,
                              const Implementation_Repository::Process_Options &options,
                              CORBA::Environment &ACE_TRY_ENV)
 {
-  Repository::Record rec;
-  rec.comm_line = CORBA::string_dup (options.command_line_);
-  rec.env = CORBA::string_dup (options.environment_);
-  rec.wdir = CORBA::string_dup (options.working_directory_);
-  rec.host = "";
-  rec.port = 0;
-  rec.ping_ior = "";
+  Repository_Record rec (options.command_line_,
+                         options.environment_,
+                         options.working_directory_,
+                         "",
+                         0,
+                         "");
 
   int status = this->repository_.add (server, rec);
 
@@ -262,16 +261,12 @@ ImplRepo_i::reregister_server (const char *server,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-  Repository::Record rec;
-  // @@ Darrell, please make sure to use the ACE_ALLOCATOR and
-  // ACE_ALLOCATOR_RETURN macros for all of these string_dup() calls
-  // in your code.
-  rec.comm_line = CORBA::string_dup (options.command_line_);
-  rec.env = CORBA::string_dup (options.environment_);
-  rec.wdir = CORBA::string_dup (options.working_directory_);
-  rec.host = "";
-  rec.port = 0;
-  rec.ping_ior = "";
+  Repository_Record rec (options.command_line_,
+                         options.environment_,
+                         options.working_directory_,
+                         "",
+                         0,
+                         "");
 
   this->repository_.update (server, rec);
 
@@ -327,7 +322,8 @@ ImplRepo_i::server_is_running (const char *server,
                 server));
 
   // Update the record in the repository
-  Repository::Record rec;
+  Repository_Record rec;
+
   if (this->repository_.resolve (server, rec) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -341,11 +337,15 @@ ImplRepo_i::server_is_running (const char *server,
   delete [] rec.ping_ior;
   delete [] rec.host;
 
-  rec.host = ACE::strnew (addr.host_.in ());
+  ACE_NEW_RETURN (rec.host, ASYS_TCHAR[ACE_OS::strlen (addr.host_.in ()) + 1], 0);
+  ACE_OS::strcpy (rec.host, addr.host_.in ());
   rec.port = addr.port_;
-  rec.ping_ior = ACE::strnew (this->orb_manager_.orb ()->object_to_string (ping,
-                                                                           ACE_TRY_ENV));
-  this->repository_.update (server, rec);
+  
+  ASYS_TCHAR *ping_ior = this->orb_manager_.orb ()->object_to_string (ping, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  ACE_NEW_RETURN (rec.ping_ior, ASYS_TCHAR[ACE_OS::strlen (ping_ior) + 1], 0);
+  ACE_OS::strcpy (rec.ping_ior, ping_ior);
 
   if (this->repository_.update (server, rec) == 0)
     {
@@ -390,13 +390,13 @@ ImplRepo_i::server_is_shutting_down (const char *server,
                                      CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_UNUSED_ARG (ACE_TRY_ENV);
-  Repository::Record rec;
+  Repository_Record rec;
 
   if (this->repository_.resolve (server, rec) == 0)
     {
-      rec.host = "";
+      ACE_OS::strcpy (rec.host, ASYS_TEXT (""));
       rec.port = 0;
-      rec.ping_ior = "";
+      ACE_OS::strcpy (rec.ping_ior, ASYS_TEXT (""));
 
       if (this->repository_.update (server, rec) == 0)
         {

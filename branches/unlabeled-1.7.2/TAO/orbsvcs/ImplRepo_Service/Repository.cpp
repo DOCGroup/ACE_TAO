@@ -4,53 +4,126 @@
 
 ACE_RCSID(ImplRepo_Service, Repository, "$Id$")
 
+  ASYS_TCHAR *comm_line;
+  ASYS_TCHAR *env;
+  ASYS_TCHAR *wdir;
+  ASYS_TCHAR *host;
+  unsigned short port;
+  ASYS_TCHAR *ping_ior;
+
+Repository_Record::Repository_Record ()
+: port (0)
+{
+  ACE_NEW (this->comm_line, ASYS_TCHAR [1]);
+  ACE_NEW (this->env, ASYS_TCHAR [1]);
+  ACE_NEW (this->wdir, ASYS_TCHAR [1]);
+  ACE_NEW (this->host, ASYS_TCHAR [1]);
+  ACE_NEW (this->ping_ior, ASYS_TCHAR [1]);
+
+  ACE_OS::strcpy (this->comm_line, ASYS_TEXT (""));
+  ACE_OS::strcpy (this->env, ASYS_TEXT (""));
+  ACE_OS::strcpy (this->wdir, ASYS_TEXT (""));
+  ACE_OS::strcpy (this->host, ASYS_TEXT (""));
+  ACE_OS::strcpy (this->ping_ior, ASYS_TEXT (""));
+}
+
+Repository_Record::Repository_Record (const Repository_Record &r)
+{
+  ACE_NEW (this->comm_line, ASYS_TCHAR [ACE_OS::strlen (r.comm_line) + 1]);
+  ACE_NEW (this->env, ASYS_TCHAR [ACE_OS::strlen (r.env) + 1]);
+  ACE_NEW (this->wdir, ASYS_TCHAR [ACE_OS::strlen (r.wdir) + 1]);
+  ACE_NEW (this->host, ASYS_TCHAR [ACE_OS::strlen (r.host) + 1]);
+  ACE_NEW (this->ping_ior, ASYS_TCHAR [ACE_OS::strlen (r.ping_ior) + 1]);
+
+  ACE_OS::strcpy (this->comm_line, r.comm_line);
+  ACE_OS::strcpy (this->env, r.env);
+  ACE_OS::strcpy (this->wdir, r.wdir);
+  ACE_OS::strcpy (this->host, r.host);
+  ACE_OS::strcpy (this->ping_ior, r.ping_ior);
+
+  this->port = r.port;
+}
+
+Repository_Record::Repository_Record (const ASYS_TCHAR *c,
+                                      const ASYS_TCHAR *e,
+                                      const ASYS_TCHAR *w,
+                                      const ASYS_TCHAR *h,
+                                      const unsigned short p,
+                                      const ASYS_TCHAR *pi)
+{
+  ACE_NEW (this->comm_line, ASYS_TCHAR [ACE_OS::strlen (c) + 1]);
+  ACE_NEW (this->env, ASYS_TCHAR [ACE_OS::strlen (e) + 1]);
+  ACE_NEW (this->wdir, ASYS_TCHAR [ACE_OS::strlen (w) + 1]);
+  ACE_NEW (this->host, ASYS_TCHAR [ACE_OS::strlen (h) + 1]);
+  ACE_NEW (this->ping_ior, ASYS_TCHAR [ACE_OS::strlen (pi) + 1]);
+
+  ACE_OS::strcpy (this->comm_line, c);
+  ACE_OS::strcpy (this->env, e);
+  ACE_OS::strcpy (this->wdir, w);
+  ACE_OS::strcpy (this->host, h);
+  ACE_OS::strcpy (this->ping_ior, pi);
+
+  this->port = p;
+}
+
+Repository_Record::~Repository_Record ()
+{
+  delete [] this->comm_line;
+  delete [] this->env;
+  delete [] this->wdir;
+  delete [] this->host;
+  delete [] this->ping_ior;
+}
+
+Repository_Record &
+Repository_Record::operator= (Repository_Record &r)
+{
+  if (this == &r)
+    return *this;
+
+  delete [] this->comm_line;
+  delete [] this->env;
+  delete [] this->wdir;
+  delete [] this->host;
+  delete [] this->ping_ior;
+
+  ACE_NEW_RETURN (this->comm_line, ASYS_TCHAR [ACE_OS::strlen (r.comm_line) + 1], *this);
+  ACE_NEW_RETURN (this->env, ASYS_TCHAR [ACE_OS::strlen (r.env) + 1], *this);
+  ACE_NEW_RETURN (this->wdir, ASYS_TCHAR [ACE_OS::strlen (r.wdir) + 1], *this);
+  ACE_NEW_RETURN (this->host, ASYS_TCHAR [ACE_OS::strlen (r.host) + 1], *this);
+  ACE_NEW_RETURN (this->ping_ior, ASYS_TCHAR [ACE_OS::strlen (r.ping_ior) + 1], *this);
+
+  ACE_OS::strcpy (this->comm_line, r.comm_line);
+  ACE_OS::strcpy (this->env, r.env);
+  ACE_OS::strcpy (this->wdir, r.wdir);
+  ACE_OS::strcpy (this->host, r.host);
+  ACE_OS::strcpy (this->ping_ior, r.ping_ior);
+
+  this->port = r.port;
+
+  return *this;
+}
+
 // Default Constructor
 Repository::Repository ()
 {
-  this->repository_.open (ACE_Naming_Context::PROC_LOCAL);
+  // Nothing
 }
 
 // Add a new server to the Repository
 int
-Repository::add (const char *key, const Repository::Record &rec)
+Repository::add (const ASYS_TCHAR *key, const Repository_Record &rec)
 {
-  char *temp; // Temporary string to hold all the variables in.
-
-  // Needs to be as long as all the lengths plus the separators and the
-  // null character (6) and then also the size that the host/port could
-  // take up.
-  ACE_NEW_RETURN (temp,
-                  char [ACE_OS::strlen (rec.comm_line)
-                        + ACE_OS::strlen (rec.env)
-                        + ACE_OS::strlen (rec.wdir)
-                        + ACE_OS::strlen (rec.ping_ior)
-                        + ACE_OS::strlen (rec.host)
-                        + 40],
-                  -1);
-
-  // Put them all in a string
-  // Why use the extra space?  Well, strtok doesn't like null strings
-  // because they show up as \n\n, which it skips past.
-  ACE_OS::sprintf (temp,
-                   " %s\n %s\n %s\n %s\n %hu\n %s\n",
-                   rec.comm_line,
-                   rec.env,
-                   rec.wdir,
-                   rec.host,
-                   rec.port,
-                   rec.ping_ior);
+  Repository_Record *new_rec = new Repository_Record (rec);
 
   // Store the record in the repository.
-  int retval = this->repository_.bind (key, temp);
-
-  // Clean up and exit.
-  delete [] temp;
+  int retval = this->repository_.bind (key, new_rec);
 
   return retval;
 }
 
 int 
-Repository::update (const char *key, const Repository::Record &rec)
+Repository::update (const ASYS_TCHAR *key, const Repository_Record &rec)
 {
   this->remove (key);
   return this->add (key, rec);
@@ -58,7 +131,7 @@ Repository::update (const char *key, const Repository::Record &rec)
 
 // Removes the server from the Repository
 int
-Repository::remove (const char *key)
+Repository::remove (const ASYS_TCHAR *key)
 {
   return this->repository_.unbind (key);
 }
@@ -66,46 +139,28 @@ Repository::remove (const char *key)
 
 // Find the key record in the Repository
 int
-Repository::resolve (const char *key, Repository::Record &rec)
+Repository::resolve (const ASYS_TCHAR *key, Repository_Record &rec)
 {
-  char *value = 0, *type = 0; // Temp variables needed for resolve
-  char *lasts = 0; // For strtok_r
-  int retval = this->repository_.resolve (key, value, type);
+  Repository_Record *rep_rec;
+  int retval = this->repository_.find (key, rep_rec);
 
   if (retval == 0)
-    {
-      // +1 to get rid of the space
-      rec.comm_line = ACE::strnew (ACE_OS::strtok_r (value, "\n", &lasts) + 1);
-      rec.env = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
-      rec.wdir = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
-      rec.host = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
-      ::sscanf (ACE_OS::strtok_r (NULL, "\n", &lasts), "%hu", &rec.port);
-      rec.ping_ior = ACE::strnew (ACE_OS::strtok_r (NULL, "\n", &lasts) + 1);
-    }
-  else
-    {
-      retval = -1;
-    }
-
-  delete [] value;
-  delete [] type;
+    rec = *rep_rec;
 
   return retval;
 }
 // = Accessor methods
 
 int
-Repository::get_comm_line (const char *key, char *&comm_line)
+Repository::get_comm_line (const ASYS_TCHAR *key, ASYS_TCHAR *&comm_line)
 {
-  Repository::Record rec;
-  int retval = this->resolve (key, rec);
+  Repository_Record *rec;
+  int retval = this->repository_.find (key, rec);
 
   if (retval == 0)
     {
-      comm_line = rec.comm_line;
-      delete [] rec.env;
-      delete [] rec.wdir;
-      delete [] rec.ping_ior;
+      ACE_NEW_RETURN (comm_line, ASYS_TCHAR [ACE_OS::strlen (rec->comm_line) + 1], -1);
+      ACE_OS::strcpy (comm_line, rec->comm_line);
     }
 
   return retval;
@@ -113,73 +168,60 @@ Repository::get_comm_line (const char *key, char *&comm_line)
 
 
 int
-Repository::get_env (const char *key, char *&env)
+Repository::get_env (const ASYS_TCHAR *key, ASYS_TCHAR *&env)
 {
-  Repository::Record rec;
-  int retval = this->resolve (key, rec);
+  Repository_Record *rec;
+  int retval = this->repository_.find (key, rec);
 
   if (retval == 0)
     {
-      delete [] rec.comm_line;
-      env = rec.env;
-      delete [] rec.wdir;
-      delete [] rec.host;
-      delete [] rec.ping_ior;
+      ACE_NEW_RETURN (env, ASYS_TCHAR [ACE_OS::strlen (rec->env) + 1], -1);
+      ACE_OS::strcpy (env, rec->env);
     }
 
   return retval;
 }
 
 int
-Repository::get_wdir (const char *key, char *&wdir)
+Repository::get_wdir (const ASYS_TCHAR *key, ASYS_TCHAR *&wdir)
 {
-  Repository::Record rec;
-  int retval = this->resolve (key, rec);
+  Repository_Record *rec;
+  int retval = this->repository_.find (key, rec);
 
   if (retval == 0)
     {
-      delete [] rec.comm_line;
-      delete [] rec.env;
-      wdir = rec.wdir;
-      delete [] rec.host;
-      delete [] rec.ping_ior;
+      ACE_NEW_RETURN (wdir, ASYS_TCHAR [ACE_OS::strlen (rec->wdir) + 1], -1);
+      ACE_OS::strcpy (wdir, rec->wdir);
     }
 
   return retval;
 }
 
 int
-Repository::get_hostport (const char *key, char *&host, unsigned short &port)
+Repository::get_hostport (const ASYS_TCHAR *key, ASYS_TCHAR *&host, unsigned short &port)
 {
-  Repository::Record rec;
-  int retval = this->resolve (key, rec);
+  Repository_Record *rec;
+  int retval = this->repository_.find (key, rec);
 
   if (retval == 0)
     {
-      delete [] rec.comm_line;
-      delete [] rec.env;
-      delete [] rec.wdir;
-      host = rec.host;
-      port = rec.port;
-      delete [] rec.ping_ior;
+      host = rec->host;
+      port = rec->port;
     }
 
   return retval;
 }
 
 int
-Repository::get_ping_ior (const char *key, char *&ping_ior)
+Repository::get_ping_ior (const ASYS_TCHAR *key, ASYS_TCHAR *&ping_ior)
 {
-  Repository::Record rec;
-  int retval = this->resolve (key, rec);
+  Repository_Record *rec;
+  int retval = this->repository_.find (key, rec);
 
   if (retval == 0)
     {
-      delete [] rec.comm_line;
-      delete [] rec.env;
-      delete [] rec.wdir;
-      delete [] rec.host;
-      ping_ior = rec.ping_ior;
+      ACE_NEW_RETURN (ping_ior, ASYS_TCHAR [ACE_OS::strlen (rec->ping_ior) + 1], -1);
+      ACE_OS::strcpy (ping_ior, rec->ping_ior);
     }
 
   return retval;
