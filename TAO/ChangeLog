@@ -1,3 +1,33 @@
+Sun Jul 28 21:05:07 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.h:
+	* orbsvcs/orbsvcs/AV/AVStreams_i.i:
+	* orbsvcs/orbsvcs/AV/AV_Core.cpp:
+	* orbsvcs/orbsvcs/AV/Flows_T.cpp:
+	* orbsvcs/orbsvcs/AV/Policy.cpp:
+	* orbsvcs/orbsvcs/AV/RTP.cpp:
+	* orbsvcs/orbsvcs/AV/TCP.cpp:
+	* orbsvcs/orbsvcs/AV/Transport.cpp:
+	* orbsvcs/orbsvcs/AV/UDP.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/ftp.h:
+	* orbsvcs/tests/AVStreams/Full_Profile/run_test.pl:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.cpp:
+	* orbsvcs/tests/AVStreams/Full_Profile/server.h:
+	* orbsvcs/tests/AVStreams/Latency/control.cpp:
+	* orbsvcs/tests/AVStreams/Latency/ping.cpp:
+	* orbsvcs/tests/AVStreams/Latency/pong.cpp:
+	* orbsvcs/tests/AVStreams/Latency/run_test.pl:
+	* orbsvcs/tests/AVStreams/Latency/svc.conf:
+	* orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/server.cpp:
+	  Code cleanups, memory fixes, in attempt to fix
+	  Full_Profile and Latency tests.  Multicast_Full_Profile
+	  test isn't quite working, but it is not crashing like it
+	  used to.
+
 Sun Jul 28 13:36:48 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
 
 	* orbsvcs/tests/Trading/Trading.dsw:

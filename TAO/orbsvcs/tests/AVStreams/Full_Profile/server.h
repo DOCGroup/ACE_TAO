@@ -35,7 +35,6 @@ public:
                     TAO_AV_Callback *&callback);
 };
 
-typedef TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint> FTP_Server_FDev;
 
 class Server
 {
@@ -55,12 +54,14 @@ protected:
   int parse_args (int argc,char **argv);
   TAO_Naming_Client my_naming_client_;
   TAO_AV_Endpoint_Reactive_Strategy_B <TAO_StreamEndPoint_B,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
-  TAO_MMDevice *mmdevice_;
-  FTP_Server_FDev *fdev_;
   FILE *fp_;
   char *protocol_;
   CORBA::ORB_var orb_;
   PortableServer::POA_ptr poa_;
+  TAO_StreamEndPoint_B *streamendpoint_b_;
+  AVStreams::StreamEndPoint_B_var sep_b_;
+  FTP_Server_FlowEndPoint *fep_b_;
+  AVStreams::FlowConsumer_var fep_b_obj_;
 };
 
 typedef ACE_Singleton<Server,ACE_Null_Mutex> FTP_SERVER;

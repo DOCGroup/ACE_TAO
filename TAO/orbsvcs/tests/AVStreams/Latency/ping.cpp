@@ -78,13 +78,13 @@ parse_args (int argc, char *argv[])
   if (ping_protocols.length () == 0)
     {
       ping_protocols.length (1);
-      ping_protocols[0] = CORBA::string_dup ("UDP=224.9.9.2:12345");
+      ping_protocols[0] = CORBA::string_dup ("UDP=localhost:12345");
     }
 
   if (pong_protocols.length () == 0)
     {
       pong_protocols.length (1);
-      pong_protocols[0] = CORBA::string_dup ("UDP=224.9.9.2:23456");
+      pong_protocols[0] = CORBA::string_dup ("UDP=localhost:23456");
     }
 
   // Indicates sucessful parsing of the command line
@@ -95,10 +95,11 @@ int main (int argc, char *argv[])
 {
   ACE_TRY_NEW_ENV
     {
-      parse_args (argc, argv);
 
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
+
+      parse_args (argc, argv);
 
       CORBA::Object_var obj
         = orb->resolve_initial_references ("RootPOA" ACE_ENV_ARG_PARAMETER);
@@ -302,6 +303,7 @@ Pong_Send_Callback::get_timeout (ACE_Time_Value *&tv,
                                  void *&)
 {
   // @@ ACE_NEW (tv, ACE_Time_Value (0, milliseconds * 1000));
+  ACE_DEBUG ((LM_DEBUG,"Pong_Send_Callback::get_timeout\n"));
   tv = 0;
 }
 

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 //=============================================================================
 /**
@@ -55,9 +54,9 @@
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
 
-typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map;
-typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_ptr> FlowEndPoint_Map_Entry;
-typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowEndPoint_ptr,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
+typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map;
+typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowEndPoint_var> FlowEndPoint_Map_Entry;
+typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowEndPoint_var,ACE_Null_Mutex>  FlowEndPoint_Map_Iterator;
 
 typedef ACE_Hash_Map_Manager <ACE_CString,TAO_AV_Flow_Handler*,ACE_Null_Mutex>  Flow_Handler_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,TAO_AV_Flow_Handler*> Flow_Handler_Map_Entry;
@@ -168,9 +167,9 @@ protected:
   AVStreams::StreamEndPoint_B_var sep_b_;
 
   /// Hash table for the flow names and its corresponding flowconnection object reference.
-  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex> FlowConnection_Map;
-  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowConnection_ptr,ACE_Null_Mutex> FlowConnection_Map_Iterator;
-  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowConnection_ptr> FlowConnection_Map_Entry;
+  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex> FlowConnection_Map;
+  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FlowConnection_var,ACE_Null_Mutex> FlowConnection_Map_Iterator;
+  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FlowConnection_var> FlowConnection_Map_Entry;
   FlowConnection_Map flow_connection_map_;
   AVStreams::FlowConnection_seq flowConnections_;
 
@@ -554,7 +553,6 @@ class TAO_AV_Export TAO_StreamEndPoint
   : public virtual POA_AVStreams::StreamEndPoint,
     public virtual TAO_Base_StreamEndPoint,
     public virtual PortableServer::RefCountServantBase
-//public virtual TAO_PropertySet
 {
 
 public:
@@ -1034,9 +1032,9 @@ protected:
   /// current flow number used for system generation of flow names.
   u_int flow_num_;
 
-  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex> FDev_Map;
-  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FDev_ptr,ACE_Null_Mutex> FDev_Map_Iterator;
-  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FDev_ptr> FDev_Map_Entry;
+  typedef ACE_Hash_Map_Manager <ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex> FDev_Map;
+  typedef ACE_Hash_Map_Iterator <ACE_CString,AVStreams::FDev_var,ACE_Null_Mutex> FDev_Map_Iterator;
+  typedef ACE_Hash_Map_Entry <ACE_CString,AVStreams::FDev_var> FDev_Map_Entry;
 
   /// hash table for the flownames and its corresponding flowEndpoint
   /// reference.
@@ -1174,9 +1172,8 @@ protected:
  */
 class TAO_AV_Export TAO_FlowEndPoint :
   public virtual POA_AVStreams::FlowEndPoint,
-  public virtual TAO_PropertySet,
-  //  public virtual PortableServer::RefCountServantBase,
-  public virtual TAO_Base_StreamEndPoint
+  public virtual TAO_Base_StreamEndPoint,
+  public virtual PortableServer::RefCountServantBase
 {
 
 public:
@@ -1550,6 +1547,7 @@ public:
 #include "Transport.h"
 
 #if defined (__ACE_INLINE__)
+#include "tao/debug.h"
 #include "AVStreams_i.i"
 #endif /* __ACE_INLINE__ */
 
