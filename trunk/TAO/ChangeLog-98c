@@ -1,3 +1,10 @@
+Fri Jun 12 15:01:16 1998  Marina Igorevna Spivak  <marina@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/CosNaming_i.cpp: Added _env parameter to
+ 	<get_context> helper method, and added the check of environment in
+ 	all methods using <get_context>.  This is to allow exceptions
+ 	propagate back.
+
 1998-06-12  Torben Worm  <tworm@cumbia.cs.wustl.edu>
 
 	* orbsvcs/Concurrency/CC_LockSet.{h,cpp}
