@@ -430,27 +430,6 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
 }
 
 void
-TAO_EC_ProxyPushSupplier::push_timeout (
-    TAO_EC_Filter* timeout_filter,
-    const RtecEventComm::EventSet &event,
-    TAO_EC_QOS_Info& qos_info,
-    CORBA::Environment &ACE_TRY_ENV)
-{
-  {
-    ACE_GUARD_THROW_EX (
-          ACE_Lock, ace_mon, *this->lock_,
-          RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
-    ACE_CHECK;
-
-    timeout_filter->push (event, qos_info, ACE_TRY_ENV);
-    if (this->refcount_ > 0)
-      return;
-  }
-
-  this->event_channel_->destroy_proxy_push_supplier (this);
-}
-
-void
 TAO_EC_ProxyPushSupplier::clear (void)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);

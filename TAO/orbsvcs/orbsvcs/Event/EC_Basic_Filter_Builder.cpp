@@ -44,7 +44,6 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
-          pos++;
         }
       return new TAO_EC_Conjunction_Filter (children, n);
     }
@@ -58,7 +57,6 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
       for (CORBA::ULong i = 0; i != n; ++i)
         {
           children[i] = this->recursive_build (supplier, qos, pos);
-          pos++;
         }
       return new TAO_EC_Disjunction_Filter (children, n);
     }
@@ -74,6 +72,7 @@ TAO_EC_Basic_Filter_Builder:: recursive_build (
                                         e.header.type,
                                         e.header.creation_time);
     }
+  pos++;
   return new TAO_EC_Type_Filter (e.header);
 }
 

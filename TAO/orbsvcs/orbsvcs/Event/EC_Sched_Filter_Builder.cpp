@@ -74,7 +74,6 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
                                                child_name.c_str (),
                                                ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
-          pos++;
         }
       return new TAO_EC_Sched_Filter (name.c_str (),
                                       scheduler,
@@ -103,7 +102,6 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
                                                child_name.c_str (),
                                                ACE_TRY_ENV);
           ACE_CHECK_RETURN (0);
-          pos++;
         }
       return new TAO_EC_Sched_Filter (name.c_str (),
                                       scheduler,
@@ -149,6 +147,7 @@ TAO_EC_Sched_Filter_Builder:: recursive_build (
                                         e.header.creation_time);
     }
 
+  pos++;
   return new TAO_EC_Sched_Filter (name.c_str (),
                                   scheduler,
                                   new TAO_EC_Type_Filter (e.header),
