@@ -1,3 +1,7 @@
+Sat Dec 18 22:43:55 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * orbsvcs/Time_Service/Makefile: Updated dependencies.
+
 Sat Dec 18 19:21:01 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
         * tao/POA.cpp: Fixed the imr_notify_startup method to not
