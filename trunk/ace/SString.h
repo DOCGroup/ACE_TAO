@@ -487,6 +487,17 @@ private:
 ACE_Export ostream &operator << (ostream &, const ACE_SString &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
+// This allows one to use W or C String based on the Unicode 
+// setting
+#if defined (UNICODE)
+typedef ACE_WString ACE_TString;
+#else /* UNICODE */
+typedef ACE_CString ACE_TString;
+#endif /* UNICODE */
+
+
+// ************************************************************
+
 class ACE_Export ACE_Tokenizer
 {
   // = TITLE
