@@ -48,6 +48,7 @@ ACE_Reactor::~ACE_Reactor (void)
 
 // Process-wide ACE_Reactor.
 ACE_Reactor *ACE_Reactor::reactor_ = 0;
+int ACE_Reactor::instantiated_ = 0;
 
 // Controls whether the Reactor is deleted when we shut down (we can
 // only delete it safely if we created it!)
@@ -61,16 +62,17 @@ ACE_Reactor::instance (void)
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
-  if (ACE_Reactor::reactor_ == 0)
+  if (ACE_Reactor::instantiated_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE_Reactor::reactor_ == 0)
+      if (ACE_Reactor::instantiated_ == 0)
         {
           ACE_NEW_RETURN (ACE_Reactor::reactor_, ACE_Reactor, 0);
           ACE_Reactor::delete_reactor_ = 1;
+          ACE_Reactor::instantiated_ = -1;
         }
     }
   return ACE_Reactor::reactor_;
@@ -88,6 +90,7 @@ ACE_Reactor::instance (ACE_Reactor *r)
   ACE_Reactor::delete_reactor_ = 0;
 
   ACE_Reactor::reactor_ = r;
+  ACE_Reactor::instantiated_ = (r != 0 ? -1 : 0);
   return t;
 }
 
@@ -104,6 +107,7 @@ ACE_Reactor::close_singleton (void)
       delete ACE_Reactor::reactor_;
       ACE_Reactor::reactor_ = 0;
       ACE_Reactor::delete_reactor_ = 0;
+      ACE_Reactor::instantiated_ = 0;
     }
 }
 

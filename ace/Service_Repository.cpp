@@ -13,6 +13,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository)
 
 // Process-wide Service Repository.
 ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
+int ACE_Service_Repository::instantiated_ = 0;
 
 // Controls whether the Service_Repository is deleted when we shut
 // down (we can only delete it safely if we created it!)
@@ -37,16 +38,17 @@ ACE_Service_Repository::instance (int size /* = ACE_Service_Repository::DEFAULT_
 {
   ACE_TRACE ("ACE_Service_Config::instance");
 
-  if (ACE_Service_Repository::svc_rep_ == 0)
+  if (ACE_Service_Repository::instantiated_ == 0)
     {
       // Perform Double-Checked Locking Optimization.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
 				*ACE_Static_Object_Lock::instance (), 0));
 
-      if (ACE_Service_Repository::svc_rep_ == 0)
+      if (ACE_Service_Repository::instantiated_ == 0)
 	{
 	  ACE_NEW_RETURN (ACE_Service_Repository::svc_rep_, ACE_Service_Repository (size), 0);
 	  ACE_Service_Repository::delete_svc_rep_ = 1;
+          ACE_Service_Repository::instantiated_ = -1;
 	}
     }
   return ACE_Service_Repository::svc_rep_;
@@ -64,6 +66,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
   ACE_Service_Repository::delete_svc_rep_ = 0;
 
   ACE_Service_Repository::svc_rep_ = s;
+  ACE_Service_Repository::instantiated_ = (s != 0 ? -1 : 0);
   return t;
 }
 
@@ -80,6 +83,7 @@ ACE_Service_Repository::close_singleton (void)
       delete ACE_Service_Repository::svc_rep_;
       ACE_Service_Repository::svc_rep_ = 0;
       ACE_Service_Repository::delete_svc_rep_ = 0;
+      ACE_Service_Repository::instantiated_ = 0;
     }
 }
 
