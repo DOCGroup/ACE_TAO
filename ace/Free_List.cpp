@@ -15,9 +15,9 @@ ACE_Free_List<T>::~ACE_Free_List (void)
   // Nothing
 }
 
-
-// Default constructor that takes in a preallocation number (<prealloc>), a 
-// low and high water mark (<lwm> and <hwm>) and an increment value (<inc>)
+// Default constructor that takes in a preallocation number
+// (<prealloc>), a low and high water mark (<lwm> and <hwm>) and an
+// increment value (<inc>)
 
 template <class T, class LOCK>  
 ACE_Locked_Free_List<T, LOCK>::ACE_Locked_Free_List (size_t prealloc, 
@@ -36,7 +36,6 @@ ACE_Locked_Free_List<T, LOCK>::ACE_Locked_Free_List (size_t prealloc,
   this->alloc (prealloc);
 }
 
-
 // Destructor - removes all the elements from the free_list
 
 template <class T, class LOCK>  
@@ -53,7 +52,6 @@ ACE_Locked_Free_List<T, LOCK>::~ACE_Locked_Free_List (void)
     delete this->mutex_;
 }
 
-
 // Allocates <n> extra nodes for the freelist
 
 template <class T, class LOCK> void 
@@ -69,7 +67,6 @@ ACE_Locked_Free_List<T, LOCK>::alloc (size_t n)
     }
 }
 
-
 // Removes and frees <n> nodes from the freelist
 
 template <class T, class LOCK> void 
@@ -83,7 +80,6 @@ ACE_Locked_Free_List<T, LOCK>::dealloc (size_t n)
       delete temp;
     }
 }
-
 
 // returns a reference to the mutex
 template <class T, class LOCK> LOCK &

@@ -1344,7 +1344,7 @@ UNIX system calls directly (regardless of whether you use ACE or not).
    	to maintain software.  Sockets and TLI are *incredibly*
    	error-prone and tedious to use, in addition to being
    	non-portable.  I've got a paper that discusses this in detail
-	at URL http://www.cs.wustl.edu/~schmidt/COOTS-95.ps.Z
+	at URL http://www.cs.wustl.edu/~schmidt/COOTS-95.ps.gz.
 	
 3. Incorporation with higher-level patterns and programming methods -- 
 
