@@ -1,0 +1,142 @@
+//$Id$
+
+A Regression test for ACE QoS features. 
+---------------------------------------
+
+This test implements a simple Receiver-Sender program that ensures
+Quality of Service (QoS) guarantees on the underlying network before
+transmitting data. The program tests the ACE QoS APIs/features. The
+test works for Winsock2 APIs on Win2K as well as RAPI on Solaris.
+
+
+------------------------------------------------------------------------
+WIN2K :
+
+Build Requirements :
+--------------------
+1. Two Win2K machines.
+2. June98 Platform SDK or later.
+3. Link with ws2_32.lib 
+
+The test consists of a receiver and a sender. 
+ 
+ The sender is started first (though it is not mandatory) as :
+
+ sender -m merengue.cs.wustl.edu:9091 -P 10004
+
+ -m: specifies the multicast session address that both client and
+     server subscribe to for QoS events.
+
+ -p: Protocol to be used. Could be udp or tcp. Default is udp.
+
+ -P: Sender source port. If not specified, DEFAULT_SOURCE_SENDER_PORT
+     (10001) will be used.
+
+ -h: Displays the help on various options.
+
+The sample Sender is started next as :
+
+  receiver -m merengue.cs.wustl.edu:9091 
+
+ -m: specifies the multicast session address that both client and
+     server subscribe to for QoS events.
+
+ -n: Option to be used by senders only to specify the destination
+     address. This option is overriden if a multicast address is also
+     specified through the -m option.
+
+ -p: Protocol to be used. Could be udp or tcp. Default is udp.
+
+ -P: Sender source port. If not specified, DEFAULT_SOURCE_SENDER_PORT
+     (10001) will be used.
+
+ -h: Displays the help on various options.
+
+On Win2K the user must have administrative access to the machine to
+run this program.  It seems to be a pre-requisite to opening QoS
+sockets.
+
+The sender and receiver should be run on different Win2K machines. 
+
+The test demonstrates how to GQOS enable an application using the ACE QoS APIs.
+It concentrates on the use of various ACE QoS APIs and their correctness.
+
+-------------------------------------------------------------------------------
+
+RAPI :
+
+0. The $ACE_ROOT/include/makeinclude/platform_macros.GNU should include the
+following :
+
+include /project/doc/vishal/ACE_wrappers/include/makeinclude/<appropriate platform macros file eg.platform_sunos5_sunc++.GNU>
+PLATFORM_RAPI_CPPFLAGS += -I/project/doc/vishal/rapi/rel4.2a4/rsvpd/
+PLATFORM_RAPI_LIBS += -lrsvp
+PLATFORM_RAPI_LDFLAGS += -L/project/doc/vishal/rapi/rel4.2a4/rsvpd/
+
+assuming that RAPI library is installed in /project/doc/vishal/rapi/rel4.2a4/
+
+1. Compile ACE with 
+       
+   make rapi=1 
+
+2. Run the RSVP Daemon on two machines: (merengue.cs and macarena.cs)
+
+   /project/doc/vishal/rapi/rel4.2a4/rsvpd/rsvpd -D
+
+   The current version of the daemon comes with an inbuilt rtap
+   application to test the various reservation commands and RAPI APIs.
+
+   Typical values for rtap would be :
+
+   dest udp macarena/5000
+   sender merengue/5000 [ t 2000000 100000 2000000 512 1024 ]
+
+   dest udp macarena/5000
+   reserve wf [ cl 2000000 100000 2000000 512 1024 ]
+
+3. If RTAP runs fine and the daemons show the debug messages about
+   RESV, PATH and other RSVP messages, run the QoS example, making sure
+   that rtap session is released on both machines.
+
+The test consists of a receiver and a sender. 
+ 
+ The sender is started first (though it is not mandatory) as :
+
+ sender -m macarena.cs.wustl.edu:9091 -P 10004
+
+ -m: specifies the multicast session address that both client and
+     server subscribe to for QoS events.
+
+ -p: Protocol to be used. Could be udp or tcp. Default is udp.
+
+ -P: Sender source port. If not specified, DEFAULT_SOURCE_SENDER_PORT
+     (10001) will be used.
+
+ -h: Displays the help on various options.
+
+The sample Sender is started next as :
+
+  receiver -m macarena.cs.wustl.edu:9091 
+
+ -m: specifies the multicast session address that both client and
+     server subscribe to for QoS events.
+
+ -n: Option to be used by senders only to specify the destination
+     address. This option is overriden if a multicast address is also
+     specified through the -m option.
+
+ -p: Protocol to be used. Could be udp or tcp. Default is udp.
+
+ -P: Sender source port. If not specified, DEFAULT_SOURCE_SENDER_PORT
+     (10001) will be used.
+
+ -h: Displays the help on various options.
+
+-------------------------------------------------------------------------------
+  
+If you run into any problems with this test please contact Vishal
+Kachroo <vishal@cs.wustl.edu>.
+
+This README last updated on 20th July, 2000.
+
+-------------------------------------------------------------------------------
