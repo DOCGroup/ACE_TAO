@@ -9,6 +9,51 @@ static FILE *output_file = 0;
 static const char *output_file_name = "output";
 // File name of the file into which received data is written.
 
+int stats [BUFSIZ];
+int stats_index = 0;
+
+int frame_num = 0;
+
+int start = 0;
+
+ACE_Time_Value count_down_time (1);
+ACE_Countdown_Time count_down (&count_down_time);
+
+double stats_avg ()
+{
+  double sum = 0;
+  for (int i=0; i < stats_index; i++)
+    {
+      sum += stats [i];
+    }
+  return sum/stats_index;
+}
+
+void dump_stats (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+	      "Dumping Stats....."));
+
+  FILE* stats_file = ACE_OS::fopen ("Stats.dat", "w");
+  if (stats_file == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+		  "Stats.dat cannot be opened \n"));
+    }
+
+  // first dump what the caller has to say.
+  ACE_OS::fprintf (stats_file, "Average Frame Rate = %f frames/sec\n",stats_avg ());
+
+  for (int i = 0; i < stats_index; i++)
+    ACE_OS::fprintf (stats_file, "%d\n",stats [i]);
+  
+  ACE_OS::fclose (stats_file);  
+
+  ACE_DEBUG ((LM_DEBUG,
+	      "Done\n"));
+
+}
+
 int
 Receiver_StreamEndPoint::get_callback (const char *,
                                        TAO_AV_Callback *&callback)
@@ -36,6 +81,25 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::receive_frame for frame %d\n",
               this->frame_count_++));
+  
+
+  frame_num++;
+  if (start == 0 )
+    {
+      count_down.start ();
+      start++;
+    }
+  else 
+    {
+      count_down.update ();
+    }
+
+  if (count_down_time <= ACE_Time_Value::zero)
+    {
+      stats [stats_index++] = frame_num;
+      frame_num = 0;
+      count_down.restart ();
+    }
 
   while (frame != 0)
     {
@@ -46,6 +110,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
                         1,
                         output_file);
 
+      
       if (result == frame->length ())
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Receiver_Callback::fwrite failed\n"),
@@ -53,6 +118,8 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 
       frame = frame->cont ();
     }
+
+
 
   return 0;
 }
@@ -63,6 +130,8 @@ Receiver_Callback::handle_destroy (void)
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
               "Receiver_Callback::end_stream\n"));
+
+  dump_stats ();
 
   ACE_TRY_NEW_ENV
     {
@@ -242,6 +311,8 @@ main (int argc,
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
+
+
     }
   ACE_CATCHANY
     {

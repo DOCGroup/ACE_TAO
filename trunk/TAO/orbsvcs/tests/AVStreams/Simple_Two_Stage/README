@@ -8,7 +8,8 @@ receiver.  The test has the following features:
 
 1. It tests the AVStreams Pluggable Protocol Framework
 2. Shows a mechanism to pace data.
-3. Performs benchmarking.
+3. Records the rate at which frames are received and dumps the results
+in the Stats.dat file.
 
 Running the test
 ----------------

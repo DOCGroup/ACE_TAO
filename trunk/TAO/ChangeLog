@@ -1,3 +1,11 @@
+Fri Nov 7 14:33:37 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
+
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/README: 	
+	* orbsvcs/tests/AVStreams/Simple_Two_Stage/receiver.cpp: 	
+
+	  Recorded the rate at which frames are received for every sec
+	  after the first frame is received in the Stats.dat file.
+	
 Fri Nov  7 11:23:22 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Any_Unknown_IDL_Type.cpp:
