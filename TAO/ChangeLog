@@ -1,3 +1,8 @@
+Thu Aug  1 11:18:47 2002  Jaiganesh Balasubramanian  <jai@doc.ece.uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.IFRService:
+	  Updated dependencies.
+
 Thu Aug  1 09:49:12 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/LoadBalancer/Makefile:
