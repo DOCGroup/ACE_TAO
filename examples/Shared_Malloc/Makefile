@@ -9,7 +9,8 @@
 #----------------------------------------------------------------------------
 
 BIN     = test_malloc \
-	  test_persistence
+	  test_persistence \
+	  test_multiple_mallocs
 
 FILES   = Malloc \
 	  Options
