@@ -34,12 +34,12 @@ call %0 IOStream_Test
 call %0 Map_Manager_Test
 call %0 Cache_Map_Manager_Test
 call %0 Map_Test
-call %0 Mem_Map_Test
+rem call %0 Mem_Map_Test            not supported
 call %0 Message_Block_Test
 call %0 Message_Queue_Notifications_Test
 call %0 Message_Queue_Test
 call %0 MT_Reactor_Timer_Test
-call %0 MM_Shared_Memory_Test
+rem call %0 MM_Shared_Memory_Test   not supported
 call %0 MT_SOCK_Test
 call %0 Naming_Test
 call %0 New_Fail_Test
@@ -70,7 +70,7 @@ call %0 Svc_Handler_Test
 call %0 SOCK_Test
 call %0 SOCK_Connector_Test
 call %0 SOCK_Send_Recv_Test
-call %0 SPIPE_Test
+rem call %0 SPIPE_Test             not supported
 call %0 SString_Test
 call %0 SV_Shared_Memory_Test
 call %0 Task_Test
