@@ -422,10 +422,8 @@ ACEXML_HttpCharStream::get_i (ACEXML_Char& ch)
                             ACE_TEXT ("UTF-16BE")) == 0) ? 1 : 0;
   ACEXML_Char input[2] = {0};
   int i = 0;
-  for (; i < 2 && input[i] != EOF; ++i)
-    {
-      input[i] = this->stream_->get_char();
-    }
+  for (; i < 2 && (input[i] = this->stream_->get_char()) > 0; ++i)
+    ;
   if (i < 2)
     {
       ch = 0;
@@ -450,7 +448,7 @@ ACEXML_HttpCharStream::peek_i (void)
   // Peek into the stream.
   ACEXML_Char input[2];
   int i = 0;
-  for (; i < 2 && (input[i] = this->stream_->peek_char (i)) != EOF; ++i)
+  for (; i < 2 && (input[i] = this->stream_->peek_char (i)) > 0; ++i)
     ;
   if (i < 2)
     return -1;
