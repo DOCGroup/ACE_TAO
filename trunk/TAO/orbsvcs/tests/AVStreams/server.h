@@ -22,7 +22,6 @@
 #define AVSTREAMS_SERVER_H
 
 #include "orbsvcs/AV/AVStreams_i.h"
-/* #include "tao/tao.h" */
 #include "tao/tao_util.h"
 
 
