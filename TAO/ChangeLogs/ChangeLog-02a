@@ -1,3 +1,8 @@
+Tue Nov 21 17:23:45 2000  Priyanka Gontla <pgontla@ece.uci.edu>
+
+	* tests/RTCORBA/Client_Protocol/server.dsp
+	  Updated settings.
+
 Tue Nov 21 19:20:44 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/DynamicInterface/Server_Request.cpp:
