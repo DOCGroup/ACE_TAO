@@ -210,6 +210,10 @@ TAO_Marshal_Any::decode (CORBA::TypeCode_ptr,
 
   any->cdr_ = ACE_Message_Block::duplicate (out.begin ());
   any->value_ = 0;
+
+  if (any->type_)
+    CORBA::release (any->type_);
+
   any->type_ = elem_tc._retn ();
   any->any_owns_data_ = 1;
 
