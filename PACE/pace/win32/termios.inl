@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/termios.inl
+ *    pace/posix/termios.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -14,7 +14,7 @@
  * ============================================================================= */
 
 #include "pace/unistd.h"
-
+#include <termios.h>
 PACE_INLINE
 speed_t
 pace_cfgetospeed (const struct termios *termiosp)
@@ -100,6 +100,3 @@ pace_tcsetpgrp (int fildes, pid_t pgrp_id)
 {
   return tcsetpgrp (fildes, pgrp_id);
 }
-
-
-

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/setjmp.inl
+ *    pace/posix/setjmp.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -15,21 +15,21 @@
 
 PACE_INLINE
 int
-pace_setjmp (jmp_buf env)
+pace_setjmp (pace_jmp_buf env)
 {
   return setjmp (env);
 }
 
 PACE_INLINE
 int
-pace_sigsetjmp (sigjmp_buf env, int savemask)
+pace_sigsetjmp (pace_sigjmp_buf env, int savemask)
 {
   return sigsetjmp (env, savemask);
 }
 
 PACE_INLINE
 void
-pace_longjmp (jmp_buf env, int val)
+pace_longjmp (pace_jmp_buf env, int val)
 {
   longjmp (env, val);
   return;
@@ -37,7 +37,7 @@ pace_longjmp (jmp_buf env, int val)
 
 PACE_INLINE
 void
-pace_siglongjmp (sigjmp_buf env, int val)
+pace_siglongjmp (pace_sigjmp_buf env, int val)
 {
   siglongjmp (env, val);
   return;

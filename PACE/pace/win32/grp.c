@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/grp.c
+ *    pace/posix/grp.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/grp.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/win32/grp.inl"
+# include "pace/posix/grp.inl"
 #endif /* ! PACE_HAS_INLINE */

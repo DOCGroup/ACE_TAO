@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/stdlib.inl
+ *    pace/posix/stdlib.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -14,6 +14,13 @@
  * ============================================================================= */
 
 #include <stdlib.h>
+
+PACE_INLINE
+void
+pace_abort (void)
+{
+  abort ();
+}
 
 PACE_INLINE
 int
@@ -72,7 +79,7 @@ void
 pace_qsort (void * base, size_t nel, size_t width,
             int (*compar)(const void *, const void *))
 {
-  return bsearch (base, nel, width, compar);
+  qsort (base, nel, width, compar);
 }
 
 PACE_INLINE
@@ -83,7 +90,7 @@ pace_rand ()
 }
 
 PACE_INLINE
-int
+void
 pace_srand (unsigned int seed)
 {
   srand (seed);

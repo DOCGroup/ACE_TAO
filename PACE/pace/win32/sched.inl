@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/sched.inl
+ *    pace/posix/sched.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -29,40 +29,40 @@ pace_sched_get_priority_min (int policy)
 
 PACE_INLINE
 int
-pace_sched_getparam (pid_t pid,
-                     struct sched_param * param)
+pace_sched_getparam (pace_pid_t pid,
+                     pace_sched_param * param)
 {
   return sched_getparam (pid, param);
 }
 
 PACE_INLINE
 int
-pace_sched_rr_get_interval (pid_t pid,
-                            struct timespec * interval)
+pace_sched_rr_get_interval (pace_pid_t pid,
+                            pace_timespec * interval)
 {
   return sched_rr_get_interval (pid, interval);
 }
 
 PACE_INLINE
 int
-pace_sched_setparam (pid_t pid,
-                     const struct sched_param * param)
+pace_sched_setparam (pace_pid_t pid,
+                     const pace_sched_param * param)
 {
   return sched_setparam (pid, param);
 }
 
 PACE_INLINE
 int
-pace_sched_getscheduler (pid_t pid)
+pace_sched_getscheduler (pace_pid_t pid)
 {
   return sched_getscheduler (pid);
 }
 
 PACE_INLINE
 int
-pace_sched_setscheduler (pid_t pid,
+pace_sched_setscheduler (pace_pid_t pid,
                          int policy,
-                         const struct sched_param * param)
+                         const pace_sched_param * param)
 {
   return sched_setscheduler (pid, policy, param);
 }

@@ -3,10 +3,10 @@
  * ============================================================================
  *
  * = LIBRARY
- *    pace (win32 ace)
+ *    pace (posix ace)
  *
  * = FILENAME
- *    pace/win32/limits.h
+ *    pace/posix/limits.h
  *
  * = AUTHOR
  *    Joe Hoffert

@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/mman.c
+ *    pace/posix/mman.c
  *
  * = AUTHOR
  *    Luther Baker
@@ -16,5 +16,5 @@
 #include "pace/sys/mman.h"
 
 #if !defined (PACE_HAS_INLINE)
-# include "pace/win32/mman.inl"
+# include "pace/posix/mman.inl"
 #endif /* ! PACE_HAS_INLINE */

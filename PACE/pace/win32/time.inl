@@ -6,7 +6,7 @@
  *    pace
  *
  * = FILENAME
- *    pace/win32/time.inl
+ *    pace/posix/time.inl
  *
  * = AUTHOR
  *    Luther Baker
@@ -38,6 +38,20 @@ pace_asctime_r (const struct tm * time, char * buf)
 }
 
 PACE_INLINE
+pace_clock_t
+pace_clock (void)
+{
+  return clock ();
+}
+
+PACE_INLINE
+double
+pace_difftime (pace_time_t time1, pace_time_t time2)
+{
+  return difftime (time1, time2);
+}
+
+PACE_INLINE
 int
 pace_clock_getres (clockid_t clock_id,
                    struct timespec * res)
@@ -63,9 +77,9 @@ pace_clock_settime (clockid_t clock_id,
 
 PACE_INLINE
 char *
-pace_clock_ctime (const time_t * clock)
+pace_ctime (const time_t * clock)
 {
-  return clock_ctime (clock);
+  return ctime (clock);
 }
 
 PACE_INLINE
