@@ -37,8 +37,8 @@ Fill_ACE_QoS::fill_simplex_receiver_qos (ACE_QoS &ace_qos,
                        "Unable to find a FlowSpec with name %s",
                        recv_flow_name.c_str ()),
                       -1);
-  ace_qos.receiving_flowspec (*recv_flow_spec);
-  ace_qos.sending_flowspec (*(this->default_traffic_));
+  ace_qos.receiving_flowspec (recv_flow_spec);
+  ace_qos.sending_flowspec ((this->default_traffic_));
   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
 
   return 0;
@@ -57,8 +57,8 @@ Fill_ACE_QoS::fill_simplex_sender_qos (ACE_QoS &ace_qos,
                        send_flow_name.c_str ()),
                       -1);
 
-  ace_qos.receiving_flowspec (*(this->default_traffic_));
-  ace_qos.sending_flowspec (*send_flow_spec);
+  ace_qos.receiving_flowspec ((this->default_traffic_));
+  ace_qos.sending_flowspec (send_flow_spec);
   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
 
   return 0;
@@ -84,8 +84,8 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
                        send_flow_name.c_str ()),
                       -1);
 
-  ace_qos.receiving_flowspec (*recv_flow_spec);
-  ace_qos.sending_flowspec (*send_flow_spec);
+  ace_qos.receiving_flowspec (recv_flow_spec);
+  ace_qos.sending_flowspec (send_flow_spec);
   ace_qos.provider_specific (Fill_ACE_QoS::iov_);
 
   return 0;
