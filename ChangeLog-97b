@@ -1,3 +1,8 @@
+Wed Nov 19 23:24:03 1997    <nw1@CHA-CHA>
+
+	* ace/Reactor.h: Rearragned macros so we use Select_Reactor as
+ 	  default if we don't have Winsock2.  Irfan did it, not me.
+
 Wed Nov 19 22:11:20 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.3.53, released Wed Nov 19 22:11:20 1997.
