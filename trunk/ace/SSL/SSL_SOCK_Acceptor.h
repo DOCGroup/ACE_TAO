@@ -18,7 +18,6 @@
 #ifndef ACE_SSL_SOCK_ACCEPTOR_H
 #define ACE_SSL_SOCK_ACCEPTOR_H
 
-#include "SSL_SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -26,6 +25,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_SSL)
+
+#include "SSL_SOCK_Stream.h"
 
 class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
@@ -43,22 +44,22 @@ public:
   // Default constructor.
 
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
-                     int reuse_addr = 0,
-                     int protocol_family = PF_INET,
-                     int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+			 int reuse_addr = 0,
+			 int protocol_family = PF_INET,
+			 int backlog = ACE_DEFAULT_BACKLOG,
+			 int protocol = 0);
   // Initiate a passive mode ssl/BSD-style acceptor socket.
   // <local_sap> is the address that we-re going to listen for
   // connections on.
 
   ACE_SSL_SOCK_Acceptor (const ACE_Addr &local_sap,
-                     ACE_Protocol_Info *protocolinfo,
-                     ACE_SOCK_GROUP g,
-                     u_long flags,
-                     int reuse_addr,
-                     int protocol_family,
-                     int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+			 ACE_Protocol_Info *protocolinfo,
+			 ACE_SOCK_GROUP g,
+			 u_long flags,
+			 int reuse_addr,
+			 int protocol_family,
+			 int backlog = ACE_DEFAULT_BACKLOG,
+			 int protocol = 0);
   // Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   // on success and -1 on failure.
 
@@ -130,5 +131,6 @@ private:
 #include "SSL_SOCK_Acceptor.i"
 #endif /* ACE_LACKS_INLINE_FUNCTIONS */
 
-#endif /* ACE_SSL_SOCK_ACCEPTOR_H */
 #endif /* ACE_HAS_SSL */
+#endif /* ACE_SSL_SOCK_ACCEPTOR_H */
+

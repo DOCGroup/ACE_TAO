@@ -2,8 +2,6 @@
 // $Id$
 //
 
-#define ACE_BUILD_DLL
-
 #include "SSL_SOCK_Acceptor.h"
 
 #if defined (ACE_HAS_SSL)
