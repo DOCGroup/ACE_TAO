@@ -392,23 +392,18 @@ ACE_Location_Node::open_handle (void)
   ACE_TRACE ("ACE_Location_Node::open_handle");
 
   ASYS_TCHAR dl_pathname[MAXPATHLEN + 1];
-  const ASYS_TCHAR *name =
-    ASYS_WIDE_STRING (this->pathname ());
-
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-  ASYS_TCHAR dl_exppathname[MAXPATHLEN];
-  if (::ExpandEnvironmentStringsA (name,
-                                   dl_exppathname,
-                                   MAXPATHLEN))
-    name = dl_exppathname;
-#endif /* ACE_WIN32 */
 
   // Transform the pathname into the appropriate dynamic link library
   // by searching the ACE_LD_SEARCH_PATH.
-  ACE::ldfind (name,
-               dl_pathname,
-               (sizeof dl_pathname / sizeof (ASYS_TCHAR)));
+  int result = ACE::ldfind (ASYS_WIDE_STRING (this->pathname ()),
+                            dl_pathname,
+                            (sizeof dl_pathname / sizeof (ASYS_TCHAR)));
 
+  // Check for errors
+  if (result != 0)
+    return 0;
+
+  // Set the handle
   this->handle (ACE_OS::dlopen (dl_pathname));
 
   if (this->handle () == 0)
@@ -458,11 +453,11 @@ ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
   ACE_TRACE ("ACE_Object_Node::symbol");
   if (this->open_handle () != 0)
     {
-      ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR*,
-                                          ASYS_WIDE_STRING (this->object_name_));
+      ASYS_TCHAR *object_name = ACE_const_cast (ASYS_TCHAR *, this->object_name_);
+      
       this->symbol_ = (void *)
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       wname);
+                       ASYS_WIDE_STRING (object_name));
 
       if (this->symbol_ == 0)
         {
@@ -470,7 +465,7 @@ ACE_Object_Node::symbol (ACE_Service_Object_Exterminator *)
 
           ACE_ERROR ((LM_ERROR,
                       ASYS_TEXT ("dlsym failed for object %s\n"),
-                      wname));
+                      ASYS_WIDE_STRING (object_name)));
 
           ASYS_TCHAR *errmsg = ACE_OS::dlerror ();
 
@@ -524,12 +519,11 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
       // Locate the factory function <function_name> in the shared
       // object.
 
-      ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR *,
-                                          ASYS_WIDE_STRING (this->function_name_));
+      ASYS_TCHAR *function_name = ACE_const_cast (ASYS_TCHAR *, this->function_name_);
 
       func = (void *(*)(ACE_Service_Object_Exterminator *))
         ACE_OS::dlsym ((ACE_SHLIB_HANDLE) this->handle (),
-                       wname);
+                       ASYS_WIDE_STRING (function_name));
 
       if (func == 0)
         {
@@ -541,7 +535,7 @@ ACE_Function_Node::symbol (ACE_Service_Object_Exterminator *gobbler)
 
               ACE_ERROR ((LM_ERROR,
                           ASYS_TEXT ("dlsym failed for function %s\n"),
-                          wname));
+                          ASYS_WIDE_STRING (function_name)));
 
               ASYS_TCHAR *errmsg = ACE_OS::dlerror ();
 
@@ -644,8 +638,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
 
   ACE_Static_Svc_Descriptor **ssdp = 0;
   ACE_STATIC_SVCS &svcs = *ACE_Service_Config::static_svcs ();
-  ASYS_TCHAR *wname = ACE_const_cast (ASYS_TCHAR *,
-                                      ASYS_WIDE_STRING (this->function_name_));
+  ASYS_TCHAR *function_name = ACE_const_cast (ASYS_TCHAR *, this->function_name_);
 
   for (ACE_STATIC_SVCS_ITERATOR iter (svcs);
        iter.next (ssdp) != 0;
@@ -653,7 +646,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
     {
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
       if (ACE_OS::strcmp (ssd->name_,
-                          wname) == 0)
+                          ASYS_WIDE_STRING (function_name)) == 0)
         func = (void *(*)(void)) ssd->alloc_;
     }
 
@@ -667,7 +660,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Object_Exterminator *)
 
           ACE_ERROR_RETURN ((LM_ERROR,
                              ASYS_TEXT ("no static service registered for function %s\n"),
-                             wname),
+                             ASYS_WIDE_STRING (function_name)),
                              0);
         }
     }
