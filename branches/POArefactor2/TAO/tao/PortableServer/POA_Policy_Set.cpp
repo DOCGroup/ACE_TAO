@@ -2,8 +2,11 @@
 
 #include "POA_Policy_Set.h"
 #include "POA_Cached_Policies.h"
-#include "tao/Policy_Validator.h"
+#define TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "PortableServerC.h"
+#undef TAO_PORTABLESERVER_SAFE_INCLUDE
 
+#include "tao/Policy_Validator.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)

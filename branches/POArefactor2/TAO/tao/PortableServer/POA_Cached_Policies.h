@@ -16,9 +16,13 @@
 #define TAO_POA_CACHED_POLICIES_H
 #include /**/ "ace/pre.h"
 
-#define TAO_PORTABLESERVER_SAFE_INCLUDE
-#include "PortableServerC.h"
-#undef TAO_PORTABLESERVER_SAFE_INCLUDE
+#include "tao/PortableServer/ThreadPolicyC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
+#include "tao/PortableServer/IdUniquenessPolicyC.h"
+#include "tao/PortableServer/IdAssignmentPolicyC.h"
+#include "tao/PortableServer/ImplicitActivationPolicyC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "tao/PortableServer/RequestProcessingPolicyC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
