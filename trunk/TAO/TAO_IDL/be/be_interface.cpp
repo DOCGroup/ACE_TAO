@@ -520,7 +520,8 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
           << "TAO_ORB_Core *oc" << be_uidt_nl
                 << ")"
                 << be_nl;
-      *os << ": ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)";
+      *os << ": ACE_NESTED_CLASS (CORBA, Object) (objref, _tao_collocated, servant, oc)," << be_idt_nl
+          << "the"<< this->base_proxy_broker_name () << "_ (0)" << be_uidt_nl;
 
       if (this->has_mixed_parentage_)
         {
