@@ -1,37 +1,60 @@
+Fri Mar 18 06:52:59 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * ace/Svc_Conf.h:
+        * ace/Svc_Conf.l:
+        * ace/Svc_Conf.y:
+        * ace/Svc_Conf_Tokens.h:
+        * ace/Svc_Conf_l.cpp:
+        * ace/Svc_Conf_y.cpp:
+        * ace/ace.mpc:
+
+          Updated the rules to regenerate Svc_Conf_l.cpp and Svc_Conf_f.cpp.
+          They are based on the original rules prior to the MPC switchover,
+          but have been enhanced to minimize the diff's (completely removing
+          the need for patching Svc_Conf_y.cpp).
+
+        * etc/Svc_Conf_l.cpp.diff:
+
+          Updated the diff to the latest version of Svc_Conf_l.cpp.
+
+        * etc/Svc_Conf_y.cpp.diff:
+
+          Removed this file.
+
 Fri Mar 18 09:49:32 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Retransmit.cpp:
-	* protocols/ace/RMCast/Acknowledge.cpp: Added missing headers.
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Acknowledge.cpp: Added missing headers.
 
 Thu Mar 17 11:02:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
+        * configure.ac:
 
-	  Add no-define to AC_INIT_AUTOMAKE so that PLATFORM and VERSION
-	  are not defined in config.h.
+          Add no-define to AC_INIT_AUTOMAKE so that PLATFORM and VERSION
+          are not defined in config.h.
 
 Thu Mar 17 19:45:10 2005  Boris Kolpackov  <boris@kolpackov.net>
 
-	* protocols/ace/RMCast/Acknowledge.cpp:
-	* protocols/ace/RMCast/Acknowledge.h:
-	* protocols/ace/RMCast/Link.cpp:
-	* protocols/ace/RMCast/Link.h:
-	* protocols/ace/RMCast/Retransmit.cpp:
-	* protocols/ace/RMCast/Retransmit.h: Implemented manual thread
-	stopping instead of SUS thread cancellation.
+        * protocols/ace/RMCast/Acknowledge.cpp:
+        * protocols/ace/RMCast/Acknowledge.h:
+        * protocols/ace/RMCast/Link.cpp:
+        * protocols/ace/RMCast/Link.h:
+        * protocols/ace/RMCast/Retransmit.cpp:
+        * protocols/ace/RMCast/Retransmit.h: Implemented manual thread
+        stopping instead of SUS thread cancellation.
 
-	* protocols/ace/RMCast/Bits.h:
-	* protocols/ace/RMCast/Socket.cpp: Some cleanups.
+        * protocols/ace/RMCast/Bits.h:
+        * protocols/ace/RMCast/Socket.cpp: Some cleanups.
 
 
 Thu Mar 17 07:34:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
+        * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
 
-	  Match "$(TAO_IDL)" instead of "TAO_IDL", to avoid emitting
-	  TAO_IDL/TAO_IDLFLAGS variable definitions for the TAO_IDL
-	  Makefile.am itself.
+          Match "$(TAO_IDL)" instead of "TAO_IDL", to avoid emitting
+          TAO_IDL/TAO_IDLFLAGS variable definitions for the TAO_IDL
+          Makefile.am itself.
 
 Wed Mar 16 10:29:28 2005  Chad Elliott  <elliott_c@ociweb.com>
 
