@@ -39,32 +39,32 @@ USELIB("..\ace\aced.lib");
 //---------------------------------------------------------------------------
 #endif /* defined(__BORLANDC__) && __BORLANDC__ >= 0x0530 */
 
-typedef ACE_UINT32 KEY;
-typedef ACE_UINT32 VALUE;
+class hash_key
+{
+public:
+  u_long operator () (size_t t) const
+    {
+      // Simply returns t
+      return t;
+    }
+};
+
+typedef size_t KEY;
+typedef size_t VALUE;
 typedef int ATTR;
 typedef ACE_Pair<VALUE, ATTR> CACHE_VALUE;
-typedef ACE_Hash<KEY> HASH_KEY;
 typedef ACE_Equal_To<KEY> COMPARE_KEYS;
 
-typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
         HASH_MAP_MANAGER;
-
-typedef ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-        HASH_MAP_MANAGER_ITERATOR;
 
 typedef ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>
         MAP_MANAGER;
 
-typedef ACE_Map_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
-        MAP_MANAGER_ITERATOR;
-
-typedef ACE_Map_Reverse_Iterator<KEY, CACHE_VALUE, ACE_Null_Mutex>
-        MAP_MANAGER_REVERSE_ITERATOR;
-
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER_ITERATOR, ATTR>
+typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, ATTR>
         HASH_MAP_CACHING_UTILITY;
 
-typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_MANAGER_ITERATOR, ATTR>
+typedef ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_MANAGER::iterator, ATTR>
         MAP_CACHING_UTILITY;
 
 // = Hash_Map_Manager related
@@ -107,18 +107,27 @@ typedef ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CA
 typedef ACE_Caching_Strategy_Adapter<KEY, CACHE_VALUE, MAP_MANAGER, ATTR, MAP_CACHING_UTILITY, MAP_NULL>
         MAP_NULL_ADAPTER;
 
-typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>
+typedef ACE_Hash_Cache_Map_Manager<KEY, VALUE, hash_key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>
         HASH_MAP_CACHE;
-typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER_ITERATOR, MAP_MANAGER_REVERSE_ITERATOR, MAP_CACHING_STRATEGY, ATTR>
+typedef ACE_Cache_Map_Manager<KEY, VALUE, MAP_MANAGER, MAP_MANAGER::iterator, MAP_MANAGER::reverse_iterator, MAP_CACHING_STRATEGY, ATTR>
         MAP_CACHE;
+
+enum Caching_Strategy_Type
+{
+  ACE_LFU,
+  ACE_FIFO,
+  ACE_LRU,
+  ACE_NULL,
+  ACE_ALL
+};
 
 static size_t iterations = ACE_MAX_ITERATIONS;
 static size_t no_of_lookups = iterations / 2;
 static int randomize_lookups = 1;
 static int purge_percent = 10;
-static LPCTSTR caching_strategy_type;
-static int caching_strategy_count = 4;
-static KEY pattern[ACE_MAX_ITERATIONS];
+static int debug = 0;
+static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
+static KEY *lookup_array = 0;
 
 static void
 run_iterator_cache (MAP_CACHE &cache)
@@ -141,8 +150,7 @@ run_iterator_cache (MAP_CACHE &cache)
       ++counter;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
   ACE_ASSERT (counter == iterations);
@@ -169,8 +177,7 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
       ++counter;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n")));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
 
   ACE_UNUSED_ARG (iterations);
   ACE_ASSERT (counter == iterations);
@@ -189,15 +196,17 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
       ACE_ASSERT ((*iter).first () == (*iter).second ());
 
       // Debugging info.
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%d|%d)"),
-                  (*iter).first (),
-                  (*iter).second ()));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%d|%d)"),
+                    (*iter).first (),
+                    (*iter).second ()));
       --counter;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n")));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+
   ACE_ASSERT (counter == 0);
 }
 
@@ -214,62 +223,60 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
       ACE_ASSERT ((*iter).first () == (*iter).second ());
 
       // Debugging info.
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("(%d|%d)"),
-                  (*iter).first (),
-                  (*iter).second ()));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("(%d|%d)"),
+                    (*iter).first (),
+                    (*iter).second ()));
       --counter;
     }
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("\n")));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+
   ACE_ASSERT (counter == 0);
 }
 
 static void
 find_test_cache (MAP_CACHE &cache)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("find\n")));
-
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
       VALUE j;
-      int result = cache.find (pattern[i], j);
+      int result = cache.find (lookup_array[i], j);
 
       ACE_ASSERT (result != -1);
-      ACE_ASSERT (j == pattern[i]);
+      ACE_ASSERT (j == lookup_array[i]);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%d  "),
-                  j));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d  "), j));
 
       ACE_UNUSED_ARG (result);
     }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
 }
 
 static void
 find_test_hash_cache (HASH_MAP_CACHE &cache)
 {
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("find\n")));
-
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
       VALUE j;
-      int result = cache.find (pattern[i], j);
+      int result = cache.find (lookup_array[i], j);
 
       ACE_ASSERT (result != -1);
-      ACE_ASSERT (j == pattern[i]);
+      ACE_ASSERT (j == lookup_array[i]);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("%d  "),
-                  j));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("%d  "), j));
 
       ACE_UNUSED_ARG (result);
     }
 
-  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
+  if (debug)
+    ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\n")));
 }
 
 static void
@@ -290,14 +297,14 @@ purge_test_cache (MAP_CACHE &cache)
   ACE_UNUSED_ARG (result);
 
   size_t resultant_size = 0;
-  if (caching_strategy_count == 0)
+  if (caching_strategy_type == ACE_NULL)
     resultant_size = current_map_size;
   else
     resultant_size = current_map_size - entries_to_remove;
-  ACE_UNUSED_ARG (resultant_size);
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_ASSERT (cache.current_size () == resultant_size);
+  ACE_UNUSED_ARG (resultant_size);
 }
 
 static void
@@ -318,152 +325,156 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
   ACE_UNUSED_ARG (result);
 
   size_t resultant_size = 0;
-  if (caching_strategy_count == 0)
+  if (caching_strategy_type == ACE_NULL)
     resultant_size = current_map_size;
   else
     resultant_size = current_map_size - entries_to_remove;
-  ACE_UNUSED_ARG (resultant_size);
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_ASSERT (cache.current_size () == resultant_size);
+  ACE_UNUSED_ARG (resultant_size);
 }
 
 static void
-functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy,
-                          int same_pattern)
+functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
 {
-  //MAP_LRU lru;
   MAP_CACHE cache (caching_strategy);
   KEY i = 0;
   VALUE j = 0;
 
   // Add it to the map now.
-  size_t counter = 0;
-  for (;
+  for (size_t counter = 0;
        i < iterations;
        ++i, ++j)
     {
       int result = cache.bind (i, j);
-      ACE_ASSERT (result != -1);
+      ACE_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
-      ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
-                  i, i, j, j));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG, "keys[%d]=%d value=[%d]=%d\n",
+                    i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
     }
 
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Number of entries in cache before purging: %d\n"),
+              cache.current_size ()));
+
   run_iterator_cache (cache);
   run_reverse_iterator_cache (cache);
-
-  if (same_pattern == 0)
-    {
-      // Obtain a pattern of lookups.
-      size_t total_entries = cache.current_size ();
-      
-      int k = 0; size_t i = 0;
-      for (k = 0; 
-           k < (int) ACE_MAX_ITERATIONS;
-           ++k)
-        {
-          KEY key = i;
-          if (randomize_lookups != 0)
-            pattern[k] = ACE_OS::rand () % total_entries;
-          else
-            pattern[k] = i;
-
-          ++i;
-          ACE_UNUSED_ARG (key);    
-        }
-    }
 
   find_test_cache (cache);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
-              cache.current_size ()));
-  
+
   purge_test_cache (cache);
-  
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
-              cache.current_size ()));
 
   run_iterator_cache (cache);
   run_reverse_iterator_cache (cache);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Number of entries in cache  after purging: %d\n"),
+              cache.current_size ()));
 }
 
 static void
-functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy,
-                               int same_pattern)
+functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 {
-  // HASH_MAP_LRU lru;
   HASH_MAP_CACHE cache (caching_strategy);
   KEY i = 0;
   VALUE j = 0;
 
   // Add it to the map now.
-  size_t counter = 0;
-  for (;
+  for (size_t counter = 0;
        i < iterations;
        ++i, ++j)
     {
       int result = cache.bind (i, j);
-      ACE_ASSERT (result != -1);
+      ACE_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
-      ACE_DEBUG ((LM_DEBUG,
-                  ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
-                  i, i, j, j));
+      if (debug)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
+                    i, i, j, j));
       ++counter;
       ACE_ASSERT (cache.current_size () == counter);
     }
 
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Number of entries in cache before purging: %d\n"),
+              cache.current_size ()));
+
   run_iterator_hash_cache (cache);
   run_reverse_iterator_hash_cache (cache);
 
-  if (same_pattern == 0)
-    {
-      // Obtain a pattern of lookups.
-      size_t total_entries = cache.current_size ();
-      int k = 0; size_t i = 0;
-      for (k = 0; 
-           k < (int) ACE_MAX_ITERATIONS;
-           ++k)
-        {
-          KEY key = i;
-          if (randomize_lookups != 0)
-            pattern[k] = ACE_OS::rand () % total_entries;
-          else
-            pattern[k] = i;
-
-          ++i;
-          ACE_UNUSED_ARG (key);     
-        }
-    }
-
   find_test_hash_cache (cache);
-      
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache before purging : %d\n"),
-              cache.current_size ()));
 
   purge_test_hash_cache (cache);
 
-  ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("Number of entries in cache after purging : %d\n"),
-              cache.current_size ()));
-
   run_iterator_hash_cache (cache);
   run_reverse_iterator_hash_cache (cache);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Number of entries in cache  after purging: %d\n"),
+              cache.current_size ()));
+}
+
+void
+test_caching_strategy_type (void)
+{
+  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = 0;
+  MAP_CACHING_STRATEGY *map_caching_strategy = 0;
+
+  switch (caching_strategy_type)
+    {
+    case ACE_NULL:
+      ACE_DEBUG ((LM_DEBUG, "\nNull_Caching_Strategy\n\n"));
+      ACE_NEW (map_caching_strategy,
+               MAP_NULL_ADAPTER);
+      ACE_NEW (hash_map_caching_strategy,
+               HASH_MAP_NULL_ADAPTER);
+      break;
+
+    case ACE_LRU:
+      ACE_DEBUG ((LM_DEBUG, "\nLRU_Caching_Strategy\n\n"));
+      ACE_NEW (map_caching_strategy,
+               MAP_LRU_ADAPTER);
+      ACE_NEW (hash_map_caching_strategy,
+               HASH_MAP_LRU_ADAPTER);
+      break;
+
+    case ACE_LFU:
+      ACE_DEBUG ((LM_DEBUG, "\nLFU_Caching_Strategy\n\n"));
+      ACE_NEW (map_caching_strategy,
+               MAP_LFU_ADAPTER);
+      ACE_NEW (hash_map_caching_strategy,
+               HASH_MAP_LFU_ADAPTER);
+      break;
+
+    case ACE_FIFO:
+      ACE_DEBUG ((LM_DEBUG, "\nFIFO_Caching_Strategy\n\n"));
+      ACE_NEW (map_caching_strategy,
+               MAP_FIFO_ADAPTER);
+      ACE_NEW (hash_map_caching_strategy,
+               HASH_MAP_FIFO_ADAPTER);
+      break;
+    }
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("map cache\n")));
+  functionality_test_cache (*map_caching_strategy);
+
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nhash map cache\n")));
+  functionality_test_hash_cache (*hash_map_caching_strategy);
+
+  delete map_caching_strategy;
+  delete hash_map_caching_strategy;
 }
 
 static int
 parse_args (int argc, ASYS_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("c:r:i:f:p:"));
-
-  caching_strategy_type = "lru";
+  ACE_Get_Opt get_opt (argc, argv, ASYS_TEXT ("c:i:r:f:p:d"));
 
   int cc;
   while ((cc = get_opt ()) != -1)
@@ -471,19 +482,15 @@ parse_args (int argc, ASYS_TCHAR *argv[])
     switch (cc)
       {
       case 'c':
-        {
-          caching_strategy_type = get_opt.optarg;
-
-          if (strcmp (caching_strategy_type, "null") == 0) 
-            caching_strategy_count = 0;
-          if (strcmp (caching_strategy_type, "lru") == 0)
-            caching_strategy_count = 1;
-          if (strcmp (caching_strategy_type, "lfu") == 0) 
-            caching_strategy_count = 2;
-          if (strcmp (caching_strategy_type, "fifo") == 0) 
-            caching_strategy_count = 3;
-          break;
-        }
+        if (ACE_OS::strcmp (get_opt.optarg, "null") == 0)
+          caching_strategy_type = ACE_NULL;
+        if (ACE_OS::strcmp (get_opt.optarg, "lru") == 0)
+          caching_strategy_type = ACE_LRU;
+        if (ACE_OS::strcmp (get_opt.optarg, "lfu") == 0)
+          caching_strategy_type = ACE_LFU;
+        if (ACE_OS::strcmp (get_opt.optarg, "fifo") == 0)
+          caching_strategy_type = ACE_FIFO;
+        break;
       case 'i':
         iterations = ACE_OS::atoi (get_opt.optarg);
         break;
@@ -496,14 +503,18 @@ parse_args (int argc, ASYS_TCHAR *argv[])
       case 'p':
         purge_percent = ACE_OS::atoi (get_opt.optarg);
         break;
+      case 'd':
+        debug = 1;
+        break;
       case '?':
       case 'h':
       default:
         ACE_ERROR ((LM_ERROR,
                     ASYS_TEXT ("usage: %s ")
-                    ASYS_TEXT ("[-c (caching strategy : lru / lfu / fifo/ null [default = all])] ")
+                    ASYS_TEXT ("[-c (caching strategy: lru / lfu / fifo / null [default = all])] ")
                     ASYS_TEXT ("[-r (randomize lookups)] ")
                     ASYS_TEXT ("[-i (iterations)] ")
+                    ASYS_TEXT ("[-d (debug, i.e., addition printouts)] ")
                     ASYS_TEXT ("[-p (purge percent)] ")
                     ASYS_TEXT ("[-f (number of lookups)] \n"),
                     argv[0]));
@@ -516,99 +527,67 @@ parse_args (int argc, ASYS_TCHAR *argv[])
 int
 main (int argc, ASYS_TCHAR *argv[])
 {
+  // Validate options.
   int result = parse_args (argc, argv);
   if (result != 0)
     return result;
-  
+
+  // Start the test only if options are valid.
   ACE_START_TEST (ASYS_TEXT ("Cache_Map_Manager_Test"));
+
+  // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
+  // Providing random a unique seed.
   ACE_OS::srand (ACE_static_cast (size_t, ACE_OS::time (0)));
-  
-  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = 0;
-  MAP_CACHING_STRATEGY *map_caching_strategy = 0;
 
-  int same_pattern = 0;
-  switch (caching_strategy_count) 
+  // Create the lookup array.
+  ACE_NEW_RETURN (lookup_array,
+                  KEY[no_of_lookups],
+                  -1);
+
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\nLookup sequence: ")));
+
+  // Initialize the lookup array.
+  for (size_t k = 0;
+       k < no_of_lookups;
+       ++k)
     {
+      if (randomize_lookups != 0)
+        lookup_array[k] = ACE_OS::rand () % iterations;
+      else
+        lookup_array[k] = k % iterations;
 
-    case 0:
-      {
-        ACE_DEBUG ((LM_DEBUG, "Null_Caching_Strategy\n"));
-        map_caching_strategy = new MAP_NULL_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_NULL_ADAPTER;   
-        break;
-      }
-
-     case 1:
-      {
-        ACE_DEBUG ((LM_DEBUG, "LRU_Caching_Strategy\n"));
-        map_caching_strategy = new MAP_LRU_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_LRU_ADAPTER;
-        break;
-      }
-
-    case 2:
-      {
-        ACE_DEBUG ((LM_DEBUG, "LFU_Caching_Strategy\n"));
-        map_caching_strategy = new MAP_LFU_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_LFU_ADAPTER;
-        break;
-      }
-
-    case 3:
-      {
-        ACE_DEBUG ((LM_DEBUG, "FIFO_Caching_Strategy\n"));
-        map_caching_strategy = new MAP_FIFO_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_FIFO_ADAPTER;
-        break;
-      }
-
-    case 4:
-    default:
-      {
-        ACE_DEBUG ((LM_DEBUG, "LRU_Caching_Strategy\n"));
-        caching_strategy_count = 1;
-        map_caching_strategy = new MAP_LRU_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_LRU_ADAPTER;
-        functionality_test_cache (*map_caching_strategy, same_pattern);
-
-        same_pattern = 1;
-
-        functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);
-        delete map_caching_strategy;
-        delete hash_map_caching_strategy;
-
-        ACE_DEBUG ((LM_DEBUG, "LFU_Caching_Strategy\n"));
-        caching_strategy_count = 2;
-        map_caching_strategy = new MAP_LFU_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_LFU_ADAPTER;
-        functionality_test_cache (*map_caching_strategy, same_pattern);
-        functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);
-        delete map_caching_strategy;
-        delete hash_map_caching_strategy;
-
-        ACE_DEBUG ((LM_DEBUG, "FIFO_Caching_Strategy\n"));
-        caching_strategy_count = 3;
-        map_caching_strategy = new MAP_FIFO_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_FIFO_ADAPTER;
-        functionality_test_cache (*map_caching_strategy, same_pattern);
-        functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);
-        delete map_caching_strategy;
-        delete hash_map_caching_strategy;
-
-        ACE_DEBUG ((LM_DEBUG, "Null_Caching_Strategy\n"));
-        caching_strategy_count = 0;
-        map_caching_strategy = new MAP_NULL_ADAPTER;
-        hash_map_caching_strategy = new HASH_MAP_NULL_ADAPTER;
-      }
-
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("%d  "),
+                  lookup_array[k]));
     }
 
-  functionality_test_cache (*map_caching_strategy, same_pattern);
-  functionality_test_hash_cache (*hash_map_caching_strategy, same_pattern);  
-  delete map_caching_strategy;
-  delete hash_map_caching_strategy;
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("\n\n")));
+
+  // Do we need to test all the strategies.
+  if (caching_strategy_type == ACE_ALL)
+    {
+      caching_strategy_type = ACE_NULL;
+      test_caching_strategy_type ();
+
+      caching_strategy_type = ACE_LRU;
+      test_caching_strategy_type ();
+
+      caching_strategy_type = ACE_LFU;
+      test_caching_strategy_type ();
+
+      caching_strategy_type = ACE_FIFO;
+      test_caching_strategy_type ();
+    }
+  else
+    {
+      test_caching_strategy_type ();
+    }
+
+  delete[] lookup_array;
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;
@@ -622,10 +601,10 @@ template class ACE_Pair<VALUE, ATTR>;
 template class ACE_Reference_Pair<KEY, VALUE>;
 template class ACE_Equal_To<KEY>;
 
-template class ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Reverse_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Iterator_Base_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Reverse_Iterator_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
+template class ACE_Hash_Map_Iterator_Base_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>;
 template class ACE_Hash_Map_Entry<KEY, CACHE_VALUE>;
 
 template class ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>;
@@ -670,7 +649,7 @@ template class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, MAP_MANAGER::reverse_i
 template class ACE_Cache_Map_Manager<KEY, VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_CACHING_STRATEGY, ATTR>;
 template class ACE_Cache_Map_Iterator<KEY, VALUE, HASH_MAP_MANAGER::iterator, HASH_MAP_CACHING_STRATEGY, ATTR>;
 template class ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_CACHING_STRATEGY, ATTR>;
-template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>;
+template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, hash_key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -678,10 +657,10 @@ template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_T
 #pragma instantiate ACE_Reference_Pair<KEY, VALUE>
 #pragma instantiate ACE_Equal_To<KEY>
 
-#pragma instantiate ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<KEY, CACHE_VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Manager_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Reverse_Iterator_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
+#pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<KEY, CACHE_VALUE, hash_key, ACE_Equal_To<KEY>, ACE_Null_Mutex>
 #pragma instantiate ACE_Hash_Map_Entry<KEY, CACHE_VALUE>
 
 #pragma instantiate ACE_Map_Manager<KEY, CACHE_VALUE, ACE_Null_Mutex>
@@ -726,6 +705,6 @@ template class ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_T
 #pragma instantiate ACE_Cache_Map_Manager<KEY, VALUE, HASH_MAP_MANAGER, HASH_MAP_MANAGER::iterator, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_CACHING_STRATEGY, ATTR>
 #pragma instantiate ACE_Cache_Map_Iterator<KEY, VALUE, HASH_MAP_MANAGER::iterator, HASH_MAP_CACHING_STRATEGY, ATTR>
 #pragma instantiate ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, HASH_MAP_MANAGER::reverse_iterator, HASH_MAP_CACHING_STRATEGY, ATTR>
-#pragma instantiate ACE_Hash_Cache_Map_Manager<KEY, VALUE, ACE_Hash<KEY>, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>
+#pragma instantiate ACE_Hash_Cache_Map_Manager<KEY, VALUE, hash_key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
