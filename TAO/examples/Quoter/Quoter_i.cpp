@@ -150,6 +150,8 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
                        CosLifeCycle::CannotMeetCriteria))
 {
   const char *exception_message = "Null message";
+  CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
+CosLifeCycle::LifeCycleObject::_nil ();
   ACE_TRY
     {
       // The name of the Generic Factory
@@ -243,11 +245,8 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Quoter copied\n"));
 
-      CosLifeCycle::LifeCycleObject_ptr lifeCycleObject_ptr =
+      lifeCycleObject_ptr =
         CosLifeCycle::LifeCycleObject::_duplicate ((CosLifeCycle::LifeCycleObject_ptr) quoter_var.in());
-
-      // Duplicate and return an object reference to the newly created Quoter.
-      return lifeCycleObject_ptr;
     }
   ACE_CATCHANY
     {
@@ -261,7 +260,7 @@ Quoter_i::copy (CosLifeCycle::FactoryFinder_ptr there,
 
   ACE_CHECK_RETURN (CosLifeCycle::LifeCycleObject::_nil());
 
-  ACE_NOTREACHED (return 0);
+  return lifeCycleObject_ptr;
 }
 
 
