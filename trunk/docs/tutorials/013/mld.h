@@ -31,13 +31,13 @@ protected:
 /*
   Just drop 'MLD' anywhere in your class definition to get cheap
   memory leak detection for your class.
-
-  
-  Use 'MLD_COUNTER->value()' in main() to see if things are OK.  We
-  don't really need a singleton since the counter itself is static and 
-  thread safe but it makes the interface to mld simpler.
  */
 #define MLD            mld mld_
+
+/*
+  Use 'MLD_COUNTER' in main() to see if things are OK.
+*/
+#define MLD_COUNTER    mld::value()
 
 //================================================
 

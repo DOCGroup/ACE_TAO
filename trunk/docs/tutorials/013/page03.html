@@ -43,9 +43,6 @@ Simple, cheap, effective.
 <P>
 <HR WIDTH="100%">
 <PRE>
-#ifndef MLD_H
-#define MLD_H
-
 #include "ace/Synch.h"
 #include "ace/Singleton.h"
 
@@ -61,48 +58,48 @@ class mld
 public:
     mld(void);
     ~mld(void);
-};
 
-/*
-  The mld_counter will be made into a singleton so that all of the mld 
-  objects can access it easily.
-*/
-
-class mld_counter
-{
-public:
-        // Return the value of the counter
     static int value(void);
-    
+        
 protected:
-    friend class mld;
-
-        // Use ACE_Atomic_Op to make the counter thread-safe
     static ACE_Atomic_Op<ACE_Mutex,int> counter_;
 };
 
-typedef ACE_Singleton<mld_counter,ACE_Mutex>    MLD_Counter;
-
-//================================================
 
 /*
-  A couple of handy macros to make things easier to remember.  Just
-  drop 'MLD' anywhere in your class definition.
-  
-  Use 'MLD_COUNTER->value()' in main() to see if things are OK.  We
-  don't really need a singleton since the counter itself is static and 
-  thread safe but it makes the interface to mld simpler.
+  Just drop 'MLD' anywhere in your class definition to get cheap
+  memory leak detection for your class.
  */
 #define MLD            mld mld_
-#define MLD_COUNTER    MLD_Counter::instance()
 
-//================================================
+/*
+  Use 'MLD_COUNTER' in main() to see if things are OK.
+*/
+#define MLD_COUNTER    mld::value()
 
-#endif
+<HR WIDTH="50%">
+<i>In the cpp file we have this:</i>
+
+ACE_Atomic_Op<ACE_Mutex,int> mld::counter_(0);
+
+// Increment the counter when a new mld is created...
+mld::mld(void)
+{
+    ++counter_;
+}
+
+// and decrement it when the object is destructed.
+mld::~mld(void)
+{
+    --counter_;
+}
+
+int mld::value(void)
+{
+    return counter_.value();
+}
+
 </PRE>
-<HR WIDTH="100%">
-<P>
-<P>
 <HR WIDTH="100%">
 <CENTER>[<A HREF="..">Tutorial Index</A>] [<A HREF="page04.html">Continue
 This Tutorial</A>]</CENTER>
