@@ -1,3 +1,8 @@
+Tue Aug 10 15:36:02 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Malloc_Test.cpp (main): removed unused argc
+          declaration, with ACE_LACKS_FORK && ! ACE_HAS_WIN32.
+
 Tue Aug 10 15:26:43 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.cpp (strptime): removed unreachable break after
