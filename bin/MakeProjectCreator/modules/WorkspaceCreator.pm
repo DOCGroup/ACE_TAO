@@ -100,7 +100,7 @@ sub parse_line {
               if (!$status) {
                 $errorString = "ERROR: Invalid parent: $parent";
               }
-            }  
+            }
             else {
               $status = 0;
               $errorString = "ERROR: Unable to locate parent: $parent";

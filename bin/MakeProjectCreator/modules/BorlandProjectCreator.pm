@@ -46,17 +46,17 @@ sub get_dll_exe_template_input_file {
   my($self) = shift;
   return "borexe";
 }
- 
- 
+
+
 sub get_dll_template_input_file {
   my($self) = shift;
   return "bordll";
 }
- 
- 
+
+
 sub get_template {
   my($self) = shift;
-  return "bor";  
+  return "bor";
 }
 
 

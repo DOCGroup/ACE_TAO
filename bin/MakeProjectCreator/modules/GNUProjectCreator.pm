@@ -41,11 +41,11 @@ sub translate_value {
 
 
 sub convert_slashes {
-  my($self) = shift; 
+  my($self) = shift;
   return 0;
 }
- 
- 
+
+
 sub fill_value {
   my($self)  = shift;
   my($name)  = shift;
@@ -96,7 +96,7 @@ sub fill_value {
         my(@keys) = sort keys %$comps;
         for(my $i = 0; $i <= $#keys; $i++) {
           $keys[$i] =~ s/^\d+_//;
-          my($key) = $keys[$i];  
+          my($key) = $keys[$i];
           $value .= "    $key" . ($i != $#keys ? " \\" : "") . $crlf;
         }
         $value .= "endif # $name";
