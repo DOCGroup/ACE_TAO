@@ -122,7 +122,8 @@ ORB_CORE_FILES += \
   Context \
   Request \
   Services \
-  NVList
+  NVList \
+  ObjectIDList
 
 DYNAMIC_ANY_FILES += \
   DynAnyC \
