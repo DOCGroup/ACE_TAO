@@ -1,3 +1,13 @@
+Mon Nov 30 19:10:23 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/DLL/Makefile:
+	* examples/DLL/Makefile.Today:
+	* examples/DLL/Makefile.Newsweek:
+
+	  Added the above makefiles. Makefile internally uses
+	  Makefile.Today and Makefile.Newsweek to build the libraries
+	  seperately. 
+	
 Mon Nov 30 13:54:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* netsvcs/lib/Server_Logging_Handler_T.cpp (handle_input): There
