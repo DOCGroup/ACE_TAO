@@ -98,6 +98,9 @@ endif # vbjc
 NavWeap.idl: ../NavWeap.idl
 	@cp -p $< .
 
+Persian.idl: ../Persian.idl
+	@cp -p $< .
+
 Navigation.java Weapons.java: NavWeap.idl
 	@$(IDL2JAVA) -I$(TAO_ROOT)/orbsvcs/orbsvcs -I$(TAO_ROOT) $<
 
