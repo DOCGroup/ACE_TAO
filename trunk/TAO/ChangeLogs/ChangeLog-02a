@@ -1,3 +1,10 @@
+Wed Jan 23 11:10:33 2002  Mayur Deshpande  <mayur@ics.uci.edu>
+        * tao/PortableServer/AMH_Response_Handler.h:
+        * tao/PortableServer/TAO_PortableServer.dsp:
+        * tao/TAO.dsp:
+          Changed workspaces and header file to compile/link on
+          Windows platforms. 
+
 Wed Jan 23 10:47:30 2002  Carlos O'Ryan  <coryan@uci.edu>
 
 	* TAO_IDL/be_include/be_interface.h:
