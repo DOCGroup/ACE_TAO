@@ -75,8 +75,8 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
   // Initialize the header.
   new (&event->header_) Event_Header (n,
                                       this->connection_id_,
-                                      0,
-                                      event_type);
+                                      event_type,
+                                      0);
 
   // Convert all the fields into network byte order.
   event->header_.encode ();
