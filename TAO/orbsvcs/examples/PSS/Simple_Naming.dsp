@@ -142,7 +142,7 @@ InputPath=.\Simple_Naming.idl
 InputName=Simple_Naming
 
 BuildCmds= \
-	..\..\..\..\bin\tao_idl -Ge 1 $(InputName).idl
+	..\..\..\..\bin\tao_idl.exe -Ge 1 $(InputName).idl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
@@ -225,7 +225,7 @@ InputPath=.\naming_data.psdl
 InputName=naming_data
 
 BuildCmds= \
-	..\..\..\..\bin\psdl_tao $(InputName).psdl
+	..\..\..\..\bin\psdl_tao.exe $(InputName).psdl
 
 "$(InputName)C.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
    $(BuildCmds)
