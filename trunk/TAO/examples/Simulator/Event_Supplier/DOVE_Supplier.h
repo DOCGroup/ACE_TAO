@@ -78,3 +78,4 @@ private:
 };
 
 #endif /* DOVE_SUPPLIER_H */
+
