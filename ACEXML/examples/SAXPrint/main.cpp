@@ -121,7 +121,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     parser.parse (&input, xmlenv);
   }
   delete handler;
-  delete fstm;
-  delete ustm;
   return 0;
 }
