@@ -30,7 +30,7 @@ void
 Test_i::shutdown (CORBA::Environment& ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_DEBUG ((LM_DEBUG, 
+  ACE_DEBUG ((LM_DEBUG,
               "Received request to shut down the ORB\n"));
   this->orb_->shutdown (0, ACE_TRY_ENV);
 }
@@ -46,7 +46,7 @@ int
 parse_args (int argc, char *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "o:p:");
-  int c;
+  int c, result;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -56,7 +56,14 @@ parse_args (int argc, char *argv[])
         break;
 
       case 'p':
-        protocol_type = ACE_OS::atoi (get_opts.optarg);
+        result = ::sscanf (get_opts.optarg,
+                           "%u",
+                           &protocol_type);
+        if (result == 0 || result == EOF)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to process <-p> option"),
+                            -1);
+
         protocol_chosen = 1;
         break;
 
@@ -74,7 +81,7 @@ parse_args (int argc, char *argv[])
 }
 
 int
-check_default_server_protocol (CORBA::ORB_ptr orb, 
+check_default_server_protocol (CORBA::ORB_ptr orb,
                                CORBA::Environment &ACE_TRY_ENV)
 {
   // Users should never write code like below.
@@ -93,15 +100,16 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
   RTCORBA::ProtocolList_var protocols = policy->protocols (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
-  ACE_DEBUG ((LM_DEBUG, 
-              "ORB default for ServerProtocolPolicy"
-              "contains %d protocls\n", protocols->length ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "\nORB default for ServerProtocolPolicy "
+              "contains %u protocols:\n", protocols->length ()));
 
   for (CORBA::ULong i = 0; i < protocols->length (); ++i)
     {
       CORBA::ULong protocol_type = protocols[i].protocol_type;
-      ACE_DEBUG ((LM_DEBUG, 
-                  "Protocol %d type IOP::ProfileId: %d\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "  Protocol %u: IOP::ProfileId = %u\n",
+                  i, protocol_type));
       RTCORBA::ProtocolProperties_var properties =
         protocols[i].transport_protocol_properties;
 
@@ -116,8 +124,10 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
 
           if (!CORBA::is_nil (tcp_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "   Properties: send_buffer_size = %d"
-                        " receive_buffer_size = %d no_delay = %d\n",
+                        "     Properties: \n"
+                        "      send_buffer_size = %d\n"
+                        "      receive_buffer_size = %d\n"
+                        "      no_delay = %d\n",
                         tcp_properties->send_buffer_size (),
                         tcp_properties->recv_buffer_size (),
                         tcp_properties->no_delay ()));
@@ -132,8 +142,9 @@ check_default_server_protocol (CORBA::ORB_ptr orb,
 
           if (!CORBA::is_nil (uiop_properties.in ()))
             ACE_DEBUG ((LM_DEBUG,
-                        "   Properties: send_buffer_size = %d"
-                        " receive_buffer_size = %d\n",
+                        "     Properties: \n"
+                        "      send_buffer_size = %d\n"
+                        "      receive_buffer_size = %d\n",
                         uiop_properties->send_buffer_size (),
                         uiop_properties->recv_buffer_size ()));
         }
@@ -187,7 +198,7 @@ main (int argc, char *argv[])
       RTCORBA::ProtocolList protocols;
       protocols.length (1);
       protocols[0].protocol_type = protocol_type;
-      protocols[0].transport_protocol_properties = 
+      protocols[0].transport_protocol_properties =
         RTCORBA::ProtocolProperties::_nil ();
       protocols[0].orb_protocol_properties =
         RTCORBA::ProtocolProperties::_nil ();
@@ -233,7 +244,7 @@ main (int argc, char *argv[])
         orb->object_to_string (server.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "\nActivated as <%s>\n\n", ior.in ()));
 
       if (ior_output_file != 0)
         {
@@ -254,7 +265,7 @@ main (int argc, char *argv[])
       orb->run (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
     }
   ACE_CATCHANY
     {
@@ -266,4 +277,3 @@ main (int argc, char *argv[])
 
   return 0;
 }
-
