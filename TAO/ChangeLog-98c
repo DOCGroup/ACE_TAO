@@ -1,3 +1,7 @@
+Wed Jun 17 16:14:26 1998  Sergio Flores  <sergio@polka.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Makefile: minor fix for Chorus.
+
 Wed Jun 17 15:05:43 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/Connect.cpp (activate): Set the thr_mgr of the service
