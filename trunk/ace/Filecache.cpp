@@ -27,7 +27,7 @@ static const int WCOPY_FLAGS = O_RDWR | O_CREAT | O_TRUNC;
 ACE_Filecache *ACE_Filecache::cvf_ = 0;
 ACE_SYNCH_RW_MUTEX ACE_Filecache::lock_;
 
-// This is how you make data opaque in C++ I'd like to do this with
+// This is how you make data opaque in C++.  I'd like to do this with
 // ACE_Filecache_Object too, but Doug would pro'ly kill me.
 class ACE_Filecache_Singleton
 {
@@ -50,6 +50,111 @@ private:
 // temporary files that are created for the cache.  This won't be
 // needed in the future when we remove reliance on copying files.
 static ACE_Filecache_Singleton cvf_singleton;
+
+class ACE_Filecache_Object
+  // = TITLE
+  //     Abstraction over a real file.  This is what the Virtual
+  //     Filesystem contains.  This class is not intended for general
+  //     consumption.  Please consult a physician before attempting to
+  //     use this class.
+{
+public:
+  ACE_Filecache_Object (const char *filename);
+  // Creates a file for reading.
+
+  ACE_Filecache_Object (const char *filename,
+	     int size);
+  // Creates a file for writing.
+
+  ~ACE_Filecache_Object (void);
+  // Only if reference count is zero should this be called.
+
+  int acquire (void);
+  // Increment the reference_count_.
+
+  int release (void);
+  // Decrement the reference_count_.
+
+  // = action_ accessors
+  int action (void) const;
+  int action (int action_value);
+
+  // = error_ accessors
+  int error (void) const;
+  int error (int error_value,
+	     const char *s = "ACE_Filecache_Object");
+
+  const char *filename (void) const;
+  // filename_ accessor
+
+  ACE_HANDLE handle (void) const;
+  // handle_ accessor.
+
+  void *address (void) const;
+  // Base memory address for memory mapped file.
+
+  size_t size (void) const;
+  // size_ accessor.
+
+  int update (void) const;
+  // True if file on disk is newer than cached file.
+
+protected:
+  ACE_Filecache_Object (void);
+  // Prevent from being called.
+
+  void init (void);
+  // Common initialization code,
+
+private:
+  int error_i (int error_value,
+	       const char *s = "ACE_Filecache_Object");
+  // Internal error logging method, no locking.
+
+public:
+
+  enum 
+  { 
+    READING = 1,
+    WRITING = 2
+  };
+
+  enum 
+  {
+    SUCCESS = 0,
+    ACCESS_FAILED,
+    OPEN_FAILED,
+    COPY_FAILED,
+    STAT_FAILED,
+    MEMMAP_FAILED,
+    WRITE_FAILED 
+  };
+
+private:
+  char *tempname_;
+  char filename_[MAXPATHLEN + 1];
+  // The temporary file name and the real file name.  The real file is
+  // copied into the temporary file for safety reasons.
+
+  ACE_Mem_Map mmap_;
+  ACE_HANDLE handle_;
+  // mmap_ holds the memory mapped version of the temporary file.
+  // handle_ is the descriptor to the temporary file.
+
+  struct stat stat_;
+  size_t size_;
+  // Used to compare against the real file to test if an update is needed.
+
+  int action_;
+  int error_;
+  // Status indicators.
+
+  int reference_count_;
+  ACE_SYNCH_RW_MUTEX lock_;
+  // reference_count_ counts how many users of the file there are.
+  // lock_ provides a synchronization mechanism for critical sections
+  // of code.
+};
 
 void
 ACE_Filecache_Handle::init (void)
@@ -177,6 +282,51 @@ ACE_Filecache::~ACE_Filecache (void)
 }
 
 ACE_Filecache_Object *
+ACE_Filecache::find (const char * filename)
+{
+  int i;
+  ACE_Filecache_Object *handle = 0;
+
+  {
+    ACE_Read_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
+
+    i = this->fetch_i (filename);
+
+    if (i != -1 && ! this->table_[i]->update ())
+      handle = this->table_[i];
+  }
+
+  // Considerably slower on misses, but should be faster on hits.
+  // This is actually the double check locking pattern.
+
+  if (handle == 0)
+    {
+      ACE_Write_Guard<ACE_SYNCH_RW_MUTEX> m (ACE_Filecache::lock_);
+
+      i = this->fetch_i (filename);
+
+      if (i == -1)
+        {
+          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: missed %s\n", filename));
+        }
+      else if (this->table_[i]->update ())
+        {
+          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: updating %s\n", filename)); 
+          this->remove_i (i);
+          handle = this->table_[i] = new ACE_Filecache_Object (filename);
+          handle->acquire ();
+        }
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "   (%t) CVF: found %s\n", filename)); 
+          handle = this->table_[i];
+        }
+    }
+
+  return handle;
+}
+
+ACE_Filecache_Object *
 ACE_Filecache::fetch (const char * filename)
 {
   int i;
@@ -193,6 +343,9 @@ ACE_Filecache::fetch (const char * filename)
 
   // Considerably slower on misses, but should be faster on hits.
   // This is actually the double check locking pattern.
+
+  // Nearly equivalent to this->find (), except a miss causes the CVF
+  // to insert the file into the cache.
 
   if (handle == 0)
     {
