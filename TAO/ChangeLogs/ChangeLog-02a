@@ -1,3 +1,10 @@
+Thu Jul 12 07:11:39 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Strategies/advanced_resource.cpp (init):
+
+	  Fixed broken code that initialized a stack allocated string
+	  array with a non-const size.  Use a CORBA::StringSeq instead.
+
 Wed Jul 11 18:00:13 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Invocation_Endpoint_Selectors.cpp (select_endpoint):

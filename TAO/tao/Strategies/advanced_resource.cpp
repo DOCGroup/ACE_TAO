@@ -19,6 +19,7 @@
 #include "tao/Single_Reactor.h"
 #include "tao/LRU_Connection_Purging_Strategy.h"
 #include "tao/Leader_Follower.h"
+#include "tao/StringSeqC.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
@@ -96,7 +97,8 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
 
   int curarg = 0;
   int unused_argc = 0;
-  char* unused_argv[argc+1];
+  CORBA::StringSeq unused_argv (argc);
+  unused_argv.length (argc);
 
   for (curarg = 0; curarg < argc; curarg++)
     {    
@@ -216,14 +218,16 @@ TAO_Advanced_Resource_Factory::init (int argc, char **argv)
         }
       else
         {
-          unused_argv[unused_argc] = argv[curarg];
+          unused_argv[unused_argc] = CORBA::string_dup (argv[curarg]);
           unused_argc++;
         }
     }
   
-  unused_argv[unused_argc] = 0;
+  unused_argv.length (unused_argc);  // "Trim" the string sequence to
+                                     // the actual size.
   
-  this->TAO_Default_Resource_Factory::init (unused_argc, unused_argv);
+  this->TAO_Default_Resource_Factory::init (unused_argc,
+                                            unused_argv.get_buffer ());
   return 0;
 }
 
