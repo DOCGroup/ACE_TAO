@@ -64,6 +64,7 @@ project(CodeGen_stub): ciao_client {
 
 project(CodeGen_svnt) : ciao_servant {
   after += CIDL_Basic_svnt CodeGen_stub
+  requires += cidl
   sharedname  = CodeGen_svnt
   libs    += CodeGen_stub CIDL_Basic_stub CIDL_Basic_svnt
   idlflags  +=  -Wb,export_macro=CODEGEN_SVNT_Export -Wb,export_include=CodeGen_svnt_export.h

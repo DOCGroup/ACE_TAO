@@ -1,3 +1,22 @@
+Wed Aug 11 14:38:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* DAnCE/ExecutionManager/Execution_Manager.cpp:
+
+	  Made certain parts exception safe and fixed fuzz errors. 
+	
+	* tests/CIDL/CodeGen/CodeGen.mpc:
+
+	  The MPC file was busted which lead to errors in the daily
+	  builds. 
+	
+	* tests/RTCCM/DiffServ/Receiver/Receiver.mpc:
+
+	  Fixed errors in he MPC file. 
+	
+	* tests/RTCCM/DiffServ/Sender/Sender_exec.cpp:
+
+	  Fixed fuzz errors.
+
 Wed Aug 11 12:45:09 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* CIDLC/CIDLC.mpc:
