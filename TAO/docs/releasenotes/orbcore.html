@@ -27,17 +27,11 @@
 
       <!-- @@ Sergio, is this correct? -->
       <LI>Supports <TT>resolve_initial_references</TT> using ACE
-      support for UDP and multicast.</LI>
+      support for multicast.</LI>
     </UL>
 
     <p>Known problems:
     <dl>
-      <dt><em>No <b>LOCATION_FORWARD</b> support.</em></dt>
-
-      <dd><p>The <b>LOCATION_FORWARD</b> capabilities as described in the
-      CORBA 2.0 Specification are currently not supported.  They will
-      be supported in a future release of TAO.</dd>
-      
       <dt><em>Object references for objects dynamically created within
       a server may not have proper host.</em> (See also <a
       href="#hostfix">recent fix</a>.)</dt>
@@ -84,6 +78,9 @@
     Recently Completed Work:
 
     <UL>
+      <li>Fixed the <b>LOCATION_FORWARD</b> capabilities to work as
+      described in the CORBA 2.1 and the POA specification.</li>
+      
       <li>Fixed problem in the IDL Cubit example which caused the
       server to dump core when dealing with <code>_out</code> sequence
       types <em>ONLY</em> when compiled with G++.  It seems that G++
