@@ -3,6 +3,10 @@
 #include "PortableServer_ORBInitializer.h"
 #include "PortableServer_PolicyFactory.h"
 #include "PortableServerC.h"
+#include "Object_Adapter.h"
+#include "tao/ORBInitInfo.h"
+#include "tao/debug.h"
+#include "tao/ORB_Core.h"
 
 ACE_RCSID (PortableServer,
            PortableServer_ORBInitializer,
@@ -20,9 +24,46 @@ TAO_PortableServer_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_p
                                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->register_poa_current (info
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
   this->register_policy_factories (info
                                    ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
+}
+
+void
+TAO_PortableServer_ORBInitializer::register_poa_current (PortableInterceptor::ORBInitInfo_ptr info
+                                                         ACE_ENV_ARG_DECL)
+{
+  // @@ This is busted.  TAO_ORBInitInfo should do proper reference
+  //    counting.
+  // Narrow to a TAO_ORBInitInfo object to get access to the
+  // orb_core() TAO extension.
+  TAO_ORBInitInfo_var tao_info =
+    TAO_ORBInitInfo::_narrow (info
+                              ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  if (CORBA::is_nil (tao_info.in ()))
+    {
+      if (TAO_debug_level > 0)
+        ACE_ERROR ((LM_ERROR,
+                    "(%P|%t) PortableServer_ORBInitializer::post_init:\n"
+                    "(%P|%t)    Unable to narrow "
+                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+
+      ACE_THROW (CORBA::INTERNAL ());
+    }
+
+  // Create Current.
+  CORBA::Object_var current =
+    new TAO_POA_Current;
+
+  // Setup the POA_Current object in the ORB Core.
+  tao_info->orb_core ()->poa_current (current.in ());
 }
 
 void

@@ -1335,6 +1335,18 @@ Package=<4>
 
 ###############################################################################
 
+Project: "POA Current"=".\POA\Current\Current.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
 Project: "POA Excessive_Object_Deactivations"=".\POA\Excessive_Object_Deactivations\Excessive_Object_Deactivations.dsp" - Package Owner=<4>
 
 Package=<5>

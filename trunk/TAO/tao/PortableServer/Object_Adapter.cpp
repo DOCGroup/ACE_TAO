@@ -869,10 +869,6 @@ TAO_Object_Adapter_Factory::TAO_Object_Adapter_Factory (void)
 TAO_Adapter*
 TAO_Object_Adapter_Factory::create (TAO_ORB_Core *orb_core)
 {
-  // Setup the POA_Current object in the ORB
-  CORBA::Object_var current = new TAO_POA_Current;
-  orb_core->poa_current (current.in ());
-
   return new TAO_Object_Adapter (orb_core->server_factory ()->
                                     active_object_map_creation_parameters (),
                                  *orb_core);

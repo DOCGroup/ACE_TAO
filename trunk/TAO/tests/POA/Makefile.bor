@@ -14,6 +14,7 @@ DIRS = \
         Single_Threaded_POA \
 	Persistent_ID \
 	Policies \
+	Current \
         wait_for_completion 
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,3 +1,10 @@
+Wed Oct 30 11:38:36 2002  Irfan Pyarali  <irfan@oomworks.com>
+
+	* ace\Timeprobe.h: Fixed formatting of comments that somehow got
+	  messed up in:
+
+	  http://cvs.doc.wustl.edu/viewcvs.cgi/ace/Timeprobe.h.diff?r1=4.29&r2=4.30	
+
 Tue Oct 29 22:27:24 2002  Frank Hunleth <frank@hunleth.com>
 
 	* apps/gperf/src/Key_List.cpp: Added cast to int on UCHAR_MAX and
