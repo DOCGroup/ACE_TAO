@@ -256,7 +256,7 @@ CORBA_Any::_tao_replace (CORBA::TypeCode_ptr tc,
   this->type_ = tmp;
 
   this->any_owns_data_ = any_owns_data;
-  
+
   this->cdr_ = mb->duplicate ();
   // We can save the decode operation
   // if there's no need to extract the object.
@@ -760,6 +760,16 @@ CORBA_Any::operator>>= (to_object obj) const
   }
   else
   return 0;
+}
+
+// this is a copying version for unbounded strings
+// Not inline, to avoid use in Any.i before definition in ORB.i.
+void
+CORBA_Any::operator<<= (const char* s)
+{
+  CORBA::Environment env;
+  this->replace (CORBA::_tc_string, new char* (CORBA::string_dup (s)),
+                 1, env);
 }
 
 // ----------------------------------------------------------------------
