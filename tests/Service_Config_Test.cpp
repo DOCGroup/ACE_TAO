@@ -30,7 +30,7 @@ run_test (int argc, char *argv[])
 
   ACE_Time_Value tv (argc > 1 ? atoi (argv[1]) : 2);
 
-  ACE_ASSERT (daemon.run_reactor_event_loop (tv) == 0);
+  ACE_ASSERT (ACE_Reactor::run_event_loop (tv) == 0);
 }
 
 int 

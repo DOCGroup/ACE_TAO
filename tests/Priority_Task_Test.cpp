@@ -37,7 +37,7 @@ private:
 };
 
 Priority_Task::Priority_Task (void)
-  : ACE_Task<ACE_MT_SYNCH> (ACE_Service_Config::thr_mgr ()),
+: ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (0)
 {
 }
@@ -133,7 +133,7 @@ main (int, char *[])
                         ACE_MAX_ITERATIONS));
 
   // Wait for all tasks to exit.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));

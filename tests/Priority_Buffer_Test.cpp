@@ -89,7 +89,7 @@ producer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue = (ACE_Message_Queue<ACE_MT_SYNCH> *) args;
 
   // Insert thread into thr_mgr.
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_Message_Block *mb = 0;
@@ -143,13 +143,13 @@ main (int, char *[])
   // Message queue.
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
-  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (producer), 
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (producer), 
 					     (void *) &msg_queue,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn"), 1);
 
   // Wait for producer and consumer threads to exit.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #else
   ACE_ERROR ((LM_ERROR, "threads not supported on this platform\n"));
 #endif /* ACE_HAS_THREADS */

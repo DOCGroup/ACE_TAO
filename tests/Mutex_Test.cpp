@@ -28,7 +28,7 @@ test (void *args)
 {
   ACE_Process_Mutex *pm = (ACE_Process_Mutex *) args;
 #if (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS)
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 #endif /* (defined (ACE_WIN32) || defined (VXWORKS)) && defined (ACE_HAS_THREADS) */
 
@@ -83,18 +83,18 @@ spawn (void)
 #elif defined (ACE_HAS_THREADS)
   ACE_Process_Mutex pm (ACE_WIDE_STRING (name));
 
-  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (test),
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (test),
 					     (void *) &pm,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
-  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (test),
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (test),
 					     (void *) &pm,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n%a", "thread create failed"));
 
   // Wait for the threads to exit.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
 #else
   ACE_ERROR ((LM_ERROR, 
