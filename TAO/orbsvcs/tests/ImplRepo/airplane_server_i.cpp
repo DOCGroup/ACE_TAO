@@ -3,6 +3,7 @@
 #include "airplane_server_i.h"
 
 #include "tao/IORTable/IORTable.h"
+#include "tao/ImR_Client/ImR_Client_Adapter_Impl.h"
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
