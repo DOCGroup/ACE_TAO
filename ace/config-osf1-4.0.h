@@ -54,7 +54,7 @@
 #   define ACE_HAS_TEMPLATE_TYPEDEFS
 #   define ACE_HAS_TYPENAME_KEYWORD
 # endif /* __DECCXX_VER >= 60090010 */
-#elif defined (RATIONAL)
+#elif defined (__rational__)
 # define ACE_HAS_REENTRANT_FUNCTIONS
 # define ACE_HAS_ONEARG_SIGWAIT
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
@@ -65,9 +65,9 @@
 # define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_TEMPLATE_SPECIALIZATION
 # define ACE_HAS_TYPENAME_KEYWORD
-#else  /* ! __GNUG__ && ! __DECCXX && ! RATIONAL */
+#else  /* ! __GNUG__ && ! __DECCXX && ! __rational__ */
 # error unsupported compiler on Digital Unix
-#endif /* ! __GNUG__ && ! __DECCXX && ! RATIONAL */
+#endif /* ! __GNUG__ && ! __DECCXX && ! __rational__ */
 
 #if defined(_POSIX_C_SOURCE) && (_POSIX_C_SOURCE >= 199506L)
   // cxx with POSIX 1003.1c-1995 threads (pthreads) . . .
