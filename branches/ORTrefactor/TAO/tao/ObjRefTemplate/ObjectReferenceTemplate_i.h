@@ -46,7 +46,6 @@ class TAO_ORT_Export TAO_ObjectReferenceTemplate
     public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-
   /// Constructor
   TAO_ObjectReferenceTemplate (const char *server_id,
                                const char *orb_id,
@@ -107,7 +106,6 @@ protected:
   ~TAO_ObjectReferenceTemplate (void);
 
 private:
-
   const char *server_id_;
   const char *orb_id_;
   PortableInterceptor::AdapterName_var adapter_name_;

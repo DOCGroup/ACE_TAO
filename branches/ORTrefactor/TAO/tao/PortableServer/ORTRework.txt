@@ -1,3 +1,31 @@
+Wed Aug 18 12:28:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IORInterceptor/IORInterceptor.pidl:
+        * tao/IORInterceptor/IORInterceptorC.{h,cpp,i,inl}:
+          Regenerated these files, no need to apply patches anymore, and use
+          .inl file instead of .i files.
+
+        * tao/PortableServer/ObjectReferenceTemplate_Adapter.h:
+          Added typedef for a list of ORT Adapter pointers
+
+        * tao/IORInterceptor/IORInterceptor_List.{h,cpp}:
+          Removed typedef of array of ObjectReferenceTemplate*, include the
+          ORT Adapter header file instead
+
+        * tao/PorableServer.mpc:
+        * tao/ObjRefTemplate.mpc:
+          PortableServer library is not dependent on objreftemplate anymore
+          but objreftemplate is dependent on portableserver
+
+        * tao/ObjRefTemplate/ObjectReferneceTemplate_Adapter_Impl.{h,cpp,i}:
+        * tao/ObjRefTemplate/ObjectReferenceTemplate_i.{h,cpp,i}:
+          Split the adapter implementation and the ort_factory and
+          ort_template. The adapter creates a TAO_ObjectReferenceTemplate
+          which is a ort_template, which then also a ort_factory. The
+          ort_factory can be replaced using IORInfo, for the identity methods
+          the ort_template is used, until the ort_factory is changed from
+          outside the ort_template is used, after that the new set one.
+
 Tue Aug 17 14:30:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
           Checkin of rework until now, not happy with the interfaces yet, now

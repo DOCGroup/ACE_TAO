@@ -174,26 +174,11 @@ TAO_POA::set_obj_ref_factory (
   PortableInterceptor::ObjectReferenceFactory *current_factory
   ACE_ENV_ARG_DECL)
 {
-  if (ort_adapter_ != 0)
-  {
-    ort_adapter_->destroy();
-    ort_adapter_ = 0;
-  }
-
-  TAO_ObjectReferenceTemplate_Adapter_Factory * ort_ap_factory =
-    this->object_reference_template_adapter_factory();
-
-  if (ort_ap_factory)
+  if (this->object_reference_template_adapter ())
     {
-      this->ort_adapter_ =
-        ort_ap_factory->create (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
-
-      if (ort_adapter_)
-        {
-          ort_adapter_->activate (current_factory,
-                                  this);
-        }
+      // Activate a different factory
+      this->ort_adapter_->set_obj_ref_factory (current_factory
+                                               ACE_ENV_ARG_PARAMETER);
     }
 }
 
@@ -432,10 +417,13 @@ TAO_POA::complete_destruction_i (ACE_ENV_SINGLE_ARG_DECL)
 
   }
 
-  if (ort_adapter_ != 0)
+  if (this->ort_adapter_ != 0)
   {
-    ort_adapter_->destroy ();
-    ort_adapter_ = 0;
+    TAO_ObjectReferenceTemplate_Adapter_Factory *ort_factory =
+      this->object_reference_template_adapter_factory ();
+
+    ort_factory->destroy (this->ort_adapter_);
+    this->ort_adapter_ = 0;
   }
 
   CORBA::release (this);
