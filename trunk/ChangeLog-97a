@@ -1,3 +1,36 @@
+Thu Jun 12 13:18:03 1997  Steve Huston <shuston@riverace.com>
+
+	* ace/OS.{h,i,cpp}: Changes for HP-UX 10 primarily.  Threads
+	  support for DCE Draft 4 threads (bundled with HP-UX 10).
+	  Correct usage of reentrant C library functions for HP-UX.
+
+	* ace/OS.i: Changed timeout argument to 2nd select function to
+	  allow the compiler to pick a conversion operator.  As it was,
+	  HP compiler would not compile it.
+
+	* ace/Service_Object.cpp: When deleting the service memory pointed
+	  to by a void *, use "operator delete" rather than deleting a void,
+	  which is prohibited by the current ANSI C++ draft.
+
+	* ace/config-hpux-10.x.h: This is now a compiler-independent header
+	  file, and is included by config-hpux-10.x-hpc++.h.  This file
+	  contains all correct settings for HP-UX 10.x, and compiler-specific
+	  config files should use this - see config-hpux-10.x-hpc++.h.
+
+	* ace/config-hpux-10.x-hpc++.h: New config file for either of the HP
+	  compilers (HP C++ or HP aC++).  It figures it out internally, and
+	  uses config-hpux-10.x.h for OS details.
+
+	* include/makeinclude/rules.lib.GNU: Allow for doing a PRELIB step
+	  when building a shared library, and not using .shobj/*.so files.
+	  This allows HP aC++ to close all template instantiations for the
+	  entire library at once, rather than separately, reducing the
+	  size of the resultant library significantly.
+
+	* include/makeinclude/platform_hpux-aCC.GNU: build libraries with
+	  templates instantiated all at once.  Compile with flags for using
+	  the reentrant versions of C library functions.
+
 Wed Jun 11 15:20:15 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
 
 	* ace/Timer_Queue_T.{h,cpp} (calculate_timeout): Changed the
