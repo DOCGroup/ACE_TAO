@@ -218,7 +218,6 @@ void CC_LockModeIterator::Next(CORBA::Environment &_env)
       break;
     case CosConcurrencyControl::write:
       TAO_THROW(CORBA::INTERNAL (CORBA::COMPLETED_NO));
-      break;
     default:
       TAO_THROW(CORBA::INTERNAL (CORBA::COMPLETED_NO));
     }
