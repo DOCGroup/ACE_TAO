@@ -1,3 +1,10 @@
+Fri Jul  6 19:55:23 2001  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* examples/Reactor/Multicast: Adding the support for UNIX Syslog
+	  broke this example because LOG_DEBUG was suddenly defined as a
+ 	  macro (it's in syslog.h).  I've fixed this by renaming the LOG_
+ 	  enums to LM_ instead.  Thanks to Bala for reporting this.
+
 Fri Jul 06 20:23:41 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/Refcoutned_Auto_Ptr.i (null): Change const_cast<> to

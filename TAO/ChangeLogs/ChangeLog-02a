@@ -41,11 +41,11 @@ Fri Jul  6 17:13:20 2001  Jeff Parsons <parsons@cs.wustl.edu>
         * tao/ORB_Core.cpp:
 
           Changed the string passed to
-          ACE_Dynamic_Service<TAO_Object_Loader>::instance from 
-          "TypeCodeFactory" to "TypeCodeFactor_Loader" to match the 
-          string in the ACE_STATIC_SVC_DEFINE macro in 
-          TypeCodeFactory_Loader.cpp. Thanks to <fbernier@gel.ulaval.ca>
-          for reporting the bug.
+ 	  ACE_Dynamic_Service<TAO_Object_Loader>::instance from
+ 	  "TypeCodeFactory" to "TypeCodeFactor_Loader" to match the string
+ 	  in the ACE_STATIC_SVC_DEFINE macro in
+ 	  TypeCodeFactory_Loader.cpp. Thanks to Francois Bernier
+ 	  <fbernier@gel.ulaval.ca> for reporting the bug.
 
 Fri Jul  6 17:10:07 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
