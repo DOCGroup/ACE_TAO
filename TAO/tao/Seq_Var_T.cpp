@@ -9,9 +9,13 @@
 #include "tao/Seq_Var_T.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/OS_Memory.h"
+
+
 ACE_RCSID (tao,
            Seq_VarOut_T,
            "$Id$")
+
 
 template<typename T, typename T_elem>
 TAO_Seq_Var_Base_T<T,T_elem>::TAO_Seq_Var_Base_T (

@@ -116,10 +116,12 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Return the reply status for the current request.  Statuses can
-  /// be PortableInterceptor::SUCCESSFUL, SYSTEM_EXCEPTION,
-  /// USER_EXCEPTION, LOCATION_FORWARD, LOCATION_FORWARD_PERMANENT,
-  /// TRANSPORT_RETRY.
+  /// Return the reply status for the current request.
+  /**
+   * Statuses can be PortableInterceptor::SUCCESSFUL,
+   * SYSTEM_EXCEPTION, USER_EXCEPTION, LOCATION_FORWARD,
+   * LOCATION_FORWARD_PERMANENT, TRANSPORT_RETRY, UNKNOWN.
+   */
   virtual PortableInterceptor::ReplyStatus reply_status (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -99,10 +99,10 @@ public:
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  /// Returns true for a two-way operation, and false otherwis.e
+  /// Returns true for a two-way operation, and false otherwise.
   virtual CORBA::Boolean response_expected (
       ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-    ACE_THROW_SPEC ((CORBA::SystemException)) ;
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
   /// Return the sync_scope policy value for the current one-way
   /// operation.  If the operation is not a one-way, a
