@@ -1,3 +1,16 @@
+Fri Nov 21 13:26:22 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * *Makefile*:
+          Udpated dependencies for all Makefiles normally built.
+
+        * include/makeinclude/macros.GNU:
+        * include/makeinclude/rules.common.GNU:
+          Added cleanup_idl_stubs.  It was already there as a .local
+          target, now it can be called directly.  This allows you to
+          cleanup the idl stub code for a particular project without
+          having to run realclean which will cleanup all everything in the
+          directory.
+
 Fri Nov 21 07:24:07 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * bin/auto_run_tests.pl:
