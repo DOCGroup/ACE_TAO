@@ -1,3 +1,12 @@
+Tue Oct 28 16:33:41 2003  Steve Huston  <shuston@riverace.com>
+
+	* m4/ace.m4: Added new option, --enable-stdcpplib, defaults to yes.
+	  This enables (disables) use of the standard C++ library on platforms
+	  where it makes a difference, like HP-UX aC++.
+
+	* m4/compiler.m4: For HP aC++, add -Ae (c89 mode) to CFLAGS.
+          When using --enable-stdcpplib=yes with aC++, add -AA to CXXFLAGS.
+
 Tue Oct 28 07:52:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/wrapper_macros.GNU:

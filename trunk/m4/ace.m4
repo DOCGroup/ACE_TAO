@@ -654,4 +654,23 @@ dnl    fi
    esac
   ],)
 
+ AC_ARG_ENABLE([stdcpplib],
+  AC_HELP_STRING([--enable-stdcpplib],[enable standard C++ library [[yes]]]),
+  [
+   case "${enableval}" in
+    yes)
+      ace_user_enable_stdcpplib=yes
+      ;;
+    no)
+      ace_user_enable_stdcpplib=no
+      ;;
+    *)
+      AC_MSG_ERROR([bad value ${enableval} for --enable-stdcpplib])
+      ;;
+   esac
+  ],
+  [
+   ace_user_enable_stdcpplib=yes
+  ])
+
 ])
