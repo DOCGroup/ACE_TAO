@@ -13,6 +13,9 @@ Wed Mar 25 10:10:04 1998  David L. Levine  <levine@cs.wustl.edu>
           apparent bug with egcs 2.91.  (egcs 2.90 builds ACE cleanly
           with ACE_HAS_TEMPLATE_SPECIALIZATION.)
 
+        * include/makeinclude/platform_vxworks5.x_g++.GNU: add VxWorks
+          host bin directory to PATH if its not already there.
+
 Tue Mar 24 19:48:44 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/Proactor.cpp (timeout): Changed comparison from || to
