@@ -1,3 +1,9 @@
+Tue May 13 09:39:13 2003  Douglas C. Schmidt  <schmidt@tango.doc.wustl.edu>
+
+	* ace/OS.i (last_error): Fixed this method so that it assigns errno
+	  to the error value.  This fixes an inconsistency reported by
+ 	  Damien Dufour <damien.dufour@horanet.com>.
+
 Tue May 13 16:59:00 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * include/makeinclude/ace_flags.bor:
