@@ -406,7 +406,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -754,7 +753,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -1101,7 +1099,6 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -2355,9 +2352,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -2404,8 +2401,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -2416,51 +2413,51 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
   AV/Flows_T.cpp AV/sfp.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
+  sfpC.h \
+  sfpC.i \
   AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
   AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/RTCP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/MCast.h \
+  AV/UDP.h \
+  AV/RTP.h \
+  AV/Protocol_Factory.h \
+  AV/Policy.h \
+  AV/MCast.h \
   AV/RTCP_Channel.h AV/RTP.h AV/RTCP_Packet.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -2493,7 +2490,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ORB_Core.i
 
 .obj/AV_Core.o .obj/AV_Core.so .shobj/AV_Core.o .shobj/AV_Core.so: AV/AV_Core.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
+  AV/AV_Core.h \
   $(ACE_ROOT)/ace/pre.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
@@ -2633,7 +2630,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -2694,15 +2691,15 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  AV/AV_export.h \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+  AV/FlowSpec_Entry.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(ACE_ROOT)/ace/Containers.h \
@@ -2713,7 +2710,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
@@ -2810,29 +2807,29 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
+  AV/Protocol_Factory.h \
+  AV/Policy.h \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/TCP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/MCast.h \
+  AV/Policy.i \
+  AV/UDP.h \
+  AV/UDP.i \
+  AV/TCP.h \
+  AV/RTP.h \
+  AV/MCast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/MCast.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTCP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+  AV/MCast.i \
+  AV/RTCP.h \
+  AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/ATM_Addr.h \
   $(ACE_ROOT)/ace/ATM_Addr.i \
   $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+  CosPropertyServiceS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -2843,42 +2840,42 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/Endpoint_Strategy.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTCP_Channel.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTCP_Packet.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/sfp.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/default_resource.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Resource_Factory.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/AVStreams_i.i \
+  AV/Flows_T.h \
+  AV/Flows_T.cpp \
+  AV/RTCP_Channel.h \
+  AV/RTCP_Packet.h \
+  AV/sfp.h \
+  sfpC.h \
+  sfpC.i \
+  AV/default_resource.h \
+  AV/Resource_Factory.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
@@ -2915,7 +2912,7 @@ AVSVC_COMPONENTS:
 
 .obj/FlowSpec_Entry.o .obj/FlowSpec_Entry.so .shobj/FlowSpec_Entry.o .shobj/FlowSpec_Entry.so: AV/FlowSpec_Entry.cpp AV/FlowSpec_Entry.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -3054,7 +3051,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -3115,10 +3112,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -3504,9 +3501,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -3553,8 +3550,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -3565,40 +3562,40 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.cpp
 
 .obj/Endpoint_Strategy.o .obj/Endpoint_Strategy.so .shobj/Endpoint_Strategy.o .shobj/Endpoint_Strategy.so: AV/Endpoint_Strategy.cpp AV/Endpoint_Strategy.h \
@@ -3873,9 +3870,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -3922,8 +3919,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -3934,34 +3931,34 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
   AV/Flows_T.cpp $(TAO_ROOT)/tao/debug.h \
   AV/Endpoint_Strategy_T.h AV/Endpoint_Strategy_T.cpp \
@@ -4270,9 +4267,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -4319,8 +4316,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -4331,34 +4328,34 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
   AV/Flows_T.cpp $(TAO_ROOT)/tao/debug.h \
   AV/Endpoint_Strategy_T.cpp \
@@ -4637,9 +4634,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -4686,8 +4683,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -4698,50 +4695,49 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/AV_Core.h AV/Transport.h AV/AVStreams_i.i AV/Flows_T.h \
   AV/Flows_T.cpp AV/sfp.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
+  sfpC.h \
+  sfpC.i \
   AV/Policy.h AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h \
-  AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
+  AV/Protocol_Factory.h AV/MCast.i AV/UDP.h AV/UDP.i AV/Nil.h AV/RTP.h \ \
   AV/RTCP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTP.h \
+  AV/UDP.h \
+  AV/RTP.h \
   AV/RTCP_Channel.h AV/RTCP_Packet.h AV/TCP.h \
   $(ACE_ROOT)/ace/Dynamic_Service.h \
   $(ACE_ROOT)/ace/Dynamic_Service_Base.h \
@@ -4900,9 +4896,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -4957,10 +4953,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -5073,7 +5069,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+  CosPropertyServiceS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -5084,35 +5080,35 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp
 
 .obj/UDP.o .obj/UDP.so .shobj/UDP.o .shobj/UDP.so: AV/UDP.cpp AV/UDP.h $(ACE_ROOT)/ace/pre.h \
@@ -5267,9 +5263,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -5324,10 +5320,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -5440,7 +5436,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+  CosPropertyServiceS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -5451,35 +5447,35 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp AV/MCast.h AV/MCast.i
 
 .obj/Policy.o .obj/Policy.so .shobj/Policy.o .shobj/Policy.so: AV/Policy.cpp AV/Policy.h \
@@ -5631,9 +5627,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -5688,10 +5684,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -5954,9 +5950,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   AV/Policy.i AV/FlowSpec_Entry.h AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -6011,10 +6007,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -6126,7 +6122,7 @@ AVSVC_COMPONENTS:
 
 .obj/MCast.o .obj/MCast.so .shobj/MCast.o .shobj/MCast.so: AV/MCast.cpp AV/MCast.h \
   $(ACE_ROOT)/ace/pre.h AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -6265,7 +6261,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/Any.h \
   $(TAO_ROOT)/tao/Any.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -6326,10 +6322,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -6450,7 +6446,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+  CosPropertyServiceS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -6461,35 +6457,35 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp
 
 .obj/media-timer.o .obj/media-timer.so .shobj/media-timer.o .shobj/media-timer.so: AV/media-timer.cpp AV/media-timer.h \
@@ -6644,7 +6640,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+  AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK.h \
@@ -6793,9 +6789,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -6842,8 +6838,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -6854,50 +6850,50 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/MCast.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/MCast.i \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
+  AV/AVStreams_i.i \
+  AV/Flows_T.h \
+  AV/Flows_T.cpp \
+  AV/UDP.h \
+  AV/Protocol_Factory.h \
+  AV/Policy.h \
+  AV/Policy.i \
+  AV/UDP.i \
+  AV/RTP.h \
+  AV/MCast.h \
+  AV/MCast.i \
   AV/RTCP_Channel.h AV/RTP.h AV/RTCP_Packet.h AV/media-timer.h \
   AV/global.h AV/md5.h
 
@@ -6999,13 +6995,13 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i AV/RTP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
+  AV/AV_export.h \
+  AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
+  AV/Policy.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -7057,10 +7053,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AV/Policy.i \
+  AV/FlowSpec_Entry.h \
+  AV/AV_Core.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -7115,10 +7111,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -7130,7 +7126,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -7223,8 +7219,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
@@ -7257,8 +7253,8 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/streams.h \
   $(ACE_ROOT)/ace/Trace.h \
   $(ACE_ROOT)/ace/OS.i AV/RTP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
+  AV/AV_export.h \
+  AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE.h \
@@ -7277,7 +7273,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
+  AV/Policy.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -7386,10 +7382,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AV/Policy.i \
+  AV/FlowSpec_Entry.h \
+  AV/AV_Core.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -7444,10 +7440,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -7459,7 +7455,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -7552,14 +7548,14 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i
 
 .obj/RTP.o .obj/RTP.so .shobj/RTP.o .shobj/RTP.so: AV/RTP.cpp AV/RTP.h $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -7568,7 +7564,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Protocol_Factory.h \
+  AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/Service_Object.h \
   $(ACE_ROOT)/ace/Shared_Object.h \
   $(ACE_ROOT)/ace/ACE.h \
@@ -7604,7 +7600,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Event_Handler.h \
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Service_Object.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.h \
+  AV/Policy.h \
   $(ACE_ROOT)/ace/Addr.h \
   $(ACE_ROOT)/ace/Addr.i \
   $(TAO_ROOT)/tao/PortableServer/ORB_Manager.h \
@@ -7713,10 +7709,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Policy.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
+  AV/Policy.i \
+  AV/FlowSpec_Entry.h \
+  AV/AV_Core.h \
+  AVStreamsC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -7771,10 +7767,10 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -7786,7 +7782,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
+  AV/Transport.h \
   $(ACE_ROOT)/ace/Acceptor.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -7879,20 +7875,20 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Connector.cpp \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK_Dgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
   AV/Policy.h AV/FlowSpec_Entry.h AV/MCast.h AV/Protocol_Factory.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h \
   $(ACE_ROOT)/ace/SOCK_Dgram_Mcast.i AV/MCast.i \
   AV/RTCP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+  AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/ATM_Addr.h \
   $(ACE_ROOT)/ace/ATM_Addr.i \
   $(ACE_ROOT)/ace/Process.h \
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+  CosPropertyServiceS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -7903,42 +7899,42 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/Endpoint_Strategy.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/UDP.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/RTP.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/AVStreams_i.i \
+  AV/Flows_T.h \
+  AV/Flows_T.cpp \
+  AV/UDP.h \
+  AV/UDP.i \
+  AV/RTP.h \
   AV/RTCP_Channel.h AV/RTCP_Packet.h AV/Nil.h
 
 .obj/sfp.o .obj/sfp.so .shobj/sfp.o .shobj/sfp.so: AV/sfp.cpp AV/sfp.h $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
+  AV/AV_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -7947,7 +7943,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/OS_Errno.h \
   $(ACE_ROOT)/ace/OS_Export.h \
   $(ACE_ROOT)/ace/OS_Errno.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.h \
+  sfpC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -8134,7 +8130,7 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/sfpC.i \
+  sfpC.i \
   $(ACE_ROOT)/ace/SOCK_Dgram.h \
   $(ACE_ROOT)/ace/SOCK.h \
   $(ACE_ROOT)/ace/Addr.h \
@@ -8151,11 +8147,11 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   AV/Policy.i AV/MCast.h AV/FlowSpec_Entry.h AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
+  AVStreamsC.h \
+  CosPropertyServiceC.h \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
+  AVStreamsC.i \
   $(ACE_ROOT)/ace/Singleton.h \
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
@@ -8264,7 +8260,7 @@ AVSVC_COMPONENTS:
   $(ACE_ROOT)/ace/Process.i \
   $(ACE_ROOT)/ace/SOCK_CODgram.h \
   $(ACE_ROOT)/ace/SOCK_CODgram.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
+  CosPropertyServiceS.h \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -8275,43 +8271,43 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/AVStreams_i.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
   AV/AVStreams_i.i AV/Flows_T.h AV/Flows_T.cpp AV/UDP.h AV/UDP.i \
   $(ACE_ROOT)/ace/ARGV.h \
   $(ACE_ROOT)/ace/ARGV.i
 
 .obj/default_resource.o .obj/default_resource.so .shobj/default_resource.o .shobj/default_resource.so: AV/default_resource.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/default_resource.h \
+  AV/default_resource.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.h \
+  AV/AVStreams_i.h \
   $(ACE_ROOT)/ace/OS.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -8582,9 +8578,9 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/CORBA_String.h \
   $(TAO_ROOT)/tao/CORBA_String.inl \
   $(TAO_ROOT)/tao/ORB.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.h \
+  AV/AV_export.h \
+  CosPropertyServiceS.h \
+  CosPropertyServiceC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(TAO_ROOT)/tao/NVList.i \
@@ -8631,8 +8627,8 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/property_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceC.i \
+  Property/property_export.h \
+  CosPropertyServiceC.i \
   $(TAO_ROOT)/tao/PortableServer/Servant_Base.h \
   $(TAO_ROOT)/tao/Abstract_Servant_Base.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -8643,43 +8639,43 @@ AVSVC_COMPONENTS:
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosPropertyServiceS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AVStreamsS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Property/CosPropertyService_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AV_Core.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.cpp \
+  CosPropertyServiceS_T.h \
+  CosPropertyServiceS_T.i \
+  CosPropertyServiceS_T.cpp \
+  CosPropertyServiceS.i \
+  AVStreamsS.h \
+  AVStreamsC.h \
+  AVStreamsC.i \
+  AVStreamsS_T.h \
+  AVStreamsS_T.i \
+  AVStreamsS_T.cpp \
+  AVStreamsS.i \
+  Property/CosPropertyService_i.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  AV/AV_Core.h \
+  AV/Endpoint_Strategy.h \
+  AV/Endpoint_Strategy_T.h \
+  AV/Endpoint_Strategy_T.cpp \
   $(TAO_ROOT)/tao/debug.h \
   $(ACE_ROOT)/ace/Process_Semaphore.h \
   $(ACE_ROOT)/ace/Process_Semaphore.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Null_MediaCtrlS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Transport.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/FlowSpec_Entry.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/AVStreams_i.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Flows_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/AV/Resource_Factory.h \
+  Null_MediaCtrlS.h \
+  Null_MediaCtrlC.h \
+  Null_MediaCtrlC.i \
+  Null_MediaCtrlS_T.h \
+  Null_MediaCtrlS_T.i \
+  Null_MediaCtrlS_T.cpp \
+  Null_MediaCtrlS.i \
+  AV/FlowSpec_Entry.h \
+  AV/Transport.h \
+  AV/Transport.i \
+  AV/FlowSpec_Entry.i \
+  AV/AVStreams_i.i \
+  AV/Flows_T.h \
+  AV/Flows_T.cpp \
+  AV/Resource_Factory.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \

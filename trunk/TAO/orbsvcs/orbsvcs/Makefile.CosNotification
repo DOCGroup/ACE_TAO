@@ -189,9 +189,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -334,8 +334,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -350,45 +350,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   Notify/notify_export.h Notify/Notify_EventChannel_i.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -420,20 +420,20 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/Notify_QoSAdmin_i.inl Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event.h Notify/Notify_Event.i \
   Notify/Notify_Channel_Objects_Factory.h Notify/Notify_POA_Factory.h \
   Notify/Notify_Factory.h Notify/Notify_FilterFactory_i.h \
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_EventChannel_i.o .obj/Notify_EventChannel_i.so .shobj/Notify_EventChannel_i.o .shobj/Notify_EventChannel_i.so: Notify/Notify_EventChannel_i.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -629,11 +629,11 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_EventChannel_i.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -663,11 +663,11 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -682,45 +682,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -732,9 +732,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Containers_T.cpp \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_Collection.h Notify/Notify_Event.h Notify/Notify_Event.i \
   Notify/Notify_EventChannelFactory_i.h Notify/Notify_SupplierAdmin_i.h \
@@ -777,7 +777,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_ConsumerAdmin_i.o .obj/Notify_ConsumerAdmin_i.so .shobj/Notify_ConsumerAdmin_i.o .shobj/Notify_ConsumerAdmin_i.so: Notify/Notify_ConsumerAdmin_i.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -973,17 +973,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_ConsumerAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -998,45 +998,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -1048,9 +1048,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Containers_T.cpp \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_Event.h \
   Notify/Notify_Event.i \
@@ -1132,9 +1132,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Notify_SupplierAdmin_i.o .obj/Notify_SupplierAdmin_i.so .shobj/Notify_SupplierAdmin_i.o .shobj/Notify_SupplierAdmin_i.so: Notify/Notify_SupplierAdmin_i.cpp \
   Notify/Notify_SupplierAdmin_i.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -1329,8 +1329,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1345,45 +1345,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -1395,9 +1395,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Containers_T.cpp \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_Event.h \
   Notify/Notify_Event.i \
@@ -1433,14 +1433,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   Notify/Notify_Proxy_T.h Notify/Notify_Listeners.h \
   Notify/Notify_Proxy_T.cpp Notify/Notify_Event_Manager.h \
   Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -1544,9 +1544,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -1689,8 +1689,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -1705,49 +1705,49 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
@@ -1782,14 +1782,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
   Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -1831,9 +1831,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_StructuredProxyPushSupplier_i.cpp \
   Notify/Notify_StructuredProxyPushSupplier_i.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -2028,8 +2028,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2044,45 +2044,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ProxySupplier_T.h Notify/Notify_Proxy_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -2093,9 +2093,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
@@ -2130,14 +2130,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
   Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -2240,9 +2240,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2385,8 +2385,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2401,49 +2401,49 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
@@ -2478,14 +2478,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
   Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -2522,7 +2522,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   Notify/Notify_Event_Manager_Objects_Factory.h \
   Notify/Notify_Worker_Task.h Notify/Notify_Command.h \
   Notify/Notify_Command.i Notify/Notify_StructuredEvents.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.h \
+  Notify/Notify_Event.h \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
   $(TAO_ROOT)/tao/Policy_Set.h \
@@ -2647,9 +2647,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -2792,8 +2792,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -2808,49 +2808,49 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
@@ -2885,14 +2885,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
   Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -2934,9 +2934,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_StructuredProxyPushConsumer_i.cpp \
   Notify/Notify_StructuredProxyPushConsumer_i.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -3131,8 +3131,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3147,45 +3147,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ProxyConsumer_T.h Notify/Notify_Proxy_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -3196,9 +3196,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
@@ -3233,14 +3233,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
   Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -3343,9 +3343,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3488,8 +3488,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3504,49 +3504,49 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_FilterAdmin_i.h Notify/Notify_ID_Pool_T.h \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
@@ -3581,14 +3581,14 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Listeners.h Notify/Notify_Proxy_T.cpp \
   Notify/Notify_Event_Manager.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -3625,7 +3625,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   Notify/Notify_Event_Manager_Objects_Factory.h \
   Notify/Notify_Worker_Task.h Notify/Notify_Command.h \
   Notify/Notify_Command.i Notify/Notify_StructuredEvents.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.h
+  Notify/Notify_Event.h
 
 .obj/Notify_FilterAdmin_i.o .obj/Notify_FilterAdmin_i.so .shobj/Notify_FilterAdmin_i.o .shobj/Notify_FilterAdmin_i.so: Notify/Notify_FilterAdmin_i.cpp \
   Notify/Notify_FilterAdmin_i.h \
@@ -3690,9 +3690,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Unbounded_Queue.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -3835,8 +3835,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -3851,50 +3851,50 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_Event.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -3928,8 +3928,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Notify_Filter_i.o .obj/Notify_Filter_i.so .shobj/Notify_Filter_i.o .shobj/Notify_Filter_i.so: Notify/Notify_Filter_i.cpp Notify/Notify_Filter_i.h \
   $(ACE_ROOT)/ace/pre.h \
   Notify/Notify_Constraint_Interpreter.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
+  ETCL/ETCL_Interpreter.h \
+  ETCL/etcl_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -3985,7 +3985,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Log_Record.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
+  ETCL/ETCL_Constraint.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4036,8 +4036,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  ETCL/ETCL_Constraint.inl \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -4127,15 +4127,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  Notify/notify_export.h \
+  CosNotifyCommC.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/notify_export.h Notify/Notify_ID_Pool_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -4145,8 +4145,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -4161,38 +4161,38 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -4223,16 +4223,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Constraint_Visitors.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h \
+  ETCL/ETCL_Constraint_Visitor.h \
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_FilterFactory_i.o .obj/Notify_FilterFactory_i.so .shobj/Notify_FilterFactory_i.o .shobj/Notify_FilterFactory_i.so: Notify/Notify_FilterFactory_i.cpp \
   Notify/Notify_FilterFactory_i.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -4427,8 +4427,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -4443,36 +4443,36 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
   Notify/notify_export.h Notify/Notify_Filter_i.h \
   Notify/Notify_Constraint_Interpreter.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
+  ETCL/ETCL_Interpreter.h \
+  ETCL/etcl_export.h \
+  ETCL/ETCL_Constraint.h \
+  ETCL/ETCL_Constraint.inl \
   Notify/Notify_ID_Pool_T.h \
   $(ACE_ROOT)/ace/Containers_T.h \
   $(ACE_ROOT)/ace/Containers.h \
@@ -4482,20 +4482,20 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotifyChannelAdminS.h \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -4529,7 +4529,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Notify_QoSAdmin_i.o .obj/Notify_QoSAdmin_i.so .shobj/Notify_QoSAdmin_i.o .shobj/Notify_QoSAdmin_i.so: Notify/Notify_QoSAdmin_i.cpp \
   Notify/Notify_QoSAdmin_i.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -4724,11 +4724,11 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.inl \
   Notify/Notify_Extensions.h
 
@@ -4736,8 +4736,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
  Notify/Notify_Constraint_Interpreter.cpp \
   Notify/Notify_Constraint_Interpreter.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Interpreter.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
+  ETCL/ETCL_Interpreter.h \
+  ETCL/etcl_export.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
   $(ACE_ROOT)/ace/svc_export.h \
@@ -4793,7 +4793,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Log_Record.h \
   $(ACE_ROOT)/ace/Log_Priority.h \
   $(ACE_ROOT)/ace/Log_Record.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
+  ETCL/ETCL_Constraint.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
   $(ACE_ROOT)/ace/Message_Block.h \
@@ -4844,8 +4844,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Auto_Ptr.i \
   $(ACE_ROOT)/ace/Auto_Ptr.cpp \
   $(ACE_ROOT)/ace/SString.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
+  ETCL/ETCL_Constraint.inl \
+  CosNotifyFilterC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/Typecode.h \
   $(TAO_ROOT)/tao/Exception.h \
@@ -4935,15 +4935,15 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  Notify/notify_export.h \
+  CosNotifyCommC.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/notify_export.h Notify/Notify_Constraint_Visitors.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
   $(ACE_ROOT)/ace/Functor.h \
@@ -4973,7 +4973,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h
+  ETCL/ETCL_Constraint_Visitor.h
 
 .obj/Notify_Constraint_Visitors.o .obj/Notify_Constraint_Visitors.so .shobj/Notify_Constraint_Visitors.o .shobj/Notify_Constraint_Visitors.so: Notify/Notify_Constraint_Visitors.cpp \
   Notify/Notify_Constraint_Visitors.h \
@@ -5100,9 +5100,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint_Visitor.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/etcl_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  ETCL/ETCL_Constraint_Visitor.h \
+  ETCL/etcl_export.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -5203,12 +5203,12 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
   Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_Constraint.inl \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ETCL/ETCL_y.h \
+  CosNotificationC.i \
+  Notify/notify_export.h \
+  ETCL/ETCL_Constraint.h \
+  ETCL/ETCL_Constraint.inl \
+  ETCL/ETCL_y.h \
   $(TAO_ROOT)/tao/DynamicAny/DynArray_i.h \
   $(TAO_ROOT)/tao/DynamicAny/DynamicAny.h \
   $(TAO_ROOT)/tao/DynamicAny/dynamicany_export.h \
@@ -5233,7 +5233,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
 
 .obj/Notify_Event.o .obj/Notify_Event.so .shobj/Notify_Event.o .shobj/Notify_Event.so: Notify/Notify_Event.cpp Notify/Notify_Event.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -5428,27 +5428,27 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
   Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  Notify/notify_export.h \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i \
   $(TAO_ROOT)/tao/debug.h
 
 .obj/Notify_StructuredEvents.o .obj/Notify_StructuredEvents.so .shobj/Notify_StructuredEvents.o .shobj/Notify_StructuredEvents.so: Notify/Notify_StructuredEvents.cpp \
   Notify/Notify_StructuredEvents.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  Notify/Notify_Event.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -5643,19 +5643,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/Notify_Event.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
+  Notify/Notify_Event.i \
   Notify/notify_export.h Notify/Notify_QoSAdmin_i.h \
   Notify/Notify_QoSAdmin_i.inl \
   $(TAO_ROOT)/tao/debug.h
@@ -5663,7 +5663,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Notify_Collection.o .obj/Notify_Collection.so .shobj/Notify_Collection.o .shobj/Notify_Collection.so: Notify/Notify_Collection.cpp \
   Notify/Notify_Collection.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+  CosNotifyCommC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -5858,26 +5858,26 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  Notify/notify_export.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/notify_export.h Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Listeners.h
 
 .obj/Notify_Event_Map.o .obj/Notify_Event_Map.so .shobj/Notify_Event_Map.o .shobj/Notify_Event_Map.so: Notify/Notify_Event_Map.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -6073,26 +6073,26 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  CosNotificationC.h \
   Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  Notify/notify_export.h \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Event_Map.h \
   Notify/Notify_Collection.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6136,7 +6136,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   Notify/Notify_Collection_Factory.h
 
 .obj/Notify_Event_Manager.o .obj/Notify_Event_Manager.so .shobj/Notify_Event_Manager.o .shobj/Notify_Event_Manager.so: Notify/Notify_Event_Manager.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -6332,28 +6332,28 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Manager.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   Notify/notify_export.h Notify/Notify_Listeners.h \
   Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Event_Manager.i \
   Notify/Notify_Event_Map.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -6431,8 +6431,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   Notify/Notify_Event_Manager_Objects_Factory.h \
   Notify/Notify_Update_Dispatch_Command.h Notify/Notify_QoSAdmin_i.h \
   Notify/Notify_QoSAdmin_i.inl Notify/Notify_EventChannel_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -6444,38 +6444,38 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.h Notify/Notify_ID_Pool_T.i \
   Notify/Notify_ID_Pool_T.cpp
 
@@ -6717,26 +6717,26 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h Notify/Notify_Worker_Task.h \
   Notify/Notify_Command.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Source_Filter_Eval_Command.h \
   Notify/Notify_Listener_Filter_Eval_Command.h \
   Notify/Notify_Event_Manager_Objects_Factory.h \
   Notify/Notify_Lookup_Command.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event_Dispatch_Command.h Notify/Notify_Factory.h \
   Notify/Notify_Listeners.h Notify/Notify_Event_Manager.h \
   Notify/Notify_Collection.h Notify/Notify_Event_Manager.i \
@@ -6766,9 +6766,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_AdminProperties.h Notify/Notify_Signal_Property_T.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
   $(ACE_ROOT)/ace/Atomic_Op.i \
@@ -7010,19 +7010,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/Notify_Command.h Notify/notify_export.h Notify/Notify_Command.i \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_AdminProperties.h \
   Notify/Notify_Listeners.h Notify/Notify_Signal_Property_T.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -7230,24 +7230,24 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Listeners.h \
   Notify/Notify_Lookup_Command.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Worker_Task.h \
   $(ACE_ROOT)/ace/Task.h \
   $(ACE_ROOT)/ace/Service_Object.h \
@@ -7291,7 +7291,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Stream.cpp
 
 .obj/Notify_Lookup_Command.o .obj/Notify_Lookup_Command.so .shobj/Notify_Lookup_Command.o .shobj/Notify_Lookup_Command.so: Notify/Notify_Lookup_Command.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -7487,26 +7487,26 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Lookup_Command.h Notify/Notify_Command.h \
   Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Event_Manager.h \
   Notify/Notify_Listeners.h Notify/Notify_Collection.h \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
@@ -7584,7 +7584,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
 
 .obj/Notify_Listener_Filter_Eval_Command.o .obj/Notify_Listener_Filter_Eval_Command.so .shobj/Notify_Listener_Filter_Eval_Command.o .shobj/Notify_Listener_Filter_Eval_Command.so:  \
  Notify/Notify_Listener_Filter_Eval_Command.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/pre.h \
   $(ACE_ROOT)/ace/post.h \
@@ -7780,26 +7780,26 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Listener_Filter_Eval_Command.h Notify/Notify_Command.h \
   Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Event_Dispatch_Command.h \
   Notify/Notify_Worker_Task.h \
   $(ACE_ROOT)/ace/Task.h \
@@ -8042,19 +8042,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Listeners.h \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
@@ -8297,23 +8297,23 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Listeners.h
 
 .obj/Notify_Factory.o .obj/Notify_Factory.so .shobj/Notify_Factory.o .shobj/Notify_Factory.so: Notify/Notify_Factory.cpp \
@@ -8545,23 +8545,23 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.i \
   Notify/Notify_Default_Collection_Factory.h \
   Notify/Notify_Collection_Factory.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  CosNotifyCommC.h \
+  Notify/notify_export.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Listeners.h \
   Notify/Notify_Default_EMO_Factory.h \
   Notify/Notify_Event_Manager_Objects_Factory.h \
@@ -8797,11 +8797,11 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  CosNotifyChannelAdminS.h \
+  CosNotificationS.h \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -8816,45 +8816,45 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableServer/Collocated_Object.i \
   $(TAO_ROOT)/tao/PortableServer/ThruPOA_Object_Proxy_Impl.h \
   $(TAO_ROOT)/tao/PortableServer/Direct_Object_Proxy_Impl.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventChannelAdminS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyChannelAdminS.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
+  CosEventChannelAdminS.h \
+  CosEventChannelAdminC.h \
+  CosEventChannelAdminC.i \
+  CosEventChannelAdminS_T.h \
+  CosEventChannelAdminS_T.i \
+  CosEventChannelAdminS_T.cpp \
+  CosEventChannelAdminS.i \
+  CosNotifyChannelAdminC.h \
+  CosNotifyChannelAdminC.i \
+  CosNotifyChannelAdminS_T.h \
+  CosNotifyChannelAdminS_T.i \
+  CosNotifyChannelAdminS_T.cpp \
+  CosNotifyChannelAdminS.i \
   Notify/Notify_ID_Pool_T.i Notify/Notify_ID_Pool_T.cpp \
   Notify/Notify_EventChannel_i.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -8867,20 +8867,20 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   Notify/Notify_QoSAdmin_i.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
   Notify/Notify_QoSAdmin_i.inl Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event.h Notify/Notify_Event.i \
   Notify/Notify_Event_Manager.h Notify/Notify_Listeners.h \
   Notify/Notify_Event_Manager.i Notify/Notify_Event_Map.h \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -9199,7 +9199,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Event_Handler.i \
   $(ACE_ROOT)/ace/Service_Object.i \
   Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
+  CosNotifyCommC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/corbafwd.h \
   $(ACE_ROOT)/ace/CDR_Base.h \
@@ -9355,22 +9355,22 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  Notify/notify_export.h \
+  CosNotificationC.h \
+  CosNotificationC.i \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Listeners.h \
   $(ACE_ROOT)/ace/Service_Config.h \
   $(ACE_ROOT)/ace/Service_Config.i \
@@ -9387,7 +9387,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Reactor.i \
   $(ACE_ROOT)/ace/Reactor_Impl.h \
   $(ACE_ROOT)/ace/Svc_Conf_Tokens.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.h \
+  ESF/ESF_Proxy_List.h \
   $(ACE_ROOT)/ace/Containers.h \
   $(ACE_ROOT)/ace/Containers.i \
   $(ACE_ROOT)/ace/Containers_T.h \
@@ -9396,17 +9396,17 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(ACE_ROOT)/ace/Containers_T.i \
   $(ACE_ROOT)/ace/Containers_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Immediate_Changes.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Copy_On_Write.cpp \
+  ESF/ESF_Proxy_List.i \
+  ESF/ESF_Proxy_List.cpp \
+  ESF/ESF_Immediate_Changes.h \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Immediate_Changes.i \
+  ESF/ESF_Immediate_Changes.cpp \
+  ESF/ESF_Copy_On_Write.h \
+  ESF/ESF_Copy_On_Write.i \
+  ESF/ESF_Copy_On_Write.cpp \
   Notify/Notify_Factory.h
 
 .obj/Notify_Default_EMO_Factory.o .obj/Notify_Default_EMO_Factory.so .shobj/Notify_Default_EMO_Factory.o .shobj/Notify_Default_EMO_Factory.so: Notify/Notify_Default_EMO_Factory.cpp \
@@ -9641,24 +9641,24 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Singleton.i \
   $(ACE_ROOT)/ace/Singleton.cpp \
   Notify/Notify_Event_Manager.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   Notify/Notify_Listeners.h Notify/Notify_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Worker.cpp \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  ESF/ESF_Worker.h \
+  ESF/ESF_Worker.i \
+  ESF/ESF_Worker.cpp \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_Event_Manager.i \
   Notify/Notify_Event_Map.h \
   $(ACE_ROOT)/ace/Hash_Map_Manager.h \
@@ -9671,9 +9671,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.i \
   $(ACE_ROOT)/ace/Hash_Map_Manager_T.cpp \
   Notify/Notify_Event_Map.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.cpp \
+  ESF/ESF_Proxy_Collection.h \
+  ESF/ESF_Proxy_Collection.i \
+  ESF/ESF_Proxy_Collection.cpp \
   Notify/Notify_Event_Processor.h \
   $(ACE_ROOT)/ace/Module.h \
   $(ACE_ROOT)/ace/Task_T.h \
@@ -9712,7 +9712,7 @@ endif # ACE_HAS_GNUG_PRE_2_8
 .obj/Notify_AdminProperties.o .obj/Notify_AdminProperties.so .shobj/Notify_AdminProperties.o .shobj/Notify_AdminProperties.so: Notify/Notify_AdminProperties.cpp \
   Notify/Notify_AdminProperties.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
+  CosNotificationC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(ACE_ROOT)/ace/post.h \
   $(ACE_ROOT)/ace/ACE_export.h \
@@ -9907,8 +9907,8 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   Notify/Notify_Listeners.h Notify/notify_export.h \
   Notify/Notify_Signal_Property_T.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -10114,9 +10114,9 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/Notify_AdminProperties.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
   Notify/Notify_Listeners.h Notify/notify_export.h \
   Notify/Notify_Signal_Property_T.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -10132,16 +10132,16 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Notification_Strategy.inl \
   $(ACE_ROOT)/ace/Message_Queue.i \
   Notify/Notify_Command.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i \
   $(TAO_ROOT)/tao/debug.h
 
@@ -10380,19 +10380,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/Notify_Command.h Notify/notify_export.h Notify/Notify_Command.i \
   Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i Notify/Notify_AdminProperties.h \
   Notify/Notify_Listeners.h Notify/Notify_Signal_Property_T.h \
   $(ACE_ROOT)/ace/Atomic_Op.h \
@@ -10600,19 +10600,19 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   Notify/notify_export.h Notify/Notify_Command.i Notify/Notify_Event.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/svc_utils_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/TimeBaseC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  TimeBaseC.h \
+  svc_utils_export.h \
+  TimeBaseC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   Notify/Notify_Event.i
 
 .obj/Notify_Extensions.o .obj/Notify_Extensions.so .shobj/Notify_Extensions.o .shobj/Notify_Extensions.so: Notify/Notify_Extensions.cpp \
@@ -11102,7 +11102,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -11463,7 +11462,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -11815,7 +11813,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -12170,7 +12167,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -12517,7 +12513,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -12868,7 +12863,6 @@ endif # ACE_HAS_GNUG_PRE_2_8
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \

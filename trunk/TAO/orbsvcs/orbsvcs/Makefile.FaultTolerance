@@ -78,7 +78,7 @@ realclean: clean
 
 .obj/FT_CORBAS.o .obj/FT_CORBAS.so .shobj/FT_CORBAS.o .shobj/FT_CORBAS.so: FT_CORBAS.cpp FT_CORBAS.h \
   $(ACE_ROOT)/ace/pre.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBS.h \
+  FT_CORBA_ORBS.h \
   $(TAO_ROOT)/tao/TimeBaseS.h \
   $(TAO_ROOT)/tao/TimeBaseC.h \
   $(TAO_ROOT)/tao/corbafwd.h \
@@ -250,7 +250,7 @@ realclean: clean
   $(TAO_ROOT)/tao/CurrentC.h \
   $(TAO_ROOT)/tao/CurrentC.i \
   $(TAO_ROOT)/tao/PolicyC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBC.h \
+  FT_CORBA_ORBC.h \
   $(TAO_ROOT)/tao/corba.h \
   $(TAO_ROOT)/tao/NVList.h \
   $(ACE_ROOT)/ace/Unbounded_Queue.h \
@@ -292,8 +292,8 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.h \
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBC.i \
+  FaultTolerance/fault_tol_export.h \
+  FT_CORBA_ORBC.i \
   $(TAO_ROOT)/tao/PortableServer/PortableServer.h \
   $(TAO_ROOT)/tao/PortableServer/portableserver_export.h \
   $(TAO_ROOT)/tao/PortableServer/PortableServerC.h \
@@ -313,48 +313,48 @@ realclean: clean
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.i \
   $(TAO_ROOT)/tao/PortableServer/PolicyS_T.cpp \
   $(TAO_ROOT)/tao/PortableServer/PolicyS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommS.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS_T.cpp \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterS.i \
+  FT_CORBA_ORBS_T.h \
+  FT_CORBA_ORBS_T.i \
+  FT_CORBA_ORBS_T.cpp \
+  FT_CORBA_ORBS.i \
+  CosNamingS.h \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  CosNamingS_T.h \
+  CosNamingS_T.i \
+  CosNamingS_T.cpp \
+  CosNamingS.i \
+  CosNotificationS.h \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  CosNotificationS_T.h \
+  CosNotificationS_T.i \
+  CosNotificationS_T.cpp \
+  CosNotificationS.i \
+  CosNotifyFilterS.h \
+  CosNotifyCommS.h \
+  CosEventCommS.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosEventCommS_T.h \
+  CosEventCommS_T.i \
+  CosEventCommS_T.cpp \
+  CosEventCommS.i \
+  CosNotifyCommC.h \
+  CosNotifyCommC.i \
+  CosNotifyCommS_T.h \
+  CosNotifyCommS_T.i \
+  CosNotifyCommS_T.cpp \
+  CosNotifyCommS.i \
+  CosNotifyFilterC.h \
+  CosNotifyFilterC.i \
+  CosNotifyFilterS_T.h \
+  CosNotifyFilterS_T.i \
+  CosNotifyFilterS_T.cpp \
+  CosNotifyFilterS.i \
   FT_CORBAC.h FaultTolerance/fault_tol_export.h FT_CORBAC.i FT_CORBAS_T.h \
   FT_CORBAS_T.i FT_CORBAS_T.cpp FT_CORBAS.i \
   $(TAO_ROOT)/tao/PortableServer/Object_Adapter.h \
@@ -430,7 +430,6 @@ realclean: clean
   $(ACE_ROOT)/ace/Array_Base.inl \
   $(ACE_ROOT)/ace/Array_Base.cpp \
   $(TAO_ROOT)/tao/PICurrent.inl \
-  $(TAO_ROOT)/tao/TAO_AMH_Response_Handler.h \
   $(TAO_ROOT)/tao/TAO_Server_Request.i \
   $(TAO_ROOT)/tao/ORB_Core.h \
   $(TAO_ROOT)/tao/Policy_Manager.h \
@@ -687,24 +686,24 @@ realclean: clean
   $(TAO_ROOT)/tao/ObjectReferenceTemplateC.i \
   $(TAO_ROOT)/tao/PortableInterceptorC.i \
   FaultTolerance/fault_tol_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FaultTolerance/fault_tol_export.h \
+  FT_CORBA_ORBC.h \
+  FaultTolerance/fault_tol_export.h \
   $(TAO_ROOT)/tao/GIOPC.h \
   $(TAO_ROOT)/tao/GIOPC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/FT_CORBA_ORBC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Naming/naming_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNamingC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/Notify/notify_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotificationC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEvent/event_export.h \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosEventCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyCommC.i \
-  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNotifyFilterC.i \
+  FT_CORBA_ORBC.i \
+  CosNamingC.h \
+  Naming/naming_export.h \
+  CosNamingC.i \
+  CosNotificationC.h \
+  Notify/notify_export.h \
+  CosNotificationC.i \
+  CosNotifyFilterC.h \
+  CosNotifyCommC.h \
+  CosEventCommC.h \
+  CosEvent/event_export.h \
+  CosEventCommC.i \
+  CosNotifyCommC.i \
+  CosNotifyFilterC.i \
   FT_CORBAC.i $(TAO_ROOT)/tao/Stub.h \
   $(TAO_ROOT)/tao/Pluggable.h \
   $(TAO_ROOT)/tao/Pluggable.i \
