@@ -23,25 +23,25 @@ Legend:
 
 [11111 ] libTAO and TAO_IDL compile.
 
-[11110 ] IDL_Cubit compiles
-[11110 ] 	svr runs
-[11111 ]	clnt runs
-
+[1111x ] IDL_Cubit compiles
+[1111x ] 	svr runs
+[1111x ]	clnt runs
+     
 [1111x ] POA/RootPOA compiles
 [1111x ] 	POA/RootPOA runs
 [1111x ] POA/FindPOA compiles
 [1111x ] 	POA/FindPOA runs
 [1111x ] POA/NewPOA compiles
 [1111x ] 	POA/NewPOA runs
-[1111  ] POA/Generic_Servant compiles
-[11x1  ] 	POA/Generic_Servant runs
-[1111  ] POA/On_Demand_Activation compiles
-[11x0  ] 	POA/On_Demand_Activation runs
-[1111  ] POA/Explicit_Activation compiles
-[01x0  ] 	POA/Explicit_Activation runs
-[x111x ] POA/Default_Servant compiles
-[x0x0x ] 	POA/Default_Servant runs
-
+[1111x ] POA/Generic_Servant compiles
+[1111x ] 	POA/Generic_Servant runs
+[1111x ] POA/On_Demand_Activation compiles
+[1111x ] 	POA/On_Demand_Activation runs
+[1111x ] POA/Explicit_Activation compiles
+[1111x ] 	POA/Explicit_Activation runs
+[1111x ] POA/Default_Servant compiles
+[x0xxx ] 	POA/Default_Servant runs
+    
 [1111x ] Param_Test compiles
 [1111x ] 	SII short
 [1111x ] 	SII ubstring
@@ -51,33 +51,33 @@ Legend:
 [0111x ] 	SII nested_struct
 [0000x ] 	SII struct_seq
 [0000x ] 	SII objref
-
-[11x1x ] 	DII short
-[11x1x ] 	DII ubstring
-[11x1x ] 	DII fixed_struct
-[00x0x ] 	DII strseq
-[00x0x ] 	DII var_struct
-[00x0x ] 	DII nested_struct
-[00x0x ] 	DII struct_seq
-[00x0x ] 	DII objref
-
+    
+[1111x ] 	DII short
+[1111x ] 	DII ubstring
+[1111x ] 	DII fixed_struct
+[0000x ] 	DII strseq
+[0000x ] 	DII var_struct
+[0000x ] 	DII nested_struct
+[0000x ] 	DII struct_seq
+[0000x ] 	DII objref
+    
 [0x0x0 ] Thruput/TAO compiles
-
+   
 [1111x ] liborbsvcs compiles
 [1111x ] Naming_Service compiles
 [1111x ] Simple_Naming compiles
-[10x0x ] 	Simple_Naming runs
-[1xx1x ] Logger compiles
-[1xx0x ] 	Logger runs
-[11x11 ] Scheduling_Service compiles
-[11xxx ]        Scheduling_Service runs
-[11x10 ] Event_Service compiles
-[11xxx ]        Event_Service runs
-[11x10 ] Dump_Schedule compiles
-[11xxx ]        Dump_Schedule runs
-[11x11 ] Event_Latency compiles
-[11x0x ]        Event_Latency runs
-
+[1x10x ] 	Simple_Naming runs
+[1x11x ] Logger compiles
+[1x10x ] 	Logger runs
+[11111 ] Scheduling_Service compiles
+[1110x ]        Scheduling_Service runs
+[11110 ] Event_Service compiles
+[1110x ]        Event_Service runs
+[11110 ] Dump_Schedule compiles
+[xxxxx ]        Dump_Schedule runs
+[11111 ] Event_Latency compiles
+[1110x ]        Event_Latency runs
+    
 [110100] MT_Cubit compiles
 [xxx0xx] 	runs for Octet
 [xxx0xx] 	runs for Short
@@ -86,7 +86,7 @@ Legend:
 
 NOTES
 * Solaris/CC
-** orbsvcs/tests/Logger does not compile
+
 ** Thruput/TAO/server.cpp -same errors as Logger/svr.cpp
 ** ParamTest/var_struct,nested_struct,struct_seq - seg. fault , but
    able to fix manually the tao_idl compiler generated files, works
@@ -117,8 +117,6 @@ NOTES
    exception.
 
 * Other (Linux/egcs, Solaris/egcs, etc.)
-
-
 
 # eval:(overwrite-mode nil)
 # Local Variables:
