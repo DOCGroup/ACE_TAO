@@ -1,3 +1,16 @@
+Mon Dec 10 15:52:39 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	The effect of breaking ace/Strategies into multiple files. 
+	
+        Tue Nov 27 21:30:10 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/Cache_Entries.h:
+	* tao/DLL_ORB.h: 
+	* tao/Transport.h: Added additional #includes to fix compilation
+	  errors.  
+	
+	* tao/*/Makefile: Updated dependencies.
+
 Mon Dec 10 13:31:35 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * tao/DynamicAny/DynCommon.cpp:
