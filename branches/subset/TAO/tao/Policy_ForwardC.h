@@ -32,7 +32,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
 #include "Sequence.h"
 #include "CDR.h"
 #include "varbase.h"

@@ -32,7 +32,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
+#include "TAO_Export.h"
+#include "Any_Impl_T.h"
 #include "CurrentC.h"
 #include "Policy_ForwardC.h"
 #include "Exception.h"

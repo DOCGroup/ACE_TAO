@@ -33,7 +33,7 @@
 #include "StringSeqC.i"
 #endif /* !defined INLINE */
 
-#include "Any_T.h"
+#include "Any_Dual_Impl_T.h"
 
 #if !defined (_CORBA_STRINGSEQ_CS_)
 #define _CORBA_STRINGSEQ_CS_

@@ -36,6 +36,7 @@
 #include "tao/IOPC.h"
 #include "tao/TimeBaseC.h"
 #include "tao/PolicyC.h"
+#include "tao/Any_Basic_Impl_T.h"
 
 // Forward references.
 class TAO_Priority_Mapping_Manager;

@@ -1016,7 +1016,27 @@ SOURCE=.\any.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_T.h
+SOURCE=.\Any_Array_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Dual_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Basic_Impl_T.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Impl_T.h
 # End Source File
 # Begin Source File
 
@@ -1884,7 +1904,27 @@ SOURCE=.\any.i
 # End Source File
 # Begin Source File
 
-SOURCE=.\Any_T.inl
+SOURCE=.\Any_Array_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Dual_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Basic_Impl_T.inl
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Impl_T.inl
 # End Source File
 # Begin Source File
 
@@ -2436,7 +2476,32 @@ SOURCE=.\tao.rc
 # PROP Default_Filter ""
 # Begin Source File
 
-SOURCE=.\Any_T.cpp
+SOURCE=.\Any_Array_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Basic_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Dual_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Basic_Impl_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Any_Special_Impl_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # Begin Source File

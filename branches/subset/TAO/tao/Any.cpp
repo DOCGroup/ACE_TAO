@@ -1,6 +1,11 @@
 // $Id$
 
-#include "tao/Any_T.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Basic_Impl_T.h"
+#include "tao/Any_Special_Impl_T.h"
+#include "tao/Any_Special_Basic_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
+
 #include "tao/ORB_Core.h"
 #include "tao/Codeset_Translator_Factory.h"
 

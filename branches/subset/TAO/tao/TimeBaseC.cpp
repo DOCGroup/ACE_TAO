@@ -21,13 +21,6 @@
 
 #include "TimeBaseC.h"
 
-#include "tao/Stub.h"
-#include "tao/Invocation.h"
-
-#if TAO_HAS_INTERCEPTORS == 1
-#include "tao/RequestInfo_Util.h"
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
 #endif /* __BORLANDC__ */
@@ -35,6 +28,14 @@
 #if !defined (__ACE_INLINE__)
 #include "TimeBaseC.i"
 #endif /* !defined INLINE */
+
+#include "tao/Stub.h"
+#include "tao/Invocation.h"
+#include "tao/Any_Dual_Impl_T.h"
+
+#if TAO_HAS_INTERCEPTORS == 1
+#include "tao/RequestInfo_Util.h"
+#endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284

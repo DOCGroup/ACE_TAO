@@ -196,10 +196,6 @@ namespace CORBA
   class OctetSeq_out;
   extern TAO_Export TypeCode_ptr _tc_OctetSeq;
 
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_var;
-//   typedef TAO_Unbounded_Sequence<Octet> OctetSeq_out;
-
   class Any;
   class Any_var;
   class Any_out;

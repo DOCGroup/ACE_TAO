@@ -33,8 +33,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "StringSeqC.h"
+#include "tao/Any_Dual_Impl_T.h"
 #include "tao/TAO_Export.h"
-#include "tao/Any_T.h"
 #include "tao/Sequence.h"
 
 #if defined (TAO_EXPORT_MACRO)

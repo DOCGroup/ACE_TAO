@@ -31,7 +31,8 @@
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "tao/Any_T.h"
+#include "tao/Any_Impl_T.h"
+#include "tao/Any_Dual_Impl_T.h"
 
 #if !defined (__ACE_INLINE__)
 #include "TAOC.i"

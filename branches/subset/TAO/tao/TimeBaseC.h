@@ -27,7 +27,6 @@
 
 #include "ace/pre.h"
 #include "tao/corbafwd.h"
-#include "tao/Any_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
