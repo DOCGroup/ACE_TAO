@@ -1,3 +1,12 @@
+﻿Fri Dec  5 13:09:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* orbsvcs/orbsvcs/CosConcurrency.dsp:
+	* orbsvcs/orbsvcs/CosLifeCycle.dsp:
+	* orbsvcs/orbsvcs/PortableGroup.dsp:
+	* orbsvcs/orbsvcs/CosLoadBalancing.dsp:
+	* orbsvcs/orbsvcs/CosTime.dsp:
+	* orbsvcs/orbsvcs/DsLogAdmin.dsp:
+
 Fri Dec  5 10:30:19 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_1639_Regression/struct_client.cpp:
