@@ -1,3 +1,51 @@
+Sun Aug 12 17:55:57 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/CodecFactory.h (TAO_CodecFactory):
+	* tao/Messaging_PolicyFactory.h (TAO_Messaging_PolicyFactory):
+
+	  Instances of these objects are now reference counted to make
+	  sure they exist long enough for the ORB to release them.  This
+	  fixes some dynamic unloading problems.
+	
+	* tao/CodecFactory_ORBInitializer.h:
+	* tao/Messaging_ORBInitializer.h:
+
+	  Maintain a reference (i.e., a "_var") to the CodecFactory and
+	  Messaging_PolicyFactory, respectively.  They will be destroyed
+	  when all outstanding references are released.
+
+	* tao/CodecFactory_ORBInitializer.cpp (pre_init):
+	* tao/Messaging_ORBInitializer.cpp (register_policy_factories):
+
+	  Initialize a CodecFactory and Messaging_PolicyFactory,
+	  respectively, on the heap.  These instances are now reference
+	  counted.
+
+	* tao/default_resource.h (TAO_Default_Resource_Factory):
+
+	  No longer any need to inherit from ACE_Cleanup.  The Service
+	  Configurator will once again manage the default resource
+	  factory's memory.
+
+	* tao/default_resource.cpp:
+
+	  Removed code that was commented out during the previous changes
+	  to this file.  That code will not be used.
+
+	* tests/DLL_ORB/Test_Client_Module.cpp:
+
+	  Removed "tabs" from this source file.
+
+	* tests/DLL_ORB/Test_Server_Module.cpp (init):
+
+	  No longer any need to use the "-ORBSkipServiceConfigOpen" option
+	  (at least for this single-threaded test).
+
+	* tests/DLL_ORB/client.cpp (main):
+
+	  Removed debugging ORB debugging options.  They shouldn't be in
+	  "released" version of this test.
+
 Sun Aug 12 08:46:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Native_Exceptions/test_i.cpp: Fixed warning with g++. 

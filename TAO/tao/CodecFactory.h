@@ -39,12 +39,12 @@
  *
  * @brief Implementation of the IOP::CodecFactory interface.
  *
- * This class can be used to create Codec of a given type, such as a
- * CDR encapsulation Codec.
+ * This class can be used to create Codec (coder/decoder) of a given
+ * type, such as a CDR encapsulation Codec.
  */
 class TAO_Export TAO_CodecFactory
   : public virtual IOP::CodecFactory,
-    public virtual CORBA::LocalObject
+    public virtual TAO_Local_RefCounted_Object
 {
 public:
 
@@ -53,7 +53,7 @@ public:
 
   /// Create a Coder/Decoder for the given type of encoding.
   virtual IOP::Codec_ptr create_codec (const IOP::Encoding & enc,
-				       CORBA::Environment &ACE_TRY_ENV = 
+				       CORBA::Environment &ACE_TRY_ENV =
 				         TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException,
 		     IOP::CodecFactory::UnknownEncoding));
@@ -75,4 +75,3 @@ private:
 #include "ace/post.h"
 
 #endif  /* TAO_CODEC_FACTORY_H */
-

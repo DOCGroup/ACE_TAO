@@ -38,21 +38,28 @@ class TAO_LF_Strategy;
  * stored in thread-specific storage, stored in shared memory,
  * etc.
  *
- * @note The default resource factory also inherits from ACE_Cleanup
- *       so that it may be registered for destruction with the
- *       TAO_Singleton_Manager.  This generally only necessary for
- *       default resource factory since it may be created during ORB
- *       initialization, and it must exist long enough for the ORB
- *       Core to make some calls on it during ORB Core finalization.
- *       Resource factories that are statically or dynamically loaded
- *       (i.e. registered with the Service Repository) before the ORB
- *       is initialized need not inherit from ACE_Cleanup, nor is it
- *       necessary for them to register with the
- *       TAO_Singleton_Manager.
+ * @note When using an ORB created by a dynamically loaded object, it
+ *       is generally necessary to pre-load a "Resource_Factory" prior
+ *       to initializing the ORB.  In the case of the
+ *       TAO_Default_Resource_Factory, this can be done by adding the
+ *       following Service Configurator directive to your `svc.conf'
+ *       file before your the directive that loads the object that
+ *       initialized your ORB:
+ * @par
+ *           static Resource_Factory ""
+ * @par
+ *       Alternatively, explicitly pre-load the Resource_Factory using
+ *       the following in your code:
+ * @par
+ *           ACE_Service_Config::process_directive (
+ *             ACE_TEXT ("static Resource_Factory \"\"") );
+ * @par
+ *       In both cases, place the appropriate resource factory
+ *       arguments, if any, between the quotes immediately following
+ *       "Resource_Factory."
  */
 class TAO_Export TAO_Default_Resource_Factory
-  : public TAO_Resource_Factory,
-    public ACE_Cleanup
+  : public TAO_Resource_Factory
 {
 public:
 

@@ -24,7 +24,7 @@
 
 #include "PortableInterceptorC.h"
 #include "LocalObject.h"
-#include "CodecFactory.h"
+#include "IOPC.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -61,9 +61,12 @@ public:
 private:
 
   /// Instance of the IOP::CodecFactory.
-  /// The CodecFactory is stateless and reentrant, so share a single
-  /// instance between all ORBs.
-  TAO_CodecFactory codec_factory_;
+  /**
+   * The CodecFactory is stateless and reentrant, so share a single
+   * instance between all ORBs.
+   */
+  IOP::CodecFactory_var codec_factory_;
+
 };
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)

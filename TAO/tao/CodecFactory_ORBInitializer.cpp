@@ -19,8 +19,23 @@ TAO_CodecFactory_ORBInitializer::pre_init (
 
   // The CodecFactory is stateless and reentrant, so share a single
   // instance between all ORBs.
+  if (CORBA::is_nil (this->codec_factory_.in ()))
+    {
+      IOP::CodecFactory_ptr codec_factory;
+      ACE_NEW_THROW_EX (codec_factory,
+                        TAO_CodecFactory,
+                          CORBA::NO_MEMORY (
+                            CORBA::SystemException::_tao_minor_code (
+                              TAO_DEFAULT_MINOR_CODE,
+                              ENOMEM),
+                            CORBA::COMPLETED_NO));
+      ACE_CHECK;
+
+      this->codec_factory_ = codec_factory;
+    }
+
   info->register_initial_reference ("CodecFactory",
-                                    &(this->codec_factory_),
+                                    this->codec_factory_.in (),
                                     ACE_TRY_ENV);
   ACE_CHECK;
 }

@@ -26,7 +26,6 @@
 
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
-#include "tao/Messaging_PolicyFactory.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -37,12 +36,25 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+
+/// Forward Declarations
+class TAO_Messaging_PolicyFactory;
+
+
 /// Messaging ORB initializer.
 class TAO_Export TAO_Messaging_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer,
     public virtual TAO_Local_RefCounted_Object
 {
 public:
+
+  /**
+   * @name PortableInterceptor::ORBInitializer Methods
+   *
+   * The following methods are required by the
+   * PortableInterceptor::ORBInitializer interface.
+   */
+  //@{
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
                          TAO_ENV_ARG_DECL_WITH_DEFAULTS)
@@ -51,6 +63,8 @@ public:
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
                           TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
+
+  //@}
 
 private:
 
@@ -62,9 +76,11 @@ private:
 private:
 
   /// Instance of the Messaging policy factory.
-  /// The Messaging policy factory is stateless and reentrant, so
-  /// share a single instance between all ORBs.
-  TAO_Messaging_PolicyFactory policy_factory_;
+  /**
+   * The Messaging policy factory is stateless and reentrant, so share
+   * a single instance between all ORBs.
+   */
+  PortableInterceptor::PolicyFactory_var policy_factory_;
 
 };
 

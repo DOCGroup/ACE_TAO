@@ -1047,7 +1047,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Utils.i \
  $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/GIOP_Message_State.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i
+ $(TAO_ROOT)/tao/GIOP_Message_Base.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
 .obj/DIOP_Connector.o .obj/DIOP_Connector.so .shobj/DIOP_Connector.o .shobj/DIOP_Connector.so: DIOP_Connector.cpp DIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -1385,6 +1387,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
@@ -4089,6 +4093,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
@@ -6039,7 +6045,9 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/GIOP_Utils.i \
  $(TAO_ROOT)/tao/GIOP_Message_State.h \
  $(TAO_ROOT)/tao/GIOP_Message_State.inl \
- $(TAO_ROOT)/tao/GIOP_Message_Base.i
+ $(TAO_ROOT)/tao/GIOP_Message_Base.i \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.h \
+ $(TAO_ROOT)/tao/GIOP_Message_Lite.i
 
 .obj/SHMIOP_Connector.o .obj/SHMIOP_Connector.so .shobj/SHMIOP_Connector.o .shobj/SHMIOP_Connector.so: SHMIOP_Connector.cpp SHMIOP_Connector.h \
  $(ACE_ROOT)/ace/pre.h \
@@ -6407,6 +6415,8 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Synch_Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.h \
  $(TAO_ROOT)/tao/Reply_Dispatcher.i \
+ $(TAO_ROOT)/tao/LF_Event.h \
+ $(TAO_ROOT)/tao/LF_Event.inl \
  $(TAO_ROOT)/tao/TAOC.h \
  $(TAO_ROOT)/tao/TAOC.i \
  $(TAO_ROOT)/tao/operation_details.h \
@@ -8015,11 +8025,27 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Connection_Purging_Strategy.h \
  $(TAO_ROOT)/tao/Connection_Purging_Strategy.inl \
  FIFO_Connection_Purging_Strategy.h NULL_Connection_Purging_Strategy.h \
+ LF_Strategy_Null.h \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ LF_Strategy_Null.inl \
  $(TAO_ROOT)/tao/Single_Reactor.h \
  $(TAO_ROOT)/tao/Single_Reactor.i \
  $(TAO_ROOT)/tao/LRU_Connection_Purging_Strategy.h \
+ $(TAO_ROOT)/tao/LF_Strategy_Complete.h \
+ $(TAO_ROOT)/tao/LF_Strategy_Complete.inl \
  $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(ACE_ROOT)/ace/Intrusive_List_Node.h \
+ $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
+ $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(ACE_ROOT)/ace/Intrusive_List.h \
+ $(ACE_ROOT)/ace/Intrusive_List.inl \
+ $(ACE_ROOT)/ace/Intrusive_List.cpp \
  $(TAO_ROOT)/tao/Leader_Follower.i \
+ $(TAO_ROOT)/tao/StringSeqC.h \
+ $(TAO_ROOT)/tao/StringSeqC.i \
  $(ACE_ROOT)/ace/Auto_Ptr.h \
  $(ACE_ROOT)/ace/Auto_Ptr.i \
  $(ACE_ROOT)/ace/Auto_Ptr.cpp \
@@ -8314,6 +8340,14 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(ACE_ROOT)/ace/Thread_Manager.i \
  $(TAO_ROOT)/tao/ORB_Core.i \
  $(TAO_ROOT)/tao/Leader_Follower.h \
+ $(TAO_ROOT)/tao/LF_Follower.h \
+ $(ACE_ROOT)/ace/Intrusive_List_Node.h \
+ $(ACE_ROOT)/ace/Intrusive_List_Node.inl \
+ $(ACE_ROOT)/ace/Intrusive_List_Node.cpp \
+ $(TAO_ROOT)/tao/LF_Follower.inl \
+ $(ACE_ROOT)/ace/Intrusive_List.h \
+ $(ACE_ROOT)/ace/Intrusive_List.inl \
+ $(ACE_ROOT)/ace/Intrusive_List.cpp \
  $(TAO_ROOT)/tao/Leader_Follower.i
 
 .obj/LFU_Connection_Purging_Strategy.o .obj/LFU_Connection_Purging_Strategy.so .shobj/LFU_Connection_Purging_Strategy.o .shobj/LFU_Connection_Purging_Strategy.so: LFU_Connection_Purging_Strategy.cpp \
@@ -8959,5 +8993,37 @@ CPPFLAGS += -I$(TAO_ROOT)
  $(TAO_ROOT)/tao/Pluggable_Messaging_Utils.i \
  $(TAO_ROOT)/tao/Incoming_Message_Queue.inl \
  $(TAO_ROOT)/tao/Transport.inl
+
+.obj/LF_Strategy_Null.o .obj/LF_Strategy_Null.so .shobj/LF_Strategy_Null.o .shobj/LF_Strategy_Null.so: LF_Strategy_Null.cpp LF_Strategy_Null.h \
+ $(ACE_ROOT)/ace/pre.h \
+ strategies_export.h \
+ $(ACE_ROOT)/ace/post.h \
+ $(ACE_ROOT)/ace/ACE_export.h \
+ $(ACE_ROOT)/ace/svc_export.h \
+ $(ACE_ROOT)/ace/ace_wchar.h \
+ $(ACE_ROOT)/ace/ace_wchar.inl \
+ $(ACE_ROOT)/ace/OS_Errno.h \
+ $(ACE_ROOT)/ace/OS_Export.h \
+ $(ACE_ROOT)/ace/OS_Errno.inl \
+ $(TAO_ROOT)/tao/LF_Strategy.h \
+ $(TAO_ROOT)/tao/orbconf.h \
+ $(ACE_ROOT)/ace/OS.h \
+ $(ACE_ROOT)/ace/OS_Dirent.h \
+ $(ACE_ROOT)/ace/OS_Dirent.inl \
+ $(ACE_ROOT)/ace/OS_String.h \
+ $(ACE_ROOT)/ace/OS_String.inl \
+ $(ACE_ROOT)/ace/OS_Memory.h \
+ $(ACE_ROOT)/ace/OS_Memory.inl \
+ $(ACE_ROOT)/ace/OS_TLI.h \
+ $(ACE_ROOT)/ace/OS_TLI.inl \
+ $(ACE_ROOT)/ace/Min_Max.h \
+ $(ACE_ROOT)/ace/streams.h \
+ $(ACE_ROOT)/ace/Basic_Types.h \
+ $(ACE_ROOT)/ace/Basic_Types.i \
+ $(ACE_ROOT)/ace/Trace.h \
+ $(ACE_ROOT)/ace/OS.i \
+ $(TAO_ROOT)/tao/TAO_Export.h \
+ $(TAO_ROOT)/tao/LF_Strategy.inl \
+ LF_Strategy_Null.inl
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY
