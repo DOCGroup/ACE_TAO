@@ -443,32 +443,15 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
                         Task_State *ts)
 {
 
-  ACE_ARGV tmp_args (this->argv_);
-  const char *arg_buf = tmp_args.buf ();
+  /*DONE*/// @@ Naga, can you please explain why you need to do all of this?
+  /*DONE*/// i.e, we need some comments here!  In particular, what is args1
+  /*DONE*/// being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
+  /*DONE*/// is an appropriate size?  It seems to me that we should either (1)
+  /*DONE*/// add an accessor on ACE_ARGV to determine what this size ought to
+  /*DONE*/// be or (2) we should try to use/add a method on ACE_ARGV that
+  /*DONE*/// converts the argv back into a char * buffer or something!  At any
+  /*DONE*/// rate, this code should be cleaned up and abstracted better.
 
-  char *low_thread_args;
-
-  int arg_len = ACE_OS::strlen (arg_buf);
-
-  ACE_NEW_RETURN (low_thread_args,
-                  char[arg_len + 1],
-                  -1);
-
-  ACE_OS::strcpy (low_thread_args,
-                  arg_buf);
-  char *args1;
-
-  // @@ Naga, can you please explain why you need to do all of this?
-  // i.e, we need some comments here!  In particular, what is args1
-  // being used for and how will we know that ACE_DEFAULT_ARGV_BUFSIZ
-  // is an appropriate size?  It seems to me that we should either (1)
-  // add an accessor on ACE_ARGV to determine what this size ought to
-  // be or (2) we should try to use/add a method on ACE_ARGV that
-  // converts the argv back into a char * buffer or something!  At any
-  // rate, this code should be cleaned up and abstracted better.
-  ACE_NEW_RETURN (args1,
-                  char[ACE_DEFAULT_ARGV_BUFSIZ],
-                  -1);
   int i;
 
   for (i = 0; i < this->argc_ ; i++)
@@ -497,28 +480,32 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
   ACE_NEW_RETURN (cubits,
                   CORBA::String [GLOBALS::instance ()->num_of_objs],
                   -1);
-  ACE_OS::sprintf (args1,
-                   "-ORBport %d "
-                   "-ORBhost %s "
-                   "-ORBobjrefstyle URL "
-                   "-ORBsndsock 32768 "
-                   "-ORBrcvsock 32768 ",
-                   GLOBALS::instance ()->base_port,
+  
+  char orbport[BUFSIZ];
+  
+  ACE_OS::sprintf (orbport,
+                   "-ORBport %d ",
+                   GLOBALS::instance ()->base_port);
+
+  char orbhost[BUFSIZ];
+
+  ACE_OS::sprintf (orbhost,
+                   "-ORBhost %s ",
                    GLOBALS::instance ()->hostname);
 
-  char *high_thread_args;
-  int args1_len = ACE_OS::strlen (args1);
+  char *high_second_argv[] = {orbport,
+                              orbhost,
+                              "-ORBobjrefstyle URL ",
+                              "-ORBsndsock 32768 ",
+                              "-ORBrcvsock 32768 ",
+                              0};
 
-  ACE_NEW_RETURN (high_thread_args,
-                  char [arg_len + args1_len +1],
-                  -1);
+  ACE_ARGV high_argv (this->argv_,high_second_argv);
 
-  ACE_OS::strcpy (high_thread_args, arg_buf);
-  ACE_OS::strcat (high_thread_args, args1);
   Cubit_Task *high_priority_task;
 
   ACE_NEW_RETURN (high_priority_task,
-                  Cubit_Task (high_thread_args,
+                  Cubit_Task (high_argv.buf (),
                               "internet",
                               1,
                               ts,
@@ -635,34 +622,30 @@ Server::start_servants (ACE_Thread_Manager *serv_thr_mgr,
               priority));
 
   // Create the low priority servants.
+  ACE_ARGV *low_argv;
 
   for (i = number_of_low_priority_servants; i > 0; i--)
     {
       char *args;
 
-      ACE_NEW_RETURN (args,
-                      char [ACE_DEFAULT_ARGV_BUFSIZ],
+      ACE_OS::sprintf (orbport,
+                      "-ORBport %d",
+                       (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i);
+
+      char *low_second_argv[] = {orbport,
+                                 orbhost,
+                                 "-ORBobjrefstyle URL ",
+                                 "-ORBsndsock 32768 ",
+                                 "-ORBrcvsock 32768 ",
+                                 0};
+
+      ACE_NEW_RETURN (low_argv,
+                      ACE_ARGV (this->argv_,low_second_argv),
                       -1);
-      ACE_OS::sprintf (args,
-                       "-ORBport %d "
-                       "-ORBhost %s "
-                       "-ORBobjrefstyle URL "
-                       "-ORBsndsock 32768 "
-                       "-ORBrcvsock 32768 ",
-                       (GLOBALS::instance ()->base_port == 0) ? (int) 0 :GLOBALS::instance ()->base_port+i,
-                       GLOBALS::instance ()->hostname);
 
-      int args_len = ACE_OS::strlen (args);
-      char *new_args;
-      
-      ACE_NEW_RETURN  (new_args,
-                       char [arg_len + args_len +1],
-                       -1);
-
-      ACE_OS::strcat (new_args,args);
 
       ACE_NEW_RETURN (low_priority_task [i - 1],
-                      Cubit_Task (new_args,
+                      Cubit_Task (low_argv->buf (),
 				  "internet",
 				  1,
 				  ts,
