@@ -35,10 +35,11 @@ namespace TAO
   template<>
   class TAO_Export SArg_Traits<void>
   {
-    public:
-    typedef void        ret_type;
+  public:
 
+    typedef void        ret_type;
     typedef Argument    ret_val;
+
   };
 
   /**
@@ -101,7 +102,8 @@ namespace TAO
     : public Basic_SArg_Traits_T<CORBA::LongDouble>
   {
   };
-};
+
+}
 
 #include /**/ "ace/post.h"
 
