@@ -1,3 +1,18 @@
+Sat Jun 17 17:24:47 2000  Luther J Baker  <luther@cs.wustl.edu>
+
+	* pace/sys/mman.h:
+	* pace/sys/socket.h:	
+	* pace/sys/stat.h:
+	* pace/sys/termios.h:
+	* pace/sys/times.h:
+	* pace/sys/types.h:
+	* pace/sys/utsname.h:	
+	* pace/netinet/in.h:
+	* pace/arpa/inet.h:
+
+	  Altered these "root" files to include the correct
+	  subdirectory/file.
+
 Sat Jun 17 16:46:39 2000  Luther J Baker  <luther@cs.wustl.edu>
 
 	* pace/aio.h:

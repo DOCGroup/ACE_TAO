@@ -6,41 +6,22 @@
  *    pace
  *
  * = FILENAME
- *    in.h
+ *    pace/netinet/in.h
  *
  * = AUTHOR
  *    Luther Baker
  *
  * ============================================================================ */
 
-
 #ifndef PACE_NETINET_IN_H
 #define PACE_NETINET_IN_H
 
-
-#include "pace/defines.h"
-#include "pace/sys/types.h"
-
-
-# if defined (PACE_HAS_CPLUSPLUS)
-extern "C" {
-# endif /* PACE_HAS_CPLUSPLUS */
-
-  PACE_INLINE PACE_UINT32 pace_htonl (PACE_UINT32 hostlong);
-
-  PACE_INLINE PACE_UINT16 pace_htons (PACE_UINT16 hostshort);
-
-  PACE_INLINE PACE_UINT32 pace_ntohl (PACE_UINT32 netlong);
-
-  PACE_INLINE PACE_UINT16 pace_ntohs (PACE_UINT16 netshort);
-
-# if defined (PACE_HAS_CPLUSPLUS)
-}
-# endif /* PACE_HAS_CPLUSPLUS */
-
-# if defined (PACE_HAS_INLINE)
-# include "in.inl"
-# endif /* PACE_HAS_INLINE */
-
+#if defined (PACE_HAS_POSIX)
+# include "posix/in.h"
+#elif defined (PACE_VXWORKS)
+# include "vxworks/in.h"
+#elif defined (PACE_WIN32)
+# include "win32/in.h"
+#endif
 
 #endif /* PACE_NETINET_IN_H */
