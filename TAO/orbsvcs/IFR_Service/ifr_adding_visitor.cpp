@@ -4092,8 +4092,8 @@ ifr_adding_visitor::visit_all_emits (AST_Component *node,
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
       this->expand_id (str, local_name);
-      new_def = c->create_emits (local_name,
-                                 str.fast_rep (),
+      new_def = c->create_emits (str.fast_rep (),
+                                 local_name,
                                  tmp->impl->version (),
                                  event_type.in ()
                                  ACE_ENV_ARG_PARAMETER);
@@ -4131,8 +4131,8 @@ ifr_adding_visitor::visit_all_publishes (AST_Component *node,
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
       this->expand_id (str, local_name);
-      new_def = c->create_publishes (local_name,
-                                     str.fast_rep (),
+      new_def = c->create_publishes (str.fast_rep (),
+                                     local_name,
                                      tmp->impl->version (),
                                      event_type.in ()
                                      ACE_ENV_ARG_PARAMETER);
@@ -4170,8 +4170,8 @@ ifr_adding_visitor::visit_all_consumes (AST_Component *node,
       ACE_CString str (node->repoID ());
       local_name = tmp->id->get_string ();
       this->expand_id (str, local_name);
-      new_def = c->create_consumes (local_name,
-                                    str.fast_rep (),
+      new_def = c->create_consumes (str.fast_rep (),
+                                    local_name,
                                     tmp->impl->version (),
                                     event_type.in ()
                                     ACE_ENV_ARG_PARAMETER);

@@ -73,7 +73,10 @@ private:
                  ACE_ENV_ARG_DECL);
 
   int event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &,
-                       CORBA::ULong
+                       CORBA::ULong seq_length,
+                       const char *port_type,
+                       const char **names,
+                       const char **ids
                        ACE_ENV_ARG_DECL);
 
 private:
