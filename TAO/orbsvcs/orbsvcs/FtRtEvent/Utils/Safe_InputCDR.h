@@ -26,7 +26,7 @@ public:
    * of the buffer.
    */
   Safe_InputCDR(const char* buf, int size);
-};
+}
 
 #if defined(__ACE_INLINE__)
 #include "Safe_InputCDR.inl"
