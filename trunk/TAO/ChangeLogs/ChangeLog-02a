@@ -1,3 +1,14 @@
+Fri Mar 15 07:50:23 2002  Chad Elliott  <elliott_c@ociweb.com>
+
+       Committing this change for Yan Dai <dai_y@ociweb.com>.
+
+       * tao/SmartProxies/Smart_Proxies.cpp:
+
+         Declared an integer to please the VisualAge5.0.2.2 compiler,
+         otherwise this error message is displayed.
+
+         "ld: 0711-244 ERROR: No csects or exported symbols have been saved."
+
 Fri Mar 15 07:15:28 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * orbsvcs/orbsvcs/CosNaming.dsp:
