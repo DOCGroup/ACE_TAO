@@ -34,6 +34,11 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
   if (this->infile_ == NULL)
     return -1;
 
+  ACE_stat statbuf;
+  if (ACE_OS::stat (name, &statbuf) < 0)
+    return -1;
+
+  this->size_ = statbuf.st_size;
   this->filename_ = ACE::strnew (name);
   return 0;
 }
@@ -41,9 +46,10 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
 int
 ACEXML_FileCharStream::available (void)
 {
-  // @@ how?
-
-  return -1;
+  long curr;
+  if ((curr = ACE_OS::ftell (this->infile_)) < 0)
+    return -1;
+  return (this->size_ - curr);
 }
 
 int
@@ -53,6 +59,7 @@ ACEXML_FileCharStream::close (void)
   this->filename_ = 0;
   ACE_OS::fclose (this->infile_);
   this->infile_ = NULL;
+  this->size_ = 0;
   return 0;
 }
 

@@ -5509,9 +5509,9 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
                     int optlen)
 {
   ACE_OS_TRACE ("ACE_OS::setsockopt");
-  
+
   #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) && defined(SO_REUSEPORT)
-  // To work around an inconsistency with Microsofts implementation of 
+  // To work around an inconsistency with Microsofts implementation of
   // sockets, we will check for SO_REUSEADDR, and ignore it. Winsock
   // always behaves as if SO_REUSEADDR=1. Some implementations have the
   // same behaviour as Winsock, but use a new name for it. SO_REUSEPORT.
@@ -5522,7 +5522,7 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
   if (level == SOL_SOCKET) {
     if (optname == SO_REUSEADDR) {
       return 0; // Not supported by Winsock
-    } 
+    }
     if (optname == SO_REUSEPORT) {
       optname = SO_REUSEADDR;
     }
@@ -10134,6 +10134,24 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
 # endif   /* ACE_WIN32 */
   ACE_OSCALL_RETURN (::fseek (fp, offset, whence), int, -1);
 #endif /* ACE_HAS_PACE */
+}
+
+ACE_INLINE long
+ACE_OS::ftell (FILE* fp)
+{
+  ACE_OSCALL_RETURN (::ftell (fp), long, -1);
+}
+
+ACE_INLINE int
+ACE_OS::fgetpos (FILE* fp, fpos_t* pos)
+{
+  ACE_OSCALL_RETURN (::fgetpos (fp, pos), int, -1);
+}
+
+ACE_INLINE int
+ACE_OS::fsetpos (FILE* fp, fpos_t* pos)
+{
+  ACE_OSCALL_RETURN (::fsetpos (fp, pos), int, -1);
 }
 
 ACE_INLINE pid_t

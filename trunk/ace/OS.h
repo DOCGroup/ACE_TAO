@@ -4778,6 +4778,9 @@ public:
   static int fseek (FILE *fp,
                     long offset,
                     int ptrname);
+  static long ftell (FILE* fp);
+  static int  fgetpos (FILE* fp, fpos_t* pos);
+  static int  fsetpos (FILE* fp, fpos_t* pos);
   static int fstat (ACE_HANDLE,
                     ACE_stat *);
   static int lstat (const char *,
