@@ -12,8 +12,8 @@
 //    This example tests the ACE Future.
 //
 // = AUTHOR
-//    Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt
-//    <schmidt@cs.wustl.edu> 
+//    Andres Kruse <Andres.Kruse@cern.ch>, Douglas C. Schmidt
+//    <schmidt@cs.wustl.edu> and Per Andersson <pera@ipso.se>
 // 
 // ============================================================================
 
@@ -92,10 +92,10 @@ Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
 				        u_long new_param, 
 				        int new_count, 
 					ACE_Future<u_long> &new_result)
-  :   scheduler_ (new_Scheduler),
-      param_ (new_param),
-      count_ (new_count),
-      future_result_ (new_result)
+  : scheduler_ (new_Scheduler),
+    param_ (new_param),
+    count_ (new_count),
+    future_result_ (new_result)
 { 
   ACE_DEBUG ((LM_DEBUG,
 	      "(%t) Method_Object_work created\n"));
@@ -103,14 +103,17 @@ Method_Object_work::Method_Object_work (Scheduler* new_Scheduler,
 
 Method_Object_work::~Method_Object_work (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Method_Object_work will be deleted.\n"));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Method_Object_work will be deleted.\n"));
 }
 
 
 int
 Method_Object_work::call (void)
 {
-  return this->future_result_.set (this->scheduler_->work_i (this->param_, this->count_));
+  return this->future_result_.set 
+    (this->scheduler_->work_i (this->param_, 
+			       this->count_));
 }
 
 class Method_Object_name : public ACE_Method_Object
@@ -118,7 +121,8 @@ class Method_Object_name : public ACE_Method_Object
   //     Reification of the <name> method.
 {
 public:
-  Method_Object_name (Scheduler *, ACE_Future<const char*> &);
+  Method_Object_name (Scheduler *, 
+		      ACE_Future<const char*> &);
   virtual ~Method_Object_name (void);
   virtual int call (void);
 
@@ -153,27 +157,36 @@ class Method_Object_end : public ACE_Method_Object
   //     Reification of the <end> method.
 {
 public:
-  Method_Object_end (Scheduler *new_Scheduler): scheduler_ (new_Scheduler) {}
+  Method_Object_end (Scheduler *new_Scheduler)
+    : scheduler_ (new_Scheduler) {}
   virtual ~Method_Object_end (void) {}
-  virtual int call (void) { this->scheduler_->close (); return -1; }
+  virtual int call (void) { 
+    this->scheduler_->close (); 
+    return -1; 
+  }
 
 private:
   Scheduler *scheduler_;
 };
 
 // constructor
-Scheduler::Scheduler (const char *newname, Scheduler *new_Scheduler)
+Scheduler::Scheduler (const char *newname, 
+		      Scheduler *new_Scheduler)
 {
   ACE_NEW (this->name_, char[ACE_OS::strlen (newname) + 1]);
   ACE_OS::strcpy ((char *) this->name_, newname);
   this->scheduler_ = new_Scheduler;
-  ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s created\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Scheduler %s created\n", 
+	      this->name_));
 }
 
 // Destructor
 Scheduler::~Scheduler (void)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s will be destroyed\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Scheduler %s will be destroyed\n", 
+	      this->name_));
   delete[] this->name_;
 }
 
@@ -182,7 +195,10 @@ int
 Scheduler::open (void *)
 {
   task_count++;
-  ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s open\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Scheduler %s open\n", 
+	      this->name_));
+  // Become an Active Object.
   return this->activate (THR_BOUND);
 }
 
@@ -190,7 +206,9 @@ Scheduler::open (void *)
 int 
 Scheduler::close (u_long)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) Scheduler %s close\n", this->name_));
+  ACE_DEBUG ((LM_DEBUG, 
+	      "(%t) Scheduler %s close\n", 
+	      this->name_));
   task_count--;
   return 0;
 }
@@ -269,7 +287,8 @@ Scheduler::work (u_long newparam, int newcount)
     ACE_Future<u_long> new_future;
 
     this->activation_queue_.enqueue
-      (new Method_Object_work (this, newparam, newcount, new_future));
+      (new Method_Object_work (this, newparam, 
+			       newcount, new_future));
     return new_future;
   }
 }
@@ -317,7 +336,8 @@ main (int, char *[])
 	ACE_Future<u_long> fresulta, fresultb, fresultc, fresultd, fresulte;
 	ACE_Future<const char*> fname;
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) going to do a non-blocking call\n"));
+	ACE_DEBUG ((LM_DEBUG, 
+		    "(%t) going to do a non-blocking call\n"));
 
 	fresulta = andres->work (9013);
 	fresultb = peter->work (9013);
@@ -327,9 +347,11 @@ main (int, char *[])
 
 	// see if the result is available...
 	if (fresulta.ready ())
-	  ACE_DEBUG ((LM_DEBUG, "(%t) wow.. work is ready.....\n"));
+	  ACE_DEBUG ((LM_DEBUG,
+		      "(%t) wow.. work is ready.....\n"));
 
-	ACE_DEBUG ((LM_DEBUG, "(%t) non-blocking call done... now blocking...\n"));
+	ACE_DEBUG ((LM_DEBUG,
+		    "(%t) non-blocking call done... now blocking...\n"));
 
 	// Save the result of fresulta.
 
@@ -390,7 +412,86 @@ main (int, char *[])
 	      (int) capsule_count,
 	      (int) methodobject_count));
 
-  ACE_DEBUG ((LM_DEBUG,"(%t) th' that's all folks!\n"));
+  {
+    // Check if set then get works, older versions of ACE_Future
+    // will lock forever (or until the timer expires), will use a small
+    // timer value to avoid blocking the process.
+   
+    ACE_Future<int> f1;
+    f1.set(100);
+   
+    ACE_Time_Value timeout(1);
+    int value = 0;
+
+    if (f1.get (value, &timeout) == 0 && value == 100)
+      ACE_DEBUG ((LM_DEBUG,
+		  "Ace_Future<T>::Set followed by Ace_Future<T>::Get works.\n"));
+    else
+      ACE_DEBUG ((LM_DEBUG,
+		  "ACE_Future<T>::Set followed by Ace_Future<T>::Get does "
+		  "not work, broken Ace_Future<> implementation.\n"));
+  }
+  {
+    ACE_DEBUG ((LM_DEBUG,
+		"Checking if Ace_Future<T>::operator= is implemented "
+		"incorrectly this might crash the program.\n"));
+
+    ACE_Future<int> f1;
+    {
+      ACE_Future<int> f2 (f1); // To ensure that a rep object is created
+    }
+    // Now it is one ACE_Future<int> referencing the rep instance
+      
+    ACE_DEBUG ((LM_DEBUG, "0.\n"));
+    //check that self assignment works
+    f1 = f1; 
+    // Is there any repesentation left, and if so what is the ref
+    // count older ACE_Future<> implementations have deleted the rep
+    // instance at this moment
+   
+    // The stuff below might crash the process if the op=
+    // implementation was bad
+    int value = 0;
+    ACE_Time_Value timeout (1);
+
+    f1.set (100);      
+    f1.get (value, &timeout);
+
+    ACE_DEBUG ((LM_DEBUG, "1.\n"));
+    { // Might delete the same data a couple of times  
+      ACE_Future<int> f2 (f1);
+      f1.set (100);      
+      f1.get (value, &timeout);
+    }
+
+    ACE_DEBUG ((LM_DEBUG, "2.\n"));
+    {   
+      ACE_Future<int> f2 (f1);
+      f1.set (100);      
+      f1.get (value, &timeout);
+    }
+
+    ACE_DEBUG ((LM_DEBUG, "3.\n"));
+    {  
+      ACE_Future<int> f2 (f1);
+      f1.set (100);      
+      f1.get (value, &timeout);
+    }
+    ACE_DEBUG ((LM_DEBUG, "4.\n"));
+    {  
+      ACE_Future<int> f2 (f1); 
+      f1.set (100);      
+      f1.get (value, &timeout);
+    }
+    ACE_DEBUG ((LM_DEBUG, "5.\n"));
+    {  
+      ACE_Future<int> f2 (90);
+      f2.get (value, &timeout);
+      f1.get (value, &timeout);
+    }
+  }
+  ACE_DEBUG ((LM_DEBUG, 
+	      "No it did not crash the program.\n"));
 
   ACE_OS::sleep (5);
 
