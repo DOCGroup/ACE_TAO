@@ -125,10 +125,8 @@ Concurrency_Service::init_naming_service(CORBA::Environment& _env)
   orb = this->orb_manager_.orb();
   child_poa = this->orb_manager_.child_poa();
   
-  ACE_DEBUG((LM_DEBUG, "****1\n"));
   int result = this->my_name_server_.init (orb.in(),
                                            child_poa.in());
-  ACE_DEBUG((LM_DEBUG, "****2\n"));
   if(result<0)
     return result;
   lockset_factory_ = this->my_concurrency_server_.GetLockSetFactory()->_this(_env);
