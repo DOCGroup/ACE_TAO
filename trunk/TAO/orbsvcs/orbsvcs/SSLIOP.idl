@@ -1,27 +1,50 @@
-// -*- C++ -*-
+// -*- IDL -*-
+//
 // $Id$
 
-//File: SSLIOP.idl
-//Part of the Security Service
+// File: SSLIOP.idl
+// Part of the Security Service with additions from the Firewall
+// specification.
 
 #ifndef _SSLIOP_IDL
 #define _SSLIOP_IDL
 
 #include <tao/IOP.pidl>
 #include <Security.idl>
+// #include <Firewall.idl>
 
 #pragma prefix "omg.org"
 
 module SSLIOP {
 
-    // Security mechanism SSL
-    const IOP::ComponentId        TAG_SSL_SEC_TRANS = 20;
+  // Security mechanism SSL
+  const IOP::ComponentId        TAG_SSL_SEC_TRANS = 20;
 
-    struct SSL {
-        Security::AssociationOptions    target_supports;
-        Security::AssociationOptions    target_requires;
-        unsigned short        port;
-    };
+  struct SSL {
+    Security::AssociationOptions    target_supports;
+    Security::AssociationOptions    target_requires;
+    unsigned short        port;
+  };
+
+  // const Firewall::IdTag TAG_ID_SSL_CERT = xx;  // OMG allocated
+
+  typedef sequence<octet> ASN_1_Cert;
+  // A DER encoded X.509 certificate.
+
+  typedef sequence<ASN_1_Cert> SSL_Cert;
+  // A chain of DER encoded X.509 certificates.  The chain is actually
+  // a sequence, according CORBA CDR encapsulation rules.
+  // The sender's certificate is first, followed by any Certificate
+  // Authority certificates proceeding sequentially upward.
+
+  local interface Current : CORBA::Current {
+
+    SSL_Cert get_peer_certificate_chain ();
+    // Return the certificate chain associated with the current
+    // execution context.
+
+  };
+
 };
 
 #pragma prefix ""

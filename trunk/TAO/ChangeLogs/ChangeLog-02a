@@ -1,3 +1,24 @@
+Wed Nov 15 21:52:10 2000  Ossama Othman  <ossama@uci.edu>
+
+	* tao/ORB_Table.cpp (bind):
+
+	  Made this method exception safe by storing the duplicated ID in
+	  a CORBA::String_var until it safe to transfer ownership to the
+	  ORB table.
+
+	* orbsvcs/orbsvcs/SSLIOP.idl:
+
+	  Added ASN.1 (DER) certificate typedefs.  These typedefs are
+	  defined by the Firewall specification.  They are used by the
+	  soon to be added SSLIOP::Current object to return the peer
+	  certificate chain for the current SSL session as an octet
+	  sequence.
+
+	  Added new TAO-specific SSLIOP::Current interface definition.
+	  This interface can be used to obtain SSL session related
+	  information about the current execution context.  Its
+	  implementation will soon be added.
+
 Wed Nov 15 21:35:17 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  This set of changes have been motivated by the CORBA 2.4
