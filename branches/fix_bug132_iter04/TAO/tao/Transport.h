@@ -643,8 +643,7 @@ private:
 
   /// Send a synchronous message, i.e. block until the message is on
   /// the wire
-  int send_synchronous_message_i (TAO_Stub *stub,
-                                  const ACE_Message_Block *message_block,
+  int send_synchronous_message_i (const ACE_Message_Block *message_block,
                                   ACE_Time_Value *max_wait_time);
 
   /// Prohibited
@@ -696,6 +695,10 @@ protected:
   /// Implement the outgoing data queue
   TAO_Queued_Message *head_;
   TAO_Queued_Message *tail_;
+
+  /// The queue will start draining no later than <queing_deadline_>
+  /// *if* the deadline is 
+  ACE_Time_Value current_deadline_;
 
   /// Lock that insures that activities that *might* use handler-related
   /// resources (such as a connection handler) get serialized.
