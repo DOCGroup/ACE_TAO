@@ -1,16 +1,34 @@
+Tue Apr 06 18:51:22 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/default_server.cpp (parse_args): Removed parsing for
+	  POAManager lock since it is no longer supported.
+
+	* tao/Object_Adapter.cpp: Added missing template instantiations
+	  for ACE_Hash_Map_Manager_Ex_Adapter and ACE_Map_Manager_Adapter.
+	  Thanks to Carlos for pointing this out.
+
+	* tao/POA.cpp (create_object_key and parse_key): Fixed the use of
+	  ACE_NTOHL and ACE_HTONL.  Thanks to David for helping here.
+
+	* tao/POA (Current): The object id information in the POA Current
+	  was broken since it kept the system id instead of the user
+	  id. The fix was to modify the Active_Object_Map to always
+	  recover the user id. Thanks to Steve Totten
+	  <totten_s@ociweb.com> for pointing this out.
+
 Tue Apr  6 18:20:48 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
-	* tao/ORB.cpp (multicast_query ()): Used ACE_HTONS for the 
+	* tao/ORB.cpp (multicast_query ()): Used ACE_HTONS for the
  	  sent data length (CORBA::Short).
 
-	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input()): Used 
+	* orbsvcs/orbsvcs/IOR_Multicast.cpp (handle_input()): Used
 	  ACE_NTOHS on the received CORBA::Short.
-	  
+
 Tue Apr  6 17:55:48 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* examples/POA/NewPOA/NewPOA.cpp (main): 
-	* examples/POA/Loader/server.cpp: 
-	* examples/POA/Identity/Identity.cpp: 
+	* examples/POA/NewPOA/NewPOA.cpp (main):
+	* examples/POA/Loader/server.cpp:
+	* examples/POA/Identity/Identity.cpp:
 	* examples/POA/Generic_Servant/client.cpp: Changed ACE_TRY_NEW_ENV
 	  as ACE_TRY with appropriate declaration
 
