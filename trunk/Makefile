@@ -121,6 +121,7 @@ CHECK =
 
 #### The release target creates the ACE (only) kit.
 release: ACE-INSTALL
+	@$(ACE_ROOT)/bin/generate_man_pages
 	@$(ACE_ROOT)/bin/make_release $(CHECK) -k ace -t $(REL) \
            -c "$(CONTROLLED_FILES)" -r "$(RELEASE_FILES)" \
            -l "$(RELEASE_LIB_FILES)"
