@@ -1,10 +1,73 @@
-Wed Oct 20 03:00:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+Fri Oct 22 01:58:18 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ch.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_cs.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_result.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_sh.cpp:
+	* TAO_IDL/be/be_visitor_argument/request_info_ss.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_interface/interceptors_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
+	* TAO_IDL/be/be_visitor_operation/interceptors_exceptlist.cpp:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_arglist.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_ch.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_cs.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_result.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_sh.h:
+	* TAO_IDL/be_include/be_visitor_argument/request_info_ss.h:
+	* TAO_IDL/be_include/be_visitor_interface/interceptors_cs.h:
+	* TAO_IDL/be_include/be_visitor_interface/interceptors_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_arglist.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_ch.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_cs.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_exceptlist.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_info_rettype.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_result.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_sh.h:
+	* TAO_IDL/be_include/be_visitor_operation/interceptors_ss.h:
+
+	  Removed all remaining interceptor related visitors.  They are no
+	  longer needed.  Sweet!
+
+	* TAO_IDL/be/be_visitor_interface/upcall_command_ss.cpp:
+	* TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface/upcall_command_ss.h:
+	* TAO_IDL/be_include/be_visitor_operation/upcall_command_ss.h:
+
+	  New visitors that generate operation-specific concrete
+	  TAO::Upcall_Command classes.
+
+	* TAO_IDL/be/be_visitor_argument.cpp:
+	* TAO_IDL/be_include/be_visitor_argument.h:
+
+	  Removed remaining vestiges of the now non-existent interceptor
+	  related visitors.
+
+	* TAO_IDL/be/be_visitor_interface.cpp:
+	* TAO_IDL/be/be_visitor_operation.cpp:
+	* TAO_IDL/be/be_visitor_attribute/attribute.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+	* TAO_IDL/be_include/be_visitor_interface.h:
+	* TAO_IDL/be_include/be_visitor_operation.h:
+
+	  Likewise.
+
+	  Added support for new TAO::Upcall_Command concrete class
+	  generation visitors.
 
 	* TAO_IDL/be_include/be_codegen.h:
 
 	  Added new "gen_skel_arg_file_includes()" method that is
 	  responsible for generated "TAO::SArgument" related header
 	  include directives.
+
+	  Removed remaining vestiges of the now non-existent interceptor
+	  related visitors.
+
+	  Added new enumerator to the CG_STATE enumeration corresponding
+	  to the new Upcall_Command generation visitor.
 
 	* TAO_IDL/be/be_codegen.cpp (gen_skel_src_includes):
 
@@ -14,13 +77,9 @@ Wed Oct 20 03:00:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  Generate include directives for "TAO::SArgument" related
 	  headers.
 
-	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/interceptors_ss.cpp:
-
-	  Made "tk_void_any" variable passed to
-	  TAO::RequestInfo_Util::make_any() call in generated
-	  stub/skeleton a static constant.  There is no reason for it to
-	  be otherwise.
+	  Include "tao/PortableServer/Upcall_{Command,Wrapper}.h" headers
+	  to pull in the corresponding class declarations.  The generated
+	  skeleton creates instances of these classes.
 
 	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
 
@@ -47,7 +106,7 @@ Wed Oct 20 03:00:34 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	* TAO_IDL/be_include/be_visitor_operation/exceptlist_ss.h:
 
 	  New visitor that generates user exception TypeCode array for use
-	  by skeleton.  The generated array is lighterweight than the one
+	  by skeleton.  The generated array is lighter weight than the one
 	  generated for the stubs.
 
 	* tao/Argument.h:

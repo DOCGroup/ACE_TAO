@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
-      *os << "static CORBA::TypeCode_ptr * _tao_exceptions[] = " << be_idt_nl;
+      *os << "static CORBA::TypeCode_ptr const * const _tao_exceptions[] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
       // Initialize an iterator to iterate thru the exception list.
@@ -58,13 +58,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
         {
           be_exception * ex = be_exception::narrow_from_decl (ei.item ());
 
-          // @@ Is the value of the (global and static) TypeCode_ptr
-          //    well defined yet?  Probably not.  Add a level of
-          //    indirection by taking the address of the TypeCode_Ptr
-          //    instead, i.e. we'll have an array of "TypeCode_ptr *"
-          //    instead of "TypeCode_ptr".
-
-          *os << "&" << ex->tc_name ();
+          *os << ex->tc_name ();
 
           ei.next ();
 
@@ -80,7 +74,8 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
     }
   else
     {
-      *os << "static CORBA::TypeCode_ptr ** const _tao_exceptions = 0;" << be_nl
+      *os << "static CORBA::TypeCode_ptr const _tao_exceptions[] = {};"
+          << be_nl
           << "static size_t const _tao_nexceptions = 0;";
     }
 
