@@ -1,3 +1,19 @@
+Thu Jun 24 15:17:45 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* DnC/Config_Handlers/Config_Handlers.mpc
+	* DnC/Config_Handlers/DnC_Dump.cpp
+	* DnC/Config_Handlers/DnC_Dump.h
+	* DnC/Config_Handlers/Process_Element.tpp
+	* DnC/Config_Handlers/Utils.cpp
+	* DnC/Config_Handlers/XercesString.cpp
+	* DnC/DomainApplicationManager/DomainApplicationManager.mpc
+	* DnC/DomainApplicationManager/DomainApplicationManager_Impl.cpp
+	* DnC/ExecutionManager/ExecutionManager.mpc
+	* DnC/NodeApplicationManager/NodeApplicationManager_Impl.cpp
+	* DnC/NodeManager/NodeDaemon.mpc
+	
+	  Checked in some changes to make DnC compile under VC6.
+
 Thu Jun 24 14:49:44 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
 
         * DnC/RepositoryManager/Repository_Manager.cpp:

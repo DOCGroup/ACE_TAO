@@ -134,7 +134,7 @@ namespace Config_Handler
   std::ostream&
   operator<< (std::ostream& o, XStr const& str)
   {
-    char* s (XMLString::transcode (str));
+    char* s = XMLString::transcode (str);
 
     o << s;
 

@@ -33,7 +33,7 @@ CIAO::Config_Handler::Utils::parse_string (DOMNodeIterator * iter)
 CORBA::Short
 CIAO::Config_Handler::Utils::parse_short (DOMNodeIterator * iter)
 {
-  char *temp (Config_Handler::Utils::parse_string (iter));
+  char *temp = Config_Handler::Utils::parse_string (iter);
   CORBA::Short ret_val = ACE_OS::atoi (temp);
   XMLString::release (&temp);
   return ret_val;
@@ -42,7 +42,7 @@ CIAO::Config_Handler::Utils::parse_short (DOMNodeIterator * iter)
 CORBA::ULong
 CIAO::Config_Handler::Utils::parse_ulong (DOMNodeIterator * iter)
 {
-  char *temp (Config_Handler::Utils::parse_string (iter));
+  char *temp = Config_Handler::Utils::parse_string (iter);
   CORBA::ULong ret_val = ACE_OS::strtoul (temp, 0, 10);
   XMLString::release (&temp);
   return ret_val;
@@ -51,7 +51,7 @@ CIAO::Config_Handler::Utils::parse_ulong (DOMNodeIterator * iter)
 CORBA::Long
 CIAO::Config_Handler::Utils::parse_long (DOMNodeIterator * iter)
 {
-  char *temp (Config_Handler::Utils::parse_string (iter));
+  char *temp = Config_Handler::Utils::parse_string (iter);
   CORBA::ULong ret_val = ACE_OS::strtol (temp, 0, 10);
   XMLString::release (&temp);
   return ret_val;
@@ -60,7 +60,7 @@ CIAO::Config_Handler::Utils::parse_long (DOMNodeIterator * iter)
 CORBA::Double
 CIAO::Config_Handler::Utils::parse_double (DOMNodeIterator * iter)
 {
-  char *temp (Config_Handler::Utils::parse_string (iter));
+  char *temp = Config_Handler::Utils::parse_string (iter);
   CORBA::Double ret_val = ACE_OS::strtod (temp, 0);
   XMLString::release (&temp);
   return ret_val;
@@ -249,7 +249,7 @@ CIAO::Config_Handler::Utils::parse_href_tag (XMLURL url, DOMDocument * doc)
     CIAO::Config_Handler::Utils::create_document (document_path);
   //auto_ptr<DOMDocument> cleanup_doc (href_doc);
 
-  DOMDocumentTraversal* traverse (href_doc);
+  DOMDocumentTraversal* traverse = href_doc;
   DOMNode* root = (href_doc->getDocumentElement ());
   unsigned long filter = DOMNodeFilter::SHOW_ELEMENT |
                          DOMNodeFilter::SHOW_TEXT;
