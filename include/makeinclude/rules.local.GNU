@@ -41,12 +41,12 @@ endif
 ifneq ($(mingw32),1)
 makefile_name.local:
 	@echo
-	@echo Makefile: $(shell pwd)/$(MAKEFILE)
+	@echo GNUmakefile: $(shell pwd)/$(MAKEFILE)
 	@echo
 else
 makefile_name.local:
 	@echo
-	@echo Makefile: $(call PWD)/$(MAKEFILE)
+	@echo GNUmakefile: $(call PWD)/$(MAKEFILE)
 	@echo
 endif
 
@@ -346,7 +346,7 @@ clean.local: makefile_name.local
 ifdef DO_CLEANUP
 	-$(RM) -r \
 	*.$(OBJEXT) *~ *.bak *.rpo *.sym lib*.*_pure_* \
-	Makefile.old core-r $(CLEANUP_DIRS) \
+	GNUmakefile.old core-r $(CLEANUP_DIRS) \
 	cxx_repository ptrepository ti_files \
 	gcctemp.c gcctemp so_locations *.ics \
 	templateregistry ir.out core.* $(CLEANUP_OBJS)
@@ -362,7 +362,7 @@ endif # DO_CLEANUP
 #       Dependency generation target
 #----------------------------------------------------------------------------
 
-MAKEFILE ?= Makefile
+MAKEFILE ?= GNUmakefile
 DEPENDENCY_FILE ?= $(MAKEFILE)
 
 TAO_ROOT ?= $(ACE_ROOT)/TAO
@@ -386,9 +386,9 @@ ORIGdepend.local: $(MAKEFILE)
 	@cat $(MAKEFILE).new >$(MAKEFILE)
 	@$(RM) $(MAKEFILE).new
 	@if	cmp -s $(MAKEFILE) $(MAKEFILE).old ;\
-	then	echo "Makefile dependencies unchanged." ;\
+	then	echo "GNUmakefile dependencies unchanged." ;\
 	else \
-		echo "Makefile dependencies updated." ;\
+		echo "GNUmakefile dependencies updated." ;\
 	fi ;\
 	$(RM) $(MAKEFILE).old ;
 
@@ -409,9 +409,9 @@ depend.local: $(MAKEFILE) idl_stubs.local
 	$(DEPGEN) -A $(DEPEND_CMD_ARGS) -e config.h -f $(DEPENDENCY_FILE) $(CPPFLAGS) \
 	-DMAKEDEPEND $(LSRC) $(SRC) $(PSRC)
 	@if cmp -s $(DEPENDENCY_FILE) $(DEPENDENCY_FILE).old ;\
-	then echo "Makefile dependencies unchanged." ;\
+	then echo "GNUmakefile dependencies unchanged." ;\
 	else \
-		echo "Makefile dependencies updated." ;\
+		echo "GNUmakefile dependencies updated." ;\
 	fi ;\
 	$(RM) $(DEPENDENCY_FILE).old ;
 
