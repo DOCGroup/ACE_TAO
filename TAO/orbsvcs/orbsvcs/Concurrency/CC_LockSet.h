@@ -36,6 +36,7 @@
 #define _CC_LOCKSET_H
 
 #include "ace/Synch.h"
+#include "ace/Token.h"
 #include "orbsvcs/CosConcurrencyControlS.h"
 
 #define NUMBER_OF_LOCK_MODES 5
@@ -45,7 +46,10 @@
 
 typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
 // Enummeration representing the lock modes. The incomming request is
-// always converted to this representation
+// always converted to this representation. There are two reasons for
+// this: Firstly the lock modes are ordered from weakest to strongest
+// in the internal representation, and secondly it is possible to
+// indicate a 'non-mode' (CC_EM)
 
 class TAO_ORBSVCS_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
   // = TITLE
@@ -99,27 +103,45 @@ private:
   // Initiatlizes the lock set array and acquires the initial
   // semaphore.
 
-  CORBA::Boolean weaker_held(CC_LockModeEnum mode);
-  // Checks if the lock set contains locked locks of weaker mode than
-  // mode
-
-  CORBA::Boolean compatible(CC_LockModeEnum mh, CC_LockModeEnum mr);
+  CORBA::Boolean compatible(CC_LockModeEnum mr);
   // Returns true if the held lock and the requested lock are compatible
+
+  // The _d functions below ensures atomical access the the state data
+  // for the lock set. The functions acquires a thread lock in order
+  // to insure consistency within the lock set. The return value
+  // typically indicates whether the current thread should be
+  // suspended or not (by locking the semaphore.
+
+  int lock_d(CC_LockModeEnum lm);
+  // Locks the access to the data and decides whether to lock or
+  // not. Returns 1 if the semaphore should be locked.
+
+  // int unlock_d(CosConcurrencyControl::lock_mode lm);
+  // This function is not necessary because we lock access to the data
+  // and unlocks the semaphore until an invalid lock mode is first on
+  // the queue. Thereafter we release the lock.
+
+  int try_lock_d(CC_LockModeEnum lm);
+  // Locks the access to the data and determines whether to return
+  // true or false. Returns 1 if true should be returned.
+
+  int change_mode_d(CC_LockModeEnum lm_held,
+                    CC_LockModeEnum lm_new);
+  // Locks access to the data and determines if the semaphore should
+  // be locked. Returns 1 if the semaphore should be locked.
+
+  int lock_held(CC_LockModeEnum lm);
+  // Locks access ti the data and checks whether the lock is held.
 
   int lock_[NUMBER_OF_LOCK_MODES];
   // An array of lock counters that counts how many locks of that type
   // that the lock set holds.
 
-  CC_LockModeEnum strongest_held_;
-  // The mode of the strongest lock held
-
-  ACE_Thread_Semaphore semaphore_;
+    ACE_Thread_Semaphore semaphore_;
+  //  ACE_Token semaphore_;
   // This is the semaphore for the lock set. The semaphore is used to
   // queue requests for locks in modes stronger than currently
   // possible to grant.
-
-  int waiting_calls_;
-  // The number of calls waiting on the saemaphore
 
   CosConcurrencyControl::LockSet_ptr related_lockset_;
   // If this lock set is related to another lock set, this is the
@@ -134,7 +156,11 @@ private:
   // Uses the internal enumeration as indices.
 
   //  ACE_Thread_Mutex mlock_;
-  // Mutex to ensure that race conditions does not occur
+  ACE_Thread_Mutex *mlock_;
+  // Lock to ensure that race conditions does not occur
+
+  ACE_Unbounded_Queue <CC_LockModeEnum> lock_queue_;
+  // Queue to hold the requested locks not yet granted.
 };
 
 #endif /* _CC_LOCKSET_H */
