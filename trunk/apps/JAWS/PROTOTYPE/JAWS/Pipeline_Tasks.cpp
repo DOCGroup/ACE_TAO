@@ -24,6 +24,8 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
   JAWS_Data_Block *db = ACE_dynamic_cast (JAWS_Data_Block *, mb);
 
+  db->io_handler ()->acquire ();
+
   int status = this->handle_put (db, tv);
 
   if (status != -1 && status != 2)
@@ -34,6 +36,8 @@ JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 
       db->io_handler ()->task (next);
     }
+
+  db->io_handler ()->release ();
 
   return status;
 }

@@ -369,7 +369,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
   if (result != ACE_Filecache_Handle::ACE_SUCCESS)
     {
-      this->handler_->transmit_file_error (result);
+      ioh->transmit_file_error (result);
       delete header_and_trailer;
       delete handle;
     }

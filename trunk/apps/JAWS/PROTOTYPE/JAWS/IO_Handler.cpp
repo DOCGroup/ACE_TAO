@@ -48,7 +48,8 @@ JAWS_IO_Handler::JAWS_IO_Handler (JAWS_IO_Handler_Factory *factory)
     mb_ (0),
     handle_ (ACE_INVALID_HANDLE),
     task_ (0),
-    factory_ (factory)
+    factory_ (factory),
+    count_ (0)
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
   , handler_ (0)
 #endif /* defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS) */
@@ -210,6 +211,27 @@ void
 JAWS_IO_Handler::idle (void)
 {
   this->status_ = IDLE;
+}
+
+void
+JAWS_IO_Handler::acquire (void)
+{
+  this->count_ = 1;
+}
+
+void
+JAWS_IO_Handler::release (void)
+{
+  if (this->count_ == 0)
+    this->done ();
+  else
+    this->count_ = 0;
+}
+
+int
+JAWS_IO_Handler::count (void)
+{
+  return this->count_;
 }
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
