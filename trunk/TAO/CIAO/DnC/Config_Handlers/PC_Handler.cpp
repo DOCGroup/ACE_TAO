@@ -23,6 +23,7 @@ BEGIN_DEPLOYMENT_NAMESPACE
 void PC_Handler::process_PackageConfiguration(::Deployment::PackageConfiguration &pc)
 {
   this->iter_->nextNode();
+
   for (DOMNode* node = this->iter_->nextNode();
        node != 0;
        node = this->iter_->nextNode())

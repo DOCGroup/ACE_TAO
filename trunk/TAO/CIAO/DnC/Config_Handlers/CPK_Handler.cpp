@@ -18,6 +18,8 @@ process_CCMComponentPortKind (DOMNodeIterator * iter,
   XStr event_publisher ("EventPublisher");
   XStr event_consumer ("EventConsumer");
 
+
+
   XStr kind_str = XStr (Utils::parse_string (iter));
   ACE_DEBUG ((LM_DEBUG, " Kind Name is %s \n", XMLString::transcode
 (kind_str)));
