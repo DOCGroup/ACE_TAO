@@ -287,12 +287,12 @@ startLaunch (const Deployment::Properties & configProperty,
    *  5. get the provided connection endpoints back and return them.
    */
 
-  Deployment::ImplementationInfos infos;
+  Deployment::NodeImplementationInfo node_info;
 
-  if (!(infos << (this->plan_)))
+  if (!(node_info << (this->plan_)))
   {
     if (CIAO::debug_level () > 1)
-      ACE_DEBUG ((LM_DEBUG, "Failed to create Component Implementation Infos!\n"));
+      ACE_DEBUG ((LM_DEBUG, "Failed to create Node Implementation Infos!\n"));
 
     ACE_THROW_RETURN (Deployment::StartError (),
                       Deployment::Application::_nil());
@@ -311,6 +311,8 @@ startLaunch (const Deployment::Properties & configProperty,
   // For debugging.
   if (true) //(CIAO::debug_level () > 1)
   {
+    Deployment::ComponentImplementationInfos infos = node_info[0].impl_infos;
+
     const CORBA::ULong info_len = infos.length ();
     for (CORBA::ULong i = 0; i < info_len; ++i)
     {
@@ -324,7 +326,7 @@ startLaunch (const Deployment::Properties & configProperty,
   }
 
   // This will install all homes and components.
-  comp_info = this->nodeapp_->install (infos ACE_ENV_ARG_PARAMETER);
+  comp_info = this->nodeapp_->install (node_info ACE_ENV_ARG_PARAMETER);
 
   ACE_CHECK_RETURN (Deployment::Application::_nil());
 
@@ -356,8 +358,8 @@ void
 CIAO::NodeApplicationManager_Impl::
 destroyApplication (Deployment::Application_ptr app
                     ACE_ENV_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException
-                   , Deployment::StopError))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Deployment::StopError))
 {
   ACE_UNUSED_ARG (app);
 
@@ -369,4 +371,6 @@ destroyApplication (Deployment::Application_ptr app
 
   this->nodeapp_->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
+
+  return;
 }
