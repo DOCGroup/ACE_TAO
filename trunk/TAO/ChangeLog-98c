@@ -1,7 +1,7 @@
 Thu Sep 03 18:57:47 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * orbsvcs/tests/start_services: removed -ORBobjrefstyle url
-          from Naming_Service startup.  It caused interoperability problem
+          from Naming_Service startup.  It caused interoperability problems
           with VisiBroker java when running Simulator/DOVEBrowser.
 
 Thu Sep  3 16:22:54 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
