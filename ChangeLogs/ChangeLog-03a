@@ -1,3 +1,8 @@
+Fri Aug 17 09:30:34 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* gperf/apps/tests/Makefile: Fixed the problem that was causing
+	  the builds to fail.
+
 Fri Aug 17 08:07:12 2001  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/Map_T.(h i): made the return value of
