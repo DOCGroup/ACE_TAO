@@ -374,11 +374,11 @@ be_visitor_sequence_cdr_op_cs::visit_predefined_type (
         case TAO_CodeGen::TAO_CDR_OUTPUT:
           {
             *os << "{" << be_idt_nl
-                << "TAO_Unbounded_Sequence<CORBA::Octet> *oseq = " << be_nl
-                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> ("
-                << "(" << sequence->name () << " *)&_tao_sequence);" << be_nl
-                << "if (oseq->mb ())" << be_idt_nl
-                << "return strm.write_octet_array_mb (oseq->mb ());"
+                << "TAO_Unbounded_Sequence<CORBA::Octet> *_tao_octet_seq = " << be_nl
+                << "  static_cast<TAO_Unbounded_Sequence<CORBA::Octet> *> "
+                << "(const_cast<" << sequence->name () << " *> (&_tao_sequence));" << be_nl
+                << "if (_tao_octet_seq->mb ())" << be_idt_nl
+                << "return strm.write_octet_array_mb (_tao_octet_seq->mb ());"
                 << be_uidt_nl
                 << "else" << be_idt_nl
                 << "return strm.write_octet_array ("
@@ -789,31 +789,8 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
                                 -1);
             }
 
-          *os << "_dup (\n";
-
-          // Even though the following arg is declared const in the
-          // function signature, MSVC++ 5.0 needs the const cast,
-          // and many other compilers just won't do it.
-          *os << "#if defined (_MSC_VER) && (_MSC_VER <= 1100)";
-
-          os->indent ();
-
-          *os << be_idt << be_idt_nl;
-          *os << "const_cast<const " << this->ctx_->node ()->name ()
-              << "> (_tao_sequence)[i]\n";
-          *os << "#else";
-
-          os->indent ();
-
-          *os << be_nl;
-          *os << "_tao_sequence[i]\n";
-          *os << "#endif /* defined (_MSC_VER) && (_MSC_VER <= 1100) */";
-
-          os->indent ();
-
-          *os << be_uidt_nl;
-          *os << ")" << be_uidt << be_uidt_nl;
-          *os << ");" << be_uidt_nl;
+          *os << "_dup (_tao_sequence[i])" << be_uidt_nl
+              << ");" << be_uidt_nl;
 
           if (bt->accept (&visitor) == -1)
             {
