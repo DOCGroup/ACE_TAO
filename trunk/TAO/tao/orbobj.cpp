@@ -443,11 +443,11 @@ CORBA_ORB::POA_init (int &argc,
 		     char **argv,
 		     const char *poa_identifier)
 {
-  // parse the arguments looking for options starting with -OA. After
+  // Parse the arguments looking for options starting with -OA. After
   // processing these options, move all these to the end of the argv
   // list and decrement argc appropriately.
 
-  TAO_ORB_Core *oc = TAO_ORB_Core_instance();
+  TAO_ORB_Core *oc = TAO_ORB_Core_instance ();
   CORBA::POA_ptr rp;
   CORBA::String_var id = poa_identifier;
   CORBA::String_var demux = CORBA::string_dup ("dynamic_hash"); // default, at least for now
