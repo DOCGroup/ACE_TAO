@@ -424,16 +424,21 @@ TAO_IIOP_Connector::open (TAO_ORB_Core *orb_core)
     new_connector_lock.release ();
 
 #if defined (TAO_USES_ROBUST_CONNECTION_MGMT)
+  
   return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
                                      this->cached_connect_strategy_,
                                      &this->null_activation_strategy_);
+
 #else /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
   return this->base_connector_.open (this->orb_core_->reactor (),
                                      &this->null_creation_strategy_,
                                      cached_connect_strategy,
                                      &this->null_activation_strategy_);
+
 #endif /* TAO_USES_ROBUST_CONNECTION_MGMT */
+
 }
 
 int
@@ -772,6 +777,7 @@ TAO_IIOP_Connector::object_key_delimiter (void) const
 int
 TAO_IIOP_Connector::init_tcp_properties (void)
 {
+
 #if (TAO_HAS_RT_CORBA == 1)
 
   // Connector protocol properties are obtained from ORB-level
@@ -783,7 +789,7 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   // overrides for protocol configuration because connection
   // lookup and caching are not done based on protocol
   // properties.
-
+  
   ACE_DECLARE_NEW_CORBA_ENV;
 
   // Check ORB-level override for tcp properties.
@@ -793,10 +799,10 @@ TAO_IIOP_Connector::init_tcp_properties (void)
   RTCORBA::TCPProtocolProperties_var tcp_properties =
     RTCORBA::TCPProtocolProperties::_nil ();
 
-    if (client_protocols != 0)
+  if (client_protocols != 0)
     {
       RTCORBA::ProtocolList & protocols = client_protocols->protocols_rep ();
-
+      
       for (CORBA::ULong j = 0; j < protocols.length (); ++j)
         if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
           {

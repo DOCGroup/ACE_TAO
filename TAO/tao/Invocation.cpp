@@ -163,25 +163,15 @@ TAO_GIOP_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
       this->is_selector_initialized_ = 1;
     }
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *timeout_policy =
-    this->stub_->relative_roundtrip_timeout ();
-
-  // Automatically release the policy
-  CORBA::Object_var auto_release = timeout_policy;
-
-  // If max_wait_time is not zero then this is not the first attempt
-  // to send the request, the timeout value includes *all* those
-  // attempts.
-  if (this->max_wait_time_ == 0
-      && timeout_policy != 0)
+  if (this->max_wait_time_ == 0)
     {
-      timeout_policy->set_time_value (this->max_wait_time_value_);
-      this->max_wait_time_ = &this->max_wait_time_value_;
+      int has_timeout;
+      this->orb_core_->call_timeout_hook (this->stub_,
+                                          has_timeout,
+                                          this->max_wait_time_value_);
+      if (has_timeout)
+        this->max_wait_time_ = &this->max_wait_time_value_;
     }
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
   ACE_Countdown_Time countdown (this->max_wait_time_);
 
@@ -971,19 +961,13 @@ TAO_GIOP_Oneway_Invocation (TAO_Stub *stub,
   : TAO_GIOP_Invocation (stub, operation, opname_len, orb_core),
     sync_scope_ (TAO::SYNC_WITH_TRANSPORT)
 {
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *ssp = stub->sync_scope ();
-
-  // Automatically release the policy
-  CORBA::Object_var auto_release = ssp;
-
-  if (ssp)
-    {
-      ssp->get_synchronization (this->sync_scope_);
-    }
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  int has_synchronization = 0;
+  int scope = 0;
+  this->orb_core_->call_sync_scope_hook (this->stub_,
+                                         has_synchronization,
+                                         scope);
+  
+  this->sync_scope_ = scope;
 }
 
 TAO_GIOP_Oneway_Invocation::~TAO_GIOP_Oneway_Invocation (void)

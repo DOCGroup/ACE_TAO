@@ -214,11 +214,7 @@ public:
   //   Object scope, then at the Current scope, then at the ORB scope,
   //   and, finally, ORB default values are checked.
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
-  TAO_RelativeRoundtripTimeoutPolicy *relative_roundtrip_timeout (void);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
+  CORBA::Policy *relative_roundtrip_timeout (void);
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -226,11 +222,7 @@ public:
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
-  TAO_Sync_Scope_Policy *sync_scope (void);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
+  CORBA::Policy *sync_scope (void);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
@@ -496,13 +488,13 @@ private:
   //   2. we can search for the servant/POA's status starting from
   //      the ORB's RootPOA.
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
+  #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   TAO_Policy_Manager_Impl *policies_;
   // The policy overrides in this object, if nil then use the default
   // policies.
 
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
+  #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
   CORBA::Short addressing_mode_;
   // The addressing mode

@@ -26,14 +26,10 @@ TAO_Messaging_PolicyFactory::create_policy (
   switch (type)
     {
 
-#if (TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1)
-
     case TAO_MESSAGING_RELATIVE_RT_TIMEOUT_POLICY_TYPE:
       return TAO_RelativeRoundtripTimeoutPolicy::create (
                value
                TAO_ENV_ARG_PARAMETER);
-
-#endif /* TAO_HAS_RELATIVE_ROUNDTRIP_TIMEOUT_POLICY == 1 */
 
 #if (TAO_HAS_CLIENT_PRIORITY_POLICY == 1)
 
@@ -43,13 +39,9 @@ TAO_Messaging_PolicyFactory::create_policy (
 
 #endif /* TAO_HAS_CLIENT_PRIORITY_POLICY == 1 */
 
-#if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
-
     case TAO_MESSAGING_SYNC_SCOPE_POLICY_TYPE:
       return TAO_Sync_Scope_Policy::create (value
                                             TAO_ENV_ARG_PARAMETER);
-
-#endif /* TAO_HAS_SYNC_SCOPE_POLICY == 1 */
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
