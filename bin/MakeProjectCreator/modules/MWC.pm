@@ -33,6 +33,7 @@ sub new {
                                       'AutomakeWorkspaceCreator',
                                       'BMakeWorkspaceCreator',
                                       'HTMLWorkspaceCreator',
+                                      'SLEWorkspaceCreator',
                                     ],
                      }, $class;
   return $self;
