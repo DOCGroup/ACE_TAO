@@ -10,7 +10,7 @@
    <xsd:sequence>
 	<xsd:element name="label" type="xsd:string" minOccurs="0"/>
     <xsd:element name="UUID" type="xsd:string" minOccurs="0"/>      
-	<xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription" />     
+    <xsd:element name="realizes" type="Deployment:ComponentInterfaceDescription" />     
     <xsd:element name="implementation" type="Deployment:MonolithicDeploymentDescription" />
     <xsd:element name="instance" type="Deployment:InstanceDeploymentDescription" minOccurs="0" maxOccurs="unbounded"/>
     <xsd:element name="connection" type="Deployment:PlanConnectionDescription" minOccurs="0" maxOccurs="unbounded"/>
