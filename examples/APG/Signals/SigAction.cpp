@@ -55,7 +55,7 @@ static void register_actions ()
 {
   ACE_TRACE (ACE_TEXT ("::register_actions"));
 
-  ACE_Sig_Action sa (my_sighandler);
+  ACE_Sig_Action sa (reinterpret_cast <ACE_SignalHandler> (my_sighandler));
 
   // Make sure we specify that SIGUSR1 will be masked out
   // during the signal handler's execution.
