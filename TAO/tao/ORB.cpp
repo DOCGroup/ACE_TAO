@@ -250,7 +250,11 @@ CORBA_ORB::perform_work (const ACE_Time_Value &tv)
 CORBA::Boolean
 CORBA_ORB::work_pending (void)
 {
+  // For the moment, there's always work to do...
+  return 1;
+#if 0
   return this->orb_core_->reactor ()->work_pending ();
+#endif 
 }
 
 #if !defined (TAO_HAS_MINIMUM_CORBA)
