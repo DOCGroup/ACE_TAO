@@ -206,7 +206,7 @@ ACE_HAS_UCONTEXT_T			Platform supports ucontext_t (which is used in the extended
 ACE_HAS_UNION_WAIT			The wait() system call takes a (union wait *) rather than int *
 ACE_HAS_UNIXWARE_SVR4_SIGNAL_T		Has inconsistent SVR4 signal stuff, but not the same as the other platforms
 ACE_HAS_UNICODE				Platform/compiler supports UNICODE
-ACE_HAS_UNICODE_ONLY                    Platform/compiler supports UNICODE _only_ (i.e., there's no char interface.)
+ACE_HAS_MOSTLY_UNICODE_APIS             Most APIs in platform/compiler supports UNICODE. (No char version available.)
 ACE_HAS_USING_KEYWORD			Compiler supports the new using keyword for C++ namespaces.
 ACE_HAS_VERBOSE_NOTSUP                  Prints out console message in ACE_NOTSUP.  Useful for tracking down origin of ACE_NOTSUP.
 ACE_HAS_VOIDPTR_MMAP			Platform requires void * for mmap().

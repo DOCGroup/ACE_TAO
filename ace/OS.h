@@ -295,12 +295,27 @@
 #define ACE_MAX_DGRAM_SIZE 8192
 #endif /* ACE_MAX_DGRAM_SIZE */
 
+// Because most WinCE APIs use wchar strings, many of ACE functions
+// must adapt to this change also.  For backward compatibility (most
+// platforms still use ASCII char APIs even if they support UNICODE,)
+// these new macros are introduced to avoid code bloating.
+//
+// ASYS stands for ACE SYSTEM something.
+
+#if defined (ACE_HAS_MOSTLY_UNICODE_APIS)
+#define ASYS_TCHAR wchar_t
+#define ASYS_TEXT(STRING)   L##STRING
+#else
+#define ASYS_TCHAR char
+#define ASYS_TEXT(STRING)   STRING
+#endif
+
 // Here are all ACE-specific global declarations needed throughout
 // ACE.
 
 // Helpful dump macros.
-#define ACE_BEGIN_DUMP "\n====\n(%P|%t|%x)"
-#define ACE_END_DUMP "====\n"
+#define ACE_BEGIN_DUMP ASYS_TEXT ("\n====\n(%P|%t|%x)")
+#define ACE_END_DUMP ASYS_TEXT ("====\n")
 
 // A free list which create more elements when there aren't enough
 // elements.
@@ -4130,10 +4145,17 @@ public:
   static char *asctime (const struct tm *tm);
   static char *asctime_r (const struct tm *tm,
                           char *buf, int buflen);
+#if !defined (ACE_HAS_WINCE)
   static char *ctime (const time_t *t);
   static char *ctime_r (const time_t *clock,
                         char *buf,
                         int buflen);
+#else
+  static wchar_t *ctime (const time_t *t);
+  static wchar_t *ctime_r (const time_t *clock,
+                           wchar_t *buf,
+                           int buflen);
+#endif /* !ACE_HAS_WINCE */
   static size_t strftime (char *s,
                           size_t maxsize,
                           const char *format,
@@ -4272,10 +4294,6 @@ public:
                           int mode,
                           int perms = 0,
                           LPSECURITY_ATTRIBUTES sa = 0);
-  static ACE_HANDLE shm_open (const char *filename,
-                              int mode,
-                              int perms = 0,
-                              LPSECURITY_ATTRIBUTES sa = 0);
   static int putmsg (ACE_HANDLE handle,
                      const struct strbuf *ctl,
                      const struct strbuf *data,
@@ -4339,9 +4357,15 @@ public:
                    const ACE_Time_Value &tv);
   static int pipe (ACE_HANDLE handles[]);
 
+  static ACE_HANDLE shm_open (const char *filename,
+                              int mode,
+                              int perms = 0,
+                              LPSECURITY_ATTRIBUTES sa = 0);
+  static int shm_unlink (const char *path);
+
   // = A set of wrappers for directory operations.
   static mode_t umask (mode_t cmask);
-#if !defined (ACE_HAS_UNICODE_ONLY)
+#if !defined (ACE_HAS_MOSTLY_UNICODE_APIS)
   static int chdir (const char *path);
   static int mkdir (const char *path,
                     mode_t mode = ACE_DEFAULT_DIR_PERMS);
@@ -4351,10 +4375,9 @@ public:
   static char *getcwd (char *,
                        size_t);
   static int unlink (const char *path);
-  static int shm_unlink (const char *path);
   static char *tempnam (const char *dir,
                         const char *pfx);
-#endif /* ACE_HAS_UNICODE_ONLY */
+#endif /* ACE_HAS_MOSTLY_UNICODE_APIS */
 
   // = A set of wrappers for random number operations.
   static int rand (void);
@@ -4923,6 +4946,13 @@ public:
   static int netdb_acquire (void);
   static int netdb_release (void);
 #endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
+
+#if defined (ACE_HAS_WINCE)
+private:
+  static const wchar_t *day_of_week_name[7];
+  static const wchar_t *month_name[12];
+  // Supporting data for ctime and ctime_r functions on WinCE.
+#endif /* ACE_HAS_WINCE */
 };
 
 #if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)

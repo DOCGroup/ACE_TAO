@@ -34,8 +34,8 @@
 #endif /* _MSC_VER */
 
 #if defined (ACE_USES_OLD_IOSTREAMS)
-#include <iostream.h>
-#include <fstream.h>
+#include /**/ <iostream.h>
+#include /**/ <fstream.h>
 #else
 #include /**/ <iomanip>
 #include /**/ <ios>
