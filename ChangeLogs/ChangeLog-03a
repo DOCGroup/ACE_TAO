@@ -1,3 +1,7 @@
+Sat Nov 23 18:03:41 2002  Steve Huston  <shuston@riverace.com>
+
+        * ace/String_Base.i (compare): Fix a size_t/int mismatch.
+
 Sat Nov 23 17:54:18 2002  Steve Huston  <shuston@riverace.com>
 
         * ace/POSIX_CB_Proactor.{h cpp}: Changes to align with recent
