@@ -702,7 +702,7 @@ TAO_GIOP::parse_header (TAO_InputCDR &cdr,
 
 CORBA::Boolean
 TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
-                                    CORBA::Environment &env)
+                                    CORBA::Environment &ACE_TRY_ENV)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_GIOP_LOCATE_REQUEST_HEADER_INIT_START);
 
@@ -710,7 +710,7 @@ TAO_GIOP_LocateRequestHeader::init (TAO_InputCDR &msg,
           && msg.decode (TC_opaque,
                          &this->object_key,
                          0,
-                         env));
+                         ACE_TRY_ENV));
 }
 
 CORBA::Boolean
