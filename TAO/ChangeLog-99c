@@ -1,3 +1,15 @@
+Mon May 10 12:47:29 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/driver/drv_preproc.cpp (DRV_cpp_init): TAO_IDL will try
+	  to figure out where MSVC is located if CPP_LOCATION is not
+	  defined.  It does this by checking if MSVCDir environment
+	  variable is defined.  Although this approach ties TAO_IDL closer
+	  to MSVC, it is probably the most widely used compiler on Win32
+	  platforms.  Therefore, I think it is not really a "bad taste."
+
+	  Thanks to Jonathan Biggar <jon@floorboard.com> for suggesting
+	  this.
+
 Mon May 10 11:43:04 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * COPYING:
