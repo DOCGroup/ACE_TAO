@@ -675,8 +675,7 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   // Send multicast info to the server.
   ssize_t n_bytes = multicast.send (mcast_info,
                                     sizeof (mcast_info));
-  // Close multicast socket now to recycle handle.
-  // @@ Fred,
+  // Close multicast socket now to recycle HANDLE.
   multicast.close ();
 
   if (TAO_debug_level > 0)
@@ -707,8 +706,10 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
 
   // Receive response message.
 
-  // @@ Why on earth are we allocating this memory dynamically?  It's
-  // a fixed size, so it should be passed in by the caller...
+  // @@ Fred, why on earth are we allocating this memory dynamically?
+  // It's a fixed size, so it should be passed in by the caller...  Or
+  // better yet, this method should just return the Object Reference,
+  // rather than having the caller do that...
   char *buf = new char[ACE_MAX_DGRAM_SIZE + 1]; // add char for '\0'
 
   n_bytes = response.recv (buf,
@@ -722,6 +723,8 @@ CORBA_ORB::multicast_query (TAO_Service_ID service_id,
   // Check for errors.
   if (n_bytes == -1 || retval == -1)
     {
+      // @@ Fred, this delete can be removed when you get rid of
+      // dynamic memory allocation.
       delete [] buf;
       if (TAO_debug_level > 0)
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -760,9 +763,9 @@ CORBA_ORB::multicast_to_service (TAO_Service_ID service_id,
   char *buf = this->multicast_query (service_id,
                                      port,
                                      timeout);
-  // @@ There's a memory leak here since buf was allocated dynamically
-  // and doesn't appear to be freed up.  It's a better idea to return
-  // an object reference here...
+  // @@ Fred, there's a memory leak here since buf was allocated
+  // dynamically and doesn't appear to be freed up.  It's a better
+  // idea to return an object reference here...
   if (buf)
     {
       // Convert ior to an object reference.

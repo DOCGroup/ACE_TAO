@@ -68,58 +68,60 @@ TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
 int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 {  
-  struct
-  {
-    u_short reply_port;
-    CORBA::Short service_id;
-  } mcast_info;
+  // mcast_info[0] == port.
+  // mcast_info[1] == service id.
+  ACE_UINT16 mcast_info[2];
 
   ACE_INET_Addr remote_addr;
-  ssize_t retcode =
-    this->mcast_dgram_.recv (&mcast_info,
+
+  ssize_t result =
+    // This call fills in the address of the sender.
+    this->mcast_dgram_.recv (mcast_info,
                              sizeof (mcast_info),
                              remote_addr);
-  if (retcode == -1)
+  if (result == -1)
     return -1;
 
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "(%P|%t) Received multicast.\n"));
 
-  // @@ validate data string received is from a valid client here
-  // @@ Probably not needed
+  // Validate data string received is from a valid client here.
 
-  if (retcode != sizeof (mcast_info))
+  if (result != sizeof (mcast_info))
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Reply to multicast not sent. Received %d bytes, expected %d.",
-                       retcode,
+                       result,
                        sizeof (mcast_info)),
                       -1);
 
   // Confirm that we were meant to respond to this request.
-  mcast_info.service_id = ntohs (mcast_info.service_id);
-  if (mcast_info.service_id == this->service_id_)
-    {
-      // Convert port number received to network byte order and set port
-      // number to reply;
-      mcast_info.reply_port = ntohs (mcast_info.reply_port);
-      remote_addr.set_port_number (mcast_info.reply_port);
+  mcast_info.service_id = ACE_NTOHS (mcast_info.service_id);
 
-      // send the object reference for the naming service
-      retcode = response_.send (this->ior_,
-                                ACE_OS::strlen (this->ior_) + 1,
-                                remote_addr,
-                                0);
+  if (mcast_info[1] == this->service_id_)
+    {
+      // Convert port number received to network byte order and set
+      // port number to reply.
+      ACE_ASSERT (mcast_info[0] == remote_addr.get_port_number ());
+
+      mcast_info[0] = ACE_NTOHS (mcast_info[0]);
+
+      // Send the object reference for the naming service
+      result = response_.send (this->ior_,
+                               ACE_OS::strlen (this->ior_),
+                               remote_addr,
+                               0);
       if (TAO_debug_level > 0)
 	ACE_DEBUG ((LM_DEBUG,
 		    "(%P|%t) ior_: <%s>\n"
-		    " sent through port %u.\n"
-		    "retcode=%d\n",
+		    " sent through port %u to host %s.\n"
+		    "result = %d\n",
 		    this->ior_,
 		    remote_addr.get_port_number (),
-		    retcode));
+		    remote_addr.get_host_name (),
+		    result));
 
-      if (retcode == -1)
+      if (result == -1)
         return -1;
     }
   else
