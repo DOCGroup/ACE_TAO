@@ -91,6 +91,17 @@ int run_main (int, ACE_TCHAR *[])
 	      ACE_TEXT ("Size: %d\n"),
 	      vector.size ()));
 
+  VECTOR v1;
+  VECTOR v2;
+  v1.push_back (1);
+  v2.push_back (1);
+  v1.push_back (2);
+  v2.push_back (2);
+  if (v1 != v2)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Inequality test failed!\n")));
+  if (!(v1 == v2))
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Equality test failed!\n")));
+
   ACE_END_TEST;
 
   return 0;
