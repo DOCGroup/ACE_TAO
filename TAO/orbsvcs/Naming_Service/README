@@ -12,7 +12,8 @@ To Run:
 ======
 
         % Naming_Service [-ORBport port] [-ORBobjrefstyle url]
-                         [-ORBnameserviceport nsport] [-s context_size]
+                         [-ORBnameserviceport nsport]
+                         [-s context_size] [-t time]
 
 Arguments:
 ==========
@@ -22,6 +23,7 @@ Arguments:
         creation of the root Naming Context (if one is created).
         (All contexts created under the root will use the same size
         for their hash tables).
+        time - how long the server should listen for requests before exiting.
 
 Environment Variables:
 =====================

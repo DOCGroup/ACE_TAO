@@ -1,5 +1,10 @@
 1998-10-11  Marina Igorevna Spivak  <marina@mambo.cs.wustl.edu>
 
+	* orbsvcs/Naming_Service/Naming_Service.{h, cpp}, README: Added a
+	command line option to specify how long a service should run
+	before shutting down.  This is useful for running purify,
+	quantify, or avoiding having explicitly kill the process.
+
 	* orbsvcs/orbsvcs/CosNaming_i.{h,cpp}:
 	Removed several memory allocations (in <get_context>, and
 	<resolve>).

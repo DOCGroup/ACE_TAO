@@ -68,6 +68,11 @@ private:
   // Service context (if one is created).  Note: all the contexts
   // created under the given context will use the same size for their
   // initial hash table allocations.
+
+  size_t time_;
+  // After how long the server should stop listening to requests (in
+  // seconds).
+
 };
 
 #endif /* TAO_NAMING_SERVICE_H */

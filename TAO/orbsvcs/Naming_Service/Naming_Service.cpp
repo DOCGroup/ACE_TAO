@@ -25,7 +25,8 @@ ACE_RCSID(Naming_Service, Naming_Service, "$Id$")
 TAO_Naming_Service::TAO_Naming_Service (void)
   : ior_output_file_ (0),
     pid_file_name_ (0),
-    context_size_ (ACE_DEFAULT_MAP_SIZE)
+    context_size_ (ACE_DEFAULT_MAP_SIZE),
+    time_ (0)
 {
 }
 
@@ -35,7 +36,8 @@ TAO_Naming_Service::TAO_Naming_Service (int argc,
                                         char* argv[])
   : ior_output_file_ (0),
     pid_file_name_ (0),
-    context_size_ (ACE_DEFAULT_MAP_SIZE)
+    context_size_ (ACE_DEFAULT_MAP_SIZE),
+    time_ (0)
 {
   this->init (argc, argv);
 }
@@ -44,9 +46,9 @@ int
 TAO_Naming_Service::parse_args (int argc,
                                 char *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, "do:p:s:");
+  ACE_Get_Opt get_opts (argc, argv, "do:p:s:t:");
   int c;
-  int size;
+  int size, time;
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -70,6 +72,11 @@ TAO_Naming_Service::parse_args (int argc,
         size = ACE_OS::atoi (get_opts.optarg);
         if (size >= 0)
           this->context_size_ = size;
+        break;
+      case 't':
+         time = ACE_OS::atoi (get_opts.optarg);
+        if (time >= 0)
+          this->time_ = time;
         break;
       case '?':
       default:
@@ -160,8 +167,13 @@ TAO_Naming_Service::init (int argc,
 int
 TAO_Naming_Service::run (CORBA_Environment& env)
 {
-  ACE_Time_Value * time_ = new ACE_Time_Value (180);
-  return this->orb_manager_.run (env, time_);
+  if (time_ == 0)
+      return this->orb_manager_.run (env);
+  else
+    {
+      ACE_Time_Value * t = new ACE_Time_Value (time_);
+      return this->orb_manager_.run (env, t);
+    }
 }
 
 // Destructor.
