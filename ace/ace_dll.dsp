@@ -1750,6 +1750,10 @@ SOURCE=.\Naming_Context.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Node.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Notification_Strategy.h
 # End Source File
 # Begin Source File
@@ -2331,6 +2335,10 @@ SOURCE=.\Typed_SV_Message_Queue.h
 # Begin Source File
 
 SOURCE=.\Unbounded_Queue.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Unbounded_Set.h
 # End Source File
 # Begin Source File
 
@@ -3242,6 +3250,10 @@ SOURCE=.\Typed_SV_Message_Queue.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Unbounded_Queue.inl
+# End Source File
+# Begin Source File
+
 SOURCE=.\UNIX_Addr.i
 # End Source File
 # Begin Source File
@@ -3420,6 +3432,11 @@ SOURCE=.\Module.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Node.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
 SOURCE=.\Obstack_T.cpp
 # PROP Exclude_From_Build 1
 # End Source File
@@ -3501,6 +3518,16 @@ SOURCE=.\Timer_Queue_T.cpp
 # Begin Source File
 
 SOURCE=.\Timer_Wheel_T.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Unbounded_Queue.cpp
+# PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\Unbounded_Set.cpp
 # PROP Exclude_From_Build 1
 # End Source File
 # End Group
