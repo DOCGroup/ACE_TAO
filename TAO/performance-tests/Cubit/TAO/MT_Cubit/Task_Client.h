@@ -203,6 +203,9 @@ public:
   // flag to indicate we are to run the utilization test of the server.
   // This means we are not sending requests at a determined frequency,
   // but rather "let it rip"!
+
+  u_int util_time_;
+  // the amount of time in seconds that the utilization test will run.
 };
 
 class Client : public ACE_Task<ACE_SYNCH>
