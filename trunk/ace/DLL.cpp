@@ -6,24 +6,31 @@
 
 ACE_RCSID(ace, DLL, "$Id$")
   
-// Implementation of the methods which provide an abstraction of
-// dynamically linked library.
+ACE_DLL::ACE_DLL (int close_on_destruction)
+  : handle_ (ACE_SHLIB_INVALID_HANDLE),
+    close_on_destruction_ (close_on_destruction)
+{
+}
 
-// If the library name and the opening mode are specified than on object
-// creation the library is implicitly opened.
+// If the library name and the opening mode are specified than on
+// object creation the library is implicitly opened.
   
 ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
-                  int mode)
-  :close_mode_ (0)
+                  int open_mode,
+                  int close_on_destruction)
+  : close_on_destruction_ (close_on_destruction)
 {
-  // If the library name is not given dont open the file.
-  if (dll_name !=0)
+  // If the library name is not given don't open the file.
+  if (dll_name != 0)
    {
-     this->handle_ = ACE_OS::dlopen (dll_name, mode);
+     this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
+
      // The ACE_SHLIB_HANDLE object is obtained.
+
      if (this->handle_ == 0)
        ACE_ERROR ((LM_ERROR,
-                   "%s\n", this->error ()));
+                   "%s\n",
+                   this->error ()));
    }
 }
 
@@ -33,8 +40,9 @@ ACE_DLL::ACE_DLL (ACE_DL_TYPE dll_name,
 
 ACE_DLL::~ACE_DLL (void)
 {
-  // CLose the library only if it hasnt been already.
-  if (this->close_mode_ == 0 && this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+  // CLose the library only if it hasn't been already.
+  if (this->close_on_destruction_ != 0 
+      && this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     this->close ();
 }
   
@@ -51,16 +59,17 @@ ACE_DLL::~ACE_DLL (void)
 
 int 
 ACE_DLL::open (ACE_DL_TYPE dll_name,
-               int mode)
+               int open_mode,
+               int close_on_destruction)
 {
-  // This check is necessary as the library could be opened
-  // more than once without closing it which would cause handle
-  // memory leaks.
-  if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-    this->close ();
+  // This check is necessary as the library could be opened more than
+  // once without closing it which would cause handle memory leaks.
+  this->close ();
+
+  this->close_on_destruction_ = close_on_destruction;
 
   // The ACE_SHLIB_HANDLE object is obtained.
-  this->handle_ = ACE_OS::dlopen (dll_name, mode);
+  this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
 
   if (this->handle_ == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -84,8 +93,8 @@ int
 ACE_DLL::close (void)
 {
   // The handle is checked to see whether the library is closed
-  // already.  If not, it is closed and the handle is made invalid which
-  // portrays that it is closed.
+  // already.  If not, it is closed and the handle is made invalid
+  // which portrays that it is closed.
   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
     {
       int retval = ACE_OS::dlclose (this->handle_);
@@ -104,19 +113,19 @@ ACE_DLL::error (void)
   return ACE_OS::dlerror();
 } 
 
-// Return the handle to the user either temporarily or forever,
-// thus orphaning it. If 0 means the user wants the handle forever
-// and if 1 means the user temporarily wants to take the handle.
+// Return the handle to the user either temporarily or forever, thus
+// orphaning it. If 0 means the user wants the handle forever and if 1
+// means the user temporarily wants to take the handle.
 
 ACE_SHLIB_HANDLE
-ACE_DLL::get_handle (int orphan_mode)
+ACE_DLL::get_handle (int become_owner)
 {
-  // Since the handle is getting orphaned we lose rights to close
-  // it on destruction. The new controller has to do it explicitly.
+  // Since the caller is becoming the owner of the handle we lose
+  // rights to close it on destruction. The new controller has to do
+  // it explicitly.
+  if (become_owner == 0)
+    this->close_on_destruction_ = 0;
 
-  if (orphan_mode == 0)
-    this->close_mode_ = 1;
-
-  // Return the handle as requested by the user.
+  // Return the handle requested by the user.
   return this->handle_;
 }
