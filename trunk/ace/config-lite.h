@@ -195,26 +195,30 @@
 #  define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-// =========================================================================
-// EXPLICIT macro
-// =========================================================================
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // =========================================================================
+  // EXPLICIT macro
+  // =========================================================================
 
-/**
- * @deprecated explicit is deprecated.  ACE requires C++
- *             "explicit" keyword support.
- */
-# define ACE_EXPLICIT explicit
+  /**
+   * @deprecated explicit is deprecated.  ACE requires C++
+   *             "explicit" keyword support.
+   */
+  # define ACE_EXPLICIT explicit
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
-// =========================================================================
-// MUTABLE macro
-// =========================================================================
+#if !defined (ACE_LACKS_DEPRECATED_MACROS)
+  // =========================================================================
+  // MUTABLE macro
+  // =========================================================================
 
-/**
- * @deprecated ACE_MUTABLE is deprecated.  ACE requires C++ "mutable"
- *             keyword support.
- */
-# define ACE_MUTABLE mutable
-# define ACE_CONST_WHEN_MUTABLE const
+  /**
+   * @deprecated ACE_MUTABLE is deprecated.  ACE requires C++ "mutable"
+   *             keyword support.
+   */
+  # define ACE_MUTABLE mutable
+  # define ACE_CONST_WHEN_MUTABLE const
+#endif /* ACE_LACKS_DEPRECATED_MACROS */
 
 // ============================================================================
 // EXPORT macros
