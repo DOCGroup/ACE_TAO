@@ -61,11 +61,11 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
                 i,
                 args.argv ()[i]));
 
-  if (ACE_Service_Config::open (args.argc (),
-                                args.argv (),
-                                ACE_DEFAULT_LOGGER_KEY,
-                                0) == -1 
-      && errno != ENOENT)
+  int result = ACE_Service_Config::open (args.argc (),
+                                         args.argv (),
+                                         ACE_DEFAULT_LOGGER_KEY,
+                                         0);
+  if (result != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),

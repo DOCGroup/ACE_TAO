@@ -1,3 +1,10 @@
+Sat Jul 27 16:20:19 2002  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/Service_Configurator/Misc/main.cpp (ACE_TMAIN): Changed
+	  the code to be more resilient against errors that occur during
+ 	  parsing of the svc.conf file.  Thanks to Denginere
+ 	  <denginere@hotmail.com> for motivating this change.
+
 Sat Jul 27 15:50:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACEXML/examples/svcconf/main.cpp:
