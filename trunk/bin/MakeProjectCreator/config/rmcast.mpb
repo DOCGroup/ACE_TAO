@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project : acelib, exceptions, threads {
+project : acelib, threads {
   after    += RMCast
   libs     += ACE_RMCast
   includes += $(ACE_ROOT)/protocols
