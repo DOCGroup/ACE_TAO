@@ -52,7 +52,7 @@ typedef POA_CORBA_IRObject *POA_CORBA_IRObject_ptr;
 class _TAO_CORBA_IRObject_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_IRObject_Strategized_Proxy_Broker;
 
-class TAO_IFR_Client_Export POA_CORBA_IRObject :  public virtual PortableServer::ServantBase
+class POA_CORBA_IRObject :  public virtual PortableServer::ServantBase
 {
 protected:
   POA_CORBA_IRObject (void);
@@ -144,7 +144,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_IRObject_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IRObject_Proxy_Broker
+class _TAO_CORBA_IRObject_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IRObject_Proxy_Broker
 {
 public: 
   _TAO_CORBA_IRObject_Strategized_Proxy_Broker (void);
@@ -192,7 +192,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_IRObject_ThruPOA_Proxy_Impl : 
+class _TAO_CORBA_IRObject_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_IRObject_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl
 {
@@ -231,7 +231,7 @@ typedef POA_CORBA_Contained *POA_CORBA_Contained_ptr;
 class _TAO_CORBA_Contained_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_Contained_Strategized_Proxy_Broker;
 
-class TAO_IFR_Client_Export POA_CORBA_Contained : public virtual POA_CORBA_IRObject
+class POA_CORBA_Contained : public virtual POA_CORBA_IRObject
 {
 protected:
   POA_CORBA_Contained (void);
@@ -480,7 +480,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_Contained_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Contained_Proxy_Broker
+class _TAO_CORBA_Contained_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Contained_Proxy_Broker
 {
 public: 
   _TAO_CORBA_Contained_Strategized_Proxy_Broker (void);
@@ -528,7 +528,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_Contained_ThruPOA_Proxy_Impl : 
+class _TAO_CORBA_Contained_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_Contained_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl
@@ -647,7 +647,7 @@ typedef POA_CORBA_Container *POA_CORBA_Container_ptr;
 class _TAO_CORBA_Container_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_Container_Strategized_Proxy_Broker;
 
-class TAO_IFR_Client_Export POA_CORBA_Container : public virtual POA_CORBA_IRObject
+class POA_CORBA_Container : public virtual POA_CORBA_IRObject
 {
 protected:
   POA_CORBA_Container (void);
@@ -1048,7 +1048,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_Container_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Container_Proxy_Broker
+class _TAO_CORBA_Container_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_Container_Proxy_Broker
 {
 public: 
   _TAO_CORBA_Container_Strategized_Proxy_Broker (void);
@@ -1096,7 +1096,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_Container_ThruPOA_Proxy_Impl : 
+class _TAO_CORBA_Container_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_Container_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl
@@ -1325,7 +1325,7 @@ typedef POA_CORBA_IDLType *POA_CORBA_IDLType_ptr;
 class _TAO_CORBA_IDLType_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_IDLType_Strategized_Proxy_Broker;
 
-class TAO_IFR_Client_Export POA_CORBA_IDLType : public virtual POA_CORBA_IRObject
+class POA_CORBA_IDLType : public virtual POA_CORBA_IRObject
 {
 protected:
   POA_CORBA_IDLType (void);
@@ -1418,7 +1418,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_IDLType_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IDLType_Proxy_Broker
+class _TAO_CORBA_IDLType_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_IDLType_Proxy_Broker
 {
 public: 
   _TAO_CORBA_IDLType_Strategized_Proxy_Broker (void);
@@ -1466,7 +1466,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_IDLType_ThruPOA_Proxy_Impl : 
+class _TAO_CORBA_IDLType_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_IDLType_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_IRObject_ThruPOA_Proxy_Impl
@@ -1499,7 +1499,7 @@ typedef POA_CORBA_TypedefDef *POA_CORBA_TypedefDef_ptr;
 class _TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl;
 class _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker;
 
-class TAO_IFR_Client_Export POA_CORBA_TypedefDef : public virtual POA_CORBA_Contained, public virtual POA_CORBA_IDLType
+class POA_CORBA_TypedefDef : public virtual POA_CORBA_Contained, public virtual POA_CORBA_IDLType
 {
 protected:
   POA_CORBA_TypedefDef (void);
@@ -1673,7 +1673,7 @@ public:
 //               Strategized Proxy Broker Declaration 
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_TypedefDef_Proxy_Broker
+class _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker : public virtual ::_TAO_CORBA_TypedefDef_Proxy_Broker
 {
 public: 
   _TAO_CORBA_TypedefDef_Strategized_Proxy_Broker (void);
@@ -1721,7 +1721,7 @@ public:
 //                    ThruPOA  Impl. Declaration
 //
 
-class TAO_IFR_Client_Export _TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl : 
+class _TAO_CORBA_TypedefDef_ThruPOA_Proxy_Impl : 
   public virtual ::_TAO_CORBA_TypedefDef_Proxy_Impl,
   public virtual TAO_ThruPOA_Object_Proxy_Impl,
   public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl, 
