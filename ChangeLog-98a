@@ -1,5 +1,9 @@
 Mon Dec 15 20:17:10 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/OS.cpp: Fixed pread() and pwrite() so that they work
+ 	  correctly even if we don't support threads.  Thanks to Irfan for
+ 	  finding this.
+
 	* ace/OS.i: Tried to fix the fstat() wrapper on Win32 so that
 	  it does the right think for HANDLES.  Thanks to Lori Anderson
 	  <lori@probita.com> for pointing this out.
