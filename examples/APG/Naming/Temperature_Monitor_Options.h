@@ -6,7 +6,7 @@
 class Temperature_Monitor_Options
   {
   public:
-    Temperature_Monitor_Options (int, char *[])
+    Temperature_Monitor_Options (int, ACE_TCHAR *[])
     { }
 
     const char *thermometer_address (void)
