@@ -1,7 +1,9 @@
 #
+# $Id$
+#
 # Makefile for building the Server_Protocol test executables
 #
 
-MAKEFILES = server.bor #client.bor
+MAKEFILES = server.bor
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
