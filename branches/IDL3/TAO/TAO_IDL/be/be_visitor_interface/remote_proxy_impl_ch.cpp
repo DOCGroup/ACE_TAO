@@ -33,6 +33,9 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (
       << "//                Remote Proxy Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate Class Declaration.
   *os << "class " << be_global->stub_export_macro ()
       << " " << node->remote_proxy_impl_name () << be_idt_nl;
@@ -40,25 +43,23 @@ be_visitor_interface_remote_proxy_impl_ch::visit_interface (
       << "," << be_idt_nl << "public virtual " 
       << "TAO_Remote_Object_Proxy_Impl";
 
-  if (node->n_inherits () > 0)
-    {
-      *os << "," << be_nl;
+  int nparents = node->n_inherits ();
 
-      for (int i = 0; i < node->n_inherits (); i++)
+  if (nparents > 0)
+    {
+      for (int i = 0; i < nparents; ++i)
         {
           be_interface *inherited =
             be_interface::narrow_from_decl (node->inherits ()[i]);
 
+          if (inherited->is_abstract ())
+            {
+              continue;
+            }
+
+          *os << "," << be_nl;
           *os << "public virtual ";
           *os << inherited->full_remote_proxy_impl_name ();
-
-          if (i < node->n_inherits () - 1)
-            {
-              // Node is the case of multiple
-              // inheritance, so put a comma.
-              *os << ", ";
-              *os << be_nl;
-            }
         }
     }
 

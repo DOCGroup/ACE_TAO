@@ -162,7 +162,7 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   if (!node->is_nested ())
     {
-      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n";
+      *os << "#endif /* ACE_HAS_USING_KEYWORD */\n\n";
     }
 
   return 0;

@@ -53,8 +53,6 @@ be_visitor_operation_rettype_pre_invoke_cs::visit_array (be_array *node)
       bt = node;
     }
 
-  os->indent ();
-
   *os << "{" << be_idt_nl
       << bt->name () << "_slice *tmp;" << be_nl
       << "ACE_ALLOCATOR_RETURN (tmp, "
@@ -87,7 +85,6 @@ visit_predefined_type (be_predefined_type *node)
   switch (node->pt ())
     {
     case AST_PredefinedType::PT_any:
-      os->indent ();
 
       *os << "{" << be_idt_nl
           << "CORBA::Any *tmp;" << be_nl

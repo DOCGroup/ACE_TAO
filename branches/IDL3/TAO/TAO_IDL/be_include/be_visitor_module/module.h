@@ -80,7 +80,6 @@ public:
 
   virtual int visit_typedef (be_typedef *node);
   // visit the typedef node
-
 };
 
 #endif /* _BE_VISITOR_MODULE_MODULE_H_ */

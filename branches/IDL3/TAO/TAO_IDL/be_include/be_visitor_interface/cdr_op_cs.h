@@ -44,7 +44,6 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // visit interface
-
 };
 
 #endif /* _BE_VISITOR_INTERFACE_CDR_OP_CS_H_ */

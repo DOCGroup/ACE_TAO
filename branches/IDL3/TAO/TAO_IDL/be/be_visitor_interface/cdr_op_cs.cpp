@@ -59,6 +59,9 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_OUTPUT);
 
@@ -67,7 +70,17 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "const " << node->full_name () << "_ptr _tao_objref" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  *os << "CORBA::Object_ptr _tao_corba_obj = _tao_objref;" << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_ptr";
+    }
+  else
+    {
+      *os << "CORBA::Object_ptr";
+    }
+
+  *os << " _tao_corba_obj = _tao_objref;" << be_nl;
   *os << "return (strm << _tao_corba_obj);" << be_uidt_nl
       << "}\n\n";
 
@@ -81,9 +94,20 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "{" << be_idt_nl;
   *os << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
-  *os << "CORBA::Object_var obj;" << be_nl;
+
+  if (node->is_abstract ())
+    {
+      *os << "CORBA::AbstractBase_var obj;" << be_nl << be_nl;
+    }
+  else
+    {
+      *os << "CORBA::Object_var obj;" << be_nl << be_nl;
+    }
+
   *os << "if ((strm >> obj.inout ()) == 0)" << be_idt_nl
+      << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
       << "// narrow to the right type" << be_nl;
   *os << "_tao_objref =" << be_idt_nl
       << node->full_name () << "::_unchecked_narrow ("

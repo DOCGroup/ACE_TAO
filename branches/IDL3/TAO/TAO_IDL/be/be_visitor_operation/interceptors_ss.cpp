@@ -140,7 +140,7 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
         }
     }
 
-  *os << " (" << be_idt_nl
+  *os << " (" << be_idt << be_idt_nl
       << "TAO_ServerRequest &_tao_server_request," << be_nl;
 
   be_interface *intf;
@@ -158,10 +158,10 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
     }
 
   // Pass in the pointer to the Servant_Upcall.
-  *os << "TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall,";
+  *os << "TAO_Object_Adapter::Servant_Upcall *tao_servant_upcall," << be_nl;
 
   // Get the right object implementation.
-  *os << intf->full_skel_name () << " *tao_impl" << be_nl;
+  *os << intf->full_skel_name () << " *tao_impl";
 
   // Generate the argument list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing.
@@ -179,12 +179,7 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
                         -1);
     }
 
- *os  << ");\n\n";
-
-  os->indent ();
-
-  *os << "// TAO_IDL - Generated from "
-      << __FILE__ << ":" << __LINE__ << be_nl;
+ *os  << be_uidt_nl << ");" << be_uidt_nl << be_nl;
 
   // Here I still need to generate the other methods + private args.
   *os << "virtual Dynamic::ParameterList * arguments ("
@@ -210,16 +205,16 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
 
   *os << "virtual char * target_most_derived_interface ("
       << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)"
-      << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl << be_nl;
 
   *os << "virtual CORBA::Boolean target_is_a (" << be_idt << be_idt_nl
       << "const char * id" << be_nl
-      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS)"
-      << be_uidt_nl
-      << "ACE_THROW_SPEC ((CORBA::SystemException));\n"
+      << "ACE_ENV_ARG_DECL_WITH_DEFAULTS" << be_uidt_nl
+      << ")" << be_nl
+      << "ACE_THROW_SPEC ((CORBA::SystemException));"
       << be_uidt_nl;
 
   // Store the result for later use.
@@ -239,7 +234,8 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
   // void since we cant have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
-      *os << "void result (";
+      *os << be_nl << "void result (";
+
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_RETTYPE_CH);
       be_visitor_operation_rettype or_visitor (&ctx);
@@ -289,7 +285,8 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
         }
     }
 
-  *os << " (const "<< "TAO_ServerRequestInfo_"<< node->flat_name ();
+  *os << " (" << be_idt << be_idt_nl
+      << "const "<< "TAO_ServerRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -322,8 +319,10 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
     }
 
 
-  *os << " &);" << be_nl
-      << "void operator= (const "
+  *os << " &" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl
+      << "void operator= (" << be_idt << be_idt_nl
+      << "const "
       << "TAO_ServerRequestInfo_"<< node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
@@ -357,7 +356,8 @@ be_visitor_operation_interceptors_ss::generate_class_declaration (
     }
 
 
-  *os << " &);" << be_nl;
+  *os << " &" << be_uidt_nl
+      << ");" << be_uidt_nl;
 
   *os << be_uidt_nl << "private:" << be_idt_nl;
 
@@ -602,7 +602,9 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
         }
     }
 
-  *os << "::arguments (ACE_ENV_SINGLE_ARG_DECL)" << be_idt_nl
+  *os << "::arguments (" << be_idt << be_idt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL" << be_uidt_nl
+      << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "// Generate the argument list on demand." << be_nl
@@ -703,7 +705,9 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
         }
     }
 
-  *os << "::exceptions (ACE_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
+  *os << "::exceptions (" << be_idt << be_idt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL" << be_uidt_nl
+      << ")"<< be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -798,7 +802,9 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
         }
     }
 
-  *os << "::result (ACE_ENV_SINGLE_ARG_DECL)"<< be_idt_nl
+  *os << "::result (" << be_idt << be_idt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL" << be_uidt_nl
+      << ")"<< be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -904,7 +910,8 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
 
   *os << "::target_most_derived_interface ("
       << be_idt << be_idt_nl
-      << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED)" << be_uidt_nl
+      << "ACE_ENV_SINGLE_ARG_DECL_NOT_USED" << be_uidt_nl
+      << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
@@ -950,7 +957,8 @@ be_visitor_operation_interceptors_ss::generate_class_definition (
 
   *os << "::target_is_a (" << be_idt << be_idt_nl
       << "const char * id" << be_nl
-      << "ACE_ENV_ARG_DECL)" << be_uidt_nl
+      << "ACE_ENV_ARG_DECL" << be_uidt_nl
+      << ")" << be_nl
       << "ACE_THROW_SPEC ((CORBA::SystemException))" << be_uidt_nl
       << "{" << be_idt_nl
       << "return this->_tao_impl->_is_a (id ACE_ENV_ARG_PARAMETER);"

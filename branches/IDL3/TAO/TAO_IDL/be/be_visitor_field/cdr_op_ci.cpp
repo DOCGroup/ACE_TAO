@@ -81,8 +81,6 @@ int
 be_visitor_field_cdr_op_ci::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Retrieve the field node.
   be_field *f = this->ctx_->be_node_as_field ();
 
   if (f == 0)
@@ -100,7 +98,9 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
 
   // Save the node's local name and full name in a buffer for quick
   // use later on.
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
       && node->is_child (this->ctx_->scope ()))
@@ -140,10 +140,12 @@ be_visitor_field_cdr_op_ci::visit_array (be_array *node)
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> "
           << "_tao_aggregate_" << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << "
           << "_tao_aggregate_" << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // This is done in cdr_op_cs and hacked into *.i.
@@ -213,9 +215,11 @@ be_visitor_field_cdr_op_ci::visit_enum (be_enum *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -263,16 +267,15 @@ int
 be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
-  // Retrieve the field node.
   be_field *f = this->ctx_->be_node_as_field ();
+
   if (!f)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_ci::"
                          "visit_interface - "
-                         "cannot retrieve field node\n"
-                         ), -1);
+                         "cannot retrieve field node\n"), 
+                        -1);
     }
 
   // Check what is the code generations substate. Are we generating code for
@@ -281,12 +284,14 @@ be_visitor_field_cdr_op_ci::visit_interface (be_interface *)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
-      // Nothing to be done because an interface cannit be declared inside a
+      // Nothing to be done because an interface cannot be declared inside a
       // structure.
       break;
     default:
@@ -325,12 +330,14 @@ be_visitor_field_cdr_op_ci::visit_interface_fwd (be_interface_fwd *)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
-      // Nothing to be done because an interface cannit be declared inside a
+      // Nothing to be done because an interface cannot be declared inside a
       // structure.
       break;
     default:
@@ -469,9 +476,11 @@ be_visitor_field_cdr_op_ci::visit_sequence (be_sequence *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -540,9 +549,11 @@ be_visitor_field_cdr_op_ci::visit_string (be_string *)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ".out ())";
+
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ".in ())";
+
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done.
@@ -583,9 +594,11 @@ be_visitor_field_cdr_op_ci::visit_structure (be_structure *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -677,9 +690,11 @@ be_visitor_field_cdr_op_ci::visit_union (be_union *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Proceed further.
@@ -791,7 +806,9 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
   // the full_name with or without the underscore and use it later on.
   char fname [NAMEBUFSIZE];
 
-  ACE_OS::memset (fname, '\0', NAMEBUFSIZE);
+  ACE_OS::memset (fname, 
+                  '\0', 
+                  NAMEBUFSIZE);
 
   if (this->ctx_->alias () == 0 // Not a typedef.
       && node->is_child (this->ctx_->scope ()))
@@ -837,6 +854,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
           << "_tao_aggregate." << f->local_name () << be_uidt_nl
           << ")" << be_uidt << be_uidt_nl
           << ");" << be_uidt_nl;
+
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
     default:

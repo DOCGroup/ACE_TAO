@@ -22,6 +22,8 @@
 #ifndef TAO_BE_VISITOR_OPERATION_H
 #define TAO_BE_VISITOR_OPERATION_H
 
+#include "idl_defines.h"
+
 #include "be_visitor_scope.h"
 #include "be_visitor_operation/operation.h"
 #include "be_visitor_operation/operation_ch.h"

@@ -144,7 +144,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
     {
       *os << be_nl
           << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
-          << ");" << be_nl << be_uidt;
+          << ");" << be_uidt_nl;
     }
   else
     {
@@ -165,8 +165,6 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
         );
       }
 
-  os->indent ();
-
   if (!this->void_return_type (bt))
     {
       *os << "return ";
@@ -184,14 +182,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::visit_operation (
       return -1;
     }
 
-  if (this->void_return_type (bt))
-    {
-      *os << "return;\n";
-    }
-
   *os << "}\n\n";
-
-  os->decr_indent (0);
 
   return 0;
 }
@@ -231,14 +222,7 @@ be_visitor_operation_thru_poa_proxy_impl_ss::gen_invoke (
   // Retrieve the operation return type.
   be_type *bt = be_type::narrow_from_decl (node->return_type ());
 
-  if (this->void_return_type (bt))
-    {
-      *os << be_uidt << be_uidt_nl;
-    }
-  else
-    {
-      *os << be_uidt << be_uidt << be_uidt_nl;
-    }
+  *os << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;
 }

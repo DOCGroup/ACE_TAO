@@ -404,6 +404,17 @@ AST_Interface::fe_add_operation (AST_Operation *t)
           return 0;
         }
     }
+  else if ((d = this->look_in_inherited (t->name (), I_FALSE)) != 0)
+    {
+      if (d->node_type () == AST_Decl::NT_op)
+        {
+          idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
+                                      t,
+                                      this,
+                                      d);
+          return 0;
+        }
+    }
 
   // Add it to scope.
   this->add_to_scope (t);
@@ -994,7 +1005,7 @@ AST_Interface::dump (ACE_OSTREAM_TYPE &o)
   o << "}";
 }
 
-// This serves for both interfaces and valuetypes.
+// This serves for both interfaces, valuetypes and components.
 void
 AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s)
@@ -1028,7 +1039,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
       // of the module it's defined in, the lookup will find the
       // forward declaration.
       if (nt == AST_Decl::NT_interface_fwd
-          || nt == AST_Decl::NT_valuetype_fwd)
+          || nt == AST_Decl::NT_valuetype_fwd
+          || nt == AST_Decl::NT_component_fwd)
         {
           AST_InterfaceFwd *fwd_def =
             AST_InterfaceFwd::narrow_from_decl (d);
@@ -1037,7 +1049,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
         }
       // In all other cases, the lookup will find an interface node.
       else if (nt == AST_Decl::NT_interface
-               || nt == AST_Decl::NT_valuetype)
+               || nt == AST_Decl::NT_valuetype
+               || nt == AST_Decl::NT_component)
         {
           fd = AST_Interface::narrow_from_decl (d);
         }
@@ -1281,6 +1294,60 @@ AST_Interface::inherited_name_clash (void)
             } // end of IF (nt1 == AST_Decl::NT_op ..)
         } // end of FOR (parent1_members ...)
     } // end of FOR (i ...)
+}
+
+AST_Decl *
+AST_Interface::lookup_for_add (AST_Decl *d,
+                               idl_bool trea_as_ref)
+{
+  if (d == 0)
+    {
+      return 0;
+    }
+
+  Identifier *id = d->local_name ();
+  AST_Decl *prev = 0;
+  AST_Decl::NodeType nt = NT_root;
+  long nis = -1;
+  AST_Interface **is = 0;
+
+  if (this->idl_keyword_clash (id) != 0)
+    {
+      return 0;
+    }
+
+  prev = this->lookup_by_name_local (id,
+                                     0);
+
+  if (prev != 0)
+    {
+      nt = prev->node_type ();
+
+      if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+        {
+          return prev;
+        }
+    }
+
+  for (nis = this->n_inherits_flat (), is = this->inherits_flat (); 
+       nis > 0; 
+       nis--, is++)
+    {
+      prev = (*is)->lookup_by_name_local (id,
+                                          0);
+
+      if (prev != 0)
+        {
+          nt = prev->node_type ();
+
+          if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+            {
+              return prev;
+            }
+        }
+    }
+
+  return 0;
 }
 
 void

@@ -121,7 +121,11 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
     {
       *os << "TAO_Valuetype_Manager<";
     }
-  else if (nt == AST_Decl::NT_interface)
+  else if (node->base_type ()->is_abstract ())
+    { 
+      *os << "TAO_Abstract_Manager<";
+    }
+  else
     {
       *os << "TAO_Object_Manager<";
     }

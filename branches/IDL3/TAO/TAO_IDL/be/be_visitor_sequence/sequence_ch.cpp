@@ -68,6 +68,17 @@ be_visitor_sequence_ch::gen_base_sequence_class (be_sequence *node)
         }
 
       break;
+    case be_sequence::MNG_ABSTRACT:
+      if (node->unbounded ())
+        {
+          *os << "TAO_Unbounded_Abstract_Sequence<";
+        }
+      else
+        {
+          *os << "TAO_Bounded_Abstract_Sequence<";
+        }
+
+      break;
     case be_sequence::MNG_PSEUDO:
       if (node->unbounded ())
         {
@@ -224,6 +235,7 @@ be_visitor_sequence_ch::instantiate_sequence (be_sequence *node)
     case be_sequence::MNG_PSEUDO:
     case be_sequence::MNG_OBJREF:
     case be_sequence::MNG_VALUE:
+    case be_sequence::MNG_ABSTRACT:
       if (node->unbounded ())
         {
           this->gen_unbounded_obj_sequence (node);
@@ -654,6 +666,7 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
       && nt != AST_Decl::NT_wstring
       && nt != AST_Decl::NT_interface
       && nt != AST_Decl::NT_interface_fwd
+      && nt != AST_Decl::NT_valuetype
       && nt != AST_Decl::NT_array
       && pdt != AST_PredefinedType::PT_pseudo
       && pdt != AST_PredefinedType::PT_object)

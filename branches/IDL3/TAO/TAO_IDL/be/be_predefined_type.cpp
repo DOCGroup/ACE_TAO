@@ -48,7 +48,7 @@ be_predefined_type::be_predefined_type (AST_PredefinedType::PredefinedType t,
   this->compute_tc_name ();
 
   // Compute the flattened fully scoped name.
-  this->compute_flat_name ();
+  this->AST_Decl::compute_flat_name ();
 }
 
 // Overriden method.

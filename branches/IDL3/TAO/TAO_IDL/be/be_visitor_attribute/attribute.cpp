@@ -196,13 +196,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = get_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
-        be_visitor_operation_interceptors_ch visitor (&ctx);
-        status = get_op.accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
       {
         ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
@@ -325,7 +318,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
                        node->is_abstract ());
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.set_defined_in (node->defined_in ());
-  set_op.add_argument_to_scope (&arg);
+  set_op.be_add_argument (&arg);
 
   // Get the strategy from the attribute and hand it over
   // to the operation, thereby deleting the old one.
@@ -448,13 +441,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
         status = set_op.accept (&visitor);
         break;
       }
-    case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
-        be_visitor_operation_interceptors_ch visitor (&ctx);
-        status = set_op.accept (&visitor);
-        break;
-      }
     case TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS:
       {
         ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CS);
@@ -549,7 +535,6 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
       delete visitor;
       visitor = 0;
     }
-
 
   return 0;
 }

@@ -47,7 +47,7 @@ be_visitor_operation_rettype_post_invoke_cs::visit_array (be_array *node)
   *os << bt->name () << "_forany _tao_retval_forany ("
       << be_idt << be_idt_nl
       << "_tao_retval.inout ()" << be_uidt_nl
-      << ");\n" << be_uidt;
+      << ");" << be_uidt_nl;
 
   return 0;
 }
@@ -55,7 +55,8 @@ be_visitor_operation_rettype_post_invoke_cs::visit_array (be_array *node)
 int
 be_visitor_operation_rettype_post_invoke_cs::visit_typedef (be_typedef *node)
 {
-  this->ctx_->alias (node); // set the alias node
+  this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,6 +65,7 @@ be_visitor_operation_rettype_post_invoke_cs::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }

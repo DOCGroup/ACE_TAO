@@ -4,6 +4,7 @@
 #include "ast_visitor.h"
 #include "utl_identifier.h"
 #include "utl_indenter.h"
+#include "utl_err.h"
 #include "global_extern.h"
 
 ACE_RCSID (ast, 
@@ -43,6 +44,29 @@ AST_Component::~AST_Component (void)
 {
 }
 
+void
+AST_Component::redefine (AST_Interface *from)
+{
+  AST_Component *c = AST_Component::narrow_from_decl (from);
+
+  if (c == 0)
+    {
+      idl_global->err ()->redef_error (from->local_name ()->get_string (),
+                                       this->local_name ()->get_string ());
+      return;
+    }
+
+  // Copy over all the base class members.
+  this->AST_Interface::redefine (from);
+
+  this->pd_base_component = c->pd_base_component;
+  this->pd_provides = c->pd_provides;
+  this->pd_uses = c->pd_uses;
+  this->pd_emits = c->pd_emits;
+  this->pd_publishes = c->pd_publishes;
+  this->pd_consumes = c->pd_consumes;
+}
+
 AST_Component *
 AST_Component::base_component (void) const
 {
@@ -61,64 +85,34 @@ AST_Component::n_supports (void) const
   return this->n_inherits ();
 }
 
-ACE_Unbounded_Queue<AST_Interface *> &
+ACE_Unbounded_Queue<AST_Component::port_description> &
 AST_Component::provides (void)
 {
   return this->pd_provides;
 }
 
-void 
-AST_Component::provides (AST_Interface *d)
-{
-  this->pd_provides.enqueue_tail (d);
-}
-
-ACE_Unbounded_Queue<AST_Component::uses_description *> &
+ACE_Unbounded_Queue<AST_Component::uses_description> &
 AST_Component::uses (void)
 {
   return this->pd_uses;
 }
 
-void 
-AST_Component::uses (AST_Component::uses_description *d)
-{
-  this->pd_uses.enqueue_tail (d);
-}
-
-ACE_Unbounded_Queue<AST_ValueType *> &
+ACE_Unbounded_Queue<AST_Component::port_description> &
 AST_Component::emits (void)
 {
   return this->pd_emits;
 }
 
-void 
-AST_Component::emits (AST_ValueType *d)
-{
-  this->pd_emits.enqueue_tail (d);
-}
-
-ACE_Unbounded_Queue<AST_ValueType *> &
+ACE_Unbounded_Queue<AST_Component::port_description> &
 AST_Component::publishes (void)
 {
   return this->pd_publishes;
 }
 
-void 
-AST_Component::publishes (AST_ValueType *d)
-{
-  this->pd_publishes.enqueue_tail (d);
-}
-
-ACE_Unbounded_Queue<AST_ValueType *> &
+ACE_Unbounded_Queue<AST_Component::port_description> &
 AST_Component::consumes (void)
 {
   return this->pd_consumes;
-}
-
-void 
-AST_Component::consumes (AST_ValueType *d)
-{
-  this->pd_consumes.enqueue_tail (d);
 }
 
 void

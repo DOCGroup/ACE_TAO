@@ -108,6 +108,9 @@ public:
 
   // Public operations.
 
+  int void_return_type (void);
+  /// Returns 1 if the operation has a void return type.
+
   /// Return the number of arguments
   virtual int argument_count (void);
 
@@ -138,6 +141,9 @@ public:
 
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
+
+  AST_Argument *be_add_argument (AST_Argument *arg);
+  // Add an argument to the scope.
 
   // Cleanup function.
   virtual void destroy (void);

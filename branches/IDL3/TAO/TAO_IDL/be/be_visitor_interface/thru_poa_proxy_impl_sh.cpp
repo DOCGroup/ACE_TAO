@@ -32,6 +32,10 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
       << be_nl
       << "//                    ThruPOA  Impl. Declaration" << be_nl
       << "//" << be_nl << be_nl;
+
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   // Generate Class Declaration.
   *os << "class " << be_global->skel_export_macro ()
       << " " << node->thru_poa_proxy_impl_name ();
@@ -41,22 +45,24 @@ be_visitor_interface_thru_poa_proxy_impl_sh::visit_interface (
 
   if (node->n_inherits () > 0)
     {
-      *os << "," << be_nl;
+      AST_Interface *parent = 0;
 
       for (int i = 0; i < node->n_inherits (); i++)
         {
+          parent = node->inherits ()[i];
+
+          if (parent->is_abstract ())
+            {
+              continue;
+            }
+
+          *os << "," << be_nl;
+
           be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
+            be_interface::narrow_from_decl (parent);
 
           *os << "public virtual ";
           *os << "::" <<  inherited->full_thru_poa_proxy_impl_name ();
-
-          if (i < node->n_inherits () - 1)
-            {
-              *os << ", ";
-            }
-
-          *os << be_nl;
         }
     }
 

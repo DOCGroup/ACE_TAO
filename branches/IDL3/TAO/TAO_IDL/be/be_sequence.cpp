@@ -26,6 +26,7 @@
 #include "be_predefined_type.h"
 #include "be_visitor.h"
 #include "utl_identifier.h"
+#include "idl_defines.h"
 
 ACE_RCSID (be, 
            be_sequence, 
@@ -236,6 +237,16 @@ be_sequence::managed_type (void)
       switch (prim_type->node_type ())
         {
         case AST_Decl::NT_interface:
+          if (prim_type->is_abstract ())
+            {
+              this->mt_ = be_sequence::MNG_ABSTRACT;
+            }
+          else
+            {
+              this->mt_ = be_sequence::MNG_OBJREF;
+            }
+
+          break;
         case AST_Decl::NT_interface_fwd:
           this->mt_ = be_sequence::MNG_OBJREF;
           break;
@@ -355,6 +366,23 @@ be_sequence::instance_name ()
                            this->flat_name (),
                            this->max_size ()->ev ()->u.ulval);
         }
+
+      break;
+    case be_sequence::MNG_ABSTRACT:
+      if (this->unbounded ())
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Unbounded_Abstract_Sequence_%s",
+                           this->flat_name ());
+        }
+      else
+        {
+          ACE_OS::sprintf (namebuf,
+                           "_TAO_Bounded_Abstract_Sequence_%s_%lu",
+                           this->flat_name (),
+                           this->max_size ()->ev ()->u.ulval);
+        }
+
       break;
     case be_sequence::MNG_VALUE:
       if (this->unbounded ())
@@ -370,6 +398,7 @@ be_sequence::instance_name ()
                            this->flat_name (),
                            this->max_size ()->ev ()->u.ulval);
         }
+
       break;
     case be_sequence::MNG_STRING:
       if (this->unbounded ())
@@ -383,6 +412,7 @@ be_sequence::instance_name ()
                            "_TAO_Bounded_String_Sequence_%s",
                            this->flat_name  ());
         }
+
       break;
     case be_sequence::MNG_WSTRING:
       if (this->unbounded ())
@@ -396,6 +426,7 @@ be_sequence::instance_name ()
                            "_TAO_Bounded_WString_Sequence_%s",
                            this->flat_name ());
         }
+
       break;
     default: // Not a managed type.
       if (this->unbounded ())
@@ -425,6 +456,7 @@ be_sequence::instance_name ()
                             this->flat_name (),
                             this->max_size ()->ev ()->u.ulval);
         }
+
       break;
     }
 

@@ -13,7 +13,6 @@ be_visitor_interface_remote_proxy_impl_cs (be_visitor_context *ctx)
   // No-Op.
 }
 
-
 be_visitor_interface_remote_proxy_impl_cs::
 ~be_visitor_interface_remote_proxy_impl_cs (void)
 {
@@ -28,6 +27,9 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (
   TAO_OutStream *os = this->ctx_->stream ();
   os->decr_indent (0);
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
   *os << be_nl
       << "///////////////////////////////////////////////////////////////////////" 
       << be_nl
@@ -40,12 +42,7 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (
   *os << node->full_base_proxy_impl_name () << "::"
       << node->base_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-  /*
-  // Dtor Impl.
-  *os << node->full_base_proxy_impl_name () << "::~"
-      << node->base_proxy_impl_name () << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
-  */
+
   // Create the destructor implementation for the remote
   // proxy implementation.
 
@@ -53,13 +50,6 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (
   *os << node->full_remote_proxy_impl_name () << "::"
       << node->remote_proxy_impl_name () << " (void)" << be_nl
       << "{}" << be_nl << be_nl;
-
-  /*
-  // Dtor Impl
-  *os << node->full_remote_proxy_impl_name () << "::~"
-      << node->remote_proxy_impl_name () << " (void)" << be_nl
-      << "{}" << be_nl << be_nl;
-  */
 
   // Generate the code for the Remote Proxy Impl.
   // operations
@@ -82,5 +72,4 @@ be_visitor_interface_remote_proxy_impl_cs::visit_interface (
       << be_nl << be_nl;
 
   return 0;
-
 }

@@ -208,7 +208,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
                        0);
 
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
-  set_op.add_argument_to_scope (&arg);
+  set_op.be_add_argument (&arg);
 
  if (this->visit_operation (&set_op) == -1)
     {

@@ -19,7 +19,11 @@ public:
   AST_Home (UTL_ScopedName *n,
             AST_Home *base_home,
             AST_Component *managed_component,
-            AST_ValueType *primary_key);
+            AST_ValueType *primary_key,
+            AST_Interface **supports,
+            long n_supports,
+            AST_Interface **supports_flat,
+            long n_supports_flat);
 
   virtual ~AST_Home (void);
 
@@ -32,10 +36,8 @@ public:
   AST_ValueType *primary_key (void) const;
 
   ACE_Unbounded_Queue<AST_Operation *> &factories (void);
-  void factories (AST_Operation *d);
 
   ACE_Unbounded_Queue<AST_Operation *> &finders (void);
-  void finders (AST_Operation *d);
 
   // Cleanup function.
   virtual void destroy (void);

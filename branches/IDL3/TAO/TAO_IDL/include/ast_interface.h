@@ -90,7 +90,7 @@ public:
 
   virtual ~AST_Interface (void);
 
-  // This serves for both interfaces and value types.
+  // This serves for both interfaces, value types and components.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s);
 
@@ -156,11 +156,11 @@ protected:
 
   virtual AST_Exception *fe_add_exception (AST_Exception *e);
 
-  virtual AST_Attribute *fe_add_attribute(AST_Attribute *a);
+  virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
 
   virtual AST_Field *fe_add_field (AST_Field *o);
 
-  virtual AST_Operation *fe_add_operation(AST_Operation *o);
+  virtual AST_Operation *fe_add_operation (AST_Operation *o);
 
   virtual AST_Union *fe_add_union (AST_Union *u);
 
@@ -177,6 +177,11 @@ protected:
   virtual AST_Typedef *fe_add_typedef (AST_Typedef *t);
 
   virtual AST_Native *fe_add_native (AST_Native *n);
+
+  // Lookup based on the local name, override of UTL_Scope definition.
+  // This version checks for redefinitions of attributes or operations.
+  AST_Decl *lookup_for_add (AST_Decl *d,
+                            idl_bool treat_as_ref);
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH

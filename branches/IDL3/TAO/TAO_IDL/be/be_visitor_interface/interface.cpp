@@ -42,19 +42,95 @@ be_visitor_interface::visit_interface (be_interface *)
   return -1;
 }
 
+// Overridden so we can deal with possible operations or attributes
+// in abstract parent classes.
+int
+be_visitor_interface::visit_scope (be_scope *node)
+{
+  if (this->be_visitor_scope::visit_scope (node) == -1)
+    {
+      return -1;
+    }
+
+  be_interface *intf = be_interface::narrow_from_scope (node);
+  AST_Interface **parent = 0;
+  AST_Decl *d = 0;
+  be_decl *bd = 0;
+
+  for (ACE_Unbounded_Queue_Iterator<AST_Interface *> iter (
+           intf->abstract_parents_
+         );
+       iter.done () == 0;
+       iter.advance ())
+    {
+      iter.next (parent);
+
+      for (UTL_ScopeActiveIterator si ((*parent), UTL_Scope::IK_decls);
+           !si.is_done ();
+           si.next ())
+        {
+          d = si.item ();
+
+          if (d == 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "(%N:%l) be_visitor_interface::visit_scope - "
+                                 "bad node in this scope\n"),
+                                -1);
+            }
+
+          AST_Decl::NodeType nt = d->node_type ();
+
+          if (nt == AST_Decl::NT_op || nt == AST_Decl::NT_attr)
+            {
+              UTL_ScopedName *item_new_name =
+                (UTL_ScopedName *)intf->name ()->copy ();
+
+              Identifier *id = 0;
+              ACE_NEW_RETURN (id,
+                              Identifier (d->local_name ()->get_string ()),
+                              -1);
+
+              UTL_ScopedName *sn = 0;
+              ACE_NEW_RETURN (sn,
+                              UTL_ScopedName (id,
+                                              0),
+                              -1);
+
+              item_new_name->nconc (sn);
+              d->set_name (item_new_name);
+              d->set_defined_in (node);
+              bd = be_decl::narrow_from_decl (d);
+
+              if (bd == 0 || bd->accept (this) == -1)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_visitor_interface::"
+                                     "visit_scope - "
+                                     "codegen for scope failed\n"),
+                                    -1);
+                }
+            }
+        }
+    }
+
+  return 0;
+}
+
 int
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
    //If, is implied-IDL
   if (node->original_interface () != 0) 
-  {
-    // and the name starts with AMH
-    if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
-      {
-        // then it is an AMH node.
-        return 1;
-      }
-  }
+    {
+      // and the name starts with AMH
+      if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
+        {
+          // then it is an AMH node.
+          return 1;
+        }
+    }
+
   return 0;
 }
 
@@ -105,9 +181,6 @@ be_visitor_interface::visit_attribute (be_attribute *node)
       break;
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_SMART_PROXY_CS);
-      break;
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
-      ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CH);
       break;
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
       ctx.state (TAO_CodeGen::TAO_ATTRIBUTE_INTERCEPTORS_CS);
@@ -234,7 +307,6 @@ be_visitor_interface::visit_constant (be_constant *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -362,7 +434,6 @@ be_visitor_interface::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -497,7 +568,6 @@ be_visitor_interface::visit_exception (be_exception *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -655,13 +725,6 @@ be_visitor_interface::visit_operation (be_operation *node)
       {
         ctx.state (TAO_CodeGen::TAO_OPERATION_SMART_PROXY_CS);
         be_visitor_operation_smart_proxy_cs visitor (&ctx);
-        status = node->accept (&visitor);
-        break;
-      }
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
-      {
-        ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_CH);
-        be_visitor_operation_interceptors_ch visitor (&ctx);
         status = node->accept (&visitor);
         break;
       }
@@ -910,7 +973,6 @@ be_visitor_interface::visit_structure (be_structure *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -1001,7 +1063,6 @@ be_visitor_interface::visit_structure_fwd (be_structure_fwd *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -1134,7 +1195,6 @@ be_visitor_interface::visit_union (be_union *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -1225,7 +1285,6 @@ be_visitor_interface::visit_union_fwd (be_union_fwd *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:
@@ -1358,7 +1417,6 @@ be_visitor_interface::visit_typedef (be_typedef *node)
     case TAO_CodeGen::TAO_INTERFACE_DIRECT_COLLOCATED_SS:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CH:
     case TAO_CodeGen::TAO_INTERFACE_SMART_PROXY_CS:
-    case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_CS:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SH:
     case TAO_CodeGen::TAO_INTERFACE_INTERCEPTORS_SS:

@@ -385,6 +385,11 @@ public:
   // Used in the generation of extern function declarations so we
   // can use non-defined interfaces as members and parameters.
 
+  ACE_Unbounded_Queue<be_interface *> mixed_parentage_interfaces;
+  // Used in the generation of overrides for CORBA::release and
+  // CORBA::is_nil, needed when the interface inherits versions from
+  // both CORBA::Object and CORBA::AbstractBase.
+
 private:
   size_t changing_standard_include_files_;
   // To switch between changing or non-changing standard include

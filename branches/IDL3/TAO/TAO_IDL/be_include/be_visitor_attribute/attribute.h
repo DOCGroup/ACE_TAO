@@ -46,7 +46,6 @@ public:
 
   virtual int visit_attribute (be_attribute *node);
   // visit attribute. We provide code for this method in the derived class
-
 };
 
 #endif /* _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H*/

@@ -105,6 +105,15 @@ public:
   idl_bool ifr_added (void);
   void ifr_added (idl_bool val);
 
+  const char *exprtype_to_string (void);
+  // Returns the appropriate type.
+
+  static const char *exprtype_to_string (AST_Expression::ExprType et);
+  // For use with ORBs without the CORBA namespace.
+
+  UTL_ScopedName *enum_full_name (void);
+  // If our type is enum, we have to generate the scoped name.
+
   // Narrowing
   DEF_NARROW_METHODS1(AST_Constant, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Constant);

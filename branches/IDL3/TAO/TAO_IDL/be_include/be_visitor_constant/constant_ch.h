@@ -41,7 +41,6 @@ public:
 
   virtual int visit_constant (be_constant *node);
   // visit constant.
-
 };
 
 #endif /* _BE_VISITOR_CONSTANT_CONSTANT_CH_H_ */

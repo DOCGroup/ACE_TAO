@@ -50,12 +50,6 @@ public:
   ~be_operation (void);
   // Destructor.
 
-  int void_return_type (void);
-  // Returns 1 if the operation has a void return type.
-
-  be_argument *add_argument_to_scope (be_argument *arg);
-  // Add an argument to the scope.
-
   virtual void destroy (void);
   // Cleanup method.
 

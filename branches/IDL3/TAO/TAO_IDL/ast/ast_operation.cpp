@@ -147,6 +147,23 @@ AST_Operation::~AST_Operation (void)
 
 // Public operations.
 
+int
+AST_Operation::void_return_type (void)
+{
+  AST_Type* type = this->return_type ();
+
+  if (type->node_type () == AST_Decl::NT_pre_defined
+      && (AST_PredefinedType::narrow_from_decl (type)->pt ()
+            == AST_PredefinedType::PT_void))
+    {
+      return 1;
+    }
+  else
+    {
+      return 0;
+    }
+}
+
 // Return the member count.
 int
 AST_Operation::argument_count (void)
@@ -269,6 +286,16 @@ AST_Operation::be_add_exceptions (UTL_ExceptList *t)
     }
 
   return this->pd_exceptions;
+}
+
+AST_Argument *
+AST_Operation::be_add_argument (AST_Argument *arg)
+{
+  this->add_to_scope (arg);
+  this->add_to_referenced (arg,
+                           0,
+                           0);
+  return arg;
 }
 
 // Add these exceptions (identified by name) to this scope.

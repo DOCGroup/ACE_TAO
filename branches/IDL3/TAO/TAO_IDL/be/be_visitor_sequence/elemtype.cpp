@@ -94,6 +94,10 @@ be_visitor_sequence_elemtype::visit_predefined_type (be_predefined_type *node)
           {
             *os << "TAO_Pseudo_Object_Manager<";
           }
+        else if (node->is_abstract ())
+          {
+            *os << "TAO_Abstract_Manager<";
+          }
         else
           {
             *os << "TAO_Object_Manager<";
@@ -148,13 +152,29 @@ be_visitor_sequence_elemtype::visit_interface (be_interface *node)
 
   if (this->ctx_->state () == TAO_CodeGen::TAO_SEQELEM_RETTYPE_CH)
     {
-      *os << "TAO_Object_Manager<";
+      if (node->is_abstract ())
+        {
+          *os << "TAO_Abstract_Manager<";
+        }
+      else
+        {
+          *os << "TAO_Object_Manager<";
+        }
+
       *os << bt->nested_type_name (this->ctx_->scope ()) << ", ";
       *os << bt->nested_type_name (this->ctx_->scope (), "_var") << ">";
     }
   else
     {
-      *os << "TAO_Object_Manager<";
+      if (node->is_abstract ())
+        {
+          *os << "TAO_Abstract_Manager<";
+        }
+      else
+        {
+          *os << "TAO_Object_Manager<";
+        }
+
       *os << bt->name () << ", ";
       *os << bt->name () << "_var>";
     }

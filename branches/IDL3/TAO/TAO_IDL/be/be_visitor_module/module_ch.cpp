@@ -40,6 +40,10 @@ be_visitor_module_ch::visit_module (be_module *node)
   if (!node->cli_hdr_gen () && !node->imported ())
     {
       TAO_OutStream *os = this->ctx_->stream ();
+
+      *os << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
       os->indent ();
 
       *os << "TAO_NAMESPACE "
@@ -58,7 +62,10 @@ be_visitor_module_ch::visit_module (be_module *node)
                             -1);
         }
 
-      *os << be_uidt_nl
+      *os << be_uidt_nl << "// TAO_IDL - Generated from" << be_nl
+          << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+
+      *os << be_nl
           << "}\nTAO_NAMESPACE_CLOSE // module " << node->name () << "\n\n";
 
     }

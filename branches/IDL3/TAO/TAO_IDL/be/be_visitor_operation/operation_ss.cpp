@@ -98,6 +98,10 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Generate the signature of the static skeleton.
   os->indent ();
+
+  *os << "// TAO_IDL - Generated from " << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "void " << intf->full_skel_name () << "::";
 
   // Check if we are an attribute node in disguise.
@@ -339,10 +343,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Invoke the send_reply() or send_other() interception point, and
   // check for exception.
-  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl;
+  *os << "\n#if (TAO_HAS_INTERCEPTORS == 1)" << be_uidt_nl;
 
-  *os << be_uidt
-      << "}" << be_nl << be_nl;
+  *os << "}" << be_nl << be_nl;
 
   // Grab the right visitor to generate the return type accessor if
   // it's not void since we can't have a private member to be of void
@@ -411,14 +414,21 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   *os << be_nl
       << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION" << be_nl
       << "    || _tao_status == PortableInterceptor::USER_EXCEPTION)"
-      << be_idt_nl;
+      << be_idt_nl
+      << "{" << be_idt_nl;
 
   if (be_global->use_raw_throw ())
-    *os << "throw;" << be_uidt << be_uidt_nl;
+    {
+      *os << "throw;";
+    }
   else
-    *os << "ACE_RE_THROW;" << be_uidt << be_uidt_nl;
+    {
+      *os << "ACE_RE_THROW;";
+    }
 
-  *os << "}" << be_uidt_nl
+  *os << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl
+      << "}" << be_uidt_nl
       << "ACE_ENDTRY;" << be_nl;
   *os << "ACE_CHECK;\n"
       << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
@@ -447,9 +457,9 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   *os << "// In case _tao_servant_upcall is not used in this function"
       << be_nl
-      << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_nl << be_nl;
+      << "ACE_UNUSED_ARG (_tao_servant_upcall);" << be_uidt_nl
+      << "}\n\n";
 
-  *os << be_uidt << "}\n\n";
   return 0;
 }
 

@@ -279,6 +279,9 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                         -1);
     }
 
+  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   os->indent (); // start from current indentation level
 
   // Generate the typecode information here
@@ -376,6 +379,7 @@ be_visitor_typecode_defn::visit_type (be_type *node)
     {
       *os << "TAO_NAMESPACE_TYPE (CORBA::TypeCode_ptr)" << be_nl;
       be_module *module = be_module::narrow_from_scope (node->defined_in ());
+
       if (!module || (this->gen_nested_namespace_begin (module) == -1))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -383,17 +387,21 @@ be_visitor_typecode_defn::visit_type (be_type *node)
                              "Error parsing nested name\n"),
                             -1);
         }
-      *os << "TAO_NAMESPACE_DEFINE (::CORBA::TypeCode_ptr, _tc_";
+
+      *os << "TAO_NAMESPACE_DEFINE (" << be_idt << be_idt_nl
+          << "::CORBA::TypeCode_ptr," << be_nl 
+          << "_tc_";
 
       // Local name generation.
       *os << node->local_name ();
 
-      *os << ", &_tc_TAO_tc_";
+      *os << "," << be_nl
+          << "&_tc_TAO_tc_";
 
       // Flat name generation.
       *os << node->flat_name ();
 
-      *os << ")" << be_nl;
+      *os << be_uidt_nl << ")" << be_uidt_nl;
 
       if (this->gen_nested_namespace_end (module) == -1)
         {

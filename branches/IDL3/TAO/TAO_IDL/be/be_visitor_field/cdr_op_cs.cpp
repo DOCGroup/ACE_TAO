@@ -87,8 +87,8 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_cs::"
                              "visit_array - "
-                             "codegen failed\n"
-                             ), -1);
+                             "codegen failed\n"), 
+                            -1);
         }
     }
 

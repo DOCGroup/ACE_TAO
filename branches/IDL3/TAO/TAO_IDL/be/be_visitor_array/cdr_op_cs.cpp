@@ -45,6 +45,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
 {
   // retrieve the base type
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -84,4 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define IDL_CF_INFORMATIVE      (long)(1 << 4)
 #define IDL_CF_NOWARNINGS       (long)(1 << 5)
 
+#define NAMEBUFSIZE 1024
+// Maximum length of static buffers used to store names.
+
 #endif  // _IDL_DEFINES_IDL_DEFINES_HH

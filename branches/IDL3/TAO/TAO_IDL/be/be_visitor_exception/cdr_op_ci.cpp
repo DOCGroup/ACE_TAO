@@ -81,7 +81,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
 
       // some members
       *os << "// first marshal the repository ID" << be_nl
-          << "if (strm << _tao_aggregate._id ())" << be_nl
+          << "if (strm << _tao_aggregate._rep_id ())" << be_nl
           << "{" << be_idt_nl
           << "// now marshal the members (if any)" << be_nl
           << "if (" << be_idt_nl;
@@ -108,7 +108,7 @@ be_visitor_exception_cdr_op_ci::visit_exception (be_exception *node)
     {
       // No members.
       *os << "// first marshal the repository ID" << be_nl
-          << "if (strm << _tao_aggregate._id ())" << be_idt_nl
+          << "if (strm << _tao_aggregate._rep_id ())" << be_idt_nl
           << "return 1;" << be_uidt_nl
           << "else" << be_idt_nl
           << "return 0;" << be_uidt << be_uidt_nl;

@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"
+#include "global_extern.h"
 #include "ace/Log_Msg.h"
 
 ACE_RCSID (ast, 
@@ -108,12 +109,11 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
     }
   else
     {
-      Identifier *corba_id = 0;
-      ACE_NEW (corba_id,
-               Identifier ("CORBA"));
+      ACE_NEW (id,
+               Identifier (idl_global->nest_orb () ? "NORB" : "CORBA"));
 
       ACE_NEW (new_name,
-               UTL_ScopedName (corba_id,
+               UTL_ScopedName (id,
                                0));
 
       UTL_ScopedName *conc_name = 0;

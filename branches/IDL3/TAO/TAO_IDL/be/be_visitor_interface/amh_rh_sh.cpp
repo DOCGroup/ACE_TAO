@@ -37,7 +37,6 @@ int
 be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-
   os->indent ();
 
   // Generate the skeleton class name, use the AMH-node name as a
@@ -93,5 +92,6 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
     }
 
   *os << be_uidt_nl << "};\n\n";
+
   return 0;
 }

@@ -348,14 +348,22 @@ AST_Home *
 be_generator::create_home (UTL_ScopedName *n,
                            AST_Home *base_home,
                            AST_Component *managed_component,
-                           AST_ValueType *primary_key)
+                           AST_ValueType *primary_key,
+                           AST_Interface **supports,
+                           long n_supports,
+                           AST_Interface **supports_flat,
+                           long n_supports_flat)
 {
   be_home *retval = 0;
   ACE_NEW_RETURN (retval,
                   be_home (n,                           
                            base_home,
                            managed_component,
-                           primary_key),
+                           primary_key,
+                           supports,
+                           n_supports,
+                           supports_flat,
+                           n_supports_flat),
                   0);
 
   return retval;

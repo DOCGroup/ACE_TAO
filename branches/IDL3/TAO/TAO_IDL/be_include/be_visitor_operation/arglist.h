@@ -51,7 +51,6 @@ public:
 
   virtual int post_process (be_decl *);
   // stuff to o/p after each element of the scope is handled
-
 };
 
 #endif /* _BE_VISITOR_OPERATION_ARGLIST_H_ */

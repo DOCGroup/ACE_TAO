@@ -124,6 +124,11 @@ public:
   idl_bool ifr_fwd_added (void);
   void ifr_fwd_added (idl_bool val);
 
+  const char *nested_type_name (AST_Decl *d,
+                                const char *suffix = 0,
+                                const char *prefix = 0);
+  // Type name of a node used when generating declarations.
+
   // Narrowing.
   DEF_NARROW_METHODS1(AST_Type, AST_Decl);
   DEF_NARROW_FROM_DECL(AST_Type);
@@ -138,6 +143,13 @@ protected:
   virtual int compute_size_type (void);
   // Determine our size type and set it if it is unknown.
 
+  const char *nested_name (const char *local_name,
+                           const char *full_name,
+                           AST_Decl *use_scope,
+                           const char *suffix,
+                           const char *prefix);
+  // Type name of a node used when generating declarations.
+
   // Has the full definition been added to the Interface Repository?
   // Used for types which can have members and can be forward declared.
   idl_bool ifr_added_;
@@ -151,6 +163,9 @@ protected:
   idl_bool has_constructor_;
   // Attribute that helps a union determine whether a member
   // should be included by value or by reference.
+
+  char *nested_type_name_;
+  // For the corresponding method.
 };
 
 #endif           // _AST_TYPE_AST_TYPE_HH

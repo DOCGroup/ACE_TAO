@@ -313,8 +313,8 @@ DRV_cpp_init (void)
 #endif  /* TAO_IDL_INCLUDE_DIR */
 
           DRV_cpp_putarg (option);
-      }
-  }
+        }
+    }
 
   // Add any flags in cpp_args to cpp's arglist.
   ACE_ARGV arglist (cpp_args);
@@ -784,7 +784,7 @@ DRV_pre_proc (const char *myfile)
   if (idl_global->compile_flags() & IDL_CF_ONLY_PREPROC)
     {
       FILE *preproc = ACE_OS::fopen (tmp_file, "r");
-      char buffer[ACE_Log_Record::MAXLOGMSGLEN];
+      char buffer[ACE_MAXLOGMSGLEN];
       int bytes;
 
       if (preproc == 0)
@@ -809,7 +809,7 @@ DRV_pre_proc (const char *myfile)
 
       while ((bytes = ACE_OS::fread (buffer,
                                      sizeof (char),
-                                     ACE_Log_Record::MAXLOGMSGLEN - 1,
+                                     ACE_MAXLOGMSGLEN - 1,
                                      preproc))
           != 0)
         {

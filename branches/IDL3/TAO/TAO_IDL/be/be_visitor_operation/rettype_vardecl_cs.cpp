@@ -200,7 +200,9 @@ be_visitor_operation_rettype_vardecl_cs::visit_valuetype_fwd (be_valuetype_fwd *
 }
 
 int
-be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_type *node)
+be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (
+    be_predefined_type *node
+  )
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_type *bt;
@@ -246,7 +248,7 @@ be_visitor_operation_rettype_vardecl_cs::visit_predefined_type (be_predefined_ty
       break;
     }
 
-  *os << be_nl << be_nl;
+  *os << be_nl;
 
   return 0;
 }

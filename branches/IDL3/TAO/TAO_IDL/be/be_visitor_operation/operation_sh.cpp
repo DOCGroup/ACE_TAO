@@ -43,6 +43,9 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
 
   os->indent ();
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "virtual ";
 
   // STEP I: generate the return type.
@@ -92,7 +95,6 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   // if there was no "native" type.
   if (!node->has_native ())
     {
-      os->indent ();
       *os << "static void ";
 
       // Check if we are an attribute node in disguise.
@@ -109,13 +111,13 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
             }
         }
 
-      *os << node->local_name () <<
-        "_skel (" << be_idt << be_idt_nl
+      *os << node->local_name ()
+          << "_skel (" << be_idt << be_idt_nl
           << "TAO_ServerRequest &_tao_req," << be_nl
           << "void *_tao_obj," << be_nl
           << "void *_tao_servant_upcall" << be_nl
           << "ACE_ENV_ARG_DECL" << be_uidt_nl
-          << ");" << be_uidt << "\n\n";
+          << ");" << be_uidt << "\n";
     }
 
   return 0;

@@ -36,6 +36,9 @@ be_visitor_interface_strategized_proxy_broker_ss::visit_interface (
       << "//            Strategized Proxy Broker Implementation" << be_nl
       << "//" << be_nl << be_nl;
 
+  *os << "// TAO_IDL - Generated from" << be_nl
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
   *os << "// Factory function Implementation." << be_nl
       << node->full_strategized_proxy_broker_name ()
       << " *" << node->full_strategized_proxy_broker_name () << "::the"

@@ -85,9 +85,10 @@ AST_Root::AST_Root (void)
 }
 
 AST_Root::AST_Root (UTL_ScopedName *n)
-	: AST_Decl (AST_Decl::NT_module,
+	: AST_Module (n),
+    AST_Decl (AST_Decl::NT_root,
               n),
-	  UTL_Scope (AST_Decl::NT_module)
+	  UTL_Scope (AST_Decl::NT_root)
 {
 }
 

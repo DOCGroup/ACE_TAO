@@ -134,6 +134,5 @@ be_visitor_amh_interface_ch::visit_interface (be_interface *node)
     }
 
   node->cli_hdr_gen (I_TRUE);
-
   return 0;
 }

@@ -45,10 +45,11 @@ be_visitor_args_post_invoke_cs::~be_visitor_args_post_invoke_cs (void)
 int
 be_visitor_args_post_invoke_cs::visit_argument (be_argument *node)
 {
-  this->ctx_->node (node); // save the argument node
+  this->ctx_->node (node);
 
-  // retrieve the type of the argument
+  // Retrieve the type of the argument.
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -76,10 +77,9 @@ be_visitor_args_post_invoke_cs::visit_argument (be_argument *node)
 int
 be_visitor_args_post_invoke_cs::visit_interface (be_interface *node)
 {
-  // we must narrow the out object reference to the appropriate type
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  // We must narrow the out object reference to the appropriate type.
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -100,16 +100,16 @@ be_visitor_args_post_invoke_cs::visit_interface (be_interface *node)
     default:
       break;
     }
+
   return 0;
 }
 
 int
 be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *node)
 {
-  // we must narrow the out object reference to the appropriate type
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  // We must narrow the out object reference to the appropriate type.
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -130,16 +130,16 @@ be_visitor_args_post_invoke_cs::visit_interface_fwd (be_interface_fwd *node)
     default:
       break;
     }
+
   return 0;
 }
 
 int
 be_visitor_args_post_invoke_cs::visit_valuetype (be_valuetype *)
 {
-  // we must narrow the out object reference to the appropriate type
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  // We must narrow the out object reference to the appropriate type.
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -153,16 +153,16 @@ be_visitor_args_post_invoke_cs::visit_valuetype (be_valuetype *)
     default:
       break;
     }
+
   return 0;
 }
 
 int
 be_visitor_args_post_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 {
-  // we must narrow the out object reference to the appropriate type
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  // We must narrow the out object reference to the appropriate type.
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
 
   switch (this->direction ())
     {
@@ -176,15 +176,16 @@ be_visitor_args_post_invoke_cs::visit_valuetype_fwd (be_valuetype_fwd *)
     default:
       break;
     }
+
   return 0;
 }
 
 int
 be_visitor_args_post_invoke_cs::visit_string (be_string *node)
 {
-  TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  be_argument *arg = this->ctx_->be_node_as_argument (); // get the argument
-                                                         // node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_argument *arg = this->ctx_->be_node_as_argument ();
+
   switch (this->direction ())
     {
     case AST_Argument::dir_IN:
@@ -207,6 +208,7 @@ be_visitor_args_post_invoke_cs::visit_string (be_string *node)
     case AST_Argument::dir_OUT:
       break;
     }
+
   return 0;
 }
 
@@ -214,6 +216,7 @@ int
 be_visitor_args_post_invoke_cs::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
+
   if (node->primitive_base_type ()->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -222,6 +225,7 @@ be_visitor_args_post_invoke_cs::visit_typedef (be_typedef *node)
                          "accept on primitive type failed\n"),
                         -1);
     }
+
   this->ctx_->alias (0);
   return 0;
 }

@@ -77,10 +77,8 @@ public:
   // visit union
 
 protected:
-
   int visit_node (be_type *);
   // helper that does the common job
-
 };
 
 #endif /* _BE_VISITOR_ARRAY_CDR_OP_CI_H_ */

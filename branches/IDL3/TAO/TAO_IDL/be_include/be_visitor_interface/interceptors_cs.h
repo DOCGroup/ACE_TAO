@@ -37,7 +37,6 @@ public:
 
   virtual int visit_interface (be_interface *node);
   // visit an interface
-
 };
 
 #endif /* _BE_INTERFACE_INTERCEPTORS_CS_H_ */

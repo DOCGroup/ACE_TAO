@@ -46,12 +46,6 @@ be_visitor_typedef_cdr_op_ci::visit_typedef (be_typedef *node)
       return 0;
     }
 
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // Generate the CDR << and >> operator impls.
-
-  os->indent ();
-
   // In general, we may have a chain of typedefs. i.e.,
   // typedef sequence<long> X;
   // typedef X Y;

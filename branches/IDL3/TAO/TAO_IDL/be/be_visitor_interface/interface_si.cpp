@@ -39,7 +39,10 @@ be_visitor_interface_si::~be_visitor_interface_si (void)
 int
 be_visitor_interface_si::visit_interface (be_interface *node)
 {
-  if (node->srv_inline_gen () || node->imported () || node->is_local ())
+  if (node->srv_inline_gen () 
+      || node->imported () 
+      || node->is_local ()
+      || node->is_abstract ())
     {
       return 0;
     }
@@ -69,7 +72,8 @@ be_visitor_interface_si::visit_interface (be_interface *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_interface_si::"
                          "visit_interface - "
-                         "codegen for base class skeletons failed\n"), -1);
+                         "codegen for base class skeletons failed\n"), 
+                        -1);
     }
 
   if (be_global->gen_tie_classes ())

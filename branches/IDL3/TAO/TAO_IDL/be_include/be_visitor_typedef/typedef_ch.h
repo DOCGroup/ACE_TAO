@@ -70,7 +70,6 @@ public:
 
   virtual int visit_union (be_union *node);
   // visit a union
-
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CH_H_ */

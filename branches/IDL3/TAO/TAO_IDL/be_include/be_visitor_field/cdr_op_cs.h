@@ -22,8 +22,6 @@
 #ifndef _BE_VISITOR_FIELD_CDR_OP_CS_H_
 #define _BE_VISITOR_FIELD_CDR_OP_CS_H_
 
-#include "be_visitor_scope.h"
-
 class be_visitor_field_cdr_op_cs : public be_visitor_decl
 {
   //
@@ -51,7 +49,6 @@ public:
   virtual int visit_structure (be_structure *node);
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_union (be_union *node);
-
 };
 
 #endif /*  _BE_VISITOR_FIELD_CDR_OP_CS_H_ */

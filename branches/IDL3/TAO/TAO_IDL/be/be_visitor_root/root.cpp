@@ -65,18 +65,18 @@ int be_visitor_root::visit_root (be_root *node)
   if (this->ctx_->state () == TAO_CodeGen::TAO_ROOT_CH)
     {
       TAO_OutStream *os = this->ctx_->stream ();
-
-      size_t size = be_global->non_local_interfaces.size ();
       be_interface *i = 0;
       be_interface_fwd *ifwd = 0;
       size_t index = 0;
 
+      size_t size = be_global->non_local_interfaces.size ();
+
       if (size > 0)
         {
           *os << "// Proxy Broker Factory function pointer declarations."
-              << be_nl << be_nl;
-          *os << be_nl << "// TAO_IDL - Generated from "
-              << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+              << be_nl;
+          *os << be_nl << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
         }
 
       for (index = 0; index < size; ++index)
@@ -97,7 +97,7 @@ int be_visitor_root::visit_root (be_root *node)
 
       if (size > 0)
         {
-          *os << be_nl << "// TAO_IDL - Generated from "
+          *os << "// TAO_IDL - Generated from "
               << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
         }
 
@@ -140,6 +140,39 @@ int be_visitor_root::visit_root (be_root *node)
               << "_upcast (" << be_idt << be_idt_nl
               << "void *" << be_uidt_nl
               << ");" << be_uidt_nl << be_nl;
+        }
+
+      size = be_global->mixed_parentage_interfaces.size ();
+
+      if (size > 0)
+        {
+          *os << "// TAO_IDL - Generated from" << be_nl
+              << "// " << __FILE__ << ":" << __LINE__ << be_nl << be_nl;
+
+          *os << "// Overrides of CORBA::release and CORBA::is_nil for" 
+              << be_nl
+              << "// interfaces that inherit from both CORBA::Object" << be_nl
+              << "// and CORBA::AbstractBase." << be_nl << be_nl
+              << "TAO_NAMESPACE CORBA" << be_nl
+              << "{" << be_idt;
+        }
+
+      for (index = 0; index < size; ++index)
+        {
+          be_global->mixed_parentage_interfaces.dequeue_head (i);
+
+          *os << be_nl
+              << "TAO_NAMESPACE_STORAGE_CLASS void release ("
+              << i->name () << "_ptr);" << be_nl
+              << "TAO_NAMESPACE_STORAGE_CLASS CORBA::Boolean is_nil ("
+              << i->name () << "_ptr);";
+        }
+
+      if (size > 0)
+        {
+          *os << be_uidt_nl
+              << "}" << be_nl
+              << "TAO_NAMESPACE_CLOSE" << be_nl << be_nl;
         }
     }
 
@@ -460,8 +493,8 @@ be_visitor_root::visit_enum (be_enum *node)
     case TAO_CodeGen::TAO_ROOT_SH:
     case TAO_CodeGen::TAO_ROOT_SI:
     case TAO_CodeGen::TAO_ROOT_SS:
-        case TAO_CodeGen::TAO_ROOT_IS:
-        case TAO_CodeGen::TAO_ROOT_IH:
+    case TAO_CodeGen::TAO_ROOT_IS:
+    case TAO_CodeGen::TAO_ROOT_IH:
       return 0; // nothing to be done
     default:
       {

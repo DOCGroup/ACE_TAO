@@ -38,7 +38,11 @@ public:
   be_home (UTL_ScopedName *n,
            AST_Home *base_home,
            AST_Component *managed_component,
-           AST_ValueType *primary_key);
+           AST_ValueType *primary_key,
+           AST_Interface **supports,
+           long n_supports,
+           AST_Interface **supports_flat,
+           long n_supports_flat);
 
   virtual ~be_home (void);
 
