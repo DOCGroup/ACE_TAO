@@ -73,8 +73,8 @@ Peer_Handler::handle_input (ACE_HANDLE)
 }
 
 int 
-Peer_Handler::handle_close (ACE_HANDLE handle,
-			    ACE_Reactor_Mask mask)
+Peer_Handler::handle_close (ACE_HANDLE,
+			    ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down\n"));
   return 0;
