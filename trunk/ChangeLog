@@ -1,87 +1,95 @@
+Tue Mar 29 06:21:34 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Support the modification to the MPC xerces base project that set
+          the xerceslib template variable to allow for the many different
+          library names it could have.
+
 Mon Mar 28 17:32:30 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Process.h:
+        * ace/Process.h:
 
-	  Fix typo in comment.
+          Fix typo in comment.
 
 Fri Mar 25 16:41:56 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
         * bin/MakeProjectCreator/modules/AutomakeWorkspaceHelper.pm:
 
-	  Change regular expression match $(KEY) instead of of adding
-	  "$(" and ")" to the key itself.
+          Change regular expression match $(KEY) instead of of adding
+          "$(" and ")" to the key itself.
 
 Fri Mar 25 09:27:40 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* configure.ac:
-	* m4/config_h.m4:
+        * configure.ac:
+        * m4/config_h.m4:
 
-	  Removed ACE_{,U}INT64_TYPEDEF macros.  These resulted in
-	  preprocessor conditionals used to set ACE_{,U}INT64.  Now that
-	  Basic_Types.h has been refactored, config headers can override
-	  it by defining ACE_{,U}INT{8,16,32,64}_TYPE.  We will use that
-	  generalized infrastructure instead.
+          Removed ACE_{,U}INT64_TYPEDEF macros.  These resulted in
+          preprocessor conditionals used to set ACE_{,U}INT64.  Now that
+          Basic_Types.h has been refactored, config headers can override
+          it by defining ACE_{,U}INT{8,16,32,64}_TYPE.  We will use that
+          generalized infrastructure instead.
 
 Fri Mar 25 07:49:08 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Basic_Types.h:
+        * ace/Basic_Types.h:
 
-	  Fix typo -- missing trailing semicolon when defining
-	  ACE_{,U}INT64 from ACE_{U,}INT64_TYPE.
+          Fix typo -- missing trailing semicolon when defining
+          ACE_{,U}INT64 from ACE_{U,}INT64_TYPE.
 
 Fri Mar 25 07:10:35 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-unixware-7.1.0.h:
-	* ace/config-unixware-7.1.0.udk.h:
+        * ace/config-unixware-7.1.0.h:
+        * ace/config-unixware-7.1.0.udk.h:
 
-	  Removed ACE_UINT64_TYPEDEF definition.  Let Basic_Types.h
-	  do its thing.
+          Removed ACE_UINT64_TYPEDEF definition.  Let Basic_Types.h
+          do its thing.
 
 Fri Mar 25 07:02:59 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/config-win32-common.h:
+        * ace/config-win32-common.h:
 
-	  Define ACE_INT64_TYPE and ACE_UINT64_TYPE macros instead of
-	  actual typedef definitions.
+          Define ACE_INT64_TYPE and ACE_UINT64_TYPE macros instead of
+          actual typedef definitions.
 
 Thu Mar 24 23:42:34 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Basic_Types.h:
+        * ace/Basic_Types.h:
 
-	  Fix typo in ACE_SIZEOF_LONG_LONG definition for systems with
-	  ACE_LACKS_LONG_LONG set.
+          Fix typo in ACE_SIZEOF_LONG_LONG definition for systems with
+          ACE_LACKS_LONG_LONG set.
 
-	  Set ACE_SIZEOF_LONG_LONG to 8 if we can't figure out what to set
-	  it to from ULLONG_MAX or ULONGLONG_MAX, which may not be present
-	  or may need special contortions to be defined.
+          Set ACE_SIZEOF_LONG_LONG to 8 if we can't figure out what to set
+          it to from ULLONG_MAX or ULONGLONG_MAX, which may not be present
+          or may need special contortions to be defined.
 
 Thu Mar 24 12:27:05 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/README:
+        * ace/README:
 
-	  Describe ACE_{,U}INT{8,16,32,64}_FORMAT_SPECIFIER macros.
+          Describe ACE_{,U}INT{8,16,32,64}_FORMAT_SPECIFIER macros.
 
-	  Describe ACE_{,U}INT{8,16,32,64}_TYPE macros.
+          Describe ACE_{,U}INT{8,16,32,64}_TYPE macros.
 
-	* ace/Basic_Types.h:
+        * ace/Basic_Types.h:
 
-	  Decouple the conditionals used to set the ACE_SIZEOF_{SHORT,INT,
-	  LONG,LONG_LONG} macros from those used to define the
-	  ACE_{,U}INT{8,16,32,64} types.
+          Decouple the conditionals used to set the ACE_SIZEOF_{SHORT,INT,
+          LONG,LONG_LONG} macros from those used to define the
+          ACE_{,U}INT{8,16,32,64} types.
 
-	  Removed cases for specific CPUs and OSs, but provide a mechanism
-	  where values can be set in platform specific config-*.h headers.
+          Removed cases for specific CPUs and OSs, but provide a mechanism
+          where values can be set in platform specific config-*.h headers.
 
 Thu Mar 24 11:26:58 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/README:
+        * ace/README:
 
-	  Describe ACE_HAS_{,U}INT{8,16,32,64}_T macros.
+          Describe ACE_HAS_{,U}INT{8,16,32,64}_T macros.
 
-	* configure.ac:
+        * configure.ac:
 
-	  Added check for {,u}int{8,16,32,64}_t types and set
-	  ACE_HAS_{,U}INT32_T if found.
+          Added check for {,u}int{8,16,32,64}_t types and set
+          ACE_HAS_{,U}INT32_T if found.
 
 Thu Mar 24 13:23:00 2005  Rich Seibel  <seibel_r@ociweb.com>
 
@@ -102,12 +110,12 @@ Thu Mar 24 13:23:00 2005  Rich Seibel  <seibel_r@ociweb.com>
 
 Thu Mar 24 14:12:19 2005  Steve Huston  <shuston@riverace.com>
 
-	* include/makeinclude/platform_hpux_aCC.GNU: Rather than hand-set all
-	  needed macros and library references for multithreading, use the
-	  compiler's -mt option if not on a .2x compiler version. -mt was
-	  added at 03.30, so 03.2x doesn't have it - maintain the hand-set
-	  values for that. This leaves out .1x versions which probably
-	  aren't used any longer anyway.
+        * include/makeinclude/platform_hpux_aCC.GNU: Rather than hand-set all
+          needed macros and library references for multithreading, use the
+          compiler's -mt option if not on a .2x compiler version. -mt was
+          added at 03.30, so 03.2x doesn't have it - maintain the hand-set
+          values for that. This leaves out .1x versions which probably
+          aren't used any longer anyway.
 
 Thu Mar 24 13:17:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -152,11 +160,11 @@ Wed Mar 23 16:51:00 2005  Gary Maxey <gary.maxey@hp.com>
 
 Wed Mar 23 10:11:02 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
-	* ace/Time_Value.h:
+        * ace/Time_Value.h:
 
-	  Remove HPUX_10 conditional timespec_t typedef.  The typedef is
-	  also defined if ACE_LACKS_TIMESPEC_T, which is set in the HPUX
-	  config-*.h files.
+          Remove HPUX_10 conditional timespec_t typedef.  The typedef is
+          also defined if ACE_LACKS_TIMESPEC_T, which is set in the HPUX
+          config-*.h files.
 
 Wed Mar 23 06:28:00 2005  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -316,13 +324,13 @@ Fri Mar 18 09:49:32 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 Thu Mar 17 23:13:34 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-	* ace/config-lite.h:
+        * ace/config-lite.h:
 
-	  Mark ACE template specialization related macros as deprecated
-	  through documentation and by placing them within an "#if
-	  !defined (ACE_LACKS_DEPRECATED_MACROS)" block.  Developers
-	  should use the standard C++ template specialization syntax
-	  instead.
+          Mark ACE template specialization related macros as deprecated
+          through documentation and by placing them within an "#if
+          !defined (ACE_LACKS_DEPRECATED_MACROS)" block.  Developers
+          should use the standard C++ template specialization syntax
+          instead.
 
 Thu Mar 17 11:02:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
