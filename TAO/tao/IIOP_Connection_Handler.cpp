@@ -83,10 +83,6 @@ TAO_IIOP_Connection_Handler::open (void*)
                                 sizeof (int)) == -1)
     return -1;
 #endif /* ! ACE_LACKS_TCP_NODELAY */
-
-  if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    return -1;
-
   // Called by the <Strategy_Acceptor> when the handler is
   // completely connected.
   ACE_INET_Addr addr;
