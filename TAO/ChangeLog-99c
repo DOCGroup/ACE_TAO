@@ -1,9 +1,16 @@
+Mon Jun 21 14:50:58 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp
+	  (visit_interface):  Added ACE_UNUSED_ARG for the <type> argument
+	  in _create_collocated_objref.  Thanks to Carlos for pointing
+	  this out.
+
 Mon Jun 21 14:54:24 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Makefile: Added the option -Ge 1.
 	* rules.tao.GNU : Removed the addition of default variable -Ge 1
 	  from this file.
-	
+
 Mon Jun 21 14:15:33 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* performance-tests/Makefile:
