@@ -155,7 +155,7 @@ client (void *arg = 0)
   ACE_UNUSED_ARG (arg);
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
 #endif /* ACE_HAS_THREADS */
 
   ACE_SOCK_IOStream server;
@@ -247,9 +247,9 @@ server (void *arg = 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "get_local_addr"), 0);
 
 #if defined (ACE_HAS_THREADS)
-  ACE_Thread_Control thread_control (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control thread_control (ACE_Thread_Manager::instance ());
 
-  if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (client), 
+  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client), 
 					     (void *) &server_addr,
 					     THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
@@ -335,7 +335,7 @@ spawn (void)
   if (acceptor.open ((const ACE_INET_Addr &) ACE_Addr::sap_any) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n", "open"), -1);
 #if defined (ACE_HAS_THREADS)
-  else if (ACE_Service_Config::thr_mgr ()->spawn (ACE_THR_FUNC (server),
+  else if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
 						  &acceptor,
 						  THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, 
@@ -343,7 +343,7 @@ spawn (void)
 		      -1);
 
   // Wait for the client and server thread to exit.
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 #elif !defined (ACE_LACKS_EXEC)
 
   switch (ACE_OS::fork ("child"))

@@ -35,14 +35,14 @@ handler (int signum)
 static void *
 worker (int iterations)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   for (int i = 0; i < iterations; i++)
     {
       if ((i % 1000) == 0)
 	{
-	  if (ACE_Service_Config::thr_mgr ()->testcancel (ACE_Thread::self ()) != 0)
+	  if (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0)
 	    {
 	      ACE_DEBUG ((LM_DEBUG, 
 			  "(%t) has been cancelled before iteration %d!\n", 
@@ -76,7 +76,7 @@ main (int, char *[])
   int n_threads = DEFAULT_THREADS;
   int n_iterations = DEFAULT_ITERATIONS;
 
-  ACE_Thread_Manager *thr_mgr = ACE_Service_Config::thr_mgr ();
+  ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
 				 (void *) n_iterations,

@@ -225,7 +225,7 @@ main (int, char *[])
 
   ACE_DEBUG ((LM_DEBUG, "(%t) waiting for worker tasks to finish...\n"));
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_ASSERT (thread_pool.msg_queue ()->is_empty ());
   ACE_DEBUG ((LM_DEBUG, "(%t) destroying worker tasks and exiting...\n"));

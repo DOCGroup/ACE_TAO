@@ -293,7 +293,7 @@ main (int, char *[])
     
       ACE_DEBUG ((LM_DEBUG, "(%t) waiting for worker tasks to finish...\n"));
     
-      ACE_Service_Config::thr_mgr ()->wait ();
+      ACE_Thread_Manager::instance ()->wait ();
       ptime.stop ();
       ptime.elapsed_time (alloc_struct[i].et_);
 

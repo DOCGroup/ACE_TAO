@@ -88,7 +88,7 @@ parse_args (int argc, char *argv[])
 static void *
 reader (void *)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) reader starting\n"));
@@ -128,7 +128,7 @@ reader (void *)
 static void *
 writer (void *)
 {
-  ACE_Thread_Control tc (ACE_Service_Config::thr_mgr ());
+  ACE_Thread_Control tc (ACE_Thread_Manager::instance ());
   ACE_NEW_THREAD;
 
   ACE_DEBUG ((LM_DEBUG, " (%t) writer starting\n"));
@@ -184,18 +184,18 @@ int main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, " (%t) main thread starting\n"));
 
-  if (ACE_Service_Config::thr_mgr ()->spawn_n (n_readers, 
+  if (ACE_Thread_Manager::instance ()->spawn_n (n_readers, 
 					       ACE_THR_FUNC (reader), 
 					       0, 
 					       THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
-  else if (ACE_Service_Config::thr_mgr ()->spawn_n (n_writers, 
+  else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers, 
 						    ACE_THR_FUNC (writer), 
 						    0, 
 						    THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn_n"), 1);
 
-  ACE_Service_Config::thr_mgr ()->wait ();
+  ACE_Thread_Manager::instance ()->wait ();
 
   ACE_DEBUG ((LM_DEBUG, " (%t) exiting main thread\n"));
 #else
