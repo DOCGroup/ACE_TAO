@@ -9,24 +9,53 @@
 //    CORBA_macros.h
 //
 // = DESCRIPTION
-//   Writing code that is portable between platforms with a without
+//   Writing code that is portable between platforms with or without
 //   native C++ exceptions is hard.  The following macros offer some
 //   help on this task, mostly oriented to making the ORB code and the
 //   IDL generated code portable.
 //
 // = AUTHOR
 //    Nanbor Wang <nanbor@cs.wustl.edu>
-//        Based on the old <tao/try_macros.h> by
+//        Based on the original <tao/try_macros.h> implementation by
 //        Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
-//        Carlos O'Ryan  <coryan@cs.wustl.edu>, et.al.
+//        Carlos O'Ryan  <coryan@cs.wustl.edu>, et al.
 // ============================================================================
 
 // Macros for handling CORBA exceptions.
 
-#define ACE_TRY_ENV _ACE_CORBA_Environment_variable
+// All these macros assume the CORBA::Environment variable used to pass
+// in/out the exception is call ACE_TRY_ENV.  Below is the name we use
+// in TAO (The ACE ORB.)  Most other ORB's have their own naming
+// convention.  You can redefine ACE_TRY_ENV to change the default name
+// ACE_ADOPT_CORBA_ENV allows the use of non-standard name within a
+// scope.
+#if !defined (ACE_TRY_ENV)
+# define ACE_TRY_ENV _ACE_CORBA_Environment_variable
+#endif /* ACE_TRY_ENV */
+
+// By default, if the compiler support native exception handling, assume
+// CORBA also support native exception handling.  But it can be disabled
+// by defining ACE_CORBA_HAS_EXCEPTIONS=0.
+// If the compiler does not support exceptions handling, make sure native
+// exception handling is disabled.
+#if defined (ACE_HAS_EXCEPTIONS)
+# if defined (ACE_CORBA_HAS_EXCEPTIONS)
+#   if (ACE_CORBA_HAS_EXCEPTIONS == 0)
+#     undef ACE_CORBA_HAS_EXCEPTIONS
+#   endif /* ACE_CORBA_HAS_EXCEPTIONS == 0 */
+# else /* !ACE_CORBA_HAS_EXCEPTIONS */
+#   define ACE_CORBA_HAS_EXCEPTIONS
+# endif /* ACE_CORBA_HAS_EXCEPTIONS */
+#else
+# if defined (ACE_CORBA_HAS_EXCEPTIONS)
+#   undef ACE_CORBA_HAS_EXCEPTIONS
+# endif /* ACE_CORBA_HAS_EXCEPTIONS */
+#endif /* ACE_HAS_EXCEPTIONS */
 
 #if defined (ACE_CORBA_HAS_EXCEPTIONS)
 // -----------------------------------------------------------------
+# define ACE_ADOPT_CORBA_ENV(ENV) ACE_UNUSED_ARG(ENV)
+
 // No need to check.  Native exceptions handle the control
 // flow automatically when an exception occurs.
 # define ACE_CHECK
@@ -103,6 +132,8 @@
 // hairy.  Exceptions are simulated using CORBA::Environment.
 // The trick here is to make sure the flow-of-control can simulate
 // the case when native exceptions occur...
+
+# define ACE_ADOPT_CORBA_ENV(ENV) CORBA::Environment &ACE_TRY_ENV = ENV
 
 // Follow every statement that could throw exceptions with ACE_CHECK
 // or ACE_CHECK_ENV.  These two macros should _NOT_ be used within
