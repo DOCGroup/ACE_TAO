@@ -24,13 +24,6 @@
 #include "ace/DLL.h"
 #include "Servant_Manager.h"
 
-// @@ *done*Kirthia, can you please add two new files called
-// Servant_Manager.h and Servant_Manager.cpp that will factor out the
-// common code into a "ServantManager_i" class.  Also, please change
-// the name from "ServantLocator_i" to just "ServantLocator_i",
-// i.e., you'll have ServantLocator_i, ServantActivator_i, and
-// ServantManager_i.
-
 class ServantLocator_i : public POA_PortableServer::ServantLocator
 {
   // = TITLE
