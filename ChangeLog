@@ -1,3 +1,30 @@
+Thu Apr 29 13:48:30 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/OS_NS_sys_socket.inl (sendv):
+
+	  Corrected problem for the Winsock 1 case where the amount of
+	  previously sent data would not be reported if an error occurred
+	  when attempting to send data in a subsequent loop iteration.
+
+	  (accept, recv, send):
+	* ace/OS_NS_unistd.inl (read):
+
+	  Do not set errno to EWOULDBLOCK when errno is set to EAGAIN and
+	  both EGAIN equals EWOULDBLOCK.  This saves us two (equality
+	  check and assignment) TSS accesses for the _REENTRANT case on
+	  platforms where EGAIN and EWOULDBLOCK are the same
+	  (e.g. Linux).  Performance improvements should be evident those
+	  platforms.
+
+	* ace/OS_NS_sys_uio.cpp (writev_emulation):
+
+	  Replaced the old implementation with a new faster one based on
+	  the one in ace/SSL/SSL_SOCK_Stream.cpp that incurs no
+	  allocations nor copies.  The new implementation can also handle
+	  partial writes.  Performance improvements should be visible on
+	  platforms that do not support writev() (i.e. define
+	  ACE_LACKS_WRITEV), such as MS Windows.
+
 Thu Apr 29 14:35:49 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/SOCK_SEQPACK_Connector.cpp (shared_connect_start): Corrected

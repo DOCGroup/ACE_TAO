@@ -72,9 +72,24 @@ ACE_OS::accept (ACE_HANDLE handle,
 #    endif /* VXWORKS */
   ACE_HANDLE ace_result = ::accept ((ACE_SOCKET) handle,
                                     addr,
-                                    (ACE_SOCKET_LEN *) addrlen) ;
-  if (ace_result == ACE_INVALID_HANDLE && errno == EAGAIN)
-    errno = EWOULDBLOCK;
+                                    (ACE_SOCKET_LEN *) addrlen);
+
+# if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
+  // Optimize this code out if we can detect that EAGAIN ==
+  // EWOULDBLOCK at compile time.  If we cannot detect equality at
+  // compile-time (e.g. if EAGAIN or EWOULDBLOCK are not preprocessor
+  // macros) perform the check at run-time.  The goal is to avoid two
+  // TSS accesses in the _REENTRANT case when EAGAIN == EWOULDBLOCK.
+  if (ace_result == ACE_INVALID_HANDLE
+#  if !defined (EAGAIN) || !defined (EWOULDBLOCK)
+      && EAGAIN != EWOULDBLOCK
+#  endif  /* !EAGAIN || !EWOULDBLOCK */
+      && errno == EAGAIN)
+    {
+      errno = EWOULDBLOCK;
+    }
+# endif /* EAGAIN != EWOULDBLOCK*/
+
   return ace_result;
 
 #  endif /* defined (ACE_WIN32) */
@@ -237,8 +252,23 @@ ACE_OS::recv (ACE_HANDLE handle, char *buf, size_t len, int flags)
 #else
   int ace_result_;
   ace_result_ = ::recv ((ACE_SOCKET) handle, buf, len, flags);
-  if (ace_result_ == -1 && errno == EAGAIN)
-    errno = EWOULDBLOCK;
+
+# if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
+  // Optimize this code out if we can detect that EAGAIN ==
+  // EWOULDBLOCK at compile time.  If we cannot detect equality at
+  // compile-time (e.g. if EAGAIN or EWOULDBLOCK are not preprocessor
+  // macros) perform the check at run-time.  The goal is to avoid two
+  // TSS accesses in the _REENTRANT case when EAGAIN == EWOULDBLOCK.
+  if (ace_result == -1
+#  if !defined (EAGAIN) || !defined (EWOULDBLOCK)
+      && EAGAIN != EWOULDBLOCK
+#  endif  /* !EAGAIN || !EWOULDBLOCK */
+      && errno == EAGAIN)
+    {
+      errno = EWOULDBLOCK;
+    }
+# endif /* EAGAIN != EWOULDBLOCK*/
+
   return ace_result_;
 #endif /* defined (ACE_WIN32) */
 }
@@ -453,8 +483,23 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
 #  else
   ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
 #  endif /* VXWORKS */
-  if (ace_result_ == -1 && errno == EAGAIN)
-    errno = EWOULDBLOCK;
+
+# if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
+  // Optimize this code out if we can detect that EAGAIN ==
+  // EWOULDBLOCK at compile time.  If we cannot detect equality at
+  // compile-time (e.g. if EAGAIN or EWOULDBLOCK are not preprocessor
+  // macros) perform the check at run-time.  The goal is to avoid two
+  // TSS accesses in the _REENTRANT case when EAGAIN == EWOULDBLOCK.
+  if (ace_result == -1
+#  if !defined (EAGAIN) || !defined (EWOULDBLOCK)
+      && EAGAIN != EWOULDBLOCK
+#  endif  /* !EAGAIN || !EWOULDBLOCK */
+      && errno == EAGAIN)
+    {
+      errno = EWOULDBLOCK;
+    }
+# endif /* EAGAIN != EWOULDBLOCK*/
+
   return ace_result_;
 #endif /* defined (ACE_WIN32) */
 }
@@ -610,29 +655,41 @@ ACE_OS::sendv (ACE_HANDLE handle,
                       0,
                       0);
 # else
-  int i;
-  for (i = 0; i < n && result != SOCKET_ERROR; i++)
+  for (int i = 0; i < n; ++i)
     {
       result = ::send ((SOCKET) handle,
                        buffers[i].iov_base,
                        buffers[i].iov_len,
                        0);
-      // Gets ignored on error anyway
-      bytes_sent += buffers[i].iov_len;
 
-      // If the transfer isnt complete just drop out of the loop.
-      if (result < (int)buffers[i].iov_len)
-        break;
+      if (result == SOCKET_ERROR)
+        {
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was sent.  If no data was sent,
+          // then always return -1.  Otherwise return bytes_sent.
+          // This gives the caller an opportunity to keep track of
+          // bytes that have already been sent.
+          if (bytes_sent > 0)
+            break;
+          else
+            {
+              ACE_OS::set_errno_to_wsa_last_error ();
+              return -1;
+            }
+        }
+      else
+        {
+          // Gets ignored on error anyway
+          bytes_sent += result;
+
+          // If the transfer isn't complete just drop out of the loop.
+          if (result < (int)buffers[i].iov_len)
+            break;
+        }
     }
 # endif /* ACE_HAS_WINSOCK2 != 0 */
 
-  if (result == SOCKET_ERROR)
-    {
-      ACE_OS::set_errno_to_wsa_last_error ();
-      return -1;
-    }
-  else
-    return (ssize_t) bytes_sent;
+  return (ssize_t) bytes_sent;
 
 #else
   return ACE_OS::writev (handle, buffers, n);
