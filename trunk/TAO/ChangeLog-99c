@@ -1,154 +1,163 @@
+Thu Aug 19 11:24:35 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * rules.tao.GNU,tao/Makefile: don't include the Interface
+          repository by default on pre-2.8 g++ platforms, and on
+          cross-compile platforms.  g++ 2.7.2.3 on Solaris can't
+          compile tao/InterfaceC.cpp.  By removing it, by default,
+          on cross-compile platforms, we reduce the size of libTAO.a
+          by 420 Kb.
+
 Thu Aug 19 01:47:49 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* docs/compiler.html: Added documentation for the new -Gl flag
-	  which generate locality constraint stubs/skeletons.
+        * docs/compiler.html: Added documentation for the new -Gl flag
+          which generate locality constraint stubs/skeletons.
 
-	* TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_si.cpp:
-	* TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/arglist.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
-	* TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
-	* TAO_IDL/driver/drv_args.cpp: Trimmed down a lot of code
-	  generation if we are generating the locality constraint
-	  implementation templates.
+        * TAO_IDL/be/be_visitor_interface/any_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_interface/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_sh.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_si.cpp:
+        * TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/arglist.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_sh.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+        * TAO_IDL/driver/drv_args.cpp: Trimmed down a lot of code
+          generation if we are generating the locality constraint
+          implementation templates.
 
 Wed Aug 18 21:32:25 1999  Ossama Othman  <othman@cs.wustl.edu>
 
-	* PROBLEM-REPORT-FORM:
-	* TAO-INSTALL.html:
+        * PROBLEM-REPORT-FORM:
+        * TAO-INSTALL.html:
 
-	  Updated with information about the bugzilla usage
-	  documentation.
+          Updated with information about the bugzilla usage
+          documentation.
 
 Wed Aug 18 18:00:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
-	  Use the new ACE_HAS_BROKEN_DGRAM_SENDV macro to workaround IRIX
-	  (and possibly other platform) problems.
+        * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
+          Use the new ACE_HAS_BROKEN_DGRAM_SENDV macro to workaround IRIX
+          (and possibly other platform) problems.
 
 Wed Aug 18 17:04:41 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
-	  There is a generated boolean variable called
-	  'result' that holds the status of the CDR op for
-	  the union's case, whichever it may be. This variable
-	  was initialized to 0. But if the discriminator is set
-	  to an implicit default value, the operator will just
-	  exit with a value of 0 and the (de)marshal will fail.
-	  Thanks to Anthony Shipman <als@aaii.oz.au> for
-	  pointing this out and suggesting a fix (initialize
-	  the result variable to 1).
+        * TAO_IDL/be/be_visitor_union/cdr_op_ci.cpp:
+          There is a generated boolean variable called
+          'result' that holds the status of the CDR op for
+          the union's case, whichever it may be. This variable
+          was initialized to 0. But if the discriminator is set
+          to an implicit default value, the operator will just
+          exit with a value of 0 and the (de)marshal will fail.
+          Thanks to Anthony Shipman <als@aaii.oz.au> for
+          pointing this out and suggesting a fix (initialize
+          the result variable to 1).
 
 Wed Aug 18 16:22:25 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_union.cpp:
-	  Code generation for implementation of union_var's
-	  ptr() method was not happening in some cases. Thanks to
-	  Lothar Werzinger <werzinger.lothar@krones.de> for
-	  pointing this out.
+        * TAO_IDL/be/be_union.cpp:
+          Code generation for implementation of union_var's
+          ptr() method was not happening in some cases. Thanks to
+          Lothar Werzinger <werzinger.lothar@krones.de> for
+          pointing this out.
 
-	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
-	* TAO_IDL/be/be_visitor_field/field_ch.cpp:
-	  CORBA 2.3 requires C++ mapping to have a typedef of
-	  '_foo_seq' for anonymous sequence members of unions
-	  or structs. This provides a consistent type name for
-	  the user so that the implementation-specific
-	  name of the anonymous sequence need not be known.
-	  Since this typedef occurs inside the union class or
-	  struct, the usual guard against compilers with broken
-	  typedef scoping is included in the generated code.
-	  Thanks again to Lothar Werzinger <werzinger.lothar@krones.de>
-	  for bringing this to our attention.
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_field/field_ch.cpp:
+          CORBA 2.3 requires C++ mapping to have a typedef of
+          '_foo_seq' for anonymous sequence members of unions
+          or structs. This provides a consistent type name for
+          the user so that the implementation-specific
+          name of the anonymous sequence need not be known.
+          Since this typedef occurs inside the union class or
+          struct, the usual guard against compilers with broken
+          typedef scoping is included in the generated code.
+          Thanks again to Lothar Werzinger <werzinger.lothar@krones.de>
+          for bringing this to our attention.
 
 Wed Aug 18 12:53:46 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Param_Test/run_test.pl:
-	  Fixed typo.
+        * tests/Param_Test/run_test.pl:
+          Fixed typo.
 
 Wed Aug 18 10:49:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* default_resource.cpp:
-	  Removed an extra 'break' statement.
+        * default_resource.cpp:
+          Removed an extra 'break' statement.
 
 Wed Aug 18 03:12:23 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* TAO_IDL/include/idl_global.h:
-	* TAO_IDL/driver/drv_args.cpp:
-	* TAO_IDL/util/utl_global.cpp: Added a new flag to direct TAO_IDL
-	  to generate locality constraint stubs/skeletons to simplify
-	  generating TAO internal pidl implementations.
+        * TAO_IDL/include/idl_global.h:
+        * TAO_IDL/driver/drv_args.cpp:
+        * TAO_IDL/util/utl_global.cpp: Added a new flag to direct TAO_IDL
+          to generate locality constraint stubs/skeletons to simplify
+          generating TAO internal pidl implementations.
 
 Tue Aug 17 22:18:20 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
-	  Added instantiation of ACE_Locked_Data_Block<> it used to be
-	  instantiated in TAO, but it isn't used there anymore.
+        * orbsvcs/orbsvcs/Event/EC_Dispatching_Task.cpp:
+          Added instantiation of ACE_Locked_Data_Block<> it used to be
+          instantiated in TAO, but it isn't used there anymore.
 
 Tue Aug 17 20:51:13 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/default_resource.cpp:
-	  Also use the new signal masking features with the TP reactor.
+        * tao/default_resource.cpp:
+          Also use the new signal masking features with the TP reactor.
 
-	* performance-tests/Latency/client.conf:
-	* performance-tests/Latency/server.conf:
-	* performance-tests/Latency/st_server.conf:
-	  Use the -ORBReactorMaskSignals 0 option to disable signal
-	  masking.
+        * performance-tests/Latency/client.conf:
+        * performance-tests/Latency/server.conf:
+        * performance-tests/Latency/st_server.conf:
+          Use the -ORBReactorMaskSignals 0 option to disable signal
+          masking.
 
 Tue Aug 17 19:17:20 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO/tests/Param_Test/driver.cpp:
-	* TAO/tests/Param_Test/helper.h:
-	* TAO/tests/Param_Test/helper.cpp:
-	* TAO/tests/Param_Test/options.h:
-	* TAO/tests/Param_Test/options.cpp:
-	* TAO/tests/Param_Test/tests.h:
-	* TAO/tests/Param_Test/param_test_i.h:
-	* TAO/tests/Param_Test/param_test_i.cpp
-	* TAO/tests/Param_Test/client.dsp:
-	* TAO/tests/Param_Test/param_test.idl:
-	* TAO/tests/Param_Test/Makefile:
-	* TAO/tests/Param_Test/README:
-	* TAO/tests/Param_Test/run_test.pl:
-	  Updated to accomodate the new files listed below.
+        * TAO/tests/Param_Test/driver.cpp:
+        * TAO/tests/Param_Test/helper.h:
+        * TAO/tests/Param_Test/helper.cpp:
+        * TAO/tests/Param_Test/options.h:
+        * TAO/tests/Param_Test/options.cpp:
+        * TAO/tests/Param_Test/tests.h:
+        * TAO/tests/Param_Test/param_test_i.h:
+        * TAO/tests/Param_Test/param_test_i.cpp
+        * TAO/tests/Param_Test/client.dsp:
+        * TAO/tests/Param_Test/param_test.idl:
+        * TAO/tests/Param_Test/Makefile:
+        * TAO/tests/Param_Test/README:
+        * TAO/tests/Param_Test/run_test.pl:
+          Updated to accomodate the new files listed below.
 
-	* TAO/tests/Param_Test/bd_wstring.h:
-	* TAO/tests/Param_Test/bd_wstring.cpp:
-	* TAO/tests/Param_Test/ub_wstring.h:
-	* TAO/tests/Param_Test/ub_wstring.cpp:
-	* TAO/tests/Param_Test/ub_wstrseq.h:
-	* TAO/tests/Param_Test/ub_wstrseq.cpp:
-	* TAO/tests/Param_Test/bd_wstrseq.h:
-	* TAO/tests/Param_Test/bd_wstrseq.cpp:
-	  New files testing the (de)marshaling of wide
-	  strings. CORBA::WStrings have their
-	  counterparts to the regular string manipulation
-	  functions defined in ACE_OS. They are (so far)
-	  wslen, wscpy, wscmp, and wsncmp. ACE_OS
-	  also has overloaded versions of strlen, strcmp, etc.
-	  that work with wstrings on NT, but they are not portable.
+        * TAO/tests/Param_Test/bd_wstring.h:
+        * TAO/tests/Param_Test/bd_wstring.cpp:
+        * TAO/tests/Param_Test/ub_wstring.h:
+        * TAO/tests/Param_Test/ub_wstring.cpp:
+        * TAO/tests/Param_Test/ub_wstrseq.h:
+        * TAO/tests/Param_Test/ub_wstrseq.cpp:
+        * TAO/tests/Param_Test/bd_wstrseq.h:
+        * TAO/tests/Param_Test/bd_wstrseq.cpp:
+          New files testing the (de)marshaling of wide
+          strings. CORBA::WStrings have their
+          counterparts to the regular string manipulation
+          functions defined in ACE_OS. They are (so far)
+          wslen, wscpy, wscmp, and wsncmp. ACE_OS
+          also has overloaded versions of strlen, strcmp, etc.
+          that work with wstrings on NT, but they are not portable.
 
-	* TAO/tests/Param_Test/bd_string.h:
-	* TAO/tests/Param_Test/bd_string.cpp:
-	  Fixed some comments pasted in unmodified from other
-	  tests, and the SII test call, which was to
-	  test_unbounded_string().
+        * TAO/tests/Param_Test/bd_string.h:
+        * TAO/tests/Param_Test/bd_string.cpp:
+          Fixed some comments pasted in unmodified from other
+          tests, and the SII test call, which was to
+          test_unbounded_string().
 
 Tue Aug 17 15:28:43 1999  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
-	* TAO-INSTALL.html: Added a reference to the
-	  http://www.tenermerx.com/tao_bcb/index.html link provided by
- 	  Christopher Kohlhoff <chris@kohlhoff.com> to explain how to
-	  build TAO using Borland C++ Builder.
+        * TAO-INSTALL.html: Added a reference to the
+          http://www.tenermerx.com/tao_bcb/index.html link provided by
+          Christopher Kohlhoff <chris@kohlhoff.com> to explain how to
+          build TAO using Borland C++ Builder.
 
 Tue Aug 17 16:45:35 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -167,312 +176,312 @@ Tue Aug 17 15:40:22 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
 
 Tue Aug 17 15:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/POAS.cpp: Fixed unused argument warnings.
+        * tao/POAS.cpp: Fixed unused argument warnings.
 
 Tue Aug 17 13:05:40 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	  Added wstring_type_spec to the production rule for
-	  param_type_spec.
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+          Added wstring_type_spec to the production rule for
+          param_type_spec.
 
 Tue Aug 17 12:10:29 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* docs/Options.html:
-	* tao/default_resource.h:
-	* tao/default_resource.cpp:
-	  Added option to control the new signal masking features in the
-	  ACE_Select_Reactor
+        * docs/Options.html:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Added option to control the new signal masking features in the
+          ACE_Select_Reactor
 
-	* performance-tests/Latency/st_server.conf:
-	  Eliminate the signal masking overhead in the Reactor.
+        * performance-tests/Latency/st_server.conf:
+          Eliminate the signal masking overhead in the Reactor.
 
-	* tao/ORB_Core.cpp:
-	  Removed template instantiations that were not needed anymore.
+        * tao/ORB_Core.cpp:
+          Removed template instantiations that were not needed anymore.
 
-	* performance-tests/Latency/client.cpp:
-	* performance-tests/Latency/st_client.cpp:
-	  Use _non_existent() to force a connection before running the
-	  test, in the future we should use validate_connection() and in
-	  the real world we should use -ORBpreconnect but this keeps the
-	  test simple.
+        * performance-tests/Latency/client.cpp:
+        * performance-tests/Latency/st_client.cpp:
+          Use _non_existent() to force a connection before running the
+          test, in the future we should use validate_connection() and in
+          the real world we should use -ORBpreconnect but this keeps the
+          test simple.
 
 Tue Aug 17 11:28:28 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Servant_Base.i:
-	  Removed pesky warning
+        * tao/Servant_Base.i:
+          Removed pesky warning
 
-	* tao/ORB_Core.h:
-	  Re-arrange some declarations to avoid crashes on shutdown. The
-	  lock used for the Data_Block was getting destroyed before the
-	  Data_Blocks were.
+        * tao/ORB_Core.h:
+          Re-arrange some declarations to avoid crashes on shutdown. The
+          lock used for the Data_Block was getting destroyed before the
+          Data_Blocks were.
 
 Tue Aug 17 10:53:22 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/Sequence_T.cpp:
-	  Fixed a couple of my typos that compiled under TAO
-	  but got caught when called from generated code.
+        * tao/Sequence_T.cpp:
+          Fixed a couple of my typos that compiled under TAO
+          but got caught when called from generated code.
 
-	* tao/Managed_Types.cpp:
-	  Added some comments.
+        * tao/Managed_Types.cpp:
+          Added some comments.
 
-	* tao/Managed_Types.h:
-	* tao/Managed_Types.i:
-	  The copy constructor of  TAO_SeqElem_(W)String_Manager
-	  is called implicitly in the generated code for the [] operator
-	  for sequences of (w)string. This copy constructor is public
-	  for strings, and was private and unimplemented for wstrings.
-	  The TAO_SeqElem_WString_Manager copy constructor
-	  now matches its string counterpart.
+        * tao/Managed_Types.h:
+        * tao/Managed_Types.i:
+          The copy constructor of  TAO_SeqElem_(W)String_Manager
+          is called implicitly in the generated code for the [] operator
+          for sequences of (w)string. This copy constructor is public
+          for strings, and was private and unimplemented for wstrings.
+          The TAO_SeqElem_WString_Manager copy constructor
+          now matches its string counterpart.
 
 Tue Aug 17 01:20:37 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tao/CurrentC.cpp:
-	* tao/DomainC.cpp:
-	* tao/DomainC.h:
-	* tao/DynAnyC.cpp:
-	* tao/IORC.cpp:
-	* tao/IORC.h:
-	* tao/POAC.cpp:
-	* tao/POAS.cpp:
-	* tao/POA_CORBA.h:
-	* tao/PolicyC.cpp:
-	* tao/PolicyC.h:
-	* tao/PolicyS.cpp: Made sure we enfore the locality constraint
-	  rules by removing remote method invocation code, unnecessary
-	  skeletons, and the use of null stubs for locality constraint
-	  object reference.  Otherwise, proper exceptions will be thrown.
+        * tao/CurrentC.cpp:
+        * tao/DomainC.cpp:
+        * tao/DomainC.h:
+        * tao/DynAnyC.cpp:
+        * tao/IORC.cpp:
+        * tao/IORC.h:
+        * tao/POAC.cpp:
+        * tao/POAS.cpp:
+        * tao/POA_CORBA.h:
+        * tao/PolicyC.cpp:
+        * tao/PolicyC.h:
+        * tao/PolicyS.cpp: Made sure we enfore the locality constraint
+          rules by removing remote method invocation code, unnecessary
+          skeletons, and the use of null stubs for locality constraint
+          object reference.  Otherwise, proper exceptions will be thrown.
 
-	* tao/ORB.cpp (object_to_string): We should throw an
-	  CORBA::MARSHAL exception if a user tries to externalize a
-	  locality constraint object.  Notice that I don't know how to
-	  pass an exception out of the overloaded << operator.
+        * tao/ORB.cpp (object_to_string): We should throw an
+          CORBA::MARSHAL exception if a user tries to externalize a
+          locality constraint object.  Notice that I don't know how to
+          pass an exception out of the overloaded << operator.
 
-	* tao/Object.cpp (_is_a,_non_existent): Made sure the function
-	  doesn't try to access stub data if the object is locality
-	  constraint.
+        * tao/Object.cpp (_is_a,_non_existent): Made sure the function
+          doesn't try to access stub data if the object is locality
+          constraint.
 
-	  (_get_policy_overrides,_set_policy_overrides,_validate_connection):
-	  (_get_client_policy,_get_policy): We don't support per-object
-	  policies for locality contraint objects.
+          (_get_policy_overrides,_set_policy_overrides,_validate_connection):
+          (_get_client_policy,_get_policy): We don't support per-object
+          policies for locality contraint objects.
 
-	  (_create_request,_request): Locality constraint objects don't
-	  support DII.
+          (_create_request,_request): Locality constraint objects don't
+          support DII.
 
-	  (_is_equivalent): Compare the servant pointer directly to
-	  determine equivalency for locality constraint object reference.
+          (_is_equivalent): Compare the servant pointer directly to
+          determine equivalency for locality constraint object reference.
 
-	  (_hash): Throw an NO_IMPLEMENT exception if the objref is locality
-	  constraint.  Quite frankly, I don't really know how to implement
-	  this function for locality constraint objects.
+          (_hash): Throw an NO_IMPLEMENT exception if the objref is locality
+          constraint.  Quite frankly, I don't really know how to implement
+          this function for locality constraint objects.
 
-	* tao/Servant_Base.{i,cpp} (_create_stub): The implementation for
-	  Local_ServantBase should always returns 0 because a null stub is
-	  now used to identify locality constraint object reference.  This
-	  method can potentially be removed and we can always create
-	  locality constraint object with a null stub.  However, I decided
-	  to keep this method around so we can simplify Policy objects
-	  which can be either be locality constraint or regular in TAO.
+        * tao/Servant_Base.{i,cpp} (_create_stub): The implementation for
+          Local_ServantBase should always returns 0 because a null stub is
+          now used to identify locality constraint object reference.  This
+          method can potentially be removed and we can always create
+          locality constraint object with a null stub.  However, I decided
+          to keep this method around so we can simplify Policy objects
+          which can be either be locality constraint or regular in TAO.
 
 Mon Aug 16 21:50:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be_include/be_sequence.h:
-	* TAO_IDL/util/utl_scope.cpp:
-	* TAO_IDL/ast/ast_redef.cpp:
-	* TAO_IDL/be/be_sequence.cpp:
-	* TAO_IDL/be/be_visitor_rettype.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handle_arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/arglist.cpp:
-	* TAO_IDL/be/be_visitor_argument/ami_handler_vardecl.cpp:
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
-	* TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
-	* TAO_IDL/be/be_visitor_array/array.cpp:
-	* TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
-	* TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
-	* TAO_IDL/be/be_visitor_field/cdr_op_cicpp:
-	* TAO_IDL/be/be_visitor_exception/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp:
-	* TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
-	* TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
-	* TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
-	* TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
-	* TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
-	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
-	* TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
-	* TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
-	  The new node type NT_wstring is used in code generation for wstring
-	  sequences, where it has some switch cases all its own. Otherwise, now
-	  that the be_string and AST_String constructors set the pd_width
-	  member to sizeof (ACE_CDR::WChar) for wstrings, all that's
-	  necessary in most cases is to check the node's width() function and
-	  branch accordingly.
+        * TAO_IDL/be_include/be_sequence.h:
+        * TAO_IDL/util/utl_scope.cpp:
+        * TAO_IDL/ast/ast_redef.cpp:
+        * TAO_IDL/be/be_sequence.cpp:
+        * TAO_IDL/be/be_visitor_rettype.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handle_arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handler_compiled_marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handler_result_arg.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handler_upcall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+        * TAO_IDL/be/be_visitor_argument/ami_handler_vardecl.cpp:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/compiled_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_docall_compiled_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/post_docall_cs.cpp:
+        * TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_array/array.cpp:
+        * TAO_IDL/be/be_visitor_array/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_exception/ctor_assign.cpp:
+        * TAO_IDL/be/be_visitor_exception/exception_ctor.cpp:
+        * TAO_IDL/be/be_visitor_field/cdr_op_cicpp:
+        * TAO_IDL/be/be_visitor_exception/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_handler_result_arg.cpp:
+        * TAO_IDL/be/be_visitor_operation/compiled_marshal.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_assign_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_is.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_marshal_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_post_upcall_ss.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_return_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/rettype_vardecl_ss.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/cdr_op_cs.cpp:
+        * TAO_IDL/be/be_visitor_sequence/buffer_type.cpp:
+        * TAO_IDL/be/be_visitor_sequence/elemtype.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/cdr_op_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ch.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_ci.cpp:
+        * TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_ch.cpp:
+        * TAO_IDL/be/be_visitor_valuetype/field_cs.cpp:
+          The new node type NT_wstring is used in code generation for wstring
+          sequences, where it has some switch cases all its own. Otherwise, now
+          that the be_string and AST_String constructors set the pd_width
+          member to sizeof (ACE_CDR::WChar) for wstrings, all that's
+          necessary in most cases is to check the node's width() function and
+          branch accordingly.
 
-	  Several of these files also have had #if 0 blocks and commented-out code
-	  removed for this checkin.
+          Several of these files also have had #if 0 blocks and commented-out code
+          removed for this checkin.
 
 Mon Aug 16 20:16:35 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp:
-	  Use a pre-allocated mutex to synchronize access into the input
-	  data block reference count. This reduces the number of memory
-	  allocations in the critical path (by one), and consequently the
-	  number of locks.
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          Use a pre-allocated mutex to synchronize access into the input
+          data block reference count. This reduces the number of memory
+          allocations in the critical path (by one), and consequently the
+          number of locks.
 
-	* tao/Reply_Dispatcher.h:
-	* tao/Reply_Dispatcher.cpp:
-	* tao/Invocation.i:
-	* tao/Transport_Mux_Strategy.cpp:
-	  For the Exclusive transport strategy we can use the
-	  pre-allocated CDR stream in the reply dispatcher end-to-end,
-	  without requiring any transfers to the message state object for
-	  the transport.  This reduces the locking overhead.
+        * tao/Reply_Dispatcher.h:
+        * tao/Reply_Dispatcher.cpp:
+        * tao/Invocation.i:
+        * tao/Transport_Mux_Strategy.cpp:
+          For the Exclusive transport strategy we can use the
+          pre-allocated CDR stream in the reply dispatcher end-to-end,
+          without requiring any transfers to the message state object for
+          the transport.  This reduces the locking overhead.
 
-	* tao/CDR.h:
-	* tao/CDR.i:
-	  As in the ACE_InputCDR class we implement a new method to
-	  transfer the contents of one CDR stream into another.
+        * tao/CDR.h:
+        * tao/CDR.i:
+          As in the ACE_InputCDR class we implement a new method to
+          transfer the contents of one CDR stream into another.
 
-	* tao/IIOP_Connect.cpp:
-	* tao/UIOP_Connect.cpp:
-	  Use the new method to transfer the contents of one CDR stream
-	  into another, two locks were eliminated thanks to that.
+        * tao/IIOP_Connect.cpp:
+        * tao/UIOP_Connect.cpp:
+          Use the new method to transfer the contents of one CDR stream
+          into another, two locks were eliminated thanks to that.
 
 Mon Aug 16 17:08:45 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
-	  Removed code commented out with #if 0.
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_str_sequence_cs.cpp:
+          Removed code commented out with #if 0.
 
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
-	* TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
-	  Added declarations for methods in new files listed below.
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ch.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_ci.h:
+        * TAO_IDL/be_include/be_visitor_sequence/sequence_cs.h:
+          Added declarations for methods in new files listed below.
 
-	* TAO_IDL/be/be_visitor_sequence.cpp:
-	  Added #includes for new files listed below.
+        * TAO_IDL/be/be_visitor_sequence.cpp:
+          Added #includes for new files listed below.
 
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
-	* TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp:
-	  New files containing methods corresponding to those in
-	  gen_bounded_str_sequence_c*.cpp.
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ch.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_ci.cpp:
+        * TAO_IDL/be/be_visitor_sequence/gen_bounded_wstr_sequence_cs.cpp:
+          New files containing methods corresponding to those in
+          gen_bounded_str_sequence_c*.cpp.
 
 Mon Aug 16 16:20:30 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/ast/ast_string.cpp:
-	* TAO_IDL/be/be_string.cpp:
-	  Mods to constructors to use new enum val NT_wstring where
-	  appropriate.
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_string.cpp:
+          Mods to constructors to use new enum val NT_wstring where
+          appropriate.
 
-	* TAO_IDL/be/be_generator.cpp:
-	  Changed use of ACE_OS::WChar to ACE_CDR::WChar.
+        * TAO_IDL/be/be_generator.cpp:
+          Changed use of ACE_OS::WChar to ACE_CDR::WChar.
 
 Mon Aug 16 14:53:11 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/sequence.h:
-	* tao/sequence.i:
-	* tao/sequence.cpp:
-	* tao/Sequence_T.h:
-	* tao/Sequence_T.i:
-	* tao/Sequence_T.cpp:
-	  Added classes TAO_Bounded_WString_Sequence and
-	  TAO_Unbounded_WString_Sequence.
+        * tao/sequence.h:
+        * tao/sequence.i:
+        * tao/sequence.cpp:
+        * tao/Sequence_T.h:
+        * tao/Sequence_T.i:
+        * tao/Sequence_T.cpp:
+          Added classes TAO_Bounded_WString_Sequence and
+          TAO_Unbounded_WString_Sequence.
 
 Mon Aug 16 13:04:16 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* TAO_IDL/fe.idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/include/ast_decl.h
-	  One last bit of wstring business in idl.yy, and a
-	  new node type NT_wstring.
+        * TAO_IDL/fe.idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/include/ast_decl.h
+          One last bit of wstring business in idl.yy, and a
+          new node type NT_wstring.
 
 Sat Aug 14 17:39:04 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/Pluggable.h:
-	* tao/Pluggable.i:
-	* tao/Pluggable.cpp:
-	* tao/Asynch_Invocation.cpp:
-	* tao/Invocation.cpp:
-	  Small optimization on the critical path: reduce number of
-	  virtual calls and use inline methods in a couple of places.
+        * tao/Pluggable.h:
+        * tao/Pluggable.i:
+        * tao/Pluggable.cpp:
+        * tao/Asynch_Invocation.cpp:
+        * tao/Invocation.cpp:
+          Small optimization on the critical path: reduce number of
+          virtual calls and use inline methods in a couple of places.
 
-	* TAO_IDL/Makefile:
-	  Removed repeated -lACE option on the link line.
+        * TAO_IDL/Makefile:
+          Removed repeated -lACE option on the link line.
 
 Fri Aug 13 16:39:42 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
-	* tao/corbafwd.h:
-	  Added typedef for CORBA::WString.
+        * tao/corbafwd.h:
+          Added typedef for CORBA::WString.
 
-	* TAO_IDL/fe/idl.ll:
-	* TAO_IDL/fe/idl.yy:
-	* TAO_IDL/fe/y.tab.h:
-	* TAO_IDL/fe/y.tab.cpp:
-	* TAO_IDL/fe/lex.yy.cpp:
-	* TAO_IDL/fe/lex.yy.cpp.diff:
-	  Production rule and lex rule for wstring
-	  literals. Functions that checks validity of
+        * TAO_IDL/fe/idl.ll:
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.h:
+        * TAO_IDL/fe/y.tab.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+        * TAO_IDL/fe/lex.yy.cpp.diff:
+          Production rule and lex rule for wstring
+          literals. Functions that checks validity of
           wstring literal (including containment of 0
-	  value Unicode escape sequence) is still a
-	  stub at this point, pending clarification of the
-	  spec.
+          value Unicode escape sequence) is still a
+          stub at this point, pending clarification of the
+          spec.
 
-	* TAO_IDL/include/ast_expression.h:
-	* TAO_IDL/include/ast_generator.h:
-	* TAO_IDL/be_include/be_expression.h:
-	* TAO_IDL/be_include/be_generator.h:
-	* TAO_IDL/ast/ast_expression.cpp:
-	* TAO_IDL/ast/ast_generator.cpp:
-	* TAO_IDL/be/be_expression.cpp:
-	* TAO_IDL/be/be_generator.cpp:
-	  Expression constructors and generators for
-	  wstring values.
+        * TAO_IDL/include/ast_expression.h:
+        * TAO_IDL/include/ast_generator.h:
+        * TAO_IDL/be_include/be_expression.h:
+        * TAO_IDL/be_include/be_generator.h:
+        * TAO_IDL/ast/ast_expression.cpp:
+        * TAO_IDL/ast/ast_generator.cpp:
+        * TAO_IDL/be/be_expression.cpp:
+        * TAO_IDL/be/be_generator.cpp:
+          Expression constructors and generators for
+          wstring values.
 
-	* TAO_IDL/be/be_sunsoft.cpp:
-	  Filled in case for wstring literal print. Doesn't
-	  handle Unicode escape sequences yet.
+        * TAO_IDL/be/be_sunsoft.cpp:
+          Filled in case for wstring literal print. Doesn't
+          handle Unicode escape sequences yet.
 
 Fri Aug 13 12:53:51 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/varout.i:
-	* tao/varout.cpp:
-	  Outline several functions because they were causing problems
-	  with forward declared interfaces.  In particular
-	  $TAO_ROOT/tao/InterfaceC.cpp would not compile under certain
-	  platforms.
+        * tao/varout.i:
+        * tao/varout.cpp:
+          Outline several functions because they were causing problems
+          with forward declared interfaces.  In particular
+          $TAO_ROOT/tao/InterfaceC.cpp would not compile under certain
+          platforms.
 
-	* tao/Makefile:
-	  Updated dependencies
+        * tao/Makefile:
+          Updated dependencies
 
 Fri Aug 13 12:44:08 1999  David L. Levine  <levine@cs.wustl.edu>
 
