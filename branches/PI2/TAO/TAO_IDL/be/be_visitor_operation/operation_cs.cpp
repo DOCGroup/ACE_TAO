@@ -389,7 +389,7 @@ be_visitor_operation_cs::gen_marshal_and_invoke (be_operation *node,
 
   *os << "TAO_ClientRequest_Info_"<< node->flat_name () << "  ri (" << this->compute_operation_name (node) << ",\n"
       << "_tao_call.service_info ()," << be_nl
-      << "(CORBA::Object_ptr) this";
+      << "this";
 
   // This necesary becos: (a) a comma is needed if there are arguments
   // (b) not needed if exceptions enabled since thats done already (c)
