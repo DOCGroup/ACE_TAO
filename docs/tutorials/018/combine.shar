@@ -3,7 +3,7 @@
 # To extract the files from this archive, save it to some FILE, remove
 # everything before the `!/bin/sh' line above, then type `sh FILE'.
 #
-# Made on 1998-11-15 12:38 EST by <jcej@chiroptera.tragus.org>.
+# Made on 1999-02-24 17:02 EST by <jcej@chiroptera.tragus.org>.
 # Source directory was `/var/home/jcej/projects/ACE_wrappers/docs/tutorials/018'.
 #
 # Existing files will *not* be overwritten unless `-c' is specified.
@@ -13,7 +13,7 @@
 # ------ ---------- ------------------------------------------
 #    416 -rw-rw-r-- hdr
 #     64 -rw-rw-r-- bodies
-#   1446 -rw-rw-r-- page01.pre
+#   2603 -rw-rw-r-- page01.pre
 #    430 -rw-rw-r-- page02.pre
 #   1282 -rw-rw-r-- page03.pre
 #    689 -rw-rw-r-- page04.pre
@@ -66,7 +66,7 @@ else
 fi
 rm -f 1231235999 $$.touch
 #
-if mkdir _sh11947; then
+if mkdir _sh30135; then
   $echo 'x -' 'creating lock directory'
 else
   $echo 'failed to create lock directory'
@@ -173,20 +173,41 @@ It gets down to a personal decision based on the application's needs.
 Consider your application, examine its behavior & decide for yourself
 if you want to spread the work evenly or if it's OK to let some
 threads work harder than others.
+<P>
+Kirthika's abstract:
+<UL>
+A token is similar to a mutex-lock, with the difference being that 
+the token is given to the waiting threads in a FIFO order. In the case 
+of the mutex-lock,  any thread (depending on the OS) could acquire 
+the lock when its released. It internally implements a recursive mutex, 
+i.e. the thread that owns the mutex can reqacquire it without deadlocking. 
+The token also has two FIFO lists for writers and readers with writer- 
+acquires having a higher priority than reader-acquires. 
+<P>
+This tutorial throws light on the differences on having a shared resource governed by 
+a lock and a token, both derive from  a Task which simply updates a counter with the 
+number-of-threads value. A barrier is used for ensuring that all threads get a equal 
+opportunity of grabbing the token. The message queue with the message containing the 
+thread count moves among the threads to be obtained and read. 
+<P>
+On obtaining the results, we conclude that on using the Token, the job to be completed 
+can be distributed evenly among available threads. This cant be guaranteed 
+in case of simply using the lock for synchronisation. 
+</ul>
 SHAR_EOF
-  $shar_touch -am 1114142998 'page01.pre' &&
+  $shar_touch -am 0224170199 'page01.pre' &&
   chmod 0664 'page01.pre' ||
   $echo 'restore of' 'page01.pre' 'failed'
   if ( md5sum --help 2>&1 | grep 'sage: md5sum \[' ) >/dev/null 2>&1 \
   && ( md5sum --version 2>&1 | grep -v 'textutils 1.12' ) >/dev/null; then
     md5sum -c << SHAR_EOF >/dev/null 2>&1 \
     || $echo 'page01.pre:' 'MD5 check failed'
-d420fe795c2d1e13cc4a9b4972ba1b47  page01.pre
+89cd84f46240da6d7d4d50e4d303e17a  page01.pre
 SHAR_EOF
   else
     shar_count="`LC_ALL= LC_CTYPE= LANG= wc -c < 'page01.pre'`"
-    test 1446 -eq "$shar_count" ||
-    $echo 'page01.pre:' 'original size' '1446,' 'current size' "$shar_count!"
+    test 2603 -eq "$shar_count" ||
+    $echo 'page01.pre:' 'original size' '2603,' 'current size' "$shar_count!"
   fi
 fi
 # ============= page02.pre ==============
@@ -415,5 +436,5 @@ SHAR_EOF
     $echo 'page07.pre:' 'original size' '478,' 'current size' "$shar_count!"
   fi
 fi
-rm -fr _sh11947
+rm -fr _sh30135
 exit 0
