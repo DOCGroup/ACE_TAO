@@ -191,7 +191,7 @@ namespace CIAO
       CORBA::SystemException))
   {
 
-    //ACE_DEBUG ((LM_DEBUG, "CIAO::RTEventService::push_event\n"));
+    ACE_DEBUG ((LM_DEBUG, "-------------CIAO::RTEventService::push_event-----------------\n"));
 
     RtecEventComm::EventSet events (1);
     events.length (1);
