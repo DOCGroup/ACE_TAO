@@ -394,7 +394,9 @@ private:
 
   /// Return a reference to the built-in load balancing strategy named
   /// "strategy."
-  CosLoadBalancing::Strategy_ptr built_in_strategy (const char * strategy);
+  CosLoadBalancing::Strategy_ptr built_in_strategy (
+    CosLoadBalancing::StrategyInfo * info
+    ACE_ENV_ARG_DECL);
 
   /// Check validity of Strategy or CustomStrategy property.
   /**
@@ -408,7 +410,7 @@ private:
   /// Initialize the built-in LeastLoaded Strategy with the given
   /// LeastLoaded properties.
   void init_least_loaded (const PortableGroup::Properties & props
-                        ACE_ENV_ARG_DECL);
+                          ACE_ENV_ARG_DECL);
 
   /// Utility method to extract a CORBA::Float value from the given
   /// property.
