@@ -495,7 +495,8 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 
   size_t queue_size = this->notify_queue_.size ();
   int number_purged = 0;
-  for (size_t index = 0; index < queue_size; ++index)
+  size_t i;
+  for (i = 0; i < queue_size; ++i)
     {
       if (-1 == this->notify_queue_.dequeue_head (temp))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -531,7 +532,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh)
 
   // now put it back in the notify queue
   queue_size = local_queue.size ();
-  for (index = 0; index < queue_size; ++index)
+  for (i = 0; i < queue_size; ++i)
     {
       if (-1 == local_queue.dequeue_head (temp))
         ACE_ERROR_RETURN ((LM_ERROR,
