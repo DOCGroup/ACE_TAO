@@ -8,7 +8,7 @@ Mon Feb 14 22:56:17 2005  Ossama Othman  <ossama@dre.vanderbilt.edu>
 	  using the same skeleton code for both collocated and
 	  uncollocated invocations without having to resort to complicated
 	  argument conversion code.  Both of these class templates
-	  subclass the TAO::Argument class. 
+	  subclass the TAO::Argument class.
 
 	* tao/BD_String_Argument_T.h:
 	* tao/Basic_Argument_T.h:
