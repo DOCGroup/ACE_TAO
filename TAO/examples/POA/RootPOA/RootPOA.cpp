@@ -25,50 +25,62 @@ ACE_RCSID(RootPOA, RootPOA, "$Id$")
 int
 main (int argc, char **argv)
 {
-  CORBA::Environment env;
+  //  CORBA::Environment env;
 
   // Initilize the ORB
-  CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, env);
+  ACE_TRY_NEW_ENV
+    {
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, 0, ACE_TRY_ENV);
 
-  TAO_CHECK_ENV_PRINT_RETURN (env,
-                              "CORBA::ORB_init",
-                              -1);
+      ACE_PRINT_TAO_EXCEPTION (ACE_TRY_ENV,
+                               "CORBA::ORB_init");
+      ACE_CHECK_RETURN (-1);
 
 
-  // Resolve the initial references for the name RootPOA thus getting
-  // an object of type CORBA::Object.
-  CORBA::Object_var obj =
-    orb->resolve_initial_references ("RootPOA");
+      // Resolve the initial references for the name RootPOA thus getting
+      // an object of type CORBA::Object.
+      CORBA::Object_var obj =
+        orb->resolve_initial_references ("RootPOA");
+      
+      // apply _narrow on the object of type CORBA::Object, to make it a
+      // POA class Object.
+      PortableServer::POA_var root_poa =
+        PortableServer::POA::_narrow (obj.in (), ACE_TRY_ENV);
 
-  // apply _narrow on the object of type CORBA::Object, to make it a
-  // POA class Object.
-  PortableServer::POA_var root_poa =
-    PortableServer::POA::_narrow (obj.in (), env);
+      ACE_PRINT_TAO_EXCEPTION (ACE_TRY_ENV,
+                               "PortableServer::POA::_narrow");
+      ACE_CHECK_RETURN (-1);
 
-  TAO_CHECK_ENV_PRINT_RETURN (env,
-                              "PortableServer::POA::_narrow",
-                              -1);
+      // Get the name of the root POA.
+      CORBA::String_var poa_name =
+        root_poa->the_name (ACE_TRY_ENV);
 
-  // Get the name of the root POA.
-  CORBA::String_var poa_name =
-    root_poa->the_name (env);
+      ACE_PRINT_TAO_EXCEPTION (ACE_TRY_ENV,
+                               "PortableServer::POA::_narrow");
+      ACE_CHECK_RETURN (-1);
+                               
 
-  TAO_CHECK_ENV_PRINT_RETURN (env,
-                              "PortableServer::POA::_narrow",
-                              -1);
+      ACE_DEBUG ((LM_DEBUG,
+                  "The RootPOA is : %s\n",
+                  poa_name.in ()));
 
-  ACE_DEBUG ((LM_DEBUG,
-              "The RootPOA is : %s\n",
-              poa_name.in ()));
+      // Destroy the POA object,also destroys the child POAs if any.
+      root_poa->destroy (1,
+                         1,
+                         ACE_TRY_ENV);
 
-  // Destroy the POA object,also destroys the child POAs if any.
-  root_poa->destroy (1,
-                     1,
-                     env);
-
-  TAO_CHECK_ENV_PRINT_RETURN (env,
-                              "PortableServer::POA::destroy",
-                              -1);
-
-  return 0;
+      ACE_PRINT_TAO_EXCEPTION (ACE_TRY_ENV,
+                               "PortableServer::POA::destroy");
+      ACE_CHECK_RETURN (-1);
+                               
+    }
+  ACE_CATCHANY
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Exceptions raised \n"));
+      ACE_CHECK_RETURN (-1);         
+    }
+  ACE_ENDTRY;
+  
+return 0;
 }
