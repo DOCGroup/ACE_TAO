@@ -1,7 +1,7 @@
 #! /bin/sh
 # $Id$
 #
-# Spawns MT_Cubit server and client executables on a single host.
+# Spawns CPP-inclient and CPP-inserver-fancy executables on a single host.
 
 usage="usage: $0 [-n <iterations>] [-t] [-l] <# low priority threads>"
 usage2="    [-t] uses /tmp, [-l] suppresses use of -ORBiioplite"
