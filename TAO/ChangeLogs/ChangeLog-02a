@@ -1,3 +1,21 @@
+Mon Nov 20 14:54:59 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/NVList.h:
+	* tao/NVList.i:
+	* tao/DynamicInterface/Request.inl:
+	* tao/DynamicInterface/Request.cpp:
+
+	  Uninlined definition of _nil to make aggressively inlining
+	  compilers happy.
+
+	  Also added _lazy_has_arguments() method to NVList, so this
+	  condition can be checked without having to evaluate the
+	  NVList's CDR stream, and replaced call to NVList::count()
+	  method in Request::invoke() with a call to this new method.
+	  The call to count() has the side effect of decoding the
+	  list's CDR stream and destroying it, which was causing DII
+	  requests to crash.
+
 Mon Nov 20 11:49:30 2000  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* tests/EndPoint_Per_Priority/server.conf
