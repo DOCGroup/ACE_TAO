@@ -49,6 +49,7 @@
 #include "ace/Object_Manager.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
+#include "ace/Argv_Type_Converter.h"
 
 #if defined(ACE_MVS)
 #include "ace/Codeset_IBM1047.h"
@@ -255,7 +256,7 @@ TAO_ORB_Core::default_buffering_constraint (void) const
 
 
 int
-TAO_ORB_Core::init (int &argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
+TAO_ORB_Core::init (int &argc, char *argv[] ACE_ENV_ARG_DECL)
 {
   // Right now, this code expects to begin parsing in argv[1] rather
   // than argv[0].  I don't think that's wise.  I think we need to
@@ -319,7 +320,11 @@ TAO_ORB_Core::init (int &argc, ACE_TCHAR *argv[] ACE_ENV_ARG_DECL)
   // -1 is unknown, default to what the resource factory sets.
   // @@ This is just for backwards compatibility.
 
-  ACE_Arg_Shifter arg_shifter (argc, argv);
+  // Copy command line parameter not to use original.
+  ACE_Argv_Type_Converter command_line(argc, argv);
+
+  ACE_Arg_Shifter arg_shifter (command_line.get_argc(),
+                               command_line.get_TCHAR_argv());
 
   while (arg_shifter.is_anything_left ())
     {

@@ -1,3 +1,67 @@
+Fri Mar 15 00:46:00 2002  Si Mong Park  <spark@ociweb.com>
+
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/ORB_Core.h:
+        * TAO/tao/ORB_Core.i:
+          Changed TAO_ORB_Core::init() to accept char type to match the type used
+          in CORBA::ORB_init() to prevent confusion.
+
+        * TAO/tao/TAO_Internal.cpp:
+          Fixed an error that caused an access violation upon deleting string
+          sesquence that is not under proper owner ship.
+
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/Resource_Factory.cpp:
+        * TAO/tao/Resource_Factory.h:
+          Changed back to use ACE_CString due to the unexpected additional
+          awkward type conversion.
+
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.h:
+        * TAO/tao/DynamicAny/DynamicAny.cpp:
+        * TAO/tao/DynamicAny/DynamicAny.h:
+        * TAO/tao/IORManipulation/IORManip_Loader.cpp:
+        * TAO/tao/IORManipulation/IORManip_Loader.h:
+        * TAO/tao/RTCORBA/RT_ORB_Loader.cpp:
+        * TAO/tao/RTCORBA/RT_ORB_Loader.h:
+	* TAO/tao/Strategies/advanced_resource.cpp:
+	* TAO/tao/Strategies/advanced_resource.h:
+	* TAO/tao/Strategies/DIOP_Factory.cpp:
+	* TAO/tao/Strategies/DIOP_Factory.h:
+	* TAO/tao/Strategies/SHMIOP_Acceptor.cpp:
+	* TAO/tao/Strategies/SHMIOP_Acceptor.h:
+	* TAO/tao/Strategies/SHMIOP_Factory.cpp:
+	* TAO/tao/Strategies/SHMIOP_Factory.h:
+	* TAO/tao/Strategies/UIOP_Factory.cpp:
+	* TAO/tao/Strategies/UIOP_Factory.h:
+	* TAO/tao/Strategies/UIOP_Lite_Factory.cpp:
+	* TAO/tao/Strategies/UIOP_Lite_Factory.h:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_Loader.cpp:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_Loader.h:
+          Changed the matching char parameter type to ACE_TCHAR as defined in
+          the base class' virtual interface.
+
+	* TAO/tao/Strategies/SHMIOP_Connection_Handler.cpp:
+          Changed ACE_TEXT to ACE_LIB_TEXT.
+
+        * TAO/TAOACE_WinCE.vcw:
+          Minor change in project dependency.
+
+        * TAO/tao/BiDir_GIOP/TAO_BiDir_GIOP.vcp:
+        * TAO/tao/Domain/TAO_Domain.vcp:
+        * TAO/tao/DynamicAny/TAO_DynamicAny.vcp:
+        * TAO/tao/DynamicInterface/TAO_DynamicInterface.vcp:
+        * TAO/tao/IFR_Client/TAO_IFR_Client.vcp:
+        * TAO/tao/IORManipulation/TAO_IORManip.vcp:
+        * TAO/tao/IORTable/TAO_IORTable.vcp:
+        * TAO/tao/PortableServer/TAO_PortableServer.vcp:
+        * TAO/tao/RTCORBA/TAO_RTCORBA.vcp:
+        * TAO/tao/RTPortableServer/TAO_RTPortableServer.vcp:
+        * TAO/tao/SmartProxies/SmartProxies.vcp:
+	* TAO/tao/Strategies/TAO_Strategies.vcp:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory.vcp:
+          eMbedded Visual C++ 3.0 project file for main TAO.dll for WinCE build.
+
 Thu Feb 28 09:55:21 2002  Chad Elliott  <elliott_c@ociweb.com>
 
         * examples/Simple/time/Time_Client_i.cpp:

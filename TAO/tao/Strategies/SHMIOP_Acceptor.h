@@ -81,7 +81,7 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO_ObjectKey &key);
 
-  int set_mmap_options (const char *prefix,
+  int set_mmap_options (const ACE_TCHAR *prefix,
                         off_t size);
   // Set the MMAP options the MEM_Stream this acceptor creates will
   // use.

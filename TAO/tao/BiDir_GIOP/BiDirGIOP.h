@@ -46,7 +46,7 @@ public:
   /// Creates a  factory and returns it.
   virtual int activate (CORBA::ORB_ptr,
                         int argc,
-                        char *argv []
+                        ACE_TCHAR *argv []
                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 

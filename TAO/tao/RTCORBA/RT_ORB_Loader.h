@@ -39,7 +39,7 @@ public:
 
   /// Initialize the RT ORB loader hooks.
   virtual int init (int argc,
-                    char* []);
+                    ACE_TCHAR* []);
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, TAO_RT_ORB_Loader)
