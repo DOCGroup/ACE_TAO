@@ -113,7 +113,7 @@ HTTP_Handler::receive_file_error (int result)
                      result,
                      "Failed");  
 
-  this->io_.send_confirmation_message (buffer, ACE_OS::strlen (buffer));
+  this->io_.send_confirmation_message (buffer, buflen);
 }
 
 void 

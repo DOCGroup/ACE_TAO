@@ -13,7 +13,7 @@ HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS]
     "Expires", "Last-Modified" };
 
 const char * const
-HTTP_Request::static_method_strings_[HTTP_Request::NUM_HEADER_STRINGS]
+HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS]
 = { "GET", "HEAD", "POST", "PUT" };
 
 // for reasons of efficiency, this class expects buffer to be
@@ -21,7 +21,9 @@ HTTP_Request::static_method_strings_[HTTP_Request::NUM_HEADER_STRINGS]
 
 HTTP_Request::HTTP_Request (void)
   : got_request_line_(0),
-    header_strings_(HTTP_Request::static_header_strings_)
+    method_(0), uri_(0), version_(0),
+    header_strings_(HTTP_Request::static_header_strings_),
+    method_strings_(HTTP_Request::static_method_strings_)
 {
   for (int i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
     this->headers_.recognize (this->header_strings_[i]);
@@ -80,55 +82,21 @@ HTTP_Request::parse_request_line (char * const request_line)
   char *lasts; // for strtok_r
 
   // Get the request type.
-  this->method_ = ACE_OS::strtok_r (buf, " \t", &lasts);
-  this->uri_ = ACE_OS::strtok_r (NULL, " \t", &lasts);
-  this->version_ = ACE_OS::strtok_r (NULL, " \t", &lasts);
-
   this->got_request_line_ = 1;
 
-  if (this->method_ == NULL)
+  if (this->method (ACE_OS::strtok_r (buf, " \t", &lasts))
+      && this->uri (ACE_OS::strtok_r (NULL, " \t", &lasts)))
     {
-      this->method_ = 0;
-      this->uri_ = 0;
-      this->version_ = 0;
-      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-      return;
-    }
-  else this->method_ = ACE_OS::strdup (this->method_);
+      this->type (this->method ());
 
-  if (this->uri_ == NULL)
-    {
-      this->uri_ = 0;
-      this->version_ = 0;
-      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
-      return;
+      if (this->version (ACE_OS::strtok_r (NULL, " \t", &lasts)) == 0)
+        {
+          if (this->type () != HTTP_Request::GET)
+            this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
+        }
     }
-  else this->uri_ = ACE_OS::strdup (this->uri_);
 
-  if (this->version_ == NULL)
-    {
-      this->version_ = 0;
-      if (ACE_OS::strcmp (this->method_, "GET") != 0)
-        this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
-    }
-  else this->version_ = ACE_OS::strdup (this->version_);
-
-  // Delegate according to the request type.
-  if (ACE_OS::strcmp (this->method_, "GET") == 0) {
-    this->type_ = HTTP_Request::GET;
-  }
-  else if (ACE_OS::strcmp (this->method_, "POST") == 0) {
-    this->type_ = HTTP_Request::POST;
-  }
-  else if (ACE_OS::strcmp (this->method_, "HEAD") == 0) {
-    this->type_ = HTTP_Request::HEAD;
-  }
-  else if (ACE_OS::strcmp (this->method_, "PUT") == 0) {
-    this->type_ = HTTP_Request::PUT;
-  }
-  else {
-    this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
-  }
+  //  this->cgi_arguments (this->uri);
 }
 
 int
@@ -179,36 +147,31 @@ HTTP_Request::version (void) const
   return this->version_;
 }
 
-#if 0 // This static function currently isn't used.
-static void
-HTTP_fix_path (char *path)
+int
+HTTP_Request::cgi (void) const
 {
-  // fix the path if it needs fixing/is fixable
-
-  // replace the percentcodes with the actual character
-  int i,j;
-  char percentcode[3];
-  
-  for (i = j = 0; path[i] != '\0'; i++,j++) {
-    if (path[i] == '%') {
-      percentcode[0] = path[++i];
-      percentcode[1] = path[++i];
-      percentcode[2] = '\0';
-      path[j] = ACE_OS::strtol (percentcode, (char **)0, 16);
-    }
-    else path[j] = path[i];
-  }
-  path[j] = path[i];
+  return this->cgi_;
 }
-#endif // 0: This static function currently isn't used.
 
-int HTTP_Request::got_request_line (void)
+const char *
+HTTP_Request::cgi_env (void) const
+{
+  return this->cgi_env_;
+}
+
+const char *
+HTTP_Request::cgi_args (void) const
+{
+  return this->cgi_args_;
+}
+
+int HTTP_Request::got_request_line (void) const
 {
   return this->got_request_line_;
 }
 
-u_long
-HTTP_Request::type (void)
+int
+HTTP_Request::type (void) const
 {
   return type_;
 }
@@ -303,3 +266,96 @@ HTTP_Request::dump (void)
     }
 }
 
+const char *
+HTTP_Request::method (const char *method_string)
+{
+  if (this->method_) ACE_OS::free (this->method_);
+
+  if (method_string == 0)
+    {
+      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
+      this->method_ = 0;
+    }
+  else this->method_ = ACE_OS::strdup (method_string);
+
+  return this->method_;
+}
+
+const char *
+HTTP_Request::uri (char *uri_string)
+{
+  if (this->uri_) ACE_OS::free (this->uri_);
+
+  if (uri_string == 0)
+    {
+      this->status_ = HTTP_Status_Code::STATUS_BAD_REQUEST;
+      this->uri_ = 0;
+    }
+  else
+    {
+      this->uri_ =  ACE_OS::strdup (uri_string);
+      this->cgi (this->uri_);
+      HTTP_Helper::HTTP_decode_string (this->uri_);
+    }
+
+  return this->uri_;
+}
+
+const char *
+HTTP_Request::version (const char *version_string)
+{
+  if (this->version_) ACE_OS::free (this->version_);
+
+  this->version_ = (version_string
+                    ? ACE_OS::strdup(version_string)
+                    : 0);
+
+  return this->version_;
+}
+
+int
+HTTP_Request::type (const char *type_string)
+{
+  this->type_ = HTTP_Request::NO_TYPE;
+  if (type_string == 0) return this->type_;
+
+  for (int i = 0; i < HTTP_Request::NUM_METHOD_STRINGS; i++)
+    if (ACE_OS::strcmp(type_string, this->method_strings_[i]) == 0)
+      {
+        this->type_ = i;
+        break;
+      }
+
+  if (this->type_ == HTTP_Request::NO_TYPE)
+    this->status_ = HTTP_Status_Code::STATUS_NOT_IMPLEMENTED;
+
+  return this->type_;
+}
+
+int
+HTTP_Request::cgi (char *uri_string)
+{
+  this->cgi_ = 0;
+  this->cgi_env_ = 0;
+  this->cgi_args_ = 0;
+
+  char *cgi_question = ACE_OS::strchr (uri_string, '?');
+  if (cgi_question)
+    {
+      this->cgi_ = 1;
+      *cgi_question++ = '\0';
+
+
+      if (*cgi_question != '\0')
+        {
+          if (ACE_OS::strchr (cgi_question, '='))
+            this->cgi_env_ = cgi_question;
+          else
+            this->cgi_args_ = cgi_question;
+
+          HTTP_Helper::HTTP_decode_string (cgi_question);
+        }
+    }
+
+  return this->cgi_;
+}

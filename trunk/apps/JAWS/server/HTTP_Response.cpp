@@ -43,7 +43,7 @@ void
 HTTP_Response::process_request (void)
 {
   switch (this->request_.status ()) {
-  case HTTP_Request::OK:
+  case HTTP_Request::OK :
 
     switch (this->request_.type ()) {
     case HTTP_Request::GET :
@@ -73,7 +73,8 @@ HTTP_Response::process_request (void)
       break;
 
     default :
-      this->error_response (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED, "");
+      this->error_response (HTTP_Status_Code::STATUS_NOT_IMPLEMENTED,
+                            "Requested method is not implemented.");
     }
     break;
 

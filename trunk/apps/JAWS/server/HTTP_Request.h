@@ -37,28 +37,17 @@ public:
   const char * uri (void) const;
   const char * version (void) const;
 
+  int cgi (void) const;
+  const char * cgi_args (void) const;
+  const char * cgi_env (void) const;
+
   int type (void) const;
-
-private:
-  // Private Accessors which can set values
-  const char * method (const char *method_string);
-  const char * uri (const char *uri_string);
-  const char * version (const char *version_string);
-
-  int type (const char *type_string);
-
   char *data (void);
-
   int data_length (void);
-
   int content_length (void);
-
   char *filename (void);
-
   int status (void);
-
   char *status_string (void);
-
   void dump (void);
   // Dump the state of the request.
 
@@ -100,13 +89,23 @@ private:
   };
 
 private:
+  // Private Accessors which can set values
+  const char * method (const char *method_string);
+  const char * uri (char *uri_string);
+  const char * version (const char *version_string);
+
+  int cgi (char *uri_string);
+
+  int type (const char *type_string);
+
+private:
   int complete_request (ACE_Message_Block &mb);
   int complete_header_line (ACE_Message_Block &mb);
 
   void parse_request_line (ACE_Message_Block &mb);
   void parse_header_line (ACE_Message_Block &mb);
   
-  int got_request_line (void);
+  int got_request_line (void) const;
 
 private:
   int got_request_line_;
@@ -122,12 +121,16 @@ private:
   const char * const * const method_strings_;
   static const char * const static_method_strings_[NUM_METHOD_STRINGS];
 
+  int cgi_;
+  char *cgi_env_;
+  char *cgi_args_;
+
   char *data_;
   int datalen_;
   int content_length_;
   char *filename_;
   int status_;
-  u_long type_;
+  int type_;
 };
 
 #endif /* HTTP_REQUEST_H */
