@@ -332,13 +332,13 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_DomainManager_ptr 
 
 #if ! defined (TAO_HAS_MINIMUM_CORBA)
 
-void operator<<= (CORBA::Any &_tao_any, CORBA::ConstructionPolicy_ptr _tao_elem)
+void operator<<= (CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr _tao_elem)
 {
   CORBA::Object_ptr *_tao_obj_ptr = 0;
   ACE_TRY_NEW_ENV
   {
     ACE_NEW (_tao_obj_ptr, CORBA::Object_ptr);
-    *_tao_obj_ptr = CORBA::ConstructionPolicy::_duplicate (_tao_elem);
+    *_tao_obj_ptr = CORBA_ConstructionPolicy::_duplicate (_tao_elem);
     _tao_any.replace (CORBA::_tc_ConstructionPolicy, _tao_obj_ptr, 1, ACE_TRY_ENV);
     ACE_TRY_CHECK;
   }
@@ -349,12 +349,12 @@ void operator<<= (CORBA::Any &_tao_any, CORBA::ConstructionPolicy_ptr _tao_elem)
   ACE_ENDTRY;
 }
 
-CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolicy_ptr &_tao_elem)
+CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA_ConstructionPolicy_ptr &_tao_elem)
 {
   CORBA::Object_ptr *tmp = 0;
   ACE_TRY_NEW_ENV
   {
-    _tao_elem = CORBA::ConstructionPolicy::_nil ();
+    _tao_elem = CORBA_ConstructionPolicy::_nil ();
     CORBA::TypeCode_var type = _tao_any.type ();
     if (!type->equal (CORBA::_tc_ConstructionPolicy, ACE_TRY_ENV)) return 0; // not equal
     ACE_TRY_CHECK;
@@ -364,7 +364,7 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolic
     if (stream.decode (CORBA::_tc_ConstructionPolicy, &_tao_obj_var.out (), 0, ACE_TRY_ENV)
        == CORBA::TypeCode::TRAVERSE_CONTINUE)
     {
-      _tao_elem = CORBA::ConstructionPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
+      _tao_elem = CORBA_ConstructionPolicy::_narrow (_tao_obj_var.in (), ACE_TRY_ENV);
       ACE_TRY_CHECK;
       *tmp = (CORBA::Object_ptr) _tao_elem;  // any owns the object
       ((CORBA::Any *)&_tao_any)->replace (CORBA::_tc_ConstructionPolicy, tmp, 1, ACE_TRY_ENV);
@@ -383,9 +383,9 @@ CORBA::Boolean operator>>= (const CORBA::Any &_tao_any, CORBA::ConstructionPolic
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-  template class TAO_Object_Field_T<CORBA::ConstructionPolicy>;
+  template class TAO_Object_Field_T<CORBA_ConstructionPolicy>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#  pragma instantiate TAO_Object_Field_T<CORBA::ConstructionPolicy>
+#  pragma instantiate TAO_Object_Field_T<CORBA_ConstructionPolicy>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
 #endif /* ! defined (TAO_HAS_MINIMUM_CORBA) */

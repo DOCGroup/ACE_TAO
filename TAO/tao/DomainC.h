@@ -13,6 +13,8 @@
 
 #include "tao/corbafwd.h"
 #include "tao/PolicyC.h"
+#include "tao/Environment.h"
+#include "tao/Any.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -289,18 +291,18 @@ private:
 
 TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConstructionPolicy;
 
-// Any operators for interface CORBA::ConstructionPolicy
+// Any operators for interface CORBA_ConstructionPolicy
 void TAO_Export operator<<= (CORBA::Any &, 
-                             CORBA::ConstructionPolicy_ptr);
+                             CORBA_ConstructionPolicy_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, 
-                                       CORBA::ConstructionPolicy *&);
+                                       CORBA_ConstructionPolicy *&);
 
 #ifndef __ACE_INLINE__
 
 CORBA::Boolean TAO_Export operator<< (TAO_OutputCDR &, 
-                                      const CORBA::ConstructionPolicy_ptr );
+                                      const CORBA_ConstructionPolicy_ptr );
 CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &, 
-                                      CORBA::ConstructionPolicy_ptr &);
+                                      CORBA_ConstructionPolicy_ptr &);
 
 #endif /* __ACE_INLINE__ */
 
@@ -309,19 +311,19 @@ CORBA::Boolean TAO_Export operator>> (TAO_InputCDR &,
 
 
 
-// Any operators for interface CORBA::DomainManager
+// Any operators for interface CORBA_DomainManager
 void TAO_Export operator<<= (CORBA::Any &, 
-                             CORBA::DomainManager_ptr);
+                             CORBA_DomainManager_ptr);
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, 
-                                       CORBA::DomainManager *&);
+                                       CORBA_DomainManager *&);
 
-// Any operators for interface CORBA::DomainManagerList
+// Any operators for interface CORBA_DomainManagerList
 void TAO_Export operator<<= (CORBA::Any &, 
-                             const CORBA::DomainManagerList &); // copying version
+                             const CORBA_DomainManagerList &); // copying version
 void TAO_Export operator<<= (CORBA::Any &, 
-                             CORBA::DomainManagerList*); // noncopying version
+                             CORBA_DomainManagerList*); // noncopying version
 CORBA::Boolean TAO_Export operator>>= (const CORBA::Any &, 
-                                       CORBA::DomainManagerList *&);
+                                       CORBA_DomainManagerList *&);
 
 #ifndef __ACE_INLINE__
 
