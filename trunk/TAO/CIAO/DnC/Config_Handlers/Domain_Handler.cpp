@@ -435,13 +435,15 @@ namespace CIAO
             {
               node = iter->nextNode ();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_bridge_name (text->getNodeValue (), domain_bridge);
+              this->process_bridge_name 
+                 (text->getNodeValue (), domain_bridge);
             }
           else if (node_name == XStr (ACE_TEXT ("label")))
             {
               node = iter->nextNode ();
               DOMText* text = ACE_reinterpret_cast (DOMText*, node);
-              this->process_bridge_label (text->getNodeValue (), domain_bridge);
+              this->process_bridge_label 
+                  (text->getNodeValue (), domain_bridge);
             }
           else if (node_name == XStr (ACE_TEXT ("resource")))
             {
@@ -672,8 +674,9 @@ namespace CIAO
         }
     }
 
-    void Domain_Handler::process_bridge_label (const XMLCh* label,
-                                               Deployment::Bridge& domain_bridge)
+    void Domain_Handler::process_bridge_label 
+          (const XMLCh* label,
+           Deployment::Bridge& domain_bridge)
     {
       if (label)
         {
@@ -681,8 +684,9 @@ namespace CIAO
         }
     }
 
-    void Domain_Handler::process_ic_label (const XMLCh* label,
-                                           Deployment::Interconnect& domain_ic)
+    void Domain_Handler::process_ic_label 
+          (const XMLCh* label,
+           Deployment::Interconnect& domain_ic)
     {
       if (label)
         {
@@ -690,8 +694,9 @@ namespace CIAO
         }
     }
 
-    void Domain_Handler::process_sr_resource_type (const XMLCh* resource_type,
-                                                   Deployment::SharedResource& domain_sr)
+    void Domain_Handler::process_sr_resource_type 
+         (const XMLCh* resource_type,
+          Deployment::SharedResource& domain_sr)
     {
       if (resource_type)
         {
@@ -713,7 +718,8 @@ namespace CIAO
         = DOMImplementationRegistry::getDOMImplementation(gLS);
 
       DOMBuilder* parser =
-        ((DOMImplementationLS*)impl)->createDOMBuilder(DOMImplementationLS::MODE_SYNCHRONOUS, 0);
+        ((DOMImplementationLS*)impl)->createDOMBuilder
+              (DOMImplementationLS::MODE_SYNCHRONOUS, 0);
 
       // Discard comment nodes in the document
       parser->setFeature (XMLUni::fgDOMComments, false);
@@ -752,7 +758,8 @@ namespace CIAO
 
       DOMDocument* doc = parser->parseURI (url);
       ACE_TString root_node_name;
-      root_node_name = XMLString::transcode (doc->getDocumentElement ()->getNodeName ());
+      root_node_name = XMLString::transcode 
+          (doc->getDocumentElement ()->getNodeName ());
 
       return doc;
     }
