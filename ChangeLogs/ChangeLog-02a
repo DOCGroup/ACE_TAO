@@ -1,3 +1,11 @@
+Thu Oct 19 12:03:41 2000  Darrell Brunsch <brunsch@uci.edu>
+
+	* apps/JAWS2/HTTPU/HTTPU.DSP:
+	* apps/JAWS2/JAWS/jaws.dsp:
+
+	  These two projects were placing their DLL's in the wrong
+	  directory.
+
 Thu Oct 19 14:23:52 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/ace-dll.icc: Removed extraneous ',' from Win32 section.
