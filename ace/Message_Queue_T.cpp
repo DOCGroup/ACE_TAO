@@ -445,7 +445,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
   ACE_TRACE ("ACE_Message_Queue<ACE_SYNCH_USE>::close");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->lock_, -1);
 
-  int res = this->deactivate_i ();
+  int result = this->deactivate_i ();
 
   // Free up the remaining messages on the queue.
 
@@ -464,7 +464,7 @@ ACE_Message_Queue<ACE_SYNCH_USE>::close (void)
       temp->release ();
     }
 
-  return res;
+  return result;
 }
 
 template <ACE_SYNCH_DECL> int
