@@ -169,7 +169,7 @@ sub check_workspace () {
     close CVS;
 
     if (! "$exec_prefix"  &&  @out_of_date) {
-      warn "ERROR: workspace must be updated or cleaned: " .
+      warn "ERROR: workspace must be updated or cleaned:\n  " .
            join ("\n  ", @out_of_date) . "\n";
       return 1;
     }
@@ -321,8 +321,10 @@ sub diff () {
 
     my $module = $kit eq 'ace'  ?  'ACE_wrappers'  :  'ACE_wrappers/TAO';
 
-    system ("$cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
-            "$gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
+    system ("sleep 60; " .
+            "nice -15 $cvs -q rdiff -u -r $previous_tag -r $tag $module | " .
+            "nice -15 sed 's%ACE_wrappers-repository/%ACE_wrappers/%g' | " .
+            "nice -15 $gzip -9 > diffs/$previous_tag-$tag.diff.gz &");
   }
 
   #### Ignore return value.  No promises on diffs.
