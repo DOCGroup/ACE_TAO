@@ -503,7 +503,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
                                    (ACE_Timer_Queue*)0,
                                    0,
                                    (ACE_Reactor_Notify*)0,
-                                   this->reactor_mask_signals_),
+                                   this->reactor_mask_signals_,
+                                   ACE_Select_Reactor_Token::LIFO),
                       0);
       break;
 
@@ -545,7 +546,8 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
     case TAO_REACTOR_TP:
       ACE_NEW_RETURN (impl, ACE_TP_Reactor ((ACE_Sig_Handler*)0,
                                             (ACE_Timer_Queue*)0,
-                                            this->reactor_mask_signals_),
+                                            this->reactor_mask_signals_,
+                                            ACE_Select_Reactor_Token::LIFO),
                       0);
       break;
     }
