@@ -97,12 +97,12 @@ run_test (PortableServer::POA_ptr poa,
   // Obtain the consumer admin..
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     event_channel->for_consumers (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // Obtain the supplier admin..
   CosEventChannelAdmin::SupplierAdmin_var supplier_admin =
     event_channel->for_suppliers (ACE_TRY_ENV);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
   // ****************************************************************
 
