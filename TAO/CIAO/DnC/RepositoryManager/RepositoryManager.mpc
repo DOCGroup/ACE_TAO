@@ -18,6 +18,7 @@ project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe 
   Source_Files {
     RepositoryManagerC.cpp
     RepositoryManagerS.cpp
+    Update_Plan.cpp
     Repository_Manager.cpp
     RepositoryManager_Impl.cpp
   }
