@@ -1,3 +1,12 @@
+Mon Feb  4 14:11:14 2002  Boris Kolpackov  <bosk@ipmce.ru>
+
+	* ace/Log_Msg.h:
+	* ace/Log_Msg.cpp:
+
+	  Added ability to install custom backend which is a
+	  per-process entity as opposite to callback which is
+	  a per-thread not-inheritable entity.
+	
 Sun Feb  3 17:59:36 2002  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * ace/config-sunos5.5.h (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION):
