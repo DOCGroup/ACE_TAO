@@ -78,6 +78,7 @@ my(%customDefined) = ('automatic'               => 1,
                       'inline_outputext'        => 1,
                       'documentation_outputext' => 1,
                       'resource_outputext'      => 1,
+                      'generic_outputext'       => 1,
                      );
 
 ## Custom sections as well as definitions
@@ -1669,12 +1670,13 @@ sub get_custom_value {
   my($value) = undef;
 
   if ($cmd eq 'input_files') {
+    my($generic) = 'generic_files';  ## Matches with generic_outputext
     my(@array) = $self->get_component_list($based);
     $value = \@array;
 
     $self->{'custom_output_files'} = {};
     my(%vcomps) = ();
-    foreach my $vc (keys %{$self->{'valid_components'}}) {
+    foreach my $vc (keys %{$self->{'valid_components'}}, $generic) {
       my(@comps) = $self->get_component_list($vc);
       $vcomps{$vc} = \@comps;
     }
@@ -1683,7 +1685,7 @@ sub get_custom_value {
       my($cinput)  = $input;
       $cinput =~ s/\.[^\.]+$//;
       foreach my $pf (@{$self->{'generated_exts'}->{$based}->{'pre_filename'}}) {
-        foreach my $vc (keys %{$self->{'valid_components'}}) {
+        foreach my $vc (keys %{$self->{'valid_components'}}, $generic) {
           push(@outputs,
                $self->check_custom_output($based, $pf,
                                           $cinput, $vc, $vcomps{$vc}));
@@ -1917,20 +1919,22 @@ sub reset_generating_types {
 sub get_template_input {
   my($self) = shift;
 
-  if ($self->lib_target()) {
+  ## This follows along the same logic as read_template_input() by
+  ## checking for exe target and then defaulting to a lib target
+  if ($self->exe_target()) {
     if ($self->{'writing_type'} == 1) {
-      return $self->{'lib_template_input'};
+      return $self->{'lexe_template_input'};
     }
     else {
-      return $self->{'dll_template_input'};
+      return $self->{'dexe_template_input'};
     }
   }
 
   if ($self->{'writing_type'} == 1) {
-    return $self->{'lexe_template_input'};
+    return $self->{'lib_template_input'};
   }
   else {
-    return $self->{'dexe_template_input'};
+    return $self->{'dll_template_input'};
   }
 }
 
