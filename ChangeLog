@@ -1,3 +1,14 @@
+Mon Jan 24 18:24:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
+
+        * examples/IPC_SAP/SPIPE_SAP/consumer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_msg.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/producer_read.cpp:
+        * examples/IPC_SAP/SPIPE_SAP/server.cpp:
+        * examples/Service_Configurator/IPC-tests/server/Handle_L_SPIPE.i:
+
+        Added a number necessary includefiles which make things compile better
+        when ACE_HAS_STREAM_PIPES is defined.
+
 Mon Jan 24 07:49:21 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_sys_socket.inl (setsockopt): Fixed a mistake in the
@@ -6,9 +17,9 @@ Mon Jan 24 07:49:21 2005  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Mon Jan 24 11:23:12 UTC 2005  Martin Corino  <mcorino@remedy.nl>
 
-	* tests/CDR_Test.cpp:
+        * tests/CDR_Test.cpp:
 
-	Fixed incorrect initializer for char array.
+        Fixed incorrect initializer for char array.
 
 Sun Jan 23 21:34:00 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 

@@ -5,6 +5,8 @@
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Time_Value.h"
 
 ACE_RCSID(SPIPE_SAP, consumer_msg, "$Id$")
 
