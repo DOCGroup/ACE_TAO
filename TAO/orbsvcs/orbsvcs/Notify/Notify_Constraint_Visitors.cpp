@@ -597,32 +597,32 @@ TAO_Notify_Constraint_Visitor::visit_special (TAO_ETCL_Special *special)
         {
         case TAO_ETCL_LENGTH:
           {
-	    CORBA::ULong length;
+            CORBA::ULong length;
 
-	    switch (tc->kind ())
+            switch (tc->kind ())
               {
-	      case CORBA::tk_sequence:
-		{
-		  TAO_DynSequence_i dyn_seq;
-		  dyn_seq.init (current_value_.in()
-		                ACE_ENV_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
+              case CORBA::tk_sequence:
+                {
+                  TAO_DynSequence_i dyn_seq;
+                  dyn_seq.init (current_value_.in()
+                                ACE_ENV_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
 
-		  DynamicAny::AnySeq_var any_seq =
-		    dyn_seq.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
+                  DynamicAny::AnySeq_var any_seq =
+                    dyn_seq.get_elements (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
 
-		  length = any_seq->length ();
-		}
+                  length = any_seq->length ();
+                }
               break;
-	      case CORBA::tk_array:
-		{
-		  length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
-		  ACE_TRY_CHECK;
-		}
+              case CORBA::tk_array:
+                {
+                  length = tc->length (ACE_ENV_SINGLE_ARG_PARAMETER);
+                  ACE_TRY_CHECK;
+                }
               break;
-	      default:
-		return -1;
+              default:
+                return -1;
               }
 
             TAO_ETCL_Literal_Constraint lit (length);
@@ -1225,11 +1225,11 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (const CORBA::Any *any,
     {
       CORBA::TypeCode_var type = any->type ();
       CORBA::TypeCode_var base_type =
-	TAO_DynAnyFactory::strip_alias (type.in () ACE_ENV_ARG_PARAMETER);
+        TAO_DynAnyFactory::strip_alias (type.in () ACE_ENV_ARG_PARAMETER);
       CORBA::TypeCode_var content_type =
-	base_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
+        base_type->content_type (ACE_ENV_SINGLE_ARG_PARAMETER);
       CORBA::TCKind kind =
-	TAO_DynAnyFactory::unalias (content_type.in() ACE_ENV_ARG_PARAMETER);
+        TAO_DynAnyFactory::unalias (content_type.in() ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // The literal and the array elements must be
