@@ -1,3 +1,12 @@
+Fri Jan  9 10:15:43 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+	* bin/msvc_auto_compile.pl:
+          When using MPC with Static builds we don't have dependencies 
+          between the libraries in the generated dsw's. The build order
+          is then handled in this file, but when using MPC we use generate
+          different filenames than previously. Added the option -MPC, when
+          this is passed on the commandline we use the MPC filenames.
+
 Fri Jan  9 08:07:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS/server/jaws.dsp:
