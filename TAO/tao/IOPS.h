@@ -50,7 +50,7 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:49
 
-TAO_NAMESPACE  POA_IOP
+namespace  POA_IOP
 {
 
 
@@ -58,7 +58,7 @@ TAO_NAMESPACE  POA_IOP
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_module/module_sh.cpp:80
 
 }
-TAO_NAMESPACE_CLOSE // module IOP
+// end module IOP
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:1044

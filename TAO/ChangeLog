@@ -1,3 +1,24 @@
+Sun Nov  2 16:33:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/orbconf.h:
+	  
+	  Removed a couple of macros for namespaces that are no longer
+	  used and absolete. We can now use the keyword namespace
+	  directly. 
+	 
+	  There are few more macros that can go. But that is the next
+	  step. 
+	
+	* tao/CONV_FRAMES.h:
+	* tao/Exception.cpp:
+	* tao/IOPS.h:
+	* tao/IOPS_T.h:
+	* tao/TAOS.h:
+	* tao/Messaging/MessagingS_T.h:
+
+	  Removal of the macro forced us to fudge these files where it was
+	  used. 
+
 Sun Nov  2 16:23:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
