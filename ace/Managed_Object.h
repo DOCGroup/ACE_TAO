@@ -65,7 +65,7 @@ class ACE_Managed_Object
   //     This template class wraps an interface that is used to
   //     allocate and access an object that is managed by the
   //     ACE_Object_Manager.  Because static template member functions
-  //     are not supported by most compilers, it is a separate
+  //     are not supported by some compilers, it is a separate
   //     (template) class.
   //
   //     This interface is typically used to replace a static object
@@ -93,7 +93,7 @@ class ACE_Managed_Object
   //
   //     By default, preallocation uses dynamic allocation.  The
   //     preallocated objects and arrays are allocated off the heap in
-  //     the ACE_Object_Manager constructor.  The statically place the
+  //     the ACE_Object_Manager constructor.  To statically place the
   //     preallocated objects in program global data instead of on the
   //     heap, #define ACE_HAS_STATIC_PREALLOCATION prior to building
   //     the ACE library.
