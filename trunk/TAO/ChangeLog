@@ -1,3 +1,15 @@
+Tue May 10 08:50:32 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Messaging/Asynch_Reply_Dispatcher.{h,cpp}:
+          Added an ACE_Allocator* to the constructor argument list which
+          is passed to the base.
+
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+          Instead of always allocating the reply dispatcher from the heap,
+          try to get an allocator, if we get one, use that allocator to
+          allocate the object and pass the alloctaor pointer to the object.
+          When there is no allocator, we use the heap.
+
 Tue May 10 08:39:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/releasenotes/index.html:
