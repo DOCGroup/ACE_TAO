@@ -11,10 +11,8 @@ ACE_RCSID(ace, Naming_Context, "$Id$")
 
 // Make life easier later on...
 
-typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>
-        LOCAL_NAME_SPACE;
-typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>
-        LITE_LOCAL_NAME_SPACE;
+typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LOCAL_NAME_SPACE;
+typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LITE_LOCAL_NAME_SPACE;
 
 // The following Factory is used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the Name
