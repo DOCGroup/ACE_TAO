@@ -173,8 +173,8 @@ int main (int argc, char *argv[])
         peer_impl->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n")); 
-     
+      ACE_DEBUG ((LM_DEBUG, "Finished peer configuration and activation\n"));
+
       CORBA::Object_var object =
         orb->string_to_object (ior ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
@@ -294,7 +294,7 @@ Roundtrip_Peer::run_experiment (CORBA::Long experiment_id,
     {
       results[i] = history.get_sample (i) / gsf;
     }
-  
+
   return results._retn ();
 }
 

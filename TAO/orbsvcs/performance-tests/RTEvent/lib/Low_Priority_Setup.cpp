@@ -10,35 +10,38 @@
 #define TAO_PERF_RTEC_LOW_PRIORITY_SETUP_CPP
 
 #include "Low_Priority_Setup.h"
+
 #include "ace/Basic_Stats.h"
+#include "ace/Sample_History.h"
 
 template<class Client_Type> Low_Priority_Setup<Client_Type>::
-Low_Priority_Setup (int nthreads,
+Low_Priority_Setup (int consumer_count,
                     int iterations,
                     int use_different_types,
                     CORBA::Long experiment_id,
                     CORBA::Long base_event_type,
                     int workload,
                     ACE_UINT32 gsf,
-                    int enable_threads,
+                    int nthreads,
                     int thread_priority,
                     int thread_sched_class,
-                    int send_period,
+                    int per_thread_period,
                     PortableServer::POA_ptr supplier_poa,
                     PortableServer::POA_ptr consumer_poa,
                     RtecEventChannelAdmin::EventChannel_ptr ec,
                     ACE_Barrier *barrier
                     ACE_ENV_ARG_DECL)
-  : nthreads_ (nthreads)
-  , clients_ (nthreads ? new Client_Type[nthreads] : 0)
-  , disconnect_ (nthreads ? new Client_Auto_Disconnect[nthreads] : 0)
+  : consumer_count_ (consumer_count)
+  , clients_ (consumer_count ? new Client_Type[consumer_count] : 0)
+  , disconnect_ (consumer_count ? new Client_Auto_Disconnect[consumer_count] : 0)
+  , nthreads_ (nthreads)
   , tasks_ (nthreads ? new Send_Task[nthreads] : 0)
   , stoppers_ (nthreads ? new Auto_Send_Task_Stopper[nthreads] : 0)
 {
-  for (int i = 0; i != nthreads; ++i)
+  for (int i = 0; i != consumer_count; ++i)
     {
       int per_consumer_workload =
-        workload / this->nthreads_;
+        workload / this->consumer_count_;
       if (workload != 0 && per_consumer_workload == 0)
         per_consumer_workload = 1;
 
@@ -57,26 +60,31 @@ Low_Priority_Setup (int nthreads,
       this->clients_[i].connect (ec
                                  ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
-      /// Automatically disconnect the group if the connection was
-      /// successful
+      // Automatically disconnect the group if the connection was
+      // successful
       this->disconnect_[i] = &this->clients_[i];
+    }
 
-      if (enable_threads)
-        {
-          this->tasks_[i].init (0,
-                                send_period * this->nthreads_,
-                                i * send_period,
-                                event_type,
-                                experiment_id,
-                                this->clients_[i].supplier (),
-                                barrier);
-          this->tasks_[i].thr_mgr (&this->thr_mgr_);
-          this->stoppers_[i] = Auto_Send_Task_Stopper (
-                  new Send_Task_Stopper (thread_priority,
-                                         thread_sched_class,
-                                         &this->tasks_[i])
-                  );
-        }
+  for (int j = 0; j != nthreads; ++j)
+    {
+      CORBA::Long event_type =
+        base_event_type;
+      if (use_different_types)
+        event_type = base_event_type + 2 * j;
+
+      this->tasks_[j].init (0,
+                            per_thread_period,
+                            j * per_thread_period,
+                            event_type,
+                            experiment_id,
+                            this->clients_[j].supplier (),
+                            barrier);
+      this->tasks_[j].thr_mgr (&this->thr_mgr_);
+      this->stoppers_[j] = Auto_Send_Task_Stopper (
+          new Send_Task_Stopper (thread_priority,
+                                 thread_sched_class,
+                                 &this->tasks_[j])
+          );
     }
 }
 
@@ -102,7 +110,7 @@ Low_Priority_Setup<Client_Type>::stop_all_threads (void)
 template<class Client_Type> void
 Low_Priority_Setup<Client_Type>::collect_basic_stats (ACE_Basic_Stats &stats)
 {
-  for (int i = 0; i != this->nthreads_; ++i)
+  for (int i = 0; i != this->consumer_count_; ++i)
     {
       ACE_Sample_History &history =
         this->clients_[i].consumer ()->sample_history ();

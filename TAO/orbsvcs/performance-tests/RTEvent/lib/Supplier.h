@@ -35,6 +35,7 @@ public:
    */
   Supplier (CORBA::Long experiment_id,
             CORBA::Long event_type,
+            CORBA::Long event_range,
             PortableServer::POA_ptr poa);
 
   /// Connect to the event channel
@@ -67,6 +68,9 @@ private:
 
   /// The event type
   CORBA::Long event_type_;
+
+  /// The event type
+  CORBA::Long event_range_;
 
   /// The proxy this object is connected to
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_consumer_;

@@ -1,0 +1,13 @@
+NTHREADS="16"
+#NTHREADS="1 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30 32"
+
+#NCONSUMERS="32 64 96 128 160 192 224 256 288 320 352 384 416 448 480 512"
+NCONSUMERS="32 64 128 256"
+
+ITERATIONS=3000
+
+LOCKING_TYPES="copy_on_read copy_on_write delayed"
+DISPATCHING_TYPES="threaded reactive rtcorba"
+FILTER_TYPES="null per_supplier"
+
+INPUT_BASE="ec_locking"

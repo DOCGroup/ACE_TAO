@@ -8,9 +8,7 @@
 #       Local macros
 #----------------------------------------------------------------------------
 
-DIRS  = \
-  EC_Scalability \
-  EC_Federated_Scalability
+DIRS  =
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
@@ -26,8 +24,7 @@ include $(TAO_ROOT)/rules.tao.GNU
 ifeq ($(corba_messaging),1)
 
 DIRS += \
-  EC_Latency \
-  EC_Federated_Latency
+  RTEvent
 
 endif # corba_messaging
 

@@ -13,9 +13,11 @@ ACE_RCSID(TAO_PERF_RTEC, Supplier, "$Id$")
 
 Supplier::Supplier (CORBA::Long experiment_id,
                     CORBA::Long event_type,
+                    CORBA::Long event_range,
                     PortableServer::POA_ptr poa)
   : experiment_id_ (experiment_id)
   , event_type_ (event_type)
+  , event_range_ (event_range)
   , default_POA_ (PortableServer::POA::_duplicate (poa))
 {
 }
@@ -44,11 +46,14 @@ Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec
 
   RtecEventChannelAdmin::SupplierQOS supplier_qos;
   supplier_qos.is_gateway = 0;
-  supplier_qos.publications.length (1);
-  RtecEventComm::EventHeader& sh0 =
-    supplier_qos.publications[0].event.header;
-  sh0.type   = this->event_type_;
-  sh0.source = this->experiment_id_;
+  supplier_qos.publications.length (this->event_range_);
+  for (CORBA::Long i = 0; i != this->event_range_; ++i)
+    {
+      RtecEventComm::EventHeader& sh =
+        supplier_qos.publications[i].event.header;
+      sh.type   = this->event_type_ + 2 * i;
+      sh.source = this->experiment_id_;
+    }
 
   this->proxy_consumer_->connect_push_supplier (supplier.in (),
                                                 supplier_qos

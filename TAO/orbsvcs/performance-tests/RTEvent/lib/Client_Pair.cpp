@@ -24,8 +24,29 @@ Client_Pair::init (CORBA::Long experiment_id,
                    PortableServer::POA_ptr supplier_poa,
                    PortableServer::POA_ptr consumer_poa)
 {
+  const CORBA::Long source_event_range = 1;
+  this->init (experiment_id,
+              base_event_type,
+              source_event_range,
+              iterations,
+              workload_in_usecs,
+              gsf,
+              supplier_poa,
+              consumer_poa);
+}
+
+void
+Client_Pair::init (CORBA::Long experiment_id,
+                   CORBA::Long base_event_type,
+                   CORBA::Long source_event_range,
+                   CORBA::ULong iterations,
+                   CORBA::Long workload_in_usecs,
+                   ACE_UINT32 gsf,
+                   PortableServer::POA_ptr supplier_poa,
+                   PortableServer::POA_ptr consumer_poa)
+{
   this->supplier_ = new Supplier (experiment_id,
-                                  base_event_type,
+                                  base_event_type, source_event_range,
                                   supplier_poa);
   this->consumer_ = new Consumer (experiment_id,
                                   base_event_type + 1,

@@ -12,7 +12,8 @@ DIRS  = \
   lib \
   RTCORBA_Baseline \
   Roundtrip \
-  Federated_Roundtrip
+  Federated_Roundtrip \
+  Colocated_Roundtrip
 
 ifndef TAO_ROOT
   TAO_ROOT = $(ACE_ROOT)/TAO
