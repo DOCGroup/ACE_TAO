@@ -1,3 +1,18 @@
+Sat Aug  9 12:37:05 1997  Brian Mendel  <brian.r.mendel@boeing.com>
+
+        * tao/corba.h:  Deleted include for xdr.h from corba.h.  xdr.h
+        is obsolete.
+
+        * tao/objtable.cpp:  Deleted pragmas for instantiating ACE_Guard,
+        ACE_Read_Guard, and ACE_Write_Guard to eliminate duplicate
+        instantiations.  The templates are instantiated by ACE.  Can these
+        templates also be removed from the
+        ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION section as well?
+
+        * tao/default.bld: Added build file for VxWorks.
+      
+        * tao/tao.bld: Added build file for VxWorks.
+
 Fri Aug  8 14:25:20 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* tao/orbobj.*: Updated various methods to use the new
