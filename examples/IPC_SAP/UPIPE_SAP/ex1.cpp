@@ -167,7 +167,7 @@ main (int, char *[])
                        "spawn"),
                       1);
   // Wait for peer2 and peer1 threads to exit.
-  thr_mgr.wait ();
+  ACE_Thread_Manager::instance ()->wait ();
   return 0;
 }
 #else
