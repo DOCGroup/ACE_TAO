@@ -1,6 +1,6 @@
 project: server, orbsvcsexe {
   ssl       = 1
-  depends  += Security
+  depends  += Security SSL
   libs     += TAO_Security
   requires += ssl
 
@@ -11,7 +11,7 @@ project: server, orbsvcsexe {
 }
 
 project: client, orbsvcsexe {
-  depends  += Security
+  depends  += Security SSL
   libs     += TAO_Security
   requires += ssl
 
