@@ -1,3 +1,9 @@
+Fri Mar 23 06:34:33 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/New_Fail_Test.cpp: Fixed a stupid warning in g++,
+	  No_AMI_Messaging  builds. Surprising that it showed up only in
+	  this build. 
+
 Thu Mar 22 21:33:37 2001  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * ace/INET_Addr.h: VxWorks' inet_ntoa doesn't behave like most
