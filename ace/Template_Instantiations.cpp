@@ -1,7 +1,7 @@
 // $Id$
 
-// Note: this file has been created through concatenation of ALL explicit template 
-// instantiations in ACE, and only those that interfered with the 
+// Note: this file has been created through concatenation of ALL explicit template
+// instantiations in ACE, and only those that interfered with the
 // multithreaded port of ACE to pSOS using the Diab D-C++ 4.1a compiler
 // have been wrapped with the appropriate preprocesor directives for
 // conditional compilation.  If you are trying to use this file, you will need
@@ -37,7 +37,7 @@
 #endif /* defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION) || defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA) */
 
 //  D E P T H = 0
-// Templates with nesting depth 0 (no dependencies on 
+// Templates with nesting depth 0 (no dependencies on
 // other templates), ordered by number of template arguments
 
 ACE_MT (template class ACE_Guard<ACE_Recursive_Thread_Mutex>);
@@ -66,7 +66,7 @@ template class ACE_Array_Iterator<ACE_TSS_Info>;
 // depending on whether ACE_HAS_THREADS is defined
 #if defined (ACE_HAS_MALLOC_STATS)
 template class ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
-#endif defined (ACE_HAS_MALLOC_STATS)
+#endif /* ACE_HAS_MALLOC_STATS */
 
 template class ACE_Auto_Array_Ptr<struct ifreq>;
 template class ACE_Auto_Basic_Array_Ptr<struct ifreq>;
@@ -192,7 +192,7 @@ template class ACE_Fixed_Set<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 template class ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS>;
 #endif /* !defined (ACE_HAS_BROKEN_HPUX_TEMPLATES) */
 
-// ACE_LOCAL_MEMORY_POOL, ACE_MMAP_MEMORY_POOL, and 
+// ACE_LOCAL_MEMORY_POOL, ACE_MMAP_MEMORY_POOL, and
 // ACE_LITE_MMAP_MEMORY_POOL are all defined in OS.h
 
 template class ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex>;
@@ -314,7 +314,7 @@ template class ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_
 template class ACE_Timer_Hash_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX, ACE_Hash_Timer_Heap>;
 template class ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall<ACE_SYNCH_RECURSIVE_MUTEX>, ACE_SYNCH_RECURSIVE_MUTEX, ACE_Hash_Timer_Heap>;
 
-//  D E P T H = 2 
+//  D E P T H = 2
 // Templates with nesting depth 2 (dependencies on other templates 2
 // levels deep), ordered by number of template arguments at top level
 
