@@ -182,7 +182,11 @@ ior_string_to_object (CORBA::String str,
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
 
-  u_char *buffer = new u_char [1 + ACE_OS::strlen ((char *) str) / 2];
+  u_char *buffer;
+  ACE_NEW_RETURN (buffer,
+                  u_char [1 + ACE_OS::strlen ((char *) str) / 2],
+                  CORBA_Object::_nil ());
+
   char *tmp = (char *) str;
   size_t len = 0;
     
@@ -348,7 +352,7 @@ iiop_string_to_object (CORBA::String string,
 // Destringify arbitrary objrefs.
 
 CORBA::Object_ptr
-IIOP_ORB::string_to_object (CORBA::String str,
+IIOP_ORB::string_to_object (const CORBA::String str,
                             CORBA::Environment &env)
 {
   env.clear ();
