@@ -36,9 +36,60 @@ usage: ./drwho-client
 -S      sort the output by real name.
 -t      set the amount of time we wait for servers to timeout.
 -w      return information on just one user.
+
 ----------------------------------------	 
 
-2. Find out where a particular person is logged in:
+2. Find out which friends are logged in (* means currently active)
+
+% drwho-client -A tango.cs.wustl.edu -r -f ~schmidt/.friends.dta
+remote friends logged on
+------------------------
+*Doug O'las    [tango*(3) mambo]
+ Carlos O'Ryan [tango swarm.cs.wustl.edu macarena]
+ Irfan Pyarali [merengue]
+ Nanbor Wang   [lambada]
+ Marina Spivak [mambo]
+ Chris Gill    [tango]
+*Vishal        [merengue*(2)]
+ Kirthika      [tango waltz]
+ Naga          [tango polka]
+ Alex          [lindy]
+ Bala          [cumbia]
+ Pradeep       [flamenco]
+ Matt Braun    [lambada]
+------------------------
+friends: 5      users: 168
+
+You'll to write a friends.dta file in order for this feature to work.
+Here's one that I've got:
+
+schmidt  Doug O'las
+coryan   Carlos O'Ryan
+irfan    Irfan Pyarali
+levine   David Levine
+nanbor   Nanbor Wang
+jp4      Jeff Parsons
+marina   Marina Spivak
+cdgill   Chris Gill
+vishal   Vishal
+kirthika Kirthika
+naga     Naga
+alex     Alex
+bala     Bala
+pradeep  Pradeep
+brunsch  Darrell Brunsch
+jxh      James Hu
+yamuna   Yamuna
+mjb2     Matt Braun
+gokhale  Andy Gokhale
+fredk    Fred Kuhns
+
+If you put this file in ~/.friends.dta drwho will automatically locate
+it.
+
+----------------------------------------
+
+3. Find out where a particular person is logged in:
 
 % drwho-client -A tango.cs.wustl.edu -r -w schmidt
 tango
@@ -64,28 +115,6 @@ or
 ? echo $host
 ? rsh $host w | egrep schmidt
 ? end
-----------------------------------------
-
-3. Find out which friends are logged in (* means currently active)
-
-% drwho-client -A tango.cs.wustl.edu -r -f ~schmidt/.friends.dta
-remote friends logged on
-------------------------
-*Doug O'las    [tango*(3) mambo]
- Carlos O'Ryan [tango swarm.cs.wustl.edu macarena]
- Irfan Pyarali [merengue]
- Nanbor Wang   [lambada]
- Marina Spivak [mambo]
- Chris Gill    [tango]
-*Vishal        [merengue*(2)]
- Kirthika      [tango waltz]
- Naga          [tango polka]
- Alex          [lindy]
- Bala          [cumbia]
- Pradeep       [flamenco]
- Matt Braun    [lambada]
-------------------------
-friends: 5      users: 168
 
 ----------------------------------------
 
@@ -212,14 +241,11 @@ remote users logged on
 ------------------------
 friends: 20	users: 20
 
-------------------------
-friends: 37	users: 163
 ----------------------------------------
 
 5. Print out all machines and who is logged into each one
 
 % drwho-client -A tango.cs.wustl.edu -R -l
-----------------------------------------
 kavita             Subhash Suri, Linda Suri
 lcs                Matthew Karl Lundberg*(2), Dna Mutants
 leia               Andy Fingerhut, rer
