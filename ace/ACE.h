@@ -407,9 +407,20 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /**
-   * On Win32 returns <pathname> if it already ends in ".exe,"
-   * otherwise returns a dynamically allocated buffer containing
-   * "<pathname>.exe".  Always returns <pathname> on UNIX.
+   * On Windows, determines if a specified pathname ends with ".exe"
+   * (not case sensitive). If on Windows and there is no ".exe" suffix,
+   * a new ACE_TCHAR array is allocated and a copy of @c pathname with
+   * the ".exe" suffix is copied into it. In this case, the caller is
+   * responsible for calling delete [] on the returned pointer.
+   *
+   * @param pathname  The name to check for a proper suffix.
+   *
+   * @retval @c pathname if there is a proper suffix for Windows. This is
+   *         always the return value for non-Windows platforms.
+   * @retval If a suffix needs to be added, returns a pointer to new[]
+   *         allocated memory containing the original @c pathname plus
+   *         a ".exe" suffix. The caller is responsible for freeing the
+   *         memory using delete [].
    */
   static const ACE_TCHAR *execname (const ACE_TCHAR *pathname);
 

@@ -1,3 +1,25 @@
+Tue Mar  4 17:39:31 2003  Steve Huston  <shuston@riverace.com>
+
+        * docs/CE-status.txt: Updated to reflect the ACE 5.3 status of CE.
+
+        * ace/ACE.cpp (execname): Try to locate ".exe" suffix without
+          case sensitivity. Thanks to Kelly F. Hickel <kfh@mqsoftware.com>
+          for reporting this. Also, when appending a suffix, append it to
+          the name, not after the name's nul terminator.
+
+        * ace/ACE.h: Clarified that the pointer returned, if allocated, is
+          allocated using new[] and should be freed with delete[].
+
+        * tests/ACE_Test.cpp:
+        * tests/ACE_Test.dsp: New test for ACE methods. At this time, it tests
+          the ACE::execname() method fixed above.
+
+        * tests/Makefile:
+        * tests/Makefile.bor:
+        * tests/tests.dsw:
+        * tests/tests.mpc:
+        * tests/run_test.lst: Added ACE_Test.
+
 Tue Mar  4 13:54:52 2003  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Codeset_Registry.cpp:
