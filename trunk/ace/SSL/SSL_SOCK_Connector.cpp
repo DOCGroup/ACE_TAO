@@ -7,6 +7,7 @@
 #if defined (ACE_HAS_SSL)
 
 #include "ace/INET_Addr.h"
+#include "ace/Synch_T.h"
 
 #include <openssl/err.h>
 
@@ -85,16 +86,15 @@ ACE_SSL_SOCK_Connector::shared_connect_finish (ACE_SSL_SOCK_Stream &new_stream,
     new_stream.close ();
 
   return result;
-
 }
 
 int
 ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream)
 {
-  if (SSL_is_init_finished (new_stream.ssl ()))
-    return 0;
-
-  ::SSL_set_connect_state (new_stream.ssl ());
+  // Check if a connection is already pending for the given SSL
+  // structure.
+  if (!SSL_in_init (new_stream.ssl ()))
+    ::SSL_set_connect_state (new_stream.ssl ());
 
   int status = ::SSL_connect (new_stream.ssl ());
   if (status <= 0)
@@ -143,26 +143,18 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
-  // @@ FIXME: Not thread safe!
-
-  if (this->non_ssl_connect_done_ == 0)
-    {
-      if (this->connector_.connect (new_stream.peer (),
-                                    remote_sap,
-                                    timeout,
-                                    local_sap,
-                                    reuse_addr,
-                                    flags,
-                                    perms,
-                                    protocol_family,
-                                    protocol) == -1)
-        return -1;
-      else
-        {
-          new_stream.set_handle (new_stream.peer ().get_handle ());
-          this->non_ssl_connect_done_ = 1;
-        }
-    }
+  if (this->connector_.connect (new_stream.peer (),
+                                remote_sap,
+                                timeout,
+                                local_sap,
+                                reuse_addr,
+                                flags,
+                                perms,
+                                protocol_family,
+                                protocol) == -1)
+    return -1;
+  else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
+    new_stream.set_handle (new_stream.peer ().get_handle ());
 
   return this->ssl_connect (new_stream);
 }
@@ -183,29 +175,21 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::connect");
 
-  // @@ FIXME: Not thread safe!
-
-  if (this->non_ssl_connect_done_ == 0)
-    {
-      if (this->connector_.connect (new_stream.peer (),
-                                    remote_sap,
-                                    qos_params,
-                                    timeout,
-                                    local_sap,
-                                    protocolinfo,
-                                    g,
-                                    flags,
-                                    reuse_addr,
-                                    perms,
-                                    protocol_family,
-                                    protocol) == -1)
-        return -1;
-      else
-        {
-          new_stream.set_handle (new_stream.peer ().get_handle ());
-          this->non_ssl_connect_done_ = 1;
-        }
-    }
+  if (this->connector_.connect (new_stream.peer (),
+                                remote_sap,
+                                qos_params,
+                                timeout,
+                                local_sap,
+                                protocolinfo,
+                                g,
+                                flags,
+                                reuse_addr,
+                                perms,
+                                protocol_family,
+                                protocol) == -1)
+    return -1;
+  else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
+    new_stream.set_handle (new_stream.peer ().get_handle ());
 
   return this->ssl_connect (new_stream);
 }
@@ -219,20 +203,13 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::complete");
 
-  // @@ FIXME: Not thread safe!
+  if (this->connector_.complete (new_stream.peer (),
+                                 remote_sap,
+                                 tv) == -1)
+    return -1;
+  else if (new_stream.get_handle () == ACE_INVALID_HANDLE)
+    new_stream.set_handle (new_stream.peer ().get_handle ());
 
-  if (this->non_ssl_connect_done_ == 0)
-    {
-      if (this->connector_.complete (new_stream.peer (),
-                                     remote_sap,
-                                     tv) == -1)
-        return -1;
-      else
-        {
-          new_stream.set_handle (new_stream.peer ().get_handle ());
-          this->non_ssl_connect_done_ = 1;
-        }
-    }
 
   return this->ssl_connect (new_stream);
 }
@@ -248,7 +225,6 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 					int perms,
 					int protocol_family,
 					int protocol)
-  : non_ssl_connect_done_ (0)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
   if (this->connect (new_stream,
@@ -282,7 +258,6 @@ ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
 					int perms,
 					int protocol_family,
 					int protocol)
-  : non_ssl_connect_done_ (0)
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector");
 
