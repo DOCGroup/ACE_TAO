@@ -112,7 +112,7 @@ Configurator_SyntaxHandler::parseECConfiguration (ECConfiguration* vs, void* arg
       Gateway_Initializer *ginit;
       ACE_NEW_RETURN(ginit,
                      Gateway_Initializer(),-1);
-      ginit->init(this->orb,this->poa,kokyuEC,
+      ginit->init(this->orb,this->poa,kokyuEC,this->driver,
                   kokyuEC->get_name(),remote_ior_files);
       ACE_Time_Value gateway_delay(5,000000);
       long timer_id = this->orb->orb_core()->reactor()->schedule_timer(this->ginitv[0],0,gateway_delay);
@@ -418,19 +418,11 @@ Configurator_SyntaxHandler::parseConsumer (Consumer* vs, void* arg)
       this->suppliermap.find(supplier->name,ecsupplier);
       ACE_ASSERT(ecsupplier); // shouldn't have got here with no Supplier
 
-      //TODO: multi-type consumer subs
-      Kokyu_EC::QoSVector::value_type qos = subs[0]; //for now just use this
       // if multiple timeouts, this won't reg supplier multiple times
       consumer->pushDependant(ecsupplier);
       ec->add_consumer_with_supplier(consumer,
                                      vs->name.c_str(),
                                      subs,
-                                     /*
-                                     qos.period,
-                                     subs,
-                                     qos.criticality,
-                                     qos.importance,
-                                     */
                                      ecsupplier,
                                      supplier->name.c_str(),
                                      ecsupplier->getPublishedTypes()
@@ -574,7 +566,6 @@ Configurator_SyntaxHandler::parsePublications (Publications* vs, void* arg)
     {
       Kokyu_EC::QoSVector::value_type pubqos;
       ACE_DEBUG ((LM_DEBUG,ACE_TEXT("Publication %s\n"),(*eniter)->str.c_str()));
-      // TODO: fix segfault in this vicinity
       if (this->eventqostable.find((*eniter)->str,pubqos))
         {
           ACE_CString error("Unknown publication event: ");
@@ -640,7 +631,10 @@ Configurator_SyntaxHandler::parseTestDriver (TestDriver* vs, void* arg)
     }
   ACE_NEW_RETURN (this->driver,
                   ECTestDriver(),-1);
+  this->driver->init(this->orb,this->poa);
   this->driver->set_time_master(vs->startcondition->master);
+  this->driver->set_start_condition(vs->startcondition->type,starttime);
+  this->driver->set_stop_condition(vs->stopcondition->type,limit);
 
   return 0;
 }
@@ -726,8 +720,8 @@ Configurator_SyntaxHandler::parseWorstExecution (WorstExecution* vs, void* arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting WorstExecution\n")));
 
-  // TODO: convert ms to 100s of ns
-  schedinfo->wc_time = vs->val;
+  // convert ms to 100s of ns
+  schedinfo->wc_time = vs->val*1000;
 
   return 0;
 }
@@ -741,8 +735,8 @@ Configurator_SyntaxHandler::parseTypicalExecution (TypicalExecution* vs, void* a
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting TypicalExecution\n")));
 
-  // TODO: convert ms to 100s of ns
-  schedinfo->typical_time = vs->val;
+  // convert ms to 100s of ns
+  schedinfo->typical_time = vs->val*10000;
 
   return 0;
 }
@@ -756,8 +750,8 @@ Configurator_SyntaxHandler::parsePeriod (Period* vs, void* arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Period with arg %@ as SchedInfo %@\n"),arg,schedinfo));
 
-  // TODO: convert ms to 100s of ns
-  schedinfo->period = vs->val;
+  // convert ms to 100s of ns
+  schedinfo->period = vs->val*10000;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler DONE visiting Period\n")));
 
@@ -773,8 +767,8 @@ Configurator_SyntaxHandler::parsePhase (Phase* vs, void* arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("SyntaxHandler visiting Phase\n")));
 
-  // TODO: convert ms to 100s of ns
-  schedinfo->phase = vs->val;
+  // convert ms to 100s of ns
+  schedinfo->phase = vs->val*10000;
 
   return 0;
 }
@@ -786,8 +780,8 @@ Configurator_SyntaxHandler::parseTime (Time* vs, void* arg)
   RtEventChannelAdmin::Time *time = static_cast<RtEventChannelAdmin::Time*> (arg);
   ACE_ASSERT(time);
 
-  // TODO: convert ms to 100s of ns
-  *time = vs->val;
+  // convert ms to 100s of ns
+  *time = vs->val*10000;
 
   return 0;
 }
