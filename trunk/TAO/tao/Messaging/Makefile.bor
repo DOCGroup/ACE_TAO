@@ -18,9 +18,9 @@ OBJFILES = \
         $(OBJDIR)\Messaging_ORBInitializer.obj \
         $(OBJDIR)\Messaging_PolicyFactory.obj \
         $(OBJDIR)\Messaging_Policy_i.obj \
-	$(OBJDIR)\TAO_ExtC.obj \
+        $(OBJDIR)\TAO_ExtC.obj \
         $(OBJDIR)\Twoway_Asynch_Invocation.obj \
-	$(OBJDIR)\AMI_ClientRequestInfo_i.obj
+        $(OBJDIR)\AMI_ClientRequestInfo_i.obj
 
 RESOURCE = $(OBJDIR)\TAO_Messaging.res
 
@@ -28,6 +28,7 @@ CFLAGS = \
         $(ACE_CFLAGS) \
         $(TAO_CFLAGS) \
         $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_VALUETYPE_CFLAGS) \
         $(TAO_MESSAGING_CFLAGS) \
         -DTAO_MESSAGING_BUILD_DLL
 
@@ -41,7 +42,7 @@ INCLUDES = \
 LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
-        $(TAO_PORTABLESERVER_LIB)
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_VALUETYPE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
-!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

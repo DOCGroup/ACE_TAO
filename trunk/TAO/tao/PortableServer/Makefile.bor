@@ -19,10 +19,10 @@ OBJFILES = \
 	$(OBJDIR)\ImR_ActivatorS.obj \
 	$(OBJDIR)\ImplRepoC.obj \
 	$(OBJDIR)\ImplRepoS.obj \
-        $(OBJDIR)\IORInfo.obj \
+   $(OBJDIR)\IORInfo.obj \
 	$(OBJDIR)\Key_Adapters.obj \
 	$(OBJDIR)\Object_Adapter.obj \
-        $(OBJDIR)\ObjectReferenceTemplate.obj \
+   $(OBJDIR)\ObjectReferenceTemplate.obj \
 	$(OBJDIR)\Operation_Table.obj \
 	$(OBJDIR)\ORB_Manager.obj \
 	$(OBJDIR)\ImplRepo_i.obj \
@@ -32,7 +32,7 @@ OBJFILES = \
 	$(OBJDIR)\POA_Policies.obj \
 	$(OBJDIR)\POA_Policy_Set.obj \
 	$(OBJDIR)\PolicyS.obj \
-        $(OBJDIR)\PortableGroup_Hooks.obj \
+   $(OBJDIR)\PortableGroup_Hooks.obj \
 	$(OBJDIR)\PortableServer.obj \
 	$(OBJDIR)\PortableServerC.obj \
 	$(OBJDIR)\PortableServer_PolicyFactory.obj \
@@ -48,11 +48,11 @@ RESOURCE = $(OBJDIR)\TAO_PortableServer.res
 
 !ifdef STATIC
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
-         $(TAO_IORINTERCEPTOR_CFLAGS)
+         $(TAO_IORINTERCEPTOR_CFLAGS) $(TAO_ORT_CFLAGS) $(TAO_VALUETYPE_CFLAGS)
 !else
 CFLAGS = $(ACE_CFLAGS) $(TAO_CFLAGS) $(TAO_PORTABLESERVER_CFLAGS) \
          $(TAO_IORINTERCEPTOR_CFLAGS) $(TAO_ORT_CFLAGS) \
-         -DTAO_PORTABLESERVER_BUILD_DLL
+         $(TAO_VALUETYPE_CFLAGS) -DTAO_PORTABLESERVER_BUILD_DLL
 !endif
 
 CPPDIR = .
@@ -64,6 +64,7 @@ LIBFILES = \
         $(ACE_LIB) \
         $(TAO_LIB) \
         $(TAO_ORT_LIB) \
-        $(TAO_IORINTERCEPTOR_LIB)
+        $(TAO_IORINTERCEPTOR_LIB) \
+        $(TAO_VALUETYPE_LIB)
 
 !include <$(ACE_ROOT)\include\makeinclude\build_core_library.bor>
