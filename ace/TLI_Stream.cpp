@@ -37,6 +37,7 @@ ACE_TLI_Stream::get_remote_addr (ACE_Addr &sa) const
   else
     return 0;
 #else /* SunOS4 sucks... */
+  ACE_UNUSED_ARG (sa);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_SVR4_TLI */
 }
