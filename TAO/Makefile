@@ -75,51 +75,10 @@ RELEASE_FILES = $(addprefix TAO/,$(CONTROLLED_FILES)) \
 
 .PHONY: INSTALL
 INSTALL: TAO-INSTALL.html
-	lynx -dump $^ > $@; chmod a+r $@
+	@lynx -dump $^ > $@; chmod a+r $@
 
 orbsvcs/README: docs/orbsvcs.html
-	lynx -dump $^ > $@; chmod a+r $@
-
-#### If creating the "official" TAO release:
-#### 1) Check that the workspace is up-to-date, and bail out if not.
-#### 2) Update the timestamp in the VERSION file.
-#### 3) Add a ChangeLog entry to the ChangeLog plain file.
-#### Detect if we are creating the "official" release by looking at the PWD.
-#### To disable this feature, add "TIMESTAMP=" to the make command line.
-#### NOTE: if the version number in the VERSION file contains three components,
-####       e.g., 4.1.5, then the third one will be incremented.  This assumes
-####       that alpha/beta releases are numbered with three components, and
-####       that final releases are not.  So, if the version number is, e.g.,
-####       4.2, it will not be modified because it is assumed to be for a
-####       final release.
-#ifeq ($(shell pwd),/project/adaptive/ACE_wrappers/TAO)
-  TIMESTAMP = (CHANGELOG='ChangeLog'; export CHANGELOG; \
-              if [ -z "$$CHANGELOG" ]; then echo unable to find latest ChangeLog file; exit 1; fi; \
-              cd ..; UPTODATE=`cvs -nq update $(RELEASE_FILES) | egrep -v '/tests/log/' | perl -pi -e 's%/TAO%%g; s/$$/\\\n  /g'`; cd TAO; \
-              if [ "$$UPTODATE" ]; then /pkg/gnu/bin/echo -e ERROR: workspace must be updated, and/or non-controlled files must be removed or added/committed: $$UPTODATE; exit 1; fi; \
-	      perl release.pl) &&
-#else
-#  TIMESTAMP =
-#endif
-
-#### The following tar creation commands assume that cpio supports -H tar.
-#### Old versions of cpio might not, but the version that's shipped with
-#### Solaris 2.5.1, and gnu cpio 2.3, do support that option.
-
-FILTER = -name CVS -prune -o ! -name '.\#*' ! -name '\#*' ! -name '*~' -print
-
-cleanrelease-old:	INSTALL
-	@$(TIMESTAMP) (make realclean; cd ..; \
-	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
-	 chmod a+r TAO.tar.gz; )
-
-release-old:	INSTALL
-	@$(TIMESTAMP) (cd ..; \
-	 find $(RELEASE_FILES) $(FILTER) | cpio -o -H tar | gzip -9 > TAO.tar.gz; \
-	 chmod a+r TAO.tar.gz; )
-
-releaseall-old: INSTALL
-	@$(TIMESTAMP) true
+	@lynx -dump $^ > $@; chmod a+r $@
 
 .PHONY: release
 
