@@ -1,3 +1,9 @@
+Thu Sep 28 20:34:38 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
+	   
+	  Put back a generated 'const' that was inadvertently removed.
+
 Thu Sep 28 17:47:24 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_argument/request_info_arglist.cpp:
