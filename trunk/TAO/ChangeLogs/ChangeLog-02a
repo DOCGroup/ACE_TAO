@@ -1,149 +1,172 @@
+Mon Mar 19 09:05:40 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/Typecode.cpp:
+          The code was not checking for exceptions with ACE_CHECK or
+          ACE_CHECK_RETURN, but was using the return values.  This is
+          clearly broken and can result in some nasty behavior on
+          platforms without native exceptions.
+
+        * tao/Transport.cpp:
+          Cosmetic fixes to fit the ACE-guidelines.
+
+        * tao/RT_Invocation_Endpoint_Selectors.cpp:
+          Don't use ACE_UNUSED_ARG() when simply removing the argument
+          name would do.
+
+        * tao/RT_Invocation_Endpoint_Selectors.cpp:
+        * orbsvcs/tests/EC_Mcast/EC_Mcast.cpp:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
+        * orbsvcs/tests/CosEvent/Basic/Random.cpp:
+        * orbsvcs/tests/Concurrency/CC_tests.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+          Add missing ACE_CHECK, ACE_CHECK_RETURN or ACE_TRY_CHECK
+
 Mon Mar 19 10:03:01 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main):
-	  Fixed a warning in KCC builds.
+        * tests/POA/Single_Threaded_POA/Single_Threaded_POA.cpp (main):
+          Fixed a warning in KCC builds.
 
 Mon Mar 19 06:23:05 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* orbsvcs/examples/RtEC/Schedule/Service.cpp: Commented out the
-	  guard for RECONFIG_SCHED type. Theoretically the guard may not
-	  be needed. This should solve one of the compile problems on Lynx
-	  I386 builds. 
+        * orbsvcs/examples/RtEC/Schedule/Service.cpp: Commented out the
+          guard for RECONFIG_SCHED type. Theoretically the guard may not
+          be needed. This should solve one of the compile problems on Lynx
+          I386 builds.
 
 Mon Mar 19 03:02:11 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current_Impl.cpp (get_attributes):
 
-	  Fixed memory access violations.
+          Fixed memory access violations.
 
-	* orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
-	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
-	* orbsvcs/tests/Security/Secure_Invocation/Foo_i.h:
-	* orbsvcs/tests/Security/Secure_Invocation/README:
-	* orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.dsw:
-	* orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/client.conf:
-	* orbsvcs/tests/Security/Secure_Invocation/client.cpp:
-	* orbsvcs/tests/Security/Secure_Invocation/client.dsp:
-	* orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/client_nopasswd.conf:
-	* orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
-	* orbsvcs/tests/Security/Secure_Invocation/server.conf:
-	* orbsvcs/tests/Security/Secure_Invocation/server.cpp:
-	* orbsvcs/tests/Security/Secure_Invocation/server.dsp:
-	* orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
-	* orbsvcs/tests/Security/Secure_Invocation/server_none.conf:
-	* orbsvcs/tests/Security/Secure_Invocation/server_nopasswd.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/Foo.idl:
+        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/Foo_i.h:
+        * orbsvcs/tests/Security/Secure_Invocation/README:
+        * orbsvcs/tests/Security/Secure_Invocation/Secure_Invocation.dsw:
+        * orbsvcs/tests/Security/Secure_Invocation/cacert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/client.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/client.dsp:
+        * orbsvcs/tests/Security/Secure_Invocation/client_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_key_nopasswd.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/client_nopasswd.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/run_test.pl:
+        * orbsvcs/tests/Security/Secure_Invocation/server.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/server.cpp:
+        * orbsvcs/tests/Security/Secure_Invocation/server.dsp:
+        * orbsvcs/tests/Security/Secure_Invocation/server_cert.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_key_nopasswd.pem:
+        * orbsvcs/tests/Security/Secure_Invocation/server_none.conf:
+        * orbsvcs/tests/Security/Secure_Invocation/server_nopasswd.conf:
 
-	  New test that verifies secure invocations are working properly,
-	  and to some extent the "SecurityCurrent" object.
+          New test that verifies secure invocations are working properly,
+          and to some extent the "SecurityCurrent" object.
 
 Mon Mar 19 00:16:13 2001  Ossama Othman  <ossama@uci.edu>
 
-	* orbsvcs/orbsvcs/Security.dsp:
+        * orbsvcs/orbsvcs/Security.dsp:
 
-	  Added missing custom IDL build steps to the "Release"
-	  configuration.
+          Added missing custom IDL build steps to the "Release"
+          configuration.
 
 Sun Mar 18 23:50:28 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
-	* tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
 
-	  Changed the parameter passed to the server and the client.
+          Changed the parameter passed to the server and the client.
 
-	* tests/RTCORBA/Banded_Connections/bands.unix:
+        * tests/RTCORBA/Banded_Connections/bands.unix:
 
-	  Changed the bands to be adjacent.
+          Changed the bands to be adjacent.
 
-	* tests/RTCORBA/Banded_Connections/bands.nt:
+        * tests/RTCORBA/Banded_Connections/bands.nt:
 
-	  Changed the priority bands to cover all the available priority
-	  range available on win32.
+          Changed the priority bands to cover all the available priority
+          range available on win32.
 
-	* tests/RTCORBA/Banded_Connections/server.cpp:
+        * tests/RTCORBA/Banded_Connections/server.cpp:
 
-	  It was creating and activating two CORBA object using the same
-	  servant and using the UNIQUE_ID policy. This problem has been
-	  fixed by using two different servant.
+          It was creating and activating two CORBA object using the same
+          servant and using the UNIQUE_ID policy. This problem has been
+          fixed by using two different servant.
 
-	* tests/RTCORBA/Banded_Connections/client.cpp:
+        * tests/RTCORBA/Banded_Connections/client.cpp:
 
-	  Fixed wront diagnostic message that was erroneously signaling an
-	  error condition in case of success.
+          Fixed wront diagnostic message that was erroneously signaling an
+          error condition in case of success.
 
-	* tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
+        * tao/RT_Invocation_Endpoint_Selectors.cpp (select_endpoint):
 
-	  Changed the logic used to select the ORB endpoint that should
-	  be used to send a GIOP request in presence of priority bands.
-	  Before if the client was exposing a priority that was different
-	  from one of the server ORB endpoint's priority, an exception
-	  would have been raised even if the priority exposed by the
-	  client was within one of the bands used by the server ORB.
-	  The decision logic assume that the endpoint priority exported in
-	  the server ORB are associated with the maximum value of the
-	  relative bands.
+          Changed the logic used to select the ORB endpoint that should
+          be used to send a GIOP request in presence of priority bands.
+          Before if the client was exposing a priority that was different
+          from one of the server ORB endpoint's priority, an exception
+          would have been raised even if the priority exposed by the
+          client was within one of the bands used by the server ORB.
+          The decision logic assume that the endpoint priority exported in
+          the server ORB are associated with the maximum value of the
+          relative bands.
 
 Sun Mar 18 21:13:36 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/IORInfo.cpp (add_ior_component_to_profile):
-	* tao/Object_Ref_Table.cpp (register_initial_reference):
-	* tao/PolicyFactory_Registry.cpp (register_policy_factory):
+        * tao/IORInfo.cpp (add_ior_component_to_profile):
+        * tao/Object_Ref_Table.cpp (register_initial_reference):
+        * tao/PolicyFactory_Registry.cpp (register_policy_factory):
 
-	  Added missing OMG assigned exception minor codes to ACE_THROW
-	  expressions.
+          Added missing OMG assigned exception minor codes to ACE_THROW
+          expressions.
 
-	* tao/corbafwd.h:
-	* tao/CORBALOC_Parser.cpp (parse_string_count_helper):
-	* tao/CORBANAME_Parser.cpp (parse_string_dynamic_request_helper):
+        * tao/corbafwd.h:
+        * tao/CORBALOC_Parser.cpp (parse_string_count_helper):
+        * tao/CORBANAME_Parser.cpp (parse_string_dynamic_request_helper):
 
-	  Removed uses of needless TAO_OMG_MINOR_BAD_PARAM_10 macro.
+          Removed uses of needless TAO_OMG_MINOR_BAD_PARAM_10 macro.
 
 Sun Mar 18 16:28:03 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.h:
-	* tao/corbafwd.h:
+        * tao/Exception.h:
+        * tao/corbafwd.h:
 
-	  Added missing CODESET_INCOMPATIBLE and BAD_QOS to the list of
-	  CORBA system exceptions (see CORBA 2.4.2 spec).
+          Added missing CODESET_INCOMPATIBLE and BAD_QOS to the list of
+          CORBA system exceptions (see CORBA 2.4.2 spec).
 
-	* tao/Exception.cpp (_tao_get_omg_exception_description):
+        * tao/Exception.cpp (_tao_get_omg_exception_description):
 
-	  Return the description of the OMG minor code for a given
-	  CORBA::SystemException.  Descriptions correspond to those found
-	  in the CORBA 2.4.2 spec and the recently adopted Portable
-	  Interceptors spec.  [Bug 827]
+          Return the description of the OMG minor code for a given
+          CORBA::SystemException.  Descriptions correspond to those found
+          in the CORBA 2.4.2 spec and the recently adopted Portable
+          Interceptors spec.  [Bug 827]
 
 Sun Mar 18 18:09:05 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tests/Param_Test/ub_any_seq.cpp (init_parameters):
+        * tests/Param_Test/ub_any_seq.cpp (init_parameters):
 
-	  Fixed warnings issued by g++ 2.95.2.
+          Fixed warnings issued by g++ 2.95.2.
 
 Sun Mar 18 13:30:00 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.cpp (_info):
+        * tao/Exception.cpp (_info):
 
-	  Fixed _is_a() call on CORBA::BAD_PARAM() exception.  The
-	  repository ID passed to the _is_a() call was missing the
-	  version.
+          Fixed _is_a() call on CORBA::BAD_PARAM() exception.  The
+          repository ID passed to the _is_a() call was missing the
+          version.
 
 Sun Mar 18 11:50:57 2001  Ossama Othman  <ossama@uci.edu>
 
-	* tao/Exception.cpp (_info):
+        * tao/Exception.cpp (_info):
 
-	  Fixed exception informational message so that it displays the
-	  properly masked TAO and OMG minor codes, rather than the raw
-	  minor codes.  The masked minor codes are more meaningful.
+          Fixed exception informational message so that it displays the
+          properly masked TAO and OMG minor codes, rather than the raw
+          minor codes.  The masked minor codes are more meaningful.
 
-	* tao/ORB_Core.i (check_shutdown):
+        * tao/ORB_Core.i (check_shutdown):
 
-	  Bitwise-OR the minor code in the CORBA::BAD_INV_ORDER()
-	  exception being thrown with the TAO_OMG_VMCID constant/macro.
-	  The minor code in use is one assigned by the OMG.
+          Bitwise-OR the minor code in the CORBA::BAD_INV_ORDER()
+          exception being thrown with the TAO_OMG_VMCID constant/macro.
+          The minor code in use is one assigned by the OMG.
 
 Sun Mar 18 12:34:44 2001  Carlos O'Ryan  <coryan@uci.edu>
 

@@ -98,6 +98,7 @@ int
 TAO_CEC_Push_Command::execute (CORBA::Environment& ACE_TRY_ENV)
 {
   this->proxy_->push_to_consumer (this->event_, ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
   return 0;
 }
 
