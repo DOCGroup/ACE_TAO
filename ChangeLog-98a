@@ -1,3 +1,9 @@
+Thu Jan 08 11:05:15 1998    <coryan@CHA-CHA>
+
+	* ace/ace_dll.dsp: 
+	* ace/ace_lib.dsp: 
+	  Added the new Shared_Memory.cpp file to the project.
+
 Wed Jan 07 20:40:45 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/OS.h: protect #define of AF_FILE, because Linux/RedHat 5.0
