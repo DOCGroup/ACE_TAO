@@ -1,3 +1,14 @@
+Sat Nov 29 09:43:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_traits.cpp (visit_field):
+        
+          Added check to skip code generation for any kind of field except
+          an anonymous array. Traits specializations are generated for
+          interfaces, valuetypes and arrays. When visiting the field members
+          of a struct, union or exception, we want to generate traits
+          specialiations only for anonymous arrays, since all the other
+          cases are handled elsewhere, at the point of declaration.
+
 Fri Nov 28 22:46:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/Messaging/Asynch_Invocation.cpp:

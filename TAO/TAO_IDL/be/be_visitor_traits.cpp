@@ -266,6 +266,13 @@ int
 be_visitor_traits::visit_field (be_field *node)
 {
   be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  AST_Decl::NodeType nt = ft->node_type ();
+  
+  // All we are trying to catch in here are anonymous array members.
+  if (nt != AST_Decl::NT_array)
+    {
+      return 0;
+    }
 
   if (ft->accept (this) == -1)
     {
