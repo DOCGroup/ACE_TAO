@@ -107,7 +107,7 @@ public class TimeValue
    * of day offset by the given number of seconds and nanoseconds.  
    *@param sec Number of seconds to offset by
    *@param nanos Number of nanoseconds to offset by
-   *@see JACE.ASX.TimeValue;
+   *@see JACE.ASX.TimeValue
    *@return TimeValue for the system time plus the given offset
    */
   public static TimeValue relativeTimeOfDay(long sec, int nanos) 
@@ -120,7 +120,7 @@ public class TimeValue
    * Return a new TimeValue that represents the current system time 
    * of day offset by the given TimeValue.
    *@param tv TimeValue to offset by
-   *@see JACE.ASX.TimeValue;
+   *@see JACE.ASX.TimeValue
    *@return TimeValue for the system time plus the given offset
    */
   public static TimeValue relativeTimeOfDay(TimeValue offset)
