@@ -52,6 +52,8 @@ MIF_DT_Creator::yield (int suspend_time,
   ACE_Time_Value now (ACE_OS::gettimeofday ());
   while ((now - *base_time_) < suspend_time)
     {
+      ACE_DEBUG ((LM_DEBUG,
+		  "Main Yield\n"));
       CORBA::Policy_var sched_param;
       sched_param = CORBA::Policy::_duplicate (this->sched_param (100));
       const char * name = 0;

@@ -21,7 +21,7 @@ DT_Test::check_supported_priorities (void)
 
   this->thr_sched_policy_ = orb_->orb_core ()->orb_params ()->sched_policy ();
   this->thr_scope_policy_ = orb_->orb_core ()->orb_params ()->scope_policy ();
-
+  /*
   if (thr_sched_policy_ == THR_SCHED_RR)
     {
       //if (TAO_debug_level > 0)
@@ -38,13 +38,14 @@ DT_Test::check_supported_priorities (void)
       sched_policy_ = ACE_SCHED_FIFO;
     }
   else
+  */
     {
       if (TAO_debug_level > 0)
         ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
       
       sched_policy_ = ACE_SCHED_OTHER;
     }
-
+  
   if (thr_sched_policy_ == THR_SCHED_RR || thr_sched_policy_ == THR_SCHED_FIFO)
     {
       max_priority_ = ACE_Sched_Params::priority_max (sched_policy_);
@@ -97,12 +98,11 @@ DT_Test::init (int argc, char *argv []
     RTScheduling::Current::_narrow (object.in () ACE_ENV_ARG_PARAMETER);
   ACE_CHECK;
   
-  
-  if (sched_policy_ != ACE_SCHED_OTHER)
-    {
+  //  if (sched_policy_ != ACE_SCHED_OTHER)
+  // {
       //Set the main thread to max priority...
       if (ACE_OS::sched_params (ACE_Sched_Params (sched_policy_,
-						  max_priority_ - 2,
+						  2,
 						  ACE_SCOPE_PROCESS)) != 0)
 	{
 	  if (ACE_OS::last_error () == EPERM)
@@ -115,7 +115,7 @@ DT_Test::init (int argc, char *argv []
 	    ACE_ERROR ((LM_ERROR,
 			"(%P|%t): sched_params failed\n"));
 	}
-    }
+      // }
   return 0;
 }
 

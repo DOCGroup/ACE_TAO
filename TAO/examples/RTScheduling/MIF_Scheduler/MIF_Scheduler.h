@@ -10,7 +10,7 @@
 class DT : public ACE_Message_Block
 {
  public:
-  DT (ACE_Thread_Mutex *lock,
+  DT (ACE_Thread_Mutex &lock,
       int guid);
 
   void suspend (void);
@@ -19,6 +19,8 @@ class DT : public ACE_Message_Block
  private:
   ACE_Condition_Thread_Mutex dt_cond_;
   int guid_;
+  int eligible_;
+  ACE_Thread_Mutex& mutex_;
 };
 
 class Segment_Sched_Param_Policy:
@@ -160,6 +162,7 @@ public TAO_Local_RefCounted_Object
  private:
   RTScheduling::Current_var current_;
   ACE_Thread_Mutex lock_;  
+  ACE_Lock* state_lock_;
   DT_Message_Queue ready_que_;
   DT_Message_Queue wait_que_;
 };
