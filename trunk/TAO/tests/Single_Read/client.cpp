@@ -138,6 +138,8 @@ main (int argc, char **argv)
       // Shutdown server.
       if (shutdown_server)
         {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) Sending a shutdown call..\n"));
           test_object->shutdown (ACE_TRY_ENV);
           ACE_TRY_CHECK;
         }

@@ -1,3 +1,13 @@
+Tue Jul 17 14:09:16 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tests/Single_Read/client.cpp:
+	* tests/Single_Read/test_i.cpp: Added some debug statements. This
+	  test seems to be failing only in one of the Full builds. Not
+	  sure what could be the problem. The test runs to perfection but
+	  the srever doesn't shutdown. I havent been able to reproduce the
+	  error. These debug statements should give me sufficient clue to
+	  what is happening.
+
 Tue Jul 17 13:48:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Strategies/UIOP_Transport.cpp: Fixed a warning.
