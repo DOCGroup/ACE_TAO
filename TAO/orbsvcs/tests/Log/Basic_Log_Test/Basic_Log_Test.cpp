@@ -621,7 +621,8 @@ BasicLog_Test::destroy_log()
   ACE_ENDTRY;
 }
 
-int BasicLog_Test::test_log_destroy (void)
+int
+BasicLog_Test::test_log_destroy (void)
 {
 
   ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
@@ -633,16 +634,24 @@ int BasicLog_Test::test_log_destroy (void)
       ACE_TRY_CHECK;
       ACE_DEBUG ((LM_INFO, "Wrote to log\n"));
     }
+  ACE_CATCH (CORBA::OBJECT_NOT_EXIST, ex)
+    {
+      ACE_DEBUG ((LM_ERROR,
+                  "Test of destroy log succeeded: "
+                  "caught CORBA::OBJECT_NOT_EXIST exception.\n"));
+      return 0;
+    }
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "Destroying log");
       ACE_DEBUG ((LM_ERROR,
-                  "Test of destroy log succeeded and caught exception.\n"));
-      return 0;
+                  "Test of destroy log failed: "
+                  "caught unexpected exception.\n"));
+      return -1;
     }
   ACE_ENDTRY;
   ACE_ERROR_RETURN ((LM_ERROR,
-                     "Test of destroy log failed and no exception thrown.\n"),
+                     "Test of destroy log failed: no exception thrown.\n"),
                     -1);
 }
 
