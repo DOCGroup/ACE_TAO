@@ -133,9 +133,9 @@ Server::init_high_priority (void)
   // Please make sure that this gets factored out into a macro or an
   // inline function!
 #if defined (VXWORKS)
-  ACE_Sched_Priority this->high_priority_ = ACE_THR_PRI_FIFO_DEF;
+  this->high_priority_ = ACE_THR_PRI_FIFO_DEF;
 #elif defined (ACE_WIN32)
-  ACE_Sched_Priority this->high_priority_ =
+  this->high_priority_ =
     ACE_Sched_Params::priority_max (ACE_SCHED_FIFO,
                                     ACE_SCOPE_THREAD);
 #else
