@@ -1,3 +1,21 @@
+Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+  
+	* tao/GIOP.cpp
+	* tao/IIOP_Transport.cpp
+	* tao/Invocation.cpp
+	* tao/Invocation.i
+	* tao/Pluggable.cpp
+	* tao/Pluggable.h
+	* tao/Reply_Dispatcher.cpp
+	* tao/Reply_Dispatcher.h
+	* tao/Transport_Mux_Strategy.cpp
+	* tao/Transport_Mux_Strategy.h
+	* tao/Wait_Strategy.cpp
+  	  
+    	  Ooooh!!!. Got the Muxed TMS to work. I havent taken care of the
+	  MT case yet. Need to make the Hash Table with SYNCH
+	  MUTEX. Things should be ok then.
+  
 Sun Jul  4 13:00:38 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu> 
 
 	* Transport_Mux_Strategy.cpp
