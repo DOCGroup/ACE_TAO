@@ -467,7 +467,8 @@ CORBA_SystemException::_info (void) const
 
       const char *errno_indication;
       char unknown_errno [32];
-      switch (this->minor () & 0x7FU)
+      CORBA::ULong minor_code = this->minor () & 0x7FU;
+      switch (minor_code)
         {
         case TAO_UNSPECIFIED_MINOR_CODE:
           errno_indication = "unspecified errno";
@@ -537,7 +538,7 @@ CORBA_SystemException::_info (void) const
             // 7 bits of some other errno.
             ACE_OS::sprintf (unknown_errno,
                              "low 7 bits of errno: %3u",
-                             this->minor () & 0x7FU);
+                             minor_code);
 
             errno_indication = unknown_errno;
           }
@@ -548,7 +549,7 @@ CORBA_SystemException::_info (void) const
                        "TAO exception, "
                        "minor code = %x (%s; %s), "
                        "completed = %s\n",
-                       this->minor (),
+                       minor_code,
                        location,
                        errno_indication,
                        (completed () == CORBA::COMPLETED_YES) ? "YES" :
@@ -564,12 +565,17 @@ CORBA_SystemException::_info (void) const
       //    over time.
       const char *minor_description = "*unknown description*";
 
+      CORBA::ULong minor_code = this->minor () & 0xFFFU;
+
       if (this->_is_a ("IDL:omg.org/CORBA/BAD_PARAM"))
         {
-          switch (this->minor () & 0xFFFU)
+
+          switch (minor_code)
             {
             case TAO_OMG_MINOR_BAD_PARAM_10:
-              minor_description = "string_to_object conversion failed due to non specific reason";
+              minor_description =
+                "string_to_object conversion failed due "
+                "to non specific reason";
               break;
             default:
               break;
@@ -580,10 +586,10 @@ CORBA_SystemException::_info (void) const
 
       char buffer[BUFSIZ];
       ACE_OS::sprintf (buffer,
-                       "This is an OMG minor code (%d), "
+                       "OMG minor code (%d), "
                        "described as '%s', "
                        "completed = %s\n",
-                       this->minor (),
+                       minor_code,
                        minor_description,
                        (completed () == CORBA::COMPLETED_YES) ? "YES" :
                        (completed () == CORBA::COMPLETED_NO) ? "NO" :
@@ -599,7 +605,7 @@ CORBA_SystemException::_info (void) const
                        "Unknown vendor minor code id (%x), "
                        "minor code = %x, completed = %s\n",
                        VMCID,
-                       this->minor (),
+                       this->minor (),  // Use the raw minor code
                        (completed () == CORBA::COMPLETED_YES) ? "YES" :
                        (completed () == CORBA::COMPLETED_NO) ? "NO" :
                        (completed () == CORBA::COMPLETED_MAYBE) ? "MAYBE" :

@@ -457,7 +457,8 @@ TAO_ORB_Core::check_shutdown (CORBA_Environment &ACE_TRY_ENV)
       // CORBA::BAD_INV_ORDER exception with minor code 4 if the ORB
       // has shutdown by the time an ORB function is called.
 
-      ACE_THROW (CORBA::BAD_INV_ORDER (4, CORBA::COMPLETED_NO));
+      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 4,
+                                       CORBA::COMPLETED_NO));
     }
 }
 
