@@ -18,9 +18,13 @@ CPPDIR = .
 
 IDLDIR = .
 
+IDLFILES = \
+        Consumer.idl \
+        Notifier.idl
+
 !include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
 
-# 
+#
 # IDL Build rules
 #
 
