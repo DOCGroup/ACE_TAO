@@ -964,7 +964,7 @@ Param_Test_i::test_exception (CORBA::ULong s1,
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Param_Test::Ooops))
 {
-  int d = s1 % 3;
+  CORBA::ULong d = s1 % 3;
 
   if (d == 0)
     {
