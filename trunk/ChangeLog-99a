@@ -4553,6 +4553,16 @@ Wed Jun 16 18:14:45 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
           the template list for the Cached_Connect_Strategy_Ex class to
           ward off g++ compiler errors.
 
+Wed Jun 16 15:54:08 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/OS.h:
+	* ace/OS.i:
+	* ace/config-win32.h:
+	  Auto-detect if we are using MSVC5.0 or MSVC6.0 and define the
+	  ACE_HAS_WINSOCK_GQOS macro in that case. This macro is used in
+	  the places where the QoS data structure of both compilers are
+	  different.
+
 Mon Jun 14 22:52:48 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * tests/Map_Manager_Test.cpp: Removed template instantiation
