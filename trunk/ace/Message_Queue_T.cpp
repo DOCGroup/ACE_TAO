@@ -39,7 +39,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Iterator (ACE_Messa
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 {
-  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
   if (this->curr_ != 0)
     {
@@ -53,7 +53,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::done (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
   return this->curr_ == 0;
 }
@@ -61,7 +61,7 @@ ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::done (void) const
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Iterator<ACE_SYNCH_USE>::advance (void)
 {
-  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
   if (this->curr_)
     this->curr_ = this->curr_->next ();
@@ -90,7 +90,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::ACE_Message_Queue_Reverse_Ite
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&entry)
 {
-  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
   if (this->curr_ != 0)
     {
@@ -104,7 +104,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::next (ACE_Message_Block *&ent
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::done (void) const
 {
-  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
   return this->curr_ == 0;
 }
@@ -112,7 +112,7 @@ ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::done (void) const
 template <ACE_SYNCH_DECL> int
 ACE_Message_Queue_Reverse_Iterator<ACE_SYNCH_USE>::advance (void)
 {
-  ACE_Read_Guard<ACE_SYNCH_MUTEX_T> m (this->queue_.lock_);
+  ACE_READ_GUARD_RETURN (ACE_SYNCH_MUTEX_T, m, this->queue_.lock_, -1)
 
   if (this->curr_)
     this->curr_ = this->curr_->prev ();
