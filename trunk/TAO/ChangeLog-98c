@@ -10,6 +10,10 @@ Sun Nov 01 08:24:19 1998  David L. Levine  <levine@cs.wustl.edu>
           sleep_time < delta, because GHS 1.8.8 complained (improperly)
           that sleep_time - delta could never be less than 0.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+          removed fabs () #define with ACE_LACKS_FLOATING_POINT,
+          because it's no longer used.
+
 Sat Oct 31 17:49:18 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.2.38 released.
