@@ -1,3 +1,15 @@
+Wed Sep 10 13:19:23 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * orbsvcs/orbsvcs/IFRService/tmplinst.cpp:
+
+          Added explicit template instantiation of
+          TAO_IFR_Generic_Utils<CORBA::ExtInitializerSeq>.
+
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+
+          Added explicit template instantiations of
+          ACE_Vector<AST_Factory *> and ACE_Array_Base<AST_Factory *>
+
 Wed Sep 10 08:15:13 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/IOP_IORC.i:

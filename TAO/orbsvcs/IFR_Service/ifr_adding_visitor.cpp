@@ -4471,6 +4471,9 @@ template class ACE_Node <AST_Operation *>;
 template class ACE_Unbounded_Queue <AST_Operation *>;
 template class ACE_Unbounded_Queue_Iterator <AST_Operation *>;
 
+template class ACE_Vector<AST_Factory *>;
+template class ACE_Array_Base<AST_Factory *>;
+
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Node <AST_Component::port_description>
@@ -4480,6 +4483,9 @@ template class ACE_Unbounded_Queue_Iterator <AST_Operation *>;
 #pragma instantiate ACE_Node <AST_Operation *>
 #pragma instantiate ACE_Unbounded_Queue <AST_Operation *>
 #pragma instantiate ACE_Unbounded_Queue_Iterator <AST_Operation *>
+
+#pragma instantiate ACE_Vector<AST_Factory *>
+#pragma instantiate ACE_Array_Base<AST_Factory *>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
 
