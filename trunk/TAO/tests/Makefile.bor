@@ -69,6 +69,7 @@ DIRS = \
         Smart_Proxies \
         Strategies \
 	Timed_Buffered_Oneways \
-        Timeout
+        Timeout \
+        Two_Objects
 
 !include <$(ACE_ROOT)\include\makeinclude\recurse.bor>
