@@ -495,18 +495,18 @@ private:
 class TAO_Export TC_Private_State
 {
 public:
-  /// constructor
+  /// Constructor.
   TC_Private_State (CORBA::TCKind kind);
 
-  /// destructor
+  /// Destructor.
   ~TC_Private_State (void);
 
   TAO_SYNCH_MUTEX mutex_;
 
-  /// our kind that will determine what kind of children we may have
+  /// Our kind that will determine what kind of children we may have
   CORBA::TCKind  tc_kind_;
 
-  // = data members that indicate if the desired quantify
+  // Data members that indicate if the desired quantity
   // was precomputed or not.
   CORBA::Boolean tc_id_known_;
   CORBA::Boolean tc_name_known_;
@@ -523,7 +523,7 @@ public:
   CORBA::Boolean tc_type_modifier_known_;
   CORBA::Boolean tc_concrete_base_type_known_;
 
-  // = These data members store the precomputed values
+  // These data members store the precomputed values.
   char *tc_id_;
   char *tc_name_;
   CORBA::ULong tc_member_count_;

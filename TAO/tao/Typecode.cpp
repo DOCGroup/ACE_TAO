@@ -634,8 +634,8 @@ TC_Private_State::~TC_Private_State (void)
               delete [] this->tc_member_name_list_;
                     this->tc_member_name_list_ = 0;
             }
-          break;
 
+          break;
       case CORBA::tk_struct:
       case CORBA::tk_except:
         {
@@ -670,8 +670,8 @@ TC_Private_State::~TC_Private_State (void)
             }
           this->tc_member_count_ = 0;
         }
-        break;
 
+        break;
       case CORBA::tk_sequence:
       case CORBA::tk_array:
       case CORBA::tk_alias:
@@ -679,12 +679,12 @@ TC_Private_State::~TC_Private_State (void)
         // is not acquired from the pool of constant or predefined
         // typecodes.
         if (this->tc_content_type_known_ && this->tc_content_type_ != 0)
-                {
-                  CORBA::release (this->tc_content_type_);
-                  this->tc_content_type_ = 0;
-                }
-        break;
+          {
+            CORBA::release (this->tc_content_type_);
+            this->tc_content_type_ = 0;
+          }
 
+        break;
       case CORBA::tk_union:
         {
           // free up the member name list
@@ -715,6 +715,7 @@ TC_Private_State::~TC_Private_State (void)
               delete [] this->tc_member_type_list_;
                     this->tc_member_type_list_ = 0;
             }
+
           if (this->tc_member_label_list_known_)
             {
               for (CORBA::ULong i = 0;
@@ -726,12 +727,13 @@ TC_Private_State::~TC_Private_State (void)
               delete [] this->tc_member_label_list_;
                     this->tc_member_label_list_ = 0;
             }
+
           this->tc_member_count_ = 0;
 
           // Discriminator must come last b/c it will be inside the Any
           // in each element of the label list.
           CORBA::release (this->tc_discriminator_type_);
-                this->tc_discriminator_type_ = 0;
+          this->tc_discriminator_type_ = 0;
         }
         break;
 
@@ -766,7 +768,14 @@ TC_Private_State::~TC_Private_State (void)
               delete [] this->tc_member_type_list_;
               this->tc_member_type_list_ = 0;
             }
+
           this->tc_member_count_ = 0;
+
+          if (this->tc_member_visibility_list_known_)
+            {
+              delete [] this->tc_member_visibility_list_;
+              this->tc_member_visibility_list_ = 0;
+            }
 
           // free up concrete base value typecode
           if (this->tc_concrete_base_type_known_)
