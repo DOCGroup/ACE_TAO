@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/parser/parser
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -42,6 +43,11 @@ nobase_include_HEADERS = \
   Entity_Manager.i \
   Parser.i \
   ParserContext.inl
+
+pkgconfigdata_DATA = ACEXML_Parser.pc
+
+ACEXML_Parser.pc: ${top_builddir}/config.status ${srcdir}/ACEXML_Parser.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACEXML_Parser.pc.in
 
 ## Clean up template repositories, etc.
 clean-local:

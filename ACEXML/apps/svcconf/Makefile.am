@@ -9,6 +9,7 @@
 ## /acebuilds/ACE_wrappers-repository/bin/mwc.pl -include /acebuilds/MPC/config -include /acebuilds/MPC/templates -feature_file /acebuilds/ACE_wrappers-repository/local.features -noreldefs -type automake -exclude build,Kokyu
 
 includedir = @includedir@/ACEXML/apps/svcconf
+pkgconfigdatadir = ${prefix}/lib/pkgconfig
 
 ACE_BUILDDIR = $(top_builddir)
 ACE_ROOT = $(top_srcdir)
@@ -39,6 +40,11 @@ nobase_include_HEADERS += \
   Svcconf.h \
   Svcconf_Handler.h \
   Svcconf_Handler.i
+
+pkgconfigdata_DATA = ACEXML_XML_Svc_Conf_Parser.pc
+
+ACEXML_XML_Svc_Conf_Parser.pc: ${top_builddir}/config.status ${srcdir}/ACEXML_XML_Svc_Conf_Parser.pc.in
+	${top_builddir}/config.status --file $@:${srcdir}/ACEXML_XML_Svc_Conf_Parser.pc.in
 
 endif BUILD_ACEXML
 

@@ -1,3 +1,21 @@
+Sun Jan  9 18:29:13 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* ACEXML/apps/svcconf/Makefile.am:
+	* ACEXML/common/Makefile.am:
+	* ACEXML/parser/parser/Makefile.am:
+	* Kokyu/Makefile.am:
+	* protocols/ace/HTBP/Makefile.am:
+
+          Generate pkg-config *.pc files from templates.
+
+	* ACEXML/apps/svcconf/ACEXML_XML_Svc_Conf_Parser.pc.in:
+	* ACEXML/common/ACEXML.pc.in:
+	* ACEXML/parser/parser/ACEXML_Parser.pc.in:
+	* Kokyu/Kokyu.pc.in:
+	* protocols/ace/HTBP/ACE_HTBP.pc.in:
+
+          New files, pkg-config *.pc templates.
+
 Sun Jan  9 17:53:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/System_V_IPC/SV_Semaphores/Semaphores_1.cpp:
