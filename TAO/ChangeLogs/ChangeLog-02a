@@ -1,3 +1,9 @@
+Tue May  7 21:00:09 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+
+	  Removed duplicate explicit template instantiations.
+
 Tue May  7 22:58:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/No_Server_MT_Connect_Test/client.cpp: Mistaken include
@@ -14,7 +20,7 @@ Tue May 07 15:37:38 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	
 	* tests/No_Server_MT_Connect_Test/run_test.pl: Use a single thread
 	  for the test with reactive connect strategy. Thanks to Ru for
-	  pinting out the problem on some platforms.
+	  pointing out the problem on some platforms.
 
 Tue May  7 15:00:16 2002  Nanbor Wang  <nanbor@cs.wustl.edu>
 
@@ -12641,15 +12647,15 @@ Wed Jan  2 10:22:59 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
 Wed Jan  2 09:41:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
-        * orbsvvcs/IFR_Service/drv_init_ifr.cpp:
-        * orbsvvcs/IFR_Service/ifr_adding_visitor.cpp:
-        * orbsvvcs/IFR_Service/ifr_adding_visitor.h:
-        * orbsvvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
-        * orbsvvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
-        * orbsvvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
-        * orbsvvcs/IFR_Service/ifr_adding_visitor_union.cpp:
-        * orbsvvcs/IFR_Service/ifr_visitor.cpp:
-        * orbsvvcs/IFR_Service/ifr_visitor.h:
+        * orbsvcs/IFR_Service/drv_init_ifr.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.h:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_exception.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_operation.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_structure.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor_union.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.cpp:
+        * orbsvcs/IFR_Service/ifr_visitor.h:
 
           Changes related to corresponding changes in the TAO IDL
           compiler regarding value types and #pragma prefix.
