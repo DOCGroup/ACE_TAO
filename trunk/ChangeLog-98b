@@ -1,27 +1,33 @@
+Sun Aug 23 21:09:55 1998  Arturo Montes  <mitosys@colomsat.net.co>
+
+        * ace/OS.i (thr_testcancel): with ACE_HAS_PTHREAD_DRAFT6,
+          use ::pthread_testintr () instead of pthread_testcancel ().
+          Thats what FSU pthreads uses.  Hopefully, MVS does also.
+
 Sun Aug 23 16:28:10 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Process.cpp (spawn): Removed the ACE_DEBUG messages on exec
- 	  failure, etc.  If apps want to know what has failed, they need
- 	  to check the return from spawn() or wait().  ACE shouldn't be
- 	  generating debugging information gratuitiously...
+        * ace/Process.cpp (spawn): Removed the ACE_DEBUG messages on exec
+          failure, etc.  If apps want to know what has failed, they need
+          to check the return from spawn() or wait().  ACE shouldn't be
+          generating debugging information gratuitiously...
 
 Sun Aug 23 15:42:48 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
 
-	* ace/Process.cpp: Put the warning on failure on exec
-	("ACE_Process::spawn (); exec failed: exiting!!!!\n") under
-	condition (ACE_Service_Config::debug_). 
+        * ace/Process.cpp: Put the warning on failure on exec
+        ("ACE_Process::spawn (); exec failed: exiting!!!!\n") under
+        condition (ACE_Service_Config::debug_).
 
 Sun Aug 23 11:12:46 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Makefile: 
-	* tests/Message_Queue_Notifications_Test.cpp: 
-	  Fixed typos.
+        * tests/Makefile:
+        * tests/Message_Queue_Notifications_Test.cpp:
+          Fixed typos.
 
 Sat Aug 22 21:52:23 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* examples/IPC_SAP/UPIPE_SAP/ex[23].cpp: Changed the
- 	  Auto_Basic_Ptr to the Auto_Basic_Array_Ptr to avoid compilation
- 	  problems.  Thanks to David Levine for reporting this.
+        * examples/IPC_SAP/UPIPE_SAP/ex[23].cpp: Changed the
+          Auto_Basic_Ptr to the Auto_Basic_Array_Ptr to avoid compilation
+          problems.  Thanks to David Levine for reporting this.
 
 Sat Aug 22 20:13:37 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
@@ -1783,7 +1789,7 @@ Tue Jul 28 09:52:08 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex> instantiation
           from Thread_Manager.cpp to Dynamic.cpp.
 
-Mon Jul 27 16:31:27 1998    Arturo Montes  <mitosys@colomsat.net.co>
+Mon Jul 27 16:31:27 1998  Arturo Montes  <mitosys@colomsat.net.co>
 
         * ace/Thread_Manager.{h,i,cpp}:
         * ace/Log_Msg.cpp: The Thread_Manager::at_exit method now provides a
