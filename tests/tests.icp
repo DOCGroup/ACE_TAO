@@ -170,6 +170,10 @@ subproject Map_Test icc "Map_Test.icc", ics "Map_Test.ics"
 {
 }
 
+subproject Max_Default_Port_Test icc "Max_Default_Port_Test.icc", ics "Max_Default_Port_Test.ics"
+{
+}
+
 subproject Mem_Map_Test icc "Mem_Map_Test.icc", ics "Mem_Map_Test.ics"
 {
 }
