@@ -16,13 +16,12 @@
 // Compiler-specific configuration.
 
 #if defined (__GNUG__)
+# include "ace/config-g++-common.h"
+# undef ACE_HAS_TEMPLATE_SPECIALIZATION
+
 # define ACE_HAS_VERBOSE_NOTSUP
 # define ACE_LACKS_IOSTREAM_FX
 # define ACE_MAIN ace_main
-
-# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
-# define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
-# define ACE_TEMPLATES_REQUIRE_SOURCE
 
   // Even though the documentation suggests that g++/VxWorks 5.3.1
   // (Tornado 1.0.1) supports long long, Wind River tech support says
