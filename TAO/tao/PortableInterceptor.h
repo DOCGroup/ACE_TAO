@@ -31,7 +31,7 @@
 #include "ace/pre.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
-#include "tao/PortableInterceptorC.h"
+#include "tao/Request_Info.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
