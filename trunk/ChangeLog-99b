@@ -1,3 +1,9 @@
+Thu Mar 11 12:53:41 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/Thread_Manager.i: 
+	  The method to return the number of threads was using thr_lists_
+	  as a pointer, but it isn't.
+
 Thu Mar 11 10:12:51 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
 
 	* ace/Thread_Manager: Added a method to return the current number
