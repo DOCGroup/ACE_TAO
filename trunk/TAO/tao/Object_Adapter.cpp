@@ -811,8 +811,8 @@ TAO_Object_Adapter::Non_Servant_Upcall::~Non_Servant_Upcall (void)
 
 TAO_Object_Adapter::Outstanding_Requests::Outstanding_Requests (TAO_POA &poa,
                                                                 TAO_Object_Adapter &object_adapter)
-  : object_adapter_ (object_adapter),
-    poa_ (poa)
+  : poa_ (poa),
+    object_adapter_ (object_adapter)
 {
   // Increase <poa->outstanding_requests_>.
   this->poa_.increment_outstanding_requests ();
@@ -837,21 +837,25 @@ TAO_Object_Adapter::Outstanding_Requests::~Outstanding_Requests (void)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-template class auto_ptr<TAO_Object_Adapter::Hint_Strategy>;
-template class auto_ptr<TAO_Object_Adapter::transient_poa_map>;
-
-template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>;
-template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>;
-
 // Common typedefs.
 typedef TAO_Object_Adapter::poa_name key;
 typedef TAO_POA *value;
+typedef ACE_Reverse_Lock<ACE_Lock> REVERSE_LOCK;
 
 typedef ACE_Pair<key, value> expanded_value;
 typedef ACE_Reference_Pair<const key, value> value_type;
 typedef ACE_Equal_To<key> compare_keys;
 typedef TAO_ObjectId_Hash hash_key;
 typedef ACE_Noop_Key_Generator<key> noop_key_generator;
+
+template class ACE_Reverse_Lock<ACE_Lock>;
+template class ACE_Guard<REVERSE_LOCK>;
+
+template class auto_ptr<TAO_Object_Adapter::Hint_Strategy>;
+template class auto_ptr<TAO_Object_Adapter::transient_poa_map>;
+
+template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>;
+template class ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>;
 
 template class ACE_Noop_Key_Generator<key>;
 
@@ -907,21 +911,25 @@ template class ACE_Map_Entry<key, value>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
-#pragma instantiate auto_ptr<TAO_Object_Adapter::Hint_Strategy>
-#pragma instantiate auto_ptr<TAO_Object_Adapter::transient_poa_map>
-
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>
-#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>
-
 // Common typedefs.
 typedef TAO_Object_Adapter::poa_name key;
 typedef TAO_POA *value;
+typedef ACE_Reverse_Lock<ACE_Lock> REVERSE_LOCK;
 
 typedef ACE_Pair<key, value> expanded_value;
 typedef ACE_Reference_Pair<const key, value> value_type;
 typedef ACE_Equal_To<key> compare_keys;
 typedef TAO_ObjectId_Hash hash_key;
 typedef ACE_Noop_Key_Generator<key> noop_key_generator;
+
+#pragma instantiate ACE_Reverse_Lock<ACE_Lock>
+#pragma instantiate ACE_Guard<REVERSE_LOCK>
+
+#pragma instantiate auto_ptr<TAO_Object_Adapter::Hint_Strategy>
+#pragma instantiate auto_ptr<TAO_Object_Adapter::transient_poa_map>
+
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::Hint_Strategy>
+#pragma instantiate ACE_Auto_Basic_Ptr<TAO_Object_Adapter::transient_poa_map>
 
 #pragma instantiate ACE_Noop_Key_Generator<key>
 
