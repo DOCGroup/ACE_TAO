@@ -1,3 +1,9 @@
+Mon Jul 28 14:04:10 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * examples/RTScheduling/DT_Creator.cpp:
+          Removed leftover inclusion of Task.h file that was causing
+          compile errors.
+
 Mon Jul 28 13:52:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h:

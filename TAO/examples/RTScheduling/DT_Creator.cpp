@@ -6,7 +6,6 @@
 #include "tao/ORB_Core.h"
 #include "Task_Stats.h"
 #include "ace/High_Res_Timer.h"
-#include "Task.h"
 #include "DT_Creator.h"
 #include "tao/RTScheduling/Current.h"
 
