@@ -58,7 +58,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     profile_ (orb_core),
     requesting_principal_ (0),
     is_dsi_ (0),
-    dsi_nvlist_align_ (0)
+    dsi_nvlist_align_ (0),
+    argument_flag_ (1)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -89,7 +90,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_Pluggable_Messaging *mesg_base,
     profile_ (orb_core),
     requesting_principal_ (0),
     is_dsi_ (0),
-    dsi_nvlist_align_ (0)
+    dsi_nvlist_align_ (0),
+    argument_flag_ (1)
 {
   profile_.object_key (object_key);
   parse_error = 0;
@@ -127,6 +129,9 @@ TAO_ServerRequest::init_reply (CORBA::Environment &)
   // received in the Request.  (RTCORBA relies on it.  Check before
   // modifying...) marina
   reply_params.service_context_notowned (&this->service_info_);
+
+  // Are we going to marshall any data with the reply?
+  reply_params.argument_flag_ = this->argument_flag_;
 
   // Forward exception only.
   if (!CORBA::is_nil (this->forward_location_.in ()))
@@ -181,6 +186,9 @@ TAO_ServerRequest::send_no_exception_reply (void)
   reply_params.service_context_notowned (&this->service_info_);
 
   reply_params.reply_status_ = TAO_GIOP_NO_EXCEPTION;
+
+  // No data anyway.
+  reply_params.argument_flag_ = 0;
 
   // Construct a REPLY header.
   this->mesg_base_->write_reply_header (*this->outgoing_,

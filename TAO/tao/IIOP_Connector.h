@@ -55,6 +55,9 @@ public:
   // state/info to the service handler upon creation.  Currently used
   // by IIOP and UIOP to pass protocol configuration properties.
 
+  ~TAO_IIOP_Connect_Creation_Strategy (void);
+  // Default destructor g++, 2.7.2 seems to be needing this
+
   virtual int make_svc_handler (TAO_IIOP_Client_Connection_Handler *&sh);
   // Makes TAO_IIOP_Client_Connection_Handlers
 

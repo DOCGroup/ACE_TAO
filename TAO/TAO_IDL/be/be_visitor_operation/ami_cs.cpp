@@ -421,11 +421,36 @@ be_compiled_visitor_operation_ami_cs::gen_marshal_and_invoke (be_operation *node
       ext += 5;
     }
 
+  // Do we have any arguments in the operation that needs marshalling
+  UTL_ScopeActiveIterator si (node,
+                              UTL_Scope::IK_decls);
+  AST_Decl *d = 0;
+  AST_Argument *arg = 0;
+  int flag = 0;
+
+  while (!si.is_done ())
+  {
+    d = si.item ();
+    arg = AST_Argument::narrow_from_decl (d);
+
+    if (arg->direction () == AST_Argument::dir_IN ||
+        arg->direction () == AST_Argument::dir_INOUT)
+      {
+        // There is something that needs marshalling
+        flag = 1;
+        break;
+      }
+    si.next ();
+  }
+
   *os << node->local_name ()
       << "\"," << be_nl
       << ACE_OS::strlen (node->original_local_name ()->get_string ()) + ext
       << "," << be_nl
+      << flag
+      << ","<< be_nl
       << "istub->orb_core ()," << be_nl;
+
 
   // Next argument is the reply handler skeleton for this method.
 

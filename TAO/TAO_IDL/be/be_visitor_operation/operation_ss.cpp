@@ -153,6 +153,36 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
   ctx.state (TAO_CodeGen::TAO_OPERATION_RETVAL_DECL_SS);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
 
+  // Do we have any arguments in the operation that needs marshalling
+  UTL_ScopeActiveIterator si (node,
+                              UTL_Scope::IK_decls);
+  AST_Decl *d = 0;
+  AST_Argument *arg = 0;
+  int flag = 0;
+  while (!si.is_done ())
+  {
+    d = si.item ();
+    arg = AST_Argument::narrow_from_decl (d);
+
+    if (arg->direction () == AST_Argument::dir_INOUT ||
+        arg->direction () == AST_Argument::dir_OUT)
+      {
+        // There are return type that needs to get marshalled
+        flag = 1;
+        break;
+      }
+    si.next ();
+  }
+
+  // Check if the flag is zero and for the return type
+  if (flag == 0 &&
+      node->void_return_type () == 1)
+    {
+      // There are no return type and argument values that needs to be
+      // marshalled
+      *os << "_tao_server_request.argument_flag (0);" << be_nl;
+    }
+
   if (!visitor || (bt->accept (visitor) == -1))
     {
       delete visitor;
@@ -190,7 +220,7 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   // Fish out the interceptor and do preinvoke.
   *os << "#if (TAO_HAS_INTERCEPTORS == 1)" << be_nl
-      << "TAO_ServerRequestInterceptor_Adapter _tao_vfr (" 
+      << "TAO_ServerRequestInterceptor_Adapter _tao_vfr ("
       << be_idt << be_idt_nl
       << "_tao_server_request.orb_core ()->server_request_interceptors ()"
       << be_uidt_nl
