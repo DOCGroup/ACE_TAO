@@ -1,3 +1,9 @@
+Tue Jan 23 13:15:03 2001  Jeff Parsons <parsons@cs.wustl.edu>
+
+        * tao/*Makefile:
+
+          Updated dependencies.
+
 Tue Jan 23 11:08:00 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
         * configure.in:
