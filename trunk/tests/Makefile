@@ -13,7 +13,9 @@ BIN = 	Barrier_Test \
 	CPP_Test \
 	Future_Test \
 	Handle_Set_Test \
+	Map_Manager_Test \
 	Mem_Map_Test \
+	Message_Queue_Test \
 	Mutex_Test \
 	Naming_Test \
 	Priority_Buffer_Test \
