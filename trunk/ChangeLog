@@ -1,38 +1,70 @@
+Fri Mar 19 08:33:01 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/templates/em3vcp.mpd:
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+        * bin/MakeProjectCreator/templates/make.mpd:
+        * bin/MakeProjectCreator/templates/vc6dsp.mpd:
+        * bin/MakeProjectCreator/templates/vc7.mpd:
+
+          Fixed a bug where a command dependency would be placed upon
+          generated files.  The full path to the command is not always
+          supplied  during custom definition and thus dependencies couldn't
+          be satisfied because the command doesn't necessarily exist in the
+          current directory.
+
+          The solution was to add a new custom definition keyword that
+          allows the user to determine whether the command dependency should
+          be generated or not.  The default is to not generate a command
+          dependency.
+
+        * bin/MakeProjectCreator/README:
+
+          Documented the new 'dependant' keyword for custom definitions.
+
+        * bin/MakeProjectCreator/config/ciao_servant.mpb:
+        * bin/MakeProjectCreator/config/psdl.mpb:
+        * bin/MakeProjectCreator/config/taoidldefaults.mpb:
+
+          Set 'dependent' to 1 to ensure that the command dependency is
+          generated for these custom definitions.
+
 Thu Mar 18 22:47:05 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* ace/Task.cpp:
-	* ace/Task.h:
-	* ace/Thread_Manager.cpp:
-	* ace/Thread_Manager.h:
+        * ace/Task.cpp:
+        * ace/Task.h:
+        * ace/Thread_Manager.cpp:
+        * ace/Thread_Manager.h:
 
-	  The following change has been reverted "Fri Mar  5 23:09:14 2004
-	  Balachandran Natarajan  <bala@dre.vanderbilt.edu>" . A better
-	  fix would be available soon. These fixes actually borke backward
-	  compatibility in a bad way.
+          The following change has been reverted "Fri Mar  5 23:09:14 2004
+          Balachandran Natarajan  <bala@dre.vanderbilt.edu>" . A better
+          fix would be available soon. These fixes actually borke backward
+          compatibility in a bad way.
 
 Thu Mar 18 13:50:21 2004  Steve Huston  <shuston@riverace.com>
 
-	* ace/Asynch_IO.{h cpp}: The change in
-	  Thu Mar 11 14:35:41 2004  Steve Huston  <shuston@riverace.com>
-	  didn't go far enough... the problem exists in all derivatives of
-	  ACE_Asynch_Operation_Impl. Only ACE_Asynch_Operation deleted the
-	  implementation_ pointer in its constructor. However, since each
-	  derivative of ACE_Asynch_Operation was declaring its own
-	  implementation_ (in addition to the one in ACE_Asynch_Operation),
-	  no implementation was ever, in fact, being deleted. Hence:
-	    1. The ACE_Asynch_Operation::implementation_ member is removed,
-	       along with the void implementation(ACE_Asynch_Operation_Impl*)
-	       method that set it.
-	    2. The ACE_Asynch_Operation_Impl* implementation() method is now
-	       pure virtual in ACE_Asynch_Operation and must be implemented
-	       in each operation class.
-	    3. Each operation class needs to maintain its own appropriately
-	       typed implementation pointer, and delete it when necessary.
-	    4. The implementation(ACE_*_Impl*) methods are all removed, as
-	       none are necessary, and none are used any longer.
-	  The operation classes already were creating their own implementation
-	  objects, so that is the same now. However, they all now delete the
-	  implementation at destructor time.
+        * ace/Asynch_IO.{h cpp}: The change in
+          Thu Mar 11 14:35:41 2004  Steve Huston  <shuston@riverace.com>
+          didn't go far enough... the problem exists in all derivatives of
+          ACE_Asynch_Operation_Impl. Only ACE_Asynch_Operation deleted the
+          implementation_ pointer in its constructor. However, since each
+          derivative of ACE_Asynch_Operation was declaring its own
+          implementation_ (in addition to the one in ACE_Asynch_Operation),
+          no implementation was ever, in fact, being deleted. Hence:
+            1. The ACE_Asynch_Operation::implementation_ member is removed,
+               along with the void implementation(ACE_Asynch_Operation_Impl*)
+               method that set it.
+            2. The ACE_Asynch_Operation_Impl* implementation() method is now
+               pure virtual in ACE_Asynch_Operation and must be implemented
+               in each operation class.
+            3. Each operation class needs to maintain its own appropriately
+               typed implementation pointer, and delete it when necessary.
+            4. The implementation(ACE_*_Impl*) methods are all removed, as
+               none are necessary, and none are used any longer.
+          The operation classes already were creating their own implementation
+          objects, so that is the same now. However, they all now delete the
+          implementation at destructor time.
 
 Thu Mar 18 08:59:40 2004  Chad Elliott  <elliott_c@ociweb.com>
 
