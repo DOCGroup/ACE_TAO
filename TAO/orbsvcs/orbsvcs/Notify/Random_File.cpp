@@ -1,6 +1,6 @@
 // $Id$
 
-#include "Persistent_File.h"
+#include "Random_File.h"
 
 #include "ace/OS.h"
 #include <tao/debug.h>
@@ -10,26 +10,26 @@
 namespace TAO_NOTIFY
 {
 
-Persistent_File::Persistent_File()
+Random_File::Random_File()
   : block_size_(512)
 {
 }
 
-Persistent_File::~Persistent_File()
+Random_File::~Random_File()
 {
   this->close();
 }
 
 size_t
-Persistent_File::block_size() const
+Random_File::block_size() const
 {
   return this->block_size_;
 }
 
 size_t
-Persistent_File::size() const
+Random_File::size() const
 {
-  Persistent_File * mutable_this = ACE_const_cast (Persistent_File *, this);
+  Random_File * mutable_this = ACE_const_cast (Random_File *, this);
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, mutable_this->lock_, 0);
   size_t original_pos = mutable_this->tell ();
   mutable_this->ACE_FILE::seek(0, SEEK_END);
@@ -43,7 +43,7 @@ Persistent_File::size() const
 }
 
 bool
-Persistent_File::open(const char* filename, size_t block_size)
+Random_File::open(const char* filename, size_t block_size)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
   this->block_size_ = block_size;
@@ -80,7 +80,7 @@ Persistent_File::open(const char* filename, size_t block_size)
 }
 
 bool
-Persistent_File::write(const size_t block_number, void* buf, bool atomic)
+Random_File::write(const size_t block_number, void* buf, bool atomic)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
@@ -115,7 +115,7 @@ Persistent_File::write(const size_t block_number, void* buf, bool atomic)
 }
 
 bool
-Persistent_File::read(const size_t block_number, void* buf)
+Random_File::read(const size_t block_number, void* buf)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, false);
   if (DEBUG_LEVEL > 8) ACE_DEBUG ((LM_DEBUG,
@@ -136,7 +136,7 @@ Persistent_File::read(const size_t block_number, void* buf)
 }
 
 bool
-Persistent_File::seek(const size_t block_number)
+Random_File::seek(const size_t block_number)
 {
   ssize_t destloc = block_number * this->block_size_;
   bool result = (destloc == this->ACE_FILE::seek(destloc, SEEK_SET));
@@ -144,7 +144,7 @@ Persistent_File::seek(const size_t block_number)
 }
 
 bool
-Persistent_File::sync()
+Random_File::sync()
 {
   bool result = false;
   result = (0 == ACE_OS::fsync(this->get_handle()));
