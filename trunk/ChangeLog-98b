@@ -1,3 +1,8 @@
+Mon Oct 19 11:13:00 1998 Chris Gill  <cdgill@cs.wustl.edu>
+
+        * ace/Message_Block.h: Added title and description comments to
+	  deadline and laxity message priority strategy classes.
+
 Sun Oct 18 17:22:00 1998  James CE Johnson  <jcej@chiroptera.tragus.org>
 
 	* docs/tutorials/014/combine.shar:
