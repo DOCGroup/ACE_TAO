@@ -60,9 +60,6 @@ public:
    * Each of these methods corresponds to a client side interception
    * point.
    *
-   * @todo
-   * The "receive_request_service_contexts()" and "send_other()"
-   * PortableInterceptor interception points are missing.
    */
   //@{
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1

@@ -1,3 +1,11 @@
+Fri Nov 12 13:25:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/POA.cpp (create_reference_with_id_i):
+          Throw the exception with the correct minor code
+
+        * tao/*C.{h,cpp,i}:
+          Regenerated several files
+
 Fri Nov 12 08:50:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptor.pidl:
