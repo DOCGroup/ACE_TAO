@@ -116,7 +116,7 @@ IDL_GlobalData::IDL_GlobalData (void)
       server_template_skeleton_ending_ (ACE::strnew ("S_T.cpp")),
       server_inline_ending_ (ACE::strnew ("S.i")),
       server_template_inline_ending_ (ACE::strnew ("S_T.i")),
-      perfect_hasher_ (0),
+      gperf_path_ (0),
       output_dir_ (0),
       any_support_ (I_TRUE),
       tc_support_ (I_TRUE),
@@ -135,19 +135,19 @@ IDL_GlobalData::IDL_GlobalData (void)
     // the perfect hasher and at that time, we can switch over to some
     // other scheme. 
     {
-      this->perfect_hasher_ = 0;
+      this->gperf_path_ = 0;
     }
   else
     {
       // Set it to the default value.
-      ACE_NEW (this->perfect_hasher_, 
+      ACE_NEW (this->gperf_path_, 
                char [ACE_OS::strlen (ace_root) + ACE_OS::strlen ("/bin/gperf") + 1]);
 #if defined (ACE_WIN32)
-      ACE_OS::sprintf (this->perfect_hasher_,
+      ACE_OS::sprintf (this->gperf_path_,
                        "%s\\bin\\gperf",
                        ace_root);
 #else /* Not ACE_WIN32 */
-      ACE_OS::sprintf (this->perfect_hasher_,
+      ACE_OS::sprintf (this->gperf_path_,
                        "%s/bin/gperf",
                        ace_root);
 #endif /* ACE_WIN32 */
@@ -945,16 +945,16 @@ IDL_GlobalData::output_dir (void) const
 }
 
 void
-IDL_GlobalData::perfect_hasher (const char* s)
+IDL_GlobalData::gperf_path (const char* s)
 {
-  delete [] this->perfect_hasher_;
-  this->perfect_hasher_ = ACE::strnew (s);
+  delete [] this->gperf_path_;
+  this->gperf_path_ = ACE::strnew (s);
 }
 
 const char*
-IDL_GlobalData::perfect_hasher (void) const
+IDL_GlobalData::gperf_path (void) const
 {
-  return this->perfect_hasher_;
+  return this->gperf_path_;
 }
 
 void
