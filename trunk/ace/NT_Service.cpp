@@ -26,6 +26,7 @@ ACE_NT_Service::~ACE_NT_Service (void)
     }
   delete [] desc_;
   delete [] name_;
+  delete [] host_;
 }
 
 // This default implementation of ACE_NT_Service::open sets the
@@ -144,6 +145,27 @@ ACE_NT_Service::name (LPCTSTR name, LPCTSTR desc)
   desc_ = ACE::strnew (desc);
 }
 
+void
+ACE_NT_Service::host (LPCTSTR host)
+{
+  delete [] host_;
+
+  if (svc_sc_handle_ != 0)
+    {
+      CloseServiceHandle (svc_sc_handle_);
+      svc_sc_handle_ = 0;
+    }
+
+  if (host == 0)
+    {
+      host_ = 0;
+    }
+  else
+    {
+      host_ = ACE::strnew (host);
+    }
+}
+
 int
 ACE_NT_Service::insert (DWORD start_type,
                         DWORD error_control,
@@ -163,7 +185,7 @@ ACE_NT_Service::insert (DWORD start_type,
       exe_path = this_exe;
     }
 
-  SC_HANDLE sc_mgr = OpenSCManager (0, 0, SC_MANAGER_ALL_ACCESS);
+  SC_HANDLE sc_mgr = OpenSCManager (this->host (), 0, SC_MANAGER_ALL_ACCESS);
   if (sc_mgr == 0)
     return -1;
 
@@ -375,7 +397,7 @@ ACE_NT_Service::test_access (DWORD desired_access)
 {
   int status = -1;     // Guilty until proven innocent
 
-  SC_HANDLE sc_mgr = OpenSCManager (0,
+  SC_HANDLE sc_mgr = OpenSCManager (this->host (),
                                     0,
                                     GENERIC_READ);
   if (sc_mgr != 0)
@@ -448,7 +470,7 @@ ACE_NT_Service::svc_sc_handle (void)
 {
   if (svc_sc_handle_ == 0)
     {
-      SC_HANDLE sc_mgr = OpenSCManager (0,
+      SC_HANDLE sc_mgr = OpenSCManager (this->host (),
                                         0,
                                         SC_MANAGER_ALL_ACCESS);
       if (sc_mgr != 0)
