@@ -16,12 +16,6 @@
 #if !defined (TAO_NVLIST_H)
 #  define TAO_NVLIST_H
 
-// @@ IS it necessary to use TAO_Export on a forward decl?  I
-// simply did a global replace of _EXPCLASS with TAO_Export.  I'm
-// not familiar enough with crazy MSVC nuances to know if this is
-// necessary, what it means, etc.  Perhaps Brian can shed some light
-// on the subject? --cjc
-
 class TAO_Export CORBA_NamedValue
 {
   // = TITLE

@@ -18,10 +18,8 @@ for consumption.</P>
 <P><EM>Programmer's Note:</EM> the internal structure for these
 options is the traditional <CODE>argc</CODE>/<CODE>argv</CODE> vector
 of strings style popularized by C and Unix.  By convention, an
-initialization method will <b>NOT</b> consume, <EM>i.e.</EM> ,remove
-from the vector, any options that it recognizes.  Rather, it will
-leave those options intact, and it will also simply ignore any options
-is does not recognize as its own.</P>
+initialization method will consume, <EM>i.e.</EM> ,remove from the
+vector, any options that it recognizes.</P>
 </blockquote>
 
 <H2>Types of Options</H2>
@@ -45,12 +43,13 @@ is does not recognize as its own.</P>
 <blockquote>
 <H3><CODE>CORBA::ORB</CODE><A NAME="ORB"></A></H3>
 
+<blockquote>
 <P><TABLE BORDER="2" WIDTH="100%" HEIGHT="96" CELLSPACING="2" CELLPADDING=
 "0">
 <TR>
 <TH WIDTH="43%" HEIGHT="17">Option</TH>
 <TH WIDTH="57%">Description</TH></TR>
-<TR>
+<TR NAME="ORBsvcconf">
 <TD HEIGHT="30"><CODE>-ORBsvcconf</CODE> <EM>config file name</EM></TD>
 <TD>Specifies the name of the file from which it will read dynamic service configuration
 directives <EM>ala</EM> ACE's Service Configurator.</TD></TR>
@@ -85,44 +84,51 @@ is <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>, or <CODE>user
 If not specified, the default is <TT>64</TT>.</TD></TR>
 <TR>
 <TD><CODE>-ORBrcvsock</CODE> <EM>receive buffer size</EM></TD>
-<TD>Specify the size of the socket receive buffer as a positive, non-zero integer.
+<TD><A NAME="-ORBrcvsock"></a>Specify the size of the socket receive buffer as a positive, non-zero integer.
 If not specified, the system-dependent default is used.</TD></TR>
 <TR>
 <TD><CODE>-ORBsndsock</CODE> <EM>send buffer size</EM></TD>
-<TD>Specify the size of the socket send buffer as a positive, non-zero integer.
+<TD><A NAME="-ORBsndsock"></a>Specify the size of the socket send buffer as a positive, non-zero integer.
 If not specified, the system-dependent default is used.</TD></TR>
-<TR>
-<TD><CODE>-OAthread</CODE></TD>
-<TD>Specify a thread-per-connection concurrency policy be utilized in processing
-requests.</TD></TR>
 <TR>
 <TD><CODE>-ORBnameserviceport</CODE> <EM>portspec</EM></TD>
 <TD>Specifies which port the Naming Service is listening on.</TD></TR>
 <TR>
 <TD><CODE>-ORBnameserviceior</CODE> <EM>ior</EM></TD>
 <TD>Specifies the IOR for the Naming Service.</TD></TR>
+<TR>
+<TD><CODE>-ORBpreconnect</CODE> <EM>host</EM><STRONG>:</STRONG><EM>port</em>[<STRONG>,</STRONG><EM>host</EM><STRONG>:</STRONG><EM>port</em>...]</TD>
+<TD><A name="-ORBpreconnect"></a>Pre-establishes a blocking connection to each listed
+<em>host</em>:<em>port</em> combination.  If a connection cannot
+be established, an warning is announced and it continues with the
+next listed.  Listing the same combination multiple times will
+properly establish multiple connections to that endpoint.</TD></TR>
 </TABLE>
 </P>
+</blockquote>
 
 <H3><CODE>CORBA::POA</CODE><A NAME="POA"></A></H3>
 
+<blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="100%">
 <TR>
-<TH WIDTH="43%">Option</TH>
-<TH WIDTH="55%">Description</TH></TR>
+<TH WIDTH="43%" HEIGHT="17">Option</TH>
+<TH WIDTH="57%">Description</TH></TR>
 <TR>
 <TD><CODE>-OAid</CODE> <EM>OA Identifier</EM></TD>
 <TD>Associates <I><EM>OA Identifier</EM></I> with the Object Adapter.</TD></TR>
 </TABLE>
 </P>
+</blockquote>
 
 <H3><CODE>TAO_Resource_Factory</CODE><A NAME="ResourceFactory"></A></H3>
 
+<blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="100%" HEIGHT=
 "186">
 <TR>
 <TH WIDTH="43%" HEIGHT="17">Option</TH>
-<TH WIDTH="55%">Description</TH></TR>
+<TH WIDTH="57%">Description</TH></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBresources</CODE> <EM>which</EM></TD>
 <TD>Specify whether each thread uses a global 
@@ -130,14 +136,16 @@ requests.</TD></TR>
 (<em>which</em> = <code>tss</code>) instance for the resources it returns.</TD></TR>
 </TABLE>
 </P>
+</blockquote>
 
 <H3><CODE>TAO_Default_Server_Strategy_Factory</CODE><A NAME="DefaultServer"></A></H3>
 
+<blockquote>
 <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0" WIDTH="100%" HEIGHT=
 "186">
 <TR>
 <TH WIDTH="43%" HEIGHT="17">Option</TH>
-<TH WIDTH="55%">Description</TH></TR>
+<TH WIDTH="57%">Description</TH></TR>
 <TR>
 <TD HEIGHT="43"><CODE>-ORBthreadflags</CODE> <EM>thread flags</EM></TD>
 <TD>Specify the flags used for thread creation. Flags can be any logical-OR
@@ -159,6 +167,7 @@ can be one of <CODE>dynamic</CODE>, <CODE>linear</CODE>, <CODE>active</CODE>,
 or <CODE>user</CODE>.</TD></TR>
 </TABLE>
 </P>
+</blockquote>
 
 <H3><CODE>TAO_Default_Client_Strategy_Factory</CODE><A NAME="DefaultClient"></A></H3>
 

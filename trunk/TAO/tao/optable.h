@@ -105,8 +105,10 @@ struct TAO_Export TAO_Linear_OpTable_Entry
 };
 
 class TAO_Export TAO_Linear_OpTable : public TAO_Operation_Table
-// @@ Please comment me.
 {
+  // = TITLE
+  //    Operation table lookup strategy based on
+  //    linear search.  Not efficient, but it works.
 public:
   TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA::ULong dbsize);
   // constructor.
@@ -192,8 +194,9 @@ class TAO_Export TAO_Perfect_Hash_OpTable : public TAO_Operation_Table
 };
 
 class TAO_Export TAO_Operation_Table_Parameters
-// @@ Please comment me.
 {
+  // = TITLE
+  //    Parameters used to create the operation table.
 public:
   enum DEMUX_STRATEGY
   {

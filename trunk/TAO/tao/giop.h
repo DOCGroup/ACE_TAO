@@ -208,7 +208,7 @@ public:
   // true if this request requires a response
     
   TAO_opaque object_key;
-  // @@ the object key of the destination object (is this right?)
+  // The object key of the destination object.
     
   CORBA::String operation;
   // Name of the operation being performed
@@ -305,17 +305,23 @@ public:
   // No CORBA::Context support (deprecated).
 
 private:
-  // @@ Please add comments.
   IIOP_Object *data_;
+  // The object on which this invocation is going.
 
   const char *opname_;
+  // Name of the operation being invoked.
 
   CORBA::Boolean do_rsvp_;
+  // Set to TRUE if this request a twoway.
 
   CORBA::ULong my_request_id_;
+  // Request ID of this operation.
 
   u_char buffer [CDR::DEFAULT_BUFSIZE];
+  // Buffer used for CDR stream.
+  
   CDR stream_;
+  // Stream into which the request is placed.
 
   TAO_Client_Connection_Handler *handler_;
   // The handler for the client's connection.

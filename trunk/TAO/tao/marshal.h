@@ -135,7 +135,7 @@ public:
 
 class TAO_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
-  // @@ Andy, please fill in here and add comments to this class.
+  // @@ (ANDY) Please fill in here and add comments to this class.
   // = TITLE
   // = DESCRIPTION
 public:

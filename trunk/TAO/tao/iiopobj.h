@@ -133,11 +133,6 @@ class TAO_Export IIOP_Object : public STUB_Object
   // = DESCRIPTION
   //   NOTE that this uses (single) implementation inheritance to share
   //   most of the basic code for an object reference.
-
-  // @@ What does it mean to have an 'extern "C"' object?!  This is so
-  // that it is visible to DCOM, which is a C linkage, I believe.  This
-  // is all holdover from the original DB code, and the COM integration
-  // is the least understood of any of it.
 {
 public:
   void do_call (CORBA::Environment &env,
@@ -223,11 +218,11 @@ public:
   // changed by the caller.
 
   IIOP::Profile profile;
-  // @@ Please document me (this should be private).
+  // Profile for this object.
 
 private:
   CORBA::Object base;
-  // @@ Please document me.
+  // The actual CORBA object for this.
 
   ACE_SYNCH_MUTEX IUnknown_lock_;
   // Mutex to protect <IUnknown>-related stuff.

@@ -588,9 +588,9 @@ Cubit_Client::~Cubit_Client (void)
 {
   // Free resources
   CORBA::release (this->orb_ptr_);
-  this->objref_->Release ();
-  this->factory_->Release ();
-  this->cubit_->Release ();
+  CORBA::release (this->objref_);
+  CORBA::release (this->factory_);
+  CORBA::release (this->cubit_);
 }
 
 int
@@ -599,15 +599,15 @@ Cubit_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  // Parse command line and verify parameters.
-  if (this->parse_args () == -1)
-    return -1;
-
   // Retrieve the ORB.
   this->orb_ptr_ = CORBA::ORB_init (this->argc_,
                                     this->argv_,
                                     "internet",
                                     this->env_);
+
+  // Parse command line and verify parameters.
+  if (this->parse_args () == -1)
+    return -1;
 
   if (this->env_.exception () != 0)
     {

@@ -42,34 +42,6 @@
 
 #include "tao/corba.h"
 
-// Apart from the length word, headers are specified to be arrays of
-// bytes.  They're dealt with as such, rather than using CDR routines,
-// to speed up the critical paths for message read and write.
-
-static inline CORBA::Boolean
-start_message (TAO_GIOP_MsgType type,
-	       CDR &msg)
-{
-  msg.next = msg.buffer;		// for reused streams
-  msg.remaining = msg.length;
-
-  if (msg.bytes_remaining () < TAO_GIOP_HEADER_LEN)
-    return CORBA::B_FALSE;
-
-  msg.next [0] = 'G';
-  msg.next [1] = 'I';
-  msg.next [2] = 'O';
-  msg.next [3] = 'P';
-
-  msg.next [4] = MY_MAJOR;
-  msg.next [5] = MY_MINOR;
-  msg.next [6] = TAO_ENCAP_BYTE_ORDER;
-  msg.next [7] = (u_char) type;
-
-  msg.skip_bytes (TAO_GIOP_HEADER_LEN);
-  return CORBA::B_TRUE;
-}
-
 static const char digits [] = "0123456789ABCD";
 static const char *names [] =
 {
@@ -140,7 +112,7 @@ TAO_GIOP::send_request (TAO_SVC_HANDLER *&handler,
 	  return CORBA::B_FALSE;
 	}
 
-      ssize_t writelen = peer.send ((char _FAR *) buf, buflen);
+      ssize_t writelen = peer.send_n ((char _FAR *) buf, buflen);
 
 #if defined (DEBUG)
       //      dmsg_filter (6, "wrote %d bytes to connection %d",
@@ -262,7 +234,7 @@ static inline void
 send_error (TAO_Client_Connection_Handler *&handler)
 {
   dump_msg ("send", (const u_char *) error_message, TAO_GIOP_HEADER_LEN);
-  handler->peer ().send (error_message, TAO_GIOP_HEADER_LEN);
+  handler->peer ().send_n (error_message, TAO_GIOP_HEADER_LEN);
   ACE_HANDLE which = handler->peer ().get_handle ();
   handler->close ();
   handler = 0;
@@ -691,7 +663,7 @@ TAO_GIOP_Invocation::start (CORBA::Environment &env)
 
   // Build the outgoing message, starting with generic GIOP header.
 
-  CORBA::Boolean bt = start_message (TAO_GIOP_Request, this->stream_);
+  CORBA::Boolean bt = TAO_GIOP::start_message (TAO_GIOP_Request, this->stream_);
 
   if (bt != CORBA::B_TRUE)
     {

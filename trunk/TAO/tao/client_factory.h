@@ -30,12 +30,6 @@ public:
   
   virtual ~TAO_Client_Strategy_Factory (void);
   // Destructor
-
-#if 0
-  // @@ Please remove me if possible.
-  virtual TAO_CONNECTOR *connector (void);
-  // Return a pointer to a connector using appropriate strategies.
-#endif /* 0 */
 };
 
 #endif /* TAO_CLIENT_FACTORY_H */

@@ -65,6 +65,18 @@ public:
   CORBA::UShort name_service_port (void);
   // Get the port of our name service.
 
+  int sock_rcvbuf_size (void);
+  // Get the size to be used for a socket's receive buffer.
+
+  void sock_rcvbuf_size (int);
+  // Set the size to be used for a socket's receive buffer.
+
+  int sock_sndbuf_size (void);
+  // Get the size to be used for a socket's send buffer.
+
+  void sock_sndbuf_size (int);
+  // Set the size to be used for a socket's send buffer.
+
 private:
   ACE_INET_Addr addr_;          
   // host + port number we are listening on
@@ -74,6 +86,12 @@ private:
 
   CORBA::UShort name_service_port_;
   // The port number of our configured Naming Service.
+
+  int sock_rcvbuf_size_;
+  // Size to be used for a socket's receive buffer.
+
+  int sock_sndbuf_size_;
+  // Size to be used for a socket's send buffer.
 };
 
 typedef enum 

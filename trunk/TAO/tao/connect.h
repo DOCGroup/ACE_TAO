@@ -79,12 +79,17 @@ public:
   // and additional information carried in <env>.
 
   virtual void send_response (CDR &response);
-  // @@ (CJC) Please document me...
+  // Send <response> to the client on the other end.
 
 protected:
-  // @@ (CJC) Please document all these methods and fields.
+  // = Event Handler overloads
+  
   virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  // Reads a message from the <peer()>, dispatching and servicing it
+  // appropriately.
+  
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  // Perform appropriate closing of the connection.
 
   TAO_OA_Parameters *params_;
 };

@@ -159,12 +159,16 @@ private:
 
   // = ORB_CORE_STUFF
   TAO_Client_Strategy_Factory *client_factory_;
+  // Handle to the factory for Client-side strategies.
 
   CORBA::Boolean client_factory_from_service_config_;
+  // TRUE if <client_factory_> was obtained from the Service Configurator.
 
   TAO_Server_Strategy_Factory *server_factory_;
+  // Handle to the factory for Server-side strategies.
 
   CORBA::Boolean server_factory_from_service_config_;
+  // TRUE if <server_factory_> was obtained from the Service Configurator.
 
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, CORBA::Boolean> should_shutdown_;
   // Flag which denotes that the ORB should shut down and <run> should

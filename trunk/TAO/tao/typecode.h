@@ -24,6 +24,7 @@
 
 // @@ What does this comment refer to?  I don't see any enums in this
 // file.  Can you please move this to the right place?
+// @@ (ANDY) Do you know what this comment is about?
 
 // Do not change these enum values, or duplicate them if you need to
 // add values.  They are used to index tables, and if you change the
