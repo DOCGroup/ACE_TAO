@@ -7,7 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//     LSOCK_Connector.cpp
+//     UIOP_Connector.cpp
 //
 // = DESCRIPTION
 //
@@ -18,36 +18,36 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/LSOCK_Connector.h"
-#include "tao/LSOCK_Profile.h"
+#include "tao/UIOP_Connector.h"
+#include "tao/UIOP_Profile.h"
 #include "tao/GIOP.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Environment.h"
 
 CORBA::ULong
-TAO_LSOCK_Connector::tag (void)
+TAO_UIOP_Connector::tag (void)
 {
   return this->tag_;
 }
 
-TAO_LSOCK_Connector::TAO_LSOCK_Connector (void)
+TAO_UIOP_Connector::TAO_UIOP_Connector (void)
   : tag_(TAO_IOP_TAG_INTERNET_IOP),
     base_connector_ ()
 {
 }
 
 int
-TAO_LSOCK_Connector::connect (TAO_Profile *profile,
-                              TAO_Transport *& transport)
+TAO_UIOP_Connector::connect (TAO_Profile *profile,
+                             TAO_Transport *& transport)
 {
   if (profile->tag () != TAO_IOP_TAG_INTERNET_IOP)
     return -1;
 
-  TAO_LSOCK_Profile *lsock_profile =
-    ACE_dynamic_cast (TAO_LSOCK_Profile *, profile);
+  TAO_UIOP_Profile *uiop_profile =
+    ACE_dynamic_cast (TAO_UIOP_Profile *, profile);
 
-  if (lsock_profile == 0)
+  if (uiop_profile == 0)
     return -1;
 
 // Establish the connection and get back a <Client_Connection_Handler>.
@@ -59,8 +59,8 @@ TAO_LSOCK_Connector::connect (TAO_Profile *profile,
 //       local_addr.set_port_number (server_addr_p->get_port_number ());
 //
 //       // Set the local port number to use.
-//       if (con->connect (lsock_profile->hint (),
-//                         lsock_profile->object_addr (),
+//       if (con->connect (uiop_profile->hint (),
+//                         uiop_profile->object_addr (),
 //                         0,
 //                         local_addr,
 //                         1) == -1);
@@ -70,7 +70,7 @@ TAO_LSOCK_Connector::connect (TAO_Profile *profile,
 //                    "%s failed (%p)\n",
 //                    __FILE__,
 //                    __LINE__,
-//                    lsock_profile->addr_to_string (),
+//                    uiop_profile->addr_to_string (),
 //                    "errno"));
 //
 //        TAO_THROW_ENV_RETURN_VOID (CORBA::TRANSIENT (), env);
@@ -79,7 +79,7 @@ TAO_LSOCK_Connector::connect (TAO_Profile *profile,
 //  else
 //#endif /* TAO_ARL_USES_SAME_CONNECTOR_PORT */
 
-  const ACE_UNIX_Addr &oa = lsock_profile->object_addr ();
+  const ACE_UNIX_Addr &oa = uiop_profile->object_addr ();
 
   TAO_Client_Connection_Handler* result;
 
@@ -87,7 +87,7 @@ TAO_LSOCK_Connector::connect (TAO_Profile *profile,
   // object; but we obtain the transport in the <result>
   // variable. Other threads may modify the hint, but we are not
   // affected.
-  if (this->base_connector_.connect (lsock_profile->hint (),
+  if (this->base_connector_.connect (uiop_profile->hint (),
                                      result,
                                      oa) == -1)
     { // Give users a clue to the problem.
@@ -108,8 +108,8 @@ TAO_LSOCK_Connector::connect (TAO_Profile *profile,
 }
 
 int
-TAO_LSOCK_Connector::open (TAO_Resource_Factory *trf,
-                           ACE_Reactor *reactor)
+TAO_UIOP_Connector::open (TAO_Resource_Factory *trf,
+                          ACE_Reactor *reactor)
 {
   // @@ Fred: why not just
   //
@@ -124,14 +124,14 @@ TAO_LSOCK_Connector::open (TAO_Resource_Factory *trf,
 }
 
 int
-TAO_LSOCK_Connector::close (void)
+TAO_UIOP_Connector::close (void)
 {
   this->base_connector_.close ();
   return 0;
 }
 
 int
-TAO_LSOCK_Connector::preconnect (char *preconnections)
+TAO_UIOP_Connector::preconnect (char *preconnections)
 {
 #if 0
   if (preconnections)
@@ -147,7 +147,6 @@ TAO_LSOCK_Connector::preconnect (char *preconnections)
            where != 0;
            where = ACE::strsplit_r (0, ",", nextptr))
         {
-          char *tport = 0;
           char *trendezvous_point = where;
           char *sep = ACE_OS::strchr (where, ':');
 

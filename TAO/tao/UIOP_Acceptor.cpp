@@ -7,7 +7,7 @@
 //     TAO
 //
 // = FILENAME
-//      LSOCK_Acceptor.cpp
+//      UIOP_Acceptor.cpp
 //
 // = DESCRIPTION
 //
@@ -20,29 +20,29 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "tao/LSOCK_Acceptor.h"
+#include "tao/UIOP_Acceptor.h"
 #include "tao/GIOP.h"
 
 CORBA::ULong
-TAO_LSOCK_Acceptor::tag (void)
+TAO_UIOP_Acceptor::tag (void)
 {
   return this->tag_;
 }
 
-TAO_LSOCK_Acceptor::TAO_LSOCK_Acceptor (void)
+TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
   : base_acceptor_ (),
     tag_ (TAO_IOP_TAG_INTERNET_IOP)
 {
 }
 
 TAO_Profile *
-TAO_LSOCK_Acceptor::create_profile (TAO_ObjectKey &)
+TAO_UIOP_Acceptor::create_profile (TAO_ObjectKey &)
 {
   return 0;
 }
 
 ACE_Event_Handler *
-TAO_LSOCK_Acceptor::acceptor (void)
+TAO_UIOP_Acceptor::acceptor (void)
 {
   return &base_acceptor_;
 }
