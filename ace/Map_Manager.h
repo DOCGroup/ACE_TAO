@@ -150,6 +150,9 @@ public:
   // Declare the dynamic allocation hooks.
 
 protected:
+
+  void free_search_structure (void);
+  // Explicitly call the destructors and free up the search_structure_.
   
   ACE_Map_Entry<EXT_ID, INT_ID> *search_structure_;
   // Implementation of the Map (should use hashing instead of
