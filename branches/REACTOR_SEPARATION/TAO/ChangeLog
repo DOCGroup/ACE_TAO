@@ -1,3 +1,15 @@
+Sun Jan  9 22:58:24 2005  Marek Brudka  <mbrudka@aster.pl>
+
+	* tests/QtTests/svc.conf.xml (Module):
+	* tests/QtTests/svc.conf (Module):
+	* tests/QtTests/server.cpp (Module):
+	* tests/QtTests/client.cpp (Module):
+	Adapted the test to the current programming model for qt resource
+	* tao/tao_qtreactor.mpc (Module):
+	* tao/qt_resource_loader.h (Module):
+	* tao/qt_resource_loader.cpp (Module):
+	Create preliminary version of QtReasourceLoader class for static use of Qt resources in TAO servers.
+
 Sun Jan  9 01:20:25 2005  Marek Brudka  <mbrudka@aster.pl>
 
 	* docs/Options.html (Module):

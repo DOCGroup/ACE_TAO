@@ -9,7 +9,7 @@ ACE_RCSID (QtTests, server, "$Id$")
 #ifdef index
 #undef index
 #endif
-#include "tao/qt_resource.h"
+#include "tao/qt_resource_loader.h"
 #include <qlcdnumber.h>
 #include <qvbox.h>
 #include <qslider.h>
@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 
   // Qt specific stuff for running with TAO...
   QApplication app (argc, argv);
-  TAO_QtResource_Factory::set_context (&app);
+  TAO_QtResource_Loader qt_resources( &app );
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY

@@ -3,6 +3,7 @@ project(TAO_QtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaul
   dynamicflags += TAO_QTREACTOR_BUILD_DLL
   Header_Files {
     qt_resource.h
+    qt_resource_loader.h
     TAO_QtReactor_export.h
   }
   Inline_Files {
@@ -11,6 +12,7 @@ project(TAO_QtReactor) : acelib, taolib, taoversion, core, tao_output, taodefaul
   Source_Files(TAO_COMPONENTS) {
     Default_Resources {
       qt_resource.cpp
+      qt_resource_loader.cpp
     }
   }
 }
