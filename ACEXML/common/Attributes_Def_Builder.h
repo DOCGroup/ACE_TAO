@@ -14,6 +14,7 @@
 
 #include "common/XML_Types.h"
 #include "common/Env.h"
+#include "ace/Auto_Ptr.h"
 
 /**
  * @ class ACEXML_Attribute_Def_Builder Attributes_Def_Builder.h "common/Attributes_Def_Builder.h"

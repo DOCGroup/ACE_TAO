@@ -51,7 +51,7 @@ main (int, ACE_TCHAR*[])
   ACEXML_UTF8 decoded [MAXPATHLEN];
   ACE_OS::memset (decoded, 0, sizeof decoded);
 
-  int retv = ACEXML_Transcoder::utf16s2utf8s (org, decoded, MAXPATHLEN);
+  ACEXML_Transcoder::utf16s2utf8s (org, decoded, MAXPATHLEN);
 
   ACE_DEBUG ((LM_DEBUG, "Transcoded UTF8 string:\n"));
   ACE_HEX_DUMP ((LM_DEBUG, decoded, ACE_OS::strlen (decoded) + 1));
@@ -59,7 +59,7 @@ main (int, ACE_TCHAR*[])
 
   ACEXML_UTF16 after [18];
   ACE_OS::memset (after, 0, sizeof after);
-  retv = ACEXML_Transcoder::utf8s2utf16s (decoded, after, 18);
+  ACEXML_Transcoder::utf8s2utf16s (decoded, after, 18);
 
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
   dump_utf16 (after, x);

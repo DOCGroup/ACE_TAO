@@ -46,20 +46,6 @@ ACEXML_Attribute::~ACEXML_Attribute (void)
   delete this->value_;
 }
 
-ACEXML_INLINE void
-ACEXML_Attribute::setAttribute (const ACEXML_Char *uri,
-                                const ACEXML_Char *localName,
-                                const ACEXML_Char *qName,
-                                const ACEXML_Char *type,
-                                const ACEXML_Char *value)
-{
-  this->uri (uri);
-  this->qName (qName);
-  this->localName (localName);
-  this->type (type);
-  this->value (value);
-}
-
 ACEXML_INLINE const ACEXML_Char *
 ACEXML_Attribute::uri (void) const
 {
@@ -123,6 +109,20 @@ ACEXML_Attribute::value (const ACEXML_Char *value)
 {
   delete this->value_;
   this->value_ = ACE::strnew (value);
+}
+
+ACEXML_INLINE void
+ACEXML_Attribute::setAttribute (const ACEXML_Char *uri,
+                                const ACEXML_Char *localName,
+                                const ACEXML_Char *qName,
+                                const ACEXML_Char *type,
+                                const ACEXML_Char *value)
+{
+  this->uri (uri);
+  this->qName (qName);
+  this->localName (localName);
+  this->type (type);
+  this->value (value);
 }
 
 ACEXML_INLINE ACEXML_Attribute &
