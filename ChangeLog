@@ -1,3 +1,10 @@
+Wed Feb  2 15:25:39 2005  Steve Huston  <shuston@riverace.com>
+
+	* ace/OS_NS_stdio.inl (vsprintf): Clarified the reason why ULONG_MAX
+	  doesn't always work with vswprintf(). glibc (at least newer versions
+	  such as 2.3) check the bounds of the buffer/size combination before
+	  attempting the operation.
+
 Wed Feb 02 08:57:23 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
