@@ -317,28 +317,24 @@ ACE_Streambuf<STREAM>::sync (void)
 template <class STREAM> int
 ACE_Streambuf<STREAM>::flushbuf (void)
 {
-  size_t n;
-  char *q;
+  // pptr() is one character beyond the last character put
+  // into the buffer.  pbase() points to the beginning of
+  // the put buffer.  Unless pptr() is greater than pbase()
+  // there is nothing to be sent to the peer_.
+  //
+  if( pptr() <= pbase() )
+	return 0;
 
-  // Get a pointer to the beginning of the output buffer
-  q = pbase ();
-
-  // and calculate the number of bytes based on the end-of-data pointer
-  // and the beginning-of-data pointer.
-  n = pptr () - q;
-
-  // Use the send_n function to ensure that everything waiting in the
-  // put area is sent to the peer.
-  ssize_t s = peer_->send_n (q, n);
-
-  // If we didn't send as many as we wanted then there is something
-  // wrong with the peer.  A send_n guarantees the delivery of our
-  // data or total failure.
-  if (s < n)
-    return EOF;
+  // Starting at the beginning of the buffer, send as much
+  // data as there is waiting.  send_n guarantees that all
+  // of the data will be sent or an error will be returned.
+  //
+  if( peer_->send_n( pbase(), pptr() - pbase() ) == -1 )
+	return EOF;
 
   // Now that we've sent everything in the output buffer, we reset the
   // buffer pointers to appear empty.
+  //
   setp (base (), base ());
 
   return 0;
@@ -405,9 +401,9 @@ ACE_Streambuf<STREAM>::fillbuf (void)
 template <class STREAM>
 ACE_Streambuf<STREAM>::ACE_Streambuf (STREAM *peer, int io_mode)
   : peer_ (peer),
-    mode_ (io_mode),
     get_mode_ (1),
-    put_mode_ (2)
+    put_mode_ (2),
+    mode_ (io_mode)
 {
   // A streambuf allows for unbuffered IO where every character is
   // read as requested and written as provided.  To me, this seems
