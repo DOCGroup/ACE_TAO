@@ -1,3 +1,10 @@
+Thu Oct 30 17:04:52 1997    <irfan@TWOSTEP>
+
+	* ace/OS.h (ACE_CLASS_IS_NAMESPACE): Changed the macro to not
+ 	  include the destructor.  This causes undefined destructor
+ 	  problems on Win32.  Also added ACE_UNIMPLEMENTED_FUNC macros
+ 	  around the remain functions.
+
 Thu Oct 30 10:50:21 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
 	* ace/OS.h: Added new macro--ACE_CLASS_IS_NAMESPACE ()--to
