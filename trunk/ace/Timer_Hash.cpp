@@ -68,7 +68,6 @@ template class ACE_Timer_Hash_Iterator_T<ACE_Event_Handler *,
                                   ACE_Hash_Timer_Heap>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Timer_Node_T<ACE_Event_Handler *>
 #pragma instantiate ACE_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *> >
 #pragma instantiate ACE_Locked_Free_List<ACE_Timer_Node_T<ACE_Event_Handler *>, \
                                     ACE_Null_Mutex>
