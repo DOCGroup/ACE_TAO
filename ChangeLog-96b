@@ -180,33 +180,6 @@ Wed Nov 13 01:22:16 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
   	  Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
  	  pointing this out.
 
-Tue Nov 12 02:33:56 1996    <harrison@samba.cs.wustl.edu>
-
-	* config.h (ACE_HAS_STL): Added ACE_HAS_STL flag.  For now, it's
-	  only to deal with the iostream vs iostream.h include problems.
-
-	* Made a whole bunch of changes in order to support compilation
-	  with Microsoft's broken STL and broken compiler for the broken
-	  C++ language.  Do I sound bitter?!  Die.
-
-	* ace/OS.h: Removed the inclusion of iostream.h.  Can't mix old
-	  iostreams with new STL iostreams.
-
-	* Log_Record.h: Added conditional inclusion of iostream and
-	  iostream.h to deal with STL.  So far, I haven't run into any
-	  problems related to changing semantics.  We'll see.
-
-	* For some totally evil reason, MSVC++ will not allow any use of
-	  the "allocator" symbol.  It's an STL thing.  As a result, I've
- 	  had to change all of the following files to rename allocator() to
- 	  alloc(): Local_Name_Space_T.cpp, Map_Manager.cpp,
- 	  Message_Block.cpp, Read_Buffer.cpp, SString.cpp.
-	
-	* Service_Config.{h,cpp}:  We have to change the allocator()
-	  accessors to alloc().  This is will break some things.  If
-	  necessary, we can conditionally compile in the old accessors
-	  for platforms that are not using STL and MSVC++.  
-
 Tue Nov 12 19:43:12 1996  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (spawn_n): Was missing a 0 after ?.
