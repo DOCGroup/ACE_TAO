@@ -183,7 +183,7 @@ TAO_Unbounded_String_Sequence::operator= (
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  char ** tmp1 = ACE_reinterpret_cast (char **, this->buffer_);
+  char ** tmp1 = reinterpret_cast <char **> (this->buffer_);
   char ** const tmp2 = ACE_reinterpret_cast (char ** ACE_CAST_CONST,
                                              rhs.buffer_);
 
@@ -251,8 +251,7 @@ TAO_Unbounded_String_Sequence::_tao_any_destructor (
   )
 {
   TAO_Unbounded_String_Sequence * tmp =
-    ACE_static_cast (TAO_Unbounded_String_Sequence *,
-                     _tao_void_pointer);
+    static_cast <TAO_Unbounded_String_Sequence *> (_tao_void_pointer);
   delete tmp;
 }
 
@@ -272,7 +271,7 @@ TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
         }
       else
         {
-          result = ACE_reinterpret_cast (char **, this->buffer_);
+          result = reinterpret_cast <char **> (this->buffer_);
         }
     }
   else // if (orphan == 1)
@@ -281,7 +280,7 @@ TAO_Unbounded_String_Sequence::get_buffer (CORBA::Boolean orphan)
         {
           // We set the state back to default and relinquish
           // ownership.
-          result = ACE_reinterpret_cast (char **, this->buffer_);
+          result = reinterpret_cast <char **> (this->buffer_);
           this->maximum_ = 0;
           this->length_ = 0;
           this->buffer_ = 0;
@@ -306,7 +305,7 @@ TAO_Unbounded_String_Sequence::_allocate_buffer (CORBA::ULong length)
 
   if (this->buffer_ != 0)
     {
-      char ** old = ACE_reinterpret_cast (char **, this->buffer_);
+      char ** old = reinterpret_cast <char **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -342,7 +341,7 @@ TAO_Unbounded_String_Sequence::_deallocate_buffer (void)
       return;
     }
 
-  char ** tmp = ACE_reinterpret_cast (char **, this->buffer_);
+  char ** tmp = reinterpret_cast <char **> (this->buffer_);
 
   for (CORBA::ULong i = 0; i < this->length_; ++i)
     {
@@ -361,8 +360,7 @@ void
 TAO_Unbounded_String_Sequence::_shrink_buffer (CORBA::ULong nl,
                                                CORBA::ULong ol)
 {
-  char ** tmp = ACE_reinterpret_cast (char **,
-                                      this->buffer_);
+  char ** tmp = reinterpret_cast <char **> (this->buffer_);
 
   for (CORBA::ULong i = nl; i < ol; ++i)
     {
@@ -379,8 +377,7 @@ TAO_Unbounded_String_Sequence::replace (CORBA::ULong maximum,
 {
   if (this->release_ == 1)
     {
-      char ** tmp = ACE_reinterpret_cast (char **,
-                                          this->buffer_);
+      char ** tmp = reinterpret_cast <char **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -454,8 +451,7 @@ TAO_Unbounded_WString_Sequence::operator= (
 
   if (this->release_)
     {
-      CORBA::WChar ** tmp = ACE_reinterpret_cast (CORBA::WChar **,
-                                                  this->buffer_);
+      CORBA::WChar ** tmp = reinterpret_cast <CORBA::WChar **> (this->buffer_);
 
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         {
@@ -486,8 +482,7 @@ TAO_Unbounded_WString_Sequence::operator= (
 
   TAO_Unbounded_Base_Sequence::operator= (rhs);
 
-  CORBA::WChar ** tmp1 = ACE_reinterpret_cast (CORBA::WChar **,
-                                               this->buffer_);
+  CORBA::WChar ** tmp1 = reinterpret_cast <CORBA::WChar **> (this->buffer_);
   CORBA::WChar ** const tmp2 =
     ACE_reinterpret_cast (CORBA::WChar ** ACE_CAST_CONST,
                           rhs.buffer_);
