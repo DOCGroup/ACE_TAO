@@ -33,8 +33,8 @@
 
 namespace CORBA
 {
-  TAO_DynamicInterface_Export void release (ContextList_ptr);
-  TAO_DynamicInterface_Export Boolean is_nil (ContextList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION void release (ContextList_ptr);
+  TAO_NAMESPACE_INLINE_FUNCTION Boolean is_nil (ContextList_ptr);
 
   typedef TAO_Pseudo_Var_T<Context> Context_var;
   typedef TAO_Pseudo_Out_T<Context, Context_var> Context_out;
