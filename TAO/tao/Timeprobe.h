@@ -16,7 +16,7 @@
 //#define TAO_SELECT_PP_TIMEPROBES
 
 #if defined (ACE_ENABLE_TIMEPROBES)
-#  define TAO_PP_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id) 
+#  define TAO_PP_TIMEPROBE(id) ACE_TIMEPROBE_SINGLETON::instance ()->timeprobe (id)
 #  define TAO_FUNCTION_PP_TIMEPROBE(X) ACE_Function_Timeprobe<ACE_TIMEPROBE_WITH_LOCKING> function_timeprobe (*ACE_TIMEPROBE_SINGLETON::instance (), X)
 #else /* ACE_ENABLE_TIMEPROBES */
 #  define TAO_PP_TIMEPROBE(id)

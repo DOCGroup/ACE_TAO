@@ -11,6 +11,58 @@
 # include "tao/Object_Adapter.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, POA, "$Id$")
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Timeprobes class
+#include "tao/Timeprobe.h"
+
+#if defined (ACE_ENABLE_TIMEPROBES)
+
+static const char *TAO_Object_Adapter_Timeprobe_Description[] =
+{
+  "Object_Adapter::dispatch_servant - start",
+  "Object_Adapter::dispatch_servant - end",
+
+  "POA::parse_key - start",
+  "POA::parse_key - end",
+
+  "Object_Adapter::find_poa - start",
+  "Object_Adapter::find_poa - end",
+
+  "POA::locate_servant - start",
+  "POA::locate_servant - end",
+
+  "Servant::_dispatch - start",
+  "Servant::_dispatch - end",
+};
+
+enum
+{
+  // Timeprobe description table start key
+  TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START = 200,
+  TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_END,
+
+  TAO_POA_PARSE_KEY_START,
+  TAO_POA_PARSE_KEY_END,
+
+  TAO_OBJECT_ADAPTER_FIND_POA_START,
+  TAO_OBJECT_ADAPTER_FIND_POA_END,
+
+  TAO_POA_LOCATE_SERVANT_START,
+  TAO_POA_LOCATE_SERVANT_END,
+
+  TAO_SERVANT_DISPATCH_START,
+  TAO_SERVANT_DISPATCH_END
+};
+
+// Setup Timeprobes
+ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Object_Adapter_Timeprobe_Description,
+                                  TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START);
+
+#endif /* ACE_ENABLE_TIMEPROBES */
+
 ////////////////////////////////////////////////////////////////////////////////
 
 /* static */
@@ -125,112 +177,13 @@ TAO_Object_Adapter::~TAO_Object_Adapter (void)
   delete this->lock_;
 }
 
-/* static */
-CORBA::ULong
-TAO_Object_Adapter::transient_poa_name_size ()
-{
-  return TAO_Object_Adapter::transient_poa_name_size_;
-}
-
-int
-TAO_Object_Adapter::locate_servant (const TAO_ObjectKey &key,
-                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), -1, ACE_TRY_ENV);
-
-  return this->locate_servant_i (key,
-                                 ACE_TRY_ENV);
-}
-
-int
-TAO_Object_Adapter::locate_servant_i (const TAO_ObjectKey &key,
-                                      CORBA::Environment &ACE_TRY_ENV)
-{
-  PortableServer::ObjectId id;
-  TAO_POA *poa = 0;
-
-  this->locate_poa (key,
-                    id,
-                    poa,
-                    ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  PortableServer::Servant servant = 0;
-  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
-                                                           servant,
-                                                           ACE_TRY_ENV);
-  ACE_CHECK_RETURN (-1);
-
-  switch (result)
-    {
-    case TAO_POA::FOUND:
-      // Optimistic attitude
-    case TAO_POA::DEFAULT_SERVANT:
-    case TAO_POA::SERVANT_MANAGER:
-      return 0;
-
-    case TAO_POA::NOT_FOUND:
-      return -1;
-    }
-
-  return -1;
-}
-
-PortableServer::Servant
-TAO_Object_Adapter::find_servant (const TAO_ObjectKey &key,
-                                  CORBA::Environment &ACE_TRY_ENV)
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
-
-  return this->find_servant_i (key,
-                               ACE_TRY_ENV);
-}
-
-PortableServer::Servant
-TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
-                                    CORBA::Environment &ACE_TRY_ENV)
-{
-  // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
-
-  PortableServer::ObjectId id;
-  TAO_POA *poa = 0;
-
-  this->locate_poa (key,
-                    id,
-                    poa,
-                    ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  PortableServer::Servant servant = 0;
-  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
-                                                           servant,
-                                                           ACE_TRY_ENV);
-  ACE_CHECK_RETURN (0);
-
-  switch (result)
-    {
-    case TAO_POA::FOUND:
-      return servant;
-
-    case TAO_POA::DEFAULT_SERVANT:
-    case TAO_POA::SERVANT_MANAGER:
-    case TAO_POA::NOT_FOUND:
-      return 0;
-    }
-
-  return 0;
-}
-
 void
 TAO_Object_Adapter::dispatch_servant (const TAO_ObjectKey &key,
                                       CORBA::ServerRequest &req,
                                       void *context,
                                       CORBA::Environment &ACE_TRY_ENV)
 {
-  // ACE_FUNCTION_TIMEPROBE (TAO_POA_DISPATCH_SERVANT_START);
+  ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_DISPATCH_SERVANT_START);
 
   // Lock access to the POA for the duration of this transaction
   TAO_POA_GUARD (ACE_Lock, monitor, this->lock (), ACE_TRY_ENV);
@@ -264,17 +217,23 @@ TAO_Object_Adapter::dispatch_servant_i (const TAO_ObjectKey &key,
                                    operation,
                                    this->orb_core_);
 
-  PortableServer::Servant servant = poa->locate_servant_i (operation,
-                                                           id,
-                                                           &current_context,
-                                                           ACE_TRY_ENV);
-  ACE_CHECK;
+  PortableServer::Servant servant = 0;
+
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_POA_LOCATE_SERVANT_START);
+
+    servant = poa->locate_servant_i (operation,
+                                     id,
+                                     &current_context,
+                                     ACE_TRY_ENV);
+    ACE_CHECK;
+  }
 
   // Now that we know the servant.
   current_context.servant (servant);
 
   {
-    // ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
+    ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
     // Upcall
     servant->_dispatch (req,
@@ -296,166 +255,40 @@ TAO_Object_Adapter::locate_poa (const TAO_ObjectKey &key,
   CORBA::Boolean is_system_id = 0;
   TAO_Temporary_Creation_Time poa_creation_time;
 
-  int result = TAO_POA::parse_key (key,
-                                   poa_system_name,
-                                   system_id,
-                                   is_root,
-                                   is_persistent,
-                                   is_system_id,
-                                   poa_creation_time);
+  int result = 0;
+
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_POA_PARSE_KEY_START);
+
+    result = TAO_POA::parse_key (key,
+                                 poa_system_name,
+                                 system_id,
+                                 is_root,
+                                 is_persistent,
+                                 is_system_id,
+                                 poa_creation_time);
+  }
+
   if (result != 0)
     {
       ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::COMPLETED_NO));
     }
 
-  result = this->find_poa (poa_system_name,
-                           is_persistent,
-                           is_root,
-                           poa_creation_time,
-                           poa,
-                           ACE_TRY_ENV);
+  {
+    ACE_FUNCTION_TIMEPROBE (TAO_OBJECT_ADAPTER_FIND_POA_START);
+
+    result = this->find_poa (poa_system_name,
+                             is_persistent,
+                             is_root,
+                             poa_creation_time,
+                             poa,
+                             ACE_TRY_ENV);
+  }
 
   if (result != 0)
     {
       ACE_THROW (CORBA::OBJECT_NOT_EXIST (CORBA::COMPLETED_NO));
     }
-}
-
-int
-TAO_Object_Adapter::find_poa (const poa_name &system_name,
-                              CORBA::Boolean activate_it,
-                              CORBA::Boolean root,
-                              const TAO_Temporary_Creation_Time &poa_creation_time,
-                              TAO_POA *&poa,
-                              CORBA_Environment &ACE_TRY_ENV)
-{
-  if (activate_it)
-    {
-      return this->find_persistent_poa (system_name,
-                                        poa,
-                                        ACE_TRY_ENV);
-    }
-  else
-    {
-      return this->find_transient_poa (system_name,
-                                       root,
-                                       poa_creation_time,
-                                       poa);
-    }
-}
-
-int
-TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
-                                        CORBA::Boolean root,
-                                        const TAO_Temporary_Creation_Time &poa_creation_time,
-                                        TAO_POA *&poa)
-{
-  int result = 0;
-  if (root)
-    {
-      poa = this->orb_core_.root_poa ();
-    }
-  else
-    {
-      result = this->transient_poa_map_->find (system_name,
-                                               poa);
-    }
-
-  if (result == 0)
-    {
-      if (poa->creation_time () != poa_creation_time)
-        {
-          result = -1;
-        }
-    }
-
-  return result;
-}
-
-int
-TAO_Object_Adapter::find_persistent_poa (const poa_name &system_name,
-                                         TAO_POA *&poa,
-                                         CORBA_Environment &ACE_TRY_ENV)
-{
-  return this->hint_strategy_->find_persistent_poa (system_name,
-                                                    poa,
-                                                    ACE_TRY_ENV);
-}
-
-int
-TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
-                              TAO_POA *poa,
-                              poa_name_out system_name)
-{
-  if (poa->persistent ())
-    {
-      return this->bind_persistent_poa (folded_name,
-                                        poa,
-                                        system_name);
-    }
-  else
-    {
-      return this->bind_transient_poa (poa,
-                                       system_name);
-    }
-}
-
-int
-TAO_Object_Adapter::bind_transient_poa (TAO_POA *poa,
-                                        poa_name_out system_name)
-{
-  poa_name name;
-  int result = this->transient_poa_map_->bind_create_key (poa,
-                                                          name);
-
-  if (result == 0)
-    {
-      ACE_NEW_RETURN (system_name,
-                      poa_name (name),
-                      -1);
-    }
-
-  return result;
-}
-
-int
-TAO_Object_Adapter::bind_persistent_poa (const poa_name &folded_name,
-                                         TAO_POA *poa,
-                                         poa_name_out system_name)
-{
-  return this->hint_strategy_->bind_persistent_poa (folded_name,
-                                                    poa,
-                                                    system_name);
-}
-
-int
-TAO_Object_Adapter::unbind_poa (TAO_POA *poa,
-                                const poa_name &folded_name,
-                                const poa_name &system_name)
-{
-  if (poa->persistent ())
-    {
-      return this->unbind_persistent_poa (folded_name,
-                                          system_name);
-    }
-  else
-    {
-      return this->unbind_transient_poa (system_name);
-    }
-}
-
-int
-TAO_Object_Adapter::unbind_transient_poa (const poa_name &system_name)
-{
-  return this->transient_poa_map_->unbind (system_name);
-}
-
-int
-TAO_Object_Adapter::unbind_persistent_poa (const poa_name &folded_name,
-                                           const poa_name &system_name)
-{
-  return this->hint_strategy_->unbind_persistent_poa (folded_name,
-                                                      system_name);
 }
 
 int
@@ -502,10 +335,136 @@ TAO_Object_Adapter::activate_poa (const poa_name &folded_name,
   return result;
 }
 
-ACE_Lock &
-TAO_Object_Adapter::lock (void)
+int
+TAO_Object_Adapter::find_transient_poa (const poa_name &system_name,
+                                        CORBA::Boolean root,
+                                        const TAO_Temporary_Creation_Time &poa_creation_time,
+                                        TAO_POA *&poa)
 {
-  return *this->lock_;
+  int result = 0;
+  if (root)
+    {
+      poa = this->orb_core_.root_poa ();
+    }
+  else
+    {
+      result = this->transient_poa_map_->find (system_name,
+                                               poa);
+    }
+
+  if (result == 0)
+    {
+      if (poa->creation_time () != poa_creation_time)
+        {
+          result = -1;
+        }
+    }
+
+  return result;
+}
+
+int
+TAO_Object_Adapter::bind_poa (const poa_name &folded_name,
+                              TAO_POA *poa,
+                              poa_name_out system_name)
+{
+  if (poa->persistent ())
+    {
+      return this->bind_persistent_poa (folded_name,
+                                        poa,
+                                        system_name);
+    }
+  else
+    {
+      return this->bind_transient_poa (poa,
+                                       system_name);
+    }
+}
+
+int
+TAO_Object_Adapter::unbind_poa (TAO_POA *poa,
+                                const poa_name &folded_name,
+                                const poa_name &system_name)
+{
+  if (poa->persistent ())
+    {
+      return this->unbind_persistent_poa (folded_name,
+                                          system_name);
+    }
+  else
+    {
+      return this->unbind_transient_poa (system_name);
+    }
+}
+
+int
+TAO_Object_Adapter::locate_servant_i (const TAO_ObjectKey &key,
+                                      CORBA::Environment &ACE_TRY_ENV)
+{
+  PortableServer::ObjectId id;
+  TAO_POA *poa = 0;
+
+  this->locate_poa (key,
+                    id,
+                    poa,
+                    ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  PortableServer::Servant servant = 0;
+  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
+                                                           servant,
+                                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+
+  switch (result)
+    {
+    case TAO_POA::FOUND:
+      // Optimistic attitude
+    case TAO_POA::DEFAULT_SERVANT:
+    case TAO_POA::SERVANT_MANAGER:
+      return 0;
+
+    case TAO_POA::NOT_FOUND:
+      return -1;
+    }
+
+  return -1;
+}
+
+PortableServer::Servant
+TAO_Object_Adapter::find_servant_i (const TAO_ObjectKey &key,
+                                    CORBA::Environment &ACE_TRY_ENV)
+{
+  // Lock access for the duration of this transaction.
+  TAO_POA_GUARD_RETURN (ACE_Lock, monitor, this->lock (), 0, ACE_TRY_ENV);
+
+  PortableServer::ObjectId id;
+  TAO_POA *poa = 0;
+
+  this->locate_poa (key,
+                    id,
+                    poa,
+                    ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  PortableServer::Servant servant = 0;
+  TAO_POA::LOCATION_RESULT result = poa->locate_servant_i (id,
+                                                           servant,
+                                                           ACE_TRY_ENV);
+  ACE_CHECK_RETURN (0);
+
+  switch (result)
+    {
+    case TAO_POA::FOUND:
+      return servant;
+
+    case TAO_POA::DEFAULT_SERVANT:
+    case TAO_POA::SERVANT_MANAGER:
+    case TAO_POA::NOT_FOUND:
+      return 0;
+    }
+
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -543,7 +502,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::find_persistent_poa (const poa_name &s
   if (result == 0)
     {
       result = this->persistent_poa_system_map_.find (system_name,
-                                                       poa);
+                                                      poa);
       if (result != 0 ||
           folded_name != poa->folded_name ())
         {
@@ -568,7 +527,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (const poa_name &f
 {
   poa_name name = folded_name;
   int result = this->persistent_poa_system_map_.bind_modify_key (poa,
-                                                                  name);
+                                                                 name);
 
   if (result == 0)
     {
