@@ -23,7 +23,7 @@ ACE_Event_Handler::ACE_Event_Handler (void)
 
 ACE_Event_Handler::~ACE_Event_Handler (void) 
 {
-  ACE_TRACE ("ACE_Event_Handler::~ACE_Event_Handler");
+  // ACE_TRACE ("ACE_Event_Handler::~ACE_Event_Handler");
 }
 
 // Gets the file descriptor associated with this I/O device. 

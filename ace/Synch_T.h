@@ -373,7 +373,7 @@ public:
   int acquire (void) { return this->owner_ = this->lock_->acquire_write (); }
   // Explicitly acquire the write lock.
 
-  int tryacquire_write (void) { return this->owner_ = this->lock_->acquire_write (); }
+  int tryacquire_write (void) { return this->owner_ = this->lock_->tryacquire_write (); }
   // Conditionally acquire the write lock (i.e., won't block).
 
   int tryacquire (void) { return this->owner_ = this->lock_->tryacquire_write (); }

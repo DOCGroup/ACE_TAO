@@ -1,3 +1,7 @@
+// Timer_List.cpp
+// $Id$
+
+#define ACE_BUILD_DLL
 #include "ace/Timer_List.h"
 
 ACE_Timer_List_Iterator::ACE_Timer_List_Iterator (ACE_Timer_List &list)

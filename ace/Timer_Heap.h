@@ -46,7 +46,7 @@ protected:
   // Pointer to the <ACE_Timer_Heap> that we are iterating over.
 };
 
-class ACE_Timer_Heap : public ACE_Timer_Queue
+class ACE_Export ACE_Timer_Heap : public ACE_Timer_Queue
   // = TITLE 
   //      Provides a very fast and predictable timer implementation.
   //
