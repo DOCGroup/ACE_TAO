@@ -1,3 +1,7 @@
+Fri Dec 31 08:07:18 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * all Makefiles: updated dependencies.
+
 Thu Dec 30 11:17:27 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * etc/ACE-development-process.html: fixed some typos.
