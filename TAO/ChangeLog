@@ -1,3 +1,17 @@
+Sat Nov  8 22:19:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/TypeCodeFactory/TypeCodeFactoryC.cpp:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.h:
+	* tao/TypeCodeFactory/TypeCodeFactoryC.inl:
+
+	  Regenerated code. 
+
+	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.cpp.diff:
+	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.h.diff:
+	* tao/TypeCodeFactory/diffs/TypeCodeFactoryC.inl.diff:
+
+	  Diff files that are no longer necessary.
+
 Sun Nov  9 04:08:16 UTC 2003  Don Hinton  <dhinton@dresystems.com>
 
         * orbsvcs/tests/Notify/lib/LookupManager.cpp:
