@@ -1,3 +1,11 @@
+2001-04-02  Yamuna Krishnamurthy  <yamuna@ace.cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/mpeg/source/server/augmented_server.cpp: 
+	* orbsvcs/tests/AVStreams/mpeg/source/server/server.cpp: 	
+	* orbsvcs/tests/AVStreams/benchmark/server.cpp: 	
+
+	  Fixed Fuzz errors.
+
 Mon Apr  2 08:46:42 2001  Darrell Brunsch <brunsch@uci.edu>
 
         * docs/tutorials/Quoter/AMI/client.cpp:

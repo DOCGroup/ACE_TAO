@@ -366,12 +366,16 @@ AV_Server::init (int argc,
   video_server_mmdevice_name.length (1);
   video_server_mmdevice_name [0].id = CORBA::string_dup ("Video_Server_MMDevice");
 
-  // Register the video control object with the naming server.
-  this->my_name_client_->bind (video_server_mmdevice_name,
-                               this->video_mmdevice_->_this (ACE_TRY_ENV),
-                               ACE_TRY_ENV);
+  CORBA::Object_var video_mmdevice 
+    = this->video_mmdevice_->_this (ACE_TRY_ENV);
   ACE_CHECK_RETURN (-1);
 
+  // Register the video control object with the naming server.
+  this->my_name_client_->bind (video_server_mmdevice_name,
+                               video_mmdevice.in (),
+                               ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
+  
   if (ACE_TRY_ENV.exception () != 0)
     {
       ACE_TRY_ENV.clear ();
@@ -412,6 +416,7 @@ AV_Server::init (int argc,
   this->my_name_client_->bind (audio_server_mmdevice_name,
                                audio_mmdevice.in (),
                                ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   if (ACE_TRY_ENV.exception () != 0)
     {
