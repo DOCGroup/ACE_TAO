@@ -77,10 +77,8 @@ LIBS    += -ldl
 
 ifeq ($(threads),1)
   LIBS += -lpthread
-  ifeq (-DACE_HAS_AIO_CALLS,$(PLATFORM_AIO_SUPPORT))
-    LIBS += -lrt
-  endif
 endif
+LIBS += $(shell test -e /usr/lib/librt.so && echo -lrt)
 
 PLATFORM_QT_CPPFLAGS=-I$(QTDIR)/include
 PLATFORM_QT_LIBS=-lqt
