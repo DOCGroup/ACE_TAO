@@ -23,11 +23,10 @@ ACE_DLL::ACE_DLL (int close_on_destruction)
 ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
                   int open_mode,
                   int close_on_destruction)
-  : handle_ (ACE_OS::dlopen (dll_name,
-                             open_mode)),
+  : handle_ (ACE_SHLIB_INVALID_HANDLE),
     close_on_destruction_ (close_on_destruction)
 {
-  if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
+  if (this->open (dll_name, open_mode, close_on_destruction) != 0)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%s\n"),
                 this->error ()));
