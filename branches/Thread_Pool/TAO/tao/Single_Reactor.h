@@ -53,8 +53,6 @@ public:
   virtual int shutdown_all (void);
 
 private:
-  /// The leader follower
-  TAO_Leader_Follower *leader_follower_;
 };
 
 #if defined (__ACE_INLINE__)

@@ -13,7 +13,6 @@
 #include "Stub.h"
 #include "Reactor_Registry.h"
 #include "Leader_Follower.h"
-#include "Transport_Cache_Manager.h"
 #include "Connector_Registry.h"
 #include "Acceptor_Registry.h"
 
@@ -173,7 +172,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
     ior_interceptors_ (),
     parser_registry_ (),
-    transport_cache_ (0),
     bidir_adapter_ (0),
     bidir_giop_policy_ (0),
     flushing_strategy_ (0),
@@ -217,7 +215,6 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid)
 TAO_ORB_Core::~TAO_ORB_Core (void)
 {
   delete this->flushing_strategy_;
-  delete this->transport_cache_;
 
   ACE_OS::free (this->orbid_);
 
@@ -1035,11 +1032,6 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
   // Initialize the flushing strategy
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
-  // Create the purging strategy
-  ACE_NEW_RETURN (this->transport_cache_,
-                  TAO_Transport_Cache_Manager (*this),
-                  -1);
-
   // Now that we have a complete list of available protocols and their
   // related factory objects, set default policies and initialize the
   // registries!
@@ -1150,42 +1142,8 @@ TAO_ORB_Core::fini (void)
 
   // Finalize lane resources.
   this->thread_lane_resources_manager ()->finalize ();
+  delete this->thread_lane_resources_manager_;
 
-  // Set of file descriptors corresponding to open connections.  This
-  // handle set is used to explicitly deregister the connection event
-  // handlers from the Reactor.  This is particularly important for
-  // dynamically loaded ORBs where an application level reactor, such
-  // as the Singleton reactor, is used instead of an ORB created one.
-
-  ACE_Handle_Set handle_set;
-  TAO_EventHandlerSet unregistered;
-
-  // Close the transport cache and return the handle set that needs
-  // to be de-registered from the reactor.
-  if (this->transport_cache_ != 0)
-    {
-      this->transport_cache_->close (handle_set, unregistered);
-    }
-
-  // Shutdown all open connections that are registered with the ORB
-  // Core.  Note that the ACE_Event_Handler::DONT_CALL mask is NOT
-  // used here since the reactor should invoke each handle's
-  // corresponding ACE_Event_Handler::handle_close() method to ensure
-  // that the connection is shutdown gracefully prior to destroying
-  // the ORB Core.
-  if (handle_set.num_set () > 0)
-    (void) this->reactor ()->remove_handler (handle_set,
-                                             ACE_Event_Handler::ALL_EVENTS_MASK);
-  if (!unregistered.is_empty ())
-    {
-      ACE_Event_Handler** eh;
-      for (TAO_EventHandlerSetIterator iter(unregistered);
-           iter.next (eh); iter.advance())
-        {
-          (*eh)->handle_close (ACE_INVALID_HANDLE,
-                               ACE_Event_Handler::ALL_EVENTS_MASK);
-        }
-    }
   // Pass reactor back to the resource factory.
   if (this->resource_factory_ != 0)
     this->resource_factory_->reclaim_reactor (this->reactor_);
@@ -1386,12 +1344,12 @@ TAO_ORB_Core::thread_lane_resources_manager (void)
                       TAO_Default_Thread_Lane_Resources_Manager,
                       0);
 
-      // Initialize the resources.
-      thread_lane_resources_manager->initialize (*this);
-
       // Store a copy for later use.
       this->thread_lane_resources_manager_ = thread_lane_resources_manager;
     }
+
+  // Initialize the resources.
+  this->thread_lane_resources_manager_->initialize (*this);
 
   return this->thread_lane_resources_manager_;
 }
@@ -2926,40 +2884,13 @@ TAO_ORB_Core::create_data_block_i (size_t size,
 ACE_Reactor *
 TAO_ORB_Core::reactor (void)
 {
-  if (this->reactor_registry_ != 0)
-    return this->reactor_registry_->reactor ();
-
-  if (this->reactor_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->reactor_ == 0)
-        {
-          this->reactor_ =
-            this->resource_factory ()->get_reactor ();
-        }
-    }
-  return this->reactor_;
+  return this->reactor_registry_->reactor ();
 }
 
 ACE_Reactor *
 TAO_ORB_Core::reactor (TAO_Acceptor *acceptor)
 {
-  if (this->reactor_registry_ != 0)
-    return this->reactor_registry_->reactor (acceptor);
-
-  // @@ ????
-  if (this->reactor_ == 0)
-    {
-      // Double checked locking
-      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
-      if (this->reactor_ == 0)
-        {
-          this->reactor_ =
-            this->resource_factory ()->get_reactor ();
-        }
-    }
-  return this->reactor_;
+  return this->reactor_registry_->reactor (acceptor);
 }
 
 CORBA::Object_ptr

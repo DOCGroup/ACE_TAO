@@ -152,10 +152,10 @@ TAO_RT_POA::valid_priority (RTCORBA::Priority priority,
   else
     // Case 2.
     {
-      TAO_Acceptor_Registry *ar =
-        this->orb_core_.acceptor_registry ();
+      TAO_Acceptor_Registry &ar =
+        this->orb_core_.lane_resources ().acceptor_registry ();
 
-      for (TAO_Acceptor **a = ar->begin (); a != ar->end (); ++a)
+      for (TAO_Acceptor **a = ar.begin (); a != ar.end (); ++a)
         {
           if ((*a)->priority () == priority)
             return;

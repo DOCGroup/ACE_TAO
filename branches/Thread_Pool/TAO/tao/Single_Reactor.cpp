@@ -4,6 +4,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/Resource_Factory.h"
 #include "tao/Leader_Follower.h"
+#include "tao/Thread_Lane_Resources.h"
 #include "ace/Reactor.h"
 
 #if !defined (__ACE_INLINE__)
@@ -12,23 +13,24 @@
 
 ACE_RCSID(tao, Single_Reactor, "$Id$")
 
+TAO_Single_Reactor::TAO_Single_Reactor (void)
+{
+}
+
 TAO_Single_Reactor::~TAO_Single_Reactor (void)
 {
-  delete this->leader_follower_;
 }
 
 void
 TAO_Single_Reactor::open (TAO_ORB_Core *orb_core)
 {
   this->TAO_Reactor_Registry::open (orb_core);
-  ACE_NEW (this->leader_follower_,
-           TAO_Leader_Follower (this->orb_core ()));
 }
 
 ACE_Reactor *
 TAO_Single_Reactor::reactor (void)
 {
-  return this->leader_follower_->reactor ();
+  return this->leader_follower ().reactor ();
 }
 
 ACE_Reactor *
@@ -40,13 +42,13 @@ TAO_Single_Reactor::reactor (TAO_Acceptor *)
 TAO_Leader_Follower &
 TAO_Single_Reactor::leader_follower (void)
 {
-  return *this->leader_follower_;
+  return this->orb_core ()->lane_resources ().leader_follower ();
 }
 
 TAO_Leader_Follower &
 TAO_Single_Reactor::leader_follower (TAO_Acceptor *)
 {
-  return *this->leader_follower_;
+  return this->leader_follower ();
 }
 
 void
