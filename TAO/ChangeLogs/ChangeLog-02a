@@ -1752,7 +1752,7 @@ Thu Jul 26 17:12:00 2001  Ossama Othman  <ossama@uci.edu>
           not inserted into the parser registry.  This problem surfaced
           when attempting to dynamically load the ORB, and manifested
           itself as a CORBA::INV_OBJREF exception when attempting to
-          destringify an IOR such as "file://foo.ior".
+          destringify an IOR such as "file://foo.ior".  [Bug 744]
 
 Thu Jul 26 09:44:00 2001  Craig Rodrigues  <crodrigu@bbn.com>
 
