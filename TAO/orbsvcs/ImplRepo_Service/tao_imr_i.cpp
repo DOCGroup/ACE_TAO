@@ -779,7 +779,7 @@ TAO_IMR_Op_Autostart::run (void)
                                    ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK;
 
-              for (size_t i = 0; i < server_list->length (); i++)
+              for (CORBA::ULong i = 0; i < server_list->length (); i++)
                 {
                   ACE_TRY_EX (inside)
                     {
@@ -911,7 +911,7 @@ TAO_IMR_Op_List::run (void)
                (IR_LIST_CHUNK, server_list, server_iter ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
-          for (size_t i = 0; i < server_list->length (); i++)
+          for (CORBA::ULong i = 0; i < server_list->length (); i++)
             this->display_server_information (server_list[i]);
 
           // Check for more to be displayed
@@ -929,7 +929,7 @@ TAO_IMR_Op_List::run (void)
                                        ACE_ENV_ARG_PARAMETER);
                   ACE_TRY_CHECK;
 
-                  for (size_t i = 0; i < server_list->length (); i++)
+                  for (CORBA::ULong i = 0; i < server_list->length (); i++)
                     this->display_server_information (server_list[i]);
                 }
 
@@ -1239,7 +1239,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
               info.startup.command_line.in (),
               info.startup.working_directory.in (),
               act));
-  for (size_t i = 0; i < info.startup.environment.length (); ++i)
+  for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
     ACE_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s \n",
                 info.startup.environment[i].name.in (),
                 info.startup.environment[i].value.in ()));

@@ -1,7 +1,25 @@
+Thu May  1 08:37:49 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * orbsvcs/IFR_Service/IFR_Service.mpc:
+
+          Added the NT_Service.cpp.
+
+        * orbsvcs/IFR_Service/drv_preproc_ifr.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/IFR_Service/tao_ifr.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+          Removed build warnings for Windows XP 64-bit.
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+          Added $(TAO_ROOT)/TAO_IDL to the libpaths.
+
 Wed Apr 30 20:18:51 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tao/IORManipulation/IORC.cpp: Added explicit template
-	  instantiations. 
+	  instantiations.
 
 Wed Apr 30 17:13:43 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -62,7 +80,7 @@ Wed Apr 30 16:44:12 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 	* orbsvcs/orbsvcs/CosNotification_Static.dsp:
 
-          Removed attic'ed files. 
+          Removed attic'ed files.
 
 Wed Apr 30 10:40:31 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
 

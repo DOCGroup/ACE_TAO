@@ -72,7 +72,7 @@ DRV_save_orb_args (ACE_CString &arg_holder,
 
           // If the arg ends with either .idl or .pidl, we're done.
 
-          int len = tmp.length ();
+          int len = ACE_static_cast (int, tmp.length ());
           int pos = tmp.find (".idl");
 
           if (len - pos == 4)

@@ -14,6 +14,7 @@ project : orbsvcsexe, core, acexml, minimum_corba {
     Server_Repository.cpp
     Repository_Configuration.cpp
     XML_ContentHandler.cpp
+    NT_Service.cpp
   }
 }
 
