@@ -1,3 +1,9 @@
+Fri Mar 18 09:49:32 2005  Boris Kolpackov  <boris@kolpackov.net>
+
+	* protocols/ace/RMCast/Link.cpp:
+	* protocols/ace/RMCast/Retransmit.cpp:
+	* protocols/ace/RMCast/Acknowledge.cpp: Added missing headers.
+
 Thu Mar 17 11:02:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* configure.ac:
