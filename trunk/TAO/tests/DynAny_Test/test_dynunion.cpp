@@ -63,7 +63,7 @@ Test_DynUnion::run_test (void)
         this->orb_->create_dyn_any (in_any1,
                                     ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      CORBA_DynUnion_var fa1 = CORBA_DynUnion::_narrow (dp1,
+      CORBA_DynUnion_var fa1 = CORBA_DynUnion::_narrow (dp1.in (),
                                                         ACE_TRY_ENV);
       ACE_TRY_CHECK;
       fa1->insert_typecode (data.m_typecode1,
@@ -133,7 +133,7 @@ Test_DynUnion::run_test (void)
       ACE_TRY_CHECK;
       CORBA::TypeCode_var tc = dp3->get_typecode (ACE_TRY_ENV);
       ACE_TRY_CHECK;
-      if (!ACE_OS::strcmp (m_nm, "tc")
+      if (!ACE_OS::strcmp (m_nm.in (), "tc")
           && tk == CORBA::tk_TypeCode
           && data.m_typecode1->equal (tc.in ()))
         ACE_DEBUG ((LM_DEBUG,
