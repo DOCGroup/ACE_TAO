@@ -37,6 +37,16 @@ ECTestDriver::~ECTestDriver (void)
 {
 }
 
+int
+ECTestDriver::init(CORBA::ORB_var orb, PortableServer::POA_var poa)
+{
+  ECDriver::init(orb,poa);
+
+  this->rt.initialize();
+
+  return 0;
+}
+
 bool
 ECTestDriver::get_time_master (void) const
 {
@@ -53,11 +63,11 @@ void
 ECTestDriver::set_start_condition(StartCondition::TYPE type, Time time)
   ACE_THROW_SPEC ((ACEXML_SAXException))
 {
-  if (type != StartCondition::GLOBALTIME)
+  if (type != StartCondition::DELAYAFTERCONNECT)
     {
       ACEXML_THROW (ACEXML_SAXException ("ECTestDriver does not support"
                                          " start condition types other than"
-                                         "GLOBALTIME"));
+                                         "DELAYAFTERCONNECT"));
     }
 
   this->starttype = type;
@@ -112,13 +122,15 @@ ECTestDriver::wait_for_start(Kokyu_EC* ec)
     }
 }
 
-void
-ECTestDriver::run_i (int argc, char *argv[])
+ACE_Reactor*
+ECTestDriver::reactor(void)
 {
-  //spawn thread to run the reactor event loop
-  Reactor_Task rt;
-  rt.initialize();
+  return this->rt.reactor();
+} //reactor()
 
+void
+ECTestDriver::run_i (int, char **)
+{
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
 
@@ -128,6 +140,7 @@ ECTestDriver::run_i (int argc, char *argv[])
   // for DURATION, limit is in msecs
   ACE_Time_Value stop_time(this->stoplimit/1000,this->stoplimit%1000);
 
-  rt.activate(); //need thread creation flags? or priority?
+  //spawn thread to run the reactor event loop
+  this->rt.activate(); //need thread creation flags? or priority?
   orb->run (stop_time ACE_ENV_ARG_PARAMETER);
 } //run_i()
