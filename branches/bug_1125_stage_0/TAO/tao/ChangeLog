@@ -1,3 +1,14 @@
+Mon Jul 22 17:52:04 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Base.cpp: We now use the global pool for
+	  allocating memory  for the return path. Using TSS created
+	  problems when we were trying to move the unsent messages from
+	  the TSS to global pool. The message block makes things to crash
+	  horribly, especially at places that you have no clue about. 
+	
+	* tao/Transport.cpp: Do not reset the allocators since ot is not
+	  required. 
+
 Tue Jul 16 07:06:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Synch_Queued_Message.cpp:

@@ -584,12 +584,21 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
 #endif /* ACE_HAS_PURIFY */
 
   // Initialze an output CDR on the stack
+  // NOTE: Dont jump to a conclusion as to why we are using the
+  // inpout_cdr and hence the  global pool here. These pools will move
+  // to the lanes anyway at some point of time. Further, it would have
+  // been awesome to have this in TSS. But for some reason the cloning
+  // that happens when the ORB gets flow controlled while writing a
+  // reply is messing things up. We crash horribly. Doing this adds a
+  // lock, we need to set things like this -- put stuff in TSS here
+  // and transfer to global memory when we get flow controlled. We
+  // need to work on the message block to get it right!
   TAO_OutputCDR output (repbuf,
                         sizeof repbuf,
                         TAO_ENCAP_BYTE_ORDER,
-                        this->orb_core_->output_cdr_buffer_allocator (),
-                        this->orb_core_->output_cdr_dblock_allocator (),
-                        this->orb_core_->output_cdr_msgblock_allocator (),
+                        this->orb_core_->input_cdr_buffer_allocator (),
+                        this->orb_core_->input_cdr_dblock_allocator (),
+                        this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
                         qd->major_version_,
                         qd->minor_version_,

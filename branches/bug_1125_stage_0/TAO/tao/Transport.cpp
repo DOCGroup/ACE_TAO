@@ -619,16 +619,6 @@ TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
   synch_message.remove_from_list (this->head_,
                                   this->tail_);
 
-  ACE_Message_Block *tmp_mb =
-    ACE_const_cast (ACE_Message_Block *,
-                    mb);
-
-  // Reset the message block allocators to allocate memory from the
-  // global pool.
-  tmp_mb->reset_allocators (this->orb_core_->input_cdr_buffer_allocator (),
-                            this->orb_core_->input_cdr_dblock_allocator (),
-                            this->orb_core_->input_cdr_msgblock_allocator ());
-
   // Clone the node that we have.
   TAO_Queued_Message *msg =
     synch_message.clone (this->orb_core_->transport_message_buffer_allocator ());
