@@ -859,17 +859,18 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
 #else /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-          ofstream* output_stream;
+          ofstream* output_stream = 0;
 
           //
           // note: we are allocating dynamic memory here....but
           // I assume it will persist for the life of the program
           //
 
-          ACE_NEW_RETURN
-            (output_stream,
-             ofstream (),
-             1);
+          ACE_NEW_THROW_EX (output_stream,
+                            ofstream (),
+                            CORBA::NO_MEMORY (TAO_DEFAULT_MINOR_CODE,
+                                              CORBA::COMPLETED_NO));
+          ACE_CHECK_RETURN (1);
 
           output_stream->open (file_name, ios::out | ios::app);
 
@@ -932,23 +933,42 @@ TAO_ORB_Core::init (int &argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
             }
         }
 
+      else if ((current_arg = arg_shifter.get_the_parameter
+                ("-ORBid")))
+        {
+          // The ORBid is actually set in ORB_init(), and then passed
+          // to the TAO_ORB_Core() constructor.  However, in the case
+          // where the ORBid third argument to ORB_init() is not zero,
+          // any "-ORBid" arguments in the argv argument list are
+          // supposed to be ignored, according to the CORBA spec.  As
+          // such, "-ORBid" must be removed from the argument list
+          // since ORB_init() must remove all "-ORB" option
+          // arguments.
+
+          // We obtain a lock on the ORB table when setting the
+          // ORBid.  For this reason we should *not* set the ORBid
+          // here.  CORBA::ORB_init() does all of the proper locking
+          // and setting.
+
+          arg_shifter.consume_arg ();
+        }
+
       ////////////////////////////////////////////////////////////////
-      // catch all the remaining -ORB args                          //
+      // catch any unknown -ORB args                                //
       ////////////////////////////////////////////////////////////////
       else if (arg_shifter.cur_arg_strncasecmp ("-ORB") != -1)
         {
           if (TAO_debug_level > 0)
             {
               current_arg = arg_shifter.get_current (); 
-              ACE_DEBUG ((LM_WARNING,
-                          ASYS_TEXT ("WARNING: Unknown \"-ORB\" option ")
-                          ASYS_TEXT ("<%s>.\n")
-                          ASYS_TEXT ("         Removing it from the ")
-                          ASYS_TEXT ("argument list.\n"),
+              ACE_DEBUG ((LM_ERROR,
+                          ASYS_TEXT ("ERROR: Unknown \"-ORB\" option ")
+                          ASYS_TEXT ("<%s>.\n"),
                           ((current_arg == 0) ? "<NULL>" : current_arg)));
             }
 
-          arg_shifter.consume_arg ();
+          ACE_THROW_RETURN (CORBA::BAD_PARAM (),
+                            -1);
         }
 
       ////////////////////////////////////////////////////////////////
