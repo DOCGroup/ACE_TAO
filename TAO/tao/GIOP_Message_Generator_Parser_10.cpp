@@ -72,12 +72,40 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   // this message, then patched shortly before it's sent).
 
   /***** This has been deprecated in the 2.4 spec ******/
-  //static CORBA::Principal_ptr principal = 0;
-  //msg << principal;
 
-  // This is now introduced in 2.4 spec
+#if defined (TAO_PEER_REQUIRES_PRINCIPAL)
+
+  char username[BUFSIZ];
+  char *result =
+    ACE_OS::cuserid (username,
+                     BUFSIZ);
+
+  if (result != 0)
+    {
+      CORBA::ULong username_size =
+        ACE_static_cast (CORBA::ULong,
+                         ACE_OS::strlen (username));
+
+      CORBA::Octet *buffer =
+        CORBA::OctetSeq::allocbuf (username_size + 1);
+
+      ACE_OS::memcpy (buffer,
+                      username,
+                      username_size + 1);
+
+      req_principal.replace (username_size + 1,
+                             username_size + 1,
+                             buffer,
+                             1);
+    }
+
+#else
+
   CORBA::OctetSeq req_principal (0);
   req_principal.length (0);
+
+#endif /* TAO_PEER_REQUIRES_PRINCIPAL */
+
   msg << req_principal;
 
   return 1;

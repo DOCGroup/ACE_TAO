@@ -1,3 +1,12 @@
+Thu Feb 20 17:14:46 2004  Irfan Pyarali  <irfan@oomworks.com>
+
+	* tao\GIOP_Message_Generator_Parser_10.cpp (write_request_header):
+	  
+	  Added code to add the username as principal in the request
+	  header.  This is required for some older ORBs, such as Orbix3.
+	  To turn on this code, TAO_PEER_REQUIRES_PRINCIPAL must be
+	  defined at compile time.  This fixes bug 1686.
+
 Fri Feb 20 21:24:21 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 	* examples/Simple/time/client_static.dsp:

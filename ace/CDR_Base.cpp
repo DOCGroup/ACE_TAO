@@ -555,6 +555,15 @@ ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
 {
   return this->l != rhs.l || this->h != rhs.h;
 }
+
+ACE_CDR::LongLong &
+ACE_CDR::LongLong::operator= (const ACE_CDR::LongLong &rhs)
+{
+  this->l = rhs.l;
+  this->h = rhs.h;
+
+  return *this;
+}
 #endif /* NONNATIVE_LONGLONG */
 
 #if defined (NONNATIVE_LONGDOUBLE)
@@ -568,6 +577,13 @@ int
 ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
 {
   return ACE_OS::memcmp (this->ld, rhs.ld, 16) != 0;
+}
+
+ACE_CDR::LongDouble &
+ACE_CDR::LongDouble::operator= (const ACE_CDR::LongDouble &rhs)
+{
+  ACE_OS::memcpy (this->ld, rhs.ld, 16);
+  return *this;
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
