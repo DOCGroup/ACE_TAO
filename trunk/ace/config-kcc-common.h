@@ -37,6 +37,10 @@
 # define ACE_HAS_PENTIUM
 #endif /* i386 */
 
+// ****** Need to move this somewhere else
+// #define TAO_YY_BREAK
+
+#define ACE_SIZEOF_LONG_LONG 8
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
@@ -57,6 +61,6 @@
 #define ACE_HAS_EXCEPTIONS 1
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
-//#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER 1
 
 #endif /* ACE_KCC_COMMON_H */
