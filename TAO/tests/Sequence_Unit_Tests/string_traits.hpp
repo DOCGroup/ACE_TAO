@@ -58,18 +58,6 @@ struct string_traits_decorator
     }
     return element;
   }
-
-  inline static void not_released_from_const(
-      char_type * & dst, char_type const * src)
-  {
-    dst = const_cast<char_type*>(src);
-  }
-
-  inline static void not_released_from_managed(
-      char_type * & dst, char_type const * src)
-  {
-    dst = const_cast<char_type*>(src);
-  }
 };
 
 template<class charT, bool dummy>
