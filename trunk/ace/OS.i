@@ -8520,21 +8520,21 @@ ACE_OS::munmap (void *addr, size_t len)
 }
 
 ACE_INLINE int
-ACE_OS::madvise (caddr_t addr, size_t len, int advice)
+ACE_OS::madvise (caddr_t addr, size_t len, int map_advice)
 {
   ACE_OS_TRACE ("ACE_OS::madvise");
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
-  ACE_UNUSED_ARG (advice);
+  ACE_UNUSED_ARG (map_advice);
 
   ACE_NOTSUP_RETURN (-1);
 #elif !defined (ACE_LACKS_MADVISE)
-  ACE_OSCALL_RETURN (::madvise (addr, len, advice), int, -1);
+  ACE_OSCALL_RETURN (::madvise (addr, len, map_advice), int, -1);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
-  ACE_UNUSED_ARG (advice);
+  ACE_UNUSED_ARG (map_advice);
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
 }
