@@ -1,3 +1,10 @@
+Wed Jul 14 10:58:30 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* ace/CDR_Stream.h:
+	* ace/CDR_Stream.cpp:
+	  Clarified the relationship between this implementation and the
+	  original SunSoft version.
+
 Wed Jul 14 10:47:45 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * include/makeinclude/platform_qnx_neutrino.GNU:

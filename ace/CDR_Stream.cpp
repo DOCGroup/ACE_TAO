@@ -1,36 +1,4 @@
-// CDR_Stream.cpp
 // $Id$
-
-// Portions of this file are:
-// Copyright 1994-1995 by Sun Microsystems Inc.
-// All Rights Reserved
-
-// CDR:         Encode/Decode basic machine data types
-//
-// Implementation of OMG "Common Data Representation" (CDR) ... there
-// are one routine each for byte/halfword/word/doubleword put/get,
-// which adjust to establish "natural" alignment (the bulk of the
-// code) and then put or get with byteswapping as needed.
-//
-// The implementation knows that native data formats are conformant
-// with OMG-IDL's (and hence CDR's) size requirements, and relies on
-// the fact that (for example) CORBA's Long is always four bytes long
-// even if the environment's "int" is a different size.
-//
-//      char, octet                       8 bits (1 byte)
-//      short, unsigned short            16 bits (2 bytes)
-//      long, unsigned long, float       32 bits (4 bytes)
-//      double, (unsigned) long long     64 bits (8 bytes)
-//      long double                     128 bits (16 bytes)
-//
-// Moreover, this "knows" that the native 'char' represents ISO
-// Latin/1 characters (an ASCII superset addressing Western European
-// characters) and that "double" and "float" comply with the IEEE
-// standards. (The "long double" may not be a native data type,
-// though.)
-//
-// THREADING NOTE: "CDR" is a data structure which must be protected
-// by external critical sections.
 
 #define ACE_BUILD_DLL
 #include "ace/CDR_Stream.h"
