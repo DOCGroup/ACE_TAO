@@ -61,6 +61,7 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
+
     CORBA::Object_var objref = this->container_->get_objref (this);
     Components::CCMObject_var ccmobjref = 
       Components::CCMObject::_narrow (objref.in ()

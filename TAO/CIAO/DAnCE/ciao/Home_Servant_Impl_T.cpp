@@ -75,20 +75,34 @@ namespace CIAO
     ACE_THROW_SPEC ((CORBA::SystemException,
                      Components::RemoveFailure))
   {
-    COMP_VAR _ciao_comp = COMP::_narrow (comp
-                                         ACE_ENV_ARG_PARAMETER);
+    PortableServer::ObjectId_var oid =
+      this->container_->the_POA ()->reference_to_id (comp
+                                                     ACE_ENV_ARG_PARAMETER);
     ACE_CHECK;
 
-    if (CORBA::is_nil (_ciao_comp.in ()))
+    Components::CCMObject_var ccm_obj_ptr;
+    COMP_SVNT *servant = 0;
+
+    if (objref_map_.unbind (oid.in (), ccm_obj_ptr) == 0)
     {
-      ACE_THROW (CORBA::INTERNAL ());
+      COMP_VAR _ciao_comp = COMP::_narrow (ccm_obj_ptr
+                                           ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK;
+      if (CORBA::is_nil (_ciao_comp.in ()))
+      {
+        ACE_THROW (CORBA::INTERNAL ());
+      }
+      _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
+      ACE_CHECK;
+
+      if (component_map_.unbind (oid.in (), servant) == 0)
+        {
+          PortableServer::ServantBase_var safe (servant);
+          servant->_ciao_passivate (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK;
+        }
     }
 
-    _ciao_comp->remove (ACE_ENV_SINGLE_ARG_PARAMETER);
-    ACE_CHECK;
-
-    this->_ciao_passivate_component (_ciao_comp.in ()
-                                     ACE_ENV_ARG_PARAMETER);
   }
 
   // Operations for keyless home interface.
@@ -214,6 +228,14 @@ namespace CIAO
     COMP_VAR ho = COMP::_narrow (objref.in ()
                                  ACE_ENV_ARG_PARAMETER);
     ACE_CHECK_RETURN (COMP::_nil ());
+
+    Components::CCMObject_var ccmobjref =
+      Components::CCMObject::_narrow (objref.in ()
+                                      ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (Components::CCMObject::_nil ());
+
+    this->objref_map_.bind (oid.in (), 
+      Components::CCMObject::_duplicate (ccmobjref.in ()));
 
     if (this->component_map_.bind (oid.in (), svt) == 0)
       {
