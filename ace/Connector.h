@@ -371,11 +371,15 @@ protected:
   // <SVC_HANDLER> as an "active object" via multi-threading or
   // multi-processing).
 
-  // = Define some useful typedefs.
-  typedef ACE_Creation_Strategy<SVC_HANDLER> CREATION_STRATEGY;
-  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> CONNECT_STRATEGY;
-  typedef ACE_Concurrency_Strategy<SVC_HANDLER> CONCURRENCY_STRATEGY;
-  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2> SUPER;
+  // = Define some useful typedefs traits.
+  typedef ACE_Creation_Strategy<SVC_HANDLER> 
+          CREATION_STRATEGY;
+  typedef ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+          CONNECT_STRATEGY;
+  typedef ACE_Concurrency_Strategy<SVC_HANDLER> 
+          CONCURRENCY_STRATEGY;
+  typedef ACE_Connector <SVC_HANDLER, ACE_PEER_CONNECTOR_2> 
+          SUPER;
 
   // = Strategy objects.
 

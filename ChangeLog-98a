@@ -1,4 +1,8 @@
-Fri Dec  5 13:03:57 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+Fri Dec  5 16:58:29 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/Addr.h: Added a const ACE_Addr & instead of const ACE_Addr.
+  	  This will avoid an extra copy.  Thanks to Irfan for noticing
+ 	  this.
 
 	* examples/Reactor/Dgram/CODgram.cpp: Also updated the CODgram
  	  test to be just like the Dgram test.

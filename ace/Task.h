@@ -111,15 +111,15 @@ public:
   // THR_SCHED_RR, THR_SCHED_DEFAULT
   // = END<INDENT>
   //
-  // By default, or if <{priority}> is set to ACE_DEFAULT_THREAD_PRIORITY,
-  // an "appropriate"
-  // priority value for the given scheduling policy (specified in
-  // <{flags}>, e.g., <THR_SCHED_DEFAULT>) is used.  This value is
-  // calculated dynamically, and is the median value between the
-  // minimum and maximum priority values for the given policy.  If an
-  // explicit value is given, it is used.  Note that actual priority
-  // values are EXTREMEMLY implementation-dependent, and are probably
-  // best avoided.
+  // By default, or if <{priority}> is set to
+  // ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
+  // the given scheduling policy (specified in <{flags}>, e.g.,
+  // <THR_SCHED_DEFAULT>) is used.  This value is calculated
+  // dynamically, and is the median value between the minimum and
+  // maximum priority values for the given policy.  If an explicit
+  // value is given, it is used.  Note that actual priority values are
+  // EXTREMEMLY implementation-dependent, and are probably best
+  // avoided.
   //
   // If <thread_handles> != 0 it is assumed to be an array of <n>
   // thread_handles that will be assigned the values of the thread
@@ -161,8 +161,8 @@ public:
   // Atomically decrement the thread count by 1.  This should only be
   // called by the <ACE_Task_Exit> class destructor.
 
-  // Routine that runs the service routine as a daemon thread.
   static void *svc_run (void *);
+  // Routine that runs the service routine as a daemon thread.
 
   static void cleanup (void *object, void *params);
   // Cleanup hook that is called when a thread exits to gracefully
