@@ -1,3 +1,10 @@
+Fri Dec  1 10:56:42 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* include/makeinclude/ace_flags.bor:
+
+	  Added definitions necessary for the new smart proxies
+	  library and its Borland makefile.
+
 Fri Dec 01 09:21:31 2000  Steve Huston  <shuston@riverace.com>
 
         * ace/Reactor.h: Clarified some comments.
