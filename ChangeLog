@@ -1,3 +1,9 @@
+Tue May 18 08:14:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Barrier.{h,cpp}:
+          Made method signature in implementation same as declaration and fixed
+          doxygen documentation
+
 Tue May 18 08:00:22 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * Kokyu/tests/DSRT_MIF/MIF.cpp:
