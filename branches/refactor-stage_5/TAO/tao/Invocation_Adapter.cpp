@@ -197,11 +197,12 @@ namespace TAO
       this->target_->_stubobj ();
 
     if (stub == 0)
-      ACE_THROW (CORBA::INTERNAL (
-                   CORBA::SystemException::_tao_minor_code (
-                     TAO_DEFAULT_MINOR_CODE,
-                     EINVAL),
-                   CORBA::COMPLETED_NO));
+      ACE_THROW_RETURN (CORBA::INTERNAL (
+                          CORBA::SystemException::_tao_minor_code (
+                            TAO_DEFAULT_MINOR_CODE,
+                            EINVAL),
+                          CORBA::COMPLETED_NO),
+                        0);
 
     return stub;
   }
@@ -218,11 +219,12 @@ namespace TAO
         && this->mode_ == TAO_ASYNCHRONOUS_CALLBACK_INVOCATION)
       {
 
-        ACE_THROW (CORBA::INTERNAL (
-               CORBA::SystemException::_tao_minor_code (
-                 TAO_DEFAULT_MINOR_CODE,
-                 EINVAL),
-               CORBA::COMPLETED_NO));
+        ACE_THROW_RETURN (CORBA::INTERNAL (
+            CORBA::SystemException::_tao_minor_code (
+                TAO_DEFAULT_MINOR_CODE,
+                EINVAL),
+            CORBA::COMPLETED_NO),
+                          TAO_INVOKE_FAILURE);
       }
 
     ACE_Time_Value tmp_wait_time;
