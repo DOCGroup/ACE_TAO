@@ -654,18 +654,25 @@ ACE_OS::strcasecmp (const char *s, const char *t)
   // equal.
   int result = 0;
 
-  while (*s != '\0' && *t != '\0') 
+  if (strlen(s) != strlen(t))
     {
-      if (tolower (*s) != tolower (*t)) 
-        {
-          result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
-          break;
-        }
-
-      ++s; ++t;
+      result = 1;
     }
+   else
+     {
+       while (*s != '\0' && *t != '\0') 
+         {
+           if (tolower (*s) != tolower (*t)) 
+             {
+               result = ((tolower (*s) < tolower (*t)) ? -1 : 1);
+               break;
+             }
 
-  return result; // == 0 for match, else 1
+           ++s; ++t;
+         }
+     }
+ 
+   return result; // == 0 for match, else 1
 #else
   return ::strcasecmp (s, t);
 #endif /* ACE_LACKS_STRCASECMP */
