@@ -201,7 +201,7 @@ private:
  * * <dequeue_head> *requires* that the ACE_Message_Block
  * pointer argument point to an ACE_Message_Block that was
  * allocated by the caller.  It must be big enough to support
- * the received message, without using continutation.  The
+ * the received message, without using continuation. The
  * pointer argument is not modified.
  * * Message priority.  MSG_Q_FIFO is hard-coded.
  * * enqueue method timeouts.

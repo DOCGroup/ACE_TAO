@@ -1,3 +1,22 @@
+Wed Apr 17 12:27:23 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_man.doxygen:
+          Removed ACE_COMPILE_TIMEPROBES as PREDEFINED because it should be
+          defined in Config-doxygen.h
+
+        * ace/Config-doxygen.h
+          Added ACE_COMPILE_TIMEPROBES as define to generate timeprobe
+          documentation. This config file is automatically included when doing
+          a doxygen generation.
+
+        * ace/Intrusive_List.h:
+        * ace/Synch.h:
+          Doxygen-ized some of the comments
+
+        * ace/Message_Queue.h:
+          Fixed typo
+
 Wed Apr 17 07:28:12 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/DLL/Newsweek.cpp:

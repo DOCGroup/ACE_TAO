@@ -199,23 +199,23 @@ public:
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
    * -DACE_HAS_PTHREADS, rather than -DACE_HAS_STHREADS or
-   * -DACE_HAS_POSIX_SEM. */  
+   * -DACE_HAS_POSIX_SEM. */
   int acquire (ACE_Time_Value &tv);
 
   /**
    * If <tv> == 0 then call <acquire()> directly.  Otherwise, Block
-   * the thread until the semaphore count becomes greater than 0 
+   * the thread until the semaphore count becomes greater than 0
    * (at which point it is decremented) or until <tv> times out (in
    * which case -1 is returned and <errno> == <ETIME>).  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
    * The value of <*tv> is updated upon return to show the actual
-   * (absolute) acquisition time. 
+   * (absolute) acquisition time.
    *
    * NOTE: Solaris threads do not support timed semaphores.
    * Therefore, if you're running on Solaris you might want to
    * consider using the ACE POSIX pthreads implementation instead,
    * which can be enabled by compiling ACE with
-   * -DACE_HAS_PTHREADS, rather than -DACE_HAS_STHREADS or 
+   * -DACE_HAS_PTHREADS, rather than -DACE_HAS_STHREADS or
    * -DACE_HAS_POSIX_SEM.  */
   int acquire (ACE_Time_Value *tv);
 
@@ -498,8 +498,8 @@ public:
   /**
    * Block the thread until the mutex is acquired or <tv> times out,
    * in which case -1 is returned and <errno> == <ETIME>.  Note that
-   * <tv> is assumed  to be in "absolute" rather than "relative" time.  
-   * The value of <tv> is updated upon return to show the actual 
+   * <tv> is assumed  to be in "absolute" rather than "relative" time.
+   * The value of <tv> is updated upon return to show the actual
    * (absolute) acquisition time.
    */
   int acquire (ACE_Time_Value &tv);
@@ -872,9 +872,9 @@ public:
   int wait (void);
 
   /// Same as wait() above, but this one can be timed
-  /// <abstime> is absolute time-of-day if if <use_absolute_time> 
+  /// <abstime> is absolute time-of-day if if <use_absolute_time>
   /// is non-0, else it is relative time.
-  int wait (const ACE_Time_Value *abstime, 
+  int wait (const ACE_Time_Value *abstime,
             int use_absolute_time = 1);
 
   /**
@@ -932,7 +932,7 @@ private:
  * Specialization of Event mechanism which wakes up all waiting
  * thread on <signal>.  All platforms support process-scope locking
  * support.  However, only Win32 platforms support global naming and
- * system-scope locking support. 
+ * system-scope locking support.
  */
 class ACE_Export ACE_Manual_Event : public ACE_Event
 {
@@ -969,7 +969,7 @@ public:
  * Specialization of Event mechanism which wakes up one waiting
  * thread on <signal>.  All platforms support process-scope locking
  * support.  However, only Win32 platforms support global naming and
- * system-scope locking support. 
+ * system-scope locking support.
  */
 class ACE_Export ACE_Auto_Event : public ACE_Event
 {
@@ -1065,7 +1065,7 @@ public:
    * which case -1 is returned with <errno> == <ETIME>.  Note that
    * <*tv> is assumed to be in "absolute" rather than "relative" time.
    * The value of <*tv> is updated upon return to show the actual
-   * (absolute) acquisition time.  
+   * (absolute) acquisition time.
    */
   int acquire (ACE_Time_Value *tv);
 
@@ -1520,17 +1520,17 @@ struct ACE_Export ACE_Sub_Barrier
 
   ~ACE_Sub_Barrier (void);
 
+  /// True if this generation of the barrier is done.
   ACE_Condition_Thread_Mutex barrier_finished_;
-  // True if this generation of the barrier is done.
 
+  /// Number of threads that are still running.
   int running_threads_;
-  // Number of threads that are still running.
 
+  /// Dump the state of an object.
   void dump (void) const;
-  // Dump the state of an object.
 
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
 };
 
 /**
