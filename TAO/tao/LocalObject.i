@@ -33,7 +33,7 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj
             CORBA::LocalObject_ptr,
             obj->_tao_QueryInterface (
                 ACE_reinterpret_cast (
-                    ptr_arith_t,
+                    ptrdiff_t,
                     &CORBA::LocalObject::_narrow
                   )
               )
@@ -55,7 +55,7 @@ CORBA::LocalObject::_unchecked_narrow (CORBA::Object_ptr obj
              CORBA::LocalObject_ptr,
              obj->_tao_QueryInterface (
                  ACE_reinterpret_cast (
-                     ptr_arith_t,
+                     ptrdiff_t,
                      &CORBA::LocalObject::_narrow
                    )
                )

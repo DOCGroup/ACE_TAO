@@ -217,7 +217,7 @@ namespace CORBA
      * re-alignment.
      * It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
      */
-    ptr_arith_t _tao_target_alignment (void);
+    ptrdiff_t _tao_target_alignment (void);
 
     /**
      * If this list is used by a DII request, this will tell us if

@@ -375,7 +375,7 @@ TAO_ClientRequestInfo_i::request_id (ACE_ENV_SINGLE_ARG_DECL)
   // 32 bit address
   if (sizeof (this) == 4)
     id = ACE_static_cast (CORBA::ULong,
-                          ACE_reinterpret_cast (ptr_arith_t,
+                          ACE_reinterpret_cast (ptrdiff_t,
                                                 this->invocation_));
 
   // 64 bit address -- bits 8 through 39  (see notes above!)
@@ -386,13 +386,13 @@ TAO_ClientRequestInfo_i::request_id (ACE_ENV_SINGLE_ARG_DECL)
            && sizeof (*(this->invocation_)) > 256 /* 2 << 8 */)
     id =
       (ACE_static_cast (CORBA::ULong,
-       ACE_reinterpret_cast (ptr_arith_t,
+       ACE_reinterpret_cast (ptrdiff_t,
                              this->invocation_)) >> 8) & 0xFFFFFFFFu;
 
   // 64 bit address -- lower 32 bits
   else if (sizeof (this) == 8)
     id = ACE_static_cast (CORBA::ULong,
-                          ACE_reinterpret_cast (ptr_arith_t,
+                          ACE_reinterpret_cast (ptrdiff_t,
                                                 this->invocation_)) &
                          0xFFFFFFFFu;
 

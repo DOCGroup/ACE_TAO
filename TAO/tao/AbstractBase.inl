@@ -55,7 +55,7 @@ CORBA::AbstractBase::_tao_obv_repository_id (void) const
 
 ACE_INLINE
 void *
-CORBA::AbstractBase::_tao_obv_narrow (ptr_arith_t /* type_id */)
+CORBA::AbstractBase::_tao_obv_narrow (ptrdiff_t /* type_id */)
 {
   return this;
 }

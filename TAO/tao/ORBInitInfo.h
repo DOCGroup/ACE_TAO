@@ -227,7 +227,7 @@ public:
       return (TAO_ORBInitInfo_ptr)0;
     }
 
-  virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void *_tao_QueryInterface (ptrdiff_t type);
 
   virtual const char* _interface_repository_id (void) const;
   //@}

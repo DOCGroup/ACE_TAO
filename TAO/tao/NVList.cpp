@@ -431,7 +431,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming,
     }
 }
 
-ptr_arith_t
+ptrdiff_t
 CORBA::NVList::_tao_target_alignment (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -445,7 +445,7 @@ CORBA::NVList::_tao_target_alignment (void)
     }
 
   const char* rd = this->incoming_->start ()->rd_ptr ();
-  return ptr_arith_t(rd) % ACE_CDR::MAX_ALIGNMENT;
+  return ptrdiff_t(rd) % ACE_CDR::MAX_ALIGNMENT;
 }
 
 void

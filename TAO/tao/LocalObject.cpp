@@ -45,7 +45,7 @@ CORBA::LocalObject::_hash (CORBA::ULong maximum
   // 64-bit platforms.
 
   CORBA::ULong hash = ACE_static_cast (CORBA::ULong,
-                        ACE_reinterpret_cast (ptr_arith_t, this));
+                        ACE_reinterpret_cast (ptrdiff_t, this));
 
   return hash % maximum;
 }
@@ -79,14 +79,14 @@ CORBA::LocalObject::_key (ACE_ENV_SINGLE_ARG_DECL)
 
 #if 0
 void *
-CORBA::LocalObject::_tao_QueryInterface (ptr_arith_t type)
+CORBA::LocalObject::_tao_QueryInterface (ptrdiff_t type)
 {
   void *retv = 0;
 
-  if (type == ACE_reinterpret_cast (ptr_arith_t,
+  if (type == ACE_reinterpret_cast (ptrdiff_t,
                                     &CORBA::LocalObject::_narrow))
     retv = ACE_reinterpret_cast (void *, this);
-  else if (type == ACE_reinterpret_cast (ptr_arith_t,
+  else if (type == ACE_reinterpret_cast (ptrdiff_t,
                                          &CORBA::Object::_narrow))
     retv = ACE_reinterpret_cast (void *,
                                  ACE_static_cast (CORBA::Object_ptr,
