@@ -1,3 +1,16 @@
+Mon Nov 13 02:13:54 2000  Darrell Brunsch <brunsch@uci.edu>
+
+        * tao/Strategies/TAO_Strategies.dsp:
+
+          An ACE_HAS_STRATEGIES_DLL was being defined for the cpp 
+          files, which was preventing anything from being exported.
+          Removed it and things look happy on Win32 Release now.
+
+        * tao/Strategies/TAO_Strategies_Static.dsp:
+
+          Changed the configurations to Win32 Static Debug and
+          Win32 Static Release.
+
 Mon Nov 13 08:46:40 2000  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/ImplRepo.bor:
