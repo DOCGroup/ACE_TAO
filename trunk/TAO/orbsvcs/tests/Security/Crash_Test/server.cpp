@@ -86,8 +86,7 @@ main (int argc, char *argv[])
       ACE_TRY_CHECK;
 
       PortableServer::ObjectId_var oid =
-        PortableServer::string_to_ObjectId ("object1"
-                                            ACE_ENV_ARG_PARAMETER);
+        PortableServer::string_to_ObjectId ("object1");
       ACE_TRY_CHECK;
 
       persistent_poa->activate_object_with_id (oid.in (),
