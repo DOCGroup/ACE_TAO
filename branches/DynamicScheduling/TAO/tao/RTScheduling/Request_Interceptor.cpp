@@ -1,9 +1,10 @@
 //$Id$
 
 #include "Request_Interceptor.h"
+#include "Current.h"
 
 Client_Interceptor::Client_Interceptor (RTScheduling::Current_ptr current)
-  : current_ (RTScheduling::Current::_duplicate (current)),
+  : current_ (RTScheduling::Current::_duplicate (current))
 {
 } 
 

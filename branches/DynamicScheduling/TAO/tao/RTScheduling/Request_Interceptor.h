@@ -3,9 +3,15 @@
 #ifndef REQUEST_INTERCEPTOR_H
 #define REQUEST_INTERCEPTOR_H
 
-class Client_Interceptor:
-public TAO_RTScheduler_Export ClientRequestInterceptor
+#include "rtscheduler_export.h"
+#include "tao/PortableInterceptorC.h"
+#include "RTSchedulerC.h"
+
+class TAO_RTScheduler_Export Client_Interceptor:
+public  PortableInterceptor::ClientRequestInterceptor
 {
+public:
+  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri
 			     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException, 
@@ -28,10 +34,12 @@ public TAO_RTScheduler_Export ClientRequestInterceptor
 			      ACE_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException, 
 		     PortableInterceptor::ForwardRequest));
+private:
+	RTScheduling::Current_var current_;
 };
 
 class TAO_RTScheduler_Export Server_Interceptor:
-public ServerRequestInterceptor
+public PortableInterceptor::ServerRequestInterceptor
 {
   virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri
 						 ACE_ENV_ARG_DECL_WITH_DEFAULTS)
