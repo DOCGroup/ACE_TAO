@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/Containers.h"
+#include "ace/Log_Msg.h"
 
 int
 main (int, ACE_TCHAR *[])

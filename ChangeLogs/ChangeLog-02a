@@ -1,3 +1,10 @@
+Sat Dec 15 09:52:14 2001  Carlos O'Ryan  <coryan@uci.edu>
+
+	* examples/Misc/test_set.cpp:
+	  Add missing #include for Tru64/DU/CXX, probably implicitly
+	  included on other platforms due to the
+	  ACE_TEMPLATES_REQUIRE_SOURCE. 
+
 Sat Dec 15 09:30:31 2001  Douglas C. Schmidt  <schmidt@macarena.cs.wustl.edu>
 
 	* tests/Message_Queue_Test_Ex.cpp: Improved the example to use
