@@ -1,3 +1,8 @@
+Thu Apr  1 21:41:01 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* $TAO_ROOT/examples/POA/FindPOA/FindPOA.cpp
+	Made some cosmetic changes
+
 Thu Apr  1 13:47:56 1999  Vishal Kachroo  <vishal@merengue.cs.wustl.edu>
 
 	* tao/Connect.cpp (handle_message): Changed a c-style cast to 
