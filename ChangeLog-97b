@@ -1,3 +1,110 @@
+Sun Oct 26 00:06:17 1997    <irfan@TWOSTEP>
+
+	* ace/Strategies_T.cpp (~ACE_Cached_Connect_Strategy): Must set
+ 	  recycler to 0 before calling close, else the svc_handler will
+ 	  try to purge itself from the cache.
+
+	* tests/Conn_Test.cpp (client): Updated to use the new connection
+ 	  recycling scheme.
+
+	* ace/Hash_Map_Manager:
+
+	- ACE_Hash_Map_Reverse_Iterator: Added reverse iterator.
+
+	- ACE_Hash_Map_Entry: Added a prev pointer to the entry.  Thus
+ 	  changing the bucket chains into doubly linked lists.  Because of
+ 	  this, it was necessary to change the way the list was being
+ 	  managed.  Sentinels were created for each bucket.  
+	  
+	  This also changed (a) the way the iterators worked, (b) made it
+ 	  easy to delete entries when you have one (this scheme allows the
+ 	  entries to be easily used as ACTs).
+
+	- New methods (bind, trybind, rebind, find): These methods allow
+ 	  the users to get access to ACE_Hash_Map_Entry of the node in
+ 	  question.  This allows the user to treat the entry as an ACT and
+ 	  get access to the key (in case the user is interested in
+ 	  changing the key).  These methods are only valid since the
+ 	  implementation of Hash_Map_Manager uses linked lists where nodes
+ 	  are never copied.  These methods cannot be added to Map_Manager
+ 	  since it uses an array of nodes, where the your data may get
+ 	  copied to another node when the size of the Map_Manager changes.
+	
+	* ace/Strategies (ACE_Connection_Recycling_Strategy): Added a new
+ 	  abstract strategy for recycling connections.
+
+	* ace/Strategies_T: 
+
+ 	- ACE_Cached_Connect_Strategy: ACE_Cached_Connect_Strategy now
+ 	  implements the ACE_Connection_Recycling_Strategy interface.
+  	  This allows Svc_Handlers to cache themselves with
+ 	  ACE_Cached_Connect_Strategy when they become idle.  It also
+ 	  allows them to purge themselves from the connection cache when
+ 	  the Svc_Handlers close down.
+
+	  Also added ~ACE_Cached_Connect_Strategy that will cleanup up the
+	  connection cache.
+
+	- ACE_Hash_Addr: ACE_Hash_Addr is the key for the hash map used by
+ 	  ACE_Cached_Connect_Strategy.  Previously it kept the Svc_Handler
+ 	  pointer in the key in order to find out if it was busy or not.
+  	  Now the <in_use> flag has been moved from the Svc_Handler into
+ 	  the key.  The also saves the Hash_Addr from requiring
+ 	  Svc_Handler as a template parameter.
+	  
+	  Also updated ACE_Hash_Addr::operator== such that if the
+ 	  Svc_Handler is busy, it does not bother to check compare the
+ 	  addresses but simply returns false.
+	
+	* ace/Svc_Handler.cpp: Added the ability for a Svc_Handler to
+ 	  recycle itself.  idle() can be called when the Svc_Handler is
+ 	  done serving a particular connection and can how be recycled.
+  	  The Svc_Handler now also has a pointer to a recycler that is
+ 	  responsible for managing the connections.  The recycler is
+ 	  usually a Cached_Connector.
+
+	* ace/Filecache.cpp (ACE_Hash_Map_Entry): Added a new constructor
+ 	  specialization as the ACE_Hash_Map_Entry now has two
+ 	  constructors.
+
+	* tests/Hash_Map_Manager_Test.cpp (ACE_Hash_Map_Entry): Added a
+ 	  new constructor specialization as the ACE_Hash_Map_Entry now has
+ 	  two constructors.
+	
+	* tests/Reactor_Exceptions_Test.cpp (class My_Reactor): Added the
+ 	  other handle_events method.  Thanks to Stephen Coy
+ 	  (coys@mail.ns.wsa.com.au) for pointing this out.
+
+	* ace/Strategies_T.cpp (hash_i): This default routine is no good.
+  	  It uses a complicated scheme that calculate a hash value.
+  	  Unfortunately, there is no guarantee that this hash algorithm
+ 	  will produce the same hash value for the same address.
+  	  Therefore, it is better just to return a consistent hash value
+ 	  rather than an erroneous one.  I have choosen 0 of the return
+ 	  value.  Even though this will cause all the entries to be hashed
+ 	  to the 0 bucket, atleast they will be found.  Users should
+ 	  override this to provide better hashing.
+
+	  (compare_i): Memcmp is not the correct default action.
+  	  !(b1==b2) is the correct comparison, though this will assume
+ 	  that the addresses will have a comparison operation.
+
+	* ace/Mem_Map.cpp (close and close_handle): close() is doing too
+ 	  much.  It is closing the handle and unmapping the file.
+  	  Changing this method might effect code that depends on this
+ 	  behavior.  Therefore, we create a seperated method
+ 	  close_handle() that only closes down the handle, and does not
+ 	  unmap the file.  Thanks to Jeff Richards (jrichard@OhioEE.com)
+ 	  for pointing this out.
+
+	* ace/Strategies_T.cpp (connect_svc_handler): If connect() failed
+ 	  because of timeouts, we have to reject the connection entirely.
+  	  This is necessary since currently there is no way for the
+ 	  non-blocking connects to complete and for the <Connector> to
+ 	  notify the cache of the completion of connect().  Therefore if
+ 	  errno is EWOULDBLOCK, it is changed to ENOTSUP and -1 is
+ 	  returned.
+
 Sat Oct 25 17:41:57 1997  Sergio Flores  <sergio@macarena.cs.wustl.edu>
 
         * examples/Timer_Queue/Thread_Timer_Queue_Test.cpp: 
