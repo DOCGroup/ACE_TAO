@@ -12,6 +12,11 @@
 
 debug = 1
 optimize = 1
+threads = 1
+
+ifeq ($(threads),0)
+  CFLAGS += -DACE_MT_SAFE=0
+endif # threads
 
 ifeq ($(shell /bin/uname -i),i86pc)
   #### gcc on Solaris86 doesn't use -g
