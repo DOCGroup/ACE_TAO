@@ -50,6 +50,8 @@ TAO/tests/LongUpcalls/run_test.pl: MINIMUM
 TAO/examples/Buffered_Oneways/run_test.pl: MINIMUM
 # REQUIRES AMI 'TAO/examples/Buffered_AMI/run_test.pl: MINIMUM
 TAO/tests/InterOp-Naming/run_test.pl: MINIMUM
+TAO/tests/Multiple/run_test.pl
+TAO/tests/Exposed_Policies/run_test.pl
 
 
 TAO/examples/POA/Adapter_Activator/run_test.pl: MINIMUM
