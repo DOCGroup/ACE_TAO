@@ -1,3 +1,10 @@
+Thu Aug 17 05:48:51 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace/config-win32-common.h: Wrapped the redefinition of FD_SETSIZE
+	  to #undef if it's already set to avoid a compiler/pre-processor
+ 	  warning.  Thanks to Johnny Willemsen <Johnny.Willemsen@meco.nl>
+ 	  for contributing these.
+
 Wed Aug 16 06:03:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Select_Reactor_Base.h: Make the notify_queue_lock_ in
