@@ -7,6 +7,12 @@
 */
 #include "mpool.h"
 
+#if defined(ACE_LACKS_SYSV_SHMEM)
+int main (int, char *[])
+{
+    ACE_ERROR_RETURN ((LM_ERROR, "System V Semaphores not available on this platform.\n"),100);
+}
+#else // ACE_LACKS_SYSV_SHMEM
 int main (int, char *[])
 {
         /*
@@ -145,3 +151,5 @@ template class ACE_Read_Guard<ACE_SV_Semaphore_Simple>;
 #pragma instantiate ACE_Write_Guard<ACE_SV_Semaphore_Simple>
 #pragma instantiate ACE_Read_Guard<ACE_SV_Semaphore_Simple>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#endif // ACE_LACKS_SYSV_SHMEM

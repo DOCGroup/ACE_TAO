@@ -3,6 +3,12 @@
 
 #include "shmem.h"
 
+#if defined(ACE_LACKS_SYSV_SHMEM)
+int main (int, char *[])
+{
+	ACE_ERROR_RETURN ((LM_ERROR, "System V Shared Memory not available on this platform\n"),100);
+}
+#else // ACE_LACKS_SYSV_SHMEM
 int main (int, char *[])
 {
     ACE_Shared_Memory_SV shm_client (SHM_KEY, sizeof(SharedData));
@@ -31,3 +37,4 @@ int main (int, char *[])
     return 0;
 }
 
+#endif // ACE_LACKS_SYSV_SHMEM

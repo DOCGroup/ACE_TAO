@@ -92,5 +92,5 @@ int main (int argc, char *argv[])
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Application exiting\n"));
 
-  exit (0);
+  return (0);
 }

@@ -3,6 +3,7 @@
 
 #include "shmem.h"
 
+#if ! defined(ACE_LACKS_SYSV_SHMEM)
 /*
   Set the available_ flag to zero & optionally initialize the buf_
   area.
@@ -45,3 +46,4 @@ void SharedData::available(int _available)
 {
     available_ = _available;
 }
+#endif // ACE_LACKS_SYSV_SHMEM
