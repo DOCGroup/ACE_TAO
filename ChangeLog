@@ -1,3 +1,21 @@
+Mon Jul 28 16:12:15 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+        * tao/Exception.h
+        * tao/Exception.cpp
+
+          Modify these two files in accordance with the new OMG CORBA
+          C++ Mapping version 1.1.
+
+          However, due to the problem of MS VC++ 6.0 compiler, not all
+          specification for Exception type has been fulfilled. Some
+          constructors, copy constructors and assignment operators which
+          should be put into the "protected" section in class declaration
+          has been remained in the "public" section. These changes will
+          be made later when we full migrate to MS VC++ 7.0 or later
+          version.
+
+          See the "NOTE" section in the Exception.h file for details.
+
 Mon Jul 28 15:06:32 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * ace/WFMO_Reactor.i:
