@@ -46,21 +46,15 @@ namespace CIAO
         {
           CORBA::ULong tmp = 0;
 
-#if 0
-          ACE_CString cstr = *ab;
-
-
           // @@ MAJO: What should be do
           bool r =
-            Singleton_IDREF_Map::instance ()->find_ref (cstr,
-                                                        tmp);
+            Singleton_IDREF_Map::instance ()->find_ref (
+              ab->id ().c_str (),
+              tmp);
 
           if (!r)
             // @@MAJO: What should we do if find_ref fails?
             continue;
-#endif /*if 0*/
-
-
 
           CORBA::ULong len =
             toconfig.artifactRef.length ();

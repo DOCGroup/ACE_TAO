@@ -12,7 +12,8 @@
 #define CIAO_CONFIG_HANDLERS_ADD_Handler_H
 #include /**/ "ace/pre.h"
 
-#include "Config_Handlers_Export.h"
+#include "Config_Handlers/Config_Handlers_Export.h"
+#include "tao/Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,7 +49,8 @@ namespace CIAO
     public:
       static void artifact_deployment_descr (
           const ArtifactDeploymentDescription& desc,
-          ::Deployment::ArtifactDeploymentDescription &dest);
+          ::Deployment::ArtifactDeploymentDescription &dest,
+          CORBA::ULong l = 0);
     };
   }
 }

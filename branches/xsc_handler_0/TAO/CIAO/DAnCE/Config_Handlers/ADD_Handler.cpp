@@ -5,6 +5,7 @@
 #include "Property_Handler.h"
 #include "Req_Handler.h"
 #include "RDD_Handler.h"
+#include "Singleton_IDREF_Map.h"
 
 ACE_RCSID (DAnCE,
            ADD_Handler,
@@ -17,7 +18,8 @@ namespace CIAO
     void
     ADD_Handler::artifact_deployment_descr (
         const ArtifactDeploymentDescription &src,
-        Deployment::ArtifactDeploymentDescription &dest)
+        Deployment::ArtifactDeploymentDescription &dest,
+        CORBA::ULong pos)
     {
       dest.name =
         CORBA::string_dup (src.name ().c_str ());
@@ -75,13 +77,21 @@ namespace CIAO
                                           dest.execParameter[len]);
         }
 
-#if 0
-      // @@ MAJO: Don't know how to handle this.
+
       if (src.id_p ())
         {
+          ACE_CString cstr (src.id ().c_str ());
 
+          bool retval =
+            Singleton_IDREF_Map::instance ()->bind_ref (cstr,
+                                                        pos);
+          if (!retval)
+          {
+            // @@ MAJO: Don't know how to handle this. Throw an exception?
+          }
         }
 
+#if 0
       // @@ MAJO: Don't know how to handle this.
       if (src.deployRequirement_p ())
         {
