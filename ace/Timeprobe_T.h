@@ -54,6 +54,14 @@ public:
     // Default size of the slots in Timeprobe
   };
 
+  typedef ACE_Timeprobe<ACE_LOCK>
+          SELF;
+  // Self
+
+  typedef ACE_Unbounded_Set<ACE_Event_Descriptions>
+          EVENT_DESCRIPTIONS;
+  // We can hold multiple event description tables.
+
   ACE_Timeprobe (u_long size = ACE_DEFAULT_TABLE_SIZE);
   // Create Timeprobes with <size> slots
 
@@ -82,14 +90,36 @@ public:
   ACE_Timeprobe (const ACE_Timeprobe<ACE_LOCK> &);
   // Not implemented (stupid MSVC won't let it be protected).
 
-protected:
-  typedef ACE_Timeprobe<ACE_LOCK>
-          SELF;
-  // Self
+  // = (Somewhat private) Accessors
 
-  typedef ACE_Unbounded_Set<ACE_Event_Descriptions>
-          EVENT_DESCRIPTIONS;
-  // We can hold multiple event description tables.
+  ACE_Unbounded_Set<ACE_Event_Descriptions> &event_descriptions (void);
+  // Event Descriptions
+
+  ACE_Unbounded_Set<ACE_Event_Descriptions> &sorted_event_descriptions (void);
+  // Sorted Event Descriptions.
+
+  u_int *current_slot_vme_address (void);
+  // VME slot address.
+
+  const char *find_description_i (u_long i);
+  // Find description of event <i>
+
+  void sort_event_descriptions_i (void);
+  // Sort event descriptions
+
+  ACE_timeprobe_t *timeprobes (void);
+  // Time probe slots
+
+  ACE_LOCK &lock (void);
+  // Synchronization variable.
+
+  u_long max_size (void);
+  // Max size of timestamp table
+
+  u_long current_size (void);
+  // Current size of timestamp table
+
+protected:
 
   EVENT_DESCRIPTIONS event_descriptions_;
   // Event Descriptions
@@ -100,12 +130,6 @@ protected:
   u_int *current_slot_vme_address_;
   // Added sections below here to make compatible with the VMETRO
   // board test.
-
-  const char *find_description_i (u_long i);
-  // Find description of event <i>
-
-  void sort_event_descriptions_i (void);
-  // Sort event descriptions
 
   ACE_timeprobe_t *timeprobes_;
   // Time probe slots
