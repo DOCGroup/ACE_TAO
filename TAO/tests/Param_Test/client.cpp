@@ -221,8 +221,6 @@ Param_Test_Client<T>::run_dii_test (void)
   // print statistics
   this->results_.print_stats (opname);
   return this->results_.error_count ()? -1:0;
-
-  return 0;
 }
 
 
