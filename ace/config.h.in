@@ -32,10 +32,6 @@
 /* Define if you have <alloca.h> and it should be used (not on Ultrix).  */
 #undef HAVE_ALLOCA_H
 
-/* Define if system calls automatically restart after interruption
-   by a signal.  */
-#undef HAVE_RESTARTABLE_SYSCALLS
-
 /* Define if you have the strftime function.  */
 #undef HAVE_STRFTIME
 
@@ -225,6 +221,9 @@
 #undef SCO
 #undef _SVID3
 
+/* SunOS / Solaris specific configuration parameters */
+#undef _RWSTD_NO_EXCEPTIONS
+
 /* UnixWare specific configuration parameters */
 #undef UNIXWARE
 #undef UNIXWARE_2_0
@@ -324,6 +323,10 @@
    value of this macro is the enum definition, e.g., enum __rusage_who, for
    Linux glibc 2.0. */
 #undef ACE_HAS_RUSAGE_WHO_ENUM
+
+/* Platform has void (*)(...) prototype for pthread_key_create()
+   destructor (e.g., LynxOS). */
+#undef ACE_HAS_STDARG_THR_DEST
 
 /* Used when users want to compile ACE with STL and STL map class
    conflicts with <net/if.h> map struct. */
@@ -615,6 +618,10 @@
 /* Platform supports POSIX.1c-1995 threads */
 #undef ACE_HAS_PTHREADS_STD
 
+/* Platform has the UNIX98 extensions to Pthreads (suspend, continue,
+   rwlocks) */
+#undef ACE_HAS_PTHREADS_UNIX98_EXT
+
 /* Platform has pthread_condattr_setkind_np(). */
 #undef ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP
 
@@ -719,9 +726,6 @@
    4.0 and beyond). */
 #undef ACE_HAS_SIGNAL_OBJECT_AND_WAIT
 
-/* Automatically restart OS system calls when EINTR occurs */
-#undef ACE_HAS_SIGNAL_SAFE_OS_CALLS
-
 /* Platform has the sigsuspend() system call */
 #undef ACE_HAS_SIGSUSPEND
 
@@ -733,6 +737,9 @@
 
 /* Compiler/platform defines the sig_atomic_t typedef */
 #undef ACE_HAS_SIG_ATOMIC_T
+
+/* Compiler requires extern "C" functions for signals. */
+#undef ACE_HAS_SIG_C_FUNC
 
 /* Platform supports new BSD inet_addr len field. */
 #undef ACE_HAS_SIN_LEN
@@ -860,6 +867,12 @@
 
 /* Compiler/platform has thread-specific storage */
 #undef ACE_HAS_THREAD_SPECIFIC_STORAGE
+
+/* The pthread_keycreate() routine *must* take extern C functions. */
+#undef ACE_HAS_THR_C_DEST
+
+/* The pthread_create() routine *must* take extern C functions. */
+#undef ACE_HAS_THR_C_FUNC
 
 /* Platform/compiler supports timezone * as second parameter to
    gettimeofday() and has a prototype*/
@@ -1415,9 +1428,6 @@
 
 /* Define if you have the <sys/ndir.h> header file.  */
 #undef HAVE_SYS_NDIR_H
-
-/* Define if you have the <unistd.h> header file.  */
-#undef HAVE_UNISTD_H
 
 /* Define if you have the dld library (-ldld).  */
 #undef HAVE_LIBDLD

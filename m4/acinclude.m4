@@ -58,6 +58,38 @@ AC_DEFUN(ACE_CHECK_FOR_CVS_DIR,
  fi
 ])
 
+
+dnl Prevent the configure script from continuing any further if
+dnl configuration is being performed in the top-level directory.  The
+dnl idea is to prevent files generated during configuration and build
+dnl from overwriting the stock files of the same name.
+dnl Usage: ACE_CHECK_TOP_SRCDIR
+AC_DEFUN(ACE_CHECK_TOP_SRCDIR,
+[
+ if test $srcdir = "." && test $USE_MAINTAINER_MODE != yes; then
+   AC_MSG_ERROR(
+     [
+      Please configure and build in a directory other than the
+      top-level source directory.  Doing so will prevent files
+      distributed with the package from being overwritten.  This
+      currently necessary since autoconf support is still
+      experimental.  If you encounter problems please use the stock
+      build procedure.
+
+      For example, try the following from the top-level source
+      directory:
+
+          mkdir objdir
+          cd objdir
+          ../configure
+          make
+
+      This will create a build space in the directory \`objdir' and
+      start a build in that directory.
+     ])
+ fi
+])
+
 dnl Add compiler flags to the CXXFLAGS and CFLAGS variables when doing an
 dnl AC_TRY_COMPILE (not ACE_TRY_COMPILE).
 dnl Use this macro when adding include directories to the compiler flags,
@@ -76,7 +108,7 @@ AC_DEFUN(ACE_TRY_COMPILE, dnl
     CFLAGS="$CFLAGS $1"
    ])
 
- AC_TRY_COMPILE($2, $3, $4, $5)
+ AC_TRY_COMPILE([$2],[$3],[$4],[$5])
 
  dnl Restore the C++ and C flags
  ifelse(AC_LANG, [CPLUSPLUS],
@@ -146,18 +178,7 @@ dnl Other "treat warnings as errors" flags for other compilers should
 dnl be added if possible.
   ace_pre_warning_CXXFLAGS="$CXXFLAGS"
 
-  if test -n "$GXX"; then
-    CXXFLAGS="$CXXFLAGS -Werror"
-  else
-    case $target in
-    *solaris*)
-       if test "$CXX" = CC; then
-         CXXFLAGS="$CXXFLAGS -xwe"
-       fi
-       ;;
-    *) ;;
-    esac
-  fi
+  CXXFLAGS="$CXXFLAGS $WERROR"
 
   $1
 
@@ -206,7 +227,7 @@ dnl  AC_REQUIRE([AC_PROG_CXX])
 dnl  AC_REQUIRE([AC_PROG_CXXCPP])
 dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 
-  ACE_CACHE_CHECK(for $1 in $2, ace_cv_type_$1,
+  ACE_CACHE_CHECK([for $1 in $2], [ace_cv_type_$1],
     [
      AC_TRY_COMPILE(
        [
@@ -221,7 +242,7 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
        [
         ace_cv_type_$1=no
        ])
-    ], $3, $4)
+    ],[$3],[$4])
 ])
 
 
@@ -240,9 +261,9 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
 dnl Do the transliteration at runtime so arg 1 can be a shell variable.
 dnl  ac_safe=`echo "$1" | sed 'y%./+-%__p_%'`
 
-  ACE_CACHE_CHECK(for struct $1 in $2, ace_cv_struct_$1,
+  ACE_CACHE_CHECK([for struct $1 in $2], [ace_cv_struct_$1],
     [
-     ACE_TRY_COMPILE_STRUCT($1, $2,
+     ACE_TRY_COMPILE_STRUCT([$1], [$2],
        [
         ace_cv_struct_$1=yes
        ],
@@ -317,9 +338,11 @@ dnl  AC_REQUIRE([AC_LANG_CPLUSPLUS])
   AC_REQUIRE([AC_PROG_AWK])
 
   AC_TRY_CPP(
-    [
+     [
 #include <$2>
-    ], ace_header_exists=yes, ace_header_exists=no)
+     ],
+     [ace_header_exists=yes],
+     [ace_header_exists=no])
 
   cat > conftest.$ac_ext <<EOF
 
@@ -330,7 +353,7 @@ EOF
 
   if test "$ace_header_exists" = yes; then
     if test -z "$AWK"; then
-      AC_MSG_WARN(No awk program found.  "Real" function may not be found.)
+      AC_MSG_WARN([No awk program found.  "Real" function may not be found.])
     fi
 
     if (eval "$ac_cpp conftest.$ac_ext") 2>&5 |
@@ -342,14 +365,14 @@ EOF
     fi
 
     if test $1 != "$ace_real_function"; then
-      AC_MSG_CHECKING(for real $1 from $2)
-      AC_MSG_RESULT($ace_real_function)
+      AC_MSG_CHECKING([for real $1 from $2])
+      AC_MSG_RESULT([$ace_real_function])
     fi
   else
     ace_real_function=$1
   fi dnl test "$ace_header_not_exist" != yes
 
-  AC_CHECK_FUNC($ace_real_function, $3, $4)
+  AC_CHECK_FUNC([$ace_real_function],[$3],[$4])
 ])
 
 dnl Check for function in library using prototype in header
@@ -422,7 +445,7 @@ dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_setrlimit_enum=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep 'setrlimit.*\(.*[^,]*enum' | \
+       egrep '[ ]+setrlimit.*\(.*[^,]*enum' | \
        sed -e 's/^.*setrlimit.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
@@ -431,7 +454,7 @@ changequote([, ])dnl
      AC_MSG_RESULT([$ace_setrlimit_enum])
 
 if test -n "$ace_setrlimit_enum"; then
-     AC_DEFINE_UNQUOTED(ACE_HAS_RLIMIT_RESOURCE_ENUM, $ace_setrlimit_enum)
+     AC_DEFINE_UNQUOTED([ACE_HAS_RLIMIT_RESOURCE_ENUM], [$ace_setrlimit_enum])
 fi
 
      rm -rf conftest*
@@ -465,7 +488,7 @@ dnl Here we attempt to determine the type of the first argument of
 dnl getrusage from its prototype.  It should either be an int or an
 dnl enum.  If it is an enum, determine the enum type.
      ace_rusage_who=`eval "$ac_cpp conftest.$ac_ext" | \
-       egrep 'getrusage.*\(.*[^,]*enum' | \
+       egrep '[ ]+getrusage.*\(.*[^,]*enum' | \
        sed -e 's/^.*getrusage.*(.*enum//' -e 's/[^ ]*,.*$//'`
 changequote([, ])dnl
 
@@ -474,7 +497,7 @@ changequote([, ])dnl
      AC_MSG_RESULT([$ace_rusage_who])
 
 if test -n "$ace_rusage_who"; then
-     AC_DEFINE_UNQUOTED(ACE_HAS_RUSAGE_WHO_ENUM, $ace_rusage_who)
+     AC_DEFINE_UNQUOTED([ACE_HAS_RUSAGE_WHO_ENUM], [$ace_rusage_who])
 fi
 
      rm -rf conftest*
@@ -564,9 +587,9 @@ dnl Roland McGrath, Noah Friedman, david d zuhn, and many others.
 dnl Usage: ACE_SEARCH_LIBS(FUNCTION, SEARCH-LIBS [, ACTION-IF-FOUND
 dnl                        [, ACTION-IF-NOT-FOUND [, OTHER-LIBRARIES]]])
 dnl Search for a library defining FUNCTION, if it's not already available.
-AC_DEFUN(ACE_SEARCH_LIBS,
+AC_DEFUN(ACE_SEARCH_LIBS, dnl
 [
- AC_CACHE_CHECK(for library containing $1, ac_cv_search_$1,
+ AC_CACHE_CHECK([for library containing $1], [ac_cv_search_$1],
    [
     ac_func_search_save_LIBS="$LIBS"
 
@@ -576,7 +599,7 @@ AC_DEFUN(ACE_SEARCH_LIBS,
 
     test "$ac_cv_search_$1" = "no" && for i in $2; do
       LIBS="-l$i $5 $ac_func_search_save_LIBS"
-      ACE_TRY_LINK_FUNC($1,
+      ACE_TRY_LINK_FUNC([$1],
         [
          ac_cv_search_$1="-l$i"
          break
@@ -597,7 +620,7 @@ AC_DEFUN(ACE_SEARCH_LIBS,
 dnl Usage: ACE_TRY_LINK_FUNC(FUNCTION,[, ACTION-IF-FOUND
 dnl                          [, ACTION-IF-NOT-FOUND])
 dnl Search for a library defining FUNCTION, if it's not already available.
-AC_DEFUN(ACE_TRY_LINK_FUNC,
+AC_DEFUN(ACE_TRY_LINK_FUNC, dnl
 [
 AC_TRY_LINK(
 dnl Don't include <ctype.h> because on OSF/1 3.0 it includes <sys/types.h>
