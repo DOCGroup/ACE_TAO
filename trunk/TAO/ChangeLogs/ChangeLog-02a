@@ -1,3 +1,36 @@
+Wed Mar  8 17:22:32 2000  Ossama Othman  <ossama@uci.edu>
+
+	* docs/pluggable_protocols/index.html:
+
+	  Fixed typographical errors.
+
+	* tao/ORB.cpp (ORB_init):
+
+	  It doesn't make sense for argc to be zero and argv to be
+	  non-empty/zero, or for argc to be greater than zero and argv be
+	  zero/empty.  Throw a CORBA::BAD_PARAM() exception if argc/argv
+	  combination is invalid.
+
+	* tao/ORB_Core.cpp (init):
+
+	  Throw a CORBA::BAD_PARAM() exception if an unrecognized "-ORB"
+	  option is encountered.  This behavior is in accordance with the
+	  CORBA 2.3.1 specification.
+
+	  Use ACE_NEW_THROW_EX(), instead of ACE_NEW_RETURN() in
+	  "-ORBLogFile" option processing code.
+	
+	  Explicitly consume "-ORBid" options passed to this method since
+	  they are specifically handled in the CORBA::ORB_init() method.
+	  According to the CORBA specification, if the ORBid third
+	  argument is used then any "-ORBid" options must be ignored.
+	  However, the above fix that forces the ORB to throw an
+	  exception when encountering an unrecognized "-ORB" option,
+	  also forces us to explicitly recognize the "-ORBid" option in
+	  the TAO_ORB_Core::init() method since it may "slip" through when
+	  both the ORBid third argument to CORBA::ORB_init() and a
+	  "-ORBid" ORB option are provided.
+
 Wed Mar  8 12:03:21 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/GIOP.cpp:

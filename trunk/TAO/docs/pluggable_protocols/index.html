@@ -2182,8 +2182,8 @@ Applying the solution in TAO</A>
 <P>
 A <TT>Transport</TT> implements
 external polymorphism&nbsp;[<A HREF="#Schmidt:97e">2</A>] over the
-<TT>Client_Connector_Handler</TT> and the
-<TT>Service_Connector_Handler</TT> objects described in the
+<TT>Client_Connection_Handler</TT> and the
+<TT>Service_Connection_Handler</TT> objects described in the
 <A HREF="#SECTION260"><TT>Connection_Handler</TT></A> section of this
 document.  A <TT>Connection_Handler</TT> is simply a template
 instantiation of <TT>ACE_Svc_Handler&lt;&gt;</TT>, but they don't do
@@ -2616,14 +2616,17 @@ ACE_Acceptor&lt;ACE_ATM_ACCEPTOR&gt; and
 ACE_Connector&lt;ACE_ATM_ACCEPTOR&gt;, again no big deal (I think).
 The factory is even simpler.
 
-<P>Things get really interesting in the Transport and Connect classes.  Transport
-just implements external polymorphism over the Client_Connector_Handler and
-the Service_Connector_Handler objects defined in the Connect.{h,i,cpp}, those are
-simply ACE_Svc_Handler&lt;ACE_ATM_Stream&gt;, but they don't do much work, they
-just delegate on the Transport classes.  This somewhat strange design is easy to
-understand once you realize that all the ACE_Svc_Handler&lt;&gt; classes are not type
-compatible (except in their most basic ACE_Event_Handler form).  So they must
-be wrapped using the TAO_Transport class.
+<P>
+Things get really interesting in the Transport and Connect classes.
+Transport just implements external polymorphism over the
+Client_Connection_Handler and the Service_Connection_Handler objects
+defined in the Connect.{h,i,cpp}, those are simply
+ACE_Svc_Handler&lt;ACE_ATM_Stream&gt;, but they don't do much work,
+they just delegate on the Transport classes.  This somewhat strange
+design is easy to understand once you realize that all the
+ACE_Svc_Handler&lt;&gt; classes are not type compatible (except in
+their most basic ACE_Event_Handler form).  So they must be wrapped
+using the TAO_Transport class.
 </BLOCKQUOTE>
 
 
@@ -2980,7 +2983,7 @@ examples of the Layers architecture.
     <ADDRESS><a href="mailto:ossama@uci.edu">Ossama Othman</a></ADDRESS>
 <!-- Created: Tue Dec 14 16:53:58 CST 1999 -->
 <!-- hhmts start -->
-Last modified: Wed Feb 16 08:34:42 PST 2000
+Last modified: Wed Mar  8 13:58:21 PST 2000
 <!-- hhmts end -->
 </BODY>
 </HTML>
