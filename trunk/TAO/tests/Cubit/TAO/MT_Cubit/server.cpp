@@ -116,10 +116,6 @@ Server::prelim_args_process (void)
                && i - 1 < this->argc_)
         ACE_OS::strcpy (GLOBALS::instance ()->hostname,
                         this->argv_[i+1]);
-//       else if (ACE_OS::strcmp (this->argv_[i], "-t") == 0
-//                && i - 1 < this->argc_)
-//         GLOBALS::instance ()->num_of_objs =
-//           ACE_OS::atoi (this->argv_ [i + 1]);
     }
 }
 
@@ -337,8 +333,7 @@ int
 Server::start_servants (ACE_Thread_Manager *serv_thr_mgr)
 {
   int result;
-
-  // Do the preliminary argument processing for options -p,-h and -t.
+  // Do the preliminary argument processing for options -p and -h.
   this->prelim_args_process ();
 
   // Find the priority for the high priority servant.
