@@ -1,3 +1,10 @@
+Thu Nov 28 14:45:43 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/Bug_1361_Regression/Server_Thread_Pool.cpp (svc): 
+	* tests/Bug_1361_Regression/Server_Thread_Pool.h:
+	* tests/Bug_1361_Regression/shutdown.cpp: Fixed warnings and
+	  compile errors.  
+
 Thu Nov 28 07:57:12 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* orbsvcs/orbsvcs/Notify/Admin.h:
