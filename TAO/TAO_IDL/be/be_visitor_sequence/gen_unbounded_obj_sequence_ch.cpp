@@ -72,7 +72,7 @@ be_visitor_sequence_ch::gen_unbounded_obj_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (class_name);
 
-  *os << "class " << class_name << be_idt_nl
+  *os << "class TAO_EXPORT_MACRO " << class_name << be_idt_nl
       << ": public TAO_Unbounded_Base_Sequence" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
