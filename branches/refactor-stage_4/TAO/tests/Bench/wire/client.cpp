@@ -82,6 +82,13 @@ main (int argc, char *argv[])
       cout << "inoutarg: " << inoutarg.in () << endl;
       cout << "outarg: " << outarg.in () << endl;
 
+      for (int i = 0 ; i != 10; ++i)
+        {
+          objref->push ("push_event"
+		        ACE_ENV_ARG_PARAMETER);
+          ACE_TRY_CHECK;
+	}
+
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
     }

@@ -15,10 +15,12 @@ class foo_i : public virtual POA_foo
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
-};
 
-#if defined(__ACE_INLINE__)
-#include "test_i.inl"
-#endif /* __ACE_INLINE__ */
+  virtual void push (const char *inarg
+		     ACE_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    ));
+};
 
 #endif /* TAO_TEST_I_H */

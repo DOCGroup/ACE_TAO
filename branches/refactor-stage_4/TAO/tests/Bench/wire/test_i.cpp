@@ -7,7 +7,7 @@ char *
 foo_i::all_str (const char *inarg,
                 char *& inoutarg,
                 CORBA::String_out outarg
-                ACE_ENV_ARG_DECL)
+                ACE_ENV_ARG_DECL_NOT_USED)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
@@ -30,4 +30,15 @@ foo_i::all_str (const char *inarg,
   ACE_OS::sprintf (retval, "%s", new_retval);
 
   return retval;
+}
+
+
+void
+foo_i::push (const char *inarg
+             ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_THROW_SPEC ((
+        CORBA::SystemException
+    ))
+{
+  cout << "Eventreceived is " << inarg << endl;
 }

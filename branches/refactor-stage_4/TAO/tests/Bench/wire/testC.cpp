@@ -42,6 +42,7 @@
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #include "tao/UB_String_Arguments.h"
+#include "tao/Basic_Arguments.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -378,7 +379,7 @@ char * _TAO_foo_Remote_Proxy_Impl::all_str (
                                   "all_str",
                                   7);
 
-  _tao_call.invoke (ACE_ENV_SINGLE_ARG_DECL);
+  _tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK_RETURN (_tao_retval.retn ());
 
 #if 0
@@ -612,14 +613,12 @@ void _TAO_foo_Remote_Proxy_Impl::push (
 
   TAO::Invocation_Base _tao_call (_collocated_tao_target_,
                                   _tao_signature,
-                                  4, //arg number
+                                  2, //arg number
                                   "push",
                                   4);
 
-  _tao_call.invoke (ACE_ENV_SINGLE_ARG_DECL);
-  ACE_CHECK_RETURN (_tao_retval._retn ());
-
-  return _tao_retval._retn ();
+  _tao_call.invoke (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 }
 //
 //            End  Base & Remote  Proxy Implemeentation.
@@ -933,6 +932,36 @@ char * foo::all_str (
     );
 }
 
+void foo::push (
+    const char * inarg
+    ACE_ENV_ARG_DECL
+  )
+  ACE_THROW_SPEC ((
+    CORBA::SystemException
+  ))
+{
+  if (!this->is_evaluated ())
+    {
+      ACE_NESTED_CLASS (CORBA, Object)::tao_object_initialize (this);
+
+    }
+  if (this->the_TAO_foo_Proxy_Broker_ == 0)
+    {
+      foo_setup_collocation (
+          this->ACE_NESTED_CLASS (CORBA, Object)::_is_collocated ()
+        );
+    }
+
+  _TAO_foo_Proxy_Impl &proxy =
+    this->the_TAO_foo_Proxy_Broker_->select_proxy (this ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK;
+
+  return proxy.push (
+      this,
+      inarg
+      ACE_ENV_ARG_PARAMETER
+    );
+}
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
 
