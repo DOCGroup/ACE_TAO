@@ -27,9 +27,9 @@ Options::Options (void)
     threading_strategy_ (REACTIVE),
     options_ (0),
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
-    consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
+    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT),
     supplier_connector_port_ (DEFAULT_GATEWAY_SUPPLIER_PORT),
-    consumer_connector_port_ (DEFAULT_GATEWAY_CONSUMER_PORT)
+    max_timeout_ (MAX_TIMEOUT)
 {
   ACE_OS::strcpy (this->proxy_config_file_, "proxy_config");
   ACE_OS::strcpy (this->consumer_config_file_, "consumer_config");
@@ -64,7 +64,13 @@ Options::performance_window (void) const
   return this->performance_window_;
 }
 
-int
+long
+Options::max_timeout (void) const
+{
+  return this->max_timeout_;
+}
+
+int 
 Options::blocking_semantics (void) const
 {
   return this->blocking_semantics_;
@@ -124,7 +130,10 @@ int
 Options::parse_args (int argc, char *argv[])
 {
   // Assign defaults.
-  ACE_Get_Opt get_opt (argc, argv, "a:bC:c:dP:p:q:t:vw:", 0);
+  ACE_Get_Opt get_opt (argc,
+                       argv,
+                       "a:bC:c:dP:p:q:r:t:vw:",
+                       0);
 
   for (int c; (c = get_opt ()) != EOF; )
     {

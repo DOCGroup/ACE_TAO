@@ -1,3 +1,12 @@
+Fri Jan  2 00:17:04 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Reader_Writer_Test.cpp: Changed from an ACE_RW_Mutex to an
+ 	  ACE_RW_Thread_Mutex so that we can use the new
+ 	  tryacquire_write_upgrade() method.
+
+	* ace/Env_Value_T.h: Reformatted the file a bit to conform to
+	  ACE coding conventions.
+
 Thu Jan  1 12:04:29 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
         * apps/Gateway/Peer/Options.cpp (parse_args): Changed the option

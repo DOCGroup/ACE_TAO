@@ -1,8 +1,9 @@
-# Configuration file for specifying connection information about
-# proxies. 
+# Configuration file that the gatewayd process uses to determine
+# connection information about proxies.
 # 
-# Here's an explanation of the fields in this file, and how they
-# relate to fields in the "consumer_config" file.
+# The following provides an explanation for the fields in this file,
+# and how they relate to fields in the corresponding "consumer_config"
+# file. 
 #
 # 1. Proxy ID -- Each Proxy is given a unique ID that is used
 #    in the "consumer_config" file to specify to which Consumers
@@ -16,12 +17,18 @@
 #
 # 3. Remote Port -- The port number where the remote
 #    Supplier/Consumer peerd process is listening on.
+#    If this is a '*' character it is an indication to the
+#    Gateway to use the "default value," e.g., which can be provided
+#    on the command-line, etc.
 #
 # 4. Proxy Role -- i.e., Consumer ('C') or Supplier ('S')
 #
 # 5. Max Retry Timeout -- The maximum amount of time that we'll
 #    wait between retry attempts (these start at 1 second and 
 #    double until they reach the Max Retry Timeout).
+#    If this is a '*' character it is an indication to the
+#    Gateway to use the "default value," e.g., which can be provided
+#    on the command-line, etc.
 #
 # 6. Local Port -- The port number that we want to use for
 #    our local Proxy connection.  If this is the value 0, then

@@ -11,41 +11,42 @@ FP_RETURN_TYPE
 Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
 					 int &line_number)
 {
-  FP_RETURN_TYPE read_result;
+  FP_RETURN_TYPE result;
 
   // Increment the line count.
   line_number++;
 
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id.
-  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS)
-    {
-      if (read_result == FP::EOFILE)
-	return FP::EOFILE;
-      else if (read_result == FP::EOLINE
-	       || read_result == FP::COMMENT)
-	line_number++;
-    }
+
+  while ((result = this->getint (entry.proxy_id_)) != FP::SUCCESS)
+    if (result == FP::EOFILE)
+      return FP::EOFILE;
+    else if (result == FP::EOLINE
+             || result == FP::COMMENT)
+      line_number++;
 
   // Get the supplier id.
-  if ((read_result = this->getint (entry.supplier_id_)) != FP::SUCCESS)
-    return read_result;
+  result = this->getint (entry.supplier_id_);
+  if (result != FP::SUCCESS)
+    return result;
 
   // Get the payload type.
-  if ((read_result = this->getint (entry.type_)) != FP::SUCCESS)
-    return read_result;
+  result = this->getint (entry.type_);
+  if (result != FP::SUCCESS)
+    return result;
 
   // get all the consumers.
   entry.total_consumers_ = 0;
 
-  while ((read_result = this->getint (entry.consumers_[entry.total_consumers_]))
-	 == FP::SUCCESS)
+  while ((result = this->getint 
+          (entry.consumers_[entry.total_consumers_])) == FP::SUCCESS)
     ++entry.total_consumers_; // do nothing (should check against max...)
 
-  if (read_result == FP::EOLINE || read_result == FP::EOFILE)
+  if (result == FP::EOLINE || result == FP::EOFILE)
     return FP::SUCCESS;
   else
-    return read_result;
+    return result;
 }
 
 FP_RETURN_TYPE
@@ -53,54 +54,81 @@ Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
 					   int &line_number)
 {
   char buf[BUFSIZ];
-  FP_RETURN_TYPE read_result;
-  // increment the line count
+  FP_RETURN_TYPE result;
+
+  // Increment the line count.
   line_number++;
 
-  // Ignore comments, check for EOF and EOLINE
-  // if this succeeds, we have our connection id
-  while ((read_result = this->getint (entry.proxy_id_)) != FP::SUCCESS)
-    {
-      if (read_result == FP::EOFILE)
-	return FP::EOFILE;
-      else if (read_result == FP::EOLINE
-	       || read_result == FP::COMMENT)
-	line_number++;
-    }
+  // Ignore comments, check for EOF and EOLINE if this succeeds, we
+  // have our connection id
 
-  // get the hostname
-  if ((read_result = this->getword (entry.host_)) != FP::SUCCESS)
-    return read_result;
+  while ((result = this->getint (entry.proxy_id_)) != FP::SUCCESS)
+    if (result == FP::EOFILE)
+      return FP::EOFILE;
+    else if (result == FP::EOLINE
+             || result == FP::COMMENT)
+      line_number++;
+
+  // Get the hostname.
+  result = this->getword (entry.host_);
+  if (result != FP::SUCCESS)
+    return result;
 
   ACE_INT32 port;
 
   // Get the port number.
-  if ((read_result = this->getint (port)) != FP::SUCCESS)
-    return read_result;
-  else
-    entry.remote_port_ = (u_short) port;
+  result = this->getint (port);
+  if (result == FP::DEFAULT)
+    {
+      // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
+      result = this->getword (buf);
+      if (result != FP::SUCCESS)
+        return result;
+      else
+        entry.proxy_role_ = buf[0];
 
-  // Get the proxy role.
-  if ((read_result = this->getword (buf)) != FP::SUCCESS)
-    return read_result;
+      if (entry.proxy_role_ == 'C')
+        entry.remote_port_ = Options::instance ()->consumer_connector_port ();
+      else (entry.proxy_role_ == 'S')
+        entry.remote_port_ = Options::instance ()->supplier_connector_port ();
+      else
+        // Yikes, this is a *weird* error!
+        entry.remote_port_ = 0;
+    }
+  else if (result != FP::SUCCESS)
+    return result;
   else
-    entry.proxy_role_ = buf[0];
+    {
+      entry.remote_port_ = u_short (port);
+
+      // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
+      result = this->getword (buf);
+      if (result != FP::SUCCESS)
+        return result;
+      else
+        entry.proxy_role_ = buf[0];
+    }
 
   // Get the max retry delay.
-  if ((read_result = this->getint (entry.max_retry_timeout_)) != FP::SUCCESS)
-    return read_result;
+  result = this->getint (entry.max_retry_timeout_);
+  if (result == FP::DEFAULT)
+    entry.max_retry_timeout_ = Options::instance ()->max_timeout ();
+  else if (result != FP::SUCCESS)
+    return result;
 
   // Get the local port number.
-  if ((read_result = this->getint (port)) != FP::SUCCESS)
-    return read_result;
+  result = this->getint (port);
+  if (result != FP::SUCCESS)
+    return result;
   else
-    entry.local_port_ = (u_short) port;
+    entry.local_port_ = u_short (port);
 
   ACE_INT32 priority;
 
-  // Get the priority
-  if ((read_result = this->getint (priority)) != FP::SUCCESS)
-    return read_result;
+  // Get the priority.
+  result = this->getint (priority);
+  if (result != FP::SUCCESS)
+    return result;
   else
     entry.priority_ = priority;
 
@@ -110,11 +138,12 @@ Proxy_Config_File_Parser::read_entry (Proxy_Config_Info &entry,
 #if defined (DEBUGGING)
 int main (int argc, char *argv[])
 {
-  if (argc != 4) {
-//    ACE_ERROR_RETURN ((LM_ERROR, "%s filename\n", argv[0]), -1);
-    cerr << argv[0] << " CCfilename filename Mapfilename.\n";
-    exit (1);
-  }
+  if (argc != 4) 
+    {
+      //    ACE_ERROR_RETURN ((LM_ERROR, "%s filename\n", argv[0]), -1);
+      cerr << argv[0] << " CCfilename filename Mapfilename.\n";
+      exit (1);
+    }
   FP_RETURN_TYPE result;
   Proxy_Config_Info entry;
   Proxy_Config_File_Parser CCfile;

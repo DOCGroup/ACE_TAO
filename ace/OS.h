@@ -171,31 +171,13 @@
 #define ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR "10008"
 #endif /* ACE_DEFAULT_THR_LOGGING_SERVER_PORT_STR */
 
-// Used for the gateway server.
-#if !defined (ACE_DEFAULT_GATEWAY_SERVER_PORT)
-#define ACE_DEFAULT_GATEWAY_SERVER_PORT 10009
-#endif /* ACE_DEFAULT_GATEWAY_SERVER_PORT */
-
-#if !defined (ACE_DEFAULT_GATEWAY_SERVER_PORT_STR)
-#define ACE_DEFAULT_GATEWAY_SERVER_PORT_STR "10009"
-#endif /* ACE_DEFAULT_GATEWAY_SERVER_PORT_STR */
-
-// Used for the peer server.
-#if !defined (ACE_DEFAULT_PEER_SERVER_PORT)
-#define ACE_DEFAULT_PEER_SERVER_PORT 10010
-#endif /* ACE_DEFAULT_PEER_SERVER_PORT */
-
-#if !defined (ACE_DEFAULT_PEER_SERVER_PORT_STR)
-#define ACE_DEFAULT_PEER_SERVER_PORT_STR "10010"
-#endif /* ACE_DEFAULT_PEER_SERVER_PORT_STR */
-
 // Used for the time server.
 #if !defined (ACE_DEFAULT_TIME_SERVER_PORT)
-#define ACE_DEFAULT_TIME_SERVER_PORT 10011
+#define ACE_DEFAULT_TIME_SERVER_PORT 10009
 #endif /* ACE_DEFAULT_TIME_SERVER_PORT */
 
 #if !defined (ACE_DEFAULT_TIME_SERVER_PORT_STR)
-#define ACE_DEFAULT_TIME_SERVER_PORT_STR "10011"
+#define ACE_DEFAULT_TIME_SERVER_PORT_STR "10009"
 #endif /* ACE_DEFAULT_TIME_SERVER_PORT_STR */
 
 #if !defined (ACE_DEFAULT_TIME_SERVER_STR)
@@ -207,7 +189,7 @@
 #if defined (ACE_HAS_STREAM_PIPES)
 #define ACE_DEFAULT_RENDEZVOUS "/tmp/fifo.ace"
 #else
-#define ACE_DEFAULT_RENDEZVOUS "localhost:10012"
+#define ACE_DEFAULT_RENDEZVOUS "localhost:10010"
 #endif /* ACE_LACKS_FIFO */
 #endif /* ACE_DEFAULT_RENDEZVOUS */
 
@@ -215,7 +197,7 @@
 #if defined (ACE_HAS_STREAM_PIPES)
 #define ACE_DEFAULT_LOGGER_KEY "/tmp/server_daemon"
 #else
-#define ACE_DEFAULT_LOGGER_KEY "localhost:10013"
+#define ACE_DEFAULT_LOGGER_KEY "localhost:10010"
 #endif /* ACE_HAS_STREAM_PIPES */
 #endif /* ACE_DEFAULT_LOGGER_KEY */
 
@@ -4285,10 +4267,11 @@ public:
                           void *arg = 0);
   static int rwlock_destroy (ACE_rwlock_t *rw);
   static int rw_rdlock (ACE_rwlock_t *rw);
+  static int rw_wrlock (ACE_rwlock_t *rw);
   static int rw_tryrdlock (ACE_rwlock_t *rw);
   static int rw_trywrlock (ACE_rwlock_t *rw);
+  static int rw_trywrlock_upgrade (ACE_rwlock_t *rw);
   static int rw_unlock (ACE_rwlock_t *rw);
-  static int rw_wrlock (ACE_rwlock_t *rw);
 
   // = A set of wrappers for auto-reset and manuaevents.
   static int event_init (ACE_event_t *event,

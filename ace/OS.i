@@ -3134,49 +3134,6 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #endif /* ACE_LACKS_COND_T */
 
 ACE_INLINE int
-ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
-{
-  // ACE_TRACE ("ACE_OS::rw_rdlock");
-#if defined (ACE_HAS_THREADS)
-#if defined (ACE_HAS_STHREADS) || !defined (ACE_LACKS_RWLOCK_T)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
-#else /* NT, POSIX, and VxWorks don't support this natively. */
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
-#endif /* ACE_HAS_DCETHREADS */
-  int result = 0;
-  if (ACE_OS::mutex_lock (&rw->lock_) == -1)
-    result = -1; // -1 means didn't get the mutex.
-  else
-    {
-      // Give preference to writers who are waiting.
-      while (rw->ref_count_ < 0 || rw->num_waiting_writers_ > 0)
-        {
-          rw->num_waiting_readers_++;
-          if (ACE_OS::cond_wait (&rw->waiting_readers_, &rw->lock_) == -1)
-            {
-              result = -2; // -2 means that we need to release the mutex.
-              break;
-            }
-          rw->num_waiting_readers_--;
-        }
-    }
-  if (result == 0)
-    rw->ref_count_++;
-  if (result != -1)
-    ACE_OS::mutex_unlock (&rw->lock_);
-#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
-  ACE_PTHREAD_CLEANUP_POP (0);
-#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
-  return 0;
-#endif /* ACE_HAS_STHREADS */
-#else
-  ACE_UNUSED_ARG (rw);
-  ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_THREADS */
-}
-
-ACE_INLINE int
 ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_tryrdlock");
@@ -3249,6 +3206,94 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
 }
 
 ACE_INLINE int
+ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
+{
+  // ACE_TRACE ("ACE_OS::rw_rdlock");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS) || !defined (ACE_LACKS_RWLOCK_T)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), ace_result_), int, -1);
+#else /* NT, POSIX, and VxWorks don't support this natively. */
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
+#endif /* ACE_HAS_DCETHREADS */
+  int result = 0;
+  if (ACE_OS::mutex_lock (&rw->lock_) == -1)
+    result = -1; // -1 means didn't get the mutex.
+  else
+    {
+      // Give preference to writers who are waiting.
+      while (rw->ref_count_ < 0 || rw->num_waiting_writers_ > 0)
+        {
+          rw->num_waiting_readers_++;
+          if (ACE_OS::cond_wait (&rw->waiting_readers_, &rw->lock_) == -1)
+            {
+              result = -2; // -2 means that we need to release the mutex.
+              break;
+            }
+          rw->num_waiting_readers_--;
+        }
+    }
+  if (result == 0)
+    rw->ref_count_++;
+  if (result != -1)
+    ACE_OS::mutex_unlock (&rw->lock_);
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_PTHREAD_CLEANUP_POP (0);
+#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+  return 0;
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (rw);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
+ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
+{
+  // ACE_TRACE ("ACE_OS::rw_wrlock");
+#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_STHREADS) || !defined (ACE_LACKS_RWLOCK_T)
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
+#else /* NT, POSIX, and VxWorks don't support this natively. */
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
+#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+  int result = 0;
+
+  if (ACE_OS::mutex_lock (&rw->lock_) == -1)
+    result = -1; // -1 means didn't get the mutex.
+  else
+    {
+      while (rw->ref_count_ != 0)
+        {
+          rw->num_waiting_writers_++;
+
+          if (ACE_OS::cond_wait (&rw->waiting_writers_, &rw->lock_) == -1)
+            {
+              result = -2; // -2 means we need to release the mutex.
+              break;
+            }
+
+          rw->num_waiting_writers_--;
+        }
+    }
+  if (result == 0)
+    rw->ref_count_ = -1;
+  if (result != -1)
+    ACE_OS::mutex_unlock (&rw->lock_);
+#if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
+  ACE_PTHREAD_CLEANUP_POP (0);
+#endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
+  return 0;
+#endif /* ACE_HAS_STHREADS */
+#else
+  ACE_UNUSED_ARG (rw);
+  ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_HAS_THREADS */
+}
+
+ACE_INLINE int
 ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_unlock");
@@ -3264,7 +3309,7 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   else if (rw->ref_count_ == -1) // Releasing a writer.
     rw->ref_count_ = 0;
   else
-    assert (!"count should not be 0!\n");
+    ACE_ASSERT (!"count should not be 0!\n");
 
   int result;
   int error = 0;
@@ -3293,37 +3338,36 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
 #endif /* ACE_HAS_THREADS */
 }
 
+// Note that the caller of this method *must* already possess this
+// lock as a read lock.
+
 ACE_INLINE int
-ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
+ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
 {
   // ACE_TRACE ("ACE_OS::rw_wrlock");
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_STHREADS) || !defined (ACE_LACKS_RWLOCK_T)
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), ace_result_), int, -1);
+  // Solaris rwlocks don't support the upgrade feature...
+  ACE_NOTSUP_RETURN (-1);
 #else /* NT, POSIX, and VxWorks don't support this natively. */
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
   ACE_PTHREAD_CLEANUP_PUSH (&rw->lock_);
 #endif /* defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS) */
   int result = 0;
+
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
     result = -1; // -1 means didn't get the mutex.
-  else
+  else if (rw->ref_count_ != 1)
     {
-      while (rw->ref_count_ != 0)
-        {
-          rw->num_waiting_writers_++;
-
-          if (ACE_OS::cond_wait (&rw->waiting_writers_, &rw->lock_) == -1)
-            {
-              result = -2; // -2 means we need to release the mutex.
-              break;
-            }
-
-          rw->num_waiting_writers_--;
-        }
+      // There were other readers, so we'll have to bail out.
+      error = EBUSY;
+      result = -1;
     }
   if (result == 0)
+    // We force the lock to become a write lock, thereby putting
+    // ourselves ahead of all other waiting writers.
     rw->ref_count_ = -1;
+
   if (result != -1)
     ACE_OS::mutex_unlock (&rw->lock_);
 #if defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)
