@@ -915,7 +915,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (retval != 0)
     return 1;
 
-  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPv6");
+  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPV6");
   ACE_TString test = temp;
 
   u_long role = config.role ();

@@ -79,7 +79,6 @@
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
 #  define ACE_TRACE(X) ACE_TRACE_IMPL(X)
-#  include "ace/Global_Macros.h"
 #  include "ace/Trace.h"
 #endif /* ACE_NTRACE */
 
@@ -97,7 +96,6 @@
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
 #  define ACE_OS_TRACE(X) ACE_TRACE_IMPL(X)
-#  include "ace/Global_Macros.h"
 #  include "ace/Trace.h"
 #endif /* ACE_OS_NTRACE */
 

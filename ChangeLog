@@ -1,3 +1,23 @@
+Thu Feb 19 15:22:49 2004  Steve Huston  <shuston@riverace.com>
+
+	* ace/Template_Instantiations.cpp: Add a block to keep HP aC++ from
+	  issuing a warning about an empty translation unit.
+
+	* ace/Global_Macros.h: Added #include "ace/config-lite.h" because
+	  this file checks on config options.
+
+	* ace/config-all.h: No need to include "ace/Global_Macros.h" from here.
+
+	* ace/MEM_Addr.cpp (same_host): To account for IPv4/IPv6 differences,
+	  use ACE_INET_Addr::operator==. Because that method takes the port
+	  number into account when comparing, and we don't care about the
+	  port number, copy the two addresses to new ACE_INET_Addr objects
+	  and set their port numbers to 0, then compare.
+
+	* tests/Multicast_Test_IPV6.cpp:
+	* tests/Proactor_Test_IPV6.cpp: Corrected name of log file so
+	  the test script can find it.
+
 Thu Feb 19 08:06:09 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* ace/OS_NS_sys_stat.inl (lstat): Removed the ACE_WIN32
@@ -424,6 +444,18 @@ Fri Feb  6 09:48:01 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           signatures messes things up a lot. Someone needs to take a look
           at it fix the compile time options properly.
 
+<<<<<<< ChangeLog
+	  Reverted the change "Fri Feb  6 09:31:30 2004  Balachandran
+	  Natarajan  <bala@dre.vanderbilt.edu>" since it creates more
+	  problems. 
+
+	* ace/config-sunos5.5.h:
+
+	  Added ACE_LACKS_SWAB. This is a lie. There are signatures
+	  mismatch and adding compile time options that get the right
+	  signatures messes things up a lot. Someone needs to take a look
+	  at it fix the compile time options properly. 
+	
 Fri Feb  6 09:35:13 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/rteventlogadmin.mpb:
