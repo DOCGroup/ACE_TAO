@@ -81,8 +81,6 @@ realclean: clean
  $(ACE_ROOT)/ace/pre.h \
  TimeBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -402,8 +400,6 @@ realclean: clean
 .obj/IOR_Multicast.o .obj/IOR_Multicast.so .shobj/IOR_Multicast.o .shobj/IOR_Multicast.so: IOR_Multicast.cpp IOR_Multicast.h \
  $(ACE_ROOT)/ace/pre.h \
  svc_utils_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -746,8 +742,6 @@ realclean: clean
  $(TAO_ROOT)/tao/CDR.h \
  $(TAO_ROOT)/tao/corbafwd.h \
  $(ACE_ROOT)/ace/CDR_Base.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1096,10 +1090,9 @@ realclean: clean
  $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/RtecBaseS.o .obj/RtecBaseS.so .shobj/RtecBaseS.o .shobj/RtecBaseS.so: RtecBaseS.cpp RtecBaseS.h \
- $(ACE_ROOT)/ace/pre.h RtecBaseC.h \
+ $(ACE_ROOT)/ace/pre.h \
+ RtecBaseC.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1448,13 +1441,12 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.h \
  $(TAO_ROOT)/tao/PortableServer/Active_Object_Map.i \
  $(TAO_ROOT)/tao/PortableServer/Object_Adapter.i \
- $(TAO_ROOT)/tao/PortableServer/Operation_Table.h
+ $(TAO_ROOT)/tao/PortableServer/Operation_Table.h \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 .obj/TimeBaseC.o .obj/TimeBaseC.so .shobj/TimeBaseC.o .shobj/TimeBaseC.so: TimeBaseC.cpp TimeBaseC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -1773,8 +1765,6 @@ realclean: clean
 .obj/RtecBaseC.o .obj/RtecBaseC.so .shobj/RtecBaseC.o .shobj/RtecBaseC.so: RtecBaseC.cpp RtecBaseC.h \
  $(ACE_ROOT)/ace/pre.h \
  $(TAO_ROOT)/tao/corba.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -2087,6 +2077,7 @@ realclean: clean
  $(TAO_ROOT)/tao/PortableInterceptor.i \
  $(TAO_ROOT)/tao/BiDirPolicyC.h \
  $(TAO_ROOT)/tao/BiDirPolicyC.i \
- svc_utils_export.h RtecBaseC.i
+ svc_utils_export.h RtecBaseC.i \
+ $(TAO_ROOT)/tao/RequestInfo_Util.h
 
 # IF YOU PUT ANYTHING HERE IT WILL GO AWAY

@@ -65,8 +65,6 @@ realclean: clean
 
 .obj/be_global.o .obj/be_global.so .shobj/be_global.o .shobj/be_global.so: be_global.cpp be_global.h TAO_IFR_BE_Export.h \
  $(ACE_ROOT)/ace/pre.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -241,8 +239,6 @@ realclean: clean
  $(ACE_ROOT)/ace/ACE.h \
  $(ACE_ROOT)/ace/pre.h \
  $(ACE_ROOT)/ace/OS.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -464,8 +460,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -685,8 +679,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -905,8 +897,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1124,8 +1114,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1343,8 +1331,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1561,8 +1547,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \
@@ -1743,8 +1727,6 @@ realclean: clean
  $(ACE_ROOT)/ace/post.h \
  ../../TAO_IDL/include/ast_visitor.h \
  ../../TAO_IDL/include/TAO_IDL_FE_Export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
  $(ACE_ROOT)/ace/ace_wchar.h \

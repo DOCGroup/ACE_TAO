@@ -50,10 +50,8 @@ CPPFLAGS += -I$(TAO_ROOT)
 
 
 .obj/InterfaceC.o .obj/InterfaceC.so .shobj/InterfaceC.o .shobj/InterfaceC.so: InterfaceC.cpp InterfaceC.h \
- $(ACE_ROOT)/ace/pre.h ifrfwd.h \
- ifr_client_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
+ $(ACE_ROOT)/ace/pre.h \
+ ifrfwd.h ifr_client_export.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
@@ -345,8 +343,6 @@ CPPFLAGS += -I$(TAO_ROOT)
  IFR_Client_Adapter_Impl.h \
  $(ACE_ROOT)/ace/pre.h \
  ifr_client_export.h \
- $(ACE_ROOT)/ace/config-sunos5.6.h \
- $(ACE_ROOT)/ace/config-sunos5.5.h \
  $(ACE_ROOT)/ace/post.h \
  $(ACE_ROOT)/ace/ACE_export.h \
  $(ACE_ROOT)/ace/svc_export.h \
