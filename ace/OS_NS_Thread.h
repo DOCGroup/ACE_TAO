@@ -699,28 +699,43 @@ typedef unsigned int ACE_thread_key_t;
 /**
  * @class ACE_Thread_ID
  *
- * @brief Defines a platform-independent thread ID.
+ * @brief Defines a platform-independent thread ID class.  Note that
+ *  this class should be defined within the scope of a thread, rather
+ *  than at global scope!
  */
 class ACE_Export ACE_Thread_ID
 {
 public:
-  // = Initialization method.
-  ACE_Thread_ID (ACE_thread_t, ACE_hthread_t);
-  ACE_Thread_ID (const ACE_Thread_ID &id);
+  /// Initialize the object using the thread id and thread handle
+  /// passed as parameters.
+  ACE_Thread_ID (ACE_thread_t thr_id,
+                 ACE_hthread_t thr_handle);
 
-  // = Set/Get the Thread ID.
+  /// Initialize the object using calls to ACE_OS::thr_self().
+  ACE_Thread_ID (void);
+
+  /// Copy constructor.
+  ACE_Thread_ID (const ACE_Thread_ID &rhs);
+
+  /// Get the thread id.
   ACE_thread_t id (void);
+
+  /// Set the thread id.
   void id (ACE_thread_t);
 
-  // = Set/Get the Thread handle.
+  /// Get the thread handle.
   ACE_hthread_t handle (void);
+
+  /// Set the thread handle.
   void handle (ACE_hthread_t);
 
   // Create a string representation of the thread id.
   void to_string (char *thr_string);
 
-  // != Comparison operator.
+  /// Equality operator.
   bool operator== (const ACE_Thread_ID &) const;
+
+  /// Inequality operator.
   bool operator!= (const ACE_Thread_ID &) const;
 
 private:
