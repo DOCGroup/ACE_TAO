@@ -1312,7 +1312,6 @@ TAO_SFP_Frame_State::reset (void)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 template class ACE_DNode<TAO_SFP_Fragment_Node>;
-template class ACE_Equal_To<CORBA::ULong>;
 template class ACE_Ordered_MultiSet<TAO_SFP_Fragment_Node>;
 template class ACE_Ordered_MultiSet_Iterator<TAO_SFP_Fragment_Node>;
 

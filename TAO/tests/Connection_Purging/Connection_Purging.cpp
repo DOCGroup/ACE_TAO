@@ -450,14 +450,12 @@ main (int argc,
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
 // = Handle Gobbler
-template class ACE_Node<ACE_HANDLE>;
 template class ACE_Unbounded_Set<ACE_HANDLE>;
 template class ACE_Unbounded_Set_Iterator<ACE_HANDLE>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 // = Handle Gobbler
-#pragma instantiate ACE_Node<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set<ACE_HANDLE>
 #pragma instantiate ACE_Unbounded_Set_Iterator<ACE_HANDLE>
 
