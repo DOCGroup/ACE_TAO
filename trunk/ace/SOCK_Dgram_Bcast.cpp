@@ -161,14 +161,14 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     }
 
 
-#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__)
+#if !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
   /*
      There are addresses longer than sizeof (struct sockaddr) eg. IPv6
      or QNX::links. In this case address does not fit into struct ifreq.
-     The code below could be applied everywhere, but now every system
+     The code below could be applied everywhere, but not every system
 	 provides sockaddr.sa_len field.
    */
   for (int nbytes = ifc.ifc_len; nbytes >= (int) sizeof (struct ifreq) &&
@@ -179,7 +179,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
-#endif
+#endif /* !defined(CHORUS_4) && !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) */
     {
 #if defined (__QNX__)
       // Silently skip link interfaces
