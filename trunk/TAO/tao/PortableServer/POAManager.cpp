@@ -4,10 +4,14 @@
 #include "POA.h"
 #include "poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/Interceptor_List.h"
+#include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
 # include "POAManager.i"
 #endif /* ! __ACE_INLINE__ */
+
+PortableInterceptor::AdapterManagerId TAO_POA_Manager::poa_manager_id_ = 0;
 
 TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
   : state_ (PortableServer::POAManager::HOLDING),
@@ -15,6 +19,7 @@ TAO_POA_Manager::TAO_POA_Manager (TAO_Object_Adapter &object_adapter)
     poa_collection_ (),
     object_adapter_ (object_adapter)
 {
+  ++TAO_POA_Manager::poa_manager_id_;
 }
 
 TAO_POA_Manager::~TAO_POA_Manager (void)
@@ -111,6 +116,33 @@ TAO_POA_Manager::deactivate_i (CORBA::Boolean etherealize_objects,
   // manager known in the process; the wait_for_completion parameter
   // to deactivate will be the same as the similarly named parameter
   // of ORB::shutdown.
+}
+
+void
+TAO_POA_Manager::
+adapter_manager_state_changed (PortableServer::POAManager::State state,
+                               CORBA::Environment &)
+{
+  /// Whenever the POAManager state is changed, the
+  /// adapter_manager_state_changed method is to be invoked on all the IOR
+  ///  Interceptors.
+
+  PortableInterceptor::AdapterState adapter_state = state;
+
+  TAO_IORInterceptor_List::TYPE &interceptors =
+    this->object_adapter_.orb_core ().ior_interceptors ();
+
+  size_t interceptor_count = interceptors.size ();
+
+  if (interceptor_count == 0)
+    return;
+
+  for (size_t i = 0; i < interceptor_count; ++i)
+    {
+      interceptors[i]->adapter_manager_state_changed
+        (TAO_POA_Manager::poa_manager_id_,
+         adapter_state);
+    }
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)

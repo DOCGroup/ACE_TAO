@@ -21,8 +21,7 @@ TAO_RT_POA::create_reference_with_priority (const char * intf,
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
 
-  return this->create_reference_i (intf,
-                                   priority
+  return this->create_reference_i (intf
                                    TAO_ENV_ARG_PARAMETER);
 }
 
@@ -45,8 +44,7 @@ TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectI
   TAO_POA_GUARD_RETURN (0);
 
   return this->create_reference_with_id_i (oid,
-                                           intf,
-                                           priority
+                                           intf
                                            TAO_ENV_ARG_PARAMETER);
 }
 

@@ -15,14 +15,17 @@
 
 #include "ace/pre.h"
 
-#include "corbafwd.h"
+#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/POA.h"
+
+#include "tao/corbafwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "PortableInterceptorC.h"
-#include "LocalObject.h"
+#include "tao/PortableInterceptorC.h"
+#include "tao/LocalObject.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.
@@ -46,18 +49,22 @@ class TAO_MProfile;
  * This class exposes an interface that allows IORInterceptors add
  * tagged components to IORs.
  */
-class TAO_Export TAO_IORInfo :
+class TAO_PortableServer_Export TAO_IORInfo :
   public virtual PortableInterceptor::IORInfo,
   public virtual TAO_Local_RefCounted_Object
 {
   friend class TAO_dummy_friend;
+  friend class TAO_POA;
 
 public:
 
   /// Constructor.
   TAO_IORInfo (TAO_ORB_Core *orb_core,
-               TAO_MProfile &mp,
-               CORBA::PolicyList *policy_list);
+               TAO_POA *poa);
+
+  /*	       TAO_MProfile &mp,
+	       CORBA::PolicyList *policy_list);
+  */
 
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
@@ -80,6 +87,27 @@ public:
       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
+  virtual PortableInterceptor::AdapterManagerId manager_id (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual PortableInterceptor::AdapterState state (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual PortableInterceptor::ObjectReferenceTemplate * adapter_template (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual PortableInterceptor::ObjectReferenceFactory * current_factory (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
+
+  virtual void current_factory (
+      PortableInterceptor::ObjectReferenceFactory * current_factory
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+      ACE_THROW_SPEC ((CORBA::SystemException));
+
 protected:
 
   /// Destructor is protected to force instantiation on the heap since
@@ -99,13 +127,30 @@ private:
   /// Pointer to the ORB Core of the current ORB.
   TAO_ORB_Core *orb_core_;
 
-  /// Reference to the profiles corresponding to the servant being
+  /// Pointer to POA
+  TAO_POA *poa_;
+
+  /*
+    /// Reference to the profiles corresponding to the servant being
   /// created.
   TAO_MProfile &mp_;
 
   /// Pointer to the list of policies in effect for the servant
   /// being created.
   CORBA::PolicyList *policy_list_;
+  */
+
+  /// The Adapter state
+  PortableInterceptor::AdapterState state_;
+
+  /// The AdapterManagerId
+  PortableInterceptor::AdapterManagerId manager_id_;
+
+  /// The ObjectReferenceTemplate
+  PortableInterceptor::ObjectReferenceTemplate *adapter_template_;
+
+  /// The current factory
+  PortableInterceptor::ObjectReferenceFactory *current_factory_;
 
 };
 

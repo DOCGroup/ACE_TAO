@@ -23,18 +23,16 @@
 #define _TAO_IDL_PORTABLEINTERCEPTORC_H_
 
 #include "ace/pre.h"
-
-#include "corbafwd.h"
+#include "tao/corba.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/corbafwd.h"
+#include "CurrentC.h"
 #include "DynamicC.h"
 #include "MessagingC.h"
-#include "CurrentC.h"
-#include "IOPC.h"
-#include "PolicyC.h"
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -100,7 +98,10 @@ TAO_NAMESPACE  PortableInterceptor
     static Interceptor_ptr tao_duplicate (Interceptor_ptr);
     static void tao_release (Interceptor_ptr);
     static Interceptor_ptr tao_nil (void);
-    static Interceptor_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static Interceptor_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -141,7 +142,8 @@ TAO_NAMESPACE  PortableInterceptor
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_INTERCEPTOR_CH_
 
-class TAO_Export Interceptor : public virtual CORBA_Object
+  class TAO_Export Interceptor
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -149,17 +151,20 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     typedef Interceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static Interceptor_ptr _duplicate (Interceptor_ptr obj);
+
     static Interceptor_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Interceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Interceptor_ptr _nil (void)
       {
@@ -185,9 +190,10 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    Interceptor ();
+    Interceptor (void);
 
     virtual ~Interceptor (void);
+
   private:
     Interceptor (const Interceptor &);
     void operator= (const Interceptor &);
@@ -243,14 +249,14 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     virtual CORBA::TypeCode_ptr _type (void) const;
   }; // Exception PortableInterceptor::ForwardRequest.
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ForwardRequest;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ForwardRequest;
 
 
 #endif /* end #if !defined */
 
   typedef CORBA::Short ReplyStatus;
   typedef CORBA::Short_out ReplyStatus_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyStatus;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplyStatus;
 
   TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short SUCCESSFUL;
 
@@ -266,7 +272,7 @@ class TAO_Export Interceptor : public virtual CORBA_Object
 
   typedef CORBA::ULong SlotId;
   typedef CORBA::ULong_out SlotId_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SlotId;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_SlotId;
 
 
 #if !defined (_PORTABLEINTERCEPTOR_INVALIDSLOT_CH_)
@@ -309,7 +315,7 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     virtual CORBA::TypeCode_ptr _type (void) const;
   }; // Exception PortableInterceptor::InvalidSlot.
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidSlot;
 
 
 #endif /* end #if !defined */
@@ -353,7 +359,10 @@ class TAO_Export Interceptor : public virtual CORBA_Object
     static Current_ptr tao_duplicate (Current_ptr);
     static void tao_release (Current_ptr);
     static Current_ptr tao_nil (void);
-    static Current_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static Current_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -394,7 +403,8 @@ class TAO_Export Interceptor : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_CURRENT_CH_)
 #define _PORTABLEINTERCEPTOR_CURRENT_CH_
 
-class TAO_Export Current: public virtual CORBA::Current
+  class TAO_Export Current
+    : public virtual CORBA::Current
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -402,17 +412,20 @@ class TAO_Export Current: public virtual CORBA::Current
     typedef Current_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static Current_ptr _duplicate (Current_ptr obj);
+
     static Current_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Current_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static Current_ptr _nil (void)
       {
@@ -420,9 +433,8 @@ class TAO_Export Current: public virtual CORBA::Current
       }
 
     virtual CORBA::Any * get_slot (
-        PortableInterceptor::SlotId id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        PortableInterceptor::SlotId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::InvalidSlot
@@ -430,9 +442,8 @@ class TAO_Export Current: public virtual CORBA::Current
 
     virtual void set_slot (
         PortableInterceptor::SlotId id,
-        const CORBA::Any & data
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        const CORBA::Any & data TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::InvalidSlot
@@ -443,9 +454,10 @@ class TAO_Export Current: public virtual CORBA::Current
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    Current ();
+    Current (void);
 
     virtual ~Current (void);
+
   private:
     Current (const Current &);
     void operator= (const Current &);
@@ -493,7 +505,10 @@ class TAO_Export Current: public virtual CORBA::Current
     static RequestInfo_ptr tao_duplicate (RequestInfo_ptr);
     static void tao_release (RequestInfo_ptr);
     static RequestInfo_ptr tao_nil (void);
-    static RequestInfo_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static RequestInfo_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -534,7 +549,8 @@ class TAO_Export Current: public virtual CORBA::Current
 #if !defined (_PORTABLEINTERCEPTOR_REQUESTINFO_CH_)
 #define _PORTABLEINTERCEPTOR_REQUESTINFO_CH_
 
-class TAO_Export RequestInfo : public virtual CORBA_Object
+  class TAO_Export RequestInfo
+    : public virtual CORBA_Object
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -542,17 +558,20 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     typedef RequestInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static RequestInfo_ptr _duplicate (RequestInfo_ptr obj);
+
     static RequestInfo_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static RequestInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static RequestInfo_ptr _nil (void)
       {
@@ -560,57 +579,57 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
       }
 
     virtual CORBA::ULong request_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * operation (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual Dynamic::ParameterList * arguments (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::Dynamic::ParameterList * arguments (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual Dynamic::ExceptionList * exceptions (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::Dynamic::ExceptionList * exceptions (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual Dynamic::ContextList * contexts (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::Dynamic::ContextList * contexts (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual Dynamic::RequestContext * operation_context (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::Dynamic::RequestContext * operation_context (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Any * result (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Boolean response_expected (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -618,8 +637,8 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
 #if TAO_HAS_CORBA_MESSAGING == 1
 
     virtual Messaging::SyncScope sync_scope (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -627,40 +646,37 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
 #endif  /* TAO_HAS_CORBA_MESSAGING == 1 */
 
     virtual PortableInterceptor::ReplyStatus reply_status (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Object_ptr forward_reference (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Any * get_slot (
-        PortableInterceptor::SlotId id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        PortableInterceptor::SlotId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::InvalidSlot
       )) = 0;
 
-    virtual IOP::ServiceContext * get_request_service_context (
-        IOP::ServiceId id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::IOP::ServiceContext * get_request_service_context (
+        IOP::ServiceId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual IOP::ServiceContext * get_reply_service_context (
-        IOP::ServiceId id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::IOP::ServiceContext * get_reply_service_context (
+        IOP::ServiceId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -670,9 +686,10 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    RequestInfo ();
+    RequestInfo (void);
 
     virtual ~RequestInfo (void);
+
   private:
     RequestInfo (const RequestInfo &);
     void operator= (const RequestInfo &);
@@ -720,7 +737,10 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
     static ClientRequestInfo_ptr tao_duplicate (ClientRequestInfo_ptr);
     static void tao_release (ClientRequestInfo_ptr);
     static ClientRequestInfo_ptr tao_nil (void);
-    static ClientRequestInfo_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ClientRequestInfo_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -761,7 +781,8 @@ class TAO_Export RequestInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINFO_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINFO_CH_
 
-class TAO_Export ClientRequestInfo: public virtual RequestInfo
+  class TAO_Export ClientRequestInfo
+    : public virtual PortableInterceptor::RequestInfo
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -769,17 +790,20 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     typedef ClientRequestInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static ClientRequestInfo_ptr _duplicate (ClientRequestInfo_ptr obj);
+
     static ClientRequestInfo_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ClientRequestInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ClientRequestInfo_ptr _nil (void)
       {
@@ -787,69 +811,65 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
       }
 
     virtual CORBA::Object_ptr target (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Object_ptr effective_target (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual IOP::TaggedProfile * effective_profile (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::IOP::TaggedProfile * effective_profile (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::Any * received_exception (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * received_exception_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual IOP::TaggedComponent * get_effective_component (
-        IOP::ComponentId id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::IOP::TaggedComponent * get_effective_component (
+        IOP::ComponentId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual IOP::TaggedComponentSeq * get_effective_components (
-        IOP::ComponentId id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::IOP::TaggedComponentSeq * get_effective_components (
+        IOP::ComponentId id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual CORBA::Policy_ptr get_request_policy (
-        CORBA::PolicyType type
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::CORBA::Policy_ptr get_request_policy (
+        CORBA::PolicyType type TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void add_request_service_context (
         const IOP::ServiceContext & service_context,
-        CORBA::Boolean replace
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        CORBA::Boolean replace TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -859,9 +879,10 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ClientRequestInfo ();
+    ClientRequestInfo (void);
 
     virtual ~ClientRequestInfo (void);
+
   private:
     ClientRequestInfo (const ClientRequestInfo &);
     void operator= (const ClientRequestInfo &);
@@ -869,6 +890,26 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
 
 
 #endif /* end #if !defined */
+
+  typedef char * ServerId;
+  typedef CORBA::String_var ServerId_var;
+  typedef CORBA::String_out ServerId_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ServerId;
+
+  typedef char * ORBId;
+  typedef CORBA::String_var ORBId_var;
+  typedef CORBA::String_out ORBId_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ORBId;
+
+  typedef CORBA::StringSeq AdapterName;
+  typedef CORBA::StringSeq_var AdapterName_var;
+  typedef CORBA::StringSeq_out AdapterName_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AdapterName;
+
+  typedef CORBA::OctetSeq ObjectId;
+  typedef CORBA::OctetSeq_var ObjectId_var;
+  typedef CORBA::OctetSeq_out ObjectId_out;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectId;
 
 
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO___PTR_CH_)
@@ -909,7 +950,10 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
     static ServerRequestInfo_ptr tao_duplicate (ServerRequestInfo_ptr);
     static void tao_release (ServerRequestInfo_ptr);
     static ServerRequestInfo_ptr tao_nil (void);
-    static ServerRequestInfo_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ServerRequestInfo_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -950,7 +994,8 @@ class TAO_Export ClientRequestInfo: public virtual RequestInfo
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO_CH_
 
-class TAO_Export ServerRequestInfo: public virtual RequestInfo
+  class TAO_Export ServerRequestInfo
+    : public virtual PortableInterceptor::RequestInfo
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -958,17 +1003,20 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     typedef ServerRequestInfo_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static ServerRequestInfo_ptr _duplicate (ServerRequestInfo_ptr obj);
+
     static ServerRequestInfo_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerRequestInfo_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerRequestInfo_ptr _nil (void)
       {
@@ -976,64 +1024,81 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
       }
 
     virtual CORBA::Any * sending_exception (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual CORBA::OctetSeq * object_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+    virtual char * server_id (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual CORBA::OctetSeq * adapter_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    virtual char * orb_id (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
 
+    virtual ::PortableInterceptor::AdapterName * adapter_name (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    virtual ::CORBA::OctetSeq * object_id (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      )) = 0;
+
+    virtual ::CORBA::OctetSeq * adapter_id (
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * target_most_derived_interface (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
-    virtual CORBA::Policy_ptr get_server_policy (
-        CORBA::PolicyType type
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+    virtual ::CORBA::Policy_ptr get_server_policy (
+        CORBA::PolicyType type TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void set_slot (
         PortableInterceptor::SlotId id,
-        const CORBA::Any & data
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        const CORBA::Any & data TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException,
         PortableInterceptor::InvalidSlot
       )) = 0;
 
     virtual CORBA::Boolean target_is_a (
-        const char * id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        const char * id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual void add_reply_service_context (
         const IOP::ServiceContext & service_context,
-        CORBA::Boolean replace
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
+        CORBA::Boolean replace TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
@@ -1043,9 +1108,10 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ServerRequestInfo ();
+    ServerRequestInfo (void);
 
     virtual ~ServerRequestInfo (void);
+
   private:
     ServerRequestInfo (const ServerRequestInfo &);
     void operator= (const ServerRequestInfo &);
@@ -1093,7 +1159,10 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
     static ClientRequestInterceptor_ptr tao_duplicate (ClientRequestInterceptor_ptr);
     static void tao_release (ClientRequestInterceptor_ptr);
     static ClientRequestInterceptor_ptr tao_nil (void);
-    static ClientRequestInterceptor_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ClientRequestInterceptor_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1134,7 +1203,8 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
 #if !defined (_PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_CLIENTREQUESTINTERCEPTOR_CH_
 
-class TAO_Export ClientRequestInterceptor: public virtual Interceptor
+  class TAO_Export ClientRequestInterceptor
+    : public virtual PortableInterceptor::Interceptor
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1142,17 +1212,20 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     typedef ClientRequestInterceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static ClientRequestInterceptor_ptr _duplicate (ClientRequestInterceptor_ptr obj);
+
     static ClientRequestInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ClientRequestInterceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ClientRequestInterceptor_ptr _nil (void)
       {
@@ -1207,9 +1280,10 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ClientRequestInterceptor ();
+    ClientRequestInterceptor (void);
 
     virtual ~ClientRequestInterceptor (void);
+
   private:
     ClientRequestInterceptor (const ClientRequestInterceptor &);
     void operator= (const ClientRequestInterceptor &);
@@ -1257,7 +1331,10 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
     static ServerRequestInterceptor_ptr tao_duplicate (ServerRequestInterceptor_ptr);
     static void tao_release (ServerRequestInterceptor_ptr);
     static ServerRequestInterceptor_ptr tao_nil (void);
-    static ServerRequestInterceptor_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
+    static ServerRequestInterceptor_ptr tao_narrow (
+        CORBA::Object *
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
     static CORBA::Object * tao_upcast (void *);
 
   private:
@@ -1298,7 +1375,8 @@ class TAO_Export ClientRequestInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINTERCEPTOR_CH_
 
-class TAO_Export ServerRequestInterceptor: public virtual Interceptor
+  class TAO_Export ServerRequestInterceptor
+    : public virtual PortableInterceptor::Interceptor
   {
   public:
   #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
@@ -1306,17 +1384,20 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     typedef ServerRequestInterceptor_var _var_type;
   #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-  static int _tao_class_id;
+    static int _tao_class_id;
 
-    // the static operations
+    // The static operations.
     static ServerRequestInterceptor_ptr _duplicate (ServerRequestInterceptor_ptr obj);
+
     static ServerRequestInterceptor_ptr _narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerRequestInterceptor_ptr _unchecked_narrow (
         CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS
+      );
 
     static ServerRequestInterceptor_ptr _nil (void)
       {
@@ -1372,9 +1453,10 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
     virtual const char* _interface_repository_id (void) const;
 
   protected:
-    ServerRequestInterceptor ();
+    ServerRequestInterceptor (void);
 
     virtual ~ServerRequestInterceptor (void);
+
   private:
     ServerRequestInterceptor (const ServerRequestInterceptor &);
     void operator= (const ServerRequestInterceptor &);
@@ -1383,12 +1465,420 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 
 #endif /* end #if !defined */
 
+  // Valuetype class
+  class ObjectReferenceFactory;
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY___PTR_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY___PTR_CH_
+
+  typedef ObjectReferenceFactory *ObjectReferenceFactory_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY___VAR_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY___VAR_CH_
+
+  class TAO_Export ObjectReferenceFactory_var
+  {
+  public:
+    ObjectReferenceFactory_var (void); // default constructor
+    ObjectReferenceFactory_var (ObjectReferenceFactory*);
+    ObjectReferenceFactory_var (const ObjectReferenceFactory*); // (TAO extension)
+    ObjectReferenceFactory_var (const ObjectReferenceFactory_var &); // copy constructor
+    ~ObjectReferenceFactory_var (void); // destructor
+
+    ObjectReferenceFactory_var &operator= (ObjectReferenceFactory*);
+    ObjectReferenceFactory_var &operator= (const ObjectReferenceFactory_var &);
+    ObjectReferenceFactory* operator-> (void) const;
+
+    operator const ObjectReferenceFactory* () const;
+    operator ObjectReferenceFactory* ();
+    // in, inout, out, _retn
+    ObjectReferenceFactory* in (void) const;
+    ObjectReferenceFactory* &inout (void);
+    ObjectReferenceFactory* &out (void);
+    ObjectReferenceFactory* _retn (void);
+    ObjectReferenceFactory* ptr (void) const;
+
+  private:
+    ObjectReferenceFactory* ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY___OUT_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY___OUT_CH_
+
+  class TAO_Export ObjectReferenceFactory_out
+  {
+  public:
+    ObjectReferenceFactory_out (ObjectReferenceFactory* &);
+    ObjectReferenceFactory_out (ObjectReferenceFactory_var &);
+    ObjectReferenceFactory_out (const ObjectReferenceFactory_out &);
+    ObjectReferenceFactory_out &operator= (const ObjectReferenceFactory_out &);
+    ObjectReferenceFactory_out &operator= (const ObjectReferenceFactory_var &);
+    ObjectReferenceFactory_out &operator= (ObjectReferenceFactory*);
+    operator ObjectReferenceFactory* &();
+    ObjectReferenceFactory* &ptr (void);
+    ObjectReferenceFactory* operator-> (void);
+
+  private:
+    ObjectReferenceFactory* &ptr_;
+  };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCEFACTORY_CH_
+
+  class TAO_Export ObjectReferenceFactory
+    : public virtual CORBA_ValueBase
+  {
+  public:
+
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+    typedef ObjectReferenceFactory* _ptr_type;
+    typedef ObjectReferenceFactory_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+    static ObjectReferenceFactory* _downcast (CORBA::ValueBase* );
+    // The address of static _downcast is implicit used as type id
+
+    // (TAO extensions or internals)
+    static CORBA::Boolean _tao_unmarshal (
+        TAO_InputCDR &,
+        ObjectReferenceFactory *&
+      );
+    virtual const char* _tao_obv_repository_id () const;
+    static const char* _tao_obv_static_repository_id ();
+
+    virtual CORBA::Object_ptr make_object (
+        const char *, 
+        const PortableInterceptor::ObjectId &
+        TAO_ENV_ARG_DECL_WITH_DEFAULTS) = 0;
+
+  protected:
+    ObjectReferenceFactory ();
+    virtual ~ObjectReferenceFactory ();
+    
+    // TAO internals
+    virtual void *_tao_obv_narrow (ptr_arith_t);
+    virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+    virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+    
+  private:
+    ObjectReferenceFactory (const ObjectReferenceFactory &);
+    void operator= (const ObjectReferenceFactory &);
+
+    };
+
+#endif /* end #if !defined */
+
+    // Valuetype class
+    class ObjectReferenceTemplate;
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___PTR_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___PTR_CH_
+
+    typedef ObjectReferenceTemplate *ObjectReferenceTemplate_ptr;
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___VAR_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___VAR_CH_
+
+    class TAO_Export ObjectReferenceTemplate_var
+    {
+    public:
+      ObjectReferenceTemplate_var (void); // default constructor
+      ObjectReferenceTemplate_var (ObjectReferenceTemplate*);
+      ObjectReferenceTemplate_var (const ObjectReferenceTemplate*); // (TAO extension)
+      ObjectReferenceTemplate_var (const ObjectReferenceTemplate_var &); // copy constructor
+      ~ObjectReferenceTemplate_var (void); // destructor
+
+      ObjectReferenceTemplate_var &operator= (ObjectReferenceTemplate*);
+      ObjectReferenceTemplate_var &operator= (const ObjectReferenceTemplate_var &);
+      ObjectReferenceTemplate* operator-> (void) const;
+
+      operator const ObjectReferenceTemplate* () const;
+      operator ObjectReferenceTemplate* ();
+      // in, inout, out, _retn
+      ObjectReferenceTemplate* in (void) const;
+      ObjectReferenceTemplate* &inout (void);
+      ObjectReferenceTemplate* &out (void);
+      ObjectReferenceTemplate* _retn (void);
+      ObjectReferenceTemplate* ptr (void) const;
+
+    private:
+      ObjectReferenceTemplate* ptr_;
+    };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___OUT_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE___OUT_CH_
+
+    class TAO_Export ObjectReferenceTemplate_out
+    {
+    public:
+      ObjectReferenceTemplate_out (ObjectReferenceTemplate* &);
+      ObjectReferenceTemplate_out (ObjectReferenceTemplate_var &);
+      ObjectReferenceTemplate_out (const ObjectReferenceTemplate_out &);
+      ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_out &);
+      ObjectReferenceTemplate_out &operator= (const ObjectReferenceTemplate_var &);
+      ObjectReferenceTemplate_out &operator= (ObjectReferenceTemplate*);
+      operator ObjectReferenceTemplate* &();
+      ObjectReferenceTemplate* &ptr (void);
+      ObjectReferenceTemplate* operator-> (void);
+
+    private:
+      ObjectReferenceTemplate* &ptr_;
+    };
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATE_CH_
+
+    class TAO_Export ObjectReferenceTemplate
+      : public virtual ObjectReferenceFactory
+    {
+    public:
+      
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+      typedef ObjectReferenceTemplate* _ptr_type;
+      typedef ObjectReferenceTemplate_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+      
+      static ObjectReferenceTemplate* _downcast (CORBA::ValueBase* );
+      // The address of static _downcast is implicit used as type id
+      
+      // (TAO extensions or internals)
+      static CORBA::Boolean _tao_unmarshal (
+                                            TAO_InputCDR &,
+                                            ObjectReferenceTemplate *&
+                                            );
+      virtual const char* _tao_obv_repository_id () const;
+      static const char* _tao_obv_static_repository_id ();
+
+      virtual char * server_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+
+      virtual char * orb_id (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+
+      virtual ::PortableInterceptor::AdapterName * adapter_name (TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS) = 0;
+
+    protected:
+      ObjectReferenceTemplate ();
+      virtual ~ObjectReferenceTemplate ();
+      
+      // TAO internals
+      virtual void *_tao_obv_narrow (ptr_arith_t);
+      virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
+      virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
+      
+private:
+  ObjectReferenceTemplate (const ObjectReferenceTemplate &);
+  void operator= (const ObjectReferenceTemplate &);
+
+};
+
+#endif /* end #if !defined */
+
+
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+
+#if !defined (__TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_)
+#define __TAO_UNBOUNDED_VALUETYPE_SEQUENCE_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_
+
+class TAO_EXPORT_MACRO _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
+  : public TAO_Unbounded_Base_Sequence
+{
+public:
+  // = Initialization and termination methods.
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void);
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (CORBA::ULong maximum);
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
+      CORBA::ULong maximum,
+      CORBA::ULong length,
+      ObjectReferenceTemplate* *value,
+      CORBA::Boolean release = 0
+    );
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (
+      const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
+    );
+  _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &operator= (
+      const _TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq &rhs
+    );
+  virtual ~_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq (void);
+
+  // = Accessors.
+  TAO_Valuetype_Manager<PortableInterceptor::ObjectReferenceTemplate,PortableInterceptor::ObjectReferenceTemplate_var> operator[] (CORBA::ULong index) const;
+
+  // = Static operations.
+  static ObjectReferenceTemplate **allocbuf (CORBA::ULong nelems);
+  static void freebuf (ObjectReferenceTemplate **buffer);
+
+  // Implement the TAO_Base_Sequence methods (see Sequence.h)
+  virtual void _allocate_buffer (CORBA::ULong length);
+  virtual void _deallocate_buffer (void);
+  ObjectReferenceTemplate* *get_buffer (CORBA::Boolean orphan = 0);
+  const ObjectReferenceTemplate* *get_buffer (void) const;
+  virtual void _shrink_buffer (
+      CORBA::ULong nl,
+      CORBA::ULong ol
+    );
+
+
+};
+
+#endif /* end #if !defined */
+
+
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ_CH_
+
+class ObjectReferenceTemplateSeq;
+class ObjectReferenceTemplateSeq_var;
+
+// *************************************************************
+// ObjectReferenceTemplateSeq
+// *************************************************************
+
+class TAO_Export ObjectReferenceTemplateSeq : public
+#if !defined (TAO_USE_SEQUENCE_TEMPLATES)
+_TAO_Unbounded_Valuetype_Sequence_PortableInterceptor_ObjectReferenceTemplateSeq
+#else /* TAO_USE_SEQUENCE_TEMPLATES */
+TAO_Unbounded_Valuetype_Sequence<ObjectReferenceTemplate,ObjectReferenceTemplate_var>
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+{
+public:
+  ObjectReferenceTemplateSeq (void); // default ctor
+  ObjectReferenceTemplateSeq (CORBA::ULong max); // uses max size
+  ObjectReferenceTemplateSeq (
+      CORBA::ULong max,
+      CORBA::ULong length,
+      ObjectReferenceTemplate_ptr *buffer,
+      CORBA::Boolean release = 0
+    );
+  ObjectReferenceTemplateSeq (const ObjectReferenceTemplateSeq &); // copy ctor
+  ~ObjectReferenceTemplateSeq (void);
+  static void _tao_any_destructor (void*);
+
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef ObjectReferenceTemplateSeq_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
+
+
+};
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___VAR_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___VAR_CH_
+
+// *************************************************************
+// class PortableInterceptor::ObjectReferenceTemplateSeq_var
+// *************************************************************
+
+class TAO_Export ObjectReferenceTemplateSeq_var
+{
+public:
+  ObjectReferenceTemplateSeq_var (void);
+  ObjectReferenceTemplateSeq_var (ObjectReferenceTemplateSeq *);
+  ObjectReferenceTemplateSeq_var (const ObjectReferenceTemplateSeq_var &);
+  ~ObjectReferenceTemplateSeq_var (void);
+
+  ObjectReferenceTemplateSeq_var &operator= (ObjectReferenceTemplateSeq *);
+  ObjectReferenceTemplateSeq_var &operator= (const ObjectReferenceTemplateSeq_var &);
+  ObjectReferenceTemplateSeq *operator-> (void);
+  const ObjectReferenceTemplateSeq *operator-> (void) const;
+
+  operator const ObjectReferenceTemplateSeq &() const;
+  operator ObjectReferenceTemplateSeq &();
+  operator ObjectReferenceTemplateSeq &() const;
+  operator ObjectReferenceTemplateSeq *&(); // variable-size base types only
+
+  TAO_Valuetype_Manager<ObjectReferenceTemplate, ObjectReferenceTemplate_var> operator[] (CORBA::ULong index);
+
+  // in, inout, out, _retn
+  const ObjectReferenceTemplateSeq &in (void) const;
+  ObjectReferenceTemplateSeq &inout (void);
+  ObjectReferenceTemplateSeq *&out (void);
+  ObjectReferenceTemplateSeq *_retn (void);
+  ObjectReferenceTemplateSeq *ptr (void) const;
+
+private:
+  ObjectReferenceTemplateSeq *ptr_;
+};
+
+
+#endif /* end #if !defined */
+
+
+#if !defined (_PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___OUT_CH_)
+#define _PORTABLEINTERCEPTOR_OBJECTREFERENCETEMPLATESEQ___OUT_CH_
+
+class TAO_Export ObjectReferenceTemplateSeq_out
+{
+public:
+  ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq *&);
+  ObjectReferenceTemplateSeq_out (ObjectReferenceTemplateSeq_var &);
+  ObjectReferenceTemplateSeq_out (const ObjectReferenceTemplateSeq_out &);
+  ObjectReferenceTemplateSeq_out &operator= (const ObjectReferenceTemplateSeq_out &);
+  ObjectReferenceTemplateSeq_out &operator= (ObjectReferenceTemplateSeq *);
+  operator ObjectReferenceTemplateSeq *&();
+  ObjectReferenceTemplateSeq *&ptr (void);
+  ObjectReferenceTemplateSeq *operator-> (void);
+  TAO_Valuetype_Manager<ObjectReferenceTemplate, ObjectReferenceTemplate_var> operator[] (CORBA::ULong index);
+
+private:
+  ObjectReferenceTemplateSeq *&ptr_;
+  // Assignment from T_var not allowed.
+  void operator= (const ObjectReferenceTemplateSeq_var &);
+};
+
+
+#endif /* end #if !defined */
+
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectReferenceTemplateSeq;
+
+typedef CORBA::Long AdapterManagerId;
+typedef CORBA::Long_out AdapterManagerId_out;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AdapterManagerId;
+
+typedef CORBA::Short AdapterState;
+typedef CORBA::Short_out AdapterState_out;
+TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_AdapterState;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short HOLDING;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short ACTIVE;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short DISCARDING;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short INACTIVE;
+
+TAO_NAMESPACE_STORAGE_CLASS const CORBA::Short NON_EXISTENT;
+
 
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO___PTR_CH_
 
-  class IORInfo;
-  typedef IORInfo *IORInfo_ptr;
+class IORInfo;
+typedef IORInfo *IORInfo_ptr;
 
 #endif /* end #if !defined */
 
@@ -1396,41 +1886,44 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO___VAR_CH_
 
-  class TAO_Export IORInfo_var : public TAO_Base_var
-  {
-  public:
-    IORInfo_var (void); // default constructor
-    IORInfo_var (IORInfo_ptr p) : ptr_ (p) {}
-    IORInfo_var (const IORInfo_var &); // copy constructor
-    ~IORInfo_var (void); // destructor
+class TAO_Export IORInfo_var : public TAO_Base_var
+{
+public:
+  IORInfo_var (void); // default constructor
+  IORInfo_var (IORInfo_ptr p) : ptr_ (p) {}
+  IORInfo_var (const IORInfo_var &); // copy constructor
+  ~IORInfo_var (void); // destructor
 
-    IORInfo_var &operator= (IORInfo_ptr);
-    IORInfo_var &operator= (const IORInfo_var &);
-    IORInfo_ptr operator-> (void) const;
+  IORInfo_var &operator= (IORInfo_ptr);
+  IORInfo_var &operator= (const IORInfo_var &);
+  IORInfo_ptr operator-> (void) const;
 
-    operator const IORInfo_ptr &() const;
-    operator IORInfo_ptr &();
-    // in, inout, out, _retn
-    IORInfo_ptr in (void) const;
-    IORInfo_ptr &inout (void);
-    IORInfo_ptr &out (void);
-    IORInfo_ptr _retn (void);
-    IORInfo_ptr ptr (void) const;
+  operator const IORInfo_ptr &() const;
+  operator IORInfo_ptr &();
+  // in, inout, out, _retn
+  IORInfo_ptr in (void) const;
+  IORInfo_ptr &inout (void);
+  IORInfo_ptr &out (void);
+  IORInfo_ptr _retn (void);
+  IORInfo_ptr ptr (void) const;
 
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static IORInfo_ptr tao_duplicate (IORInfo_ptr);
-    static void tao_release (IORInfo_ptr);
-    static IORInfo_ptr tao_nil (void);
-    static IORInfo_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
-    static CORBA::Object * tao_upcast (void *);
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static IORInfo_ptr tao_duplicate (IORInfo_ptr);
+  static void tao_release (IORInfo_ptr);
+  static IORInfo_ptr tao_nil (void);
+  static IORInfo_ptr tao_narrow (
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * tao_upcast (void *);
 
-  private:
-    IORInfo_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    IORInfo_var (const TAO_Base_var &rhs);
-    IORInfo_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  IORInfo_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IORInfo_var (const TAO_Base_var &rhs);
+  IORInfo_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -1439,22 +1932,22 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO___OUT_CH_
 
-  class TAO_Export IORInfo_out
-  {
-  public:
-    IORInfo_out (IORInfo_ptr &);
-    IORInfo_out (IORInfo_var &);
-    IORInfo_out (const IORInfo_out &);
-    IORInfo_out &operator= (const IORInfo_out &);
-    IORInfo_out &operator= (const IORInfo_var &);
-    IORInfo_out &operator= (IORInfo_ptr);
-    operator IORInfo_ptr &();
-    IORInfo_ptr &ptr (void);
-    IORInfo_ptr operator-> (void);
+class TAO_Export IORInfo_out
+{
+public:
+  IORInfo_out (IORInfo_ptr &);
+  IORInfo_out (IORInfo_var &);
+  IORInfo_out (const IORInfo_out &);
+  IORInfo_out &operator= (const IORInfo_out &);
+  IORInfo_out &operator= (const IORInfo_var &);
+  IORInfo_out &operator= (IORInfo_ptr);
+  operator IORInfo_ptr &();
+  IORInfo_ptr &ptr (void);
+  IORInfo_ptr operator-> (void);
 
-  private:
-    IORInfo_ptr &ptr_;
-  };
+private:
+  IORInfo_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
@@ -1463,68 +1956,105 @@ class TAO_Export ServerRequestInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_IORINFO_CH_)
 #define _PORTABLEINTERCEPTOR_IORINFO_CH_
 
-class TAO_Export IORInfo : public virtual CORBA_Object
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef IORInfo_ptr _ptr_type;
-    typedef IORInfo_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
+class TAO_Export IORInfo
+  : public virtual CORBA_Object
+{
+public:
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef IORInfo_ptr _ptr_type;
+  typedef IORInfo_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
 
-    // the static operations
-    static IORInfo_ptr _duplicate (IORInfo_ptr obj);
-    static IORInfo_ptr _narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  // The static operations.
+  static IORInfo_ptr _duplicate (IORInfo_ptr obj);
 
-    static IORInfo_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  static IORInfo_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    static IORInfo_ptr _nil (void)
-      {
-        return (IORInfo_ptr)0;
-      }
+  static IORInfo_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    virtual CORBA::Policy_ptr get_effective_policy (
-        CORBA::PolicyType type
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  static IORInfo_ptr _nil (void)
+    {
+      return (IORInfo_ptr)0;
+    }
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual ::CORBA::Policy_ptr get_effective_policy (
+      CORBA::PolicyType type TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual void add_ior_component (
-        const IOP::TaggedComponent & component
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void add_ior_component (
+      const IOP::TaggedComponent & component TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual void add_ior_component_to_profile (
+      const IOP::TaggedComponent & component,
+      IOP::ProfileId profile_id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual void add_ior_component_to_profile (
-        const IOP::TaggedComponent & component,
-        IOP::ProfileId profile_id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual PortableInterceptor::AdapterManagerId manager_id (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual PortableInterceptor::AdapterState state (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual ::PortableInterceptor::ObjectReferenceTemplate * adapter_template (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual ::PortableInterceptor::ObjectReferenceFactory * current_factory (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-  protected:
-    IORInfo ();
+  virtual void current_factory (
+      PortableInterceptor::ObjectReferenceFactory * current_factory TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual ~IORInfo (void);
-  private:
-    IORInfo (const IORInfo &);
-    void operator= (const IORInfo &);
-  };
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+  virtual const char* _interface_repository_id (void) const;
+
+protected:
+  IORInfo (void);
+
+  virtual ~IORInfo (void);
+
+private:
+  IORInfo (const IORInfo &);
+  void operator= (const IORInfo &);
+};
 
 
 #endif /* end #if !defined */
@@ -1533,8 +2063,8 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___PTR_CH_
 
-  class IORInterceptor;
-  typedef IORInterceptor *IORInterceptor_ptr;
+class IORInterceptor;
+typedef IORInterceptor *IORInterceptor_ptr;
 
 #endif /* end #if !defined */
 
@@ -1542,41 +2072,44 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___VAR_CH_
 
-  class TAO_Export IORInterceptor_var : public TAO_Base_var
-  {
-  public:
-    IORInterceptor_var (void); // default constructor
-    IORInterceptor_var (IORInterceptor_ptr p) : ptr_ (p) {}
-    IORInterceptor_var (const IORInterceptor_var &); // copy constructor
-    ~IORInterceptor_var (void); // destructor
+class TAO_Export IORInterceptor_var : public TAO_Base_var
+{
+public:
+  IORInterceptor_var (void); // default constructor
+  IORInterceptor_var (IORInterceptor_ptr p) : ptr_ (p) {}
+  IORInterceptor_var (const IORInterceptor_var &); // copy constructor
+  ~IORInterceptor_var (void); // destructor
 
-    IORInterceptor_var &operator= (IORInterceptor_ptr);
-    IORInterceptor_var &operator= (const IORInterceptor_var &);
-    IORInterceptor_ptr operator-> (void) const;
+  IORInterceptor_var &operator= (IORInterceptor_ptr);
+  IORInterceptor_var &operator= (const IORInterceptor_var &);
+  IORInterceptor_ptr operator-> (void) const;
 
-    operator const IORInterceptor_ptr &() const;
-    operator IORInterceptor_ptr &();
-    // in, inout, out, _retn
-    IORInterceptor_ptr in (void) const;
-    IORInterceptor_ptr &inout (void);
-    IORInterceptor_ptr &out (void);
-    IORInterceptor_ptr _retn (void);
-    IORInterceptor_ptr ptr (void) const;
+  operator const IORInterceptor_ptr &() const;
+  operator IORInterceptor_ptr &();
+  // in, inout, out, _retn
+  IORInterceptor_ptr in (void) const;
+  IORInterceptor_ptr &inout (void);
+  IORInterceptor_ptr &out (void);
+  IORInterceptor_ptr _retn (void);
+  IORInterceptor_ptr ptr (void) const;
 
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static IORInterceptor_ptr tao_duplicate (IORInterceptor_ptr);
-    static void tao_release (IORInterceptor_ptr);
-    static IORInterceptor_ptr tao_nil (void);
-    static IORInterceptor_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
-    static CORBA::Object * tao_upcast (void *);
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static IORInterceptor_ptr tao_duplicate (IORInterceptor_ptr);
+  static void tao_release (IORInterceptor_ptr);
+  static IORInterceptor_ptr tao_nil (void);
+  static IORInterceptor_ptr tao_narrow (
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * tao_upcast (void *);
 
-  private:
-    IORInterceptor_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    IORInterceptor_var (const TAO_Base_var &rhs);
-    IORInterceptor_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  IORInterceptor_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  IORInterceptor_var (const TAO_Base_var &rhs);
+  IORInterceptor_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -1585,22 +2118,22 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR___OUT_CH_
 
-  class TAO_Export IORInterceptor_out
-  {
-  public:
-    IORInterceptor_out (IORInterceptor_ptr &);
-    IORInterceptor_out (IORInterceptor_var &);
-    IORInterceptor_out (const IORInterceptor_out &);
-    IORInterceptor_out &operator= (const IORInterceptor_out &);
-    IORInterceptor_out &operator= (const IORInterceptor_var &);
-    IORInterceptor_out &operator= (IORInterceptor_ptr);
-    operator IORInterceptor_ptr &();
-    IORInterceptor_ptr &ptr (void);
-    IORInterceptor_ptr operator-> (void);
+class TAO_Export IORInterceptor_out
+{
+public:
+  IORInterceptor_out (IORInterceptor_ptr &);
+  IORInterceptor_out (IORInterceptor_var &);
+  IORInterceptor_out (const IORInterceptor_out &);
+  IORInterceptor_out &operator= (const IORInterceptor_out &);
+  IORInterceptor_out &operator= (const IORInterceptor_var &);
+  IORInterceptor_out &operator= (IORInterceptor_ptr);
+  operator IORInterceptor_ptr &();
+  IORInterceptor_ptr &ptr (void);
+  IORInterceptor_ptr operator-> (void);
 
-  private:
-    IORInterceptor_ptr &ptr_;
-  };
+private:
+  IORInterceptor_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
@@ -1609,51 +2142,80 @@ class TAO_Export IORInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_IORINTERCEPTOR_CH_)
 #define _PORTABLEINTERCEPTOR_IORINTERCEPTOR_CH_
 
-class TAO_Export IORInterceptor: public virtual Interceptor
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef IORInterceptor_ptr _ptr_type;
-    typedef IORInterceptor_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
+class TAO_Export IORInterceptor
+  : public virtual PortableInterceptor::Interceptor
+{
+public:
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef IORInterceptor_ptr _ptr_type;
+  typedef IORInterceptor_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
 
-    // the static operations
-    static IORInterceptor_ptr _duplicate (IORInterceptor_ptr obj);
-    static IORInterceptor_ptr _narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  // The static operations.
+  static IORInterceptor_ptr _duplicate (IORInterceptor_ptr obj);
 
-    static IORInterceptor_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  static IORInterceptor_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    static IORInterceptor_ptr _nil (void)
-      {
-        return (IORInterceptor_ptr)0;
-      }
+  static IORInterceptor_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    virtual void establish_components (
-        PortableInterceptor::IORInfo_ptr info
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  static IORInterceptor_ptr _nil (void)
+    {
+      return (IORInterceptor_ptr)0;
+    }
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void establish_components (
+      PortableInterceptor::IORInfo_ptr info
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual void components_established (
+      PortableInterceptor::IORInfo_ptr info
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-  protected:
-    IORInterceptor ();
+  virtual void adapter_manager_state_changed (
+      PortableInterceptor::AdapterManagerId id,
+      PortableInterceptor::AdapterState state TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual ~IORInterceptor (void);
-  private:
-    IORInterceptor (const IORInterceptor &);
-    void operator= (const IORInterceptor &);
-  };
+  virtual void adapter_state_changed (
+      const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
+      PortableInterceptor::AdapterState state TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
+
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
+
+  virtual const char* _interface_repository_id (void) const;
+
+protected:
+  IORInterceptor (void);
+
+  virtual ~IORInterceptor (void);
+
+private:
+  IORInterceptor (const IORInterceptor &);
+  void operator= (const IORInterceptor &);
+};
 
 
 #endif /* end #if !defined */
@@ -1662,8 +2224,8 @@ class TAO_Export IORInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY___PTR_CH_
 
-  class PolicyFactory;
-  typedef PolicyFactory *PolicyFactory_ptr;
+class PolicyFactory;
+typedef PolicyFactory *PolicyFactory_ptr;
 
 #endif /* end #if !defined */
 
@@ -1671,41 +2233,44 @@ class TAO_Export IORInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY___VAR_CH_
 
-  class TAO_Export PolicyFactory_var : public TAO_Base_var
-  {
-  public:
-    PolicyFactory_var (void); // default constructor
-    PolicyFactory_var (PolicyFactory_ptr p) : ptr_ (p) {}
-    PolicyFactory_var (const PolicyFactory_var &); // copy constructor
-    ~PolicyFactory_var (void); // destructor
+class TAO_Export PolicyFactory_var : public TAO_Base_var
+{
+public:
+  PolicyFactory_var (void); // default constructor
+  PolicyFactory_var (PolicyFactory_ptr p) : ptr_ (p) {}
+  PolicyFactory_var (const PolicyFactory_var &); // copy constructor
+  ~PolicyFactory_var (void); // destructor
 
-    PolicyFactory_var &operator= (PolicyFactory_ptr);
-    PolicyFactory_var &operator= (const PolicyFactory_var &);
-    PolicyFactory_ptr operator-> (void) const;
+  PolicyFactory_var &operator= (PolicyFactory_ptr);
+  PolicyFactory_var &operator= (const PolicyFactory_var &);
+  PolicyFactory_ptr operator-> (void) const;
 
-    operator const PolicyFactory_ptr &() const;
-    operator PolicyFactory_ptr &();
-    // in, inout, out, _retn
-    PolicyFactory_ptr in (void) const;
-    PolicyFactory_ptr &inout (void);
-    PolicyFactory_ptr &out (void);
-    PolicyFactory_ptr _retn (void);
-    PolicyFactory_ptr ptr (void) const;
+  operator const PolicyFactory_ptr &() const;
+  operator PolicyFactory_ptr &();
+  // in, inout, out, _retn
+  PolicyFactory_ptr in (void) const;
+  PolicyFactory_ptr &inout (void);
+  PolicyFactory_ptr &out (void);
+  PolicyFactory_ptr _retn (void);
+  PolicyFactory_ptr ptr (void) const;
 
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static PolicyFactory_ptr tao_duplicate (PolicyFactory_ptr);
-    static void tao_release (PolicyFactory_ptr);
-    static PolicyFactory_ptr tao_nil (void);
-    static PolicyFactory_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
-    static CORBA::Object * tao_upcast (void *);
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static PolicyFactory_ptr tao_duplicate (PolicyFactory_ptr);
+  static void tao_release (PolicyFactory_ptr);
+  static PolicyFactory_ptr tao_nil (void);
+  static PolicyFactory_ptr tao_narrow (
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * tao_upcast (void *);
 
-  private:
-    PolicyFactory_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    PolicyFactory_var (const TAO_Base_var &rhs);
-    PolicyFactory_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  PolicyFactory_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  PolicyFactory_var (const TAO_Base_var &rhs);
+  PolicyFactory_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -1714,22 +2279,22 @@ class TAO_Export IORInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY___OUT_CH_
 
-  class TAO_Export PolicyFactory_out
-  {
-  public:
-    PolicyFactory_out (PolicyFactory_ptr &);
-    PolicyFactory_out (PolicyFactory_var &);
-    PolicyFactory_out (const PolicyFactory_out &);
-    PolicyFactory_out &operator= (const PolicyFactory_out &);
-    PolicyFactory_out &operator= (const PolicyFactory_var &);
-    PolicyFactory_out &operator= (PolicyFactory_ptr);
-    operator PolicyFactory_ptr &();
-    PolicyFactory_ptr &ptr (void);
-    PolicyFactory_ptr operator-> (void);
+class TAO_Export PolicyFactory_out
+{
+public:
+  PolicyFactory_out (PolicyFactory_ptr &);
+  PolicyFactory_out (PolicyFactory_var &);
+  PolicyFactory_out (const PolicyFactory_out &);
+  PolicyFactory_out &operator= (const PolicyFactory_out &);
+  PolicyFactory_out &operator= (const PolicyFactory_var &);
+  PolicyFactory_out &operator= (PolicyFactory_ptr);
+  operator PolicyFactory_ptr &();
+  PolicyFactory_ptr &ptr (void);
+  PolicyFactory_ptr operator-> (void);
 
-  private:
-    PolicyFactory_ptr &ptr_;
-  };
+private:
+  PolicyFactory_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
@@ -1738,53 +2303,58 @@ class TAO_Export IORInterceptor: public virtual Interceptor
 #if !defined (_PORTABLEINTERCEPTOR_POLICYFACTORY_CH_)
 #define _PORTABLEINTERCEPTOR_POLICYFACTORY_CH_
 
-class TAO_Export PolicyFactory : public virtual CORBA_Object
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef PolicyFactory_ptr _ptr_type;
-    typedef PolicyFactory_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
+class TAO_Export PolicyFactory
+  : public virtual CORBA_Object
+{
+public:
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef PolicyFactory_ptr _ptr_type;
+  typedef PolicyFactory_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
 
-    // the static operations
-    static PolicyFactory_ptr _duplicate (PolicyFactory_ptr obj);
-    static PolicyFactory_ptr _narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  // The static operations.
+  static PolicyFactory_ptr _duplicate (PolicyFactory_ptr obj);
 
-    static PolicyFactory_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  static PolicyFactory_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    static PolicyFactory_ptr _nil (void)
-      {
-        return (PolicyFactory_ptr)0;
-      }
+  static PolicyFactory_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    virtual CORBA::Policy_ptr create_policy (
-        CORBA::PolicyType type,
-        const CORBA::Any & value
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        CORBA::PolicyError
-      )) = 0;
+  static PolicyFactory_ptr _nil (void)
+    {
+      return (PolicyFactory_ptr)0;
+    }
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual ::CORBA::Policy_ptr create_policy (
+      CORBA::PolicyType type,
+      const CORBA::Any & value
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      CORBA::PolicyError
+    )) = 0;
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
 
-  protected:
-    PolicyFactory ();
+  virtual const char* _interface_repository_id (void) const;
 
-    virtual ~PolicyFactory (void);
-  private:
-    PolicyFactory (const PolicyFactory &);
-    void operator= (const PolicyFactory &);
-  };
+protected:
+  PolicyFactory (void);
+
+  virtual ~PolicyFactory (void);
+
+private:
+  PolicyFactory (const PolicyFactory &);
+  void operator= (const PolicyFactory &);
+};
 
 
 #endif /* end #if !defined */
@@ -1793,8 +2363,8 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO___PTR_CH_
 
-  class ORBInitInfo;
-  typedef ORBInitInfo *ORBInitInfo_ptr;
+class ORBInitInfo;
+typedef ORBInitInfo *ORBInitInfo_ptr;
 
 #endif /* end #if !defined */
 
@@ -1802,41 +2372,44 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO___VAR_CH_
 
-  class TAO_Export ORBInitInfo_var : public TAO_Base_var
-  {
-  public:
-    ORBInitInfo_var (void); // default constructor
-    ORBInitInfo_var (ORBInitInfo_ptr p) : ptr_ (p) {}
-    ORBInitInfo_var (const ORBInitInfo_var &); // copy constructor
-    ~ORBInitInfo_var (void); // destructor
+class TAO_Export ORBInitInfo_var : public TAO_Base_var
+{
+public:
+  ORBInitInfo_var (void); // default constructor
+  ORBInitInfo_var (ORBInitInfo_ptr p) : ptr_ (p) {}
+  ORBInitInfo_var (const ORBInitInfo_var &); // copy constructor
+  ~ORBInitInfo_var (void); // destructor
 
-    ORBInitInfo_var &operator= (ORBInitInfo_ptr);
-    ORBInitInfo_var &operator= (const ORBInitInfo_var &);
-    ORBInitInfo_ptr operator-> (void) const;
+  ORBInitInfo_var &operator= (ORBInitInfo_ptr);
+  ORBInitInfo_var &operator= (const ORBInitInfo_var &);
+  ORBInitInfo_ptr operator-> (void) const;
 
-    operator const ORBInitInfo_ptr &() const;
-    operator ORBInitInfo_ptr &();
-    // in, inout, out, _retn
-    ORBInitInfo_ptr in (void) const;
-    ORBInitInfo_ptr &inout (void);
-    ORBInitInfo_ptr &out (void);
-    ORBInitInfo_ptr _retn (void);
-    ORBInitInfo_ptr ptr (void) const;
+  operator const ORBInitInfo_ptr &() const;
+  operator ORBInitInfo_ptr &();
+  // in, inout, out, _retn
+  ORBInitInfo_ptr in (void) const;
+  ORBInitInfo_ptr &inout (void);
+  ORBInitInfo_ptr &out (void);
+  ORBInitInfo_ptr _retn (void);
+  ORBInitInfo_ptr ptr (void) const;
 
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static ORBInitInfo_ptr tao_duplicate (ORBInitInfo_ptr);
-    static void tao_release (ORBInitInfo_ptr);
-    static ORBInitInfo_ptr tao_nil (void);
-    static ORBInitInfo_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
-    static CORBA::Object * tao_upcast (void *);
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static ORBInitInfo_ptr tao_duplicate (ORBInitInfo_ptr);
+  static void tao_release (ORBInitInfo_ptr);
+  static ORBInitInfo_ptr tao_nil (void);
+  static ORBInitInfo_ptr tao_narrow (
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * tao_upcast (void *);
 
-  private:
-    ORBInitInfo_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ORBInitInfo_var (const TAO_Base_var &rhs);
-    ORBInitInfo_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  ORBInitInfo_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  ORBInitInfo_var (const TAO_Base_var &rhs);
+  ORBInitInfo_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -1845,22 +2418,22 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO___OUT_CH_
 
-  class TAO_Export ORBInitInfo_out
-  {
-  public:
-    ORBInitInfo_out (ORBInitInfo_ptr &);
-    ORBInitInfo_out (ORBInitInfo_var &);
-    ORBInitInfo_out (const ORBInitInfo_out &);
-    ORBInitInfo_out &operator= (const ORBInitInfo_out &);
-    ORBInitInfo_out &operator= (const ORBInitInfo_var &);
-    ORBInitInfo_out &operator= (ORBInitInfo_ptr);
-    operator ORBInitInfo_ptr &();
-    ORBInitInfo_ptr &ptr (void);
-    ORBInitInfo_ptr operator-> (void);
+class TAO_Export ORBInitInfo_out
+{
+public:
+  ORBInitInfo_out (ORBInitInfo_ptr &);
+  ORBInitInfo_out (ORBInitInfo_var &);
+  ORBInitInfo_out (const ORBInitInfo_out &);
+  ORBInitInfo_out &operator= (const ORBInitInfo_out &);
+  ORBInitInfo_out &operator= (const ORBInitInfo_var &);
+  ORBInitInfo_out &operator= (ORBInitInfo_ptr);
+  operator ORBInitInfo_ptr &();
+  ORBInitInfo_ptr &ptr (void);
+  ORBInitInfo_ptr operator-> (void);
 
-  private:
-    ORBInitInfo_ptr &ptr_;
-  };
+private:
+  ORBInitInfo_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
@@ -1869,75 +2442,79 @@ class TAO_Export PolicyFactory : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_CH_
 
-class TAO_Export ORBInitInfo : public virtual CORBA_Object
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ORBInitInfo_ptr _ptr_type;
-    typedef ORBInitInfo_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
+class TAO_Export ORBInitInfo
+  : public virtual CORBA_Object
+{
+public:
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef ORBInitInfo_ptr _ptr_type;
+  typedef ORBInitInfo_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
 
-    // the static operations
-    static ORBInitInfo_ptr _duplicate (ORBInitInfo_ptr obj);
-    static ORBInitInfo_ptr _narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  // The static operations.
+  static ORBInitInfo_ptr _duplicate (ORBInitInfo_ptr obj);
 
-    static ORBInitInfo_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  static ORBInitInfo_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    static ORBInitInfo_ptr _nil (void)
-      {
-        return (ORBInitInfo_ptr)0;
-      }
+  static ORBInitInfo_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    typedef char * ObjectId;
-    typedef CORBA::String_var ObjectId_var;
-    typedef CORBA::String_out ObjectId_out;
+  static ORBInitInfo_ptr _nil (void)
+    {
+      return (ORBInitInfo_ptr)0;
+    }
+
+  typedef char * ObjectId;
+  typedef CORBA::String_var ObjectId_var;
+  typedef CORBA::String_out ObjectId_out;
 
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO_DUPLICATENAME_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_DUPLICATENAME_CH_
 
-    class TAO_Export DuplicateName : public CORBA::UserException
-    {
-    public:
-      TAO_String_Manager name;
+  class TAO_Export DuplicateName : public CORBA::UserException
+  {
+  public:
+    TAO_String_Manager name;
 
-      DuplicateName (void);
-      // Default constructor.
+    DuplicateName (void);
+    // Default constructor.
 
-      DuplicateName (const DuplicateName &);
-      // Copy constructor.
+    DuplicateName (const DuplicateName &);
+    // Copy constructor.
 
-      ~DuplicateName (void);
-      // Destructor.
+    ~DuplicateName (void);
+    // Destructor.
 
-      DuplicateName &operator= (const DuplicateName &);
+    DuplicateName &operator= (const DuplicateName &);
 
-      virtual void _raise (void);
+    virtual void _raise (void);
 
-      virtual void _tao_encode (
-          TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
-        ) const;
+    virtual void _tao_encode (
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
+      ) const;
 
-      virtual void _tao_decode (
-          TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
-        );
+    virtual void _tao_decode (
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
 
-      static DuplicateName *_downcast (CORBA::Exception *);
+    static DuplicateName *_downcast (CORBA::Exception *);
 
-      DuplicateName (
-          const char * _tao_name
-        );
+    DuplicateName (
+        const char * _tao_name
+      );
 
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception PortableInterceptor::ORBInitInfo::DuplicateName.
+    // = TAO extension.
+    static CORBA::Exception *_alloc (void);
+  }; // Exception PortableInterceptor::ORBInitInfo::DuplicateName.
 
 
 #endif /* end #if !defined */
@@ -1946,138 +2523,133 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITINFO_INVALIDNAME_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITINFO_INVALIDNAME_CH_
 
-    class TAO_Export InvalidName : public CORBA::UserException
-    {
-    public:
+  class TAO_Export InvalidName : public CORBA::UserException
+  {
+  public:
 
-      InvalidName (void);
-      // Default constructor.
+    InvalidName (void);
+    // Default constructor.
 
-      InvalidName (const InvalidName &);
-      // Copy constructor.
+    InvalidName (const InvalidName &);
+    // Copy constructor.
 
-      ~InvalidName (void);
-      // Destructor.
+    ~InvalidName (void);
+    // Destructor.
 
-      InvalidName &operator= (const InvalidName &);
+    InvalidName &operator= (const InvalidName &);
 
-      virtual void _raise (void);
+    virtual void _raise (void);
 
-      virtual void _tao_encode (
-          TAO_OutputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
-        ) const;
+    virtual void _tao_encode (
+        TAO_OutputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
+      ) const;
 
-      virtual void _tao_decode (
-          TAO_InputCDR &
-          TAO_ENV_ARG_DECL_NOT_USED
-        );
+    virtual void _tao_decode (
+        TAO_InputCDR &
+        TAO_ENV_ARG_DECL_NOT_USED
+      );
 
-      static InvalidName *_downcast (CORBA::Exception *);
+    static InvalidName *_downcast (CORBA::Exception *);
 
 
-      // = TAO extension.
-      static CORBA::Exception *_alloc (void);
-    }; // Exception PortableInterceptor::ORBInitInfo::InvalidName.
+    // = TAO extension.
+    static CORBA::Exception *_alloc (void);
+  }; // Exception PortableInterceptor::ORBInitInfo::InvalidName.
 
 
 #endif /* end #if !defined */
 
-    virtual CORBA::StringSeq * arguments (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual ::CORBA::StringSeq * arguments (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual char * orb_id (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual char * orb_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual ::IOP::CodecFactory_ptr codec_factory (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual void register_initial_reference (
+      const char * id,
+      CORBA::Object_ptr obj TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ORBInitInfo::InvalidName
+    )) = 0;
 
-    virtual IOP::CodecFactory_ptr codec_factory (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+  virtual CORBA::Object_ptr resolve_initial_references (
+      const char * id TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ORBInitInfo::InvalidName
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual void add_client_request_interceptor (
+      PortableInterceptor::ClientRequestInterceptor_ptr interceptor TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ORBInitInfo::DuplicateName
+    )) = 0;
 
-    virtual void register_initial_reference (
-        const char * id,
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void add_server_request_interceptor (
+      PortableInterceptor::ServerRequestInterceptor_ptr interceptor TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ORBInitInfo::DuplicateName
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::InvalidName
-      )) = 0;
+  virtual void add_ior_interceptor (
+      PortableInterceptor::IORInterceptor_ptr interceptor TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException,
+      PortableInterceptor::ORBInitInfo::DuplicateName
+    )) = 0;
 
-    virtual CORBA::Object_ptr resolve_initial_references (
-        const char * id
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual PortableInterceptor::SlotId allocate_slot_id (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::InvalidName
-      )) = 0;
+  virtual void register_policy_factory (
+      CORBA::PolicyType type,
+      PortableInterceptor::PolicyFactory_ptr policy_factory TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual void add_client_request_interceptor (
-        PortableInterceptor::ClientRequestInterceptor_ptr interceptor
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::DuplicateName
-      )) = 0;
+  virtual const char* _interface_repository_id (void) const;
 
-    virtual void add_server_request_interceptor (
-        PortableInterceptor::ServerRequestInterceptor_ptr interceptor
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+protected:
+  ORBInitInfo (void);
 
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::DuplicateName
-      )) = 0;
+  virtual ~ORBInitInfo (void);
 
-    virtual void add_ior_interceptor (
-        PortableInterceptor::IORInterceptor_ptr interceptor
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
-      ACE_THROW_SPEC ((
-        CORBA::SystemException,
-        PortableInterceptor::ORBInitInfo::DuplicateName
-      )) = 0;
-
-    virtual PortableInterceptor::SlotId allocate_slot_id (
-        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
-
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual void register_policy_factory (
-        CORBA::PolicyType type,
-        PortableInterceptor::PolicyFactory_ptr policy_factory
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS)
-
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
-
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
-
-    virtual const char* _interface_repository_id (void) const;
-
-  protected:
-    ORBInitInfo ();
-
-    virtual ~ORBInitInfo (void);
-  private:
-    ORBInitInfo (const ORBInitInfo &);
-    void operator= (const ORBInitInfo &);
-  };
+private:
+  ORBInitInfo (const ORBInitInfo &);
+  void operator= (const ORBInitInfo &);
+};
 
 
 #endif /* end #if !defined */
@@ -2086,8 +2658,8 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___PTR_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER___PTR_CH_
 
-  class ORBInitializer;
-  typedef ORBInitializer *ORBInitializer_ptr;
+class ORBInitializer;
+typedef ORBInitializer *ORBInitializer_ptr;
 
 #endif /* end #if !defined */
 
@@ -2095,41 +2667,44 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___VAR_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER___VAR_CH_
 
-  class TAO_Export ORBInitializer_var : public TAO_Base_var
-  {
-  public:
-    ORBInitializer_var (void); // default constructor
-    ORBInitializer_var (ORBInitializer_ptr p) : ptr_ (p) {}
-    ORBInitializer_var (const ORBInitializer_var &); // copy constructor
-    ~ORBInitializer_var (void); // destructor
+class TAO_Export ORBInitializer_var : public TAO_Base_var
+{
+public:
+  ORBInitializer_var (void); // default constructor
+  ORBInitializer_var (ORBInitializer_ptr p) : ptr_ (p) {}
+  ORBInitializer_var (const ORBInitializer_var &); // copy constructor
+  ~ORBInitializer_var (void); // destructor
 
-    ORBInitializer_var &operator= (ORBInitializer_ptr);
-    ORBInitializer_var &operator= (const ORBInitializer_var &);
-    ORBInitializer_ptr operator-> (void) const;
+  ORBInitializer_var &operator= (ORBInitializer_ptr);
+  ORBInitializer_var &operator= (const ORBInitializer_var &);
+  ORBInitializer_ptr operator-> (void) const;
 
-    operator const ORBInitializer_ptr &() const;
-    operator ORBInitializer_ptr &();
-    // in, inout, out, _retn
-    ORBInitializer_ptr in (void) const;
-    ORBInitializer_ptr &inout (void);
-    ORBInitializer_ptr &out (void);
-    ORBInitializer_ptr _retn (void);
-    ORBInitializer_ptr ptr (void) const;
+  operator const ORBInitializer_ptr &() const;
+  operator ORBInitializer_ptr &();
+  // in, inout, out, _retn
+  ORBInitializer_ptr in (void) const;
+  ORBInitializer_ptr &inout (void);
+  ORBInitializer_ptr &out (void);
+  ORBInitializer_ptr _retn (void);
+  ORBInitializer_ptr ptr (void) const;
 
-    // Hooks used by template sequence and object manager classes
-    // for non-defined forward declared interfaces.
-    static ORBInitializer_ptr tao_duplicate (ORBInitializer_ptr);
-    static void tao_release (ORBInitializer_ptr);
-    static ORBInitializer_ptr tao_nil (void);
-    static ORBInitializer_ptr tao_narrow (CORBA::Object * TAO_ENV_ARG_DECL_NOT_USED);
-    static CORBA::Object * tao_upcast (void *);
+  // Hooks used by template sequence and object manager classes
+  // for non-defined forward declared interfaces.
+  static ORBInitializer_ptr tao_duplicate (ORBInitializer_ptr);
+  static void tao_release (ORBInitializer_ptr);
+  static ORBInitializer_ptr tao_nil (void);
+  static ORBInitializer_ptr tao_narrow (
+      CORBA::Object *
+      TAO_ENV_ARG_DECL_NOT_USED
+    );
+  static CORBA::Object * tao_upcast (void *);
 
-  private:
-    ORBInitializer_ptr ptr_;
-    // Unimplemented - prevents widening assignment.
-    ORBInitializer_var (const TAO_Base_var &rhs);
-    ORBInitializer_var &operator= (const TAO_Base_var &rhs);
-  };
+private:
+  ORBInitializer_ptr ptr_;
+  // Unimplemented - prevents widening assignment.
+  ORBInitializer_var (const TAO_Base_var &rhs);
+  ORBInitializer_var &operator= (const TAO_Base_var &rhs);
+};
 
 
 #endif /* end #if !defined */
@@ -2138,22 +2713,22 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER___OUT_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER___OUT_CH_
 
-  class TAO_Export ORBInitializer_out
-  {
-  public:
-    ORBInitializer_out (ORBInitializer_ptr &);
-    ORBInitializer_out (ORBInitializer_var &);
-    ORBInitializer_out (const ORBInitializer_out &);
-    ORBInitializer_out &operator= (const ORBInitializer_out &);
-    ORBInitializer_out &operator= (const ORBInitializer_var &);
-    ORBInitializer_out &operator= (ORBInitializer_ptr);
-    operator ORBInitializer_ptr &();
-    ORBInitializer_ptr &ptr (void);
-    ORBInitializer_ptr operator-> (void);
+class TAO_Export ORBInitializer_out
+{
+public:
+  ORBInitializer_out (ORBInitializer_ptr &);
+  ORBInitializer_out (ORBInitializer_var &);
+  ORBInitializer_out (const ORBInitializer_out &);
+  ORBInitializer_out &operator= (const ORBInitializer_out &);
+  ORBInitializer_out &operator= (const ORBInitializer_var &);
+  ORBInitializer_out &operator= (ORBInitializer_ptr);
+  operator ORBInitializer_ptr &();
+  ORBInitializer_ptr &ptr (void);
+  ORBInitializer_ptr operator-> (void);
 
-  private:
-    ORBInitializer_ptr &ptr_;
-  };
+private:
+  ORBInitializer_ptr &ptr_;
+};
 
 
 #endif /* end #if !defined */
@@ -2162,59 +2737,64 @@ class TAO_Export ORBInitInfo : public virtual CORBA_Object
 #if !defined (_PORTABLEINTERCEPTOR_ORBINITIALIZER_CH_)
 #define _PORTABLEINTERCEPTOR_ORBINITIALIZER_CH_
 
-class TAO_Export ORBInitializer : public virtual CORBA_Object
-  {
-  public:
-  #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef ORBInitializer_ptr _ptr_type;
-    typedef ORBInitializer_var _var_type;
-  #endif /* ! __GNUC__ || g++ >= 2.8 */
+class TAO_Export ORBInitializer
+  : public virtual CORBA_Object
+{
+public:
+#if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
+  typedef ORBInitializer_ptr _ptr_type;
+  typedef ORBInitializer_var _var_type;
+#endif /* ! __GNUC__ || g++ >= 2.8 */
 
   static int _tao_class_id;
 
-   // the static operations
-    static ORBInitializer_ptr _duplicate (ORBInitializer_ptr obj);
-    static ORBInitializer_ptr _narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  // The static operations.
+  static ORBInitializer_ptr _duplicate (ORBInitializer_ptr obj);
 
-    static ORBInitializer_ptr _unchecked_narrow (
-        CORBA::Object_ptr obj
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS);
+  static ORBInitializer_ptr _narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    static ORBInitializer_ptr _nil (void)
-      {
-        return (ORBInitializer_ptr)0;
-      }
+  static ORBInitializer_ptr _unchecked_narrow (
+      CORBA::Object_ptr obj
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    );
 
-    virtual void pre_init (
-        PortableInterceptor::ORBInitInfo_ptr info
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  static ORBInitializer_ptr _nil (void)
+    {
+      return (ORBInitializer_ptr)0;
+    }
 
-    virtual void post_init (
-        PortableInterceptor::ORBInitInfo_ptr info
-        TAO_ENV_ARG_DECL_WITH_DEFAULTS
-      )
-      ACE_THROW_SPEC ((
-        CORBA::SystemException
-      )) = 0;
+  virtual void pre_init (
+      PortableInterceptor::ORBInitInfo_ptr info
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual void *_tao_QueryInterface (ptr_arith_t type);
+  virtual void post_init (
+      PortableInterceptor::ORBInitInfo_ptr info
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS
+    )
+    ACE_THROW_SPEC ((
+      CORBA::SystemException
+    )) = 0;
 
-    virtual const char* _interface_repository_id (void) const;
+  virtual void *_tao_QueryInterface (ptr_arith_t type);
 
-  protected:
-    ORBInitializer ();
+  virtual const char* _interface_repository_id (void) const;
 
-    virtual ~ORBInitializer (void);
-  private:
-    ORBInitializer (const ORBInitializer &);
-    void operator= (const ORBInitializer &);
-  };
+protected:
+  ORBInitializer (void);
+
+  virtual ~ORBInitializer (void);
+
+private:
+  ORBInitializer (const ORBInitializer &);
+  void operator= (const ORBInitializer &);
+};
 
 
 #endif /* end #if !defined */
@@ -2228,6 +2808,11 @@ TAO_NAMESPACE_STORAGE_CLASS void register_orb_initializer (
 }
 TAO_NAMESPACE_CLOSE // module PortableInterceptor
 
+TAO_NAMESPACE  OBV_PortableInterceptor
+{
+}
+TAO_NAMESPACE_CLOSE
+
 TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::ForwardRequest &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ForwardRequest*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ForwardRequest *&); // deprecated
@@ -2236,6 +2821,10 @@ TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::InvalidSlo
 TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::InvalidSlot*); // noncopying version
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::InvalidSlot *&); // deprecated
 TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::InvalidSlot *&);
+TAO_Export void operator<<= (CORBA::Any &, const PortableInterceptor::ObjectReferenceTemplateSeq &); // copying version
+TAO_Export void operator<<= (CORBA::Any &, PortableInterceptor::ObjectReferenceTemplateSeq*); // noncopying version
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, PortableInterceptor::ObjectReferenceTemplateSeq *&); // deprecated
+TAO_Export CORBA::Boolean operator>>= (const CORBA::Any &, const PortableInterceptor::ObjectReferenceTemplateSeq *&);
 
 #ifndef __ACE_INLINE__
 
@@ -2244,6 +2833,43 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::Forwa
 
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::InvalidSlot &);
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::InvalidSlot &);
+
+//@@ Boris: begin experimental
+TAO_NAMESPACE CORBA
+{
+  void add_ref (PortableInterceptor::ObjectReferenceFactory *);
+  void remove_ref (PortableInterceptor::ObjectReferenceFactory *);
+}
+TAO_NAMESPACE_CLOSE
+//@@ Boris: end experimental
+
+TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceFactory *);
+TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceFactory *&);
+//@@ Boris: begin experimental
+TAO_NAMESPACE CORBA
+{
+  void add_ref (PortableInterceptor::ObjectReferenceTemplate *);
+  void remove_ref (PortableInterceptor::ObjectReferenceTemplate *);
+}
+TAO_NAMESPACE_CLOSE
+//@@ Boris: end experimental
+
+TAO_ExportCORBA::Boolean operator<< (TAO_OutputCDR &, const PortableInterceptor::ObjectReferenceTemplate *);
+TAO_ExportCORBA::Boolean operator>> (TAO_InputCDR &, PortableInterceptor::ObjectReferenceTemplate *&);
+
+#if !defined _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
+#define _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_
+
+TAO_Export CORBA::Boolean operator<< (
+    TAO_OutputCDR &,
+    const PortableInterceptor::ObjectReferenceTemplateSeq &
+  );
+TAO_Export CORBA::Boolean operator>> (
+    TAO_InputCDR &,
+    PortableInterceptor::ObjectReferenceTemplateSeq &
+  );
+
+#endif /* _TAO_CDR_OP_PortableInterceptor_ObjectReferenceTemplateSeq_H_ */
 
 
 #endif /* __ACE_INLINE__ */

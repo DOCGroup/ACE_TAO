@@ -281,8 +281,7 @@ TAO_POA::create_reference (const char *intf
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
-  return this->create_reference_i (intf,
-                                   this->cached_policies_.server_priority ()
+  return this->create_reference_i (intf
                                    TAO_ENV_ARG_PARAMETER);
 }
 
@@ -297,8 +296,7 @@ TAO_POA::create_reference_with_id (const PortableServer::ObjectId &id,
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
 
   return this->create_reference_with_id_i (id,
-                                           intf,
-                                           this->cached_policies_.server_priority ()
+                                           intf
                                            TAO_ENV_ARG_PARAMETER);
 }
 
@@ -386,6 +384,33 @@ TAO_POA::the_POAManager (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   return PortableServer::POAManager::_duplicate (&this->poa_manager_);
+}
+
+ACE_INLINE PortableInterceptor::AdapterManagerId
+TAO_POA::get_manager_id (TAO_ENV_SINGLE_ARG_DECL_NOT_USED)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return TAO_POA_Manager::poa_manager_id_;
+}
+
+
+ACE_INLINE CORBA::StringSeq *
+TAO_POA::adapter_name (TAO_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  return this->adapter_name_i (TAO_ENV_SINGLE_ARG_DECL);
+}
+
+ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
+TAO_POA::get_adapter_template ()
+{
+  return this->ort_template_;
+}
+
+ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
+TAO_POA::get_obj_ref_factory ()
+{
+  return this->obj_ref_factory_;
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -603,6 +628,12 @@ ACE_INLINE PortableServer::ThreadPolicyValue
 TAO_POA::thread_policy (void) const
 {
   return this->cached_policies_.thread ();
+}
+
+ACE_INLINE PortableInterceptor::AdapterState
+TAO_POA::get_adapter_state (TAO_ENV_SINGLE_ARG_DECL)
+{
+  return this->adapter_state_;
 }
 
 ACE_INLINE TAO_POA_Cached_Policies &
