@@ -1,3 +1,11 @@
+Tue Feb  8 01:26:29 2000  Pradeep Gore  <pradeep@flamenco.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannelFactory_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_EventChannel_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_SupplierAdmin_i.{h,cpp}:
+	* orbsvcs/orbsvcs/Notify/Notify_ConsumerAdmin_i.{h.cpp}:
+	  Added missing implementation for administrative methods.
+
 Mon Feb  7 15:31:54 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be_include/be_union.h:
