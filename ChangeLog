@@ -1,3 +1,10 @@
+Thu Feb 3 10:28:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Removed some empty lines and use the ?= operator to set TAO_ROOT
+          and CIAO_ROOT if they are not set yet, saves us a few lines in each
+          generated GNU makefile
+
 Thu Feb 3 08:43:37 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
