@@ -4,13 +4,13 @@
 //
 // = LIBRARY
 //    TAO
-// 
+//
 // = FILENAME
 //    iiopobj.h
 //
 // = AUTHOR
 //     Copyright 1994-1995 by Sun Microsystems Inc.
-// 
+//
 // ============================================================================
 
 #if !defined (TAO_IIOPORB_H)
@@ -43,15 +43,27 @@ public:
                                   CORBA::Environment &env);
   // Convert an object reference to an IOR stringified form.
 
+  int _register_collocation (ACE_Addr &addr);
+  // Register a "collocation."  This method takes a pointer to an
+  // ACE_INET_Addr and records the location into an Unbounded_Set.
+  // Returns 0 if succeeds, -1 if recording fails, 1 if the location
+  // is already in the set.
+
+  TAO_ServantBase *_get_collocated_servant (STUB_Object *sobj);
+  // Return the object pointer of an collocated object it there is
+  // one, otherwise, return 0.
+
   // = ACCESSORS
   void use_omg_ior_format (CORBA::Boolean ior);
   // Set the IOR flag.
   CORBA::Boolean use_omg_ior_format (void);
   // Get the IOR flag.
-  
+
 private:
   CORBA::Boolean use_omg_ior_format_;
   // Decides whether to use the URL notation or to use IOR notation.
+
+  ACE_Unbounded_Set<ACE_INET_Addr> collocation_record_;
 
   // = These are not provided.
   IIOP_ORB (const IIOP_ORB &);
