@@ -101,7 +101,7 @@ BE_cleanup (void)
         {
           CORBA::ModuleDef_var scope =
             CORBA::ModuleDef::_narrow (result.in ()
-                                      ACE_ENV_ARG_PARAMETER);
+                                       ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           scope->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -217,7 +217,7 @@ BE_create_holding_scope (ACE_ENV_SINGLE_ARG_DECL)
   else
     {
       scope = CORBA::ModuleDef::_narrow (result.in ()
-                                        ACE_ENV_ARG_PARAMETER);
+                                         ACE_ENV_ARG_PARAMETER);
       ACE_CHECK;
     }
 
@@ -231,7 +231,7 @@ BE_produce (void)
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
     {
-      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
+//      BE_create_holding_scope (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       // Get the root node.
@@ -253,12 +253,14 @@ BE_produce (void)
 
           TAO_IFR_VISITOR_WRITE_GUARD;
 
+          // If the visitor is dispatched this way, we need to override
+          // only visit_scope() for the removing visitor.
           if (visitor.visit_scope (root) == -1)
             {
               ACE_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept visitor\n")
+                  ACE_TEXT (" failed to accept removing visitor\n")
                 ));
 
               BE_abort ();
@@ -275,7 +277,7 @@ BE_produce (void)
               ACE_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept visitor\n")
+                  ACE_TEXT (" failed to accept adding visitor\n")
                 ));
 
               BE_abort ();

@@ -1,0 +1,26 @@
+// -*- C++ -*-
+// $Id$
+
+module help
+{
+  exception doh {};
+  exception whups {};
+};
+
+module help
+{
+  interface c_supp1 {};
+  interface c_supp2 {};
+};
+
+module mod
+{
+  component test_component supports help::c_supp1, help::c_supp2
+  {
+    attribute long c_attr 
+      getraises (help::doh) 
+      setraises (help::whups, help::doh);
+  };
+};
+
+

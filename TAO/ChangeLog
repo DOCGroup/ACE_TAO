@@ -1,3 +1,49 @@
+Wed Jul 30 18:25:13 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/fe/idl.yy:
+        * TAO_IDL/fe/y.tab.cpp:
+
+	  Fixed cut and paste error in code that adds attribute 
+	  exceptions to the AST.
+
+        * orbsvcs/IFR_Service/be_produce.cpp:
+        * orbsvcs/IFR_Service/ifr_adding_visitor.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentModuleDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtAttributeDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/InterfaceDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/ModuleDef_i.h:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.cpp:
+        * orbsvcs/orbsvcs/IFRService/Repository_i.h:
+
+	  A start on debugging and testing the IFR's support of 
+	  IDL3 types.
+
+        * tao/Typecode.cpp:
+
+	  Fixed bugs in marshaling and demarshaling of IDL3
+	  type codes.
+
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/IDL3_Test.dsp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * orbsvcs/tests/InterfaceRepo/IDL3_Test/test.idl:
+
+	  Start of new test for IFR's IDL3 support.
+
+        * orbsvcs/tests/InterfaceRepo/InterfaceRepo.dsw:
+        * orbsvcs/tests/InterfaceRepo/Application_Test/client.cpp:
+
+	  Updates and minor changes.
+
 Wed Jul 30 17:00:03 2003  Yamuna Krishnamurthy  <yamuna@oomworks.com>
 	
 	* examples/RTScheduling/FP_SchedulingC.h:
