@@ -1,0 +1,40 @@
+#! /bin/sh
+
+# =============================================================================
+#
+#  @file  ACE-casts-convert
+#
+#  $Id$
+#
+#  Script to convert all ACE cast macro calls (e.g.
+#  ACE_static_cast (foo, bar)) to their standard C++ counterparts (e.g.
+#  static_cast<foo> (bar)).
+#
+#  Use this script at your own risk.  It appears to work correctly for
+#  all cases, but verify the results "just in case".
+#
+#  @author Ossama Othman
+#
+# =============================================================================
+
+
+if test "$#" -eq 0; then
+  echo "Usage: $0 FILE [FILE2] ..."
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "Converting ACE cast macro calls to standard C++ syntax in:"
+
+while test "$#" -gt 0
+do
+  arg="$1"
+  shift
+
+  if grep "ACE_\(static\|dynamic\|const\|reinterpret\)_cast" $arg > /dev/null 2>&1; then
+    echo $arg
+   sed -e :a -e 's/ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*\([^ \t].*\)/\1_cast<\2> (\3/g; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*([ \t]*\([^,]*\)[ \t]*,[ \t]*$/{N;s/\n//;ba;}; /ACE_\(const\|static\|reinterpret\|dynamic\)_cast[ \t]*(/ba' $arg > ${arg}.new
+    mv ${arg}.new $arg
+  fi
+done
