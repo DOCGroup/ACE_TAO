@@ -1,20 +1,41 @@
+Mon Mar 02 09:13:26 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-sunos5.5-sunc++-4.x.h: replaced ACE_PAGE_SIZE with
+          ACE_HAS_GETPAGESIZE, and added ACE_HAS_STL_MAP_CONFLICT.
+          Thanks to J. Russell Noseworthy <rnosewor@objectsciences.com>
+          for these recommendations.
+
+        * ace/config-sunos5.6-sunc++-4.x.h: just #include
+          config-sunos5.5-sunc++-4.x.h.  There's no difference between
+          the two at this point.
+
+        * include/makeinclude/platform_sunos5_sunc++.GNU: added -R./ and
+          -mt to LDFLAGS.  Added -fast to LDFLAGS if "fast" flag is
+          enabled.  Thanks to J. Russell Noseworthy
+          <rnosewor@objectsciences.com> for these recommendations.
+
+        * include/makeinclude/platform_sunos5.6_sparc_sunc++.GNU: just
+          include platform_sunos5_sunc++.GNU.  There's no difference between
+          the two at this point.  There is one significant net change to
+          the 5.6 platform:  -s is no longer included in LDFLAGS.
+
 Sun Mar  1 13:54:02 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* Makefile: Added cvs commands to automatically tag the CVS
-	  repository with version number 'ACE_9_9_99' tag and 'Current'
-	  tag.
+        * Makefile: Added cvs commands to automatically tag the CVS
+          repository with version number 'ACE_9_9_99' tag and 'Current'
+          tag.
 
 Sun Mar  1 12:26:13 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
-	* ace/Hash_Map_Manager.cpp (reset_i):
-	* ace/Hash_Map_Manager.h:
-	Added reset () method for the Hash_Map_Iterator.
+        * ace/Hash_Map_Manager.cpp (reset_i):
+        * ace/Hash_Map_Manager.h:
+        Added reset () method for the Hash_Map_Iterator.
 
 Sun Mar 01 10:59:27 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Asynch_IO.cpp (cancel): Changed CancelIO to CancelIo.
+        * ace/Asynch_IO.cpp (cancel): Changed CancelIO to CancelIo.
 
-	* ace/Synch.h (ACE_Lock): Added a virtual destructor to ACE_Lock.
+        * ace/Synch.h (ACE_Lock): Added a virtual destructor to ACE_Lock.
 
 Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -25,18 +46,18 @@ Sun Mar 01 08:38:00 1998  David L. Levine  <levine@cs.wustl.edu>
           defining ACE_DEFAULT_SYNCH_TYPE.
 
         * ace/OS.i (sema_init): on VxWorks, use the type argument for the
- 	  sema type, instead of hard-coding to SEM_Q_FIFO.
+          sema type, instead of hard-coding to SEM_Q_FIFO.
 
         * ACE-INSTALL.html: updated Linux/alpha "as" patch.
 
 Sat Feb 28 12:20:57 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Message_Queue.cpp: Fixed the implementation of
- 	  wait_not_{full,empty}_cond() so that they utilize the
- 	  ACE_Time_Value it's passed.  In addition, revised the
- 	  implementation of peek_dequeue_head() so that it uses the new
- 	  wait_not_empty_cond() implementation.  Thanks to Thanks to Tom
- 	  Venturella <tventurell@mdc.com> for reporting this.
+        * ace/Message_Queue.cpp: Fixed the implementation of
+          wait_not_{full,empty}_cond() so that they utilize the
+          ACE_Time_Value it's passed.  In addition, revised the
+          implementation of peek_dequeue_head() so that it uses the new
+          wait_not_empty_cond() implementation.  Thanks to Thanks to Tom
+          Venturella <tventurell@mdc.com> for reporting this.
 
 Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -56,15 +77,15 @@ Fri Feb 27 15:47:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Fri Feb 27 13:42:09 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/ACE.cpp (recv_n): Removed the MSG_PEEK flag since it didn't
- 	  seem to work correctly.
+        * ace/ACE.cpp (recv_n): Removed the MSG_PEEK flag since it didn't
+          seem to work correctly.
 
 Fri Feb 27 11:18:28 1998  Chris Cleeland  <cleeland@lambada.cs.wustl.edu>
 
-	* ace/Log_Msg.cpp: Added three new conversion operators: "%{"
- 	calls inc() to increase the trace_depth, "%}" calls dec() to
- 	decrease the trace_depth, and "%$" is used in place of "\n" to
- 	insert a newline followed by appropriate current indentation.
+        * ace/Log_Msg.cpp: Added three new conversion operators: "%{"
+        calls inc() to increase the trace_depth, "%}" calls dec() to
+        decrease the trace_depth, and "%$" is used in place of "\n" to
+        insert a newline followed by appropriate current indentation.
 
 Thu Feb 26 21:36:27 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -72,10 +93,10 @@ Thu Feb 26 21:36:27 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Thu Feb 26 16:48:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/OS.h: Added new macros for ACE_FILE_STREAM and
- 	  ACE_FILE_CONNECTOR to be consistent with the ACE_SOCK_* stuff,
- 	  etc.  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting
- 	  this.
+        * ace/OS.h: Added new macros for ACE_FILE_STREAM and
+          ACE_FILE_CONNECTOR to be consistent with the ACE_SOCK_* stuff,
+          etc.  Thanks to Ganesh Pai <gpai@voicetek.com> for reporting
+          this.
 
 Thu Feb 26 11:14:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -84,38 +105,38 @@ Thu Feb 26 11:14:21 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Thu Feb 26 02:42:57 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Service_Config.cpp (load_static_svcs): Removed explicit
-	  constness cast from the allocation function.
+        * ace/Service_Config.cpp (load_static_svcs): Removed explicit
+          constness cast from the allocation function.
 
 Wed Feb 25 23:08:44 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* tests/MT_Reactor_Timer_Test.cpp: Made this test compile on
- 	  platforms that lack threads and also updated the programming
- 	  style to be consistent with other parts of ACE.
+        * tests/MT_Reactor_Timer_Test.cpp: Made this test compile on
+          platforms that lack threads and also updated the programming
+          style to be consistent with other parts of ACE.
 
-	* tests/Priority_Task_Test.cpp: Made this test compile on
-	  platforms that lack threads.
+        * tests/Priority_Task_Test.cpp: Made this test compile on
+          platforms that lack threads.
 
-	* ace/Svc_Conf.h: Fixed the prototype for
- 	  ace_create_service_type() to reflect the elimination of "const
- 	  void *".
+        * ace/Svc_Conf.h: Fixed the prototype for
+          ace_create_service_type() to reflect the elimination of "const
+          void *".
 
-	* ace/Parse_Node: Eliminated more uses of "const void *" and
- 	  changed them to plain ol' "void *".
+        * ace/Parse_Node: Eliminated more uses of "const void *" and
+          changed them to plain ol' "void *".
 
-	* ace/Service_Types.cpp (fini): Changed the "const void *" to be
- 	  simply "void *" since it didn't seem to make any sense they way
- 	  it was!  Thanks to Stephen Coy <stevec@magna.com.au> for
- 	  insisting on this...
+        * ace/Service_Types.cpp (fini): Changed the "const void *" to be
+          simply "void *" since it didn't seem to make any sense they way
+          it was!  Thanks to Stephen Coy <stevec@magna.com.au> for
+          insisting on this...
 
-	* ace/config-sunos5.*.h: Moved the ACE_HAS_REENTRANT_FUNCTIONS
- 	  into the section of #defines that should be commented out if
- 	  we're not building a multi-threaded library.
+        * ace/config-sunos5.*.h: Moved the ACE_HAS_REENTRANT_FUNCTIONS
+          into the section of #defines that should be commented out if
+          we're not building a multi-threaded library.
 
-	* ace/Service_Config.cpp (open): Tightened up the comparison of
- 	  the key with the ACE_DEFAULT_LOGGER_KEY to use string equality
- 	  rather than pointer equality.  Thanks to Stephen Coy
- 	  <stevec@magna.com.au> for reporting this.
+        * ace/Service_Config.cpp (open): Tightened up the comparison of
+          the key with the ACE_DEFAULT_LOGGER_KEY to use string equality
+          rather than pointer equality.  Thanks to Stephen Coy
+          <stevec@magna.com.au> for reporting this.
 
 Wed Feb 25 10:50:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -130,51 +151,51 @@ Wed Feb 25 10:50:17 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Tue Feb 24 15:07:50 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* tests/test.{mdp,mak}: Added Env_Value_Test and OrdMultiSet_Test
-	  into the workspace.
+        * tests/test.{mdp,mak}: Added Env_Value_Test and OrdMultiSet_Test
+          into the workspace.
 
-	  Removed all odbc libraries from all projects.  We don't really
-	  need them to run ACE.  Thanks to gonzo@ing.puc.cl (Gonzalo
-	  A. Diethelm) for pointing this out.
+          Removed all odbc libraries from all projects.  We don't really
+          need them to run ACE.  Thanks to gonzo@ing.puc.cl (Gonzalo
+          A. Diethelm) for pointing this out.
 
 Tue Feb 24 07:14:16 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.cpp (handle_accept): Update the
- 	  event_handler's proactor pointer once it is accepted.  Thanks to
- 	  Jason Katz <Jason@email.rts-inc.com> for reporting this.
+        * ace/Asynch_Acceptor.cpp (handle_accept): Update the
+          event_handler's proactor pointer once it is accepted.  Thanks to
+          Jason Katz <Jason@email.rts-inc.com> for reporting this.
 
-	* apps/Gateway/Gateway/Event.h (class Subscription): Moved the
- 	  htonl of total_consumers_ to *after* the loop that uses it!
-  	  Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
+        * apps/Gateway/Gateway/Event.h (class Subscription): Moved the
+          htonl of total_consumers_ to *after* the loop that uses it!
+          Thanks to Jorn Jensen <jornj@funcom.com> for reporting this.
 
 Tue Feb 24 05:08:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.i: Filled in some missing keywords.
+        * ace/Asynch_Acceptor.i: Filled in some missing keywords.
 
-	* ace/Log_Record.h (ACE_Log_Record): Hacked it to work for CE.
-	  Undefined the ostream version of print ().  I'm planning to drop
-	  iostream support on WinCE.  (Then, I don't have to write my
-	  own. ;-)
+        * ace/Log_Record.h (ACE_Log_Record): Hacked it to work for CE.
+          Undefined the ostream version of print ().  I'm planning to drop
+          iostream support on WinCE.  (Then, I don't have to write my
+          own. ;-)
 
-	* ace/ACE.{h,i} (timestamp, format_hexdump): Removed UNICODE_ONLY version.
-	  Changed to use ASYS_TCHAR to differentiate this condition.
+        * ace/ACE.{h,i} (timestamp, format_hexdump): Removed UNICODE_ONLY version.
+          Changed to use ASYS_TCHAR to differentiate this condition.
 
-	* ace/OS.h (ACE_OS): Undefined shm_{open,unlink} if
-	  ACE_HAS_MOSTLY_UNICODE_APIS.
+        * ace/OS.h (ACE_OS): Undefined shm_{open,unlink} if
+          ACE_HAS_MOSTLY_UNICODE_APIS.
 
-	* ace/OS.cpp (ctime,ctime_r): Added CE implementation.
+        * ace/OS.cpp (ctime,ctime_r): Added CE implementation.
 
-	* ace/streams.h: Added /**/ between #include and <..> in several
-	  places.
+        * ace/streams.h: Added /**/ between #include and <..> in several
+          places.
 
-	* ace/*: Changed ACE_HAS_UNICODE_ONLY to
-	  ACE_HAS_MOSTLY_UNICODE_APIS.
+        * ace/*: Changed ACE_HAS_UNICODE_ONLY to
+          ACE_HAS_MOSTLY_UNICODE_APIS.
 
 Mon Feb 23 19:41:53 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
-	* ace/Asynch_Acceptor.i (bytes_to_read): Added an inline accessor
- 	  for the bytes_to_read_ field.  Thanks to Jason Katz
- 	  <Jason@email.rts-inc.com> for suggesting this.
+        * ace/Asynch_Acceptor.i (bytes_to_read): Added an inline accessor
+          for the bytes_to_read_ field.  Thanks to Jason Katz
+          <Jason@email.rts-inc.com> for suggesting this.
 
 Mon Feb 23 12:26:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
@@ -199,8 +220,8 @@ Mon Feb 23 11:27:10 1998  David L. Levine  <levine@cs.wustl.edu>
 
 Mon Feb 23 11:11:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/Process.h: Define ACE_Process_Options::NO_EXEC as 0 on
- 	  Win32.  It has no effect on NT anyway.
+        * ace/Process.h: Define ACE_Process_Options::NO_EXEC as 0 on
+          Win32.  It has no effect on NT anyway.
 
 Sun Feb 22 21:37:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
