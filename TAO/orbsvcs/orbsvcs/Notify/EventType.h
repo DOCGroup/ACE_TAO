@@ -53,10 +53,10 @@ public:
   TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
   /// == operator
-  int operator==(const TAO_Notify_EventType& notify_event_type) const;
+  bool operator==(const TAO_Notify_EventType& notify_event_type) const;
 
   /// != operator
-  int operator!=(const TAO_Notify_EventType& notify_event_type) const;
+  bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
 
   static TAO_Notify_EventType special (void);
   // Return the special event type.

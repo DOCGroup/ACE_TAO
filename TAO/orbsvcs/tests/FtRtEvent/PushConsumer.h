@@ -37,6 +37,6 @@ public:
 private:
   CORBA::ORB_var orb_;
   PushConsumer_impl(const PushConsumer_impl&);
-  void operator==(const PushConsumer_impl&);
+  bool operator==(const PushConsumer_impl&);
 };
 #endif

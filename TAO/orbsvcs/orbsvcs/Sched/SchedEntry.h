@@ -69,7 +69,7 @@ public:
   ~Dispatch_Entry_Link ();
     // Destructor.
 
-  int operator < (const Dispatch_Entry_Link &d) const;
+  bool operator < (const Dispatch_Entry_Link &d) const;
     // Less than comparison operator.
 
   Dispatch_Entry &dispatch_entry () const;
@@ -403,7 +403,7 @@ public:
   // LT comparator
   //  TBD - make this a global comparison operator
   //  instead of a class member function
-  int operator < (const Dispatch_Entry &d) const;
+  bool operator < (const Dispatch_Entry &d) const;
 
   // accessor for pointer to original dispatch
   Dispatch_Entry *original_dispatch ();
@@ -583,7 +583,7 @@ public:
   TimeLine_Entry *prev (void) const;
   void prev (TimeLine_Entry *);
 
-  int operator < (const TimeLine_Entry&) const;
+  bool operator < (const TimeLine_Entry&) const;
 
 private:
 
@@ -623,7 +623,7 @@ public:
   TimeLine_Entry &entry () const;
   // accessor for the underlying entry
 
-  int operator < (const TimeLine_Entry_Link&) const;
+  bool operator < (const TimeLine_Entry_Link&) const;
   // comparison operator
 
 private:

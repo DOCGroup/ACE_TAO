@@ -52,7 +52,7 @@ public:
 
 // ****************************************************************
 
-class TAO_ETCL_Export TAO_ETCL_Literal_Constraint 
+class TAO_ETCL_Export TAO_ETCL_Literal_Constraint
   : public TAO_ETCL_Constraint
 {
 public:
@@ -93,22 +93,22 @@ public:
 
   // = Boolean operators.
 
-  CORBA::Boolean
+  bool
   operator< (const TAO_ETCL_Literal_Constraint& rhs);
 
-  CORBA::Boolean
+  bool
   operator<= (const TAO_ETCL_Literal_Constraint& rhs);
 
-  CORBA::Boolean
+  bool
   operator> (const TAO_ETCL_Literal_Constraint& rhs);
 
-  CORBA::Boolean
+  bool
   operator>= (const TAO_ETCL_Literal_Constraint& rhs);
 
-  CORBA::Boolean
+  bool
   operator== (const TAO_ETCL_Literal_Constraint& rhs);
 
-  CORBA::Boolean
+  bool
   operator!= (const TAO_ETCL_Literal_Constraint& rhs);
 
   // = Arithmetic operators.

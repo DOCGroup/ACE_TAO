@@ -100,13 +100,13 @@ TAO_ExtId::operator= (const TAO_ExtId &rhs)
   kind_ = rhs.kind_;
 }
 
-int
+bool
 TAO_ExtId::operator== (const TAO_ExtId &rhs) const
 {
   return id_ == rhs.id_ && kind_ == rhs.kind_;
 }
 
-int
+bool
 TAO_ExtId::operator!= (const TAO_ExtId &rhs) const
 {
   return id_ != rhs.id_ || kind_ != rhs.kind_;

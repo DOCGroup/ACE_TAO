@@ -354,14 +354,14 @@ ACE_Unbounded_List_Iterator<T>::operator* (void)
   return *retv;
 }
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_List_Iterator<T>::operator== (const ACE_Unbounded_List_Iterator<T> &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
-template <class T> int
+template <class T> bool
 ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T> &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::operator!=");
@@ -387,4 +387,3 @@ ACE_Unbounded_List<T>::is_full (void) const
 
 
 #endif /* NS_CONTAINERS_T_C */
-

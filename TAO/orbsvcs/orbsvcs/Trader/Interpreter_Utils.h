@@ -44,28 +44,28 @@ public:
   TAO_String_Hash_Key (const CORBA::String_var &hash_key);
   // Copy constructor.
 
-  int operator == (const TAO_String_Hash_Key &hash_key) const;
+  bool operator == (const TAO_String_Hash_Key &hash_key) const;
   // The operator for hash binding and "find"ing.
 
-  friend int operator < (const TAO_String_Hash_Key &left,
-                         const TAO_String_Hash_Key &right);
+  friend bool operator < (const TAO_String_Hash_Key &left,
+                          const TAO_String_Hash_Key &right);
   // The operator for hash binding and "find"ing.
 
   u_long hash (void) const;
   // The function that computes a hash value.
 };
 
-typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, 
-                                int, 
-                                ACE_Hash<TAO_String_Hash_Key>, 
-                                ACE_Equal_To<TAO_String_Hash_Key>, 
-                                ACE_Null_Mutex> 
+typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key,
+                                int,
+                                ACE_Hash<TAO_String_Hash_Key>,
+                                ACE_Equal_To<TAO_String_Hash_Key>,
+                                ACE_Null_Mutex>
   TAO_Lookup_Table;
-typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key, 
-                                CORBA::TypeCode_ptr, 
-                                ACE_Hash<TAO_String_Hash_Key>, 
-                                ACE_Equal_To<TAO_String_Hash_Key>, 
-                                ACE_Null_Mutex> 
+typedef ACE_Hash_Map_Manager_Ex<TAO_String_Hash_Key,
+                                CORBA::TypeCode_ptr,
+                                ACE_Hash<TAO_String_Hash_Key>,
+                                ACE_Equal_To<TAO_String_Hash_Key>,
+                                ACE_Null_Mutex>
   TAO_Typecode_Table;
 
 

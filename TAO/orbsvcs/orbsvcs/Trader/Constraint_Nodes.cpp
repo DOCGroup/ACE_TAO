@@ -553,11 +553,11 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
   return return_value;
 }
 
-int
+bool
 operator== (const TAO_Literal_Constraint& left,
             const TAO_Literal_Constraint& right)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -584,11 +584,11 @@ operator== (const TAO_Literal_Constraint& left,
 }
 
 
-int
+bool
 operator!= (const TAO_Literal_Constraint& left,
             const TAO_Literal_Constraint& right)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -614,11 +614,11 @@ operator!= (const TAO_Literal_Constraint& left,
   return return_value;
 }
 
-int
+bool
 operator< (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -644,11 +644,11 @@ operator< (const TAO_Literal_Constraint& left,
   return return_value;
 }
 
-int
+bool
 operator<= (const TAO_Literal_Constraint& left,
             const TAO_Literal_Constraint& right)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -671,11 +671,11 @@ operator<= (const TAO_Literal_Constraint& left,
   return return_value;
 }
 
-int
+bool
 operator> (const TAO_Literal_Constraint& left,
            const TAO_Literal_Constraint& right)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -698,11 +698,11 @@ operator> (const TAO_Literal_Constraint& left,
   return return_value;
 }
 
-int
+bool
 operator>= (const TAO_Literal_Constraint& left,
             const TAO_Literal_Constraint& right)
 {
-  int return_value = 0;
+  bool return_value = false;
   TAO_Expression_Type widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
 
@@ -726,21 +726,21 @@ operator>= (const TAO_Literal_Constraint& left,
 }
 
 
-int
+bool
 operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
 {
   return (left == (CORBA::Double) right);
 }
 
-int
+bool
 operator== (const TAO_String_Manager& left,
             const TAO_Literal_Constraint& right)
 {
-  int result =  0;
+  bool result = false;
 
   if ((const char*) right != 0)
     result = ACE_OS::strcmp ((const char*) left,
- (const char*) right) == 0;
+                             (const char*) right) == 0;
   return result;
 }
 
