@@ -936,8 +936,16 @@ AC_DISABLE_STATIC
 dnl Enable Libtool module support
 AC_LIBTOOL_DLOPEN
 
+dnl FIXME: Temporary hack to make libtool work with g++.
+dnl        Shared library support will only work with GNU g++ and GNU ld
+dnl        right now.
+save_CC="$CC"
+CC="$CXX"
+
 dnl Check for libtool and turn on Automake processing for Libtool
 AC_PROG_LIBTOOL
+
+CC="$save_CC"
 
 dnl
 dnl SECTION 5: checks for header files
