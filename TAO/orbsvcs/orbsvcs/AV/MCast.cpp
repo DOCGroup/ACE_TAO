@@ -4,6 +4,10 @@
 #include "Nil.h"
 #include "AVStreams_i.h"
 
+#if !defined(__ACE_INLINE__)
+#include "MCast.i"
+#endif /* __ACE_INLINE__ */
+
 //------------------------------------------------------------
 //TAO_AV_UDP_MCast_Flow_Handler
 //------------------------------------------------------------
@@ -31,7 +35,7 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_input (ACE_HANDLE /*fd*/)
 }
 
 int
-TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv, 
+TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
                                                const void *arg)
 {
   return TAO_AV_Flow_Handler::handle_timeout (tv,arg);
