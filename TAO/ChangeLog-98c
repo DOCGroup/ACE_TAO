@@ -7,6 +7,10 @@ Wed Apr 08 10:02:16 1998  David L. Levine  <levine@cs.wustl.edu>
           the top of the Makefile.  The old release mechanism has
           been retained; to use it:  make release-old.
 
+        * tao/ORB.cpp (ORB_init): added missing __FILE__ to printout.
+          Thanks to Tom Brusehaver <tgb@cozy.netco.com> for reporting
+          this.
+
 Wed Apr 08 07:41:53 1998  Brian Mendel  <brian.r.mendel@boeing.com>
 
         * tao/{default.bld, tao.bld}: Updated VxWorks GHS Build files.
