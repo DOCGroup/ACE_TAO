@@ -16,8 +16,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Priority_Reactor)
 
 // Initialize ACE_Select_Reactor.
 
-const int npriorities =
-  ACE_Event_Handler::HI_PRIORITY - ACE_Event_Handler::LO_PRIORITY + 1;
+#define npriorities \
+	ACE_Event_Handler::HI_PRIORITY-ACE_Event_Handler::LO_PRIORITY+1
 
 void
 ACE_Priority_Reactor::init_bucket (void)
