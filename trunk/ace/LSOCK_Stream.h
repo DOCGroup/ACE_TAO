@@ -62,7 +62,9 @@ public:
   // for UNIX domain sockets.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK_Stream.i"
+#endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* ACE_LOCAL_SOCK_STREAM_H */

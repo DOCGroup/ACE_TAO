@@ -86,6 +86,8 @@ private:
   long microsec_;
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Date_Time.i"
+#endif
 
 #endif /* ACE_DATE_TIME_H */

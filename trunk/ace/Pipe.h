@@ -68,6 +68,8 @@ private:
   ACE_HANDLE handles_[2];
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/Pipe.i"
+#endif
 
 #endif /* ACE_PIPE_H */

@@ -7,7 +7,7 @@
 // ACE_HAS_STREAM_PIPES vs. if it doesn't...  See the manual page on
 // getmsg(2) and read(2) for more details.
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
@@ -29,7 +29,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::recv");
@@ -39,7 +39,7 @@ ACE_FIFO_Recv_Msg::recv (void *buf, size_t max_len)
 }
 
 #if defined (ACE_HAS_STREAM_PIPES)
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 			 ACE_Str_Buf *cntl,
 			 int *flags)
@@ -51,7 +51,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf *data,
 			 flags);
 }
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_FIFO_Recv_Msg::recv (int *band,
 			 ACE_Str_Buf *data,
 			 ACE_Str_Buf *cntl,

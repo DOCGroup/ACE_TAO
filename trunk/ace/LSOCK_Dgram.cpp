@@ -6,6 +6,10 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/LSOCK_Dgram.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Dgram)
 
 void

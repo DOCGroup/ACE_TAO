@@ -1,3 +1,5 @@
+// $Id$
+
 #if ! defined (ACE_CONFIG_WINCE_H)
 #define ACE_CONFIG_WINCE_H
 
@@ -7,6 +9,7 @@
 #define ACE_USES_WINCE_SEMA_SIMULATION
 #define ACE_HAS_STRICT 1
 
+#define ACE_LACKS_INLINE_FUNCTIONS
 
 // @@ Need to remap every function that uses any of these flags to
 //    Win32 API.  These are for ANSI styled function and are not

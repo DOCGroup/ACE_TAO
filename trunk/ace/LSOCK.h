@@ -63,7 +63,9 @@ private:
   // An auxiliary handle used to avoid virtual base classes... 
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK.i"
+#endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* ACE_LOCAL_SOCK_H */

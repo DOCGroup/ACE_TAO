@@ -77,6 +77,9 @@ private:
   // To confirm connection establishment.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/UPIPE_Acceptor.i"
+#endif
+
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_UPIPE_ACCEPTOR_H */

@@ -55,5 +55,8 @@ protected:
   // Our local address.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SPIPE.i"
+#endif
+
 #endif /* ACE_SPIPE_H */

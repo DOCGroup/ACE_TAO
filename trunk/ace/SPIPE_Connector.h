@@ -90,6 +90,8 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SPIPE_Connector.i"
+#endif
 
 #endif /* ACE_SPIPE_CONNECTOR_H */

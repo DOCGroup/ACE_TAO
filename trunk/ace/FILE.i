@@ -3,7 +3,7 @@
 
 // FILE.i
 
-inline int
+ASYS_INLINE int
 ACE_FILE::disable (int signum) const
 {
 #if defined (ACE_WIN32)

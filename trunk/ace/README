@@ -138,6 +138,7 @@ ACE_HAS_XPG4_MULTIBYTE_CHAR             Platform has support for multi-byte
 ACE_LACKS_FCNTL                         Platform lacks POSIX-style fcntl ().
 ACE_LACKS_FIFO                          Platform lacks UNIX FIFOs (e.g., Win32)
 ACE_LACKS_GETS                          Platform lacks ::gets (), or it's desired to ensure that it doesn't get used.  Linux egcs g++ warns against using it.
+ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline" keyword correctly.
 ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support reentrant netdb functions (getprotobyname_r, getprotobynumber_r, gethostbyaddr_r, gethostbyname_r, getservbyname_r).
 ACE_HAS_REGEX                           Platform supports the POSIX regular expression library
 ACE_HAS_SELECT_H                        Platform has special header for select().

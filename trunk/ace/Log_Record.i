@@ -3,7 +3,7 @@
 
 // Log_Record.i
 
-inline void
+ASYS_INLINE void
 ACE_Log_Record::encode (void)
 {
   ACE_TRACE ("ACE_Log_Record::encode");
@@ -16,7 +16,7 @@ ACE_Log_Record::encode (void)
   this->pid_ = htonl (this->pid_);
 }
 
-inline void
+ASYS_INLINE void
 ACE_Log_Record::decode (void)
 {
   ACE_TRACE ("ACE_Log_Record::decode");
@@ -27,63 +27,63 @@ ACE_Log_Record::decode (void)
   this->length_ = ntohl (this->length_);
 }
 
-inline long 
+ASYS_INLINE long 
 ACE_Log_Record::type (void) const
 {
   ACE_TRACE ("ACE_Log_Record::type");
   return this->type_;
 }
 
-inline void 
+ASYS_INLINE void 
 ACE_Log_Record::type (long t)
 {
   ACE_TRACE ("ACE_Log_Record::type");
   this->type_ = t;
 }
 
-inline long 
+ASYS_INLINE long 
 ACE_Log_Record::length (void) const
 {
   ACE_TRACE ("ACE_Log_Record::length");
   return this->length_;
 }
 
-inline void 
+ASYS_INLINE void 
 ACE_Log_Record::length (long l)
 {
   ACE_TRACE ("ACE_Log_Record::length");
   this->length_ = l;
 }
 
-inline const ACE_Time_Value &
+ASYS_INLINE const ACE_Time_Value &
 ACE_Log_Record::time_stamp (void) const
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   return this->time_stamp_;
 }
 
-inline void 
+ASYS_INLINE void 
 ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   this->time_stamp_ = ts;
 }
 
-inline long 
+ASYS_INLINE long 
 ACE_Log_Record::pid (void) const
 {
   ACE_TRACE ("ACE_Log_Record::pid");
   return this->pid_;
 }
 
-inline void 
+ASYS_INLINE void 
 ACE_Log_Record::pid (long p)
 {
   ACE_TRACE ("ACE_Log_Record::pid");
   this->pid_ = p;
 }
 
-inline ASYS_TCHAR *
+ASYS_INLINE ASYS_TCHAR *
 ACE_Log_Record::msg_data (void)
 {
   ACE_TRACE ("ACE_Log_Record::msg_data");

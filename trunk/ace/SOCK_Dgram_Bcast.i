@@ -6,7 +6,7 @@
 // Broadcast an N byte datagram to ADDR (note that addr must be
 // preassigned to the broadcast address of the subnet...)
 
-inline ssize_t
+ASYS_INLINE ssize_t
 ACE_SOCK_Dgram_Bcast::send (const void *buf, 
 			    size_t n, 
 			    const ACE_Addr &addr, 

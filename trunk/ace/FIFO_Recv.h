@@ -63,6 +63,8 @@ private:
   // Auxiliary handle that is used to implement persistent FIFOs.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Recv.i"
+#endif
 
 #endif /* ACE_FIFO_RECV_H */

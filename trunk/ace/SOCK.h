@@ -81,6 +81,8 @@ protected:
   // from being defined.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK.i"
+#endif
 
 #endif /* ACE_SOCK_H */

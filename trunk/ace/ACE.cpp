@@ -12,6 +12,10 @@
 #include "ace/Process.h"
 #include "ace/Version.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/ACE.i"
+#endif
+
 // Hex characters.
 const char ACE::hex_chars_[] = "0123456789abcdef";
 

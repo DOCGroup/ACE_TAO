@@ -105,6 +105,8 @@ private:
   // IP address.
 }; 
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram_Mcast.i"
+#endif
 
 #endif /* ACE_SOCK_DGRAM_MCAST_H */

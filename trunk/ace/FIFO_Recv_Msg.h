@@ -68,6 +68,8 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Recv_Msg.i"
+#endif
 
 #endif /* ACE_FIFO_RECV_MSG_H */

@@ -4,6 +4,10 @@
 #define ACE_BUILD_DLL
 #include "ace/IO_SAP.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/IO_SAP.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_IO_SAP)
 
 // This is the do-nothing constructor.  It does not perform a

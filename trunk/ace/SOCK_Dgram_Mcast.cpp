@@ -5,6 +5,10 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/INET_Addr.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SOCK_Dgram_Mcast.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast)
 
 void

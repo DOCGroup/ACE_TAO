@@ -55,7 +55,9 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/LSOCK_Dgram.i"
+#endif
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 #endif /* ACE_LOCAL_SOCK_DGRAM_H */

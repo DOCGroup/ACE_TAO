@@ -3,6 +3,10 @@
 #define ACE_BUILD_DLL
 #include "ace/IPC_SAP.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/IPC_SAP.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
 void

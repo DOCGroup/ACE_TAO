@@ -5,7 +5,7 @@
 
 // Creates a Local ACE_DEV. 
 
-inline
+ASYS_INLINE
 ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io, 
 				      const ACE_DEV_Addr &remote_sap,
 				      ACE_Time_Value *timeout,
@@ -22,7 +22,7 @@ ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io,
 	       remote_sap.get_path_name (), ASYS_TEXT ("ACE_DEV_IO")));
 }
 
-inline int 
+ASYS_INLINE int 
 ACE_DEV_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);

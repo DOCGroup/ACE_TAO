@@ -60,6 +60,8 @@ private:
   // Cache the process ID. 
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/IPC_SAP.i"
+#endif
 
 #endif /* ACE_IPC_SAP_H */

@@ -5,7 +5,7 @@
 
 // Used to return the underlying handle_. 
 
-inline ACE_HANDLE
+ASYS_INLINE ACE_HANDLE
 ACE_IO_SAP::get_handle (void) const
 {
   ACE_TRACE ("ACE_IO_SAP::get_handle");
@@ -14,7 +14,7 @@ ACE_IO_SAP::get_handle (void) const
 
 // Used to set the underlying handle_.
 
-inline void
+ASYS_INLINE void
 ACE_IO_SAP::set_handle (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_IO_SAP::set_handle");
@@ -23,7 +23,7 @@ ACE_IO_SAP::set_handle (ACE_HANDLE handle)
 
 // Provides access to the ACE_OS::ioctl system call. 
 
-inline int 
+ASYS_INLINE int 
 ACE_IO_SAP::control (int cmd, void *arg) const
 {
   ACE_TRACE ("ACE_IO_SAP::control");

@@ -595,6 +595,8 @@ private:
   // Hex characters.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/ACE.i"
+#endif
 
 #endif  /* ACE_ACE_H */

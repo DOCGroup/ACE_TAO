@@ -4,6 +4,10 @@
 #define ACE_BUILD_DLL
 #include "ace/SPIPE_Connector.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/SPIPE_Connector.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 
 // Creates a Local ACE_SPIPE. 

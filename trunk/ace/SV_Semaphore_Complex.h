@@ -144,5 +144,8 @@ private:
   static sembuf op_unlock_[1];
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Complex.i"
+#endif
+
 #endif /* ACE_SV_SEMAPHORE_COMPLEX_H */

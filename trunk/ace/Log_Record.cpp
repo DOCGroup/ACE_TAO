@@ -5,6 +5,10 @@
 #include "ace/Log_Record.h"
 #include "ace/streams.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/LOG_Record.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Record)
 
 const char *ACE_Log_Record::priority_names_[] = 

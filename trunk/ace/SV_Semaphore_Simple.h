@@ -139,5 +139,8 @@ protected:
   // LUSED characters when he wants to get a different key.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SV_Semaphore_Simple.i"
+#endif
+
 #endif /* _SV_SEMAPHORE_SIMPLE_H */

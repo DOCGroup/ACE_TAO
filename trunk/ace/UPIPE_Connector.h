@@ -93,6 +93,9 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/UPIPE_Connector.i"
+#endif
+
 #endif /* ACE_HAS_THREADS */
 #endif /* ACE_UPIPE_CONNECTOR_H */

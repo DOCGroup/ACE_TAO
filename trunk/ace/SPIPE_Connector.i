@@ -3,7 +3,7 @@
 
 // SPIPE_Connector.i
 
-inline int
+ASYS_INLINE int
 ACE_SPIPE_Connector::reset_new_handle (ACE_HANDLE handle)
 {
   ACE_UNUSED_ARG (handle);

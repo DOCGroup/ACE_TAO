@@ -7,6 +7,10 @@
 #define ACE_BUILD_DLL
 #include "ace/FILE.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/FILE.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE)
 
 void

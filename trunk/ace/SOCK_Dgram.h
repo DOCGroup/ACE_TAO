@@ -109,6 +109,8 @@ private:
   // Do not allow this function to percolate up to this interface...
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_Dgram.i"
+#endif
 
 #endif /* ACE_SOCK_DGRAM_H */

@@ -116,5 +116,8 @@ private:
   ACE_SPIPE_Addr remote_addr_;
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SPIPE_Stream.i"
+#endif
+
 #endif /* ACE_SPIPE_STREAM_H */

@@ -68,7 +68,9 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/FIFO_Send_Msg.i"
+#endif
 
 #endif /* ACE_FIFO_SEND_MSG_H */
 

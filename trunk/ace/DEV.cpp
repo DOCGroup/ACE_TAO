@@ -5,6 +5,10 @@
 #define ACE_BUILD_DLL
 #include "ace/DEV.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/DEV.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV)
 
 void

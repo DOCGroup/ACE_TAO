@@ -6,6 +6,10 @@
 #define ACE_BUILD_DLL
 #include "ace/FIFO_Send_Msg.h"
 
+#if defined (ACE_LACKS_INLINE_FUNCTIONS)
+#include "ace/FIFO_Send_Msg.i"
+#endif
+
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send_Msg)
 
 void

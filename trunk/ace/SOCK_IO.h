@@ -106,6 +106,8 @@ public:
   // Declare the dynamic allocation hooks.
 };
 
+#if !defined (ACE_LACKS_INLINE_FUNCTIONS)
 #include "ace/SOCK_IO.i"
+#endif
 
 #endif /* ACE_SOCK_IO_H */
