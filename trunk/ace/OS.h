@@ -2783,7 +2783,7 @@ public:
   // loaded or the first use of a socket() call.
 
   static int socket_fini (void);
-  // Finialize WinSock after last use (e.g., when a DLL is unloaded).
+  // Finalize WinSock after last use (e.g., when a DLL is unloaded).
 
   // = A set of wrappers for regular expressions.
   static char *compile (const char *instring, char *expbuf, char
