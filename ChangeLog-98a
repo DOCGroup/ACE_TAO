@@ -1,3 +1,9 @@
+Tue Dec 30 20:32:03 1997  Nanbor Wang  <nw1@cs.wustl.edu>
+
+	* ace/Map_Manager.{h,cpp}: Added STL-styled iterator function.
+  	  Changed the references to ACE_Map_Manager within interator
+ 	  classes to pointers so we can check errors.
+
 Tue Dec 30 14:56:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Obstack: Enhanced ACE_Obstack so that it can be given a
