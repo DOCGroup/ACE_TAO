@@ -461,7 +461,7 @@ CORBA::Boolean
 TAO_GIOP_Message_Lite::
   write_reply_header (TAO_OutputCDR &output,
                       TAO_Pluggable_Reply_Params &reply,
-                      CORBA::Environment &ACE_TRY_ENV)
+                      CORBA::Environment & /*ACE_TRY_ENV*/)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Write the GIOP Lite header first

@@ -1,3 +1,8 @@
+Thu Apr 13 13:07:56 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* tao/GIOP_Message_Lite.cpp (write_reply_header): Fixed a warning
+	  in SUNOS_EGCS.
+
 Thu Apr 13 11:56:57 2000  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Lite.cpp: Removed the reply header in the
