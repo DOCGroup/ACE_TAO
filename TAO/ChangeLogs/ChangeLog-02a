@@ -1,3 +1,9 @@
+Fri Dec 22 07:30:37 2000  Johnny Willemsen
+
+        * examples/Load_Balancing:
+        * examples/Load_Balancing_persistent:
+          Added Borland C++ Builder makefiles
+
 Fri Dec 22 01:01:37 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/driver/drv_preproc.cpp (DRV_pre_proc): Restore file
