@@ -1,3 +1,14 @@
+Wed Oct  2 17:42:42 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLogFactory_i.h:
+	* orbsvcs/orbsvcs/Log/EventLog_i.cpp:
+	* orbsvcs/orbsvcs/Log/EventLog_i.h:
+	* orbsvcs/orbsvcs/Log/Log_i.cpp:
+	* orbsvcs/orbsvcs/Log/Log_i.h:
+
+	  More memory leak, emulated and native exception fixes.
+
 Wed Oct  2 17:25:18 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
