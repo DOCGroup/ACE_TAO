@@ -1,3 +1,14 @@
+Thu Jun 10 14:19:02 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* examples/POA/On_Demand_Loading/Server_Manager.cpp (create_poa): 
+	  Removed typecast warning and changed the return value to 0 from
+	  -1.
+	
+	* examples/POA/On_Demand_Loading/README:
+	  Explicitly mentioned that by default Generic_Servant is used and 
+	  hence needs to be built before running this example using
+	  run_test.pl.
+
 Thu Jun 10 14:13:19 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_typedef/typedef_ch.cpp:
