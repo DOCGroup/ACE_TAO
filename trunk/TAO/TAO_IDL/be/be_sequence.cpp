@@ -313,7 +313,7 @@ be_sequence::gen_client_header (void)
           *ch << local_name () << " (CORBA::ULong length, " << nl;
         }
 
-      *ch << "\t";
+      *ch << "  ";
       // generate the type info for the element type
       if (s->gen_code (bt, this) == -1)
         {
@@ -553,11 +553,11 @@ be_sequence::gen_client_stubs (void)
       *cs << "// copy constructor" << nl;
       *cs << this->name () << "::" << this->local_name () <<
         " (const " << this->name () << " &seq)" << nl;
-      *cs << "\t: maximum_ (seq.maximum_)," << nl;
-      *cs << "\t  length_ (seq.length_)," << nl;
-      *cs << "\t  buffer_ (" << this->name () << "::allocbuf (seq.maximum_)),"
+      *cs << "  : maximum_ (seq.maximum_)," << nl;
+      *cs << "    length_ (seq.length_)," << nl;
+      *cs << "    buffer_ (" << this->name () << "::allocbuf (seq.maximum_)),"
           << nl;
-      *cs << "\t  release_ (1) // we always own it" << nl;
+      *cs << "    release_ (1) // we always own it" << nl;
       *cs << "{\n";
       cs->incr_indent ();
       // copy each element
@@ -567,7 +567,7 @@ be_sequence::gen_client_stubs (void)
           {
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
-            *cs << "\tthis->buffer_[i] = " << bt->name () << "::_duplicate ("
+            *cs << "  this->buffer_[i] = " << bt->name () << "::_duplicate ("
                 << "seq.buffer_[i]);" << nl;
             *cs << "}\n";
           }
@@ -576,14 +576,14 @@ be_sequence::gen_client_stubs (void)
           {
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
-            *cs << "\tthis->buffer_[i] = CORBA::string_dup (" <<
+            *cs << "  this->buffer_[i] = CORBA::string_dup (" <<
               "seq.buffer_[i]);" << nl;
             *cs << "}\n";
           }
           break;
         default: // all other types are self managed, just assign them.
           *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
-          *cs << "\tthis->buffer_[i] = seq.buffer_[i];\n";
+          *cs << "  this->buffer_[i] = seq.buffer_[i];\n";
         }
       cs->decr_indent ();
       *cs << "}\n\n";
@@ -595,10 +595,10 @@ be_sequence::gen_client_stubs (void)
           *cs << "// constructor for unbounded seq" << nl;
           *cs << this->name () << "::" << this->local_name () <<
             "(CORBA::ULong max )" << nl;
-          *cs << "\t: maximum_ (max)," << nl;
-          *cs << "\t  length_ (0)," << nl;
-          *cs << "\t  buffer_ (" << this->name () << "::allocbuf (max))," << nl;
-          *cs << "\t  release_ (1) // owns" << nl;
+          *cs << "  : maximum_ (max)," << nl;
+          *cs << "    length_ (0)," << nl;
+          *cs << "    buffer_ (" << this->name () << "::allocbuf (max))," << nl;
+          *cs << "    release_ (1) // owns" << nl;
           *cs << "{\n";
           *cs << "}\n\n";
         }
@@ -618,22 +618,22 @@ be_sequence::gen_client_stubs (void)
           // bounded seq does not take the "max" argument
           *cs << " (CORBA::ULong length, " << nl;
         }
-      *cs << "\t";
+      *cs << "  ";
       if (s->gen_code (bt, this) == -1)
         return -1;
       *cs << " *value, CORBA::Boolean release)" << nl;
       // for unbounded we have the additional max parameter
       if (this->unbounded_)
         {
-          *cs << "\t: maximum_ (max)," << nl;
+          *cs << "  : maximum_ (max)," << nl;
         }
       else
         {
-          *cs << "\t: maximum_ (" << this->max_size () << ")," << nl;
+          *cs << "  : maximum_ (" << this->max_size () << ")," << nl;
         }
-      *cs << "\t  length_ (length)," << nl;
-      *cs << "\t  buffer_ (value)," << nl;
-      *cs << "\t  release_ (release) // ownership depends on release" << nl;
+      *cs << "    length_ (length)," << nl;
+      *cs << "    buffer_ (value)," << nl;
+      *cs << "    release_ (release) // ownership depends on release" << nl;
       *cs << "{\n";
       *cs << "}\n\n";
 
@@ -703,7 +703,7 @@ be_sequence::gen_client_stubs (void)
           {
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
-            *cs << "\tthis->buffer_[i] = " << bt->name () << "::_duplicate ("
+            *cs << "  this->buffer_[i] = " << bt->name () << "::_duplicate ("
                 << "seq.buffer_[i]);" << nl;
             *cs << "}" << nl;
           }
@@ -712,14 +712,14 @@ be_sequence::gen_client_stubs (void)
           {
             *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
             *cs << "{" << nl;
-            *cs << "\tthis->buffer_[i] = CORBA::string_dup (" <<
+            *cs << "  this->buffer_[i] = CORBA::string_dup (" <<
               "seq.buffer_[i]);" << nl;
             *cs << "}" << nl;
           }
           break;
         default: // all other types are self managed, just assign them.
           *cs << "for (CORBA::ULong i=0; i < seq.length_; i++)" << nl;
-          *cs << "\tthis->buffer_[i] = seq.buffer_[i];" << nl;
+          *cs << "  this->buffer_[i] = seq.buffer_[i];" << nl;
         }
       *cs << "return *this;\n";
       cs->decr_indent ();
@@ -763,7 +763,7 @@ be_sequence::gen_client_stubs (void)
           *cs << " *tmp = " << this->name ()
               << "::allocbuf (length);" << nl;
           *cs << "if (!tmp)" << nl;
-          *cs << "\treturn;" << nl;
+          *cs << "  return;" << nl;
 
           // copy each element. Allocate a new manager and initialize it.
           switch (this->managed_type ())
@@ -774,7 +774,7 @@ be_sequence::gen_client_stubs (void)
                 *cs << "// copy old buffer" << nl;
                 *cs << "for (i=0; i < this->length_; i++)" << nl;
                 *cs << "{" << nl;
-                *cs << "\ttmp[i] = " << bt->name () << "::_duplicate ("
+                *cs << "  tmp[i] = " << bt->name () << "::_duplicate ("
                     << "this->buffer_[i]);" << nl;
                 *cs << "}" << nl;
               }
@@ -785,7 +785,7 @@ be_sequence::gen_client_stubs (void)
                 *cs << "// copy old buffer" << nl;
                 *cs << "for (i=0; i < this->length_; i++)" << nl;
                 *cs << "{" << nl;
-                *cs << "\ttmp[i] = CORBA::string_dup (" <<
+                *cs << "  tmp[i] = CORBA::string_dup (" <<
                   "this->buffer_[i]);" << nl;
                 *cs << "}" << nl;
               }
@@ -796,7 +796,7 @@ be_sequence::gen_client_stubs (void)
                 *cs << "// copy old buffer" << nl;
                 *cs << "for (i=0; i < this->length_; i++)" << nl;
                 *cs << "{" << nl;
-                *cs << "\ttmp[i] = this->buffer_[i];" << nl;
+                *cs << "  tmp[i] = this->buffer_[i];" << nl;
                 *cs << "}" << nl;
               }
             }
@@ -869,13 +869,13 @@ be_sequence::gen_client_stubs (void)
         case be_sequence::MNG_OBJREF:
           {
             *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
-            *cs << "\tbuf[i] = " << bt->name () << "::_nil ();" << nl;
+            *cs << "  buf[i] = " << bt->name () << "::_nil ();" << nl;
           }
           break;
         case be_sequence::MNG_STRING:
           {
             *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
-            *cs << "\tbuf[i] = (char *)0;" << nl;
+            *cs << "  buf[i] = (char *)0;" << nl;
           }
           break;
         }
@@ -910,13 +910,13 @@ be_sequence::gen_client_stubs (void)
             case be_sequence::MNG_OBJREF:
               {
                 *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
-                *cs << "\tCORBA::release (seq[i]);" << nl;
+                *cs << "  CORBA::release (seq[i]);" << nl;
               }
               break;
             case be_sequence::MNG_STRING:
               {
                 *cs << "for (CORBA::ULong i=0; i < nelems; i++)" << nl;
-                *cs << "\tCORBA::string_free (seq[i]);" << nl;
+                *cs << "  CORBA::string_free (seq[i]);" << nl;
               }
               break;
             }
@@ -1051,18 +1051,18 @@ be_sequence::gen_client_inline (void)
       // for bounded and unbounded, initialize the data members differently
       if (this->unbounded_)
         {
-          *ci << "\t: maximum_ (0)," << nl;
-          *ci << "\t  length_ (0)," << nl;
-          *ci << "\t  buffer_ (0)," << nl;
-          *ci << "\t  release_ (0) // does not own" << nl;
+          *ci << "  : maximum_ (0)," << nl;
+          *ci << "    length_ (0)," << nl;
+          *ci << "    buffer_ (0)," << nl;
+          *ci << "    release_ (0) // does not own" << nl;
         }
       else
         {
-          *ci << "\t: maximum_ (" << this->max_size () << ")," << nl;
-          *ci << "\t  length_ (0)," << nl;
-          *ci << "\t  buffer_ (" << this->name () << "::allocbuf (" <<
+          *ci << "  : maximum_ (" << this->max_size () << ")," << nl;
+          *ci << "    length_ (0)," << nl;
+          *ci << "    buffer_ (" << this->name () << "::allocbuf (" <<
             this->max_size () << "))," << nl;
-          *ci << "\t  release_ (1) // owns" << nl;
+          *ci << "    release_ (1) // owns" << nl;
         }
       *ci << "{}\n\n";
 
@@ -1430,14 +1430,14 @@ be_sequence::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "\t" << ": ptr_ (0)" << nl;
+  *ci << "  " << ": ptr_ (0)" << nl;
   *ci << "{}\n\n";
 
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << " *p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // copy constructor
@@ -1448,9 +1448,9 @@ be_sequence::gen_var_impl (void)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "\tthis->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
+  *ci << "  this->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
   *ci << "else" << nl;
-  *ci << "\tthis->ptr_ = 0;\n";
+  *ci << "  this->ptr_ = 0;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
@@ -1827,7 +1827,7 @@ be_sequence::gen_out_impl (void)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << " *&p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = 0;\n";
@@ -1839,7 +1839,7 @@ be_sequence::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () <<
     "_var &p) // constructor from _var" << nl;
-  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
@@ -1852,7 +1852,7 @@ be_sequence::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "  : ptr_ (p.ptr_)" << nl;
   *ci << "{}\n\n";
 
   // assignment operator from _out &
@@ -2188,8 +2188,8 @@ be_sequence::gen_managed_type_ci (void)
       *ci << "ACE_INLINE " << nl;
       *ci << fnamebuf << "::" << lnamebuf <<
         "(char **buffer, CORBA::Boolean release)" << nl;
-      *ci << "\t: ptr_ (buffer)," << nl;
-      *ci << "\t  release_ (release)" << nl;
+      *ci << "  : ptr_ (buffer)," << nl;
+      *ci << "    release_ (release)" << nl;
       *ci << "{}\n\n";
 
       // other extra methods - cast operator ()
@@ -2240,8 +2240,8 @@ be_sequence::gen_managed_type_ci (void)
       *ci << "ACE_INLINE " << nl;
       *ci << fnamebuf << "::" << lnamebuf << "(" << bt->name () <<
         "_ptr* buffer, CORBA::Boolean release)" << nl;
-      *ci << "\t: ptr_ (buffer)," << nl;
-      *ci << "\t  release_ (release)" << nl;
+      *ci << "  : ptr_ (buffer)," << nl;
+      *ci << "    release_ (release)" << nl;
       *ci << "{}\n\n";
 
       // other extra methods - cast operator ()

@@ -144,7 +144,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &_tao_base_" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -238,7 +238,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", _tao_base_" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
 #endif
@@ -336,7 +336,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", _tao_base_" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
 #endif
@@ -412,7 +412,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
                         "); // ORB does not own" << nl;
 #endif
@@ -489,7 +489,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
                         ", 1); // ORB owns" << nl;
 #endif
@@ -565,7 +565,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", " << arg->local_name () <<
                         ", 1); // ORB owns" << nl;
 #endif
@@ -650,7 +650,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
                         "); // ORB does not own" << nl;
 #endif
@@ -727,7 +727,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", " << arg->local_name () <<
                         ", 1); // ORB owns" << nl;
 #endif
@@ -805,7 +805,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
                         ", 0); // ORB doesn't own" << nl;
 #endif
@@ -896,7 +896,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
                         "); // ORB does not own" << nl;
 #endif
@@ -970,7 +970,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", " << arg->local_name () <<
                         "); // ORB owns " << nl;
 #endif
@@ -1044,7 +1044,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", " << arg->local_name () <<
                         ", 1); // ORB owns" << nl;
 #endif
@@ -1133,7 +1133,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -1233,7 +1233,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -1337,7 +1337,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", _tao_base_" << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
 #endif
@@ -1443,7 +1443,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", " << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -1524,7 +1524,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", " << arg->local_name () <<
                     "); // ORB does not own" << nl;
                 }
@@ -1606,7 +1606,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", " << arg->local_name () <<
                     ", 1); // ORB owns" << nl;
                 }
@@ -1683,7 +1683,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -1761,7 +1761,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                   // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -1859,7 +1859,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", " << arg->local_name () <<
                         ", 0); // ORB does not own" << nl;
 #endif
@@ -1878,7 +1878,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                       *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                         ";" << nl;
                     // declare an Any
-                      *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                      *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                         bt->tc_name () << ", &" << arg->local_name () <<
                         ", 0); // ORB does not own" << nl;
 #endif
@@ -2012,7 +2012,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -2089,7 +2089,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif
@@ -2166,7 +2166,7 @@ be_state_argument::gen_code (be_type *bt, be_decl *d, be_type *type)
                   *os << "CORBA::NamedValue_ptr nv_" << arg->local_name () <<
                     ";" << nl;
                     // declare an Any
-                  *os << "CORBA::Any \t any_" << arg->local_name () << " (" <<
+                  *os << "CORBA::Any    any_" << arg->local_name () << " (" <<
                     bt->tc_name () << ", &" << arg->local_name () <<
                     "); // ORB does not own" << nl;
 #endif

@@ -147,7 +147,8 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       << be_nl << be_nl;
 
   // generate a typedef to a parametrized sequence
-  *os << "class " << node->local_name () << ": public ";
+  *os << "class " << idl_global->export_macro ()
+      << " " << node->local_name () << " : public ";
   if (this->gen_base_sequence_class (node) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -170,9 +171,10 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   *os << node->local_name () << " (";
   if (node->unbounded ())
     {
-      *os << "CORBA::ULong max, ";  // unbounded seq takes this extra parameter
+      // unbounded seq takes this extra parameter
+      *os << "CORBA::ULong max, " << be_idt << be_idt_nl;
     }
-  *os << "CORBA::ULong length, ";
+  *os << "CORBA::ULong length, " << be_nl;
   // generate the base type for the buffer
   be_visitor_context ctx (*this->ctx_);
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH);
@@ -194,7 +196,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
                         -1);
     }
   delete visitor;
-  *os << " *buffer, CORBA::Boolean release=0);" << be_nl;
+  *os << " *buffer, " << be_nl
+      << "CORBA::Boolean release=0" << be_uidt_nl
+      << ");" << be_uidt_nl;
   *os << node->local_name () << " (const " << node->local_name ()
       << " &); // copy ctor" << be_nl;
   *os << "~" << node->local_name () << " (void); // dtor\n";
@@ -291,7 +295,8 @@ be_visitor_sequence_ch::gen_var_defn (be_sequence *node)
   // for over here.
 
   os->indent (); // start with whatever was our current indent level
-  *os << "class " << namebuf << be_nl;
+  *os << "class " << idl_global->export_macro ()
+      << " " << namebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:\n";
   os->incr_indent ();
@@ -399,7 +404,8 @@ be_visitor_sequence_ch::gen_out_defn (be_sequence *node)
   // generate the out definition (always in the client header)
   os->indent (); // start with whatever was our current indent level
 
-  *os << "class " << namebuf << be_nl;
+  *os << "class " << idl_global->export_macro () << " "
+      << namebuf << be_nl;
   *os << "{" << be_nl;
   *os << "public:\n";
   os->incr_indent ();
@@ -545,14 +551,14 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl
       << fname << "::" << lname
       << " (void) // default constructor" << be_nl
-      << "\t" << ": ptr_ (0)" << be_nl
+      << "  " << ": ptr_ (0)" << be_nl
       << "{}\n\n";
 
   // constr from a _ptr
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->name () << " *p)" << be_nl;
-  *os << "\t: ptr_ (p)" << be_nl;
+  *os << "  : ptr_ (p)" << be_nl;
   *os << "{}\n\n";
 
   // copy constructor
@@ -563,9 +569,9 @@ be_visitor_sequence_ci::gen_var_impl (be_sequence *node)
   *os << "{\n";
   os->incr_indent ();
   *os << "if (p.ptr_)" << be_nl;
-  *os << "\tthis->ptr_ = new " << node->name () << "(*p.ptr_);" << be_nl;
+  *os << "  this->ptr_ = new " << node->name () << "(*p.ptr_);" << be_nl;
   *os << "else" << be_nl;
-  *os << "\tthis->ptr_ = 0;\n";
+  *os << "  this->ptr_ = 0;\n";
   os->decr_indent ();
   *os << "}\n\n";
 
@@ -786,7 +792,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   os->indent ();
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->name () << " *&p)" << be_nl;
-  *os << "\t: ptr_ (p)" << be_nl;
+  *os << "  : ptr_ (p)" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "this->ptr_ = 0;\n";
@@ -798,7 +804,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << node->name () <<
     "_var &p) // constructor from _var" << be_nl;
-  *os << "\t: ptr_ (p.out ())" << be_nl;
+  *os << "  : ptr_ (p.out ())" << be_nl;
   *os << "{\n";
   os->incr_indent ();
   *os << "delete this->ptr_;" << be_nl;
@@ -811,7 +817,7 @@ be_visitor_sequence_ci::gen_out_impl (be_sequence *node)
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname << " (" << fname <<
     " &p) // copy constructor" << be_nl;
-  *os << "\t: ptr_ (p.ptr_)" << be_nl;
+  *os << "  : ptr_ (p.ptr_)" << be_nl;
   *os << "{}\n\n";
 
   // assignment operator from _out &

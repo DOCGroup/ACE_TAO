@@ -633,9 +633,9 @@ be_attribute::gen_server_skeletons (void)
   *ss << "{\n";
   ss->incr_indent ();
   // define an NVList to hold the in argument
-  *ss << "CORBA::NVList_ptr \t nvlist;" << nl;
+  *ss << "CORBA::NVList_ptr nvlist;" << nl;
   // define a variable that will eventually point to our implementation object
-  *ss << intf->full_skel_name () << "_ptr \t impl = (" << intf->full_skel_name
+  *ss << intf->full_skel_name () << "_ptr    impl = (" << intf->full_skel_name
     () << "_ptr)_tao_object_reference;" << nl;
 
   // declare an NVList and create one

@@ -559,10 +559,10 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
             *os << "// set the value" << nl;
             *os << "if (!this->" << ub->local_name () << "_) // does not exist"
                 << nl ;
-            *os << "\tthis->" << ub->local_name () <<
+            *os << "  this->" << ub->local_name () <<
               "_ = new CORBA::String_var (val);" << nl;
             *os << "else" << nl;
-            *os << "\t*this->" << ub->local_name () << "_ = val;\n";
+            *os << "  *this->" << ub->local_name () << "_ = val;\n";
           }
         else
           {
@@ -606,10 +606,10 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
             *os << "// set the value" << nl;
             *os << "if (!this->" << ub->local_name () << "_) // does not exist"
                 << nl ;
-            *os << "\tthis->" << ub->local_name () <<
+            *os << "  this->" << ub->local_name () <<
               "_ = new CORBA::String_var (val);" << nl;
             *os << "else" << nl;
-            *os << "\t*this->" << ub->local_name () << "_ = val;\n";
+            *os << "  *this->" << ub->local_name () << "_ = val;\n";
           }
         else
           {
@@ -653,10 +653,10 @@ be_state_union_public_ci::gen_code (be_type *bt, be_decl *d, be_type *type)
             *os << "// set the value" << nl;
             *os << "if (!this->" << ub->local_name () << "_) // does not exist"
                 << nl ;
-            *os << "\tthis->" << ub->local_name () <<
+            *os << "  this->" << ub->local_name () <<
               "_ = new CORBA::String_var (val);" << nl;
             *os << "else" << nl;
-            *os << "\t*this->" << ub->local_name () << "_ = val;\n";
+            *os << "  *this->" << ub->local_name () << "_ = val;\n";
           }
         else
           {

@@ -370,14 +370,14 @@ be_structure::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "\t" << ": ptr_ (0)" << nl;
+  *ci << "  " << ": ptr_ (0)" << nl;
   *ci << "{}\n\n";
 
   // constr from a pointer
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << " *p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // copy constructor
@@ -388,9 +388,9 @@ be_structure::gen_var_impl (void)
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "if (p.ptr_)" << nl;
-  *ci << "\tthis->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
+  *ci << "  this->ptr_ = new " << this->name () << "(*p.ptr_);" << nl;
   *ci << "else" << nl;
-  *ci << "\tthis->ptr_ = 0;\n";
+  *ci << "  this->ptr_ = 0;\n";
   ci->decr_indent ();
   *ci << "}\n\n";
 
@@ -655,7 +655,7 @@ be_structure::gen_out_impl (void)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << " *&p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = 0;\n";
@@ -667,7 +667,7 @@ be_structure::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () <<
     "_var &p) // constructor from _var" << nl;
-  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "delete this->ptr_;" << nl;
@@ -680,7 +680,7 @@ be_structure::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "  : ptr_ (p.ptr_)" << nl;
   *ci << "{}\n\n";
 
   // assignment operator from _out &

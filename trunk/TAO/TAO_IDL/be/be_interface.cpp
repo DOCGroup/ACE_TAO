@@ -338,7 +338,7 @@ be_interface::gen_client_header (void)
         {
           // we do not inherit from anybody, hence we do so from the base
           // CORBA::Object class
-          *ch << ": public virtual CORBA::Object" << nl;
+          *ch << " : public virtual CORBA::Object" << nl;
         }
 
       // generate the body
@@ -598,10 +598,10 @@ be_interface::gen_client_stubs (void)
     }
   cs->indent ();
   *cs << "(!ACE_OS::strcmp ((char *)value, CORBA::_tc_Object->id (_tao_environment))))\n";
-  *cs << "\treturn 1; // success using local knowledge\n";
+  *cs << "  return 1; // success using local knowledge\n";
   cs->decr_indent ();
   *cs << "else" << nl;
-  *cs << "\treturn this->CORBA_Object::_is_a (value, _tao_environment); // remote call\n";
+  *cs << "  return this->CORBA_Object::_is_a (value, _tao_environment); // remote call\n";
   cs->decr_indent ();
   *cs << "}\n\n";
 
@@ -844,7 +844,7 @@ int be_interface::gen_server_skeletons (void)
   *ss << "if (_tao_environment.exception () != 0) return;" << nl;
   *ss << "value = *(CORBA::String *)nv->value ()->value ();" << nl;
 
-  *ss << this->full_skel_name () << "_ptr \t impl = ("
+  *ss << this->full_skel_name () << "_ptr    impl = ("
       << this->full_skel_name () << "_ptr) _tao_object_reference;"
       << nl;
 
@@ -918,7 +918,7 @@ int be_interface::gen_server_skeletons (void)
   ss->decr_indent ();
   *ss << "}\n";
   *ss << "else" << nl;
-  *ss << "\tskel (req, this, context, env);\n";
+  *ss << "  skel (req, this, context, env);\n";
   ss->decr_indent ();
   *ss << "}\n\n";
 
@@ -1155,14 +1155,14 @@ be_interface::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname <<
     " (void) // default constructor" << nl;
-  *ci << "\t" << ": ptr_ (" << this->name () << "::_nil ())" << nl;
+  *ci << "  " << ": ptr_ (" << this->name () << "::_nil ())" << nl;
   *ci << "{}\n\n";
 
   // constr from a _ptr
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << "_ptr p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{}\n\n";
 
   // the additional ptr () member function. This member function must be
@@ -1183,7 +1183,7 @@ be_interface::gen_var_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (const " << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (" << name () << "::_duplicate (p.ptr ()))" << nl;
+  *ci << "  : ptr_ (" << name () << "::_duplicate (p.ptr ()))" << nl;
   *ci << "{}\n\n";
 
   // destructor
@@ -1394,7 +1394,7 @@ be_interface::gen_out_impl (void)
   ci->indent ();
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << name () << "_ptr &p)" << nl;
-  *ci << "\t: ptr_ (p)" << nl;
+  *ci << "  : ptr_ (p)" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "this->ptr_ = " << this->name () << "::_nil ();\n";
@@ -1406,7 +1406,7 @@ be_interface::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << this->name () <<
     "_var &p) // constructor from _var" << nl;
-  *ci << "\t: ptr_ (p.out ())" << nl;
+  *ci << "  : ptr_ (p.out ())" << nl;
   *ci << "{\n";
   ci->incr_indent ();
   *ci << "CORBA::release (this->ptr_);" << nl;
@@ -1419,7 +1419,7 @@ be_interface::gen_out_impl (void)
   *ci << "ACE_INLINE" << nl;
   *ci << fname << "::" << lname << " (" << fname <<
     " &p) // copy constructor" << nl;
-  *ci << "\t: ptr_ (p.ptr_)" << nl;
+  *ci << "  : ptr_ (p.ptr_)" << nl;
   *ci << "{}\n\n";
 
       // assignment operator from _out &
