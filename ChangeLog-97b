@@ -23,6 +23,11 @@ Thu Sep 11 21:07:25 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
  	  complaining in the first place.  Thanks to Eric Newton for
  	  pointing this out.
 
+	* netsvcs/lib/README: The entry point for the time service client
+ 	  is _make_ACE_TS_Clerk_Processor and not
+ 	  _make_ACE_TS_Clerk_Connector.  Thanks to Ivan for pointing this
+ 	  out.
+
 Thu Sep 11 10:59:12 1997    <nw1@CHA-CHA>
 
 	* ace/Connector.cpp (handle_output): Increased the idle time
@@ -87,13 +92,6 @@ Thu Sep 11 08:52:36 1997  David L. Levine  <levine@cs.wustl.edu>
 	  examples/Service_Configurator/IPC-tests/server/Makefile:
 	  removed -L./ from LDFLAGS because it's redundant:
 	  wrapper_macros.GNU adds it.
-
-Thu Sep 11 00:24:04 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
-
-	* netsvcs/lib/README: The entry point for the time service client
- 	  is _make_ACE_TS_Clerk_Processor and not
- 	  _make_ACE_TS_Clerk_Connector.  Thanks to Ivan for pointing this
- 	  out.
 
 Wed Sep 10 22:58:10 1997  Douglas C. Schmidt  <schmidt@mambo.cs.wustl.edu>
 
