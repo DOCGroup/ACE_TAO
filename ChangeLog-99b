@@ -1,3 +1,11 @@
+Wed Sep  8 14:05:00 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
+
+	* ace/Log_Msg.cpp: Shifted the instantiations to the top to keep
+	  SunCC5.0 debug=0 build happy.
+
+	* tests/Cached_Accept_Conn_Test.cpp: Repositioned global
+	  declarations to ward off compilation errors on HP-UX.
+	
 Wed Sep  8 13:13:18 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Process.h (ACE_Process): Made the spawn() method virtual
