@@ -3,6 +3,7 @@
 // Shared_Memory_Pool.cpp
 #include "ace/Shared_Memory_Pool.h"
 #include "ace/OS_NS_sys_shm.h"
+#include "ace/Log_Msg.h"
 
 ACE_RCSID(ace, Shared_Memory_Pool, "$Id$")
 
