@@ -75,7 +75,7 @@ struct ArgStruct
 static const char send_order [] = "abcdefghijklmnop";
 
 // order in which messages are received with "FIFO prioritization" (i.e., none)
-static const char FIFO_receipt_order [] = "abcdefghijklmnop";
+// Unused:  static const char FIFO_receipt_order [] = "abcdefghijklmnop";
 
 // order in which messages are received with static prioritization
 static const char static_receipt_order [] = "ponmlkjihgfedcba";
