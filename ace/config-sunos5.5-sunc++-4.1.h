@@ -2,7 +2,7 @@
 // $Id$
 
 // The following configuration file is designed to work for SunOS 5.5
-// platforms using the SunC++ 4.1 compiler.
+// platforms using the SunC++ 4.1 compiler.  It also works with version 4.2.
 
 #if !defined (ACE_CONFIG_H)
 #define ACE_CONFIG_H
@@ -14,19 +14,25 @@
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// ACE_HAS_EXCEPTIONS requires -noex, but that causes problems with
-// Sun C++ 4.1 on multiprocessor UltraSparcs:  threaded executables
-// core dump when threads exit.  This problem does not seem to appear
-// on single-processor UltraSparcs.
-// So until -noex gets fixed on MP machines, we can't use this with
-// Sun C++ 4.1 . . .
+// ACE_HAS_EXCEPTIONS precludes -noex, but without -noex causes problems
+// with Sun C++ 4.1/4.2 on multiprocessor UltraSparcs:  threaded
+// executables core dump when threads exit.  This problem does not seem
+// to appear on single-processor UltraSparcs.  So until exception handling
+// gets fixed on MP machines, we can't use this with Sun C++ 4.1/4.2 . . .
 // #define ACE_HAS_EXCEPTIONS
 
 #define ACE_HAS_UNICODE
 
 // Note that SunC++ 4.1 fixes template bugs that prevented earlier
 // versions from supporting template typedefs correctly.
+// But template typedefs don't work with SunC++ 4.1 or 4.2.
 // #define ACE_HAS_TEMPLATE_TYPEDEFS
+
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC >= 0x420)
+  // Sun C++ 4.2 (and beyond) supports template specialization.
+  #define ACE_TEMPLATES_REQUIRE_SPECIALIZATION
+  #define ACE_TEMPLATES_REQUIRE_SOURCE
+#endif
 
 // Platform supports System V IPC (most versions of UNIX, but not Win32)
 #define ACE_HAS_SYSV_IPC			
