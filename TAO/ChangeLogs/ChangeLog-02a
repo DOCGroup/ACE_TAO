@@ -1,3 +1,31 @@
+Tue Dec 12 13:49:49 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* docs/rtcorba/reactor-per-lane.gif
+	* docs/rtcorba/queue-per-lane.gif:
+
+	  Added pictures for architecture description.
+	
+	* docs/rtcorba/omg_issues.html:
+
+	  Populated the page with content.
+
+	* docs/rtcorba/issues.html:
+
+	  Added one new issue.
+	
+	* docs/rtcorba/index.html:
+
+	  Added page title.
+	
+	* docs/rtcorba/content.html:
+
+	  Removed examples section.
+	
+	* docs/rtcorba/faq.html
+	* docs/rtcorba/status.html:
+
+	  Added last modified date.
+
 Tue Dec 12  1:28:15 2000  Jeff Parsons   <parsons@cs.wustl.edu>
 
 		* tao/tests/DynAny_Test/test_dynunion.cpp:
@@ -40,6 +68,33 @@ Mon Dec 11 16:26:49 2000  Yamuna Krishnamurthy  <yamuna@cs.wustl.edu>
         * orbsvcs/orbsvcs/Makefile.av:
 
           Fixed compile errors.
+
+Mon Dec 11 04:31:31 2000  Marina Spivak  <marina@cs.wustl.edu>
+
+	* docs/rtcorba/index.htm
+	* docs/rtcorba/content.htm
+	* docs/rtcorba/status.htm:
+
+	  These files were added and then removed to be replaced by the
+	  ones below (in order to change .htm to .html).
+	
+	* docs/rtcorba/index.html
+	* docs/rtcorba/content.html
+	* docs/rtcorba/status.html
+	* docs/rtcorba/issues.html
+	* docs/rtcorba/faq.html
+	* docs/rtcorba/omg_issues.html
+	* docs/rtcorba/features.html
+	* docs/rtcorba/architecture.html:
+
+	  New RTCORBA documentation.
+
+	* tests/RTCORBA/README
+	* docs/index.html
+	* docs/releasenotes/index.html
+	* docs/Options.html:
+
+	  Updated to reflect new files above.
 
 Sun Dec 10 14:05:35 2000  Angelo Corsaro  <angelo@cs.wustl.edu>
 
