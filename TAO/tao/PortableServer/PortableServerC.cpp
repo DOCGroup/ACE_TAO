@@ -28,7 +28,6 @@
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
 
-
 #include "PortableServerC.h"
 #include "tao/Stub.h"
 #include "tao/Invocation_Adapter.h"
@@ -2941,6 +2940,56 @@ static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_AdapterInactive (
 
 ::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_AdapterInactive =
   &_tc_TAO_tc_PortableServer_POAManager_AdapterInactive;
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+
+static const CORBA::Long _oc_PortableServer_POAManager_State[] =
+{
+  TAO_ENCAP_BYTE_ORDER, // byte order
+  48,
+  ACE_NTOHL (0x49444c3a), 
+  ACE_NTOHL (0x6f6d672e), 
+  ACE_NTOHL (0x6f72672f), 
+  ACE_NTOHL (0x506f7274), 
+  ACE_NTOHL (0x61626c65), 
+  ACE_NTOHL (0x53657276), 
+  ACE_NTOHL (0x65722f50), 
+  ACE_NTOHL (0x4f414d61), 
+  ACE_NTOHL (0x6e616765), 
+  ACE_NTOHL (0x722f5374), 
+  ACE_NTOHL (0x6174653a), 
+  ACE_NTOHL (0x322e3300),  // repository ID = IDL:omg.org/PortableServer/POAManager/State:2.3
+  6,
+  ACE_NTOHL (0x53746174), 
+  ACE_NTOHL (0x65000000),  // name = State
+  4, // member count
+  8,
+  ACE_NTOHL (0x484f4c44), 
+  ACE_NTOHL (0x494e4700),  // name = HOLDING
+  7,
+  ACE_NTOHL (0x41435449), 
+  ACE_NTOHL (0x56450000),  // name = ACTIVE
+  11,
+  ACE_NTOHL (0x44495343), 
+  ACE_NTOHL (0x41524449), 
+  ACE_NTOHL (0x4e470000),  // name = DISCARDING
+  9,
+  ACE_NTOHL (0x494e4143), 
+  ACE_NTOHL (0x54495645), 
+  ACE_NTOHL (0x0),  // name = INACTIVE
+  };
+
+static CORBA::TypeCode _tc_TAO_tc_PortableServer_POAManager_State (
+    CORBA::tk_enum,
+    sizeof (_oc_PortableServer_POAManager_State),
+    (char *) &_oc_PortableServer_POAManager_State,
+    0,
+    sizeof (PortableServer::POAManager::State)
+  );
+
+::CORBA::TypeCode_ptr PortableServer::POAManager::_tc_State =
+  &_tc_TAO_tc_PortableServer_POAManager_State;
 
 PortableServer::POAManager::POAManager (void)
 {}
@@ -6617,6 +6666,120 @@ operator>>= (
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0)
+
+// TAO_IDL - Generated from 
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_exception/any_op_cs.cpp:50
+
+// Copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    const PortableServer::POAManager::AdapterInactive &_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::insert_copy (
+      _tao_any,
+      PortableServer::POAManager::AdapterInactive::_tao_any_destructor,
+      PortableServer::POAManager::_tc_AdapterInactive,
+      _tao_elem
+    );
+}
+
+// Non-copying insertion.
+void operator<<= (
+    CORBA::Any &_tao_any,
+    PortableServer::POAManager::AdapterInactive *_tao_elem
+  )
+{
+  TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::insert (
+      _tao_any,
+      PortableServer::POAManager::AdapterInactive::_tao_any_destructor,
+      PortableServer::POAManager::_tc_AdapterInactive,
+      _tao_elem
+    );
+}
+
+// Extraction to non-const pointer (deprecated).
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    PortableServer::POAManager::AdapterInactive *&_tao_elem
+  )
+{
+  return _tao_any >>= ACE_const_cast (
+      const PortableServer::POAManager::AdapterInactive *&,
+      _tao_elem
+    );
+}
+
+// Extraction to const pointer.
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    const PortableServer::POAManager::AdapterInactive *&_tao_elem
+  )
+{
+  return
+    TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::extract (
+        _tao_any,
+        PortableServer::POAManager::AdapterInactive::_tao_any_destructor,
+        PortableServer::POAManager::_tc_AdapterInactive,
+        _tao_elem
+      );
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Dual_Impl_T<PortableServer::POAManager::AdapterInactive>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
+
+// TAO_IDL - Generated from
+// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_enum/any_op_cs.cpp:52
+
+void operator<<= (
+    CORBA::Any &_tao_any,
+    PortableServer::POAManager::State _tao_elem
+  )
+{
+  TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::insert (
+      _tao_any,
+      PortableServer::POAManager::_tc_State,
+      _tao_elem
+    );
+}
+
+CORBA::Boolean operator>>= (
+    const CORBA::Any &_tao_any,
+    PortableServer::POAManager::State &_tao_elem
+  )
+{
+  return
+    TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::extract (
+        _tao_any,
+        PortableServer::POAManager::_tc_State,
+        _tao_elem 
+      );
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::marshal_value (TAO_OutputCDR &)
+{
+  return 0;
+}
+
+ACE_TEMPLATE_SPECIALIZATION
+CORBA::Boolean
+TAO::Any_Basic_Impl_T<PortableServer::POAManager::State>::demarshal_value (TAO_InputCDR &)
+{
+  return 0;
+}
 
 // TAO_IDL - Generated from
 // W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_interface/any_op_cs.cpp:50

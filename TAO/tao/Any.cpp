@@ -774,11 +774,26 @@ template class TAO::Any_Impl_T<CORBA::WChar>;
 template class TAO::Any_Impl_T<CORBA::Object>;
 
 template class TAO::Arg_Traits<CORBA::Any>;
-/*template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
+template class TAO::Var_Size_Arg_Traits_T<CORBA::Any,
                                           CORBA::Any_var,
                                           CORBA::Any_out>;
-*/
+template class TAO::In_Var_Size_Argument_T<CORBA::Any>;
+template class TAO::Inout_Var_Size_Argument_T<CORBA::Any>;
+template class TAO::Out_Var_Size_Argument_T<CORBA::Any,
+                                            CORBA::Any_out>;
+template class TAO::Ret_Var_Size_Argument_T<CORBA::Any,
+                                            CORBA::Any_var>;
 
+template class TAO::SArg_Traits<CORBA::Any>;
+template class TAO::Var_Size_SArg_Traits_T<CORBA::Any,
+                                           CORBA::Any_var,
+                                           CORBA::Any_out>;
+template class TAO::In_Var_Size_SArgument_T<CORBA::Any>;
+template class TAO::Inout_Var_Size_SArgument_T<CORBA::Any>;
+template class TAO::Out_Var_Size_SArgument_T<CORBA::Any,
+                                             CORBA::Any_var>;
+template class TAO::Ret_Var_Size_SArgument_T<CORBA::Any,
+                                             CORBA::Any_var>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate TAO::Any_Special_Impl_T<
@@ -799,12 +814,27 @@ template class TAO::Arg_Traits<CORBA::Any>;
 #pragma instantiate TAO::Any_Impl_T<char>
 #pragma instantiate TAO::Any_Impl_T<CORBA::WChar>
 #pragma instantiate TAO::Any_Impl_T<CORBA::Object>
-#pragma instantiate TAO::Any_Impl_T<CORBA::AbstractBase>
-#pragma instantiate TAO::Any_Impl_T<CORBA::ValueBase>
 
 #pragma instantiate TAO::Arg_Traits<CORBA::Any>
-#pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any,
-                                               CORBA::Any_var,
-                                               CORBA::Any_out>
+#pragma instantiate TAO::Var_Size_Arg_Traits_T<CORBA::Any, \
+                                          CORBA::Any_var, \
+                                          CORBA::Any_out>
+#pragma instantiate TAO::In_Var_Size_Argument_T<CORBA::Any>
+#pragma instantiate TAO::Inout_Var_Size_Argument_T<CORBA::Any>
+#pragma instantiate TAO::Out_Var_Size_Argument_T<CORBA::Any, \
+                                            CORBA::Any_out>
+#pragma instantiate TAO::Ret_Var_Size_Argument_T<CORBA::Any, \
+                                            CORBA::Any_var>
+
+#pragma instantiate TAO::SArg_Traits<CORBA::Any>
+#pragma instantiate TAO::Var_Size_SArg_Traits_T<CORBA::Any, \
+                                           CORBA::Any_var, \
+                                           CORBA::Any_out>
+#pragma instantiate TAO::In_Var_Size_SArgument_T<CORBA::Any>
+#pragma instantiate TAO::Inout_Var_Size_SArgument_T<CORBA::Any>
+#pragma instantiate TAO::Out_Var_Size_SArgument_T<CORBA::Any, \
+                                             CORBA::Any_var>
+#pragma instantiate TAO::Ret_Var_Size_SArgument_T<CORBA::Any, \
+                                             CORBA::Any_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

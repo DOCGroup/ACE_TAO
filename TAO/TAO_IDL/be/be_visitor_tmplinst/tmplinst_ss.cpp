@@ -298,6 +298,54 @@ be_visitor_tmplinst_ss::visit_array (be_array *node)
 }
 
 int
+be_visitor_tmplinst_ss::visit_attribute (be_attribute *node)
+{
+  if (this->this_mode_generated (node)
+      || node->imported ()
+      || node->is_local ())
+    {
+      return 0;
+    }
+
+  const char * S = "S";
+
+  be_visitor_arg_tmplinst visitor (this->ctx_,
+                                   this->mode_,
+                                   this->prefix_,
+                                   this->suffix_,
+                                   this->linebreak_,
+                                   S);
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  visitor.direction ();
+
+  if (bt->accept (&visitor) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_tmplinst_ss::"
+                         "visit_attribute - "
+                         "codegen for return type failed\n"),
+                        -1);
+    }
+
+  if (!node->readonly ())
+    {
+      visitor.direction (AST_Argument::dir_IN);
+
+      if (bt->accept (&visitor) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_tmplinst_ss::"
+                             "visit_attribute - "
+                             "codegen for IN parameter failed\n"),
+                            -1);
+        }
+    }
+
+  this->this_mode_generated (node, I_TRUE);
+  return 0;
+}
+
+int
 be_visitor_tmplinst_ss::visit_enum (be_enum *node)
 {
   if (this->this_mode_generated (node) || !node->seen_in_operation ())

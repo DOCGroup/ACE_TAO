@@ -105,7 +105,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << node->name () << "::_tao_obv_repository_id (void) const" << be_nl
       << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
-      << "}" << be_nl;
+      << "}" << be_nl << be_nl;
 
   if (be_global->any_support ())
     {

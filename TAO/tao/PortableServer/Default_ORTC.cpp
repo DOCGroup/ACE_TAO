@@ -123,7 +123,7 @@ TAO_Default_ORT::ObjectReferenceTemplate::_downcast (CORBA::ValueBase *v)
       return 0;
     }
 
-  return (ObjectReferenceTemplate *) v->_tao_obv_narrow ((ptrdiff_t) &_downcast);
+  return dynamic_cast<TAO_Default_ORT::ObjectReferenceTemplate *> (v);
 }
 
 const char *
@@ -131,40 +131,6 @@ TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_repository_id (void) const
 {
   return this->_tao_obv_static_repository_id ();
 }
-
-void *
-#if defined (_MSC_VER)
-TAO_Default_ORT::ObjectReferenceTemplate::TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t type_id)
-#else
-TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
-#endif /* _MSC_VER */
-{
-  if (type_id == (ptrdiff_t) &_downcast)
-    {
-      return this;
-    }
-
-  void *rval = 0;
-
-  if (rval == 0)
-    {
-#if defined (_MSC_VER)
-      rval = this->PortableInterceptor_ObjectReferenceTemplate_tao_obv_narrow (type_id);
-#else
-      rval = this->PortableInterceptor::ObjectReferenceTemplate::_tao_obv_narrow (type_id);
-#endif /* _MSC_VER */
-    }
-
-  return rval;
-}
-
-#if defined (_MSC_VER)
-void *
-TAO_Default_ORT::ObjectReferenceTemplate::_tao_obv_narrow (ptrdiff_t type_id)
-{
-  return this->TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (type_id);
-}
-#endif /* _MSC_VER */
 
 void
 TAO_Default_ORT::ObjectReferenceTemplate::_tao_any_destructor (void *_tao_void_pointer)

@@ -134,10 +134,6 @@ namespace TAO_Default_ORT
     ObjectReferenceTemplate (void);
     virtual ~ObjectReferenceTemplate (void);
     
-    virtual void *_tao_obv_narrow (ptrdiff_t);
-#if defined (_MSC_VER)
-    virtual void *TAO_Default_ORT_ObjectReferenceTemplate_tao_obv_narrow (ptrdiff_t);
-#endif /* _MSC_VER */
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &);
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     

@@ -37,13 +37,12 @@ be_visitor_sequence_cs::~be_visitor_sequence_cs (void)
 
 int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
-
   if (node->imported () || node->cli_stub_gen ())
     {
       return 0;
     }
 
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If our base type is an anonymous sequence, generate code for it here.

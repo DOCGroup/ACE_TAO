@@ -3789,9 +3789,8 @@ operator>> (TAO_InputCDR &strm, CORBA::TCKind &_tao_enumval)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
-/*template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
+template class TAO_Pseudo_Object_Manager<CORBA::TypeCode,
                                          CORBA::TypeCode_var>;
-*/
 
 template class ACE_Hash_Map_Entry<const char *,
                                   ACE_Unbounded_Queue<CORBA::Long> *>;
@@ -3822,11 +3821,35 @@ template class TAO_Pseudo_Var_T<CORBA::TypeCode>;
 template class TAO_Pseudo_Out_T<CORBA::TypeCode, CORBA::TypeCode_var>;
 
 template class TAO::Objref_Traits<CORBA::TypeCode>;
+
 template class TAO::Arg_Traits<CORBA::TypeCode>;
-/*template class TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
-                                        CORBA::TypeCode_var,
-                                        CORBA::TypeCode_out>;
-*/
+template class 
+  TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr,
+                           CORBA::TypeCode_var,
+                           CORBA::TypeCode_out,
+                           TAO::Objref_Traits<CORBA::TypeCode> >;
+template class TAO::In_Object_Argument_T<CORBA::TypeCode_ptr>;
+template class 
+  TAO::Inout_Object_Argument_T<CORBA::TypeCode_ptr,
+                               TAO::Objref_Traits<CORBA::TypeCode> >;
+template class TAO::Out_Object_Argument_T<CORBA::TypeCode_ptr,
+                                          CORBA::TypeCode_out>;
+template class TAO::Ret_Object_Argument_T<CORBA::TypeCode_ptr,
+                                          CORBA::TypeCode_var>;
+
+template class TAO::SArg_Traits<CORBA::TypeCode>;
+template class TAO::Object_SArg_Traits_T<CORBA::TypeCode_ptr,
+                                         CORBA::TypeCode_var,
+                                         CORBA::TypeCode_out>;
+template class TAO::In_Object_SArgument_T<CORBA::TypeCode_ptr,
+                                          CORBA::TypeCode_var>;
+template class TAO::Inout_Object_SArgument_T<CORBA::TypeCode_ptr,
+                                             CORBA::TypeCode_var>;
+template class TAO::Out_Object_SArgument_T<CORBA::TypeCode_ptr,
+                                           CORBA::TypeCode_var,
+                                           CORBA::TypeCode_out>;
+template class TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr,
+                                           CORBA::TypeCode_var>;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
@@ -3865,8 +3888,32 @@ template class TAO::Arg_Traits<CORBA::TypeCode>;
 
 #pragma instantiate TAO::Objref_Traits<CORBA::TypeCode>
 #pragma instantiate TAO::Arg_Traits<CORBA::TypeCode>
-#pragma instantiate TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr, \
-                                             CORBA::TypeCode_var, \
-                                             CORBA::TypeCode_out>
+#pragma instantiate \
+  TAO::Object_Arg_Traits_T<CORBA::TypeCode_ptr, \
+                           CORBA::TypeCode_var, \
+                           CORBA::TypeCode_out, \
+                           TAO::Objref_Traits<CORBA::TypeCode> >
+#pragma instantiate TAO::In_Object_Argument_T<CORBA::TypeCode_ptr>
+#pragma instantiate \
+  TAO::Inout_Object_Argument_T<CORBA::TypeCode_ptr, \
+                               TAO::Objref_Traits<CORBA::TypeCode> >
+#pragma instantiate TAO::Out_Object_Argument_T<CORBA::TypeCode_ptr, \
+                                               CORBA::TypeCode_out>
+#pragma instantiate TAO::Ret_Object_Argument_T<CORBA::TypeCode_ptr, \
+                                               CORBA::TypeCode_var>
+
+#pragma instantiate TAO::SArg_Traits<CORBA::TypeCode>
+#pragma instantiate TAO::Object_SArg_Traits_T<CORBA::TypeCode_ptr, \
+                                              CORBA::TypeCode_var, \
+                                              CORBA::TypeCode_out>
+#pragma instantiate TAO::In_Object_SArgument_T<CORBA::TypeCode_ptr, \
+                                               CORBA::TypeCode_var>
+#pragma instantiate TAO::Inout_Object_SArgument_T<CORBA::TypeCode_ptr, \
+                                                  CORBA::TypeCode_var>
+#pragma instantiate TAO::Out_Object_SArgument_T<CORBA::TypeCode_ptr, \
+                                                CORBA::TypeCode_var, \
+                                                CORBA::TypeCode_out>
+#pragma instantiate TAO::Ret_Object_SArgument_T<CORBA::TypeCode_ptr, \
+                                                CORBA::TypeCode_var>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

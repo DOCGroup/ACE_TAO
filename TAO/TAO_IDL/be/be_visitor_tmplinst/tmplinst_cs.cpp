@@ -500,7 +500,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_" << (fixed ? "Fixed" : "Var") << "Array_Var_T<"
           << this->linebreak_ << be_idt << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_nl
+          << fname << "_slice" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
@@ -508,7 +508,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_Array_Out_T<" << this->linebreak_ << be_idt << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
           << fname << "_var," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_nl
+          << fname << "_slice" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
       *os << be_nl << be_nl
@@ -516,7 +516,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << "TAO_Array_Var_Base_T<" << this->linebreak_ << be_idt
           << be_idt_nl
           << fname << "," << this->linebreak_ << be_nl
-          << fname << "_slice" << this->linebreak_ << be_nl
+          << fname << "_slice" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
     }
 
@@ -524,7 +524,7 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl
       << "TAO_Array_Forany_T<" << this->linebreak_ << be_idt << be_idt_nl
       << fname << "," << this->linebreak_ << be_nl
-      << fname << "_slice" << this->linebreak_ << be_nl
+      << fname << "_slice" << this->linebreak_ << be_uidt_nl
       << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
 
   // For Any impl template class.
@@ -537,6 +537,54 @@ be_visitor_tmplinst_cs::visit_array (be_array *node)
           << fname << "_slice," << this->linebreak_ << be_nl
           << fname << "_forany" << this->linebreak_ << be_uidt_nl
           << ">" << this->suffix_ << be_uidt << be_uidt << be_uidt;
+    }
+
+  this->this_mode_generated (node, I_TRUE);
+  return 0;
+}
+
+int
+be_visitor_tmplinst_cs::visit_attribute (be_attribute *node)
+{
+  if (this->this_mode_generated (node)
+      || node->imported ()
+      || node->is_local ())
+    {
+      return 0;
+    }
+
+  const char * S = "";
+
+  be_visitor_arg_tmplinst visitor (this->ctx_,
+                                   this->mode_,
+                                   this->prefix_,
+                                   this->suffix_,
+                                   this->linebreak_,
+                                   S);
+  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  visitor.direction ();
+
+  if (bt->accept (&visitor) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_tmplinst_cs::"
+                         "visit_attribute - "
+                         "codegen for return type failed\n"),
+                        -1);
+    }
+
+  if (!node->readonly ())
+    {
+      visitor.direction (AST_Argument::dir_IN);
+
+      if (bt->accept (&visitor) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_tmplinst_cs::"
+                             "visit_attribute - "
+                             "codegen for IN parameter failed\n"),
+                            -1);
+        }
     }
 
   this->this_mode_generated (node, I_TRUE);
@@ -1029,7 +1077,42 @@ be_visitor_tmplinst_cs::gen_base_class_tmplinst (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  os->gen_ifdef_macro (node->flat_name (), "explicit");
+  // A generated sequence is a unique class type for each IDL typedef,
+  // but the base template class may not be. So, when generating the
+  // explicit template instantiation of the base class, we use the
+  // unaliased element type and the bound (if any) in the #ifdef guard to
+  // prevent duplicates.
+
+  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  AST_Decl::NodeType nt = bt->node_type ();
+
+  if (nt == AST_Decl::NT_typedef)
+    {
+      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      bt = td->primitive_base_type ();
+    }
+
+  static char ifdef_suffix [NAMEBUFSIZE];
+
+  ACE_OS::memset (ifdef_suffix, 
+                  '\0', 
+                  NAMEBUFSIZE);
+
+  if (node->unbounded ())
+    {
+      ACE_OS::sprintf (ifdef_suffix,
+                       "%s",
+                       "explicit");
+    }
+  else
+    {
+      ACE_OS::sprintf (ifdef_suffix,
+                       "%d_%s",
+                       node->max_size ()->ev ()->u.ulval,
+                       "explicit");
+    }
+
+  os->gen_ifdef_macro (bt->flat_name (), ifdef_suffix);
 
   *os << be_nl << be_nl
       << this->prefix_ << this->linebreak_ << be_idt << be_idt_nl;
