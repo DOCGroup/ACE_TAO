@@ -204,10 +204,12 @@ main (int, char *[])
 
 template class ACE_Ordered_MultiSet<int>;
 template class ACE_Ordered_MultiSet_Iterator<int>;
+template class ACE_DNode<int>;
 
 #elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Ordered_MultiSet<int>
 #pragma instantiate ACE_Ordered_MultiSet_Iterator<int>
+#pragma instantiate ACE_DNode<int>
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
