@@ -14,7 +14,10 @@
    //********************************************************************
    //
    // Compiler-related definitions.  These are set for C Set ++ V3
-#  define ACE_HAS_EXCEPTIONS
+#  if !defined (ACE_HAS_EXCEPTIONS)
+#    define ACE_HAS_EXCEPTIONS
+#  endif
+
    // Compiler supports the ssize_t typedef.
 #  define ACE_HAS_SSIZE_T
 
