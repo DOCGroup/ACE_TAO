@@ -184,13 +184,19 @@ ACE_Process::wait (int *status)
   // keep the original error code intact.
   result = ::WaitForSingleObject (process_info_.hProcess,
                                 INFINITE);
-  if (result != WAIT_FAILED && status != 0)
-    // The error status of GetExitCodeProcess is nonetheless not
-    // tested.  (Don't know how to return the value.)
-    ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
-  return result;
+  if (result == WAIT_OBJECT_0 && status != 0)
+    {
+      // The error status of GetExitCodeProcess is nonetheless not
+      // tested.  (Don't know how to return the value.)
+      ::GetExitCodeProcess (process_info_.hProcess, (LPDWORD) status);
+
+      return this->getpid ();
+    }
+  else
+    return -1;
 #else /* ACE_WIN32 */
-  return ACE_OS::waitpid (this->child_id_, status, 0);
+  // This takes care of the EINTR return case.
+  ACE_OSCALL_RETURN(ACE_OS::waitpid (this->child_id_, status, 0), int, -1);
 #endif /* ACE_WIN32 */
 }
 
