@@ -1,5 +1,14 @@
 Wed Jun  9 13:06:43 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* include/makeinclude/platform_sunos5_sunc++.GNU,
+	* include/makeinclude/platform_sunos5_g++.GNU,
+	* include/makeinclude/platform_irix6.x_g++.GNU,
+	* include/makeinclude/platform_linux_lxpthread.GNU,
+	* include/makeinclude/platform_irix6.x_sgic++.GNU:
+	  Added support to make it easier to override various settings
+	  in platform_macros files.  Thanks to Dave Meyer
+	  <dmeyer@lima.arl.std.saic.com> for contributing this.
+
 	* ace/SPIPE_Stream: Added sendv(), sendv_n(), and recvv_n()
  	  methods to SPIPE_Stream.  Thank to Carlos for pointing this out.
 
