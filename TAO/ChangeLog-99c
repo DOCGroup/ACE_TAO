@@ -1,3 +1,24 @@
+Tue Jul 13 12:18:44 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
+
+	* orbsvcs/tests/AVStreams/Multicast/Makefile: 
+	* orbsvcs/tests/AVStreams/Multicast/server.{h,cpp}: 
+	* orbsvcs/tests/AVStreams/Multicast/ftp.{h,cpp}: 
+	  Added all the new files to test the Multipoint binding in
+	  AVStreams. Two instances of server receive the same file from
+	  the ftp program and save them under 2 different filenames using
+	  the multipoint bindings of TAO_StreamCtrl in the light profile.
+	
+	* orbsvcs/orbsvcs/AV/AVStreams_i.{h,cpp}: 
+	  Fixed a few a error in the multipoint bind_devs case. It works
+	  now with one multicast source and multiple multicast sinks in
+	  the light profile i.e with no FlowEndPoint interfaces.
+
+	* orbsvcs/orbsvcs/AV/MCast.cpp:
+	  Added code to set the local address on the TAO_FlowSpec_Entry
+	  upon accepting/connecting to a connection so that multiconnect
+	  call can extract the multicast address being used for this
+	  flow.
+			
 Mon Jul 12 16:15:20 1999  Nagarajan Surendran  <naga@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp: 
