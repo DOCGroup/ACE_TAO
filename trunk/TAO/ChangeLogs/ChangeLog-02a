@@ -1,3 +1,24 @@
+Fri Feb 25 18:39:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* tao/Any.h:
+	* tao/Any.cpp:
+	  Added insertion/extraction operator for long double.
+	  These work right out of the box on platforms like
+	  Solaris and Digitial Unix where the size of the
+	  native long double is 16 bytes. For other platforms,
+	  we define CORBA::LongDouble to be a struct containing
+	  an array 'ld' of 16 chars. In that case, the workaround
+	  would look like:
+
+	  CORBA::LongDouble dd;
+	  sprintf (dd.ld, "%f", 3.14159);
+	  CORBA::Any any;
+	  any <<= dd;
+
+	  CORBA::LongDouble dd_out;
+	  any >>= dd_out;
+	  cout << atof (dd_out.ld) << endl;
+
 Fri Feb 25 18:25:28 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tests/IDL_Test/reopened_modules.idl:
