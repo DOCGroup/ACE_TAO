@@ -1,3 +1,8 @@
+Mon Mar 07 14:11:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Adapter_Factory.cpp:
+          Initialise pointer with 0
+
 Mon Mar 07 13:42:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Portable_Interceptors/Collocated/Service_Context_Manipulation/interceptors.cpp:
