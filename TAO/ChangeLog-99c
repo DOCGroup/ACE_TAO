@@ -1,4 +1,8 @@
 Tue Jul  6 09:55:42 1999  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* tao/Invocation.cpp
+	* tao/Wait_Strategy.cpp:Commented out the call to
+	  <sending_request> in Invocation class.  
   
 	* client.muxed.conf: Added this file. This enables MT wait
 	  strategy and MUXED TMS. 
