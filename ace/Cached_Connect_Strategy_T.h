@@ -105,6 +105,11 @@ protected:
   virtual int cache_i (const void *recycling_act);
   // Add to cache (non-locking version).
 
+  virtual int recycle_state_i (const void *recycling_act,
+                               ACE_Recyclable_State new_state);
+  virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
+  // Get/Set <recycle_state> (non-locking version).
+
   virtual int mark_as_closed_i (const void *recycling_act);
   // Mark as closed (non-locking version).
 
@@ -112,7 +117,6 @@ protected:
   // Cleanup hint.
 
   // = Helpers
-
   virtual int check_hint_i (SVC_HANDLER *&sh,
                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                             ACE_Time_Value *timeout,
@@ -122,7 +126,6 @@ protected:
                             int perms,
                             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, ACE_Pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
                             int &found);
-
 
   virtual int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,

@@ -682,6 +682,8 @@ class ACE_Cached_Connect_Strategy : public ACE_Connection_Recycling_Strategy, pu
   //     It's added value is re-use of established connections.
 public:
 
+  typedef ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX> SELF;
+
   ACE_Cached_Connect_Strategy (ACE_Creation_Strategy<SVC_HANDLER> *cre_s = 0,
                                ACE_Concurrency_Strategy<SVC_HANDLER> *con_s = 0,
                                ACE_Recycling_Strategy<SVC_HANDLER> *rec_s = 0,
@@ -747,9 +749,10 @@ public:
   virtual int cache (const void *recycling_act);
   // Add to cache.
 
-  virtual int state (const void *recycling_act,
-                     ACE_Recyclable_State new_state);
-  // Change state to <new_state>.
+  virtual int recycle_state (const void *recycling_act,
+                             ACE_Recyclable_State new_state);
+  virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const;
+  // Get/Set <recycle_state>.
 
   virtual int mark_as_closed (const void *recycling_act);
   // Mark as closed.
@@ -772,9 +775,9 @@ public:
   // = Typedefs for managing the map
   typedef ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>
           REFCOUNTED_HASH_RECYCLABLE_ADDRESS;
-  typedef ACE_Hash_Map_Manager <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Manager<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP;
-  typedef ACE_Hash_Map_Iterator <REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
+  typedef ACE_Hash_Map_Iterator<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *, ACE_Null_Mutex>
           CONNECTION_MAP_ITERATOR;
   typedef ACE_Hash_Map_Entry<REFCOUNTED_HASH_RECYCLABLE_ADDRESS, SVC_HANDLER *>
           CONNECTION_MAP_ENTRY;
@@ -796,9 +799,10 @@ protected:
   virtual int cache_i (const void *recycling_act);
   // Add to cache (non-locking version).
 
-  virtual int state_i (const void *recycling_act,
-                       ACE_Recyclable_State new_state);
-  // Change state to <new_state> (non-locking version).
+  virtual int recycle_state_i (const void *recycling_act,
+                               ACE_Recyclable_State new_state);
+  virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
+  // Get/Set <recycle_state> (non-locking version).
 
   virtual int mark_as_closed_i (const void *recycling_act);
   // Mark as closed (non-locking version).
@@ -817,15 +821,6 @@ protected:
                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                     int &found);
 
-  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
-                             const ACE_PEER_CONNECTOR_ADDR &remote_addr,
-                             ACE_Time_Value *timeout,
-                             const ACE_PEER_CONNECTOR_ADDR &local_addr,
-                             int reuse_addr,
-                             int flags,
-                             int perms,
-                             int &found);
-
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                     ACE_Time_Value *timeout,
@@ -835,6 +830,15 @@ protected:
                                     int perms,
                                     ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry,
                                     int &found);
+
+  virtual int connect_svc_handler_i (SVC_HANDLER *&sh,
+                                     const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                     ACE_Time_Value *timeout,
+                                     const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                     int reuse_addr,
+                                     int flags,
+                                     int perms,
+                                     int &found);
 
   CONNECTION_MAP connection_cache_;
   // Table that maintains the cache of connected <SVC_HANDLER>s.

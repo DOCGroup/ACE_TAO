@@ -15,7 +15,7 @@ ACE_Connection_Recycling_Strategy::ACE_Connection_Recycling_Strategy (void)
 
 ACE_INLINE
 ACE_Recyclable::ACE_Recyclable (ACE_Recyclable_State initial_state)
-  : state_ (initial_state)
+  : recycle_state_ (initial_state)
 {
 }
 
@@ -25,15 +25,15 @@ ACE_Recyclable::~ACE_Recyclable (void)
 }
 
 ACE_INLINE ACE_Recyclable_State
-ACE_Recyclable::state (void) const
+ACE_Recyclable::recycle_state (void) const
 {
-  return this->state_;
+  return this->recycle_state_;
 }
 
 ACE_INLINE void
-ACE_Recyclable::state (ACE_Recyclable_State new_state)
+ACE_Recyclable::recycle_state (ACE_Recyclable_State new_state)
 {
-  this->state_ = new_state;
+  this->recycle_state_ = new_state;
 }
 
 ACE_INLINE

@@ -100,9 +100,10 @@ public:
   virtual int cache (const void *recycling_act) = 0;
   // Add to cache.
 
-  virtual int state (const void *recycling_act,
-                     ACE_Recyclable_State new_state) = 0;
-  // Change state to <new_state>.
+  virtual int recycle_state (const void *recycling_act,
+                             ACE_Recyclable_State new_state) = 0;
+  virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const = 0;
+  // Get/Set <recycle_state>.
 
   virtual int mark_as_closed (const void *recycling_act) = 0;
   // Mark as closed.
@@ -122,14 +123,14 @@ public:
   // Destructor.
 
   // = Set/Get the recyclable bit
-  ACE_Recyclable_State state (void) const;
-  void state (ACE_Recyclable_State new_state);
+  ACE_Recyclable_State recycle_state (void) const;
+  void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
   ACE_Recyclable (ACE_Recyclable_State initial_state);
   // Protected constructor.
 
-  ACE_Recyclable_State state_;
+  ACE_Recyclable_State recycle_state_;
   // Our state.
 };
 
