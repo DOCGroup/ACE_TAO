@@ -74,7 +74,7 @@ main (int argc, char *argv[])
                              " (%P|%t) Panic: nil PolicyManager\n"),
                             1);
         CORBA::Any policy_value;
-        policy_value <<= Messaging::SYNC_WITH_TARGET;
+        policy_value <<= Messaging::SYNC_WITH_SERVER;
         CORBA::PolicyList policies(1); policies.length(1);
         policies[0] =
           orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE,

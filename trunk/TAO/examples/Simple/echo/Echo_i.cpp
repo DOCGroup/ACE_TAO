@@ -33,37 +33,41 @@ Echo_i::orb (CORBA::ORB_ptr o)
 // Return a list of object references.
 
 Echo::List *
-Echo_i::echo_list (const char *message,
+Echo_i::echo_list (const char *,
                    CORBA::Environment &ACE_TRY_ENV)
  ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_UNUSED_ARG (message);
+  Echo::List_var list;
 
-  Echo::List *list;
-
-  ACE_NEW_RETURN (list,
-                  Echo::List (3),
-                  0);
+  {
+    Echo_List *tmp
+      ACE_NEW_RETURN (tmp,
+                      Echo::List (3),
+                      0);
+    // Pass ownership to the _var, pitty that ACE_NEW_RETURN cannot
+    // assign to T_vars directly.
+    list = tmp;
+  }
 
   list->length (3);
 
   // Just do something to get a list of object references.
-  (*list)[0] =
+  list[0] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  (*list)[1] =
+  list[1] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);;
   ACE_CHECK_RETURN (0);
 
-  (*list)[2] =
+  list[2] =
     orb_->resolve_initial_references ("NameService",
                                       ACE_TRY_ENV);
   ACE_CHECK_RETURN (0);
 
-  return list;
+  return list._retn ();
 }
 
 // Return the mesg string from the server
