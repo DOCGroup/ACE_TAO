@@ -63,7 +63,7 @@ main (int argc, char *argv[])
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
   int grp_id = thr_mgr->spawn_n (n_threads, ACE_THR_FUNC (worker),
-				 (void *) n_iterations,
+				 ACE_reinterpret_cast (void *, n_iterations),
 				 THR_NEW_LWP | THR_DETACHED);
 
   // Wait for 1 second and then suspend every thread in the group.

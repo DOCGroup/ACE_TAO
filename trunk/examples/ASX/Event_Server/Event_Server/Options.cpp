@@ -63,7 +63,7 @@ void Options::print_results (void)
 		"%8d = messages sent\n"
 		"%8d = messages received\n"
 		"%8d = signals received\n"
-		"%8ds, %dms = wait-cpu (latency) time\n"		
+		"%8ds, %dms = wait-cpu (latency) time\n"
 		"%8ds, %dms = user lock wait sleep time\n"
 		"%8ds, %dms = all other sleep time\n"
 		"%8d = voluntary context switches\n"
@@ -161,8 +161,8 @@ Options::parse_args (int argc, char *argv[])
 		   "\t[-H high water mark]\n"
 		   "\t[-i number of test iterations]\n"
 		   "\t[-L low water mark]\n"
-		   "\t[-M] message size \n" 
-		   "\t[-n] (THR_NEW_LWP)\n" 
+		   "\t[-M] message size \n"
+		   "\t[-n] (THR_NEW_LWP)\n"
 		   "\t[-q max queue size]\n"
 		   "\t[-s supplier port]\n"
 		   "\t[-t number of threads]\n"
@@ -175,12 +175,12 @@ Options::parse_args (int argc, char *argv[])
 
   if (this->verbose ())
     ACE_OS::printf ("%8d = initial concurrency hint\n"
-	      "%8d = total iterations\n"
-	      "%8d = thread count\n"
-	      "%8d = low water mark\n"
-	      "%8d = high water mark\n"
-	      "%8d = message_size\n"
-	      "%8d = initial queue length\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER " = total iterations\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER " = thread count\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER " = low water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER " = high water mark\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER " = message_size\n"
+	      ACE_SIZE_T_FORMAT_SPECIFIER " = initial queue length\n"
 	      "%8d = THR_BOUND\n"
 	      "%8d = THR_NEW_LWP\n",
 	      ACE_Thread::getconcurrency (),
