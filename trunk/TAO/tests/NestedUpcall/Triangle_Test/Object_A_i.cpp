@@ -36,7 +36,7 @@ Object_A_i::~Object_A_i (void)
 
 
 void
-Object_A_i::foo (Initiator_ptr initiator_ptr,
+Object_A_i::foo (Initiator_ptr theInitiator_ptr,
                     CORBA::Environment &ACE_TRY_ENV)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -45,7 +45,7 @@ Object_A_i::foo (Initiator_ptr initiator_ptr,
 
   ACE_TRY
     {
-      initiator_ptr->foo_object_B (ACE_TRY_ENV);
+      theInitiator_ptr->foo_object_B (ACE_TRY_ENV);
       ACE_TRY_CHECK;
 
       while (!this->finish_two_way_call_)
