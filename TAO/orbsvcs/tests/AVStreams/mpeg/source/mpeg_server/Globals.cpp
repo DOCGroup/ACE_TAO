@@ -132,7 +132,7 @@ Video_Timer_Global::StartTimer (void)
 	  timerAdjust / SPEEDUP_INV_SCALE);
   */
   TimerSpeed();
-  setsignal(SIGALRM, timerHandler);
+  //  setsignal(SIGALRM, timerHandler);
   timerOn = 1;
   preTimerVal = get_usec();
   /*
@@ -144,7 +144,8 @@ void
 Video_Timer_Global::StopTimer (void)
 {
   struct itimerval val;
-  setsignal(SIGALRM, SIG_IGN);
+  // @@Naga I have to incorporate this logic into the changed code 
+  //  setsignal(SIGALRM, SIG_IGN);
   val.it_interval.tv_sec =  val.it_value.tv_sec = 0;
   val.it_interval.tv_usec = val.it_value.tv_usec = 0;
   setitimer(ITIMER_REAL, &val, NULL);
