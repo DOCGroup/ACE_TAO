@@ -1,14 +1,21 @@
+Sat Aug  7 23:06:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/Makefile.am:
+	  Changed to introduce an intermediate dependency between the IDL
+	  sources and generated output files so that only one instance of
+	  tao_idl is spawned per input file with parallel make.
+
 Sat Aug  7 18:08:51 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* utils/catior/catior.cpp:
 
 	  Removed direct inclusion of <ctype.h>. This file already
 	  includes ace/os_include/os_ctype.h. If LynxOS has problems, then
-	  the problem is elsewhere. 
-	
+	  the problem is elsewhere.
+
 	* utils/nslist/nslist.cpp:
 
-	  Used Object::is_nil () instead of _nil (). 
+	  Used Object::is_nil () instead of _nil ().
 
 Fri Aug  6 15:44:50 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
