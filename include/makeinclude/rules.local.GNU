@@ -40,7 +40,7 @@ endif
 
 makefile_name.local:
 	@echo
-	@echo Makefile: $(PWD)/$(MAKEFILE)
+	@echo Makefile: $(shell pwd)/$(MAKEFILE)
 	@echo
 
 all.local: makefile_name.local $(split_target) build.objdirs build.local install.local
@@ -253,16 +253,16 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
-	@if test $(PWD) != $(@D) -o -n "$(SOVERSION)" ; then \
+	@if test $(shell pwd) != $(@D) -o -n "$(SOVERSION)" ; then \
 		if test -s $@ ; then \
 			echo "$(@F) already installed" ; \
 		else \
 			echo "Installing $(@F:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) -> $(@D)" ; \
 			$(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
-			$(LN_S) $(PWD)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
+			$(LN_S) $(shell pwd)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)); \
 			echo "Installing $(@F) -> $(@D)" ; \
 			$(RM) $@; \
-			$(LN_S) $(PWD)/$(@F) $@; \
+			$(LN_S) $(shell pwd)/$(@F) $@; \
 		fi ; \
 	fi
 ifdef MVSLIB
@@ -272,7 +272,7 @@ ifdef MVSLIB
 			echo "$(@F:.$(SOEXT)=.x) already installed" ; \
 		else \
 			echo "Installing $(@F:.$(SOEXT)=.x) -> $(@D)" ; \
-			$(RM) $(@); $(LN_S) $(PWD)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
+			$(RM) $(@); $(LN_S) $(shell pwd)/$(@F:.$(SOEXT)=.x) $(@:.$(SOEXT)=.x) ; \
 		fi \
 	fi
 endif
