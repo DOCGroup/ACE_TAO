@@ -707,6 +707,18 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 
 // empty ACE_OS namespace to help identify compiler errors more easily.
 namespace ACE_OS {}
+#if !defined (ACE_OS_String)
+#  define ACE_OS_String ACE_OS
+#endif /* ACE_OS_String */
+#if !defined (ACE_OS_Memory)
+#  define ACE_OS_Memory ACE_OS
+#endif /* ACE_OS_Memory */
+#if !defined (ACE_OS_Dirent)
+#  define ACE_OS_Dirent ACE_OS
+#endif /* ACE_OS_Dirent */
+#if !defined (ACE_OS_TLI)
+#  define ACE_OS_TLI ACE_OS
+#endif /* ACE_OS_TLI */
 
 #include /**/ "ace/post.h"
 
