@@ -1,6 +1,6 @@
 Thu May 06 12:28:54 1999  David L. Levine  <levine@cs.wustl.edu>
 
-        * docs/ACE-FMM.html: replaced a > with &gt; and added RCS $Id$.
+        * docs/ACE-FMM.html: replaced a > with &gt; and added RCS Id string.
 
         * ACE-INSTALL.html: added link to docs/ACE-FMM.html.
 
