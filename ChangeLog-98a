@@ -1,3 +1,14 @@
+Sat Apr 25 17:47:31 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/OS.h (ACE_FACTORY_DECLARE): Added explicit casting for
+ 	  gobbler to prevent some weird compiler from complaining too
+ 	  much.
+
+	* netsvcs/lib/Server_Logging_Handler_T.cpp
+ 	  (ACE_Server_Logging_Acceptor_T): We can't initialize the
+ 	  <scheduler_> with a temporary object.  Its content gets deleted
+ 	  right after the constructor exits.
+
 Sat Apr 25 11:55:01 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* ace/Containers.h (class ACE_Double_Linked_List): Added
