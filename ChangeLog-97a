@@ -1,3 +1,9 @@
+Mon Jan 13 00:17:50 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* ace/LSOCK_Stream.h: Added a new typedef for PEER_ADDR that is
+ 	  associated with ACE_UNIX_Addr.  Thanks to Mark Rabotnikov
+ 	  <mark@usp.elscintcorp.co.il> for suggesting this.
+
 Sun Jan 12 16:59:52 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* ace/Timer_List.cpp (schedule): Cleanup the code so that (1)

@@ -19,6 +19,7 @@
 #define ACE_LOCAL_SOCK_STREAM_H
 
 #include "ace/SOCK_Stream.h"
+#include "ace/UNIX_Addr.h"
 #include "ace/LSOCK.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
@@ -40,6 +41,9 @@ public:
 
   void set_handle (ACE_HANDLE fd); 
   // Overrides set_handle from the base classes.
+
+  // = Meta-type info
+  typedef ACE_UNIX_Addr PEER_ADDR;
 
   void dump (void) const;
   // Dump the state of an object.

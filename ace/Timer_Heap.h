@@ -103,22 +103,6 @@ public:
   // Returns 1 if cancellation succeeded and 0 if the <timer_id>
   // wasn't found.
 
-  virtual int expire (const ACE_Time_Value &current_time);
-  // Run the <handle_timeout> method for all Timers whose values are
-  // <= <cur_time>.  This does not account for <timer_skew>.  Returns
-  // the number of <Event_Handler>s for which <handle_timeout> was
-  // called.
-
-  virtual int expire (void);
-  // Run the <handle_timeout> method for all Timers whose values are
-  // <= <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.
-  // Returns the number of <Event_Handler>s for which <handle_timeout>
-  // was called.
-
-  virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
-  // Determine the next event to timeout.  Returns <max> if there are
-  // no pending timers or if all pending timers are longer than max.
-
   virtual void dump (void) const;
   // Dump the state of an object.
 
@@ -130,11 +114,18 @@ protected:
   // Returns a pointer to this <ACE_Timer_Queue>'s iterator.
 
 private:
-  void reheap_down (void);
-  // Called after a deletion to restore the heap property.
+  ACE_Timer_Node *remove (int index);
+  // Remove and return the <index>th <ACE_Timer_Node> and restore the
+  // heap property.
 
-  void reheap_up (void);
-  // Called after an insertion to restore the heap property.
+  void insert (ACE_Timer_Node *new_node);
+  // Insert <new_node> into the heap and restore the heap property.
+
+  void reheap_up (ACE_Timer_Node *new_node);
+  // Restore the heap property.
+
+  void reheap_down (ACE_Timer_Node *moved_node, int child_index);
+  // Restore the heap property, starting at <child_index>.
 
   size_t max_size_;
   // Maximum size of the heap.
