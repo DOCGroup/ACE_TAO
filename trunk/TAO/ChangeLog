@@ -1,3 +1,20 @@
+Fri Apr 16 09:24:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Collocated_Invocation.h:
+        * tao/LocateRequest_Invocation.h:
+        * tao/operation_details.h:
+        * tao/ORB.h:
+        * tao/Server_Strategy_Factory.h:
+        * tao/Service_Context.h:
+        * tao/RTCORBA/RT_Policy_i.h:
+        * tao/RTPortableServer/RT_Acceptor_Filters.h:
+        * tao/RTPortableServer/RT_Collocation_Resolver.h:
+        * tao/RTPortableServer/RT_Object_Adapter_Factory.h:
+        * tao/RTPortableServer/RT_POA.h:
+        * tao/RTPortableServer/RTPortableServer.h:
+        * tao/RTPortableServer/RTPortableServer.pidl:
+          Doxygen documentation fixes.
+
 Thu Apr 15 23:13:55 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/Any.h:
