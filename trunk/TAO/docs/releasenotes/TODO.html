@@ -753,6 +753,30 @@ class POA_Foo {
         </P>
       </LI>
 
+      <LI><P>GPERF is generating a function for each binary search
+          table;
+          a generic function could be used, or at least we should add
+          an option to gperf to it receives that generic function as
+          an argument.
+        </P>
+      </LI>
+
+      <LI><P>The TAO_IDL compiler does not handle the following code
+          sequence properly:
+<PRE>
+    // IDL
+    interface Foo;
+    typedef sequence<Foo> FooSeq;
+
+    interface Foo {
+      // anything here
+    }; 
+</PRE>
+        It may be necessary to have a multi-pass code generator to
+        solve this problem.
+        </P>
+      </LI>
+
       <HR>
 
   <!-- Things below this point are "big" tasks" that -->
