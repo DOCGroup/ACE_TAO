@@ -1,3 +1,10 @@
+Tue Apr 22 17:25:09 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * ace/config-win32-msvc-6.h:
+
+          Added pragma disable for warning about long names (caused
+          by template parameters).
+
 Tue Apr 22 21:45:00 UTC 2003  Gautam Thaker  <gthaker@atl.lmco.com>
 
         Please direct all immediate build issues to jcohen@atl.lmco.com
