@@ -1,12 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <!-- $Id$ -->
 <html> <head>
-<title>Using ACE try Macros to Enhance CORBA Portability</title>
+<title>Using ACE Exception Handling Macros to Enhance CORBA Portability</title>
 </head>
 
 <body text="#000000" link="#0000ff" vlink="#cc0000" bgcolor="#ffffff">
 <Hr><P>
-<h3>Using ACE try Macros to Enhance CORBA Portability</h3>
+<h3>Using ACE Exception Handling Macros to Enhance CORBA Portability</h3>
 
 <P>CORBA <CODE>Environment</CODE> arguments provide a way to handle
 exceptions when native c++ exception handling is unavailable or
@@ -39,63 +39,163 @@ Vinoski</A>.  Likewise, we recommend that you read the Error Handling chapter fr
 </ul>
 
 <HR><P>
-<h3><a name="nutshell">ACE Try Macros in a Nutshell</h3>
+<h3><a name="nutshell">ACE Exception Macros in a Nutshell</h3>
 
 <P>This section explains some simple rules of writing programs for
 platforms with and without native exception support using ACE's
-try macros.
+exception macros.
 </P>
-
+<P>ACE exception macros are modelled like C++ language exceptions and
+can be used like them, but with a small difference. These macros
+rely on  the CORBA::Environment variable to handle exceptions
+on platforms that do not support exception
+handling. (Please note that native exceptions can be turned on
+or off at COMPILE time as an option to your make)
+The exception macros have been modelled with some extra rules to 
+ensure this works even on
+platforms without native exception support.  See some <a
+href="#examples">quick examples</a> on  how to use ACE exception
+macros.
+</P>
 <ol>
-  <li><p>ACE try macros are modelled like C++ language  exceptions and
-      can be used like them, but with a small difference. These macros
-      rely on  the CORBA::Environment variable to handle exceptions
-      on platforms that do not support exception
-      handling. (Please note that native exceptions can be turned on
-      or off at COMPILE time as an option to your make)
-      The exception macros  have been modelled with some extra rules to ensure it works even on
-      platforms without native exception support.  See some <a
-      href="#examples">quick examples</a> on  how to use ACE try
-      macros.
-      </p>
+  <li><P><em>Declaration of CORBA::Environment Parameter at Methods</em><br>
+      On platforms lacking native exceptions, all CORBA methods take an
+      extra parameter added at the end of their argument list. This
+      last parameter holds the CORBA::Environment variable.
+      However, on systems with native exceptions, no such extra method
+      parameter is added.<br>
+      In order for both configurations to work with the same source code,
+      following macros are defined. In native exception configurations,
+      they all resolve to <em>empty</em>.</p>
+      <ul>
+        <li><p><em>ACE_ENV_ARG_DECL</em></p>
+        in the pseudo exception configuration resolves to
+        <pre>
+        , CORBA::Environment ACE_TRY_ENV
+        </pre>
+        It is used for declaring the extra Environment parameter
+        at CORBA methods that take one or more regular parameters.
+        The fact that the comma is part of the macro substitution
+        caters for the hiding of this added argument when native
+        exceptions are used.  However, by the same virtue its
+        usage is a bit peculiar -<br>
+        Example: a CORBA IDL defined method
+        <pre>
+        void mymethod (boolean b);
+        </pre>
+        may be declared as follows in C++:
+        <pre>
+        void mymethod (CORBA::Boolean b  ACE_ENV_ARG_DECL);
+        </pre>
+        Notice the missing comma before the ACE_ENV_ARG_DECL.
+        This notation is necessary because when using native exceptions,
+        also the presence of the comma before the (non-existent)
+        CORBA::Environment parameter must be hidden.</p>
+        </li>
+        <li><p><em>ACE_ENV_SINGLE_ARG_DECL</em></p>
+        is similar to <code>ACE_ENV_ARG_DECL</code>, but is used when
+        the method takes no other parameters.  It is necessary as a 
+        separate macro because it does not contain the leading comma
+        that <code>ACE_ENV_ARG_DECL</code> does.
+        Example: a CORBA IDL defined method
+        <pre>
+        void mymethod ();
+        </pre>
+        may look like this in C++:
+        <pre>
+        void mymethod (ACE_ENV_SINGLE_ARG_DECL);
+        </pre>
+        <li><p><em>ACE_ENV_ARG_DECL_WITH_DEFAULTS</em>,
+        <li><em>ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS</em></p>
+        are similar to the above two macros but add a default value
+        to the parameter declaration. In case of TAO, the default value
+        is <code>TAO_default_environment()</code>.<p>
+        Notice that these macros are only used at the declaration
+        of methods (usually in header files), not at their definition
+        (usually in implementation files.) At the definition,
+        instead use the corresponding macro without "_WITH_DEFAULTS".
+        Example: the CORBA IDL defined method
+        <pre>
+        void mymethod ();
+        </pre>
+        in the C++ header file looks like this:
+        <pre>
+        void mymethod (ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS);
+        </pre>
+        and in the C++ implementation file may look something like:
+        <pre>
+        void mymethod (ACE_ENV_SINGLE_ARG_DECL)
+        {
+          // ...
+        }
+        </pre>
+      </ul>
+
+      <br>
   </li>
 
-  <li><P><em>Name of CORBA::Environment variable</em><br>
-      A function that may throw a CORBA::Exception needs a
-      CORBA::Environment variable to pass up exceptions (to throw in
-      the C++ sense) and to gather (catch () in the C++ sense)
-      exceptions from functions it called.  By default, ACE try macros
-      assumes that the variable is named <code>ACE_TRY_ENV</code>.
-      <code>ACE_TRY_ENV</code> itself is also a macro which can be
-      redefined.
-      </pre>
+  <li><P><em>Passing the CORBA::Environment Parameter into Method Calls</em><br>
+      Now that we've seen how to declare methods with Environment
+      parameters, let's see how to invoke such methods.</p>
+      <ul>
+        <li><p><em>ACE_ENV_ARG_PARAMETER</em></p>
+        in the pseudo exception configuration resolves to
+        <pre>
+        , ACE_TRY_ENV
+        </pre>
+        and is written as the last parameter of a method call that takes
+        one or more regular parameters. Again we need to omit the
+        comma that would normally precede this last parameter, as the
+        comma is already part of the macro definition. For example,
+        the CORBA IDL method
+        <pre>
+        void mymethod (boolean b);
+        </pre>
+        would be invoked as follows:
+        <pre>
+        some_var.mymethod (bparam  ACE_ENV_ARG_PARAMETER);
+        </pre>
+      </ul>
 
-      <P>
-      You can redefine the name of the variable to
-      something else to avoid name clashing.  Alternatively, there's
-      another macro (<code>ACE_ADOPT_CORBA_ENV</code>) that allow you
-      to use another variable name as the default CORBA::Environment
-      <em>within</em> a function.
-      </P>
-  </LI>
+      <ul>
+        <li><p><em>ACE_ENV_SINGLE_ARG_PARAMETER</em></p>
+        is similar to <code>ACE_ENV_ARG_PARAMETER</code> but is used
+        for calling methods that don't take any regular parameters.
+        Our example of a CORBA IDL method
+        <pre>
+        void mymethod ();
+        </pre>
+        we would invoke as follows:
+        <pre>
+        some_var.mymethod (ACE_ENV_SINGLE_ARG_PARAMETER);
+        </pre>
+      </ul>
+      <br>
+  </li>
 
   <li><P><em>Definition of the CORBA::Environment variable </em><br>
-      If you are using TAO for writing application programs and you
-      are interested in using exceptions (which is a pretty neat way
-      to go about), the environmnet variable can be brought in to your
-      scope by the adding a statement <code>ACE_DECLARE_NEW_CORBA_ENV;</code>
-      You can then invoke the methods on the servant from the client
+      We have seen how to declare methods with the CORBA::Environment
+      parameter, and how to invoke such methods. However, where does
+      the variable to pass into methods as the CORBA::Environment
+      parameter come from in the first place?</p>
+      <P>An environment variable can be defined in the needed scope
+      (for example, in the main program, or in a more local scope)
+      by the statement</p>
+      <pre>
+      ACE_DECLARE_NEW_CORBA_ENV;
+      </pre>
+      <P>You can then invoke the methods on the servant from the client
       side as
       <pre>
-      object_reference->func_name (x, y, ACE_TRY_ENV);
+      object_reference->func_name (x, y  ACE_ENV_ARG_PARAMETER);
       </pre>
-
 
       Even if you are interested in making calls within the client
       side, you can define your method like this
       <pre>
-      int AN_OBJ::foobar (int a, int b, CORBA_Environment &ACE_TRY_ENV);
+      int AN_OBJ::foobar (int a, int b  ACE_ENV_ARG_DECL);
       </pre>
+
   <li><P><em>Throwing exceptions:</em><br>
       Use <code>ACE_THROW</code> and <code>ACE_THROW_RETURN</code> to
       throw exceptions.  They should never be used within a try
@@ -144,7 +244,8 @@ try macros.
       in one statement like this:
       </P>
       <pre>
-          x = obj1->callme (ACE_TRY_ENV) + obj2->dare_me (ACE_TRY_ENV);
+          x = obj1->callme (ACE_ENV_SINGLE_ARG_PARAMETER)
+            + obj2->dare_me (ACE_ENV_SINGLE_ARG_PARAMETER);
           ACE_CHECK;
       </pre>
       <P>This example may work differently when native exception
@@ -226,6 +327,26 @@ try macros.
       the exception itself, not the CORBA_Environment that carries the
       exception.</em></p>
   </li>
+
+  <li><P><em>Name of CORBA::Environment variable</em><br>
+      A function that may throw a CORBA::Exception needs a
+      CORBA::Environment variable to pass up exceptions (to throw in
+      the C++ sense) and to gather (catch () in the C++ sense)
+      exceptions from functions it called.  By default, ACE exception
+      macros assume that the variable is named <code>ACE_TRY_ENV</code>.
+      <code>ACE_TRY_ENV</code> itself is also a macro which can be
+      redefined.
+      </pre>
+
+      <P>
+      You can redefine the name of the variable to
+      something else to avoid name clashing.  Alternatively, there's
+      another macro (<code>ACE_ADOPT_CORBA_ENV</code>) that allow you
+      to use another variable name as the default CORBA::Environment
+      <em>within</em> a function.
+      </P>
+  </LI>
+
 </ol>
 
 <HR><P>
@@ -242,7 +363,7 @@ macros discussed here.
       ACE_TRY  // Use ACE_DECLARE_NEW_CORBA_ENV to create ACE_TRY_ENV
                // if you got undefined symbol warning here.
         {
-          some_operation (arg1, arg2, ACE_TRY_ENV);
+          some_operation (arg1, arg2  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
 
           .
@@ -250,7 +371,7 @@ macros discussed here.
           if (whatever)
             ACE_TRY_THROW (CORBA::BAD_PARAM ());
 
-          some_other_operation (arg1, arg2, arg3, ACE_TRY_ENV);
+          some_other_operation (arg1, arg2, arg3  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
         }
       <a name="ace_try">
@@ -280,10 +401,10 @@ macros discussed here.
       <pre>
       ACE_TRY_EX (block_1)
         {
-          some_operation (arg1, arg2, ACE_TRY_ENV);
+          some_operation (arg1, arg2  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (block_1);
 
-          some_other_operation (arg1, arg2, arg3, ACE_TRY_ENV);
+          some_other_operation (arg1, arg2, arg3  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (block_1);
         }
       ACE_CATCH (CORBA_some_exception, ex)
@@ -305,10 +426,10 @@ macros discussed here.
 
       ACE_TRY_EX (block_2)
         {
-          foo (arg, ACE_TRY_ENV);
+          foo (arg  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (block_2);
 
-          bar (arg1, arg2, ACE_TRY_ENV);
+          bar (arg1, arg2  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK_EX (block_2);
         }
       ACE_CATCH (CORBA_some_exception, ex)
@@ -331,7 +452,7 @@ macros discussed here.
       ACE_TRY
         {
           // Calls that can raise an exception
-          some_call1 (arg1, arg2, ACE_TRY_ENV);
+          some_call1 (arg1, arg2  ACE_ENV_ARG_PARAMETER);
           ACE_TRY_CHECK;
           .
           .
@@ -345,7 +466,7 @@ macros discussed here.
 
           ACE_TRY_EX (block1) // basically a label
             {
-              some_other_call1 (arg1,.. , ACE_TRY_ENV);
+              some_other_call1 (arg1,..   ACE_ENV_ARG_PARAMETER);
               ACE_TRY_CHECK_EX (block1);
             }
           ACE_CATCH (CORBA_some_other_exception, ex1)
@@ -393,7 +514,7 @@ macros discussed here.
 <pre>
       ACE_TRY
         {
-            obj[i++] = foo_bar_method (a, b, ACE_TRY_ENV);
+            obj[i++] = foo_bar_method (a, b  ACE_ENV_ARG_PARAMETER);
         }
 </pre></p>
   </li>
