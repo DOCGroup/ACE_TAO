@@ -1,3 +1,10 @@
+Mon May  1 19:20:04 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	  Another try at getting all compilers happy with the
+	  generated code in _tao_QueryInterface in 
+	  nested_scopesC.cpp in IDL_Test.
+
 Mon May  1 14:32:11 2000  Marina Spivak  <marina@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
