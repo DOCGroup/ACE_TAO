@@ -4190,6 +4190,18 @@ extern "C" ssize_t writev_timedwait (ACE_HANDLE handle,
 #define ACE_DES_FREE(POINTER,DEALLOCATOR,CLASS) \
    do { POINTER->CLASS::~CLASS (); DEALLOCATOR (POINTER); } while (0)
 
+#if defined (ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR)
+#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+   do { POINTER->T_CLASS ## T_PARAMETER::~T_CLASS (); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+#else
+#define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
+   do { POINTER->T_CLASS ## T_PARAMETER::~T_CLASS ## T_PARAMETER (); \
+        DEALLOCATOR (POINTER); \
+      } while (0)
+#endif /* ACE_HAS_BROKEN_EXPLICIT_TEMPLATE_DESTRUCTOR */
+
 #if defined (ACE_HAS_SIGNAL_SAFE_OS_CALLS)
 // The following two macros ensure that system calls are properly
 // restarted (if necessary) when interrupts occur.
