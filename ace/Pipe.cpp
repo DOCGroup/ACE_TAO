@@ -102,13 +102,15 @@ ACE_Pipe::open (int buffer_size)
     }
 # endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
 
-#elif defined (ACE_HAS_STREAM_PIPES)
+#elif defined (ACE_HAS_STREAM_PIPES) || defined(__QNX__)
   ACE_UNUSED_ARG (buffer_size);
   if (ACE_OS::pipe (this->handles_) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_LIB_TEXT ("%p\n"),
                        ACE_LIB_TEXT ("pipe")),
                       -1);
+
+#if defined(__QNX__)
   int arg = RMSGN;
 
   // Enable "msg no discard" mode, which ensures that record
@@ -125,6 +127,8 @@ ACE_Pipe::open (int buffer_size)
                          ACE_LIB_TEXT ("%p\n"),
                          ACE_LIB_TEXT ("ioctl")), -1);
     }
+#endif /* __QNX__ */
+
 #else  /* ! ACE_WIN32 && ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   if (ACE_OS::socketpair (AF_UNIX,
                           SOCK_STREAM,
