@@ -1,3 +1,8 @@
+Tue Jun 24 00:44:30 1997  Nanbor Wang  <nw1@lambada.cs.wustl.edu>
+
+        * ace/SPIPE.{h,i}: Added the disable(int signum) function to
+          prevent NT from disabling an SPIPE using socket calls.
+
 Mon Jun 23 22:14:39 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Svc_Conf*: Changed the name of the YYSTYPE field
