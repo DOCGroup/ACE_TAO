@@ -40,7 +40,7 @@ class ACE_Reactor_Impl;
 /**
  * @class ACE_Reactor
  *
- * @brief The resposiblility of this class is to forward all methods to
+ * @brief The responsibility of this class is to forward all methods to
  * its delegation/implementation class, e.g.,
  * <ACE_Select_Reactor> or <ACE_WFMO_Reactor>.
  */
@@ -333,14 +333,14 @@ public:
   /**
    * Removes <event_handler>.  Note that the I/O handle will be
    * obtained using <get_handle> method of <event_handler> .  If
-   * <mask> == <ACE_Event_Handler::DONT_CALL> then the <handle_close>
-   * method of the <event_handler> is not invoked.
+   * <mask> includes <ACE_Event_Handler::DONT_CALL> then the
+   * <handle_close> method of the <event_handler> is not invoked.
    */
   virtual int remove_handler (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes <handle>.  If <mask> == <ACE_Event_Handler::DONT_CALL>
+   * Removes <handle>.  If <mask> includes <ACE_Event_Handler::DONT_CALL>
    * then the <handle_close> method of the associated <event_handler>
    * is not invoked.
    */
