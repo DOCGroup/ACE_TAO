@@ -1,5 +1,8 @@
 Thu Jan  8 19:50:43 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
+	* ace/Task: Added a virtual destructor for ~ACE_Task_Base.  Thanks
+ 	  to Oleg Krivosheev <kriol@fnal.gov> for suggesting this.
+
 	* ace: Added a new config-sunos5.5-egcs.h for the EGCS compiler.
   	  Thanks to Oleg Krivosheev <kriol@fnal.gov> for contributing
  	  this.
