@@ -245,6 +245,9 @@
 // Platform's select() has non-const timeval argument
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
+// Platform supports pread()/pwrite().
+#define ACE_HAS_P_READ_WRITE
+
 // Compiler/platform supports poll().
 #define ACE_HAS_POLL
 
