@@ -1,3 +1,11 @@
+Fri Sep 10 09:06:42 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/orbsvcs/ec_typed_events_serv.mpb:
+	* orbsvcs/orbsvcs/ec_typed_events_skel.mpb:
+
+	  Moved dependency on dynamicinterface and ifr_client from _skel
+	  to _serv.
+
 Thu Sep  9 19:26:40 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/CosEvent/lib/CosEvent_lib.mpc:
