@@ -1,3 +1,13 @@
+Mon Mar 05 09:10:27 2001  Johnny Willemsen <jwillemsen@remedy.nl>
+
+        * examples/Makefile.bor:
+        * examples/PluggableUDP/Makefile.bor:
+        * examples/PluggableUDP/tests/Makefile.bor:
+        * examples/PluggableUDP/Diop/Makefile.bor:
+
+          Included Diop in the BCB build and make tests makefile empty
+          because for tests there is no correct client and server makefile yet
+
 Sun Mar 04 23:00:59 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/ORB.h (run):
