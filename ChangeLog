@@ -1,3 +1,10 @@
+Mon Jun 18 16:20:51 2001  Steve Huston  <shuston@riverace.com>
+
+        * tests/Thread_Manager_Test.cpp: Added a new function,
+          test_task_record_keeping(), that tests task-related record
+          keeping in the ACE_Thread_Manager. Motivated by a report of
+          ACE_Thread_Manager::task_all_list() not working correctly.
+
 Mon Jun 18 15:29:38 2001  Steve Huston  <shuston@riverace.com>
 
         * ace/ace.icc: Replace Obstack.cpp with Obchunk.cpp; added

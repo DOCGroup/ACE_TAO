@@ -23,6 +23,7 @@
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
+#include "ace/Task.h"
 
 ACE_RCSID(tests, Thread_Manager_Test, "$Id$")
 
@@ -144,6 +145,106 @@ worker (int iterations)
 }
 
 static const int DEFAULT_ITERATIONS = 10000;
+
+// Define a ACE_Task that will serve in the tests related to tasks.
+
+class ThrMgr_Task : public ACE_Task_Base {
+public:
+  ThrMgr_Task (ACE_Thread_Manager *);
+
+  virtual int svc (void);
+
+  static int errors;
+};
+
+int ThrMgr_Task::errors = 0;
+
+// Just be sure to set the ACE_Thread_Manager correctly.
+ThrMgr_Task::ThrMgr_Task (ACE_Thread_Manager *mgr)
+  : ACE_Task_Base (mgr)
+{
+}
+
+// svc just waits til it's been cancelled, then exits.
+int
+ThrMgr_Task::svc (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Task 0x%x, thread %t waiting to be cancelled\n"),
+              this));
+  ACE_thread_t me = ACE_Thread::self ();
+  for (int i = 0; i < 30 && !this->thr_mgr ()->testcancel (me); ++i)
+    ACE_OS::sleep (1);
+
+  if (this->thr_mgr ()->testcancel (me))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Task 0x%x, thread %t cancelled; exiting\n"),
+                  this));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Task 0x%x, thread %t was not cancelled\n"),
+                  this));
+      ++ThrMgr_Task::errors;
+    }
+  return 0;
+}
+
+
+// This function tests the task-based record keeping functions.
+static int
+test_task_record_keeping (ACE_Thread_Manager *mgr)
+{
+
+  int status = 0;
+
+  ThrMgr_Task t1 (mgr), t2 (mgr);
+  int t1_grp (20), t2_grp (30);
+
+  // Start two tasks, with multiple threads per task. Make sure that
+  // task_all_list() works.
+  if (-1 == t1.activate (THR_JOINABLE, 2, 0,
+                         ACE_DEFAULT_THREAD_PRIORITY, t1_grp))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate")), 1);
+  if (-1 == t2.activate (THR_JOINABLE, 3, 0,
+                         ACE_DEFAULT_THREAD_PRIORITY, t2_grp))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate")), 1);
+
+  ACE_Task_Base *task_list[10];
+  int num_tasks = mgr->task_all_list (task_list, 10);
+  if (2 != num_tasks)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected 2 tasks; got %d\n"),
+                  num_tasks));
+      status = 1;
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got %d tasks - correct\n"), num_tasks));
+      if ((task_list[0] == &t1 || task_list[0] == &t2) &&
+          (task_list[1] == &t1 || task_list[0] == &t2) &&
+          task_list[0] != task_list[1])
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
+      else
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("But Task ID values are wrong!\n")));
+    }
+  ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t1_grp));
+  if (-1 == mgr->cancel_grp (t1_grp))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
+                      1);
+  ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t2_grp));
+  if (-1 == mgr->cancel_grp (t2_grp))
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
+                      1);
+
+  mgr->wait ();
+  if (ThrMgr_Task::errors > 0 && status == 0)
+    status = 1;
+
+  return status;
+}
 
 #endif /* ACE_HAS_THREADS */
 
@@ -325,6 +426,10 @@ main (int, ACE_TCHAR *[])
   thread_start = 0;
   delete [] signalled;
   signalled = 0;
+
+  // Now test task record keeping
+  if (test_task_record_keeping (thr_mgr) != 0)
+    status = -1;
 
 #else
   ACE_ERROR ((LM_INFO,
