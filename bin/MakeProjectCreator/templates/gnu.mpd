@@ -331,7 +331,7 @@ all: idl_stubs
 
 # This rule forces make to run the idl_stubs
 # target before building any of the source files.
-<%source_files%>: idl_stubs
+FORCED_IDL_STUBS = <%source_files%>
 <%if(exename)%>
 endif
 <%else%>
@@ -475,17 +475,20 @@ endif
 <%comptarget%>
 <%if(idl_files)%>
 
-ADDITIONAL_IDL_TARGETS =
 <%foreach(idl_files)%>
 <%if(flag_overrides(idl_file, idlgendir))%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+ADDITIONAL_IDL_TARGETS += <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>S.cpp=)
 GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>$(ext))
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
 <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.h <%flag_overrides(idl_file, idlgendir)%>/<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%flag_overrides(idl_file, idlgendir)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 <%if(idlgendir)%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+ADDITIONAL_IDL_TARGETS += <%idlgendir%>/<%basenoextension(idl_file)%>C.h
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%idlgendir%>/<%basenoextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%idlgendir%>/<%basenoextension(idl_file)%>S.cpp=)
 GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%idlgendir%>/<%basenoextension(idl_file)%>$(ext))
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
 <%idlgendir%>/<%basenoextension(idl_file)%>C.h <%idlgendir%>/<%basenoextension(idl_file)%>C.cpp: <%idl_file%>
@@ -493,12 +496,16 @@ GENERATED_DIRTY += $(foreach ext, $(IDL_EXT), <%idlgendir%>/<%basenoextension(id
 <%else%>
 # IDL File Directory: <%dirname(idl_file)%>
 <%if(dirname_found)%>
-ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
+ADDITIONAL_IDL_TARGETS += <%noextension(idl_file)%>C.h
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%dirname(idl_file)%>/<%noextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%dirname(idl_file)%>/<%noextension(idl_file)%>S.cpp=)
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
-<%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp: <%idl_file%>
+<%dirname(idl_file)%>/<%noextension(idl_file)%>C.h <%dirname(idl_file)%>/<%noextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) -o <%dirname(idl_file)%> <%if(flag_overrides(idl_file, idlflags))%><%flag_overrides(idl_file, idlflags)%><%else%>$(TAO_IDLFLAGS)<%endif%> <%idl_file%>
 <%else%>
 <%if(flag_overrides(idl_file, idlflags))%>
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%noextension(idl_file)%>C.cpp=)
+FORCED_IDL_STUBS := $(FORCED_IDL_STUBS:<%noextension(idl_file)%>S.cpp=)
 <%comment(The S.cpp was removed to avoid yet another problem with parallelism.  It doesn't seem necessary since you can't get the S.cpp without the C.cpp)%>
 <%noextension(idl_file)%>C.h <%noextension(idl_file)%>C.cpp: <%idl_file%>
 	$(TAO_IDL) <%flag_overrides(idl_file, idlflags)%> <%idl_file%>
@@ -510,6 +517,10 @@ ADDITIONAL_IDL_TARGETS := $(ADDITIONAL_IDL_TARGETS) <%noextension(idl_file)%>C.h
 
 ifneq ($(ADDITIONAL_IDL_TARGETS),)
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
+endif
+
+ifneq ($(FORCED_IDL_STUBS),)
+$(FORCED_IDL_STUBS): idl_stubs
 endif
 
 .PRECIOUS: $(foreach ext, $(IDL_EXT), $(foreach file, $(IDL_FILES), $(file)$(ext)))

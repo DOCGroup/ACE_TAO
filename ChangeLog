@@ -1,3 +1,11 @@
+Wed Dec  3 09:48:55 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+
+          Fixed a bug in the generated GNU Makefile where idl files that had
+          scoped idlflag assignments would be processed every time
+          regardless of whether the generated files were up-to-date or not.
+
 Wed Dec  3 11:06:12 UTC 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
         * ace/OS_NS_Thread.h:
@@ -6,35 +14,35 @@ Wed Dec  3 11:06:12 UTC 2003  Johnny Willemsen <jwillemsen@remedy.nl>
 
 Wed Dec  3 11:39:45 2003  Kobi Cohen-Arazi  <kcarazi@finjan.com>
 
-	* tests/Task_Ex_Test.cpp:
+        * tests/Task_Ex_Test.cpp:
           Added explicit instantiations to ACE_Task_Ex and ACE_Message_Queue_Ex
 
 Tue Dec  2 16:33:14 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.h: Add #include "ace/Object_Manager_Base.h" to get
-	  the ACE_OS_Object_Manager definition referenced by the ACE_OS_GUARD
-	  macros.
+        * ace/OS_NS_Thread.h: Add #include "ace/Object_Manager_Base.h" to get
+          the ACE_OS_Object_Manager definition referenced by the ACE_OS_GUARD
+          macros.
 
-	* ace/OS_NS_Thread.inl: (ACE_OS_Thread_Mutex_Guard,
-	  ACE_OS_Recursive_Thread_Mutex_Guard): Changed use of
-	  ACE_Object_Manager::starting_up to ACE_OS_Object_Manager to match
-	  the class preallocated locks are obtained in the ACE_OS_GUARD
-	  macros, above. Fixes compile errors on Linux and others.
+        * ace/OS_NS_Thread.inl: (ACE_OS_Thread_Mutex_Guard,
+          ACE_OS_Recursive_Thread_Mutex_Guard): Changed use of
+          ACE_Object_Manager::starting_up to ACE_OS_Object_Manager to match
+          the class preallocated locks are obtained in the ACE_OS_GUARD
+          macros, above. Fixes compile errors on Linux and others.
 
 Tue Dec  2 14:43:17 2003  Steve Huston  <shuston@riverace.com>
 
-	* ace/OS_NS_Thread.{h inl} (ACE_OS_Thread_Mutex_Guard,
-	  ACE_OS_Recursive_Thread_Mutex_Guard): Changed the constructors to
-	  check ACE_Object_Manager::starting_up () before grabbing the
-	  monitor lock. If done before ACE_Object_Manager has been
-	  initialized, the lock reference is invalid and often results
-	  in a crash in the guard object.
-	  The motivating case for this fix is a static ACE_Date_Time
-	  object which resulted in an ACE_OS_GUARD crashing in
-	  ACE_OS::localtime_r(). Thanks to Craig L. Ching
-	  <cching@mqsoftware.com> for this report.
+        * ace/OS_NS_Thread.{h inl} (ACE_OS_Thread_Mutex_Guard,
+          ACE_OS_Recursive_Thread_Mutex_Guard): Changed the constructors to
+          check ACE_Object_Manager::starting_up () before grabbing the
+          monitor lock. If done before ACE_Object_Manager has been
+          initialized, the lock reference is invalid and often results
+          in a crash in the guard object.
+          The motivating case for this fix is a static ACE_Date_Time
+          object which resulted in an ACE_OS_GUARD crashing in
+          ACE_OS::localtime_r(). Thanks to Craig L. Ching
+          <cching@mqsoftware.com> for this report.
 
-	* tests/Date_Time_Test.cpp: Test a static ACE_Date_Time object.
+        * tests/Date_Time_Test.cpp: Test a static ACE_Date_Time object.
 
 Tue Dec  2 16:19:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -45,7 +53,7 @@ Tue Dec  2 16:19:33 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 Tue Dec  2 12:15:18 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/C++NPv2/Server_Shutdown.cpp:
-	  Added include of ace/OS_NS_string.h to get ACE_OS::strcmp
+          Added include of ace/OS_NS_string.h to get ACE_OS::strcmp
 
 Tue Dec  2 12:07:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -54,14 +62,14 @@ Tue Dec  2 12:07:13 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Mon Dec  1 22:04:37 2003  Kobi Cohen-Arazi  <kobi-co@barak-online.net>
 
-	* tests/Task_Ex_Test.cpp:
-	Move User_Defined_Msg class to Task_Ex_Test.h.
+        * tests/Task_Ex_Test.cpp:
+        Move User_Defined_Msg class to Task_Ex_Test.h.
 
-	* tests/Task_Ex_Test.dsp:
-	Add Task_Ex_Test.h to dsp.
+        * tests/Task_Ex_Test.dsp:
+        Add Task_Ex_Test.h to dsp.
 
-	* tests/Task_Ex_Test.h:
-	Added to fix problems with AIX IBM and Template instantiations.
+        * tests/Task_Ex_Test.h:
+        Added to fix problems with AIX IBM and Template instantiations.
 
 Mon Dec  1 13:03:50 2003  Chad Elliott  <elliott_c@ociweb.com>
 
