@@ -1,48 +1,54 @@
+Mon Sep 28 14:41:48 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time_Utilities.cpp: added #define ACE_BUILD_DLL.
+          Thanks to Brian Mendel <brian.r.mendel@boeing.com> for
+          reporting link failure without it on NT.
+
 Mon Sep 28 02:26:39 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* examples/POA: Added ability to support perl scripts for running
- 	  the tests and writing IORs to files:
+        * examples/POA: Added ability to support perl scripts for running
+          the tests and writing IORs to files:
 
-	  - ACE_wrappers/TAO/examples/POA/DSI/client.cpp 
-	  - ACE_wrappers/TAO/examples/POA/DSI/server.cpp 
-	  - ACE_wrappers/TAO/examples/POA/Generic_Servant/client.cpp 
-	  - ACE_wrappers/TAO/examples/POA/On_Demand_Activation/server.cpp
+          - ACE_wrappers/TAO/examples/POA/DSI/client.cpp
+          - ACE_wrappers/TAO/examples/POA/DSI/server.cpp
+          - ACE_wrappers/TAO/examples/POA/Generic_Servant/client.cpp
+          - ACE_wrappers/TAO/examples/POA/On_Demand_Activation/server.cpp
 
 Sun Sep 27 23:00:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* tao/POA: Changed the creation time to have a binary encoding
- 	  rather than the hex encoding.  Binary is better than the hex
- 	  representation because it takes half the space to store.
+        * tao/POA: Changed the creation time to have a binary encoding
+          rather than the hex encoding.  Binary is better than the hex
+          representation because it takes half the space to store.
 
-	  Also, changed the Object Id generation and parsing code to not
- 	  use MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX but use
- 	  (2 * sizeof (CORBA::ULong)).
+          Also, changed the Object Id generation and parsing code to not
+          use MAX_SPACE_REQUIRED_FOR_TWO_CORBA_ULONG_TO_HEX but use
+          (2 * sizeof (CORBA::ULong)).
 
 Sun Sep 27 22:53:08 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* examples/POA/Explicit_Activation/run_test.pl: Changed
-	  permissions to allow execution. Nothing special. Feh.
+        * examples/POA/Explicit_Activation/run_test.pl: Changed
+          permissions to allow execution. Nothing special. Feh.
 
 Sun Sep 27 22:37:11 1998  Matthew J Braun  <mjb2@cec.wustl.edu>
 
-	* examples/POA/Default_Servant/server.cpp
-	* examples/POA/Default_Servant/client.cpp 
-	* examples/POA/DSI/server.cpp
-	* examples/POA/DSI/client.cpp 
-	  Fixed a small misuse of strdup
-	
-	* tests/OctetSeq/run_test.pl: Small script to run OctetSeq test
+        * examples/POA/Default_Servant/server.cpp
+        * examples/POA/Default_Servant/client.cpp
+        * examples/POA/DSI/server.cpp
+        * examples/POA/DSI/client.cpp
+          Fixed a small misuse of strdup
 
-	* tests/Multiple_Inheritance/run_test.pl: Script to run client and 
-	  server 
+        * tests/OctetSeq/run_test.pl: Small script to run OctetSeq test
 
-	* tests/Multiple_Inheritance/server.cpp
-	* tests/Multiple_Inheritance/client.cpp
-	  Added command line parsing and ability to output the IOR to a
-	  file (server) and read from a file (client)
-	
-	* tests/Multiple_Inheritance/Makefile: Fixed realclean to remove
-	  server and client binaries
+        * tests/Multiple_Inheritance/run_test.pl: Script to run client and
+          server
+
+        * tests/Multiple_Inheritance/server.cpp
+        * tests/Multiple_Inheritance/client.cpp
+          Added command line parsing and ability to output the IOR to a
+          file (server) and read from a file (client)
+
+        * tests/Multiple_Inheritance/Makefile: Fixed realclean to remove
+          server and client binaries
 
 Sun Sep 27 21:05:40 1998  David L. Levine  <levine@cs.wustl.edu>
 
