@@ -41,6 +41,8 @@ public:
   // The destructor
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
+                                           int argc,
+                                           char *argv [],
                                            CORBA::Environment &)
     ACE_THROW_SPEC (()) = 0;
   // Create and activate a new object into the orb.
