@@ -1,3 +1,10 @@
+Sat Jul 10 16:22:00 1999  Chris Gill  <cdgill@tango.cs.wustl.edu>
+
+        * ace/config-win32-common.h: wrapped ACE_HAS_TYPENAME_KEYWORD so it is
+	  only set for MSVC++ 6.0 or higher.  This is to work around a compiler
+          bug in MSVC++ 5.0 when trying to compile certain forms with the
+          typename keyword in a template method argument list.
+
 Sat Jul 10 13:16:50 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Malloc: Changed the type of pointer used by ACE_Name_Node

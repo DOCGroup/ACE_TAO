@@ -55,13 +55,17 @@ typedef unsigned __int64 ACE_UINT64;
 # define ACE_LACKS_PRAGMA_ONCE
 #endif /* _MSC_VER < 1000 */
 
-// Only MSVC 5.0 definitions
+// Only >= MSVC 5.0 definitions
 #if (_MSC_VER >= 1100)
   #if !defined (ACE_HAS_WINCE)
     #define ACE_HAS_SIG_ATOMIC_T
   #endif /* ACE_HAS_WINCE */
-#define ACE_HAS_TYPENAME_KEYWORD
 #endif /* _MSC_VER >= 1100 */
+
+// Only >= MSVC 6.0 definitions
+#if (_MSC_VER >= 1200)
+#define ACE_HAS_TYPENAME_KEYWORD
+#endif /* _MSC_VER >= 1200 */
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
