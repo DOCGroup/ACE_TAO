@@ -14,6 +14,20 @@ endif
 # optimize = 1
 # exceptions = 0
 
+GNUWIN32_DLL_ALLOW_EXECP = 0
+
+GNUWIN32_CXX_VERSION := $(shell $(CXX) -dumpversion)
+#exceptions across dll boundries are ok in gcc 3+
+ifeq (2.95,$(findstring 2.95,$(GNUWIN32_CXX_VERSION)))
+  GNUWIN32_DLL_ALLOW_EXECP = 0
+else
+  ifeq (3.,$(findstring 3.,$(GNUWIN32_CXX_VERSION)))
+    GNUWIN32_DLL_ALLOW_EXECP = 1
+  else
+    GNUWIN32_DLL_ALLOW_EXECP = 0
+  endif
+endif
+
 ifndef winsock2
   winsock2 = 1
 endif
@@ -104,9 +118,11 @@ SHLIBBUILD = \
     -shared -o $@ $(LDFLAGS) $(VSHDIR)/$@.def \
     $(VSHOBJS1) $(ACE_SHLIBS) $(LIBS)
 
-ifeq ($(exceptions),1)
-SHLIBBUILD += \
- ;echo "Warning: exceptions fail when mixing DLL and non DLL calls."
+ifneq ($(GNUWIN32_DLL_ALLOW_EXECP), 1)
+  ifeq ($(exceptions),1)
+    SHLIBBUILD += \
+     ;echo "Warning: exceptions fail when mixing DLL and non DLL calls."
+  endif
 endif
 
 PRELIB  = @true
