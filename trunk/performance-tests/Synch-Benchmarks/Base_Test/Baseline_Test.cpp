@@ -1,17 +1,22 @@
 // $Id$
 
+#include "Baseline_Test.h"
+
+# if defined (ACE_HAS_THREADS)
+
 #define  ACE_BUILD_SVC_DLL
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Repository.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"
-#include "Baseline_Test.h"
 
 #if !defined (__ACE_INLINE__)
 #include "Baseline_Test.i"
 #endif /* __ACE_INLINE__ */
 
-ACE_RCSID(Synch_Benchmarks, Baseline_Test, "$Id$")
+ACE_RCSID (Base_Test,
+           Baseline_Test,
+           "$Id$")
 
 Baseline_Test_Options baseline_options;
 // Static Baseline Options holds the test configuration information
@@ -223,3 +228,5 @@ Baseline_Test::hold_lock (void *arg)
 }
 
 ACE_SVC_FACTORY_DEFINE (Baseline_Test)
+
+#endif  /* ACE_HAS_THREADS */
