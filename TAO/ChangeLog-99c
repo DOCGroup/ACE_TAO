@@ -1,3 +1,20 @@
+Thu Sep  2 17:56:29 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/util/utl_scope.cpp:
+	* TAO_IDL/include/utl_error.h:
+	* TAO_IDL/util/utl_error.cpp:
+	  Added a check for name clash between an identifier
+	  being declared and any others referenced in that
+	  scope. Also added a method to output a redefinition
+	  error messsage that takes string args. The existing
+	  one that takes AST_Decl args would print the entire
+	  scoped name of the referenced identifier, and that
+	  would be confusing (only the top level component is
+	  'in' the scope and can cause a collision). Thanks to
+	  Kristopher Johnson <kjohnson@gardnersys.com> for 
+	  reporting the bug and to Jonathan Biggar <jon@floorboard.com>
+	  for his clarification of the 2.3 spec changes.
+
 Thu Sep  2 17:30:48 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/corbafwd.h:
