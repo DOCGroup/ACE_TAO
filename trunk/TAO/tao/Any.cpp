@@ -534,23 +534,31 @@ operator<<= (CORBA::Any &any, CORBA::Object_ptr *objptr)
 // to avoid use in Any.i before definition in ORB.i.
 
 void
-operator<<= (CORBA::Any &any, const char* s)
+operator<<= (CORBA::Any &any, const char *s)
 {
-  TAO::Any_Impl_T<char>::insert (any,
-                                 TAO::Any_Impl::_tao_any_string_destructor,
-                                 CORBA::_tc_string,
-                                 CORBA::string_dup (s));
+  TAO::Any_Special_Impl_T<
+      char,
+      CORBA::Any::from_string,
+      CORBA::Any::to_string
+    >::insert (any,
+               TAO::Any_Impl::_tao_any_string_destructor,
+               CORBA::_tc_string,
+               CORBA::string_dup (s),
+               0);
 }
 
 void
-operator<<= (CORBA::Any &any, const CORBA::WChar* ws)
+operator<<= (CORBA::Any &any, const CORBA::WChar *ws)
 {
-  TAO::Any_Impl_T<CORBA::WChar>::insert (
-      any,
-      TAO::Any_Impl::_tao_any_wstring_destructor,
-      CORBA::_tc_wstring,
-      CORBA::wstring_dup (ws)
-    );
+  TAO::Any_Special_Impl_T<
+      CORBA::WChar,
+      CORBA::Any::from_wstring,
+      CORBA::Any::to_wstring
+    >::insert (any,
+               TAO::Any_Impl::_tao_any_wstring_destructor,
+               CORBA::_tc_wstring,
+               CORBA::wstring_dup (ws),
+               0);
 }
 
 // Extraction: these are safe and hence we have to check that the
@@ -730,23 +738,31 @@ operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, const CORBA::Char *&s)
 {
-  return TAO::Any_Impl_T<char>::extract (
-      any,
-      TAO::Any_Impl::_tao_any_string_destructor,
-      CORBA::_tc_string,
-      ACE_const_cast (char *&, s)
-    );
+  return
+    TAO::Any_Special_Impl_T<
+        char,
+        CORBA::Any::from_string,
+        CORBA::Any::to_string
+      >::extract (any,
+                  TAO::Any_Impl::_tao_any_string_destructor,
+                  CORBA::_tc_string,
+                  s,
+                  0);
 }
 
 CORBA::Boolean
 operator>>= (const CORBA::Any &any, const CORBA::WChar *&ws)
 {
-  return TAO::Any_Impl_T<CORBA::WChar>::extract (
-      any,
-      TAO::Any_Impl::_tao_any_wstring_destructor,
-      CORBA::_tc_wstring,
-      ACE_const_cast (CORBA::WChar *&, ws)
-    );
+  return
+    TAO::Any_Special_Impl_T<
+        CORBA::WChar,
+        CORBA::Any::from_wstring,
+        CORBA::Any::to_wstring
+      >::extract (any,
+                  TAO::Any_Impl::_tao_any_wstring_destructor,
+                  CORBA::_tc_wstring,
+                  ws,
+                  0);
 }
 
 CORBA::Boolean
