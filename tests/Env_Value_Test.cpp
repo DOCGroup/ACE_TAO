@@ -24,13 +24,13 @@ int
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
 // arguments.  And on VxWorks, which uses ACE_HAS_NONSTATIC_OBJECT_MANAGER,
 // we can't use spawn because it doesn't have fork ().
-main (int argc, char *[])
+main (int argc, LPTSTR [])
 {
       ACE_UNUSED_ARG (argc);
       ACE_OS::putenv("TEST_VALUE_POSITIVE=10.2");
       ACE_OS::putenv("TEST_VALUE_NEGATIVE=-10.2");
 #else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER */
-  main (int argc, char *[], char* envp[])
+main (int argc, LPTSTR [], LPTSTR envp[])
 {
   if (argc == 1)
     {
@@ -38,10 +38,12 @@ main (int argc, char *[])
       ACE_Process_Options options (1);
       options.setenv (envp);
 
-      options.command_line ("Env_Value_Test run_as_test");
+      options.command_line (TEXT ("Env_Value_Test run_as_test"));
 
-      options.setenv("TEST_VALUE_POSITIVE", "%s", "10.2");
-      options.setenv("TEST_VALUE_NEGATIVE", "%s", "-10.2");
+      options.setenv(TEXT ("TEST_VALUE_POSITIVE"), TEXT ("%s"), 
+                     TEXT ("10.2"));
+      options.setenv(TEXT ("TEST_VALUE_NEGATIVE"), TEXT ("%s"), 
+                     TEXT ("-10.2"));
 
       ACE_Process p;
       pid_t result = p.spawn (options);
