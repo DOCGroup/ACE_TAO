@@ -1,5 +1,9 @@
 Fri Jan 30 11:42:10 1998  Chris Cleeland  <cleeland@tango.cs.wustl.edu>
 
+	* docs/releasenotes/orbcore.html: Updated to reflect
+ 	characteristics of the latest release as well as what we have to
+ 	look forwrd to.
+
 	* announcement: Added this boilerplate for release announcement.
   	Actually, it's a sciprt which can be piped to something like
  	'mailx'.
