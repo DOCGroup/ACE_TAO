@@ -68,7 +68,7 @@ Options::parse_args (int argc, char **argv)
 	  ACE_ERROR_RETURN ((LM_ERROR,
 			     "Unable to read cubit_factory_ior from file %s: %p\n",
 			     get_opts.optarg), -1);
-	this->ior_ = ACE_OS::strdup (temp_buf);
+	this->ior_ = CORBA::string_copy (temp_buf);
 	ACE_OS::fclose (ior_file);
 	break;
      case 'k':

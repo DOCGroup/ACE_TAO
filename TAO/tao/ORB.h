@@ -151,7 +151,8 @@ class TAO_Operation_Table;
 class TAO_Client_Strategy_Factory;
 class TAO_Server_Strategy_Factory;
 class TAO_ORB_Parameters;
-class CDR;
+class TAO_InputCDR;
+class TAO_OutputCDR;
 
 // The new (POA) base class for servants.
 class TAO_ServantBase;

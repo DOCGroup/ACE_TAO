@@ -90,6 +90,21 @@ public:
   void sock_sndbuf_size (int);
   // Set the size to be used for a socket's send buffer.
 
+  int cdr_default_size (void) const;
+  void cdr_default_size (int);
+  // If the user does not specify the size of a CDR stream this is the
+  // size of its internal buffer.
+
+  int cdr_max_exp_size (void) const;
+  void cdr_max_exp_size (int);
+  // CDR streams internal buffers grow exponentially until they reach
+  // this size.
+
+  int cdr_linear_chunk (void) const;
+  void cdr_linear_chunk (int);
+  // After reaching their maximum exponential size limit CDR streams
+  // grow linearly in chunks of this size.
+
 private:
   ACE_INET_Addr addr_;
   // host + port number we are listening on
@@ -111,6 +126,15 @@ private:
 
   int sock_sndbuf_size_;
   // Size to be used for a socket's send buffer.
+
+  int cdr_default_size_;
+  // Default size for CDR buffers.
+
+  int cdr_max_exp_size_;
+  // Cutoff value for exponential growth of CDR buffers.
+
+  int cdr_linear_chunk_;
+  // Control for linear growth of CDR buffers.
 };
 
 typedef enum

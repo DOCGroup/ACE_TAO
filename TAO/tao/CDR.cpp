@@ -1,5 +1,7 @@
 // $Id$
 
+//
+// Portions of this file are:
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 
@@ -45,507 +47,622 @@
 // compilations without any inline code.
 
 ACE_INLINE
-void CDR::swap_long(char *orig, CORBA::Long &target)
+void CDR::swap_2 (const char *orig, char* target)
 {
-  register char *lp = ACE_reinterpret_cast(char *,&target);
-
-  lp [3] = *orig++;
-  lp [2] = *orig++;
-  lp [1] = *orig++;
-  lp [0] = *orig++;
+  target[1] = *orig++;
+  target[0] = *orig++;
 }
 
 ACE_INLINE
-void CDR::swap_ulonglong(char *orig, CORBA::ULongLong &target)
+void CDR::swap_4 (const char *orig, char* target)
 {
-  register char *llp = ACE_reinterpret_cast(char *, &target);
-
-  llp [7] = *orig++;
-  llp [6] = *orig++;
-  llp [5] = *orig++;
-  llp [4] = *orig++;
-  llp [3] = *orig++;
-  llp [2] = *orig++;
-  llp [1] = *orig++;
-  llp [0] = *orig++;
+  target [3] = *orig++;
+  target [2] = *orig++;
+  target [1] = *orig++;
+  target [0] = *orig++;
 }
 
 ACE_INLINE
-void CDR::swap_longdouble(char *orig, CORBA::LongDouble &target)
+void CDR::swap_8 (const char *orig, char* target)
 {
-  register char *ldp = ACE_reinterpret_cast(char *, &target);
-
-  ldp [15] = *orig++;
-  ldp [14] = *orig++;
-  ldp [13] = *orig++;
-  ldp [12] = *orig++;
-  ldp [11] = *orig++;
-  ldp [10] = *orig++;
-  ldp [9] = *orig++;
-  ldp [8] = *orig++;
-  ldp [7] = *orig++;
-  ldp [6] = *orig++;
-  ldp [5] = *orig++;
-  ldp [4] = *orig++;
-  ldp [3] = *orig++;
-  ldp [2] = *orig++;
-  ldp [1] = *orig++;
-  ldp [0] = *orig++;
+  target [7] = *orig++;
+  target [6] = *orig++;
+  target [5] = *orig++;
+  target [4] = *orig++;
+  target [3] = *orig++;
+  target [2] = *orig++;
+  target [1] = *orig++;
+  target [0] = *orig++;
 }
 
-ACE_INLINE void
-CDR::mb_align (ACE_Message_Block* mb)
+ACE_INLINE
+void CDR::swap_16 (const char *orig, char* target)
 {
-  ptr_arith_t temp = (ptr_arith_t) mb->base ();
-
-  temp += MAX_ALIGNMENT - 1;
-  temp &= ~ ((ptr_arith_t) MAX_ALIGNMENT - 1);
-  char* start = ACE_reinterpret_cast(char*,temp);
-  mb->rd_ptr (start);
-  mb->wr_ptr (start);
+  target [15] = *orig++;
+  target [14] = *orig++;
+  target [13] = *orig++;
+  target [12] = *orig++;
+  target [11] = *orig++;
+  target [10] = *orig++;
+  target [9] = *orig++;
+  target [8] = *orig++;
+  target [7] = *orig++;
+  target [6] = *orig++;
+  target [5] = *orig++;
+  target [4] = *orig++;
+  target [3] = *orig++;
+  target [2] = *orig++;
+  target [1] = *orig++;
+  target [0] = *orig++;
 }
 
-ACE_INLINE CORBA::Boolean
-CDR::adjust_to_put (size_t size, char*& buf)
-{
-  buf = ACE_reinterpret_cast (char *,
-                              ptr_align_binary (this->mb_->wr_ptr (),
-                                                size));
-  char *end = buf + size;
-
-  if (end <= this->mb_->end ())
-    {
-      this->mb_->wr_ptr (end);
-      return CORBA::B_TRUE;
-    }
-  else if (this->grow (0))
-    {
-      // grow(0) may change the value of wr_ptr() so we have to
-      // recompute the position....
-      buf = ACE_reinterpret_cast (char *,
-                                  ptr_align_binary (this->mb_->wr_ptr (),
-                                                    size));
-      this->mb_->wr_ptr (buf + size);
-      return CORBA::B_TRUE;
-    }
-
-  return CORBA::B_FALSE;
-}
-
-ACE_INLINE CORBA::Boolean
-CDR::adjust_to_get (size_t size,
-                    char*& buf)
-{
-  buf = ACE_reinterpret_cast (char *,
-                              ptr_align_binary (this->mb_->rd_ptr(),
-                                                size));
-  char *end = buf + size;
-  if (end <= this->mb_->end ())
-    {
-      this->mb_->rd_ptr (end);
-      return CORBA::B_TRUE;
-    }
-
-  return CORBA::B_FALSE;
-}
-
-CDR::CDR (char *buf,
-          size_t len,
-          int byte_order,
-          int consume_buf,
-          TAO_Marshal_Factory *f)
-  // Constructor ... buffer must be aligned for the strictest CDR
-  // alignment requirement, since the algorithms used here only
-  // maintain alignment with respect to &buffer [0].  Yes, that
-  // complicates the grow () primitive.
-  : do_byteswap (byte_order != TAO_ENCAP_BYTE_ORDER),
-    factory_ (f),
-    mobj_ (0),
-    good_bit_ (1)
-{
-  if (buf != 0)
-    {
-      ACE_Message_Block::Message_Flags flags =
-        consume_buf ? 0 : ACE_Message_Block::DONT_DELETE;
-      ACE_NEW (this->mb_,
-               ACE_Message_Block
-                 (new ACE_Data_Block (len,
-                                      ACE_Message_Block::MB_DATA,
-                                      (char *) buf,
-                                      0,
-                                      0,
-                                      flags)));
-      // We cannot trust the buffer to be properly aligned.
-      CDR::mb_align (this->mb_);
-    }
-  else
-    {
-      if (len == 0)
-        len = CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT;
-      ACE_NEW (this->mb_, ACE_Message_Block (len));
-      CDR::mb_align (this->mb_);
-    }
-
-#if defined(ACE_PURIFY)
-  if (this->mb_->base () != 0)
-    (void) ACE_OS::memset (this->mb_->base (), 0, len);
-#endif
-}
-
-CDR::CDR (const CDR& rhs)
-  :  do_byteswap (rhs.do_byteswap),
-     factory_ (rhs.factory_),
-     mobj_ (rhs.mobj_),
-     good_bit_ (rhs.good_bit_)
-{
-  this->mb_ = ACE_Message_Block::duplicate (rhs.mb_);
-  this->mb_->wr_ptr (rhs.mb_->wr_ptr ());
-  this->mb_->rd_ptr (rhs.mb_->rd_ptr ());
-}
-
-CDR::~CDR (void)
-{
-  ACE_Message_Block::release (this->mb_);
-  this->mb_ = 0;
-}
-
-CORBA::Boolean
-CDR::get_string (char*& buf)
-{
-  CORBA::ULong len;
-  return this->get_encapsulation (buf, len);
-}
-
-CORBA::Boolean
-CDR::get_encapsulation (char *&buf, CORBA::ULong& size)
-{
-  // TODO in some platforms this may not be safe.....
-  // @@ Carlos, can you please address this?
-  if (this->get_ulong (size))
-    {
-      buf = this->mb_->rd_ptr ();
-      this->mb_->rd_ptr (size);
-      return CORBA::B_TRUE;
-    }
-
-  return CORBA::B_FALSE;
-}
-
-void
-CDR::setup_encapsulation (char *buf, u_int len)
-{
-  // Also used when interpreting typecodes, but more generally when
-  // getting ready to read from encapsulations.  In such cases the
-  // buffer alignment guarantees must be provided by the caller, this
-  // code doesn't verify them.  These streams are "read only".
-  ACE_Message_Block::release (this->mb_);
-  this->mb_ = 0;
-  ACE_NEW (this->mb_,
-           ACE_Message_Block (buf + 1, len - 1));
-  do_byteswap = (buf[0] != TAO_ENCAP_BYTE_ORDER);
-
-  this->mb_->wr_ptr (buf + len);
-
-#if 0
-  // @@ TODO This test should be activated in debug version, but it
-  // seems a bit too conservative, checking for 4 byte boudaries
-  // should be OK for most cases.
-
-  ptr_arith_t temp = (ptr_arith_t) buf + 1;
-
-  temp += MAX_ALIGNMENT - 1;
-  temp &= ~ ((ptr_arith_t) MAX_ALIGNMENT - 1);
-  char* start = ACE_reinterpret_cast(char*,temp);
-
-  if (start != buf + 1)
-    {
-      ACE_ERROR ((LM_WARNING,
-                  "unproperly aligned buffer in "
-                  "CDR::setup_encapsulation\n"));
-    }
-#endif /* 0 */
-}
-
-void
-CDR::setup_indirection (CDR& cdr, CORBA::Long offset)
-{
-  ACE_Message_Block::release (this->mb_);
-  this->do_byteswap  = cdr.do_byteswap;
-  this->factory_ = cdr.factory_;
-  this->mobj_ = cdr.mobj_;
-  this->good_bit_ = 1;
-
-  this->mb_ = ACE_Message_Block::duplicate (cdr.mb_);
-  this->mb_->wr_ptr (cdr.mb_->wr_ptr ());
-  this->mb_->rd_ptr (cdr.mb_->rd_ptr () + offset);
-
-  if (this->mb_->rd_ptr () < this->mb_->base ()
-      || this->mb_->rd_ptr () > this->mb_->wr_ptr () )
-    this->good_bit_ = 0;
-}
-
-void
-CDR::reset (void)
-{
-  CDR::mb_align (this->mb_);
-}
-
-// Grow the CDR buffer, either to a known size (incoming message) or
-// by a standard increment (creating outgoing message).
-//
-// We can't use realloc () because of a constraint that the part of the
-// buffer into which we marshal be aligned according to MAX_ALIGNMENT,
-// which can be a stronger requirement than malloc/realloc places on
-// buffer.  This makes growing a buffer on the encode side costly,
-// since it can need to be done repetitively and copies more data each
-// time.
-//
-// NOTE: this code knows about what's involved in the constructor and
-// destructor, as it needs to invoke the constructor and do what the
-// destructor would do (and not in the normal order).  It also knows
-// all other state that's significant.  Change with care!
-//
-// NOTE: arguably this is a good place to ensure that the memory's
-// zeroed out to comply with Orange Book C2 "object reuse" (meaning
-// data, like I/O buffers) policy.  IIOP doesn't mandate such policies
-// though.
-
-CORBA::Boolean
-CDR::grow (size_t newsize)
+int
+CDR::grow (ACE_Message_Block*& mb, size_t minsize)
 {
   // Calculate the new buffer's length; if growing for encode, we
   // don't grow in "small" chunks because of the cost.
 
-  size_t new_len;
+  size_t size = mb->size();
+  size_t newsize = size;
 
-  size_t size = this->mb_->size();
-  if (newsize == 0)
+  if (minsize == 0)
     {
       // TODO We should the growth strategy should be controlled using
       // the ORB parameters....
       if (size < CDR::EXP_GROWTH_MAX)
-        new_len = size * 2;
+        newsize *= 2;
       else
-        new_len = size + CDR::LINEAR_GROWTH_CHUNK;
+        newsize += CDR::LINEAR_GROWTH_CHUNK;
     }
-  else if (newsize <= size)
-    return CORBA::B_TRUE;
+  else if (minsize <= size)
+    return 0;
   else
-    new_len = newsize;
+    {
+      while (newsize < minsize)
+	{
+	  if (newsize < CDR::EXP_GROWTH_MAX)
+	    newsize *= 2;
+	  else
+	    newsize += CDR::LINEAR_GROWTH_CHUNK;
+	}
+    }
 
-  new_len += MAX_ALIGNMENT - 1;
+  ACE_Message_Block* tmp;
+  ACE_NEW_RETURN (tmp, ACE_Message_Block (newsize), -1);
 
-  ACE_Message_Block *mb;
-  ACE_NEW_RETURN (mb,
-                  ACE_Message_Block (new_len),
-                  CORBA::B_FALSE);
+  CDR::mb_align (tmp);
 
-  CDR::mb_align (mb);
+  tmp->copy (mb->rd_ptr (), mb->length());
+  ACE_Message_Block::release (mb);
+  mb = tmp;
 
-  mb->copy (this->mb_->rd_ptr (),
-            this->mb_->length());
-  ACE_Message_Block::release (this->mb_);
-  this->mb_ = mb;
-
-  return CORBA::B_TRUE;
+  return 0;
 }
 
 // ****************************************************************
-// put_ methods
+// ****************************************************************
+// ****************************************************************
 
-CORBA::Boolean
-CDR::put_short (CORBA::Short s)
+TAO_OutputCDR::TAO_OutputCDR (size_t size,
+			      int byte_order,
+			      TAO_Marshal_Factory *factory)
+  :  do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+     factory_ (factory),
+     good_bit_ (1)
 {
-  char *buf;
-
-  if (this->adjust_to_put (SHORT_SIZE, buf))
+  if (size == 0)
     {
-      // copy the half word, native byte order
-      *(CORBA::Short *)buf = s;
+      size = CDR::DEFAULT_BUFSIZE + CDR::MAX_ALIGNMENT;
+    }
+  ACE_NEW (this->start_, ACE_Message_Block (size));
+  CDR::mb_align (this->start_);
+}
+
+TAO_OutputCDR::TAO_OutputCDR (char *data, size_t size,
+			      int byte_order,
+			      TAO_Marshal_Factory *factory)
+  :  do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+     factory_ (factory),
+     good_bit_ (1)
+{
+  ACE_NEW (this->start_, ACE_Message_Block (data, size));
+  // We cannot trust the buffer to be properly aligned
+  CDR::mb_align (this->start_);
+}
+
+TAO_OutputCDR::~TAO_OutputCDR (void)
+{
+  ACE_Message_Block::release (this->start_);
+  this->start_ = 0;
+}
+
+void
+TAO_OutputCDR::reset (void)
+{
+  CDR::mb_align (this->start_);
+}
+
+ACE_INLINE char*
+TAO_OutputCDR::wr_ptr (void) const
+{
+  return this->start_->wr_ptr ();
+}
+
+ACE_INLINE char*
+TAO_OutputCDR::end (void) const
+{
+  return this->start_->end ();
+}
+
+ACE_INLINE int
+TAO_OutputCDR::adjust (size_t size, size_t align, char*& buf)
+{
+  buf = ptr_align_binary (this->wr_ptr(), align);
+  char *end = buf + size;
+
+  if (end <= this->end ())
+    {
+      this->start_->wr_ptr (end);
+      return 0;
+    }
+  else if (CDR::grow (this->start_,
+		      this->start_->size() + (end - this->end () )) == 0)
+    {
+      // grow(0) may change the value of wr_ptr() so we have to
+      // recompute the position....
+      buf = ptr_align_binary (this->wr_ptr(), align);
+      this->start_->wr_ptr (buf + size);
+      return 0;
+    }
+  this->good_bit_ = 0;
+  return -1;
+}
+
+ACE_INLINE int
+TAO_OutputCDR::adjust (size_t size, char*& buf)
+{
+  return this->adjust (size, size, buf);
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_1 (const CORBA::Octet* x)
+{
+  if (this->wr_ptr () < this->end() || CDR::grow(this->start_, 0) == 0)
+    {
+      *ACE_reinterpret_cast(CORBA::Octet*,this->wr_ptr()) = *x;
+      this->start_->wr_ptr (1);
       return CORBA::B_TRUE;
     }
 
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_2 (const CORBA::UShort* x)
+{
+  char* buf;
+  if (this->adjust (CDR::SHORT_SIZE, buf) == 0)
+    {
+      *ACE_reinterpret_cast(CORBA::UShort*,buf) = *x;
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_4 (const CORBA::ULong* x)
+{
+  char* buf;
+  if (this->adjust (CDR::LONG_SIZE, buf) == 0)
+    {
+      *ACE_reinterpret_cast(CORBA::ULong*,buf) = *x;
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_8 (const CORBA::ULongLong* x)
+{
+  char* buf;
+  if (this->adjust (CDR::LONGLONG_SIZE, buf) == 0)
+    {
+      *ACE_reinterpret_cast(CORBA::ULongLong*,buf) = *x;
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_16 (const CORBA::LongDouble* x)
+{
+  char* buf;
+  if (this->adjust (CDR::LONGDOUBLE_SIZE, CDR::LONGDOUBLE_ALIGN, buf) == 0)
+    {
+      *ACE_reinterpret_cast(CORBA::LongDouble*,buf) = *x;
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_OutputCDR::write_array (const void* x,
+			    size_t size,
+			    size_t align,
+			    CORBA::ULong length)
+{
+  char* buf;
+  if (this->adjust (size * length, align, buf) == 0)
+    {
+      ACE_OS::memcpy (buf, x, size*length);
+      return CORBA::B_TRUE;
+    }
   this->good_bit_ = 0;
   return CORBA::B_FALSE;
 }
 
-CORBA::Boolean
-CDR::put_long (CORBA::Long l)
+CORBA_Boolean
+TAO_OutputCDR::write_string (const CORBA::Char *x)
 {
-  char *buf;
-
-  if (this->adjust_to_put (LONG_SIZE, buf))
+  CORBA::ULong len = ACE_OS::strlen (x) + 1;
+  
+  if (this->write_ulong (len))
     {
-      // copy the word, native byte order
-      *(CORBA::Long *)buf =  l;
-      return CORBA::B_TRUE;
+      return this->write_char_array (x, len);
     }
-
-  this->good_bit_ = 0;
   return CORBA::B_FALSE;
 }
 
-CORBA::Boolean
-CDR::put_ulonglong (const CORBA::ULongLong &ull)
+CORBA_Boolean
+TAO_OutputCDR::write_wstring (const CORBA::WChar *x)
 {
-  char *buf;
-
-  if (this->adjust_to_put (LONGLONG_SIZE, buf))
+  CORBA::ULong len = ACE_OS::wslen (x) + 1;
+  if (this->write_ulong (len))
     {
-      *(CORBA::ULongLong *)buf = ull;
-      return CORBA::B_TRUE;
+      return this->write_wchar_array (x, len);
     }
-
-  this->good_bit_ = 0;
   return CORBA::B_FALSE;
 }
 
-CORBA::Boolean
-CDR::put_longdouble (CORBA::LongDouble &ld)
+CORBA_Boolean
+TAO_OutputCDR::write_boolean_array (const CORBA::Boolean* x,
+				    CORBA::ULong length)
 {
-  char *buf;
-
-  if (this->adjust_to_put (LONGDOUBLE_SIZE, buf))
+  // It is hard to optimize this, the spec requires that on the wire
+  // booleans be represented as a byte with value 0 or 1, but in
+  // memoery it is possible (though very unlikely) that a boolean has
+  // a non-zero value (different from 1).
+  // We resort to a simple loop.
+  const CORBA::Boolean* end = x + length;
+  for (const CORBA::Boolean* i = x; i != end && this->good_bit(); ++i)
     {
-      // copy the longdouble in native byte order
-      *(CORBA::LongDouble *)buf = ld;
-      return CORBA::B_TRUE;
+      this->write_boolean (*i);
     }
-
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
-}
-
-CORBA::Boolean
-CDR::put_string (const char *str, CORBA::ULong len)
-{
-  // Assuming that length is the length of the string. We insert len+1
-  // for the additional NUL character.
-  if (this->put_long (len + 1))
-    {
-      char *buf = this->mb_->wr_ptr ();
-      char *end = buf + len + 1;
-
-      if (end <= this->mb_->end ()
-          || this->grow (this->size () + len + 1))
-        this->mb_->copy (str, len + 1);
-
-      return CORBA::B_TRUE;
-    }
-  return CORBA::B_FALSE;
+  return this->good_bit ();
 }
 
 // ****************************************************************
-// get_
 
-CORBA::Boolean
-CDR::get_short (CORBA::Short &s)
+TAO_InputCDR::TAO_InputCDR (const char *buf, size_t bufsiz,
+			    int byte_order,
+			    TAO_Marshal_Factory *factory)
+  : factory_ (factory),
+    do_byte_swap_ (byte_order != TAO_ENCAP_BYTE_ORDER),
+    good_bit_ (1)
 {
-  char *buf;
-  if (this->adjust_to_get (SHORT_SIZE, buf))
-    {
-      // decode halfword, swapping as needed
-      if (!do_byteswap)
-        {
-          s = *(CORBA::Short *)buf;
-          return CORBA::B_TRUE;  // put a return here to avoid a jump
-        }
-      else
-        {
-          // do swapping
-          register char   *sp = ACE_reinterpret_cast(char *, &s);
+  ACE_NEW (this->start_, ACE_Message_Block (buf, bufsiz));
+  this->start_->wr_ptr (bufsiz);
+}
 
-          sp [1] = buf[0];
-          sp [0] = buf[1];
-          return CORBA::B_TRUE;
-        }
+TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
+			    size_t size,
+			    CORBA::Long offset)
+  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+    factory_ (rhs.factory_),
+    do_byte_swap_ (rhs.do_byte_swap_),
+    good_bit_ (1)
+{
+  char* newpos = this->start_->rd_ptr() + offset;
+  if (this->start_->base () <= newpos
+      && newpos <= this->start_->end ()
+      && newpos + size <= this->start_->end ())
+    {
+      this->start_->rd_ptr (newpos);
+      this->start_->wr_ptr (newpos + size);
     }
-  this->good_bit_ = 0;
+  else
+    {
+      this->good_bit_ = 0;
+    }
+}
+
+TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
+  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+    factory_ (rhs.factory_),
+    do_byte_swap_ (rhs.do_byte_swap_),
+    good_bit_ (1)
+{
+}
+
+TAO_InputCDR&
+TAO_InputCDR::operator= (const TAO_InputCDR& rhs)
+{
+  if (this != &rhs)
+    {
+      ACE_Message_Block::release (this->start_);
+      this->start_ = ACE_Message_Block::duplicate (rhs.start_);
+      this->factory_ = rhs.factory_;
+      this->do_byte_swap_ = rhs.do_byte_swap_;
+      this->good_bit_ = 1;
+    }
+  return *this;
+}
+
+TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs)
+  : start_ (ACE_Message_Block::duplicate (rhs.start_)),
+    factory_ (rhs.factory_),
+    do_byte_swap_ (rhs.do_byte_swap_),
+    good_bit_ (1)
+{
+}
+
+TAO_InputCDR::~TAO_InputCDR (void)
+{
+  ACE_Message_Block::release (this->start_);
+  this->start_ = 0;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_string (CORBA::Char*& x)
+{
+  CORBA::ULong len;
+  this->read_ulong (len);
+  if (this->good_bit() && len > 0)
+    {
+      x = CORBA::string_alloc (len);
+      if (this->read_char_array (x, len))
+	return CORBA::B_TRUE;
+      CORBA::string_free (x);
+    }
+  x = 0;
   return CORBA::B_FALSE;
 }
 
-CORBA::Boolean
-CDR::get_long (CORBA::Long &l)
+CORBA_Boolean
+TAO_InputCDR::read_wstring (CORBA::WChar*& x)
 {
-  char *buf;
-  if (this->adjust_to_get (LONG_SIZE, buf))
+  CORBA::ULong len;
+  this->read_ulong (len);
+  if (this->good_bit())
     {
-      if (!do_byteswap)
-        {
-          l =  *(CORBA::Long *)buf;
-          return CORBA::B_TRUE;
-        }
-      else
-        {
-          // NOTE: environment-specific speedups abound for this kind
-          // of stuff.  This generic code takes advantage of none of
-          // them.
-          swap_long (buf, l);
-          return CORBA::B_TRUE;
-        }
+      x = CORBA::wstring_alloc (len);
+      if (this->read_wchar_array (x, len))
+	return CORBA::B_TRUE;
+
+      CORBA::wstring_free (x);
     }
-  this->good_bit_ = 0;
+  x = 0;
   return CORBA::B_FALSE;
 }
 
-CORBA::Boolean
-CDR::get_ulonglong (CORBA::ULongLong &ull)
+ACE_INLINE char*
+TAO_InputCDR::end (void)
 {
-  char *buf;
+  return this->start_->end ();
+}
 
-  if (this->adjust_to_get (LONGLONG_SIZE, buf))
+ACE_INLINE void
+TAO_InputCDR::rd_ptr (size_t offset)
+{
+  this->start_->rd_ptr (offset);
+}
+
+ACE_INLINE int
+TAO_InputCDR::adjust (size_t size,
+		      size_t align,
+		      char*& buf)
+{
+  buf = ptr_align_binary (this->rd_ptr(), align);
+  char *end = buf + size;
+  if (end <= this->end ())
     {
-      if (!do_byteswap)
-        {
-          ull = *(CORBA::ULongLong *)buf;
-          return CORBA::B_TRUE;
-        }
-      else
-        {
-          swap_ulonglong (buf, ull);
-          return CORBA::B_TRUE;
-        }
+      this->start_->rd_ptr (end);
+      return 0;
     }
 
   this->good_bit_ = 0;
-  return CORBA::B_FALSE;
+  return -1;
 }
 
-CORBA::Boolean
-CDR::get_longdouble (CORBA::LongDouble &ld)
+ACE_INLINE int
+TAO_InputCDR::adjust (size_t size,
+		      char*& buf)
 {
-  char *buf;
-
-  if (this->adjust_to_get (LONGDOUBLE_SIZE, buf))
-    {
-      if (!do_byteswap)
-        {
-          ld = *(CORBA::LongDouble *)buf;
-          return CORBA::B_TRUE;
-        }
-      else
-        {
-          swap_longdouble (buf, ld);
-          return CORBA::B_TRUE;
-        }
-    }
-
-  this->good_bit_ = 0;
-  return CORBA::B_FALSE;
+  return this->adjust (size, size, buf);
 }
 
-CORBA::Boolean
-CDR::get_string (char *&str, CORBA::ULong len)
+CORBA_Boolean
+TAO_InputCDR::read_1 (CORBA::Octet* x)
 {
-  // len includes the terminating 0
-  char *end = this->mb_->rd_ptr () + len;
-
-  if (end <= this->mb_->end ())
+  if (this->rd_ptr () < this->end())
     {
-      ACE_OS::memcpy (str, this->mb_->rd_ptr (), len);
-      this->mb_->rd_ptr (end);
+      *x = *ACE_reinterpret_cast(CORBA::Octet*,this->rd_ptr());
+      this->start_->rd_ptr (1);
       return CORBA::B_TRUE;
     }
 
+  this->good_bit_ = 0;
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_2 (CORBA::UShort* x)
+{
+  char* buf;
+  if (this->adjust (CDR::SHORT_SIZE, buf) == 0)
+    {
+      if (!this->do_byte_swap_)
+	{
+	  *x = *ACE_reinterpret_cast(CORBA::UShort*,buf);
+	}
+      else
+	{
+	  CDR::swap_2 (buf, ACE_reinterpret_cast(char*,x));
+	}
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_4 (CORBA::ULong* x)
+{
+  char* buf;
+  if (this->adjust (CDR::LONG_SIZE, buf) == 0)
+    {
+      if (!this->do_byte_swap_)
+	{
+	  *x = *ACE_reinterpret_cast(CORBA::ULong*,buf);
+	}
+      else
+	{
+	  CDR::swap_4 (buf, ACE_reinterpret_cast(char*,x));
+	}
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_8 (CORBA::ULongLong* x)
+{
+  char* buf;
+  if (this->adjust (CDR::LONGLONG_SIZE, buf) == 0)
+    {
+      if (!this->do_byte_swap_)
+	{
+	  *x = *ACE_reinterpret_cast(CORBA::ULongLong*,buf);
+	}
+      else
+	{
+	  CDR::swap_8 (buf, ACE_reinterpret_cast(char*,x));
+	}
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_16 (CORBA::LongDouble* x)
+{
+  char* buf;
+  if (this->adjust (CDR::LONGDOUBLE_SIZE,
+		    CDR::LONGDOUBLE_ALIGN,
+		    buf) == 0)
+    {
+      if (!this->do_byte_swap_)
+	{
+	  *x = *ACE_reinterpret_cast(CORBA::LongDouble*,buf);
+	}
+      else
+	{
+	  CDR::swap_16 (buf, ACE_reinterpret_cast(char*,x));
+	}
+      return CORBA::B_TRUE;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_array (void* x,
+			  size_t size,
+			  size_t align,
+			  CORBA::ULong length)
+{
+  char* buf;
+  if (this->adjust (size * length, align, buf) == 0)
+    {
+      if (!this->do_byte_swap_ || size == 1)
+	{
+	  ACE_OS::memcpy (x, buf, size*length);
+	}
+      else
+	{
+	  // I cannot see any fast way out of this....
+	  typedef void (*SWAPPER)(const char*, char*);
+	  SWAPPER swapper;
+	  switch (size)
+	    {
+	    case 2:
+	      swapper = CDR::swap_2;
+	      break;
+	    case 4:
+	      swapper = CDR::swap_4;
+	      break;
+	    case 8:
+	      swapper = CDR::swap_8;
+	      break;
+	    case 16:
+	      swapper = CDR::swap_16;
+	      break;
+	    default:
+	      // TODO: print something?
+	      this->good_bit_ = 0;
+	      return CORBA::B_FALSE;
+	    }
+	  char *target = ACE_reinterpret_cast(char*,x);
+	  char *end = target + size*length;
+	  for (; target != end; target += size, buf += size)
+	    {
+	      (*swapper)(buf, target);
+	    }
+	}
+      return this->good_bit_;
+    }
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::read_boolean_array (CORBA::Boolean* x,
+				  CORBA::ULong length)
+{
+  // It is hard to optimize this, the spec requires that on the wire
+  // booleans be represented as a byte with value 0 or 1, but in
+  // memoery it is possible (though very unlikely) that a boolean has
+  // a non-zero value (different from 1).
+  // We resort to a simple loop.
+  for (CORBA::ULong i = 0; i != length && this->good_bit_; ++i)
+    {
+      this->read_boolean (x[i]);
+    }
+  return this->good_bit_;
+}
+
+CORBA_Boolean
+TAO_InputCDR::skip_string (void)
+{
+  CORBA::ULong len;
+  if (this->read_ulong (len))
+    {
+      if (this->rd_ptr () + len <= this->end ())
+	{
+	  this->rd_ptr (len);
+	  return CORBA::B_TRUE;
+	}
+      this->good_bit_ = 0;
+    }
+
+  return CORBA::B_FALSE;
+}
+
+CORBA_Boolean
+TAO_InputCDR::skip_bytes (size_t len)
+{
+  if (this->rd_ptr () + len <= this->end ())
+    {
+      this->rd_ptr (len);
+      return CORBA::B_TRUE;
+    }
+  this->good_bit_ = 0;
   return CORBA::B_FALSE;
 }

@@ -276,7 +276,7 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // Create a CDR stream ... juggle the alignment here a bit, we know
   // it's good enough for the typecode.
 
-  CDR stream (buffer, buflen);
+  TAO_OutputCDR stream (buffer, buflen);
 
   // into CDR stream, stuff (in order):
   //    - byte order flag [4 bytes]
@@ -295,14 +295,14 @@ TAO_Exceptions::make_standard_typecode (CORBA::TypeCode_ptr tcp,
   // exceptions?
   assert (ACE_OS::strlen (full_id) <= sizeof full_id);
 
-  if (stream.put_byte (TAO_ENCAP_BYTE_ORDER) != CORBA::B_TRUE
+  if (stream.write_octet (TAO_ENCAP_BYTE_ORDER) != CORBA::B_TRUE
       || stream.encode (CORBA::_tc_string,
                        &strptr, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
       || stream.encode (CORBA::_tc_string,
                        &name, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE
-      || stream.put_ulong (2L) != CORBA::B_TRUE
+      || stream.write_ulong (2L) != CORBA::B_TRUE
       || stream.encode (CORBA::_tc_string,
                        &minor, 0,
                        env) != CORBA::TypeCode::TRAVERSE_CONTINUE

@@ -163,10 +163,10 @@ public:
   virtual void init_reply (CORBA::Environment &env) = 0;
   // Start a Reply message.
 
-  virtual CDR &incoming (void) = 0;
+  virtual TAO_InputCDR &incoming (void) = 0;
   // Retrieve the incoming stream.
 
-  virtual CDR &outgoing (void) = 0;
+  virtual TAO_OutputCDR &outgoing (void) = 0;
   // Retrieve the outgoing stream.
 };
 
@@ -177,10 +177,10 @@ class TAO_Export IIOP_ServerRequest : public CORBA_ServerRequest
 public:
   // = Initialization and termination methods.
   IIOP_ServerRequest (const TAO_GIOP_RequestHeader &hdr,
-                      CDR *req,
-                      CDR *resp,
-                      CORBA::ORB_ptr the_orb,
-                      TAO_POA *the_poa);
+		      TAO_InputCDR *req,
+                      TAO_OutputCDR *resp,
+		      CORBA::ORB_ptr the_orb,
+		      TAO_POA *the_poa);
   // Constructor
 
   virtual ~IIOP_ServerRequest (void);
@@ -225,10 +225,10 @@ public:
   virtual void init_reply (CORBA::Environment &env);
   // start a Reply message
 
-  virtual CDR &incoming (void);
+  virtual TAO_InputCDR &incoming (void);
   // Retrieve the incoming stream.
 
-  virtual CDR &outgoing (void);
+  virtual TAO_OutputCDR &outgoing (void);
   // Retrieve the outgoing stream.
 
   // = Stuff required for memory management and COM
@@ -241,10 +241,10 @@ private:
   CORBA::String_var opname_;
   // Operation name.
 
-  CDR *incoming_;
+  TAO_InputCDR *incoming_;               
   // Incoming stream.
 
-  CDR *outgoing_;
+  TAO_OutputCDR *outgoing_;               
   // Outgoing stream.
 
   CORBA::ULong reqid_;
