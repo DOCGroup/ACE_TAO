@@ -264,6 +264,7 @@ namespace Deployment
 
   void DnC_Dump::dump (const ::Deployment::SubcomponentPortEndpoint &spe)
   {
+    /*
     ACE_DEBUG ((LM_DEBUG, "SubcomponentPortEndpoint: \n"));
 
     ACE_DEBUG ((LM_DEBUG, "  portName: %s\n", spe.portName.in ()));
@@ -275,6 +276,8 @@ namespace Deployment
       {
         DnC_Dump::dump (spe.instance[i]); // SubcomponentInstantiationDescription
       }
+
+    */
   }
 
   void DnC_Dump::dump (const ::Deployment::Requirement &req)

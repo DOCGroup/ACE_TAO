@@ -1,3 +1,16 @@
+Tue May 18 00:54:00 2004  Jaiganesh B  <jai@dre.vanderbilt.edu>
+
+        * DnC/Config_Handlers/CAD_Handler.cpp:
+        * DnC/Config_Handlers/CAD_Handler.h:
+        * DnC/Config_Handlers/Config_Handlers.mpc:
+        * DnC/Config_Handlers/DnC_Dump.cpp:
+        * DnC/Deployment.idl:
+
+          Made a change to the IDL for the ComponentDataModel
+          elements.
+
+          Updated the affected handlers.
+
 Mon May 17 22:15:11 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* docs/index.html:
@@ -11,8 +24,8 @@ Mon May 17 21:07:25 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* tools/static_configurator/Static_Assembly_Visitors.h:
 	* tools/static_configurator/Static_Configurator.cpp:
 	* tools/static_configurator/Static_Configurator.mpc:
-	  
-	  Fixed some compile errors because of a typo. 
+
+	  Fixed some compile errors because of a typo.
 
 Mon May 17 19:29:43 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
@@ -31,21 +44,21 @@ Mon May 17 19:29:43 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	  Changes to statically parse .rtcad files and generate main
 	  driver for static RTCCM applications.
-	
+
 Mon May 17 16:16:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	Merging RTCIAO-tests branch to the main trunk. This branch
 	contained the RTCCM tests from Nanbor (nanbor@txcorp.com).
-	
+
 	* ciao/CIAO_common.h:
 	* ciao/Client_init.cpp: Minor modifications to CIAO core. Addition
-	  of CIAO_debug_level. 
-	
+	  of CIAO_debug_level.
+
 	* ciao/ComponentInstallation_Impl.cpp:
 	* ciao/ServerActivator_Impl.cpp:
 	* ciao/ServerActivator_Impl.h: Addition of extra command line
-	  flags to be passed on to the component server during its spawning.	
-	
+	  flags to be passed on to the component server during its spawning.
+
 	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
 	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
 	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
@@ -55,7 +68,7 @@ Mon May 17 16:16:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* tests/RTCCM/Priority_Test/descriptors/RTsvc.conf:
 	* tests/RTCCM/Priority_Test/descriptors/svcmap.dat:
 	* tests/RTCCM/Priority_Test/descriptors/test.dat:
-	* tests/RTCCM/Priority_Test/descriptors/test.rtd: 
+	* tests/RTCCM/Priority_Test/descriptors/test.rtd:
 	* tests/RTCCM/Priority_Test/descriptors/basic-remote.cad:
 	* tests/RTCCM/Priority_Test/descriptors/basic_remote.pl:
 	* tests/RTCCM/Priority_Test/descriptors/basic_rt.rtd:
@@ -132,14 +145,14 @@ Mon May 17 16:16:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 	* tests/RTCCM/Priority_Test/Workers/Worker_svnt_export.h:
 	* tests/RTCCM/Priority_Test/descriptors/CB_Worker.csd:
 	* tests/RTCCM/Priority_Test/descriptors/IOB_Worker.csd:
-	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd: 
+	* tests/RTCCM/Priority_Test/descriptors/Worker.ssd:
 
 	  New files for test Worker components.
 
 	* tests/RTCCM/Priority_Test/Priority_Test.idl:
 	* tests/RTCCM/Priority_Test/Priority_Test.mpc:
 	* tests/RTCCM/Priority_Test/Priority_Test_stub_export.h:
-	* tests/RTCCM/Priority_Test/Priority_Test_svnt_export.h: 
+	* tests/RTCCM/Priority_Test/Priority_Test_svnt_export.h:
 
 	  Added files for RTCCM Priority_Test project.
 
@@ -164,7 +177,7 @@ Mon May 17 16:16:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* performance-tests/Benchmark/RoundTripClient/run_test.pl:
 	* performance-tests/Benchmark/RoundTripClient/run_test_ior_cad.pl:
-	
+
 	  Setting CIAO_ROOT if not already set.
 
 	* tools/Assembly_Deployer/Assembly_Deployer.cpp:
@@ -183,7 +196,7 @@ Mon May 17 16:16:37 2004  Venkita Subramonian  <venkita@cs.wustl.edu>
 
 	* tools/ComponentServer/ComponentServer.cpp: Changes to run
 	  component server in SCHED_FIFO class.
-	
+
 	* tools/Daemon/CIAO_Daemon.cpp: Added command line processing for
 	  extra command-line argument for component server process.
 
