@@ -420,7 +420,7 @@ TAO_TCP_Properties::no_delay (CORBA::Boolean no_delay
   this->no_delay_ = no_delay;
 }
 
-CORBA::Boolean 
+CORBA::Boolean
 TAO_TCP_Properties::enable_network_priority (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
@@ -671,7 +671,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
                                 int &send_buffer_size,
                                 int &recv_buffer_size,
                                 int &no_delay,
-                                int &enable_network_priority,				
+                                int &enable_network_priority,
                                 const char *protocol_type)
 {
   RTCORBA::ProtocolProperties_var properties =
@@ -707,7 +707,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
               // Find protocol properties.
               for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                 {
-                  if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                  if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                     {
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
@@ -760,7 +760,7 @@ TAO_ServerProtocolPolicy::hook (TAO_ORB_Core *orb_core,
 
                   for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                     {
-                      if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                      if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                         {
                           properties =
                             RTCORBA::ProtocolProperties::_narrow (
@@ -955,7 +955,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
 
               for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                 {
-                  if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                  if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                     {
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
@@ -1007,7 +1007,7 @@ TAO_ClientProtocolPolicy::hook (TAO_ORB_Core *orb_core,
 
                   for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                     {
-                      if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                      if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                         {
                           properties =
                             RTCORBA::ProtocolProperties::_narrow (
@@ -1234,4 +1234,3 @@ TAO_Protocol_Properties_Factory::create_orb_protocol_property (
                     0);
    return property;
 }
-

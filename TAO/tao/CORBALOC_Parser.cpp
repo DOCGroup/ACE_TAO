@@ -62,7 +62,7 @@ TAO_CORBALOC_Parser::parse_string_count_helper (const char * s,
                        ACE_TEXT ("TAO (%P|%t) Invalid Syntax: %s\n"),
                        s));
 
-          ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
+          ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                        CORBA::COMPLETED_NO));
         }
 
@@ -389,7 +389,7 @@ TAO_CORBALOC_Parser::check_prefix (const char *end_point
                     ACE_TEXT ("no usable transport protocol ")
                     ACE_TEXT ("was found.\n")));
 
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 10,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 10,
                                           CORBA::COMPLETED_NO),
                         -1);
     }

@@ -86,7 +86,7 @@ Dynamic::ParameterList *
 TAO_ServerRequestInfo::arguments (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -95,7 +95,7 @@ Dynamic::ExceptionList *
 TAO_ServerRequestInfo::exceptions (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -104,7 +104,7 @@ Dynamic::ContextList *
 TAO_ServerRequestInfo::contexts (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -113,7 +113,7 @@ Dynamic::RequestContext *
 TAO_ServerRequestInfo::operation_context (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -122,7 +122,7 @@ CORBA::Any *
 TAO_ServerRequestInfo::result (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -142,7 +142,7 @@ TAO_ServerRequestInfo::sync_scope (ACE_ENV_SINGLE_ARG_DECL)
   if (this->server_request_.sync_with_server ())
     return Messaging::SYNC_WITH_SERVER;
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     -1);
 }
@@ -154,7 +154,7 @@ TAO_ServerRequestInfo::reply_status (ACE_ENV_SINGLE_ARG_DECL)
 {
   if (this->reply_status_ == -1)
     // A reply hasn't been received yet.
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                             CORBA::COMPLETED_NO),
                       -1);
 
@@ -166,7 +166,7 @@ TAO_ServerRequestInfo::forward_reference (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (this->reply_status_ != PortableInterceptor::LOCATION_FORWARD)
-    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+    ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                             CORBA::COMPLETED_NO),
                       CORBA::Object::_nil ());
 
@@ -244,7 +244,7 @@ TAO_ServerRequestInfo::get_service_context_i (
   else
     {
       // Not found.
-      ACE_THROW_RETURN (CORBA::BAD_PARAM (TAO_OMG_VMCID | 26,
+      ACE_THROW_RETURN (CORBA::BAD_PARAM (CORBA::OMGVMCID | 26,
                                           CORBA::COMPLETED_NO),
                         0);
     }
@@ -260,7 +260,7 @@ TAO_ServerRequestInfo::sending_exception (ACE_ENV_SINGLE_ARG_DECL)
   if (this->reply_status_ != PortableInterceptor::SYSTEM_EXCEPTION
       && this->reply_status_ != PortableInterceptor::USER_EXCEPTION)
     {
-      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+      ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                               CORBA::COMPLETED_NO),
                         0);
     }
@@ -306,7 +306,7 @@ TAO_ServerRequestInfo::server_id (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::string_dup (this->server_request_.orb_core ()->server_id ());
 
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -319,7 +319,7 @@ TAO_ServerRequestInfo::orb_id (ACE_ENV_SINGLE_ARG_DECL)
     return
       CORBA::string_dup (this->server_request_.orb_core ()->orbid ());
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -339,7 +339,7 @@ TAO_ServerRequestInfo::adapter_name (ACE_ENV_SINGLE_ARG_DECL)
       this->servant_upcall_->poa ().adapter_name (
         ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -382,7 +382,7 @@ TAO_ServerRequestInfo::object_id (ACE_ENV_SINGLE_ARG_DECL)
       return obj_id._retn ();
     }
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -394,7 +394,7 @@ TAO_ServerRequestInfo::adapter_id (ACE_ENV_SINGLE_ARG_DECL)
   if (this->servant_upcall_ != 0)
     return this->servant_upcall_->poa ().id (ACE_ENV_SINGLE_ARG_PARAMETER);
 
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     0);
 }
@@ -406,7 +406,7 @@ TAO_ServerRequestInfo::target_most_derived_interface (
 {
   // Implemented in the generated skeleton.
 
-  ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
+  ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
                                          CORBA::COMPLETED_NO),
                     0);
 }
@@ -445,7 +445,7 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
         }
 
       // No policy matching the given PolicyType was found.
-      ACE_THROW_RETURN (CORBA::INV_POLICY (TAO_OMG_VMCID | 3,
+      ACE_THROW_RETURN (CORBA::INV_POLICY (CORBA::OMGVMCID | 3,
                                            CORBA::COMPLETED_NO),
                         CORBA::Policy::_nil ());
     }
@@ -453,7 +453,7 @@ TAO_ServerRequestInfo::get_server_policy (CORBA::PolicyType type
   // @@ Technically, we shouldn't be throwing this exception since
   //    this method should be valid in all server side request
   //    interception points.
-  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 14,
+  ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14,
                                           CORBA::COMPLETED_NO),
                     CORBA::Policy::_nil ());
 }
@@ -497,7 +497,7 @@ TAO_ServerRequestInfo::target_is_a (const char * /* id */
 {
   // Implemented in the generated skeleton.
 
-  ACE_THROW_RETURN (CORBA::NO_RESOURCES (TAO_OMG_VMCID | 1,
+  ACE_THROW_RETURN (CORBA::NO_RESOURCES (CORBA::OMGVMCID | 1,
                                          CORBA::COMPLETED_NO), 0);
 }
 
@@ -514,7 +514,7 @@ TAO_ServerRequestInfo::add_reply_service_context (
 
   if (service_context_list.set_context (service_context, replace) == 0)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 15,
+      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 15,
                                        CORBA::COMPLETED_NO));
     }
 }

@@ -1007,7 +1007,7 @@ TAO_POA::tao_add_ior_component_to_profile (
   // supposed to throw a CORBA::BAD_PARAM exception if no profile
   // matched the given ProfileId.
   if (found_profile == 0)
-    ACE_THROW (CORBA::BAD_PARAM (TAO_OMG_VMCID | 29,
+    ACE_THROW (CORBA::BAD_PARAM (CORBA::OMGVMCID | 29,
                                  CORBA::COMPLETED_NO));
 }
 
@@ -1383,7 +1383,7 @@ TAO_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
   // same then the ORB shall return SUCCESS.
   if (!priorities_match)
     {
-      ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 1,
+      ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 1,
                                        CORBA::COMPLETED_NO));
     }
 
@@ -1487,7 +1487,7 @@ TAO_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
                 {
                   // CORBA 2.3 specifies which minor code corresponds
                   // to this particular problem.
-                  ACE_THROW (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 3,
+                  ACE_THROW (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 3,
                                                    CORBA::COMPLETED_NO));
                 }
             }
@@ -3699,7 +3699,7 @@ TAO_POA::components_established_i (PortableInterceptor::IORInfo_ptr info
         }
       ACE_CATCHANY
         {
-          ACE_THROW (CORBA::OBJ_ADAPTER (TAO_OMG_VMCID | 6,
+          ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 6,
                                          CORBA::COMPLETED_NO));
         }
       ACE_ENDTRY;

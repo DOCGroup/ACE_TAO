@@ -1,38 +1,37 @@
-
-// This may look like C, but it's really -*- C++ -*-
-// $Id$
-
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Connection_Handler.h"
-#include "tao/IIOP_Acceptor.h"
-#include "tao/IIOP_Profile.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/operation_details.h"
-#include "tao/Timeprobe.h"
-#include "tao/CDR.h"
-#include "tao/Transport_Mux_Strategy.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/Sync_Strategies.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/GIOP_Message_Base.h"
-#include "tao/GIOP_Message_Lite.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/Adapter.h"
+#include "IIOP_Transport.h"
+#include "IIOP_Connection_Handler.h"
+#include "IIOP_Acceptor.h"
+#include "IIOP_Profile.h"
+#include "Acceptor_Registry.h"
+#include "Thread_Lane_Resources.h"
+#include "operation_details.h"
+#include "Timeprobe.h"
+#include "CDR.h"
+#include "Transport_Mux_Strategy.h"
+#include "Wait_Strategy.h"
+#include "Sync_Strategies.h"
+#include "Stub.h"
+#include "ORB_Core.h"
+#include "debug.h"
+#include "GIOP_Message_Base.h"
+#include "GIOP_Message_Lite.h"
+#include "Protocols_Hooks.h"
+#include "Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/IIOP_Transport.i"
+# include "IIOP_Transport.i"
 #endif /* ! __ACE_INLINE__ */
 
 
-ACE_RCSID (tao, IIOP_Transport, "$Id$")
+ACE_RCSID (tao,
+           IIOP_Transport,
+           "$Id$")
+
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
 					TAO_ORB_Core *orb_core,
 					CORBA::Boolean flag)
-  : TAO_Transport (TAO_TAG_IIOP_PROFILE,
+  : TAO_Transport (IOP::TAG_INTERNET_IOP,
 		   orb_core)
   , connection_handler_ (handler)
   , messaging_object_ (0)
@@ -248,7 +247,7 @@ TAO_IIOP_Transport::send_message (TAO_OutputCDR &stream,
   return 1;
 }
 
-int 
+int
 TAO_IIOP_Transport::send_message_shared (TAO_Stub *stub,
 						                 int message_semantics,
 								         const ACE_Message_Block *message_block,
@@ -355,7 +354,7 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
        acceptor++)
     {
       // Check whether it is a IIOP acceptor
-      if ((*acceptor)->tag () == TAO_TAG_IIOP_PROFILE)
+      if ((*acceptor)->tag () == IOP::TAG_INTERNET_IOP)
 	{
 	  // @@ Why isn't the return value checked!
 	  //	  -Ossama
@@ -457,4 +456,3 @@ TAO_IIOP_Transport::invalidate_event_handler_i (void)
   this->connection_handler_ = 0;
   return eh;
 }
-

@@ -65,12 +65,12 @@ TAO_RT_Protocols_Hooks::init_hooks (TAO_ORB_Core *orb_core
     this->orb_core_->object_ref_table ().resolve_initial_references (
 								     "RTCurrent"
 								     ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
-  
+  ACE_CHECK;
+
   this->current_ =
     RTCORBA::Current::_narrow (object.in ()
 			       ACE_ENV_ARG_PARAMETER);
-  ACE_TRY_CHECK;
+  ACE_CHECK;
 
 }
 
@@ -167,13 +167,13 @@ TAO_RT_Protocols_Hooks::update_client_protocol_properties (TAO_Stub *stub,
 
           if (client_protocols != 0)
             {
-              //TAO_ClientProtocolPolicy
+              // TAO_ClientProtocolPolicy
               RTCORBA::ProtocolList & protocols =
                 client_protocols->protocols_rep ();
 
               for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                 {
-                  if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                  if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                     {
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
@@ -264,18 +264,18 @@ TAO_RT_Protocols_Hooks::update_server_protocol_properties (CORBA::Policy *policy
 
           if (server_protocols != 0)
             {
-              //TAO_ServerProtocolPolicy
+              // TAO_ServerProtocolPolicy
               RTCORBA::ProtocolList & protocols =
                 server_protocols->protocols_rep ();
 
               for (CORBA::ULong j = 0; j < protocols.length (); ++j)
                 {
-                  if (protocols[j].protocol_type == TAO_TAG_IIOP_PROFILE)
+                  if (protocols[j].protocol_type == IOP::TAG_INTERNET_IOP)
                     {
                       properties =
                         RTCORBA::ProtocolProperties::_narrow (
-							      protocols[j].transport_protocol_properties.in ()
-							      ACE_ENV_ARG_PARAMETER);
+                          protocols[j].transport_protocol_properties.in ()
+                          ACE_ENV_ARG_PARAMETER);
                       ACE_TRY_CHECK;
 
                       if (ACE_OS::strcmp (protocol_type, "iiop") == 0)

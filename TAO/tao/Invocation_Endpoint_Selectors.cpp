@@ -55,7 +55,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (
 
   // If we get here, we completely failed to find an endpoint selector
   // that we know how to use, so throw an exception.
-  ACE_THROW (CORBA::TRANSIENT (TAO_OMG_VMCID | 2,
+  ACE_THROW (CORBA::TRANSIENT (CORBA::OMGVMCID | 2,
                                CORBA::COMPLETED_NO));
 }
 

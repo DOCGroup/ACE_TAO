@@ -1220,7 +1220,7 @@ CORBA_Contained_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::lookup_id (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -1399,7 +1399,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::get_canonical_typec
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -1578,7 +1578,7 @@ CORBA_PrimitiveDef_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::get_primitive (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -1757,7 +1757,7 @@ CORBA_StringDef_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::create_string (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -1936,7 +1936,7 @@ CORBA_WstringDef_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::create_wstring (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -2118,7 +2118,7 @@ CORBA_SequenceDef_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::create_sequence (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -2300,7 +2300,7 @@ CORBA_ArrayDef_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::create_array (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -2482,7 +2482,7 @@ CORBA_FixedDef_ptr _TAO_CORBA_Repository_Remote_Proxy_Impl::create_fixed (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -4188,7 +4188,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_ConstantDef_Remote_Proxy_Impl::type (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -4356,7 +4356,7 @@ CORBA_IDLType_ptr _TAO_CORBA_ConstantDef_Remote_Proxy_Impl::type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -4533,7 +4533,7 @@ void _TAO_CORBA_ConstantDef_Remote_Proxy_Impl::type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -4687,7 +4687,7 @@ CORBA::Any * _TAO_CORBA_ConstantDef_Remote_Proxy_Impl::value (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -4864,7 +4864,7 @@ void _TAO_CORBA_ConstantDef_Remote_Proxy_Impl::value (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -5748,7 +5748,7 @@ CORBA_StructMemberSeq * _TAO_CORBA_StructDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -5925,7 +5925,7 @@ void _TAO_CORBA_StructDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -7058,7 +7058,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_UnionDef_Remote_Proxy_Impl::discriminator_type (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -7226,7 +7226,7 @@ CORBA_IDLType_ptr _TAO_CORBA_UnionDef_Remote_Proxy_Impl::discriminator_type_def 
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -7403,7 +7403,7 @@ void _TAO_CORBA_UnionDef_Remote_Proxy_Impl::discriminator_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -7557,7 +7557,7 @@ CORBA_UnionMemberSeq * _TAO_CORBA_UnionDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -7734,7 +7734,7 @@ void _TAO_CORBA_UnionDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -8653,7 +8653,7 @@ CORBA_EnumMemberSeq * _TAO_CORBA_EnumDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -8830,7 +8830,7 @@ void _TAO_CORBA_EnumDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -9680,7 +9680,7 @@ CORBA_IDLType_ptr _TAO_CORBA_AliasDef_Remote_Proxy_Impl::original_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -9857,7 +9857,7 @@ void _TAO_CORBA_AliasDef_Remote_Proxy_Impl::original_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -11098,7 +11098,7 @@ CORBA::PrimitiveKind _TAO_CORBA_PrimitiveDef_Remote_Proxy_Impl::kind (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -11916,7 +11916,7 @@ CORBA::ULong _TAO_CORBA_StringDef_Remote_Proxy_Impl::bound (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -12092,7 +12092,7 @@ void _TAO_CORBA_StringDef_Remote_Proxy_Impl::bound (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -12915,7 +12915,7 @@ CORBA::ULong _TAO_CORBA_WstringDef_Remote_Proxy_Impl::bound (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -13091,7 +13091,7 @@ void _TAO_CORBA_WstringDef_Remote_Proxy_Impl::bound (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -14182,7 +14182,7 @@ CORBA::ULong _TAO_CORBA_SequenceDef_Remote_Proxy_Impl::bound (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -14358,7 +14358,7 @@ void _TAO_CORBA_SequenceDef_Remote_Proxy_Impl::bound (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -14511,7 +14511,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_SequenceDef_Remote_Proxy_Impl::element_type (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -14679,7 +14679,7 @@ CORBA_IDLType_ptr _TAO_CORBA_SequenceDef_Remote_Proxy_Impl::element_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -14856,7 +14856,7 @@ void _TAO_CORBA_SequenceDef_Remote_Proxy_Impl::element_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -16000,7 +16000,7 @@ CORBA::ULong _TAO_CORBA_ArrayDef_Remote_Proxy_Impl::length (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -16176,7 +16176,7 @@ void _TAO_CORBA_ArrayDef_Remote_Proxy_Impl::length (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -16329,7 +16329,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_ArrayDef_Remote_Proxy_Impl::element_type (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -16497,7 +16497,7 @@ CORBA_IDLType_ptr _TAO_CORBA_ArrayDef_Remote_Proxy_Impl::element_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -16674,7 +16674,7 @@ void _TAO_CORBA_ArrayDef_Remote_Proxy_Impl::element_type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -17640,7 +17640,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl::type (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -17809,7 +17809,7 @@ CORBA_StructMemberSeq * _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -17986,7 +17986,7 @@ void _TAO_CORBA_ExceptionDef_Remote_Proxy_Impl::members (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -19352,7 +19352,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_AttributeDef_Remote_Proxy_Impl::type (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -19520,7 +19520,7 @@ CORBA_IDLType_ptr _TAO_CORBA_AttributeDef_Remote_Proxy_Impl::type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -19697,7 +19697,7 @@ void _TAO_CORBA_AttributeDef_Remote_Proxy_Impl::type_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -19849,7 +19849,7 @@ CORBA::AttributeMode _TAO_CORBA_AttributeDef_Remote_Proxy_Impl::mode (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -20025,7 +20025,7 @@ void _TAO_CORBA_AttributeDef_Remote_Proxy_Impl::mode (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -21863,7 +21863,7 @@ CORBA::TypeCode_ptr _TAO_CORBA_OperationDef_Remote_Proxy_Impl::result (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -22031,7 +22031,7 @@ CORBA_IDLType_ptr _TAO_CORBA_OperationDef_Remote_Proxy_Impl::result_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -22208,7 +22208,7 @@ void _TAO_CORBA_OperationDef_Remote_Proxy_Impl::result_def (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -22362,7 +22362,7 @@ CORBA_ParDescriptionSeq * _TAO_CORBA_OperationDef_Remote_Proxy_Impl::params (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -22539,7 +22539,7 @@ void _TAO_CORBA_OperationDef_Remote_Proxy_Impl::params (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -22691,7 +22691,7 @@ CORBA::OperationMode _TAO_CORBA_OperationDef_Remote_Proxy_Impl::mode (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -22867,7 +22867,7 @@ void _TAO_CORBA_OperationDef_Remote_Proxy_Impl::mode (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -23021,7 +23021,7 @@ CORBA_ContextIdSeq * _TAO_CORBA_OperationDef_Remote_Proxy_Impl::contexts (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -23198,7 +23198,7 @@ void _TAO_CORBA_OperationDef_Remote_Proxy_Impl::contexts (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -23352,7 +23352,7 @@ CORBA_ExceptionDefSeq * _TAO_CORBA_OperationDef_Remote_Proxy_Impl::exceptions (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -23529,7 +23529,7 @@ void _TAO_CORBA_OperationDef_Remote_Proxy_Impl::exceptions (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -25235,7 +25235,7 @@ CORBA_InterfaceDefSeq * _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl::base_interfac
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -25412,7 +25412,7 @@ void _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl::base_interfaces (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES)
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES)
               );
 
             }
@@ -25575,7 +25575,7 @@ CORBA::Boolean _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl::is_a (
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 _tao_retval
               );
 
@@ -25742,7 +25742,7 @@ CORBA_InterfaceDef::FullInterfaceDescription * _TAO_CORBA_InterfaceDef_Remote_Pr
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -25933,7 +25933,7 @@ CORBA_AttributeDef_ptr _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl::create_attribu
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 
@@ -26133,7 +26133,7 @@ CORBA_OperationDef_ptr _TAO_CORBA_InterfaceDef_Remote_Proxy_Impl::create_operati
           if (_invoke_status == TAO_INVOKE_EXCEPTION)
             {
               TAO_INTERCEPTOR_THROW_RETURN (
-                CORBA::UNKNOWN (TAO_OMG_VMCID | 1, CORBA::COMPLETED_YES),
+                CORBA::UNKNOWN (CORBA::OMGVMCID | 1, CORBA::COMPLETED_YES),
                 0
               );
 

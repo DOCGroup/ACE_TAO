@@ -451,8 +451,50 @@ be_visitor_operation_ss::visit_operation (be_operation *node)
 
   *os << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "ACE_ENDTRY;" << be_nl;
+      << "}" << be_uidt_nl;
+
+  // Convert non-CORBA C++ exceptions to CORBA::UNKNOWN.
+  *os << "\n# if defined (ACE_HAS_EXCEPTIONS) \\\n"
+      << "     && defined (ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS)" << be_nl
+      << "ACE_CATCHALL" << be_idt_nl
+      << "{" << be_idt_nl
+      << "CORBA::UNKNOWN ex;" << be_nl
+      << be_nl
+      << "_tao_ri.exception (&ex);"<< be_nl
+      << "_tao_vfr.receive_exception (" << be_idt << be_idt_nl
+      << "&_tao_ri" << be_nl
+      << "ACE_ENV_ARG_PARAMETER" << be_uidt_nl
+      << ");" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  // The receive_exception() interception point may have thrown a
+  // PortableInterceptor::ForwardRequest exception.  In that event,
+  // the connection retry loop must be restarted so do not throw the
+  // CORBA::UNKNOWN exception to convert the unhandled C++ exception.
+  *os << be_nl
+      << "PortableInterceptor::ReplyStatus _tao_status =" << be_idt_nl
+      << "_tao_ri.reply_status (ACE_ENV_SINGLE_ARG_PARAMETER);" << be_uidt_nl
+      << "ACE_TRY_CHECK;" << be_nl;
+
+  *os << be_nl
+      << "if (_tao_status == PortableInterceptor::SYSTEM_EXCEPTION)"
+      << be_idt_nl;
+
+  if (be_global->use_raw_throw ())
+    {
+      *os << "throw ";
+    }
+  else
+    {
+      *os << "ACE_TRY_THROW ";
+    }
+
+  *os << "(ex);"  << be_uidt << be_uidt_nl
+      << "}" << be_uidt
+      << "\n# endif  /* ACE_HAS_EXCEPTIONS"
+      << " && ACE_HAS_BROKEN_UNEXPECTED_EXCEPTIONS */" << be_nl << be_nl;
+
+  *os << "ACE_ENDTRY;" << be_nl;
   *os << "ACE_CHECK;\n"
       << "#endif /* TAO_HAS_INTERCEPTORS */" << be_nl << be_nl;
 

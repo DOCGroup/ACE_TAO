@@ -1458,7 +1458,7 @@ CORBA::ORB_init (int &argc,
           // @@ Does the BAD_INV_ORDER exception apply here?
           //       -Ossama
 
-          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (TAO_OMG_VMCID | 4,
+          ACE_THROW_RETURN (CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 4,
                                                   CORBA::COMPLETED_NO),
                             CORBA::ORB::_nil ());
         }
@@ -1583,7 +1583,7 @@ CORBA_ORB::object_to_string (CORBA::Object_ptr obj
   if (!CORBA::is_nil (obj) && obj->_is_local ())
     // @@ The CCM spec says one minor code, and the CORBA spec says
     //    another.  Which is the correct one?
-    ACE_THROW_RETURN (CORBA::MARSHAL (TAO_OMG_VMCID | 4,
+    ACE_THROW_RETURN (CORBA::MARSHAL (CORBA::OMGVMCID | 4,
                                       CORBA::COMPLETED_NO),
                       0);
 
