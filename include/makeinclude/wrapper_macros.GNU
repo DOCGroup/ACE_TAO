@@ -316,7 +316,7 @@ endif # repo
 ifdef repo
   #### Remove -fno-implicit-templates from, and add -frepo to, CCFLAGS.
   CCFLAGS := $(strip $(subst -fno-implicit-templates,,$(CCFLAGS)))
-  CCFLAGS += -frepo
+  CCFLAGS += -frepo -DACE_HAS_GNU_REPO
 endif # repo
 
 #----------------------------------------------------------------------------
