@@ -1,3 +1,93 @@
+Sat Jun 3 00:06:25 2000 Angelo Corsaro <corsaro@cs.wustl.edu>
+
+	* tao/RT_Policy_i.h
+	* tao/RT_Policy_i.i
+	* tao/RT_Policy_i.cpp
+
+	Added support for serialization to client exposed 
+	Policies servant.
+
+
+	* tao/POA.h
+	* tao/POA.cpp
+	
+	Added modification to support Policies propagation,
+	and exactly the method: 
+	  - const CORBA::PolicyList& get_client_exposed_policies()
+	was added, together with the member variable:
+	  - CORBA::PolicyList client_exposed_policies_
+	Also the method:
+	  - TAO_POA::key_to_object 
+	was modified.
+
+	
+	* tao/ORB_Core.h
+	* tao/ORB_Core.cpp
+
+	Modified the signature of the method:
+	   - TAO_ORB_Core::create_stub_object()
+	to receive the PolicyList from the POA.
+
+
+	* tao/Servant_Base.cpp
+
+	Changed Methods to support  policies propagation
+	  - TAO_ServantBase::_create_stub()
+	  - TAO_DynamicImplementation::_create_stub
+
+
+	* tao/GIOP_Server_Request.i
+	* tao/GIOP_Server_Request.cpp
+
+	Changed method to support client exposed policies, 
+	and the following mehtod:
+	  - TAO_GIOP_ServerRequest::objref
+	has been moved from GIOP_Server_Request.i to GIOP_Server_Request.cpp.
+	Added (in GIOP_Server_Request.cpp) #include "tao/POA.h"  for 
+	supporting method invocation on POA.
+
+
+	* tao/Profile.h
+	* tao/Profile.cpp
+
+	Added Methods:
+	  -  virtual void set_policies(const CORBA::PolicyList *policy_list);
+	  -  virtual const CORBA::PolicyList * policy_list get_policies();
+	Added Member Variable:
+	  - CORBA::PolicyList *policy_list_;
+	Modified Constructor TAO_Profile::TAO_Profile to suppor the 
+	new member variabel initialization.
+
+
+	* tao/PolicyC.h
+	* tao/PolicyC.cpp
+
+	Now CORBA::Policy inherits from Encodable.
+
+	* tao/Encodable.h
+	* tao/Encodable.cpp
+
+	Interface that defines the methods to serialize an object
+	into a CDR.
+
+	
+	* tao/Policy_Factory.h
+	* tao/Policy_Factory.i
+	* tao/Policy_Factory.cpp
+
+	Factory used to create the policy while extracting
+	them form the IOR.
+
+	
+	* tao/TAO.dsp
+
+	Updated VC++ Project File.
+
+	
+	* tao/Makefile
+
+	Update Makefile to include the new files.
+	
 Fri Jun  2 20:39:14 2000  Darrell Brunsch <brunsch@uci.edu>
 
         * orbsvcs/ImplRepo_Service/Repository.h:
@@ -87,6 +177,7 @@ Thu Jun 01 01:06:01 2000  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* tao/POA.i: Repositioned two inline methods in order to avoid
 	  declared after use warnings: cleanup_in_progress() and lock()
 
+>>>>>>> 1.830
 Wed May 31 16:35:05 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/CurrentC.cpp:
