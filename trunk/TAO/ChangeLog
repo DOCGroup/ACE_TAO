@@ -1,3 +1,22 @@
+Fri Nov 28 15:30:42 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/AV.bor:
+        * orbsvcs/orbsvcs/CosConcurrency.bor:
+        * orbsvcs/orbsvcs/CosEvent.bor:
+        * orbsvcs/orbsvcs/CosLifeCycle.bor:
+        * orbsvcs/orbsvcs/CosNaming.bor:
+        * orbsvcs/orbsvcs/CosProperty.bor:
+        * orbsvcs/orbsvcs/CosTime.bor:
+        * orbsvcs/orbsvcs/CosTrading.bor:
+        * orbsvcs/orbsvcs/DsLogAdmin.bor:
+        * orbsvcs/orbsvcs/ETCL.bor:
+        * orbsvcs/orbsvcs/FaultTolerance.bor:
+        * orbsvcs/orbsvcs/PortableGroup.bor:
+        * orbsvcs/orbsvcs/RT_Notification.bor:
+        * orbsvcs/orbsvcs/SSLIOP.bor:
+        * orbsvcs/orbsvcs/Svc_Utils.bor:
+          Added missing Id tag
+
 Fri Nov 28 14:33:09 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosNotification.mpc:
