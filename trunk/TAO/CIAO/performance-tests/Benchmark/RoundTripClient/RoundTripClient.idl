@@ -3,8 +3,8 @@
 /**
  * @file RoundTripClient.idl
  *
- * Definition of the Component that provides the LatencyTest interface
- *
+ * Definition of the Component that uses the LatencyTest interface
+ * provided by RoundTrip component
  */
 //=============================================================================
 
