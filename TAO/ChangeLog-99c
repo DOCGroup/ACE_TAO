@@ -1,7 +1,15 @@
+Tue Mar  2 02:32:34 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/IIOP_Profile.{h,i,cpp}: Added new file IIOP_Profile.i for
+	  inline functions.  Moved some accessors from .cpp file to .i
+	  file.  Added _host_(), _port_(), _object_key_(),
+	  reset_object_addr() when TAO_USES_FLICK is defined.  Flick needs
+	  to access the structure directly.
+
 Mon Mar  1 23:37:58 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Server_Request.cpp:
-	  Fixed yet another instance of backwards 
+	  Fixed yet another instance of backwards
 	  any_owns_data behavior, is dsi_marshal(). Will look
 	  at the rest of Server_Request.cpp later - there
 	  seems to be questionable stuff in the other methods
