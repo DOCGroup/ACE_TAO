@@ -38,14 +38,16 @@ static u_int errors = 0;
 #if defined (ACE_HAS_THREADS)
 
 #if defined (ACE_DEFAULT_THREAD_KEYS)
-// If ACE_DEFAULT_THREAD_KEYS is defined, it is probably set to a small
-// value.  So that the test doesn't run out of keys quickly in the
-// first thread, set the number of ITERATIONS to be small as well.
-static const int ITERATIONS = ((ACE_DEFAULT_THREAD_KEYS/8) < 2 ? 1 : ACE_DEFAULT_THREAD_KEYS/8);
+  // If ACE_DEFAULT_THREAD_KEYS is defined, it is probably
+  // set to a small value.  So that the test doesn't run out
+  // of keys quickly in the first thread, set the number of
+  // ITERATIONS to be small as well.
+  static const int ITERATIONS =
+    ACE_DEFAULT_THREAD_KEYS/8 < 2  ?  1  :  ACE_DEFAULT_THREAD_KEYS/8;
 #elif defined (__Lynx__)
-static const int ITERATIONS = 1;
+  static const int ITERATIONS = 1;
 #else
-static const int ITERATIONS = 100;
+  static const int ITERATIONS = 100;
 #endif /* ACE_DEFAULT_THREAD_KEYS */
 
 // Static variables.
@@ -65,9 +67,19 @@ static ACE_Thread_Mutex output_lock;
 extern "C" void
 cleanup (void *ptr)
 {
+#if defined (ACE_HAS_PTHREADS_DRAFT4)
+  // The intended use of this function doesn't apply with
+  // Draft 4 threads.  With Draft 4 threads, this function
+  // is called implicitly by pthread_setspecific whenever an
+  // old value is replaced.  This function is intended to be
+  // used with Draft 6 and later threads, where it is called
+  // on thread termination with the thread-specific value.
+  ACE_UNUSED_ARG (ptr);
+#else  /* ! ACE_HAS_PTHREADS_DRAFT4 */
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("(%t) in cleanup, ptr = %x\n"), ptr));
 
   operator delete (ptr);
+#endif /* ! ACE_HAS_PTHREADS_DRAFT4 */
 }
 
 // This worker function is the entry point for each thread.
@@ -233,11 +245,7 @@ main (int, ASYS_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   Errno::allocate_lock ();
 
-#if defined (__Lynx__)
-  const u_int threads = 2;
-#else  /* ! __Lynx__ */
   const u_int threads = ACE_MAX_THREADS;
-#endif /* ! __Lynx__ */
 
   // Dynamically allocate TSS_Error so that we can control when it
   // gets deleted.  Specifically, we need to delete it before the
