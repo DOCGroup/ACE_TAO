@@ -1,16 +1,13 @@
-Sat Mar 21 20:34:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
-
-	* tao/connect.cpp (open): fixed a bug due to wrong parens
- 	location.
-	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
-	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:	
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:	
-	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: added option to
- 	disable use of the name service.  hacked the code for platforms
- 	that don't support floating point math.  Added Quantify start/stop
- 	primitives around CORBA calls.
-
 Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
+
+	* tao: Renamed a bunch of files so that the names and
+ 	  capitalization matches precisely.
+
+	* tao/Request.i: Created this file and moved a bunch of inline
+ 	  methods into here.
+
+	* tao: Renamed the corbacom.* files (since we don't support COM
+ 	  anyhow) into CORBA.h and the new CORBA.i and CORBA.cpp files.
 
 	* tao/corbacom.h: Moved the CORBA_SEQUENCE stuff back into the
  	  header file since it wasn't linking correctly...
@@ -55,6 +52,19 @@ Sat Mar 21 11:00:40 1998  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
 	* tao/sequence_T.i (replace): Fixed some typos in the template
  	  code.  Thanks to Ben Eng <ben@jetpen.com> for reporting these.
+
+Sat Mar 21 20:34:39 1998  Sergio Flores  <sergio@lambada.cs.wustl.edu>
+
+	* tao/connect.cpp (open): fixed a bug due to wrong parens
+ 	location.
+
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:	
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:	
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp: added option to
+ 	disable use of the name service.  hacked the code for platforms
+ 	that don't support floating point math.  Added Quantify start/stop
+ 	primitives around CORBA calls.
 
 Sat Mar 21 17:55:40 1998  Michael Kircher  <mk1@cs.wustl.edu>
 	
