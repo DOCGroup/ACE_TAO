@@ -1,3 +1,25 @@
+Wed Nov 10 20:20:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.{h,cpp}:
+          Moved incarnate and etherealize of the servant to separate helper
+          methods
+
+Wed Nov 10 19:09:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/IdUniquenessStrategy*.*:
+          Renamed validate to is_servant_activation_allowed, this tells much
+          better what this method does. Also, this method does just the check,
+          it doesn't throw an exception anymore, so the corba environment
+          macros are removed
+
+        * tao/PortableServer/RequestProcessingStrategyServantActivator.cpp:
+          Use the is_servant_activation_allowed method from the id uniqueness
+          strategy instead of handling the check ourselves
+
+        * tao/PortableServer/ServantRetentionStrategyRetain.cpp:
+          Call is_servant_activation_allowed on the IdUniqueness policy and
+          throw an error when it is not possible.
+
 Wed Nov 10 15:19:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/ServantRetentionStrategyNonRetain.h:
