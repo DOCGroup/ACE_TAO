@@ -171,7 +171,9 @@ sub check_for_id_string ()
             while (<FILE>) {
                 if (/\$Id\:/ or /\$Id\$/) {
                     $found = 1;
-                    last;
+                }
+                if (/\$id\$/) {
+                    print_error ("Incorrect \$id\$ found in $file correct casing");
                 }
             }
             close (FILE);
