@@ -3,6 +3,10 @@
 #ifndef ACE_CONFIG_WINCE_H
 #define ACE_CONFIG_WINCE_H
 
+#if !defined (ACE_HAS_WINCE)
+#define ACE_HAS_WINCE
+#endif
+
 // Only DLL version is supported on CE.
 #if defined (ACE_HAS_DLL)
 # undef ACE_HAS_DLL
