@@ -1,3 +1,27 @@
+Thu Sep  7 12:07:14 2000  Ossama Othman  <ossama@uci.edu>
+
+	* bin/autoconf_compile (LOGBASE):
+
+	  Create log file with `.txt' extension instead of `.log' to
+	  prevent web browsers from needlessly prompting users which
+	  viewer should be used.
+	
+	* m4/acinclude.m4:
+
+	  Updated copyright information.
+
+	* m4/platform.m4:
+
+	  When setting platform-specific flags, use the "$host" autoconf
+	  variable instead of "$target."  The latter is only supposed to
+	  be used when building cross-platform tool chains.
+
+	* m4/threads.m4 (CPPFLAGS):
+
+	  Place user provided preprocessor flags after the ones set by the
+	  configure script to allow the user to override automatically
+	  set flags.
+
 Thu Sep 07 14:30:49 2000  Nanbor Wang  <nanbor@cs.wustl.edu>
 
         * bin/auto_compile_win32.pl: Added Portable Server to the project
