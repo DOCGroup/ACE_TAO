@@ -3,6 +3,12 @@ Thu Nov 19 10:28:11 1998  David L. Levine  <levine@cs.wustl.edu>
         * performance-tests/Misc/context_switch_time.cpp: fixed 64-to-32
           bit casts to work with unsigned 64 bit ACE_hrtime_t on NT.
 
+        * ace/Basic_Types.h (ACE_UINT64_DBLCAST_ADAPTER): on other
+          than Win32 and without ACE_LACKS_LONGLONG_T, wrapped the
+          "n" macro definition with parenthesis, to avoid insidious
+          errors in equations due to removing the grouping.  g++ 2.7.2.3
+          noticed this on the latest context_switch_time.cpp.
+
 Thu Nov 19 00:18:26 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/OS.i (strnstr): Added a check to see if the substring is

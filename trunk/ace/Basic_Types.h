@@ -316,7 +316,7 @@ typedef ACE_UINT16 ACE_USHORT16;
    // Only use the low 32 bits.
 #   define ACE_UINT64_DBLCAST_ADAPTER(n) ACE_U64_TO_U32 (n)
 # else  /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
-#   define ACE_UINT64_DBLCAST_ADAPTER(n) n
+#   define ACE_UINT64_DBLCAST_ADAPTER(n) (n)
 # endif /* ! ACE_WIN32 && ! ACE_LACKS_LONGLONG_T */
 
 
