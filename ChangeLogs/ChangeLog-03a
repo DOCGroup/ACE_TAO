@@ -9,12 +9,15 @@ Mon Feb 26 18:18:38 2001  Steve Huston  <shuston@riverace.com>
           If match is found, return index from start of string, not from
           'pos'. Matches the C++ string standard, which was the model for
           these classes.
+          Thanks to Glen Osterhout <gosterho@elronsw.com> for this fix.
 
         * ace/SString.h: Clarified comments on return value for above
           functions.
 
         * tests/SString_Test.cpp: Changed to look for the correct return
           from the npos tests of the functions above.
+
+        * THANKS: Added Glen Osterhout to the Hall of Fame.
 
 Mon Feb 26 15:01:55 2001  Darrell Brunsch <brunsch@uci.edu>
 
