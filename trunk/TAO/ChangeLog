@@ -1,3 +1,12 @@
+Thu Aug 26 10:17:45 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp:
+        
+          Fixed incorrect generation of base classes for C++ classes
+          mapped from valuetypes, to include only the immediate
+          supported abstract interfaces rather than the entire
+          graph of supported abstract interfaces.
+
 Thu Aug 26 00:17:41 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/Makefile.am:

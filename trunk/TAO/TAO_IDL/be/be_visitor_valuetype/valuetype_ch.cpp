@@ -160,25 +160,13 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
 
       *os << "public virtual CORBA::ValueBase";
     }
-
-  if (node->supports_abstract ())
+    
+  // Generate the supported interfaces.  
+  for (i = 0; i < node->n_supports (); ++i)
     {
-      status =
-        node->traverse_supports_list_graphs (
-            be_valuetype::abstract_supports_helper,
-            os,
-            I_TRUE,
-            I_FALSE
-          );    
-
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_valuetype_ch::"
-                             "visit_valuetype - "
-                             "traversal of supported interfaces failed\n"),
-                            -1);
-        }
+      *os << "," << be_nl
+          << "public virtual "
+          << node->supports ()[i]->name ();
     }
 
   // Generate the body.
