@@ -1,3 +1,9 @@
+Fri Feb 25 19:59:33 2000  Vishal Kachroo  <vishal@cs.wustl.edu>
+
+	* tao/GIOP.cpp (process_server_request): Removed a memory leak.
+	  Thanks to Klemen Zagar <klemen.zagar@ijs.si> for reporting 
+	  this.
+
 Fri Feb 25 18:39:17 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* tao/Any.h:
