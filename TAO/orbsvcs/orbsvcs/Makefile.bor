@@ -25,6 +25,7 @@ MAKEFILES = \
    FaultTolerance.bor \
    PortableGroup.bor \
 	CosLoadBalancing.bor \
-   IFRService.bor
+   IFRService.bor \
+   RTCosScheduling.bor
 
 !include <$(ACE_ROOT)/include/makeinclude/recurse.bor>
