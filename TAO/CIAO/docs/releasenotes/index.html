@@ -10,7 +10,7 @@
 <ul>
   <li><a href="#status">Current Status</a>
   <li><a href="#outlook">Project Outlook</a>
-  <li>Short-term <a href="todo.html">to-do list</a></p>
+  <li>Short-term <a href="../todo.html">to-do list</a></p>
 </ul>
 
 <hr>
@@ -18,6 +18,34 @@
 
 <ol>
   <li><h3>Latest News</h3>
+      <ul>
+      <li>
+         Mon Jun 28 2004 - The first cut of the new <strong>DnC</strong> specificication
+         implementation is finished. The first cut includes two parts:
+	 <ul>
+         <li>
+	    A modeling tool chain , <a href="http://www.dre.vanderbilt.edu/CoSMIC/">
+	    CoSMIC</a>, which is capable of describing the Assembly/Component
+	    using <a href="http://www.isis.vanderbilt.edu/Projects/gme/default.html">
+	    GME</a> as the development bed.
+	    The artifact generated from the CoSMIC is a set of XML descriptors.
+         <li>
+	    A run-time infrastructure that performs the actual deployment and
+	    configuration, with a superset of the capabilities described in OMG
+	    D&C specification with CIAO extension. The implementation source code
+	    could be fount in <a href="../../DnC"> this directory </a>.
+	    <br>
+	    In the new DnC run-time framework we have migrated all the functionalities
+	    presented in the old CIAO runtime except the Real-Time configuration and 
+	    Static-Configuration. Currently, the two CIAO runtime co-exist in our source 
+	    and the component implementation could be used with both framework without much 
+	    change. (For the change that one has to go through please read <a href ="./switch.html">
+	    here</a>.)
+	  </ul>
+      </ul>
+
+      <br>
+
       <ul>
         <li>Sun Aug 24 2003 - The first phase of RT support extension
             is complete.  The RT extension enables developers to
@@ -381,8 +409,8 @@ certain release together.  All interfaces and types are under
 
   <li><b>CIAO 0.4</b> - (TAO 1.4, Jan 2004)
       <ul>
-        <li>Usable version of CIAO tested on Linux and Win32. 
-        <li>CIDLC supports most of the IDL2 and IDL3 keywords.  
+        <li>Usable version of CIAO tested on Linux and Win32.
+        <li>CIDLC supports most of the IDL2 and IDL3 keywords.
         <li>Simple examples of usage is available in
         <code>$CIAO_ROOT/examples</code>
       </ul>
