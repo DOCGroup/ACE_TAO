@@ -4,6 +4,11 @@ Fri May 22 07:53:03 1998  David L. Levine  <levine@cs.wustl.edu>
           ACE_LACKS_CONDATTR_PSHARED #defines.  That leaves just
           one, that's commented out.
 
+        * performance-tests/Misc/context_switch_time.cpp: create all
+          threads as detached so they don't have to be joined.  They
+          test was using up resources on LynxOS, if a high -c option
+          was used, without this change.
+
 Fri May 22 07:30:23 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE version 4.5.8 released.
