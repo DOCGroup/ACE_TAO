@@ -14,6 +14,7 @@
 
 
 #include <string>
+#include <iostream>
 
 
 TAO::be_visitor_union_typecode::be_visitor_union_typecode (
@@ -94,21 +95,37 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
     {
       node->field (member_ptr, i);
 
-      be_decl * const member_decl =
-        be_decl::narrow_from_decl (*member_ptr);
+      be_union_branch * const branch =
+        be_union_branch::narrow_from_decl (*member_ptr);
 
-      be_type * const member_type =
-        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+      ACE_ASSERT (branch != 0);
 
-      os << "{ "
-         << "\"" << member_decl->original_local_name () << "\", "
-         << "&"  << member_type->tc_name ()
-         << " }";
+      if (branch->label ()->label_kind () == AST_UnionLabel::UL_label)
+        {
+          // Only deal with non-default cases.  The default case has
+          // special handling in the union TypeCode implementation.
 
-      if (i < count - 1)
-        os << ",";
+          os << "{ ";
 
-      os << be_nl;
+          // Generate the label value.  Only the first label value is
+          // used in the case where multiple labels are used for the
+          // same union branch/case.
+          branch->gen_label_value (&os, 0);
+
+          os << ", ";
+          
+          be_type * const type =
+            be_type::narrow_from_decl ((*member_ptr)->field_type ());
+
+          os << "\"" << branch->original_local_name () << "\", "
+             << "&"  << type->tc_name ()
+             << " }";
+
+          if (i < count - 1)
+            os << ",";
+
+          os << be_nl;
+        }
     }
 
   return 0;
