@@ -1,3 +1,10 @@
+Tue Aug 17 09:50:46 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+ 	* bin/MakeProjectCreator/config/ciao_servant.mpb:
+	* bin/MakeProjectCreator/config/ciao_servant_dnc.mpb:
+
+	  Added the path to $TAO_ROOT/orbsvcs to the CIDL compiler. 
+
 Tue Aug 17 14:30:00 UTC 2004  Simon Massey  <simon.massey@prismtechnologies.com>
         * tests/Proactor_Test.cpp
           Revertion of change to this file (for the sake of being complete).
