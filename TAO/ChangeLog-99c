@@ -1,9 +1,14 @@
-Thu Jul 15 12:59:05 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+Thu Jul 15 13:11:02 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tao/Object_Adapter.cpp (find_transient_poa): Changed use of
 	  ORB_Core::root_poa() such that an environment variable was
 	  passed to the function instead of it using the default
 	  environment.  Thanks to Carlos for pointing this out.
+
+	  Also, since setup() and teardown() are done in the same thread
+	  of control, we can optimize away a call to
+	  TAO_TSS_RESOURCES::instance() by caching a pointer to tss
+	  resources. Thanks again to Carlos for pointing this out.
 
 Thu Jul 15 13:00:09 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
