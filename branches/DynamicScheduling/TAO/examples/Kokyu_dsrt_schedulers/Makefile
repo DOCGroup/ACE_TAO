@@ -18,6 +18,7 @@ CPP_SRCS += \
 	MUF_Scheduler.cpp \
 	FP_Scheduler.cpp \
 	Kokyu_qosC.cpp \
+	utils.cpp \
 	$(IDL_SRC)
 	
 	
