@@ -67,7 +67,7 @@ protected:
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
-  /// datablock that is created on teh stack to initialise the CDR
+  /// datablock that is created on the stack to initialise the CDR
   /// stream underneath.
   ACE_Data_Block db_;
 
