@@ -152,10 +152,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
 
   *os << "ACE_CHECK;" << be_nl << be_nl
       << "// Exception handling" << be_nl
-      << "switch (reply_status)" << be_idt_nl
+      << "switch (reply_status)" << be_nl
       << "{" << be_idt_nl
-      << "case TAO_AMI_REPLY_OK:" << be_idt_nl
-      << "{\n";
+      << "case TAO_AMI_REPLY_OK:" << be_nl
+      << "{" << be_idt << "\n";
 
   // declare variables for arguments
   ctx = *this->ctx_;
@@ -183,15 +183,15 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
                         -1);
     }
 
-  os->indent ();
-  *os << be_uidt_nl
-      << "}" << be_uidt_nl << "return;" << be_uidt_nl
+  *os << "break;" << be_uidt_nl
+      << "}" << be_nl 
       << "case TAO_AMI_REPLY_USER_EXCEPTION:" << be_nl
-      << "case TAO_AMI_REPLY_SYSTEM_EXCEPTION:" << be_idt_nl
+      << "case TAO_AMI_REPLY_SYSTEM_EXCEPTION:" << be_nl
       << "{" << be_idt_nl
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl << be_nl;
 
-  be_interface *original = (be_interface::narrow_from_decl (parent))->original_interface ();
+  be_interface *original = 
+    (be_interface::narrow_from_decl (parent))->original_interface ();
 
   if (!original)
     {
@@ -203,49 +203,74 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (be_op
     }
 
 
-  *os << original->compute_local_name ("AMI_", "ExceptionHolder") << "_var exception_holder_var;" << be_nl
-      << "ACE_NEW (exception_holder_var," << be_idt_nl;
+  *os << original->compute_local_name ("AMI_", "ExceptionHolder") 
+      << "_var exception_holder_var;" << be_nl
+      << "ACE_NEW (" << be_idt << be_idt_nl 
+      << "exception_holder_var," << be_nl;
 
   if (original->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      be_decl *scope = be_scope::narrow_from_scope (original->defined_in ())->decl ();
+      be_decl *scope = 
+        be_scope::narrow_from_scope (original->defined_in ())->decl ();
+
       *os << "OBV_" << scope->name() << "::"
-          << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
+          << "_tao_" 
+          << original->compute_local_name ("AMI_", "ExceptionHolder");
     }
   else
-    *os << "_tao_" << original->compute_local_name ("AMI_", "ExceptionHolder");
+    {
+      *os << "_tao_" 
+          << original->compute_local_name ("AMI_", "ExceptionHolder");
+    }
 
-  *os << " ());" << be_uidt_nl;
+  *os << " ()" << be_uidt_nl
+      << ");" << be_uidt_nl << be_nl;
 
-  *os << "Messaging::ExceptionHolder::_tao_seq_Octet_var marshaled_exception_var =" << be_idt_nl
-      << "new Messaging::ExceptionHolder::_marshaled_exception_seq (cdr->length (), // max" << be_nl
+  *os << "Messaging::ExceptionHolder::_tao_seq_Octet_var marshaled_exception_var =" 
+      << be_idt_nl
+      << "new Messaging::ExceptionHolder::_marshaled_exception_seq ("
+      << be_idt << be_idt_nl 
+      << "cdr->length (), // max" 
+      << be_nl
       << "cdr->length (), // length" << be_nl
-      << "(unsigned char*) cdr->rd_ptr (),// data" << be_nl
-      << "0); // release" << be_uidt_nl
-      << "exception_holder_var->marshaled_exception (marshaled_exception_var.in ());" << be_nl;
+      << "(unsigned char*) cdr->rd_ptr (), // data" << be_nl
+      << "0 // release" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl << be_nl
+      << "exception_holder_var->marshaled_exception (marshaled_exception_var.in ());" 
+      << be_nl << be_nl;
 
   *os << "if (reply_status == TAO_AMI_REPLY_SYSTEM_EXCEPTION)" << be_idt_nl
       << "exception_holder_var->is_system_exception (1);" << be_uidt_nl
       << "else" << be_idt_nl
-      << "exception_holder_var->is_system_exception (0);" << be_uidt_nl
+      << "exception_holder_var->is_system_exception (0);" 
+      << be_uidt_nl << be_nl
       << "exception_holder_var->byte_order (ACE_CDR_BYTE_ORDER);" << be_nl
       << be_nl
       << "_tao_reply_handler_object->"
-      << node->local_name () << "_excep (exception_holder_var";
+      << node->local_name () << "_excep (" << be_idt << be_idt_nl
+      << "exception_holder_var";
 
   if (!be_global->exception_support ())
-    *os << "," << be_nl << " ACE_TRY_ENV";
+    {
+      *os << "," << be_nl << "ACE_TRY_ENV";
+    }
 
-  *os << ");" << be_uidt_nl
-      << "}" << be_uidt_nl
-      << "return;" << be_uidt_nl;
+  *os << be_uidt_nl << ");" << be_uidt_nl;
+
+  if (!be_global->exception_support ())
+    {
+      *os << "ACE_CHECK;" << be_nl;
+    }
+
+  *os << "break;" << be_uidt_nl
+      << "}" << be_nl;
 
   *os << "case TAO_AMI_REPLY_NOT_OK:" << be_idt_nl
       << "// @@ Michael: Not even the spec mentions this case." << be_nl
       << "//             We have to think about this case." << be_nl
-      << "break;" << be_uidt_nl
-      << "}" << be_uidt_nl;
-  *os << be_uidt_nl << "}" << be_nl << be_nl;
+      << "break;" << be_uidt << be_uidt_nl
+      << "}" << be_uidt << be_uidt_nl;
+  *os << "}" << be_nl << be_nl;
 
   return 0;
 }
@@ -522,7 +547,7 @@ be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::
         *os << "get_";
     }
 
-  *os << node->local_name () << " (" << be_idt_nl;
+  *os << node->local_name () << " (" << be_idt << be_idt_nl;
 
 
   ctx = *this->ctx_;
@@ -541,9 +566,9 @@ be_compiled_visitor_operation_ami_handler_reply_stub_operation_cs::
   delete visitor;
   visitor = 0;
 
-  os->indent ();
+//  os->indent ();
 
-  *os << ");" << be_uidt_nl;
+  *os << be_uidt_nl << ");" << be_uidt_nl;
 
   *os << "ACE_CHECK;" << be_nl;
 
