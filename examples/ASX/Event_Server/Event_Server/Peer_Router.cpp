@@ -351,12 +351,14 @@ Peer_Router::control (ACE_Message_Block *mb)
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 template class ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 template class ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>;
+template class ACE_Map_Iterator_Base<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>;
 template class ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>;
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 #pragma instantiate ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 #pragma instantiate ACE_Map_Entry<ROUTING_KEY, Peer_Handler *>
+#pragma instantiate ACE_Map_Iterator_Base<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Iterator<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Map_Manager<ROUTING_KEY, Peer_Handler *, ACE_SYNCH_RW_MUTEX>
 #pragma instantiate ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
