@@ -1,3 +1,14 @@
+Wed Apr  1 23:39:04 1998  Sergio Flores  <sergio@flamenco.cs.wustl.edu>
+
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Task_Client.h:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.cpp:
+	* tests/Cubit/TAO/MT_Cubit/Util_Thread.h:
+	* tests/Cubit/TAO/MT_Cubit/client.cpp:
+	* tests/Cubit/TAO/MT_Cubit/server.cpp:
+	* tests/Cubit/TAO/MT_Cubit/server.h: Fixed some bugs and added
+ 	some comments.
+
 Wed Apr 01 22:37:59 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* tests/POA/Default_Servant/client.cpp: Fixed options parsing.
