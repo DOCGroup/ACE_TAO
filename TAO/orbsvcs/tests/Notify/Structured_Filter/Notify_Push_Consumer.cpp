@@ -73,8 +73,10 @@ Any_String (const CORBA::Any& any)
 
 void
 Notify_Push_Consumer::push_structured_event (
-                          const CosNotification::StructuredEvent& event
-                          TAO_ENV_ARG_NOT_USED)
+    const CosNotification::StructuredEvent& event
+    TAO_ENV_ARG_NOT_USED
+  )
+    ACE_THROW_SPEC ((CORBA::SystemException))
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s %d (sent recv) %s %s\n",
