@@ -249,7 +249,9 @@ thelist = $(sort $(MKLIST))
 #       Local rules
 #----------------------------------------------------------------------------
 
-standard_targets = all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean ORBSVCS_COMPONENTS
+standard_targets = all debug profile install deinstall clean clobber depend rcs_info idl_stubs realclean
+
+all: ORBSVCS_COMPONENTS
 
 $(standard_targets): %: $(addsuffix -%, $(thelist))
 
