@@ -1,3 +1,8 @@
+Mon Jun 14 10:32:04 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO/docs/releasenotes/TODO.html:
+	  Added item for Dynamic Any overhaul in the 'pending' section.
+
 Mon Jun 14 09:59:45 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* TAO_IDL/be/be_visitor_operation/collocated_ss.cpp:
