@@ -13,6 +13,7 @@
 //
 // ============================================================================
 
+#include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Filecache.h"
 #include "http_handler.h"
