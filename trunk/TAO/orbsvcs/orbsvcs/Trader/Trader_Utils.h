@@ -33,7 +33,6 @@
 
 #include "Trader.h"
 
-
   // *************************************************************
   // TAO_Property_Evaluator
   // *************************************************************
@@ -93,7 +92,6 @@ public:
   
   typedef CosTradingDynamic::DynamicProp DP_Struct;
   typedef CosTradingDynamic::DynamicPropEval DP_Eval;
-
   
   const CosTrading::PropertySeq& props_;
   // The offer from which the TAO_Property_Evaluator extracts property 
@@ -102,12 +100,12 @@ public:
   int supports_dp_;
 
   CORBA::Any** dp_cache_;
-  // In order to the result of property_value uniformly, we need to
-  // collect the dynamically allocated anys retrieved from dynamic
-  // properties in order to free them upon deletion. If we didn't do
-  // this, then the property_value method would leak or cause seg
-  // faults, since the client wouldn't be able to tell whether or not
-  // the return value should be freed.  
+  // In order for the client to treat the results of property_value
+  // uniformly, we need to collect the dynamically allocated anys
+  // retrieved from dynamic properties and free them upon deletion. If
+  // we didn't do this, then the property_value method would leak or
+  // cause seg faults, since the client wouldn't be able to tell
+  // whether or not the return value should be freed.  
 
  private:
 
@@ -170,17 +168,7 @@ private:
   TAO_Property_Evaluator_By_Name (const TAO_Property_Evaluator_By_Name&);
   TAO_Property_Evaluator_By_Name& operator= (const TAO_Property_Evaluator_By_Name&);
   
-  typedef ACE_Hash_Map_Manager
-    <
-    TAO_String_Hash_Key,
-    int,
-    ACE_Null_Mutex
-    >
-    Lookup_Table;
-  // A mapping, upon which lookups will take O(lg n), of property
-  // names to sequence indices.
-  
-  Lookup_Table table_;
+  TAO_Lookup_Table table_;
   // The instance of the above mapping for the offer provided in the
   // constructor. 
 };
@@ -583,11 +571,13 @@ class TAO_Offer_Modifier
 public:
 
   TAO_Offer_Modifier (const char* type,
-		      CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-		      CosTrading::Offer& offer);
+		      const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+		      CosTrading::Offer* offer);
   // Modify an <offer> of type <type>, whose properties are described
   // by <type_struct>
-  
+
+  ~TAO_Offer_Modifier (void);
+
   void delete_properties (const CosTrading::PropertyNameSeq& deletes,
 			  CORBA::Environment& _env)
     TAO_THROW_SPEC ((CosTrading::Register::UnknownPropertyName, 
@@ -597,24 +587,25 @@ public:
   // Delete the properties whose names were given to the
   // constructor. Ensure we don't delete mandatory properties.
 
-  void merge_properties (const CosTrading::PropertySeq& modifies,
+  void merge_properties (CosTrading::PropertySeq& modifies,
 			 CORBA::Environment& _env)
-    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,
-		    CosTrading::DuplicatePropertyName,
-		    CosTrading::Register::ReadonlyProperty));
+    TAO_THROW_SPEC ((CosTrading::IllegalPropertyName,                     
+                     CosTrading::DuplicatePropertyName,
+                     CosTrading::PropertyTypeMismatch,
+                     CosTrading::ReadonlyDynamicProperty, 
+                     CosTrading::Register::ReadonlyProperty));
   // Copy to the destination the union of the source and destination
   // properties. In the case of duplicate properties, update the
-  // destination with the source's value.
+  // destination with the source's value. This class claims the memory
+  // in the modifies sequence.
 
-  CosTrading::Offer& affect_change (void);
+  void affect_change (void);
   // Return a reference to the Offer with the changes affected.
-  
+
 private:
 
   TAO_Offer_Modifier (const TAO_Offer_Modifier&);
-  TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);
-  
-  typedef ACE_Unbounded_Set<TAO_String_Hash_Key> Prop_Names;
+  TAO_Offer_Modifier& operator= (const TAO_Offer_Modifier&);  
 
   typedef ACE_Hash_Map_Manager
     <
@@ -622,22 +613,27 @@ private:
     CosTrading::Property*,
     ACE_Null_Mutex
     >
-    Props;
-  
+    Property_Table;
+
   const char* type_;
-  // The type of the offer.
+  // The type of the offer.  
   
-  Props props_;
+  Property_Table props_;
   // The map of properties in the offer.
+
+  TAO_Typecode_Table prop_types_;
+  // Table of property types.
   
-  Prop_Names readonly_, mandatory_;
+  TAO_String_Set readonly_, mandatory_;
   // The set of readonly and mandatory property names in the offer's
   // type.
+
+  CosTrading::PropertySeq merge_props_;
+  // Sequence of properties to merge with the original.
   
-  CosTrading::Offer& offer_;
+  CosTrading::Offer* offer_;
   // A reference to the offer undergoing change.
 };
-
 
   // *************************************************************
   // TAO_Offer_Filter
@@ -661,13 +657,14 @@ class TAO_Offer_Filter
 {
 public:
   
-  typedef CosTradingRepos::ServiceTypeRepository SERVICE_TYPE_REPOS;
-  
-  TAO_Offer_Filter (SERVICE_TYPE_REPOS::TypeStruct* type_struct,
-		    TAO_Policies& policies,
+  TAO_Offer_Filter (TAO_Policies& policies,
 		    CORBA::Environment& _env);
   // Glean from the TypeStruct and Policy setting the appropriate way
   // to screen unsuitable offers from consideration.
+
+  void configure_type (CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct);
+  // Set the offer filter to screen for offers containing properties
+  // that aren't marked as readonly in this TypeStruct.
   
   CORBA::Boolean ok_to_consider (CosTrading::Offer* offer);
   // Determine whether the poicies contained in the given policy
@@ -709,12 +706,10 @@ private:
   TAO_Offer_Filter (const TAO_Offer_Filter&);
   TAO_Offer_Filter& operator= (const TAO_Offer_Filter&);
   
-  typedef ACE_Unbounded_Set<TAO_String_Hash_Key> Names;
-    
-  Names mod_props_;
+  TAO_String_Set not_mod_props_;
   // The set of the name of modifiable properties.
 
-  Names limits_;
+  TAO_String_Set limits_;
   // Cardinality and property limitations applied.
   
   CORBA::ULong search_card_, match_card_, return_card_;
@@ -757,12 +752,14 @@ public:
   
 private:
 
-  
-  typedef ACE_Unbounded_Set< TAO_String_Hash_Key > Prop_Names;
   typedef ACE_Unbounded_Queue< CosTrading::Property* > Prop_Queue;
   
-  Prop_Names props_;
+  TAO_String_Set props_;
   CosTrading::Lookup::HowManyProps policy_;
 };
+
+  // *************************************************************
+  // Miscellaneous
+  // *************************************************************
 
 #endif /* TAO_TRADER_UTILS_H */

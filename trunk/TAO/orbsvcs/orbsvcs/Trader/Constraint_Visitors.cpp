@@ -326,11 +326,11 @@ TAO_Constraint_Evaluator::do_the_op (int operation)
 
 int
 TAO_Constraint_Evaluator::visit_bin_op (TAO_Binary_Constraint* op,
-					 int operation)
+                                        int operation)
 {
   int return_value = -1;
-  TAO_Constraint* left = op->left_operand (),
-    *right = op->right_operand (); 
+  TAO_Constraint* left = op->left_operand ();
+  TAO_Constraint* right = op->right_operand ();
 
   // Perform an operation on the results of evaluating the left and
   // right branches of this subtree.
@@ -568,9 +568,10 @@ sequence_does_contain (CORBA::Any* sequence,
 	CosTradingSequences::ShortSeq* short_seq;
         TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>
           extracter (CosTradingSequences::_tc_ShortSeq);
-        
+
+        CORBA::Long value = element;
 	if (extracter.extract (*sequence, short_seq))
-	  return_value = ::TAO_find (*short_seq, (CORBA::Long) element);
+	  return_value = ::TAO_find (*short_seq, value);
       }
     break;
     case CORBA::tk_ushort:
@@ -579,8 +580,9 @@ sequence_does_contain (CORBA::Any* sequence,
         TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>
           extracter (CosTradingSequences::_tc_UShortSeq);
 
+        CORBA::ULong value = element;
 	if (extracter.extract (*sequence, ushort_seq))
-	  return_value = ::TAO_find (*ushort_seq, (CORBA::ULong) element);
+	  return_value = ::TAO_find (*ushort_seq, value);
       }
       break;
     case CORBA::tk_long:
@@ -589,8 +591,9 @@ sequence_does_contain (CORBA::Any* sequence,
         TAO_Sequence_Extracter<CosTradingSequences::LongSeq>
           extracter (CosTradingSequences::_tc_LongSeq);
 
+        CORBA::Long value = element;
 	if (extracter.extract (*sequence, long_seq))
-	  return_value = ::TAO_find (*long_seq, (CORBA::Long) element);
+	  return_value = ::TAO_find (*long_seq, value);
       }
       break;
     case CORBA::tk_ulong:
@@ -609,8 +612,9 @@ sequence_does_contain (CORBA::Any* sequence,
         TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>
           extracter (CosTradingSequences::_tc_FloatSeq);
 
+        CORBA::Double value = element;
 	if (extracter.extract (*sequence, float_seq))
-	  return_value = ::TAO_find (*float_seq, (CORBA::Double) element);
+	  return_value = ::TAO_find (*float_seq, value);
       }
       break;
     case CORBA::tk_double:
@@ -619,8 +623,9 @@ sequence_does_contain (CORBA::Any* sequence,
         TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>
           extracter (CosTradingSequences::_tc_DoubleSeq);
 
+        CORBA::Double value = element;
 	if (extracter.extract (*sequence, double_seq))
-	  return_value = ::TAO_find (*double_seq, (CORBA::Double) element);
+	  return_value = ::TAO_find (*double_seq, value);
       }
       break;
     case CORBA::tk_boolean:
@@ -629,8 +634,9 @@ sequence_does_contain (CORBA::Any* sequence,
         TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>
           extracter (CosTradingSequences::_tc_BooleanSeq);
 
+        CORBA::Boolean value = element;
 	if (extracter.extract (*sequence, boolean_seq))
-	  return_value = ::TAO_find (*boolean_seq, (CORBA::Boolean) element);
+	  return_value = ::TAO_find (*boolean_seq, value);
       }
       break;
     case CORBA::tk_string:
@@ -639,9 +645,12 @@ sequence_does_contain (CORBA::Any* sequence,
         TAO_Sequence_Extracter<CosTradingSequences::StringSeq>
           extracter (CosTradingSequences::_tc_StringSeq);
 
+        const char* value = element;
 	if (extracter.extract (*sequence, string_seq))
-	  return_value = ::TAO_find_string (*string_seq, (const char *) element);
+	  return_value = ::TAO_find_string (*string_seq, value);
       }
+      break;
+    default:
       break;
     }
 
@@ -654,18 +663,31 @@ sequence_does_contain (CORBA::Any* sequence,
 
 TAO_Constraint_Validator::
 TAO_Constraint_Validator
-(CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct)
+(const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct)
 {
-  CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq =
-    type_struct->props;
+  const CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq =
+    type_struct.props;
   int length = prop_seq.length ();
   
   // Create a map of the service type properties to their types.
   for (int i = 0; i < length; i++)
     {
-      CORBA::TypeCode_var corba_type = prop_seq[i].value_type;
+      CORBA::TypeCode_ptr corba_type =
+        CORBA::TypeCode::_duplicate (prop_seq[i].value_type);
+
       TAO_String_Hash_Key prop_name_str = (const char*) prop_seq[i].name;
-      this->type_map_.bind (prop_name_str, corba_type.ptr ());
+      this->type_map_.bind (prop_name_str, corba_type);
+    }
+}
+
+TAO_Constraint_Validator::~TAO_Constraint_Validator (void)
+{
+  for (TAO_Typecode_Table::iterator type_iter (this->type_map_);
+       ! type_iter.done ();
+       type_iter++)
+    {
+      CORBA::TypeCode_ptr corba_type = (*type_iter).int_id_;
+      CORBA::release (corba_type);
     }
 }
 
@@ -1110,9 +1132,9 @@ TAO_Constraint_Validator::expr_returns_string (TAO_Expression_Type expr_type)
 }
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>;
-template class ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>;
+template class ACE_Node<TAO_Literal_Constraint>;
 template class ACE_Unbounded_Queue<TAO_Literal_Constraint>;
+template class ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>;
 template class TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::LongSeq>;
@@ -1121,10 +1143,18 @@ template class TAO_Sequence_Extracter<CosTradingSequences::FloatSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>;
 template class TAO_Sequence_Extracter<CosTradingSequences::StringSeq>;
+template CORBA::Boolean TAO_find (const CosTradingSequences::DoubleSeq&, const CORBA::Double);
+template CORBA::Boolean TAO_find (const CosTradingSequences::FloatSeq&, const CORBA::Double);
+template CORBA::Boolean TAO_find (const CosTradingSequences::BooleanSeq&, const CORBA::Boolean);
+template CORBA::Boolean TAO_find (const CosTradingSequences::ULongSeq&, const CORBA::ULong);
+template CORBA::Boolean TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long);
+template CORBA::Boolean TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long);
+template CORBA::Boolean TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong);
+template CORBA::Boolean TAO_find (const CosTradingSequences::StringSeq&, const char*);
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex>
-#pragma instantiate ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex>
+#pragma instantiate ACE_Node<TAO_Literal_Constraint>
 #pragma instantiate ACE_Unbounded_Queue<TAO_Literal_Constraint>
+#pragma instantiate ACE_Unbounded_Queue_Iterator<TAO_Literal_Constraint>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::ShortSeq>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::UShortSeq>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::LongSeq>
@@ -1133,4 +1163,12 @@ template class TAO_Sequence_Extracter<CosTradingSequences::StringSeq>;
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::DoubleSeq>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::BooleanSeq>
 #pragma instantiate TAO_Sequence_Extracter<CosTradingSequences::StringSeq>
+#pragma instantiate TAO_find (const CosTradingSequences::DoubleSeq&, const CORBA::Double)
+#pragma instantiate TAO_find (const CosTradingSequences::FloatSeq&, const CORBA::Double)
+#pragma instantiate TAO_find (const CosTradingSequences::BooleanSeq&, const CORBA::Boolean)
+#pragma instantiate TAO_find (const CosTradingSequences::ULongSeq&, const CORBA::ULong)
+#pragma instantiate TAO_find (const CosTradingSequences::LongSeq&, const CORBA::Long)
+#pragma instantiate TAO_find (const CosTradingSequences::ShortSeq&, const CORBA::Long)
+#pragma instantiate TAO_find (const CosTradingSequences::UShortSeq&, const CORBA::ULong)
+#pragma instantiate TAO_find (const CosTradingSequences::StringSeq&, const char*)
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

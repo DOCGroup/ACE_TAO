@@ -150,6 +150,8 @@ public:
   CosTrading::TypeRepository_ptr type_repos (void) const;
   void type_repos (CosTrading::TypeRepository_ptr);
 
+  CosTradingRepos::ServiceTypeRepository_ptr service_type_repos (void) const;
+  
 private:
 
   TAO_Lockable &locker_;
@@ -166,6 +168,9 @@ private:
 
   CORBA::Object_var type_repos_;
   // A reference to the TypeRepostitory used by the trader.
+
+  CosTradingRepos::ServiceTypeRepository_var service_type_repos_;
+  // Already narrowed reference to the ServiceTypeRepository.
 };
 
 class TAO_ORBSVCS_Export TAO_Link_Attributes_Impl
@@ -476,6 +481,50 @@ public:
   u_long hash (void) const; 
   // The function that computes a hash value. 
 };
+
+class TAO_Hashable_ULong
+// = TITLE
+// Helper class using hashable integers in the
+// ACE_Hash_Map_Manager. The right way to do this would probably be
+// template specialization of the Hash Map Manager, but compilers have 
+// a difficult enough time with the Trading Service as it is. 
+{
+public:
+  
+  TAO_Hashable_ULong (void)
+    : number_ (0) {}
+  
+  TAO_Hashable_ULong (CORBA::ULong number)
+    : number_ (number) {}
+  
+  u_long hash (void) const { return number_; }
+  
+  TAO_Hashable_ULong& operator= (const TAO_Hashable_ULong& number)
+    {
+      this->number_ = number.number_;
+      return *this;
+    }
+  
+  operator CORBA::ULong (void) const { return number_; }
+  
+  friend int operator== (const TAO_Hashable_ULong& left,
+                         const TAO_Hashable_ULong& right)
+    { return left.number_ == right.number_; }
+  
+private:
+  
+  CORBA::ULong number_;   
+};
+
+// Helpful typedefs
+// Should probably be private to TAO_Offer_Database, but g++ has a
+// hard time with it like that when compiling
+// TAO_Service_Offer_Iterator. 
+typedef ACE_Hash_Map_Manager<TAO_Hashable_ULong,CosTrading::Offer*,ACE_Null_Mutex> TAO_Offer_Map; 
+typedef ACE_Hash_Map_Manager<TAO_String_Hash_Key, int, ACE_Null_Mutex> TAO_Lookup_Table;
+typedef ACE_Unbounded_Set<TAO_String_Hash_Key> TAO_String_Set;
+typedef ACE_Hash_Map_Manager<TAO_String_Hash_Key, CORBA::TypeCode_ptr, ACE_Null_Mutex> TAO_Typecode_Table;
+typedef ACE_Unbounded_Queue<char*> TAO_String_Queue;
 
   // *************************************************************
   // TAO_Sequence_Extracter_Base

@@ -19,7 +19,7 @@
 #define TAO_TRADER_C
 
 #include "Trader_T.h"
-#include "Trader_Interfaces.h" 
+#include "Trader_Interfaces.h"
 
   // *************************************************************
   // TAO_Trader
@@ -27,7 +27,7 @@
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> 
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
-TAO_Trader (Trader_Components components)
+TAO_Trader (TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::Trader_Components components)
 {
   CORBA::Environment env;
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
@@ -35,34 +35,36 @@ TAO_Trader (Trader_Components components)
   
   if (ACE_BIT_ENABLED (components, LOOKUP))
     {
-      TAO_Lookup<TRADER_SELF, TRADER_LOCK_TYPE>* lookup =
-        new TAO_Lookup<TRADER_SELF, TRADER_LOCK_TYPE> (*this);
+      TAO_Lookup<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* lookup =
+        new TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> (*this);
       this->trading_components ().lookup_if (lookup->_this (env));
       this->ifs_[LOOKUP_IF] = lookup;
     }
   if (ACE_BIT_ENABLED (components, REGISTER))
     {
-      TAO_Register<TRADER_SELF>* reg = new TAO_Register<TRADER_SELF> (*this);
+      TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* reg =
+        new TAO_Register<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().register_if (reg->_this (env));
       this->ifs_[REGISTER_IF] = reg;
     }
   if (ACE_BIT_ENABLED (components, ADMIN))
     {
-      TAO_Admin<TRADER_SELF,TRADER_LOCK_TYPE>* admin =
-        new TAO_Admin<TRADER_SELF,TRADER_LOCK_TYPE> (*this);
+      TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* admin =
+        new TAO_Admin<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().admin_if (admin->_this (env));
       this->ifs_[ADMIN_IF] = admin;
     }
   if (ACE_BIT_ENABLED (components, PROXY))
     {
-      TAO_Proxy<TRADER_SELF>* proxy = new TAO_Proxy<TRADER_SELF> (*this);
+      TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* proxy =
+        new TAO_Proxy<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().proxy_if (proxy->_this (env));
       this->ifs_[PROXY_IF] = proxy;
     }
   if (ACE_BIT_ENABLED (components, LINK))
     {
-      TAO_Link<TRADER_SELF, MAP_LOCK_TYPE>* link =
-	new TAO_Link<TRADER_SELF, MAP_LOCK_TYPE> (*this);
+      TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>* link =
+	new TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> (*this);
       this->trading_components ().link_if (link->_this (env));
       this->ifs_[LINK_IF] = link;
     }
