@@ -26,11 +26,13 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// be/be_codegen.cpp:302
+// be/be_codegen.cpp:338
 
 
 #include "RTScheduler.h"
+#include "tao/ORB_Core.h"
 #include "tao/Typecode.h"
+#include "tao/Var_Size_Argument_T.h"
 #include "ace/OS_NS_string.h"
 
 #if defined (__BORLANDC__)
@@ -42,18 +44,39 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// be/be_visitor_arg_traits.cpp:60
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
 {
+
+  // TAO_IDL - Generated from
+  // be/be_visitor_arg_traits.cpp:265
+
+#if !defined (_CORBA_POLICYLIST__ARG_TRAITS_CS_)
+#define _CORBA_POLICYLIST__ARG_TRAITS_CS_
+
+  ACE_TEMPLATE_SPECIALIZATION
+  class TAO_RTScheduler_Export Arg_Traits<CORBA::PolicyList>
+    : public
+        Var_Size_Arg_Traits_T<
+            CORBA::PolicyList,
+            CORBA::PolicyList_var,
+            CORBA::PolicyList_out
+          >
+  {
+  };
+
+#endif /* end #if !defined */
 }
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_interface/interface_cs.cpp:60
 
 // Traits specializations for RTScheduling::ThreadAction.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ThreadAction_ptr
 TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_duplicate (
     RTScheduling::ThreadAction_ptr p
@@ -62,6 +85,7 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_duplicate (
   return RTScheduling::ThreadAction::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_release (
     RTScheduling::ThreadAction_ptr p
@@ -70,12 +94,14 @@ TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ThreadAction_ptr
 TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_nil (void)
 {
   return RTScheduling::ThreadAction::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::ThreadAction>::tao_marshal (
     RTScheduling::ThreadAction_ptr p,
@@ -99,6 +125,23 @@ RTScheduling::ThreadAction::~ThreadAction (void)
 
 RTScheduling::ThreadAction_ptr
 RTScheduling::ThreadAction::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return ThreadAction::_nil ();
+    }
+
+  ThreadAction_ptr proxy =
+    dynamic_cast<ThreadAction_ptr> (_tao_objref);
+
+  return ThreadAction::_duplicate (proxy);
+}
+
+RTScheduling::ThreadAction_ptr
+RTScheduling::ThreadAction::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -207,6 +250,7 @@ namespace RTScheduling
 
 // Traits specializations for RTScheduling::DistributableThread.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::DistributableThread_ptr
 TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_duplicate (
     RTScheduling::DistributableThread_ptr p
@@ -215,6 +259,7 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_duplicate (
   return RTScheduling::DistributableThread::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_release (
     RTScheduling::DistributableThread_ptr p
@@ -223,12 +268,14 @@ TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::DistributableThread_ptr
 TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_nil (void)
 {
   return RTScheduling::DistributableThread::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::DistributableThread>::tao_marshal (
     RTScheduling::DistributableThread_ptr p,
@@ -297,6 +344,23 @@ RTScheduling::DistributableThread::~DistributableThread (void)
 
 RTScheduling::DistributableThread_ptr
 RTScheduling::DistributableThread::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return DistributableThread::_nil ();
+    }
+
+  DistributableThread_ptr proxy =
+    dynamic_cast<DistributableThread_ptr> (_tao_objref);
+
+  return DistributableThread::_duplicate (proxy);
+}
+
+RTScheduling::DistributableThread_ptr
+RTScheduling::DistributableThread::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -408,6 +472,7 @@ namespace RTScheduling
 
 // Traits specializations for RTScheduling::Current.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Current_ptr
 TAO::Objref_Traits<RTScheduling::Current>::tao_duplicate (
     RTScheduling::Current_ptr p
@@ -416,6 +481,7 @@ TAO::Objref_Traits<RTScheduling::Current>::tao_duplicate (
   return RTScheduling::Current::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::Current>::tao_release (
     RTScheduling::Current_ptr p
@@ -424,12 +490,14 @@ TAO::Objref_Traits<RTScheduling::Current>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Current_ptr
 TAO::Objref_Traits<RTScheduling::Current>::tao_nil (void)
 {
   return RTScheduling::Current::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::Current>::tao_marshal (
     RTScheduling::Current_ptr p,
@@ -767,6 +835,23 @@ RTScheduling::Current::_narrow (
 }
 
 RTScheduling::Current_ptr
+RTScheduling::Current::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Current::_nil ();
+    }
+
+  Current_ptr proxy =
+    dynamic_cast<Current_ptr> (_tao_objref);
+
+  return Current::_duplicate (proxy);
+}
+
+RTScheduling::Current_ptr
 RTScheduling::Current::_duplicate (Current_ptr obj)
 {
   if (! CORBA::is_nil (obj))
@@ -864,6 +949,7 @@ namespace RTScheduling
 
 // Traits specializations for RTScheduling::ResourceManager.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ResourceManager_ptr
 TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_duplicate (
     RTScheduling::ResourceManager_ptr p
@@ -872,6 +958,7 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_duplicate (
   return RTScheduling::ResourceManager::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_release (
     RTScheduling::ResourceManager_ptr p
@@ -880,12 +967,14 @@ TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::ResourceManager_ptr
 TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_nil (void)
 {
   return RTScheduling::ResourceManager::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::ResourceManager>::tao_marshal (
     RTScheduling::ResourceManager_ptr p,
@@ -909,6 +998,23 @@ RTScheduling::ResourceManager::~ResourceManager (void)
 
 RTScheduling::ResourceManager_ptr
 RTScheduling::ResourceManager::_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return ResourceManager::_nil ();
+    }
+
+  ResourceManager_ptr proxy =
+    dynamic_cast<ResourceManager_ptr> (_tao_objref);
+
+  return ResourceManager::_duplicate (proxy);
+}
+
+RTScheduling::ResourceManager_ptr
+RTScheduling::ResourceManager::_unchecked_narrow (
     CORBA::Object_ptr _tao_objref
     ACE_ENV_ARG_DECL_NOT_USED
   )
@@ -1022,6 +1128,7 @@ namespace RTScheduling
 
 // Traits specializations for RTScheduling::Scheduler.
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Scheduler_ptr
 TAO::Objref_Traits<RTScheduling::Scheduler>::tao_duplicate (
     RTScheduling::Scheduler_ptr p
@@ -1030,6 +1137,7 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::tao_duplicate (
   return RTScheduling::Scheduler::_duplicate (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 void
 TAO::Objref_Traits<RTScheduling::Scheduler>::tao_release (
     RTScheduling::Scheduler_ptr p
@@ -1038,12 +1146,14 @@ TAO::Objref_Traits<RTScheduling::Scheduler>::tao_release (
   CORBA::release (p);
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 RTScheduling::Scheduler_ptr
 TAO::Objref_Traits<RTScheduling::Scheduler>::tao_nil (void)
 {
   return RTScheduling::Scheduler::_nil ();
 }
 
+ACE_TEMPLATE_CLASS_MEMBER_SPECIALIZATION
 CORBA::Boolean
 TAO::Objref_Traits<RTScheduling::Scheduler>::tao_marshal (
     RTScheduling::Scheduler_ptr p,
@@ -1220,6 +1330,23 @@ RTScheduling::Scheduler::_narrow (
 }
 
 RTScheduling::Scheduler_ptr
+RTScheduling::Scheduler::_unchecked_narrow (
+    CORBA::Object_ptr _tao_objref
+    ACE_ENV_ARG_DECL_NOT_USED
+  )
+{
+  if (CORBA::is_nil (_tao_objref))
+    {
+      return Scheduler::_nil ();
+    }
+
+  Scheduler_ptr proxy =
+    dynamic_cast<Scheduler_ptr> (_tao_objref);
+
+  return Scheduler::_duplicate (proxy);
+}
+
+RTScheduling::Scheduler_ptr
 RTScheduling::Scheduler::_duplicate (Scheduler_ptr obj)
 {
   if (! CORBA::is_nil (obj))
@@ -1306,9 +1433,23 @@ namespace RTScheduling
 }
 
 // TAO_IDL - Generated from
-// be/be_visitor_root/root.cpp:1702
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+  template class TAO::Arg_Traits<CORBA::PolicyList>;
+
+  template class
+    TAO::Var_Size_Arg_Traits_T<
+        CORBA::PolicyList,
+        CORBA::PolicyList_var,
+        CORBA::PolicyList_out
+      >;
+
+#endif /* end #if !defined */
 
   template class
     TAO::Objref_Traits<
@@ -1424,6 +1565,20 @@ namespace RTScheduling
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#if !defined (_CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_)
+#define _CORBA_SEQUENCE__ARG_TRAITS_TMPLINST_CS_
+
+# pragma instantiate TAO::Arg_Traits<CORBA::PolicyList>
+
+# pragma instantiate \
+    TAO::Var_Size_Arg_Traits_T< \
+        CORBA::PolicyList, \
+        CORBA::PolicyList_var, \
+        CORBA::PolicyList_out \
+      >
+
+#endif /* end #if !defined */
 
 # pragma instantiate \
     TAO::Objref_Traits< \

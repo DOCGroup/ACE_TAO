@@ -18,7 +18,7 @@
 //   this is:
 //
 //     tao_idl
-//          -o orig -Ge 1 -GT
+//          -o orig -Ge 1 -GT -GA
 //          -Wb,export_macro=TAO_RTPortableServer_Export
 //          -Wb,export_include="rtportableserver_export.h"
 //          -Wb,pre_include="ace/pre.h"
@@ -26,22 +26,8 @@
 //          RTPortableServer.pidl
 //
 //   2. Then apply the patches in tao/RTPortableServer/diffs to the
-//   generated code.  The patch fixes include file dependencies and makes
-//   the inheritance of RTPortableServer::POA from PortableServer::POA
-//   non-virtual.  This was to make sure that classes casting from
-//   PortableServer::POA to TAO_POA can still do so.
+//   generated code.
 //
-//   Apply patches using the following commands:
-//
-//   patch < diffs/RTPortableServerC.h.diff
-//   patch < diffs/RTPortableServerC.i.diff
-//   patch < diffs/RTPortableServerC.cpp.diff
-//
-//   Note: The diffs were generated with these commands:
-//
-//   diff -wBbu orig/RTPortableServerC.h RTPortableServerC.h > diffs/RTPortableServerC.h.diff
-//   diff -wBbu orig/RTPortableServerC.i RTPortableServerC.i > diffs/RTPortableServerC.i.diff
-//   diff -wBbu orig/RTPortableServerC.cpp RTPortableServerC.cpp > diffs/RTPortableServerC.cpp.diff
 //
 // ================================================================
 
