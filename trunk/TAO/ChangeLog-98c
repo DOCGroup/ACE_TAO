@@ -1,3 +1,18 @@
+Thu Dec 31 15:28:49 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Event/EC_Event_Channel.h: 
+	* orbsvcs/orbsvcs/Event/EC_ConsumerAdmin.h: 
+	* orbsvcs/orbsvcs/Event/EC_Dispatching.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxySupplier.h: 
+	* orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter.h: 
+	* orbsvcs/orbsvcs/Event/EC_Filter_Builder.h: 
+	  I'm prototyping a new version of the real-time Event Channel,
+	  this version will be more efficient, more configurable and
+	  (hopefully) easier to maintain.  This initial commit is just for
+	  backup purposes, it does not compile and it will suffer many
+	  changes before it is usable.
+
 Thu Dec 31 15:34:47 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/CosEvent/ProxyPushConsumer_i.cpp: 
