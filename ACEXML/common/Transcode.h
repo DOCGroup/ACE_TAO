@@ -58,7 +58,7 @@ public:
    * Convert a UTF-16 character into a string in UTF-8 encoding.
    *
    * @return number of characters the function uses to store the
-   *         converted string if succeeds or one of the error STATUS
+   *         converted string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int utf162utf8 (ACEXML_UTF16 src,
@@ -69,7 +69,7 @@ public:
    * Convert a UCS-4 character into a string in UTF-8 encoding.
    *
    * @return number of characters the function uses to store the
-   *         converted string if succeeds or one of the error STATUS
+   *         converted string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int ucs42utf8 (ACEXML_UCS4 src,
@@ -80,7 +80,7 @@ public:
    * Convert a UCS-4 character into a string in UTF-16 encoding.
    *
    * @return number of characters the function uses to store the
-   *         converted string if succeeds or one of the error STATUS
+   *         converted string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int ucs42utf16 (ACEXML_UCS4 src,
@@ -91,7 +91,7 @@ public:
    * Convert a UTF-16 surrogate character pair into a string in UTF-8 encoding.
    *
    * @return number of characters the function uses to store the
-   *         converted string if succeeds or one of the error STATUS
+   *         converted string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int surrogate2utf8 (ACEXML_UTF16 high,
@@ -102,7 +102,7 @@ public:
   /*
    * Convert a UTF-16 surrogate character pair into a UCS-4 character.
    *
-   * @return SUCCESS if succeeds or one of the error STATUS
+   * @return SUCCESS if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int surrogate2ucs4 (ACEXML_UTF16 high,
@@ -114,7 +114,7 @@ public:
    * into a UCS-4 character.
    *
    * @return number of characters the function consumed from the
-   *         UTF-8 string if succeeds or one of the error STATUS
+   *         UTF-8 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int utf82ucs4 (const ACEXML_UTF8 *src,
@@ -126,7 +126,7 @@ public:
    * into a UCS-4 character.
    *
    * @return number of characters the function consumed from the
-   *         UTF-16 string if succeeds or one of the error STATUS
+   *         UTF-16 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int utf162ucs4 (const ACEXML_UTF16 *src,
@@ -146,7 +146,7 @@ public:
    * @param len The length of @a dst string.
    *
    * @return number of characters the function consumed from the
-   *         UTF-8 string if succeeds or one of the error STATUS
+   *         UTF-8 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int utf8s2utf16s (const ACEXML_UTF8 *src,
@@ -159,7 +159,7 @@ public:
    * @param len The length of @a dst string.
    *
    * @return number of characters the function uses in
-   *         UTF-8 string if succeeds or one of the error STATUS
+   *         UTF-8 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
   static int utf16s2utf8s (const ACEXML_UTF16 *src,

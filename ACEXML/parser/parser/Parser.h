@@ -31,6 +31,7 @@
 #include "ace/Containers_T.h"
 #include "ace/Auto_Ptr.h"
 #include "ACEXML/parser/parser/Entity_Manager.h"
+#include "ACEXML/parser/parser/ParserErrors.h"
 
 /**
  * @class ACEXML_Parser Parser.h "ACEXML/parser/parser/Parser.h"
@@ -387,15 +388,6 @@ protected:
   /// Peek a character.
   ACEXML_Char peek (void);
 
-  /**
-   * Check if more data can be added to a character buffer in obstack.
-   * If not, the existing data in the buffer will be cleared out by
-   * freezing the segment and pass it out thru a content_handler_->characters ()
-   * call.  @a counter records the length of the existing data in
-   * obstack.
-   */
-  int try_grow_cdata (size_t size, size_t &len ACEXML_ENV_ARG_DECL);
-
   // Feature names:
 
   /**
@@ -440,19 +432,19 @@ private:
    * Dispatch errors to ErrorHandler.
    *
    */
-  void report_error (const ACEXML_Char* message ACEXML_ENV_ARG_DECL);
+  void report_error (ACEXML_Error minor_code ACEXML_ENV_ARG_DECL);
 
   /**
    * Dispatch warnings to ErrorHandler.
    *
    */
-  void report_warning (const ACEXML_Char* message ACEXML_ENV_ARG_DECL);
+  void report_warning (ACEXML_Error minor_code ACEXML_ENV_ARG_DECL);
 
   /**
    * Dispatch fatal errors to ErrorHandler.
    *
    */
-  void report_fatal_error (const ACEXML_Char* message ACEXML_ENV_ARG_DECL);
+  void report_fatal_error (ACEXML_Error minor_code ACEXML_ENV_ARG_DECL);
 
   /**
    * Dispatch prefix mapping calls to the ContentHandler.
@@ -499,6 +491,9 @@ private:
 
   // Locator
   ACEXML_LocatorImpl locator_;
+
+  // Flag set if the document is a standalone XML document
+  int standalone_;
 
   // Feature flags &
   int simple_parsing_;

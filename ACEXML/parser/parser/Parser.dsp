@@ -116,6 +116,10 @@ SOURCE=.\Parser.h
 
 SOURCE=.\Parser_export.h
 # End Source File
+# Begin Source File
+
+SOURCE=.\ParserErrors.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
