@@ -1,3 +1,8 @@
+Wed Sep 02 19:08:29 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Template_Instatiations.cpp: commented text following
+          an #endif.
+
 Wed Sep 02 16:46:45 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.5.35 released.
@@ -8,19 +13,19 @@ Wed Sep 02 16:33:25 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 Wed Sep 02 16:31:22 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* ace/OS.h: Make sure ACE_NO_INLINE is not defined before defining
-	  it to avoid double defining the macro.  Thanks to Ossama Othman
-	  <othman@astrosun.tn.cornell.edu> for suggestion this.
+        * ace/OS.h: Make sure ACE_NO_INLINE is not defined before defining
+          it to avoid double defining the macro.  Thanks to Ossama Othman
+          <othman@astrosun.tn.cornell.edu> for suggestion this.
 
 Wed Sep  2 11:10:08 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/Task.cpp (activate): Remmber to decrement the thr_count_ if
- 	  spawn_n() fails.  Thanks to Russ Noseworthy
- 	  <rnosewor@objectsciences.com> for reporting this fix.
+        * ace/Task.cpp (activate): Remmber to decrement the thr_count_ if
+          spawn_n() fails.  Thanks to Russ Noseworthy
+          <rnosewor@objectsciences.com> for reporting this fix.
 
-	* examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Fixed another
-	  void * -> char * problem.  Now this stuff all seems to build
-	  fine.
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp: Fixed another
+          void * -> char * problem.  Now this stuff all seems to build
+          fine.
 
 Wed Sep 02 10:07:15 1998  David L. Levine  <levine@cs.wustl.edu>
 
