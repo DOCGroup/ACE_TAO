@@ -9,6 +9,8 @@
  *									  *
  **************************************************************************/
 
+#include <thread.h>
+
 #include <stdio.h>
 
 #ifdef WIN32
@@ -25,7 +27,6 @@
 #include <string.h>
 
 #ifndef WIN32
-#include <thread.h>
 #include <netdb.h>
 #include <unistd.h>
 #endif /* WIN32 */
@@ -411,7 +412,7 @@ accumstats(rqst_timer_t *rqsttimer, page_stats_t *pagestats, stats_t *timestat)
  * returns the number of files retrieved
  */
 static int 
-makeload(int maxcount, int pageval, rqst_timer_t *timerarray, stats_t *timestat, SOCKET mastersock, page_stats_t *page_stats)
+makeload(int maxcount, int pageval, THREAD rqst_timer_t *timerarray, THREAD stats_t *timestat, THREAD SOCKET mastersock, THREAD page_stats_t *page_stats)
 {
     int cnt;
     int returnval;
@@ -926,15 +927,15 @@ main(int argc, char *argv[])
 void ClientThread(void *dummy)
 {
 
-  FILE	*logfile;
+  THREAD FILE	*logfile;
   
-  stats_t	timestat;
+  THREAD stats_t	timestat;
   
-  rqst_timer_t	timerarray[MAXNUMOFFILES];
-  SOCKET	mastersock = BADSOCKET_VALUE;	/* connection to webmaster */
+  THREAD rqst_timer_t	timerarray[MAXNUMOFFILES];
+  THREAD SOCKET	mastersock = BADSOCKET_VALUE;	/* connection to webmaster */
   
 
-  page_stats_t *page_stats;    /* actually a dynamic array */
+  THREAD page_stats_t *page_stats;    /* actually a dynamic array */
 
     int		loopcnt = 0;
     int		filecnt;
@@ -985,11 +986,7 @@ void ClientThread(void *dummy)
 
     /* Initialize random number generator */
     junk = getpid ();
-#ifndef WIN32
     rand_r(&junk);
-#else
-	junk = rand ();
-#endif /* ! WIN32 */
     D_PRINTF( "Random seed: %d\n", junk );
 
     for (i=0; i < MAXNUMOFFILES; i++) 
@@ -1074,11 +1071,7 @@ void ClientThread(void *dummy)
 		D_PRINTF( "Running in timed mode\n" );
 		/* random number between 0 and totalweight-1 */
                 junk = getpid ();
-#ifndef WIN32
 		ran_number = (rand_r(&junk) % total_weight);
-#else
-		ran_number = (RANDOM() % total_weight);
-#endif
 		D_PRINTF( "random %ld\n", ran_number );
 		
 		/* loop through pages, find correct one 

@@ -16,7 +16,7 @@ CC		= cc
 LIBS		= -lsocket -lm -lthread 		#-lm 
 LDFLAGS         = 
 INCLUDES	= $(DYNAMICINCLUDES)
-CFLAGS		= -g
+CFLAGS		= -fast
 CPPFLAGS	= 
 DEFS		= -DHAVE_CONFIG_H $(DYNAMICDEFS)
 
