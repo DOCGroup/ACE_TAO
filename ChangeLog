@@ -1,9 +1,22 @@
+Mon Jan  3 19:16:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.{h,cpp}:
+          Changed the return type of the notify method to int to match the
+          declaration in the base class. Also added argument names to the
+          header file to help doxygen generate the documentation. Thanks to
+          Alexander Libman <alexander dot libman at earthlink dot net> for
+          reporting this.
+
+        * ace/Reactor_Impl.h:
+          Added argument names to the notify method so that doxygen can
+          generate better documentation
+
 Mon Jan  3 13:05:46 2005  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/config/core.mpb:
 
           Added a setting for the template variable 'install_headers' which
-          is currently only used by the automake project type. 
+          is currently only used by the automake project type.
           Coincidentally, I changed the case of INSTALL_THIS_TARGET to
           lowercase.  I personally prefer lowercase and since MPC is case
           insensitive with respect to variable names, it causes no harm to
