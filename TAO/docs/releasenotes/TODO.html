@@ -50,6 +50,27 @@
         <BR>[ASSIGNED TO:] Pradeep
       </LI>
 
+      <LI><P><B>EC:</B> The Event Channel must be profiled,
+          quantified, etc.
+          Now that we have a single threaded event channel this task
+          is much easier, the points to investigate are:
+        </P>
+        <P>
+        <UL>
+          <LI> How many data copies does the EC make? Can we reduce it
+            to zero?
+          </LI>
+          <LI> How many memory allocations?
+            Can they be replaced by memory poools?
+          </LI>
+          <LI>How many locks? Can we strategize locks?
+            Can we share a single lock for the whole dispatch?
+          </LI>
+        </UL>
+        <BR>[ASSIGNED TO:] Carlos
+        </P>
+      </LI>
+
     </OL>
 
     <HR>
@@ -197,26 +218,6 @@
           messages. This is important for an effective implementation
           of the multicast version of the EC. The classes affected
           include <CODE>UDP_Receiver</CODE> and <CODE>UDP_Sender</CODE>.
-        </P>
-      </LI>
-
-      <LI><P><B>EC:</B> The Event Channel must be profiled,
-          quantified, etc.
-          Now that we have a single threaded event channel this task
-          is much easier, the points to investigate are:
-        </P>
-        <P>
-        <UL>
-          <LI> How many data copies does the EC make? Can we reduce it
-            to zero?
-          </LI>
-          <LI> How many memory allocations?
-            Can they be replaced by memory poools?
-          </LI>
-          <LI>How many locks? Can we strategize locks?
-            Can we share a single lock for the whole dispatch?
-          </LI>
-        </UL>
         </P>
       </LI>
 
