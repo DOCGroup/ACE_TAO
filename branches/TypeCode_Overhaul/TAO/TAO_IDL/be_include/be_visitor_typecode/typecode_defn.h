@@ -90,9 +90,6 @@ public:
   virtual int visit_structure (be_structure *node);
   // visit a structure
 
-  virtual int visit_typedef (be_typedef *node);
-  // visit a typedef
-
   virtual int visit_union (be_union *node);
   // visit a union
 
@@ -269,6 +266,15 @@ public:
     be_type *node;
     ACE_CDR::Long offset;
   };
+
+protected:
+
+  /// Generate the TypeCode_ptr.
+  /**
+   * Generate actual TypeCode instance/definition, not the supporting
+   * code, e.g.  "static CORBA::TypeCode_ptr const Foo_ptr = ...".
+   */
+  int gen_typecode_ptr (be_type * node);
 
 private:
 
