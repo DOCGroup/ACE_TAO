@@ -1,3 +1,13 @@
+Fri Aug 06 11:03:53 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/Concurrency_Service/Makefile,
+          orbsvcs/Naming_Service/Makefile,
+          orbsvcs/Trading_Service/Makefile:
+          removed unnecessary include of include/makeinclude/rules.lib.GNU.
+          It bothered builds on NT for VxWorks target.  Thanks to
+          Erik Johannes <ejohannes@oresis.com> and Stephane Chatre
+          <schatre@oresis.com> for reporting this. [Bug 210]
+
 Fri Aug 06 10:39:36 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * performance-tests/Cubit/TAO/MT_Cubit/Globals.cpp (get_low_priority):
