@@ -1,3 +1,12 @@
+Tue Oct  3 10:33:43 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be_include/be_interface.h:
+
+	  Had to add 'virtual' to a couple of function declarations,
+	  to keep cxx from being confused about functions with the
+	  same name in the base class AST_Decl, even though the
+	  signatures are not quite the same.
+
 Tue Oct 03 10:08:19 2000  David L. Levine <levine@cs.wustl.edu>
 
         * orbsvcs/examples/CosEC/RtEC_Based/lib/Makefile: inserted
