@@ -1,3 +1,11 @@
+Fri Jan  7 08:39:40 2005  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/HTBP/Send_Large_Msg/Send_Large_Msg.mpc:
+        * tests/HTBP/Send_Recv_Tests/SendRecv_Test.mpc:
+
+          Added after += Test_Output to make sure that these projects aren't
+          built before the Test_Output library.
+
 Fri Jan  7 13:19:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Unbounded_Set_Ex.{h,cpp,inl}:
@@ -36,15 +44,15 @@ Fri Jan  7 11:38:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Thu Jan  6 18:29:22 2005  Steve Huston  <shuston@riverace.com>
 
-	* configure.ac: Added check for
-	  ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS ( ~CLASS<PARAM>() ),
-	  and made it the primary check since most compilers like this one.
-	  If this one fails, then test for
-	  ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR ( ~CLASS() ). Some
-	  compilers don't like this one (such as IBM Visual Age C++) but
-	  do like the first one.
+        * configure.ac: Added check for
+          ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS ( ~CLASS<PARAM>() ),
+          and made it the primary check since most compilers like this one.
+          If this one fails, then test for
+          ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR ( ~CLASS() ). Some
+          compilers don't like this one (such as IBM Visual Age C++) but
+          do like the first one.
 
-	* m4/config_h.m4: Added ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS.
+        * m4/config_h.m4: Added ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS.
 
 Thu Jan  6 08:54:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 

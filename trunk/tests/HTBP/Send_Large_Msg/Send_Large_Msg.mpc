@@ -4,7 +4,8 @@
 
 project(*Server): aceexe, htbp {
   exename = server
-  libs += Test_Output
+  after  += Test_Output
+  libs   += Test_Output
 
   Source_Files {
     server.cpp
