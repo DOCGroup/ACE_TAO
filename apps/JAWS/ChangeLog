@@ -1,3 +1,8 @@
+Wed Aug  6 16:45:48 1997  James C Hu  <jxh@lambada.cs.wustl.edu>
+
+	* server/main.cpp: Added another signal handler so I can kill JAWS
+	  when purifying. 
+
 Mon Aug  4 00:07:24 1997  Nanbor Wang  <nw1@cumbia.cs.wustl.edu>
 
 	* server/main.cpp (main): Service configurator now doesn't return
