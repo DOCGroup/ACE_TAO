@@ -7,6 +7,9 @@
 #ifndef TAO_ORB_IDL
 #define TAO_ORB_IDL
 
+#include <OctetSeq.pidl>
+#include <StringSeq.pidl>
+
 #include <Policy.pidl>
 #include <Services.pidl>
 
@@ -95,10 +98,6 @@ module CORBA
 
   typedef string ObjectId;
   typedef sequence <ObjectId> ObjectIdList;
-
-  // Portable Interceptor specification adds these types.
-  typedef sequence<string> StringSeq;
-  typedef sequence<wstring> WStringSeq;
 };
 
 #endif /* TAO_ORB_IDL */
