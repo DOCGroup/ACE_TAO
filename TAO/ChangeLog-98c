@@ -1,10 +1,15 @@
+Wed Jul 29 06:45:54 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/NestedUpcall/MT_Client_Test/ local_server.cpp (MT_Server):
+          reordered initializers to match declaration order.
+
 Tue Jul 28 23:01:21 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
 
-	* orbsvcs/tests/Logger/runtests.pl: Removed this since it has been 
-	  replaced.
+        * orbsvcs/tests/Logger/runtests.pl: Removed this since it has been
+          replaced.
 
-	* orbsvcs/tests/Logger/run_test.pl: Cleaned this script up by 
-	  removing the code that wasn't needed.
+        * orbsvcs/tests/Logger/run_test.pl: Cleaned this script up by
+          removing the code that wasn't needed.
 
 Tue Jul 28 16:54:00 1998  Jeff Parsons <jp4@cs.wustl.edu>
 
