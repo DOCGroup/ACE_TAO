@@ -19,7 +19,7 @@
 //
 // ============================================================================
 
-#include <iostream.h>
+#include "ace/streams.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "orbsvcs/CosNamingC.h"
