@@ -60,7 +60,8 @@ Tue Dec 02 06:16:39 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Message_Queue_Test (main): increased queue size from
           default of 16Kb to 32Kb, so that it runs on machines with 8Kb
-          pagesizes.
+          pagesizes.  And, added a check to see if the queue is full
+          before enqueuing.
 
 Tue Dec 02 00:18:04 1997    <irfan@TWOSTEP>
 
