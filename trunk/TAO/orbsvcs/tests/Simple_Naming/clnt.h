@@ -11,8 +11,7 @@
 //    clnt.h
 //
 // = DESCRIPTION
-//      This class implements naming service according to the CORBA
-//      spec.
+//      This class tests the facilities to connect to the naming service.
 //
 // = AUTHORS
 //      Sergio Flores-Gaitan <sergio@cs.wustl.edu>
@@ -55,28 +54,6 @@ private:
   char **argv_;
   // arguments from command line.
 
-  char *hostname_;
-  // Hostname of server.
-
-  CORBA::ULong portnum_;
-  // default port number of server.
-
   int exit_later_;
   // Flag to tell server to not exit immediately
-
-  CORBA::Object_ptr factory_;
-  // factory pointer for CosNaming.
-
-  CORBA::Object_ptr objref_;
-  // storage of the factory objref
-  
-  CORBA::Environment env_;
-  // Environment variable
-
-  //  CORBA::Object_ptr CosNaming_;
-  CosNaming::NamingContext_ptr CosNaming_;
-  // CosNaming obj ref
-
-  char *cosnaming_factory_key_;
-  // CosNaming key.
 };

@@ -1,3 +1,16 @@
+Thu Jan 29 12:33:30 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* orbsvcs/tests/Simple_Naming/clnt.cpp: 
+	* orbsvcs/tests/Simple_Naming/clnt.h: 
+	  Simple Naming simply tries to locate the Naming Service, it is
+	  useful to test the TAO facilities (multicast, environment,
+	  command line) for that purpose.
+	
+	* orbsvcs/tests/Logger/clnt.cpp: 
+	* orbsvcs/tests/Logger/clnt.h: 
+	  We do not attempt to use nested context unless requested by the
+	  user, the reason is that it is failing consistently right now.
+
 Thu Jan 29 10:34:08 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO_IDL/be/be_operation.cpp: Some bug fixes made in the pre-POA

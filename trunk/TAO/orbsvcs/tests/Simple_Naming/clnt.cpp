@@ -22,13 +22,9 @@
 // constructor
 
 CosNaming_Client::CosNaming_Client (void)
-  : hostname_ ("localhost"),
-    portnum_ (TAO_DEFAULT_SERVER_PORT),
-    exit_later_ (0),
-    factory_ (CORBA::Object::_nil ()),
-    objref_ (CORBA::Object::_nil ()),
-    CosNaming_ (CosNaming::NamingContext::_nil ()),
-    cosnaming_factory_key_ ("NameService")
+  : exit_later_ (0),
+    argc_ (0),
+    argv_ (0)
 {
 }
 
@@ -37,7 +33,7 @@ CosNaming_Client::CosNaming_Client (void)
 int
 CosNaming_Client::parse_args (void)
 {
-  ACE_Get_Opt get_opts (argc_, argv_, "dn:h:p:k:x");
+  ACE_Get_Opt get_opts (argc_, argv_, "dx");
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -46,12 +42,6 @@ CosNaming_Client::parse_args (void)
       case 'd':  // debug flag
 	TAO_debug_level++;
 	break;
-      case 'h':
-        hostname_ = ACE_OS::strdup (get_opts.optarg);
-        break;
-      case 'p':
-        portnum_ = ACE_OS::atoi (get_opts.optarg);
-        break;
       case 'x':
 	this->exit_later_++;
 	break;
@@ -60,8 +50,6 @@ CosNaming_Client::parse_args (void)
 	ACE_ERROR_RETURN ((LM_ERROR,
 			   "usage:  %s"
 			   " [-d]"
-                           " [-h hostname]"
-                           " [-p port]"
 			   " [-x]"
 			   "\n",
                            this->argv_ [0]), 
@@ -77,21 +65,15 @@ CosNaming_Client::parse_args (void)
 int
 CosNaming_Client::run (void)
 {
-
-
-  if (this->exit_later_)
-    {
-      //  this->please_exit (this->env_);
-      dexc (this->env_, "server, please ACE_OS::exit");
-    }
-
+  // @@ TODO, add some interesting test here, maybe creating some
+  // nested naming contexts and registering a number of objreferences
+  // in there.
+  // We could even use the iterators.
   return 0;
 }
 
 CosNaming_Client::~CosNaming_Client (void)
 {
-  CORBA::release (this->CosNaming_);
-  CORBA::release (this->factory_);
 }
 
 int
@@ -100,66 +82,34 @@ CosNaming_Client::init (int argc, char **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  // retrieve the ORB
-  CORBA::ORB_init (this->argc_,
-                   this->argv_,
-                   "internet",
-                   this->env_);
-
-  if (this->env_.exception () != 0)
+  TAO_TRY
     {
-      this->env_.print_exception ("ORB initialization");
+      // Initialize ORB.
+      CORBA::ORB_var orb = 
+	CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+
+      CORBA::Object_var naming_obj =
+	orb->resolve_initial_references ("NameService");
+      if (CORBA::is_nil (naming_obj.in ()))
+	ACE_ERROR_RETURN ((LM_ERROR,
+			   " (%P|%t) Unable to initialize the POA.\n"),
+			  -1);
+
+      CosNaming::NamingContext_var naming_context = 
+        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
+      TAO_CHECK_ENV;
+      
+      // Parse command line and verify parameters.
+      if (this->parse_args () == -1)
+	return -1;
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("init");
       return -1;
     }
-
-  // Parse command line and verify parameters.
-  if (this->parse_args () == -1)
-    return -1;
-
-  // Retrieve a factory objref.
-  this->objref_ = CosNaming::NamingContext::_bind (this->hostname_,
-						   this->portnum_,
-						   this->cosnaming_factory_key_,
-						   this->env_);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("CosNaming_Factory::_bind");
-      return -1;
-    }
-
-  if (CORBA::is_nil (this->objref_) == CORBA::B_TRUE)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " _bind returned null object for key (%s) host (%s), port (%d)\n",
-		       this->cosnaming_factory_key_,
-                       this->hostname_,
-                       this->portnum_),
-                      -1);
-
-  // Narrow the CORBA::Object reference to the stub object, checking
-  // the type along the way using _is_a.  There is really no need to
-  // narrow <objref> because <_bind> will return us the
-  // <CosNaming_Factory> pointer.  However, we do it so that we can
-  // explicitly test the _narrow function.
-
-  this->CosNaming_ = CosNaming::NamingContext::_narrow (this->objref_,
-							this->env_);
-
-  if (this->CosNaming_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-		       " (%P|%t) Unable to narrow object reference to a CosNaming_ptr.\n"),
-		      -1);
-
-  if (this->env_.exception () != 0)
-    {
-      this->env_.print_exception ("CosNaming::NamingContext::_narrow");
-      return -1;
-    }
-
-  if (CORBA::is_nil (this->CosNaming_))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "null CosNaming objref returned by factory\n"),
-                      -1);
+  TAO_ENDTRY;
 
   return 0;
 }
@@ -173,6 +123,6 @@ main (int argc, char **argv)
   
   if (cosnaming_client.init (argc, argv) == -1)
     return 1;
-  else
-    return cosnaming_client.run ();
+
+  return cosnaming_client.run ();
 }

@@ -58,36 +58,12 @@ private:
   char **argv_;
   // arguments from command line.
 
-  const char *logger_factory_key_;
-  // Key of factory obj ref.
+  int test_nesting_;
+  // Test nested naming context or not.
 
-  char *hostname_;
-  // Hostname of server.
-
-  CORBA::ULong portnum_;
-  // default port number of server.
-
-  int exit_later_;
-  // Flag to tell server to not exit immediately
-
-  Logger_Factory_ptr factory_;
-  // factory pointer for logger.
-
-  CORBA::Object_ptr objref_;
-  // storage of the factory objref
-  
-  CORBA::Environment env_;
-  // Environment variable
-
-  CORBA::ORB_ptr orb_ptr_;
-  // Remember our orb
-
-  Logger_ptr logger_1_;
+  Logger_var logger_1_;
   // Logger obj ref
 
-  Logger_ptr logger_2_;
+  Logger_var logger_2_;
   // Logger obj ref
-
-  CosNaming::NamingContext_ptr naming_service_;
-  // naming service
 };
