@@ -25,7 +25,6 @@
 #include "ace/Synch.h"
 #include "ace/SString.h"
 
-
 class Server_Info
   // = TITLE
   //   Information about IR registered servers.
@@ -37,10 +36,13 @@ class Server_Info
 public:
   // = Constructors
 
+  enum ActivationMode {NORMAL, MANUAL, PER_CLIENT};
+
   Server_Info (const ACE_TString POA_name,
                const ACE_TString logical_server_name,
                const ACE_TString startup_command,
-               const ACE_TString working_dir);
+               const ACE_TString working_dir,
+               const ActivationMode activation);
   // Initialize the command_line and working_dir.
 
   // = Destructors
@@ -56,13 +58,17 @@ public:
 
   void get_startup_info (ACE_TString &logical_server_name,
                          ACE_TString &startup_command,
-                         ACE_TString &working_dir);
+                         ACE_TString &working_dir,
+                         ActivationMode &activation);
   // Returns startup information.
 
   void get_running_info (ACE_TString &host,
                          unsigned short &port,
                          ACE_TString &server_object_ior);
   // Returns information about a running instance.
+
+  // ActivationMode get_activation (void);
+  // Get the activation mode.
 
   // @@ Does this belong here?
   //  int startup ();
@@ -96,6 +102,9 @@ private:
 
   ACE_TString server_object_ior_;
   // IOR of the server object in the server.
+
+  ActivationMode activation_;
+  // The type of activation this supports.
 
   // No copying allowed.
   void operator= (Server_Info &);
@@ -134,7 +143,8 @@ public:
   int add (const ACE_TString POA_name,
            const ACE_TString logical_server_name,
            const ACE_TString startup_command,
-           const ACE_TString working_dir);
+           const ACE_TString working_dir,
+           const Server_Info::ActivationMode activation);
   // Add a new server to the Repository
 
   int update (const ACE_TString POA_name,
@@ -146,7 +156,8 @@ public:
   int get_startup_info (const ACE_TString POA_name,
                         ACE_TString &logical_server_name,
                         ACE_TString &startup_command,
-                        ACE_TString &working_dir);
+                        ACE_TString &working_dir,
+                        Server_Info::ActivationMode &activation);
   // Returns information related to startup.
 
   int get_running_info (const ACE_TString POA_name,

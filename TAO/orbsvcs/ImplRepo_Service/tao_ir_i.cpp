@@ -175,7 +175,8 @@ TAO_IR_Op_Activate::TAO_IR_Op_Activate (ImplementationRepository::Administration
 }
 
 TAO_IR_Op_Add::TAO_IR_Op_Add (ImplementationRepository::Administration_ptr implrepo)
-: TAO_IR_Op (implrepo)
+: TAO_IR_Op (implrepo),
+  activation_ (ImplementationRepository::NORMAL)
 {
   // Nothing
 }
@@ -292,7 +293,7 @@ TAO_IR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
   }
 
   // Skip both the program name and the "add" command
-  ACE_Get_Opt get_opts (argc, argv, "hc:w:");
+  ACE_Get_Opt get_opts (argc, argv, "hc:w:a:");
 
   this->server_name_ = argv[0];
   int c;
@@ -305,6 +306,19 @@ TAO_IR_Op_Add::parse (int argc, ASYS_TCHAR **argv)
         break;
       case 'w':  // Working Directory
         this->working_dir_ = get_opts.optarg;
+        break;
+      case 'a':  // Activation Mode
+        if (ACE_OS::strcasecmp (get_opts.optarg, "NORMAL") == 0)
+          this->activation_ = ImplementationRepository::NORMAL;
+        else if (ACE_OS::strcasecmp (get_opts.optarg, "MANUAL") == 0)
+          this->activation_ = ImplementationRepository::MANUAL;
+        else if (ACE_OS::strcasecmp (get_opts.optarg, "PER_CLIENT") == 0)
+          this->activation_ = ImplementationRepository::PER_CLIENT;
+        else
+          ACE_ERROR_RETURN ((LM_ERROR, 
+                             "Unknown Activation Mode <%s>!\n", 
+                             get_opts.optarg),
+                            -1);
         break;
       case 'h':  // display help
       default:
@@ -483,6 +497,7 @@ TAO_IR_Op_Add::run (void)
   startup_options.command_line = CORBA::string_dup (this->command_line_.c_str ());
   // @@ add environment
   startup_options.working_directory = CORBA::string_dup (this->working_dir_.c_str ());
+  startup_options.activation = this->activation_;
 
   ACE_DECLARE_NEW_CORBA_ENV;
   ACE_TRY
@@ -747,7 +762,8 @@ TAO_IR_Op_Update::print_usage (void)
                         "  where [command-arguments] can be\n"
                         "    -h            Displays this\n"
                         "    -c command    Startup command\n"
-                        "    -w dir        Working directory\n"));
+                        "    -w dir        Working directory\n"
+                        "    -a mode       Set activate mode (NORMAL|MANUAL|PER_CLIENT)"));
 }
 
 
@@ -757,24 +773,37 @@ TAO_IR_Op_Update::print_usage (void)
 void
 TAO_IR_Op::display_server_information (const ImplementationRepository::ServerInformation &info)
 {
+  // Figure out what the activation string is.
+  const char *act;
+  if (info.startup.activation == ImplementationRepository::NORMAL)
+    act = "NORMAL";
+  else if (info.startup.activation == ImplementationRepository::MANUAL)
+    act = "MANUAL";
+  else if (info.startup.activation == ImplementationRepository::PER_CLIENT)
+    act = "PER_CLIENT";
+
   // Print out information
   ACE_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server.in ()));
   ACE_DEBUG ((LM_DEBUG,
               "  Command Line: %s\n"
-              "  Working Directory: %s\n",
+              "  Working Directory: %s\n"
+              "  Activation Mode: %s\n",
               info.startup.command_line.in (),
-              info.startup.working_directory.in ()));
+              info.startup.working_directory.in (),
+              act));
   // @@ add environment and logical server once implemented
 
-  // I am assuming that a blank host means currently not running.
-  if (ACE_OS::strlen (info.location.host) > 0)
+  
+  if (info.startup.activation == ImplementationRepository::PER_CLIENT)
+    ACE_DEBUG ((LM_DEBUG, "  No running info available for PER_CLIENT mode\n"));
+  else if (ACE_OS::strlen (info.location.host) > 0)
     ACE_DEBUG ((LM_DEBUG,
                 "  Running at \n"
                 "    Host: %s\n"
                 "    Port: %d\n",
                 info.location.host.in (),
                 info.location.port));
-  else
+  else   // I am assuming that a blank host means currently not running.
     ACE_DEBUG ((LM_DEBUG,
                 "  Not currently running\n"));
 }

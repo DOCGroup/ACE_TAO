@@ -13,12 +13,14 @@ ACE_RCSID(ImplRepo_Service, Repository, "$Id$")
 Server_Info::Server_Info (const ACE_TString POA_name,
                           const ACE_TString logical_server_name,
                           const ACE_TString startup_command,
-                          const ACE_TString working_dir)
+                          const ACE_TString working_dir,
+                          const ActivationMode activation)
 : starting_up_ (0),
   logical_server_name_ (logical_server_name),
   POA_name_ (POA_name),
   startup_command_ (startup_command),
   working_dir_ (working_dir),
+  activation_ (activation),
   host_ (""),
   port_ (0),
   server_object_ior_ ("")
@@ -52,11 +54,13 @@ Server_Info::update_running_info (const ACE_TString host,
 void
 Server_Info::get_startup_info (ACE_TString &logical_server_name,
                                ACE_TString &startup_command,
-                               ACE_TString &working_dir)
+                               ACE_TString &working_dir,
+                               ActivationMode &activation)
 {
   logical_server_name = this->logical_server_name_;
   startup_command = this->startup_command_;
   working_dir = this->working_dir_;
+  activation = this->activation_;
 }
 
 
@@ -72,6 +76,7 @@ Server_Info::get_running_info (ACE_TString &host,
   server_object_ior = this->server_object_ior_;
 }
 
+
 // Default Constructor
 
 Server_Repository::Server_Repository ()
@@ -86,11 +91,16 @@ int
 Server_Repository::add (const ACE_TString POA_name,
                         const ACE_TString logical_server_name,
                         const ACE_TString startup_command,
-                        const ACE_TString working_dir)
+                        const ACE_TString working_dir,
+                        const Server_Info::ActivationMode activation)
 {
   Server_Info *new_server;
   ACE_NEW_RETURN (new_server,
-                  Server_Info (POA_name, logical_server_name, startup_command, working_dir),
+                  Server_Info (POA_name, 
+                               logical_server_name, 
+                               startup_command, 
+                               working_dir, 
+                               activation),
                   -1);
 
   return this->repository_.bind (POA_name, new_server);
@@ -122,14 +132,15 @@ int
 Server_Repository::get_startup_info (const ACE_TString POA_name,
                                      ACE_TString &logical_server_name,
                                      ACE_TString &startup_command,
-                                     ACE_TString &working_dir)
+                                     ACE_TString &working_dir,
+                                     Server_Info::ActivationMode &activation)
 {
   Server_Info *server;
   int retval = this->repository_.find (POA_name, server);
 
   // Only fill in data if it was found
   if (retval == 0)
-    server->get_startup_info (logical_server_name, startup_command, working_dir);
+    server->get_startup_info (logical_server_name, startup_command, working_dir, activation);
 
   return retval;
 }

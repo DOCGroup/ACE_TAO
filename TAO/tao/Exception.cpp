@@ -413,6 +413,9 @@ CORBA_SystemException::_info (void) const
         case TAO_TIMEOUT_RECV_MINOR_CODE:
           location = "timeout during recv";
           break;
+        case TAO_IMPLREPO_SERVER_MANUAL_ACTIVATION:
+          location = "implrepo server specified manual startup";
+          break;
         default:
           location = "unknown location";
         }
