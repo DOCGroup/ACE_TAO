@@ -116,7 +116,7 @@ public:
 
   virtual int addr_to_string (ASYS_TCHAR buffer[], 
                               size_t size,
-                              int ipaddr_format = 0) const;
+                              int ipaddr_format = 1) const;
   // Transform the current <ACE_INET_Addr> address into string format.
   // If <ipaddr_format> is non-0 this produces "ip-number:port-number"
   // (e.g., "128.252.166.57:1234"), whereas if <ipaddr_format> is 0
