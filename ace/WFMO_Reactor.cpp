@@ -65,10 +65,10 @@ ACE_WFMO_Reactor_Handler_Repository::open (size_t size)
 ACE_WFMO_Reactor_Handler_Repository::~ACE_WFMO_Reactor_Handler_Repository (void)
 {
   // Free up dynamically allocated space
-  delete[] this->current_handles_;
-  delete[] this->current_info_;
-  delete[] this->current_suspended_info_;
-  delete[] this->to_be_added_info_;
+  delete [] this->current_handles_;
+  delete [] this->current_info_;
+  delete [] this->current_suspended_info_;
+  delete [] this->to_be_added_info_;
 }
 
 void
