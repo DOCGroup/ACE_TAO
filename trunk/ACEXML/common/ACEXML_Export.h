@@ -18,19 +18,15 @@
 
 #include "ace/config-all.h"
 
-#if defined (ACE_AS_STATIC_LIBS) && !defined (ACEXML_HAS_DLL)
-#  define ACEXML_HAS_DLL 0
-#endif /* ACE_AS_STATIC_LIBS && ACEXML_HAS_DLL */
-
-#if defined (ACE_HAS_DLL)
-#  if !defined (ACEXML_HAS_DLL)
-#    define ACEXML_HAS_DLL 1
-#  endif /* ! ACEXML_HAS_DLL */
+#if defined (ACE_AS_STATIC_LIBS)
+# if !defined (ACEXML_HAS_DLL)
+#   define ACEXML_HAS_DLL 0
+# endif /* ! ACEXML_HAS_DLL */
 #else
-#  if !defined (ACEXML_HAS_DLL)
-#    define ACEXML_HAS_DLL 0
-#  endif /* ! ACEXML_HAS_DLL */
-#endif
+# if !defined (ACEXML_HAS_DLL)
+#   define ACEXML_HAS_DLL 1
+# endif /* ! ACEXML_HAS_DLL */
+#endif /* ACE_AS_STATIC_LIB */
 
 #if defined (ACEXML_HAS_DLL) && (ACEXML_HAS_DLL == 1)
 #  if defined (ACEXML_BUILD_DLL)
