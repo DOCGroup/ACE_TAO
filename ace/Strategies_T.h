@@ -800,8 +800,8 @@ protected:
                               int perms);
   // Creates a new connection.
 
-  virtual int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
+  int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
+            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, SVC_HANDLER *> *&entry);
   // Find an idle handle.
 
   virtual int purge_i (const void *recycling_act);
