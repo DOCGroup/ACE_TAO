@@ -12,7 +12,6 @@
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
-#include "tao/Invocation.h"
 
 #include "DIOP_Profile.h"
 
@@ -108,56 +107,6 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 
       return -1;
     }
-
-  return 0;
-}
-
-int
-TAO_DIOP_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                     TAO_Transport_Descriptor_Interface *desc,
-                                     ACE_Time_Value * /*max_wait_time*/)
-{
-  TAO_Transport *&transport = invocation->transport ();
-
-  TAO_DIOP_Endpoint *diop_endpoint =
-    this->remote_endpoint (desc->endpoint ());
-
-  if (diop_endpoint == 0)
-    return -1;
-
-  const ACE_INET_Addr &remote_address =
-    diop_endpoint->object_addr ();
-
-  TAO_DIOP_Connection_Handler *svc_handler = 0;
-
-  if (svc_handler_table_.find (remote_address, svc_handler) == -1)
-    {
-      TAO_DIOP_Connection_Handler *svc_handler_i = 0;
-      ACE_NEW_RETURN (svc_handler_i,
-                      TAO_DIOP_Connection_Handler (this->orb_core (),
-                                                   this->lite_flag_,
-                                                   0 /* TAO_DIOP_Properties */),
-                      -1);
-
-      svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
-      svc_handler_i->addr (remote_address);
-
-      svc_handler_i->open (0);
-
-      svc_handler_table_.bind (remote_address,
-                               svc_handler_i);
-      svc_handler = svc_handler_i;
-
-      if (TAO_debug_level > 2)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) DIOP_Connector::connect - ")
-                    ACE_TEXT ("new connection on HANDLE %d\n"),
-                    svc_handler->get_handle ()));
-   }
-
-  // @@ Michael: We do not use regular connection management.
-  svc_handler->add_reference ();
-  transport = svc_handler->transport ();
 
   return 0;
 }

@@ -115,10 +115,6 @@ public:
     const CORBA::PolicyTypeSeq & types
     ACE_ENV_ARG_DECL_WITH_DEFAULTS);
 
-  CORBA::Boolean validate_connection (
-    CORBA::PolicyList_out inconsistent_policies
-    ACE_ENV_ARG_DECL_WITH_DEFAULTS);
-
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 

@@ -1,3 +1,34 @@
+Sun Sep  7 15:05:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* tao/LocateRequest_Invocation.cpp:
+	* tao/LocateRequest_Invocation.h:
+	* tao/LocateRequest_Invocation_Adapter.cpp:
+	* tao/LocateRequest_Invocation_Adapter.h: New classes for
+	  LocateRequest invocation. 
+
+	* tao/Invocation_Adapter.cpp: Cosmetic fixes. 
+	
+	* tao/Makefile.tao: Added the new files for compilation. 
+
+	* tao/Object.cpp: _validate_connection () uses the new
+	  LocateRequest classes to make remote calls. 
+
+	* tao/Remote_Object_Proxy_Broker.h: Cosmetic fix. 
+
+	* tao/Stub.cpp:
+	* tao/Stub.h: Removed the validate_connection () on the stub. This
+	  was of less use to us. 
+
+	* tao/Strategies/DIOP_Connector.cpp:
+	* tao/Strategies/DIOP_Connector.h:
+	* tao/Strategies/SCIOP_Connector.cpp:
+	* tao/Strategies/SCIOP_Connector.h:
+	* tao/Strategies/SHMIOP_Connector.cpp:
+	* tao/Strategies/SHMIOP_Connector.h:
+	* tao/Strategies/UIOP_Connector.cpp:
+	* tao/Strategies/UIOP_Connector.h: Removed references to the
+	  GIOP_Invocation classes. They are not used anymore. 
+
 Sun Sep  7 15:01:11 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/be/be_visitor_tmplinst/tmplinst_cs.cpp (visit_interface):
