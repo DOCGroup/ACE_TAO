@@ -12,6 +12,7 @@ DIRS = \
 	Codec \
 	Collocation \
 	Connection_Purging \
+	Crash_On_Write \
 	Crashed_Callback \
 	DSI_Gateway \
 	DynAny_Test \

@@ -58,6 +58,13 @@ how to run the following tests:
 	  to a server that crashes.  The client used to hang on
 	  TAO-1.1.12.
 
+	. Crash_On_Write
+
+	  A regression test for bug number 678.  The ORB used to crash
+	  if an error was detected during a write() call.  Between
+	  betas 1.1.14 and 1.1.15 the ORB would not crash but would
+	  dead-lock.
+
         . DSI_Gateway
                     
           A simple test for the DSI/DII gateway support. TAO can
