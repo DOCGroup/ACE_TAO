@@ -106,14 +106,20 @@ namespace CCF
       void OperationTemplate<T>::
       receives (T& o)
       {
-        receives_pre (o);
-        iterate_and_traverse (o.receives_begin (),
-                              o.receives_end (),
-                              edge_traverser (),
-                              *this,
-                              &OperationTemplate<T>::comma,
-                              o);
-        receives_post (o);
+        typename T::ReceivesIterator
+          b (o.receives_begin ()), e (o.receives_end ());
+
+        if (b != e)
+        {
+          receives_pre (o);
+          iterate_and_traverse (
+            b, e, edge_traverser (), *this, &OperationTemplate<T>::comma, o);
+          receives_post (o);
+        }
+        else
+        {
+          receives_none (o);
+        }
       }
 
       template<typename T>
@@ -127,6 +133,13 @@ namespace CCF
       receives_post (T&)
       {
       }
+
+      template<typename T>
+      void OperationTemplate<T>::
+      receives_none (T&)
+      {
+      }
+
 
       template<typename T>
       void OperationTemplate<T>::

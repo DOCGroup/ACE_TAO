@@ -7,6 +7,7 @@
 
 #include "CCF/IDL3/SemanticGraph/Home.hpp"
 
+#include "CCF/IDL2/Traversal/Operation.hpp"
 #include "CCF/IDL3/Traversal/Elements.hpp"
 
 namespace CCF
@@ -71,7 +72,7 @@ namespace CCF
 
         virtual void
         supports_none (Type&);
-        
+
         virtual void
         manages (Type&, EdgeDispatcherBase&);
 
@@ -95,6 +96,7 @@ namespace CCF
       //
       //
       //
+      /*
       struct HomeFactory : Node<SemanticGraph::HomeFactory>
       {
         virtual void
@@ -145,11 +147,16 @@ namespace CCF
         virtual void
         comma (Type&);
       };
+      */
 
+      typedef
+      OperationTemplate<SemanticGraph::HomeFactory>
+      HomeFactory;
 
       //
       //
       //
+      /*
       struct HomeFinder : Node<SemanticGraph::HomeFinder>
       {
         virtual void
@@ -200,6 +207,11 @@ namespace CCF
         virtual void
         comma (Type&);
       };
+      */
+
+      typedef
+      OperationTemplate<SemanticGraph::HomeFinder>
+      HomeFinder;
     }
   }
 }
