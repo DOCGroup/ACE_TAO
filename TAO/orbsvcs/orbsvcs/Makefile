@@ -48,7 +48,7 @@ endif
 ifdef lifecycle
 IDL_FILES += \
 	CosLifeCycleS \
-	CosLifeCycleC 
+	CosLifeCycleC
 endif # lifecycle
 
 ifdef trader
@@ -56,7 +56,7 @@ ifdef trader
 IDL_FILES += \
 	CosTradingC \
 	CosTradingS \
-	SequencesC 
+	SequencesC
 
 include $(STL_ROOT)/config/local.cfg
 
@@ -102,8 +102,11 @@ FILES= $(IDL_FILES) \
 	Event/Task_Manager \
 	\
 	Sched/Config_Scheduler \
+	Sched/DynSched \
+	Sched/SchedEntry \
 	Sched/Scheduler \
 	Sched/Scheduler_Generic \
+	Sched/Strategy_Scheduler \
 	\
 	tmplinst-orbsvcs
 
