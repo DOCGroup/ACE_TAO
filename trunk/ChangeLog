@@ -1,3 +1,15 @@
+Fri Jul 23 10:19:00 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* ace/Proactor.cpp (timeout):
+
+	  Release the asynch_timer instance from the auto_ptr<> after the
+	  completion has been posted and prior to exiting this method
+	  successfully.  Once the completion is posted, the proactor
+	  becomes response for managing the asynch_timer memory.
+	  Addresses memory access violations revealved by a
+	  Proactor_Timer_Test failure.  Thanks to Johnny for pointing out
+	  the failure.
+
 Fri Jul 23 11:38:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/make_release:
@@ -8,8 +20,8 @@ Fri Jul 23 11:38:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 Fri Jul 23 13:32:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/SOCK_Connector_Test.cpp:
-          Fixed incorrect Id tag, the $ around was missing, therefor it wasn't
-          updated by cvs anymore
+          Fixed incorrect Id tag, the $ around was missing, therefore it
+	  wasn't updated by cvs anymore.
 
 Thu Jul 22 14:11:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
