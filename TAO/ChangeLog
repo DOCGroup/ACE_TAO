@@ -1,3 +1,35 @@
+2003-08-17  Jaiganesh Balasubramanian  <jai@tango.dre.vanderbilt.edu>
+
+	* tests/ICMG_Any_Bug/Test.idl:
+	* tests/ICMG_Any_Bug/Hello.cpp:
+	* tests/ICMG_Any_Bug/Hello.dsw:
+	* tests/ICMG_Any_Bug/Hello.h:
+	* tests/ICMG_Any_Bug/Hello.mpc:
+	* tests/ICMG_Any_Bug/HelloWorld.cpp:
+	* tests/ICMG_Any_Bug/HelloWorld.h:
+	* tests/ICMG_Any_Bug/Makefile:
+	* tests/ICMG_Any_Bug/Makefile.bor:
+	* tests/ICMG_Any_Bug/README:
+	* tests/ICMG_Any_Bug/client.bor:
+	* tests/ICMG_Any_Bug/client.cpp:
+	* tests/ICMG_Any_Bug/client.dsp:
+	* tests/ICMG_Any_Bug/server.bor:
+	* tests/ICMG_Any_Bug/server.cpp:
+	* tests/ICMG_Any_Bug/server.dsp:
+	* tests/ICMG_Any_Bug/run_test.pl:
+
+	  This is a test written to test the TAO Any
+	  implementation's widening to an Object.
+
+	  Thanks to Anand <anand@iCMGworld.com> for reporting
+	  the problem.
+	 
+	  Jeff Parsons <j.parsons@vanderbilt.edu> made a fix
+	  for the problem. Please refer to the changelog entry
+	  dated:
+	  Fri Jul 11 18:41:41 2003 Jeff Parsons.
+	
+
 Sun Aug 17 12:19:08 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* tao/RTScheduling/Makefile (ACE_SHLIBS):
