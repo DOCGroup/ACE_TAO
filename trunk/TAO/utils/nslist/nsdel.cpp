@@ -130,7 +130,7 @@ main (int argc, char *argv[])
       the_name[ntoks - 1].id = CORBA::string_dup (lastname);
       if (kind != 0)
         the_name[ntoks - 1].kind = CORBA::string_dup (kind);
-      root_nc->unbind (the_name, ACE_TRY_ENV);
+      root_nc->unbind (the_name TAO_ENV_ARG_PARAMETER );
       ACE_TRY_CHECK;
     }
   ACE_CATCHANY
@@ -140,8 +140,6 @@ main (int argc, char *argv[])
       return 1;
     }
   ACE_ENDTRY;
- 
+
   return 0;
 }
-
-
