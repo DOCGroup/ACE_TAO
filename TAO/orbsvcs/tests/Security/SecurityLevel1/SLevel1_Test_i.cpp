@@ -1,11 +1,11 @@
-//
-
 #include "SLevel1_Test_i.h"
 #include "ace/OS_NS_string.h"
+
 
 ACE_RCSID (SecurityLevel1,
            SLevel1_Test_i,
            "$Id$")
+
 
 SLevel1_Server_i::SLevel1_Server_i (CORBA::ORB_ptr orb,
                                     SecurityLevel1::Current_ptr ss_current)
@@ -16,40 +16,40 @@ SLevel1_Server_i::SLevel1_Server_i (CORBA::ORB_ptr orb,
 
 CORBA::Boolean
 SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   SLevel1_Server::NoSecurityAttributes))
 {
-
-  /// Lets first set the attributes that we want to get from the
-  /// client.
+  // Lets first set the attributes that we want to get from the
+  // client.
   Security::AttributeType desired_attribute;
 
-  /// Who defines these attributes : OMG
+  // Who defines these attributes : OMG
   desired_attribute.attribute_family.family_definer = 0;
 
-  /// What category of attributes do we want: Privilege Attributes
+  // What category of attributes do we want: Privilege Attributes
   desired_attribute.attribute_family.family = 1;
 
-  ///  What is the attribute type whose value we want to know:
-  ///  AccessId: the identity of the principal used for access
-  ///  control
+  //  What is the attribute type whose value we want to know:
+  //  AccessId: the identity of the principal used for access
+  //  control
   desired_attribute.attribute_type = Security::AccessId;
 
-  /// Define the AttributeTypeList
+  // Define the AttributeTypeList
   Security::AttributeTypeList attribute_type_list;
   attribute_type_list.length (1);
   attribute_type_list[0] = desired_attribute;
 
-  /// Get the desired security attributes. The in parameter describes
-  /// the attribute type/s that we want and the return parameter is the
-  /// value/s of the attribute type/s that we want.
+  // Get the desired security attributes. The in parameter describes
+  // the attribute type/s that we want and the return parameter is the
+  // value/s of the attribute type/s that we want.
   Security::AttributeList_var attribute_list =
     this->ss_current_->get_attributes (attribute_type_list
                                        ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (1);
 
-  /// Just a preliminary check to see if we received something or
-  /// not. If we received some value, the length will not be zero.
-  CORBA::ULong len = attribute_list->length ();
+  // Just a preliminary check to see if we received something or
+  // not. If we received some value, the length will not be zero.
+  const CORBA::ULong len = attribute_list->length ();
 
   if (len == 0)
     {
@@ -59,10 +59,10 @@ SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
       ACE_THROW_RETURN (SLevel1_Server::NoSecurityAttributes (), 1);
     }
 
-  /// Now, that we received the value of our desired attribute, lets
-  /// check if the value (in turn, the requesting client) has the
-  /// criteria to access this method.
-  /// @@  Assume X.509 certificates are in use.
+  // Now, that we received the value of our desired attribute, lets
+  // check if the value (in turn, the requesting client) has the
+  // criteria to access this method.
+  // @@  Assume X.509 certificates are in use.
   const char x509[] = "x509";
   Security::OID x509_defining_authority;
   x509_defining_authority.length (sizeof (x509));
@@ -97,21 +97,21 @@ SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
                              &der_cert,
                              attribute.value.length ());
 
-          /// This method creates a dummy certificate that
-          /// we will use as the basis for checking the clients
-          /// certificate.
+          // This method creates a dummy certificate that
+          // we will use as the basis for checking the clients
+          // certificate.
           X509 *x = create_check_cert ();
 
-          /// Lets compare the subject name between the certificate
-          /// that we received from the client and the certificate we
-          /// just created.
+          // Lets compare the subject name between the certificate
+          // that we received from the client and the certificate we
+          // just created.
           int result = ::X509_subject_name_cmp(peer, x);
 
-          /// Free these X509 pointers as we donot want them anymore.
+          // Free these X509 pointers as we donot want them anymore.
           ::X509_free (peer);
           ::X509_free (x);
 
-          /// If the subjects match, the client is authorized.
+          // If the subjects match, the client is authorized.
           if (result == 0)
             {
               // Matched and hence authorized: hence return true.
@@ -141,7 +141,7 @@ SLevel1_Server_i::authorize_level1 (ACE_ENV_SINGLE_ARG_DECL)
 X509 *
 SLevel1_Server_i::create_check_cert ()
 {
-  /// Trial to set a name:
+  // Trial to set a name:
   X509 *x = X509_new ();
   X509_NAME *name=NULL;
   X509_NAME_ENTRY *ne=NULL;
