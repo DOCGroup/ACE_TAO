@@ -90,19 +90,13 @@ else
   ACE_HAS_GNUG_PRE_2_8 = 0
 endif # VERSION
 
-ifeq (2.5.0,$(VERSION))
-  CFLAGS += -mthreads
-else  # ! 2.5.0
-ifeq (3.0.,$(findstring 3.0.,$(VERSION)))
-  CFLAGS += -mthreads
-else  # >= 3.1.0
+ifeq (3.1.0,$(VERSION))
   CFLAGS += -I$(ENV_PREFIX)/usr/include
-endif # >= 3.1.0
-endif # ! 2.5.0
+endif # 3.1.0
 
 CC              = gcc
 CXX             = g++
-CFLAGS          += -pipe -ansi -Wpointer-arith
+CFLAGS          += -mthreads -pipe -ansi -Wpointer-arith
 #### -Winline complains a lot with -O2.
 #### CFLAGS          += -Winline
 #### LynxOS 3.0.0's g++ has a lot of warnings about non-virtual base class
