@@ -1,3 +1,10 @@
+Sat May 26 18:23:04 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp: Commented out the
+	  implementation of create_new_mprofile (). Looks like it is not
+	  getting called anywhere. This was giving compile errors with
+	  g++ on Linux.
+
 Sat May 26 17:41:37 2001  Krishnakumar B  <kitty@cs.wustl.edu>
 
         * performance-tests/DII_Latency/run_test.pl:
