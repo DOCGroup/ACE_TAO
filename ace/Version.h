@@ -3,5 +3,5 @@
 
 #define ACE_MAJOR_VERSION (4u)
 #define ACE_MINOR_VERSION (5u)
-#define ACE_BETA_VERSION (20u)
-#define ACE_VERSION "4.5.20\0"
+#define ACE_BETA_VERSION (21u)
+#define ACE_VERSION "4.5.21\0"
