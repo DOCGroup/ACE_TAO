@@ -115,7 +115,7 @@ static void TestInteger32()
   i1 = us; // unsigned short
   ACE_ASSERT(i1 == ACE_static_cast (long, us));
   i1 = si; // unsigned short
-  ACE_ASSERT(i1 == ACE_static_cast (long, si))
+  ACE_ASSERT(i1 == ACE_static_cast (long, si));
  #endif /*ACE_WIN32*/
 }
 
