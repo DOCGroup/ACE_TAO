@@ -141,7 +141,7 @@ libACE_OS_la_SOURCES = \
   Thread_Hook.cpp \
   Base_Thread_Adapter.cpp \
   OS_Thread_Adapter.cpp \
-  OS_Log_Msg.cpp \
+  OS_Log_Msg_Attributes.cpp \
   Thread_Exit.cpp \
   Thread_Control.cpp \
   Sched_Params.cpp
