@@ -1,3 +1,13 @@
+Thu Mar  4 01:30:45 UTC 2004  Don Hinton  <dhinton@dre.vanderbilt.edu>
+
+        * include/makeinclude/wrapper_macros.GNU:
+          Rolled back change: Tue Mar  2 23:57:29 UTC 2004  Don Hinton
+          <dhinton@dre.vanderbilt.edu>. Apparently, some compilers need
+          things like -I, etc..., when dealing with templates at link
+          time.  After the BFO release, we may try to determine who needs
+          what, but since it isn't critical path, I've rolled it back.
+          Thanks to Steve Huston from pointing this out.
+
 Wed Mar  3 13:06:59 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/ProjectCreator.pm:

@@ -813,14 +813,14 @@ COMPILEESO.cc   = $(CXX) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 ifeq ($(LINK.c),override)
   LINK.c  = $(LINK.c.override)
 else
-  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(LDFLAGS) \
+  LINK.c  = $(PURELINK) $(PRELINK) $(LD) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) \
             $(LDLIBS) $(LIBS)
 endif # LINK.c.override
 
 ifeq ($(LINK.cc),override)
   LINK.cc = $(LINK.cc.override)
 else
-  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(PTDIRS)
+  LINK.cc = $(PURELINK) $(PRELINK) $(LD) $(CCFLAGS) $(CPPFLAGS) $(PTDIRS)
 endif # LINK.cc.override
 
 SOLINK.cc = $(PRELINK) $(DLD) $(SOFLAGS)
