@@ -1,8 +1,14 @@
+Fri Jun 28 07:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Nested_Upcall_Crash/server.bor:
+        * tests/Nested_Upcall_Crash/client.bor:
+          Added missing files.
+
 Thu Jun 27 22:04:33 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/DynamicInterface/DII_Reply_Dispatcher.cpp: Used the
 	  input cdr allocators in place of the old message block
-	  allocators. 
+	  allocators.
 
 Thu Jun 27 15:41:53 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -22,15 +28,15 @@ Thu Jun 27 17:58:20 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Transport.cpp: Used the
 	  input cdr allocators in place of the old message block
-	  allocators. 
+	  allocators.
 
 Thu Jun 27 16:54:42 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/ORB_Core.h:
-	* tao/ORB_Core.cpp: Made the following changes 
+	* tao/ORB_Core.cpp: Made the following changes
 
 	  - Deprecated the option -ORBResources since it served no
-	    purpose. The output data was by default created on the TSS and 
+	    purpose. The output data was by default created on the TSS and
 	    the input data into the ORB was created on the stack by
 	    default. With flow control and other parameters affecting the
 	    ORB they took appropriate action. The use of this option only
@@ -42,12 +48,12 @@ Thu Jun 27 16:54:42 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	  - The input CDR allocators by default will now be pointing to a
 	    global memory pool. The facility to create it on the TSS has been
-	    removed since this was not necessary. 
+	    removed since this was not necessary.
 
 	  - Removed 3 allocators that were added for
 	    message_blocks. They were added before TAO 1.2 as a temporary
 	    measure. Now that 1.2 is  out, time to clean up the mess a bit
-	    and deprecate some of the old features.  
+	    and deprecate some of the old features.
 
 	  The above changes help us to switch back to an old scheme where
 	  we used 3 allocators for the output data path and 3 allocators
@@ -57,10 +63,10 @@ Thu Jun 27 16:54:42 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Resource_Factory.cpp:
 	* tao/default_resources.h:
 	* tao/default_resources.cpp: Removed all references to
-	  use_tss_resources and the usage of -ORBResources option. 
+	  use_tss_resources and the usage of -ORBResources option.
 
 	* tao/Synch_Reply_Dispatcher.cpp:
-	* tao/Asynch_Reply_Dispatcher.cpp: 
+	* tao/Asynch_Reply_Dispatcher.cpp:
 	* tao/Transport.cpp:
 	* tao/GIOP_Message_Base.cpp:
 	* tao/GIOP_Message_Lite.cpp: Changed the usage of allocators. All
@@ -72,16 +78,16 @@ Thu Jun 27 16:54:42 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	* tao/Incoming_Message_Queue.cpp:
 	* tao/Incoming_Message_Queue.inl: The memory allocated and
 	  released for the queue now comes off the memory pool instead of
-	  the heap. Changes made to use the memory pool instead of heap.  
+	  the heap. Changes made to use the memory pool instead of heap.
 
-	* tao/Transport.h: Cosmetic fixes to the documentation. 
-	
+	* tao/Transport.h: Cosmetic fixes to the documentation.
+
 	* tao/Strategies/DIOP_Transport.cpp: Changed the usage of
 	  allocators. All the allocators now point to the input CDR
 	  allocator in the ORB_Core and there should be less confusion now
 	  on where the memory for the data is being allocated from.
 
-	* docs/Options.html: Documented that -ORBResources is deprecated. 
+	* docs/Options.html: Documented that -ORBResources is deprecated.
 
 Thu Jun 27 14:55:08 2002  Ossama Othman  <ossama@uci.edu>
 
@@ -103,9 +109,9 @@ Thu Jun 27 16:47:36 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 Thu Jun 27 10:53:51 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/Big_Oneways/Session_Control.cpp (session_finished):
-	  Pre-connect to the remote sessions before trying to run multiple 
+	  Pre-connect to the remote sessions before trying to run multiple
 	  threads to them. This solves [BUG 1241] for the Big_Oneway
-	  test. 
+	  test.
 
 Thu Jun 27 10:28:29 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
