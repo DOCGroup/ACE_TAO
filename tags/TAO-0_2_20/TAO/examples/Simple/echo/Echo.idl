@@ -1,0 +1,20 @@
+/* -*- C++ -*- */
+// $Id$
+
+#if !defined (_ECHO_IDL)
+#define _ECHO_IDL
+
+interface Echo
+{
+  // = TITLE
+  // Defines an interface that encapsulates operations that
+  // return the mesg string to be displayed and shuts down the server.
+
+  string echo (in string mesg);
+  // This operation returns the message and displays it on the screen.
+
+  oneway void shutdown ();
+  // This operation will shutdown the server.
+};
+
+#endif /* _ECHO_IDL */
