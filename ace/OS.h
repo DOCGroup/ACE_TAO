@@ -313,16 +313,12 @@ private:
 #define ACE_MAX(x,y) (((x)>(y))?(x):(y))
 #define ACE_MIN(x,y) (((x)<(y))?(x):(y))
 
-// keep the compiler from complaining of
-// parameters which are not used.
-#if defined (ghs)
-// GreenHills C++ 1.8.8 complains that the (a) expression has no effect.  But,
-// it doesn't complain about unused args, so don't bother with them.
-#define ACE_UNUSED_ARG(a)
-#elif defined (__GNUC__) || defined (__sgi) || defined (__hpux)
+// Keep the compiler from complaining about parameters which are not used.
+#if defined (ghs) || (__GNUC__) || defined (__hpux) || defined (__sgi)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
-// conditional statement.
+// conditional statement.  NOTE: that may only be true if -O is enabled,
+// such as with GreenHills (ghs) 1.8.8.
 #define ACE_UNUSED_ARG(a) {if (&a) /* null */ ;}
 #else
 #define ACE_UNUSED_ARG(a) (a)
