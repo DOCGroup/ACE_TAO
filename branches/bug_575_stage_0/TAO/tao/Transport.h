@@ -136,7 +136,20 @@ protected:
  *
  * <H3>The incoming data path:</H3>
  *
- * @todo Document the incoming data path design forces.
+ * One of the main responsibilities of the transport is to read and
+ * process the incoming GIOP message as quickly and efficiently as
+ * possible. There are other forces that needs to be given due
+ * consideration. They are
+ *  - Multiple threads should read from the same handle
+ *  - Reads on the handle could give one or more messages.
+ *  - Minimise locking and copying overhead when trying to attack the
+ *    above.
+ *
+ * <H3> Parsing messages (GIOP) & processing the message:</H3>
+ *
+ * The messages should be checked for validity and the right
+ * information should be sent to the higher layer for processing.
+ *
  *
  *
  * <B>See Also:</B>
