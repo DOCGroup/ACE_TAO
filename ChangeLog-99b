@@ -1,3 +1,11 @@
+Tue Jul 13 09:11:24 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * include/makeinclude/platform_vxworks5.x_ghs.GNU:
+          moved LIBS setting for Green Hills 1.8.9 from
+          x86-only to all targets.  Thanks to Dale Wood
+          <dale_wood@Mitel.com> for confirming that this
+          is necessary for PowerPC targets.
+
 Tue Jul 13 08:18:56 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-osf1.h,config-osf1-4.0.h,
