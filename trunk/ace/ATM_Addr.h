@@ -149,7 +149,7 @@ public:
   u_char get_selector (void) const;
 
   /// Set the selector for the network address.
-  void set_selector (u_char);
+  void set_selector (u_char selector);
 
   /**
    * Compare two addresses for equality.  The addresses are considered

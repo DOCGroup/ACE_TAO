@@ -1,3 +1,22 @@
+Wed Aug 21 08:01:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/PSS/PSDL.bor:
+          Added new BCB makefile
+
+        * orbsvcs/Makefile.bor:
+          Added PSS directory
+
+        * orbsvcs/tests/AVStreams/Component_Switching/*.bor:
+        * orbsvcs/tests/AVStreams/Full_Profile/server.bor:
+        * orbsvcs/tests/AVStreams/Multicast/*.bor:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/*.bor:
+        * orbsvcs/tests/AVStreams/Pluggable/*.bor:
+        * orbsvcs/tests/EC_Custom_Marshal/*.bor:
+        * orbsvcs/tests/EC_Mcast/Makefile.bor:
+        * orbsvcs/tests/EC_Throughput/*.bor:
+        * orbsvcs/tests/Event/Basic/*.bor:
+          Added missing libraries
+
 Tue Aug 20 14:20:40 2002  Jaiganesh@doc  <bugzilla@cs.wustl.edu>
 
         * TAO version 1.2.4 released.

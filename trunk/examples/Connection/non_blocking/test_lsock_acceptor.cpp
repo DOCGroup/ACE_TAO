@@ -3,6 +3,7 @@
 // ACE_LSOCK Server.
 
 #include "ace/LSOCK_Acceptor.h"
+#include "ace/Log_Msg.h"
 
 #if defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 int

@@ -2,8 +2,9 @@
 // $Id$
 
 // Multiplexor.i
+#if 0
 
-int 
+int
 Driver::link_from_below (ACE_Module *stream_head)
 {
   ACE_TRACE ("Driver::link_from_below");
@@ -19,7 +20,7 @@ Driver::link_from_below (ACE_Module *stream_head)
   return 0;
 }
 
-int 
+int
 Driver::unlink_from_below (ACE_Module *)
 {
   ACE_TRACE ("Driver::unlink_from_below");
@@ -36,21 +37,21 @@ ACE_Multiplexor::~ACE_Multiplexor (void)
   ACE_TRACE ("ACE_Multiplexor::~ACE_Multiplexor");
 }
 
-int 
+int
 ACE_Multiplexor::link_from_above (Driver &ld)
 {
   ACE_TRACE ("ACE_Multiplexor::link_from_above");
   return ld.link_from_below (this->alloc_lower_module (this));
 }
 
-int 
+int
 ACE_Multiplexor::link_from_above (ACE_Multiplexor &lm)
 {
   ACE_TRACE ("ACE_Multiplexor::link_from_above");
   return lm.link_from_below (this->alloc_lower_module (this));
 }
 
-int 
+int
 ACE_Multiplexor::link_from_below (ACE_Module *stream_head)
 {
   ACE_TRACE ("ACE_Multiplexor::link_from_below");
@@ -66,23 +67,25 @@ ACE_Multiplexor::link_from_below (ACE_Module *stream_head)
   return 0;
 }
 
-int 
+int
 ACE_Multiplexor::unlink_from_above (Driver &)
 {
   ACE_TRACE ("ACE_Multiplexor::unlink_from_above");
   return -1;
 }
 
-int 
+int
 ACE_Multiplexor::unlink_from_above (ACE_Multiplexor &)
 {
   ACE_TRACE ("ACE_Multiplexor::unlink_from_above");
   return -1;
 }
 
-int 
+int
 ACE_Multiplexor::unlink_from_below (ACE_Module *)
 {
   ACE_TRACE ("ACE_Multiplexor::unlink_from_below");
   return -1;
 }
+
+#endif /*  0 */
