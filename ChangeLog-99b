@@ -1,3 +1,7 @@
+Sun Aug 22 21:02:26 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/config-vxworks5.x.h: added ACE_LACKS_ATEXIT.
+
 Sun Aug 22 21:01:18 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/README: added ACE_LACKS_ATEXIT.
