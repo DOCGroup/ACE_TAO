@@ -1,3 +1,13 @@
+Wed Mar 24 11:02:49 2004  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * tao/Typecode.h:
+        * tao.Typecode.i:
+        
+          Changed the name of the parameter in the offset_map() set
+          method from 'map' (which could clash with STL 'map') to
+          'new_map'. Thanks to <gshamis@yahoo.com> for reporting the
+          problem. This closes [BUGID:1774].
+
 Wed Mar 24 11:00:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
