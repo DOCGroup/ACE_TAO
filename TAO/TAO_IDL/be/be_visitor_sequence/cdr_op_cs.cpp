@@ -710,8 +710,7 @@ be_visitor_sequence_cdr_op_cs::visit_node (be_type *bt)
 
           break;
         default:
-          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);"
-              << be_uidt_nl;
+          *os << "_tao_marshal_flag = (strm >> _tao_sequence[i]);";
 
           break;
         }
