@@ -286,7 +286,7 @@ TAO_Marshal_TypeCode::decode (CORBA_TypeCode_ptr,
         *tcp = __tc_consts [(u_int) kind];
       else
         {
-          if (kind == ~0 || kind < TC_KIND_COUNT)
+          if (kind == ~(CORBA_ULong)0 || kind < TC_KIND_COUNT)
             {
 	      // either a non-constant typecode or an indirected typecode
               switch (kind) 

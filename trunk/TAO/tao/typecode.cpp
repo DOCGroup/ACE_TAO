@@ -1338,7 +1338,7 @@ CORBA_TypeCode::skip_typecode (CDR &stream)
   CORBA_ULong temp;
 
   if (stream.get_ulong (kind) 
-      && (kind < TC_KIND_COUNT || kind == ~0))
+      && (kind < TC_KIND_COUNT || kind == ~CORBA_ULong(0)))
     {
 
       switch (kind) 

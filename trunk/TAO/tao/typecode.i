@@ -25,14 +25,14 @@ CORBA_TypeCode::_duplicate (CORBA_TypeCode_ptr tc)
 
 ACE_INLINE CORBA_TypeCode::CORBA_TypeCode (CORBA_TCKind kind)
   : _length (0),
-    non_aligned_buffer_ (0),
     _buffer (0),
     _kind (kind),
     _parent (0),
     refcount_ (1),
     _delete_flag (CORBA_B_FALSE),
     _orb_owns (CORBA_B_TRUE),
-    _private_state (new TC_Private_State (kind))
+    _private_state (new TC_Private_State (kind)),
+    non_aligned_buffer_ (0)
 {
 }
 

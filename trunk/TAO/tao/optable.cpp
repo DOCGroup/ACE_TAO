@@ -31,7 +31,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (const TAO_operation_db_entry
 
   // the job of the constructor is to go thru each entry of the database and
   // bind the operation name to its corresponding skeleton
-  for (int i=0; i < dbsize; i++)
+  for (CORBA_ULong i=0; i < dbsize; i++)
     {
       // XXXASG: what happens if bind fails ???
       (void)this->bind (db[i].opname_, db[i].skel_ptr_);
@@ -78,7 +78,7 @@ TAO_Linear_OpTable::TAO_Linear_OpTable (const TAO_operation_db_entry *db, CORBA_
 {
   // the job of the constructor is to go thru each entry of the database and
   // bind the operation name to its corresponding skeleton
-  for (int i=0; i < dbsize; i++)
+  for (CORBA_ULong i=0; i < dbsize; i++)
     {
       // XXXASG: what happens if bind fails ???
       (void)this->bind (db[i].opname_, db[i].skel_ptr_);
@@ -145,7 +145,7 @@ TAO_Active_Demux_OpTable::TAO_Active_Demux_OpTable (const
 {
   // the job of the constructor is to go thru each entry of the database and
   // bind the operation name to its corresponding skeleton
-  for (int i=0; i < dbsize; i++)
+  for (CORBA_ULong i=0; i < dbsize; i++)
     {
       // XXXASG: what happens if bind fails ???
       (void)this->bind (db[i].opname_, db[i].skel_ptr_);
@@ -157,6 +157,7 @@ TAO_Active_Demux_OpTable::~TAO_Active_Demux_OpTable (void)
   delete [] this->tbl_;
 }
 
+int
 TAO_Active_Demux_OpTable::bind (const CORBA_String &opname,
 				const TAO_Skeleton skel_ptr)
 {

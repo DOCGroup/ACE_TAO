@@ -1,5 +1,17 @@
-Wed Jul 30 14:18:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+Wed Jul 30 16:55:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
 
+	* tao/typecode.i (CORBA_TypeCode): Re-ordered member
+ 	initialization to correspond to declaration order.
+
+	* tao/{typecode,orbobj,optable,decode,cdr}.cpp: Added explicit
+ 	typecast to CORBA_ULong/unsigned long to eliminate warnings about
+ 	comparisons btw. signed and unsigned entities.
+
+	* tao/optable.cpp (bind): Put in explicit return type for
+ 	TAO_Active_Demux_OpTable::bind().
+
+Wed Jul 30 14:18:02 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+	
 	* tao/Makefile: Corrected automatic definition of TAO_ROOT and
  	fixed all dependencies on tao header/inline files.
 
