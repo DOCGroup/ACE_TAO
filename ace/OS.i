@@ -2443,7 +2443,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 }
 
 ACE_INLINE int
-ACE_OS::cond_init (ACE_cond_t *cv, int type, LPCTSTR name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, LPCTSTR name, void *arg)
 {
   ACE_condattr_t attributes;
   if (ACE_OS::condattr_init (attributes, type) == 0
