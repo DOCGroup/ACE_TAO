@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 // $Id$
 
-#include "ace/Synch.h"
+#include "ace/Guard_T.h"
 #include "ace/Malloc_Base.h"
 
 /////////////////////////////////////////////////////

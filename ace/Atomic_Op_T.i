@@ -2,6 +2,8 @@
 //
 // $Id$
 
+#include "ace/Guard_T.h"
+
 //
 // ACE_Atomic_Op_Ex inline functions
 //

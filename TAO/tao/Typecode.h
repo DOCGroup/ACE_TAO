@@ -21,6 +21,7 @@
 
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Queue.h"
+#include "ace/Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

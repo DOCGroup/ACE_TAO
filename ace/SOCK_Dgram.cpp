@@ -1,6 +1,5 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/Handle_Set.h"
-#include "ace/Synch.h"
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"

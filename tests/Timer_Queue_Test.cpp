@@ -31,6 +31,8 @@
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
 #include "ace/Timer_Queue.h"
+#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID(tests, Timer_Queue_Test, "$Id$")
 

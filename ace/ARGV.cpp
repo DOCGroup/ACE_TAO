@@ -4,11 +4,13 @@
 // Transforms a string BUF into an ARGV-style vector of strings.
 
 #include "ace/ARGV.h"
-#include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/ARGV.i"
 #endif /* __ACE_INLINE__ */
+
+#include "ace/Log_Msg.h"
+#include "ace/OS.h"
 
 ACE_RCSID(ace, ARGV, "$Id$")
 

@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Synch_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Signal.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Msg.h"

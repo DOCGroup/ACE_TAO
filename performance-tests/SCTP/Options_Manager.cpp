@@ -3,17 +3,18 @@
 // $Id$
 
 extern "C" {
-#include <sys/types.h>
+#include "ace/os_include/sys/os_types.h"
 };
 
 #include "ace/Get_Opt.h"
+#include "ace/os_include/netinet/os_in.h"
+#include "ace/OS.h"
 
 // make sure that the code compiles cleanly even if SCTP is not
 // available. If SCTP is not installed, program will exit early in
 // main() with an error message.
 #ifdef ACE_HAS_SCTP
 extern "C" {
-#include <netinet/in.h>
 #include <netinet/sctp.h>
 };
 #else

@@ -20,8 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
-
+#include "ace/Thread_Mutex.h"
 
 // Include the templates here.
 #include "ace/Atomic_Op_T.h"

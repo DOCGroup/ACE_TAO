@@ -22,6 +22,7 @@
 // particular, it is needed for the definition of ACE_LITTLE_ENDIAN.
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
+#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -4,6 +4,7 @@
 // Framework_Component.inl
 
 #include "ace/ACE.h"
+#include "ace/Guard_T.h"
 
 ACE_INLINE 
 ACE_Framework_Component::ACE_Framework_Component (void *_this, 

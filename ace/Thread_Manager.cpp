@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/Synch_T.h"
+#include "ace/TSS_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"

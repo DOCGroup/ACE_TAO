@@ -19,6 +19,7 @@
 #define _REACTOR_SINGLETON_H
 
 #include "ace/Singleton.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

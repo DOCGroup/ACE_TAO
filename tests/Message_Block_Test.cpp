@@ -37,6 +37,9 @@ static const size_t ACE_ALLOC_AMOUNT = 48;
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Lock_Adapter_T.h"
+#include "ace/Synch_Traits.h"
+
 // Number of iterations to run the test.
 static size_t n_iterations = ACE_MAX_ITERATIONS;
 

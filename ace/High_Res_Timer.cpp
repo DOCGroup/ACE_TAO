@@ -26,7 +26,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
-# include "ace/Synch.h"
+# include "ace/Guard_T.h"
+# include "ace/Recursive_Thread_Mutex.h"
 # include "ace/Object_Manager.h"
 
   // Initialize the global_scale_factor_ to 1.  The first

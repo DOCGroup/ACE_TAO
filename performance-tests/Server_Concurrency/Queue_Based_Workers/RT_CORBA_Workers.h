@@ -17,7 +17,7 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Task_T.h"
-
+#include "ace/Manual_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

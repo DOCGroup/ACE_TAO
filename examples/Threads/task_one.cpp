@@ -13,6 +13,7 @@ ACE_RCSID(Threads, task_one, "$Id$")
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Task.h"
+#include "ace/Barrier.h"
 
 class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
 {

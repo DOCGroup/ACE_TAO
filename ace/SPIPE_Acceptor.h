@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32)
-#include "ace/Synch.h"
+#if (defined (ACE_WIN32) && defined (ACE_HAS_WINNT4) && (ACE_HAS_WINNT4 != 0))
+#include "ace/Manual_Event.h"
 #endif /* ACE_WIN32 */
 
 /**

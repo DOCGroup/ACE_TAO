@@ -22,7 +22,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch.h"
 #include "ace/SPIPE.h"
 #include "ace/Message_Queue.h"
 #include "ace/UPIPE_Addr.h"

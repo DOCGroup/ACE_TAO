@@ -1,3 +1,169 @@
+Mon Aug  4 03:26:30 UTC 2003  Don Hinton  <dhinton@dresystems.com>
+
+        * ace/Auto_Event.{h,cpp,inl}:
+        * ace/Barrier.{h,cpp,inl}:
+        * ace/Condition_Recursive_Thread_Mutex.{h,cpp,inl}:
+        * ace/Condition_T.{h,cpp,inl}:
+        * ace/Condition_Thread_Mutex.{h,cpp,inl}:
+        * ace/Event.{h,cpp,inl}:
+        * ace/Guard_T.{h,cpp,inl}:
+        * ace/Lock.{h,cpp,inl}:
+        * ace/Lock_Adapter_T.{h,cpp,inl}:
+        * ace/Manual_Event.{h,cpp,inl}:
+        * ace/Mutex.{h,cpp,inl}:
+        * ace/Null_Barrier.h:
+        * ace/Null_Condition.h:
+        * ace/Null_Mutex.h:
+        * ace/Null_Semaphore.h:
+        * ace/RW_Mutex.{h,cpp,inl}:
+        * ace/RW_Thread_Mutex.{h,cpp,inl}:
+        * ace/Recursive_Thread_Mutex.{h,cpp,inl}:
+        * ace/Reverse_Lock_T.{h,cpp,inl}:
+        * ace/Semaphore.{h,cpp,inl}:
+        * ace/Synch_Traits.h:
+        * ace/TSS_Adapter.{h,cpp,inl}:
+        * ace/TSS_T.{h,cpp,inl}:
+        * ace/Thread_Mutex.{h,cpp,inl}:
+        * ace/Thread_Semaphore.{h,cpp,inl}:
+        * ace/Synch.{h,cpp,i}:
+        * ace/Synch_T.{h,cpp,i}:
+          Moved all the code out of Synch* and into new files, roughly one
+          per class as part of the footprint and compile time reduciton
+          effort.
+
+        * ace/TSS_T.h:
+        * ace/OS.h:
+          Moved the ACE_TSS_TYPE macros from OS.h to TSS_T.h:
+
+        * ace/Token.{h,i}:
+        * ace/Synch.{h,i}:
+          Moved the ACE_Noop_Token class from Synch.* to Token.*.
+
+        * ace/ARGV.cpp:
+        * ace/Activation_Queue.h:
+        * ace/Active_Map_Manager_T.h:
+        * ace/Asynch_Pseudo_Task.h:
+        * ace/Atomic_Op.h:
+        * ace/Atomic_Op_T.{h,i}:
+        * ace/Based_Pointer_Repository.{cpp,h}:
+        * ace/Bound_Ptr.i:
+        * ace/Cached_Connect_Strategy_T.{cpp,h}:
+        * ace/Capabilities.h:
+        * ace/Configuration.h:
+        * ace/Containers_T.cpp:
+        * ace/DLL_Manager.{cpp,h}:
+        * ace/Dump.{cpp,h}:
+        * ace/Dynamic.cpp:
+        * ace/Event_Handler.h:
+        * ace/Filecache.h:
+        * ace/Framework_Component.{h,cpp,inl}:
+        * ace/Free_List.{h,i}:
+        * ace/Future.h:
+        * ace/Handle_Set.cpp:
+        * ace/Hash_Cache_Map_Manager_T.{h,i}:
+        * ace/Hash_Map_With_Allocator_T.h:
+        * ace/High_Res_Timer.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/Local_Name_Space.h:
+        * ace/Local_Name_Space_T.h:
+        * ace/Log_Msg.{cpp,h}:
+        * ace/Log_Record.{h,i}:
+        * ace/MEM_SAP.i:
+        * ace/Malloc.cpp:
+        * ace/Malloc_Allocator.cpp:
+        * ace/Malloc_T.h:
+        * ace/Map_Manager.{h,i}:
+        * ace/Memory_Pool.cpp:
+        * ace/Message_Block.cpp:
+        * ace/Message_Queue.h:
+        * ace/Message_Queue_T.h:
+        * ace/Metrics_Cache.h:
+        * ace/Name_Request_Reply.cpp:
+        * ace/Object_Manager.{cpp,h}:
+        * ace/POSIX_Asynch_IO.h:
+        * ace/POSIX_CB_Proactor.h:
+        * ace/Proactor.cpp:
+        * ace/Process_Manager.{cpp,h}:
+        * ace/Process_Mutex.{cpp,h}:
+        * ace/Process_Semaphore.h:
+        * ace/RB_Tree.{cpp,i}:
+        * ace/SOCK_Acceptor.cpp:
+        * ace/SOCK_Dgram.cpp:
+        * ace/SOCK_Dgram_Mcast.h:
+        * ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ace/SPIPE_Acceptor.h:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Select_Reactor_T.{cpp,h}:
+        * ace/Service_Repository.{h,i}:
+        * ace/Service_Types.{h,i}:
+        * ace/Signal.{cpp,h}:
+        * ace/Singleton.{cpp,h}:
+        * ace/Strategies_T.{cpp,h}:
+        * ace/System_Time.h:
+        * ace/Task_T.{cpp,h}:
+        * ace/Test_and_Set.cpp:
+        * ace/Thread_Exit.cpp:
+        * ace/Thread_Manager.{cpp,h}:
+        * ace/Timeprobe.h:
+        * ace/Timer_Queue.h:
+        * ace/Timer_Queue_T.cpp:
+        * ace/Token.{cpp,h,i}:
+        * ace/Token_Invariants.h:
+        * ace/Token_Manager.h:
+        * ace/UPIPE_Acceptor.h:
+        * ace/UPIPE_Connector.h:
+        * ace/UPIPE_Stream.h:
+        * ace/UUID.h:
+        * ace/Unbounded_Queue.cpp:
+        * apps/drwho/BS_Client.cpp:
+        * examples/ASX/Event_Server/Event_Server/Consumer_Router.h:
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.h:
+        * examples/ASX/UPIPE_Event_Server/Peer_Router.h:
+        * examples/C++NPv2/Logging_Event_Handler_Ex.h:
+        * examples/Logger/simple-server/Reactor_Singleton.h:
+        * examples/Misc/test_get_opt.cpp:
+        * examples/Misc/test_set.cpp:
+        * examples/Misc/test_trace.cpp:
+        * examples/Reactor/Misc/test_timer_queue.cpp:
+        * examples/Shared_Malloc/test_persistence.cpp:
+        * examples/Threads/TSS_Data.h:
+        * examples/Threads/barrier2.cpp:
+        * examples/Threads/task_one.cpp:
+        * examples/Timer_Queue/Thread_Timer_Queue_Test.h :
+        * performance-tests/SCTP/Options_Manager.cpp
+        * performance-tests/Server_Concurrency/Leader_Follower/RT_CORBA_Leader_Follower.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.cpp:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/RT_CORBA_Workers.h:
+        * performance-tests/Server_Concurrency/Queue_Based_Workers/workers.cpp:
+        * tests/Aio_Platform_Test.cpp:
+        * tests/Basic_Types_Test.cpp:
+        * tests/Cached_Allocator_Test.cpp:
+        * tests/MT_Reference_Counted_Event_Handler_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Message_Block_Test.cpp:
+        * tests/Message_Queue_Notifications_Test.cpp:
+        * tests/Reactor_Timer_Test.cpp:
+        * tests/Recursive_Condition_Bug_Test.cpp:
+        * tests/Task_Test.cpp:
+        * tests/Thread_Manager_Test.cpp:
+        * tests/Thread_Pool_Test.cpp:
+        * tests/Timeprobe_Test.cpp:
+        * tests/Timer_Queue_Reference_Counting_Test.cpp:
+        * tests/Timer_Queue_Test.cpp:
+        * tests/Token_Strategy_Test.cpp:
+          Refactored the includes due to Synch changes above.
+
+        * etc/ace.doxygen:
+          Added "__ACE_INLINE__" and ACE_TEMPLATES_REQUIRE_SOURCE to
+          PREDEFINES so that the all the includes would show up in the
+          doxygen file reference pages.
+
+        * ace/Log_Msg.{h,cpp}:
+          Removed the static log_msg_tss_key_ variable from ACE_Log_Msg
+          and added a free function in Log_Msg.cpp with a static local
+          variable to hold the same value.  The obviates the need to
+          include OS.h in Log_Msg.h. 
+        
 Sun Aug  3 20:55:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* tests/RMCast/RMCast_Reassembly_Test.cpp:

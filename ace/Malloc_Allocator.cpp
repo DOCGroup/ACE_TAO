@@ -18,7 +18,8 @@
 #include "ace/Malloc_Allocator.i"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_T.h"
+#include "ace/Guard_T.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_RCSID (ace, Malloc_Allocator, "$Id$")
 

@@ -26,7 +26,6 @@
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Functor_T.h"
 #include "ace/Pair_T.h"
-#include "ace/Synch.h"
 
 // For linkers which cant grok long names...
 #define ACE_Cached_Connect_Strategy_Ex ACCSE

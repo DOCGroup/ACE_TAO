@@ -23,6 +23,7 @@
 
 #include "ace/Functor.h"
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Null_Mutex.h"
 
 class TAO_Pluggable_Reply_Params;
 

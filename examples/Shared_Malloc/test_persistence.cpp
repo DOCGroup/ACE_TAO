@@ -8,6 +8,7 @@
 
 #include "ace/Malloc.h"
 #include "ace/streams.h"
+#include "ace/Null_Mutex.h"
 
 ACE_RCSID(Shared_Malloc, test_persistence, "$Id$")
 

@@ -35,6 +35,7 @@
 #include "ace/Task.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Auto_Event.h"
 
 ACE_RCSID(tests, MT_Reference_Counted_Event_Handler_Test, "$Id$")
 

@@ -20,7 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
+#include "ace/Global_Macros.h"
+#include "ace/Default_Constants.h"
 
 /**
  * @class ACE_Free_List

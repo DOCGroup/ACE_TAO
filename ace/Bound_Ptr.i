@@ -3,8 +3,6 @@
 
 // Bound_Ptr.i
 
-#include "Synch_T.h"
-
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
 ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (int init_obj_ref_count)
 {

@@ -32,6 +32,7 @@
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/svc_export.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
 #include "Driver.h"
 
 // These typedefs ensure that we use the minimal amount of locking

@@ -34,6 +34,7 @@
 #include "ace/SString.h"
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "ace/Malloc.h"
+#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

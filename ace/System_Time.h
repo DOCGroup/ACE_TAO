@@ -25,6 +25,7 @@
 
 #include "ace/Memory_Pool.h"
 #include "ace/Malloc_T.h"
+#include "ace/Null_Mutex.h"
 
 /**
  * @class ACE_System_Time

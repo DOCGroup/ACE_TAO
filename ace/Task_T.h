@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_T.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Task.h"
 
 // Forward decls...

@@ -20,6 +20,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/debug.h"
 #include "ace/Malloc_Base.h"
+#include "ace/Null_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Typecode.i"
