@@ -1,3 +1,11 @@
+Fri Mar 13 09:09:08 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tests/Handle_Set_Test.cpp (main): don't run test_performance
+          on Chorus, because it loses its lunch on the floating point
+          arithmetic.  It can't even printf using a %f, %e, or %g format
+          specifier.  It just prints "f", "e", or "g", respectively.
+          Maybe something has to be done to configure it for floating point?
+
 Fri Mar 13 01:10:36 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
 	* ace/WFMO_Reactor: The following changes were made to make the
