@@ -243,16 +243,16 @@ Demux_Test_Client::parse_args (void)
 int
 Demux_Test_Client::run (CORBA::Environment &env)
 {
-  TAO_TRY
+  // open a temporary results file
+  if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
     {
-      // open a temporary results file
-      if ((this->result_fp_ = ACE_OS::fopen ("results.dat", "w")) == 0)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Demux_Test_Client::run - "
-                             "Failed to open the results file for writing\n"),
-                            -1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Demux_Test_Client::run - "
+                         "Failed to open the results file for writing\n"),
+                        -1);
+    }
+  TAO_TRY_EX (RUN)
+    {
       switch (this->is_)
         {
         case Demux_Test_Client::LINEAR:
@@ -268,18 +268,7 @@ Demux_Test_Client::run (CORBA::Environment &env)
           (void) this->run_worst_test (TAO_TRY_ENV);
           break;
         }
-      TAO_CHECK_ENV;
-
-      ACE_OS::fclose (this->result_fp_);
-
-      // now print the results
-      if (this->print_results () == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Demux_Test_Client::run - "
-                             "Print results failed\n"),
-                            -1);
-        }
+      TAO_CHECK_ENV_EX (RUN);
     }
   TAO_CATCHANY
     {
@@ -291,7 +280,35 @@ Demux_Test_Client::run (CORBA::Environment &env)
                         -1);
     }
   TAO_ENDTRY;
+      
+  ACE_OS::fclose (this->result_fp_);
 
+  TAO_TRY_EX (SHUTDOWN)
+    {
+      // call the shutdown method one the first object
+      this->demux_test_[0][0]->shutdown (TAO_TRY_ENV);
+      TAO_CHECK_ENV_EX (SHUTDOWN);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("shutdown failed");
+      env.exception (TAO_TRY_ENV.exception ());
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) Demux_Test_Client::run - "
+                         "Error running the Client\n"),
+                        -1);
+    }
+  TAO_ENDTRY;
+      
+      // now print the results
+  if (this->print_results () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Demux_Test_Client::run - "
+                         "Print results failed\n"),
+                        -1);
+    }
+      
   return 0;
 }
 

@@ -67,7 +67,7 @@ Demux_Test_CodeGenerator::gen_servant_impl_code (void)
       (void) iter.next (str);
 
       ACE_OS::fprintf (fp, "void Demux_Test_i::%s (CORBA::Environment &env)\n",
-                       str->rep ());
+                       str->c_str ());
       // if debugging desired
       ACE_OS::fprintf (fp, "{\n");
       ACE_OS::fprintf (fp, "   ACE_UNUSED_ARG (env);\n");
@@ -76,7 +76,14 @@ Demux_Test_CodeGenerator::gen_servant_impl_code (void)
         {
           ACE_OS::fprintf (fp, "   ACE_DEBUG ((LM_DEBUG, "
                            "\"Inside Demux_Test_i::%s\\n\"));\n",
-                           str->rep ());
+                           str->c_str ());
+        }
+      
+      // if this is a shutdown method
+      if (!ACE_OS::strcmp (str->c_str (), "shutdown"))
+        {
+          ACE_OS::fprintf (fp, 
+                           "  TAO_ORB_Core_instance ()->orb ()->shutdown ();\n");
         }
 
       ACE_OS::fprintf (fp, "}\n\n");

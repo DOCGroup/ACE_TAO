@@ -150,10 +150,12 @@ Demux_Test_Server::init (int argc, char *argv [], CORBA::Environment &env)
   // the specified number of objects. Finally, activate these objects.
   
   // open the file that has all the POA names in it
-  if ((this->poa_fp_ = ACE_OS::fopen ("poa_names.dat", "r")) == 0)
+  char poa_file [128];
+  ACE_OS::sprintf (poa_file, "poa_names_%d.dat", this->num_POAs_);
+  if ((this->poa_fp_ = ACE_OS::fopen (poa_file, "r")) == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         " (%P|%t) Unable to open POA file\n"),
+                         " (%P|%t) Unable to open POA file %s\n", poa_file),
                         -1);
     }
 
