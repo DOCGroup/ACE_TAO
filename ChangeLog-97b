@@ -1,3 +1,19 @@
+Fri Oct 31 14:35:37 1997  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.h,README: wrapped #include of dlfcn.h with
+          ACE_HAS_DLFCN_H_BROKEN_EXTERN_C to support RedHat 4.2
+          Linux 2.0.30/Alpha.
+
+        * ace/OS.i,README: added ACE_HAS_GETRUSAGE_PROTO support, for
+          platforms that have a getrusage () prototype that is
+          different from the one in OS.i.
+
+        * ace/config-linux.h: added added some #defines to enable
+          builds on RedHat 4.2/Linux 2.0.30/Alpha.
+
+        * include/makeinclude/platform-linux.GNU: added -pipe and
+          bumped optimization level up to -O3.
+
 Fri Oct 31 00:53:52 1997    <irfan@TWOSTEP>
 
 	* The following five changes were suggested by Stephen Coy
