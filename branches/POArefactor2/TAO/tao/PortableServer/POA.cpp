@@ -2728,9 +2728,7 @@ template class ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<AC
 template class ACE_Write_Guard<ACE_Lock>;
 template class ACE_Read_Guard<ACE_Lock>;
 template class ACE_Array_Base <IOP::ProfileId>;
-
 template class ACE_Node<TAO_POA *>;
-
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
 
 #pragma instantiate ACE_Array_Base<TAO_Active_Object_Map::Map_Entry *>
@@ -2746,7 +2744,6 @@ template class ACE_Node<TAO_POA *>;
 #pragma instantiate ACE_Hash_Map_Iterator_Base_Ex<ACE_CString, TAO_POA *, ACE_Hash<ACE_CString>, ACE_Equal_To<ACE_CString>, ACE_Null_Mutex>
 #pragma instantiate ACE_Write_Guard<ACE_Lock>
 #pragma instantiate ACE_Read_Guard<ACE_Lock>
-
-#pragma instantiate ACE_Node<TAO_POA *>
 #pragma instantiate ACE_Array_Base <IOP::ProfileId>
+#pragma instantiate ACE_Node<TAO_POA *>
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */

@@ -20,7 +20,6 @@
 #include "POA.h"
 #include "POA_Current_Impl.h"
 #include "Servant_Upcall.h"
-//#include "Servant_Retention_Strategy.h"
 #include "tao/TSS_Resources.h"
 
 ACE_RCSID (PortableServer,
@@ -57,14 +56,6 @@ namespace TAO
     AOM_Only_Request_Processing_Strategy::strategy_init(TAO_POA *poa)
     {
       Request_Processing_Strategy::strategy_init (poa);
-    }
-
-    PortableServer::Servant
-    AOM_Only_Request_Processing_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference
-      ACE_ENV_ARG_DECL)
-    {
-      return 0;
     }
 
     TAO_Active_Object_Map*
@@ -160,14 +151,6 @@ namespace TAO
     Default_Servant_Request_Processing_Strategy::~Default_Servant_Request_Processing_Strategy (void)
     {
       this->default_servant_ = 0;
-    }
-
-    PortableServer::Servant
-    Default_Servant_Request_Processing_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference
-      ACE_ENV_ARG_DECL)
-    {
-      return this->default_servant_.in ();
     }
 
     void
@@ -346,15 +329,6 @@ namespace TAO
 
       poa_current_impl.object_id (object_id);
       servant_upcall.user_id (&object_id);
-    }
-
-    PortableServer::Servant
-    Servant_Activator_Request_Processing_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference
-      ACE_ENV_ARG_DECL)
-    {
-      // Get the servant out of the active object map
-      return 0;
     }
 
     TAO_Active_Object_Map*
@@ -631,15 +605,6 @@ namespace TAO
           ACE_THROW (CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 4,
                                          CORBA::COMPLETED_NO));
         }
-    }
-
-    PortableServer::Servant
-    Servant_Locator_Request_Processing_Strategy::reference_to_servant (
-      CORBA::Object_ptr reference
-      ACE_ENV_ARG_DECL)
-    {
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
     }
 
     TAO_SERVANT_LOCATION

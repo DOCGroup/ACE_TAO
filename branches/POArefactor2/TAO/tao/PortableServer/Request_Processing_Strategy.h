@@ -117,10 +117,6 @@ namespace TAO
                    TAO::Portable_Server::Servant_Upcall &servant_upcall,
                    TAO::Portable_Server::POA_Current_Impl &poa_current_impl
                    ACE_ENV_ARG_DECL) = 0;
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference
-                            ACE_ENV_ARG_DECL) = 0;
 
     protected:
       TAO_POA* poa_;
@@ -179,11 +175,6 @@ namespace TAO
                    TAO::Portable_Server::POA_Current_Impl &poa_current_impl
                    ACE_ENV_ARG_DECL);
 
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference
-                            ACE_ENV_ARG_DECL);
-
     private:
       TAO_Active_Object_Map* get_aom() const;
     };
@@ -228,10 +219,6 @@ namespace TAO
                    TAO::Portable_Server::POA_Current_Impl &poa_current_impl
                    ACE_ENV_ARG_DECL);
 
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference
-                            ACE_ENV_ARG_DECL);
 
       virtual
       PortableServer::Servant
@@ -306,11 +293,6 @@ namespace TAO
                    TAO::Portable_Server::POA_Current_Impl &poa_current_impl
                    ACE_ENV_ARG_DECL);
 
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference
-                            ACE_ENV_ARG_DECL);
-
     private:
       TAO_Active_Object_Map* get_aom() const;
 
@@ -354,11 +336,6 @@ namespace TAO
                    TAO::Portable_Server::Servant_Upcall &servant_upcall,
                    TAO::Portable_Server::POA_Current_Impl &poa_current_impl
                    ACE_ENV_ARG_DECL);
-
-      virtual
-      PortableServer::Servant
-      reference_to_servant (CORBA::Object_ptr reference
-                            ACE_ENV_ARG_DECL);
 
     private:
       PortableServer::ServantLocator_var servant_locator_;

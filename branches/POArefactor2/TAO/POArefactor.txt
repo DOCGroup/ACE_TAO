@@ -1,3 +1,16 @@
+Mon Nov  1 18:44:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableServer/Servant_Retention_Strategy.cpp:
+          Changed the implementation of reference_to_servant, use a different
+          method from the request_processing_strategy and implemented the
+          non_retain case, this was previously not there in TAO, but the spec
+          describes that certain functionality must be there
+
+        * tao/PortableServer/Request_Processing_Strategy.{h,cpp}:
+          Removed servant_to_reference, this is not needed, the
+          servant_retention_strategy just calls get_servant(), for aom and
+          servant manager it then gets wrong policy, else it gets the servant
+
 Mon Nov  1 11:39:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/POA.{h,cpp,i}:

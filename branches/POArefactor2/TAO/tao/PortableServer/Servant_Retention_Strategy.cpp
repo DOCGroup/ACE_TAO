@@ -273,11 +273,11 @@ namespace TAO
                                                   entry);
 
       if (servant == 0)
-      {
-        // No servant found, try the request_processing strategy
-        servant = this->poa_->active_policy_strategies().request_processing_strategy()->reference_to_servant (reference);
-        ACE_CHECK_RETURN (0);
-      }
+        {
+          // No servant found, try the request_processing strategy
+          servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+          ACE_CHECK_RETURN (0);
+        }
 
       if (servant != 0)
         {
@@ -1244,12 +1244,42 @@ namespace TAO
       CORBA::Object_ptr reference
       ACE_ENV_ARG_DECL)
     {
-      // Without an active object map we can't do a reference_to_servant
+       // Always try the request processing strategy
+       PortableServer::Servant servant = this->poa_->active_policy_strategies().request_processing_strategy()->get_servant (ACE_ENV_SINGLE_ARG_PARAMETER);
+       ACE_CHECK_RETURN (0);
 
-      ACE_UNUSED_ARG (reference);
+        if (servant != 0)
+          {
+            // A recursive thread lock without using a recursive thread
+            // lock.  Non_Servant_Upcall has a magic constructor and
+            // destructor.  We unlock the Object_Adapter lock for the
+            // duration of the servant activator upcalls; reacquiring once
+            // the upcalls complete.  Even though we are releasing the lock,
+            // other threads will not be able to make progress since
+            // <Object_Adapter::non_servant_upcall_in_progress_> has been
+            // set.
+            TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this->poa_);
+            ACE_UNUSED_ARG (non_servant_upcall);
 
-      ACE_THROW_RETURN (PortableServer::POA::WrongPolicy (),
-                        0);
+            // The POA invokes _add_ref once on the Servant before returning
+            // it. If the application uses reference counting, the caller of
+            // id_to_servant is responsible for invoking _remove_ref once on
+            // the returned Servant when it is finished with it. A
+            // conforming caller need not invoke _remove_ref on the returned
+            // Servant if the type of the Servant uses the default reference
+            // counting inherited from ServantBase.
+            servant->_add_ref (ACE_ENV_SINGLE_ARG_PARAMETER);
+            ACE_CHECK_RETURN (0);
+
+            return servant;
+        }
+      else
+        {
+          // Otherwise the ObjectNotActive exception is raised.
+          // @todo, is this the correct exception, the spec is not clear
+          ACE_THROW_RETURN (PortableServer::POA::ObjectNotActive (),
+                            0);
+        }
     }
 
     PortableServer::ObjectId *
