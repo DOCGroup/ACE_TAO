@@ -21,26 +21,26 @@ ACE_Shared_Memory_MM::dump (void) const
 // Creates a shared memory segment of SIZE bytes.
 
 ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
-					    int length, 
-					    int prot, 
-					    int share, 
-					    char *addr, 
-					    off_t pos)
+                                            int length,
+                                            int prot,
+                                            int share,
+                                            char *addr,
+                                            off_t pos)
   : shared_memory_ (handle, length, prot, share, addr, pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
 
-ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (LPTSTR file_name, 
-					    int len, 
-					    int flags, 
-					    int mode, 
-					    int prot, 
-					    int share, 
-					    char *addr, 
-					    off_t pos)
-  : shared_memory_ (file_name, len, flags, mode, 
-		    prot, share, addr, pos)
+ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (LPCTSTR file_name,
+                                            int len,
+                                            int flags,
+                                            int mode,
+                                            int prot,
+                                            int share,
+                                            char *addr,
+                                            off_t pos)
+  : shared_memory_ (file_name, len, flags, mode,
+                    prot, share, addr, pos)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
@@ -51,4 +51,3 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (void)
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
-
