@@ -1,4 +1,4 @@
-Thu Sep 19 13:50:09 2003  Dale Wilson  <wilson_d@ociweb.com>
+Fri Sep 19 13:50:09 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.cpp
         * orbsvcs\FT_ReplicationManager\FT_ReplicationManager.h
@@ -26,7 +26,7 @@ Thu Sep 18 12:20:48 2003  Dale Wilson  <wilson_d@ociweb.com>
         * tao/Utils/ServantMain.cpp
         * tao/Utils/ServantMain.h
 
-          Change fault detector and fault notifier to use ServantMain. 
+          Change fault detector and fault notifier to use ServantMain.
           These changes were made in the oci_haft branch.
 
 Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
@@ -37,10 +37,10 @@ Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager_Main.cpp:
-        * orbsvcs/FT_ReplicationManager/README: 
+        * orbsvcs/FT_ReplicationManager/README:
         * orbsvcs/orbsvcs/FT_ReplicationManager.idl:
-	  These files were added as part of the initial check in of
-	  Replication Manager implementation. 
+    These files were added as part of the initial check in of
+    Replication Manager implementation.
 
         * orbsvcs/orbsvcs/FT_CORBA.idl:
         * orbsvcs/orbsvcs/FaultTolerance.mpc:
@@ -59,14 +59,14 @@ Wed Sep 18 11:30:00 2003  Curt Hibbs  <hibbs_c@ociweb.com>
         * orbsvcs/orbsvcs/PortableGroup/PG_PropertyManager.h:
         * orbsvcs/orbsvcs/PortableGroup/PG_Property_Utils.cpp:
           These files were modified as part of the initial check in  of
-	  Replication Manager implementation. 
+    Replication Manager implementation.
 
         * orbsvcs/tests/FT_App/FT_App.mpc:
         * orbsvcs/tests/FT_App/FT_Client.cpp:
         * orbsvcs/tests/FT_App/FT_UnitTests.cpp:
         * orbsvcs/tests/FT_App/FT_UnitTests.h:
           These files were added to implement testing of the Replication
-	  Manager implementation. 
+    Manager implementation.
 
           These changes were made in the oci_haft branch.
 
@@ -74,8 +74,8 @@ Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.h:
         * orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
-        
-	  Get the ENV args right.
+
+    Get the ENV args right.
 
         * orbsvcs/Fault_Notifier/FT_Notifier_i.h:
         * orbsvcs/Fault_Notifier/FT_Notifier_i.cpp:
@@ -83,7 +83,7 @@ Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
           Fault Notifier passes unit test
 
         MOVE FROM....
-	
+
         * tests/FT_App/.cvsignore:
         * tests/FT_App/FTAPP_Notifier_Main.cpp:
         * tests/FT_App/FT_App.mpc:
@@ -98,7 +98,7 @@ Wed Sep  3 13:35:32 2003  Dale Wilson  <wilson_d@ociweb.com>
         * tests/FT_App/run_test_basic.pl:
         * tests/FT_App/run_test_notifier.pl:
         * tests/FT_App/testscript:
-	
+
         MOVE TO...
         * orbsvcs/tests/FT_App/.cvsignore:
         * orbsvcs/tests/FT_App/FTAPP_Notifier_Main.cpp:
@@ -174,7 +174,7 @@ Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup.idl:
           Fix include so PortableGroup can be included from outside
-	  orbsvcs directory. 
+    orbsvcs directory.
 
         * tests/FT_App/FT_Client.cpp:
         * tests/FT_App/FT_Replica.cpp:
@@ -184,7 +184,7 @@ Thu Aug  7 16:39:14 2003  Dale Wilson  <wilson_d@ociweb.com>
         * tests/FT_App/run_test_notifier.pl:
         * tests/FT_App/testscript:
           Make fault points generic rather than method specific.   Add
-	  "before replication" fault point. 
+    "before replication" fault point.
 
           These changes were made in the oci_haft branch.
 
