@@ -378,8 +378,12 @@ typedef struct
 #   define ACE_PLATFORM_A "pSOS"
 #   define ACE_PLATFORM_EXE_SUFFIX_A ""
 
-#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
-#   define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#   if !defined (ACE_DLL_SUFFIX)
+#     define ACE_DLL_SUFFIX ACE_LIB_TEXT (".so")
+#   endif /* !ACE_DLL_SUFFIX */
+#   if !defined (ACE_DLL_PREFIX)
+#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
+#   endif /* !ACE_DLL_PREFIX */
 #   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("LD_LIBRARY_PATH")
 #   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (":")
 #   define ACE_LOGGER_KEY ACE_LIB_TEXT ("/tmp/server_daemon")
@@ -2745,12 +2749,12 @@ typedef void (*ACE_SignalHandlerV)(...);
 #   define ACE_DIRECTORY_SEPARATOR_CHAR_A '\\'
 #   define ACE_LD_SEARCH_PATH ACE_LIB_TEXT ("PATH")
 #   define ACE_LD_SEARCH_PATH_SEPARATOR_STR ACE_LIB_TEXT (";")
-#   define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
-#   if defined (__MINGW32__)
-#     define ACE_DLL_PREFIX ACE_LIB_TEXT ("lib")
-#   else /* __MINGW32__ */
+#   if !defined (ACE_DLL_SUFFIX)
+#     define ACE_DLL_SUFFIX ACE_LIB_TEXT (".dll")
+#   endif /* !ACE_DLL_SUFFIX */
+#   if !defined (ACE_DLL_PREFIX)
 #     define ACE_DLL_PREFIX ACE_LIB_TEXT ("")
-#   endif /* __MINGW32__ */
+#   endif /* !ACE_DLL_PREFIX */
 
 // This will help until we figure out everything:
 #   define NFDBITS 32 /* only used in unused functions... */
