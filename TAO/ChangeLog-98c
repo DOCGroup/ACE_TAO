@@ -1,3 +1,14 @@
+Fri Jan 01 02:45:18 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* TAO_IDL/be/be_visitor_array/array_ci.cpp (gen_forany_impl and
+ 	  gen_var_impl): There is no cast required for assigning a pointer
+ 	  to zero. Thanks to Patrice Bensoussan <pbensoussan@amadeus.net>
+ 	  for reporting this bug.
+
+	* Active_Object_Map.i: Rearranged functions to remove "redeclared
+ 	  inline after being called" warnings.  Thanks to David for
+	  pointing these out.
+
 Thu Dec 31 16:28:27 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* TAO_IDL/tao_idl.dsp:

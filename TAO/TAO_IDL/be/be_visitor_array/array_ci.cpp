@@ -228,7 +228,7 @@ be_visitor_array_ci::gen_var_impl (be_array *node)
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname <<
     " (void) // default constructor" << be_nl;
-  *os << "  " << ": ptr_ ((" << nodename << "_slice *)0)" << be_nl;
+  *os << "  " << ": ptr_ (0)" << be_nl;
   *os << "{}\n\n";
 
   // constr from a _slice *
@@ -555,7 +555,7 @@ be_visitor_array_ci::gen_forany_impl (be_array *node)
   *os << "ACE_INLINE" << be_nl;
   *os << fname << "::" << lname <<
     " (void) // default constructor" << be_nl;
-  *os << "  " << ": ptr_ ((" << nodename << "_slice *)0)," << be_nl;
+  *os << "  " << ": ptr_ (0)," << be_nl;
   *os << "    nocopy_ (0)" << be_nl;
   *os << "{}\n\n";
 
