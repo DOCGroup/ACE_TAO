@@ -1756,21 +1756,21 @@ ACE::bind_port (ACE_HANDLE handle,
 {
   ACE_TRACE ("ACE::bind_port");
 
-  sockaddr_in sin;
+  sockaddr_in sock_addr;
 
-  ACE_OS::memset ((void *) &sin, 0, sizeof sin);
-  sin.sin_family = AF_INET;
+  ACE_OS::memset ((void *) &sock_addr, 0, sizeof sock_addr);
+  sock_addr.sin_family = AF_INET;
 #if defined (ACE_HAS_SIN_LEN)
-  sin.sin_len = sizeof sin;
+  sock_addr.sin_len = sizeof sock_addr;
 #endif /* ACE_HAS_SIN_LEN */
-  sin.sin_addr.s_addr = ip_addr;
+  sock_addr.sin_addr.s_addr = ip_addr;
 
 #if !defined (ACE_LACKS_WILDCARD_BIND)
   // The OS kernel should select a free port for us.
-  sin.sin_port = 0;
+  sock_addr.sin_port = 0;
   return ACE_OS::bind (handle,
-                       ACE_reinterpret_cast(sockaddr *, &sin),
-                       sizeof sin);
+                       ACE_reinterpret_cast(sockaddr *, &sock_addr),
+                       sizeof sock_addr);
 #else
   static u_short upper_limit = ACE_MAX_DEFAULT_PORT;
   int round_trip = upper_limit;
@@ -1780,11 +1780,11 @@ ACE::bind_port (ACE_HANDLE handle,
 
   for (;;)
     {
-      sin.sin_port = htons (upper_limit);
+      sock_addr.sin_port = htons (upper_limit);
 
       if (ACE_OS::bind (handle,
-                        ACE_reinterpret_cast(sockaddr *, &sin),
-                        sizeof sin) >= 0)
+                        ACE_reinterpret_cast(sockaddr *, &sock_addr),
+                        sizeof sock_addr) >= 0)
         {
 #if defined (ACE_WIN32)
           upper_limit--;
