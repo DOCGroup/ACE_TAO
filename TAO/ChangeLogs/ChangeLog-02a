@@ -1,3 +1,12 @@
+Thu Apr 27 15:25:34 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+        * tao/DynArray_i.cpp:
+        * tao/DynSequence_i.cpp:
+        * tao/DynStruct_i.cpp:
+        * tao/DynUnion_i.cpp:
+          Fixed exception handling problems.  I was using ACE_TRY_CHECK
+          when an ACE_CHECK was enough.
+
 Thu Apr 27 14:31:58 2000  Carlos O'Ryan  <coryan@uci.edu>
 
         * tao/Makefile:
