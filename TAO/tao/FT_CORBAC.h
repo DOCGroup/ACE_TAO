@@ -9,8 +9,10 @@
 
 #ifndef _TAO_IDL_FT_CORBAC_H_
 #define _TAO_IDL_FT_CORBAC_H_
+#include "ace/pre.h"
 
-#include "tao/corba.h"
+
+#if (TAO_HAS_FT_CORBA == 1)
 
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 #include "ace/streams.h"
@@ -20,15 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "TimeBaseC.h"
-#include "CosNamingC.h"
-#include "CosNotificationC.h"
-#include "CosNotifyFilterC.h"
-#include "tao/IOPC.h"
-#include "tao/GIOP1_2C.h"
-#include "tao/ORBC.h"
-#include "tao/orbC.h"
-#include "tao/PolicyC.h"
+#include "tao/ftcorbafwd.h"
+
 
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
@@ -49,116 +44,121 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-TAO_NAMESPACE  FT
+struct TAO_Export FT_TagFTGroupTaggedComponent
 {
-  
-  struct TAO_Export TagFTGroupTaggedComponent
-  {
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef TagFTGroupTaggedComponent_var _var_type;
+  typedef FT_TagFTGroupTaggedComponent_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-    static void _tao_any_destructor (void*);
+  static void _tao_any_destructor (void*);
 
-    GIOP::Version version;
-    TAO_String_Manager ft_domain_id;
-    ACE_NESTED_CLASS (FT, ObjectGroupId) object_group_id;
-    ACE_NESTED_CLASS (FT, ObjectGroupRefVersion) object_group_ref_version;
-  };
+  GIOP::Version version;
+  TAO_String_Manager ft_domain_id;
+  ACE_NESTED_CLASS (FT, ObjectGroupId) object_group_id;
+  ACE_NESTED_CLASS (FT, ObjectGroupRefVersion) object_group_ref_version;
+};
 
-  class TAO_Export TagFTGroupTaggedComponent_var
-  {
-  public:
-    TagFTGroupTaggedComponent_var (void); // default constructor
-    TagFTGroupTaggedComponent_var (TagFTGroupTaggedComponent *);
-    TagFTGroupTaggedComponent_var (const TagFTGroupTaggedComponent_var &); // copy constructor
-    ~TagFTGroupTaggedComponent_var (void); // destructor
-    
-    TagFTGroupTaggedComponent_var &operator= (TagFTGroupTaggedComponent *);
-    TagFTGroupTaggedComponent_var &operator= (const TagFTGroupTaggedComponent_var &);
-    TagFTGroupTaggedComponent *operator-> (void);
-    const TagFTGroupTaggedComponent *operator-> (void) const;
-    
-    operator const TagFTGroupTaggedComponent &() const;
-    operator TagFTGroupTaggedComponent &();
-    operator TagFTGroupTaggedComponent &() const;
-    operator TagFTGroupTaggedComponent *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
-    const TagFTGroupTaggedComponent &in (void) const;
-    TagFTGroupTaggedComponent &inout (void);
-    TagFTGroupTaggedComponent *&out (void);
-    TagFTGroupTaggedComponent *_retn (void);
-    TagFTGroupTaggedComponent *ptr (void) const;
+class TAO_Export FT_TagFTGroupTaggedComponent_var
+{
+public:
+  FT_TagFTGroupTaggedComponent_var (void);
+  // default constructor
+  FT_TagFTGroupTaggedComponent_var (FT_TagFTGroupTaggedComponent *);
+  FT_TagFTGroupTaggedComponent_var (const FT_TagFTGroupTaggedComponent_var &);
+  // copy constructor
+  ~FT_TagFTGroupTaggedComponent_var (void);
+  // destructor
+  FT_TagFTGroupTaggedComponent_var &operator= (FT_TagFTGroupTaggedComponent *);
+  FT_TagFTGroupTaggedComponent_var &operator= (const FT_TagFTGroupTaggedComponent_var &);
+  FT_TagFTGroupTaggedComponent *operator-> (void);
+  const FT_TagFTGroupTaggedComponent *operator-> (void) const;
 
-  private:
-    TagFTGroupTaggedComponent *ptr_;
-  };
+  operator const FT_TagFTGroupTaggedComponent &() const;
+  operator FT_TagFTGroupTaggedComponent &();
+  operator FT_TagFTGroupTaggedComponent &() const;
+  operator FT_TagFTGroupTaggedComponent *&();
+  // variable-size types only
 
-  class TAO_Export TagFTGroupTaggedComponent_out
-  {
-  public:
-    TagFTGroupTaggedComponent_out (TagFTGroupTaggedComponent *&);
-    TagFTGroupTaggedComponent_out (TagFTGroupTaggedComponent_var &);
-    TagFTGroupTaggedComponent_out (const TagFTGroupTaggedComponent_out &);
-    TagFTGroupTaggedComponent_out &operator= (const TagFTGroupTaggedComponent_out &);
-    TagFTGroupTaggedComponent_out &operator= (TagFTGroupTaggedComponent *);
-    operator TagFTGroupTaggedComponent *&();
-    TagFTGroupTaggedComponent *&ptr (void);
-    TagFTGroupTaggedComponent *operator-> (void);
-    
-  private:
-    TagFTGroupTaggedComponent *&ptr_;
-    // assignment from T_var not allowed
-    void operator= (const TagFTGroupTaggedComponent_var &);
-  };
+  // in, inout, out, _retn
+  const FT_TagFTGroupTaggedComponent &in (void) const;
+  FT_TagFTGroupTaggedComponent &inout (void);
+  FT_TagFTGroupTaggedComponent *&out (void);
+  FT_TagFTGroupTaggedComponent *_retn (void);
+  FT_TagFTGroupTaggedComponent *ptr (void) const;
+
+private:
+  FT_TagFTGroupTaggedComponent *ptr_;
+};
+
+class TAO_Export FT_TagFTGroupTaggedComponent_out
+{
+public:
+  FT_TagFTGroupTaggedComponent_out (FT_TagFTGroupTaggedComponent *&);
+  FT_TagFTGroupTaggedComponent_out (FT_TagFTGroupTaggedComponent_var &);
+  FT_TagFTGroupTaggedComponent_out (const FT_TagFTGroupTaggedComponent_out &);
+  FT_TagFTGroupTaggedComponent_out &operator= (const FT_TagFTGroupTaggedComponent_out &);
+  FT_TagFTGroupTaggedComponent_out &operator= (FT_TagFTGroupTaggedComponent *);
+  operator FT_TagFTGroupTaggedComponent *&();
+  FT_TagFTGroupTaggedComponent *&ptr (void);
+  FT_TagFTGroupTaggedComponent *operator-> (void);
+
+private:
+  FT_TagFTGroupTaggedComponent *&ptr_;
+  // assignment from T_var not allowed
+  void operator= (const FT_TagFTGroupTaggedComponent_var &);
+};
 
 
-  
-  struct TAO_Export TagFTPrimaryTaggedComponent
-  {
+
+struct TAO_Export FT_TagFTPrimaryTaggedComponent
+{
 
 #if !defined(__GNUC__) || !defined (ACE_HAS_GNUG_PRE_2_8)
-    typedef TagFTPrimaryTaggedComponent_var _var_type;
+  typedef FT_TagFTPrimaryTaggedComponent_var _var_type;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
-    static void _tao_any_destructor (void*);
+  static void _tao_any_destructor (void*);
 
     CORBA::Boolean primary;
-  };
+};
 
-  class TAO_Export TagFTPrimaryTaggedComponent_var
-  {
-  public:
-    TagFTPrimaryTaggedComponent_var (void); // default constructor
-    TagFTPrimaryTaggedComponent_var (TagFTPrimaryTaggedComponent *);
-    TagFTPrimaryTaggedComponent_var (const TagFTPrimaryTaggedComponent_var &); // copy constructor
-    TagFTPrimaryTaggedComponent_var (const TagFTPrimaryTaggedComponent &); // fixed-size types only
-    ~TagFTPrimaryTaggedComponent_var (void); // destructor
-    
-    TagFTPrimaryTaggedComponent_var &operator= (TagFTPrimaryTaggedComponent *);
-    TagFTPrimaryTaggedComponent_var &operator= (const TagFTPrimaryTaggedComponent_var &);
-    TagFTPrimaryTaggedComponent_var &operator= (const TagFTPrimaryTaggedComponent &); // fixed-size types only
-    TagFTPrimaryTaggedComponent *operator-> (void);
-    const TagFTPrimaryTaggedComponent *operator-> (void) const;
-    
-    operator const TagFTPrimaryTaggedComponent &() const;
-    operator TagFTPrimaryTaggedComponent &();
-    operator TagFTPrimaryTaggedComponent &() const;
-    
-    // in, inout, out, _retn 
-    const TagFTPrimaryTaggedComponent &in (void) const;
-    TagFTPrimaryTaggedComponent &inout (void);
-    TagFTPrimaryTaggedComponent &out (void);
-    TagFTPrimaryTaggedComponent _retn (void);
-    TagFTPrimaryTaggedComponent *ptr (void) const;
+class TAO_Export FT_TagFTPrimaryTaggedComponent_var
+{
+public:
+  FT_TagFTPrimaryTaggedComponent_var (void);
+  // default constructor
+  FT_TagFTPrimaryTaggedComponent_var (FT_TagFTPrimaryTaggedComponent *);
+  FT_TagFTPrimaryTaggedComponent_var (const FT_TagFTPrimaryTaggedComponent_var &);
+  // copy constructor
+  FT_TagFTPrimaryTaggedComponent_var (const FT_TagFTPrimaryTaggedComponent &);
+  // fixed-size types only
+  ~FT_TagFTPrimaryTaggedComponent_var (void);
+  // destructor
+
+  FT_TagFTPrimaryTaggedComponent_var &operator= (FT_TagFTPrimaryTaggedComponent *);
+  FT_TagFTPrimaryTaggedComponent_var &operator= (const FT_TagFTPrimaryTaggedComponent_var &);
+  FT_TagFTPrimaryTaggedComponent_var &operator= (const FT_TagFTPrimaryTaggedComponent &);
+  // fixed-size types only
+  FT_TagFTPrimaryTaggedComponent *operator-> (void);
+  const FT_TagFTPrimaryTaggedComponent *operator-> (void) const;
+
+  operator const FT_TagFTPrimaryTaggedComponent &() const;
+  operator FT_TagFTPrimaryTaggedComponent &();
+  operator FT_TagFTPrimaryTaggedComponent &() const;
+
+  // in, inout, out, _retn
+  const FT_TagFTPrimaryTaggedComponent &in (void) const;
+  FT_TagFTPrimaryTaggedComponent &inout (void);
+  FT_TagFTPrimaryTaggedComponent &out (void);
+  FT_TagFTPrimaryTaggedComponent _retn (void);
+  FT_TagFTPrimaryTaggedComponent *ptr (void) const;
 
   private:
-    TagFTPrimaryTaggedComponent *ptr_;
-  };
+  FT_TagFTPrimaryTaggedComponent *ptr_;
+};
 
-  typedef TagFTPrimaryTaggedComponent &TagFTPrimaryTaggedComponent_out;
+
 
 
 
@@ -182,18 +182,18 @@ TAO_NAMESPACE  FT
     FTGroupVersionServiceContext_var (const FTGroupVersionServiceContext_var &); // copy constructor
     FTGroupVersionServiceContext_var (const FTGroupVersionServiceContext &); // fixed-size types only
     ~FTGroupVersionServiceContext_var (void); // destructor
-    
+
     FTGroupVersionServiceContext_var &operator= (FTGroupVersionServiceContext *);
     FTGroupVersionServiceContext_var &operator= (const FTGroupVersionServiceContext_var &);
     FTGroupVersionServiceContext_var &operator= (const FTGroupVersionServiceContext &); // fixed-size types only
     FTGroupVersionServiceContext *operator-> (void);
     const FTGroupVersionServiceContext *operator-> (void) const;
-    
+
     operator const FTGroupVersionServiceContext &() const;
     operator FTGroupVersionServiceContext &();
     operator FTGroupVersionServiceContext &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const FTGroupVersionServiceContext &in (void) const;
     FTGroupVersionServiceContext &inout (void);
     FTGroupVersionServiceContext &out (void);
@@ -228,18 +228,18 @@ TAO_NAMESPACE  FT
     FTRequestServiceContext_var (FTRequestServiceContext *);
     FTRequestServiceContext_var (const FTRequestServiceContext_var &); // copy constructor
     ~FTRequestServiceContext_var (void); // destructor
-    
+
     FTRequestServiceContext_var &operator= (FTRequestServiceContext *);
     FTRequestServiceContext_var &operator= (const FTRequestServiceContext_var &);
     FTRequestServiceContext *operator-> (void);
     const FTRequestServiceContext *operator-> (void) const;
-    
+
     operator const FTRequestServiceContext &() const;
     operator FTRequestServiceContext &();
     operator FTRequestServiceContext &() const;
     operator FTRequestServiceContext *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const FTRequestServiceContext &in (void) const;
     FTRequestServiceContext &inout (void);
     FTRequestServiceContext *&out (void);
@@ -261,14 +261,14 @@ TAO_NAMESPACE  FT
     operator FTRequestServiceContext *&();
     FTRequestServiceContext *&ptr (void);
     FTRequestServiceContext *operator-> (void);
-    
+
   private:
     FTRequestServiceContext *&ptr_;
     // assignment from T_var not allowed
     void operator= (const FTRequestServiceContext_var &);
   };
 
-  
+
 
 
 #if !defined (_FT_REQUESTDURATIONPOLICY___VAR_CH_)
@@ -278,17 +278,17 @@ TAO_NAMESPACE  FT
   {
   public:
     RequestDurationPolicy_var (void); // default constructor
-    RequestDurationPolicy_var (RequestDurationPolicy_ptr p) : ptr_ (p) {} 
+    RequestDurationPolicy_var (RequestDurationPolicy_ptr p) : ptr_ (p) {}
     RequestDurationPolicy_var (const RequestDurationPolicy_var &); // copy constructor
     ~RequestDurationPolicy_var (void); // destructor
-    
+
     RequestDurationPolicy_var &operator= (RequestDurationPolicy_ptr);
     RequestDurationPolicy_var &operator= (const RequestDurationPolicy_var &);
     RequestDurationPolicy_ptr operator-> (void) const;
-    
+
     operator const RequestDurationPolicy_ptr &() const;
     operator RequestDurationPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     RequestDurationPolicy_ptr in (void) const;
     RequestDurationPolicy_ptr &inout (void);
     RequestDurationPolicy_ptr &out (void);
@@ -321,7 +321,7 @@ TAO_NAMESPACE  FT
     operator RequestDurationPolicy_ptr &();
     RequestDurationPolicy_ptr &ptr (void);
     RequestDurationPolicy_ptr operator-> (void);
-    
+
   private:
     RequestDurationPolicy_ptr &ptr_;
   };
@@ -345,12 +345,12 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
     static RequestDurationPolicy_ptr _duplicate (RequestDurationPolicy_ptr obj);
     static RequestDurationPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static RequestDurationPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static RequestDurationPolicy_ptr _nil (void)
@@ -361,7 +361,7 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
     static void _tao_any_destructor (void*);
 
     virtual TimeBase::TimeT request_duration_value (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -369,18 +369,18 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &ACE_TRY_ENV = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     RequestDurationPolicy (void);
-    RequestDurationPolicy (TAO_Stub *objref, 
-        TAO_ServantBase *_tao_servant = 0, 
+    RequestDurationPolicy (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~RequestDurationPolicy (void);
@@ -414,18 +414,18 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
     TagFTHeartbeatEnabledTaggedComponent_var (const TagFTHeartbeatEnabledTaggedComponent_var &); // copy constructor
     TagFTHeartbeatEnabledTaggedComponent_var (const TagFTHeartbeatEnabledTaggedComponent &); // fixed-size types only
     ~TagFTHeartbeatEnabledTaggedComponent_var (void); // destructor
-    
+
     TagFTHeartbeatEnabledTaggedComponent_var &operator= (TagFTHeartbeatEnabledTaggedComponent *);
     TagFTHeartbeatEnabledTaggedComponent_var &operator= (const TagFTHeartbeatEnabledTaggedComponent_var &);
     TagFTHeartbeatEnabledTaggedComponent_var &operator= (const TagFTHeartbeatEnabledTaggedComponent &); // fixed-size types only
     TagFTHeartbeatEnabledTaggedComponent *operator-> (void);
     const TagFTHeartbeatEnabledTaggedComponent *operator-> (void) const;
-    
+
     operator const TagFTHeartbeatEnabledTaggedComponent &() const;
     operator TagFTHeartbeatEnabledTaggedComponent &();
     operator TagFTHeartbeatEnabledTaggedComponent &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const TagFTHeartbeatEnabledTaggedComponent &in (void) const;
     TagFTHeartbeatEnabledTaggedComponent &inout (void);
     TagFTHeartbeatEnabledTaggedComponent &out (void);
@@ -460,18 +460,18 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
     HeartbeatPolicyValue_var (const HeartbeatPolicyValue_var &); // copy constructor
     HeartbeatPolicyValue_var (const HeartbeatPolicyValue &); // fixed-size types only
     ~HeartbeatPolicyValue_var (void); // destructor
-    
+
     HeartbeatPolicyValue_var &operator= (HeartbeatPolicyValue *);
     HeartbeatPolicyValue_var &operator= (const HeartbeatPolicyValue_var &);
     HeartbeatPolicyValue_var &operator= (const HeartbeatPolicyValue &); // fixed-size types only
     HeartbeatPolicyValue *operator-> (void);
     const HeartbeatPolicyValue *operator-> (void) const;
-    
+
     operator const HeartbeatPolicyValue &() const;
     operator HeartbeatPolicyValue &();
     operator HeartbeatPolicyValue &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const HeartbeatPolicyValue &in (void) const;
     HeartbeatPolicyValue &inout (void);
     HeartbeatPolicyValue &out (void);
@@ -490,7 +490,7 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
 #define _FT_HEARTBEATPOLICY___PTR_CH_
 
 
-  
+
 #endif /* end #if !defined */
 
 
@@ -501,17 +501,17 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
   {
   public:
     HeartbeatPolicy_var (void); // default constructor
-    HeartbeatPolicy_var (HeartbeatPolicy_ptr p) : ptr_ (p) {} 
+    HeartbeatPolicy_var (HeartbeatPolicy_ptr p) : ptr_ (p) {}
     HeartbeatPolicy_var (const HeartbeatPolicy_var &); // copy constructor
     ~HeartbeatPolicy_var (void); // destructor
-    
+
     HeartbeatPolicy_var &operator= (HeartbeatPolicy_ptr);
     HeartbeatPolicy_var &operator= (const HeartbeatPolicy_var &);
     HeartbeatPolicy_ptr operator-> (void) const;
-    
+
     operator const HeartbeatPolicy_ptr &() const;
     operator HeartbeatPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     HeartbeatPolicy_ptr in (void) const;
     HeartbeatPolicy_ptr &inout (void);
     HeartbeatPolicy_ptr &out (void);
@@ -544,7 +544,7 @@ class TAO_Export RequestDurationPolicy: public virtual CORBA::Policy
     operator HeartbeatPolicy_ptr &();
     HeartbeatPolicy_ptr &ptr (void);
     HeartbeatPolicy_ptr operator-> (void);
-    
+
   private:
     HeartbeatPolicy_ptr &ptr_;
   };
@@ -568,12 +568,12 @@ class TAO_Export HeartbeatPolicy: public virtual CORBA::Policy
     static HeartbeatPolicy_ptr _duplicate (HeartbeatPolicy_ptr obj);
     static HeartbeatPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static HeartbeatPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static HeartbeatPolicy_ptr _nil (void)
@@ -584,7 +584,7 @@ class TAO_Export HeartbeatPolicy: public virtual CORBA::Policy
     static void _tao_any_destructor (void*);
 
     virtual FT::HeartbeatPolicyValue heartbeat_policy_value (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -592,18 +592,18 @@ class TAO_Export HeartbeatPolicy: public virtual CORBA::Policy
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &ACE_TRY_ENV = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     HeartbeatPolicy (void);
-    HeartbeatPolicy (TAO_Stub *objref, 
-        TAO_ServantBase *_tao_servant = 0, 
+    HeartbeatPolicy (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~HeartbeatPolicy (void);
@@ -622,7 +622,7 @@ class TAO_Export HeartbeatPolicy: public virtual CORBA::Policy
 #define _FT_HEARTBEATENABLEDPOLICY___PTR_CH_
 
 
-  
+
 #endif /* end #if !defined */
 
 
@@ -633,17 +633,17 @@ class TAO_Export HeartbeatPolicy: public virtual CORBA::Policy
   {
   public:
     HeartbeatEnabledPolicy_var (void); // default constructor
-    HeartbeatEnabledPolicy_var (HeartbeatEnabledPolicy_ptr p) : ptr_ (p) {} 
+    HeartbeatEnabledPolicy_var (HeartbeatEnabledPolicy_ptr p) : ptr_ (p) {}
     HeartbeatEnabledPolicy_var (const HeartbeatEnabledPolicy_var &); // copy constructor
     ~HeartbeatEnabledPolicy_var (void); // destructor
-    
+
     HeartbeatEnabledPolicy_var &operator= (HeartbeatEnabledPolicy_ptr);
     HeartbeatEnabledPolicy_var &operator= (const HeartbeatEnabledPolicy_var &);
     HeartbeatEnabledPolicy_ptr operator-> (void) const;
-    
+
     operator const HeartbeatEnabledPolicy_ptr &() const;
     operator HeartbeatEnabledPolicy_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     HeartbeatEnabledPolicy_ptr in (void) const;
     HeartbeatEnabledPolicy_ptr &inout (void);
     HeartbeatEnabledPolicy_ptr &out (void);
@@ -676,7 +676,7 @@ class TAO_Export HeartbeatPolicy: public virtual CORBA::Policy
     operator HeartbeatEnabledPolicy_ptr &();
     HeartbeatEnabledPolicy_ptr &ptr (void);
     HeartbeatEnabledPolicy_ptr operator-> (void);
-    
+
   private:
     HeartbeatEnabledPolicy_ptr &ptr_;
   };
@@ -700,12 +700,12 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
     static HeartbeatEnabledPolicy_ptr _duplicate (HeartbeatEnabledPolicy_ptr obj);
     static HeartbeatEnabledPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static HeartbeatEnabledPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static HeartbeatEnabledPolicy_ptr _nil (void)
@@ -716,7 +716,7 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
     static void _tao_any_destructor (void*);
 
     virtual CORBA::Boolean heartbeat_enabled_policy_value (
-        CORBA::Environment &ACE_TRY_ENV = 
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       )
       ACE_THROW_SPEC ((
@@ -724,18 +724,18 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
       ));
 
     virtual CORBA::Boolean _is_a (
-        const CORBA::Char *type_id, 
-        CORBA::Environment &ACE_TRY_ENV = 
+        const CORBA::Char *type_id,
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual void *_tao_QueryInterface (ptr_arith_t type);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
   protected:
     HeartbeatEnabledPolicy (void);
-    HeartbeatEnabledPolicy (TAO_Stub *objref, 
-        TAO_ServantBase *_tao_servant = 0, 
+    HeartbeatEnabledPolicy (TAO_Stub *objref,
+        TAO_ServantBase *_tao_servant = 0,
         CORBA::Boolean _tao_collocated = 0
       );
     virtual ~HeartbeatEnabledPolicy (void);
@@ -750,7 +750,7 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
 
 
 
-  
+
 #if !defined (_FT_GENERICFACTORY___PTR_CH_)
 #define _FT_GENERICFACTORY___PTR_CH_
 
@@ -766,17 +766,17 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
   {
   public:
     GenericFactory_var (void); // default constructor
-    GenericFactory_var (GenericFactory_ptr p) : ptr_ (p) {} 
+    GenericFactory_var (GenericFactory_ptr p) : ptr_ (p) {}
     GenericFactory_var (const GenericFactory_var &); // copy constructor
     ~GenericFactory_var (void); // destructor
-    
+
     GenericFactory_var &operator= (GenericFactory_ptr);
     GenericFactory_var &operator= (const GenericFactory_var &);
     GenericFactory_ptr operator-> (void) const;
-    
+
     operator const GenericFactory_ptr &() const;
     operator GenericFactory_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     GenericFactory_ptr in (void) const;
     GenericFactory_ptr &inout (void);
     GenericFactory_ptr &out (void);
@@ -809,7 +809,7 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
     operator GenericFactory_ptr &();
     GenericFactory_ptr &ptr (void);
     GenericFactory_ptr operator-> (void);
-    
+
   private:
     GenericFactory_ptr &ptr_;
   };
@@ -817,12 +817,12 @@ class TAO_Export HeartbeatEnabledPolicy: public virtual CORBA::Policy
 
 #endif /* end #if !defined */
 
-  class FaultNotifier;
-  
+
+
 #if !defined (_FT_FAULTNOTIFIER___PTR_CH_)
 #define _FT_FAULTNOTIFIER___PTR_CH_
 
-typedef FaultNotifier *FaultNotifier_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -834,17 +834,17 @@ typedef FaultNotifier *FaultNotifier_ptr;
   {
   public:
     FaultNotifier_var (void); // default constructor
-    FaultNotifier_var (FaultNotifier_ptr p) : ptr_ (p) {} 
+    FaultNotifier_var (FaultNotifier_ptr p) : ptr_ (p) {}
     FaultNotifier_var (const FaultNotifier_var &); // copy constructor
     ~FaultNotifier_var (void); // destructor
-    
+
     FaultNotifier_var &operator= (FaultNotifier_ptr);
     FaultNotifier_var &operator= (const FaultNotifier_var &);
     FaultNotifier_ptr operator-> (void) const;
-    
+
     operator const FaultNotifier_ptr &() const;
     operator FaultNotifier_ptr &();
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     FaultNotifier_ptr in (void) const;
     FaultNotifier_ptr &inout (void);
     FaultNotifier_ptr &out (void);
@@ -877,7 +877,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
     operator FaultNotifier_ptr &();
     FaultNotifier_ptr &ptr (void);
     FaultNotifier_ptr operator-> (void);
-    
+
   private:
     FaultNotifier_ptr &ptr_;
   };
@@ -885,31 +885,17 @@ typedef FaultNotifier *FaultNotifier_ptr;
 
 #endif /* end #if !defined */
 
-  typedef char * TypeId;
-  typedef CORBA::String_var TypeId_var;
-  typedef CORBA::String_out TypeId_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_TypeId;
 
-  typedef CORBA::Object ObjectGroup;
-  typedef CORBA::Object_ptr ObjectGroup_ptr;
-  typedef CORBA::Object_var ObjectGroup_var;
-  typedef CORBA::Object_out ObjectGroup_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroup;
 
   typedef CosNaming::Name Name;
   typedef CosNaming::Name_var Name_var;
   typedef CosNaming::Name_out Name_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Name;
+  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Name;
 
-  typedef CORBA::Any Value;
-  typedef CORBA::Any_ptr Value_ptr;
-  typedef CORBA::Any_var Value_var;
-  typedef CORBA::Any_out Value_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Value;
 
-  struct Property;
-  class Property_var;
-  
+
+
+
   struct TAO_Export Property
   {
 
@@ -930,18 +916,18 @@ typedef FaultNotifier *FaultNotifier_ptr;
     Property_var (Property *);
     Property_var (const Property_var &); // copy constructor
     ~Property_var (void); // destructor
-    
+
     Property_var &operator= (Property *);
     Property_var &operator= (const Property_var &);
     Property *operator-> (void);
     const Property *operator-> (void) const;
-    
+
     operator const Property &() const;
     operator Property &();
     operator Property &() const;
     operator Property *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const Property &in (void) const;
     Property &inout (void);
     Property *&out (void);
@@ -963,18 +949,18 @@ typedef FaultNotifier *FaultNotifier_ptr;
     operator Property *&();
     Property *&ptr (void);
     Property *operator-> (void);
-    
+
   private:
     Property *&ptr_;
     // assignment from T_var not allowed
     void operator= (const Property_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Property;
+
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CH_
 
@@ -982,9 +968,9 @@ typedef FaultNotifier *FaultNotifier_ptr;
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_FT_Properties (void); // Default constructor.
-      _TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum,
         CORBA::ULong length,
         Property *data,
@@ -1001,7 +987,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       Property *get_buffer (CORBA::Boolean orphan = 0);
       const Property *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -1013,32 +999,31 @@ typedef FaultNotifier *FaultNotifier_ptr;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_FT_PROPERTIES_CH_)
 #define _FT_PROPERTIES_CH_
 
-  class Properties;
-  class Properties_var;
-  
+
+
   // *************************************************************
   // Properties
   // *************************************************************
-  
-  class TAO_Export Properties : public 
+
+  class TAO_Export Properties : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_FT_Properties
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Property>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     Properties (void); // default ctor
     Properties (CORBA::ULong max); // uses max size
     Properties (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      Property *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      Property *buffer,
       CORBA::Boolean release=0
     );
     Properties (const Properties &); // copy ctor
@@ -1050,7 +1035,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -1068,19 +1053,19 @@ typedef FaultNotifier *FaultNotifier_ptr;
     Properties_var (Properties *);
     Properties_var (const Properties_var &); // copy constructor
     ~Properties_var (void); // destructor
-    
+
     Properties_var &operator= (Properties *);
     Properties_var &operator= (const Properties_var &);
     Properties *operator-> (void);
     const Properties *operator-> (void) const;
-    
+
     operator const Properties &() const;
     operator Properties &();
     operator Properties &() const;
     operator Properties *&(); // variable-size base types only
-    
+
     Property &operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const Properties &in (void) const;
     Properties &inout (void);
     Properties *&out (void);
@@ -1110,7 +1095,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
     Properties *&ptr (void);
     Properties *operator-> (void);
     Property &operator[] (CORBA::ULong index);
-    
+
   private:
     Properties *&ptr_;
     // assignment from T_var not allowed
@@ -1120,16 +1105,9 @@ typedef FaultNotifier *FaultNotifier_ptr;
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Properties;
-
-  typedef Name Location;
-  typedef Name_var Location_var;
-  typedef Name_out Location_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Location;
-
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CH_
 
@@ -1137,9 +1115,9 @@ typedef FaultNotifier *FaultNotifier_ptr;
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_FT_Locations (void); // Default constructor.
-      _TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum,
         CORBA::ULong length,
         Location *data,
@@ -1156,7 +1134,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       Location *get_buffer (CORBA::Boolean orphan = 0);
       const Location *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -1168,32 +1146,31 @@ typedef FaultNotifier *FaultNotifier_ptr;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_FT_LOCATIONS_CH_)
 #define _FT_LOCATIONS_CH_
 
-  class Locations;
-  class Locations_var;
-  
+
+
   // *************************************************************
   // Locations
   // *************************************************************
-  
-  class TAO_Export Locations : public 
+
+  class TAO_Export Locations : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_FT_Locations
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<Location>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     Locations (void); // default ctor
     Locations (CORBA::ULong max); // uses max size
     Locations (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      Location *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      Location *buffer,
       CORBA::Boolean release=0
     );
     Locations (const Locations &); // copy ctor
@@ -1205,7 +1182,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -1223,19 +1200,19 @@ typedef FaultNotifier *FaultNotifier_ptr;
     Locations_var (Locations *);
     Locations_var (const Locations_var &); // copy constructor
     ~Locations_var (void); // destructor
-    
+
     Locations_var &operator= (Locations *);
     Locations_var &operator= (const Locations_var &);
     Locations *operator-> (void);
     const Locations *operator-> (void) const;
-    
+
     operator const Locations &() const;
     operator Locations &();
     operator Locations &() const;
     operator Locations *&(); // variable-size base types only
-    
+
     Location &operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const Locations &in (void) const;
     Locations &inout (void);
     Locations *&out (void);
@@ -1265,7 +1242,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
     Locations *&ptr (void);
     Locations *operator-> (void);
     Location &operator[] (CORBA::ULong index);
-    
+
   private:
     Locations *&ptr_;
     // assignment from T_var not allowed
@@ -1275,16 +1252,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Locations;
 
-  typedef Properties Criteria;
-  typedef Properties_var Criteria_var;
-  typedef Properties_out Criteria_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Criteria;
-
-  struct FactoryInfo;
-  class FactoryInfo_var;
-  
   struct TAO_Export FactoryInfo
   {
 
@@ -1306,18 +1274,18 @@ typedef FaultNotifier *FaultNotifier_ptr;
     FactoryInfo_var (FactoryInfo *);
     FactoryInfo_var (const FactoryInfo_var &); // copy constructor
     ~FactoryInfo_var (void); // destructor
-    
+
     FactoryInfo_var &operator= (FactoryInfo *);
     FactoryInfo_var &operator= (const FactoryInfo_var &);
     FactoryInfo *operator-> (void);
     const FactoryInfo *operator-> (void) const;
-    
+
     operator const FactoryInfo &() const;
     operator FactoryInfo &();
     operator FactoryInfo &() const;
     operator FactoryInfo *&(); // variable-size types only
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const FactoryInfo &in (void) const;
     FactoryInfo &inout (void);
     FactoryInfo *&out (void);
@@ -1339,18 +1307,16 @@ typedef FaultNotifier *FaultNotifier_ptr;
     operator FactoryInfo *&();
     FactoryInfo *&ptr (void);
     FactoryInfo *operator-> (void);
-    
+
   private:
     FactoryInfo *&ptr_;
     // assignment from T_var not allowed
     void operator= (const FactoryInfo_var &);
   };
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FactoryInfo;
-
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-    
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CH_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CH_
 
@@ -1358,9 +1324,9 @@ typedef FaultNotifier *FaultNotifier_ptr;
     {
     public:
       // = Initialization and termination methods.
-      
+
       _TAO_Unbounded_Sequence_FT_FactoryInfos (void); // Default constructor.
-      _TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum); 
+      _TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum);
       _TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum,
         CORBA::ULong length,
         FactoryInfo *data,
@@ -1377,7 +1343,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
       virtual void _allocate_buffer (CORBA::ULong length);
       virtual void _deallocate_buffer (void);
       // Implement the TAO_Base_Sequence methods (see Sequence.h)
-      
+
       FactoryInfo *get_buffer (CORBA::Boolean orphan = 0);
       const FactoryInfo *get_buffer (void) const;
       void replace (CORBA::ULong max,
@@ -1389,32 +1355,31 @@ typedef FaultNotifier *FaultNotifier_ptr;
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
-  
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
+
 #if !defined (_FT_FACTORYINFOS_CH_)
 #define _FT_FACTORYINFOS_CH_
 
-  class FactoryInfos;
-  class FactoryInfos_var;
-  
+
+
   // *************************************************************
   // FactoryInfos
   // *************************************************************
-  
-  class TAO_Export FactoryInfos : public 
+
+  class TAO_Export FactoryInfos : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
     _TAO_Unbounded_Sequence_FT_FactoryInfos
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
     TAO_Unbounded_Sequence<FactoryInfo>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
   {
   public:
     FactoryInfos (void); // default ctor
     FactoryInfos (CORBA::ULong max); // uses max size
     FactoryInfos (
-      CORBA::ULong max, 
-      CORBA::ULong length, 
-      FactoryInfo *buffer, 
+      CORBA::ULong max,
+      CORBA::ULong length,
+      FactoryInfo *buffer,
       CORBA::Boolean release=0
     );
     FactoryInfos (const FactoryInfos &); // copy ctor
@@ -1426,7 +1391,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
 #endif /* ! __GNUC__ || g++ >= 2.8 */
 
   };
-  
+
 #endif /* end #if !defined */
 
 
@@ -1444,19 +1409,19 @@ typedef FaultNotifier *FaultNotifier_ptr;
     FactoryInfos_var (FactoryInfos *);
     FactoryInfos_var (const FactoryInfos_var &); // copy constructor
     ~FactoryInfos_var (void); // destructor
-    
+
     FactoryInfos_var &operator= (FactoryInfos *);
     FactoryInfos_var &operator= (const FactoryInfos_var &);
     FactoryInfos *operator-> (void);
     const FactoryInfos *operator-> (void) const;
-    
+
     operator const FactoryInfos &() const;
     operator FactoryInfos &();
     operator FactoryInfos &() const;
     operator FactoryInfos *&(); // variable-size base types only
-    
+
     FactoryInfo &operator[] (CORBA::ULong index);
-    // in, inout, out, _retn 
+    // in, inout, out, _retn
     const FactoryInfos &in (void) const;
     FactoryInfos &inout (void);
     FactoryInfos *&out (void);
@@ -1486,7 +1451,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
     FactoryInfos *&ptr (void);
     FactoryInfos *operator-> (void);
     FactoryInfo &operator[] (CORBA::ULong index);
-    
+
   private:
     FactoryInfos *&ptr_;
     // assignment from T_var not allowed
@@ -1496,69 +1461,14 @@ typedef FaultNotifier *FaultNotifier_ptr;
 
 #endif /* end #if !defined */
 
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FactoryInfos;
 
-  typedef CORBA::Long ReplicationStyleValue;
-  typedef CORBA::Long_out ReplicationStyleValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplicationStyleValue;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long STATELESS;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long COLD_PASSIVE;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long WARM_PASSIVE;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long ACTIVE;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long ACTIVE_WITH_VOTING;
 
-  typedef CORBA::Long MembershipStyleValue;
-  typedef CORBA::Long_out MembershipStyleValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_MembershipStyleValue;
 
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long MEMB_APP_CTRL;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long MEMB_INF_CTRL;
-
-  typedef CORBA::Long ConsistencyStyleValue;
-  typedef CORBA::Long_out ConsistencyStyleValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ConsistencyStyleValue;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long CONS_APP_CTRL;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long CONS_INF_CTRL;
-
-  typedef CORBA::Long FaultMonitoringStyleValue;
-  typedef CORBA::Long_out FaultMonitoringStyleValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FaultMonitoringStyleValue;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long PULL;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long PUSH;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long NOT_MONITORED;
-
-  typedef CORBA::Long FaultMonitoringGranularityValue;
-  typedef CORBA::Long_out FaultMonitoringGranularityValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FaultMonitoringGranularityValue;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long MEMB;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long LOC;
-
-  TAO_NAMESPACE_STORAGE_CLASS const CORBA::Long LOC_AND_TYPE;
-
-  typedef CORBA::UShort InitialNumberReplicasValue;
-  typedef CORBA::UShort_out InitialNumberReplicasValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InitialNumberReplicasValue;
-
-  typedef CORBA::UShort MinimumNumberReplicasValue;
-  typedef CORBA::UShort_out MinimumNumberReplicasValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_MinimumNumberReplicasValue;
-
-  struct FaultMonitoringIntervalAndTimeoutValue;
-  class FaultMonitoringIntervalAndTimeoutValue_var;
-  
   struct TAO_Export FaultMonitoringIntervalAndTimeoutValue
   {
 
@@ -1580,18 +1490,18 @@ typedef FaultNotifier *FaultNotifier_ptr;
     FaultMonitoringIntervalAndTimeoutValue_var (const FaultMonitoringIntervalAndTimeoutValue_var &); // copy constructor
     FaultMonitoringIntervalAndTimeoutValue_var (const FaultMonitoringIntervalAndTimeoutValue &); // fixed-size types only
     ~FaultMonitoringIntervalAndTimeoutValue_var (void); // destructor
-    
+
     FaultMonitoringIntervalAndTimeoutValue_var &operator= (FaultMonitoringIntervalAndTimeoutValue *);
     FaultMonitoringIntervalAndTimeoutValue_var &operator= (const FaultMonitoringIntervalAndTimeoutValue_var &);
     FaultMonitoringIntervalAndTimeoutValue_var &operator= (const FaultMonitoringIntervalAndTimeoutValue &); // fixed-size types only
     FaultMonitoringIntervalAndTimeoutValue *operator-> (void);
     const FaultMonitoringIntervalAndTimeoutValue *operator-> (void) const;
-    
+
     operator const FaultMonitoringIntervalAndTimeoutValue &() const;
     operator FaultMonitoringIntervalAndTimeoutValue &();
     operator FaultMonitoringIntervalAndTimeoutValue &() const;
-    
-    // in, inout, out, _retn 
+
+    // in, inout, out, _retn
     const FaultMonitoringIntervalAndTimeoutValue &in (void) const;
     FaultMonitoringIntervalAndTimeoutValue &inout (void);
     FaultMonitoringIntervalAndTimeoutValue &out (void);
@@ -1603,12 +1513,6 @@ typedef FaultNotifier *FaultNotifier_ptr;
   };
 
   typedef FaultMonitoringIntervalAndTimeoutValue &FaultMonitoringIntervalAndTimeoutValue_out;
-
-  TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FaultMonitoringIntervalAndTimeoutValue;
-
-  typedef TimeBase::TimeT CheckpointIntervalValue;
-  typedef TimeBase::TimeT_out CheckpointIntervalValue_out;
-    TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CheckpointIntervalValue;
 
 
 #if !defined (_FT_INTERFACENOTFOUND_CH_)
@@ -1643,7 +1547,7 @@ typedef FaultNotifier *FaultNotifier_ptr;
 
 }; // exception FT::InterfaceNotFound
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InterfaceNotFound;
+
 
 
 #endif /* end #if !defined */
@@ -1681,7 +1585,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::ObjectGroupNotFound
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroupNotFound;
+
 
 
 #endif /* end #if !defined */
@@ -1719,7 +1623,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::MemberNotFound
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_MemberNotFound;
+
 
 
 #endif /* end #if !defined */
@@ -1757,7 +1661,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::ObjectNotFound
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectNotFound;
+
 
 
 #endif /* end #if !defined */
@@ -1795,7 +1699,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::MemberAlreadyPresent
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_MemberAlreadyPresent;
+
 
 
 #endif /* end #if !defined */
@@ -1833,7 +1737,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::BadReplicationStyle
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_BadReplicationStyle;
+
 
 
 #endif /* end #if !defined */
@@ -1871,7 +1775,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::ObjectNotCreated
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectNotCreated;
+
 
 
 #endif /* end #if !defined */
@@ -1909,7 +1813,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::ObjectNotAdded
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectNotAdded;
+
 
 
 #endif /* end #if !defined */
@@ -1947,7 +1851,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::PrimaryNotSet
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PrimaryNotSet;
+
 
 
 #endif /* end #if !defined */
@@ -1991,7 +1895,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::UnsupportedProperty
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_UnsupportedProperty;
+
 
 
 #endif /* end #if !defined */
@@ -2035,7 +1939,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::InvalidProperty
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidProperty;
+
 
 
 #endif /* end #if !defined */
@@ -2079,7 +1983,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::NoFactory
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NoFactory;
+
 
 
 #endif /* end #if !defined */
@@ -2121,7 +2025,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::InvalidCriteria
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidCriteria;
+
 
 
 #endif /* end #if !defined */
@@ -2163,7 +2067,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::CannotMeetCriteria
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CannotMeetCriteria;
+
 
 
 #endif /* end #if !defined */
@@ -2172,8 +2076,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_CannotMeetCriteria;
 #if !defined (_FT_PROPERTYMANAGER___PTR_CH_)
 #define _FT_PROPERTYMANAGER___PTR_CH_
 
-class PropertyManager;
-typedef PropertyManager *PropertyManager_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -2185,17 +2088,17 @@ class TAO_Export PropertyManager_var : public TAO_Base_var
 {
 public:
   PropertyManager_var (void); // default constructor
-  PropertyManager_var (PropertyManager_ptr p) : ptr_ (p) {} 
+  PropertyManager_var (PropertyManager_ptr p) : ptr_ (p) {}
   PropertyManager_var (const PropertyManager_var &); // copy constructor
   ~PropertyManager_var (void); // destructor
-  
+
   PropertyManager_var &operator= (PropertyManager_ptr);
   PropertyManager_var &operator= (const PropertyManager_var &);
   PropertyManager_ptr operator-> (void) const;
-  
+
   operator const PropertyManager_ptr &() const;
   operator PropertyManager_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   PropertyManager_ptr in (void) const;
   PropertyManager_ptr &inout (void);
   PropertyManager_ptr &out (void);
@@ -2228,7 +2131,7 @@ public:
   operator PropertyManager_ptr &();
   PropertyManager_ptr &ptr (void);
   PropertyManager_ptr operator-> (void);
-  
+
 private:
   PropertyManager_ptr &ptr_;
 };
@@ -2252,12 +2155,12 @@ public:
   static PropertyManager_ptr _duplicate (PropertyManager_ptr obj);
   static PropertyManager_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static PropertyManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static PropertyManager_ptr _nil (void)
@@ -2269,7 +2172,7 @@ public:
 
   virtual void set_default_properties (
       const FT::Properties & props,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2279,7 +2182,7 @@ public:
     ));
 
   virtual FT::Properties * get_default_properties (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2288,7 +2191,7 @@ public:
 
   virtual void remove_default_properties (
       const FT::Properties & props,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2300,7 +2203,7 @@ public:
   virtual void set_type_properties (
       const char * type_id,
       const FT::Properties & overrides,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2311,7 +2214,7 @@ public:
 
   virtual FT::Properties * get_type_properties (
       const char * type_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2321,7 +2224,7 @@ public:
   virtual void remove_type_properties (
       const char * type_id,
       const FT::Properties & props,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2333,7 +2236,7 @@ public:
   virtual void set_properties_dynamically (
       FT::ObjectGroup_ptr object_group,
       const FT::Properties & overrides,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2345,7 +2248,7 @@ public:
 
   virtual FT::Properties * get_properties (
       FT::ObjectGroup_ptr object_group,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2354,18 +2257,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   PropertyManager (void);
-  PropertyManager (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  PropertyManager (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~PropertyManager (void);
@@ -2377,14 +2280,13 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PropertyManager;
+
 
 
 #if !defined (_FT_OBJECTGROUPMANAGER___PTR_CH_)
 #define _FT_OBJECTGROUPMANAGER___PTR_CH_
 
-class ObjectGroupManager;
-typedef ObjectGroupManager *ObjectGroupManager_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -2396,17 +2298,17 @@ class TAO_Export ObjectGroupManager_var : public TAO_Base_var
 {
 public:
   ObjectGroupManager_var (void); // default constructor
-  ObjectGroupManager_var (ObjectGroupManager_ptr p) : ptr_ (p) {} 
+  ObjectGroupManager_var (ObjectGroupManager_ptr p) : ptr_ (p) {}
   ObjectGroupManager_var (const ObjectGroupManager_var &); // copy constructor
   ~ObjectGroupManager_var (void); // destructor
-  
+
   ObjectGroupManager_var &operator= (ObjectGroupManager_ptr);
   ObjectGroupManager_var &operator= (const ObjectGroupManager_var &);
   ObjectGroupManager_ptr operator-> (void) const;
-  
+
   operator const ObjectGroupManager_ptr &() const;
   operator ObjectGroupManager_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   ObjectGroupManager_ptr in (void) const;
   ObjectGroupManager_ptr &inout (void);
   ObjectGroupManager_ptr &out (void);
@@ -2439,7 +2341,7 @@ public:
   operator ObjectGroupManager_ptr &();
   ObjectGroupManager_ptr &ptr (void);
   ObjectGroupManager_ptr operator-> (void);
-  
+
 private:
   ObjectGroupManager_ptr &ptr_;
 };
@@ -2463,12 +2365,12 @@ public:
   static ObjectGroupManager_ptr _duplicate (ObjectGroupManager_ptr obj);
   static ObjectGroupManager_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static ObjectGroupManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static ObjectGroupManager_ptr _nil (void)
@@ -2483,7 +2385,7 @@ public:
       const FT::Location & the_location,
       const char * type_id,
       const FT::Criteria & the_criteria,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2500,7 +2402,7 @@ public:
       FT::ObjectGroup_ptr object_group,
       const FT::Location & the_location,
       CORBA::Object_ptr member,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2513,7 +2415,7 @@ public:
   virtual FT::ObjectGroup_ptr remove_member (
       FT::ObjectGroup_ptr object_group,
       const FT::Location & the_location,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2525,7 +2427,7 @@ public:
   virtual FT::ObjectGroup_ptr set_primary_member (
       FT::ObjectGroup_ptr object_group,
       const FT::Location & the_location,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2538,7 +2440,7 @@ public:
 
   virtual FT::Locations * locations_of_members (
       FT::ObjectGroup_ptr object_group,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2548,7 +2450,7 @@ public:
 
   virtual FT::ObjectGroupId get_object_group_id (
       FT::ObjectGroup_ptr object_group,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2558,7 +2460,7 @@ public:
 
   virtual FT::ObjectGroup_ptr get_object_group_ref (
       FT::ObjectGroup_ptr object_group,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2569,7 +2471,7 @@ public:
   virtual CORBA::Object_ptr get_member_ref (
       FT::ObjectGroup_ptr object_group,
       const FT::Location & loc,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2579,18 +2481,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   ObjectGroupManager (void);
-  ObjectGroupManager (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  ObjectGroupManager (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~ObjectGroupManager (void);
@@ -2602,14 +2504,13 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ObjectGroupManager;
+
 
 
 #if !defined (_FT_GENERICFACTORY___PTR_CH_)
 #define _FT_GENERICFACTORY___PTR_CH_
 
-class GenericFactory;
-typedef GenericFactory *GenericFactory_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -2621,17 +2522,17 @@ class TAO_Export GenericFactory_var : public TAO_Base_var
 {
 public:
   GenericFactory_var (void); // default constructor
-  GenericFactory_var (GenericFactory_ptr p) : ptr_ (p) {} 
+  GenericFactory_var (GenericFactory_ptr p) : ptr_ (p) {}
   GenericFactory_var (const GenericFactory_var &); // copy constructor
   ~GenericFactory_var (void); // destructor
-  
+
   GenericFactory_var &operator= (GenericFactory_ptr);
   GenericFactory_var &operator= (const GenericFactory_var &);
   GenericFactory_ptr operator-> (void) const;
-  
+
   operator const GenericFactory_ptr &() const;
   operator GenericFactory_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   GenericFactory_ptr in (void) const;
   GenericFactory_ptr &inout (void);
   GenericFactory_ptr &out (void);
@@ -2664,7 +2565,7 @@ public:
   operator GenericFactory_ptr &();
   GenericFactory_ptr &ptr (void);
   GenericFactory_ptr operator-> (void);
-  
+
 private:
   GenericFactory_ptr &ptr_;
 };
@@ -2688,12 +2589,12 @@ public:
   static GenericFactory_ptr _duplicate (GenericFactory_ptr obj);
   static GenericFactory_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static GenericFactory_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static GenericFactory_ptr _nil (void)
@@ -2713,7 +2614,7 @@ public:
       const char * type_id,
       const FT::Criteria & the_criteria,
       FT::GenericFactory::FactoryCreationId_out factory_creation_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2727,7 +2628,7 @@ public:
 
   virtual void delete_object (
       const FT::GenericFactory::FactoryCreationId & factory_creation_id,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2736,18 +2637,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   GenericFactory (void);
-  GenericFactory (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  GenericFactory (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~GenericFactory (void);
@@ -2759,14 +2660,13 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_GenericFactory;
+
 
 
 #if !defined (_FT_REPLICATIONMANAGER___PTR_CH_)
 #define _FT_REPLICATIONMANAGER___PTR_CH_
 
-class ReplicationManager;
-typedef ReplicationManager *ReplicationManager_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -2778,17 +2678,17 @@ class TAO_Export ReplicationManager_var : public TAO_Base_var
 {
 public:
   ReplicationManager_var (void); // default constructor
-  ReplicationManager_var (ReplicationManager_ptr p) : ptr_ (p) {} 
+  ReplicationManager_var (ReplicationManager_ptr p) : ptr_ (p) {}
   ReplicationManager_var (const ReplicationManager_var &); // copy constructor
   ~ReplicationManager_var (void); // destructor
-  
+
   ReplicationManager_var &operator= (ReplicationManager_ptr);
   ReplicationManager_var &operator= (const ReplicationManager_var &);
   ReplicationManager_ptr operator-> (void) const;
-  
+
   operator const ReplicationManager_ptr &() const;
   operator ReplicationManager_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   ReplicationManager_ptr in (void) const;
   ReplicationManager_ptr &inout (void);
   ReplicationManager_ptr &out (void);
@@ -2821,7 +2721,7 @@ public:
   operator ReplicationManager_ptr &();
   ReplicationManager_ptr &ptr (void);
   ReplicationManager_ptr operator-> (void);
-  
+
 private:
   ReplicationManager_ptr &ptr_;
 };
@@ -2845,12 +2745,12 @@ public:
   static ReplicationManager_ptr _duplicate (ReplicationManager_ptr obj);
   static ReplicationManager_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static ReplicationManager_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static ReplicationManager_ptr _nil (void)
@@ -2862,7 +2762,7 @@ public:
 
   virtual void register_fault_notifier (
       FT::FaultNotifier_ptr fault_notifier,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2870,7 +2770,7 @@ public:
     ));
 
   virtual FT::FaultNotifier_ptr get_fault_notifier (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -2879,18 +2779,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   ReplicationManager (void);
-  ReplicationManager (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  ReplicationManager (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~ReplicationManager (void);
@@ -2902,14 +2802,13 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_ReplicationManager;
+
 
 
 #if !defined (_FT_PULLMONITORABLE___PTR_CH_)
 #define _FT_PULLMONITORABLE___PTR_CH_
 
-class PullMonitorable;
-typedef PullMonitorable *PullMonitorable_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -2921,17 +2820,17 @@ class TAO_Export PullMonitorable_var : public TAO_Base_var
 {
 public:
   PullMonitorable_var (void); // default constructor
-  PullMonitorable_var (PullMonitorable_ptr p) : ptr_ (p) {} 
+  PullMonitorable_var (PullMonitorable_ptr p) : ptr_ (p) {}
   PullMonitorable_var (const PullMonitorable_var &); // copy constructor
   ~PullMonitorable_var (void); // destructor
-  
+
   PullMonitorable_var &operator= (PullMonitorable_ptr);
   PullMonitorable_var &operator= (const PullMonitorable_var &);
   PullMonitorable_ptr operator-> (void) const;
-  
+
   operator const PullMonitorable_ptr &() const;
   operator PullMonitorable_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   PullMonitorable_ptr in (void) const;
   PullMonitorable_ptr &inout (void);
   PullMonitorable_ptr &out (void);
@@ -2964,7 +2863,7 @@ public:
   operator PullMonitorable_ptr &();
   PullMonitorable_ptr &ptr (void);
   PullMonitorable_ptr operator-> (void);
-  
+
 private:
   PullMonitorable_ptr &ptr_;
 };
@@ -2988,12 +2887,12 @@ public:
   static PullMonitorable_ptr _duplicate (PullMonitorable_ptr obj);
   static PullMonitorable_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static PullMonitorable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static PullMonitorable_ptr _nil (void)
@@ -3004,7 +2903,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual CORBA::Boolean is_alive (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3012,18 +2911,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   PullMonitorable (void);
-  PullMonitorable (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  PullMonitorable (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~PullMonitorable (void);
@@ -3035,14 +2934,13 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_PullMonitorable;
+
 
 
 #if !defined (_FT_FAULTNOTIFIER___PTR_CH_)
 #define _FT_FAULTNOTIFIER___PTR_CH_
 
-class FaultNotifier;
-typedef FaultNotifier *FaultNotifier_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -3054,17 +2952,17 @@ class TAO_Export FaultNotifier_var : public TAO_Base_var
 {
 public:
   FaultNotifier_var (void); // default constructor
-  FaultNotifier_var (FaultNotifier_ptr p) : ptr_ (p) {} 
+  FaultNotifier_var (FaultNotifier_ptr p) : ptr_ (p) {}
   FaultNotifier_var (const FaultNotifier_var &); // copy constructor
   ~FaultNotifier_var (void); // destructor
-  
+
   FaultNotifier_var &operator= (FaultNotifier_ptr);
   FaultNotifier_var &operator= (const FaultNotifier_var &);
   FaultNotifier_ptr operator-> (void) const;
-  
+
   operator const FaultNotifier_ptr &() const;
   operator FaultNotifier_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   FaultNotifier_ptr in (void) const;
   FaultNotifier_ptr &inout (void);
   FaultNotifier_ptr &out (void);
@@ -3097,7 +2995,7 @@ public:
   operator FaultNotifier_ptr &();
   FaultNotifier_ptr &ptr (void);
   FaultNotifier_ptr operator-> (void);
-  
+
 private:
   FaultNotifier_ptr &ptr_;
 };
@@ -3121,12 +3019,12 @@ public:
   static FaultNotifier_ptr _duplicate (FaultNotifier_ptr obj);
   static FaultNotifier_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static FaultNotifier_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static FaultNotifier_ptr _nil (void)
@@ -3142,7 +3040,7 @@ public:
 
   virtual void push_structured_fault (
       const CosNotification::StructuredEvent & event,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3151,7 +3049,7 @@ public:
 
   virtual void push_sequence_fault (
       const CosNotification::EventBatch & events,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3160,7 +3058,7 @@ public:
 
   virtual CosNotifyFilter::Filter_ptr create_subscription_filter (
       const char * constraint_grammar,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3171,7 +3069,7 @@ public:
   virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
       CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
       CosNotifyFilter::Filter_ptr filter,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3181,7 +3079,7 @@ public:
   virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
       CosNotifyComm::SequencePushConsumer_ptr push_consumer,
       CosNotifyFilter::Filter_ptr filter,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3190,7 +3088,7 @@ public:
 
   virtual void disconnect_consumer (
       FT::FaultNotifier::ConsumerId connection,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3199,18 +3097,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   FaultNotifier (void);
-  FaultNotifier (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  FaultNotifier (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~FaultNotifier (void);
@@ -3222,33 +3120,32 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_FaultNotifier;
+
 
 
 #if !defined (_FT_STATE_CH_)
 #define _FT_STATE_CH_
 
-class State;
-class State_var;
+
 
 // *************************************************************
 // State
 // *************************************************************
 
-class TAO_Export State : public 
+class TAO_Export State : public
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
   TAO_Unbounded_Sequence<CORBA::Octet>
 #else /* TAO_USE_SEQUENCE_TEMPLATES */
   TAO_Unbounded_Sequence<CORBA::Octet>
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 {
 public:
   State (void); // default ctor
   State (CORBA::ULong max); // uses max size
   State (
-    CORBA::ULong max, 
-    CORBA::ULong length, 
-    CORBA::Octet *buffer, 
+    CORBA::ULong max,
+    CORBA::ULong length,
+    CORBA::Octet *buffer,
     CORBA::Boolean release=0
   );
   State (const State &); // copy ctor
@@ -3288,19 +3185,19 @@ public:
   State_var (const State_var &); // copy constructor
   State_var (const State &); // fixed-size base types only
   ~State_var (void); // destructor
-  
+
   State_var &operator= (State *);
   State_var &operator= (const State_var &);
   State_var &operator= (const State &); // fixed-size base types only
   State *operator-> (void);
   const State *operator-> (void) const;
-  
+
   operator const State &() const;
   operator State &();
   operator State &() const;
-  
+
   CORBA::Octet &operator[] (CORBA::ULong index);
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   const State &in (void) const;
   State &inout (void);
   State *&out (void);
@@ -3330,7 +3227,7 @@ public:
   State *&ptr (void);
   State *operator-> (void);
   CORBA::Octet &operator[] (CORBA::ULong index);
-  
+
 private:
   State *&ptr_;
   // assignment from T_var not allowed
@@ -3340,7 +3237,7 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_State;
+
 
 
 #if !defined (_FT_NOSTATEAVAILABLE_CH_)
@@ -3375,7 +3272,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::NoStateAvailable
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NoStateAvailable;
+
 
 
 #endif /* end #if !defined */
@@ -3413,7 +3310,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::InvalidState
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidState;
+
 
 
 #endif /* end #if !defined */
@@ -3451,7 +3348,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::NoUpdateAvailable
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_NoUpdateAvailable;
+
 
 
 #endif /* end #if !defined */
@@ -3489,7 +3386,7 @@ static CORBA::Exception *_alloc (void);
 
 }; // exception FT::InvalidUpdate
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidUpdate;
+
 
 
 #endif /* end #if !defined */
@@ -3498,8 +3395,7 @@ TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_InvalidUpdate;
 #if !defined (_FT_CHECKPOINTABLE___PTR_CH_)
 #define _FT_CHECKPOINTABLE___PTR_CH_
 
-class Checkpointable;
-typedef Checkpointable *Checkpointable_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -3511,17 +3407,17 @@ class TAO_Export Checkpointable_var : public TAO_Base_var
 {
 public:
   Checkpointable_var (void); // default constructor
-  Checkpointable_var (Checkpointable_ptr p) : ptr_ (p) {} 
+  Checkpointable_var (Checkpointable_ptr p) : ptr_ (p) {}
   Checkpointable_var (const Checkpointable_var &); // copy constructor
   ~Checkpointable_var (void); // destructor
-  
+
   Checkpointable_var &operator= (Checkpointable_ptr);
   Checkpointable_var &operator= (const Checkpointable_var &);
   Checkpointable_ptr operator-> (void) const;
-  
+
   operator const Checkpointable_ptr &() const;
   operator Checkpointable_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   Checkpointable_ptr in (void) const;
   Checkpointable_ptr &inout (void);
   Checkpointable_ptr &out (void);
@@ -3554,7 +3450,7 @@ public:
   operator Checkpointable_ptr &();
   Checkpointable_ptr &ptr (void);
   Checkpointable_ptr operator-> (void);
-  
+
 private:
   Checkpointable_ptr &ptr_;
 };
@@ -3578,12 +3474,12 @@ public:
   static Checkpointable_ptr _duplicate (Checkpointable_ptr obj);
   static Checkpointable_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static Checkpointable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static Checkpointable_ptr _nil (void)
@@ -3594,7 +3490,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual FT::State * get_state (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3604,7 +3500,7 @@ public:
 
   virtual void set_state (
       const FT::State & s,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3613,18 +3509,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   Checkpointable (void);
-  Checkpointable (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  Checkpointable (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~Checkpointable (void);
@@ -3636,14 +3532,13 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Checkpointable;
+
 
 
 #if !defined (_FT_UPDATEABLE___PTR_CH_)
 #define _FT_UPDATEABLE___PTR_CH_
 
-class Updateable;
-typedef Updateable *Updateable_ptr;
+
 
 #endif /* end #if !defined */
 
@@ -3655,17 +3550,17 @@ class TAO_Export Updateable_var : public TAO_Base_var
 {
 public:
   Updateable_var (void); // default constructor
-  Updateable_var (Updateable_ptr p) : ptr_ (p) {} 
+  Updateable_var (Updateable_ptr p) : ptr_ (p) {}
   Updateable_var (const Updateable_var &); // copy constructor
   ~Updateable_var (void); // destructor
-  
+
   Updateable_var &operator= (Updateable_ptr);
   Updateable_var &operator= (const Updateable_var &);
   Updateable_ptr operator-> (void) const;
-  
+
   operator const Updateable_ptr &() const;
   operator Updateable_ptr &();
-  // in, inout, out, _retn 
+  // in, inout, out, _retn
   Updateable_ptr in (void) const;
   Updateable_ptr &inout (void);
   Updateable_ptr &out (void);
@@ -3698,7 +3593,7 @@ public:
   operator Updateable_ptr &();
   Updateable_ptr &ptr (void);
   Updateable_ptr operator-> (void);
-  
+
 private:
   Updateable_ptr &ptr_;
 };
@@ -3722,12 +3617,12 @@ public:
   static Updateable_ptr _duplicate (Updateable_ptr obj);
   static Updateable_ptr _narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static Updateable_ptr _unchecked_narrow (
       CORBA::Object_ptr obj,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   static Updateable_ptr _nil (void)
@@ -3738,7 +3633,7 @@ public:
   static void _tao_any_destructor (void*);
 
   virtual FT::State * get_update (
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3748,7 +3643,7 @@ public:
 
   virtual void set_update (
       const FT::State & s,
-      CORBA::Environment &ACE_TRY_ENV = 
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     )
     ACE_THROW_SPEC ((
@@ -3757,18 +3652,18 @@ public:
     ));
 
   virtual CORBA::Boolean _is_a (
-      const CORBA::Char *type_id, 
-      CORBA::Environment &ACE_TRY_ENV = 
+      const CORBA::Char *type_id,
+      CORBA::Environment &ACE_TRY_ENV =
         TAO_default_environment ()
     );
   virtual void *_tao_QueryInterface (ptr_arith_t type);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
 protected:
   Updateable (void);
-  Updateable (TAO_Stub *objref, 
-      TAO_ServantBase *_tao_servant = 0, 
+  Updateable (TAO_Stub *objref,
+      TAO_ServantBase *_tao_servant = 0,
       CORBA::Boolean _tao_collocated = 0
     );
   virtual ~Updateable (void);
@@ -3780,11 +3675,9 @@ private:
 
 #endif /* end #if !defined */
 
-TAO_NAMESPACE_STORAGE_CLASS CORBA::TypeCode_ptr _tc_Updateable;
 
 
-}
-TAO_NAMESPACE_CLOSE // module FT
+
 
 TAO_Export void operator<<= (CORBA::Any &, const FT::TagFTGroupTaggedComponent &); // copying version
 TAO_Export void operator<<= (CORBA::Any &, FT::TagFTGroupTaggedComponent*); // noncopying version
@@ -4227,9 +4120,12 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &, FT::Updateable_ptr &);
 #endif /* __ACE_INLINE__ */
 
 
+
 #if defined (__ACE_INLINE__)
 #include "FT_CORBAC.i"
 #endif /* defined INLINE */
+
+#endif /*TAO_HAS_FT_CORBA == 1 */
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1200)
 #pragma warning(pop)

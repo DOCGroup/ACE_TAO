@@ -12,17 +12,17 @@
 // *************************************************************
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::TagFTGroupTaggedComponent_var (void) // default constructor
+FT::TagFTGroupTaggedComponent_var::FT_TagFTGroupTaggedComponent_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::TagFTGroupTaggedComponent_var (TagFTGroupTaggedComponent *p)
+FT::TagFTGroupTaggedComponent_var::FT_TagFTGroupTaggedComponent_var (FT_TagFTGroupTaggedComponent *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::TagFTGroupTaggedComponent_var (const ::FT::TagFTGroupTaggedComponent_var &p) // copy constructor
+FT::TagFTGroupTaggedComponent_var::FT_TagFTGroupTaggedComponent_var (const ::FT::TagFTGroupTaggedComponent_var &p) // copy constructor
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::FT::TagFTGroupTaggedComponent (*p.ptr_));
@@ -31,13 +31,13 @@ FT::TagFTGroupTaggedComponent_var::TagFTGroupTaggedComponent_var (const ::FT::Ta
 }
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::~TagFTGroupTaggedComponent_var (void) // destructor
+FT::TagFTGroupTaggedComponent_var::~FT_TagFTGroupTaggedComponent_var (void) // destructor
 {
   delete this->ptr_;
 }
 
 ACE_INLINE FT::TagFTGroupTaggedComponent_var &
-FT::TagFTGroupTaggedComponent_var::operator= (TagFTGroupTaggedComponent *p)
+FT::TagFTGroupTaggedComponent_var::operator= (FT_TagFTGroupTaggedComponent *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
@@ -74,20 +74,20 @@ FT::TagFTGroupTaggedComponent_var::operator const ::FT::TagFTGroupTaggedComponen
 }
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::operator ::FT::TagFTGroupTaggedComponent &() // cast 
+FT::TagFTGroupTaggedComponent_var::operator ::FT::TagFTGroupTaggedComponent &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::operator ::FT::TagFTGroupTaggedComponent &() const // cast 
+FT::TagFTGroupTaggedComponent_var::operator ::FT::TagFTGroupTaggedComponent &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_var::operator ::FT::TagFTGroupTaggedComponent *&() // cast 
+FT::TagFTGroupTaggedComponent_var::operator ::FT::TagFTGroupTaggedComponent *&() // cast
 {
   return this->ptr_;
 }
@@ -104,7 +104,7 @@ FT::TagFTGroupTaggedComponent_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::TagFTGroupTaggedComponent *&
 FT::TagFTGroupTaggedComponent_var::out (void)
 {
@@ -132,14 +132,14 @@ FT::TagFTGroupTaggedComponent_var::ptr (void) const
 // *************************************************************
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_out::TagFTGroupTaggedComponent_out (::FT::TagFTGroupTaggedComponent *&p)
+FT::TagFTGroupTaggedComponent_out::FT_TagFTGroupTaggedComponent_out (::FT::TagFTGroupTaggedComponent *&p)
   : ptr_ (p)
 {
   this->ptr_ = 0;
 }
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_out::TagFTGroupTaggedComponent_out (TagFTGroupTaggedComponent_var &p) // constructor from _var
+FT::TagFTGroupTaggedComponent_out::FT_TagFTGroupTaggedComponent_out (FT_TagFTGroupTaggedComponent_var &p) // constructor from _var
   : ptr_ (p.out ())
 {
   delete this->ptr_;
@@ -147,25 +147,25 @@ FT::TagFTGroupTaggedComponent_out::TagFTGroupTaggedComponent_out (TagFTGroupTagg
 }
 
 ACE_INLINE
-FT::TagFTGroupTaggedComponent_out::TagFTGroupTaggedComponent_out (const ::FT::TagFTGroupTaggedComponent_out &p) // copy constructor
-  : ptr_ (ACE_const_cast (TagFTGroupTaggedComponent_out&, p).ptr_)
+FT::TagFTGroupTaggedComponent_out::FT_TagFTGroupTaggedComponent_out (const ::FT::TagFTGroupTaggedComponent_out &p) // copy constructor
+  : ptr_ (ACE_const_cast (FT_TagFTGroupTaggedComponent_out&, p).ptr_)
 {}
 
 ACE_INLINE FT::TagFTGroupTaggedComponent_out &
 FT::TagFTGroupTaggedComponent_out::operator= (const ::FT::TagFTGroupTaggedComponent_out &p)
 {
-  this->ptr_ = ACE_const_cast (TagFTGroupTaggedComponent_out&, p).ptr_;
+  this->ptr_ = ACE_const_cast (FT_TagFTGroupTaggedComponent_out&, p).ptr_;
   return *this;
 }
 
 ACE_INLINE FT::TagFTGroupTaggedComponent_out &
-FT::TagFTGroupTaggedComponent_out::operator= (TagFTGroupTaggedComponent *p)
+FT::TagFTGroupTaggedComponent_out::operator= (FT_TagFTGroupTaggedComponent *p)
 {
   this->ptr_ = p;
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::TagFTGroupTaggedComponent_out::operator ::FT::TagFTGroupTaggedComponent *&() // cast
 {
   return this->ptr_;
@@ -188,17 +188,17 @@ FT::TagFTGroupTaggedComponent_out::operator-> (void)
 // *************************************************************
 
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::TagFTPrimaryTaggedComponent_var (void) // default constructor
+FT::TagFTPrimaryTaggedComponent_var::FT_TagFTPrimaryTaggedComponent_var (void) // default constructor
   : ptr_ (0)
 {}
 
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::TagFTPrimaryTaggedComponent_var (TagFTPrimaryTaggedComponent *p)
+FT::TagFTPrimaryTaggedComponent_var::FT_TagFTPrimaryTaggedComponent_var (FT_TagFTPrimaryTaggedComponent *p)
   : ptr_ (p)
 {}
 
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::TagFTPrimaryTaggedComponent_var (const ::FT::TagFTPrimaryTaggedComponent_var &p) // copy constructor
+FT::TagFTPrimaryTaggedComponent_var::FT_TagFTPrimaryTaggedComponent_var (const ::FT::TagFTPrimaryTaggedComponent_var &p) // copy constructor
 {
   if (p.ptr_)
     ACE_NEW (this->ptr_, ::FT::TagFTPrimaryTaggedComponent (*p.ptr_));
@@ -208,19 +208,19 @@ FT::TagFTPrimaryTaggedComponent_var::TagFTPrimaryTaggedComponent_var (const ::FT
 
 // fixed-size types only
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::TagFTPrimaryTaggedComponent_var (const ::FT::TagFTPrimaryTaggedComponent &p)
+FT::TagFTPrimaryTaggedComponent_var::FT_TagFTPrimaryTaggedComponent_var (const ::FT::TagFTPrimaryTaggedComponent &p)
 {
   ACE_NEW (this->ptr_, ::FT::TagFTPrimaryTaggedComponent (p));
 }
 
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::~TagFTPrimaryTaggedComponent_var (void) // destructor
+FT::TagFTPrimaryTaggedComponent_var::~FT_TagFTPrimaryTaggedComponent_var (void) // destructor
 {
   delete this->ptr_;
 }
 
 ACE_INLINE FT::TagFTPrimaryTaggedComponent_var &
-FT::TagFTPrimaryTaggedComponent_var::operator= (TagFTPrimaryTaggedComponent *p)
+FT::TagFTPrimaryTaggedComponent_var::operator= (FT_TagFTPrimaryTaggedComponent *p)
 {
   delete this->ptr_;
   this->ptr_ = p;
@@ -269,13 +269,13 @@ FT::TagFTPrimaryTaggedComponent_var::operator const ::FT::TagFTPrimaryTaggedComp
 }
 
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::operator ::FT::TagFTPrimaryTaggedComponent &() // cast 
+FT::TagFTPrimaryTaggedComponent_var::operator ::FT::TagFTPrimaryTaggedComponent &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::TagFTPrimaryTaggedComponent_var::operator ::FT::TagFTPrimaryTaggedComponent &() const // cast 
+FT::TagFTPrimaryTaggedComponent_var::operator ::FT::TagFTPrimaryTaggedComponent &() const // cast
 {
   return *this->ptr_;
 }
@@ -292,7 +292,7 @@ FT::TagFTPrimaryTaggedComponent_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::FT::TagFTPrimaryTaggedComponent &
 FT::TagFTPrimaryTaggedComponent_var::out (void)
 {
@@ -397,13 +397,13 @@ FT::FTGroupVersionServiceContext_var::operator const ::FT::FTGroupVersionService
 }
 
 ACE_INLINE
-FT::FTGroupVersionServiceContext_var::operator ::FT::FTGroupVersionServiceContext &() // cast 
+FT::FTGroupVersionServiceContext_var::operator ::FT::FTGroupVersionServiceContext &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::FTGroupVersionServiceContext_var::operator ::FT::FTGroupVersionServiceContext &() const // cast 
+FT::FTGroupVersionServiceContext_var::operator ::FT::FTGroupVersionServiceContext &() const // cast
 {
   return *this->ptr_;
 }
@@ -420,7 +420,7 @@ FT::FTGroupVersionServiceContext_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::FT::FTGroupVersionServiceContext &
 FT::FTGroupVersionServiceContext_var::out (void)
 {
@@ -506,20 +506,20 @@ FT::FTRequestServiceContext_var::operator const ::FT::FTRequestServiceContext &(
 }
 
 ACE_INLINE
-FT::FTRequestServiceContext_var::operator ::FT::FTRequestServiceContext &() // cast 
+FT::FTRequestServiceContext_var::operator ::FT::FTRequestServiceContext &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::FTRequestServiceContext_var::operator ::FT::FTRequestServiceContext &() const // cast 
+FT::FTRequestServiceContext_var::operator ::FT::FTRequestServiceContext &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::FTRequestServiceContext_var::operator ::FT::FTRequestServiceContext *&() // cast 
+FT::FTRequestServiceContext_var::operator ::FT::FTRequestServiceContext *&() // cast
 {
   return this->ptr_;
 }
@@ -536,7 +536,7 @@ FT::FTRequestServiceContext_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::FTRequestServiceContext *&
 FT::FTRequestServiceContext_var::out (void)
 {
@@ -597,7 +597,7 @@ FT::FTRequestServiceContext_out::operator= (FTRequestServiceContext *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::FTRequestServiceContext_out::operator ::FT::FTRequestServiceContext *&() // cast
 {
   return this->ptr_;
@@ -676,14 +676,14 @@ FT::RequestDurationPolicy_var::operator= (const ::FT::RequestDurationPolicy_var 
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::RequestDurationPolicy_var::operator const ::FT::RequestDurationPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::RequestDurationPolicy_var::operator ::FT::RequestDurationPolicy_ptr &() // cast 
+ACE_INLINE
+FT::RequestDurationPolicy_var::operator ::FT::RequestDurationPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -775,7 +775,7 @@ FT::RequestDurationPolicy_out::operator= (RequestDurationPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::RequestDurationPolicy_out::operator ::FT::RequestDurationPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -882,13 +882,13 @@ FT::TagFTHeartbeatEnabledTaggedComponent_var::operator const ::FT::TagFTHeartbea
 }
 
 ACE_INLINE
-FT::TagFTHeartbeatEnabledTaggedComponent_var::operator ::FT::TagFTHeartbeatEnabledTaggedComponent &() // cast 
+FT::TagFTHeartbeatEnabledTaggedComponent_var::operator ::FT::TagFTHeartbeatEnabledTaggedComponent &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::TagFTHeartbeatEnabledTaggedComponent_var::operator ::FT::TagFTHeartbeatEnabledTaggedComponent &() const // cast 
+FT::TagFTHeartbeatEnabledTaggedComponent_var::operator ::FT::TagFTHeartbeatEnabledTaggedComponent &() const // cast
 {
   return *this->ptr_;
 }
@@ -905,7 +905,7 @@ FT::TagFTHeartbeatEnabledTaggedComponent_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::FT::TagFTHeartbeatEnabledTaggedComponent &
 FT::TagFTHeartbeatEnabledTaggedComponent_var::out (void)
 {
@@ -1010,13 +1010,13 @@ FT::HeartbeatPolicyValue_var::operator const ::FT::HeartbeatPolicyValue &() cons
 }
 
 ACE_INLINE
-FT::HeartbeatPolicyValue_var::operator ::FT::HeartbeatPolicyValue &() // cast 
+FT::HeartbeatPolicyValue_var::operator ::FT::HeartbeatPolicyValue &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::HeartbeatPolicyValue_var::operator ::FT::HeartbeatPolicyValue &() const // cast 
+FT::HeartbeatPolicyValue_var::operator ::FT::HeartbeatPolicyValue &() const // cast
 {
   return *this->ptr_;
 }
@@ -1033,7 +1033,7 @@ FT::HeartbeatPolicyValue_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::FT::HeartbeatPolicyValue &
 FT::HeartbeatPolicyValue_var::out (void)
 {
@@ -1113,14 +1113,14 @@ FT::HeartbeatPolicy_var::operator= (const ::FT::HeartbeatPolicy_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::HeartbeatPolicy_var::operator const ::FT::HeartbeatPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::HeartbeatPolicy_var::operator ::FT::HeartbeatPolicy_ptr &() // cast 
+ACE_INLINE
+FT::HeartbeatPolicy_var::operator ::FT::HeartbeatPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1212,7 +1212,7 @@ FT::HeartbeatPolicy_out::operator= (HeartbeatPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::HeartbeatPolicy_out::operator ::FT::HeartbeatPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1294,14 +1294,14 @@ FT::HeartbeatEnabledPolicy_var::operator= (const ::FT::HeartbeatEnabledPolicy_va
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::HeartbeatEnabledPolicy_var::operator const ::FT::HeartbeatEnabledPolicy_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::HeartbeatEnabledPolicy_var::operator ::FT::HeartbeatEnabledPolicy_ptr &() // cast 
+ACE_INLINE
+FT::HeartbeatEnabledPolicy_var::operator ::FT::HeartbeatEnabledPolicy_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -1393,7 +1393,7 @@ FT::HeartbeatEnabledPolicy_out::operator= (HeartbeatEnabledPolicy_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::HeartbeatEnabledPolicy_out::operator ::FT::HeartbeatEnabledPolicy_ptr &() // cast
 {
   return this->ptr_;
@@ -1438,7 +1438,7 @@ FT::GenericFactory_var::GenericFactory_var (void) // default constructor
   : ptr_ (FT::GenericFactory::_nil ())
 {}
 
-ACE_INLINE FT::GenericFactory_ptr 
+ACE_INLINE FT::GenericFactory_ptr
 FT::GenericFactory_var::ptr (void) const
 {
   return this->ptr_;
@@ -1475,19 +1475,19 @@ FT::GenericFactory_var::operator= (const FT::GenericFactory_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::GenericFactory_var::operator const FT::GenericFactory_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::GenericFactory_var::operator FT::GenericFactory_ptr &() // cast 
+ACE_INLINE
+FT::GenericFactory_var::operator FT::GenericFactory_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE FT::GenericFactory_ptr 
+ACE_INLINE FT::GenericFactory_ptr
 FT::GenericFactory_var::operator-> (void) const
 {
   return this->ptr_;
@@ -1513,7 +1513,7 @@ FT::GenericFactory_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE FT::GenericFactory_ptr 
+ACE_INLINE FT::GenericFactory_ptr
 FT::GenericFactory_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -1574,7 +1574,7 @@ FT::GenericFactory_out::operator= (FT::GenericFactory_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::GenericFactory_out::operator FT::GenericFactory_ptr &() // cast
 {
   return this->ptr_;
@@ -1586,7 +1586,7 @@ FT::GenericFactory_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE FT::GenericFactory_ptr 
+ACE_INLINE FT::GenericFactory_ptr
 FT::GenericFactory_out::operator-> (void)
 {
   return this->ptr_;
@@ -1619,7 +1619,7 @@ FT::FaultNotifier_var::FaultNotifier_var (void) // default constructor
   : ptr_ (FT::FaultNotifier::_nil ())
 {}
 
-ACE_INLINE FT::FaultNotifier_ptr 
+ACE_INLINE FT::FaultNotifier_ptr
 FT::FaultNotifier_var::ptr (void) const
 {
   return this->ptr_;
@@ -1656,19 +1656,19 @@ FT::FaultNotifier_var::operator= (const FT::FaultNotifier_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::FaultNotifier_var::operator const FT::FaultNotifier_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::FaultNotifier_var::operator FT::FaultNotifier_ptr &() // cast 
+ACE_INLINE
+FT::FaultNotifier_var::operator FT::FaultNotifier_ptr &() // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE FT::FaultNotifier_ptr 
+ACE_INLINE FT::FaultNotifier_ptr
 FT::FaultNotifier_var::operator-> (void) const
 {
   return this->ptr_;
@@ -1694,7 +1694,7 @@ FT::FaultNotifier_var::out (void)
   return this->ptr_;
 }
 
-ACE_INLINE FT::FaultNotifier_ptr 
+ACE_INLINE FT::FaultNotifier_ptr
 FT::FaultNotifier_var::_retn (void)
 {
   // yield ownership of managed obj reference
@@ -1755,7 +1755,7 @@ FT::FaultNotifier_out::operator= (FT::FaultNotifier_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::FaultNotifier_out::operator FT::FaultNotifier_ptr &() // cast
 {
   return this->ptr_;
@@ -1767,7 +1767,7 @@ FT::FaultNotifier_out::ptr (void) // ptr
   return this->ptr_;
 }
 
-ACE_INLINE FT::FaultNotifier_ptr 
+ACE_INLINE FT::FaultNotifier_ptr
 FT::FaultNotifier_out::operator-> (void)
 {
   return this->ptr_;
@@ -1843,20 +1843,20 @@ FT::Property_var::operator const ::FT::Property &() const // cast
 }
 
 ACE_INLINE
-FT::Property_var::operator ::FT::Property &() // cast 
+FT::Property_var::operator ::FT::Property &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::Property_var::operator ::FT::Property &() const // cast 
+FT::Property_var::operator ::FT::Property &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::Property_var::operator ::FT::Property *&() // cast 
+FT::Property_var::operator ::FT::Property *&() // cast
 {
   return this->ptr_;
 }
@@ -1873,7 +1873,7 @@ FT::Property_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::Property *&
 FT::Property_var::out (void)
 {
@@ -1934,7 +1934,7 @@ FT::Property_out::operator= (Property *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Property_out::operator ::FT::Property *&() // cast
 {
   return this->ptr_;
@@ -1954,7 +1954,7 @@ FT::Property_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_PROPERTIES_CI_
 
@@ -1967,24 +1967,24 @@ FT::Property_out::operator-> (void)
     ACE_NEW_RETURN (retval, FT::Property[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void FT::_TAO_Unbounded_Sequence_FT_Properties::freebuf (FT::Property *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_FT_Properties::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -1993,7 +1993,7 @@ FT::Property_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Properties::_TAO_Unbounded_Sequence_FT_Properties (const _TAO_Unbounded_Sequence_FT_Properties &rhs)
   // Copy constructor.
@@ -2003,10 +2003,10 @@ FT::Property_out::operator-> (void)
     {
       FT::Property *tmp1 = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (this->maximum_);
       FT::Property * const tmp2 = ACE_reinterpret_cast (FT::Property * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -2014,14 +2014,14 @@ FT::Property_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE FT::_TAO_Unbounded_Sequence_FT_Properties &
   FT::_TAO_Unbounded_Sequence_FT_Properties::operator= (const _TAO_Unbounded_Sequence_FT_Properties &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -2034,18 +2034,18 @@ FT::Property_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_FT_Properties::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     FT::Property *tmp1 = ACE_reinterpret_cast (FT::Property *, this->buffer_);
     FT::Property * const tmp2 = ACE_reinterpret_cast (FT::Property * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE FT::Property &
   FT::_TAO_Unbounded_Sequence_FT_Properties::operator[] (CORBA::ULong i)
@@ -2055,7 +2055,7 @@ FT::Property_out::operator-> (void)
     FT::Property* tmp = ACE_reinterpret_cast(FT::Property*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const FT::Property &
   FT::_TAO_Unbounded_Sequence_FT_Properties::operator[] (CORBA::ULong i) const
   // operator []
@@ -2064,9 +2064,9 @@ FT::Property_out::operator-> (void)
     FT::Property * const tmp = ACE_reinterpret_cast (FT::Property* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE FT::Property *
   FT::_TAO_Unbounded_Sequence_FT_Properties::get_buffer (CORBA::Boolean orphan)
   {
@@ -2099,13 +2099,13 @@ FT::Property_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const FT::Property *
   FT::_TAO_Unbounded_Sequence_FT_Properties::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const FT::Property * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   FT::_TAO_Unbounded_Sequence_FT_Properties::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -2122,11 +2122,11 @@ FT::Property_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_FT_PROPERTIES_CI_)
 #define _FT_PROPERTIES_CI_
@@ -2191,27 +2191,27 @@ FT::Properties_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Properties_var::operator const ::FT::Properties &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::Properties_var::operator ::FT::Properties &() // cast 
+ACE_INLINE
+FT::Properties_var::operator ::FT::Properties &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::Properties_var::operator ::FT::Properties &() const // cast 
+ACE_INLINE
+FT::Properties_var::operator ::FT::Properties &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::Properties_var::operator ::FT::Properties *&() // cast 
+FT::Properties_var::operator ::FT::Properties *&() // cast
 {
   return this->ptr_;
 }
@@ -2234,7 +2234,7 @@ FT::Properties_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::Properties *&
 FT::Properties_var::out (void)
 {
@@ -2295,7 +2295,7 @@ FT::Properties_out::operator= (Properties *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Properties_out::operator ::FT::Properties *&() // cast
 {
   return this->ptr_;
@@ -2324,7 +2324,7 @@ FT::Properties_out::operator[] (CORBA::ULong index)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_LOCATIONS_CI_
 
@@ -2337,24 +2337,24 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     ACE_NEW_RETURN (retval, FT::Location[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void FT::_TAO_Unbounded_Sequence_FT_Locations::freebuf (FT::Location *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_FT_Locations::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -2363,7 +2363,7 @@ FT::Properties_out::operator[] (CORBA::ULong index)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_Locations::_TAO_Unbounded_Sequence_FT_Locations (const _TAO_Unbounded_Sequence_FT_Locations &rhs)
   // Copy constructor.
@@ -2373,10 +2373,10 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     {
       FT::Location *tmp1 = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (this->maximum_);
       FT::Location * const tmp2 = ACE_reinterpret_cast (FT::Location * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -2384,14 +2384,14 @@ FT::Properties_out::operator[] (CORBA::ULong index)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE FT::_TAO_Unbounded_Sequence_FT_Locations &
   FT::_TAO_Unbounded_Sequence_FT_Locations::operator= (const _TAO_Unbounded_Sequence_FT_Locations &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -2404,18 +2404,18 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_FT_Locations::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     FT::Location *tmp1 = ACE_reinterpret_cast (FT::Location *, this->buffer_);
     FT::Location * const tmp2 = ACE_reinterpret_cast (FT::Location * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE FT::Location &
   FT::_TAO_Unbounded_Sequence_FT_Locations::operator[] (CORBA::ULong i)
@@ -2425,7 +2425,7 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     FT::Location* tmp = ACE_reinterpret_cast(FT::Location*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const FT::Location &
   FT::_TAO_Unbounded_Sequence_FT_Locations::operator[] (CORBA::ULong i) const
   // operator []
@@ -2434,9 +2434,9 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     FT::Location * const tmp = ACE_reinterpret_cast (FT::Location* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE FT::Location *
   FT::_TAO_Unbounded_Sequence_FT_Locations::get_buffer (CORBA::Boolean orphan)
   {
@@ -2469,13 +2469,13 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     }
     return result;
   }
-  
+
   ACE_INLINE const FT::Location *
   FT::_TAO_Unbounded_Sequence_FT_Locations::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const FT::Location * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   FT::_TAO_Unbounded_Sequence_FT_Locations::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -2492,11 +2492,11 @@ FT::Properties_out::operator[] (CORBA::ULong index)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_FT_LOCATIONS_CI_)
 #define _FT_LOCATIONS_CI_
@@ -2561,27 +2561,27 @@ FT::Locations_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Locations_var::operator const ::FT::Locations &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::Locations_var::operator ::FT::Locations &() // cast 
+ACE_INLINE
+FT::Locations_var::operator ::FT::Locations &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::Locations_var::operator ::FT::Locations &() const // cast 
+ACE_INLINE
+FT::Locations_var::operator ::FT::Locations &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::Locations_var::operator ::FT::Locations *&() // cast 
+FT::Locations_var::operator ::FT::Locations *&() // cast
 {
   return this->ptr_;
 }
@@ -2604,7 +2604,7 @@ FT::Locations_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::Locations *&
 FT::Locations_var::out (void)
 {
@@ -2665,7 +2665,7 @@ FT::Locations_out::operator= (Locations *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Locations_out::operator ::FT::Locations *&() // cast
 {
   return this->ptr_;
@@ -2759,20 +2759,20 @@ FT::FactoryInfo_var::operator const ::FT::FactoryInfo &() const // cast
 }
 
 ACE_INLINE
-FT::FactoryInfo_var::operator ::FT::FactoryInfo &() // cast 
+FT::FactoryInfo_var::operator ::FT::FactoryInfo &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::FactoryInfo_var::operator ::FT::FactoryInfo &() const // cast 
+FT::FactoryInfo_var::operator ::FT::FactoryInfo &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::FactoryInfo_var::operator ::FT::FactoryInfo *&() // cast 
+FT::FactoryInfo_var::operator ::FT::FactoryInfo *&() // cast
 {
   return this->ptr_;
 }
@@ -2789,7 +2789,7 @@ FT::FactoryInfo_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::FactoryInfo *&
 FT::FactoryInfo_var::out (void)
 {
@@ -2850,7 +2850,7 @@ FT::FactoryInfo_out::operator= (FactoryInfo *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::FactoryInfo_out::operator ::FT::FactoryInfo *&() // cast
 {
   return this->ptr_;
@@ -2870,7 +2870,7 @@ FT::FactoryInfo_out::operator-> (void)
 
 
 #if !defined (TAO_USE_SEQUENCE_TEMPLATES)
-  
+
 #if !defined (__TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CI_)
 #define __TAO_UNBOUNDED_SEQUENCE_FT_FACTORYINFOS_CI_
 
@@ -2883,24 +2883,24 @@ FT::FactoryInfo_out::operator-> (void)
     ACE_NEW_RETURN (retval, FT::FactoryInfo[size], 0);
     return retval;
   }
-  
+
   ACE_INLINE void FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::freebuf (FT::FactoryInfo *buffer)
   // Free the sequence.
   {
     delete [] buffer;
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (void) // Default constructor.
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum) // Constructor using a maximum length value.
     : TAO_Unbounded_Base_Sequence (maximum, _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (maximum))
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (CORBA::ULong maximum,
     CORBA::ULong length,
@@ -2909,7 +2909,7 @@ FT::FactoryInfo_out::operator-> (void)
   : TAO_Unbounded_Base_Sequence (maximum, length, data, release)
   {
   }
-  
+
   ACE_INLINE
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::_TAO_Unbounded_Sequence_FT_FactoryInfos (const _TAO_Unbounded_Sequence_FT_FactoryInfos &rhs)
   // Copy constructor.
@@ -2919,10 +2919,10 @@ FT::FactoryInfo_out::operator-> (void)
     {
       FT::FactoryInfo *tmp1 = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (this->maximum_);
       FT::FactoryInfo * const tmp2 = ACE_reinterpret_cast (FT::FactoryInfo * ACE_CAST_CONST, rhs.buffer_);
-      
+
       for (CORBA::ULong i = 0; i < this->length_; ++i)
         tmp1[i] = tmp2[i];
-      
+
       this->buffer_ = tmp1;
     }
     else
@@ -2930,14 +2930,14 @@ FT::FactoryInfo_out::operator-> (void)
       this->buffer_ = 0;
     }
   }
-  
+
   ACE_INLINE FT::_TAO_Unbounded_Sequence_FT_FactoryInfos &
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::operator= (const _TAO_Unbounded_Sequence_FT_FactoryInfos &rhs)
   // Assignment operator.
   {
     if (this == &rhs)
       return *this;
-    
+
     if (this->release_)
     {
       if (this->maximum_ < rhs.maximum_)
@@ -2950,18 +2950,18 @@ FT::FactoryInfo_out::operator-> (void)
     }
     else
       this->buffer_ = _TAO_Unbounded_Sequence_FT_FactoryInfos::allocbuf (rhs.maximum_);
-    
+
     TAO_Unbounded_Base_Sequence::operator= (rhs);
-    
+
     FT::FactoryInfo *tmp1 = ACE_reinterpret_cast (FT::FactoryInfo *, this->buffer_);
     FT::FactoryInfo * const tmp2 = ACE_reinterpret_cast (FT::FactoryInfo * ACE_CAST_CONST, rhs.buffer_);
-    
+
     for (CORBA::ULong i = 0; i < this->length_; ++i)
       tmp1[i] = tmp2[i];
-    
+
     return *this;
   }
-  
+
   // = Accessors.
   ACE_INLINE FT::FactoryInfo &
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::operator[] (CORBA::ULong i)
@@ -2971,7 +2971,7 @@ FT::FactoryInfo_out::operator-> (void)
     FT::FactoryInfo* tmp = ACE_reinterpret_cast(FT::FactoryInfo*,this->buffer_);
     return tmp[i];
   }
-  
+
   ACE_INLINE const FT::FactoryInfo &
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::operator[] (CORBA::ULong i) const
   // operator []
@@ -2980,9 +2980,9 @@ FT::FactoryInfo_out::operator-> (void)
     FT::FactoryInfo * const tmp = ACE_reinterpret_cast (FT::FactoryInfo* ACE_CAST_CONST, this->buffer_);
     return tmp[i];
   }
-  
+
   // Implement the TAO_Base_Sequence methods (see Sequence.h)
-  
+
   ACE_INLINE FT::FactoryInfo *
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::get_buffer (CORBA::Boolean orphan)
   {
@@ -3015,13 +3015,13 @@ FT::FactoryInfo_out::operator-> (void)
     }
     return result;
   }
-  
+
   ACE_INLINE const FT::FactoryInfo *
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::get_buffer (void) const
   {
     return ACE_reinterpret_cast(const FT::FactoryInfo * ACE_CAST_CONST, this->buffer_);
   }
-  
+
   ACE_INLINE void
   FT::_TAO_Unbounded_Sequence_FT_FactoryInfos::replace (CORBA::ULong max,
   CORBA::ULong length,
@@ -3038,11 +3038,11 @@ FT::FactoryInfo_out::operator-> (void)
     this->buffer_ = data;
     this->release_ = release;
   }
-  
+
 #endif /* end #if !defined */
 
 
-#endif /* !TAO_USE_SEQUENCE_TEMPLATES */ 
+#endif /* !TAO_USE_SEQUENCE_TEMPLATES */
 
 #if !defined (_FT_FACTORYINFOS_CI_)
 #define _FT_FACTORYINFOS_CI_
@@ -3107,27 +3107,27 @@ FT::FactoryInfos_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::FactoryInfos_var::operator const ::FT::FactoryInfos &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::FactoryInfos_var::operator ::FT::FactoryInfos &() // cast 
+ACE_INLINE
+FT::FactoryInfos_var::operator ::FT::FactoryInfos &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::FactoryInfos_var::operator ::FT::FactoryInfos &() const // cast 
+ACE_INLINE
+FT::FactoryInfos_var::operator ::FT::FactoryInfos &() const // cast
 {
   return *this->ptr_;
 }
 
 // variable-size types only
 ACE_INLINE
-FT::FactoryInfos_var::operator ::FT::FactoryInfos *&() // cast 
+FT::FactoryInfos_var::operator ::FT::FactoryInfos *&() // cast
 {
   return this->ptr_;
 }
@@ -3150,7 +3150,7 @@ FT::FactoryInfos_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::FactoryInfos *&
 FT::FactoryInfos_var::out (void)
 {
@@ -3211,7 +3211,7 @@ FT::FactoryInfos_out::operator= (FactoryInfos *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::FactoryInfos_out::operator ::FT::FactoryInfos *&() // cast
 {
   return this->ptr_;
@@ -3324,13 +3324,13 @@ FT::FaultMonitoringIntervalAndTimeoutValue_var::operator const ::FT::FaultMonito
 }
 
 ACE_INLINE
-FT::FaultMonitoringIntervalAndTimeoutValue_var::operator ::FT::FaultMonitoringIntervalAndTimeoutValue &() // cast 
+FT::FaultMonitoringIntervalAndTimeoutValue_var::operator ::FT::FaultMonitoringIntervalAndTimeoutValue &() // cast
 {
   return *this->ptr_;
 }
 
 ACE_INLINE
-FT::FaultMonitoringIntervalAndTimeoutValue_var::operator ::FT::FaultMonitoringIntervalAndTimeoutValue &() const // cast 
+FT::FaultMonitoringIntervalAndTimeoutValue_var::operator ::FT::FaultMonitoringIntervalAndTimeoutValue &() const // cast
 {
   return *this->ptr_;
 }
@@ -3347,7 +3347,7 @@ FT::FaultMonitoringIntervalAndTimeoutValue_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for fixed size 
+// mapping for fixed size
 ACE_INLINE ::FT::FaultMonitoringIntervalAndTimeoutValue &
 FT::FaultMonitoringIntervalAndTimeoutValue_var::out (void)
 {
@@ -3483,14 +3483,14 @@ FT::PropertyManager_var::operator= (const ::FT::PropertyManager_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::PropertyManager_var::operator const ::FT::PropertyManager_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::PropertyManager_var::operator ::FT::PropertyManager_ptr &() // cast 
+ACE_INLINE
+FT::PropertyManager_var::operator ::FT::PropertyManager_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3582,7 +3582,7 @@ FT::PropertyManager_out::operator= (PropertyManager_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::PropertyManager_out::operator ::FT::PropertyManager_ptr &() // cast
 {
   return this->ptr_;
@@ -3664,14 +3664,14 @@ FT::ObjectGroupManager_var::operator= (const ::FT::ObjectGroupManager_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::ObjectGroupManager_var::operator const ::FT::ObjectGroupManager_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::ObjectGroupManager_var::operator ::FT::ObjectGroupManager_ptr &() // cast 
+ACE_INLINE
+FT::ObjectGroupManager_var::operator ::FT::ObjectGroupManager_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3763,7 +3763,7 @@ FT::ObjectGroupManager_out::operator= (ObjectGroupManager_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::ObjectGroupManager_out::operator ::FT::ObjectGroupManager_ptr &() // cast
 {
   return this->ptr_;
@@ -3845,14 +3845,14 @@ FT::ReplicationManager_var::operator= (const ::FT::ReplicationManager_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::ReplicationManager_var::operator const ::FT::ReplicationManager_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::ReplicationManager_var::operator ::FT::ReplicationManager_ptr &() // cast 
+ACE_INLINE
+FT::ReplicationManager_var::operator ::FT::ReplicationManager_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -3944,7 +3944,7 @@ FT::ReplicationManager_out::operator= (ReplicationManager_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::ReplicationManager_out::operator ::FT::ReplicationManager_ptr &() // cast
 {
   return this->ptr_;
@@ -4026,14 +4026,14 @@ FT::PullMonitorable_var::operator= (const ::FT::PullMonitorable_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::PullMonitorable_var::operator const ::FT::PullMonitorable_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::PullMonitorable_var::operator ::FT::PullMonitorable_ptr &() // cast 
+ACE_INLINE
+FT::PullMonitorable_var::operator ::FT::PullMonitorable_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4125,7 +4125,7 @@ FT::PullMonitorable_out::operator= (PullMonitorable_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::PullMonitorable_out::operator ::FT::PullMonitorable_ptr &() // cast
 {
   return this->ptr_;
@@ -4229,20 +4229,20 @@ FT::State_var::operator-> (void)
   return this->ptr_;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::State_var::operator const ::FT::State &() const // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::State_var::operator ::FT::State &() // cast 
+ACE_INLINE
+FT::State_var::operator ::FT::State &() // cast
 {
   return *this->ptr_;
 }
 
-ACE_INLINE 
-FT::State_var::operator ::FT::State &() const // cast 
+ACE_INLINE
+FT::State_var::operator ::FT::State &() const // cast
 {
   return *this->ptr_;
 }
@@ -4265,7 +4265,7 @@ FT::State_var::inout (void)
   return *this->ptr_;
 }
 
-// mapping for variable size 
+// mapping for variable size
 ACE_INLINE ::FT::State *&
 FT::State_var::out (void)
 {
@@ -4326,7 +4326,7 @@ FT::State_out::operator= (State *p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::State_out::operator ::FT::State *&() // cast
 {
   return this->ptr_;
@@ -4430,14 +4430,14 @@ FT::Checkpointable_var::operator= (const ::FT::Checkpointable_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Checkpointable_var::operator const ::FT::Checkpointable_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::Checkpointable_var::operator ::FT::Checkpointable_ptr &() // cast 
+ACE_INLINE
+FT::Checkpointable_var::operator ::FT::Checkpointable_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4529,7 +4529,7 @@ FT::Checkpointable_out::operator= (Checkpointable_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Checkpointable_out::operator ::FT::Checkpointable_ptr &() // cast
 {
   return this->ptr_;
@@ -4611,14 +4611,14 @@ FT::Updateable_var::operator= (const ::FT::Updateable_var &p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Updateable_var::operator const ::FT::Updateable_ptr &() const // cast
 {
   return this->ptr_;
 }
 
-ACE_INLINE 
-FT::Updateable_var::operator ::FT::Updateable_ptr &() // cast 
+ACE_INLINE
+FT::Updateable_var::operator ::FT::Updateable_ptr &() // cast
 {
   return this->ptr_;
 }
@@ -4710,7 +4710,7 @@ FT::Updateable_out::operator= (Updateable_ptr p)
   return *this;
 }
 
-ACE_INLINE 
+ACE_INLINE
 FT::Updateable_out::operator ::FT::Updateable_ptr &() // cast
 {
   return this->ptr_;
@@ -4742,7 +4742,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTGroupT
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTGroupTaggedComponent &_tao_aggregate)
@@ -4756,7 +4756,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTGroupTaggedCo
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTPrimaryTaggedComponent &_tao_aggregate)
@@ -4767,7 +4767,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTPrimar
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTPrimaryTaggedComponent &_tao_aggregate)
@@ -4778,7 +4778,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTPrimaryTagged
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FTGroupVersionServiceContext &_tao_aggregate)
@@ -4789,7 +4789,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FTGroupVers
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FTGroupVersionServiceContext &_tao_aggregate)
@@ -4800,7 +4800,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FTGroupVersionServ
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FTRequestServiceContext &_tao_aggregate)
@@ -4813,7 +4813,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FTRequestSe
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FTRequestServiceContext &_tao_aggregate)
@@ -4826,7 +4826,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FTRequestServiceCo
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean
@@ -4886,7 +4886,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::TagFTHeartb
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTHeartbeatEnabledTaggedComponent &_tao_aggregate)
@@ -4897,7 +4897,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::TagFTHeartbeatEnab
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::HeartbeatPolicyValue &_tao_aggregate)
@@ -4910,7 +4910,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::HeartbeatPo
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::HeartbeatPolicyValue &_tao_aggregate)
@@ -4923,7 +4923,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::HeartbeatPolicyVal
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean
@@ -5053,7 +5053,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::Property &_
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::Property &_tao_aggregate)
@@ -5065,7 +5065,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::Property &_tao_agg
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -5108,7 +5108,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FactoryInfo
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FactoryInfo &_tao_aggregate)
@@ -5121,7 +5121,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FactoryInfo &_tao_
     return 1;
   else
     return 0;
-  
+
 }
 
 
@@ -5148,7 +5148,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::FaultMonito
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FaultMonitoringIntervalAndTimeoutValue &_tao_aggregate)
@@ -5160,7 +5160,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &strm, FT::FaultMonitoringInt
     return 1;
   else
     return 0;
-  
+
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &strm, const FT::InterfaceNotFound &_tao_aggregate)
@@ -6257,4 +6257,3 @@ operator>> (
   ACE_ENDTRY;
   return 0;
 }
-
