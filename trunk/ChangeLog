@@ -1,3 +1,13 @@
+Fri Nov 19 16:03:31 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
+
+	* ace/DLL.cpp: Cleaned up the code a bit since it was messy
+          and improved the documentation to clarify the role of
+          "close_handle_on_destruction".  Also fixed a bug in
+          ACE_DLL::close() since it wasn't guarding against multiple
+          calls, i.e., one explicit and one implicit via the
+          destructor.  Thanks to Russell Mora
+          <russell.mora@veritas.com> for motivating these fixes.
+
 Mon Oct 18 13:02:11 2004  Dale Wilson  <wilson_d@ociweb.com>
 
         * bin/MakeProjectCreator/config/notify.mpb:
