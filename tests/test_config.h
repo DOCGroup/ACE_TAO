@@ -14,6 +14,9 @@
 #if !defined (ACE_TEST_CONFIG_H)
 #define ACE_TEST_CONFIG_H
 
+#undef ACE_NDEBUG
+#include "ace/OS.h"
+
 #if defined (ACE_HAS_MINIMUM_IOSTREAMH_INCLUSION)
 # include /**/ <iostream.h>
 # include /**/ <fstream.h>
