@@ -586,7 +586,7 @@ sequence_does_contain (CORBA::Any* sequence,
 
 // Explicit template specializations
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::Short>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Short element) const
@@ -605,7 +605,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::UShort>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::UShort element) const
@@ -624,7 +624,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::Long>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Long element) const
@@ -643,7 +643,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::ULong>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::ULong element) const
@@ -662,7 +662,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::Float>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Float element) const
@@ -678,7 +678,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::Double>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Double element) const
@@ -694,7 +694,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<CORBA::Boolean>::
 operator () (TAO_DynSequence_i& dyn_any,
              CORBA::Boolean element) const
@@ -710,7 +710,7 @@ operator () (TAO_DynSequence_i& dyn_any,
   return return_value;
 }
 
-ACE_TEMPLATE_METHOD_SPECIALIZATION int
+int
 TAO_Element_Equal<const char*>::
 operator () (TAO_DynSequence_i& dyn_any,
              const char* element) const

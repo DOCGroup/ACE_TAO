@@ -1,3 +1,9 @@
+Mon Jun 24 22:37:58 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* orbsvcs/orbsvcs/Trader/Constraint_Visitors.cpp: Remove unnecessary 
+	  ACE_TEMPLATE_METHOD_SPECIALIZATION macros.  Fixes build problems on
+	  Borland, Solaris, and gcc. 
+
 Mon Jun 24 18:47:41 UTC 2002  Craig Rodrigues  <crodrigu@bbn.com>
 
 	* tao/Sequence.i: Remove unnecessary ACE_TEMPLATE_METHOD_SPECIALIZATION
