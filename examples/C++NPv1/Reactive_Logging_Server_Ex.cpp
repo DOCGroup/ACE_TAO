@@ -6,16 +6,6 @@
 
 #include "ace/Functor.h"
 #include "ace/Log_Msg.h"
-#if defined (ACE_WIN32)
-ACE_TEMPLATE_SPECIALIZATION
-class ACE_Hash<ACE_HANDLE>
-{
-public:
-  /// Simply returns t
-  u_long operator () (ACE_HANDLE t) const
-            { return ACE_reinterpret_cast (u_long, t); }
-};
-#endif
 
 #include "Reactive_Logging_Server_Ex.h"
 
