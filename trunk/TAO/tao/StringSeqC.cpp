@@ -26,12 +26,12 @@
 //     http://www.cs.wustl.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_codegen.cpp:301
+// be/be_codegen.cpp:338
 
 
 #include "StringSeqC.h"
-#include "Any_Dual_Impl_T.h"
-#include "Typecode.h"
+#include "tao/Typecode.h"
+#include "CDR.h"
 
 #if defined (__BORLANDC__)
 #pragma option -w-rvl -w-rch -w-ccc -w-aus -w-sig
@@ -42,7 +42,7 @@
 #endif /* !defined INLINE */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_arg_traits.cpp:59
+// be/be_visitor_arg_traits.cpp:62
 
 // Arg traits specializations.
 namespace TAO
@@ -50,7 +50,7 @@ namespace TAO
 };
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_STRINGSEQ_CS_)
 #define _CORBA_STRINGSEQ_CS_
@@ -97,7 +97,7 @@ void CORBA::StringSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_StringSeq[] =
 {
@@ -139,7 +139,7 @@ namespace CORBA
 }
 
 // TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/sequence_cs.cpp:66
+// be/be_visitor_sequence/sequence_cs.cpp:65
 
 #if !defined (_CORBA_WSTRINGSEQ_CS_)
 #define _CORBA_WSTRINGSEQ_CS_
@@ -186,7 +186,7 @@ void CORBA::WStringSeq::_tao_any_destructor (
 #endif /* end #if !defined */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_typecode/typecode_defn.cpp:284
+// be/be_visitor_typecode/typecode_defn.cpp:284
 
 static const CORBA::Long _oc_CORBA_WStringSeq[] =
 {
@@ -228,124 +228,8 @@ namespace CORBA
     &_tc_TAO_tc_CORBA_WStringSeq;
 }
 
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::StringSeq &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::StringSeq>::insert_copy (
-      _tao_any,
-      CORBA::StringSeq::_tao_any_destructor,
-      CORBA::_tc_StringSeq,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::StringSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::StringSeq>::insert (
-      _tao_any,
-      CORBA::StringSeq::_tao_any_destructor,
-      CORBA::_tc_StringSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::StringSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::StringSeq *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const CORBA::StringSeq *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<CORBA::StringSeq>::extract (
-        _tao_any,
-        CORBA::StringSeq::_tao_any_destructor,
-        CORBA::_tc_StringSeq,
-        _tao_elem
-      );
-}
-
-// TAO_IDL - Generated from 
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/any_op_cs.cpp:54
-
-// Copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    const CORBA::WStringSeq &_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::WStringSeq>::insert_copy (
-      _tao_any,
-      CORBA::WStringSeq::_tao_any_destructor,
-      CORBA::_tc_WStringSeq,
-      _tao_elem
-    );
-}
-
-// Non-copying insertion.
-void operator<<= (
-    CORBA::Any &_tao_any,
-    CORBA::WStringSeq *_tao_elem
-  )
-{
-  TAO::Any_Dual_Impl_T<CORBA::WStringSeq>::insert (
-      _tao_any,
-      CORBA::WStringSeq::_tao_any_destructor,
-      CORBA::_tc_WStringSeq,
-      _tao_elem
-    );
-}
-
-// Extraction to non-const pointer (deprecated).
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    CORBA::WStringSeq *&_tao_elem
-  )
-{
-  return _tao_any >>= ACE_const_cast (
-      const CORBA::WStringSeq *&,
-      _tao_elem
-    );
-}
-
-// Extraction to const pointer.
-CORBA::Boolean operator>>= (
-    const CORBA::Any &_tao_any,
-    const CORBA::WStringSeq *&_tao_elem
-  )
-{
-  return
-    TAO::Any_Dual_Impl_T<CORBA::WStringSeq>::extract (
-        _tao_any,
-        CORBA::WStringSeq::_tao_any_destructor,
-        CORBA::_tc_WStringSeq,
-        _tao_elem
-      );
-}
-
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_CORBA_StringSeq_CPP_
 #define _TAO_CDR_OP_CORBA_StringSeq_CPP_
@@ -418,7 +302,7 @@ return 0;
 #endif /* _TAO_CDR_OP_CORBA_StringSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_sequence/cdr_op_cs.cpp:95
+// be/be_visitor_sequence/cdr_op_cs.cpp:95
 
 #if !defined _TAO_CDR_OP_CORBA_WStringSeq_CPP_
 #define _TAO_CDR_OP_CORBA_WStringSeq_CPP_
@@ -491,7 +375,7 @@ return 0;
 #endif /* _TAO_CDR_OP_CORBA_WStringSeq_CPP_ */
 
 // TAO_IDL - Generated from
-// W:\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_root/root.cpp:1703
+// be/be_visitor_root/root.cpp:1725
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 
@@ -515,11 +399,6 @@ return 0;
       >;
 
   template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::StringSeq
-      >;
-
-  template class
     TAO_MngSeq_Var_T<
         CORBA::WStringSeq,
         TAO_SeqElem_WString_Manager
@@ -536,11 +415,6 @@ return 0;
         CORBA::WStringSeq,
         CORBA::WStringSeq_var,
         TAO_SeqElem_WString_Manager
-      >;
-
-  template class
-    TAO::Any_Dual_Impl_T<
-        CORBA::WStringSeq
       >;
 
 #elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
@@ -565,11 +439,6 @@ return 0;
       >
 
 # pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::StringSeq \
-      >
-
-# pragma instantiate \
     TAO_MngSeq_Var_T< \
         CORBA::WStringSeq, \
         TAO_SeqElem_WString_Manager \
@@ -586,11 +455,6 @@ return 0;
         CORBA::WStringSeq, \
         CORBA::WStringSeq_var, \
         TAO_SeqElem_WString_Manager \
-      >
-
-# pragma instantiate \
-    TAO::Any_Dual_Impl_T< \
-        CORBA::WStringSeq \
       >
 
 #endif /* !ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */ 

@@ -85,6 +85,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       ObjectIdListC.cpp
       ORB.cpp
       Policy_ForwardC.cpp
+      Policy_ForwardA.cpp
       PolicyC.cpp
       PolicyA.cpp
       Policy_Validator.cpp
@@ -127,6 +128,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       PICurrent.cpp
       PICurrent_ORBInitializer.cpp
       DynamicC.cpp
+      DynamicA.cpp
       Dynamic_ParameterC.cpp
       ParameterMode.cpp
       OctetSeqC.cpp
