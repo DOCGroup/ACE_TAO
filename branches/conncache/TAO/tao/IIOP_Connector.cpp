@@ -194,10 +194,6 @@ TAO_IIOP_Connector::make_connection_caching_strategy (void)
 int
 TAO_IIOP_Connector::close (void)
 {
-  TAO_CACHED_CONNECT_STRATEGY *cached_connect_strategy =
-    ACE_dynamic_cast (TAO_CACHED_CONNECT_STRATEGY *,
-                      this->base_connector_.connect_strategy ());
-
   // Zap the creation strategy that we created earlier
   delete this->cached_connect_strategy_->creation_strategy ();
   delete this->cached_connect_strategy_;
