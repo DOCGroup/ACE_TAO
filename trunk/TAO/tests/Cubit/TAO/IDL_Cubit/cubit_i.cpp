@@ -22,7 +22,7 @@ Cubit_Factory_i::Cubit_Factory_i (const char *key, int numobjs)
   : POA_Cubit_Factory (key)
 {
   // Create implementation object with user specified key.
-  
+
   this->numobjs_ = numobjs;
   this->my_cubit_ = new Cubit_i_ptr [this->numobjs_];
 
@@ -58,7 +58,7 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
 
   for (size_t i = 0; i < this->numobjs_; i++)
     {
-      obj_str = this->my_cubit_[i]->_get_name (env);
+      obj_str = CORBA::string_copy (this->my_cubit_[i]->_get_name (env));
       ACE_DEBUG ((LM_DEBUG, "obj_str = %s\n", obj_str));
 
       // Keys matched.
@@ -66,6 +66,7 @@ Cubit_Factory_i::make_cubit (const char *key, CORBA::Environment &env)
         {
           cubit = Cubit::_duplicate (this->my_cubit_ [i]);
         }
+      CORBA::string_free (obj_str);
     }
   return cubit;
 }
@@ -167,7 +168,7 @@ void Cubit_i::please_exit (CORBA::Environment &env)
 {
   // Macro to avoid "warning: unused parameter" type warning.
   ACE_UNUSED_ARG (env);
-  
+
   dmsg ("I've been asked to shut down...");
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
   dexc (env, "please_exit, shutdown");
