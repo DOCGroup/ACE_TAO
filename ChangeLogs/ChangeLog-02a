@@ -5,6 +5,8 @@ Fri Dec 15 14:36:33 2000  Christopher Kohlhoff <chris@kohlhoff.com>
 
           Added new 'realclean' target to Borland makefiles for
           removing all generated files (both intermediate and final).
+          Thanks to Johnny Willemsen <johnny.willemsen@meco.nl> for
+          suggesting this.
 
 Fri Dec 15 14:29:44 2000  Carlos O'Ryan  <coryan@uci.edu>
 
