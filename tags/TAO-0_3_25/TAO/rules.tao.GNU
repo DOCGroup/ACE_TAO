@@ -1,0 +1,79 @@
+#----------------------------------------------------------------------------
+#
+#       $Id$
+#
+#       Common rules for all of TAO
+#
+#----------------------------------------------------------------------------
+
+####
+#### Required macros for TAO.
+####
+ifndef TAO_ROOT
+  TAO_ROOT = $(ACE_ROOT)/TAO
+endif
+
+ifndef TAO_IDL
+  TAO_IDL = $(TAO_ROOT)/TAO_IDL/tao_idl
+endif
+
+
+####
+#### Macro customization.
+####
+ifeq ($(findstring g++,$(CXX)),g++)
+  ifeq ($(ACE_HAS_GNUG_PRE_2_8),1)
+    #### g++ < 2.8 complains about unused parameters in generated code.
+    CCFLAGS += -Wno-unused
+  endif # g++ < 2.8
+
+  ifneq ($(findstring egcs-2.91,$(shell $(CXX) --version)),)
+    #### egcs 2.91.57 seems to go overboard:
+    ####   DynAny_i.cpp:565: warning: `class TAO_DynAny_i * this' might be
+    ####   used uninitialized in this function
+    CCFLAGS += -Wno-uninitialized
+  endif # egcs 2.91.x
+endif # g++
+
+
+####
+#### Build rules.
+####
+IDL_EXT=C.h C.i C.cpp S.h S.i S.cpp S_T.h S_T.i S_T.cpp
+IDL_EXT2=Cli.h Cli.i Cli.cpp Ser.h Ser.i Ser.cpp Ser_T.h Ser_T.i Ser_T.cpp
+
+.SUFFIXES: $(IDL_EXT)
+
+ifneq ($(use_flick),1)
+$(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl $(TAO_IDL)
+	$(TAO_IDL) $(TAO_IDLFLAGS) $<
+else
+#### You can redefine the following in your platform_macros.GNU
+
+ifndef FLICK_SRCDIR
+  FLICK_SRCDIR  =       /project/doc/nanbor/mom
+endif
+ifndef FLICK_OBJDIR
+  FLICK_OBJDIR  =       /project/doc/nanbor/dad
+endif
+
+CCFLAGS += -I$(FLICK_OBJDIR)/runtime/headers -I$(FLICK_SRCDIR)/runtime/headers
+
+CORBA_FE=$(FLICK_OBJDIR)/bin/flick-fe-newcorba
+CORBA_PG=$(FLICK_OBJDIR)/bin/flick-c-pfe-corbaxx
+CORBA_BE=$(FLICK_OBJDIR)/bin/flick-c-pbe-iiopxx
+
+$(foreach ext, $(IDL_EXT) $(IDL_EXT2), %$(ext)): %.idl
+	$(CORBA_FE) $< && \
+	$(CORBA_PG) -c -o $*-client.prc $*.aoi && \
+	$(CORBA_BE) $*-client.prc -o $*C.cpp -h $*C.h -f $*S.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	echo > $*C.i
+	$(CORBA_FE) $< && \
+	$(CORBA_PG) -s -o $*-server.prc $*.aoi && \
+	$(CORBA_BE) $*-server.prc --no_mu_stubs -o $*S.cpp -h $*S.h -F $*C.h --presentation_implementation $(FLICK_SRCDIR)/runtime/headers/flick/pres/tao_cxx.scml && \
+	echo > $*S.i && \
+        echo > $*S_T.h && \
+        echo > $*S_T.i && \
+        echo > $*S_T.cpp
+
+endif
