@@ -1,3 +1,9 @@
+Fri Apr 16 06:38:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          Fixed error in the libcheck that was put in accidently when merging
+          from our test system to the latest cvs version.
+
 Thu Apr 15 23:28:24 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* include/makeinclude/platform_sunos5_sunc++.GNU (CCFLAGS):
