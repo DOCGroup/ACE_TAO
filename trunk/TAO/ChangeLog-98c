@@ -39,6 +39,9 @@ Wed Dec 09 07:02:06 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * README, VERSION: expanded mention of BUG-REPORT-FORM.
 
+        * performance-tests/Cubit/TAO/MT_Cubit/README.tests: removed
+          -s option, because it's no longer used with MT_Cubit.
+
 Wed Dec  9 02:34:33 1998  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
         * examples/POA/On_Demand_Loading/server.cpp :
