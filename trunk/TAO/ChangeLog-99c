@@ -1,3 +1,16 @@
+Fri Jun 25 16:30:41 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* examples/POA/DSI/Database_i.cpp (find_entry): Fixed a 
+	  mistaken exception -- it should be Not_Found rather than
+ 	  Unknown_Key.  Thanks to Steve Huston for reporting this.  Also
+ 	  tidied up the code and added proper exception checking for
+ 	  memory allocation failures.
+
+	* tao/Sequence_T: Removed all uses of CORBA::ULong as parameters
+	  to a template and replaced them with size_t since this is
+ 	  breaking the AIX C++ compiler.  Thanks to Steve Huston for
+ 	  reporting this.
+
 Fri Jun 25 17:01:23 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/NestedUpcall/Triangle_Test/initiator.cpp:
@@ -11,20 +24,13 @@ Fri Jun 25 16:43:47 1999  Irfan Pyarali  <irfan@cs.wustl.edu>
 	* examples/POA/Default_Servant/File_i.cpp (destroy):
 
 	  Fixed the throwing of an exception that is not in the throw
-	  spec.
+ 	  spec.
 
 Fri Jun 25 13:37:47 1999  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* orbsvcs/tests/AVStreams/benchmark/client.cpp:
 	* orbsvcs/tests/AVStreams/benchmark/server.cpp: Changed TAO_TRY
 	  macros to ACE_TRY macros
-
-Fri Jun 25 16:30:41 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
-
-	* tao/Sequence_T: Removed all uses of CORBA::ULong as parameters
-	  to a template and replaced them with size_t since this is
- 	  breaking the AIX C++ compiler.  Thanks to Steve Huston for
- 	  reporting this.
 
 Fri Jun 25 16:03:32 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 

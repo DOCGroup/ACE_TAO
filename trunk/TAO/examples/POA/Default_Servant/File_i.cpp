@@ -193,12 +193,13 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
 
 void
 FileImpl::Descriptor::destroy (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   File::IOError))
 {
   // Get the ACE_HANDLE for this object reference
   ACE_HANDLE file_descriptor = this->fd (ACE_TRY_ENV);
   ACE_CHECK;
 
-  // close the file corresponding to this object reference
+  // Close the file corresponding to this object reference.
   ACE_OS::close (file_descriptor);
 }

@@ -26,27 +26,28 @@ module File
     {
       typedef sequence<octet> DataBuffer;
       
-	// write buffer to File
       long write (in DataBuffer buffer)
         raises (IOError);
+      // write buffer to File
 
-	// read num_bytes to DataBuffer
       DataBuffer read (in long num_bytes)
         raises (IOError);
+      // read num_bytes to DataBuffer
 
-	// seek to offset in File from whence
       unsigned long lseek (in unsigned long offset,
                            in long whence)
         raises (IOError);
+      // seek to offset in File from whence
 
-	// destroy the descriptor
       void destroy ();
+      // destroy the descriptor
     };
 
   interface System 
     {
-	// File open operation
-      Descriptor open (in string file_name, in long flags)
+      Descriptor open (in string file_name,
+                       in long flags)
         raises (IOError);
+      // File open operation
     };        
 };

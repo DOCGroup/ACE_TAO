@@ -1,18 +1,19 @@
 /* -*- C++ -*- */
 //
 // $Id$
-//
 
 #include <orb.idl>
 
 module DynAnyTests
 {
-  struct enclosed_struct {
+  struct enclosed_struct 
+  {
     float f;
     short s;
   };
 
-  struct test_struct {
+  struct test_struct 
+  {
     char c;
     long long ll;
     enclosed_struct es;
@@ -23,7 +24,8 @@ module DynAnyTests
   const unsigned long DIM = 2;
   typedef long test_array [DIM];
 
-  enum test_enum {
+  enum test_enum 
+  {
     TE_ZEROTH,
     TE_FIRST,
     TE_SECOND,
@@ -32,13 +34,13 @@ module DynAnyTests
 
   union test_union switch (test_enum)
     {
-      case TE_SECOND:
-        CORBA::TypeCode tc;
-      case TE_FIRST:
-        short s;
-      case TE_THIRD:
-        string str;
-      case TE_ZEROTH:
-        octet o;
+    case TE_SECOND:
+      CORBA::TypeCode tc;
+    case TE_FIRST:
+      short s;
+    case TE_THIRD:
+      string str;
+    case TE_ZEROTH:
+      octet o;
     };
 };
