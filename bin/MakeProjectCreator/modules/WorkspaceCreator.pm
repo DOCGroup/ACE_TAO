@@ -500,7 +500,7 @@ sub write_workspace {
         my($name) = lc($self->{'project_info'}->{$project}->[0]);
         if (defined $names{$name}) {
           ++$duplicates;
-          print "WARNING: Duplicate case-insensitive project '$name'.\n";
+          print "ERROR: Duplicate case-insensitive project '$name'.\n";
         }
         else {
           $names{$name} = 1;
@@ -521,7 +521,7 @@ sub write_workspace {
     }
     else {
       if (!defined $self->{'projects'}->[0]) {
-        print "WARNING: No projects were created.\n";
+        print "No projects were created.\n";
         $abort_creation = 1;
       }
     }
@@ -600,7 +600,7 @@ sub write_workspace {
       }
     }
     else {
-      print "         Workspace $name has not been created.\n";
+      print "Workspace $name has not been created.\n";
     }
     if (!$addfile) {
       $self->{'per_project_workspace_name'} = undef;

@@ -1,8 +1,15 @@
+Thu Jan 29 13:32:17 2004  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/WorkspaceCreator.pm:
+
+          Remove the WARNING: from the informational message that a
+          workspace wasn't created because no projects were created.
+
 Thu Jan 29 10:10:26 2004  Boris Kolpackov  <boris@dre.vanderbilt.edu>
 
-	* THANKS:
+        * THANKS:
 
-	  Added Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>.
+          Added Hans-Peter Bock <Hans-Peter.Bock@isw.uni-stuttgart.de>.
 
 Wed Jan 28 13:21:00 2004  Chad Elliott  <elliott_c@ociweb.com>
 
@@ -1949,7 +1956,7 @@ Thu Jan  8 15:45:50 GMT 2004  Paul Morrison  <epm@prismtechnologies.com>
         * ace/OS_NS_stdlib.cpp:
         * ace/Mem_Map.i:
 
-	  Added #includes to fix LynxOS compilation errors.
+          Added #includes to fix LynxOS compilation errors.
 
 Thu Jan  8 07:47:58 2004  Chad Elliott  <elliott_c@ociweb.com>
 
