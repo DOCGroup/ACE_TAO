@@ -132,11 +132,11 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::lessthan (const EXT_ID &k1,
 // Method for right rotation of the tree about a given node.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>  void
-ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * x)
+ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x)
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_rotate_right");
 
-  if (! x)
+  if (!x)
     ACE_ERROR ((LM_ERROR,
                 ACE_LIB_TEXT ("%p\n"),
                 ACE_LIB_TEXT ("\nerror: x is a null pointer in ")
