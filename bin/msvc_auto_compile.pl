@@ -181,7 +181,6 @@ sub Build_Core ()
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosTime_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\DsLogAdmin_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\CosNotification_Static.dsp",
-                      $ACE_ROOT."\\TAO\\orbsvcs\\orbsvcs\\LoadBalancing_Static.dsp",
                       $ACE_ROOT."\\TAO\\orbsvcs\\Naming_Service\\Naming_Server_static.dsp");
 
         foreach $c (@core_list) {
