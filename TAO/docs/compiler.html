@@ -456,7 +456,9 @@ also receives other options that are specific to it. <p>
     <td>To specify the output directory to IDL compiler as to where all the
         IDL-compiler-generated files are to be put. By default, all the files are
         put in the current directory from where&nbsp;<tao_idl>is called.&nbsp;</td>
-    <td>&nbsp;</td>
+    <td>If the specified directory does not exist, it will be created, if any path
+        that may precede the directory name already exists. If the directory
+        itself already exists, no action is taken.&nbsp;</td>
   </tr>
 
   <tr><a name="hc">
