@@ -117,7 +117,7 @@ TAO_Exclusive_RMS::find_dispatcher (CORBA::ULong request_id)
                        "%N:%l:TAO_Exclusive_RMS::find_handler: "
                        "Failed to find the handler\n"),
                       0);
-  
+
   return this->rd_;
 }
 

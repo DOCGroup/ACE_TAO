@@ -69,6 +69,6 @@ TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
 int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (void)
 {
-  // @@ Handover the input CDR to the Invocation class. 
+  // @@ Handover the input CDR to the Invocation class.
   return 0;
 }
