@@ -47,7 +47,9 @@ Util_Thread::run_computations (void)
 {
   while (this->done_ == 0)
     {
-      ACE::is_prime (CUBIT_ARBIT_NUMBER);
+      ACE::is_prime (CUBIT_ARBIT_NUMBER,
+                     2,
+                     CUBIT_ARBIT_NUMBER / 2);
       this->number_of_computations_ ++;
     }
 
