@@ -59,7 +59,7 @@ public:
                              TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-private:
+protected:
 
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.

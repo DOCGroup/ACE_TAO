@@ -56,7 +56,7 @@ TAO_RT_Current::the_priority (RTCORBA::Priority the_priority,
     this->orb_core_->get_protocols_hooks ()->set_thread_priority (
       this->orb_core_,
       the_priority,
-      ACE_TRY_ENV)
+      ACE_TRY_ENV);
     ACE_CHECK;
 
   if (result == -1)

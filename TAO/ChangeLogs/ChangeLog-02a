@@ -1,3 +1,16 @@
+Sun Feb 11 17:06:06 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/Priority_Mapping_Manager.h (~TAO_Priority_Mapping_Manager):
+	* tao/RT_Current.h (~TAO_RT_Current):
+
+	  Made destructor protected instead of private.  This fixes a
+	  compile-time warning about the fact that the class had a private
+	  destructor but had no friends.
+
+	* tao/RT_Current.cpp (the_priority):
+
+	  Corrected typo.
+
 Sun Feb 11 16:52:55 2001  Ossama Othman  <ossama@uci.edu>
 
 	* tao/Connection_Cache_Manager.cpp
