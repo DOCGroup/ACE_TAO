@@ -1,13 +1,15 @@
+// -*- C++ -*-
 //
 // $Id$
-//
 
-#ifndef BIG_ONEWAYS_SESSION_H
-#define BIG_ONEWAYS_SESSION_H
+#ifndef BIG_TWOWAYS_SESSION_H
+#define BIG_TWOWAYS_SESSION_H
+
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
 #include "Session_Task.h"
+#include "ace/Barrier.h"
 
 #if defined (_MSC_VER)
 # if (_MSC_VER >= 1200)
@@ -111,4 +113,5 @@ private:
 #endif /* _MSC_VER */
 
 #include /**/ "ace/post.h"
-#endif /* BIG_ONEWAYS_SESSION_H */
+
+#endif /* BIG_TWOWAYS_SESSION_H */
