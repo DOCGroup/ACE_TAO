@@ -1,3 +1,41 @@
+Tue Aug 11 16:18:53 1998  Alexander Babu Arulanthu  <alex@cs.wustl.edu>
+
+	* be/be_codegen.cpp
+ 	* be/be_visitor_root/root_sh.cpp
+	* driver/drv_args.cpp
+	* include/idl_global.h
+	* util/utl_global.cpp
+	
+	= File name endings for all the IDL generated header files,
+	  stub files, skeleton files and inline files. 
+
+	= Various 'h'eader_file_name_endings.
+        
+	[-hc <Client's header file name ending>]
+	     Default is "C.h".
+	[-hs <Server's header file name ending>]
+	     Default is "S.h".
+	[-hT <Server's template hdr file name ending>]
+	     Default is "S_T.h".
+
+	= Various 'c'lient side stub file_name_endings.
+
+	[-cs <Client stub's file name ending>]
+	     Default is "C.cpp".
+	[-ci <Client inline file name ending>]
+	     Default is "C.i".
+	
+	= Various 's'erver side skeleton file name endings. 
+
+	[-ss <Server's skeleton file name ending>]
+	     Default is "S.cpp".
+	[-sT <Server's template skeleton file name ending>]
+	     Default is "S_T.cpp".
+	[-si <Server's inline file name ending>]
+	     Default is "S.i".
+	[-st <Server's template inline file name ending>]
+	     Default is "S_T.i".
+
 Tue Aug 11 13:51:00 1998  Carlos O'Ryan  <coryan@CHA-CHA>
 
 	* TAO_IDL/driver/drv_preproc.cpp:
