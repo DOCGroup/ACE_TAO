@@ -30,70 +30,6 @@ namespace
     return os.str ();
   }
 
-  Nameable* defined_in (Nameable& n)
-  {
-    for (Nameable::NamedIterator i (n.named_begin ()), e (n.named_end ());
-        i != e;
-        ++i)
-    {
-      if (Defines* d = dynamic_cast<Defines*> (*i))
-      {
-        return &d->scope ();
-      }
-    }
-
-    return 0;
-  }
-
-  string
-  compute_repo_id (Nameable& d)
-  {
-    if (d.context ().count (STRS[REPO_ID]))
-    {
-      return d.context ().get<string> (STRS[REPO_ID]);
-    }
-
-    string prefix ("");
-    TypePrefix *tp = 0;
-
-    if (d.context ().count (STRS[TYPE_PREFIX]))
-    {
-      tp = d.context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);
-      prefix = tp->prefix ().literal ();
-    }
-    else
-    {
-      Nameable* parent = defined_in (d);
-
-      while (parent != 0)
-      {
-        if (parent->context ().count (STRS[TYPE_PREFIX]))
-        {
-          tp =
-            parent->context ().get<TypePrefix*> (STRS[TYPE_PREFIX]);
-
-          prefix = tp->prefix ().literal ();
-          break;
-        }
-
-        parent = defined_in (*parent);
-      }
-    }
-
-    if (prefix != "") prefix += "/";
-
-    ScopedName scoped (d.scoped_name ());
-    Name stripped (scoped.begin () + 1, scoped.end ());
-
-    string scope_name = regex::perl_s (name_to_string (stripped), "%::%/%");
-
-    string repo_id = "IDL:" + prefix + scope_name + ":1.0";
-
-    // Store the repo id for possible future reference.
-    d.context ().set<string> (STRS[REPO_ID], repo_id);
-    return repo_id;
-  }
-
   class EmitterBase
   {
   public:
@@ -120,7 +56,9 @@ namespace
       virtual void
       traverse (Type& c)
       {
-        os << "<componentrepid repid=\"" << compute_repo_id (c) << "\"/>"
+        os << "<componentrepid repid=\"" 
+           << c.context ().get<string> (STRS[REPO_ID])
+           << "\"/>"
            << endl;
       }
     };
@@ -134,7 +72,9 @@ namespace
       virtual void
       traverse (Type& h)
       {
-        os << "<homerepid repid=\"" << compute_repo_id (h) << "\"/>"
+        os << "<homerepid repid=\"" 
+           << h.context ().get<string> (STRS[REPO_ID])
+           << "\"/>"
            << endl;
       }
     };
@@ -150,7 +90,8 @@ namespace
       {
         os << "<homefeatures" << endl
            << "name=\"" << h.name () << "\"" << endl
-           << "repid=\"" << compute_repo_id (h)
+           << "repid=\"" 
+           << h.context ().get<string> (STRS[REPO_ID])
            << "\">" << endl;
 
         Traversal::Inherits home_inherits;
@@ -175,7 +116,9 @@ namespace
         virtual void
         traverse (Type& h)
         {
-          os << "<inheritshome repid=\"" << compute_repo_id (h) << "\"/>"
+          os << "<inheritshome repid=\"" 
+             << h.context ().get<string> (STRS[REPO_ID])
+             << "\"/>"
              << endl;
         }
       };
@@ -188,11 +131,12 @@ namespace
       {}
 
       virtual void
-      traverse (Type& h)
+      traverse (Type& c)
       {
         os << "<componentfeatures" << endl
-           << "name=\"" << h.name () << "\"" << endl
-           << "repid=\"" << compute_repo_id (h)
+           << "name=\"" << c.name () << "\"" << endl
+           << "repid=\"" 
+           << c.context ().get<string> (STRS[REPO_ID])
            << "\">" << endl;
 
         Traversal::Inherits component_inherits;
@@ -202,8 +146,8 @@ namespace
         component_inherits.node_traverser (i_emitter);
         component_supports.node_traverser (s_emitter);
 
-        inherits (h, component_inherits);
-        supports (h, component_supports);
+        inherits (c, component_inherits);
+        supports (c, component_supports);
 
         os << "<ports>" << endl;
 
@@ -211,7 +155,7 @@ namespace
         PortsEmitter ports_emitter (os);
         defines.node_traverser (ports_emitter);
 
-        names (h, defines);
+        names (c, defines);
 
         os << "</ports>" << endl;
 
@@ -219,7 +163,7 @@ namespace
 
         // Go after inherited components.
         //
-        Traversal::Component::traverse (h);
+        Traversal::Component::traverse (c);
       }
 
       struct ComponentInheritanceEmitter : Traversal::Component, EmitterBase
@@ -229,9 +173,11 @@ namespace
         {}
 
         virtual void
-        traverse (Type& h)
+        traverse (Type& c)
         {
-          os << "<inheritscomponent repid=\"" << compute_repo_id (h) << "\"/>"
+          os << "<inheritscomponent repid=\"" 
+             << c.context ().get<string> (STRS[REPO_ID])
+             << "\"/>"
              << endl;
         }
       };
@@ -243,9 +189,11 @@ namespace
         {}
 
         virtual void
-        traverse (Type& h)
+        traverse (Type& i)
         {
-          os << "<supportsinterface repid=\"" << compute_repo_id (h) << "\"/>"
+          os << "<supportsinterface repid=\"" 
+             << i.context ().get<string> (STRS[REPO_ID])
+             << "\"/>"
              << endl;
         }
       };
@@ -346,7 +294,9 @@ namespace
           virtual void
           traverse (SemanticGraph::Type& t)
           {
-            os << '\"' << compute_repo_id (t) << '\"';
+            os << '\"' 
+               << t.context ().get<string> (STRS[REPO_ID])
+               << '\"';
           }
         };
 
@@ -376,10 +326,11 @@ namespace
         if (add (i))
         {
           os << "<interface" << endl
-              << "name=\"" << i.name ()
-              << "\"" << endl
-              << "repid=\"" << compute_repo_id (i)
-              << "\">" << endl;
+             << "name=\"" << i.name ()
+             << "\"" << endl
+             << "repid=\"" 
+             << i.context ().get<string> (STRS[REPO_ID])
+             << "\">" << endl;
 
           Traversal::Inherits interface_inherits;
           InterfaceInheritanceEmitter i_emitter (os);
@@ -403,8 +354,9 @@ namespace
       virtual void
       traverse (Type& i)
       {
-        os << "<inheritsinterface repid=\"" << compute_repo_id (i)
-            << "\"/>" << endl;
+        os << "<inheritsinterface repid=\"" 
+           << i.context ().get<string> (STRS[REPO_ID])
+           << "\"/>" << endl;
       }
     };
 
