@@ -35,7 +35,7 @@ pace_mmap (void * addr,
            int prot,
            int flags,
            int fildes,
-           off_t off)
+           pace_off_t off)
 {
   return mmap ((char *) addr, len, prot, flags, fildes, off);
 }
@@ -83,7 +83,7 @@ PACE_INLINE
 int
 pace_shm_open (const char * name,
                int oflag,
-               mode_t mode)
+               pace_mode_t mode)
 {
 # if (PACE_POSIX_C_SOURCE > 2)
   return shm_open (name, oflag, mode);

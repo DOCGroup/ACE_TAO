@@ -35,7 +35,7 @@ extern "C" {
 
   PACE_INLINE int pace_chdir (const char * path);
 
-  PACE_INLINE int pace_chown (const char * path, uid_t owner, gid_t group);
+  PACE_INLINE int pace_chown (const char * path, uid_t owner, pace_gid_t group);
 
   PACE_INLINE int pace_close (int fildes);
 
@@ -67,13 +67,13 @@ extern "C" {
 
   PACE_INLINE int pace_fdatasync (int fildes);
 
-  PACE_INLINE pid_t pace_fork ();
+  PACE_INLINE pace_pid_t pace_fork ();
 
   PACE_INLINE long pace_fpathconf (int fildes, int name);
 
   PACE_INLINE int pace_fsync (int fildes);
 
-  PACE_INLINE int pace_ftruncate (int fildes, off_t length);
+  PACE_INLINE int pace_ftruncate (int fildes, pace_off_t length);
 
   PACE_INLINE char * pace_getcwd (char * buf, size_t size);
 
@@ -83,18 +83,18 @@ extern "C" {
 
   PACE_INLINE uid_t pace_getgid ();
 
-  PACE_INLINE int pace_getgroups (int gidsetsize, gid_t grouplist[]);
+  PACE_INLINE int pace_getgroups (int gidsetsize, pace_gid_t grouplist[]);
 
   PACE_INLINE char * pace_getlogin ();
 
   PACE_INLINE int pace_getlogin_r (char * name, size_t namesize);
   /* Requires PACE_HAS_POSIX_PTHREAD_SEMANTICS. */
 
-  PACE_INLINE pid_t pace_getpgrp ();
+  PACE_INLINE pace_pid_t pace_getpgrp ();
 
-  PACE_INLINE pid_t pace_getpid ();
+  PACE_INLINE pace_pid_t pace_getpid ();
 
-  PACE_INLINE pid_t pace_getppid ();
+  PACE_INLINE pace_pid_t pace_getppid ();
 
   PACE_INLINE uid_t pace_getuid ();
 
@@ -106,12 +106,11 @@ extern "C" {
    * surrounding the arguments.
    */
 
-
   PACE_INLINE int pace_isatty (int fildes);
 
   PACE_INLINE int pace_link (const char * existing, const char * new_link);
 
-  PACE_INLINE off_t pace_lseek (int fildes, off_t offset, int whence);
+  PACE_INLINE pace_off_t pace_lseek (int fildes, off_t offset, int whence);
 
   PACE_INLINE long pace_pathconf (const char * path, int name);
 
@@ -123,11 +122,11 @@ extern "C" {
 
   PACE_INLINE int pace_rmdir (const char * path);
 
-  PACE_INLINE int pace_setgid (gid_t gid);
+  PACE_INLINE int pace_setgid (pace_gid_t gid);
 
-  PACE_INLINE int pace_setpgid (pid_t pid, pid_t pgid);
+  PACE_INLINE int pace_setpgid (pace_pid_t pid, pid_t pgid);
 
-  PACE_INLINE pid_t pace_setsid ();
+  PACE_INLINE pace_pid_t pace_setsid ();
 
   PACE_INLINE int pace_setuid (uid_t uid);
 

@@ -83,12 +83,12 @@ extern "C" {
 
   PACE_INLINE int pace_fseek (FILE * stream, long offset, int whence);
 
-  PACE_INLINE int pace_fseek (FILE * stream, off_t offset, int whence);
+  PACE_INLINE int pace_fseek (FILE * stream, pace_off_t offset, int whence);
   /* Not in POSIX spec. */
 
   PACE_INLINE long pace_ftell (FILE * stream);
 
-  PACE_INLINE off_t pace_ftello (FILE * stream);
+  PACE_INLINE pace_off_t pace_ftello (FILE * stream);
   /* Not in POSIX spec. */
 
   PACE_INLINE size_t pace_fwrite (const void * ptr,

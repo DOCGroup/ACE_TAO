@@ -16,14 +16,14 @@
 
 PACE_INLINE
 int
-pace_chmod (const char * path, mode_t mode)
+pace_chmod (const char * path, pace_mode_t mode)
 {
   return chmod (path, mode);
 }
 
 PACE_INLINE
 int
-pace_fchmod (int fildes, mode_t mode)
+pace_fchmod (int fildes, pace_mode_t mode)
 {
   return fchmod (fildes, mode);
 }
@@ -37,14 +37,14 @@ pace_fstat (int fildes, struct stat * buf)
 
 PACE_INLINE
 int
-pace_mkdir (const char * path, mode_t mode)
+pace_mkdir (const char * path, pace_mode_t mode)
 {
   return mkdir (path, mode);
 }
 
 PACE_INLINE
 int
-pace_mkfifo (const char * path, mode_t mode)
+pace_mkfifo (const char * path, pace_mode_t mode)
 {
   return mkfifo (path, mode);
 }
@@ -57,8 +57,8 @@ pace_stat (const char * path, struct stat * buf)
 }
 
 PACE_INLINE
-mode_t
-pace_umask (mode_t cmask)
+pace_mode_t
+pace_umask (pace_mode_t cmask)
 {
   return umask (cmask);
 }
