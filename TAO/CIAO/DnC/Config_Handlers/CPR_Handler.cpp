@@ -3,14 +3,8 @@
 #include "tao/Exception.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
-
 #include "CPR_Handler.h"
 #include "Process_Basic_Type.h"
-
-#include <iostream>
-
-using std::cerr;
-using std::endl;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
@@ -26,11 +20,14 @@ void CPR_Handler::process_ComponentPackageReference
 
       if (false);
       else if
-        (process_string(this->iter_, node_name, "requiredUUID", cpr.requiredUUID));
+        (process_string(this->iter_, node_name, "requiredUUID", 
+                        cpr.requiredUUID));
       else if
-        (process_string(this->iter_, node_name, "requiredName", cpr.requiredName));
+        (process_string(this->iter_, node_name, "requiredName", 
+                        cpr.requiredName));
       else if
-        (process_string(this->iter_, node_name, "requiredType", cpr.requiredType));
+        (process_string(this->iter_, node_name, "requiredType", 
+                        cpr.requiredType));
       else
         {
           this->iter_->previousNode ();

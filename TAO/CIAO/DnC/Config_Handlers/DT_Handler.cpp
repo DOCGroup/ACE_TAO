@@ -97,7 +97,7 @@ CIAO::Config_Handler::DT_Handler::process_DataType (DOMNodeIterator * iter,
     ACE_DEBUG ((LM_DEBUG, "Config_Handlers::Property_Handler::process_ \
                            DataType supports only TCKind types\
                            support for recursive types will be added later\n"));
-      ACE_THROW (CORBA::INTERNAL ());
+    ACE_THROW (CORBA::INTERNAL ());
 
   }
 }

@@ -6,15 +6,10 @@
 #include "Domain_Handler.h"
 #include "Property_Handler.h"
 #include "SP_Handler.h"
-
 #include "Process_Element.h"
 #include "Process_Basic_Type.h"
-
 #include <iostream>
 #include "string.h"
-
-using std::cerr;
-using std::endl;
 
 BEGIN_DEPLOYMENT_NAMESPACE
 
@@ -35,26 +30,31 @@ void Domain_Handler::process_domain (Deployment::Domain& domain)
       else if
         (process_string(this->iter_, node_name, "label", domain.label));
       else if
-        (process_sequence_local<Deployment::SharedResource>(this->doc_, this->iter_, node,
-                                                            node_name, "sharedResource", domain.sharedResource,
-                                                            this, &Domain_Handler::process_sr));
+        (process_sequence_local<Deployment::SharedResource>
+           (this->doc_, this->iter_, node,
+            node_name, "sharedResource", domain.sharedResource,
+            this, &Domain_Handler::process_sr));
       else if
-        (process_sequence_local<Deployment::Node>(this->doc_, this->iter_, node,
-                                            node_name, "node", domain.node,
-                                            this, &Domain_Handler::process_node));
+        (process_sequence_local<Deployment::Node>
+           (this->doc_, this->iter_, node,
+            node_name, "node", domain.node,
+            this, &Domain_Handler::process_node));
       else if
-        (process_sequence_local<Deployment::Interconnect>(this->doc_, this->iter_, node,
-                                                          node_name, "interconnect", domain.interconnect,
-                                                          this, &Domain_Handler::process_interconnect));
+        (process_sequence_local<Deployment::Interconnect>
+           (this->doc_, this->iter_, node,
+            node_name, "interconnect", domain.interconnect,
+            this, &Domain_Handler::process_interconnect));
       else if
-        (process_sequence_local<Deployment::Bridge>(this->doc_, this->iter_, node,
-                                                    node_name, "bridge", domain.bridge,
-                                                    this, &Domain_Handler::process_bridge));
+        (process_sequence_local<Deployment::Bridge>
+           (this->doc_, this->iter_, node,
+            node_name, "bridge", domain.bridge,
+            this, &Domain_Handler::process_bridge));
       else if
-        (process_sequence_common<Deployment::Property>(this->doc_, this->iter_, node,
-                                                       node_name, "infoProperty", domain.infoProperty,
-                                                       &Property_Handler::process_Property,
-                                                       this->id_map_));
+        (process_sequence_common<Deployment::Property>
+           (this->doc_, this->iter_, node,
+            node_name, "infoProperty", domain.infoProperty,
+            &Property_Handler::process_Property,
+            this->id_map_));
       else
         {
           // ??? How did we get here ???
@@ -88,20 +88,21 @@ void Domain_Handler::process_node (DOMNodeIterator* iter,
       else if
         (process_string(iter, node_name, "label", domain_node.label));
       else if
-        (process_sequence_local<Deployment::Resource>(node->getOwnerDocument(), iter, node,
-                                                      node_name, "resource", domain_node.resource,
-                                                      this, &Domain_Handler::process_resource));
+        (process_sequence_local<Deployment::Resource>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "resource", domain_node.resource,
+            this, &Domain_Handler::process_resource));
       else if
-        (process_reference_seq(node, node_name, "connection",
-                               domain_node.connectionRef,
-                               this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "connection",
+                                domain_node.connectionRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_reference_seq(node, node_name, "sharedResource",
-                               domain_node.sharedResourceRef,
-                               this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "sharedResource",
+                                domain_node.sharedResourceRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
@@ -113,8 +114,8 @@ void Domain_Handler::process_node (DOMNodeIterator* iter,
     }
 }
 
-void Domain_Handler::process_resource 
-(DOMNodeIterator* iter, Deployment::Resource& domain_resource)
+void Domain_Handler::process_resource (DOMNodeIterator* iter,
+                                       Deployment::Resource& domain_resource)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -129,12 +130,14 @@ void Domain_Handler::process_resource
       else if
         (process_string(iter, node_name, "name", domain_resource.name));
       else if
-        (process_string_seq(iter, node_name, "resourceType", domain_resource.resourceType));
+        (process_string_seq
+           (iter, node_name, "resourceType", domain_resource.resourceType));
       else if
-        (process_sequence_common<Deployment::SatisfierProperty>(node->getOwnerDocument(), iter, node,
-                                                                node_name, "property", domain_resource.property,
-                                                                &SP_Handler::process_SatisfierProperty,
-                                                                this->id_map_));
+        (process_sequence_common<Deployment::SatisfierProperty>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "property", domain_resource.property,
+            &SP_Handler::process_SatisfierProperty,
+            this->id_map_));
       else
         {
           node = iter->previousNode ();
@@ -143,8 +146,8 @@ void Domain_Handler::process_resource
     }
 }
 
-void Domain_Handler::process_bridge 
-(DOMNodeIterator* iter, Deployment::Bridge& domain_bridge)
+void Domain_Handler::process_bridge (DOMNodeIterator* iter,
+                                     Deployment::Bridge& domain_bridge)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -157,20 +160,21 @@ void Domain_Handler::process_bridge
         {
         }
       else if
-        (process_string(iter, node_name, "name", domain_bridge.name));
+        (process_string (iter, node_name, "name", domain_bridge.name));
       else if
-        (process_string(iter, node_name, "label", domain_bridge.label));
+        (process_string (iter, node_name, "label", domain_bridge.label));
       else if
-        (process_reference_seq(node, node_name, "connect",
-                               domain_bridge.connectRef,
-                               this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "connect",
+                                domain_bridge.connectRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_sequence_local<Deployment::Resource>(node->getOwnerDocument(), iter, node,
-                                                      node_name, "resource", domain_bridge.resource,
-                                                      this, &Domain_Handler::process_resource));
+        (process_sequence_local<Deployment::Resource>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "resource", domain_bridge.resource,
+            this, &Domain_Handler::process_resource));
       else
         {
           iter->previousNode();
@@ -194,27 +198,28 @@ void Domain_Handler::process_interconnect (DOMNodeIterator* iter,
         {
         }
       else if
-        (process_string(iter, node_name, "name", domain_ic.name));
+        (process_string (iter, node_name, "name", domain_ic.name));
       else if
-        (process_string(iter, node_name, "label", domain_ic.label));
+        (process_string (iter, node_name, "label", domain_ic.label));
       else if
-        (process_reference_seq(node, node_name, "connect",
-                           domain_ic.connectRef,
-                           this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "connect",
+                                domain_ic.connectRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_reference_seq(node, node_name, "connection",
-                               domain_ic.connectionRef,
-                               this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "connection",
+                                domain_ic.connectionRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_sequence_local<Deployment::Resource>(node->getOwnerDocument(), iter, node,
-                                                      node_name, "resource", domain_ic.resource,
-                                                      this, &Domain_Handler::process_resource));
+        (process_sequence_local<Deployment::Resource>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "resource", domain_ic.resource,
+            this, &Domain_Handler::process_resource));
       else
         {
           iter->previousNode();
@@ -224,9 +229,8 @@ void Domain_Handler::process_interconnect (DOMNodeIterator* iter,
 }
 
 
-void Domain_Handler::process_sr 
-(DOMNodeIterator* iter,
- Deployment::SharedResource& domain_sr)
+void Domain_Handler::process_sr (DOMNodeIterator* iter,
+                                 Deployment::SharedResource& domain_sr)
 {
   for (DOMNode* node = iter->nextNode();
        node != 0;
@@ -239,22 +243,23 @@ void Domain_Handler::process_sr
         {
         }
       else if
-        (process_string(iter, node_name, "name", domain_sr.name));
+        (process_string (iter, node_name, "name", domain_sr.name));
       else if
-        (process_string_seq(iter, node_name, "resourceType", domain_sr.resourceType));
+        (process_string_seq (iter, node_name, "resourceType", 
+                             domain_sr.resourceType));
       else if
-        (process_reference_seq(node, node_name, "node",
-                               domain_sr.nodeRef,
-                               this->index_, this->idref_map_))
+        (process_reference_seq (node, node_name, "node",
+                                domain_sr.nodeRef,
+                                this->index_, this->idref_map_))
         {
           this->index_ = this->index_ + 1;
         }
       else if
-        (process_sequence_common<Deployment::SatisfierProperty>(node->getOwnerDocument(), iter, node,
-                                                                node_name, "property", domain_sr.property,
-                                                                &SP_Handler::process_SatisfierProperty,
-                                                                this->id_map_));
-      // TODO: What about "any SatisfierProperty::value"
+        (process_sequence_common<Deployment::SatisfierProperty>
+           (node->getOwnerDocument(), iter, node,
+            node_name, "property", domain_sr.property,
+            &SP_Handler::process_SatisfierProperty,
+            this->id_map_));
       else
         {
           iter->previousNode();
