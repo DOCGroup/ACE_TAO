@@ -463,7 +463,11 @@ ACE_OS_String::strstr (const wchar_t *s, const wchar_t *t)
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS_String::wcsstr_emulation (s, t);
 #  else /* ACE_LACKS_WCSSTR */
+#    if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  return (const wchar_t *) ::wcswcs (s, t);
+#    else
   return (const wchar_t *) ::wcsstr (s, t);
+#    endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #  endif /* ACE_LACKS_WCSSTR */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -485,7 +489,11 @@ ACE_OS_String::strstr (wchar_t *s, const wchar_t *t)
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS_String::wcsstr_emulation (s, t);
 #  else /* ACE_LACKS_WCSSTR */
+#    if defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+  return ::wcswcs (s, t);
+#    else
   return ::wcsstr (s, t);
+#    endif /* ACE_HAS_XPG4_MULTIBYTE_CHAR */
 #  endif /* ACE_LACKS_WCSSTR */
 }
 #endif /* ACE_HAS_WCHAR */
