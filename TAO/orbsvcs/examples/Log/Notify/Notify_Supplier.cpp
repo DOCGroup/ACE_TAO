@@ -205,7 +205,7 @@ Supplier::run (int argc, char* argv[])
                   "Calling NotifyLog get_n_records...\n"));
 
 #ifndef ACE_LACKS_LONGLONG_T
-      CORBA::Long retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
+      CORBA::ULongLong retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 #else
       CORBA::Long retval = notify_log_->get_n_records (ACE_ENV_SINGLE_ARG_PARAMETER).lo();
@@ -232,10 +232,10 @@ Supplier::run (int argc, char* argv[])
         notify_log_->query (QUERY_LANG, QUERY_1, iter_out);
 
       CORBA::ULong j = 0;
-      for (; j < rec_list->length();++j)  
+      for (; j < rec_list->length();++j)
 #ifndef ACE_LACKS_LONGLONG_T
        ACE_DEBUG ((LM_DEBUG,
-                   "id = %Q, time= %Q\n", 
+                   "id = %Q, time= %Q\n",
                    rec_list[j].id, rec_list[j].time));
 #else
        ACE_DEBUG ((LM_DEBUG,

@@ -63,8 +63,10 @@ public:
   /// the socket on which it is waiting to non-blocking mode or not.
   virtual int non_blocking (void) = 0;
 
-  /// Get/Set method for the flag
+  /// Get method for the flag
   int is_registered (void);
+
+  /// Set method for the flag
   void is_registered (int flag);
 
 protected:

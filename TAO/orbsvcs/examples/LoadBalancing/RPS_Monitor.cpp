@@ -62,7 +62,7 @@ RPS_Monitor::loads (ACE_ENV_SINGLE_ARG_DECL)
     this->last_time_ = current_time;
   }
 
-  const CORBA::Float request_count = this->interceptor_->request_count ();
+  const CORBA::Long request_count = this->interceptor_->request_count ();
 
   CosLoadBalancing::LoadList * tmp;
   ACE_NEW_THROW_EX (tmp,

@@ -140,7 +140,7 @@ namespace CORBA
     CORBA::Boolean is_local_;
 
     /// Our equivalent CORBA::Object version
-    /// @@todo: We may at some point of time should probably cache a
+    /// @todo We may at some point of time should probably cache a
     /// version of  CORBA::ValueBase
     CORBA::Object_var equivalent_obj_;
   };
