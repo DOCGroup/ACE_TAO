@@ -15,7 +15,7 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
   
   long flags = THR_NEW_LWP | THR_JOINABLE;
   if (this->ACE_Task <ACE_SYNCH>::activate (flags,
-					    4) == -1)
+					    2) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
 	ACE_ERROR_RETURN ((LM_ERROR,
@@ -28,49 +28,57 @@ Thread_Task::activate_task (CORBA::ORB_ptr orb)
 
 Thread_Task::svc (void)
 {
-
-  const char * name = 0;
-  CORBA::Policy_ptr sched_param = 0;
-  CORBA::Policy_ptr implicit_sched_param = 0;
+  ACE_TRY
+    {
+      const char * name = 0;
+      CORBA::Policy_ptr sched_param = 0;
+      CORBA::Policy_ptr implicit_sched_param = 0;
+      
+      
+      this->current_->begin_scheduling_segment (name,
+						sched_param,
+						implicit_sched_param
+						ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
   
+
+      //Start - Nested Scheduling Segment
+      this->current_->begin_scheduling_segment (name,
+						sched_param,
+						implicit_sched_param
+						ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      
+      //Start - Nested Scheduling Segment
+      this->current_->begin_scheduling_segment (name,
+						sched_param,
+						implicit_sched_param
+						ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
   
-  this->current_->begin_scheduling_segment (name,
-					    sched_param,
-					    implicit_sched_param
-					    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
+      ACE_OS::sleep (50);
+
+      this->current_->end_scheduling_segment (name
+					      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      //  End - Nested Scheduling Segment
   
+      this->current_->end_scheduling_segment (name
+					      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+      //  End - Nested Scheduling Segment
 
-  //Start - Nested Scheduling Segment
-  this->current_->begin_scheduling_segment (name,
-					    sched_param,
-					    implicit_sched_param
-					    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
-  //Start - Nested Scheduling Segment
-  this->current_->begin_scheduling_segment (name,
-					    sched_param,
-					    implicit_sched_param
-					    ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  
-  ACE_OS::sleep (100);
-
-  this->current_->end_scheduling_segment (name
-					  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  //  End - Nested Scheduling Segment
-  
-  this->current_->end_scheduling_segment (name
-					  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-  //  End - Nested Scheduling Segment
-
-  this->current_->end_scheduling_segment (name
-					  ACE_ENV_ARG_PARAMETER);
-  ACE_CHECK;
-
+      this->current_->end_scheduling_segment (name
+					      ACE_ENV_ARG_PARAMETER);
+      ACE_TRY_CHECK;
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
+                           "Caught exception:");
+      return 1;
+    }
+  ACE_ENDTRY;
   return 0;
 }
 
