@@ -1,10 +1,7 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/RTEventLog_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/orbsvcs/Event_Utilities.h"
-
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/EC_Dispatching.h"
@@ -15,6 +12,11 @@
 #include "orbsvcs/Event/EC_ConsumerControl.h"
 #include "orbsvcs/Event/EC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
+
+ACE_RCSID (Log,
+           RTEventLog_i,
+           "$Id$")
+
 
 LogConsumer::LogConsumer (RTEventLog_i *log)
 : log_ (log)
@@ -76,7 +78,7 @@ RTEventLog_i::RTEventLog_i (LogMgr_i &logmgr_i,
 {
   ACE_UNUSED_ARG (event_log_factory);
 
-  ACE_ENV_SINGLE_ARG_DECL
+  ACE_DECLARE_NEW_CORBA_ENV;
   
   PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
 
@@ -94,32 +96,40 @@ RTEventLog_i::~RTEventLog_i ()
 
 
 DsLogAdmin::Log_ptr 
-RTEventLog_i::copy (DsLogAdmin::LogId &id)
+RTEventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
-    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
+    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   RTEventLogAdmin::EventLog_var log = 
-    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id);
+    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_,
+                             id ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  copy_attributes (log.in ());
+  copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 
 }
 
 DsLogAdmin::Log_ptr 
-RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
+RTEventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException))
 {
   RTEventLogAdmin::EventLogFactory_var eventLogFactory =
-    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
+    RTEventLogAdmin::EventLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   RTEventLogAdmin::EventLog_var log = 
-    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_);
+    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0,
+                                     thresholds_ ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  copy_attributes (log.in ());
+  copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
@@ -129,7 +139,7 @@ RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
 
-  notifier_->object_deletion (logid_);
+  notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_); // check for error?
@@ -150,10 +160,8 @@ RTEventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-RTEventLog_i::activate (void)
+RTEventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_ENV_SINGLE_ARG_DECL
-
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
 

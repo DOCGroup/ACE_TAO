@@ -1,20 +1,17 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   NotifyLog_i.h
-//
-// = DESCRIPTION
-//   Implementation of the DsNotifyLogAdmin::NotifyLog interface.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   NotifyLog_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsNotifyLogAdmin::NotifyLog interface.
+ *  
+ *
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef TLS_NOTIFYLOG_I_H
 #define TLS_NOTIFYLOG_I_H
@@ -119,12 +116,12 @@ public:
   ~NotifyLog_i ();
   // Destructor.
 
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id)
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
 
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id)
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));
@@ -135,7 +132,7 @@ public:
   // Destroy the log object and all contained records.
 
   void
-  activate (void);
+  activate (ACE_ENV_SINGLE_ARG_DECL);
 
   //IDL to C++
   CosNotifyFilter::Filter_ptr
@@ -144,7 +141,7 @@ public:
       CORBA::SystemException
     ));
 
-  void set_filter (CosNotifyFilter::Filter_ptr filter)
+  void set_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ));

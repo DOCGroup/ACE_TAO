@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Telecom Log Service tests
-//
-// = FILENAME
-//   Basic_Log_Test
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   Basic_Log_Test.h
+ *
+ *  $Id$
+ *
+ *  An test of using the Basic_Logging_Service
+ *
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef _BASILOG_TEST_H
@@ -118,7 +118,7 @@ private:
     parse_args();
   // command line argument parser
 
-  int write_records(CORBA::ULongLong numberOfRecordsToWrite ACE_ENV_ARG_DECL);
+  int write_records(CORBA::ULongLong numberOfRecordsToWrite ACE_ENV_ARG_DECL_NOT_USED);
   // writes enough records to fill the log. Default write enough to fill log. Hopefully, not infinite.
 
   void

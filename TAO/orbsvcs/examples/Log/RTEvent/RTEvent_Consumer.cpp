@@ -1,8 +1,11 @@
-/* -*- C++ -*- $Id$ */
-
 #include "RTEvent_Consumer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"
+
+ACE_RCSID (RTEvent,
+           RTEvent_Consumer,
+           "$Id$")
+
 
 #define NAMING_SERVICE_NAME "NameService"
 #define EVENT_TLS_LOG_FACTORY_NAME "RTEventLogFactory"
@@ -77,7 +80,7 @@ Consumer::run (int argc, char* argv[])
 
       // Need to check return value for errors.
       if (CORBA::is_nil (naming_obj.in ()))
-        ACE_THROW (CORBA::UNKNOWN ());
+        ACE_THROW_RETURN (CORBA::UNKNOWN (), 0);
 
       this->naming_context_ =
         CosNaming::NamingContext::_narrow (naming_obj.in () ACE_ENV_ARG_PARAMETER);

@@ -1,9 +1,12 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/EventLogNotification.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
+
+ACE_RCSID (Log,
+           EventLogNotification,
+           "$Id$")
+
 
 EventLogNotification::EventLogNotification (CosEventChannelAdmin::EventChannel_ptr ec)
 : LogNotification (), event_channel_ (CosEventChannelAdmin::EventChannel::_duplicate (ec))
@@ -17,7 +20,7 @@ EventLogNotification::~EventLogNotification (void)
 }
 
 void
-EventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+EventLogNotification::disconnect_push_supplier (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
   this->consumer_->disconnect_push_consumer (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -32,16 +35,17 @@ EventLogNotification::obtain_proxy_consumer()
   consumer_ = supplier_admin->obtain_push_consumer ();
 
   CosEventComm::PushSupplier_var supplier =
-    this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
+    this->_this ();
 
   consumer_->connect_push_supplier (supplier.in());
 }
 
 void
-EventLogNotification::send_notification (const CORBA::Any& any )
+EventLogNotification::send_notification (const CORBA::Any& any 
+                                         ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  consumer_->push (any);
+  consumer_->push (any ACE_ENV_ARG_PARAMETER);
 }
 
 

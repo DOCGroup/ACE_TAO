@@ -1,9 +1,12 @@
-/* -*- C++ -*- $Id$ */
-
 #include "Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"
+
+ACE_RCSID (Log,
+           Iterator_i,
+           "$Id$")
+
 
 Iterator_i::Iterator_i (LogRecordStore::LOG_RECORD_STORE &store,
                         CORBA::ULong start,

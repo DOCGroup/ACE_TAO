@@ -1,20 +1,17 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   RTEventLogFactory_i.h
-//
-// = DESCRIPTION
-//   Implements the Factory for RTEventLog Objects.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RTEventLogFactory_i.h
+ *
+ *  $Id$
+ *
+ *  Implements the Factory for NotifyLog Objects.
+ *  
+ *
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef TLS_RTEVENTLOGFACTORY_I_H
 #define TLS_RTEVENTLOGFACTORY_I_H

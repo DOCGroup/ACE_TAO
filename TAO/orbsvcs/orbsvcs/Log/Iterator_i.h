@@ -1,22 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   Iterator_i.h
-//
-// = DESCRIPTION
-//   Implementation of the DsLogAdmin::Iterator interface.
-//
-// = AUTHOR
-//   Matthew Braun <mjb2@cs.wustl.edu>
-//   Pradeep Gore <pradeep@cs.wustl.edu>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   Iterator_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the DsLogAdmin::Iterator interface.
+ *
+ *
+ *  @author Matthew Braun <mjb2@cs.wustl.edu>
+ *  @author Pradeep Gore <pradeep@cs.wustl.edu>
+ *  
+ */
+//=============================================================================
 
 #ifndef TLS_ITERATOR_H
 #define TLS_ITERATOR_H

@@ -1,20 +1,17 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   RTEventLog_i.h
-//
-// = DESCRIPTION
-//   Implementation of the RTLogAdmin::EventLog interface.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RTEventLog_i.h
+ *
+ *  $Id$
+ *
+ *  Implementation of the RTEventLogAdmin::NotifyLog interface.
+ *  
+ *
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef TLS_RTEVENTLOG_I_H
 #define TLS_RTEVENTLOG_I_H
@@ -92,10 +89,10 @@ public:
   ~RTEventLog_i ();
   // Destructor.
 
-  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id)
+  virtual DsLogAdmin::Log_ptr copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id)
+  virtual DsLogAdmin::Log_ptr copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((DsLogAdmin::LogIdAlreadyExists, CORBA::SystemException));
 
   void
@@ -104,7 +101,7 @@ public:
   // Destroy the log object and all contained records.
 
   void
-  activate (void);
+  activate (ACE_ENV_SINGLE_ARG_DECL);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr 
   for_consumers (ACE_ENV_SINGLE_ARG_DECL)

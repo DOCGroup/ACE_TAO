@@ -1,23 +1,17 @@
-/* -*- C++ -*- */
-// $Id$
+// -*- C++ -*-
 
-// ============================================================================
-//
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   PersistStore.h
-//
-// = DESCRIPTION
-//    This flat file demonstrates basic persistence.
-//    
-//
-// = AUTHORS
-//   Rob Ruff <rruff@scires.com>
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   PersistStore.h
+ *
+ *  $Id$
+ *
+ *  This flat file demonstrates basic persistence.
+ *  
+ *  @author Rob Ruff <rruff@scires.com>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
+ */
+//=============================================================================
 
 #ifndef PERSIST_STORE_H
 #define PERSIST_STORE_H

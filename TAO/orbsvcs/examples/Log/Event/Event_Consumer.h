@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Telecom Log Event Service examples
-//
-// = FILENAME
-//   Event_Consumer
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   Event_Consumer.h
+ *
+ *  $Id$
+ *
+ *  An example of using the Event_Logging_Service.
+ *  The Event_Consumer consumes log-generated events.
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef EVENT_CONSUMER_H

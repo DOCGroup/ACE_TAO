@@ -1,14 +1,18 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/LogNotification.h"
 #include "orbsvcs/Log/NotifyLogNotification.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 
+ACE_RCSID (Log,
+           NotifyLogNotification,
+           "$Id$")
+
+
 NotifyLogNotification::NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr ec)
 : LogNotification (), event_channel_ (CosNotifyChannelAdmin::EventChannel::_duplicate (ec))
 {
-
+  ACE_DECLARE_NEW_CORBA_ENV;
+  
   CosNotifyComm::PushSupplier_var objref =
     this->_this (ACE_ENV_SINGLE_ARG_PARAMETER);
   ACE_CHECK;
@@ -67,7 +71,7 @@ NotifyLogNotification::subscription_change
 
 void
 NotifyLogNotification::disconnect_push_supplier
-   (ACE_ENV_SINGLE_ARG_DECL_NOT_USED)
+   (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException
                    ))

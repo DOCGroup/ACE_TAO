@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Telecom Log Service examples
-//
-// = FILENAME
-//   Notify_Consumer
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   Notify_Consumer.h
+ *
+ *  $Id$
+ *
+ *  An example of using the Notify_Logging_Service.
+ *  The Notify_Consumer consumes log-generated events.
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef NOTIFY_CONSUMER_H

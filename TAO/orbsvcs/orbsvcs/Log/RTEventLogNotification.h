@@ -1,20 +1,19 @@
 /* -*- C++ -*- */
-// $Id$
 
-// ============================================================================
-// = LIBRARY
-//   orbsvcs
-//
-// = FILENAME
-//   RTEventLogNotification_i.h
-//
-// = DESCRIPTION
-//   Implementation of Log generated events for RTEventLog.
-//
-// = AUTHOR
-//   D A Hanvey <d.hanvey@qub.ac.uk>
-//
-// ============================================================================
+//=============================================================================
+/**
+ *  @file   RTEventLogNotification.h
+ *
+ *  $Id$
+ *
+ *  Methods to enable log-generated events.
+ *
+ *
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
+ *   
+ *  
+ */
+//=============================================================================
 
 #ifndef TLS_RTEVENT_LOG_NOTIFICATION_H
 #define TLS_RTEVENT_LOG_NOTIFICATION_H
@@ -60,7 +59,7 @@ public:
 protected:
   // = Helper methods
 
-  void obtainProxyConsumer ();
+  void obtainProxyConsumer (ACE_ENV_SINGLE_ARG_DECL);
 
   virtual void send_notification (const CORBA::Any& any)
     ACE_THROW_SPEC ((CORBA::SystemException));

@@ -1,8 +1,11 @@
-/* -*- C++ -*- $Id$ */
-
 #include "orbsvcs/Log/NotifyLog_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogNotification.h"
+
+ACE_RCSID (Log,
+           NotifyLog_i,
+           "$Id$")
+
 
 #define CA_FILTER "threshold > 10"
 #define TCL_GRAMMAR "TCL"
@@ -19,7 +22,7 @@ LogConsumer::~LogConsumer (void)
 }
 
 void
-LogConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+LogConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin ACE_ENV_ARG_DECL)
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref =
@@ -70,7 +73,7 @@ LogConsumer::offer_change
 void
 LogConsumer::push_structured_event
    (const CosNotification::StructuredEvent & notification
-    ACE_ENV_ARG_DECL_NOT_USED)
+    ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((
                    CORBA::SystemException,
                    CosEventComm::Disconnected
@@ -116,9 +119,9 @@ NotifyLog_i::NotifyLog_i (LogMgr_i &logmgr_i,
   : Log_i (factory, id, log_notifier, log_full_action, max_size, reactor),
   logmgr_i_(logmgr_i), notify_factory_ (CosNotifyChannelAdmin::EventChannelFactory::_duplicate (ecf))
 {
- ACE_UNUSED_ARG (notify_log_factory);
+  ACE_UNUSED_ARG (notify_log_factory);
 
-  ACE_ENV_SINGLE_ARG_DECL
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   CosNotifyChannelAdmin::ChannelID channel_id;
 
@@ -141,43 +144,47 @@ NotifyLog_i::~NotifyLog_i ()
 }
 
 DsLogAdmin::Log_ptr 
-NotifyLog_i::copy (DsLogAdmin::LogId &id)
+NotifyLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
   DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
-    DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
+    DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  CosNotification::QoSProperties* qos = get_qos ();
-  CosNotification::AdminProperties* admin = get_admin ();
+  CosNotification::QoSProperties* qos = get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   DsNotifyLogAdmin::NotifyLog_var log = 
     notifyLogFactory->create (DsLogAdmin::halt, 0, thresholds_, ACE_static_cast(const CosNotification::QoSProperties, *qos),
 			       ACE_static_cast(const CosNotification::AdminProperties, *admin), id);
 
-  copy_attributes (log.in ());
+  this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
 
 DsLogAdmin::Log_ptr 
-NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
+NotifyLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
 {
   DsNotifyLogAdmin::NotifyLogFactory_var notifyLogFactory =
-    DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in ());
+    DsNotifyLogAdmin::NotifyLogFactory::_narrow (factory_.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  CosNotification::QoSProperties* qos = get_qos ();
-  CosNotification::AdminProperties* admin = get_admin ();
+  CosNotification::QoSProperties* qos = get_qos (ACE_ENV_SINGLE_ARG_PARAMETER);
+  CosNotification::AdminProperties* admin = get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 
   DsNotifyLogAdmin::NotifyLog_var log = 
     notifyLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_, ACE_static_cast(const CosNotification::QoSProperties, *qos),
 			       ACE_static_cast(const CosNotification::AdminProperties, *admin));
 
-  copy_attributes (log.in ());
+  this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 }
@@ -187,7 +194,7 @@ void
 NotifyLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
-  notifier_->object_deletion (logid_);
+  notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_); // check for error?
 
@@ -207,9 +214,8 @@ NotifyLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-NotifyLog_i::activate (void)
+NotifyLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_ENV_SINGLE_ARG_DECL
 
   CosNotifyChannelAdmin::AdminID adminid = 0;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop = 
@@ -258,7 +264,7 @@ NotifyLog_i::activate (void)
                     LogConsumer (this),
                     CORBA::NO_MEMORY ()); 
 
-  this->my_log_consumer_->connect (this->consumer_admin_.in ());         
+  this->my_log_consumer_->connect (this->consumer_admin_.in () ACE_ENV_ARG_PARAMETER);         
 }
 
 //IDL to C++
@@ -269,9 +275,7 @@ NotifyLog_i::get_filter (ACE_ENV_SINGLE_ARG_DECL)
     ))
 {  
   //TODO: need to add impl
-  //dummy impl to get it to compile
-  CosNotifyFilter::Filter_ptr filter;
-  return filter;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
@@ -281,6 +285,8 @@ NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr filter ACE_ENV_ARG_DECL)
     ))
 {
   ACE_UNUSED_ARG (filter);
+
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   //TODO: need to add impl
 }
@@ -292,9 +298,7 @@ NotifyLog_i::MyFactory (ACE_ENV_SINGLE_ARG_DECL)
     ))
 {
   //TODO: need to add impl
-  //dummy impl to compile
-  CosNotifyChannelAdmin::EventChannelFactory_ptr ecf;
-  return ecf;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -303,7 +307,7 @@ NotifyLog_i::default_consumer_admin (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->default_consumer_admin();
+  return this->event_channel_->default_consumer_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -312,7 +316,7 @@ NotifyLog_i::default_supplier_admin (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->default_supplier_admin();
+  return this->event_channel_->default_supplier_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyFilter::FilterFactory_ptr
@@ -321,7 +325,7 @@ NotifyLog_i::default_filter_factory (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->default_filter_factory();
+  return this->event_channel_->default_filter_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -331,7 +335,7 @@ NotifyLog_i::new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator 
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->new_for_consumers(op,id);
+  return this->event_channel_->new_for_consumers (op,id ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -341,7 +345,7 @@ NotifyLog_i::new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator 
       CORBA::SystemException
     ))
 {  
-  return this->event_channel_->new_for_suppliers(op,id);
+  return this->event_channel_->new_for_suppliers (op,id ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -351,7 +355,7 @@ NotifyLog_i::get_consumeradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DE
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_consumeradmin(id);
+  return this->event_channel_->get_consumeradmin (id ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -361,7 +365,7 @@ NotifyLog_i::get_supplieradmin (CosNotifyChannelAdmin::AdminID id ACE_ENV_ARG_DE
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_supplieradmin(id);
+  return this->event_channel_->get_supplieradmin (id ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
@@ -369,8 +373,8 @@ NotifyLog_i::get_all_consumeradmins (ACE_ENV_SINGLE_ARG_DECL)
     ACE_THROW_SPEC ((
       CORBA::SystemException
     ))
-{
-  return this->event_channel_->get_all_consumeradmins();
+{ 
+  return this->event_channel_->get_all_consumeradmins (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
@@ -379,7 +383,7 @@ NotifyLog_i::get_all_supplieradmins (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_all_supplieradmins();
+  return this->event_channel_->get_all_supplieradmins (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 CosNotification::AdminProperties*
@@ -388,7 +392,7 @@ NotifyLog_i::get_admin (ACE_ENV_SINGLE_ARG_DECL)
       CORBA::SystemException
     ))
 {
-  return this->event_channel_->get_admin();
+  return this->event_channel_->get_admin (ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 void
@@ -398,7 +402,7 @@ NotifyLog_i::set_admin (const CosNotification::AdminProperties& admin ACE_ENV_AR
       CORBA::SystemException
     ))
 {
-  this->event_channel_->set_admin(admin);
+  this->event_channel_->set_admin (admin ACE_ENV_ARG_PARAMETER);
 }
 
 CosNotification::QoSProperties*
@@ -408,8 +412,7 @@ NotifyLog_i::get_qos (ACE_ENV_SINGLE_ARG_DECL)
     ))
 {
   //need to add merging of QoS from Log_i and EventChannel_i
-  CosNotification::QoSProperties* temp;
-  return temp;
+  ACE_THROW_RETURN (CORBA::NO_IMPLEMENT (), 0);
 }
 
 void
@@ -421,6 +424,7 @@ NotifyLog_i::set_qos (const CosNotification::QoSProperties& qos ACE_ENV_ARG_DECL
 {
   ACE_UNUSED_ARG (qos);
 
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
   //TODO: need to add later
 }
 
@@ -435,6 +439,8 @@ NotifyLog_i::validate_qos (const CosNotification::QoSProperties& required_qos,
   ACE_UNUSED_ARG (required_qos);
  
   ACE_UNUSED_ARG (available_qos);
+
+  ACE_THROW (CORBA::NO_IMPLEMENT ());
 
   //TODO: need to add later
 }

@@ -1,17 +1,17 @@
 /* -*- C++ -*- */
-// $Id$
-//
+
 // ============================================================================
-//
-// = LIBRARY
-//   ORBSVCS Telecom Log Service examples 
-//
-// = FILENAME
-//   Notify_Supplier
-//
-// = AUTHOR
-//   D A Hanvey (d.hanvey@qub.ac.uk)
-//
+/**
+ *  @file   Notify_Supplier.h
+ *
+ *  $Id$
+ *
+ *  An example of using the Notify_Logging_Service.
+ *  
+ *
+ *
+ *  @author D A Hanvey (d.hanvey@qub.ac.uk)
+ */
 // ============================================================================
 
 #ifndef NOTIFY_SUPPLIER_H
@@ -76,7 +76,7 @@ class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSu
   //
  public:
   // = Initialization and Termination code
-  Filter_StructuredPushSupplier (ACE_ENV_SINGLE_ARG_DECL);
+  Filter_StructuredPushSupplier (ACE_ENV_SINGLE_ARG_DECL_NOT_USED);
   // Constructor.
 
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin

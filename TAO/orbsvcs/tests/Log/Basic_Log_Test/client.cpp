@@ -1,6 +1,8 @@
-/* -*- C++ -*- $Id$ */
-
 #include "Basic_Log_Test.h"
+
+ACE_RCSID (Basic_Log_Test,
+           client,
+           "$Id$")
 
 int
 main(int argc, char *argv[])

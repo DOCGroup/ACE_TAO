@@ -68,7 +68,7 @@ EventLog_i::EventLog_i (LogMgr_i &logmgr_i,
 {
   ACE_UNUSED_ARG (event_log_factory);
 
-  ACE_ENV_SINGLE_ARG_DECL
+  ACE_DECLARE_NEW_CORBA_ENV;
 
   // Create an instance of the event channel.
   PortableServer::POA_var poa = this->_default_POA (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -87,34 +87,44 @@ EventLog_i::~EventLog_i ()
 
 
 DsLogAdmin::Log_ptr
-EventLog_i::copy (DsLogAdmin::LogId &id)
+EventLog_i::copy (DsLogAdmin::LogId &id ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the log.
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
-    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
+    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   DsEventLogAdmin::EventLog_var log =
-    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id);
+    eventLogFactory->create (DsLogAdmin::halt, 0, thresholds_, id
+                             ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  copy_attributes (log.in ());
+  this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 
 }
 
 DsLogAdmin::Log_ptr
-EventLog_i::copy_with_id (DsLogAdmin::LogId id)
+EventLog_i::copy_with_id (DsLogAdmin::LogId id ACE_ENV_ARG_DECL)
 ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Duplicate the log supplying the log id.
   DsEventLogAdmin::EventLogFactory_var eventLogFactory =
-    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ());
+    DsEventLogAdmin::EventLogFactory::_narrow (factory_.in ()
+                                               ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   DsEventLogAdmin::EventLog_var log =
-    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_);
+    eventLogFactory->create_with_id (id, DsLogAdmin::halt, 0, thresholds_
+                                     ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
-  copy_attributes (log.in ());
+  this->copy_attributes (log.in () ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (DsLogAdmin::Log::_nil ());
 
   return log._retn ();
 
@@ -126,7 +136,7 @@ EventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
   // Send event to indicate the log has been deleted.
-  notifier_->object_deletion (logid_);
+  notifier_->object_deletion (logid_ ACE_ENV_ARG_PARAMETER);
 
   // Remove ourselves from the list of logs.
   this->logmgr_i_.remove (this->logid_); // check for error?
@@ -150,25 +160,16 @@ EventLog_i::destroy (ACE_ENV_SINGLE_ARG_DECL)
 }
 
 void
-EventLog_i::activate (void)
+EventLog_i::activate (ACE_ENV_SINGLE_ARG_DECL)
 {
-  ACE_DECLARE_NEW_CORBA_ENV;
-  ACE_TRY
-    {
-      CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
-        this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
-      ACE_TRY_CHECK;
+  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+  this->event_channel_->for_consumers (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
 
-      // Create the PushConsumer that will log the events.
-      this->my_log_consumer_ = new LogConsumer (this);
-      this->my_log_consumer_->connect (consumer_admin.in ());
-    }
-  ACE_CATCHANY
-    {
-      ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "Exception in EventLog_i::activate()");
-    }
-  ACE_ENDTRY;
+  // Create the PushConsumer that will log the events.
+  this->my_log_consumer_ = new LogConsumer (this);
+  ACE_CHECK;
+  this->my_log_consumer_->connect (consumer_admin.in ());
 }
 
 
