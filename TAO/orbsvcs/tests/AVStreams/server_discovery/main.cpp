@@ -9,6 +9,7 @@
 //
 // ========================================================================
 #include <jni.h>
+#include "ace/OS.h"
 
 ACE_RCSID(server_discovery, main, "$Id$")
 

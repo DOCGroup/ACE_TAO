@@ -16,6 +16,8 @@
 #include "Video_RepositoryC.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Trader_Utils.h"
+#include "mpeg_shared/ReceiverC.h"
+#include "mpeg_shared/MMDevice_ExporterC.h"
 
 class Movie_Iterator
 {
@@ -39,11 +41,14 @@ public:
   const char* description (void) const
     { return this->movie_info_[this->index_].description_.in (); }
 
-  const char* filename (void) const
-    { return this->movie_info_[this->index_].filename_.in (); }
+  const char* audio_filename (void) const
+    { return this->movie_info_[this->index_].audio_filename_.in (); }
 
-  const char* category (void) const
-    { return this->movie_info_[this->index_].category_.in (); }
+  const char* video_filename (void) const
+    { return this->movie_info_[this->index_].video_filename_.in (); }
+
+/*   const char* category (void) const */
+/*     { return this->movie_info_[this->index_].category_.in (); } */
 
 private:
 
@@ -68,7 +73,7 @@ public:
   void query_trader (void);
   // Call n times, after init has been called.
 
-  void load_movie (const char* server_name, const char* movie_name);
+  void load_movie (const char* server_name, TAO_VR::Movie* selected_movie_info);
   // Instruct the A/V client to begin an A/V stream with the
   // designated host.
 
@@ -97,7 +102,11 @@ private:
 
   static Trader_Client* instance_;
 
+  Receiver_var receiver_;
+  // Command handler receiver for mmdevice.
+
   void create_hash_table_entry (CosTrading::Offer& offer);
+
 
   TAO_VR::Movie_Info* fetch_movie_array (const char* server_name);
 
@@ -107,9 +116,13 @@ private:
   // Second-tier map --- maps property names to their values.
 
   typedef
-  ACE_Hash_Map_Manager <TAO_String_Hash_Key, Property_Map*, ACE_Null_Mutex>
+    ACE_Hash_Map_Manager <TAO_String_Hash_Key, Property_Map*, ACE_Null_Mutex>
   Server_Map;
   // First tier map --- maps server names to their second-tier maps.
+
+  typedef
+    ACE_Hash_Map_Manager <TAO_String_Hash_Key, CORBA::Object_ptr, ACE_Null_Mutex> Reference_Map;
+  // First tier map --- maps server names to their object reference.
 
   TAO_ORB_Manager orb_manager_;
   // Standard orb stuff.
@@ -117,10 +130,27 @@ private:
   CosTrading::Lookup_var lookup_;
   // A reference to the trader, what else?
 
-  Server_Map map_;
+  Server_Map mmdevice_map_;
   // The two-tiered map of server names to a map of property names to
   // values.
+
+  Reference_Map mmdevice_reference_map_;
+  // Hash Map of mmdevice object references
+
+  //  Server_Map video_map_;
+  // The two-tiered map of server names to a map of property names to
+  // values.
+
+  //  Reference_Map video_reference_map_;
+  // Hash Map of mmdevice object references
 };
 
+
+// Movie_Iterator* movie_iter=0;
+
+
 #endif /* TRADER_CLIENT_H */
+
+
+
 
