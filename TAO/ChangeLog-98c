@@ -1,3 +1,8 @@
+Fri Jun 26 09:48:55 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* VERSION: Updated this file to direct bug reports to 
+	  the ACE mailing list.
+
 Thu Jun 25 19:35:50 1998  Michael Kircher  <mk1@cs.wustl.edu>
 
 	* tests/NestedUpcall/{Triangle_Test, Reactor}: Added the 
