@@ -406,7 +406,7 @@ public:
   const char *orbid (void) const;
   // Return ORBid string.
 
-  const CORBA::Object_ptr implrepo_service (void);
+  CORBA::Object_ptr implrepo_service (void);
   void implrepo_service (const CORBA::Object_ptr ir);
   // Set/Get the IOR of the Implementation Repository service.
 

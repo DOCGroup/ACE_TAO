@@ -2071,7 +2071,7 @@ TAO_ORB_Core::set_thread_priority (CORBA::Short priority)
 #endif /* TAO_HAS_RT_CORBA */
 }
 
-const CORBA::Object_ptr 
+CORBA::Object_ptr 
 TAO_ORB_Core::implrepo_service (void)
 {
   if (!this->use_implrepo_)

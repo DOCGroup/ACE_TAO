@@ -1,3 +1,19 @@
+Fri Dec 17 01:18:29 1999  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+        * tao/ImplRepoC.h: Removed the inclusion of corbafwd.h, since
+          it isn't needed (and I believe I was told once that it shouldn't
+          be there).  Moved the other inludes before the #pragma once, so
+          this should allow ACE's config.h to set ACE_LACKS_PRAGMA_ONCE
+          before it checks it.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.cpp:
+          Fixed another case of unnecessary use of const by removing it 
+          from the implrepo_service () method.  
+
+        * orbsvcs/ImplRepo_Service/ImplRepo_i.cpp: Fixed a missed case
+          where get_object_key_delimiter () was still being used.
+          
 Thu Dec 16 21:11:40 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/pluggable_protocols/index.html:
