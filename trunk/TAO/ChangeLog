@@ -38,7 +38,6 @@ Tue Sep  3 17:08:32 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderb
 	* tao/Messaging/Makefile.bor: 
 	* tao/Messaging/Makefile: Added the new files.
 
-
 Tue Sep  3 14:48:55 2002  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/RTEvent_Static.dsp:
