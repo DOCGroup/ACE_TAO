@@ -1,3 +1,10 @@
+Sat Jan 03 09:04:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * tao/invoke.cpp (ACE_Synchronous_Cancellation_Required):
+          disabled on VxWorks to avoid runtime warnings with
+          ACE_NOTSUP_VERBOSE, because thr_setcanceltype isn't
+          supported there.
+
 Fri Jan 02 18:42:31 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
 	* TAO version 0.0.51, released Fri Jan 02 18:42:31 1998.
