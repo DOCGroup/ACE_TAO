@@ -33,7 +33,8 @@ Collocation_Test::init (int argc, char *argv[], CORBA::Environment &ACE_TRY_ENV)
 
   // Get an Object reference to RootPOA.
   CORBA::Object_var obj =
-    this->orb_->resolve_initial_references ("RootPOA");
+    this->orb_->resolve_initial_references ("RootPOA", ACE_TRY_ENV);
+  ACE_CHECK_RETURN (-1);
 
   // Narrow the Object reference to a POA reference
   this->root_poa_ =
