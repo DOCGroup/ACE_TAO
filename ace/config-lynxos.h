@@ -13,6 +13,9 @@
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
 
+#define ACE_LACKS_GETOPT_PROTO
+#define ACE_HAS_STDARG_THR_DEST
+
 #define ACE_HAS_STRING_CLASS
 #define ACE_HAS_TEMPLATE_SPECIALIZATION
 #define ACE_HAS_UALARM
@@ -79,7 +82,7 @@
 #define ACE_HAS_BROKEN_WRITEV
 #define ACE_HAS_BROKEN_READV
 #define ACE_HAS_BROKEN_SETRLIMIT
-#define ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS
+#define ACE_LACKS_SOME_POSIX_PROTOTYPES
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST

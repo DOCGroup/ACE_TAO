@@ -1,3 +1,25 @@
+Wed Oct 29 10:25:12 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* ace: Changes all uses of the overly long
+ 	  ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS to
+ 	  ACE_LACKS_SOME_POSIX_PROTOTYPES.  However, I'm not really sure
+ 	  how this relates to the ACE_LACKS_POSIX_PROTOTYPES macro.  I
+ 	  suspect we probably only need one of these...
+
+	* ace/OS.h: Added a new ACE_HAS_STDARG_THR_DEST to handle
+ 	  weirdness with LynxOS.  Thanks to Kirill.Rybaltchenko
+ 	  <Kirill.Rybaltchenko@cern.ch> for reporting this.
+
+	* ace: OS.h,config-lynxos.h: Added a new ACE_LACKS_GETOPT_PROTO
+	  for LynxOS.  Thanks to Kirill.Rybaltchenko
+	  <Kirill.Rybaltchenko@cern.ch> for reporting this.
+
+	* ace/config-lynxos.h: Replaced
+ 	  ACE_LACKS_POSIX_PROTO_FOR_SOME_FUNCS with
+ 	  ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCTIONS.  Thanks to
+ 	  Kirill.Rybaltchenko <Kirill.Rybaltchenko@cern.ch> for reporting
+ 	  this.
+
 Wed Oct 29 10:32:16 1997  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/config-lynxos.h: fixed ACE_LACKS_POSIX_PROTOTYPES_FOR_SOME_FUNCS
