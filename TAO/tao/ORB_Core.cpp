@@ -653,6 +653,8 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
                   this->orb_params ()->preconnects (preconnections);
                 }
+
+              arg_shifter.consume_arg ();
             }
         }
 
@@ -948,11 +950,11 @@ TAO_ORB_Core::init (int &argc, char *argv[])
 
   // Have registry parse the preconnects
   if (this->orb_params ()->preconnects ().is_empty () == 0)
-    this->connector_registry ()->preconnect (this->orb_params ()->preconnects ());
+    this->connector_registry ()->preconnect (this,
+                                             this->orb_params ()->preconnects ());
 
   return 0;
 }
-
 
 int
 TAO_ORB_Core::set_iiop_endpoint (int dotted_decimal_addresses,
