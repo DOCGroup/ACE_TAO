@@ -277,7 +277,7 @@ public:
   pid_t spawn (ACE_Process_Options &options);
   // Launch the process described by <options>.
 
-  int wait (void);
+  int wait (int *status = 0);
   // Wait for the process we just created to exit.
 
   int wait (const ACE_Time_Value &tv);

@@ -140,12 +140,14 @@ ACE_Process::spawn (ACE_Process_Options &options)
 }
 
 int
-ACE_Process::wait (void)
+ACE_Process::wait (int *status)
 {
 #if defined (ACE_WIN32)
+  // Notice that status doesn't get updated.
+  ACE_UNUSED_ARG (status);
   return ::WaitForSingleObject (process_info_.hProcess, INFINITE);
 #else /* ACE_WIN32 */
-  return ACE_OS::waitpid (this->child_id_, 0, 0);
+  return ACE_OS::waitpid (this->child_id_, status, 0);
 #endif /* ACE_WIN32 */
 }
 
