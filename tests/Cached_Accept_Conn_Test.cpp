@@ -26,6 +26,7 @@
 #define CACHED_ACCEPT_CONNECTION_TEST
 
 #include "test_config.h"
+#include "Cached_Accept_Conn_Test.h"
 
 #if defined(__GNUC__) && __GNUC__ == 2 && __GNUC_MINOR__ < 8
 #define ACE_HAS_BROKEN_EXTENDED_TEMPLATES
@@ -56,15 +57,6 @@ USELIB("..\ace\aced.lib");
 
 static int debug = 0;
 
-class Client_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-{
-public:
-
-  Client_Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0);
-  int close (u_long flags = 0);
-};
-
 Client_Svc_Handler::Client_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
 {
@@ -91,13 +83,6 @@ Client_Svc_Handler::close (u_long flags)
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::close (flags);
 }
 
-class Server_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
-{
-public:
-
-  Server_Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0);
-};
 
 Server_Svc_Handler::Server_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)
