@@ -1,3 +1,25 @@
+Wed Feb 16 15:01:29 2000  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_interface.cpp:
+	* TAO_IDL/be/be_structure.cpp:
+	* TAO_IDL/be/be_union.cpp:
+	* TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+	* TAO_IDL/be/be_visitor_sequence/sequence_ci.cpp:
+	* TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+	* TAO_IDL/be/be_visitor_union/union_cs.cpp:
+	  Modified generation of scoped names for arguments
+	  and return types to be compatible with scoped
+	  names where the nested name repeats after skipping
+	  one or more scopes. This was done for interfaces
+	  yesterday, these changes were to structure, exception,
+	  union, and sequence. Also used the new ACE_GLOBAL_COLONS
+	  macro where necessary to avoid SunCC 5.0 going berserk
+	  whenever it sees a construction like (::foo::...  ).
+
+	* TAO_IDL/be/be_visitor_interface/thru_poa_collocated_ss.cpp:
+	  Removed unnecessary generation of a call to the base class
+	  default constructor.
+
 Wed Feb 16 08:36:01 2000  Ossama Othman  <ossama@uci.edu>
 
 	* docs/Options.html:
