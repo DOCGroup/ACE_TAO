@@ -1,3 +1,22 @@
+Thu Jul 09 16:23:34 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Registry.h (ACE_Registry): Changed the Registry class so
+ 	  that it does not use STL containers and the string classes
+ 	  anymore.  It now uses ACE containers and string classes.  There
+ 	  should be no dependency on STL in ACE anymore.
+
+	* STL: Removed this directory since ACE is no longer dependent on
+ 	  STL. If you still need these STL files, please refer to:
+ 	  http://www.rahul.net/terris/.
+
+	* examples/Registry/test_registry_{update,iterator}.cpp (main):
+ 	  Updated files to work with modified Registry.
+
+	* ace/SString.cpp (ACE_WString::operator<<): Added new operator.
+
+	* Makefile: Updated Makefile so that STL is no longer released
+ 	  with ACE.
+
 Thu Jul 09 09:37:43 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ace/Basic_Types: for LONG_LONG size determination, don't use

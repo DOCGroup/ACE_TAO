@@ -23,15 +23,8 @@
 #if defined (ACE_WIN32)
 // This only works on Win32 platforms
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
-	    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-#include <vector>
-#include <string>
-#else
-#include "vector.h"
-#include "bstring.h"
-#endif
-// You must configure the STL components in order to use this wrapper.
+#include "ace/Containers.h"
+#include "ace/SString.h"
 
 class ACE_Export ACE_Registry
 {
@@ -48,48 +41,25 @@ class ACE_Export ACE_Registry
 public:
 
 // International string
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
-	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
-  typedef std::basic_string<TCHAR, char_traits<TCHAR>, allocator<TCHAR> > Istring;
-#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-  typedef std::basic_string<TCHAR> Istring;
-#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-#else /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
-	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
-  typedef basic_string<TCHAR, char_traits<TCHAR>, allocator<TCHAR> > Istring;
-#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-  typedef basic_string<TCHAR> Istring;
-#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
+#if defined (UNICODE)
+  typedef ACE_WString Istring;
+#else
+  typedef ACE_CString Istring;
+#endif /* UNICODE */
 
   struct ACE_Export Name_Component
   {
     Istring id_;
     Istring kind_;
+
+    int operator== (const Name_Component &rhs);
+    // Comparison
   };
   // The <id_> field is used,
   // but the <kind_> field is currently ignored
 
-// A Name is an ordered collections of components (ids)
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
-	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
-  typedef std::vector<Name_Component, allocator<Name_Component> > Name;
-#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-  typedef std::vector<Name_Component> Name;
-#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-#else /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
-	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
-  typedef vector<Name_Component, allocator<Name_Component> > Name;
-#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-  typedef vector<Name_Component> Name;
-#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
+  // A Name is an ordered collections of components (ids)
+  typedef ACE_Unbounded_Set<Name_Component> Name;
 
   static LPCTSTR STRING_SEPARATOR;
   // Separator for components in a name
@@ -118,6 +88,9 @@ public:
     // Constructor
     // (String version)
 
+    int operator== (const Binding &rhs);
+    // Comparison
+
     void name (Name &name);
     // Name accessor
     // (Name version)
@@ -136,23 +109,8 @@ public:
     // A binding has a name and a type
   };
 
-// A list of bindings
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
-	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
-  typedef std::vector<Binding, allocator<Binding> > Binding_List;
-#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-  typedef std::vector<Binding> Binding_List;
-#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-#else /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#if defined (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER) && \
-	    (ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER != 0)
-  typedef vector<Binding, allocator<Binding> > Binding_List;
-#else /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-  typedef vector<Binding> Binding_List;
-#endif /* ACE_LACKS_STL_DEFAULT_TEMPLATE_PARAMETER */
-#endif /* ACE_HAS_STD_NAMESPACE_FOR_STDCPP_LIB */
+  // A list of bindings
+  typedef ACE_Unbounded_Set<Binding> Binding_List;
 
   class Binding_Iterator;
   // Forward declaration of iterator

@@ -316,6 +316,10 @@ class ACE_Export ACE_WString
   //   an ACE_Allocator with a persistable memory pool
 {
   friend ACE_Export ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
+#if !defined (ACE_HAS_WINCE)
+  friend ACE_Export ostream &operator<< (ostream &, const ACE_WString &);
+#endif /* ! ACE_HAS_WINCE */
+
 public:
   static const int npos;
   // No position constant
@@ -455,6 +459,9 @@ private:
 };
 
 ACE_Export ACE_WString operator+ (const ACE_WString &, const ACE_WString &);
+#if !defined (ACE_HAS_WINCE)
+ACE_Export ostream &operator<< (ostream &, const ACE_WString &);
+#endif /* ! ACE_HAS_WINCE */
 
 // ************************************************************
 
