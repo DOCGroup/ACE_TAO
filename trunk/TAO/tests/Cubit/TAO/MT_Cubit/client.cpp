@@ -592,7 +592,7 @@ Client_i::start_servant (void)
                        "hostname"),
                        -1);
   ACE_OS::sprintf (high_thread_args,
-                   "-ORBport %d "
+                   "-ORBport %u "
                    "-ORBhost %s "
                    "-ORBobjrefstyle URL "
                    "-ORBsndsock 32768 "
