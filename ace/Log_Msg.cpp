@@ -548,6 +548,20 @@ ACE_Log_Msg::~ACE_Log_Msg (void)
           ACE_Log_Msg::local_host_ = 0;
         }
     }
+
+  //
+  // do we need to close and clean up?
+  //
+  if (this->delete_ostream_ == 1)
+#if defined (ACE_LACKS_IOSTREAM_TOTALLY)
+    {
+      ACE_OS::fclose (this->ostream_);
+    }
+#else
+    {
+      delete ostream_;
+    }
+#endif
 }
 
 // Open the sender-side of the Message ACE_Queue.
@@ -1300,7 +1314,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
           // Try to use the <putpmsg> API if possible in order to
           // ensure correct message queueing according to priority.
           result =
-            ACE_Log_Msg_Manager::message_queue_->send 
+            ACE_Log_Msg_Manager::message_queue_->send
             (ACE_reinterpret_cast (const ACE_Str_Buf *,
                                    0),
              &log_msg,
@@ -1381,7 +1395,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
                           text);
 
   sz += ACE_OS::sprintf (msg_buf + sz,
-                         ASYS_TEXT ("HEXDUMP %d bytes"), 
+                         ASYS_TEXT ("HEXDUMP %d bytes"),
                          size);
 
   if (len < size)
@@ -1657,8 +1671,9 @@ ACE_Log_Msg::msg_ostream (void) const
 }
 
 void
-ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m)
+ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, int delete_ostream)
 {
+  this->delete_ostream_ = delete_ostream;
   this->ostream_ = m;
 }
 
@@ -1694,4 +1709,3 @@ ACE_Log_Msg::getpid (void) const
 ACE_Log_Msg_Callback::~ACE_Log_Msg_Callback (void)
 {
 }
-
