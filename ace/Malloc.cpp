@@ -34,6 +34,42 @@ ACE_Control_Block::ACE_Malloc_Header::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
 
+#if !defined (ACE_NDEBUG)
+void
+ACE_Control_Block::print_alignment_info (void)
+{
+  ACE_TRACE ("ACE_Control_Block::print_alignment_info");
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Start ---> ACE_Control_Block::print_alignment_info:\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Sizeof ptr: %d\n")
+              ASYS_TEXT ("Sizeof size_t: %d\n")
+              ASYS_TEXT ("Sizeof long: %d\n")
+              ASYS_TEXT ("Sizeof double: %d\n")
+              ASYS_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")
+              ASYS_TEXT ("sizeof ACE_MALLOC_PADDING: %d\n")
+              ASYS_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %d\n")
+              ASYS_TEXT ("Sizeof ACE_MALLOC_PADDING_SIZE: %d\n")
+              ASYS_TEXT ("Sizeof ACE_CONTROL_BLOCK_SIZE: %d\n")
+              ASYS_TEXT ("Sizeof ACE_CONTROL_BLOCK_ALIGN_LONGS: %d\n")
+              ASYS_TEXT ("Sizeof (MALLOC_HEADER): %d\n")
+              ASYS_TEXT ("Sizeof (CONTROL_BLOCK): %d\n"),
+              sizeof (char *),
+              sizeof (size_t),
+              sizeof (long),
+              sizeof (double),
+              ACE_MALLOC_ALIGN,
+              ACE_MALLOC_PADDING,
+              ACE_MALLOC_HEADER_SIZE,
+              ACE_MALLOC_PADDING_SIZE,
+              ACE_CONTROL_BLOCK_SIZE,
+              ACE_CONTROL_BLOCK_ALIGN_LONGS,
+              sizeof (ACE_Malloc_Header),
+              sizeof (ACE_Control_Block)
+              ));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End <--- ACE_Control_Block::print_alignment_info:\n")));
+}
+#endif /* ACE_NDEBUG */
+
 void
 ACE_Control_Block::dump (void) const
 {
@@ -132,6 +168,42 @@ ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
   ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("\nsize = %d\n"), this->size_));
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 }
+
+#if !defined (ACE_NDEBUG)
+void
+ACE_PI_Control_Block::print_alignment_info (void)
+{
+  ACE_TRACE ("ACE_Control_Block::print_alignment_info");
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("Start ---> ACE_PI_Control_Block::print_alignment_info:\n")));
+  ACE_DEBUG ((LM_DEBUG,
+              ASYS_TEXT ("Sizeof ptr: %d\n")
+              ASYS_TEXT ("Sizeof size_t: %d\n")
+              ASYS_TEXT ("Sizeof long: %d\n")
+              ASYS_TEXT ("Sizeof double: %d\n")
+              ASYS_TEXT ("Sizeof ACE_MALLOC_ALIGN: %d\n")
+              ASYS_TEXT ("sizeof ACE_MALLOC_PADDING: %d\n")
+              ASYS_TEXT ("Sizeof ACE_MALLOC_HEADER_SIZE: %d\n")
+              ASYS_TEXT ("Sizeof ACE_PI_MALLOC_PADDING_SIZE: %d\n")
+              ASYS_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_SIZE: %d\n")
+              ASYS_TEXT ("Sizeof ACE_PI_CONTROL_BLOCK_ALIGN_LONGS: %d\n")
+              ASYS_TEXT ("Sizeof (MALLOC_HEADER): %d\n")
+              ASYS_TEXT ("Sizeof (CONTROL_BLOCK): %d\n"),
+              sizeof (char *),
+              sizeof (size_t),
+              sizeof (long),
+              sizeof (double),
+              ACE_MALLOC_ALIGN,
+              ACE_MALLOC_PADDING,
+              ACE_MALLOC_HEADER_SIZE,
+              ACE_PI_MALLOC_PADDING_SIZE,
+              ACE_PI_CONTROL_BLOCK_SIZE,
+              ACE_PI_CONTROL_BLOCK_ALIGN_LONGS,
+              sizeof (ACE_Malloc_Header),
+              sizeof (ACE_Control_Block)
+              ));
+  ACE_DEBUG ((LM_DEBUG, ASYS_TEXT ("End <--- ACE_PI_Control_Block::print_alignment_info:\n")));
+}
+#endif /* ACE_NDEBUG */
 
 void
 ACE_PI_Control_Block::dump (void) const
