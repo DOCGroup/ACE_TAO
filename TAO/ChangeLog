@@ -1,3 +1,10 @@
+Mon Jun 30 11:44:34 2003  Gan Deng  <gan.deng@vanderbilt.edu>
+
+	* performa ce-tests/Sequence_Latency/AMH/Single_Threaded/Roundtrip.cpp
+
+	  Fixed the code to get rid of the gcc compiling warning about unused
+	  parameters in function definitions.
+
 Mon Jun 30 11:52:22 2003  Pradeep Gore  <pradeep@oomworks.com>
 
 	* orbsvcs\examples\Notify\Lanes\Consumer.cpp:
