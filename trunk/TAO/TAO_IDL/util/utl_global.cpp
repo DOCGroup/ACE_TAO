@@ -534,6 +534,90 @@ IDL_GlobalData::n_included_idl_files (void)
   return this->n_included_idl_files_;
 }
 
+// Set the number of included_idl_files. Use this carefully. This
+// method is used when we validate all the #included idl files,
+// against the ones that we get after preprocessing.
+void
+IDL_GlobalData::n_included_idl_files (size_t n)
+{
+  this->n_included_idl_files_ = n;
+}
+
+// Validate the included idl files, somefiles might have been
+// ignored by the preprocessor. 
+void 
+IDL_GlobalData::validate_included_idl_files (void)
+{
+  // Flag to make sure we dont repeat things.
+  static int already_done = 0;
+
+  if (already_done == 1)
+    return;
+  
+  already_done = 1;
+
+  for (size_t newj = 0, j = 0;
+       j < idl_global->n_included_idl_files ();
+       j++)
+    {
+      // Get the base part.
+      char *base_part = ACE_OS::strrchr (idl_global->included_idl_files ()[j],
+                                         '/'); 
+      
+      // If no / then take the whole name. We dont need the /
+      // anyway.  
+      if (base_part == 0)
+        base_part = idl_global->included_idl_files ()[j];
+      else
+        base_part++;
+      
+      // Check this name with the names list that we got from the
+      // preprocessor.
+      size_t valid_file = 0;
+      for (size_t ni = 0;
+           ni < idl_global->n_include_file_names ();
+           ni++) 
+        {
+          char *file_name = idl_global->include_file_names ()[ni]->get_string ();
+          
+          if (ACE_OS::strstr (file_name, base_part) != 0)
+            {
+              // This file name is valid.
+              valid_file = 1;
+              break;
+            }
+        }
+      
+      // Remove the file, if it is not valid. 
+      if (valid_file == 0)
+        {
+          delete idl_global->included_idl_files ()[j];
+          idl_global->included_idl_files ()[j] = 0;
+        }
+      else
+        {
+          // File is valid.
+          
+          // Move it to new index if necessary.
+          if (j != newj)
+            {
+              // Move to the new index position.
+              idl_global->included_idl_files ()[newj] =
+                idl_global->included_idl_files ()[j];
+              
+              // Make old position 0.
+              idl_global->included_idl_files ()[j] = 0;
+            }
+          
+          // Increment the new index.
+          newj++;
+        }
+    }
+  
+  // Now adjust the count on the included_idl_files.
+  idl_global->n_included_idl_files (newj);
+}
+
 void
 IDL_GlobalData::set_parse_state(ParseState ps)
 {

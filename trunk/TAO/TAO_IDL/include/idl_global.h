@@ -291,9 +291,18 @@ public:
 
   // The number of currently availabe include files.
   virtual size_t n_included_idl_files (void);
+  
+  // Set the number of included_idl_files. Use this carefully. This
+  // method is used when we validate all the #included idl files,
+  // against the ones that we get after preprocessing.
+  virtual void n_included_idl_files (size_t n);
 
-  virtual ParseState            parse_state();          // What state we're in
-  virtual void                  set_parse_state(ParseState s); // Set it
+  // Validate the included idl files, somefiles might have been
+  // ignored by the preprocessor. 
+  virtual void validate_included_idl_files (void);
+  
+  virtual ParseState		parse_state();		// What state we're in
+  virtual void			set_parse_state(ParseState s); // Set it
 
   // Convert from a predefined type to an expression type
   virtual AST_Expression::ExprType
