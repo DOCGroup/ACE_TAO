@@ -145,133 +145,129 @@ TAO_CodeGen::start_client_header (const char *fname)
     {
       return -1;
     }
-  else
+
+  *this->client_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+                        << "// " << __FILE__ << ":" << __LINE__
+                        << be_nl << be_nl;
+
+  // Generate the #ident string, if any.
+  this->gen_ident_string (this->client_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->client_header_,
+                           "_TAO_IDL_",
+                           "_H_");
+
+  if (be_global->pre_include () != 0)
     {
-      *this->client_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                            << "// " << __FILE__ << ":" << __LINE__
-                            << be_nl << be_nl;
-
-      // Generate the #ident string, if any.
-      this->gen_ident_string (this->client_header_);
-
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->client_header_,
-                               "_TAO_IDL_",
-                               "_H_");
-
-      if (be_global->pre_include () != 0)
-        {
-          *this->client_header_ << "\n#include /**/ \""
-                                << be_global->pre_include ()
-                                << "\"\n";
-        }
-
-      // This one is almost always needed so we generate it above
-      // the #pragma once.
-      this->gen_standard_include (this->client_header_,
-                                  "tao/CDR.h");
-
-      // Some compilers don't optimize the #ifndef header include
-      // protection, but do optimize based on #pragma once.
-      *this->client_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                            << "# pragma once\n"
-                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
-
-      // Other include files.
-
-      this->gen_standard_include (this->client_header_,
-                                  "tao/Environment.h");
-
-      if (be_global->stub_export_include () != 0)
-        {
-          *this->client_header_ << "\n\n#include \""
-                                << be_global->stub_export_include ()
-                                << "\"";
-        }
-
-      this->gen_stub_hdr_includes ();
-
-      size_t nfiles = idl_global->n_included_idl_files ();
-
-      if (nfiles > 0)
-        {
-          *this->client_header_ << "\n";
-        }
-
-      // We must include all the skeleton headers corresponding to
-      // IDL files included by the current IDL file.
-      // We will use the included IDL file names as they appeared
-      // in the original main IDL file, not the one  which went
-      // thru CC preprocessor.
-      for (size_t j = 0; j < nfiles; ++j)
-        {
-          char* idl_name = idl_global->included_idl_files ()[j];
-
-          // Make a String out of it.
-          UTL_String idl_name_str = idl_name;
-
-          // Make sure this file was actually got included, not
-          // ignored by some #if defined compiler directive.
-
-
-          // Get the clnt header from the IDL file name.
-          const char* client_hdr =
-            BE_GlobalData::be_get_client_hdr (&idl_name_str,
-                                              1);
-
-          // Sanity check and then print.
-          if (client_hdr != 0)
-            {
-              this->client_header_->print ("\n#include \"%s\"",
-                                           client_hdr);
-            }
-          else
-            {
-              ACE_ERROR ((LM_WARNING,
-                          ACE_TEXT ("\nWARNING, invalid file '%s' included"),
-                          idl_name));
-            }
-        }
-
-      // Generate the TAO_EXPORT_MACRO macro.
-      *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
-      *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
-      *this->client_header_ << "#endif\n";
-      *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                            << be_global->stub_export_macro ();
-
-      // Generate export macro for nested classes.
-      *this->client_header_ << "\n\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
-                            << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
-                            << "#    undef TAO_EXPORT_NESTED_MACRO\n"
-                            << "#  endif /* defined "
-                            << "(TAO_EXPORT_NESTED_MACRO) */\n"
-                            << "#  define TAO_EXPORT_NESTED_MACRO "
-                            << be_global->stub_export_macro ()
-                            << be_nl
-                            << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
-
-      *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
-                            << "#if (_MSC_VER >= 1200)\n"
-                            << "#pragma warning(push)\n"
-                            << "#endif /* _MSC_VER >= 1200 */\n"
-                            << "#pragma warning(disable:4250)";
-
-      if (be_global->use_raw_throw ())
-        {
-          *this->client_header_ << "\n#pragma warning(disable:4290)";
-        }
-
-      *this->client_header_ << "\n#endif /* _MSC_VER */";
-
-      *this->client_header_
-          << "\n\n#if defined (__BORLANDC__)\n"
-          << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-          << "#endif /* __BORLANDC__ */";
-
-      return 0;
+      *this->client_header_ << "\n#include /**/ \""
+                            << be_global->pre_include ()
+                            << "\"\n";
     }
+
+  // This one is a good candidate to go first since applications need
+  // full knowledge of CORBA::ORB. It's rather heavyweight though
+  // (includes PolicyC.h) and should probably be refactored somehow.
+  this->gen_standard_include (this->client_header_,
+                              "tao/ORB.h");
+
+  // Some compilers don't optimize the #ifndef header include
+  // protection, but do optimize based on #pragma once.
+  *this->client_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+                        << "# pragma once\n"
+                        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+
+  // Other include files.
+
+  if (be_global->stub_export_include () != 0)
+    {
+      *this->client_header_ << "\n\n#include \""
+                            << be_global->stub_export_include ()
+                            << "\"";
+    }
+
+  this->gen_stub_hdr_includes ();
+
+  size_t nfiles = idl_global->n_included_idl_files ();
+
+  if (nfiles > 0)
+    {
+      *this->client_header_ << "\n";
+    }
+
+  // We must include all the client headers corresponding to
+  // IDL files included by the current IDL file.
+  // We will use the included IDL file names as they appeared
+  // in the original main IDL file, not the one  which went
+  // thru CC preprocessor.
+  for (size_t j = 0; j < nfiles; ++j)
+    {
+      char* idl_name = idl_global->included_idl_files ()[j];
+
+      // Make a String out of it.
+      UTL_String idl_name_str = idl_name;
+
+      // Make sure this file was actually got included, not
+      // ignored by some #if defined compiler directive.
+
+
+      // Get the clnt header from the IDL file name.
+      const char* client_hdr =
+        BE_GlobalData::be_get_client_hdr (&idl_name_str,
+                                          1);
+
+      // Sanity check and then print.
+      if (client_hdr != 0)
+        {
+          this->client_header_->print ("\n#include \"%s\"",
+                                       client_hdr);
+        }
+      else
+        {
+          ACE_ERROR ((LM_WARNING,
+                      ACE_TEXT ("\nWARNING, invalid file '%s' included"),
+                      idl_name));
+        }
+    }
+
+  // Generate the TAO_EXPORT_MACRO macro.
+  *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
+  *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
+  *this->client_header_ << "#endif\n";
+  *this->client_header_ << "#define TAO_EXPORT_MACRO "
+                        << be_global->stub_export_macro ();
+
+  // Generate export macro for nested classes.
+  *this->client_header_ << "\n\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
+                        << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
+                        << "#    undef TAO_EXPORT_NESTED_MACRO\n"
+                        << "#  endif /* defined "
+                        << "(TAO_EXPORT_NESTED_MACRO) */\n"
+                        << "#  define TAO_EXPORT_NESTED_MACRO "
+                        << be_global->stub_export_macro ()
+                        << be_nl
+                        << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
+
+  *this->client_header_ << "\n\n#if defined(_MSC_VER)\n"
+                        << "#if (_MSC_VER >= 1200)\n"
+                        << "#pragma warning(push)\n"
+                        << "#endif /* _MSC_VER >= 1200 */\n"
+                        << "#pragma warning(disable:4250)";
+
+  if (be_global->use_raw_throw ())
+    {
+      *this->client_header_ << "\n#pragma warning(disable:4290)";
+    }
+
+  *this->client_header_ << "\n#endif /* _MSC_VER */";
+
+  *this->client_header_
+      << "\n\n#if defined (__BORLANDC__)\n"
+      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
+      << "#endif /* __BORLANDC__ */";
+
+  return 0;
 }
 
 // Get the client header stream.
@@ -388,132 +384,130 @@ TAO_CodeGen::start_server_header (const char *fname)
     {
       return -1;
     }
-  else
+
+  *this->server_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
+                        << "// " << __FILE__ << ":" << __LINE__
+                        << be_nl << be_nl;
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->server_header_,
+                           "_TAO_IDL_",
+                           "_H_");
+
+  if (be_global->pre_include () != 0)
     {
-      *this->server_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                            << "// " << __FILE__ << ":" << __LINE__
-                            << be_nl << be_nl;
+      *this->server_header_ << "#include /**/ \""
+                            << be_global->pre_include ()
+                            << "\"";
+    }
 
-      // Generate the ident string, if any.
-      this->gen_ident_string (this->server_header_);
+  // Include the Messaging files if AMI is enabled.
+  if (be_global->ami_call_back () == I_TRUE)
+    {
+      // Include Messaging skeleton file.
+      this->gen_standard_include (this->server_header_,
+                                  "tao/Messaging/MessagingS.h");
+    }
 
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->server_header_,
-                               "_TAO_IDL_",
-                               "_H_");
+  // We must include all the skeleton headers corresponding to
+  // IDL files included by the current IDL file.
+  // We will use the included IDL file names as they appeared
+  // in the original main IDL file, not the one  which went
+  // thru CC preprocessor.
+  for (size_t j = 0;
+       j < idl_global->n_included_idl_files ();
+       ++j)
+    {
+      char* idl_name = idl_global->included_idl_files ()[j];
 
-      if (be_global->pre_include () != 0)
-        {
-          *this->server_header_ << "#include /**/ \""
-                                << be_global->pre_include ()
-                                << "\"";
-        }
+      // String'ifying the name.
+      UTL_String idl_name_str (idl_name);
 
-      // Include the Messaging files if AMI is enabled.
-      if (be_global->ami_call_back () == I_TRUE)
-        {
-          // Include Messaging skeleton file.
-          this->gen_standard_include (this->server_header_,
-                                      "tao/Messaging/MessagingS.h");
-        }
+      const char* server_hdr =
+        BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
 
-      // We must include all the skeleton headers corresponding to
-      // IDL files included by the current IDL file.
-      // We will use the included IDL file names as they appeared
-      // in the original main IDL file, not the one  which went
-      // thru CC preprocessor.
-      for (size_t j = 0;
-           j < idl_global->n_included_idl_files ();
-           ++j)
-        {
-          char* idl_name = idl_global->included_idl_files ()[j];
+      this->server_header_->print ("\n#include \"%s\"",
+                                   server_hdr);
+    }
 
-          // String'ifying the name.
-          UTL_String idl_name_str (idl_name);
+  // The server header should include the client header.
+  *this->server_header_ << "\n#include \""
+                        << be_global->be_get_client_hdr_fname (1)
+                        << "\"";
 
-          const char* server_hdr =
-            BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
+  // Some compilers don't optimize the #ifndef header include
+  // protection, but do optimize based on #pragma once.
+  *this->server_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+                        << "# pragma once\n"
+                        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
 
-          this->server_header_->print ("\n#include \"%s\"",
-                                       server_hdr);
-        }
+  // Include the definitions for the PortableServer namespace,
+  // this forces the application to link the POA library, a good
+  // thing, because we need the definitions there, it also
+  // registers the POA factory with the Service_Configurator, so
+  // the ORB can automatically find it.
+  this->gen_standard_include (this->server_header_,
+                              "tao/Collocation_Proxy_Broker.h");
+  this->gen_standard_include (this->server_header_,
+                              "tao/PortableServer/PortableServer.h");
+  this->gen_standard_include (this->server_header_,
+                              "tao/PortableServer/Servant_Base.h");
 
-      // The server header should include the client header.
-      *this->server_header_ << "\n#include \""
-                            << be_global->be_get_client_hdr_fname (1)
+  if (be_global->gen_amh_classes ())
+    {
+      this->gen_standard_include (this->server_header_,
+                                  "tao/PortableServer/AMH_Response_Handler.h");
+    }
+
+  *this->server_header_ << be_nl << be_nl
+                        << "#if defined(_MSC_VER)\n"
+                        << "#if (_MSC_VER >= 1200)\n"
+                        << "#pragma warning(push)\n"
+                        << "#endif /* _MSC_VER >= 1200 */\n"
+                        << "#pragma warning(disable:4250)";
+
+  if (be_global->use_raw_throw ())
+    {
+      *this->server_header_ << "\n#pragma warning(disable:4290)";
+    }
+
+  *this->server_header_ << "\n#endif /* _MSC_VER */";
+
+  *this->server_header_
+      << "\n\n#if defined (__BORLANDC__)\n"
+      << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
+      << "#endif /* __BORLANDC__ */";
+
+  if (be_global->skel_export_include () != 0)
+    {
+      *this->server_header_ << "\n\n#include \""
+                            << be_global->skel_export_include ()
                             << "\"";
 
-      // Some compilers don't optimize the #ifndef header include
-      // protection, but do optimize based on #pragma once.
-      *this->server_header_ << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-                            << "# pragma once\n"
-                            << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n";
+      // Generate the TAO_EXPORT_MACRO macro.
+      *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
+      *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
+      *this->server_header_ << "#endif\n";
+      *this->server_header_ << "#define TAO_EXPORT_MACRO "
+                            << be_global->skel_export_macro ();
 
-      // Include the definitions for the PortableServer namespace,
-      // this forces the application to link the POA library, a good
-      // thing, because we need the definitions there, it also
-      // registers the POA factory with the Service_Configurator, so
-      // the ORB can automatically find it.
-      this->gen_standard_include (this->server_header_,
-                                  "tao/Collocation_Proxy_Broker.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/PortableServer.h");
-      this->gen_standard_include (this->server_header_,
-                                  "tao/PortableServer/Servant_Base.h");
-
-      if (be_global->gen_amh_classes ())
-        {
-          this->gen_standard_include (this->server_header_,
-                                      "tao/PortableServer/AMH_Response_Handler.h");
-        }
-
-      *this->server_header_ << be_nl << be_nl
-                            << "#if defined(_MSC_VER)\n"
-                            << "#if (_MSC_VER >= 1200)\n"
-                            << "#pragma warning(push)\n"
-                            << "#endif /* _MSC_VER >= 1200 */\n"
-                            << "#pragma warning(disable:4250)";
-
-      if (be_global->use_raw_throw ())
-        {
-          *this->server_header_ << "\n#pragma warning(disable:4290)";
-        }
-
-      *this->server_header_ << "\n#endif /* _MSC_VER */";
-
+      // Generate export macro for nested classes.
       *this->server_header_
-          << "\n\n#if defined (__BORLANDC__)\n"
-          << "#pragma option push -w-rvl -w-rch -w-ccc -w-inl\n"
-          << "#endif /* __BORLANDC__ */";
-
-      if (be_global->skel_export_include () != 0)
-        {
-          *this->server_header_ << "\n\n#include \""
-                                << be_global->skel_export_include ()
-                                << "\"";
-
-          // Generate the TAO_EXPORT_MACRO macro.
-          *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
-          *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
-          *this->server_header_ << "#endif\n";
-          *this->server_header_ << "#define TAO_EXPORT_MACRO "
-                                << be_global->skel_export_macro ();
-
-          // Generate export macro for nested classes.
-          *this->server_header_
-            << "\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
-            << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
-            << "#    undef TAO_EXPORT_NESTED_MACRO\n"
-            << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
-            << "#  define TAO_EXPORT_NESTED_MACRO "
-            << be_global->skel_export_macro ()
-            << be_nl
-            << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
-        }
-
-      return 0;
+        << "\n#if defined (TAO_EXPORT_NESTED_CLASSES)\n"
+        << "#  if defined (TAO_EXPORT_NESTED_MACRO)\n"
+        << "#    undef TAO_EXPORT_NESTED_MACRO\n"
+        << "#  endif /* defined (TAO_EXPORT_NESTED_MACRO) */\n"
+        << "#  define TAO_EXPORT_NESTED_MACRO "
+        << be_global->skel_export_macro ()
+        << be_nl
+        << "#endif /* TAO_EXPORT_NESTED_CLASSES */";
     }
+
+  return 0;
 }
 
 // Get the server header stream.
@@ -544,44 +538,42 @@ TAO_CodeGen::start_server_template_header (const char *fname)
     {
       return -1;
     }
-  else
+
+  *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from"
+                                 << be_nl
+                                 << "// " << __FILE__ << ":" << __LINE__
+                                 << be_nl << be_nl;
+
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_template_header_);
+
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->server_template_header_,
+                           "_TAO_IDL_",
+                           "_H_");
+
+  if (be_global->pre_include () != 0)
     {
-      *this->server_template_header_ << be_nl << "// TAO_IDL - Generated from"
-                                     << be_nl
-                                     << "// " << __FILE__ << ":" << __LINE__
-                                     << be_nl << be_nl;
-
-      // Generate the ident string, if any.
-      this->gen_ident_string (this->server_template_header_);
-
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->server_template_header_,
-                               "_TAO_IDL_",
-                               "_H_");
-
-      if (be_global->pre_include () != 0)
-        {
-          *this->server_template_header_ << "#include /**/ \""
-                                         << be_global->pre_include ()
-                                         << "\"";
-        }
-
-      *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
-                                     << "#if (_MSC_VER >= 1200)\n"
-                                     << "#pragma warning(push)\n"
-                                     << "#endif /* _MSC_VER >= 1200 */\n"
-                                     << "#pragma warning(disable:4250)\n";
-
-      if (be_global->use_raw_throw ())
-        {
-          *this->server_template_header_ << "#pragma warning(disable:4290)\n";
-        }
-
-      *this->server_template_header_ << "#endif /* _MSC_VER */\n";
-
-      return 0;
+      *this->server_template_header_ << "#include /**/ \""
+                                     << be_global->pre_include ()
+                                     << "\"";
     }
+
+  *this->server_template_header_ << "\n\n#if defined(_MSC_VER)\n"
+                                 << "#if (_MSC_VER >= 1200)\n"
+                                 << "#pragma warning(push)\n"
+                                 << "#endif /* _MSC_VER >= 1200 */\n"
+                                 << "#pragma warning(disable:4250)\n";
+
+  if (be_global->use_raw_throw ())
+    {
+      *this->server_template_header_ << "#pragma warning(disable:4290)\n";
+    }
+
+  *this->server_template_header_ << "#endif /* _MSC_VER */\n";
+
+  return 0;
 }
 
 // Get the server header stream.
@@ -685,39 +677,37 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
     {
       return -1;
     }
-  else
-    {
-      *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from "
-                                        << be_nl << "// "
-                                        << __FILE__ << ":" << __LINE__
-                                        << be_nl << be_nl;
 
-      // Generate the ident string, if any.
-      this->gen_ident_string (this->server_template_skeletons_);
+  *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from "
+                                    << be_nl << "// "
+                                    << __FILE__ << ":" << __LINE__
+                                    << be_nl << be_nl;
 
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->server_template_skeletons_,
-                               "_TAO_IDL_",
-                               "_CPP_");
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->server_template_skeletons_);
 
-      // Generate the include statement for the server header.
-      *this->server_template_skeletons_
-          << "#include \""
-          << be_global->be_get_server_template_hdr_fname (1)
-          << "\"";
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->server_template_skeletons_,
+                           "_TAO_IDL_",
+                           "_CPP_");
 
-      // Generate the code that includes the inline file if not included in the
-      // header file.
-      *this->server_template_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)";
-      *this->server_template_skeletons_
-          << "\n#include \""
-          << be_global->be_get_server_template_inline_fname (1)
-          << "\"";
-      *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
+  // Generate the include statement for the server header.
+  *this->server_template_skeletons_
+      << "#include \""
+      << be_global->be_get_server_template_hdr_fname (1)
+      << "\"";
 
-      return 0;
-    }
+  // Generate the code that includes the inline file if not included in the
+  // header file.
+  *this->server_template_skeletons_ << "\n\n#if !defined (__ACE_INLINE__)";
+  *this->server_template_skeletons_
+      << "\n#include \""
+      << be_global->be_get_server_template_inline_fname (1)
+      << "\"";
+  *this->server_template_skeletons_ << "\n#endif /* !defined INLINE */\n\n";
+
+  return 0;
 }
 
 // Get the server template skeletons stream.
@@ -823,33 +813,31 @@ TAO_CodeGen::start_implementation_header (const char *fname)
     {
       return -1;
     }
-  else
-    {
-      *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from "
-                                    << be_nl << "// "
-                                    << __FILE__ << ":" << __LINE__
-                                    << be_nl << be_nl;
 
-      // Generate the ident string, if any.
-      this->gen_ident_string (this->implementation_header_);
+  *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from "
+                                << be_nl << "// "
+                                << __FILE__ << ":" << __LINE__
+                                << be_nl << be_nl;
 
-      // Generate the #ifndef clause.
-      this->gen_ifndef_string (fname,
-                               this->implementation_header_,
-                               "",
-                               "_H_");
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->implementation_header_);
 
-      const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
+  // Generate the #ifndef clause.
+  this->gen_ifndef_string (fname,
+                           this->implementation_header_,
+                           "",
+                           "_H_");
 
-      *this->implementation_header_<< "#include \"" << server_hdr <<"\"";
+  const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
 
-      *this->implementation_header_
-        << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
-        << "#pragma once\n"
-        << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+  *this->implementation_header_<< "#include \"" << server_hdr <<"\"";
 
-      return 0;
-    }
+  *this->implementation_header_
+    << "\n\n#if !defined (ACE_LACKS_PRAGMA_ONCE)\n"
+    << "#pragma once\n"
+    << "#endif /* ACE_LACKS_PRAGMA_ONCE */\n\n";
+
+  return 0;
 }
 
 
@@ -886,24 +874,22 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
     {
       return -1;
     }
-  else
-    {
-      *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from "
-                                      << be_nl << "// "
-                                      << __FILE__ << ":" << __LINE__
-                                      << be_nl << be_nl;
 
-      // Generate the ident string, if any.
-      this->gen_ident_string (this->implementation_skeleton_);
+  *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from "
+                                  << be_nl << "// "
+                                  << __FILE__ << ":" << __LINE__
+                                  << be_nl << be_nl;
 
-      const char* impl_hdr =
-        BE_GlobalData::be_get_implementation_hdr_fname ();
+  // Generate the ident string, if any.
+  this->gen_ident_string (this->implementation_skeleton_);
 
-      this->implementation_skeleton_->print ("#include \"%s\"\n\n",
-                                             impl_hdr);
+  const char* impl_hdr =
+    BE_GlobalData::be_get_implementation_hdr_fname ();
 
-      return 0;
-    }
+  this->implementation_skeleton_->print ("#include \"%s\"\n\n",
+                                         impl_hdr);
+
+  return 0;
 }
 
 
@@ -1277,6 +1263,16 @@ TAO_CodeGen::gen_standard_include (TAO_OutStream *stream,
 void
 TAO_CodeGen::gen_stub_hdr_includes (void)
 {
+  // Always included.
+
+  this->gen_standard_include (this->client_header_,
+                              "tao/CDR.h");
+  this->gen_standard_include (this->client_header_,
+                              "tao/Environment.h");
+
+  // Conditionally included.
+
+  // Non-abstract interface or keyword 'Object'.
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.non_local_iface_seen_
       | idl_global->decls_seen_masks.local_iface_seen_
@@ -1285,12 +1281,19 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->client_header_
     );
 
+  // Not needed at the moment, since Exception.h is pulled in by ORB.h,
+  // included at the top of the stub header file. May change if ORB.h
+  // is rearranged to make a lighter include for applications.
+#if 0
+  // System exception throw spec for every operation may change soon.
+  // For IDL exception, we need full knowledge of CORBA::UserException.
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.operation_seen_
       | idl_global->decls_seen_masks.exception_seen_,
       "tao/Exception.h",
       this->client_header_
     );
+#endif
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.abstract_iface_seen_))
@@ -1299,7 +1302,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/AbstractBase.h");
 
-      // Turn on generation of the rest of the Valuetype library files.
+      // Turn on generation of the rest of the Valuetype library includes.
       ACE_SET_BITS (idl_global->decls_seen_info_,
                     idl_global->decls_seen_masks.valuetype_seen_);
     }
@@ -1313,6 +1316,8 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
       this->gen_standard_include (this->client_header_,
                                   "tao/Valuetype/Valuetype_Adapter_Impl.h");
 
+      // Check for setting this bit performed in y.tab.cpp, actual checking
+      // code is in be_valuetype.cpp.
       this->gen_cond_file_include (
           idl_global->decls_seen_masks.valuefactory_seen_,
           "tao/Valuetype/ValueFactory.h",
@@ -1320,21 +1325,23 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
         );
     }
 
-  // This is true if we have a typecode or TCKind in the IDL file,
-  // no need to check for typecode support.
+  // This is true if we have a typecode or TCKind in the IDL file.
+  // If not included here, it will appear in *C.cpp, if TCs not suppressed. 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.typecode_seen_,
       "tao/Typecode.h",
       this->client_header_
     );
 
+  // This is true if we have an 'any' in the IDL file.
+  // If not included here, it will appear in *C.cpp, if Anys not suppressed. 
   this->gen_cond_file_include (
       idl_global->decls_seen_masks.any_seen_,
       "tao/Any.h",
       this->client_header_
     );
 
-  // Include the Messaging files if AMI is enabled.
+  // Include the Messaging library entry point, if AMI is enabled.
   if (be_global->ami_call_back () == I_TRUE)
     {
       // Include Messaging skeleton file.
@@ -1349,7 +1356,10 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                                   "tao/SmartProxies/Smart_Proxies.h");
     }
 
+  // Must have knowledge of the base class.
   this->gen_seq_file_includes ();
+
+  // _vars and _outs are typedefs of template class instantiations.
   this->gen_var_file_includes ();
 }
 
@@ -1370,6 +1380,9 @@ TAO_CodeGen::gen_stub_src_includes (void)
                        << be_global->be_get_client_hdr_fname (1)
                        << "\"";
 
+  // Conditional includes.
+
+  // Operations for local interfaces are pure virtual.
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.non_local_op_seen_))
     {
@@ -1384,20 +1397,22 @@ TAO_CodeGen::gen_stub_src_includes (void)
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Messaging/Asynch_Invocation_Adapter.h");
 
-      // If a valuetype has been seen, this will be in the header file.
+      // If a valuetype has been seen, this will already be in the header file.
       if (!ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                             idl_global->decls_seen_masks.valuetype_seen_))
         {
-          // Include files from the Valuetype library.
+          // For AMI exception holders.
           this->gen_standard_include (this->client_stubs_,
                                       "tao/Valuetype/ValueBase.h");
+          this->gen_standard_include (this->client_header_,
+                                      "tao/Valuetype/Valuetype_Adapter_Impl.h");
         }
     }
 
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.non_local_iface_seen_))
     {
-      // Include this for _narrow().
+      // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
                                   "tao/Object_T.h");
     }
@@ -1405,7 +1420,8 @@ TAO_CodeGen::gen_stub_src_includes (void)
   if (ACE_BIT_ENABLED (idl_global->decls_seen_info_,
                        idl_global->decls_seen_masks.octet_seq_seen_))
     {
-      // Include this for _narrow().
+      // Needed for the TAO_NO_COPY_OCTET_SEQUENCES optimization. Note that
+      // it is preferable to just refer to CORBA::OctetSeq in the IDL file.
       this->gen_standard_include (this->client_stubs_,
                                   "tao/ORB_Core.h");
     }
@@ -1420,7 +1436,10 @@ TAO_CodeGen::gen_stub_src_includes (void)
                                   "tao/Typecode.h");
     }
 
+  // Includes whatever Any template classes that may be needed.
   this->gen_any_file_includes ();
+
+  // Includes whatever arg helper template classes that may be needed.
   this->gen_arg_file_includes (this->client_stubs_);
 
   if (be_global->gen_amh_classes () == I_TRUE)

@@ -1,3 +1,16 @@
+Tue Sep 23 08:24:29 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
+
+        * TAO_IDL/be/be_codegen.cpp:
+
+          Changes to the file #include generation logic.
+
+        * tests/Param_Test/anyop.cpp:
+        * tests/Param_Test/options.h:
+        * tests/Param_Test/param_test_i.cpp:
+        * tests/Param_Test/results.h:
+
+          Removed some (now unnecessary) inclusions of corba.h.
+
 Mon Sep 22 20:26:50 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_field.cpp:

@@ -14,7 +14,7 @@
 // ============================================================================
 
 #include "param_test_i.h"
-#include "tao/corba.h"
+
 #include "tao/debug.h"
 
 ACE_RCSID (Param_Test,
