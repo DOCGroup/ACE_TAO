@@ -5,7 +5,7 @@
 #include "PG_Property_Utils.h"
 #include "PG_conf.h"
 
-#include "tao/ORB_COnstants.h"
+#include "tao/ORB_Constants.h"
 
 ACE_RCSID (PortableGroup,
            PG_GenericFactory,

@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RT_StructuredProxyPushSupplier.h"
+#include "tao/debug.h"
 
 #include "tao/debug.h"
 

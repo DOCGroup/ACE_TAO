@@ -61,6 +61,10 @@ TAO_FT_Service_Activate::Initializer (void)
       TAO_ORB_Core::set_endpoint_selector_factory ("FT_Endpoint_Selector_Factory");
       ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
 
+      // Set the name of the endpoint selector factory
+      TAO_ORB_Core::set_endpoint_selector_factory ("FT_Endpoint_Selector_Factory");
+      ACE_Service_Config::process_directive (ace_svc_desc_TAO_FT_Endpoint_Selector_Factory);
+
       initialized = true;
     }
 

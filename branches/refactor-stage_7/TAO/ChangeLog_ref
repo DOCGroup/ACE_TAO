@@ -1,3 +1,58 @@
+Mon Sep 29 11:37:45 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/*/Makefile*: Upfdated dependencies.
+	
+	* orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+	* orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+	* orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/EC_Lifetime_Utils_T.i:
+	* orbsvcs/orbsvcs/Event/EC_Sched_Filter.cpp:
+	* orbsvcs/orbsvcs/Event/Event_Channel.cpp:
+	* orbsvcs/orbsvcs/FaultTolerance/FT_Service_Activate.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.cpp:
+	* orbsvcs/orbsvcs/Log/PersistStore.h
+	* orbsvcs/orbsvcs/Notify/Notify_Constraint_Visitors.cpp:
+	* orbsvcs/orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+	* orbsvcs/orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.cpp: 
+	* orbsvcs/orbsvcs/Trader/Interpreter_Utils_T.h: 
+
+	  Added missing includes to get the above files compiling on Linux
+	  with g++. 
+
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.h:
+
+	  Changed the make_connection () and connect () methods to use the
+	  TAO::Profile_Transport_Resolver instead of TAO_GIOP_Invocation. 
+	
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Credentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Current.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_ReceivedCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_Vault.h:
+
+	  Added missing includes. Further removed tao_Query_Interface ()
+	  and _unchecked_narrow () . The implementation of _narrow () in
+	  all the above files would just dynamic cast to the right type
+	  and increment the reference count. This was what was required in
+	  the first place.
+	
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.cpp:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.h:
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.i: Regenerated the code. 
+	
+	* orbsvcs/orbsvcs/SSLIOP/ssl_endpoints.pidl: Removed old comments
+	  that were mostly history.
+	
 Sun Sep 28 11:17:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_traits.cpp:

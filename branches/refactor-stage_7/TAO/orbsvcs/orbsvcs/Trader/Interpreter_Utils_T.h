@@ -4,6 +4,8 @@
 #define TAO_INTERPRETER_UTILS_T_H
 #include /**/ "ace/pre.h"
 
+#include "tao/Basic_Types.h"
+
 template <class OPERAND_TYPE>
 CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand);
 
