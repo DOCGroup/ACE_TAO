@@ -80,7 +80,7 @@ public:
 
   AST_String (AST_Expression *max_size);
 
-  AST_String (AST_Expression *max_size, 
+  AST_String (AST_Expression *max_size,
               long wide);
 
   virtual ~AST_String (void);
@@ -94,7 +94,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_String);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

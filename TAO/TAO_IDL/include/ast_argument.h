@@ -79,10 +79,10 @@ class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:
   // Define enum with values denoting argument passing directions.
-  enum Direction 
+  enum Direction
     {
-      dir_IN, 
-      dir_OUT, 
+      dir_IN,
+      dir_OUT,
       dir_INOUT
     };
 
@@ -91,8 +91,8 @@ public:
   // Constructor(s).
   AST_Argument (void);
 
-  AST_Argument (Direction direction, 
-                AST_Type *ft, 
+  AST_Argument (Direction direction,
+                AST_Type *ft,
                 UTL_ScopedName *n,
                 UTL_StrList *p);
 
@@ -107,7 +107,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_Argument);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

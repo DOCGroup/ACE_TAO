@@ -72,11 +72,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Representation of expression values.
 
 // An expression (and maybe its value, if computed).
-class TAO_IDL_FE_Export AST_Expression 
+class TAO_IDL_FE_Export AST_Expression
 {
 public:
   // Enum to define all the different operators to combine expressions.
-  enum ExprComb 
+  enum ExprComb
     {
         EC_add            // '+'
       , EC_minus          // '-'
@@ -97,7 +97,7 @@ public:
 
   // Enum to define the different kinds of evaluation possible
   // Extend this for more kinds of evaluation as required.
-  enum EvalKind 
+  enum EvalKind
     {
         EK_const                  // Must evaluate to constant.
       , EK_positive_int           // Must evaluate to positive integer.
@@ -114,7 +114,7 @@ public:
     };
 
   // Enum to define expression type.
-  enum ExprType 
+  enum ExprType
     {
         EV_short                  // Expression value is short.
       , EV_ushort                 // Expression value is unsigned short.
@@ -137,9 +137,9 @@ public:
     };
 
   // Structure to describe value of constant expression and its type.
-  struct AST_ExprValue 
+  struct AST_ExprValue
     {
-      union 
+      union
         {
           short               sval;     // Contains short expression value.
           unsigned short      usval;    // Contains unsigned short expr value.
@@ -166,11 +166,11 @@ public:
  // Operations.
 
   // Constructor(s).
-  AST_Expression (AST_Expression *v, 
+  AST_Expression (AST_Expression *v,
                   ExprType t);
 
-  AST_Expression (ExprComb c, 
-                  AST_Expression *v1, 
+  AST_Expression (ExprComb c,
+                  AST_Expression *v1,
                   AST_Expression *v2);
 
   AST_Expression (short s);
@@ -179,7 +179,7 @@ public:
 
   AST_Expression (long l);
 
-  AST_Expression (long l, 
+  AST_Expression (long l,
                   ExprType t);
 
   AST_Expression (unsigned long ul);
@@ -229,7 +229,7 @@ public:
   void set_n (UTL_ScopedName *new_n);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

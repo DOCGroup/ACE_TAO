@@ -1,5 +1,29 @@
 Fri Oct  5 16:03:26 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
+	* TAO_IDL/include/ast_argument.h:
+	* TAO_IDL/include/ast_array.h:
+	* TAO_IDL/include/ast_attribute.h:
+	* TAO_IDL/include/ast_constant.h:
+	* TAO_IDL/include/ast_decl.h:
+	* TAO_IDL/include/ast_enum.h:
+	* TAO_IDL/include/ast_enum_val.h:
+	* TAO_IDL/include/ast_exception.h:
+	* TAO_IDL/include/ast_expression.h:
+	* TAO_IDL/include/ast_field.h:
+	* TAO_IDL/include/ast_interface.h:
+	* TAO_IDL/include/ast_interface_fwd.h:
+	* TAO_IDL/include/ast_module.h:
+	* TAO_IDL/include/ast_native.h:
+	* TAO_IDL/include/ast_operation.h:
+	* TAO_IDL/include/ast_predefined_type.h:
+	* TAO_IDL/include/ast_root.h:
+	* TAO_IDL/include/ast_sequence.h:
+	* TAO_IDL/include/ast_string.h:
+	* TAO_IDL/include/ast_structure.h:
+	* TAO_IDL/include/ast_typedef.h:
+	* TAO_IDL/include/ast_union.h:
+	* TAO_IDL/include/ast_union_bran.h:
+	* TAO_IDL/include/ast_union_label.h:
         * TAO_IDL/ast/ast_array.cpp:
 	* TAO_IDL/ast/ast_attribute.cpp:
 	* TAO_IDL/ast/ast_constant.cpp:

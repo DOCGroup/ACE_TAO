@@ -73,7 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // be defined manifest locally; the constants defined in these
 // enums are inserted in the enclosing scope.
 
-class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl, 
+class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
@@ -82,7 +82,7 @@ public:
   // Constructor(s) and destructor.
   AST_Module (void);
 
-  AST_Module (UTL_ScopedName *n, 
+  AST_Module (UTL_ScopedName *n,
               UTL_StrList *p);
 
   virtual ~AST_Module (void);
@@ -93,7 +93,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Module);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Involved in OBV_ namespace generation.
   void set_has_nested_valuetype (void);
@@ -102,7 +102,7 @@ public:
   // Allows adding an interface to a later point
   // The interface i is inserted after interface ix, if
   // ix is not null.
-  int be_add_interface (AST_Interface *i, 
+  int be_add_interface (AST_Interface *i,
                         AST_Interface *ix = 0);
 
   // The first time 'module CORBA' is seen, add predefined types

@@ -136,7 +136,7 @@ public:
   // Return the default index used.
 
   // AST Dumping.
-  virtual void dump (ostream &);
+  virtual void dump (ACE_OSTREAM_TYPE &);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

@@ -77,7 +77,7 @@ public:
   // Constructor(s) and destructor.
   AST_Root (void);
 
-  AST_Root (UTL_ScopedName *n, 
+  AST_Root (UTL_ScopedName *n,
             UTL_StrList *p);
 
   virtual ~AST_Root (void);
@@ -88,7 +88,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Root);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
