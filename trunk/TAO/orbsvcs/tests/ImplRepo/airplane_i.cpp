@@ -12,6 +12,8 @@ Airplane_i::Airplane_i (int shutdown)
 : shutdown_ (shutdown)
 {
   // Seed the random number generator
+  // Note: This server should not be run with thread-per-request since the seeding
+  //       doesn't work with threads.
   ACE_OS::srand (ACE_OS::time (0L));
 }
 

@@ -10,21 +10,17 @@ require ACEutils;
 
 $airplane_ior = "airplane.ior";
 $simple_ior = "simple.ior";
+$implrepo_ior = "implrepo.ior";
 
 # Make sure the files are gone, so we can wait on them.
 unlink $airplane_ior;
 unlink $simple_ior;
-unlink "implrepo.ior";
+unlink $implrepo_ior;
 
 # The Tests
 
 sub airplane_test
 {
-  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
-                         "-ORBsvcconf implrepo.conf");
-
-  ACE::waitforfile ("implrepo.ior");
-
   $SV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
                          "-o $airplane_ior -r");
 
@@ -34,9 +30,24 @@ sub airplane_test
                     " -f $airplane_ior");
 
   $SV->Kill (); $SV->Wait ();
-  $IR->Kill (); $IR->Wait ();
-
   unlink $airplane_ior;
+}
+
+sub airplane_ir_test
+{
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+                         "-ORBsvcconf implrepo.conf -ORBobjrefstyle url");
+
+  ACE::waitforfile ($implrepo_ior);
+
+  $SV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
+                         "-o $airplane_ior -i -r -ORBobjrefstyle url");
+
+  ACE::waitforfile ($airplane_ior);
+
+  system($EXEPREFIX."airplane_client -f $airplane_ior -ORBobjrefstyle url");
+
+  $IR->Kill (); $IR->Wait ();
 }
 
 sub simple_test
@@ -68,17 +79,44 @@ sub implrepo_test
   sleep $ACE::sleeptime;
 
   $PSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
-                          "-o $airplane_ior -r");
+                          "-o $airplane_ior -i -r");
 
   ACE::waitforfile ($airplane_ior);
 
   $PCL = Process::Create ($EXEPREFIX."airplane_client".$Process::EXE_EXT,
                           " -f $airplane_ior");
 
-  system ("client -f svr.ior");
+  system ($EXEPREFIX."client -f svr.ior");
 
-#  $IR->Kill (); $IR->Wait ();
+  $IR->Kill (); $IR->Wait ();
 }
+
+sub implrepo2_test
+{
+  $IR = Process::Create ("..".$DIR_SEPARATOR."..".$DIR_SEPARATOR."ImplRepo_Service".$DIR_SEPARATOR."ImplRepo_Service".$Process::EXE_EXT, 
+                         "-ORBsvcconf implrepo.conf");
+
+  ACE::waitforfile ("implrepo.ior");
+
+  system ($EXEPREFIX."server -r -o svr.ior");
+
+  $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT, "");
+
+  sleep $ACE::sleeptime;
+
+  $PSV = Process::Create ($EXEPREFIX."airplane_server".$Process::EXE_EXT,
+                          "-o $airplane_ior -i -r");
+
+  ACE::waitforfile ($airplane_ior);
+
+  $PCL = Process::Create ($EXEPREFIX."client".$Process::EXE_EXT,
+                          " -f $svr_ior");
+
+  system ($EXEPREFIX."airplane_client -f $airplane_ior");
+
+  $IR->Kill (); $IR->Wait ();
+}
+
 
 
 # Parse the arguments
@@ -100,6 +138,11 @@ for ($i = 0; $i <= $#ARGV; $i++)
       airplane_test ();    
       last SWITCH;
     }
+    if ($ARGV[$i] eq "airplane_ir")
+    {
+      airplane_ir_test ();    
+      last SWITCH;
+    }
     if ($ARGV[$i] eq "simple")
     {
       simple_test ();    
@@ -110,6 +153,12 @@ for ($i = 0; $i <= $#ARGV; $i++)
       implrepo_test ();    
       last SWITCH;
     }
+    if ($ARGV[$i] eq "implrepo2")
+    {
+      implrepo2_test ();    
+      last SWITCH;
+    }
+
 
     print "run_test: Unknown Option: ".$ARGV[$i]."\n";
   }

@@ -13,7 +13,7 @@ main (int argc, char *argv[])
   TAO_TRY
     {
       if (server.init (argc, argv, TAO_TRY_ENV) == -1)
-        return 1;
+        return -1;
       else
         {
           server.run (TAO_TRY_ENV);
