@@ -1,3 +1,10 @@
+Fri Feb 27 15:00:42 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Time_Utilities.i (hrtime_to_TimeT): with
+          ACE_LACKS_LONGLONG_T, set the high word directly.  The
+          ACE_U_LongLong operator >> returns an ACE_U_LongLong,
+          so the assignment won't work otherwise.
+
 Fri Feb 27 12:08:19 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* tao/orb_core.h (TAO_Resource_Factory): Changed to use
