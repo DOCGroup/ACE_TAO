@@ -1,0 +1,107 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "TAO_IDL Compiler"=.\tao_idl.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_DLL
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL Compiler Static"=.\tao_idl_static.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_BE_LIB
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_LIB
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_DLL"=.\TAO_IDL_BE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_DLL
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_BE_LIB"=.\TAO_IDL_BE_LIB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name TAO_IDL_FE_LIB
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_DLL"=.\TAO_IDL_FE_DLL.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "TAO_IDL_FE_LIB"=.\TAO_IDL_FE_LIB.dsp - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

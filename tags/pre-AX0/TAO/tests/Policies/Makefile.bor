@@ -1,0 +1,29 @@
+#
+# Makefile for building the Policies test
+#
+
+NAME = Manipulation
+
+OBJFILES = \
+	$(OBJDIR)\testC.obj \
+	$(OBJDIR)\testS.obj \
+	$(OBJDIR)\Manipulation.obj
+
+CPPDIR = .;..
+
+IDLDIR = .
+
+IDLFILES = \
+        test.idl
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\testC.cpp $(IDLDIR)\testS.cpp: $(IDLDIR)\test.idl
+	$(TAO_IDL) $**
+
+
+

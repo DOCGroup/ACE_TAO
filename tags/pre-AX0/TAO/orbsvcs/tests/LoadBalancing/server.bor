@@ -1,0 +1,42 @@
+#
+# Makefile for building the LoadBalancing server
+#
+
+NAME = server
+
+TAO_IDL = $(CORE_BINDIR)\tao_idl -g $(CORE_BINDIR)\gperf.exe -Ge 1
+
+OBJFILES = \
+        $(OBJDIR)\Hash_ReplicaC.obj \
+        $(OBJDIR)\Hash_ReplicaS.obj \
+        $(OBJDIR)\Hash_ReplicaControl.obj \
+        $(OBJDIR)\Hash_Replica_i.obj \
+	$(OBJDIR)\server.obj
+
+CFLAGS = \
+	$(ACE_CFLAGS) \
+	$(TAO_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_LOADBALANCING_CFLAGS)
+
+LIBFILES = \
+	$(ACE_LIB) \
+	$(TAO_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_LOADBALANCING_LIB)
+
+IDLFILES = \
+        $(IDLDIR)\Hash_Replica.idl
+
+CPPDIR = .
+
+IDLDIR = .
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>
+
+#
+# IDL Build rules
+#
+
+$(IDLDIR)\Hash_ReplicaS.cpp $(IDLDIR)\Hash_ReplicaC.cpp: $(IDLDIR)\Hash_Replica.idl
+	$(TAO_IDL) $**

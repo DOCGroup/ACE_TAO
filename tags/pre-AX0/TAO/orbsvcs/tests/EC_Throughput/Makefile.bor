@@ -1,0 +1,10 @@
+#
+# $Id$
+#
+
+MAKEFILES = \
+	ECT_Throughput.bor \
+	ECT_Supplier.bor \
+	ECT_Consumer.bor
+
+!include <$(ACE_ROOT)\include\makeinclude\recurse.bor>

@@ -1,0 +1,39 @@
+#
+# $Id$
+# Makefile for building the orbsvcs notify Throughput performance-tests
+#
+
+NAME = Throughput
+
+OBJFILES = \
+        $(OBJDIR)\Throughput.obj
+
+CFLAGS = \
+        $(ACE_CFLAGS) \
+        $(TAO_CFLAGS) \
+        $(TAO_EVENT_CFLAGS) \
+        $(TAO_NAMING_CFLAGS) \
+        $(TAO_SVC_UTILS_CFLAGS) \
+        $(TAO_IORTABLE_CFLAGS) \
+        $(TAO_PORTABLESERVER_CFLAGS) \
+        $(TAO_ETCL_CFLAGS) \
+        $(TAO_NOTIFY_CFLAGS) \
+        $(TAO_STRATEGIES_CFLAGS) \
+        $(TAO_NOTIFYTESTS_CFLAGS) \
+
+CPPDIR = .
+
+LIBFILES = \
+        $(ACE_LIB) \
+        $(TAO_LIB) \
+        $(TAO_EVENT_LIB) \
+        $(TAO_NAMING_LIB) \
+        $(TAO_SVC_UTILS_LIB) \
+        $(TAO_IORTABLE_LIB) \
+        $(TAO_PORTABLESERVER_LIB) \
+        $(TAO_ETCL_LIB) \
+        $(TAO_NOTIFY_LIB) \
+        $(TAO_STRATEGIES_LIB) \
+        $(TAO_NOTIFYTESTS_LIB) \
+
+!include <$(ACE_ROOT)\include\makeinclude\build_exe.bor>

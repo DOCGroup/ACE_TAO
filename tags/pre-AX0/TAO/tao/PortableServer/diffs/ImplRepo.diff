@@ -1,0 +1,417 @@
+--- orig/ImplRepoC.h	Wed Aug  1 17:59:21 2001
++++ ImplRepoC.h	Wed Aug  1 18:03:55 2001
+@@ -23,12 +23,19 @@
+ #define _TAO_IDL_ORIG_IMPLREPOC_H_
+ 
+ #include "ace/pre.h"
+-#include "tao/corba.h"
++#include "tao/corbafwd.h"
+ 
+ #if !defined (ACE_LACKS_PRAGMA_ONCE)
+ # pragma once
+ #endif /* ACE_LACKS_PRAGMA_ONCE */
+ 
++#include "tao/CDR.h"
++#include "tao/Any.h"
++#include "tao/Object.h"
++#include "tao/ClientRequestInfo.h"
++#include "tao/Remote_Object_Proxy_Impl.h"
++#include "tao/Managed_Types.h"
++#include "tao/Sequence.h"
+ #include "portableserver_export.h"
+ 
+ #if defined (TAO_EXPORT_MACRO)
+--- orig/ImplRepoC.i	Wed Aug  1 17:59:21 2001
++++ ImplRepoC.i	Wed Aug  1 18:03:55 2001
+@@ -23,6 +23,49 @@
+ #if !defined (_IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_)
+ #define _IMPLEMENTATIONREPOSITORY_SERVEROBJECT___CI_
+ 
++ACE_INLINE ImplementationRepository::ServerObject_ptr
++tao_ImplementationRepository_ServerObject_duplicate (
++    ImplementationRepository::ServerObject_ptr p
++  )
++{
++  return ImplementationRepository::ServerObject::_duplicate (p);
++}
++
++ACE_INLINE void
++tao_ImplementationRepository_ServerObject_release (
++    ImplementationRepository::ServerObject_ptr p
++  )
++{
++  CORBA::release (p);
++}
++
++ACE_INLINE ImplementationRepository::ServerObject_ptr
++tao_ImplementationRepository_ServerObject_nil (
++    void
++  )
++{
++  return ImplementationRepository::ServerObject::_nil ();
++}
++
++ACE_INLINE ImplementationRepository::ServerObject_ptr
++tao_ImplementationRepository_ServerObject_narrow (
++    CORBA::Object *p,
++    CORBA::Environment &ACE_TRY_ENV
++  )
++{
++  return ImplementationRepository::ServerObject::_narrow (p, ACE_TRY_ENV);
++}
++
++ACE_INLINE CORBA::Object *
++tao_ImplementationRepository_ServerObject_upcast (
++    void *src
++  )
++{
++  ImplementationRepository::ServerObject **tmp =
++    ACE_static_cast (ImplementationRepository::ServerObject **, src);
++  return *tmp;
++}
++
+ ACE_INLINE
+ ImplementationRepository::ServerObject::ServerObject (
+     TAO_Stub *objref,
+@@ -1420,6 +1463,49 @@
+ #if !defined (_IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_)
+ #define _IMPLEMENTATIONREPOSITORY_ADMINISTRATION___CI_
+ 
++ACE_INLINE ImplementationRepository::Administration_ptr
++tao_ImplementationRepository_Administration_duplicate (
++    ImplementationRepository::Administration_ptr p
++  )
++{
++  return ImplementationRepository::Administration::_duplicate (p);
++}
++
++ACE_INLINE void
++tao_ImplementationRepository_Administration_release (
++    ImplementationRepository::Administration_ptr p
++  )
++{
++  CORBA::release (p);
++}
++
++ACE_INLINE ImplementationRepository::Administration_ptr
++tao_ImplementationRepository_Administration_nil (
++    void
++  )
++{
++  return ImplementationRepository::Administration::_nil ();
++}
++
++ACE_INLINE ImplementationRepository::Administration_ptr
++tao_ImplementationRepository_Administration_narrow (
++    CORBA::Object *p,
++    CORBA::Environment &ACE_TRY_ENV
++  )
++{
++  return ImplementationRepository::Administration::_narrow (p, ACE_TRY_ENV);
++}
++
++ACE_INLINE CORBA::Object *
++tao_ImplementationRepository_Administration_upcast (
++    void *src
++  )
++{
++  ImplementationRepository::Administration **tmp =
++    ACE_static_cast (ImplementationRepository::Administration **, src);
++  return *tmp;
++}
++
+ ACE_INLINE
+ ImplementationRepository::Administration::Administration (
+     TAO_Stub *objref,
+@@ -1438,6 +1524,49 @@
+ #if !defined (_IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_)
+ #define _IMPLEMENTATIONREPOSITORY_SERVERINFORMATIONITERATOR___CI_
+ 
++ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
++tao_ImplementationRepository_ServerInformationIterator_duplicate (
++    ImplementationRepository::ServerInformationIterator_ptr p
++  )
++{
++  return ImplementationRepository::ServerInformationIterator::_duplicate (p);
++}
++
++ACE_INLINE void
++tao_ImplementationRepository_ServerInformationIterator_release (
++    ImplementationRepository::ServerInformationIterator_ptr p
++  )
++{
++  CORBA::release (p);
++}
++
++ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
++tao_ImplementationRepository_ServerInformationIterator_nil (
++    void
++  )
++{
++  return ImplementationRepository::ServerInformationIterator::_nil ();
++}
++
++ACE_INLINE ImplementationRepository::ServerInformationIterator_ptr
++tao_ImplementationRepository_ServerInformationIterator_narrow (
++    CORBA::Object *p,
++    CORBA::Environment &ACE_TRY_ENV
++  )
++{
++  return ImplementationRepository::ServerInformationIterator::_narrow (p, ACE_TRY_ENV);
++}
++
++ACE_INLINE CORBA::Object *
++tao_ImplementationRepository_ServerInformationIterator_upcast (
++    void *src
++  )
++{
++  ImplementationRepository::ServerInformationIterator **tmp =
++    ACE_static_cast (ImplementationRepository::ServerInformationIterator **, src);
++  return *tmp;
++}
++
+ ACE_INLINE
+ ImplementationRepository::ServerInformationIterator::ServerInformationIterator (
+     TAO_Stub *objref,
+@@ -1452,12 +1581,12 @@
+ 
+ #endif /* end #if !defined */
+ 
+-TAO_PortableServer_Export CORBA::Boolean operator<< (
++CORBA::Boolean TAO_PortableServer_Export operator<< (
+     TAO_OutputCDR &,
+     const ImplementationRepository::ServerObject_ptr
+   );
+ 
+-TAO_PortableServer_Export CORBA::Boolean operator>> (
++CORBA::Boolean TAO_PortableServer_Export operator>> (
+     TAO_InputCDR &,
+     ImplementationRepository::ServerObject_ptr &
+   );
+@@ -1591,22 +1720,22 @@
+ 
+ #endif /* _TAO_CDR_OP_ImplementationRepository_ServerInformationList_I_ */
+ 
+-TAO_PortableServer_Export CORBA::Boolean operator<< (
++CORBA::Boolean TAO_PortableServer_Export operator<< (
+     TAO_OutputCDR &,
+     const ImplementationRepository::ServerInformationIterator_ptr
+   );
+ 
+-TAO_PortableServer_Export CORBA::Boolean operator>> (
++CORBA::Boolean TAO_PortableServer_Export operator>> (
+     TAO_InputCDR &,
+     ImplementationRepository::ServerInformationIterator_ptr &
+   );
+ 
+-TAO_PortableServer_Export CORBA::Boolean operator<< (
++CORBA::Boolean TAO_PortableServer_Export operator<< (
+     TAO_OutputCDR &,
+     const ImplementationRepository::Administration_ptr
+   );
+ 
+-TAO_PortableServer_Export CORBA::Boolean operator>> (
++CORBA::Boolean TAO_PortableServer_Export operator>> (
+     TAO_InputCDR &,
+     ImplementationRepository::Administration_ptr &
+   );
+--- orig/ImplRepoC.cpp	Wed Aug  1 17:59:21 2001
++++ ImplRepoC.cpp	Wed Aug  1 18:03:55 2001
+@@ -41,49 +41,6 @@
+ 
+ int ImplementationRepository::ServerObject::_tao_class_id = 0;
+ 
+-ImplementationRepository::ServerObject_ptr
+-tao_ImplementationRepository_ServerObject_duplicate (
+-    ImplementationRepository::ServerObject_ptr p
+-  )
+-{
+-  return ImplementationRepository::ServerObject::_duplicate (p);
+-}
+-
+-void
+-tao_ImplementationRepository_ServerObject_release (
+-    ImplementationRepository::ServerObject_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-ImplementationRepository::ServerObject_ptr
+-tao_ImplementationRepository_ServerObject_nil (
+-    void
+-  )
+-{
+-  return ImplementationRepository::ServerObject::_nil ();
+-}
+-
+-ImplementationRepository::ServerObject_ptr
+-tao_ImplementationRepository_ServerObject_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return ImplementationRepository::ServerObject::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_ImplementationRepository_ServerObject_upcast (
+-    void *src
+-  )
+-{
+-  ImplementationRepository::ServerObject **tmp =
+-    ACE_static_cast (ImplementationRepository::ServerObject **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class ImplementationRepository::ServerObject_var
+ // *************************************************************
+@@ -206,7 +163,6 @@
+     ACE_static_cast (ServerObject **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class ImplementationRepository::ServerObject_out
+ // *************************************************************
+@@ -2087,49 +2043,6 @@
+ 
+ int ImplementationRepository::Administration::_tao_class_id = 0;
+ 
+-ImplementationRepository::Administration_ptr
+-tao_ImplementationRepository_Administration_duplicate (
+-    ImplementationRepository::Administration_ptr p
+-  )
+-{
+-  return ImplementationRepository::Administration::_duplicate (p);
+-}
+-
+-void
+-tao_ImplementationRepository_Administration_release (
+-    ImplementationRepository::Administration_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-ImplementationRepository::Administration_ptr
+-tao_ImplementationRepository_Administration_nil (
+-    void
+-  )
+-{
+-  return ImplementationRepository::Administration::_nil ();
+-}
+-
+-ImplementationRepository::Administration_ptr
+-tao_ImplementationRepository_Administration_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return ImplementationRepository::Administration::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_ImplementationRepository_Administration_upcast (
+-    void *src
+-  )
+-{
+-  ImplementationRepository::Administration **tmp =
+-    ACE_static_cast (ImplementationRepository::Administration **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class ImplementationRepository::Administration_var
+ // *************************************************************
+@@ -2252,7 +2165,6 @@
+     ACE_static_cast (Administration **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class ImplementationRepository::Administration_out
+ // *************************************************************
+@@ -5749,49 +5661,6 @@
+ 
+ int ImplementationRepository::ServerInformationIterator::_tao_class_id = 0;
+ 
+-ImplementationRepository::ServerInformationIterator_ptr
+-tao_ImplementationRepository_ServerInformationIterator_duplicate (
+-    ImplementationRepository::ServerInformationIterator_ptr p
+-  )
+-{
+-  return ImplementationRepository::ServerInformationIterator::_duplicate (p);
+-}
+-
+-void
+-tao_ImplementationRepository_ServerInformationIterator_release (
+-    ImplementationRepository::ServerInformationIterator_ptr p
+-  )
+-{
+-  CORBA::release (p);
+-}
+-
+-ImplementationRepository::ServerInformationIterator_ptr
+-tao_ImplementationRepository_ServerInformationIterator_nil (
+-    void
+-  )
+-{
+-  return ImplementationRepository::ServerInformationIterator::_nil ();
+-}
+-
+-ImplementationRepository::ServerInformationIterator_ptr
+-tao_ImplementationRepository_ServerInformationIterator_narrow (
+-    CORBA::Object *p,
+-    CORBA::Environment &ACE_TRY_ENV
+-  )
+-{
+-  return ImplementationRepository::ServerInformationIterator::_narrow (p, ACE_TRY_ENV);
+-}
+-
+-CORBA::Object *
+-tao_ImplementationRepository_ServerInformationIterator_upcast (
+-    void *src
+-  )
+-{
+-  ImplementationRepository::ServerInformationIterator **tmp =
+-    ACE_static_cast (ImplementationRepository::ServerInformationIterator **, src);
+-  return *tmp;
+-}
+-
+ // *************************************************************
+ // Operations for class ImplementationRepository::ServerInformationIterator_var
+ // *************************************************************
+@@ -5914,7 +5783,6 @@
+     ACE_static_cast (ServerInformationIterator **, src);
+   return *tmp;
+ }
+-
+ // *************************************************************
+ // Operations for class ImplementationRepository::ServerInformationIterator_out
+ // *************************************************************
+@@ -7784,11 +7652,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)
+@@ -7831,11 +7694,6 @@
+     // If length is 0 we return true.
+     if (0 >= _tao_seq_len) 
+       return 1;
+-    // Add a check to the length of the sequence
+-    // to make sure it does not exceed the length
+-    // of the stream. (See bug 58.)
+-    if (_tao_seq_len > strm.length())
+-      return 0;
+     // retrieve all the elements
+     CORBA::Boolean _tao_marshal_flag = 1;
+     for (CORBA::ULong i = 0; i < _tao_sequence.length () && _tao_marshal_flag; i++)

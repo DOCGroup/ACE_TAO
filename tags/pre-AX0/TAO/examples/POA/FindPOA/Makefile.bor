@@ -1,0 +1,13 @@
+
+#
+# Makefile for building the FindPOA example
+#
+
+NAME = FindPOA
+
+OBJFILES = \
+        $(OBJDIR)\FindPOA.obj
+
+CPPDIR = .;..
+
+!include <$(ACE_ROOT)\include\makeinclude\build_example.bor>

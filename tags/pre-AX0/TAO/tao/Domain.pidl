@@ -1,0 +1,102 @@
+// $Id$
+//
+// ================================================================
+//
+// = LIBRARY
+//   TAO
+//
+// = FILENAME
+//   Domain.pidl
+//
+// = DESCRIPTION
+//
+//   This file was used to generate the code in DomainC.{h,i,cpp}.
+//
+//   The steps to regenerate the code are as follows:
+//
+//   1. Patch this pidl file to (a) remove the CORBA module bringing
+//   the Domain interfaces to the global scope; and (b) rename the
+//   Domain interfaces to CORBA_xxxx.
+//
+//   Apply patches using the following commands:
+//
+//   patch < diffs/Domain.pidl.diff
+//   patch < diffs/Policy.pidl.diff 
+//
+//   The second patch is because Policy.pidl is included in
+//   Domain.pidl.
+//
+//   2. Run the tao_idl compiler on the patched pidl file.  The
+//   command used for this is:
+//
+//     tao_idl.exe
+//          -Ge 1
+//          -Wb,export_macro=TAO_Export
+//          -Wb,export_include="tao/corbafwd.h"
+//          -Wb,pre_include="ace/pre.h"
+//          -Wb,post_include="ace/post.h"
+//          Domain.pidl
+//
+//   3. Then patch the generated code.  This patch (a) fixes the
+//   interface repository IDs; (b) eliminates cycles in the include
+//   dependencies; (c) removes the extra CORBA module.
+//
+//   Apply patches using the following commands:
+//
+//   patch < diffs/DomainC.h.diff
+//   patch < diffs/DomainC.i.diff
+//   patch < diffs/DomainC.cpp.diff
+//
+//   patch < diffs/DomainS.cpp.diff
+//
+//   4. You'll have to move the Domain skeleton files from TAO/tao
+//   to the TAO_Domain library by hand.
+//
+//   5. Undo the patches to the pidl files.
+//
+//   Note: The diffs were generated with these commands:
+//
+//   diff -wbu Domain.pidl Domain.pidl.mod > diffs/Domain.pidl.diff
+//
+//   diff -wbu DomainC.h DomainC.h.mod > diffs/DomainC.h.diff
+//   diff -wbu DomainC.i DomainC.i.mod > diffs/DomainC.i.diff
+//   diff -wbu DomainC.cpp DomainC.cpp.mod > diffs/DomainC.cpp.diff
+//
+//   diff -wbu DomainS.cpp DomainS.cpp.mod > diffs/DomainS.cpp.diff
+//
+// ================================================================
+
+#ifndef POLICY_DOMAIN_IDL
+#define POLICY_DOMAIN_IDL
+
+#pragma prefix "omg.org"
+
+#include "Policy.pidl"
+
+module CORBA
+{
+  interface InterfaceDef;
+
+  interface DomainManager
+  {
+    Policy get_domain_policy (
+        in PolicyType policy_type
+      );
+  };
+
+  const PolicyType SecConstruction = 11;
+
+  interface ConstructionPolicy : Policy
+  {
+    void make_domain_manager (
+        in InterfaceDef object_type,
+        in boolean constr_policy
+      );
+  };
+
+  typedef sequence <DomainManager> DomainManagerList;
+};
+
+#pragma prefix ""
+
+#endif /* !defined POLICY_DOMAIN_IDL */
