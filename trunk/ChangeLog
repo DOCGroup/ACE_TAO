@@ -1,3 +1,14 @@
+Mon Dec 20 13:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_arpa_inet.cpp:
+          Replace C-style cast with C++ const_cast
+
+        * ace/config-vxworks5.x.h:
+          Updated supported versions
+
+        * ace/config-openvms.h:
+          Removed old comments
+
 Mon Dec 20 13:26:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_semaphore.h:
