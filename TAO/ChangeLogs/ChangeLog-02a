@@ -1,3 +1,12 @@
+Wed Jun 14 14:21:44 2000  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/orbsvcs/Makefile.LoadBalancing (idl_stubs):
+
+	  Removed broken "idl_stubs" target.  This fixes the dependency
+	  generation problem encountered when performing a recursive "make
+	  depend."
+	  Reported by Carlos.
+
 Wed Jun 14 13:56:47 2000  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/orbsvcs/Makefile.LoadBalancing:
