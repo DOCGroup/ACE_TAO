@@ -19,7 +19,7 @@ content="text/html; charset=iso-8859-1">
 [command-arguments]</code></p>
 
 <p><i>ORB_options</i> is the ORB options to be given. This is where
-options like &quot;-ORBImplRepoIOR&quot; would be placed. <i>command </i>is
+options like &quot;-ORBImplRepoServiceIOR&quot; would be placed. <i>command </i>is
 one of the supported commands like add, remove, etc. <i>command-arguments</i>
 are dependent on the command used. For example, <i>add </i>will need a
 server name for registration, but list does not necessarily need any arguments.</p>
@@ -33,17 +33,17 @@ is called <i>airplane.exe</i> and the POA name used by the object is <i>plane</i
 The server needs the -i option to use the IR and the IOR of the IR. So the
 command would be:</p>
 
-<p><code>tao_ir -ORBImplRepoIOR file://implrepo.ior add plane -c &quot;airplane.exe
+<p><code>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior add plane -c &quot;airplane.exe
 -i file://implrepo.ior&quot;</code></p>
 
 <p><code>And if you want to later remove that server from the IR:</code></p>
 
-<p><code>tao_ir -ORBImplRepoIOR file://implrepo.ior remove plane</code></p>
+<p><code>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior remove plane</code></p>
 
 <p>Or if you wanted to update the entry to have a working directory of
 C:\airplane\.</p>
 
-<p><code>tao_ir -ORBImplRepoIOR file://implrepo.ior update plane -w
+<p><code>tao_ir -ORBImplRepoServiceIOR file://implrepo.ior update plane -w
 &quot;C:\airplane\&quot;</code></p>
 
 <hr>

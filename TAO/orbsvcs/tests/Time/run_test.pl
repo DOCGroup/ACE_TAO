@@ -116,14 +116,14 @@ sub time_service_test_using_ir
   } 
 
   $TIR = Process::Create ($tao_ir_program, 
-                          "-ORBImplRepoIOR file://$implrepo_ior add ".
+                          "-ORBImplRepoServiceIOR file://$implrepo_ior add ".
                           "time_server -c \"$server_program ".
-                          "-ORBImplRepoIOR file://$implrepo_ior -i\"");
+                          "-ORBImplRepoServiceIOR file://$implrepo_ior -i\"");
 
   sleep 5;
 
   $SV1 = Process::Create ($server_program,
-                         "-ORBImplRepoIOR file://$implrepo_ior -o $server_ior -i");
+                         "-ORBImplRepoServiceIOR file://$implrepo_ior -o $server_ior -i");
 
   if (ACE::waitforfile_timed ($server_ior, 5) == -1) {
     print STDERR "ERROR: timedout waiting for file <$implerepo_ior>\n";
