@@ -175,17 +175,31 @@ public:
   // extract out the name used for the underlying lock name (if
   // necessary).
 
-  ACE_Malloc (const ACE_MEM_POOL_OPTIONS &options,
+  ACE_Malloc (const MEMORY_POOL_OPTIONS &options,
 	      const char *pool_name,
-	      const char *lock_name);
+	      const char *lock_name)
+    : memory_pool_ (options, pool_name),
+      lock_ (lock_name)
+    {
+      ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
+      this->open ();
+    }
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool, and uses <lock_name> to automatically
   // extract out the name used for the underlying lock name (if
   // necessary).  In addition, <options> is passed through to
   // initialize the underlying memory pool.
 
-  ACE_Malloc (const ACE_MEM_POOL_OPTIONS &options,
-	      const char *pool_name = 0);
+  ACE_Malloc (const MEMORY_POOL_OPTIONS &options,
+	      const char *pool_name = 0)
+    : memory_pool_ (options, pool_name),
+      lock_ (pool_name == 0 ? 0 : ACE::basename (pool_name, 
+						 ACE_DIRECTORY_SEPARATOR_CHAR))
+    {
+      ACE_TRACE ("ACE_Malloc<ACE_MEM_POOL_2, LOCK>::ACE_Malloc");
+      this->open ();
+    }
+
   // Initialize ACE_Malloc.  This constructor passes <pool_name> to
   // initialize the memory pool.  In addition, <options> is passed
   // through to initialize the underlying memory pool.
