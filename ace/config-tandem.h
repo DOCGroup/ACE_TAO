@@ -204,8 +204,6 @@
 //ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP  Platform has
 // pthread_mutexattr_setkind_np().
 //ACE_HAS_PTHREAD_T                     Platform has pthread_t defined.
-//ACE_HAS_PTHREAD_YIELD_VOIDPTR         pthread_yield() takes a void pointer
-// arg.
 //ACE_HAS_THREAD_SELF                   Platform has thread_self() rather
 // than pthread_self() (e.g., DCETHREADS and AIX)
 //ACE_HAS_THR_C_DEST                    The pthread_keycreate() routine *
