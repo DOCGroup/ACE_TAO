@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
+#include "FT_DefaultFaultAnalyzer.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"

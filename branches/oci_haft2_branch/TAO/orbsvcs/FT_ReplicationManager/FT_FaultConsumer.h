@@ -24,6 +24,7 @@
 
 #include "orbsvcs/CosNotifyCommS.h"
 #include "orbsvcs/FT_NotifierC.h"
+#include "FT_ReplicationManagerLib_export.h"
 
 namespace TAO
 {
@@ -36,7 +37,7 @@ namespace TAO
   * Implement the CosNotifyComm::StructuredPushConsumer interface.
   *
   */
-  class FT_FaultConsumer
+  class TAO_ReplicationManagerLib_Export FT_FaultConsumer
     : public virtual POA_CosNotifyComm::StructuredPushConsumer
     , public virtual PortableServer::RefCountServantBase
   {

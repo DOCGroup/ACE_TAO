@@ -11,7 +11,7 @@ project(FaultTolerance): orbsvcslib, core, notification, ftorb, portablegroup {
     FT_Notifier.idl
     FT_FaultDetectorFactory.idl
     FT_ReplicationManager.idl
-  }
+    }
 
   Source_Files(ORBSVCS_COMPONENTS) {
     FaultTolerance {

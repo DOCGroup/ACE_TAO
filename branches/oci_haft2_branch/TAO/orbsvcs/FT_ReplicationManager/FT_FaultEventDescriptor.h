@@ -24,11 +24,12 @@
 
 #include "orbsvcs/FT_CORBAC.h"
 #include "orbsvcs/PortableGroupC.h"
+#include "FT_ReplicationManagerLib_export.h"
 
 namespace TAO
 {
   /// Helper class for describing the properties in a fault event.
-  struct FT_FaultEventDescriptor
+  struct TAO_ReplicationManagerLib_Export FT_FaultEventDescriptor
   {
   public:
 

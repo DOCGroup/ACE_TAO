@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h"
+#include "FT_FaultAnalyzer.h"
 
 ACE_RCSID (FT_FaultAnalyzer,
            FT_FaultAnalyzer,

@@ -15,7 +15,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
+#include "FT_FaultEventDescriptor.h"
 
 ACE_RCSID (FT_FaultEventDescriptor,
            FT_FaultEventDescriptor,

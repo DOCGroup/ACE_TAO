@@ -73,13 +73,10 @@ project(*Analyzer): taoclient, fault_tolerance, orbsvcsexe {
 
 project(*FaultConsumer): taoserver, fault_tolerance, orbsvcsexe {
   exename = ft_fault_consumer
-
+  libs    += TAO_ReplicationManagerLib
   Source_Files {
     FTAPP_FaultConsumer_Main.cpp
     ReplicationManagerFaultConsumerAdapter.cpp
-    ../../FT_ReplicationManager/FT_FaultConsumer.cpp
-    ../../FT_ReplicationManager/FT_FaultAnalyzer.cpp
-    ../../FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp
   }
 
   // explicitly omit IDL files

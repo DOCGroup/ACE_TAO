@@ -16,7 +16,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h"
+#include "FT_FaultConsumer.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
 #include "orbsvcs/FT_ReplicationManager/FT_FaultAnalyzer.h"
 #include <tao/debug.h>
