@@ -10,6 +10,7 @@
 
 #include "Process_Element.h"
 #include "Config_Handlers/Config_Error_Handler.h"
+#include "ace/Auto_Ptr.h"
 #include "Utils.h"
 #include <iostream>
 #include <memory>
@@ -29,6 +30,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                                 Process_Function <DATA>* func,
                                 REF_MAP& id_map)
 {
+  char* final_url_ch;
   try
     {
       // the number of attributes
@@ -64,7 +66,7 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                 (XMLString::transcode (doc_path.c_str ()));
               result.makeRelativeTo
                 (rel_str);
-              char* final_url_ch =
+              final_url_ch =
                 XMLString::transcode (result.getURLText ());
               ACE_TString final_url = final_url_ch;
               XMLString::release (&final_url_ch);
@@ -84,7 +86,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                   if (handler.getErrors ())
                     {
                       ACE_DEBUG ((LM_DEBUG, "XML descriptor error\n"));
-                      throw parser_error ();
+                      //throw parser_error ();
+                      throw DOMException ();
                     }
                 }
               else
@@ -93,7 +96,8 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
                   if (handler.getErrors ())
                     {
                       ACE_DEBUG ((LM_DEBUG, "XML descriptor error\n"));
-                      throw parser_error ();
+                      //throw parser_error ();
+                      throw DOMException ();
                     }
                 }
 
@@ -111,10 +115,27 @@ void process_element_attributes(DOMNamedNodeMap* named_node_map,
             }
         }
     }
+  catch (const DOMException& e)
+    {
+      const unsigned int maxChars = 2047;
+      XMLCh errText[maxChars + 1];
+
+      ACE_ERROR ((LM_ERROR, "\nException occured while parsing %s: \
+                  \n",final_url_ch));
+      ACE_ERROR ((LM_ERROR, "DOMException code: %d\n ", e.code));
+      if (DOMImplementation::loadDOMExceptionMsg (e.code, errText, maxChars))
+        {
+          char* message = XMLString::transcode (errText);
+          ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+          ACE_ERROR ((LM_ERROR, "Message is: %s\n", message));
+        }
+      ACE_ERROR ((LM_ERROR, "Caught DOM exception\n\n"));
+      return;
+    }
   catch (...)
     {
-      ACE_DEBUG ((LM_DEBUG, "Caught DOM exception\n"));
-      //throw parser_error ();
+      ACE_DEBUG ((LM_DEBUG, "Caught unknown exception\n\n"));
+      return;
     }
 }
 
