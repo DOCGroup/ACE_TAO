@@ -1,3 +1,8 @@
+Mon Jun 11 13:08:00 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* include/makeinclude/platform_tru64_kcc.GNU: Fixed a spurious
+	  newline in the file. Thanks to Scott Snyder <snyder@fnal.gov>
+	  for reporting this. 
 Sun Jun 10 16:03:19 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/run_test.lst: Time_Service_Test will not run in static

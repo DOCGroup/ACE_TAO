@@ -32,8 +32,7 @@ ifeq (5.,$(findstring 5.,$(ACE_DU_VERSION)))
   WARNING_FLAGS += --diag_suppress 177
 
   # KCC makes a lot of these warnings from the C compiler.
-  WARNING_FLAGS += --backend -msg_disable --backend nonstandcast,missingretu
-rn,uninit1,ptrmismatch
+  WARNING_FLAGS += --backend -msg_disable --backend nonstandcast,missingreturn,uninit1,ptrmismatch
 
   ifndef ACE_DU_SUBVERSION
     ACE_DU_SUBVERSION := $(shell /usr/sbin/sizer -v)
