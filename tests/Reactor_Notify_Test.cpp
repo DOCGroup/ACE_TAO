@@ -140,7 +140,7 @@ Supplier_Task::close (u_long)
 {
   ACE_DEBUG ((LM_DEBUG,
               ASYS_TEXT ("(%t) Supplier_Task::close\n")));
-  
+
   int result;
 
   if (long_timeout_ == 0)
@@ -186,13 +186,13 @@ Supplier_Task::perform_notifications (int notifications)
                   i));
 
       int result;
-      
+
       // Notify the Reactor, which will call <handle_exception>.
       result = ACE_Reactor::instance ()->notify (this);
       if (result == -1)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG, 
+            ACE_DEBUG ((LM_DEBUG,
                         ASYS_TEXT ("(%t) %p\n"),
                         ASYS_TEXT ("notify")));
           else
@@ -229,7 +229,7 @@ Supplier_Task::svc (void)
 
       // Only allow 1 iteration per <ACE_Reactor::notify>
       this->perform_notifications (1);
-      
+
       ACE_DEBUG ((LM_DEBUG,
                   ASYS_TEXT ("(%t) **** exiting thread test\n")));
     }
@@ -298,7 +298,7 @@ run_test (int disable_notify_pipe,
   ACE_ASSERT (ACE_LOG_MSG->op_status () != -1);
 
   int result;
-  
+
   result = task.open ();
   ACE_ASSERT (result != -1);
 
@@ -327,9 +327,10 @@ run_test (int disable_notify_pipe,
       switch (ACE_Reactor::instance ()->handle_events (timeout))
         {
         case -1:
-          ACE_ERROR ((LM_ERROR,
-                      ASYS_TEXT ("(%t) %p\n"),
-                      ASYS_TEXT ("reactor")));
+          if (! disable_notify_pipe)
+            ACE_ERROR ((LM_ERROR,
+                        ASYS_TEXT ("(%t) %p\n"),
+                        ASYS_TEXT ("reactor")));
           shutdown = 1;
           break;
           /* NOTREACHED */
@@ -371,7 +372,7 @@ main (int, ASYS_TCHAR *[])
   run_test (0, timeout);
 
   ACE_DEBUG ((LM_DEBUG,
-              ASYS_TEXT ("(%t) running tests with notify pipe diabled")
+              ASYS_TEXT ("(%t) running tests with notify pipe disabled")
               ASYS_TEXT (" and time-out = %d seconds\n"),
               timeout.sec ()));
   run_test (1, timeout);
