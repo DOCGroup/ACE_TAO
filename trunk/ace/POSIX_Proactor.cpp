@@ -1613,14 +1613,17 @@ ACE_POSIX_SIG_Proactor::handle_events (unsigned long milli_seconds)
                       -1);
 
   // Retrive the result pointer.
-  ACE_POSIX_Asynch_Result *asynch_result =
-    ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
+  ACE_POSIX_Asynch_Result *asynch_result = 0;
+
 #if defined (__FreeBSD__)
-                          sig_info.si_value.sigval_ptr
+  asynch_result =
+    ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
+                          sig_info.si_value.sigval_ptr);
 #else
-                          sig_info.si_value.sival_ptr
+  asynch_result =
+    ACE_reinterpret_cast (ACE_POSIX_Asynch_Result *,
+                          sig_info.si_value.sival_ptr);
 #endif
-                          );
 
   // Check the <signal code> and act according to that.
   if (sig_info.si_code == SI_ASYNCIO)
