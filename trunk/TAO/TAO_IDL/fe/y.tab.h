@@ -39,7 +39,7 @@
 #define IDL_LOCAL 294
 #define IDL_ABSTRACT 295
 #define IDL_CUSTOM 296
-#define IDL_INIT 297
+#define IDL_FACTORY 297
 #define IDL_PRIVATE 298
 #define IDL_PUBLIC 299
 #define IDL_SUPPORTS 300
