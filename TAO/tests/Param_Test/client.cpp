@@ -149,8 +149,9 @@ Param_Test_Client<T>::run_dii_test (void)
       // time required to create and populate the NVList
       this->results_.start_timer ();
 
-      // first create the argument list and populate it
-      this->orb_->create_list (3, nvlist);
+      // first create the argument list (length 0 because args are *added*)
+      this->orb_->create_list (0, nvlist);
+      // then the result holder (length 1 because value is *replaced*)
       this->orb_->create_list (1, retval);
 
       // add arguments and typecode for return valueto the NVList
