@@ -314,7 +314,11 @@ int
 be_visitor_args_ami_handler_arglist::visit_typedef (be_typedef *node)
 {
   this->ctx_->alias (node);
-  if (node->primitive_base_type ()->accept (this) == -1)
+
+  // result-type necessary to create the function attributes for AMI
+  int result = node->primitive_base_type ()->accept (this);
+  if (result == -1)
+
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_args_ami_handler_arglist::"
@@ -323,7 +327,8 @@ be_visitor_args_ami_handler_arglist::visit_typedef (be_typedef *node)
                         -1);
     }
   this->ctx_->alias (0);
-  return 0;
+
+  return result;
 }
 
 

@@ -45,7 +45,7 @@ int
 be_visitor_args_ami_handler_result_arg::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream (); // get output stream
-  *os << "const " << this->type_name (node) << " _tao_retval, ";
+  *os << "const " << this->type_name (node) << " _tao_retval";
   return 1;
 }
 
