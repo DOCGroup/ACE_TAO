@@ -1,3 +1,9 @@
+Tue Aug 26 09:13:43 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp (fini):
+
+	  Fixed emulated exception macro usage.
+
 Tue Aug 26 09:06:19 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 	* TAO_IDL/be/be_visitor_operation/interceptors_cs.cpp
