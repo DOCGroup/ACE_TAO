@@ -28,13 +28,6 @@ MSVC users) the line #define TAO_HAS_INTERFACE_REPOSITORY 1
 uncommented in TAO/tao/orbconf.h. In addition, the Interface
 Repository requires the TAO_Svc_Utils library in TAO/orbsvcs/orbsvcs.
 
-At present the test client gets a reference for the Interface 
-Repository by reading the IOR from a file used for this purpose
-by the IFR service. Future additions to this test will include
-an option to get the object reference via multicast, DII requests
-constructed from IFR information on an existing object, and testing
-of a persistent Interface Repository.
-
 To run this test, either use the Perl script run_test.pl, or
 
 
@@ -42,9 +35,9 @@ To run this test, either use the Perl script run_test.pl, or
 (Windows)
 start the Interface Repository by typing 
 
- IFR_Service
+ ..\..\..\IFR_Service\IFR_Service
 
-in the IFR's home directory (TAO/orbsvcs/IFR_Service), then (in this directory)
+in one window, then (in another window)
 
  IFR_Test
 
@@ -118,7 +111,7 @@ should be stopped and restarted to avoid a BAD_PARAM exception.
 
 The IFR server is started in this test with locking enabled. Even
 though the test itself is single-threaded, using this option will
-ensure that future modifications to IFR code dont' cause deadlocks.
+ensure that future modifications to IFR code don't cause deadlocks.
 
 More information about the Interface Repository can be found in 
 TAO/docs/releasenotes.index.html.

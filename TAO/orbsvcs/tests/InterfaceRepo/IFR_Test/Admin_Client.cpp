@@ -988,7 +988,7 @@ Admin_Client::struct_test (CORBA::Environment &ACE_TRY_ENV)
 
   members[1].name = CORBA::string_dup ("array_mem");
   members[1].type_def = this->repo_->create_array (5, 
-                                                   members[0].type_def,
+                                                   members[0].type_def.in (),
                                                    ACE_TRY_ENV);
   ACE_CHECK;
   members[1].type = members[1].type_def->type (ACE_TRY_ENV);
@@ -1567,7 +1567,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
 
   members[1].name = CORBA::string_dup ("array_mem");
   IR::ArrayDef_ptr a_ptr = this->repo_->create_array (5, 
-                                                      members[0].type_def,
+                                                      members[0].type_def.in (),
                                                       ACE_TRY_ENV);
   ACE_CHECK;
   members[1].type_def = a_ptr;
@@ -1766,7 +1766,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
       if (kind == IR::dk_Exception)
         {
           cont_desc[i].value >>= ed;
-          CORBA::TypeCode_ptr tc = ed->type;
+          CORBA::TypeCode_ptr tc = ed->type.in ();
 
           length = tc->member_count (ACE_TRY_ENV);
           ACE_CHECK;
@@ -1792,7 +1792,7 @@ Admin_Client::exception_test (CORBA::Environment &ACE_TRY_ENV)
       else
         {
           cont_desc[i].value >>= td;
-          CORBA::TypeCode_ptr tc = td->type;
+          CORBA::TypeCode_ptr tc = td->type.in ();
 
           length = tc->member_count (ACE_TRY_ENV);
           ACE_CHECK;
