@@ -1,3 +1,17 @@
+Sun Sep 19 13:49:31 2004  Carlos O'Ryan  <coryan@atdesk.com>
+
+	* bin/MakeProjectCreator/config/global.features:
+	  Add new "boost" feature.  It should be enabled if you
+	  are planning to use the boost::unit_test_framework classes.
+	  Naturally you will also have to install boost (www.boost.org)
+	  I am writing unit tests for some classes, and I am too stubborn
+	  to use a sub-standard unit tests frameworks like cxxtest, but
+	  too smart to roll my own.
+
+	* bin/MakeProjectCreator/config/boost_unit_test.mpb:
+	  New base project for unit tests based on the
+	  boost::unit_test_framework.  Try it, it is good for you.
+
 Sun Sep 19 08:03:57 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* bin/msvc_cidlc.pl:
