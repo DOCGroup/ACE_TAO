@@ -92,7 +92,14 @@ TAO_UIOP_Profile::parse_string (const char *string,
                                 CORBA::Environment &ACE_TRY_ENV)
 {
   if (!string || !*string)
-    return 0;
+    {
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
+    }
 
   // Remove the "N.n@" version prefix, if it exists, and verify the
   // version is one that we accept.
@@ -126,20 +133,30 @@ TAO_UIOP_Profile::parse_string (const char *string,
 
   if (cp == 0)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
       // No rendezvous point specified
     }
 
-  CORBA::String_var rendezvous = CORBA::string_alloc (1 + cp - start);
+  CORBA::ULong length = cp - start;
 
-  ACE_OS::strncpy (rendezvous.inout (), start, cp - start);
-  rendezvous[cp - start] = '\0';
+  CORBA::String_var rendezvous = CORBA::string_alloc (1 + length);
 
-  ACE_DEBUG ((LM_DEBUG, "OSSAMA UIOP 0 ---> <%s>\n", rendezvous.in ()));
+  ACE_OS::strncpy (rendezvous.inout (), start, length);
+  rendezvous[length] = '\0';
 
   if (this->rendezvous_point (rendezvous.in ()) == 0)
     {
-      ACE_THROW_RETURN (CORBA::INV_OBJREF (), -1);
+      ACE_THROW_RETURN (CORBA::INV_OBJREF (
+        CORBA_SystemException::_tao_minor_code (
+          TAO_NULL_POINTER_MINOR_CODE,
+          0),
+        CORBA::COMPLETED_NO),
+        -1);
     }
 
   start = ++cp;  // increment past the object key separator
