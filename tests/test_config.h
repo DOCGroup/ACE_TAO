@@ -38,6 +38,7 @@
 #include "ace/streams.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
+#include "ace/Log_Msg.h"
 
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
