@@ -1,3 +1,12 @@
+Fri Aug 28 12:25:36 1998  Darrell Brunsch <brunsch@cs.wustl.edu>
+
+	* utils/IorParser/ior-handler.[h,cpp]: Fixed some struct/class 
+	  discrepancies and returning refs to a local variable error.
+
+	* utils/IorParser/IOR_Parser.[dsp,dsw]: Added these submitted
+	  project files from Lothar Werzinger <lwerzinger@krones.de>.
+	  (with a few small modifications to make them ACE/TAO-like)
+
 Fri Aug 28 11:19:04 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Sequence.{i,cpp} (TAO_String_Manager::out):
