@@ -1,3 +1,9 @@
+Mon Dec 09 18:11:02 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
+
+	* tests/OBV/TC_Alignment/server.dsp:
+	* tests/OBV/TC_Alignment/client.dsp: Fixed  the release build
+	  configuration.  
+
 Mon Dec  9 15:43:38 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tao/Connection_Handler.cpp (handle_input_eh): Use a cached
