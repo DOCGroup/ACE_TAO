@@ -1,5 +1,5 @@
 /**
- * @file IORTable.cpp
+ * @file Table_Adapter.cpp
  *
  * $Id$
  *

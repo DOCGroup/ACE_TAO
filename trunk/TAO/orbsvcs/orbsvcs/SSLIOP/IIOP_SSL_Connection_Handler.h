@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file   IIOP_SSL_Connect.h
+ *  @file   IIOP_SSL_Connection_Handler.h
  *
  *  $Id$
  *
