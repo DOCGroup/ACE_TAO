@@ -492,7 +492,6 @@ main (int argc, ASYS_TCHAR *argv[])
                                      ASYS_TEXT ("ACE_Timer_Wheel (preallocated)"),
                                      tq_stack),
                   -1);
-
   // Timer_Heap without preallocated memory.
   ACE_NEW_RETURN (tq_stack,
                   Timer_Queue_Stack (new ACE_Timer_Heap,
