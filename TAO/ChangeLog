@@ -1,3 +1,9 @@
+Wed Apr  7 10:37:14 2004  Ossama Othman  <ossama@dre.vanderbilt.edu>
+
+	* docs/ORBEndpoint.html:
+
+	  Added documentation for SSLIOP endpoints.
+
 Sat Apr  3 19:22:26 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
  	* examples/Simulator/Event_Supplier/Makefile:
@@ -15,7 +21,7 @@ Fri Apr  2 13:05:56 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* NEWS:
 
 	  Updated with the latest developments just prior to BFO.
-	
+
 Thu Apr  1 10:19:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/CodeSets/libs/UCS4_UTF16/CodeSets_Libs_UCS4_UTF16.bor:
@@ -24,7 +30,7 @@ Thu Apr  1 10:19:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Wed Mar 31 23:16:00 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
- 	* examples/Borland/ChatClient.cpp:
+	* examples/Borland/ChatClient.cpp:
 	* examples/Borland/ORBThread.h:
 	* examples/Borland/pch.h:
 	* examples/Kokyu_dsrt_schedulers/EDF_Scheduling.pidl:
@@ -1768,11 +1774,11 @@ Mon Feb 23 15:43:01 2004  Huang-Ming Huang  <hh1@cse.wustl.edu>
           Changed the processing of service contexts from
 	  receive_request_service_contexts() to receive_request(), this
 	  allows to filter out the requests which do not need the burden
-	  of service contexts processing. 
+	  of service contexts processing.
 
         * orbsvcs/orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.cpp:
           Changed to use FTRTEC specific message log facility instead of
-	  ACE_DEBUG. 
+	  ACE_DEBUG.
 
         * orbsvcs/orbsvcs/FtRtEvent/Utils/Log.h:
           Removed used macros.
@@ -2442,8 +2448,8 @@ Wed Feb 11 14:07:00 2004  Pradeep Gore  <pradeep@oomworks.com>
           options. e.g. static TAO_CosNotify_Service " -ListenerThreads 1
 	  -NoUpdates".  If this option is specified, the
 	  subscription_change/offer_change messages are NOT sent to proxy
-	  objects. 
-	
+	  objects.
+
           This option is useful to turn off entire updates for applications
           that do not reply on subscription_change/offer_change messages.
           Thanks to Richard G. Hash <richard.hash@openspirit.com> for
@@ -8374,7 +8380,6 @@ Wed Dec 10 13:58:41 2003  Chris Cleeland  <cleeland_c@ociweb.com>
           bytes across all GIOP fragments until the final fragment is
           received.
 
-----------------------------------------
 Thu Mar 20 12:34:24 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
         * all: First merge back to OCI.
@@ -8757,7 +8762,6 @@ Wed Feb 26 21:44:34 2003  Chris Cleeland  <cleeland_c@ociweb.com>
 
           Changes that don't appear to be related in any way to PMB...
 
-----------------------------------------
 Wed Dec 10 15:12:34 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
