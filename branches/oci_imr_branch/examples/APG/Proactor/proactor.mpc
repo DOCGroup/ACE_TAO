@@ -1,0 +1,6 @@
+project(HA Proactive Status) : aceexe {
+  exename = HA_Proactive_Status
+  Source_Files {
+    HA_Proactive_Status.cpp
+  }
+}

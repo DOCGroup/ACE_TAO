@@ -1,0 +1,87 @@
+<!-- DTD for CORBA Component property file. The root element
+     is <properties>. Elements are listed alphabetically.
+-->
+
+<!ELEMENT choice ( #PCDATA ) >
+
+<!ELEMENT choices ( choice | range )+ ) >
+
+<!ELEMENT defaultvalue ( #PCDATA ) >
+
+<!ELEMENT description ( #PCDATA ) >
+
+<!ELEMENT value ( #PCDATA ) >
+
+<!ELEMENT properties
+        ( description?
+        , ( simple
+          | sequence
+          | struct
+          | valuetype
+          )*
+        ) >
+
+<!ELEMENT range (value, value) >
+
+<!ELEMENT simple
+        ( description?
+        , value
+        , choices?
+        , defaultvalue?
+        ) >
+<!ATTLIST simple
+        name    CDATA #IMPLIED
+        type    ( boolean
+                | char
+                | double
+                | float
+                | short
+                | long
+                | objref
+                | octet
+                | string
+                | ulong
+                | ushort
+                | longlong
+                | ulonglong
+                | wchar
+                | wstring
+                | fixed
+                ) #REQUIRED >
+
+<!ELEMENT sequence
+        ( description?
+        , ( simple*
+          | struct*
+          | sequence*
+          | valuetype*
+          )
+        ) >
+<!ATTLIST sequence
+        name CDATA #IMPLIED
+        type CDATA #REQUIRED >
+
+<!ELEMENT struct
+        ( description?
+        , ( simple
+          | sequence
+          | struct
+          | valuetype
+          )*
+        ) >
+<!ATTLIST struct
+        name CDATA #IMPLIED
+        type CDATA #REQUIRED >
+
+<!ELEMENT valuetype
+        ( description?
+        , ( simple
+          | sequence
+          | struct
+          | valuetype
+          )*
+        ) >
+<!ATTLIST valuetype
+        name        CDATA #IMPLIED
+        type        CDATA #REQUIRED
+        primarykey  (true | false) "false" >

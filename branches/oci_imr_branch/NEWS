@@ -1,0 +1,67 @@
+USER VISIBLE CHANGES BETWEEN ACE-5.3.6 and ACE-5.4
+==================================================
+
+ACE:
+---
+. Added a new makefile commandline flag, static_link, that can be
+  used to force static linking when static_libs_only is turned on. It
+  uses the new STATIC_LINK_FLAG variable and is currently only
+  implemented for for GNU ld, i.e., it adds the "-static" option to
+  LDFLAGS. It's turned off by default since using it causes the
+  footprint to go up by almost 1 MB on Linux, since it links all the
+  system and compiler .a files, but can be turned on if users
+  want/need to use it, by enabling both static_libs_only and static_link.
+
+
+. Added macros ACE_USES_GPROF which enables users to use gprof in a
+  multithreaded environment with ACE libs. 
+
+. Added a new functor template class, ACE_Malloc_Lock_Adapter_T,
+  that's used by ACE_Malloc_T as a factory for the ACE_LOCK template
+  parameter, and allows the use of locking strategy classes, like
+  ACE_Process_Semaphore and ACE_Thread_Semaphore that don't have a
+  satisfactory ctor taking a single required ACE_TCHAR* parameter, to
+  be adapted to work with ACE_Malloc_T. 
+
+. The source code examples from "The ACE Programmer's Guide" book by
+  Huston, Syyid, and Johnston, are now located in
+  $ACE_ROOT/examples/APG. 
+
+. Support for GNU autoconf is now in ACE. Please see ACE-INSTALL.html
+  for details. 
+
+. Fixed problems that prevented ACE from being compiled on LynxOS
+  4.0.0. 
+
+. Fixed compilation error which prevented ACE from being compiled when
+  ACE_COMPILE_TIMEPROBES was set to 1.
+
+. Preliminary support for Tandem NSK has been added.
+
+. Lots of bug fixes with TLI and XPG5. Please see $ACE_ROOT/ChangeLog
+  for details.
+
+. Fixed ACE_OS::event_timedwait() and ACE_OS::event_wait() so that
+  they use a while loop around the ACE_OS::cond_[timed]wait() calls to
+  avoid problems with spurious wakeups, etc. 
+
+. ACE's wrapper around getipnodebyname() and getipnodebyaddr () has
+  been made go through the IPv4-only case on ACE_WIN32. Since Windows
+  IPv6 implementation doesn't offer support (at thistime) for
+  getipnodebyname() the code has been changed to use the IPV4 part of
+  the code. 
+
+. Install with Borland C++ of ACE library fixed
+
+ACEXML:
+-------
+
+. Fixed memory leak in ACEXML parser.
+
+. Fixed implementations of rewind() in all the CharStreams. They were
+  broken previously.
+
+. Fixed bugs in the parser associated with incorrect handling of PE
+  References for keywords. 
+
+

@@ -1,0 +1,20 @@
+# $Id$
+
+This is a test that exercises the birectional GIOP connection
+implementation in TAO. Start the server like this
+
+$ server -o <file.ior> -i <no_iterations>
+$ client -k file://<file.ior> -x 
+
+The server starts up writing the IOR to the file. The client then
+starts up, creates its own object and passes the reference to the
+server. Then it invokes a method on the server to indicate that it is
+ready for callback. The server then callsback the client on the same
+connection <no_iterations> times. If the server creates a new
+connection the server would crash itself.
+
+
+
+
+
+

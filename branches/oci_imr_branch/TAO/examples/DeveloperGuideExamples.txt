@@ -1,0 +1,20 @@
+$Id$
+
+The OCI TAO Developer's Guide contains source code for many examples which 
+are not part of the regular ACE+TAO source code distribution available from
+the Center for Distributed Object Computing at Washington University.  These
+examples were developed independently by OCI and are tightly integrated with
+the discussion of various topics in the TAO Developer's Guide.
+
+The source code for these examples is available for download from the 
+following site:
+
+<http://www.theaceorb.com/TAO/Support/tao1.0a_example_source_code.html>
+
+After downloading and extracting the example source code, you will find
+a subdirectory corresponding to each of several chapters in OCI's TAO
+Developer's Guide.
+
+For more information on OCI's Distribution of TAO and the TAO Documentation Set,
+visit <http://www.theaceorb.com/>.
+
