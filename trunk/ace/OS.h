@@ -4087,12 +4087,13 @@ typedef void *(*ACE_THR_C_FUNC)(void *);
 # endif /* VXWORKS */
 }
 
-# if !defined (MAP_FAILED)
+# if !defined (MAP_FAILED) || defined (ACE_HAS_BROKEN_MAP_FAILED)
+#   undef MAP_FAILED
 #   define MAP_FAILED ((void *) -1)
 # elif defined (ACE_HAS_LONG_MAP_FAILED)
 #   undef MAP_FAILED
 #   define MAP_FAILED ((void *) -1L)
-# endif /* MAP_FAILED */
+# endif /* !MAP_FAILED || ACE_HAS_BROKEN_MAP_FAILED */
 
 # if defined (ACE_HAS_CHARPTR_DL)
 typedef char * ACE_DL_TYPE;

@@ -186,6 +186,8 @@ ACE_HAS_BROKEN_ENUMS                    Compiler can't handle large
                                         enums (e.g., HP/UX C++)
 ACE_HAS_BROKEN_HPUX_TEMPLATES           Earlier versions of HP/UX C++
                                         are damned...
+ACE_HAS_BROKEN_MAP_FAILED               Platform doesn't cast MAP_FAILED
+                                        to a void *.
 ACE_HAS_BROKEN_MSG_H                    Platform headers don't support
                                         <msg.h> prototypes
 ACE_HAS_BROKEN_MMAP_H                   HP/UX does not wrap the
