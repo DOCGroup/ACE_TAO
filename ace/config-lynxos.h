@@ -158,11 +158,6 @@
 // on SIG Proactor for this platform.
 // #define ACE_POSIX_SIG_PROACTOR
 
-// Maximum compensation (10 ms) for early return from timed ::select ().
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 #define ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK 1
 
 // Turns off the tracing feature.

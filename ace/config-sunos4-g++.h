@@ -20,11 +20,6 @@
 // Maybe it will work?
 #undef ACE_HAS_TEMPLATE_SPECIALIZATION
 
-// Maximum compensation (10 ms) for early return from timed ::select ().
-#if !defined (ACE_TIMER_SKEW)
-# define ACE_TIMER_SKEW 10 * 1000
-#endif /* ACE_TIMER_SKEW */
-
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_LACKS_SYSTIME_H
@@ -91,11 +86,6 @@
 
 #define ACE_LACKS_DIFFTIME
 #define ACE_HAS_DIRENT
-
-// 10 millisecond fudge factor to account for Solaris timers...
-#if !defined (ACE_TIMER_SKEW)
-#define ACE_TIMER_SKEW 1000 * 10
-#endif /* ACE_TIMER_SKEW */
 
 #define ACE_HAS_SUNOS4_SIGNAL_T
 #define ACE_HAS_CPLUSPLUS_HEADERS
