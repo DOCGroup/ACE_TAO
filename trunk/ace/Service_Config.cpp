@@ -338,6 +338,7 @@ int
 ACE_Service_Config::process_directive (char directive[])
 {
   ACE_TRACE ("ACE_Service_Config::process_directives");
+  ACE_UNUSED_ARG (directive);
 
   // @@ What needs to happen at this point is for the <directive> to
   // be placed into a buffer that the YY_INPUT macro knows how to
@@ -427,7 +428,7 @@ ACE_Service_Config::open (const ASYS_TCHAR program_name[],
     flags = (u_long) ACE_Log_Msg::STDERR;
 
   LPCTSTR key = logger_key;
-  
+
   if (key == 0 || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY))
     // Only use the static <logger_key_> if the caller doesn't
     // override it in the parameter list.
