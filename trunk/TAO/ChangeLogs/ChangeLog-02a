@@ -1,3 +1,18 @@
+Tue Aug 28 10:40:06 2001  Chad Elliott  <elliott_c@ociweb.com>
+
+        * tests/TestUtils:
+        * tests/TestUtils/Makefile:
+        * tests/TestUtils/TestCombinedThreads.h:
+        * tests/TestUtils/TestCombinedThreads.cpp:
+
+          Added the TestUtils VxWorks testing library.  This is used to
+          create "one-button" TAO tests with VxWorks.
+
+        * tests/Makefile:
+
+          Added TestUtils to the Makefile.  This is compiled only for
+          VxWorks.
+
 Tue Aug 28 08:22:07 2001  Chad Elliott  <elliott_c@ociweb.com>
 
         * tests/AMI_Buffering/run_test.pl:
