@@ -697,7 +697,7 @@ Peer_Acceptor::info (char **strp, size_t length) const
 
   ACE_OS::sprintf (buf, "%s\t %s/%s %s",
 	     "Gateway peer daemon", addr_str, "tcp",
-	     "# IRIDIUM SRP traffic generator and data sink\n");
+	     "# Gateway traffic generator and data sink\n");
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
