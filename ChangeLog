@@ -1,8 +1,9 @@
 Mon Jan 31 00:09:11 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* ace/SOCK_Dgram_Mcast.cpp: Updated the comments related to
+	* ace/SOCK_Dgram_Mcast: Updated the implementation comments related to
 	  the subscribe_ifs() return value of 1 to indicate why this is
- 	  needed.  Thanks to Mark Boriac for motivating this.
+ 	  needed.  Also, updated the documentation to indicate to check
+ 	  for -1 on failure.  Thanks to Mark Boriac for motivating this.
 
 	* etc/Svc_Conf_l.cpp.diff: The context diff was incorrectly
 	  written, therefore, the wrong ACE_YY_BREAK was being commented

@@ -59,7 +59,7 @@ public:
   // The <net_if> interface is hardware specific, e.g., use "netstat
   // -i" to find whether your interface is, such as "le0" or something
   // else.  If net_if == 0, <subscribe> uses the default mcast
-  // interface.  Returns: -1 on error, else 0.
+  // interface.  Returns: -1 if the call fails.
   // 
   // Note that some platforms, such as pSoS, support only number, not
   // names, for network interfaces.  For these platforms, just give
@@ -89,7 +89,7 @@ public:
   // The <net_if> interface is hardware specific, e.g., use "netstat
   // -i" to find whether your interface is, such as "le0" or something
   // else.  If net_if == 0, <subscribe> uses the default mcast
-  // interface.  Returns: a 0 on success or -1 on failure.
+  // interface.  Returns: -1 if the call fails.
   // 
   // Note that some platforms, such as pSoS, support only number, not
   // names, for network interfaces.  For these platforms, just give
@@ -104,7 +104,7 @@ public:
   // interface is hardware specific.  Use something like "netstat -i"
   // to find whether your interface is, such as "le0" or something
   // else.  If <net_if> == 0, <subscribe> uses the default mcast
-  // interface.  Returns: -1 on error, else 0.
+  // interface.  Returns: -1 if the call fails.
   // 
   // Note that some platforms, such as pSoS, support only number, not
   // names, for network interfaces.  For these platforms, just give
@@ -112,8 +112,8 @@ public:
   // them into numbers via <ACE_OS::atoi>.
 
   int unsubscribe (void);
-  // Unsubscribe from a multicast group.  Returns 0 on success, -1 on
-  // failure.
+  // Unsubscribe from a multicast group.  Returns -1 if the call
+  // fails.
 
   // = Data transfer routines.
   ssize_t send (const void *buf,
