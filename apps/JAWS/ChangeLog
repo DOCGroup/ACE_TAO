@@ -1,3 +1,8 @@
+Mon Dec 29 18:50:02 1997  James C Hu  <jxh@cs.wustl.edu>
+
+	* server/IO.cpp: Idem to previous change, but fixes to improve
+	  compatibility and portability to Windows NT.
+
 Thu Dec 18 15:37:36 1997  James C Hu  <jxh@cs.wustl.edu>
 
 	* server/IO.cpp: Modified to account for changes in ACE_Filecache
