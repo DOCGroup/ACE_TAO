@@ -893,4 +893,5 @@ TAO_IORManip_Export CORBA::Boolean operator>> (TAO_InputCDR &, TAO_IOP::MultiPro
 #pragma option pop
 #endif /* __BORLANDC__ */
 
+#include "ace/post.h"
 #endif /* ifndef */
