@@ -33,12 +33,12 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
                                     const TAO_ObjectKey &object_key,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE,
+                 orb_core),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
     hint_ (0),
-    orb_core_ (orb_core),
     tagged_profile_ ()
 {
 }
@@ -48,36 +48,36 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
                                     const ACE_UNIX_Addr &addr,
                                     const TAO_GIOP_Version &version,
                                     TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE,
+                 orb_core),
     version_ (version),
     object_key_ (object_key),
     object_addr_ (addr),
-    hint_ (0),
-    orb_core_ (orb_core)
+    hint_ (0)
 {
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (const char *string,
                                     TAO_ORB_Core *orb_core,
                                     CORBA::Environment &ACE_TRY_ENV)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE,
+                 orb_core),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    orb_core_ (orb_core)
+    hint_ (0)
 {
   parse_string (string, ACE_TRY_ENV);
   ACE_CHECK;
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (TAO_ORB_Core *orb_core)
-  : TAO_Profile (TAO_TAG_UIOP_PROFILE),
+  : TAO_Profile (TAO_TAG_UIOP_PROFILE,
+                 orb_core),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
     object_key_ (),
     object_addr_ (),
-    hint_ (0),
-    orb_core_ (orb_core)
+    hint_ (0)
 {
 }
 
@@ -360,11 +360,11 @@ TAO_UIOP_Profile::encode (TAO_OutputCDR &stream) const
   // Create the encapsulation....
   TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                        TAO_ENCAP_BYTE_ORDER,
-                       this->orb_core_->output_cdr_buffer_allocator (),
-                       this->orb_core_->output_cdr_dblock_allocator (),
-                       this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                       this->orb_core_->to_iso8859 (),
-                       this->orb_core_->to_unicode ());
+                       this->orb_core ()->output_cdr_buffer_allocator (),
+                       this->orb_core ()->output_cdr_dblock_allocator (),
+                       this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                       this->orb_core ()->to_iso8859 (),
+                       this->orb_core ()->to_unicode ());
 
   // Create the profile body
   this->create_profile_body (encap);
@@ -388,11 +388,11 @@ TAO_UIOP_Profile::create_tagged_profile (void)
       // Create the encapsulation....
       TAO_OutputCDR encap (ACE_CDR::DEFAULT_BUFSIZE,
                            TAO_ENCAP_BYTE_ORDER,
-                           this->orb_core_->output_cdr_buffer_allocator (),
-                           this->orb_core_->output_cdr_dblock_allocator (),
-                           this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                           this->orb_core_->to_iso8859 (),
-                           this->orb_core_->to_unicode ());
+                           this->orb_core ()->output_cdr_buffer_allocator (),
+                           this->orb_core ()->output_cdr_dblock_allocator (),
+                           this->orb_core ()->orb_params ()->cdr_memcpy_tradeoff (),
+                           this->orb_core ()->to_iso8859 (),
+                           this->orb_core ()->to_unicode ());
 
       // Create the profile body
       this->create_profile_body (encap);

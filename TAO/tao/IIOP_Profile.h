@@ -178,12 +178,8 @@ private:
   // Pointer to a connection handler which we successfully used
   // already.
 
-  TAO_ORB_Core *orb_core_;
-  // ORB Core.
-
   IOP::TaggedProfile tagged_profile_;
   // Our tagged profile
-
 };
 
 #if defined (__ACE_INLINE__)

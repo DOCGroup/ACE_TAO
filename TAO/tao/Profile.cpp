@@ -210,8 +210,9 @@ TAO_Profile::the_stub (void)
 
 // ****************************************************************
 
-TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag)
-  : TAO_Profile (tag),
+TAO_Unknown_Profile::TAO_Unknown_Profile (CORBA::ULong tag,
+                                          TAO_ORB_Core *orb_core)
+  : TAO_Profile (tag, orb_core),
     tagged_profile_ ()
 {
 }
