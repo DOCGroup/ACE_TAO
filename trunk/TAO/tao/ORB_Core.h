@@ -375,6 +375,9 @@ protected:
                                 CORBA::Environment &TAO_IN_ENV);
   // Initialize the root POA.
 
+  TAO_Object_Adapter *object_adapter_i (void);
+  // Get <Object Adapter>, assume the lock is held...
+
 protected:
   ACE_SYNCH_MUTEX lock_;
   // Synchronize internal state...

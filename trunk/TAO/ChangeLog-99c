@@ -1,3 +1,14 @@
+Thu Jun 17 22:41:17 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* tao/ORB_Core.h:
+	* tao/ORB_Core.cpp:
+	  Fixed dead-lock during startup, it worked on NT thanks to the
+	  recursive mutexes in that land.
+
+	* TAO_IDL/be/be_visitor_interface/collocated_ss.cpp:
+	  Nanbor's changes and ours (Irfan's and mine) did not mix well,
+	  fixed.
+
 Thu Jun 17 22:44:04 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 
 	* examples/Simple/echo/Echo_i.{h,cpp}: Added throw specs.
@@ -17,6 +28,11 @@ Thu Jun 17 21:45:11 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ChangeLog: Split the ChangeLog to make a ChangeLog-99a since we
  	  were already up to 700k of ChangeLog entries for '99!
+
+Thu Jun 17 20:40:56 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* performance-tests/POA/Object_Creation_And_Registration/run_test.pl:
+	  Fixed include path
 
 Thu Jun 17 21:47:21 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
 
