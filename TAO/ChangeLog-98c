@@ -1,39 +1,45 @@
+Fri Jul 24 17:00:09 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * orbsvcs/orbsvcs/Event/Dispatching_Modules.cpp (open_queue):
+          set period of dispatch queue to its period, rather than 0,
+          so that the scheduler will handle it properly.
+
 Fri Jul 24 16:15:08 1998  Seth Benjamin Widoff  <sbw1@waltz.cs.wustl.edu>
 
-	* orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
-	* orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
-	* orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
-	  Fixed template trait problems with HP/UX 11. Thanks to 
- 	  John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
+        * orbsvcs/orbsvcs/Trader/Offer_Database.cpp:
+        * orbsvcs/orbsvcs/Trader/Service_Type_Repository.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+          Fixed template trait problems with HP/UX 11. Thanks to
+          John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
 
 Fri Jul 24 15:16:28 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* orbsvcs/tests/Concurrency/CC_command.tab.cpp,
- 	  orbsvcs/tests/Concurrency/CC_command.tab.y: Fixed a couple of
- 	  minor inconsistencies that showed up on HP/UX 11.  Thanks to
- 	  John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
+        * orbsvcs/tests/Concurrency/CC_command.tab.cpp,
+          orbsvcs/tests/Concurrency/CC_command.tab.y: Fixed a couple of
+          minor inconsistencies that showed up on HP/UX 11.  Thanks to
+          John Mulhern <9107@mn3.lawson.lawson.com> for reporting this.
 
 Fri Jul 24 09:56:27 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tests/Simple/client_impl.cpp: 
-	  On UNIX you close() the handle, not the file name.
+        * tests/Simple/client_impl.cpp:
+          On UNIX you close() the handle, not the file name.
 
-	* tests/Makefile: 
-	* tests/Simple/Makefile: 
-	  Added $TAO_ROOT/tests/Simple to the compilation.
+        * tests/Makefile:
+        * tests/Simple/Makefile:
+          Added $TAO_ROOT/tests/Simple to the compilation.
 
 Fri Jul 24 01:40:53 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp: 
-	  The check for memory ownership of the Message_Block was
-	  inverted, thanks to Dave Meyer <dmeyer@std.saic.com> for
-	  catching this one.
+        * tao/CDR.cpp:
+          The check for memory ownership of the Message_Block was
+          inverted, thanks to Dave Meyer <dmeyer@std.saic.com> for
+          catching this one.
 
-	* release.chk: 
-	  Updated the file to include the new platforms, the new tests in
-	  Param_Test and to remove the old info (that is probably
-	  outdated)
+        * release.chk:
+          Updated the file to include the new platforms, the new tests in
+          Param_Test and to remove the old info (that is probably
+          outdated)
 
 Thu Jul 23 23:15:33 1998  David L. Levine  <levine@cs.wustl.edu>
 
