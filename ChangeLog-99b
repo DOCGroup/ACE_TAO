@@ -1,3 +1,9 @@
+Mon Feb  1 08:39:15 1999  Douglas C. Schmidt  <schmidt@ace.cs.wustl.edu>
+
+	* ace/Synch.h: Clarified that the ACE_Semaphore::acquire() is in
+ 	  absolute, rather than relative, time.  Thanks to Jacques
+ 	  Salerian <Jacques.Salerian@era.ericsson.se> for reporting this.
+
 Sun Jan 31 20:10:23 1999  Jeff Parsons <parsons@cs.wustl.edu>
 
         * ace/OS.h:
