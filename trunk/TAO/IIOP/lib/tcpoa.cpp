@@ -714,7 +714,9 @@ TCP_OA::get_request (
 	ctx->check_forward = check_forward;
 	ctx->context = app_state;
 	ctx->oa = this;
+#if 0 // g++ didn't complain about this, but Sun C++ does
 	ctx->endpoint = fd;
+#endif
 	ctx->aggressive = do_thr_create;
 
 	//
@@ -758,7 +760,9 @@ TCP_OA::get_request (
     ctx.check_forward = check_forward;
     ctx.context = app_state;
     ctx.oa = this;
+#if 0 // g++ didn't complain about this assignment, but Sun C++ does
     ctx.endpoint = fd;
+#endif
 
 #ifdef	_POSIX_THREADS
     ctx.aggressive = CORBA_B_FALSE;
