@@ -57,11 +57,6 @@ TAO_Acceptor_Registry::make_mprofile (const TAO_ObjectKey &object_key,
 int
 TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
 {
-  // @@ Fred&Ossama: we should optimize this: we loop over the
-  // profiles here and in the ORB::is_collocated() method, maybe we
-  // should return the index of the profile that matched?  What
-  // happens if the address matches but the object key does not?
-  // Should we keep on searching in the ORB loop?
 
   TAO_AcceptorSetItor end = this->end ();
 
@@ -73,6 +68,7 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
         {
           const TAO_Profile *profile = mprofile.get_profile (j);
 
+          // Check the address for equality.
           if ((*i)->tag () == profile->tag ()
               && (*i)->is_collocated (profile))
             return 1;
@@ -121,8 +117,10 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
                           -1);
       ACE_CString prefix = iop.substring (0, slot);
 
-      // @@ Fred, please document where the major number "3" comes
-      // from.
+      // IOP://address1,address2//
+      //    ^ slot
+      // check for the presence of addresses.  Get length and subtract
+      // 3 for the three chars ://
       if (slot == ACE_static_cast (int, iop.length () - 3))
         {
           // Protocol was specified without an endpoint.  According to
@@ -135,8 +133,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
           continue;
         }
 
-      // @@ Fred, please document where the major number "3" comes
-      // from.
+      // increment slot past the "://" (i.e. add 3)
       ACE_CString addrs  = iop.substring (slot + 3);
 
       if (addrs [addrs.length () - 1] == '/')
@@ -206,6 +203,8 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core)
   return 0;
 }
 
+// Used when no endpoints were specified.  Open a default server
+// for the indicated protocol.
 int
 TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
                                      ACE_CString *protocol_prefix)
@@ -216,9 +215,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   TAO_ProtocolFactorySetItor end =
     orb_core->protocol_factories ()->end ();
 
-  // @@ Fred, there should be more comments in this method so that
-  // people can tell what's going on...  Can you please fix it?
-
+  // loop through loaded protocols looking for protocol_prefix
   for (TAO_ProtocolFactorySetItor i =
          orb_core->protocol_factories ()->begin ();
        i != end;
@@ -241,6 +238,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
             }
         }
 
+      // got it, make an acceptor
       TAO_Acceptor *acceptor =
         (*i)->factory ()->make_acceptor ();
 
@@ -254,6 +252,9 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
           continue;
         }
 
+      // initialize the acceptor to listen on the default endpoint.  For IIOP
+      // this will just be the default interface and let the kernel pick a port for
+      // us.
       if (acceptor->open_default (orb_core) == -1)
         {
           if (TAO_debug_level > 0)

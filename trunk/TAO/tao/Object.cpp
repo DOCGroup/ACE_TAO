@@ -188,7 +188,7 @@ TAO_ObjectKey *
 CORBA::Object::_key (CORBA::Environment &env)
 {
   if (this->_stubobj () && this->_stubobj ()->profile_in_use ())
-    return this->_stubobj ()->profile_in_use ()->_key (env);
+    return this->_stubobj ()->profile_in_use ()->_key ();
 
   ACE_ERROR_RETURN((LM_ERROR, "(%P|%t) Null stub obj!!!\n"), 0);
 }

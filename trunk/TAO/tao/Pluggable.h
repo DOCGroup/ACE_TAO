@@ -221,14 +221,6 @@ public:
   // Equality operator
 };
 
-// @@ Fred&Ossama: We need a *concrete* class (something that can be
-//    instantiated) that can be used to represent profiles for
-//    protocols we don't know.  This is required in the spec because
-//    we are supposed to preserve foreign profiles when communicating
-//    with other ORBs.
-//    A simple class with noops for most methods and just the basics
-//    required for marshaling and demarshaling is what we need.
-//
 class TAO_Export TAO_Profile
 {
   // = TITLE
@@ -254,10 +246,6 @@ public:
   CORBA::ULong _decr_refcnt (void);
   // Decrement the object's reference count.  When this count goes to
   // 0 this object will be deleted.
-  // @@ Fred&Ossama: guys, reference counting *should* be implemented
-  //    in the base class, otherwise you are just going to end up
-  //    repeating code and forcing the user to implement things not
-  //    directly related to protocols.
 
   void forward_to (TAO_MProfile *mprofiles);
   // Keep a pointer to the forwarded profile
@@ -274,19 +262,6 @@ public:
   // Return a string representation for this profile.  client must
   // deallocate memory.
 
-  virtual const TAO_opaque &body (void) const = 0;
-  // The body, an octet sequence that represent the marshaled
-  // profile.
-  // @@ Fred: We have to think about this method: it basically
-  //          requires the profile to keep both the <body> and the
-  //          interpreted representation (as host/port/etc.)
-  //          This is good for performance reasons, but it may consume
-  //          too much memory, maybe a method like this:
-  //
-  //          void body (TAO_opaque& return_body) const = 0;
-  //
-  //          will work better.
-
   virtual int decode (TAO_InputCDR& cdr) = 0;
   // Initialize this object using the given CDR octet string.
 
@@ -299,7 +274,7 @@ public:
   TAO_ObjectKey &object_key (TAO_ObjectKey& objkey);
   // @@ deprecated. set the Object Key.
 
-  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const = 0;
+  virtual TAO_ObjectKey *_key (void) const = 0;
   // Obtain the object key, return 0 if the profile cannot be parsed.
   // The memory is owned by the caller!
 
@@ -313,9 +288,12 @@ public:
                              CORBA::Environment &env) = 0;
   // Return a hash value for this object.
 
-  virtual ASYS_TCHAR *addr_to_string(void) = 0;
-  // Return a string representation for the address.
-  // @@ Fred: who owns the string returned?
+  virtual int addr_to_string(char *buffer, size_t length) = 0;
+  // Return a string representation for the address.  Returns
+  // -1 if buffer is too small.  The purpose of this method is to
+  // provide a general interface to the underlying address object's
+  // addr_to_string method.  This allowsthe protocol implementor to
+  // select the appropriate string format.
 
   virtual void reset_hint (void) = 0;
   // This method is used with a connection has been reset requiring
@@ -366,12 +344,12 @@ public:
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
-  virtual TAO_ObjectKey *_key (CORBA::Environment &env) const;
+  virtual TAO_ObjectKey *_key (void) const;
   virtual CORBA::Boolean is_equivalent (TAO_Profile* other_profile,
                                         CORBA::Environment &env);
   virtual CORBA::ULong hash (CORBA::ULong max,
                              CORBA::Environment &env);
-  virtual ASYS_TCHAR *addr_to_string(void);
+  virtual int addr_to_string(char *buffer, size_t length);
   virtual void reset_hint (void);
 
 private:

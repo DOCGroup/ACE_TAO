@@ -1654,9 +1654,9 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
     return 0;
 
   // @@EXC@@ We should receive the <env> from the command line.
-  // @@ Fred: why do we need an environment for the
-  //    Profile::_key() method?
-  // @@ No good reason, I will fix.
+
+  // @@ What about forwarding.  Which this approach we are never forwarded
+  //    when we use collocation!
 
   CORBA::Environment ACE_TRY_ENV;
 
@@ -1676,9 +1676,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
            i != end;
            ++i)
         {
-          // @@ Fred&Ossama: how do we handle forwarding in this case?
-          //    What happens if we are forwarded back to this ORB, or if a
-          //    local stub is (or should) be forwarded to a remote one?
 
           const TAO_MProfile& mprofile = sobj->get_base_profiles ();
           if ((*i).int_id_->is_collocated (mprofile) == 0)
@@ -1691,7 +1688,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
                ++j)
             {
               const TAO_Profile* profile = mprofile.get_profile (j);
-              TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
+              TAO_ObjectKey_var objkey = profile->_key ();
               ACE_CHECK_RETURN (0);
 
               ACE_TRY
@@ -1713,10 +1710,6 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
     }
   else
     {
-      // @@ Fred&Ossama: how do we handle forwarding in this case?
-      //    What happens if we are forwarded back to this ORB, or if a
-      //    local stub is (or should) be forwarded to a remote one?
-
       const TAO_MProfile& mprofile = sobj->get_base_profiles ();
       if (!this->orb_core_->is_collocated (mprofile))
         return 0;
@@ -1731,7 +1724,7 @@ CORBA_ORB::_get_collocated_servant (TAO_Stub *sobj)
            ++j)
         {
           const TAO_Profile* profile = mprofile.get_profile (j);
-          TAO_ObjectKey_var objkey = profile->_key (ACE_TRY_ENV);
+          TAO_ObjectKey_var objkey = profile->_key ();
           ACE_CHECK_RETURN (0);
 
           ACE_TRY_EX(LOCAL_ORB)
