@@ -22,6 +22,7 @@
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 #endif /* 0 */
 #  endif
+#  define ACE_CAST_CONST const
 #endif /* __SUNPRO_CC */
 
 #if ! defined (__ACE_INLINE__)
