@@ -1,5 +1,10 @@
 Thu Mar 27 01:00:18 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
+	* include/makeinclude/platform_irix6.2_sgiCC.GNU: Added a new
+ 	  platform config file for SGI Irix 6.2 using the CC compiler (not
+ 	  NCC nor the MipsProcompiler).  Thanks to Eric Dean Russell
+ 	  <edrusse@somnet.sandia.gov> for these changes.
+
 	* ace/OS.h: Moved the ACE_LACKS_UTSNAME_T block into the right
  	  part of the code.  Thanks to Jonathan Biggar <jon@sems.com> for
  	  this fix.
