@@ -53,26 +53,22 @@ rsvp_callback (rapi_sid_t sid,
 
   ACE_QoS_Session *qos_session = (ACE_QoS_Session *) args;
 
-  qos_flowspecx_t *csxp = 0;
-  
-  if(!flow_spec_list)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-		  "(%N|%l) Null flow_spec_list\n"));
-    }
-  else
-    {
-      // Extended Legacy format.
-      csxp = &flow_spec_list->specbody_qosx;
-      if(!csxp)
-	{
-	  ACE_ERROR_RETURN ((LM_ERROR,
-			     "(%N|%l) Null csxp\n"),
-			    -1);
-	}
-    }
-  
+  if(!flow_spec_list){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N|%l) Null flow_spec_list\n"),
+                         -1);
+   }
+
+  // Extended Legacy format.
+  qos_flowspecx_t *csxp = &flow_spec_list->specbody_qosx;
+  if(!csxp){
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N|%l) Null csxp\n"),
+                         -1);
+   }
+
   ACE_QoS ace_qos = qos_session->qos ();
+  ACE_Flow_Spec sending_flow = ace_qos.sending_flowspec ();
 
   switch(eventype)
     {
@@ -81,144 +77,116 @@ rsvp_callback (rapi_sid_t sid,
         ACE_DEBUG ((LM_DEBUG,
                     "RSVP PATH Event received\n"
                     "No. of TSpecs received : %d %d\n",
-                    flow_spec_no, &flow_spec_list->len));
+                    flow_spec_no, csxp->spec_type));
 
-	ACE_Flow_Spec *receiving_fs = 0;
-		    
-	if (flow_spec_no != 0)
-	  {
+        ACE_Flow_Spec receiving_fs (csxp->xspec_r,
+                                    csxp->xspec_b,
+                                    csxp->xspec_p,
+                                    0,
+                                    csxp->xspec_S,
+                                    1,
+                                    csxp->xspec_M,
+                                    csxp->xspec_m,
+                                    25,
+                                    0);
 
-	    ACE_NEW_RETURN (receiving_fs,
-			    ACE_Flow_Spec,
-			    -1);
 
-	    ACE_NEW_RETURN (receiving_fs,
-			    ACE_Flow_Spec (csxp->xspec_r,
-					   csxp->xspec_b,
-					   csxp->xspec_p,
-					   0,
-					   csxp->xspec_S,
-					   1,
-					   csxp->xspec_M,
-					   csxp->xspec_m,
-					   25,
-					   0),
-			    -1);
-	
-	    
-	    ACE_DEBUG ((LM_DEBUG,
-			"\nTSpec :\n"
-			"\t Spec Type = %d\n"
-			"\t Rate = %f\n"
-			"\t Bucket = %f\n"
-			"\t Peak = %f\n"
-			"\t MPU = %d\n"
-			"\t MDU = %d\n"
-			"\t TTL = %d\n",
-			csxp->spec_type,
-			csxp->xspec_r,
-			csxp->xspec_b,
-			csxp->xspec_p,
-			csxp->xspec_m,
-			csxp->xspec_M,
-			25));
-	   
-	  } 
-	// Set the sending flowspec QoS of the given session.
-	ace_qos.receiving_flowspec (receiving_fs);
+        ACE_DEBUG ((LM_DEBUG,
+                    "\nTSpec :\n"
+                    "\t Spec Type = %d\n"
+                    "\t Rate = %f\n"
+                    "\t Bucket = %f\n"
+                    "\t Peak = %f\n"
+                    "\t MPU = %d\n"
+                    "\t MDU = %d\n"
+              "\t TTL = %d\n",
+                    csxp->spec_type,
+                    csxp->xspec_r,
+                    csxp->xspec_b,
+                    csxp->xspec_p,
+                    csxp->xspec_m,
+                    csxp->xspec_M,
+                    25));
 
-	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
+        // Set the sending flowspec QoS of the given session.
+        ace_qos.receiving_flowspec (receiving_fs);
 
+        qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_EVENT);
       }
-      
+
     break;
 
     case RAPI_RESV_EVENT:
-      {	      
-	ACE_DEBUG ((LM_DEBUG,
-		    "RSVP RESV Event received\n"
-		    "No. of FlowSpecs received : %d\n",
-		    flow_spec_no));
-      
-	ACE_Flow_Spec *sending_flow = 0;
-	
-	if (flow_spec_no != 0)
-	  {
-	    ACE_NEW_RETURN (sending_flow,
-			    ACE_Flow_Spec,
-			    -1);
-	    
-	    // Choose based on the service type : [QOS_GUARANTEEDX/QOS_CNTR_LOAD].
-	    switch (csxp->spec_type)
-	      {
-	      case QOS_GUARANTEEDX:
-		// Slack term in MICROSECONDS
-		sending_flow->delay_variation (csxp->xspec_S);
+      ACE_DEBUG ((LM_DEBUG,
+                  "RSVP RESV Event received\n"
+                  "No. of FlowSpecs received : %d\n",
+                  flow_spec_no));
 
-		// @@How does the guaranteed rate parameter map to the ACE_Flow_Spec.
-		// Note there is no break !!
+      // Choose based on the service type : [QOS_GUARANTEEDX/QOS_CNTR_LOAD].
+      switch (csxp->spec_type)
+        {
+        case QOS_GUARANTEEDX:
+          // Slack term in MICROSECONDS
+          sending_flow.delay_variation (csxp->xspec_S);
 
-	      case QOS_CNTR_LOAD:
+          // @@How does the guaranteed rate parameter map to the ACE_Flow_Spec.
+          // Note there is no break !!
 
-		// qos_service_type.
-		sending_flow->service_type (csxp->spec_type);
-		// Token Bucket Average Rate (B/s)
-		sending_flow->token_rate (csxp->xspec_r);
-		// Token Bucket Rate (B)
-		sending_flow->token_bucket_size (csxp->xspec_b);
-		// Peak Data Rate (B/s)
-		sending_flow->peak_bandwidth (csxp->xspec_p);
-		// Minimum Policed Unit (B)
-		sending_flow->minimum_policed_size (csxp->xspec_m);
-		// Max Packet Size (B)
-		sending_flow->max_sdu_size (csxp->xspec_M);
+        case QOS_CNTR_LOAD:
 
-		break;
+          // qos_service_type.
+          sending_flow.service_type (csxp->spec_type);
+          // Token Bucket Average Rate (B/s)
+          sending_flow.token_rate (csxp->xspec_r);
+          // Token Bucket Rate (B)
+          sending_flow.token_bucket_size (csxp->xspec_b);
+          // Peak Data Rate (B/s)
+          sending_flow.peak_bandwidth (csxp->xspec_p);
+          // Minimum Policed Unit (B)
+          sending_flow.minimum_policed_size (csxp->xspec_m);
+          // Max Packet Size (B)
+          sending_flow.max_sdu_size (csxp->xspec_M);
 
-	      default:
-		ACE_ERROR_RETURN ((LM_ERROR,
-				   "(%N|%l) Unknown flowspec type: %u.\n", csxp->spec_type),
-				  -1);
-	      };
-	  }
-	ace_qos.sending_flowspec (sending_flow);
-	
-	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_EVENT);
-      }
+          break;
+
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N|%l) Unknown flowspec type: %u.\n", csxp->spec_type),
+                            -1);
+        };
+
+      ace_qos.sending_flowspec (sending_flow);
+
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_EVENT);
+
       break;
-      
+
     case RAPI_PATH_ERROR:
-      {
-	ACE_DEBUG ((LM_DEBUG,
-		    "PATH ERROR Event received\n"
-		    "Code=%d  Val=%d  Node= %s\n",
-		    errcode,
-		    errvalue,
-		    ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
-	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_ERROR);
-      }
+      ACE_DEBUG ((LM_DEBUG,
+                  "PATH ERROR Event received\n"
+                  "Code=%d  Val=%d  Node= %s\n",
+                  errcode,
+                  errvalue,
+                  ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_PATH_ERROR);
       break;
 
     case RAPI_RESV_ERROR:
-      {
-	ACE_DEBUG ((LM_DEBUG,
-		    "RESV ERROR Event received\n"
-		    "Code=%d  Val=%d  Node= %s\n",
-		    errcode,
-		    errvalue,
-		    ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
-	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_ERROR);
-      }
+      ACE_DEBUG ((LM_DEBUG,
+                  "RESV ERROR Event received\n"
+                  "Code=%d  Val=%d  Node= %s\n",
+                  errcode,
+                  errvalue,
+                  ACE_OS::inet_ntoa(((sockaddr_in *)errnode)->sin_addr)));
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_ERROR);
       break;
-      
+
     case RAPI_RESV_CONFIRM:
-      {
-	ACE_DEBUG ((LM_DEBUG,
-		    "RESV CONFIRM Event received\n"));
-	qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_CONFIRM);
-      }
+      ACE_DEBUG ((LM_DEBUG,
+                  "RESV CONFIRM Event received\n"));
+      qos_session->rsvp_event_type (ACE_QoS_Session::RSVP_RESV_CONFIRM);
       break;
-      
+
     default:
       ACE_DEBUG ((LM_DEBUG,
                   "Unknown RSVP Event Received\n"));
@@ -245,9 +213,6 @@ int
 ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
-  ACE_DEBUG ((LM_DEBUG,
-	      "In RAPI SESSION OPEN\n"));
-
   this->dest_addr_ = dest_addr;
   this->protocol_id_ = protocol_id;
 
@@ -330,34 +295,13 @@ ACE_RAPI_Session::qos (ACE_SOCK *socket,
 int
 ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 {
-  ACE_Flow_Spec *sending_flowspec = ace_qos.sending_flowspec ();
-  
-  if (sending_flowspec == 0)
-    {
-      int result = rapi_sender (this->session_id_,
-				0,
-				0,
-				NULL,
-				0,
-				NULL,
-				NULL,
-				25) ;
-      if (result != 0)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
-			   result),
-			  -1);
-      else
-	ACE_DEBUG ((LM_DEBUG,
-		    "rapi_sender () call succeeds with PATH Tear! \n"));
-      
-      return 0;
-    }
 
-  rapi_tspec_t *t_spec = this->init_tspec_simplified (*sending_flowspec);
+  ACE_Flow_Spec sending_flowspec = ace_qos.sending_flowspec ();
+  rapi_tspec_t *t_spec = this->init_tspec_simplified (sending_flowspec);
+
   if (t_spec == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) Error in translating from ACE Flow Spec to"
+                       "Error in translating from ACE Flow Spec to"
                        " RAPI TSpec\n"),
                       -1);
 
@@ -387,8 +331,8 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               t_spec->tspecbody_qosx.xtspec_p,
               t_spec->tspecbody_qosx.xtspec_m,
               t_spec->tspecbody_qosx.xtspec_M,
-              sending_flowspec->ttl ()));
-  
+              sending_flowspec.ttl ()));
+
   // This the source sender port.
   ACE_INET_Addr sender_addr (this->source_port ());
 
@@ -396,20 +340,16 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
               "Making the rapi_sender () call\n"));
 
   // Set the Sender TSpec for this QoS session.
-
-  int result = rapi_sender(this->session_id_,
-			   0,
-			   (sockaddr *) sender_addr.get_addr (),
-			   NULL,
-			   t_spec,
-			   NULL,
-			   NULL,
-			   sending_flowspec->ttl ()) ;
-  
-  if(result!= 0)
+  if(rapi_sender(this->session_id_,
+                 0,
+                 (sockaddr *) sender_addr.get_addr (),
+                 NULL,
+                 t_spec,
+                 NULL,
+                 NULL,
+                 sending_flowspec.ttl ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) rapi_sender error %d:\n\tPATH Generation can't be started\n",
-		       result),
+                       "rapi_sender error:\n\tPATH Generation can't be started\n"),
                       -1);
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -422,43 +362,12 @@ int
 ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 {
 
-  ACE_Flow_Spec *receiving_flowspec = ace_qos.receiving_flowspec ();
-  if (receiving_flowspec == 0)
-    {
-      if (rapi_reserve(this->session_id_,
-		       0,
-		       // Setting the RAPI_REQ_CONFIRM flag requests confirmation
-		       // of the resevation, by means of a confirmation upcall of
-		       // type RAPI_RESV_CONFIRM.
-		       //                   (sockaddr *)receiver_addr.get_addr (),
-		       0,
-		       RAPI_RSTYLE_WILDCARD,
-		       // This applies the flowspec to all the senders. Given this,
-		       // @@I am passing the filter_spec to be null, hoping this will work.
-		       NULL,
-		       NULL,
-		       0,
-		       NULL,
-		       // The filter spec is NULL. This should work since the RSTYLE is
-		       // WILDCARD.
-		       0,
-		       0) == -1)
-	ACE_ERROR_RETURN ((LM_ERROR,
-			   "(%N|%l)rapi_reserve () error:\n\tRESV Generation can't be started\n"),
-			  -1);
-      else
-	ACE_DEBUG ((LM_DEBUG,
-		    "rapi_reserve () for RESV Tear call succeeds \n"));
-      
-      return 0;
-    }
-  
-
-  rapi_flowspec_t *flow_spec = init_flowspec_simplified (*receiving_flowspec);
+  ACE_Flow_Spec receiving_flowspec = ace_qos.receiving_flowspec ();
+  rapi_flowspec_t *flow_spec = init_flowspec_simplified (receiving_flowspec);
 
   if (flow_spec == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "(%N|%l) Error in translating from ACE Flow Spec to"
+                       "Error in translating from ACE Flow Spec to"
                        " RAPI FlowSpec\n"),
                       -1);
 
@@ -556,7 +465,10 @@ ACE_RAPI_Session::init_tspec_simplified (const ACE_Flow_Spec &flow_spec)
   ctxp->xtspec_b  = flow_spec.token_bucket_size ();    // Token Bucket Depth (B)
   ctxp->xtspec_p  = flow_spec.peak_bandwidth ();       // Peak Data Rate (B/s)
   ctxp->xtspec_m  = flow_spec.minimum_policed_size (); // Minimum policed unit.
+
+
   ctxp->xtspec_M  = flow_spec.max_sdu_size();          // Maximum SDU size.
+
   t_spec->len = sizeof(rapi_hdr_t) + sizeof(qos_tspecx_t);
   t_spec->form = RAPI_TSPECTYPE_Simplified;
 
