@@ -1,5 +1,24 @@
-#include "ace/Service_Config.h"
+// $Id$
+
+// ============================================================================
+//
+// = LIBRARY
+//    ace
+// 
+// = FILENAME
+//    Hash_Map_Manager.cpp
+//
+// = AUTHOR
+//    Doug Schmidt 
+// 
+// ============================================================================
+
+#if !defined (ACE_HASH_MAP_MANAGER_C)
+#define ACE_HASH_MAP_MANAGER_C
+
 #include "ace/Hash_Map_Manager.h"
+#include "ace/Service_Config.h"
+#include "ace/Malloc.h"
 
 template <class EXT_ID, class INT_ID>
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (void)
@@ -448,3 +467,4 @@ ACE_Hash_Map_Iterator<EXT_ID, INT_ID, LOCK>::advance (void)
   return 0;
 }
 
+#endif /* ACE_HASH_MAP_MANAGER_C */

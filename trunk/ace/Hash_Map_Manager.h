@@ -17,8 +17,9 @@
 #if !defined (ACE_HASH_MAP_MANAGER_H)
 #define ACE_HASH_MAP_MANAGER_H
 
-#include "ace/SString.h"
-#include "ace/Malloc.h"
+#include "ace/OS.h"
+
+class ACE_Allocator;
 
 template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
