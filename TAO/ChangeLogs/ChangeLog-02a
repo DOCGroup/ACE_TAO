@@ -1,4 +1,9 @@
-Thu Mar  1 01:32:32 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
+Thu Mar  2 02:15:32 2001  Michael Kircher <Michael.Kircher@mchp.siemens.de>
+
+	* tao/Connection_Handler.cpp:
+	  Fixed a wrong "#elsif".
+
+Thu Mar  2 01:32:32 2001  Angelo Corsaro  <corsaro@cs.wustl.edu>
 
 	* tao/Connection_Handler.cpp (set_socket_option):
 	  Added ACE_UNUSED_ARG to avoid warning on those platform 

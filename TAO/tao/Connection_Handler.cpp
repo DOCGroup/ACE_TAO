@@ -96,7 +96,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
                             sizeof (int)) == -1
            && errno != ENOTSUP)
     return -1;
-#elseif
+#else
    ACE_UNUSED_ARGS(snd_size);
    ACE_UNUSED_ARGS(rcv_size);
 #endif /* !ACE_LACKS_SOCKET_BUFSIZ */
