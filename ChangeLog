@@ -1,3 +1,10 @@
+Thu Mar 17 11:02:15 2005  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* configure.ac:
+
+	  Add no-define to AC_INIT_AUTOMAKE so that PLATFORM and VERSION
+	  are not defined in config.h.
+
 Thu Mar 17 19:45:10 2005  Boris Kolpackov  <boris@kolpackov.net>
 
 	* protocols/ace/RMCast/Acknowledge.cpp:
