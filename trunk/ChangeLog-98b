@@ -1,18 +1,23 @@
+Wed Jun 24 21:37:22 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Message_Queue.cpp (refresh_queue): fixed syntax
+          error: extraneous ;.
+
 Wed Jun 24 19:52:30 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
         * ace/IPC_SAP.cpp (enable,disable): Fixed #define nesting.
 
 Wed Jun 24 15:36:18 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
-	* examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
-	(Peer_Router_Context): For some reason, MSVC can't grop the
- 	temporary objects.  Therefore, I changed the ACE_INET_Addr object
- 	in the constructor to a local variable.
+        * examples/ASX/Event_Server/Event_Server/Peer_Router.cpp
+        (Peer_Router_Context): For some reason, MSVC can't grop the
+        temporary objects.  Therefore, I changed the ACE_INET_Addr object
+        in the constructor to a local variable.
 
 Wed Jun 24 17:10:06 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
-	* ace/Timeprobe: Removed ACE_COMPILE_TIMEPROBE.  ACE library will
- 	  always contain ACE_Timeprobe code.
+        * ace/Timeprobe: Removed ACE_COMPILE_TIMEPROBE.  ACE library will
+          always contain ACE_Timeprobe code.
 
 Wed Jun 24 16:20:02 1998  James CE Johnson  <jcej@lads.com>
 
