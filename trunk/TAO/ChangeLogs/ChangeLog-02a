@@ -1,3 +1,11 @@
+Fri Mar  1 11:12:30 2002  Ossama Othman  <ossama@uci.edu>
+
+	* orbsvcs/tests/Security/Callback/Makefile (TAO_IDLFLAGS):
+
+	  Removed the "-GC" flag.  This test does not require AMI
+	  callbacks.  Fixes link-time errors.  Thanks to Priyanka for
+	  reminding me that I needed a ChangeLog entry.  :-)
+
 Fri Mar  1 10:41:58 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/GIOP_Message_Base.cpp:
