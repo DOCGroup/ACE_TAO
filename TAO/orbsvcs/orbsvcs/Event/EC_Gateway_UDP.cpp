@@ -1147,7 +1147,7 @@ TAO_ECG_Mcast_EH::update_consumer (
       const RtecEventComm::EventHeader& header =
         sub.dependencies[i].event.header;
 
-      if (0 <= header.type && header.type <= ACE_ES_EVENT_UNDEFINED)
+      if (0 <= header.type && header.type < ACE_ES_EVENT_UNDEFINED)
         {
           // ACE_DEBUG ((LM_DEBUG,
           //          "ECG_Mcast_EH (%t) type = %d skipped\n",
