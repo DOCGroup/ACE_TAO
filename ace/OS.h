@@ -2171,7 +2171,7 @@ protected:
 #endif /* SCO */
 
 #if defined ACE_HAS_BYTESEX_H
-# include <bytesex.h>
+# include /**/ <bytesex.h>
 #endif /* ACE_HAS_BYTESEX_H */
 #include "ace/Basic_Types.h"
 
