@@ -89,7 +89,6 @@ public:
 
 private:
   static ACE_Thread_Mutex *lock_;
-
 };
 
 ACE_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
@@ -138,7 +137,6 @@ ACE_Log_Msg_Manager::close (void)
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;
 }
-
 #endif /* ! VXWORKS */
 
 /* static */
