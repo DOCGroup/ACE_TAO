@@ -55,7 +55,7 @@ TAO_NAMESPACE  POA_IR
   class _TAO_ComponentRepository_ThruPOA_Proxy_Impl;
   class _TAO_ComponentRepository_Strategized_Proxy_Broker;
   
-  class ComponentRepository : public virtual POA_CORBA_Repository
+  class  ComponentRepository : public virtual POA_CORBA_Repository
   {
   protected:
     ComponentRepository (void);
@@ -374,7 +374,7 @@ TAO_NAMESPACE  POA_IR
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_ComponentRepository_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentRepository_Proxy_Broker
+  class  _TAO_ComponentRepository_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentRepository_Proxy_Broker
   {
   public: 
     _TAO_ComponentRepository_Strategized_Proxy_Broker (void);
@@ -422,7 +422,7 @@ TAO_NAMESPACE  POA_IR
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_ComponentRepository_ThruPOA_Proxy_Impl : 
+  class  _TAO_ComponentRepository_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_ComponentRepository_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_Repository_ThruPOA_Proxy_Impl
@@ -474,7 +474,7 @@ TAO_NAMESPACE  POA_IR
   class _TAO_ProvidesDef_ThruPOA_Proxy_Impl;
   class _TAO_ProvidesDef_Strategized_Proxy_Broker;
   
-  class ProvidesDef : public virtual POA_CORBA_Contained
+  class  ProvidesDef : public virtual POA_CORBA_Contained
   {
   protected:
     ProvidesDef (void);
@@ -655,7 +655,7 @@ TAO_NAMESPACE  POA_IR
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_ProvidesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ProvidesDef_Proxy_Broker
+  class  _TAO_ProvidesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ProvidesDef_Proxy_Broker
   {
   public: 
     _TAO_ProvidesDef_Strategized_Proxy_Broker (void);
@@ -703,7 +703,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_ProvidesDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_ProvidesDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_ProvidesDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
@@ -736,7 +736,7 @@ private:
   class _TAO_UsesDef_ThruPOA_Proxy_Impl;
   class _TAO_UsesDef_Strategized_Proxy_Broker;
   
-  class UsesDef : public virtual POA_CORBA_Contained
+  class  UsesDef : public virtual POA_CORBA_Contained
   {
   protected:
     UsesDef (void);
@@ -932,7 +932,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_UsesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_UsesDef_Proxy_Broker
+  class  _TAO_UsesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_UsesDef_Proxy_Broker
   {
   public: 
     _TAO_UsesDef_Strategized_Proxy_Broker (void);
@@ -980,7 +980,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_UsesDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_UsesDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_UsesDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
@@ -1021,7 +1021,7 @@ private:
   class _TAO_EventDef_ThruPOA_Proxy_Impl;
   class _TAO_EventDef_Strategized_Proxy_Broker;
   
-  class EventDef : public virtual POA_CORBA_Contained
+  class  EventDef : public virtual POA_CORBA_Contained
   {
   protected:
     EventDef (void);
@@ -1218,7 +1218,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_EventDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EventDef_Proxy_Broker
+  class  _TAO_EventDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EventDef_Proxy_Broker
   {
   public: 
     _TAO_EventDef_Strategized_Proxy_Broker (void);
@@ -1266,7 +1266,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_EventDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_EventDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_EventDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
@@ -1308,7 +1308,7 @@ private:
   class _TAO_EmitsDef_ThruPOA_Proxy_Impl;
   class _TAO_EmitsDef_Strategized_Proxy_Broker;
   
-  class EmitsDef : public virtual EventDef
+  class  EmitsDef : public virtual EventDef
   {
   protected:
     EmitsDef (void);
@@ -1490,7 +1490,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_EmitsDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EmitsDef_Proxy_Broker
+  class  _TAO_EmitsDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_EmitsDef_Proxy_Broker
   {
   public: 
     _TAO_EmitsDef_Strategized_Proxy_Broker (void);
@@ -1538,7 +1538,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_EmitsDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_EmitsDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_EmitsDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
@@ -1563,7 +1563,7 @@ private:
   class _TAO_PublishesDef_ThruPOA_Proxy_Impl;
   class _TAO_PublishesDef_Strategized_Proxy_Broker;
   
-  class PublishesDef : public virtual EventDef
+  class  PublishesDef : public virtual EventDef
   {
   protected:
     PublishesDef (void);
@@ -1745,7 +1745,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_PublishesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PublishesDef_Proxy_Broker
+  class  _TAO_PublishesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PublishesDef_Proxy_Broker
   {
   public: 
     _TAO_PublishesDef_Strategized_Proxy_Broker (void);
@@ -1793,7 +1793,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_PublishesDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_PublishesDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_PublishesDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
@@ -1818,7 +1818,7 @@ private:
   class _TAO_ConsumesDef_ThruPOA_Proxy_Impl;
   class _TAO_ConsumesDef_Strategized_Proxy_Broker;
   
-  class ConsumesDef : public virtual EventDef
+  class  ConsumesDef : public virtual EventDef
   {
   protected:
     ConsumesDef (void);
@@ -2000,7 +2000,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_ConsumesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ConsumesDef_Proxy_Broker
+  class  _TAO_ConsumesDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ConsumesDef_Proxy_Broker
   {
   public: 
     _TAO_ConsumesDef_Strategized_Proxy_Broker (void);
@@ -2048,7 +2048,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_ConsumesDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_ConsumesDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_ConsumesDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::POA_IR::_TAO_EventDef_ThruPOA_Proxy_Impl
@@ -2073,7 +2073,7 @@ private:
   class _TAO_ComponentDef_ThruPOA_Proxy_Impl;
   class _TAO_ComponentDef_Strategized_Proxy_Broker;
   
-  class ComponentDef : public virtual POA_CORBA_InterfaceDef
+  class  ComponentDef : public virtual POA_CORBA_InterfaceDef
   {
   protected:
     ComponentDef (void);
@@ -2663,7 +2663,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_ComponentDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentDef_Proxy_Broker
+  class  _TAO_ComponentDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_ComponentDef_Proxy_Broker
   {
   public: 
     _TAO_ComponentDef_Strategized_Proxy_Broker (void);
@@ -2711,7 +2711,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_ComponentDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_ComponentDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_ComponentDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl
@@ -2870,7 +2870,7 @@ private:
   class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl;
   class _TAO_PrimaryKeyDef_Strategized_Proxy_Broker;
   
-  class PrimaryKeyDef : public virtual POA_CORBA_Contained
+  class  PrimaryKeyDef : public virtual POA_CORBA_Contained
   {
   protected:
     PrimaryKeyDef (void);
@@ -3067,7 +3067,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_PrimaryKeyDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Broker
+  class  _TAO_PrimaryKeyDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Broker
   {
   public: 
     _TAO_PrimaryKeyDef_Strategized_Proxy_Broker (void);
@@ -3115,7 +3115,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_PrimaryKeyDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_PrimaryKeyDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_Contained_ThruPOA_Proxy_Impl
@@ -3157,7 +3157,7 @@ private:
   class _TAO_FactoryDef_ThruPOA_Proxy_Impl;
   class _TAO_FactoryDef_Strategized_Proxy_Broker;
   
-  class FactoryDef : public virtual POA_CORBA_OperationDef
+  class  FactoryDef : public virtual POA_CORBA_OperationDef
   {
   protected:
     FactoryDef (void);
@@ -3411,7 +3411,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_FactoryDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FactoryDef_Proxy_Broker
+  class  _TAO_FactoryDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FactoryDef_Proxy_Broker
   {
   public: 
     _TAO_FactoryDef_Strategized_Proxy_Broker (void);
@@ -3459,7 +3459,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_FactoryDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_FactoryDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_FactoryDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl
@@ -3484,7 +3484,7 @@ private:
   class _TAO_FinderDef_ThruPOA_Proxy_Impl;
   class _TAO_FinderDef_Strategized_Proxy_Broker;
   
-  class FinderDef : public virtual POA_CORBA_OperationDef
+  class  FinderDef : public virtual POA_CORBA_OperationDef
   {
   protected:
     FinderDef (void);
@@ -3738,7 +3738,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_FinderDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FinderDef_Proxy_Broker
+  class  _TAO_FinderDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_FinderDef_Proxy_Broker
   {
   public: 
     _TAO_FinderDef_Strategized_Proxy_Broker (void);
@@ -3786,7 +3786,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_FinderDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_FinderDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_FinderDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_OperationDef_ThruPOA_Proxy_Impl
@@ -3811,7 +3811,7 @@ private:
   class _TAO_HomeDef_ThruPOA_Proxy_Impl;
   class _TAO_HomeDef_Strategized_Proxy_Broker;
   
-  class HomeDef : public virtual POA_CORBA_InterfaceDef
+  class  HomeDef : public virtual POA_CORBA_InterfaceDef
   {
   protected:
     HomeDef (void);
@@ -4318,7 +4318,7 @@ private:
   //               Strategized Proxy Broker Declaration 
   //
   
-  class _TAO_HomeDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_HomeDef_Proxy_Broker
+  class  _TAO_HomeDef_Strategized_Proxy_Broker : public virtual ::IR::_TAO_HomeDef_Proxy_Broker
   {
   public: 
     _TAO_HomeDef_Strategized_Proxy_Broker (void);
@@ -4366,7 +4366,7 @@ private:
   //                    ThruPOA  Impl. Declaration
   //
   
-  class _TAO_HomeDef_ThruPOA_Proxy_Impl : 
+  class  _TAO_HomeDef_ThruPOA_Proxy_Impl : 
     public virtual ::IR::_TAO_HomeDef_Proxy_Impl,
     public virtual TAO_ThruPOA_Object_Proxy_Impl,
     public virtual ::_TAO_CORBA_InterfaceDef_ThruPOA_Proxy_Impl

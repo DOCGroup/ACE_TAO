@@ -39,7 +39,7 @@ TAO_NAMESPACE_CLOSE // module CORBA
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class POA_CORBA_FixedDef_tie : public POA_CORBA_FixedDef
+class  POA_CORBA_FixedDef_tie : public POA_CORBA_FixedDef
 {
 public:
   POA_CORBA_FixedDef_tie (T &t);
@@ -140,7 +140,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class POA_CORBA_ValueMemberDef_tie : public POA_CORBA_ValueMemberDef
+class  POA_CORBA_ValueMemberDef_tie : public POA_CORBA_ValueMemberDef
 {
 public:
   POA_CORBA_ValueMemberDef_tie (T &t);
@@ -335,7 +335,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class POA_CORBA_ValueDef_tie : public POA_CORBA_ValueDef
+class  POA_CORBA_ValueDef_tie : public POA_CORBA_ValueDef
 {
 public:
   POA_CORBA_ValueDef_tie (T &t);
@@ -878,7 +878,7 @@ public:
 
 // TIE class: Refer to CORBA v2.2, Section 20.34.4
 template <class T>
-class POA_CORBA_ValueBoxDef_tie : public POA_CORBA_ValueBoxDef
+class  POA_CORBA_ValueBoxDef_tie : public POA_CORBA_ValueBoxDef
 {
 public:
   POA_CORBA_ValueBoxDef_tie (T &t);

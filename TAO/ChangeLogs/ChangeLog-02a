@@ -1,3 +1,41 @@
+Fri Jun 01 23:15:05 2001  Ossama Othman  <ossama@uci.edu>
+
+	* tao/IFR_Client/diffs/IFR_Base.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_Basic.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_Components.pidl.diff:
+	* tao/IFR_Client/diffs/IFR_Extended.pidl.diff:
+
+	  Regenerated these diffs so that they are actually correct.
+	  They were all reversed, and basically unusable.
+
+	* orbsvcs/IFR_Service/IFR_BaseS.cpp:
+	* orbsvcs/IFR_Service/IFR_BaseS.h:
+	* orbsvcs/IFR_Service/IFR_BaseS.i:
+	* orbsvcs/IFR_Service/IFR_BaseS_T.cpp:
+	* orbsvcs/IFR_Service/IFR_BaseS_T.h:
+	* orbsvcs/IFR_Service/IFR_BaseS_T.i:
+	* orbsvcs/IFR_Service/IFR_BasicS.cpp:
+	* orbsvcs/IFR_Service/IFR_BasicS.h:
+	* orbsvcs/IFR_Service/IFR_BasicS.i:
+	* orbsvcs/IFR_Service/IFR_BasicS_T.cpp:
+	* orbsvcs/IFR_Service/IFR_BasicS_T.h:
+	* orbsvcs/IFR_Service/IFR_BasicS_T.i:
+	* orbsvcs/IFR_Service/IFR_ComponentsS.cpp:
+	* orbsvcs/IFR_Service/IFR_ComponentsS.h:
+	* orbsvcs/IFR_Service/IFR_ComponentsS.i:
+	* orbsvcs/IFR_Service/IFR_ComponentsS_T.cpp:
+	* orbsvcs/IFR_Service/IFR_ComponentsS_T.h:
+	* orbsvcs/IFR_Service/IFR_ComponentsS_T.i:
+	* orbsvcs/IFR_Service/IFR_ExtendedS.cpp:
+	* orbsvcs/IFR_Service/IFR_ExtendedS.h:
+	* orbsvcs/IFR_Service/IFR_ExtendedS.i:
+	* orbsvcs/IFR_Service/IFR_ExtendedS_T.cpp:
+	* orbsvcs/IFR_Service/IFR_ExtendedS_T.h:
+	* orbsvcs/IFR_Service/IFR_ExtendedS_T.i:
+
+	  Regenerated these files to pull in an "unused argument" warning
+	  fix.
+
 Fri Jun 1 20:49:50 2001  Ossama Othman  <ossama@uci.edu>
 
 	* docs/ORBEndpoint.html:
