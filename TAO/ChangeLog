@@ -1,3 +1,11 @@
+Tue Mar 22 15:42:00 2005  Gary Maxey  <gary.maxey@hp.com>
+
+        * orbsvcs/orbsvcs/Shutdown_Utilities.cpp
+
+          For Tandem NSK platform do not emit warning for failing
+          to register handler for signal 10.  Signal 10 does not
+          exist on that platform.
+
 Tue Mar 22 10:00:32 2005  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/orbsvcs/RTCORBAEvent.mpc:
