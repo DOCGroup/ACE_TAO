@@ -72,7 +72,7 @@ public:
   virtual ~ACE_Event_Handler (void);
   // Destructor is virtual to enable proper cleanup.
 
-  virtual ACE_HANDLE  get_handle (void) const;
+  virtual ACE_HANDLE get_handle (void) const;
   // Get the I/O handle.
   virtual void set_handle (ACE_HANDLE);
   // Set the I/O handle.
