@@ -39,7 +39,7 @@
 
 #define DEF_AGENT_PORT (161)
 
-class ACE_Export sagent : public ACE_Event_Handler, Snmp
+class ASNMP_Export sagent : public ACE_Event_Handler, Snmp
   // = TITLE
   //      Concrete class sagent defines the session and interface to
   //      communicate with another SNMP Version 1 manager

@@ -29,7 +29,7 @@
 #include "asnmp/wpdu.h"         // cmu adapter class
 #include "ace/SOCK_Dgram.h"
 
-class ACE_Export transaction : public ACE_Event_Handler
+class ASNMP_Export transaction : public ACE_Event_Handler
   // = TITLE
   //      Used to manage the details of a particular transaction betwen
   //       two SNMP agents. Uses SnmpTarget class to implement retry/timeout

@@ -52,9 +52,10 @@
 #include "asnmp/snmperrs.h"           // error macros and strings
 #include "asnmp/address.h"            // snmp++ address class defs
 #include "asnmp/transaction_result.h"
+#include "asnmp/ASNMP_Export.h"
 
 class Snmp;
-class ACE_Export Snmp_Result
+class ASNMP_Export Snmp_Result
 {
   public:
     virtual ~Snmp_Result();
@@ -62,7 +63,7 @@ class ACE_Export Snmp_Result
 };
 
 // Snmp session class - supports Version 1 operations in blocking mode
-class ACE_Export Snmp : public transaction_result
+class ASNMP_Export Snmp : public transaction_result
   // = TITLE
   //      Concrete class Snmp defined the session and interface to
   //      communicate with another SNMP Version 1 agent

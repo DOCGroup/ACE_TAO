@@ -68,7 +68,7 @@ enum ASNMP_Defs {
 
 // Abstract class used to provide a virtual interface into Targets
 //
-class ACE_Export SnmpTarget
+class ASNMP_Export SnmpTarget
   // = TITLE
   //      Abstract Base class SnmpTarget is used to Collect all transmission
   //      details to communicate with an SNMP
@@ -171,7 +171,7 @@ class ACE_Export SnmpTarget
 //----[  UdpTarget class ]----------------------------------------------
 // UDP/IP transport using "community string" based agents  (targets)
 //
-class ACE_Export UdpTarget: public SnmpTarget
+class ASNMP_Export UdpTarget: public SnmpTarget
   // = TITLE
   //      Concrete class UdpTarget contains all Details for communicating
   //      with a SNMPv1 agent over UDP/IPv4 transport

@@ -39,7 +39,7 @@
 //------------------------------------------------------------------------
 #include "asnmp/smival.h"
 
-class ACE_Export OctetStr: public  SnmpSyntax
+class ASNMP_Export OctetStr: public  SnmpSyntax
   // = TITLE
   //      Implement RFC1155 Octet SMI data object
 
