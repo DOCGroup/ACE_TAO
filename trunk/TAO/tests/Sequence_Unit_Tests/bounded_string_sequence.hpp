@@ -1,10 +1,9 @@
-#ifndef guard_unbounded_value_sequence_hpp
-#define guard_unbounded_value_sequence_hpp
+#ifndef guard_bounded_string_sequence_hpp
+#define guard_bounded_string_sequence_hpp
 /**
  * @file
  *
- * @brief Implement bounded sequences for types with value-like
- * semantics.
+ * @brief Implement bounded sequences for strings.
  *
  * $Id$
  *
@@ -12,29 +11,31 @@
  */
 
 #include "allocation_traits.hpp"
-#include "value_traits.hpp"
+#include "string_traits.hpp"
 #include "generic_sequence.hpp"
+#include "string_sequence_element.hpp"
 
 namespace TAO
 {
 
-template<class T, CORBA::ULong MAX>
-class bounded_value_sequence
+template<CORBA::ULong MAX>
+class bounded_string_sequence
 {
 public:
-  // static CORBA::ULong const MAXIMUM = MAX;
+  typedef char * value_type;
+  typedef char const * const_value_type;
 
-  typedef T value_type;
-  typedef T const const_value_type;
+  typedef details::string_traits<char,true> element_traits;
+  typedef details::bounded_reference_allocation_traits<value_type,element_traits,MAX,true> allocation_traits;
 
-  typedef details::bounded_allocation_traits<value_type,MAX,true> allocation_traits;
-  typedef details::value_traits<value_type,true> element_traits;
-  typedef details::generic_sequence<value_type, allocation_traits, element_traits> implementation_type;
+  typedef details::string_sequence_element<element_traits> element_type;
 
-  inline bounded_value_sequence()
+  typedef details::generic_sequence<char*, allocation_traits, element_traits> implementation_type;
+
+  inline bounded_string_sequence()
     : impl_()
   {}
-  inline bounded_value_sequence(
+  inline bounded_string_sequence(
       CORBA::ULong length,
       value_type * data,
       CORBA::Boolean release = false)
@@ -50,15 +51,19 @@ public:
   inline CORBA::ULong length() const {
     return impl_.length();
   }
+
   inline void length(CORBA::ULong length) {
     implementation_type::range::check_length(length, MAX);
     impl_.length(length);
   }
-  inline value_type const & operator[](CORBA::ULong i) const {
+  inline const_value_type operator[](CORBA::ULong i) const {
     return impl_[i];
   }
-  inline value_type & operator[](CORBA::ULong i) {
-    return impl_[i];
+  inline element_type operator[](CORBA::ULong i) {
+    return element_type(impl_[i], release());
+  }
+  inline const_value_type const * get_buffer() const {
+    return impl_.get_buffer();
   }
   inline void replace(
       CORBA::ULong length,
@@ -66,16 +71,15 @@ public:
       CORBA::Boolean release = false) {
     impl_.replace(MAX, length, data, release);
   }
-  inline value_type const * get_buffer() const {
-    return impl_.get_buffer();
-  }
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(bounded_value_sequence & rhs) throw() {
+  inline void swap(bounded_string_sequence & rhs) throw() {
     impl_.swap(rhs.impl_);
   }
-  static value_type * allocbuf(CORBA::ULong maximum) {
+
+  static value_type * allocbuf(CORBA::ULong maximum)
+  {
     return implementation_type::allocbuf(maximum);
   }
   static value_type * allocbuf() {
@@ -90,6 +94,7 @@ private:
   implementation_type impl_;
 };
 
+
 } // namespace TAO
 
-#endif // guard_unbounded_string_sequence_hpp
+#endif // guard_bounded_string_sequence_hpp

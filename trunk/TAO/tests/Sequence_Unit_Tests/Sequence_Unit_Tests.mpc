@@ -19,6 +19,12 @@ project(*Unbounded_String) : taoexe {
   }
 }
 
+project(*Bounded_String) : taoexe {
+  Source_Files {
+    Bounded_String.cpp
+  }
+}
+
 project(*String_Sequence_Element): taoexe, boost_unit_test {
   exename = string_sequence_element_ut
   Source_Files {
@@ -33,12 +39,12 @@ project(*Unbounded_String_Sequence): taoexe, boost_unit_test {
   }
 }
 
-//project(*String_Sequence_Element): taoexe, boost_unit_test {
-//  exename = string_sequence_element_ut
-//  Source_Files {
-//    string_sequence_element_ut.cpp
-//  }
-//}
+project(*Bounded_String_Sequence): taoexe, boost_unit_test {
+  exename = bounded_string_sequence_ut
+  Source_Files {
+    bounded_string_sequence_ut.cpp
+  }
+}
 
 project(*Testing_Allocation_Traits): taoexe, boost_unit_test {
   exename = testing_allocation_traits_ut

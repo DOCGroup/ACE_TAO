@@ -113,6 +113,11 @@ struct bounded_reference_allocation_traits
 {
   typedef bounded_allocation_traits<value_type,MAX,dummy> base_allocation_traits;
 
+  inline static value_type * default_buffer_allocation()
+  {
+    return allocbuf(MAX);
+  }
+
   inline static value_type * allocbuf(CORBA::ULong /* maximum */)
   {
     value_type * buffer = base_allocation_traits::allocbuf(MAX);

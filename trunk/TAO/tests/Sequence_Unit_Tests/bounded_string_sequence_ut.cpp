@@ -1,7 +1,7 @@
 /**
  * @file
  *
- * @brief Unit test for unbounded string sequences.
+ * @brief Unit test for bounded string sequences.
  *
  * $Id$
  *
@@ -10,12 +10,13 @@
 #include "testing_string_traits.hpp"
 #include "string_traits.hpp"
 #include "testing_allocation_traits.hpp"
-#include "allocation_traits.hpp"
 #include "testing_range_checking.hpp"
 
-#include "unbounded_string_sequence.hpp"
+#include "bounded_string_sequence.hpp"
 
 #include "string_sequence_tester.hpp"
+
+#include "ace/OS_NS_string.h"
 
 #include <boost/test/unit_test.hpp>
 #include <boost/shared_ptr.hpp>
@@ -26,63 +27,18 @@
 using namespace boost::unit_test_framework;
 using namespace TAO;
 
+CORBA::ULong const MAXIMUM = 32;
+
 struct Tester
 {
   typedef char char_type;
   typedef char * value_type;
   typedef char const * const_value_type;
 
-  typedef TAO::unbounded_string_sequence tested_sequence;
+  typedef TAO::bounded_string_sequence<MAXIMUM> tested_sequence;
   typedef tested_sequence::element_traits tested_element_traits;
   typedef tested_sequence::allocation_traits tested_allocation_traits;
   typedef TAO::details::range_checking<value_type,true> range;
-
-  void test_ulong_constructor()
-  {
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls i(tested_element_traits::default_initializer_calls);
-    {
-      tested_sequence x(16);
-
-      BOOST_CHECK_EQUAL(CORBA::ULong(16), x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(0), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
-    }
-    BOOST_CHECK_MESSAGE(a.expect(1), a);
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
-    BOOST_CHECK_MESSAGE(i.expect(0), i);
-  }
-
-  void test_copy_constructor_from_ulong()
-  {
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls i(tested_element_traits::default_initializer_calls);
-    expected_calls d(tested_element_traits::duplicate_calls);
-    {
-      tested_sequence x(16);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-
-      x.length(8);
-
-      BOOST_CHECK_EQUAL(CORBA::ULong(16), x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
-
-      BOOST_CHECK_MESSAGE(i.expect(8), i);
-
-      tested_sequence y(x);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_EQUAL(CORBA::ULong(16), y.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), y.length());
-      BOOST_CHECK_EQUAL(true, y.release());
-
-      BOOST_CHECK_MESSAGE(d.expect(8), d);
-    }
-    BOOST_CHECK_MESSAGE(f.expect(2), f);
-    BOOST_CHECK_MESSAGE(i.expect(0), i);
-  }
 
   void test_set_length_less_than_maximum()
   {
@@ -90,134 +46,29 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls i(tested_element_traits::default_initializer_calls);
     {
-      tested_sequence x(16);
+      tested_sequence x;
 
       x.length(8);
-      BOOST_CHECK_EQUAL(CORBA::ULong(16), x.maximum());
+      BOOST_CHECK_MESSAGE(a.expect(0), a);
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), x.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(8), x.length());
       BOOST_CHECK_EQUAL(true, x.release());
 
       BOOST_CHECK_MESSAGE(i.expect(8), i);
     }
-    BOOST_CHECK_MESSAGE(a.expect(1), a);
     BOOST_CHECK_MESSAGE(f.expect(1), f);
   }
 
   void test_set_length_more_than_maximum()
   {
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls i(tested_element_traits::default_initializer_calls);
-    {
-      tested_sequence x(16);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
+    tested_sequence x;
 
-      x.length(32);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
-
-      BOOST_CHECK_MESSAGE(i.expect(32), i);
-
-      BOOST_CHECK_EQUAL(CORBA::ULong(32), x.maximum());
-      BOOST_CHECK_EQUAL(CORBA::ULong(32), x.length());
-      BOOST_CHECK_EQUAL(true, x.release());
-    }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
-  }
-
-  void test_exception_in_ulong_constructor()
-  {
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    {
-      tested_allocation_traits::allocbuf_calls.failure_countdown(1);
-      BOOST_CHECK_THROW(tested_sequence x(16), testing_exception);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-    }
-    BOOST_CHECK_MESSAGE(f.expect(0), f);
-  }
-
-  void test_exception_in_length()
-  {
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls d(tested_element_traits::duplicate_calls);
-    expected_calls r(tested_element_traits::release_calls);
-    {
-      tested_sequence y; y.length(4);
-      for(CORBA::ULong i = 0; i != 4; ++i)
-      {
-        y[i] = tested_element_traits::duplicate("check");
-      }
-
-      a.reset();
-      d.reset();
-      r.reset();
-      f.reset();
-      tested_allocation_traits::allocbuf_calls.failure_countdown(1);
-      BOOST_CHECK_THROW(y.length(8), testing_exception);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(0), f);
-      BOOST_CHECK_MESSAGE(d.expect(0), d);
-      BOOST_CHECK_MESSAGE(r.expect(0), r);
-
-      BOOST_CHECK_EQUAL(CORBA::ULong(4), y.length());
-      for(CORBA::ULong i = 0; i != 4; ++i)
-      {
-        BOOST_CHECK_MESSAGE(
-            ACE_OS::strcmp(
-                const_cast<const_value_type>("check"),
-                y[i]) == 0,
-            "Mismatch in element " << i
-            << ", expected=" << const_cast<const_value_type>("check")
-            << ", got=" << y[i]);
-      }
-    }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
-  }
-
-  void test_duplicate_exception_in_length()
-  {
-    expected_calls f(tested_allocation_traits::freebuf_calls);
-    expected_calls a(tested_allocation_traits::allocbuf_calls);
-    expected_calls d(tested_element_traits::duplicate_calls);
-    expected_calls r(tested_element_traits::release_calls);
-    {
-      tested_sequence y; y.length(4);
-      for(CORBA::ULong i = 0; i != 4; ++i)
-      {
-        y[i] = tested_element_traits::duplicate("check");
-      }
-
-      a.reset();
-      d.reset();
-      r.reset();
-      f.reset();
-      tested_element_traits::duplicate_calls.failure_countdown(3);
-      BOOST_CHECK_THROW(y.length(8), testing_exception);
-      BOOST_CHECK_MESSAGE(a.expect(1), a);
-      BOOST_CHECK_MESSAGE(f.expect(1), f);
-      BOOST_CHECK_MESSAGE(d.expect(3), d);
-      BOOST_CHECK_MESSAGE(r.expect(8), r);
-
-      BOOST_CHECK_EQUAL(CORBA::ULong(4), y.length());
-      for(CORBA::ULong i = 0; i != 4; ++i)
-      {
-        BOOST_CHECK_MESSAGE(
-            ACE_OS::strcmp(
-                const_cast<const_value_type>("check"),
-                y[i]) == 0,
-            "Mismatch in element " << i
-            << ", expected=" << const_cast<const_value_type>("check")
-            << ", got=" << y[i]);
-      }
-    }
-    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    BOOST_CHECK_THROW(x.length(64), std::runtime_error);
   }
 
   value_type * alloc_and_init_buffer()
   {
-    value_type * buf = tested_sequence::allocbuf(8);
+    value_type * buf = tested_sequence::allocbuf();
     buf[0] = tested_element_traits::duplicate("1");
     buf[1] = tested_element_traits::duplicate("4");
     buf[2] = tested_element_traits::duplicate("9");
@@ -241,8 +92,8 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer);
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      tested_sequence a(4, buffer);
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
       BOOST_CHECK_EQUAL(false, a.release());
@@ -251,7 +102,7 @@ struct Tester
     BOOST_CHECK_MESSAGE(a.expect(0), a);
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     tested_sequence::freebuf(buffer);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void test_buffer_constructor_false()
@@ -261,8 +112,8 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer, false);
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      tested_sequence a(4, buffer, false);
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
       BOOST_CHECK_EQUAL(false, a.release());
@@ -271,7 +122,7 @@ struct Tester
     BOOST_CHECK_MESSAGE(a.expect(0), a);
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     tested_sequence::freebuf(buffer);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void test_buffer_constructor_true()
@@ -281,8 +132,8 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer, true);
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      tested_sequence a(4, buffer, true);
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
       BOOST_CHECK_EQUAL(true, a.release());
@@ -290,7 +141,7 @@ struct Tester
     }
     BOOST_CHECK_MESSAGE(a.expect(0), a);
     BOOST_CHECK_MESSAGE(f.expect(1), f);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void test_replace_default()
@@ -302,12 +153,12 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
     {
       tested_sequence a;
-      a.replace(8, 4, buffer);
+      a.replace(4, buffer);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
       BOOST_CHECK_MESSAGE(f.expect(1), f);
-      BOOST_CHECK_MESSAGE(r.expect(0), 0);
+      BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
       BOOST_CHECK_EQUAL(false, a.release());
@@ -316,7 +167,7 @@ struct Tester
     BOOST_CHECK_MESSAGE(c.expect(0), c);
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     tested_sequence::freebuf(buffer);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void test_replace_false()
@@ -328,12 +179,12 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
     {
       tested_sequence a;
-      a.replace(8, 4, buffer, false);
+      a.replace(4, buffer, false);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
       BOOST_CHECK_MESSAGE(f.expect(1), f);
-      BOOST_CHECK_MESSAGE(r.expect(0), 0);
+      BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
       BOOST_CHECK_EQUAL(false, a.release());
@@ -342,7 +193,7 @@ struct Tester
     BOOST_CHECK_MESSAGE(c.expect(0), c);
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     tested_sequence::freebuf(buffer);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void test_replace_true()
@@ -354,12 +205,12 @@ struct Tester
     expected_calls r(tested_element_traits::release_calls);
     {
       tested_sequence a;
-      a.replace(8, 4, buffer, false);
+      a.replace(4, buffer, false);
       BOOST_CHECK_MESSAGE(c.expect(0), c);
       BOOST_CHECK_MESSAGE(f.expect(1), f);
-      BOOST_CHECK_MESSAGE(r.expect(0), r);
+      BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
 
-      BOOST_CHECK_EQUAL(CORBA::ULong(8), a.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), a.maximum());
       BOOST_CHECK_EQUAL(CORBA::ULong(4), a.length());
       BOOST_CHECK_EQUAL(buffer, a.get_buffer());
       BOOST_CHECK_EQUAL(false, a.release());
@@ -368,27 +219,27 @@ struct Tester
     BOOST_CHECK_MESSAGE(c.expect(0), c);
     BOOST_CHECK_MESSAGE(f.expect(0), f);
     tested_sequence::freebuf(buffer);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void test_get_buffer_default()
   {
     value_type * buffer = alloc_and_init_buffer();
-    tested_sequence a(8, 4, buffer, true);
+    tested_sequence a(4, buffer, true);
     BOOST_CHECK_EQUAL(a.get_buffer(), buffer);
   }
 
   void test_get_buffer_false()
   {
     value_type * buffer = alloc_and_init_buffer();
-    tested_sequence a(8, 4, buffer, true);
+    tested_sequence a(4, buffer, true);
     BOOST_CHECK_EQUAL(a.get_buffer(), buffer);
   }
 
   void test_get_buffer_true_with_release_false()
   {
     value_type * buffer = alloc_and_init_buffer();
-    tested_sequence a(8, 4, buffer, false);
+    tested_sequence a(4, buffer, false);
     BOOST_CHECK_EQUAL(static_cast<value_type*>(0), a.get_buffer(true));
     tested_sequence::freebuf(buffer);
   }
@@ -400,22 +251,25 @@ struct Tester
     expected_calls f(tested_allocation_traits::freebuf_calls);
     expected_calls r(tested_element_traits::release_calls);
     {
-      tested_sequence a(8, 4, buffer, true);
+      tested_sequence a(4, buffer, true);
       BOOST_CHECK_EQUAL(buffer, a.get_buffer(true));
 
       tested_sequence const & b = a;
-      BOOST_CHECK_EQUAL(0UL, b.maximum());
-      BOOST_CHECK_EQUAL(0UL, b.length());
+      BOOST_CHECK_EQUAL(CORBA::ULong(MAXIMUM), b.maximum());
+      BOOST_CHECK_EQUAL(CORBA::ULong(0), b.length());
       BOOST_CHECK(0 != b.get_buffer());
 
-      BOOST_CHECK_MESSAGE(c.expect(1), c);
+      BOOST_CHECK_MESSAGE(c.expect(0), c);
 
       BOOST_CHECK(buffer != b.get_buffer());
     }
-    BOOST_CHECK_MESSAGE(c.expect(0), c);
     BOOST_CHECK_MESSAGE(f.expect(1), f);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
+    BOOST_CHECK_MESSAGE(c.expect(0), c);
+
     tested_sequence::freebuf(buffer);
-    BOOST_CHECK_MESSAGE(r.expect(8), r);
+    BOOST_CHECK_MESSAGE(f.expect(1), f);
+    BOOST_CHECK_MESSAGE(r.expect(MAXIMUM), r);
   }
 
   void add_all(test_suite * ts)
@@ -427,26 +281,10 @@ struct Tester
     boost::shared_ptr<Tester> shared_this(self_);
 
     ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_ulong_constructor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_copy_constructor_from_ulong,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_less_than_maximum,
                 shared_this));
     ts->add(BOOST_CLASS_TEST_CASE(
                 &Tester::test_set_length_more_than_maximum,
-                shared_this));
-
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_exception_in_ulong_constructor,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_exception_in_length,
-                shared_this));
-    ts->add(BOOST_CLASS_TEST_CASE(
-                &Tester::test_duplicate_exception_in_length,
                 shared_this));
 
     ts->add(BOOST_CLASS_TEST_CASE(
@@ -500,11 +338,10 @@ test_suite *
 init_unit_test_suite(int, char*[])
 {
   std::auto_ptr<test_suite> ts(
-      BOOST_TEST_SUITE("unbounded string sequence unit test"));
+      BOOST_TEST_SUITE("bounded string sequence unit test"));
 
   boost::shared_ptr<Tester> tester(Tester::allocate());
   tester->add_all(ts.get());
 
   return ts.release();
 }
-

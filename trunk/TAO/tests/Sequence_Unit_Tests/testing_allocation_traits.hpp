@@ -68,6 +68,18 @@ struct bounded_allocation_traits<T,MAX,true>
 {
 };
 
+template<typename T, class reference_traits>
+struct unbounded_reference_allocation_traits<T,reference_traits,true>
+  : public testing_allocation_traits<T, unbounded_reference_allocation_traits<T,reference_traits,false> >
+{
+};
+
+template<typename T, class reference_traits, CORBA::ULong MAX>
+struct bounded_reference_allocation_traits<T,reference_traits,MAX,true>
+  : public testing_allocation_traits<T, bounded_reference_allocation_traits<T,reference_traits,MAX,false> >
+{
+};
+
 } // namespace details
 } // namespace TAO
 
