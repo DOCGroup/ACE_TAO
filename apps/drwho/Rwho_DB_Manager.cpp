@@ -2,6 +2,7 @@
 #include "global.h"
 #include "Options.h"
 #include "Rwho_DB_Manager.h"
+#include "ace/Log_Msg.h"
 
 // Change to the RWHO directory to speed up and simplify later
 // processing.  This requires opening the directory for reading with
