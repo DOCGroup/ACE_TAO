@@ -92,13 +92,13 @@ commands:
 
      - query: to query the location of a component implementation
 
-This program uses resolve_initial_references ("CIAO-Daemon") to acqurie
+This program uses resolve_initial_references ("CIAODaemon") to acqurie
 the daemon control interface, so you must provide the reference to the
 program somehow.  For example:
 
-  DaemonController -ORBInitRef CIAO-Daemon=file://daemon.ior <command> [command options]
+  DaemonController -ORBInitRef CIAODaemon=file://daemon.ior <command> [command options]
 
 To check the parameter required for each of the commands listed above,
 just append the -h command option flag, such as:
 
-  DaemonController -ORBInitRef CIAO-Daemon=file://daemon.ior install -h
+  DaemonController -ORBInitRef CIAODaemon=file://daemon.ior install -h

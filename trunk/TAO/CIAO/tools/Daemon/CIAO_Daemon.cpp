@@ -223,11 +223,11 @@ main (int argc, char *argv[])
                                    ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
-      adapter->bind ("CIAO-Daemon", str.in () ACE_ENV_ARG_PARAMETER);
+      adapter->bind ("CIAODaemon", str.in () ACE_ENV_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       write_IOR (str.in ());
-      ACE_DEBUG ((LM_INFO, "CIAO-Daemon IOR: %s\n", str.in ()));
+      ACE_DEBUG ((LM_INFO, "CIAODaemon IOR: %s\n", str.in ()));
 
       // Activate POA manager
       PortableServer::POAManager_var mgr
@@ -249,7 +249,7 @@ main (int argc, char *argv[])
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
-                           "server::main\t\n");
+                           "CIAO_Daemon::main\t\n");
       return 1;
     }
   ACE_ENDTRY;
