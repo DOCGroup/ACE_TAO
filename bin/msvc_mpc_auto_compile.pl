@@ -206,12 +206,10 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
     elsif ($ARGV[0] =~ '-Debug') {      # Debug versions
         print "Building Debug Version\n" if ( $verbose );
         $Build_Debug = 1;
-        $Build_All = 0;
     }
     elsif ($ARGV[0] =~ '-Release') {    # Release versions
         print "Building Release Version\n" if ( $verbose );
         $Build_Release = 1;
-        $Build_All = 0;
     }
     elsif ($ARGV[0] =~ '-vc7') {    # Use VC7 project and solution files.
         print "Using VC7 files\n" if ( $verbose );
@@ -234,7 +232,6 @@ while ( $#ARGV >= 0  &&  $ARGV[0] =~ /^(-|\/)/ )
         print "-clean     = Clean\n";
         print "-Debug     = Compile Debug versions\n";
         print "-Release   = Compile Release versions\n";
-        print "-DLL       = Comple DLL Configurations\n";
         exit;
     }
     else {
