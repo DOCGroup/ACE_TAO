@@ -17,7 +17,8 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 
 void
 Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
+  ACE_THROW_SPEC ((CORBA::SystemException,
+                   Foo::Bar::NoSecurityAttributes))
 {
   Security::AttributeType desired_attribute;
 
@@ -44,6 +45,15 @@ Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
   // information is available for this upcall.  The following code
   // verifies that this is actually the case.
 
+  CORBA::ULong len = attribute_list->length ();
+  if (len == 0)
+    {
+      // The desired security attribute was not available.  This
+      // indicates a failure in the underlying security mechanism
+      // support.
+      ACE_THROW (Foo::Bar::NoSecurityAttributes ());
+    }
+
   // Assume X.509 certificates are in use.
   const char x509[] = "x509";
   Security::OID x509_defining_authority;
@@ -54,7 +64,6 @@ Foo_i::baz (CORBA::Environment &ACE_TRY_ENV)
 
   ACE_OS_String::memcpy (buf, x509, sizeof (x509));
 
-  CORBA::ULong len = attribute_list->length ();
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       Security::SecAttribute &attribute = attribute_list[i];

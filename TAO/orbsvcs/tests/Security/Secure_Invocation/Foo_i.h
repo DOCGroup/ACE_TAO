@@ -29,7 +29,8 @@ public:
   /// Test method.
   virtual void baz (CORBA::Environment &ACE_TRY_ENV =
                       TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     Foo::Bar::NoSecurityAttributes));
 
   virtual void shutdown (CORBA::Environment &ACE_TRY_ENV =
                            TAO_default_environment ())
