@@ -217,7 +217,7 @@ struct string_char_baggage<char> {
     is_del (char_type c) _THROW_NONE
     {
         // characteristic function for delimiters of char_type
-        return isspace(c);
+        return isspace(c) != 0;
     }
 
     //
