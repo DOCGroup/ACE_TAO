@@ -126,6 +126,9 @@ USAGE: ./SOCK_STREAM_clt [ -<flag> [<val>] | --<name> [<val>] ]...
    -x   int            histogram-num-outliers      100
    -b   int            histogram-bin-count         1000
 
+   -C   int            client-port                 assigned by kernel
+   -i   str            client-connect-addr         INADDR_ANY
+
    -p   int            server-port                 45453
    -H   str            server-host                 localhost
 
@@ -183,6 +186,14 @@ SOCK_SEQPACK_clt.
         of each bin will be
 
           (histogram-max-bin - histogram-min-bin) / histogram-bin-count
+
+    client-port          [ -C int ]
+    client-connect-addr  [ -i string ]
+
+        the port and network address where the client's data-mode
+        socket is to be bound.  By default, the port number is
+        assigned by the kernel, and the socket is bound to all network
+        interfaces.
 
     server-port  [ -p int ]
     server-host  [ -H string ]
