@@ -12,7 +12,7 @@ Top_i::~Top_i ()
   // No-op.
 }
 
-CORBA::String
+char *
 Top_i::shape (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -31,7 +31,7 @@ Left_i::~Left_i ()
   // No-op.
 }
 
-CORBA::String
+char *
 Left_i::shape (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -40,7 +40,7 @@ Left_i::shape (CORBA::Environment &)
   return CORBA::string_dup ("the left line");
 }
 
-CORBA::String
+char *
 Left_i::color (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -59,7 +59,7 @@ Right_i::~Right_i ()
   // no-op.
 }
 
-CORBA::String
+char *
 Right_i::shape (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -68,7 +68,7 @@ Right_i::shape (CORBA::Environment &)
   return CORBA::string_dup ("the right line");
 }
 
-CORBA::String
+char *
 Right_i::color (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -97,7 +97,7 @@ Buttom_i::~Buttom_i ()
   // no-op.
 }
 
-CORBA::String
+char *
 Buttom_i::shape (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -106,7 +106,7 @@ Buttom_i::shape (CORBA::Environment &)
   return CORBA::string_dup ("a diamond");
 }
 
-CORBA::String
+char *
 Buttom_i::color (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
@@ -124,7 +124,7 @@ Buttom_i::width (CORBA::Environment &)
   return 100;
 }
 
-CORBA::String
+char *
 Buttom_i::name (CORBA::Environment &)
   ACE_THROW_SPEC ((
     CORBA::SystemException
