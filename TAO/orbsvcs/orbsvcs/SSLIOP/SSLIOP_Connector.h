@@ -26,9 +26,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
+#include "ace/SSL/SSL_Connector.h"
 #include "IIOP_SSL_Connector.h"
 #include "SSLIOP_Connection_Handler.h"
-
 
 /// Forward declarations.
 class TAO_Base_Transport_Property;
@@ -109,8 +109,8 @@ public:
                                ACE_SSL_SOCK_CONNECTOR>
           TAO_SSLIOP_CONNECT_STRATEGY ;
 
-  typedef ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler,
-                                 ACE_SSL_SOCK_CONNECTOR>
+  typedef ACE_SSL_Strategy_Connector<TAO_SSLIOP_Connection_Handler,
+                                     ACE_SSL_SOCK_CONNECTOR>
           TAO_SSLIOP_BASE_CONNECTOR;
 
 private:

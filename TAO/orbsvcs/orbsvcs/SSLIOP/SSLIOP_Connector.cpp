@@ -27,7 +27,7 @@ ACE_RCSID (TAO_SSLIOP,
 
 template class TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>;
 template class TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>;
-template class ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
+template class ACE_SSL_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>;
 template class ACE_Svc_Tuple<TAO_SSLIOP_Connection_Handler>;
@@ -43,7 +43,7 @@ template class ACE_Auto_Basic_Ptr<TAO_SSLIOP_Connection_Handler>;
 
 #pragma instantiate TAO_Connect_Concurrency_Strategy<TAO_SSLIOP_Connection_Handler>
 #pragma instantiate TAO_Connect_Creation_Strategy<TAO_SSLIOP_Connection_Handler>
-#pragma instantiate ACE_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
+#pragma instantiate ACE_SSL_Strategy_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connect_Strategy<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 #pragma instantiate ACE_Connector<TAO_SSLIOP_Connection_Handler, ACE_SSL_SOCK_CONNECTOR>
 
@@ -489,16 +489,26 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
 
       svc_handler = safe_handler.release ();
 
+      // Get the max_wait_time
+      ACE_Time_Value *max_wait_time = 0;
+
+      ACE_Time_Value connection_timeout;
+      int timeout = 0;
+
+      this->orb_core ()->connection_timeout (invocation->stub (),
+                                             timeout,
+                                             connection_timeout);
+      if (!timeout)
+        max_wait_time =
+          invocation->max_wait_time ();
+      else
+        max_wait_time = &connection_timeout;
 
       // Get the right synch options
       ACE_Synch_Options synch_options;
 
-      ACE_Time_Value *max_wait_time =
-        invocation->max_wait_time ();
-
       this->active_connect_strategy_->synch_options (max_wait_time,
                                                      synch_options);
-
 
       // We obtain the transport in the <svc_handler> variable.
       // As we know now that the connection is not available in
@@ -506,7 +516,6 @@ TAO_SSLIOP_Connector::ssliop_connect (TAO_SSLIOP_Endpoint *ssl_endpoint,
       result = this->base_connector_.connect (svc_handler,
                                               remote_address,
                                               synch_options);
-
 
       // We dont have to wait since we only use a blocked connect
       // strategy.
