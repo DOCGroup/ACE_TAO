@@ -24,6 +24,9 @@ Fri Jan 02 07:06:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * ace/Synch.i (tryacquire_write_upgrade): only define if
           ACE_HAS_THREADS.
 
+        * tests/test_config.h: hacked ACE_INIT_LOG to work on VxWorks.
+          VxWorks gets upset if its asked to unlink a nonexistant file.
+
 Fri Jan 02 00:47:33 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.4.13, released Fri Jan 02 00:47:33 1998.
