@@ -157,7 +157,7 @@ typedef unsigned CORBA_Flags;	        // enum values defined in nvlist.hh,
 
 
 
-typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Object_ptr &, CORBA_Environment &);
+typedef void (*skeleton)(CORBA_ServerRequest &, CORBA_Object_ptr, CORBA_Environment &);
 //
 // Basic types used in the CORBA 2.0 runtime
 //

@@ -168,7 +168,7 @@ void CORBA_BOA::dispatch(CORBA_OctetSeq &key, CORBA_ServerRequest &req, void
 #endif
   obj = this->lookup(key);
   // get the skeleton
-  if (obj != 0)
+  if (obj != 0) // should really be !is_nil
     {
       opname = req.op_name();
       skel = obj->lookup(opname);
