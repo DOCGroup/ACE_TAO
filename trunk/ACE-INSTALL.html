@@ -200,9 +200,9 @@ for ACE.  Ideally, ACE will compile on any POSIX conforming OS.
             can enable it by rebuilding your kernel with CONFIG_IP_MULTICAST
             enabled.<p>
         <li>Enable IP multicast in ACE.  It is enabled by default in
-            <code>ace/config-linux-common.h</code>.  If you don't
-            use IP multicast, please comment out the
-            <code>#define ACE_HAS_IP_MULTICAST</code> before building ACE.<p>
+            <code>ace/config-linux-common.h</code>.  If you don't use
+            IP multicast, add <code>#define ACE_HAS_IP_MULTICAST 0</code>
+            to your <code>ace/config.h</code> before building ACE.<p>
         <li>There must be a network interface that is up and supports
             multicast.  If you have linuxconf, it's easiest to use that
             to add a network route for multicast (224.0.0.0) on one of
@@ -574,13 +574,16 @@ need to do:<P>
       however that you can normally skip this step because the defaults
       are typically fine for most systems. <P>
 
-  <LI> Set the $ACE_ROOT/ace/config.h file to point to the appropriate
-      platform/compiler-specific header configurations (such as
-      config-sunos5-sunc++-4.x.h).  This file contains the #defines that
+  <LI> Create a <code>$ACE_ROOT/ace/config.h</code> file that includes
+      the appropriate platform/compiler-specific header configurations
+      (such as <code>config-sunos5-sunc++-4.x.h</code>).  This file
+      contains the #defines that
       are used throughout ACE to indicate which features your system
-      supports (see the $ACE_ROOT/ace/OS.h file for many
+      supports (see the <code>$ACE_ROOT/ace/OS.h</code> file for many
       examples of how the ACE build configuration is affected by these
-      macro settings).<P>
+      macro settings).  Make sure you settings are placed
+      <strong>before</strong> the inclusion of the platform-specific
+      header file.<P>
 
       There are config files for most versions of UNIX.  If there isn't a
       version of this file that matches your platform/compiler, you'll
@@ -737,10 +740,10 @@ card.  This is one method:<P>
   <LI>  Choose Network from Control Panel
   <LI>  Add Adapter: MS Loopback Adapter
   <LI>  Configure MS Loopback Adapter with 802.3 (default)
-  <LI>  Add Software: TCP/IP Protocol
+  <LI>  Add Protocol: TCP/IP Protocol
   <LI>  Configure TCP/IP Protocol with a valid IP address and subnet mask.
       Leave everything else at the default settings.
-  <LI>  Add Software: Workstation
+  <LI>  Add Service: Workstation
   <LI>  Exit and Restart System
   <LI>  Run Control Panel again
   <LI> Choose Services from Control Panel
@@ -1207,7 +1210,7 @@ $ACE_ROOT, and then invoke the top-level Makefile with the
 % mkdir build-SunOS5
 % cd build-SunOS5
 % make -f ../Makefile clone
-% (cd ace; ln -s config-sunos5.5-g++.h config.h)
+% (cd ace; echo "\#include "ace/config-sunos5.5-g++.h" > config.h)
 % (cd include/makeincludes; ln -s platform_sunos5-g++.h platform_macros.GNU)
 % setenv ACE_ROOT $cwd
 % make
@@ -1253,9 +1256,9 @@ ORBIX_ROOT to point to the root of the Orbix source tree and
 ORBELINE_ROOT to point to the root of the ORBeline source tree.  Since
 many platforms don't have these CORBA tools the default for ACE does
 *not* incorporate them.  Thus, if you are compiling with Orbix or
-ORBeline, make sure that you set the symbolic links for
+ORBeline, make sure that you set up
 $ACE_ROOT/include/makeinclude/platform_macros.GNU and
-$ACE_ROOT/ace/config.h to point to the the config* and platform*
+$ACE_ROOT/ace/config.h to use the config* and platform*
 files that have "-orbix" in them!
 
 <P><HR><P>
