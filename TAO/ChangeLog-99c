@@ -1,3 +1,20 @@
+Tue Jul 20 19:05:06 1999  Jeff Parsons  <parsons@cs.wustl.edu>
+
+	* TAO_IDL/be/be_array.cpp:
+	  Reverted addition of has_constructor() call - arrays
+	  are always included in unions as pointers to the slice
+	  anyway.
+
+	* TAO_IDL/be/be_visitor_union_branch/private_ch.cpp:
+	  Changed reference to be_type::SIZE_TYPE to 
+	  be_decl::SIZE_TYPE (where it actually resides).
+
+	* TAO_IDL/be/be_field.cpp:
+	* TAO_IDL/be/be_typedef.cpp:
+	  Added calls to has_constructor() in comput_size_type().
+	  They don't seem to be needed on NT, but Solaris egcs
+	  seems to need them.
+
 Tue Jul 20 19:03:46 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* tao/IIOP_Connector.cpp:
