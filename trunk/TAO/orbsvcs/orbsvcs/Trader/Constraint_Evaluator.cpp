@@ -15,6 +15,7 @@
 // ========================================================================
 
 #include "Constraint_Evaluator.h"
+#include "Trader_T.h"
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
 {
