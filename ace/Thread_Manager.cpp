@@ -1172,6 +1172,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
         // ACE_Thread_Descriptor addresses into TSS, we can find a
         // way to solve this.
 
+#if !defined (VXWORKS)
 	// Threads created with THR_DAEMON shouldn't exist here,
 	// but just to be safe, let's put it here.
 	if (((this->thr_table_[i].flags_ & (THR_DETACHED | THR_DAEMON)) == 0) ||
@@ -1182,6 +1183,7 @@ ACE_Thread_Manager::exit (void *status, int do_thr_exit)
             this->terminated_thr_queue_.enqueue_tail
               (this->thr_table_[i]);
 	  }
+#endif /* VXWORKS */        
 
         // Remove thread descriptor from the table.
         this->remove_thr (i);
@@ -1252,7 +1254,10 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout)
     ACE_Thread_Descriptor item;
 
     while (! this->terminated_thr_queue_.dequeue_head (item))
-	ACE_Thread::join (item.thr_handle_);
+#if !defined (VXWORKS)
+	ACE_Thread::join (item.thr_handle_)
+#endif /* VXWORKS */
+          ;
   }
 #else
   ACE_UNUSED_ARG (timeout);
