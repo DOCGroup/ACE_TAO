@@ -185,7 +185,7 @@ CORBA_ORB::run (ACE_Time_Value *tv)
 
   while (this->should_shutdown_ == 0)
     {
-      ACE_TIMEPROBE (TAO_CORBA_ORB_RUN);
+      ACE_TIMEPROBE (TAO_CORBA_ORB_RUN_START);
       switch (r->handle_events (tv))
         {
         case 0: // Timed out, so we return to caller.

@@ -1,3 +1,29 @@
+Thu Apr 16 04:14:53 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* ace/Timeprobe: 
+
+	  This class is used to instrument code.  This is accomplished by
+ 	  inserting time probes at different location in the code.
+  	  ACE_Timeprobe then measures the time difference between two time
+ 	  probes.
+	  
+	  This class provides a lightweight implementation for measuring
+ 	  the time required to execute code between two time probes.  When
+ 	  a time probe executes, it records the time, the id of the
+ 	  calling thread, and an event description.  The event description
+ 	  can either be an unsigned long or a string (char *).  If string
+ 	  are used, care must be taken cause only pointer copies are done
+ 	  and the string data is *not* copied.
+        
+	  The recorded time probes can then be printed by calling
+ 	  print_times().  If you have used unsigned longs as event
+ 	  descriptions in any of your time probes, you must provide an
+ 	  event description table that maps the unsigned longs to readable
+ 	  strings.  This map is a simple array of strings, and the event
+ 	  number is used as the index into the array when looking for the
+ 	  event description.  If you have only used strings for the event
+ 	  description, this map is not necessary.
+
 Wed Apr 15 23:01:08 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Thread_Manager.cpp (exit): Don't delete the ACE_Thread_Exit

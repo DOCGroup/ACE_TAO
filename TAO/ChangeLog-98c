@@ -1,5 +1,8 @@
 Thu Apr 16 01:25:18 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
 
+	* TAO: Change the use of time probes.  The new ACE scheme is now
+ 	  used.
+
 	* tao/poa.idl: Fixed the idl file.
 
 	* tao/PolicyS.cpp (_tao_collocated_Policy): _tao_collocated_Policy

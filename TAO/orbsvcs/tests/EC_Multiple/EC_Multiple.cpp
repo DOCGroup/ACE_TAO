@@ -4,7 +4,7 @@
 
 #include "ace/Get_Opt.h"
 
-#include "tao/Timeprobe.h"
+#include "ace/Timeprobe.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Scheduler_Factory.h"

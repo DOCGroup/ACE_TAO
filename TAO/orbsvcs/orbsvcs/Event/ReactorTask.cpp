@@ -1,7 +1,7 @@
 // $Id$
 
 #include "ace/High_Res_Timer.h"
-#include "tao/Timeprobe.h"
+#include "ace/Timeprobe.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
 #include "ReactorTask.h"
