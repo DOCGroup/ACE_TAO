@@ -67,27 +67,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // BE_produce.cc - Produce the work of the BE - does nothing in the
 //                 dummy BE
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "global_extern.h"
 #include "TAO_IFR_BE_Export.h"
 #include "be_extern.h"
+#include "ast_root.h"
 #include "ifr_visitor_macro.h"
 #include "ifr_removing_visitor.h"
 #include "ifr_adding_visitor.h"
 
-ACE_RCSID(be, be_produce, "$Id$")
+ACE_RCSID (be, 
+           be_produce, 
+           "$Id$")
 
 // Clean up before exit, whether successful or not.
 // Need not be exported since it is called only from this file.
 void
 BE_cleanup (void)
 {
-  AST_Decl *root = idl_global->root ();
-
-  root->destroy ();
-  delete root;
-  root = 0;
-
   idl_global->destroy ();
   delete idl_global;
   idl_global = 0;
@@ -118,6 +114,9 @@ BE_cleanup (void)
                            ACE_TEXT ("BE_cleanup"));
     }
   ACE_ENDTRY;
+
+  delete be_global;
+  be_global = 0;
 }
 
 // Abort this run of the BE.

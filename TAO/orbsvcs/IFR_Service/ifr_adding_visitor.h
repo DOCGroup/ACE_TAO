@@ -21,7 +21,6 @@
 #define TAO_IFR_ADDING_VISITOR_H
 
 #include "ifr_visitor.h"
-#include "idl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

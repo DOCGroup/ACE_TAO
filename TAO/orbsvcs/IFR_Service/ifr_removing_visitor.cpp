@@ -4,7 +4,9 @@
 #include "ifr_removing_visitor.h"
 #include "utl_scope.h"
 
-ACE_RCSID(IFR_Service, ifr_removing_visitor, "$Id$")
+ACE_RCSID (IFR_Service, 
+           ifr_removing_visitor, 
+           "$Id$")
 
 ifr_removing_visitor::ifr_removing_visitor (void)
 {

@@ -66,17 +66,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Pass an IDL file through the C preprocessor
 
-#include "idl.h"
-#include "idl_extern.h"
+#include "idl_bool.h"
+#include "idl_defines.h"
+#include "global_extern.h"
+#include "fe_extern.h"
 #include "be_extern.h"
-#include "drv_private_ifr.h"
 #include "drv_extern_ifr.h"
+#include "utl_string.h"
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
 
-ACE_RCSID(IFR_Service, drv_preproc_ifr, "$Id$")
+ACE_RCSID (IFR_Service, 
+           drv_preproc_ifr, 
+           "$Id$")
 
 static long argcount = 0;
 static long max_argcount = 128;

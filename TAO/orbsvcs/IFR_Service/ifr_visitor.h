@@ -65,19 +65,31 @@ public:
   // Visit interface.
 
   virtual int visit_interface_fwd (AST_InterfaceFwd *node);
-  // Visit interface_fwd
+  // Visit a forward interface declaration.
 
-  virtual int visit_valuetype (AST_Interface *node);
+  virtual int visit_valuetype (AST_ValueType *node);
   // Visit valuetype.
 
-  virtual int visit_valuetype_fwd (AST_InterfaceFwd *node);
+  virtual int visit_valuetype_fwd (AST_ValueTypeFwd *node);
   // Visit valuetype_fwd
+
+  virtual int visit_component (AST_Component *node);
+  // Visit component.
+
+  virtual int visit_component_fwd (AST_ComponentFwd *node);
+  // Visit component_fwd
+
+  virtual int visit_home (AST_Home *node);
+  // Visit component home.
 
   virtual int visit_factory (AST_Factory *node);
   // Visit a OBV factory construct.
 
   virtual int visit_structure (AST_Structure *node);
   // Visit a structure.
+
+  virtual int visit_structure_fwd (AST_StructureFwd *node);
+  // Visit a forward structure declaration.
 
   virtual int visit_exception (AST_Exception *node);
   // Visit exception
@@ -102,6 +114,9 @@ public:
 
   virtual int visit_union (AST_Union *node);
   // Visit union.
+
+  virtual int visit_union_fwd (AST_UnionFwd *node);
+  // Visit a forward union declaration.
 
   virtual int visit_union_branch (AST_UnionBranch *node);
   // Visit union branch.
