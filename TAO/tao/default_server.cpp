@@ -129,7 +129,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, char *argv[])
   ACE_TRACE ("TAO_Default_Server_Strategy_Factory::parse_args");
 
   int curarg;
-  for (curarg = 0; curarg < argc; curarg++)
+  for (curarg = 0; curarg < argc && argv[curarg]; curarg++)
     {
       if (ACE_OS::strcmp (argv[curarg], "-ORBconcurrency") == 0)
         {
