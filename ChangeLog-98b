@@ -1,3 +1,11 @@
+Wed Jan 06 21:42:11 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/OS.cpp (thr_create): moved #endif /* ACE_LACKS_SETDETACH */
+          outside of }, to allow compilation on DU 4.0/cxx with DCE threads.
+
+        * ace/config-osf1-4.0.h: with DCE threads only, added
+          ACE_LACKS_THREAD_PROCESS_SCOPING.
+
 Wed Jan 06 16:36:21 1999  David L. Levine  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.11 released.
