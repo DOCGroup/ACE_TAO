@@ -32,7 +32,7 @@ TAO_MProfile::set (CORBA::ULong sz)
   if (sz == 0)
     {
       // We do, so release all of our profiles.
-      for (PHandle h = 0; h < this->size_; h++ )
+      for (TAO_PHandle h = 0; h < this->size_; h++ )
         {
           if (this->pfiles_[h]) 
             {
@@ -61,7 +61,7 @@ TAO_MProfile::set (CORBA::ULong sz)
     {
       
       // We do, so release all of our profiles.
-      for (PHandle h = 0; h < size_; h++)
+      for (TAO_PHandle h = 0; h < size_; h++)
         {
           if (this->pfiles_[h]) 
             {
@@ -124,14 +124,14 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
   // this->fwded_mprofile_ = 0;
 
   // Now reference all profiles.
-  for (PHandle h = 0 ; h < this->size_ ; h++ )
+  for (TAO_PHandle h = 0 ; h < this->size_ ; h++ )
     {
       if (mprofile->pfiles_[h]) 
         {
           this->pfiles_[h] = mprofile->pfiles_[h];
           this->pfiles_[h]->_incr_refcnt ();
         }
-    } // for (PHandle ...)
+    } // for (TAO_PHandle ...)
 
   if (mprofile->fwded_mprofile_)
     {
@@ -144,7 +144,7 @@ TAO_MProfile::set (TAO_MProfile *mprofile)
 TAO_MProfile::~TAO_MProfile (void)
  {
   if (this->pfiles_)
-    for (PHandle h = 0; h < size_; h++)
+    for (TAO_PHandle h = 0; h < size_; h++)
       {
         if (this->pfiles_[h])
           this->pfiles_[h]->_decr_refcnt ();
@@ -233,7 +233,7 @@ TAO_MProfile::get_prev (void)
 
 // does not affect the current_ setting!
 TAO_Profile *
-TAO_MProfile::get_profile (PHandle handle)
+TAO_MProfile::get_profile (TAO_PHandle handle)
 {
   if (handle < last_)
     return pfiles_ [handle];
@@ -257,7 +257,7 @@ TAO_MProfile::get_current_profile (void)
   //  return current_ == 0 ? pfiles_ [current_] : pfiles_ [current_-1];
 }
 
-PHandle 
+TAO_PHandle 
 TAO_MProfile::get_current_handle (void)
 {
   if (current_ > 0)
@@ -325,11 +325,11 @@ TAO_MProfile::is_equivalent (TAO_MProfile *first,
   // of the profiles from the second list!!
   TAO_Profile_ptr *pfiles1 = first->pfiles ();
   TAO_Profile_ptr *pfiles2 = second->pfiles ();
-  PHandle first_cnt = first->profile_count ();
-  PHandle second_cnt = second->profile_count ();
+  TAO_PHandle first_cnt = first->profile_count ();
+  TAO_PHandle second_cnt = second->profile_count ();
   
-  for (PHandle h1 = 0; h1 < first_cnt;h1++)
-    for (PHandle h2 = 0; h2 < second_cnt; h2++ )
+  for (TAO_PHandle h1 = 0; h1 < first_cnt;h1++)
+    for (TAO_PHandle h2 = 0; h2 < second_cnt; h2++ )
       if (pfiles1[h1]->is_equivalent (pfiles2[h2], env))
         return 1;
   
@@ -344,7 +344,7 @@ TAO_MProfile::hash (CORBA::ULong max, CORBA::Environment &env)
   if (last_ == 0) 
     return 0;
 
-  for (PHandle h=0; h < last_ ; h++) 
+  for (TAO_PHandle h=0; h < last_ ; h++) 
     hashval += pfiles_[h]->hash (max, env);
 
   // The above hash function return an ULong between 0 and max here we
