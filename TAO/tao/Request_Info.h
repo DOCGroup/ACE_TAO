@@ -145,20 +145,20 @@ class TAO_Export TAO_ClientRequest_Info
                                         TAO_default_environment ())
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-   virtual IOP::TaggedComponent * get_effective_component (IOP::ComponentId id,
-                                                           CORBA::Environment &ACE_TRY_ENV =
-                                                           TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+   virtual IOP::TaggedComponent * get_effective_component (
+       IOP::ComponentId id
+       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
-   virtual CORBA::Policy_ptr get_request_policy (CORBA::PolicyType type,
-                                                 CORBA::Environment &ACE_TRY_ENV =
-                                                 TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+   virtual CORBA::Policy_ptr get_request_policy (
+       CORBA::PolicyType type
+       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+     ACE_THROW_SPEC ((CORBA::SystemException));
 
-   virtual void add_request_service_context (const IOP::ServiceContext & service_context,
-                                             CORBA::Boolean replace,
-                                             CORBA::Environment &ACE_TRY_ENV =
-                                             TAO_default_environment ())
+   virtual void add_request_service_context (
+       const IOP::ServiceContext & service_context,
+       CORBA::Boolean replace
+       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
      ACE_THROW_SPEC ((CORBA::SystemException));
 
  protected:
@@ -261,51 +261,52 @@ class TAO_Export TAO_ServerRequest_Info
                                                            TAO_default_environment ())
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Any * sending_exception (CORBA::Environment &ACE_TRY_ENV =
-                                           TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Any * sending_exception (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // This method causes problem since there is no trivial way to
   // extract the exception from the Any.
 
-  virtual CORBA::Exception * _sending_exception (CORBA::Environment &ACE_TRY_ENV =
-                                                  TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Exception * _sending_exception (
+      CORBA::Environment &ACE_TRY_ENV =
+        TAO_default_environment ())
+    ACE_THROW_SPEC ((CORBA::SystemException));
   // Note: This is TAO specific and was done to combat the previous
   // problem to some extent.
 
-  virtual CORBA::OctetSeq * object_id (CORBA::Environment &ACE_TRY_ENV =
-                                       TAO_default_environment ())
+  virtual CORBA::OctetSeq * object_id (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::OctetSeq * adapter_id (CORBA::Environment &ACE_TRY_ENV =
-                                        TAO_default_environment ())
+  virtual CORBA::OctetSeq * adapter_id (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
       ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual char * target_most_derived_interface (CORBA::Environment &ACE_TRY_ENV =
-                                                TAO_default_environment ())
+  virtual char * target_most_derived_interface (
+      TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual CORBA::Policy_ptr get_server_policy (CORBA::PolicyType type,
-                                               CORBA::Environment &ACE_TRY_ENV =
-                                               TAO_default_environment ())
+  virtual CORBA::Policy_ptr get_server_policy (
+      CORBA::PolicyType type
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void set_slot (PortableInterceptor::SlotId id,
-                         const CORBA::Any & data,
-                         CORBA::Environment &ACE_TRY_ENV =
-                         TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException,
-                       PortableInterceptor::InvalidSlot));
+  virtual void set_slot (
+      PortableInterceptor::SlotId id,
+      const CORBA::Any & data
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException,
+                     PortableInterceptor::InvalidSlot));
 
-  virtual CORBA::Boolean target_is_a (const char * id,
-                                      CORBA::Environment &ACE_TRY_ENV =
-                                      TAO_default_environment ())
-      ACE_THROW_SPEC ((CORBA::SystemException));
+  virtual CORBA::Boolean target_is_a (
+       const char * id
+       TAO_ENV_ARG_DECL_WITH_DEFAULTS)
+    ACE_THROW_SPEC ((CORBA::SystemException));
 
-  virtual void add_reply_service_context (const IOP::ServiceContext & service_context,
-                                          CORBA::Boolean replace,
-                                          CORBA::Environment &ACE_TRY_ENV =
-                                          TAO_default_environment ())
+  virtual void add_reply_service_context (
+      const IOP::ServiceContext & service_context,
+      CORBA::Boolean replace
+      TAO_ENV_ARG_DECL_WITH_DEFAULTS)
     ACE_THROW_SPEC ((CORBA::SystemException));
 
  protected:

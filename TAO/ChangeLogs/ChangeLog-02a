@@ -1,3 +1,20 @@
+Fri Oct 20 10:49:30 2000  Carlos O'Ryan  <coryan@uci.edu>
+
+	* tao/Exception.cpp:
+	  Fixed use of allocator in Exception extraction functions.
+
+	* tao/PortableInterceptorC.h:
+	* tao/Request_Info.h:
+	* tao/Request_Info.cpp:
+	* tao/PortableInterceptor.i:
+	  Fixed so it would compile in platforms with exceptions enabled.
+
+	* tao/Makefile:
+	* tao/DynamicAny/Makefile:
+	* tao/IORManipulation/Makefile:
+	* tao/IORTable/Makefile:
+	* tao/PortableServer/Makefile:
+
 Fri Oct 20 07:55:22 2000  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* orbsvcs/IFR_Service/TCF_Loader.cpp:

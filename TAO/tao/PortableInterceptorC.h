@@ -927,32 +927,28 @@ class TAO_Export ServerRequestInfo: public virtual RequestInfo
       }
 
     virtual CORBA::Any * sending_exception (
-                CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::OctetSeq * object_id (
-                CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual CORBA::OctetSeq * adapter_id (
-                CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException
       )) = 0;
 
     virtual char * target_most_derived_interface (
-                CORBA::Environment &ACE_TRY_ENV = 
-          TAO_default_environment ()
+        TAO_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
       )
       ACE_THROW_SPEC ((
         CORBA::SystemException

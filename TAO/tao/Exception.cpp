@@ -1121,55 +1121,53 @@ tao_insert_in_extractor_system_exception (
         const char *compare_IR_Id,
         const char *msg)
 {
-  ACE_DECLARE_NEW_CORBA_ENV; 
-  ACE_TRY 
-    { 
-      CORBA::TypeCode_var type = any.type (); 
-      CORBA::Boolean equiv = 
-        type->equivalent (tc_name, ACE_TRY_ENV); 
-      ACE_TRY_CHECK; 
-      if (!equiv) 
+  ACE_DECLARE_NEW_CORBA_ENV;
+  ACE_TRY
+    {
+      CORBA::TypeCode_var type = any.type ();
+      CORBA::Boolean equiv =
+        type->equivalent (tc_name, ACE_TRY_ENV);
+      ACE_TRY_CHECK;
+      if (!equiv)
         return 0;
-      if (any.any_owns_data ()) 
-        { 
-          tmp = (CORBA_SystemException *)any.value (); 
+      if (any.any_owns_data ())
+        {
+          tmp = (CORBA_SystemException *)any.value ();
           return 0; //@@ was 1
-        } 
-      else 
-        { 
-          TAO_InputCDR stream ( 
-              any._tao_get_cdr (), 
-              any._tao_byte_order () 
-            ); 
-          CORBA::String_var interface_repository_id; 
-          if (!(stream >> interface_repository_id.out ())) 
-            return 0; 
+        }
+      else
+        {
+          TAO_InputCDR stream (
+              any._tao_get_cdr (),
+              any._tao_byte_order ()
+            );
+          CORBA::String_var interface_repository_id;
+          if (!(stream >> interface_repository_id.out ()))
+            return 0;
           if (ACE_OS_String::strcmp (interface_repository_id.in (),
                                      compare_IR_Id))
-            return 0; 
-          CORBA::SystemException *cast_allocator = 
-            (CORBA::SystemException *)allocator;
-          cast_allocator->_tao_decode (stream, ACE_TRY_ENV); 
-          ACE_TRY_CHECK; 
-          ((CORBA::Any *)&any)->_tao_replace ( 
+            return 0;
+          CORBA::SystemException *tmp = allocator ();
+          tmp->_tao_decode (stream, ACE_TRY_ENV);
+          ACE_TRY_CHECK;
+          ((CORBA::Any *)&any)->_tao_replace (
               tc_name,
-              1, 
-              cast_allocator, 
-              destructor 
-            ); 
-          tmp = cast_allocator;
-          return 0; // @@ Was 1 .. to be changed. 
-        } 
-    } 
-  ACE_CATCHANY 
-    { 
-      ACE_PRINT_EXCEPTION ( 
+              1,
+              tmp,
+              destructor
+            );
+          return 0; // @@ Was 1 .. to be changed.
+        }
+    }
+  ACE_CATCHANY
+    {
+      ACE_PRINT_EXCEPTION (
           ACE_ANY_EXCEPTION,
           msg
-        ); 
-    } 
-  ACE_ENDTRY; 
-  return 0; 
+        );
+    }
+  ACE_ENDTRY;
+  return 0;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
