@@ -249,6 +249,7 @@ POA_Messaging::_TAO_ReplyHandler_Strategized_Proxy_Broker::create_proxy (
 //        End Strategized Proxy Broker Implementation
 ///////////////////////////////////////////////////////////////////////
 
+#if (TAO_HAS_AMI_CALLBACK == 1) || (TAO_HAS_AMI_POLLER == 1 )
 
 Messaging::_TAO_ReplyHandler_Proxy_Broker *
 Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_function (CORBA::Object_ptr obj)
@@ -266,9 +267,11 @@ Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (long)
   return 0;
 }
 
+
 static int Messaging__TAO_ReplyHandler_Proxy_Broker_Stub_Factory_Initializer_Scarecrow = 
   Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer (ACE_reinterpret_cast (long, Messaging__TAO_ReplyHandler_Proxy_Broker_Factory_Initializer));
 
+#endif /* TAO_HAS_AMI_CALLBACK == 1 || TAO_HAS_AMI_POLLER == 1 */
 
 ///////////////////////////////////////////////////////////////////////
 //                 ThruPOA Proxy  Implementation
