@@ -447,7 +447,7 @@ namespace TAO
 
 } // namespace TAO
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* FT_REPLICATION_MANAGER_H_ */
 

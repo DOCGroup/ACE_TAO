@@ -74,6 +74,17 @@ namespace TAO
     */
     int fini (ACE_ENV_SINGLE_ARG_DECL);
 
+    /**
+    * Accessor for a duplicate of this consumer's object reference.
+    */
+    CosNotifyComm::StructuredPushConsumer_ptr consumer_ref ();
+
+    //@@ For testing purposes only, will be removed later.
+    /**
+    * Accessor for the number of notifications we have received.
+    */
+    size_t notifications () const;
+
   public:
 
     /////////////////////////
@@ -125,11 +136,9 @@ namespace TAO
     // Forbidden methods
   private:
     /// Copy constructor.
-    FT_FaultConsumer (
-        const FT_FaultConsumer & rhs);
+    FT_FaultConsumer (const FT_FaultConsumer & rhs);
     /// Assignment operator.
-    FT_FaultConsumer & operator = (
-        const FT_FaultConsumer & rhs);
+    FT_FaultConsumer & operator = (const FT_FaultConsumer & rhs);
 
     ///////////////
     // Data Members
@@ -147,6 +156,9 @@ namespace TAO
     /// ConsumerId assigned by the notifier.
     FT::FaultNotifier::ConsumerId consumer_id_;
 
+    /// Our consumer object reference.
+    CosNotifyComm::StructuredPushConsumer_var consumer_ref_;
+
     ///TODO: Remove this later, it is just for testing.
     // Keep track of how many notifications we have received.
     size_t notifications_;
@@ -155,7 +167,7 @@ namespace TAO
 
 } // namespace TAO
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 
 #endif  /* FT_FAULT_CONSUMER_H_ */
 

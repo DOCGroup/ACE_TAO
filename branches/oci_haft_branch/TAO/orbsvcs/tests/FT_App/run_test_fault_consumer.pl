@@ -121,7 +121,7 @@ my($replica1_ior) = PerlACE::LocalFile ("replica1.ior");
 my($replica2_ior) = PerlACE::LocalFile ("replica2.ior");
 my($detector_ior) = PerlACE::LocalFile ("detector.ior");
 my($notifier_ior) = PerlACE::LocalFile ("notifier.ior");
-# my($ready_file) = PerlACE::LocalFile ("ready.file");
+my($ready_file) = PerlACE::LocalFile ("ready.file");
 my($client_data) = PerlACE::LocalFile ("persistent.dat");
 
 #discard junk from previous tests
@@ -131,7 +131,7 @@ unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
-# unlink $ready_file;
+unlink $ready_file;
 unlink $client_data;
 
 my($status) = 0;
@@ -140,8 +140,7 @@ my($REP1) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory1_
 my($REP2) = new PerlACE::Process (".$build_directory/ft_replica", "-o $factory2_ior -t $replica2_ior -r 2 -q");
 my($DET) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Detector$build_directory/Fault_Detector", "-o $detector_ior -q");
 my($NOT) = new PerlACE::Process ("$ENV{'TAO_ROOT'}/orbsvcs/Fault_Notifier$build_directory/Fault_Notifier", "-o $notifier_ior -v -q");
-# my($ANA) = new PerlACE::Process (".$build_directory/ft_analyzer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
-my($ANA) = new PerlACE::Process (".$build_directory/ft_fault_consumer");
+my($ANA) = new PerlACE::Process (".$build_directory/ft_fault_consumer", "-o $ready_file -n $notifier_ior -q -d $detector_ior -r $replica1_ior,$replica2_ior");
 
 my($CL);
 if (simulated) {
@@ -180,7 +179,7 @@ if (PerlACE::waitforfile_timed ($detector_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$detector_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
-    $DET->Kill (); $DET2->TimedWait(1);
+    $DET->Kill (); $DET->TimedWait(1);
     exit 1;
 }
 
@@ -192,25 +191,24 @@ if (PerlACE::waitforfile_timed ($notifier_ior, 5) == -1) {
     print STDERR "ERROR: cannot find file <$notifier_ior>\n";
     $REP1->Kill (); $REP1->TimedWait (1);
     $REP2->Kill (); $REP2->TimedWait (1);
-    $DET->Kill (); $DET2->TimedWait(1);
-    $ANA->Kill (); $ANA->TimedWait(1);
+    $DET->Kill (); $DET->TimedWait(1);
+    $NOT->Kill (); $NOT->TimedWait(1);
     exit 1;
 }
 
-print "\nTEST: starting analyzer " . $ANA->CommandLine . "\n" if ($verbose);
+print "\nTEST: starting fault consumer " . $ANA->CommandLine . "\n" if ($verbose);
 $ANA->Spawn ();
-sleep (3);
 
-# print "TEST: waiting for READY.FILE from analyzer\n" if ($verbose);
-# if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
-#     print STDERR "ERROR: cannot find file <$ready_file>\n";
-#     $REP1->Kill (); $REP1->TimedWait (1);
-#     $REP2->Kill (); $REP2->TimedWait (1);
-#     $DET->Kill (); $DET2->TimedWait(1);
-#     $NOT->Kill (); $NOT->TimedWait(1);
-#     $ANA->Kill (); $ANA->TimedWait(1);
-#     exit 1;
-# }
+print "TEST: waiting for READY.FILE from fault consumer\n" if ($verbose);
+if (PerlACE::waitforfile_timed ($ready_file, 5) == -1) {
+    print STDERR "ERROR: cannot find file <$ready_file>\n";
+    $REP1->Kill (); $REP1->TimedWait (1);
+    $REP2->Kill (); $REP2->TimedWait (1);
+    $DET->Kill (); $DET->TimedWait(1);
+    $NOT->Kill (); $NOT->TimedWait(1);
+    $ANA->Kill (); $ANA->TimedWait(1);
+    exit 1;
+}
 
 print "\nTEST: starting client " . $CL->CommandLine . "\n" if ($verbose);
 $client = $CL->SpawnWaitKill (60);
@@ -248,10 +246,10 @@ if ($notifier != 0) {
     $status = 1;
 }
 
-print "\nTEST: wait for analyzer to leave.\n" if ($verbose);
+print "\nTEST: wait for fault consumer to leave.\n" if ($verbose);
 $analyzer = $ANA->WaitKill (60);
 if ($analyzer != 0) {
-    print STDERR "ERROR: analyzer returned $analyzer\n";
+    print STDERR "ERROR: fault consumer returned $analyzer\n";
     $status = 1;
 }
 
@@ -260,7 +258,7 @@ unlink $replica1_ior;
 unlink $replica2_ior;
 unlink $detector_ior;
 unlink $notifier_ior;
-# unlink $ready_file;
+unlink $ready_file;
 
 #client's work file
 unlink $client_data;
