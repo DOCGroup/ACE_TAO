@@ -1,3 +1,7 @@
+Fri Jul 03 13:47:19 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ACE version 4.5.20 released.
+
 Fri Jul 03 08:52:13 1998  Steve Huston  <shuston@riverace.com>
 
 	* netsvcs/lib/Name_Handler.{cpp h}: Moved class Naming_Context from
