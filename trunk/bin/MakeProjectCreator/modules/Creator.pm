@@ -566,8 +566,10 @@ sub fill_type_name {
     $name =~ s/\*$/$post/;
     $name =~ s/\*/$mid/g;
 
-    ## Remove any trailing underscore
+    ## Remove any trailing underscore or any underscore that is followed
+    ## by a space.  This value could be a space separated list.
     $name =~ s/_$//;
+    $name =~ s/_\s/ /g;
 
     ## If any one word is capitalized then capitalize each word
     if ($name =~ /[A-Z][0-9a-z_]+/) {

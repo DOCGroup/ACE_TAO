@@ -1,3 +1,11 @@
+Thu Oct  2 13:49:22 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/Creator.pm:
+
+          Also remove underscores that are followed by spaces.  The value
+          could be a space separated list and removing the trailing
+          underscore isn't enough.
+
 Thu Oct  2 13:02:44 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/modules/Creator.pm:
