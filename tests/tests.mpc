@@ -757,6 +757,15 @@ project(Recursive Condition Test) : aceexe {
   }
 }
 
+project(Recursive Condition Bug Test) : aceexe {
+  exename = Recursive_Condition_Bug_Test
+  Source_Files {
+    Recursive_Condition_Bug_Test.cpp
+  }
+  Header_Files {
+  }
+}
+
 project(Recursive Mutex Test) : aceexe {
   exename = Recursive_Mutex_Test
   Source_Files {
