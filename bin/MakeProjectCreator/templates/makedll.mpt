@@ -32,9 +32,10 @@ SunCC {
 }
 
 aCC {
-  cxx       = aCC
-  pic       = +Z
-  platforms = hpux
+  cxx           = aCC
+  pic           = +Z
+  platforms     = hpux
+  compilerflags = -AA -D_RWSTD_MULTI_THREAD
 }
 
 xlC_r {
@@ -83,7 +84,7 @@ aix {
 
 irix {
   shflags = -shared
-  ldlibs  = -lsocket -ldl -lnsl -lgen -lpthread
+  ldlibs  = -lsocket -ldl -lgen -lpthread
 }
 
 lynxos {
