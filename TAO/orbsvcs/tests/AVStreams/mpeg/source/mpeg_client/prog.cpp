@@ -38,7 +38,7 @@
 #include <Xm/Text.h>
 #include <Xm/TextF.h>
 #include <Xm/DialogS.h>
-#include "common.h"
+#include "include/common.h"
 #include "newproto.h"
 #include "global.h"
 

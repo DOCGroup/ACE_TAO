@@ -119,13 +119,13 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include "ace/Singleton.h"
-#include "common.h"
-#include "routine.h"
-#include "fileio.h"
-#include "com.h"   
-#include "sendpt.h"
-#include "server_proto.h"
-#include "Video_Server.h"
+#include "include/common.h"
+#include "mpeg_shared/routine.h"
+#include "mpeg_shared/fileio.h"
+#include "mpeg_shared/com.h"   
+#include "mpeg_shared/sendpt.h"
+#include "mpeg_server/server_proto.h"
+#include "mpeg_server/Video_Server.h"
 
 class Mpeg_Global
 {

@@ -31,6 +31,7 @@
 #define MPEG_VIDEO_CONTROL_STATE_H
 
 #include "ace/Singleton.h"
+#include "mpeg_shared/Video_ControlS.h"
 
 class Video_Control_Handler;
 
@@ -65,6 +66,30 @@ public:
 
   void set_state (Video_States state);
   // sets the state
+
+  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para) ;
+  
+  virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
+                                      CORBA::Long_out size) ;
+
+  virtual CORBA::Boolean close (void) ;
+  
+  virtual CORBA::Boolean stat_sent (void) ;
+
+  virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para) ;
+
+  virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para) ;
+
+  virtual CORBA::Boolean step (const Video_Control::STEPpara &para) ;
+  
+  virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
+                               CORBA::Long_out vts) ;
+
+  virtual CORBA::Boolean position (const Video_Control::POSITIONpara &para) ;
+
+  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para) ;
+
+  virtual CORBA::Boolean stop (CORBA::Long cmdsn) ;
  
 protected:
   Video_States state_;
@@ -86,6 +111,30 @@ public:
   virtual int handle_input (ACE_HANDLE h = 0);
   // Called by the Video_Control_handler when control events occur in
   // the waiting state  
+  virtual CORBA::Boolean init_video (const Video_Control::INITvideoPara &para);
+  
+  virtual CORBA::Boolean stat_stream (CORBA::Char_out ch,
+                                      CORBA::Long_out size);
+
+  virtual CORBA::Boolean close (void);
+  
+  virtual CORBA::Boolean stat_sent (void);
+
+  virtual CORBA::Boolean fast_forward (const Video_Control::FFpara &para);
+
+  virtual CORBA::Boolean fast_backward (const Video_Control::FFpara &para);
+
+  virtual CORBA::Boolean step (const Video_Control::STEPpara &para);
+  
+
+  virtual CORBA::Boolean play (const Video_Control::PLAYpara &para,
+                               CORBA::Long_out vts);
+
+  virtual CORBA::Boolean position (const Video_Control::POSITIONpara &para);
+
+  virtual CORBA::Boolean speed (const Video_Control::SPEEDpara &para);
+
+  virtual CORBA::Boolean stop (CORBA::Long cmdsn);
 };
 
 class Video_Control_Play_State : public virtual Video_Control_State

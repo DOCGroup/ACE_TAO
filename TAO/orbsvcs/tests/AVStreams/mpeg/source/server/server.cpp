@@ -12,8 +12,9 @@ int
 AV_Acceptor::make_svc_handler (AV_Svc_Handler *&sh)
 {
   ACE_NEW_RETURN (sh,
-                  AV_Svc_Handler (ACE_Reactor::instance (),
-                                    this),
+                  //                AV_Svc_Handler (ACE_Reactor::instance (),
+                  AV_Svc_Handler (TAO_ORB_Core_instance ()->reactor (),
+                                  this),
                   -1);
   return 0;
 }
@@ -47,7 +48,8 @@ AV_Svc_Handler::open (void *)
     case 0:
       // I am the child. i should handle this connection close down
       // the "listen-mode" socket
-      ACE_Reactor::instance ()->remove_handler
+      //    ACE_Reactor::instance ()->remove_handler
+      TAO_ORB_Core_instance ()-> reactor ()->remove_handler
         (this->acceptor_->get_handle (),
          ACCEPT_MASK);
       
@@ -206,7 +208,8 @@ AV_Svc_Handler::handle_connection (ACE_HANDLE)
                             this->dgram_.get_handle (), 
                             Mpeg_Global::rttag, 
                             -INET_SOCKET_BUFFER_SIZE);
-      ACE_Reactor::instance ()->end_event_loop ();
+      //    ACE_Reactor::instance ()->end_event_loop ();
+      TAO_ORB_Core_instance ()->reactor ()->end_event_loop ();
       if (result != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P|%t)handle_connection : "),
@@ -406,6 +409,8 @@ AV_Server_Sig_Handler::int_handler (int sig)
 AV_Server::AV_Server ()
 {
   this->signal_handler_ = new AV_Server_Sig_Handler ;
+  this->orb_manager_ = new TAO_ORB_Manager ;
+  this->video_control_ = new Video_Control_i;
 }
 
 // %% move to the destructor or sig handler
@@ -473,29 +478,22 @@ AV_Server::parse_args (int argc,
 // Initializes the mpeg server
 int
 AV_Server::init (int argc,
-                   char **argv)
+                   char **argv,
+                 CORBA::Environment& env)
 {
   int result;
 
-  TAO_TRY
-    {
   // Initialize the orb_manager
-      this->orb_manager_.init_child_poa (argc,
-                                         argv,
-                                         "child_poa",
-                                         TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+  this->orb_manager_->init_child_poa (argc,
+                                      argv,
+                                      "child_poa",
+                                      env);
+  TAO_CHECK_ENV_RETURN (env,-1);
 
-      this->orb_manager_.activate_under_child_poa ("Video_Control",
-                                                   this->video_control_,
-                                                   TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-    }
-  TAO_CATCHANY
-    {
-      TAO_TRY_ENV.print_exception ("Exception");
-      return -1;
-    }
+  this->orb_manager_->activate_under_child_poa ("Video_Control",
+                                                this->video_control_,
+                                                env);
+  TAO_CHECK_ENV_RETURN (env,-1);
   
   result = this->parse_args (argc, argv);
   if (result < 0)
@@ -551,19 +549,22 @@ AV_Server::init (int argc,
 
 // Runs the mpeg server
 int
-AV_Server::run ()
+AV_Server::run (CORBA::Environment& env)
 {
   int result;
-    this->server_control_addr_.set (VCR_TCP_PORT);
+  this->server_control_addr_.set (VCR_TCP_PORT);
 
   // "listen" on the socket
-  if (this->acceptor_.open (this->server_control_addr_) == -1)
+  if (this->acceptor_.open (this->server_control_addr_,
+                            TAO_ORB_Core_instance ()->reactor ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), -1);
 
     //  ACE_Reactor::instance ()->run_event_loop (); 
 
   // Run the ORB event loop
-  this->orb_manager_->run ();
+  this->orb_manager_->run (env);
+
+  TAO_CHECK_ENV_RETURN (env,-1);
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P)AV_Server::run () "
@@ -582,13 +583,22 @@ int
 main (int argc, char **argv)
 {
   AV_Server vcr_server;
-  
-  // parses the arguments, and initializes the server
-  if (vcr_server.init (argc, argv) < 0)
+
+  TAO_TRY
+    {
+    // parses the arguments, and initializes the server
+  if (vcr_server.init (argc, argv,TAO_TRY_ENV) < 0)
     return 1;
   
   // runs the reactor event loop
-  vcr_server.run ();
+  vcr_server.run (TAO_TRY_ENV);
+    }
+  TAO_CATCHANY
+    {
+      TAO_TRY_ENV.print_exception ("Exception");
+      return -1;
+    }
+  TAO_ENDTRY;
   
   return 0;
 }

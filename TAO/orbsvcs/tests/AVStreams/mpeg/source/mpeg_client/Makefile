@@ -44,7 +44,7 @@ FILES= 24bit            \
        Command_Handler
 
 MPEG_ROOT = $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source
-CPPFLAGS += -I$(MPEG_ROOT)/include -I$(MPEG_ROOT)/mpeg_shared -I$(MPEG_ROOT)/mpeg_server  -I$(MPEG_ROOT)/mpeg_mib -I$(MPEG_ROOT)/mpeg_client
+CPPFLAGS += -I$(MPEG_ROOT)
 
 DEFS    = $(addsuffix .h,$(FILES))
 LSRC	= $(addsuffix .cpp,$(FILES))
@@ -227,10 +227,11 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i interface/fb.xbm \
- interface/play.xbm interface/step.xbm interface/stop.xbm \
- interface/loop.xbm interface/ff.xbm interface/MainWindow.mib \
- interface/Info.mib video.h ../include/common.h newproto.h \
+ $(ACE_ROOT)/ace/Log_Record.i \
+ interface/fb.xbm interface/play.xbm interface/step.xbm \
+ interface/stop.xbm interface/loop.xbm interface/ff.xbm \
+ interface/MainWindow.mib interface/Info.mib video.h \
+ ../include/common.h newproto.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/mpeg_shared/routine.h \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  global.h
@@ -293,8 +294,8 @@ realclean: clean
  $(ACE_ROOT)/ace/Version.h \
  $(ACE_ROOT)/ace/ACE.i \
  $(ACE_ROOT)/ace/Log_Priority.h \
- $(ACE_ROOT)/ace/Log_Record.i decoders.h util.h \
- video.h proto.h global.h ui.h
+ $(ACE_ROOT)/ace/Log_Record.i decoders.h \
+ util.h video.h proto.h global.h ui.h
 .obj/vp.o .obj/vp.so .shobj/vp.o .shobj/vp.so: vp.cpp \
  $(TAO_ROOT)/orbsvcs/tests/AVStreams/mpeg/source/include/common.h \
  $(ACE_ROOT)/ace/OS.h \
