@@ -246,7 +246,7 @@ ACE_FlReactor::reset_timeout (void)
     {
       float t = max_wait_time->sec ()
         + max_wait_time->usec () / 1000000.0F;
-      Fl::add_timeout (t, 
+      Fl::add_timeout (t,
                        ACE_FlReactor::fl_timeout_proc,
                        this);
     }
@@ -254,11 +254,11 @@ ACE_FlReactor::reset_timeout (void)
 
 int
 ACE_FlReactor::reset_timer_interval
-  (const long timer_id, 
+  (const long timer_id,
    const ACE_Time_Value &interval)
 {
   ACE_TRACE ("ACE_FlReactor::reset_timer_interval");
-  ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Select_Reactor_Token, ace_mon, this->token_, -1));
 
   int result = ACE_Select_Reactor::reset_interval
     (timer_id,
