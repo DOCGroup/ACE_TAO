@@ -1,3 +1,9 @@
+Tue Jan 20 09:18:31 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
+
+	* TAO_IDL/be/{be_operation,be_state_operation}.cpp: For return
+	value of sequences, the stub now allocates the top level storage
+	for the sequence class.
+
 Tue Jan 20 05:34:16 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* TAO/tao/sequence.cpp: In the assignment operator for Unbounded
