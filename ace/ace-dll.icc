@@ -1,28 +1,28 @@
 if $__TOS_WIN__ {
-	option PlatformOptions = define ("ACE_HAS_WINSOCK2","1"),
-	         define ("WIN32","1"),
-        	 define ("_WINDOWS","1")
-	TARG = "aced.dll"
+        option PlatformOptions = define ("ACE_HAS_WINSOCK2","1"),
+                 define ("WIN32","1"),
+                 define ("_WINDOWS","1")
+        TARG = "aced.dll"
 }
 if $__TOS_AIX__ {
-	option PlatformOptions = null
-	TARG = "aced.shr.a"
+        option PlatformOptions = null
+        TARG = "libACEshr.a"
+        option report(disable, "CPPC1125")
 }
 
 option
-	 PlatformOptions,
-         incl(searchPath,'H:\ACE_wrappers'),
-       	 define ("__ACE_INLINE__","0"),
+         PlatformOptions,
+         define ("__ACE_INLINE__","0"),
          define("ACE_HAS_DLL","0"),
          link(exportAll),
          link(linkwithsharedlib),
-         link(linkWithMultiThreadLib,yes)
+         link(linkWithMultiThreadLib,yes),
+         incl(searchpath, "..")
          {
                target type (dll) TARG
                 {
                        option macros(global)
                         {
-                             source type(cpp) "ACE.h"
                              source type(cpp) "OS.h"
                         }
                  source type(cpp) "Log_Msg.cpp"
@@ -188,17 +188,12 @@ option
                  source type(cpp) "WIN32_Proactor.cpp"
                  source type(cpp) "XtReactor.cpp"
                  source type(cpp) "Active_Map_Manager_T.cpp"
-                 source type(cpp) "Cache_Hash_T.cpp"
-                 source type(cpp) "Cache_Heap_T.cpp"
-                 source type(cpp) "Cache_Manager_T.cpp"
                  source type(cpp) "Containers_T.cpp"
                  source type(cpp) "Dump_T.cpp"
                  source type(cpp) "Env_Value_T.cpp"
                  source type(cpp) "Event_Handler_T.cpp"
                  source type(cpp) "Functor_T.cpp"
-                 source type(cpp) "Hash_Bucket_T.cpp"
                  source type(cpp) "Hash_Map_Manager_T.cpp"
-                 source type(cpp) "Hash_Purgable_Map_Manager_T.cpp"
                  source type(cpp) "IOStream_T.cpp"
                  source type(cpp) "Local_Name_Space_T.cpp"
                  source type(cpp) "Malloc_T.cpp"
@@ -232,7 +227,6 @@ option
                  source type (cpp) "Functor_T.cpp"
                  source type (cpp) "Future.cpp"
                  source type (cpp) "Hash_Map_Manager_T.cpp"
-                 source type (cpp) "Hash_Purgable_Map_Manager_T.cpp"
                  source type (cpp) "IOStream_T.cpp"
                  source type (cpp) "LOCK_SOCK_Acceptor.cpp"
                  source type (cpp) "Local_Name_Space_T.cpp"
@@ -262,19 +256,19 @@ option
                  source type (cpp) "Typed_SV_Message.cpp"
                  source type (cpp) "Typed_SV_Message_Queue.cpp"
 
-		  // Libraries needed during linking
-		if $__TOS_WIN__ {
-			source type (lib) "advapi32.lib"
-                 	source type (lib) "user32.lib"
-		  	source type (lib) "ws2_32.lib"
-		  	source type (lib) "wsock32.lib"
-		  	source type (lib) "mswsock.lib"
-		}
-		if $__TOS_AIX__ {
+                  // Libraries needed during linking
+                if $__TOS_WIN__ {
+                        source type (lib) "advapi32.lib"
+                        source type (lib) "user32.lib"
+                        source type (lib) "ws2_32.lib"
+                        source type (lib) "wsock32.lib"
+                        source type (lib) "mswsock.lib"
+                }
+                if $__TOS_AIX__ {
                         source type (lib) "libtli_r.a"
                         source type (lib) "libpthreads.a"
                         source type (lib) "libc_r.a"
                         source type (lib) "libdl.a"
-		}
+                }
         }
 }
