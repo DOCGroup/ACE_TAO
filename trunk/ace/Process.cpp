@@ -4,6 +4,7 @@
 #include "ace/OS.h"
 #include "ace/Process.h"
 #include "ace/ARGV.h"
+#include "ace/Signal.h"
 #include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
