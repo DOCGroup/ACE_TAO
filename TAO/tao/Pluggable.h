@@ -228,11 +228,11 @@ public:
   // MProfile accessor
 
   virtual int parse_string (const char *string,
-                            CORBA::Environment &env) = 0;
+                            CORBA::Environment &ACE_TRY_ENV) = 0;
   // Initialize this object using the given input string.
   // Supports URL stylr of object references
 
-  virtual CORBA::String to_string (CORBA::Environment &env) = 0;
+  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return a string representation for this profile.  client must
   // deallocate memory.
 
@@ -258,7 +258,7 @@ public:
   // version are the same.
 
   virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &env) = 0;
+                             CORBA::Environment &ACE_TRY_ENV) = 0;
   // Return a hash value for this object.
 
   virtual int addr_to_string(char *buffer, size_t length) = 0;
@@ -311,15 +311,15 @@ public:
 
   // = The TAO_Profile methods look above
   virtual int parse_string (const char *string,
-                            CORBA::Environment &env);
-  virtual CORBA::String to_string (CORBA::Environment &env);
+                            CORBA::Environment &ACE_TRY_ENV);
+  virtual CORBA::String to_string (CORBA::Environment &ACE_TRY_ENV);
   virtual int decode (TAO_InputCDR& cdr);
   virtual int encode (TAO_OutputCDR &stream) const;
   virtual const TAO_ObjectKey &object_key (void) const;
   virtual TAO_ObjectKey *_key (void) const;
   virtual CORBA::Boolean is_equivalent (const TAO_Profile* other_profile);
   virtual CORBA::ULong hash (CORBA::ULong max,
-                             CORBA::Environment &env);
+                             CORBA::Environment &ACE_TRY_ENV);
   virtual int addr_to_string(char *buffer, size_t length);
   virtual void reset_hint (void);
 

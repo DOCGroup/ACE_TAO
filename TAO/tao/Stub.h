@@ -213,12 +213,12 @@ class TAO_Export TAO_Stub
   //   The stub and DII interpreter APIs are member functions of this
   //   type.
 public:
-  void do_static_call (CORBA_Environment &TAO_IN_ENV,
+  void do_static_call (CORBA_Environment &ACE_TRY_ENV,
                        const TAO_Call_Data *info,
                        void** args);
   // The "stub interpreter" method parameters are:
   //
-  //    - TAO_IN_ENV ... used for exception reporting
+  //    - ACE_TRY_ENV ... used for exception reporting
   //    - info ... describes the call
   //    - args parameters follow
   //
@@ -241,7 +241,7 @@ public:
                         CORBA::NamedValue_ptr result,
                         CORBA::Flags flags,
                         CORBA::ExceptionList &exceptions,
-                        CORBA_Environment &TAO_IN_ENV =
+                        CORBA_Environment &ACE_TRY_ENV =
                               TAO_default_environment ());
   // Dynamic invocations use a more costly "varargs" calling
   // convention; it's got the same input data as the (static)
@@ -259,7 +259,7 @@ public:
   //    - result ... result and its description
   //    - flags ... only one DII flag is legal
   //    - exceptions ... list of legal user-defined exceptions
-  //    - TAO_IN_ENV ... used for exception reporting.
+  //    - ACE_TRY_ENV ... used for exception reporting.
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -300,7 +300,7 @@ public:
   // All objref representations carry around a type ID.
 
   CORBA::ULong hash (CORBA::ULong maximum,
-          CORBA_Environment &TAO_IN_ENV = TAO_default_environment ());
+          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ());
   // All objref representations know how to hash themselves and
   // compare themselves for equivalence to others.  It's easily
   // possible to have two objrefs that are distinct copies of data
@@ -400,7 +400,7 @@ public:
   // temporary.
 
 protected:
-  void put_params (CORBA_Environment &TAO_IN_ENV,
+  void put_params (CORBA_Environment &ACE_TRY_ENV,
                    const TAO_Call_Data *info,
                    TAO_GIOP_Invocation &call,
                    void** args);
@@ -411,7 +411,7 @@ protected:
 
   void put_params (TAO_GIOP_Invocation &call,
                    CORBA::NVList_ptr args,
-                   CORBA_Environment &TAO_IN_ENV =
+                   CORBA_Environment &ACE_TRY_ENV =
                          TAO_default_environment ());
   // Helper method to factor out common code in dynamic oneway
   // vs. twoway invocations.

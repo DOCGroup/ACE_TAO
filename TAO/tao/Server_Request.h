@@ -113,13 +113,13 @@ public:
 #if !defined (TAO_HAS_MINIMUM_CORBA)
 
   virtual void arguments (CORBA::NVList_ptr &list,
-                          CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()) = 0;
+                          CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Implementation uses this to provide the ORB with the operation's
   // parameter list ... on return, their values are available; the
   // list fed in has typecodes and (perhap) memory assigned.
 
   virtual void set_result (const CORBA::Any &value,
-                           CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()) = 0;
+                           CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Implementation uses this to provide the operation result
   // ... illegal if exception() was called or params() was not called.
   //
@@ -127,7 +127,7 @@ public:
   // sent when this returns, and reclaim memory it allocated.
 
   virtual void set_exception (const CORBA::Any &value,
-                              CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()) = 0;
+                              CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // Implementation uses this to provide the exception value which is
   // the only result of this particular invocation.
   //
@@ -143,7 +143,7 @@ public:
   // this stuff is a catastrophic error since this is all part of the
   // basic CORBA Object Model.
 
-  virtual void dsi_marshal (CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()) = 0;
+  virtual void dsi_marshal (CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()) = 0;
   // marshal outgoing parameters. Used by DSI
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -154,7 +154,7 @@ public:
   virtual unsigned int operation_length (void) const = 0;
   // get the length of the operation name
 
-  virtual void init_reply (CORBA_Environment &TAO_IN_ENV =
+  virtual void init_reply (CORBA_Environment &ACE_TRY_ENV =
                                TAO_default_environment ()) = 0;
   // Start a Reply message.
 
@@ -169,12 +169,12 @@ public:
   virtual CORBA::ORB_ptr  orb (void) = 0;
   // get the underlying ORB
 
-  virtual void demarshal (CORBA_Environment &orb_env,
+  virtual void demarshal (CORBA_Environment &ACE_TRY_ENV,
                           const TAO_Call_Data_Skel *info,
                           ...) = 0;
   // demarshal incoming parameters
 
-  virtual void marshal (CORBA_Environment &orb_env,
+  virtual void marshal (CORBA_Environment &ACE_TRY_ENV,
                         //                        CORBA_Environment &skel_env,
                         const TAO_Call_Data_Skel *info,
                         ...) = 0;

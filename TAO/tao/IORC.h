@@ -115,12 +115,12 @@ TAO_NAMESPACE  TAO_IOP
     static TAO_IOR_Manipulation_ptr _duplicate (TAO_IOR_Manipulation_ptr obj);
     static TAO_IOR_Manipulation_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static TAO_IOR_Manipulation_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     static TAO_IOR_Manipulation_ptr _nil (void);
@@ -531,7 +531,7 @@ TAO_NAMESPACE  TAO_IOP
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           TAO_default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;

@@ -164,12 +164,12 @@ TAO_NAMESPACE  Messaging
     static RebindPolicy_ptr _duplicate (RebindPolicy_ptr obj);
     static RebindPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RebindPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RebindPolicy_ptr _nil (void);
@@ -180,7 +180,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -257,12 +257,12 @@ TAO_NAMESPACE  Messaging
     static SyncScopePolicy_ptr _duplicate (SyncScopePolicy_ptr obj);
     static SyncScopePolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static SyncScopePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static SyncScopePolicy_ptr _nil (void);
@@ -273,7 +273,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -387,12 +387,12 @@ TAO_NAMESPACE  Messaging
     static RequestPriorityPolicy_ptr _duplicate (RequestPriorityPolicy_ptr obj);
     static RequestPriorityPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RequestPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RequestPriorityPolicy_ptr _nil (void);
@@ -403,7 +403,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -480,12 +480,12 @@ TAO_NAMESPACE  Messaging
     static ReplyPriorityPolicy_ptr _duplicate (ReplyPriorityPolicy_ptr obj);
     static ReplyPriorityPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyPriorityPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyPriorityPolicy_ptr _nil (void);
@@ -496,7 +496,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -573,12 +573,12 @@ TAO_NAMESPACE  Messaging
     static RequestStartTimePolicy_ptr _duplicate (RequestStartTimePolicy_ptr obj);
     static RequestStartTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RequestStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RequestStartTimePolicy_ptr _nil (void);
@@ -589,7 +589,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -666,12 +666,12 @@ TAO_NAMESPACE  Messaging
     static RequestEndTimePolicy_ptr _duplicate (RequestEndTimePolicy_ptr obj);
     static RequestEndTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RequestEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RequestEndTimePolicy_ptr _nil (void);
@@ -682,7 +682,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -759,12 +759,12 @@ TAO_NAMESPACE  Messaging
     static ReplyStartTimePolicy_ptr _duplicate (ReplyStartTimePolicy_ptr obj);
     static ReplyStartTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyStartTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyStartTimePolicy_ptr _nil (void);
@@ -775,7 +775,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -852,12 +852,12 @@ TAO_NAMESPACE  Messaging
     static ReplyEndTimePolicy_ptr _duplicate (ReplyEndTimePolicy_ptr obj);
     static ReplyEndTimePolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyEndTimePolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyEndTimePolicy_ptr _nil (void);
@@ -868,7 +868,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -945,12 +945,12 @@ TAO_NAMESPACE  Messaging
     static RelativeRequestTimeoutPolicy_ptr _duplicate (RelativeRequestTimeoutPolicy_ptr obj);
     static RelativeRequestTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RelativeRequestTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RelativeRequestTimeoutPolicy_ptr _nil (void);
@@ -961,7 +961,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -1038,12 +1038,12 @@ TAO_NAMESPACE  Messaging
     static RelativeRoundtripTimeoutPolicy_ptr _duplicate (RelativeRoundtripTimeoutPolicy_ptr obj);
     static RelativeRoundtripTimeoutPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RelativeRoundtripTimeoutPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RelativeRoundtripTimeoutPolicy_ptr _nil (void);
@@ -1054,7 +1054,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -1168,12 +1168,12 @@ TAO_NAMESPACE  Messaging
     static RoutingPolicy_ptr _duplicate (RoutingPolicy_ptr obj);
     static RoutingPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RoutingPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static RoutingPolicy_ptr _nil (void);
@@ -1184,7 +1184,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -1261,12 +1261,12 @@ TAO_NAMESPACE  Messaging
     static MaxHopsPolicy_ptr _duplicate (MaxHopsPolicy_ptr obj);
     static MaxHopsPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static MaxHopsPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static MaxHopsPolicy_ptr _nil (void);
@@ -1277,7 +1277,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -1354,12 +1354,12 @@ TAO_NAMESPACE  Messaging
     static QueueOrderPolicy_ptr _duplicate (QueueOrderPolicy_ptr obj);
     static QueueOrderPolicy_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static QueueOrderPolicy_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static QueueOrderPolicy_ptr _nil (void);
@@ -1370,7 +1370,7 @@ TAO_NAMESPACE  Messaging
       ) = 0;
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -1692,19 +1692,19 @@ TAO_NAMESPACE  Messaging
     static ReplyHandler_ptr _duplicate (ReplyHandler_ptr obj);
     static ReplyHandler_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyHandler_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static ReplyHandler_ptr _nil (void);
 
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;
@@ -1779,12 +1779,12 @@ TAO_NAMESPACE  Messaging
     static Poller_ptr _duplicate (Poller_ptr obj);
     static Poller_ptr _narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static Poller_ptr _unchecked_narrow (
         CORBA::Object_ptr obj,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     static Poller_ptr _nil (void);
@@ -1820,7 +1820,7 @@ TAO_NAMESPACE  Messaging
       );
     virtual CORBA::Boolean _is_a (
         const CORBA::Char *type_id,
-        CORBA::Environment &env =
+        CORBA::Environment &ACE_TRY_ENV =
           CORBA::Environment::default_environment ()
       );
     virtual const char* _interface_repository_id (void) const;

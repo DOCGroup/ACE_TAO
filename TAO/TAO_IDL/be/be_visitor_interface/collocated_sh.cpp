@@ -99,7 +99,7 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
   *os << "virtual CORBA::Boolean _is_a" << be_idt
       << "(" << be_idt_nl
       << "const CORBA::Char *logical_type_id," << be_nl
-      << "CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()" << be_uidt_nl
+      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   if (!node->is_nested ())
@@ -114,7 +114,7 @@ int be_visitor_interface_collocated_sh::visit_interface (be_interface *node)
 
   *os << "virtual CORBA::Boolean _non_existent" << be_idt
       << "(" << be_idt_nl
-      << "CORBA_Environment &TAO_IN_ENV = TAO_default_environment ()" << be_uidt_nl
+      << "CORBA_Environment &ACE_TRY_ENV = TAO_default_environment ()" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   if (this->visit_scope (node) == -1)

@@ -354,7 +354,7 @@ public:
   // Constructor
 
   void init (TAO_InputCDR &msg,
-             CORBA_Environment &TAO_IN_ENV =
+             CORBA_Environment &ACE_TRY_ENV =
                  TAO_default_environment ());
   // Initialize the header from the values found in <msg>.
 

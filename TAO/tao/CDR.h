@@ -116,7 +116,7 @@ public:
                                            CORBA_Environment &ACE_TRY_ENV =
                                            TAO_default_environment ());
   // Append the contents of the CDR stream based on information
-  // described by <tc>; returning any errors in <TAO_IN_ENV>.
+  // described by <tc>; returning any errors in <ACE_TRY_ENV>.
 
   // @@ TODO: do we want a special method to write an array of
   // strings and wstrings?
@@ -129,7 +129,7 @@ public:
                                            CORBA_Environment &ACE_TRY_ENV =
                                            TAO_default_environment ());
   // Marshalls the contents of <data> as described by the TypeCode in
-  // <tc>. Any errors are reported though the <TAO_IN_ENV> parameter.
+  // <tc>. Any errors are reported though the <ACE_TRY_ENV> parameter.
 
 private:
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
@@ -221,13 +221,13 @@ public:
                                            CORBA_Environment &ACE_TRY_ENV =
                                            TAO_default_environment ());
   // Demarshall the contents of the CDR stream into <data> as
-  // described by <tc>; returning any errors in <TAO_IN_ENV>.
+  // described by <tc>; returning any errors in <ACE_TRY_ENV>.
 
   CORBA::TypeCode::traverse_status skip (CORBA::TypeCode_ptr tc,
                                          CORBA_Environment &ACE_TRY_ENV =
                                          TAO_default_environment ());
   // Skip the contents of the CDR stream based on information
-  // described by <tc>; returning any errors in <TAO_IN_ENV>.
+  // described by <tc>; returning any errors in <ACE_TRY_ENV>.
 
   TAO_ORB_Core *orb_core (void) const;
   // Accessor

@@ -115,12 +115,12 @@ class  CORBA_Current : public virtual ACE_CORBA_1 (Object)
   // the static operations
   static CORBA_Current_ptr _duplicate (CORBA_Current_ptr obj);
   static CORBA_Current_ptr _narrow (CORBA::Object_ptr obj,
-                                    CORBA_Environment &TAO_IN_ENV =
+                                    CORBA_Environment &ACE_TRY_ENV =
                                         TAO_default_environment ());
   static CORBA_Current_ptr _nil (void);
 
   virtual CORBA::Boolean _is_a (const CORBA::Char *type_id,
-                                CORBA_Environment &TAO_IN_ENV =
+                                CORBA_Environment &ACE_TRY_ENV =
                                     TAO_default_environment ()
                                 );
   virtual const char* _interface_repository_id (void) const;
