@@ -93,6 +93,7 @@ ACE_HAS_REGEX				Platform supports the POSIX regular expression library
 ACE_HAS_SELECT_H			Platform has special header for select().
 ACE_HAS_SEMUN				Compiler/platform defines a union semun for SysV shared memory
 ACE_HAS_SIGINFO_T			Platform supports SVR4 extended signals
+ACE_HAS_SIG_MACROS			Platform/compiler has macros for sig{empty,fill,add,del}set (e.g., SCO and FreeBSD)
 ACE_HAS_SIGNAL_OBJECT_AND_WAIT		Platform supports the Win32 SignalObjectAndWait() function (WinNT 4.0 and beyond).
 ACE_HAS_SIGNAL_SAFE_OS_CALLS		Automatically restart OS system calls when EINTR occurs
 ACE_HAS_SIGWAIT				Platform/compiler has the sigwait(2) prototype

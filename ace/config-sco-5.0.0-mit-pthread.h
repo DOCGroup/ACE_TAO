@@ -14,6 +14,8 @@
 #define	_SVID3
 #endif /* SCO */
 
+#define ACE_HAS_SIG_MACROS
+
 #if defined (SCO) && !defined (MAXPATHLEN)
 #define MAXPATHLEN 1023
 #endif /* SCO */
