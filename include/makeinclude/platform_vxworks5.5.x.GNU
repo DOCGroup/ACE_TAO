@@ -106,9 +106,10 @@ BIN_UNCHECKED ?=
 ifneq ("$(BIN_UNCHECKED)","")
   ## set variables for VxWorks linktarget identification
   PRJ_FILE = $(basename $(notdir $(BIN_UNCHECKED))).vxworks
+  EXEEXT = .out
   PRJ_DIR = .
   VXWORKSLINK = true
-  GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE) *.out
+  GENERATED_DIRTY += $(PRJ_DIR)/$(PRJ_FILE)
 endif
 
 include $(TGT_DIR)/h/make/defs.default
@@ -119,9 +120,8 @@ include $(TGT_DIR)/h/tool/$(TOOL_FAMILY)/make.$(CPU)$(TOOL)
 
 ifeq ("$(VXWORKSLINK)","true")
   override LARGE_PROJECT =
-  PRJ_OBJS =
-  PRJ_LIBS += $(VLDLIBS)
-  LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH)
+  PRJ_OBJS = $(addprefix $(VDIR), $(OBJS))
+  LD_PARTIAL += -L$(ACE_ROOT)/ace -L./ $(LDLIBPATH) $(LD_LINK_PATH) $(VLDLIBS)
   PRJ_OBJS_FOR_LD_PARTIAL=$(addprefix $(VDIR), $(OBJS))
   PRJ_OBJS_FOR_LD=$(addprefix $(VDIR), $(OBJS))
   PRJ_OBJS_FOR_NM=$(addprefix $(VDIR), $(OBJS))
@@ -134,7 +134,7 @@ ifeq ("$(VXWORKSLINK)","true")
   ##
 default: all
 
-include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
+##include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
 
   ## dummy target to satify VxWorks dependencies
 $(PRJ_DIR)/$(PRJ_FILE):

@@ -329,6 +329,9 @@ endif
 
 <%endif%>
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
+ifeq ($(VXWORKSLINK),true)
+include $(TGT_DIR)/h/make/rules.$(PRJ_TYPE)
+endif
 <%if(tao)%>
 include $(TAO_ROOT)/taoconfig.mk
 <%endif%>
@@ -506,17 +509,14 @@ endif
 <%endif%>
 <%if(exename)%>
 
+ifneq ($(VXWORKSLINK),true)
 ifndef kylix
-ifeq ($(VXWORKSLINK),true)
-$(BIN): $(addprefix $(VDIR), $(OBJS)) $(DEFAULT_RULE)
-	cp $(DEFAULT_RULE) $@
-else
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $@ $^ $(VLDLIBS) $(POSTLINK)
-endif
 else
 $(BIN): $(addprefix $(VDIR), $(OBJS))
 	$(LINK.cc) $(LDFLAGS) $(CC_OUTPUT_FLAG) $(VLDLIBS) $(BORINITEXEOBJ) $(POSTLINK) $^, $@,,
+endif
 endif
 <%endif%>
 
