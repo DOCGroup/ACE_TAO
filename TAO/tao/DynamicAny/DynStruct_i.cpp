@@ -69,6 +69,17 @@ TAO_DynStruct_i::init (const CORBA_Any& any,
   TAO_InputCDR cdr (mb,
                     any._tao_byte_order ());
 
+  // If we have an exception type, unmarshal the repository ID.
+  CORBA::TCKind kind = TAO_DynAnyFactory::unalias (this->type_.in (),
+                                                   ACE_TRY_ENV);
+  ACE_CHECK;
+
+  if (kind == CORBA::tk_except)
+    {
+      CORBA::String_var str;
+      cdr >> str.out ();
+    }
+
   for (CORBA::ULong i = 0; i < numfields; i++)
     {
       CORBA::TypeCode_var field_tc =
