@@ -216,11 +216,10 @@ namespace CCF
 
       TypeInfo const& Extends::
       static_type_info () { return extends_; }
-      
+
       // Scope
       //
       //
-
       Nameables Scope::
       lookup (Name const& name) const
       {
@@ -267,6 +266,13 @@ namespace CCF
             (**i).extendee ().lookup (name, result);
           }
         }
+      }
+
+      void Scope::
+      add_edge_left (Names& e)
+      {
+        names_.push_back (&e);
+        names_map_[e.name ()].push_back (&e);
       }
 
       namespace
