@@ -79,6 +79,9 @@ Fri Nov 06 08:57:49 1998  David L. Levine  <levine@cs.wustl.edu>
 
         * ACE-INSTALL.html: added note on possibly having to change
           -G to -shared in platform_macro.GNU's SOFLAGS with GNU linker.
+          Thanks to Andy Gokhale and James Megquier <jmegq@bbn.com> for
+          reporting this.  If anyone knows of an automagic fix, that would
+          be appreciated.
 
         * ACE-INSTALL.html: added note on how to enable IP multicast on
           LynxOS.
