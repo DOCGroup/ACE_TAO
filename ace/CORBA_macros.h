@@ -88,6 +88,7 @@
 # define ACE_TRY_NEW_ENV \
    do \
      { \
+       CORBA::Environment ACE_TRY_ENV; \
        try \
          {
 # define ACE_TRY_EX(LABEL) \
@@ -109,10 +110,10 @@
 # define ACE_CATCH(EXCEPTION,VAR) \
          } \
        catch (EXCEPTION & VAR) \
-         {
+         { \
+           ACE_UNUSED_ARG (VAR);
 # define ACE_CATCHANY \
-       ACE_CATCH(CORBA::Exception, ex) \
-         ACE_UNUSED_ARG (ex);
+       ACE_CATCH(CORBA::Exception, ex)
 # define ACE_CATCHALL \
          } \
        catch (...) \
