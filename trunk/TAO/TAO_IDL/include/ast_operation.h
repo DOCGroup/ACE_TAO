@@ -76,12 +76,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
 
-class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl, 
+class TAO_IDL_FE_Export AST_Operation : public virtual AST_Decl,
                                         public virtual UTL_Scope
 {
 public:
   // Define enum with flags for operation attributes.
-  enum Flags 
+  enum Flags
   {
        OP_noflags               // No flags present.
      , OP_oneway                // Operation is oneway.
@@ -127,7 +127,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Operation);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Method to add exceptions
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
@@ -143,13 +143,13 @@ private:
 
   AST_Type *pd_return_type;
   // Return type
-  
+
   Flags pd_flags;
   // Operation flags
-  
+
   UTL_StrList *pd_context;
   // Context
-  
+
   UTL_ExceptList *pd_exceptions;
   // Exceptions raised
 

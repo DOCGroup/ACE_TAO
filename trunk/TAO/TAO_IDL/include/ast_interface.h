@@ -78,7 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 
 
-class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type, 
+class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
@@ -155,7 +155,7 @@ public:
   DEF_NARROW_FROM_SCOPE(AST_Interface);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -163,7 +163,7 @@ public:
 protected:
 
   idl_bool is_valuetype_;
-  // 
+  //
 
 private:
   // Helper function for fwd_redefinition_helper.

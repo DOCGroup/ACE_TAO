@@ -87,7 +87,7 @@ public:
 
   // Data Accessors.
   AST_UnionLabel *label (unsigned long index = 0);
-  
+
   unsigned long label_list_length (void);
 
   // Narrowing.
@@ -95,7 +95,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_UnionBranch);
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

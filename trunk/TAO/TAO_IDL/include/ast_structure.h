@@ -124,7 +124,7 @@ public:
   // Are we or the node represented by node involved in recursion.
 
   // AST Dumping.
-  virtual void dump (ostream &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
   virtual void destroy (void);

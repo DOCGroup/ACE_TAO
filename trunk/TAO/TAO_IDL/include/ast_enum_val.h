@@ -79,8 +79,8 @@ public:
   // Constructor(s).
   AST_EnumVal (void);
 
-  AST_EnumVal (unsigned long v, 
-               UTL_ScopedName *n, 
+  AST_EnumVal (unsigned long v,
+               UTL_ScopedName *n,
                UTL_StrList *p);
 
   // Destructor.
@@ -91,7 +91,7 @@ public:
   DEF_NARROW_FROM_DECL(AST_EnumVal);
 
   // AST Dumping.
-  virtual void dump (ostream &);
+  virtual void dump (ACE_OSTREAM_TYPE &);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
