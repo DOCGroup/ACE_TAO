@@ -350,6 +350,10 @@ subproject Thread_Pool_Reactor_Test icc "Thread_Pool_Reactor_Test.icc", ics "Thr
 {
 }
 
+subproject Thread_Pool_Reactor_Resume_Test icc "Thread_Pool_Reactor_Resume_Test.icc", ics "Thread_Pool_Reactor_Resume_Test.ics"
+{
+}
+
 subproject Thread_Pool_Test icc "Thread_Pool_Test.icc", ics "Thread_Pool_Test.ics"
 {
 }
