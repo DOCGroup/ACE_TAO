@@ -1,3 +1,8 @@
+Tue Sep 03 17:59:45 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
+
+	* tao/Messaging/TAO_Messaging.dsp: Added the new files in to the
+	  workspace. 
+
 Tue Sep  3 17:54:41 2002  Balachandran Natarajan  <bala@isis-server.vuse.vanderbilt.edu>
 
 	* tests/RTCORBA/Policies/Policies.cpp: Fixed a compile error in

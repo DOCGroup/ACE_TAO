@@ -172,6 +172,10 @@ SOURCE=.\Messaging.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_No_ImplC.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_ORBInitializer.cpp
 # End Source File
 # Begin Source File
@@ -181,6 +185,14 @@ SOURCE=.\Messaging_Policy_i.cpp
 # Begin Source File
 
 SOURCE=.\Messaging_PolicyFactory.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_RT_PolicyC.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_SyncScope_PolicyC.cpp
 # End Source File
 # Begin Source File
 
@@ -224,6 +236,10 @@ SOURCE=.\messaging_export.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_No_ImplC.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_ORBInitializer.h
 # End Source File
 # Begin Source File
@@ -233,6 +249,14 @@ SOURCE=.\Messaging_Policy_i.h
 # Begin Source File
 
 SOURCE=.\Messaging_PolicyFactory.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_RT_PolicyC.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_SyncScope_PolicyC.h
 # End Source File
 # Begin Source File
 
@@ -264,7 +288,19 @@ SOURCE=.\Asynch_Reply_Dispatcher.i
 # End Source File
 # Begin Source File
 
+SOURCE=.\Messaging_No_ImplC.i
+# End Source File
+# Begin Source File
+
 SOURCE=.\Messaging_Policy_i.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_RT_PolicyC.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Messaging_SyncScope_PolicyC.i
 # End Source File
 # Begin Source File
 
