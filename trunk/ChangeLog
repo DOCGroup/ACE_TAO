@@ -1,3 +1,9 @@
+Fri Nov 26 17:54:32 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* bin/tao_other_tests.lst:
+
+	  Added orbsvcs/test/Log/Basic_Log_Test test to the list.
+
 Fri Nov 26 18:24:39 2004  Steve Huston  <shuston@riverace.com>
 
 	* ace/OS_NS_Thread.inl (thr_getprio): WinCE doesn't support
