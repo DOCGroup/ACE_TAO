@@ -1,6 +1,11 @@
+1998-06-16  Torben Worm  <tworm@cumbia.cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/CC_LockSet.{h,cpp}
+	  Cleaned up debugging code.
+
 Tue Jun 16 14:01:52 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/CDR.cpp: 
+	* tao/CDR.cpp:
 	  Fixed potential inifinite loop in buffer growth if the initial
 	  buffer size was 0. Thanks to Stuart Myles
 	  <smyles@wsj.dowjones.com> for detecting this.
