@@ -12,7 +12,7 @@ Tue Apr 25 15:05:48 2000  Ossama Othman  <ossama@uci.edu>
 	* tao/SHMIOP_Profile.cpp:
 
 	  Removed copy constructor and assignment operator
-	  implementations, and declarad them to be ACE_UNIMPLIMENTED_FUNCs
+	  implementations, and declarad them to be ACE_UNIMPLEMENTED_FUNC
 	  and private.  TAO_Profile instances should not be copied.
 
 	  (object_key):
