@@ -263,7 +263,7 @@ Test_ObjRef::check_validity (void)
     }
   ACE_ENDTRY;
 
-  return 0;
+  return 1;
 }
 
 CORBA::Boolean
@@ -290,6 +290,7 @@ Test_ObjRef::check_validity (CORBA::Request_ptr /*req*/)
   ACE_CATCHANY
     {
       ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION, "_narrow from DII result");
+      return 0;
     }
   ACE_ENDTRY;
   ACE_CHECK_RETURN (0);
