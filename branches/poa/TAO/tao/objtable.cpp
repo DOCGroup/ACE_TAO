@@ -386,7 +386,7 @@ TAO_Array_ObjTable_Iterator::done (const TAO_Object_Table_Iterator_Impl *end) co
 
 
 TAO_Linear_ObjTable::
-TAO_Linear_ObjTable (CORBA::ULong size)
+TAO_Linear_ObjTable (CORBA::ULong /*size*/)
   :  next_ (0),
      tablesize_ (0),
      table_ (0)
@@ -551,7 +551,7 @@ TAO_Active_Demux_ObjTable::~TAO_Active_Demux_ObjTable ()
 }
 
 int
-TAO_Active_Demux_ObjTable::index_from_id (const PortableServer::ObjectId &id) const
+TAO_Active_Demux_ObjTable::index_from_id (const PortableServer::ObjectId & /*id*/) const
 {
   // @@ TODO parse id an obtain the index, maybe write a "index" to id
   // function or some method to obtain the next "free" id.
