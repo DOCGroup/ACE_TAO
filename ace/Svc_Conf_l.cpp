@@ -216,7 +216,7 @@ static int ace_yy_n_chars;		/* number of characters read into ace_yy_ch_buf */
 int ace_yyleng;
 
 /* Points to current character in buffer. */
-static ACE_TCHAR *ace_yy_c_buf_p = (char *) 0;
+static ACE_TCHAR *ace_yy_c_buf_p = (ACE_TCHAR *) 0;
 static int ace_yy_init = 1;		/* whether we need to initialize */
 static int ace_yy_start = 0;	/* start state number */
 
@@ -679,7 +679,7 @@ ACE_YY_DECL
           ACE_Svc_Conf_Lexer_Guard ace_lexer_guard (ACE_SVC_CONF_PARAM);
 
 	register ace_yy_state_type ace_yy_current_state;
-	register ACE_TCHAR *ace_yy_cp, *ace_yy_bp;
+	register ACE_TCHAR *ace_yy_cp=0, *ace_yy_bp=0;
 	register int ace_yy_act;
 
 
