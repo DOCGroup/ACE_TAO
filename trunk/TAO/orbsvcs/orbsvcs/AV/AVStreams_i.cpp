@@ -4905,6 +4905,7 @@ template class ACE_Hash_Map_Reverse_Iterator_Ex<TAO_String_Hash_Key, TAO_FlowSpe
 
 template class ACE_Svc_Handler <ACE_SOCK_STREAM,ACE_NULL_SYNCH>;
 
+template class ACE_Equal_to<MMDevice_Map_Hash_Key>;
 template class ACE_Array<char*>;
 template class ACE_Array_Base<char*>;
 template class ACE_DLList<TAO_MCastConfigIf::Peer_Info>;
