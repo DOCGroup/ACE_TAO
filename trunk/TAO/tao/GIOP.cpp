@@ -485,9 +485,9 @@ TAO_GIOP::recv_request (TAO_SVC_HANDLER *&handler,
         {
         case 0:
           if (TAO_orbdebug)
-			  ACE_DEBUG ((LM_DEBUG,
-                         "(%P|%t) Header EOF ... peer probably aborted connection %d\n",
-                         connection.get_handle ()));
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) End of connection %d\n",
+                        connection.get_handle ()));
           return TAO_GIOP::EndOfFile;
           // @@ should probably find some way to report this without
           // an exception, since for most servers it's not an error.
