@@ -1,3 +1,11 @@
+Wed Sep 29 07:06:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed pre/post check, the matching of the /**/ was not
+          correct. Added a check for _MSC_VER >= 1200. This is at
+          level 6, when we have updated more code, we can lower the
+          level.
+
 Tue Sep 28 21:05:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* Makefile.am:
