@@ -37,6 +37,9 @@ Tue Feb 17 10:43:45 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	* orbsvcs/Dump_Schedule/Makefile: 
 	  Updated dependencies.
 
+	* docs/releasenotes/ec.html: 
+	  Updated documentation for this release.
+
 Tue Feb 17 07:40:49 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* tao/any.cpp: Added a "return *this" to operator= to stop certain
