@@ -1,3 +1,10 @@
+Thu Dec 16 17:25:42 1999  Ossama Othman  <othman@cs.wustl.edu>
+
+	* orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp (list):
+	* orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp (list):
+
+	  Added missing ACE_CHECK after call to ACE_NEW_THROW_EX.
+
 Thu Dec 16 14:53:23 1999  Ossama Othman  <othman@cs.wustl.edu>
 
 	* docs/index.html:
