@@ -60,8 +60,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
   if (be_global->any_support ())
     {
-      *os << "static void _tao_any_destructor (void *);"
-          << be_nl << be_nl;
+      *os << "static void _tao_any_destructor (void *);";
     }
 
   // Generate code for field members.
