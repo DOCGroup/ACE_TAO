@@ -553,7 +553,7 @@ TAO_GIOP_Invocation::TAO_GIOP_Invocation (IIOP_Object *data,
     do_rsvp_ (is_roundtrip),
     my_request_id_ (0),
     out_stream_ (CDR::DEFAULT_BUFSIZE), /* (buffer, sizeof buffer), */
-    inp_stream_ (out_stream_),
+    inp_stream_ (CDR::DEFAULT_BUFSIZE),
     handler_ (0)
 {
   // @@ TODO The comments here are scary, can someone please give me a
