@@ -1,3 +1,11 @@
+Mon Aug 23 22:03:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
+
+	* include/makeinclude/rules.lib.GNU:
+	* include/makeinclude/rules.local.GNU:
+	  When compiling both shared and static libraries only one of them 
+	  was installed. Thanks to Paul Calabrese <calabrese_p@ociweb.com> 
+	  for providing this fix.
+
 Mon Aug 23 21:41:43 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
 	* tests/run_tests.pl:
