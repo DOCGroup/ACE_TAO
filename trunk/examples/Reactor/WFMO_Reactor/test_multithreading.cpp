@@ -60,19 +60,19 @@ parse_args (int argc, char **argv)
     switch (c)
       {
       case 't':
-        concurrent_threads = atoi (get_opt.opt_arg ());
+        concurrent_threads = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'e':
-        iterations = atoi (get_opt.opt_arg ());
+        iterations = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'h':
-        number_of_handles = atoi (get_opt.opt_arg ());
+        number_of_handles = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 'i':
-        interval = atoi (get_opt.opt_arg ());
+        interval = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       case 's':
-        number_of_handles_to_signal = atoi (get_opt.opt_arg ());
+        number_of_handles_to_signal = ACE_OS::atoi (get_opt.opt_arg ());
         break;
       default:
         print_usage_and_die ();
