@@ -137,12 +137,12 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
       if (!end)
         {
           key_out = current_section;
-          return 0;
+          break;
         }
       begin = end + 1;
     }
 
-  return -1;
+  return 0;
 }
 
 int 
