@@ -1,3 +1,15 @@
+Fri Feb 14 18:39:01 UTC 2003  Craig Rodrigues  <crodrigu@bbn.com>
+
+	* tao/RTCORBA/RT_ORBInitializer.cpp:
+	  If you do:
+	  ACE_DEBUG((LM_DEBUG, "%p" ));
+	  to print errno, then that is wrong and will crash.
+
+	  You need to do:
+	  ACE_DEBUG((LM_DEBUG, "%p", "somestring ));
+	  I've changed things to be consistent:
+	  ACE_DEBUG((LM_DEBUG, "errno: %d %m", errno));
+
 Fri Feb 14 09:12:12 2003  Balachandran Natarajan  <bala@isis-server.isis.vanderbilt.edu>
 
 	* tests/RTCORBA/MT_Client_Protocol_Priority/client.conf: New file

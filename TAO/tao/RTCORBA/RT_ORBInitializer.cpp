@@ -247,7 +247,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   int result = ACE_OS::thr_getprio(thr_id, priority);
   if ( result != 0 ) {
-     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_getprio failed, priority %d errno %p\n", priority));
+     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_getprio failed, priority %d errno: %d %m\n", priority, errno));
      return;
   }
 
@@ -259,7 +259,7 @@ TAO_RT_ORBInitializer::pre_init (
 
   result = ACE_OS::thr_setprio(thr_id, priority, this->sched_policy_);
   if ( result != 0 ) {
-     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_setprio failed, priority %d errno %p\n", priority));
+     ACE_ERROR ((LM_ERROR, "(%N,%l) ACE_OS::thr_setprio failed, priority %d errno: %d %m\n", priority, errno));
   }
 
 }
