@@ -303,6 +303,7 @@ test_log_msg_features (const char *program)
                 10000,
                 badname,
                 cleanup));
+
 }
 
 static int
@@ -422,6 +423,9 @@ main (int, char *argv[])
   // Test various features of the <ACE_Log_Msg>.
   test_log_msg_features (argv[0]);
 
+  // Restore this mask so the shutdown message will print correctly!
+  ACE_LOG_MSG->priority_mask (ACE_LOG_MSG->priority_mask () | LM_DEBUG,
+                              ACE_Log_Msg::PROCESS);
   ACE_END_TEST;
   return 0;
 }
