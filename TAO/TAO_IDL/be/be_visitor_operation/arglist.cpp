@@ -48,7 +48,7 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << " (" << be_idt << be_idt << "\n";
+  *os << " (" << be_idt << be_idt_nl;
 
   // all we do is hand over code generation to our scope
   if (this->visit_scope (node) == -1)
@@ -217,7 +217,7 @@ be_visitor_operation_arglist::post_process (be_decl *bd)
   // which case there will not be any CORBA::Environment parameter
   if (!this->last_node (bd))
     {
-      *os << ",\n";
+      *os << "," << be_nl;
     }
   return 0;
 }

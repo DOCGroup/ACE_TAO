@@ -31,10 +31,10 @@ ACE_RCSID(be_visitor_operation, operation_interceptors_ss, "$Id$")
   // primary visitor for "operation" in server header
   // ******************************************************
 
-  be_visitor_operation_interceptors_ss::be_visitor_operation_interceptors_ss (
-      be_visitor_context *ctx
-    )
-    : be_visitor_operation (ctx)
+be_visitor_operation_interceptors_ss::be_visitor_operation_interceptors_ss (
+    be_visitor_context *ctx
+  )
+  : be_visitor_operation (ctx)
 {
 }
 
@@ -69,7 +69,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       *os << "POA_" << parent->full_name () << "::";
     }
 
-  *os << "TAO_ServerRequest_Info_"<< node->flat_name ();
+  *os << "TAO_ServerRequest_Info_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -93,16 +93,16 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
         {
-          *os <<"_get";
+          *os << "_get";
         }
       else
         {
-          *os <<"_set";
+          *os << "_set";
         }
     }
 
   *os << "::"
-      << "TAO_ServerRequest_Info_"<< node->flat_name ();
+      << "TAO_ServerRequest_Info_" << node->flat_name ();
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
@@ -126,15 +126,16 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
         {
-          *os <<"_get";
+          *os << "_get";
         }
       else
         {
-          *os <<"_set";
+          *os << "_set";
         }
     }
 
-  *os << " (const char *_tao_operation," << be_nl
+  *os << " (" << be_idt << be_idt_nl
+      << "const char *_tao_operation," << be_nl
       << "IOP::ServiceContextList &_tao_service_context_list";
 
   // Generate the argument list with the appropriate mapping. For these
@@ -156,13 +157,11 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
 
   delete visitor;
 
-  os->indent ();
-  *os << ")" << be_nl;
+  *os << be_uidt_nl << ")" << be_nl;
 
   // Generate the member list and set each member but before that,
   // its necessary to pass on some args to the base class.
-  os->indent ();
-  *os << "  : TAO_ServerRequest_Info (_tao_operation, "
+  *os << ": TAO_ServerRequest_Info (_tao_operation, "
       << "_tao_service_context_list)";
 
   ctx = *this->ctx_;
@@ -218,11 +217,11 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
         {
-          *os <<"_get";
+          *os << "_get";
         }
       else
         {
-          *os <<"_set";
+          *os << "_set";
         }
     }
 
@@ -313,11 +312,11 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
         {
-          *os <<"_get";
+          *os << "_get";
         }
       else
         {
-          *os <<"_set";
+          *os << "_set";
         }
     }
 
@@ -327,7 +326,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   // Generate the CORBA::Environment parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
-      *os<<"CORBA::Environment &";
+      *os <<"CORBA::Environment &";
     }
   else
     {
@@ -403,11 +402,11 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
         {
-          *os <<"_get";
+          *os << "_get";
         }
       else
         {
-          *os <<"_set";
+          *os << "_set";
         }
     }
 
@@ -417,7 +416,7 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
   // Generate the CORBA::Environment parameter for the alternative mapping.
   if (!be_global->exception_support ())
     {
-      *os<<"CORBA::Environment &";
+      *os << "CORBA::Environment &";
     }
   else
     {
@@ -488,7 +487,8 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
           *os << "POA_"<< parent->full_name () << "::";
         }
 
-      *os << "TAO_ServerRequest_Info_"<<node->flat_name ();
+      *os << "TAO_ServerRequest_Info_" << node->flat_name ();
+
       // We need the interface node in which this operation was defined. However,
       // if this operation node was an attribute node in disguise, we get this
       // information from the context and add a "_get"/"_set" to the flat
@@ -511,11 +511,11 @@ be_visitor_operation_interceptors_ss::visit_operation (be_operation *node)
           // void it means it is not the accessor.
           if (!this->void_return_type (bt))
             {
-              *os <<"_get";
+              *os << "_get";
             }
           else
             {
-              *os <<"_set";
+              *os << "_set";
             }
         }
 

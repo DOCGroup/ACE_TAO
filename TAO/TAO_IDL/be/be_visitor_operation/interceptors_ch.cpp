@@ -31,36 +31,36 @@ ACE_RCSID(be_visitor_operation, operation_interceptors_ch, "$Id$")
   // primary visitor for "operation" in client header
   // ******************************************************
 
-  be_visitor_operation_interceptors_ch::be_visitor_operation_interceptors_ch (be_visitor_context *ctx)
-    : be_visitor_operation (ctx)
+be_visitor_operation_interceptors_ch::be_visitor_operation_interceptors_ch (
+    be_visitor_context *ctx
+  )
+  : be_visitor_operation (ctx)
 {
 }
 
-be_visitor_operation_interceptors_ch::~be_visitor_operation_interceptors_ch (void)
+be_visitor_operation_interceptors_ch::~be_visitor_operation_interceptors_ch (
+    void
+  )
 {
 }
 
 int
 be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
 {
-  TAO_OutStream *os; // output stream
-  be_type *bt;       // type node
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_type *bt = 0;
   be_visitor_context ctx (*this->ctx_);
   be_visitor *visitor = tao_cg->make_visitor (&ctx);
-  os = this->ctx_->stream ();
-  this->ctx_->node (node); // save the node
 
-  /*  if ((node->next_state (TAO_CodeGen::TAO_OPERATION_CH, 
-                         node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CH)) 
-       == TAO_CodeGen::TAO_AMI_SENDC_OPERATION_CH)
-      ||(node->next_state (TAO_CodeGen::TAO_OPERATION_CH,
-                           node->has_extra_code_generation (TAO_CodeGen::TAO_OPERATION_CH)) 
-         == TAO_CodeGen::TAO_AMI_HANDLER_REPLY_STUB_OPERATION_CH))
-         return 0;*/
-  
-  // Generate the ClientRequest_Info object per operation to be used by the interecptors
-  os->indent (); // start with the current indentation level
-  *os << "class TAO_ClientRequest_Info_"<< node->flat_name ();
+  // Save the node
+  this->ctx_->node (node);
+
+  // Generate the ClientRequest_Info object per operation to 
+  // be used by the interecptors.
+
+  // Start with the current indentation level.
+  *os << "class TAO_ClientRequest_Info_" << node->flat_name ();
+
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -69,6 +69,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   if (this->ctx_->attribute ())
     {
       bt = be_type::narrow_from_decl (node->return_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -78,24 +79,33 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                             -1);
         }
       
-      // grab the right visitor to generate the return type if its not
+      // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
-        *os <<"_get";
+        {
+          *os << "_get";
+        }
       else
-        *os <<"_set";
+        {
+          *os << "_set";
+        }
     }
+
   *os << " : public TAO_ClientRequest_Info" << be_nl
       << "{" << be_nl
-      << "public:"<< be_idt_nl
+      << "public:" << be_idt_nl
+
     // Need to declare the stub as a friend so that it can access the 
     // private members of the Request Info class.
       << "friend class ";
+
   be_decl *parent =
     be_scope::narrow_from_scope (node->defined_in ())->decl ();
-  *os << parent->full_name () <<";"<< be_nl;
+
+  *os << parent->full_name () << ";" << be_nl << be_nl;
   
-  *os << "TAO_ClientRequest_Info_"<< node->flat_name ();
+  *os << "TAO_ClientRequest_Info_" << node->flat_name ();
+
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -104,6 +114,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   if (this->ctx_->attribute ())
     {
       bt = be_type::narrow_from_decl (node->return_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -113,25 +124,29 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                             -1);
         }
       
-      // grab the right visitor to generate the return type if its not
+      // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
-        *os <<"_get";
+        {
+          *os << "_get";
+        }
       else
-        *os <<"_set";
+        {
+          *os << "_set";
+        }
     }
 
-  *os << " (" << be_idt_nl 
-      << "const char *_tao_operation,"<< be_nl 
+  *os << " (" << be_idt << be_idt_nl 
+      << "const char *_tao_operation," << be_nl 
       << "IOP::ServiceContextList &_tao_service_context_list," << be_nl
-      << "CORBA::Object *_tao_target" << be_uidt;
+      << "CORBA::Object *_tao_target";
 
-  //generate the argument list with the appropriate mapping. For these
-  // we grab a visitor that generates the parameter listing
- 
+  // Generate the argument list with the appropriate mapping. For these
+  // we grab a visitor that generates the parameter listing. 
   ctx = *this->ctx_;
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_ARGLIST_CH);
   visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -150,81 +165,72 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
-  *os  << ");\n\n";
 
-  os->indent ();
-  // Here I still need to generate the other methods + private args
-  *os << " virtual Dynamic::ParameterList * arguments (";
-    if (!be_global->exception_support ())
-      {
-        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
-            <<be_idt_nl << " TAO_default_environment ())" 
-            << be_uidt<< be_uidt_nl;
-
-      }
-    else
-      *os << "void)" <<be_nl;
-
-    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-        << be_uidt_nl << be_nl;
-  os->indent ();
-  *os << "virtual Dynamic::ExceptionList * exceptions ( ";
-    if (!be_global->exception_support ())
-      {
-        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
-            <<be_idt_nl << " TAO_default_environment ())" 
-            << be_uidt<< be_uidt_nl;
-      }
-    else
-      *os << "void)" <<be_nl;
-
-    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-        << be_uidt_nl << be_nl;
-    os->indent ();
-    *os << "virtual CORBA::Any * result (";
-    if (!be_global->exception_support ())
-      {
-        *os << be_idt_nl <<"CORBA::Environment &ACE_TRY_ENV =" 
-            <<be_idt_nl << " TAO_default_environment ())" 
-            << be_uidt<< be_uidt_nl;
-      }
-    else
-      *os << "void)" <<be_nl;
-
-    *os << " ACE_THROW_SPEC ((CORBA::SystemException));" 
-        << be_uidt_nl << be_nl;
-  
-  os->indent ();
-  *os << be_uidt_nl << "private:" <<be_nl;
-
-  *os << "TAO_ClientRequest_Info_"<< node->flat_name ();
-  // We need the interface node in which this operation was defined. However,
-  // if this operation node was an attribute node in disguise, we get this
-  // information from the context and add a "_get"/"_set" to the flat
-  // name to get around the problem of overloaded methods which are
-  // generated for attributes.
-  if (this->ctx_->attribute ())
+  if (be_global->exception_support ())
     {
-      bt = be_type::narrow_from_decl (node->return_type ());
-      if (!bt)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%N:%l) be_visitor_interceptors_ch::"
-                             "visit_operation - "
-                             "Bad return type\n"),
-                            -1);
-        }
-      
-      // grab the right visitor to generate the return type if its not
-      // void it means it is not the accessor.
-      if (!this->void_return_type (bt))
-        *os <<"_get";
-      else
-        *os <<"_set";
+      *os << be_uidt;
     }
 
-  *os << " (const "<< "TAO_ClientRequest_Info_"<< node->flat_name ();
+  *os << ");" << be_uidt_nl << be_nl;
+
+  // Here I still need to generate the other methods + private args.
+  *os << "virtual Dynamic::ParameterList * arguments ";
+
+  if (!be_global->exception_support ())
+    {
+      *os << "(" << be_idt << be_idt_nl 
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl 
+          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << ")" << be_nl;
+    }
+  else
+    {
+      *os << "(void)" << be_idt_nl;
+    }
+
+  *os << "ACE_THROW_SPEC ((CORBA::SystemException));" 
+      << be_uidt_nl << be_nl;
+
+  *os << "virtual Dynamic::ExceptionList * exceptions ";
+
+  if (!be_global->exception_support ())
+    {
+      *os << "(" << be_idt << be_idt_nl 
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl 
+          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << ")" << be_nl;
+    }
+  else
+    {
+      *os << "(void)" << be_idt_nl;
+    }
+
+  *os << "ACE_THROW_SPEC ((CORBA::SystemException));" 
+      << be_uidt_nl << be_nl;
+
+  *os << "virtual CORBA::Any * result ";
+
+  if (!be_global->exception_support ())
+    {
+      *os << "(" << be_idt << be_idt_nl 
+          << "CORBA::Environment &ACE_TRY_ENV = " << be_idt_nl 
+          << "TAO_default_environment ()" << be_uidt << be_uidt_nl
+          << ")" << be_nl;
+    }
+  else
+    {
+      *os << "(void)" << be_idt_nl;
+    }
+
+  *os << "ACE_THROW_SPEC ((CORBA::SystemException));" 
+      << be_uidt_nl << be_uidt_nl;
+  
+  *os << "private:" << be_idt_nl;
+
+  *os << "TAO_ClientRequest_Info_" << node->flat_name ();
+
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -233,6 +239,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   if (this->ctx_->attribute ())
     {
       bt = be_type::narrow_from_decl (node->return_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -242,17 +249,54 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                             -1);
         }
       
-      // grab the right visitor to generate the return type if its not
+      // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
-        *os <<"_get";
+        {
+          *os << "_get";
+        }
       else
-        *os <<"_set";
+        {
+          *os << "_set";
+        }
+    }
+
+  *os << " (const " << "TAO_ClientRequest_Info_" << node->flat_name ();
+
+  // We need the interface node in which this operation was defined. However,
+  // if this operation node was an attribute node in disguise, we get this
+  // information from the context and add a "_get"/"_set" to the flat
+  // name to get around the problem of overloaded methods which are
+  // generated for attributes.
+  if (this->ctx_->attribute ())
+    {
+      bt = be_type::narrow_from_decl (node->return_type ());
+
+      if (!bt)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_interceptors_ch::"
+                             "visit_operation - "
+                             "Bad return type\n"),
+                            -1);
+        }
+      
+      // Grab the right visitor to generate the return type if its not
+      // void it means it is not the accessor.
+      if (!this->void_return_type (bt))
+        {
+          *os << "_get";
+        }
+      else
+        {
+          *os << "_set";
+        }
     }
 
   *os << " &);" << be_nl 
       << "void operator= (const "
       << "TAO_ClientRequest_Info_"<< node->flat_name ();
+
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context and add a "_get"/"_set" to the flat
@@ -261,6 +305,7 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
   if (this->ctx_->attribute ())
     {
       bt = be_type::narrow_from_decl (node->return_type ());
+
       if (!bt)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -270,22 +315,27 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                             -1);
         }
       
-      // grab the right visitor to generate the return type if its not
+      // Grab the right visitor to generate the return type if its not
       // void it means it is not the accessor.
       if (!this->void_return_type (bt))
-        *os <<"_get";
+        {
+          *os << "_get";
+        }
       else
-        *os <<"_set";
+        {
+          *os << "_set";
+        }
     }
 
-  *os << " &);"<< be_nl;
-  // need to generate the args as reference memebers...
-  //generate the member list with the appropriate mapping. For these
+  *os << " &);" << be_nl;
+
+  // Need to generate the args as reference memebers...
+  // Generate the member list with the appropriate mapping. For these
   // we grab a visitor that generates the parameter listing and
-  // modify it to generate reference members.
-      
+  // modify it to generate reference members.      
   ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_ARGLIST_CH);
   visitor = tao_cg->make_visitor (&ctx);
+
   if (!visitor)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -304,11 +354,13 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                          "codegen for argument list failed\n"),
                         -1);
     }
+
   delete visitor;
 
   // Store the result for later use.
-  // generate the return type 
+  // generate the return type.
   bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -318,14 +370,16 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                         -1);
     }
       
-  // grab the right visitor to generate the return type if its not
-  // void since we cant have a private member to be of void type.
+  // Grab the right visitor to generate the return type if its not
+  // void since we can't have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
+      os->indent ();
       *os << "void result (";
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (bt->accept (visitor) == -1))
         {
           delete visitor;
@@ -335,15 +389,15 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                              "codegen for retval pre invoke failed\n"),
                             -1);
         }
-      os->indent ();
-      *os << "  result);" << be_uidt << be_uidt << be_uidt_nl
-          << " // update the result " << be_nl;
+
+      *os << " result);" << be_nl
+          << "// update the result " << be_nl;
     }
       
-  // Generate the result data member
-  // generate the return type 
-
+  // Generate the result data member.
+  // Generate the return type.
   bt = be_type::narrow_from_decl (node->return_type ());
+
   if (!bt)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -353,13 +407,14 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                         -1);
     }
       
-  // grab the right visitor to generate the return type if its not
-  // void since we cant have a private member to be of void type.
+  // Grab the right visitor to generate the return type if it's not
+  // void since we can't have a private member to be of void type.
   if (!this->void_return_type (bt))
     {
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_OPERATION_INTERCEPTORS_INFO_RETTYPE_CH);
       visitor = tao_cg->make_visitor (&ctx);
+
       if (!visitor || (bt->accept (visitor) == -1))
         {
           delete visitor;
@@ -369,11 +424,16 @@ be_visitor_operation_interceptors_ch::visit_operation (be_operation *node)
                              "codegen for retval pre invoke failed\n"),
                             -1);
         }
-      os->indent ();
-      *os << "  result_;" << be_uidt << be_uidt << be_uidt_nl;
+
+      *os << " result_;" << be_uidt_nl;
     }
-  os->decr_indent ();
-  *os << "};\n\n";
+  else
+    {
+      *os << be_uidt_nl;
+    }
+
+  *os << "};" << be_nl << be_nl;
+
   return 0;
 }
 
