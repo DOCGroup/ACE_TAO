@@ -20,23 +20,24 @@ Tue Apr 30 14:46:26 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 Tue Apr 30 14:20:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
-	* tao/Messaging/TAO_Messaging_Static.dsp: Added the new files
+	* tao/Messaging/TAO_Messaging_Static.dsp: Added the new files,
 	  Connection_Timeout_Policy.*  to the project file.
 
 Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 	
 	* tao/IIOP_Connector.cpp: Checked to see if the connection timeout
-	  policy is set. 
+	  policy is set by the application and if so, gets the value.
 	
 	* tao/ORB_Core.cpp:
-	* tao/ORB_Core.h: Added new hook connection_timeout_hook () and
-	  methods connection_timeout () and stubless_connection_timeout
-	  (). They are used for setting the connection timeout hook and
-	  for querying the timeout values on the ORB and thread levels.
+	* tao/ORB_Core.h: Added new hook methods connection_timeout_hook
+	  (), connection_timeout () and stubless_connection_timeout
+	  (). They are used for setting the connection timeout hook and 
+	  querying the timeout values on the ORB and thread levels.
 	
 	* tao/Stub.cpp:
 	* tao/Stub.h: Added a new method connection_timeout () that
-	  queries the policy list at the object level. 
+	  queries the policy list at the object level for a
+	  connection timeout policy and returns the policy.
 	
 	* tao/orbconf.h: 
 	  Removed TAO_HAS_MINIMUM_CONNECTION_CACHING_STRATEGY since it has
@@ -47,7 +48,8 @@ Tue Apr 30 13:50:55 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/Messaging/Connection_Timeout_Policy_i.cpp:
 	* tao/Messaging/Connection_Timeout_Policy_i.h: New files
-	  containing the implementation of the new proprietary policy. 
+	  containing the implementation of the new proprietary connection
+	  timeout policy. 
 
 	* tao/Messaging/TAO_Messaging.dsp:
 	* tao/Messaging/Makefile: Added the new file. 
