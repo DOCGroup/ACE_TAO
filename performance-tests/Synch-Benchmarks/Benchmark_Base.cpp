@@ -40,8 +40,8 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 {
   sri->advance ();
   for (const ACE_Service_Type *sr;
-       sri.next (sr) != 0;
-       sri.advance ())
+       sri->next (sr) != 0;
+       sri->advance ())
     {
       // This would greatly benefit from RTTI typesafe downcasting...
       const ACE_Service_Type_Impl *type = sr->type ();
@@ -54,8 +54,9 @@ Benchmark_Method_Base::exec (ACE_Service_Repository_Iterator *sri)
 
           ACE_DEBUG ((LM_DEBUG, "\nstarting up %s\n", sr->name ()));
 
-          this->pre_run_test () == 0 && this->run_test () == 0 &&
+          int notused = this->pre_run_test () == 0 && this->run_test () == 0 &&
             this->post_run_test () == 0;
+          notused = notused;
         }
       else
         return 0;

@@ -3,8 +3,8 @@
 
 /* Defines the class used to dynamically link in the benchmark tests */
 
-#if !defined (ACE_BENCHMARK_H)
-#define ACE_BENCHMARK_H
+#if !defined (ACE_BENCHMARK_PERFORMANCE_H)
+#define ACE_BENCHMARK_PERFORMANCE_H
 
 #include "Benchmark_Base.h"
 
@@ -35,4 +35,4 @@ protected:
   // Keeps track if we are finished or not.
 };
 #endif /* ACE_HAS_THREADS */
-#endif /* ACE_BENCHMARK_H */
+#endif /* ACE_BENCHMARK_PERFORMANCE_H */
