@@ -37,7 +37,7 @@ BIN =   Stdio_Test \
 
 #### If the PACE library wasn't built with all components, don't
 #### try to build certain tests.
-PACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/pace_components --pace)
+PACE_BUILD_COMPONENTS := $(shell sh $(ACE_ROOT)/bin/ace_components --pace)
 
 PSRC=$(addsuffix .c,$(BIN))
 

@@ -31,14 +31,18 @@ pace_getpwuid_r (pace_uid_t uid,
                  pace_size_t bufsize,
                  pace_passwd ** result)
 {
-#if (PACE_SUNOS)
-  *result = getpwuid_r (uid, pwd, buffer, bufsize);
-  if (*result == 0)
-    return errno;
-  return 0;
+#if (PACE_LYNXOS)
+  if (getpwuid_r (pwd, uid, buffer, bufsize) == 0)
+    /* Successful search */
+    {
+      **result = *pwd;
+      return 0;
+    }
+
+  return -1;
 #else
   return getpwuid_r (uid, pwd, buffer, bufsize, result);
-#endif /* PACE_SUNOS */
+#endif /* ! PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_SDR_UOF */
 
@@ -60,13 +64,18 @@ pace_getpwnam_r (const char * name,
                  pace_size_t bufsize,
                  pace_passwd ** result)
 {
-# if (PACE_SUNOS)
-  *result = getpwnam_r (name, pwd, buffer, bufsize);
-  if (*result == 0)
-    return errno;
-  return 0;
+# if (PACE_LYNXOS)
+  if (getpwnam_r (pwd, PACE_NONCONST_ARG_CAST (char *) name,
+                  buffer, bufsize) == 0)
+    /* Successful search */
+    {
+      **result = *pwd;
+      return 0;
+    }
+
+  return -1;
 #else
   return getpwnam_r (name, pwd, buffer, bufsize, result);
-#endif /* PACE_SUNOS */
+#endif /* ! PACE_LYNXOS */
 }
 #endif /* PACE_HAS_POSIX_SDR_UOF */

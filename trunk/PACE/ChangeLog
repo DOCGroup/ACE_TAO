@@ -1,3 +1,41 @@
+Fri Jul 28 15:54:38 2000  Joe Hoffert  <joeh@cs.wustl.edu>
+
+        * tests/Makefile:
+          Modified to use ace_components rather than
+          pace_components.
+
+        * pace/posix/signal.h:
+          Changed pace_sig_pf typedef to compile for LynxOS. Still
+          need to fix it to compile for ACE with PACE for LynxOS.
+
+        * pace/posix/signal.inl:
+          Fixed sigwait and signal for LynxOS (at least for building
+          pace).
+
+        * pace/posix/time.inl: 
+        * pace/posix/pwd.inl:
+        * pace/posix/grp.inl:
+        * pace/posix/dirent.inl:
+          Changed LynxOS workarounds for the reentrant functions
+          and deleted the check for SUNOS since now it can use
+          the POSIX calls (with _POSIX_PTHREAD_SEMANTICS being
+          defined properly).
+
+        * pace/config/config.h:
+          Deleted definition of _REENTRANT (and put it in
+          include/makeinclude/rules.common.GNU) and defined
+          the different POSIX UoF macros to be 0 if we're
+          not using all of them.
+
+        * pace/Makefile:
+          Modified to use bin/ace_components rather than
+          bin/pace_components (which is going away).
+
+        * include/makeinclude/rules.common.GNU: 
+          Adding -D_POSIX_PTHREAD_SEMANTICS (if threads == 1)
+          and -D_REENTRANT for SunOS so they get defined before
+          any include files.
+
 Fri Jul 28 11:29:08 2000  David L. Levine <levine@cs.wustl.edu>
 
         * README: added brief discussion of how PACE helps
