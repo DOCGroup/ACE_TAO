@@ -52,7 +52,6 @@ be_visitor_interface_ami_exception_holder_ch::visit_interface (be_interface *nod
                                                0,
                                                0);
   inherit_vt->set_name (inherit_name);
-  const char * name = inherit_vt->full_name ();
 
   be_module *msg = new be_module (new UTL_ScopedName (new Identifier ("Messaging", 0,0,0),
                                                             0),
@@ -123,11 +122,6 @@ be_visitor_interface_ami_exception_holder_ch::visit_interface (be_interface *nod
                                                                  (new Identifier ("void", 1, 0, I_FALSE), 
                                                                   0),
                                                                0);
-
-              AST_Operation *operation = new AST_Operation (rt,
-                                                            AST_Operation::OP_noflags,
-                                                            node->name (),
-                                                            0);
 
               UTL_ScopedName *new_name = (UTL_ScopedName *) node->name ()->copy ();
 
