@@ -4,6 +4,7 @@
 ** Copyright 2001 Addison Wesley. All Rights Reserved.
 */
 
+#include "ace/Auto_Ptr.h"
 #include "ace/FILE_IO.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
@@ -16,33 +17,31 @@
 
 static void sigterm_handler (int /* signum */) { /* No-op. */ }
 
-
 void *Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
-  Thread_Args *thread_args = ACE_static_cast (Thread_Args *, arg);
+  auto_ptr<Thread_Args> thread_args (ACE_static_cast (Thread_Args *, arg));
 
-  int result =
-    thread_args->this_->handle_data (&thread_args->logging_peer_);
-
+  thread_args->this_->handle_data (&thread_args->logging_peer_);
   thread_args->logging_peer_.close ();
-  delete thread_args;
-  return ACE_reinterpret_cast (void *, result);
+  return 0;    // Return value is ignored
 }
 
 
 int
 Thread_Per_Connection_Logging_Server::handle_connections ()
 {
-  Thread_Args *thread_args = new Thread_Args (this);
+  auto_ptr<Thread_Args> thread_args (new Thread_Args (this));
 
   if (acceptor ().accept (thread_args->logging_peer_) == -1)
     return -1;
-  else if (ACE_Thread_Manager::instance ()->spawn (
+  if (ACE_Thread_Manager::instance ()->spawn (
                    // Pointer to function entry point.
                   Thread_Per_Connection_Logging_Server::run_svc,
                    // <run_svc> parameter.
-                  ACE_static_cast (void *, thread_args),
-                  THR_DETACHED | THR_NEW_LWP) == -1) return -1;
+                  ACE_static_cast (void *, thread_args.get ()),
+                  THR_DETACHED | THR_SCOPE_SYSTEM) == -1)
+    return -1;
+  thread_args.release ();   // Spawned thread now owns memory
   return 0;
 }
 
@@ -87,3 +86,10 @@ int main (int argc, char *argv[])
   ACE_Thread_Manager::instance ()->cancel_all ();
   return ACE_Thread_Manager::instance ()->wait ();
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+template class auto_ptr<Thread_Args>;
+#elif defined (ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+#pragma instantiate auto_ptr<Thread_Args>
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
