@@ -503,10 +503,7 @@ TAO_Server_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr ini
                                           env);
 
   // Make the upcall to the app
-  return this->handle_connection_requested (initiator, 
-                                            is_mcast, 
-                                            qos, 
-                                            the_spec,  
+  return this->handle_connection_requested (the_spec,
                                             env);
 
 }
