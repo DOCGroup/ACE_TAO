@@ -438,7 +438,7 @@ TAO_Unique_Id_Strategy::remaining_activations (PortableServer::Servant servant)
 int
 TAO_Multiple_Id_Strategy::is_servant_in_map (PortableServer::Servant)
 {
-  ACE_UNUSED_ARG (servant);
+  //  ACE_UNUSED_ARG (servant);
 
   return -1;
 }
@@ -638,8 +638,8 @@ int
 TAO_User_Id_Strategy::bind_using_system_id (PortableServer::Servant,
                                             TAO_Active_Object_Map::Map_Entry *&)
 {
-  ACE_UNUSED_ARG (servant);
-  ACE_UNUSED_ARG (entry);
+  //  ACE_UNUSED_ARG (servant);
+  // ACE_UNUSED_ARG (entry);
 
   return -1;
 }
