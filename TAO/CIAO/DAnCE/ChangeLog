@@ -1,3 +1,11 @@
+Wed Mar  2 16:55:29 2005  Will Otte <wotte@dre.vanderbilt.edu>
+	
+	* Config_Handlers.mpc
+	* DP_Handler.cpp
+
+	Fixed an error where the IDREF singleton was still trying to
+	be compiled.
+
 Tue Mar 01 23:54:21 2005  Gan Deng <dengg@dre.vanderbilt.edu>
 
 	* DomainApplicationManager/DomainApplicationManager_Impl.cpp

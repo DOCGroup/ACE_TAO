@@ -29,7 +29,6 @@ project (Config_Handlers) : acelib, ciao_deployment_stub {
     CPD_Handler.cpp
     DataType_Handler.cpp
     MDD_Handler.cpp
-    Singleton_IDREF_Map.cpp
     Req_Handler.cpp
     CPD_Handler.cpp
     Any_Handler.cpp
