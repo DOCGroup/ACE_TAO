@@ -25,6 +25,8 @@ project(BMDisplay_svnt) : ciao_servant {
   dynamicflags = BMDISPLAY_SVNT_BUILD_DLL
 
   CIDL_Files {
+	commandflags += -I../../../../ciao -I../../../../../tao -I../../../../.. -I../../../../../orbsvcs/orbsvcs 
+  
     BMDisplay.cidl
   }
 

@@ -11,7 +11,7 @@ project(BMClosedED_stub): ciao_client {
   IDL_Files {
     BMClosedED.idl
   }
-
+  
   Source_Files {
     BMClosedEDC.cpp
   }
@@ -26,6 +26,8 @@ project(BMClosedED_svnt) : ciao_servant {
   dynamicflags = BMCLOSEDED_SVNT_BUILD_DLL
 
   CIDL_Files {
+	commandflags += -I../../../../ciao -I../../../../../tao -I../../../../.. -I../../../../../orbsvcs/orbsvcs 
+  
     BMClosedED.cidl
   }
 
