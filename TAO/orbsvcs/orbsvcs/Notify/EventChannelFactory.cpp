@@ -95,6 +95,9 @@ TAO_NS_EventChannelFactory::init (PortableServer::POA_ptr poa ACE_ENV_ARG_DECL)
 
   // We are also activated in the same Object POA.
   this->poa_ = this->object_poa_;
+
+  // Make the Proxys acivate in this same POA.
+  this->proxy_poa_ = this->object_poa_;
 }
 
 void
