@@ -1,12 +1,31 @@
 The following tests of TAO are provided in this directory.
+The individual directories contain READMEs on how to run the tests.
 
-	. Thruput_test
+        . Cubit
+                
+                 Cubit example. The servant returns the cube of the number
+                 sent to it by the client. (This example uses hand-generated
+                 stubs and skeletons)
 
-		 Throughput tests for TAO, based on TTCP.
+        . Demux_test
+
+                This tests various demultiplexing strategies used in
+                TAO.    
+
+        . IDL_Cubit
+
+                Cubit example with tao_idl compiler generated stubs and
+                skeletons
+
 
 	. MT-Cubit 
 
 		 Multithreaded real-time Cubit example.
 
-The individual directories contain READMEs on how to run the tests.
+	. Thruput_test
+
+		 Throughput tests for TAO, based on TTCP.
+
+
+
 
