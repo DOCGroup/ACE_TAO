@@ -56,7 +56,11 @@ namespace TAO
         break;
 #if !defined (ACE_LACKS_LONGLONG_T)
       case CORBA::tk_ulonglong:
+  #if !defined (ACE_LACKS_UNSIGNEDLONGLONG_T)
         this->u_.ull = *static_cast<CORBA::ULongLong *> (value);
+  #else
+        this->u_.ull = *static_cast<CORBA::LongLong *> (value);
+  #endif
         break;
 #endif
       case CORBA::tk_longdouble:

@@ -376,7 +376,7 @@ extern int cma_sigwait  (sigset_t *);
 #define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Compiler/platform does not support the unsigned long long datatype.
-#define ACE_LACKS_LONGLONG_T
+#define ACE_LACKS_UNSIGNEDLONGLONG_T
 
 // Compiler supports the ssize_t typedef
 #define ACE_HAS_SSIZE_T

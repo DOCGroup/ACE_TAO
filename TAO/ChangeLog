@@ -1,3 +1,15 @@
+Wed Mar 23 16:51:00 2005  Gary Maxey <gary.maxey@hp.com>
+
+        * tao/Any_Basic_Impl.h
+
+          Use "long long" as a container for "unsigned long long" in the
+          "has long long but no unsigned long long" case.
+
+        * tao/Any_Basic_Impl.cpp
+
+          Use "long long" as a container for "unsigned long long" in the
+          "has long long but no unsigned long long" case.
+
 Wed Mar 23 14:56:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/Mcast/Simple/consumer.cpp:

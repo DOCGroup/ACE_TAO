@@ -823,8 +823,8 @@ ACE_LACKS_KEY_T                         Platform lacks key_t (e.g.,
                                         Chorus, VxWorks, Win32)
 ACE_LACKS_LINEBUFFERED_STREAMBUF        Platform lacks streambuf
                                         "linebuffered ()".
-ACE_LACKS_LONGLONG_T                    Compiler/platform does no
-                                        supports the unsigned long
+ACE_LACKS_LONGLONG_T                    Compiler/platform does not
+                                        support the signed or unsigned long
                                         long datatype.
 ACE_LACKS_LSTAT                         Platform lacks the lstat() function.
 ACE_LACKS_MADVISE                       Platform lacks madvise()
@@ -1027,6 +1027,9 @@ ACE_LACKS_UNIX_DOMAIN_SOCKETS           ACE platform has no UNIX
 ACE_LACKS_UNIX_SIGNALS                  Platform lacks full signal
                                         support (e.g., Win32 and
                                         Chorus).
+ACE_LACKS_UNSIGNEDLONGLONG_T            Compiler/platform does not
+                                        support the unsigned long
+                                        long datatype.
 ACE_LACKS_UTSNAME_T                     Platform lacks struct utsname
                                         (e.g., Win32 and VxWorks)
 ACE_LACKS_WAIT                          The platform lacks wait
