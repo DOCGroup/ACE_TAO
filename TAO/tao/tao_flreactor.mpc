@@ -3,6 +3,7 @@ project(TAO_FlReactor) : acelib, taolib, taoversion, core, tao_output, taodefaul
   dynamicflags += TAO_FLREACTOR_BUILD_DLL
   Header_Files {
     fl_resource.h
+    fl_resource_loader.h
     TAO_FlReactor_export.h
   }
   Inline_Files {
@@ -10,6 +11,7 @@ project(TAO_FlReactor) : acelib, taolib, taoversion, core, tao_output, taodefaul
   }
   Source_Files(TAO_COMPONENTS) {
     Default_Resources {
+      fl_resource_loader.cpp
       fl_resource.cpp
     }
   }

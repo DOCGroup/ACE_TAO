@@ -1,5 +1,16 @@
-Fri Jan 14 22:37:44 2005  Marek Brudka  <mbrudka@aster.pl>
+Sat Jan 15 00:08:12 2005  Marek Brudka  <mbrudka@aster.pl>
 
+        * tao/tk_resource.h (Module):
+        * tao/tk_resource.cpp (Module):
+        * examples/AMI/FL_Callback/svc.conf.xml (Module):
+        * examples/AMI/FL_Callback/svc.conf (Module):
+        * tests/FL_Cube/server.cpp (Module):
+        * tests/FL_Cube/client.cpp (Module):
+        * tao/tao_flreactor.mpc (Module):
+        * tao/fl_resource.h (Module):
+        * tao/fl_resource.cpp (Module):
+        * examples/AMI/FL_Callback/progress.cpp (Module):
+        * examples/AMI/FL_Callback/README (Module):
         * tests/Xt_Stopwatch/svc.conf (Module):
         * tests/Xt_Stopwatch/svc.conf.xml (Module):
         * tests/Xt_Stopwatch/server.cpp (Module):
@@ -9,10 +20,11 @@ Fri Jan 14 22:37:44 2005  Marek Brudka  <mbrudka@aster.pl>
         * tao/xt_resource_loader.cpp (Module):
         * tao/xt_resource.i (Module):
         * tao/xt_resource_loader.cpp (Module):
+        * tao/xt_resource.h (Module):
         * tao/xt_resource.cpp (Module):
         * tao/tao_xtreactor.mpc (Module):
-        Created TAO_XtResource_Loader, changed XT_Resource_Factory name to XtResource_Factory,
-        updated doc and adapted tests to new way xt resources are loaded.
+        Created TAO_*Resource_Loader, changed some names,
+        updated doc and adapted tests to new way gui resources are loaded.
 
         * tests/QtTests/server.cpp (Module):
         * tests/QtTests/client.cpp (Module):

@@ -1,9 +1,0 @@
-<?xml version='1.0'?>
-<!-- Converted from ./examples/AMI/FL_Callback/svc.conf by svcconf-convert.pl -->
-<ACE_Svc_Conf>
- <!--  $Id$ -->
- <!--  -->
- <dynamic id="Resource_Factory" type="Service_Object">
-   <initializer path="TAO_FlReactor" init="_make_TAO_FlResource_Factory"/>
- </dynamic>
-</ACE_Svc_Conf>

@@ -3,6 +3,7 @@ project(TAO_TkReactor) : acelib, taolib, taoversion, core, tao_output, taodefaul
   dynamicflags += TAO_TKREACTOR_BUILD_DLL
   Header_Files {
     tk_resource.h
+    tk_resource_loader.h
     TAO_TkReactor_export.h
   }
   Inline_Files {
@@ -11,6 +12,7 @@ project(TAO_TkReactor) : acelib, taolib, taoversion, core, tao_output, taodefaul
   Source_Files(TAO_COMPONENTS) {
     Default_Resources {
       tk_resource.cpp
+      tk_resource_loader.cpp
     }
   }
 }

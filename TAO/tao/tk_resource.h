@@ -20,16 +20,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// forwards
+class ACE_TkReactor;
 
 /**
  * @class TAO_TkResource_Factory
  *
  * @brief TAO's default resource factory for TkReactor
  *
- * Using a <{resource source specifier}> as a discriminator, the
- * factory can return resource instances which are, e.g., global,
- * stored in thread-specific storage, stored in shared memory,
- * etc.
+ * This factory is intended for creating TkReactor for ORB.
  */
 
 class TAO_TkReactor_Export TAO_TkResource_Factory : public TAO_Default_Resource_Factory
@@ -41,6 +40,10 @@ public:
 protected:
   /// Obtain the reactor implementation
   virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+
+private:
+  static ACE_TkReactor *impl_;
+
 };
 
 #if defined (__ACE_INLINE__)

@@ -9,9 +9,9 @@
 // Must be called with lock held
 TAO_QtResource_Loader::TAO_QtResource_Loader (QApplication *qapp)
 {
+    TAO_QtResource_Factory::set_context (qapp);
     TAO_ORB_Core::set_reactor_factory ("QtResource_Factory");
     ACE_Service_Config::process_directive (ace_svc_desc_TAO_QtResource_Factory);
-    TAO_QtResource_Factory::set_context (qapp);
 }
 
 TAO_QtResource_Loader::~TAO_QtResource_Loader ()
