@@ -62,15 +62,14 @@ public:
   // the specification is not recognized then we return 0.
   // Each protocol will be characterized by a prefix, so
   // endpoints will be specified as:
-  // "iiop:macarena:0" - IIOP on macarena, port <any>
-  // "uiop:/foo/bar"   - GIOP over unix domain, file /foo/bar
-  // "iiop:localhost:0" - IIOP, sap_any [any better idea?]
+  // "iiop://macarena:0" - IIOP on macarena, port <any>
+  // "uiop:///foo/bar"   - GIOP over unix domain, file /foo/bar
+  // "iiop://localhost:0" - IIOP, sap_any [any better idea?]
   // "aal5giop:......"   - GIOP over AAL5, how to specify the
   //                       end point?
   //
   // this format is extensible, for example:
-  // "rtiiop:macarena:0,15" - real-time IIOP, host, port, prio.
-  //
+  // "rtiiop://macarena:0,15" - real-time IIOP, host, port, prio.
 
   int open (TAO_ORB_Core *orb_core);
   // Initialize all registered acceptors.  Return -1 on error.
@@ -78,11 +77,14 @@ public:
   //    the Acceptor_Registry? Is there just one per orb core? Should
   //    tbe acceptor registry know which ORB_Core it belongs to?
 
+  int close_all (void);
+  // Close all open acceptors.
+
   size_t endpoint_count (void);
   // returns the total number of endpoints, i.e. the number of profiles
   // that will be created.
 
-  int make_mprofile (const TAO_ObjectKey &object_key,
+  int make_mprofile (const TAO_ObjectKey& object_key,
                      TAO_MProfile &mprofile);
   // add profiles to the mprofile object for all open endpoints.
 
@@ -93,6 +95,10 @@ public:
   TAO_AcceptorSetItor begin (void);
   TAO_AcceptorSetItor end (void);
   // Iteration
+
+private:
+  int open_default (TAO_ORB_Core* orb_core, ACE_CString* protocol_prefix = 0);
+  // Create an acceptor with a default endpoint
 
 private:
 
