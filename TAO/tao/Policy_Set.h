@@ -87,7 +87,7 @@ public:
   /// policies cannot be removed such as at the object and thread level
   /// scopes.  This method is most likely not appropriate for accessing
   /// policies at the ORB level scope in any situation.
-  const CORBA::Policy_ptr get_cached_const_policy (TAO_Cached_Policy_Type type) const;
+  CORBA::Policy_ptr get_cached_const_policy (TAO_Cached_Policy_Type type) const;
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
