@@ -1,7 +1,7 @@
 Sun Mar 21 09:44:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tests/Timeprobe_Test.cpp: don't test ACE_Singleton
-          creating during static construction if ACE_HAS_PURIFY
+          creation during static construction if ACE_HAS_PURIFY
           is enabled, because it notices the memory-in-use.
 
 Sat Mar 20 19:10:37 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
