@@ -7,7 +7,7 @@ ACE_BUILDDIR = $(top_builddir)/..
 TAO_ROOT = $(top_srcdir)
 TAO_BUILDDIR = $(top_builddir)
 
-## Makefile.TAO.am 
+## Makefile.TAO.am
 
 ORB_Core = \
   Abstract_Servant_Base.cpp \
@@ -780,7 +780,7 @@ nobase_include_HEADERS = \
   Objref_VarOut_T.inl \
   OctetSeqC.inl \
   PICurrent.inl \
-  PI_ForwardC.i \
+  PI_ForwardC.inl \
   Parser_Registry.i \
   Pluggable_Messaging.i \
   Pluggable_Messaging_Utils.i \
@@ -951,7 +951,7 @@ nobase_include_HEADERS = \
 EXTRA_DIST = \
   tao.rc
 
-## Makefile.BiDir_GIOP.am 
+## Makefile.BiDir_GIOP.am
 
 lib_LTLIBRARIES += libTAO_BiDirGIOP.la
 
@@ -992,7 +992,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   BiDir_GIOP/TAO_BiDir_GIOP.rc
 
-## Makefile.Valuetype.am 
+## Makefile.Valuetype.am
 
 lib_LTLIBRARIES += libTAO_Valuetype.la
 
@@ -1044,7 +1044,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Valuetype/TAO_Valuetype.rc
 
-## Makefile.ObjRefTemplate.am 
+## Makefile.ObjRefTemplate.am
 
 lib_LTLIBRARIES += libTAO_ObjRefTemplate.la
 
@@ -1056,26 +1056,36 @@ libTAO_ObjRefTemplate_la_CPPFLAGS = \
   -DTAO_ORT_BUILD_DLL
 
 libTAO_ObjRefTemplate_la_SOURCES = \
-  ObjRefTemplate/ObjectReferenceTemplateC.cpp
+  ObjRefTemplate/ORT_Adapter_Factory_Impl.cpp \
+  ObjRefTemplate/ORT_Adapter_Impl.cpp \
+  ObjRefTemplate/ObjectReferenceTemplate_i.cpp \
+  ObjRefTemplate/ObjectReferenceTemplateC.cpp \
+  ObjRefTemplate/Default_ORTC.cpp
 
 libTAO_ObjRefTemplate_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_ObjRefTemplate_la_LIBADD = \
+  libTAO_PortableServer.la \
   libTAO_Valuetype.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
+  ObjRefTemplate/ORT_Adapter_Factory_Impl.h \
+  ObjRefTemplate/ORT_Adapter_Impl.h \
+  ObjRefTemplate/ObjectReferenceTemplate_i.h \
   ObjRefTemplate/ObjectReferenceTemplateC.h \
   ObjRefTemplate/ort_export.h \
-  ObjRefTemplate/ObjectReferenceTemplateC.i \
-  ObjRefTemplate/ObjectReferenceTemplate.pidl
+  ObjRefTemplate/ObjectReferenceTemplateC.inl \
+  ObjRefTemplate/ObjectReferenceTemplate.pidl \
+  ObjRefTemplate/Default_ORTC.inl \
+  ObjRefTemplate/Default_ORT.pidl
 
 EXTRA_DIST += \
   ObjRefTemplate/TAO_ObjRefTemplate.rc
 
-## Makefile.IORInterceptor.am 
+## Makefile.IORInterceptor.am
 
 lib_LTLIBRARIES += libTAO_IORInterceptor.la
 
@@ -1087,6 +1097,7 @@ libTAO_IORInterceptor_la_CPPFLAGS = \
   -DTAO_IORINTERCEPTOR_BUILD_DLL
 
 libTAO_IORInterceptor_la_SOURCES = \
+  IORInterceptor/IORInfo.cpp \
   IORInterceptor/IORInterceptorC.cpp \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.cpp \
   IORInterceptor/IORInterceptor_Adapter_Impl.cpp \
@@ -1098,23 +1109,25 @@ libTAO_IORInterceptor_la_LDFLAGS = \
 libTAO_IORInterceptor_la_LIBADD = \
   libTAO_ObjRefTemplate.la \
   libTAO_Valuetype.la \
+  libTAO_PortableServer.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
 nobase_include_HEADERS += \
   IORInterceptor/IORInterceptorC.h \
+  IORInterceptor/IORInfo.h \
   IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h \
   IORInterceptor/IORInterceptor_Adapter_Impl.h \
   IORInterceptor/IORInterceptor_List.h \
   IORInterceptor/iorinterceptor_export.h \
-  IORInterceptor/IORInterceptorC.i \
+  IORInterceptor/IORInterceptorC.inl \
   IORInterceptor/IORInterceptor_List.inl \
   IORInterceptor/IORInterceptor.pidl
 
 EXTRA_DIST += \
   IORInterceptor/TAO_IORInterceptor.rc
 
-## Makefile.PortableServer.am 
+## Makefile.PortableServer.am
 
 lib_LTLIBRARIES += libTAO_PortableServer.la
 
@@ -1130,10 +1143,8 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/Active_Object_Map.cpp \
   PortableServer/Collocated_Object_Proxy_Broker.cpp \
   PortableServer/Default_Acceptor_Filter.cpp \
-  PortableServer/Default_ORTC.cpp \
   PortableServer/Default_Policy_Validator.cpp \
   PortableServer/Default_Servant_Dispatcher.cpp \
-  PortableServer/IORInfo.cpp \
   PortableServer/ImR_LocatorC.cpp \
   PortableServer/ImR_LocatorS.cpp \
   PortableServer/ImplRepoC.cpp \
@@ -1141,8 +1152,9 @@ libTAO_PortableServer_la_SOURCES = \
   PortableServer/ImplRepo_i.cpp \
   PortableServer/Key_Adapters.cpp \
   PortableServer/ORB_Manager.cpp \
-  PortableServer/ObjectReferenceTemplate.cpp \
   PortableServer/Object_Adapter.cpp \
+  PortableServer/ORT_Adapter.cpp \
+  PortableServer/ORT_Adapter_Factory.cpp \
   PortableServer/Operation_Table.cpp \
   PortableServer/PICurrent_Guard.cpp \
   PortableServer/POA.cpp \
@@ -1166,9 +1178,6 @@ libTAO_PortableServer_la_LDFLAGS = \
  -version-number @TAO_MAJOR@:@TAO_MINOR@:@TAO_BETA@
 
 libTAO_PortableServer_la_LIBADD = \
-  libTAO_IORInterceptor.la \
-  libTAO_ObjRefTemplate.la \
-  libTAO_Valuetype.la \
   libTAO.la \
   $(ACE_BUILDDIR)/ace/libACE.la
 
@@ -1177,10 +1186,8 @@ nobase_include_HEADERS += \
   PortableServer/Active_Object_Map.h \
   PortableServer/Collocated_Object_Proxy_Broker.h \
   PortableServer/Default_Acceptor_Filter.h \
-  PortableServer/Default_ORTC.h \
   PortableServer/Default_Policy_Validator.h \
   PortableServer/Default_Servant_Dispatcher.h \
-  PortableServer/IORInfo.h \
   PortableServer/ImR_LocatorC.h \
   PortableServer/ImR_LocatorS.h \
   PortableServer/ImplRepoC.h \
@@ -1188,9 +1195,10 @@ nobase_include_HEADERS += \
   PortableServer/ImplRepo_i.h \
   PortableServer/Key_Adapters.h \
   PortableServer/ORB_Manager.h \
-  PortableServer/ObjectReferenceTemplate.h \
   PortableServer/Object_Adapter.h \
   PortableServer/Operation_Table.h \
+  PortableServer/ORT_Adapter.h \
+  PortableServer/ORT_Adapter_Factory.h \
   PortableServer/PICurrent_Guard.h \
   PortableServer/POA.h \
   PortableServer/POAManager.h \
@@ -1213,23 +1221,20 @@ nobase_include_HEADERS += \
   PortableServer/poa_macros.h \
   PortableServer/portableserver_export.h \
   PortableServer/Active_Object_Map.i \
-  PortableServer/Default_ORTC.i \
-  PortableServer/IORInfo.inl \
-  PortableServer/ImR_LocatorC.i \
-  PortableServer/ImR_LocatorS.i \
-  PortableServer/ImplRepoC.i \
-  PortableServer/ImplRepoS.i \
+  PortableServer/ImR_LocatorC.inl \
+  PortableServer/ImR_LocatorS.inl \
+  PortableServer/ImplRepoC.inl \
+  PortableServer/ImplRepoS.inl \
   PortableServer/Key_Adapters.i \
-  PortableServer/ObjectReferenceTemplate.inl \
   PortableServer/Object_Adapter.i \
   PortableServer/POA.i \
   PortableServer/POAManager.i \
   PortableServer/POA_Cached_Policies.i \
   PortableServer/POA_Policies.i \
   PortableServer/POA_Policy_Set.i \
-  PortableServer/PolicyS.i \
-  PortableServer/PolicyS_T.i \
-  PortableServer/PortableServerC.i \
+  PortableServer/PolicyS.inl \
+  PortableServer/PolicyS_T.inl \
+  PortableServer/PortableServerC.inl \
   PortableServer/Servant_Base.i \
   PortableServer/ServerInterceptorAdapter.inl \
   PortableServer/ServerRequestInfo.inl \
@@ -1242,7 +1247,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   PortableServer/TAO_PortableServer.rc
 
-## Makefile.IFR_Client.am 
+## Makefile.IFR_Client.am
 
 lib_LTLIBRARIES += libTAO_IFR_Client.la
 
@@ -1291,7 +1296,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IFR_Client/TAO_IFR_Client.rc
 
-## Makefile.Domain.am 
+## Makefile.Domain.am
 
 lib_LTLIBRARIES += libTAO_Domain.la
 
@@ -1328,7 +1333,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Domain/TAO_Domain.rc
 
-## Makefile.DynamicAny.am 
+## Makefile.DynamicAny.am
 
 lib_LTLIBRARIES += libTAO_DynamicAny.la
 
@@ -1377,7 +1382,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   DynamicAny/TAO_DynamicAny.rc
 
-## Makefile.Messaging.am 
+## Makefile.Messaging.am
 
 lib_LTLIBRARIES += libTAO_Messaging.la
 
@@ -1454,7 +1459,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Messaging/TAO_Messaging.rc
 
-## Makefile.DynamicInterface.am 
+## Makefile.DynamicInterface.am
 
 if !BUILD_MINIMUM_CORBA
 
@@ -1518,7 +1523,7 @@ endif !BUILD_MINIMUM_CORBA
 EXTRA_DIST += \
   DynamicInterface/TAO_DynamicInterface.rc
 
-## Makefile.IORManipulation.am 
+## Makefile.IORManipulation.am
 
 lib_LTLIBRARIES += libTAO_IORManip.la
 
@@ -1553,7 +1558,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORManipulation/TAO_IORManip.rc
 
-## Makefile.IORTable.am 
+## Makefile.IORTable.am
 
 lib_LTLIBRARIES += libTAO_IORTable.la
 
@@ -1589,7 +1594,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   IORTable/TAO_IORTable.rc
 
-## Makefile.RTCORBA.am 
+## Makefile.RTCORBA.am
 
 if BUILD_RT_CORBA
 
@@ -1700,7 +1705,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTCORBA/TAO_RTCORBA.rc
 
-## Makefile.RTPortableServer.am 
+## Makefile.RTPortableServer.am
 
 if BUILD_RT_CORBA
 
@@ -1757,7 +1762,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTPortableServer/TAO_RTPortableServer.rc
 
-## Makefile.RTScheduler.am 
+## Makefile.RTScheduler.am
 
 if BUILD_RT_CORBA
 if BUILD_CORBA_MESSAGING
@@ -1816,7 +1821,7 @@ endif BUILD_RT_CORBA
 EXTRA_DIST += \
   RTScheduling/TAO_RTScheduler.rc
 
-## Makefile.SmartProxies.am 
+## Makefile.SmartProxies.am
 
 lib_LTLIBRARIES += libTAO_SmartProxies.la
 
@@ -1845,7 +1850,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   SmartProxies/SmartProxies.rc
 
-## Makefile.Strategies.am 
+## Makefile.Strategies.am
 
 lib_LTLIBRARIES += libTAO_Strategies.la
 
@@ -1970,7 +1975,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   Strategies/TAO_Strategies.rc
 
-## Makefile.TypeCodeFactory.am 
+## Makefile.TypeCodeFactory.am
 
 lib_LTLIBRARIES += libTAO_TypeCodeFactory.la
 
@@ -2007,7 +2012,7 @@ nobase_include_HEADERS += \
 EXTRA_DIST += \
   TypeCodeFactory/TypeCodeFactory.rc
 
-## Makefile.Utils.am 
+## Makefile.Utils.am
 
 lib_LTLIBRARIES += libTAO_Utils.la
 

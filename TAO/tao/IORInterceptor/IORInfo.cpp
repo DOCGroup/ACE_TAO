@@ -1,4 +1,4 @@
-#include "tao/PortableServer/IORInfo.h"
+#include "IORInfo.h"
 #include "tao/PortableServer/POA.h"
 
 #include "tao/PolicyC.h"
@@ -6,10 +6,9 @@
 #include "tao/ORB_Constants.h"
 
 
-ACE_RCSID (PortableServer,
+ACE_RCSID (IORInterceptor,
            IORInfo,
            "$Id$")
-
 
 #if !defined (__ACE_INLINE__)
 # include "IORInfo.inl"
@@ -138,7 +137,8 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
   // add_ior_component_to_profile.  It's a const value and its value
   // never changes.
   PortableInterceptor::ObjectReferenceTemplate *adapter_template =
-    this->poa_->get_adapter_template ();
+    this->poa_->get_adapter_template (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (adapter_template == 0)
     {
@@ -146,8 +146,6 @@ TAO_IORInfo::adapter_template (ACE_ENV_SINGLE_ARG_DECL)
                                               CORBA::COMPLETED_NO),
                         0);
     }
-
-  CORBA::add_ref (adapter_template);
 
   return adapter_template;
 }
@@ -165,7 +163,8 @@ TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
   // can be changed.  The value of the current_factory can be changed
   // only during the call to components_established method.
   PortableInterceptor::ObjectReferenceFactory *adapter_factory =
-    this->poa_->get_obj_ref_factory ();
+    this->poa_->get_obj_ref_factory (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (0);
 
   if (adapter_factory == 0)
     {
@@ -173,8 +172,6 @@ TAO_IORInfo::current_factory (ACE_ENV_SINGLE_ARG_DECL)
                                               CORBA::COMPLETED_NO),
                         0);
     }
-
-  CORBA::add_ref (adapter_factory);
 
   return adapter_factory;
 }

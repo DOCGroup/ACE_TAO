@@ -16,12 +16,14 @@
 
 #include /**/ "ace/pre.h"
 #include "ace/Service_Object.h"
+#include "ace/Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Exception.h"
+#include "tao/PI_ForwardC.h"
 
 namespace PortableInterceptor
 {
@@ -29,9 +31,17 @@ namespace PortableInterceptor
   typedef Interceptor *Interceptor_ptr;
   class IORInterceptor;
   typedef IORInterceptor *IORInterceptor_ptr;
+  class IORInfo;
+  typedef IORInfo *IORInfo_ptr;
+  class ObjectReferenceTemplate;
 }
 
+typedef
+ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*>
+    TAO_ObjectReferenceTemplate_Array;
+
 class TAO_IORInterceptor_List;
+class TAO_POA;
 
 /**
  * @class TAO_IORInterceptor_Adapter
@@ -61,6 +71,34 @@ public:
   virtual TAO_IORInterceptor_List *interceptor_list (void)
     ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
+  /// Call the IORInterceptor::establish_components() method on all
+  /// registered IORInterceptors.
+  /**
+   * This method calls IORInterceptor::establish_components() method
+   * on all registered IORInterceptors, and
+   * IORInterceptor::components_established() once the former is
+   * completed.
+   */
+  virtual void establish_components (TAO_POA *poa ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  /// Call the IORInterceptor::components_established() method on all
+  /// registered IORInterceptors.
+  virtual void components_established (PortableInterceptor::IORInfo_ptr info
+                                       ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual void adapter_state_changed (
+      const TAO_ObjectReferenceTemplate_Array &array_obj_ref_template,
+      PortableInterceptor::AdapterState state
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+
+  virtual void adapter_manager_state_changed (
+      PortableInterceptor::AdapterManagerId id,
+      PortableInterceptor::AdapterState state
+      ACE_ENV_ARG_DECL)
+    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 };
 
 #include /**/ "ace/post.h"

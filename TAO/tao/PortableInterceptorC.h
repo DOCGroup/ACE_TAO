@@ -98,6 +98,31 @@ namespace PortableInterceptor
 {
 
   // TAO_IDL - Generated from
+  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const PortableInterceptor::AdapterState HOLDING = 0;
+  
+  // TAO_IDL - Generated from
+  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const PortableInterceptor::AdapterState ACTIVE = 1;
+  
+  // TAO_IDL - Generated from
+  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const PortableInterceptor::AdapterState DISCARDING = 2;
+  
+  // TAO_IDL - Generated from
+  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const PortableInterceptor::AdapterState INACTIVE = 3;
+  
+  // TAO_IDL - Generated from
+  // C:\ACE\develop\ACE_wrappers\TAO\TAO_IDL\be\be_visitor_constant/constant_ch.cpp:52
+  
+  const PortableInterceptor::AdapterState NON_EXISTENT = 4;
+  
+  // TAO_IDL - Generated from
   // be\be_interface.cpp:611
 
 #if !defined (_PORTABLEINTERCEPTOR_INTERCEPTOR__VAR_OUT_CH_)
