@@ -7858,7 +7858,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   return 0;
 
-#elif
+#else
   ACE_UNUSED_ARG (node);
   ACE_NOTSUP_RETURN (-1);
 #endif
