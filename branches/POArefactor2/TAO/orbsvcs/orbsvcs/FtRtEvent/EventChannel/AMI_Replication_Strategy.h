@@ -14,7 +14,7 @@
 #define AMI_REPLICATION_STRATEGY_H
 
 #include "ace/Task.h"
-#include "tao/PortableServer/PortableServerC.h"
+#include "tao/PortableServer/PortableServer.h"
 #include "orbsvcs/FTRT_GroupManagerC.h"
 #include "Replication_Strategy.h"
 
