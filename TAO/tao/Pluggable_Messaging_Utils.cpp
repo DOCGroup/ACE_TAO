@@ -5,4 +5,4 @@
 #include "tao/Pluggable_Messaging_Utils.i"
 #endif /* __ACE_INLINE__ */
 
-// @@ Bala: don't forget the RCSID stuff.
+ACE_RCSID(tao, Pluggable_Messaging_Utils, "$Id$")

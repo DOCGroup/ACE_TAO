@@ -1,19 +1,27 @@
+// -*- C++ -*-
 //$Id$
+
 #include "tao/GIOP_Message_Connectors.h"
 #include "tao/Any.h"
 #include "tao/debug.h"
 #include "tao/Principal.h"
 #include "tao/TAOC.h"
 #include "tao/operation_details.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/target_specification.h"
+
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Connectors.i"
 #endif /* __ACE_INLINE__ */
 
+ACE_RCSID(tao, GIOP_Message_Connectors, "$Id$")
+
+
 int
 TAO_GIOP_Message_Connectors::
   parse_reply (TAO_Message_State_Factory &mesg_state,
-               TAO_Pluggable_Connector_Params &params)
+               TAO_Pluggable_Reply_Params &params)
 {
   // @@ Bala: See how the message state is a per-protocol thing?
   //    Wouldn't it be better to have each protocol define its own
@@ -28,6 +36,15 @@ TAO_GIOP_Message_Connectors::
   //    IMHO the right approach is to factor out common functionality
   //    and interfaces 'a posteriori', otherwise we will define
   //    ackward interfaces that will have to be changed anyway!
+  
+  // @@ Carlos: I agree. But I see a problem. Other than the transport
+  //    classes, we store state information in our Reply despatcers,
+  //    Transport Mux Strategy etc. I would only love to have the
+  //    Message States local to GIOP or say some other protocol. One
+  //    example that spoils this idea is the Mux_Strategies that we
+  //    have. I am ready to hear anything you suggest to get around
+  //    this.   
+
 
   // Cast to the GIOP Message state
   TAO_GIOP_Message_State *state = ACE_dynamic_cast (TAO_GIOP_Message_State *,
@@ -58,6 +75,9 @@ TAO_GIOP_Message_Connectors::
     }
 
   // @@ Bala: More silly translations!
+
+  // @@ Carlos: Please let me know what I can do to mask them from the
+  //    user of this method
 
   // Pass the right Pluggable interface code to the transport layer
   switch (rep_stat)
@@ -108,21 +128,21 @@ TAO_GIOP_Message_Connectors::validate_version (TAO_GIOP_Message_State *state)
 
 int
 TAO_GIOP_Message_Connectors::
-process_connector_messages (TAO_Transport * /*transport*/, 
-                            TAO_ORB_Core * /*orb_core*/,
-                            TAO_InputCDR & /*input*/,
-                            CORBA::Octet /*message_type*/)
+process_client_message (TAO_Transport * /*transport*/, 
+                        TAO_ORB_Core * /*orb_core*/,
+                        TAO_InputCDR & /*input*/,
+                        CORBA::Octet /*message_type*/)
 {
    ACE_NOTSUP_RETURN (-1);
 }
 
 
 ///////////////////////////////////////////////////////////////////
-// Methods for TAO_GIOP_Message_Connector_11
+// Methods for TAO_GIOP_Message_Connector_10
 //////////////////////////////////////////////////////////////////
 
 CORBA::Boolean
-TAO_GIOP_Message_Connector_11::
+TAO_GIOP_Message_Connector_10::
   write_request_header (const TAO_Operation_Details &opdetails,
                         TAO_Target_Specification &spec,
                         TAO_OutputCDR &msg)
@@ -200,7 +220,7 @@ TAO_GIOP_Message_Connector_11::
 
 
 CORBA::Boolean
-TAO_GIOP_Message_Connector_11::
+TAO_GIOP_Message_Connector_10::
   write_locate_request_header (CORBA::ULong request_id,
                                TAO_Target_Specification &spec,
                                TAO_OutputCDR &msg)
@@ -229,9 +249,9 @@ TAO_GIOP_Message_Connector_11::
 
 
 int
-TAO_GIOP_Message_Connector_11::
+TAO_GIOP_Message_Connector_10::
   parse_reply (TAO_Message_State_Factory &mesg_state,
-               TAO_Pluggable_Connector_Params &params)
+               TAO_Pluggable_Reply_Params &params)
        
 {
   // Cast to the GIOP Message state
@@ -284,29 +304,27 @@ TAO_GIOP_Message_Connector_11::
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Connector_11:: major_version (void)
+TAO_GIOP_Message_Connector_10:: major_version (void)
 {
   // Any harm in hardcoding??
   return (CORBA::Octet) 1;
 }
+
+CORBA::Octet
+TAO_GIOP_Message_Connector_10:: minor_version (void)
+{
+  // Any harm in hardcoding??
+  return 0;
+}
+
+
+///////////////////////////////////////////////////////////////////
+// Methods for TAO_GIOP_Message_Connector_11
+//////////////////////////////////////////////////////////////////
 
 CORBA::Octet
 TAO_GIOP_Message_Connector_11:: minor_version (void)
 {
   // Any harm in hardcoding??
   return (CORBA::Octet) 1;
-}
-
-
-///////////////////////////////////////////////////////////////////
-// Methods for TAO_GIOP_Message_Connector_10
-//////////////////////////////////////////////////////////////////
-
-CORBA::Octet
-TAO_GIOP_Message_Connector_10:: minor_version (void)
-{
-  // Any harm in hardcoding??
-  // @@ Bala: of course not...  but don't cast stuff that doen't need
-  // casting! return 0 is enough.
-  return (CORBA::Octet) 0;
 }

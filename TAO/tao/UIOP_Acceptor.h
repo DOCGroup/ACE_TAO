@@ -24,7 +24,7 @@
 #define TAO_UIOP_ACCEPTOR_H
 
 #include "tao/Pluggable.h"
-#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

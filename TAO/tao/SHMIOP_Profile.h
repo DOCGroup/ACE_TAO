@@ -32,7 +32,7 @@
 #include "tao/Profile.h"
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
-#include "tao/GIOP_Utils.h"
+#include "tao/GIOP_Message_State.h"
 
 #include "ace/Synch.h"
 #include "ace/MEM_Addr.h"

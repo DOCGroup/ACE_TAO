@@ -2,29 +2,29 @@
 
 #include "tao/Pluggable_Messaging.h"
 #include "tao/debug.h"
+#include "tao/Pluggable.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Pluggable_Messaging.i"
 #endif /* __ACE_INLINE__ */
 
 
-
+ACE_RCSID(tao, Pluggable_Messaging, "$Id$")
 //////////////////////////////////////////////////////////////////////////
 // Methods for the Pluugable Messaging stuff
 /////////////////////////////////////////////////////////////////////////
 
-TAO_Pluggable_Messaging_Interface::~TAO_Pluggable_Messaging_Interface (void)
+TAO_Pluggable_Messaging::~TAO_Pluggable_Messaging (void)
 {
   //no-op
 }
 
 int
-TAO_Pluggable_Messaging_Interface::
-  transport_message (TAO_Transport *transport,
-                     TAO_OutputCDR &stream,
-                     int two_way,
-                     TAO_Stub *stub,
-                     ACE_Time_Value *max_wait_time)
+TAO_Pluggable_Messaging:: transport_message (TAO_Transport *transport,
+                                             TAO_OutputCDR &stream,
+                                             int two_way,
+                                             TAO_Stub *stub,
+                                             ACE_Time_Value *max_wait_time)
 {
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux

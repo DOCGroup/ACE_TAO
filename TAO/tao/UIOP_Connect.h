@@ -35,12 +35,12 @@
 
 #include "tao/corbafwd.h"
 #include "tao/Wait_Strategy.h"
-#include "tao/Pluggable_Messaging.h"
+
 
 // Forward Decls
 class TAO_ORB_Core;
 class TAO_ORB_Core_TSS_Resources;
-
+class TAO_Pluggable_Messaging;
 
 typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
         TAO_UIOP_SVC_HANDLER;
@@ -105,9 +105,6 @@ protected:
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
 
-  TAO_Pluggable_Messaging_Interface *mesg_factory_;
-  // The Connector messaging factory
-  
   CORBA::Boolean lite_flag_;
   // Are we usinglite?
 };
@@ -156,7 +153,7 @@ protected:
   TAO_UIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
+  TAO_Pluggable_Messaging *acceptor_factory_;
   // Messaging acceptor factory
 
   // = Event Handler overloads

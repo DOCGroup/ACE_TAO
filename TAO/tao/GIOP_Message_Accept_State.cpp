@@ -1,6 +1,12 @@
+// -*- C++ -*-
 //$Id$
+
 #include "tao/GIOP_Message_Accept_State.h"
 #include "tao/debug.h"
+#include "tao/GIOP_Server_Request.h"
+#include "tao/GIOP_Utils.h"
+
+ACE_RCSID(tao, GIOP_Message_Accept_State, "$Id$") 
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Accept_State.i"
@@ -10,7 +16,7 @@
 // TAO_GIOP_Message_Accept_State_11 methods 
 ////////////////////////////////////////////////////////////////////////////////
 int
-TAO_GIOP_Message_Accept_State_11::
+TAO_GIOP_Message_Accept_State_10::
   parse_request_header (TAO_GIOP_ServerRequest &request)
 {
   // Tear out the service context ... we currently ignore it, but it
@@ -116,7 +122,7 @@ TAO_GIOP_Message_Accept_State_11::
 
 
 CORBA::Boolean
-TAO_GIOP_Message_Accept_State_11::
+TAO_GIOP_Message_Accept_State_10::
   write_reply_header (TAO_OutputCDR &output,
                       CORBA::ULong request_id)
 {
@@ -134,7 +140,7 @@ TAO_GIOP_Message_Accept_State_11::
 }
 
 int
-TAO_GIOP_Message_Accept_State_11::
+TAO_GIOP_Message_Accept_State_10::
   parse_locate_header (TAO_GIOP_Locate_Request_Header &request)
 {
   // Get the stream 
@@ -164,7 +170,7 @@ TAO_GIOP_Message_Accept_State_11::
 }
 
 CORBA::Boolean
-TAO_GIOP_Message_Accept_State_11::
+TAO_GIOP_Message_Accept_State_10::
 write_locate_reply_mesg (TAO_OutputCDR &output,
                          CORBA::ULong request_id,
                          TAO_GIOP_Locate_Status_Msg &status_info)
@@ -188,29 +194,25 @@ write_locate_reply_mesg (TAO_OutputCDR &output,
   return 1;
 }
 
-/*int
-TAO_GIOP_Message_Accept_State_11::
-  make_reply (const TAO_GIOP_Version &version,
-              TAO_GIOP_Message_Type t,
-              CORBA::ULong request_id,
-              TAO_OutputCDR &);
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_Accept_State_10::major_version (void)
 {
-  
-}*/
+  return (CORBA::Octet) 1;
+}
 
-///////////////////////////////////////////////////////////////
-// TAO_GIOP_Message_Accept_Impl methods
-//////////////////////////////////////////////////////////////
-  
-CORBA::Boolean
-TAO_GIOP_Message_Accept_Impl::
-  check_revision (CORBA::Octet incoming_major,
-                  CORBA::Octet incoming_minor)
+ACE_INLINE CORBA::Octet
+TAO_GIOP_Message_Accept_State_10::minor_version (void)
 {
-  // Need a better way to do this. @@Bala
-  if (incoming_major > 1 ||
-      incoming_minor > 2)
-    return 0;
+  return (CORBA::Octet) 0;
+}
 
+/////////////////////////////////////////////////////
+//  TAO_GIOP_Message_Accept_State_11
+/////////////////////////////////////////////////////
+
+CORBA::Octet
+TAO_GIOP_Message_Accept_State_11::minor_version (void)
+{
   return 1;
 }
+

@@ -3,7 +3,6 @@
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 //
-// GIOP:        Utility routines for sending, receiving GIOP messages
 //
 // Note that the Internet IOP is just the TCP-specific mapping of the
 // General IOP.  Areas where other protocols may map differently
@@ -38,20 +37,24 @@
 
 #include "tao/GIOP_Message_Base.h"
 #include "tao/operation_details.h"
+#include "tao/GIOP_Utils.h"
+#include "tao/Pluggable.h"
+#include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_Base.i"
 #endif /* __ACE_INLINE__ */
 
-// @@ Bala: the no-op comments again.
+ACE_RCSID(tao, GIOP_Message_Base, "$Id$")
+
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (void)
 {
-  //no-op
+  
 }
 
 TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 {
-  //no-op
+  
 }
 
 CORBA::Boolean
@@ -69,6 +72,10 @@ TAO_GIOP_Message_Base::
   // ways to do this, btw).
   // But only GIOP implements exactly these messages, does that sound
   // really like a good idea?
+  // @@ Carlos: I would be interested to now the efficient method. To
+  // be frank, I don't know of any. The reason I have put this is to
+  // mask the GIOP specificness of the incoming parameter type. Let me
+  // know what you feel.
 
   // First convert the Pluggable type to the GIOP specific type. 
   switch (t)
@@ -140,6 +147,10 @@ TAO_GIOP_Message_Base::
 {
   // @@ Bala: Why not do this right, the application should call the
   // methods below directly!
+  // @@Carlos: The idea was that the application (or the user of this
+  // method)  shouldn't know what is being done. 
+  // An afterthought, please see my comments in the file
+  // Pluggable_Messaging.h 
   switch (header_type)
     {
     case TAO_PLUGGABLE_MESSAGE_REQUEST_HEADER:
@@ -436,6 +447,109 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   return result;
 }
 
+
+int
+TAO_GIOP_Message_Base::parse_magic_bytes (TAO_GIOP_Message_State  *state) 
+{
+  // Grab the read pointer
+  char *buf = state->cdr.rd_ptr ();
+  
+  // The values are hard-coded to support non-ASCII platforms.
+  if (!(buf [0] == 0x47      // 'G'
+        && buf [1] == 0x49   // 'I'
+        && buf [2] == 0x4f   // 'O'
+        && buf [3] == 0x50)) // 'P'
+    {
+      // For the present...
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ASYS_TEXT ("TAO (%P|%t) bad header, magic word [%c%c%c%c]\n"), 
+                    buf[0],
+                    buf[1],
+                    buf[2],
+                    buf[3]));
+      return -1;
+    }
+
+  if (this->validate_version (state) == -1)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("(%N|%l|%p|%t) Error in validating")
+                      ASYS_TEXT ("revision \n")));
+          return -1;
+        }
+    }
+  
+  return 0;
+}
+
+int
+TAO_GIOP_Message_Base::parse_header (TAO_GIOP_Message_State *state)
+{
+  char *buf = state->cdr.rd_ptr ();
+
+  // Let us be specific that it is for 1.0
+  if (this->minor_version () == 0 &&
+      this->major_version () == 1)
+    {
+      state->byte_order = buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET];
+      if (TAO_debug_level > 2
+          && state->byte_order != 0 && state->byte_order != 1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) invalid byte order <%d>")
+                      ASYS_TEXT (" for version <1.0>\n"),
+                      state->byte_order));
+          return -1;
+        }
+    }
+  else
+    {
+      state->byte_order     =
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x01);
+      state->more_fragments =
+        (CORBA::Octet) (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET]& 0x02);
+
+      if (TAO_debug_level > 2
+          && (buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET] & ~0x3) != 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ASYS_TEXT ("TAO (%P|%t) invalid flags for <%d>")
+                      ASYS_TEXT (" for version <%d %d> \n"),
+                      buf[TAO_GIOP_MESSAGE_FLAGS_OFFSET],
+                      this->major_version (),
+                      this->minor_version ()));
+          return -1;
+        }
+    }
+
+  // Get the message type
+  state->message_type = buf[TAO_GIOP_MESSAGE_TYPE_OFFSET];
+
+  // Reset our input CDR stream
+  state->cdr.reset_byte_order (state->byte_order);
+
+
+  state->cdr.skip_bytes (TAO_GIOP_MESSAGE_SIZE_OFFSET);
+  state->cdr.read_ulong (state->message_size);
+
+  if (TAO_debug_level > 2)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ASYS_TEXT ("TAO (%P|%t) Parsed header = <%d,%d,%d,%d,%d>\n"), 
+                  this->major_version (),
+                  this->minor_version (),
+                  state->byte_order,
+                  state->message_type,
+                  state->message_size));
+    }
+
+  return 1;
+}
+
+
 // Server sends an "I'm shutting down now, any requests you've sent me
 // can be retried" message to the server.  The message is prefab, for
 // simplicity.
@@ -511,3 +625,5 @@ TAO_GIOP_Message_Base::
               which));
 
 }
+
+

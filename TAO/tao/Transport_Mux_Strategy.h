@@ -24,8 +24,8 @@
 #define TAO_TRANSPORT_MUX_STRATEGY_H
 
 // BALA should not be here But for the time being
-#include "tao/GIOP_Utils.h"
-/////////
+#include "tao/GIOP_Message_State.h"
+
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -106,9 +106,6 @@ protected:
   TAO_ORB_Core *orb_core_;
   // Cached ORB Core.
   
-  TAO_Pluggable_Messaging_Interface *mesg_factory_;
-  // The Connector messaging factory
-  
   CORBA::Boolean lite_flag_;
   // Are we using lite?
 };
@@ -172,7 +169,7 @@ protected:
   TAO_SHMIOP_Server_Transport transport_;
   // @@ New transport object reference.
 
-  TAO_Pluggable_Messaging_Interface *acceptor_factory_;
+  TAO_Pluggable_Messaging *acceptor_factory_;
   // Messaging acceptor factory
 
   TAO_ORB_Core *orb_core_;

@@ -1,26 +1,20 @@
+// -*- C++ -*-
 //$Id$
 
-/////////////////////////////////////////////////////
-//  TAO_GIOP_Message_Accept_State_11
-////////////////////////////////////////////////////
 
-ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_Accept_State_11::major_version (void)
+///////////////////////////////////////////////////////////////
+// TAO_GIOP_Message_Accept_Impl methods
+//////////////////////////////////////////////////////////////
+  
+ACE_INLINE CORBA::Boolean
+TAO_GIOP_Message_Accept_Impl::check_revision (CORBA::Octet incoming_major,
+                                              CORBA::Octet incoming_minor)
 {
-  return (CORBA::Octet) 1;
+  // Need a better way to do this. @@Bala
+  if (incoming_major > 1 ||
+      incoming_minor > 1)
+    return 0;
+
+  return 1;
 }
 
-ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_Accept_State_11::minor_version (void)
-{
-  return (CORBA::Octet) 1;
-}
-
-/////////////////////////////////////////////////////
-//  TAO_GIOP_Message_Accept_State_10
-////////////////////////////////////////////////////
-ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_Accept_State_10::minor_version (void)
-{
-  return (CORBA::Octet) 0;
-}
