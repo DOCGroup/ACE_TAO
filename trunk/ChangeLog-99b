@@ -1,3 +1,9 @@
+Mon Aug 09 16:49:45 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Process.{h,cpp} (wait): Re-visited the implementation so it
+	  behaves the same on both UNIX and Win32.  Thanks to Doug for
+	  suggesting this.
+
 Mon Aug 09 16:30:24 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * docs/ACE-guidelines.html: added note to follow the
