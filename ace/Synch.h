@@ -687,6 +687,19 @@ public:
 class ACE_Export ACE_Noop_Token : public ACE_Null_Mutex
 {
 public:
+  /// Queueing strategy
+  enum QUEUEING_STRATEGY
+  {
+    FIFO = -1,
+    LIFO = 0
+  };
+
+  /// Get queueing strategy.
+  int queueing_strategy (void);
+
+  /// Set queueing strategy.
+  void queueing_strategy (int queueing_strategy);
+
   int renew (int = 0, ACE_Time_Value * =0);
 
   /// Dump the state of an object.

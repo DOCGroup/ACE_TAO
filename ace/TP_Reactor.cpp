@@ -99,8 +99,9 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
-                                int mask_signals)
-  : ACE_Select_Reactor (sh, tq, 0, 0, mask_signals)
+                                int mask_signals,
+                                int s_queue)
+  : ACE_Select_Reactor (sh, tq, 0, 0, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);
@@ -110,8 +111,9 @@ ACE_TP_Reactor::ACE_TP_Reactor (size_t size,
                                 int rs,
                                 ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
-                                int mask_signals)
-  : ACE_Select_Reactor (size, rs, sh, tq, 0, 0, mask_signals)
+                                int mask_signals,
+                                int s_queue)
+  : ACE_Select_Reactor (size, rs, sh, tq, 0, 0, mask_signals, s_queue)
 {
   ACE_TRACE ("ACE_TP_Reactor::ACE_TP_Reactor");
   this->supress_notify_renew (1);

@@ -34,7 +34,7 @@
  * @class ACE_Token
  *
  * @brief Class that acquires, renews, and releases a synchronization
- * token that is serviced in strict FIFO ordering and that also
+ * token that is serviced in strict FIFO/LIFO ordering and that also
  * supports (1) recursion and (2) readers/writer semantics.
  *
  * This class is a more general-purpose synchronization mechanism
@@ -44,9 +44,9 @@
  * <acquire> multiple times, however, it must call <release> an
  * equal number of times before the token is actually released.
  * Threads that are blocked awaiting the token are serviced in
- * strict FIFO order as other threads release the token (Solaris
+ * strict FIFO/LIFO order as other threads release the token (Solaris
  * and Pthread mutexes don't strictly enforce an acquisition
- * order).  There are two FIFO lists within the class.  Write
+ * order).  There are two lists within the class.  Write
  * acquires always have higher priority over read acquires.  Which
  * means, if you use both write/read operations, care must be
  * taken to avoid starvation on the readers.  Notice that the
@@ -62,10 +62,30 @@
 class ACE_Export ACE_Token
 {
 public:
+
+  /**
+   * Available queueing strategies.  
+   */
+  enum QUEUEING_STRATEGY
+  {
+    /// FIFO, First In, First Out.
+    FIFO = -1,
+    /// LIFO, Last In, First Out
+    LIFO = 0
+  };
+
   // = Initialization and termination.
 
   ACE_Token (const ACE_TCHAR *name = 0, void * = 0);
   virtual ~ACE_Token (void);
+
+  // = Strategies
+
+  /// Retrieve the current queueing strategy.
+  int queueing_strategy (void);
+
+  /// Set the queueing strategy.
+  void queueing_strategy (int queueing_strategy);
 
   // = Synchronization operations.
 
@@ -107,7 +127,7 @@ public:
    * you don't want to degrade the quality of service if there are
    * other threads waiting to get the token.  If <requeue_position> ==
    * -1 and there are other threads waiting to obtain the token we are
-   * queued at the end of the list of waiters.  If <requeue_position>
+   * queued according to the queueing strategy.  If <requeue_position>
    * > -1 then it indicates how many entries to skip over before
    * inserting our thread into the list of waiters (e.g.,
    * <requeue_position> == 0 means "insert at front of the queue").
@@ -174,7 +194,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = The following structure implements a ACE_FIFO of waiter threads
+  // = The following structure implements a LIFO/FIFO queue of waiter threads
   // that are asleep waiting to obtain the token.
 
   struct ACE_Token_Queue_Entry
@@ -270,6 +290,9 @@ private:
 
   /// The attributes for the condition variables, optimizes lock time.
   ACE_Condition_Attributes attributes_;
+
+  /// Queueing strategy, LIFO/FIFO.
+  int queueing_strategy_;
 };
 
 #if defined (__ACE_INLINE__)
@@ -280,6 +303,8 @@ private:
 class ACE_Export ACE_Token
 {
 public:
+  int queueing_strategy (void) { ACE_NOTSUP_RETURN (-1); }
+  void queueing_strategy (int queueing_strategy) { }
   int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
   int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
   int remove (void) { ACE_NOTSUP_RETURN (-1); }

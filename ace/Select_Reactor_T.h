@@ -70,8 +70,10 @@ template <class ACE_SELECT_REACTOR_MUTEX>
 class ACE_Select_Reactor_Token_T : public ACE_SELECT_REACTOR_MUTEX
 {
 public:
-  ACE_Select_Reactor_Token_T (ACE_Select_Reactor_Impl &r);
-  ACE_Select_Reactor_Token_T (void);
+
+  ACE_Select_Reactor_Token_T (ACE_Select_Reactor_Impl &r,
+                              int s_queue = ACE_SELECT_REACTOR_MUTEX::FIFO);
+  ACE_Select_Reactor_Token_T (int s_queue = ACE_SELECT_REACTOR_MUTEX::FIFO);
   virtual ~ACE_Select_Reactor_Token_T (void);
 
   /// Called just before the ACE_Event_Handler goes to sleep.
@@ -122,7 +124,8 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1);
+                        int mask_signals = 1,
+                        int s_queue = ACE_SELECT_REACTOR_TOKEN::FIFO);
 
   /// Initialize @c ACE_Select_Reactor with size @arg size.
   /// If @arg disable_notify_pipe is non-0 then the reactor will
@@ -146,7 +149,8 @@ public:
                         ACE_Timer_Queue * = 0,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = 0,
-                        int mask_signals = 1);
+                        int mask_signals = 1,
+                        int s_queue = ACE_SELECT_REACTOR_TOKEN::FIFO);
 
   /**
    * Initialize the @c ACE_Select_Reactor to manage

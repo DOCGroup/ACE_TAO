@@ -1,3 +1,23 @@
+Mon Feb 25 13:50:43 2002 UTC Don Hinton <dhinton@ieee.org>
+
+	* ace/Token.{h|i|cpp}: Added the ability to chose the queueing strategy, 
+	  FIFO or LIFO, by using the queueing_strategy() methods.  The default
+	  is FIFO, which was the previous behavior.  Now ACE_Token_Queue::insert_entry()
+	  is always called with the queueing_strategy in order to determine where 
+	  the thread should requeue itself. 
+	
+	* ace/Synch.{h|i}: Added queueing strategy methods to ACE_Noop_Token.
+
+	* ace/Select_Reactor_T.{h|cpp}: 
+	* ace/TP_Reactor.{h|cpp}: Added QUEUEING_STRATEGY parameter to 
+	  ACE_Select_Reactor_Token_T, ACE_Select_Reactor_T, and ACE_TP_Reactor
+	  ctors with FIFO default.
+
+	* tests/Token_Strategy_Test.cpp :
+	* tests/Makefile :
+	* tests/run_test.lst: Added new Token_Strategy_Test.cpp to test the
+	  FIFO/LIFO strategies.	
+
 Mon Feb 25 13:44:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/tutorials/018/Test_T.h:

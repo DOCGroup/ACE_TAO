@@ -817,6 +817,17 @@ ACE_Null_Mutex::dump (void) const
 }
 
 ACE_INLINE int
+ACE_Noop_Token::queueing_strategy (void)
+{
+  return -1;
+}
+
+ACE_INLINE void
+ACE_Noop_Token::queueing_strategy (int queueing_strategy)
+{
+}
+
+ACE_INLINE int
 ACE_Noop_Token::renew (int, ACE_Time_Value *)
 {
   return 0;
