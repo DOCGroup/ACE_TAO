@@ -133,7 +133,6 @@ Tue Mar 27 14:20:48 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
           all the occurences of TAO_orbdebug to TAO_debug_level. That
           should hopefully fix the DLL Core builds.
 
->>>>>>> 1.2970
 Tue Mar 27 08:15:34 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * examples/PluggableUDP/DIOP/DIOP_Connection_Handler.cpp:
