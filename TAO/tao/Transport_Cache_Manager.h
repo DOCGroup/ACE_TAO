@@ -23,11 +23,11 @@
 
 #include "tao/TAO_Export.h"
 #include "tao/Cache_Entries.h"
+#include "tao/Connection_Purging_Strategy.h"
 
 class TAO_ORB_Core;
 class ACE_Handle_Set;
 class TAO_Resource_Factory;
-class TAO_Connection_Purging_Strategy;
 
 typedef ACE_Unbounded_Set<ACE_Event_Handler*> TAO_EventHandlerSet;
 typedef ACE_Unbounded_Set_Iterator<ACE_Event_Handler*>
