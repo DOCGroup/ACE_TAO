@@ -625,6 +625,51 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
 
   return 0;
 
+#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
+  if (sched_params.quantum () != ACE_Time_Value::zero)
+    {
+      // quantums not supported
+      errno = EINVAL;
+      return -1;
+    }
+
+  // Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
+  // providing this code for 1003.1c PThreads.  Please note that this
+  // has only been tested for POSIX 1003.1c threads, and may cause problems
+  // with other PThreads flavors!
+
+  int result;
+  struct sched_param param;
+
+  param.sched_priority = sched_params.priority ();
+
+  if (sched_params.scope () == ACE_SCOPE_PROCESS)
+    {
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sched_setscheduler (
+                                             0,    // this process
+                                             sched_params.policy (),
+                                             &param),
+                                           result),
+                         int, -1);
+    }
+  else if (sched_params.scope () == ACE_SCOPE_THREAD)
+    {
+      ACE_thread_t thr_id = ACE_OS::thr_self ();
+  
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
+                                             thr_id,
+                                             sched_params.policy (),
+                                             &param),
+                                           result),
+                         int, -1);
+    }
+  else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
+  return 0;
 #elif defined (ACE_WIN32)
 
   if (sched_params.scope () != ACE_SCOPE_PROCESS  ||
@@ -665,52 +710,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params)
   // Set the thread priority on the current thread.
   return ACE_OS::thr_setprio (sched_params.priority ());
 
-#elif (defined (ACE_HAS_DCETHREADS) || defined (ACE_HAS_PTHREADS)) && !defined (ACE_LACKS_SETSCHED)
-  if (sched_params.quantum () != ACE_Time_Value::zero)
-    {
-      // quantums not supported
-      errno = EINVAL;
-      return -1;
-    }
-
-  // Thanks to Thilo Kielmann <kielmann@informatik.uni-siegen.de> for
-  // providing this code for 1003.1c PThreads.  Please note that this
-  // has only been tested for POSIX 1003.1c threads, and may cause problems
-  // with other PThreads flavors!
-
-  ACE_thread_t thr_id = ACE_OS::thr_self ();
-  int result;
-  struct sched_param param;
-
-  param.sched_priority = sched_params.priority ();
-
-  if (sched_params.scope () == ACE_SCOPE_PROCESS)
-    {
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sched_setscheduler (
-                                             thr_id,
-                                             sched_params.policy (),
-                                             &param),
-                                           result),
-                         int, -1);
-    }
-  else if (sched_params.scope () == ACE_SCOPE_THREAD)
-    {
-      param.sched_priority = sched_params.priority ();
-  
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_setschedparam (
-                                             thr_id,
-                                             sched_params.policy (),
-                                             &param),
-                                           result),
-                         int, -1);
-    }
-  else // sched_params.scope () == ACE_SCOPE_LWP, which isn't POSIX
-    {
-      errno = EINVAL;
-      return -1;
-    }
-
-  return 0;
 #else
   ACE_NOTSUP_RETURN (ENOTSUP);
 #endif /* ACE_HAS_STHREADS */
