@@ -11,6 +11,14 @@ Fri Mar 06 08:37:44 1998  David L. Levine  <levine@cs.wustl.edu>
         * bin/create_ace_build: made perl4-compatible.  Thanks to
           Carlos for noticing this.
 
+        * include/makeinclude/platform_vxworks5.x_g++.GNU:  added
+          WIN32 host support.  Thanks to Paul von Behren
+          <Paul_von_Behren@stortek.com> for providing the patches.
+
+        * ACE-INSTALL.html:  added information from Paul von Behren
+          <Paul_von_Behren@stortek.com> on building on NT hosts for
+          VxWorks targets.
+
         * tests/Recursive_Mutex_Test.cpp: 50 iterations instead of 100
           on CHORUS.
 
