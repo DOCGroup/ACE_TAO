@@ -1,3 +1,10 @@
+Tue Feb  3 11:36:41 2004  Steve Huston  <shuston@riverace.com>
+
+	* examples/APG/Reactor/Client.cpp:
+	* examples/APG/ThreadSafety/TSS.cpp: Add template instantiations needed
+	  to correct LynxOS build. Thanks to Olli Savia <ops@iki.fi> for
+	  these fixes.
+
 Tue Feb  3 07:37:20 2004  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/MakeProjectCreator/templates/make.mpd:
