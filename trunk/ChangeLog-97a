@@ -1,3 +1,9 @@
+Mon May 12 18:59:39 1997  David L. Levine  <levine@cs.wustl.edu>
+
+	* ace/config-mvs.h: conditionally use ACE_HAS_UCONTEXT_T or
+	  ACE_LACKS_UCONTEXT_H depending on __COMPILER_VER__.  Thanks to
+	  Chuck Gehr <gehr@sweng.stortek.com> for this fix.
+
 Mon May 12 17:11:50 1997  Tim H. Harrison  <harrison@waltz.cs.wustl.edu>
 
 	* ace/Process.h: Changed ACE_Process::start to
