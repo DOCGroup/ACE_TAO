@@ -41,7 +41,7 @@ $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($iorfile2, 10) == -1) {
     print STDERR "ERROR: cannot find file <$iorfile2>\n";
-    $SV->Kill (); 
+    $SV->Kill ();
     exit 1;
 }
 
@@ -64,6 +64,6 @@ unlink $iorfile1;
 unlink $iorfile2;
 
 # Clean up SHMIOP files
-unlink glob ("server_shmiop_*");
+PerlACE::check_n_cleanup_files ("server_shmiop_*");
 
 exit $status;
