@@ -72,10 +72,6 @@ TAO_GIOP_Asynch_Invocation::start (CORBA::Environment &ACE_TRY_ENV)
   ACE_CHECK;
 
   this->target_spec_.target_specifier (this->profile_->object_key ());
-  this->transport_->start_request (this->orb_core_,
-                                   this->target_spec_,
-                                   this->out_stream_,
-                                   ACE_TRY_ENV);
 }
 
 // **************************************************************************

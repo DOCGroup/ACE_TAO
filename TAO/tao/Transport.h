@@ -34,6 +34,7 @@ class TAO_Operation_Details;
 class TAO_Transport_Mux_Strategy;
 class TAO_Wait_Strategy;
 class TAO_Connection_Handler;
+class TAO_Pluggable_Messaging;
 
 #include "ace/Message_Queue.h"
 #include "ace/Strategies.h"
@@ -255,10 +256,9 @@ public:
    */
   void provide_handle (ACE_Handle_Set &handle_set);
 
-  /// @@ Bala: you must document this function!!
-  /// @@ Bala: from the implementation in IIOP_Transport it looks more
-  //         like it process the list of listening endpoints, or it is
-  //         parsing it, but 'tearing'???
+  /// Extracts the list of listen points from the <cdr> stream. The
+  /// list would have the protocol specific details of the
+  /// ListenPoints
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
   /// Remove all messages from the outgoing queue.
@@ -398,6 +398,10 @@ protected:
   // we're trying to lock down! (CJC)
   virtual ACE_Event_Handler *event_handler_i (void) = 0;
 
+  /// Return the messaging object that is used to format the data that
+  /// needs to be sent.
+  virtual TAO_Pluggable_Messaging * messaging_object (void) = 0;
+
   /// Write the complete Message_Block chain to the connection.
   /**
    * Often the implementation simply forwards the arguments to the
@@ -445,32 +449,18 @@ protected:
                           const ACE_Time_Value *timeout = 0) = 0;
 
 public:
-  /// Fill into <output> the right headers to make a request.
-  /**
-   * @todo Bala: in the good old days it was decided that the
-   * pluggable protocol framework would not raise exceptions.
-   */
-  // @nolock
-  virtual void start_request (TAO_ORB_Core *orb_core,
-                              TAO_Target_Specification &spec,
-                              TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV =
-                              TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
 
-  /// Fill into <output> the right headers to make a locate request.
-  /**
-   * @todo Bala: in the good old days it was decided that the
-   * pluggable protocol framework would not raise exceptions.
-   */
-  // @@nolock
-  virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Target_Specification &spec,
-                             TAO_Operation_Details &opdetails,
-                             TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV =
-                             TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException)) = 0;
+  /// This is a request for the transport object to write a
+  /// LocateRequest header before it is sent out.
+  int generate_locate_request (TAO_Target_Specification &spec,
+                               TAO_Operation_Details &opdetails,
+                               TAO_OutputCDR &output);
+
+  /// This is a request for the transport object to write a request
+  /// header before it sends out the request
+  virtual int generate_request_header (TAO_Operation_Details &opd,
+                                       TAO_Target_Specification &spec,
+                                       TAO_OutputCDR &msg);
 
   /// Prepare the waiting and demuxing strategy to receive a reply for
   /// a new request.
@@ -504,18 +494,7 @@ public:
                             int twoway,
                             ACE_Time_Value *max_time_wait) = 0;
 
-  /// This is a request for the transport object to write a request
-  /// header before it sends out a request
-  /**
-   * @todo: Bala shouldn't this be <write_request_header> or maybe
-   *   <init_request_header>, or <prepare_request_header>? Nothing is
-   *   really sent at this point, right?
-   *
-   * @todo: This looks like generic code too.
-   */
-  virtual CORBA::Boolean send_request_header (TAO_Operation_Details &opd,
-                                              TAO_Target_Specification &spec,
-                                              TAO_OutputCDR &msg) = 0;
+
 
   /// This method formats the stream and then sends the message on the
   /// transport.
@@ -627,8 +606,6 @@ public:
   void cache_map_entry (
     TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
 
-  //  TAO_Transport_Cache_Manager::HASH_MAP_ENTRY *& cache_map_entry (void);
-
   void mark_invalid (void);
 
   int make_idle (void);
@@ -697,10 +674,9 @@ protected:
    *   demarshalling time on the client.
    * + On the server side -- once a client that has established the
    *   connection asks the server to use the connection both ways, we
-   *   *dont* want the server to go pack service info to the
-   *   client. That would be *bad*..
-   *   @@ Bala: what would this be *bad*? Exactly what breaks? The
-   *          protocol? Some GIOP rules?  Performance?
+   *   *dont* want the server to pack service info to the client. That
+   *   is not allowed. We need a flag to prevent such a things from
+   *   happening.
    *
    * The value of this flag will be 0 if the client sends info and 1
    * if the server receives the info.

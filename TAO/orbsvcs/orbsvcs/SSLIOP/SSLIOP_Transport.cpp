@@ -64,6 +64,13 @@ TAO_SSLIOP_Transport::event_handler_i (void)
   return this->connection_handler_;
 }
 
+TAO_Pluggable_Messaging *
+TAO_SSLIOP_Transport::event_handler_i (void)
+{
+  return this->messaging_object_;
+}
+
+
 ssize_t
 TAO_SSLIOP_Transport::send_i (const ACE_Message_Block *message_block,
                               const ACE_Time_Value *max_wait_time,
@@ -268,43 +275,10 @@ TAO_SSLIOP_Transport::send_message (TAO_OutputCDR &stream,
 }
 
 
-void
-TAO_SSLIOP_Transport::start_request (TAO_ORB_Core * /*orb_core*/,
-                                   TAO_Target_Specification & /*spec */,
-                                   TAO_OutputCDR & /*output */,
-                                   CORBA::Environment & /*ACE_TRY_ENV*/)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  //  TAO_FUNCTION_PP_TIMEPROBE (TAO_IIOP_CLIENT_TRANSPORT_START_REQUEST_START);
-
-  // @@ This method should NO longer be required..
-
-  /*  if (this->client_mesg_factory_->write_protocol_header
-      (TAO_PLUGGABLE_MESSAGE_REQUEST,
-       output) == 0)
-       ACE_THROW (CORBA::MARSHAL ());*/
-}
-
-
-void
-TAO_SSLIOP_Transport::start_locate (TAO_ORB_Core * /*orb_core*/,
-                                  TAO_Target_Specification &spec,
-                                  TAO_Operation_Details &opdetails,
-                                  TAO_OutputCDR &output,
-                                  CORBA::Environment &ACE_TRY_ENV)
-  ACE_THROW_SPEC ((CORBA::SystemException))
-{
-  if (this->messaging_object_->generate_locate_request_header (opdetails,
-                                                               spec,
-                                                               output) == -1)
-    ACE_THROW (CORBA::MARSHAL ());
-}
-
-
-CORBA::Boolean
-TAO_SSLIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
-                                         TAO_Target_Specification &spec,
-                                         TAO_OutputCDR &msg)
+int
+TAO_SSLIOP_Transport::send_request_header (TAO_Target_Specification &spec,
+                                           TAO_Operation_Details &opdetails,
+                                           TAO_OutputCDR &msg)
 {
   // Check whether we have a Bi Dir IIOP policy set, whether the
   // messaging objects are ready to handle bidirectional connections
@@ -326,11 +300,7 @@ TAO_SSLIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
 
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
-  if (this->messaging_object_->generate_request_header (opdetails,
-                                                        spec,
-                                                        msg) == -1)
-    return 0;
-
+  return TAO_Transport::generate_request_header (op
   return 1;
 }
 
@@ -614,4 +584,3 @@ TAO_SSLIOP_Transport::connection_handler (void) const
   return connection_handler_;
 }
 #endif
-

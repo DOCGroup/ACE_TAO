@@ -11,6 +11,8 @@
 #include "Stub.h"
 #include "Sync_Strategies.h"
 #include "Connection_Handler.h"
+#include "Pluggable_Messaging.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
 # include "Transport.inl"
@@ -85,6 +87,8 @@ TAO_Transport::~TAO_Transport (void)
 
   delete this->handler_lock_;
 }
+
+
 
 ssize_t
 TAO_Transport::send_or_buffer (TAO_Stub *stub,
@@ -452,6 +456,50 @@ TAO_Transport::recv (char *buffer,
   // now call the template method
   return this->recv_i (buffer, len, timeout);
 }
+
+int
+TAO_Transport::generate_locate_request (
+    TAO_Target_Specification &spec,
+    TAO_Operation_Details &opdetails,
+    TAO_OutputCDR &output)
+{
+  if (this->messaging_object ()->generate_locate_request_header (opdetails,
+                                                                 spec,
+                                                                 output) == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) Error in marshalling the \n")
+                    ACE_TEXT ("LocateRequest Header \n")));
+
+      return -1;
+    }
+
+  return 0;
+}
+
+
+int
+TAO_Transport::generate_request_header (
+    TAO_Operation_Details &opdetails,
+    TAO_Target_Specification &spec,
+    TAO_OutputCDR &output)
+{
+  if (this->messaging_object ()->generate_request_header (opdetails,
+                                                          spec,
+                                                          output) == -1)
+    {
+      if (TAO_debug_level > 0)
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) Error in marshalling the \n")
+                    ACE_TEXT ("LocateRequest Header \n")));
+
+      return -1;
+    }
+
+  return 0;
+}
+
 
 long
 TAO_Transport::register_for_timer_event (const void* arg,

@@ -1,5 +1,8 @@
 // $Id$
 
+
+
+
 ACE_INLINE TAO_ORB_Core *
 TAO_Transport::orb_core (void) const
 {

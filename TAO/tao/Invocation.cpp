@@ -378,10 +378,10 @@ TAO_GIOP_Invocation::prepare_header (CORBA::Octet response_flags,
   this->op_details_.response_flags (response_flags);
 
   // Send the request for the header
-  if (this->transport_->send_request_header (this->op_details_,
-                                             this->target_spec_,
-                                             this->out_stream_)
-        == 0)
+  if (this->transport_->generate_request_header (this->op_details_,
+                                                 this->target_spec_,
+                                                 this->out_stream_)
+        == -1)
     {
       ACE_THROW (CORBA::MARSHAL ());
     }
@@ -838,11 +838,6 @@ TAO_GIOP_Twoway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->transport_->start_request (this->orb_core_,
-                                   this->target_spec_,
-                                   this->out_stream_,
-                                   ACE_TRY_ENV);
-
   this->rd_.reply_received () = 0;
 }
 
@@ -965,10 +960,6 @@ TAO_GIOP_Oneway_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->transport_->start_request (this->orb_core_,
-                                   this->target_spec_,
-                                   this->out_stream_,
-                                   ACE_TRY_ENV);
 }
 
 int
@@ -1024,12 +1015,9 @@ TAO_GIOP_Locate_Request_Invocation::start (CORBA_Environment &ACE_TRY_ENV)
   TAO_GIOP_Invocation::start (ACE_TRY_ENV);
   ACE_CHECK;
 
-  this->transport_->start_locate (this->orb_core_,
-                                  this->target_spec_,
-                                  this->op_details_,
-                                  this->out_stream_,
-                                  ACE_TRY_ENV);
-
+  this->transport_->generate_locate_request (this->target_spec_,
+                                             this->op_details_,
+                                             this->out_stream_);
   this->rd_.reply_received () = 0;
 }
 

@@ -64,6 +64,8 @@ protected:
 
   virtual ACE_Event_Handler *event_handler_i (void);
 
+  virtual TAO_Pluggable_Messaging *messaging_object (void);
+
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send_i (const ACE_Message_Block *mblk,
                           const ACE_Time_Value *s = 0,
@@ -99,25 +101,6 @@ public:
                             TAO_Stub *stub = 0,
                             int twoway = 1,
                             ACE_Time_Value *max_time_wait = 0);
-
-  virtual void start_request (TAO_ORB_Core *orb_core,
-                              TAO_Target_Specification &spec,
-                              TAO_OutputCDR &output,
-                              CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-  virtual void start_locate (TAO_ORB_Core *orb_core,
-                             TAO_Target_Specification &spec,
-                             TAO_Operation_Details &opdetails,
-                             TAO_OutputCDR &output,
-                             CORBA::Environment &ACE_TRY_ENV = TAO_default_environment ())
-    ACE_THROW_SPEC ((CORBA::SystemException));
-
-
-  virtual CORBA::Boolean
-  send_request_header (TAO_Operation_Details &opdetails,
-                       TAO_Target_Specification &spec,
-                       TAO_OutputCDR &msg);
 
   /// Initialising the messaging object
   virtual int messaging_init (CORBA::Octet major,
