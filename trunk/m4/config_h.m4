@@ -916,9 +916,6 @@ AH_TEMPLATE([ACE_HAS_UTIME],[Platform has <utime.h> header file])
 AH_TEMPLATE([ACE_HAS_EXPLICIT_KEYWORD],
 [Compiler supports explicit constructors.])
 
-AH_TEMPLATE([ACE_HAS_MUTABLE_KEYWORD],
-[Compiler supports the C++ `mutable' keyword.])
-
 AH_TEMPLATE([ACE_HAS_TYPENAME_KEYWORD],
 [Compiler supports the C++ typename keyword])
 
