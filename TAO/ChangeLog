@@ -1,3 +1,9 @@
+Wed Nov 24 18:38:29 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* orbsvcs/tests/Log/Basic_Log_Test/Log_Basic_Log_Test.mpc:
+
+          Added exename definition.
+
 Wed Nov 24 17:08:25 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* orbsvcs/tests/FaultTolerance/GroupRef_Manipulation/run_test.pl:
