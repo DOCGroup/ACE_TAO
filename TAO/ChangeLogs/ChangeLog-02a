@@ -5,8 +5,8 @@ Mon Jul 09 10:56:30 2001  Ossama Othman  <ossama@uci.edu>
 
 	  Added this accessor that returns a reference to the underlying
 	  TAO_ServerRequest object.  Thanks to James Megquier
-	  <jmegq@bbn.com> and Mouna Seri <seri@crhc.uiuc.edu> suggesting
-	  addition of this acceossor.
+	  <jmegq@bbn.com> and Mouna Seri <seri@crhc.uiuc.edu> for
+	  suggesting addition of this accessor.
 
 Mon Jul  9 11:16:36 2001  Jeff Parsons <parsons@cs.wustl.edu>
 
