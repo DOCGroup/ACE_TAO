@@ -1,3 +1,8 @@
+Thu Sep 16 07:55:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * m4/config_h.m4:
+          Removed ACE_HAS_CYGWIN32_SOCKET_H
+
 Thu Sep 16 07:33:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/msvc_static_order.lst:
