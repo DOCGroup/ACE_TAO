@@ -18,9 +18,9 @@
 
 NS_NamingContext::NS_NamingContext (void)
 {
+  // Deal with faults.
   if (context_.open (NS_MAP_SIZE) == -1)
     ACE_ERROR ((LM_ERROR, "%p\n", "NS_NamingContext"));
-  // deal with fault
 }
 
 NS_NamingContext::~NS_NamingContext (void)
@@ -30,17 +30,14 @@ NS_NamingContext::~NS_NamingContext (void)
 CosNaming::NamingContext_ptr
 NS_NamingContext::get_context (const CosNaming::Name &name)
 {
-  // create compound name to be resolved
-  // (<name> - last component)
+  // Create compound name to be resolved (<name> - last component).
   CORBA::Environment _env;
   CORBA::ULong len = name.length ();
   CosNaming::Name comp_name (name);
   comp_name.length (len - 1);
 
   // resolve
-  CORBA::Object_ptr cont_ref;
-
-  cont_ref = resolve (comp_name, _env);
+  CORBA::Object_ptr cont_ref = resolve (comp_name, _env);
 
   // Deal with exceptions in resolve: basicly, add the last component
   // of the name to <rest_of_name> and rethrow.
@@ -130,10 +127,10 @@ NS_NamingContext::bind (const CosNaming::Name& n,
 	  return;
 	}
 
-      ACE_DEBUG ((LM_DEBUG, "bound: <%s,%s>\n",
-		  n[0].id.in ()==0? "nil":n[0].id.in (),
-		  n[0].kind.in ()==0? "nil":n[0].kind.in ()
-		  ));
+      ACE_DEBUG ((LM_DEBUG,
+                  "bound: <%s,%s>\n",
+		  n[0].id.in ()==0? "nil" : n[0].id.in (),
+		  n[0].kind.in ()==0? "nil" : n[0].kind.in ()));
     }
 }
 
@@ -143,10 +140,11 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
 			  CORBA::Environment &_env)
 {
   int result = 0;
-  // get the length of the name
+
+  // Get the length of the name.
   CORBA::ULong len = n.length ();
 
-  // check for invalid name.
+  // Check for invalid name.
   if (len == 0)
     {
       _env.clear ();
@@ -165,9 +163,12 @@ NS_NamingContext::rebind (const CosNaming::Name& n,
       simple_name[0] = n[len - 1];
       cont->rebind (simple_name, obj, _env);
     }
-  // If we received a simple name, we need to rebind it in this context.
+
   else
     {
+      // If we received a simple name, we need to rebind it in this
+      // context.
+
       NS_IntId entry (obj);
       NS_ExtId name (n[0].id, n[0].kind);
       NS_IntId oldentry;
@@ -192,6 +193,7 @@ NS_NamingContext::bind_context (const CosNaming::Name &n,
 				CORBA::Environment &_env)
 {
   int result = 0;
+
   // Get the length of the name.
   CORBA::ULong len = n.length ();
 
@@ -298,10 +300,12 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       return CORBA::Object::_nil ();
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Trying to resolve <%s,%s>\n",
-	      n[0].id.in (), n[0].kind.in ()));
+  ACE_DEBUG ((LM_DEBUG,
+              "Trying to resolve <%s,%s>\n",
+	      n[0].id.in (),
+              n[0].kind.in ()));
 
-  // resolve the first component of the name
+  // Resolve the first component of the name.
   NS_ExtId name (n[0].id, n[0].kind);
   NS_IntId entry;
   if (context_.find (name, entry) == -1)
@@ -342,12 +346,14 @@ NS_NamingContext::resolve (const CosNaming::Name& n,
       return (cont->resolve (rest_of_name, _env));
     }
 
-  ACE_DEBUG ((LM_DEBUG, "Resolved <%s,%s> to %08.8x\n",
-	      n[0].id.in (), n[0].kind.in (),
+  ACE_DEBUG ((LM_DEBUG,
+              "Resolved <%s,%s> to %08.8x\n",
+	      n[0].id.in (),
+              n[0].kind.in (),
 	      item));
 
-  // if the name we had to resolve was simple, we just need
-  // to return the result.
+  // If the name we had to resolve was simple, we just need to return
+  // the result.
   return CORBA::Object::_duplicate (item);
 }
 
@@ -380,9 +386,10 @@ NS_NamingContext::unbind (const CosNaming::Name& n,
       cont->unbind (simple_name, _env);
     }
   else
-  // If we received a simple name, we need to unbind it in this
-  // context.
     {
+      // If we received a simple name, we need to unbind it in this
+      // context.
+
       NS_ExtId name (n[0].id, n[0].kind);
       // try unbinding the name.
       if (context_.unbind (name) == -1)
@@ -410,7 +417,7 @@ NS_NamingContext::bind_new_context (const CosNaming::Name& n,
 
   bind_context (n, c->_this (_env), _env);
   
-  // release object if exception occurs.   
+  // Release object if exception occurs.   
   if (_env.exception () != 0)
     {
       delete c;
@@ -430,7 +437,7 @@ NS_NamingContext::destroy (CORBA::Environment &_env)
       return;
     }
 
-  // destroy context
+  // Destroy context.
   CORBA::release (tie_ref_);
 }
     
@@ -447,11 +454,13 @@ NS_NamingContext::list (CORBA::ULong how_many,
   // Number of bindings that will go into the BindingList.
   CORBA::ULong n;
 
+  // Number of bindings in the context is > <how_many> so need to
+  // return a BindingIterator.
   if (context_.current_size () > how_many)
-    // number of bindings in the context is > <how_many>
-    // so need to return a BindingIterator.
      {
-       NS_BindingIterator *bind_iter = new NS_BindingIterator (hash_iter);
+       NS_BindingIterator *bind_iter;
+       
+       ACE_NEW (bind_iter, NS_BindingIterator (hash_iter));
 
        // @@ ????
 
