@@ -763,8 +763,6 @@ TAO_Marshal_Struct::decode (CORBA::TypeCode_ptr  tc,
                         break;
                       case CORBA::tk_TypeCode:
                       case CORBA::tk_objref:
-                        retval = stream->decode (param, &data, 0, env);
-                        break;
                       case CORBA::tk_any:
                       case CORBA::tk_Principal:
                       case CORBA::tk_struct:
@@ -1109,7 +1107,7 @@ TAO_Marshal_Sequence::decode (CORBA::TypeCode_ptr  tc,
                     }
                   // In any case the sequence length is changed.
                   seq->length_ = bounds;
-                
+
 
                   value = (char *) seq->buffer_;
 

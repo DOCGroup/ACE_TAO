@@ -110,7 +110,7 @@ POA_CORBA::_tao_collocated_Current::_tao_collocated_Current (
     POA_CORBA::Current_ptr  servant,
     STUB_Object *stub
   )
-  : CORBA_Current (),
+  : CORBA_Current (stub, servant, CORBA::B_TRUE),
     CORBA_Object (stub, servant, CORBA::B_TRUE),
     servant_ (servant)
 {
