@@ -3,6 +3,12 @@ Sun Sep 27 21:05:40 1998  David L. Levine  <levine@cs.wustl.edu>
         * tao/Object_Table.i (create_object_id): added
           ACE_UNUSED_ARG (servant).
 
+        * tao/Object_Table.cpp (TAO_Dynamic_Hash_ObjTable,
+          TAO_Linear_ObjTable ctors): added static cast of
+          TAO_Object_Table_Impl::DEFAULT_TABLE_SIZE to size_t,
+          to avoid g++ complaints about enumeral and non-enumeral
+          type in conditional expression.
+
 Sun Sep 27 19:25:08 1998  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
         * orbsvcs/orbsvcs/Event/EC_Gateway_UDP.cpp:
