@@ -7,6 +7,10 @@ Tue Feb 02 09:22:31 1999  David L. Levine  <levine@cs.wustl.edu>
           following breaks, because some compilers complain that
           they're unreachable.
 
+        * tao/IIOP_Transport.cpp (do_sendv): added static cast of
+          iov_len to size_t.  It avoids a compile warning about
+          signed/unsigned comparison on g++/Solaris86.
+
 Mon Feb 01 21:28:27 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * TAO version 0.3.1 released.
