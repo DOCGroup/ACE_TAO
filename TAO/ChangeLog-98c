@@ -1,3 +1,33 @@
+Wed May 22 11:31:42 1997  Chris Cleeland  <cleeland@cs.wustl.edu>
+
+	* IIOP/test/svr.cpp: Added better error checking and messages, and
+ 	performed general re-formatting.
+
+	* IIOP/test/method_db.i (initialize_method_db): Changed arg type
+ 	to use a pointer to the abstract class TAO_Operation_Table.
+
+	* IIOP/test/cubitS.cpp (_skel_Cubit::_skel_Cubit): Added better
+ 	error checking and messages.  Also defaulted to use the linear
+ 	object table implementation rather than the hashed to simplify
+ 	debugging.
+
+	* IIOP/test/clnt.cpp: Moved some code around so that more of the
+ 	code is common is less is specific to VxWorks and other platforms.
+  	Also did general re-formatting.
+
+	* IIOP/lib/optable.cpp (TAO_Linear_OpTable::find): Initialization
+ 	of the loop variable makes the loop work properly.
+
+	* IIOP/lib/objtable.cpp (TAO_Dynamic_Hash_ObjTable::find):
+ 	Explicitly specified length of object key in CTOR for ACE_CString
+ 	because object keys are not zero-terminated.
+
+	* IIOP/lib/giop.cpp: Added newlines to the end of all ACE_DEBUG()
+ 	messages.
+
+	* IIOP/lib/factories.cpp: Added template specializations for
+ 	ACE_Hash_Addr<ACE_INET_Addr, TAO_Client_Connection_Handler>.
+
 Tue May 22 09:32:41 1997  Brian Mendel  <bmendel@mdc.com>
 
         * IIOP/lib/cdr.h: Deleted #define old_value ACE_INLINE and
