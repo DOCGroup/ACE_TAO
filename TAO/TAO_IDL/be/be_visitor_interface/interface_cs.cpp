@@ -67,8 +67,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->repoID () << "\", ACE_TRY_ENV);" << be_nl
       << "ACE_CHECK_RETURN (" << node->full_name () << "::_nil ());" << be_nl
       << "if (is_a == 0)" << be_idt_nl
-      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl
-      << "return " << node->full_name ()
+      << "return " << node->full_name () << "::_nil ();" << be_uidt_nl;
+
+  *os << "return " << node->full_name ()
       << "::_unchecked_narrow (obj, ACE_TRY_ENV);" << be_uidt_nl
       << "}" << be_nl << be_nl;
 
