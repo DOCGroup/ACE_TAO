@@ -1,3 +1,26 @@
+Mon Mar 10 11:03:14 2003  Ossama Othman  <ossama@uci.edu>
+
+	* tao/DynamicInterface/DII_ClientRequestInfo.h (request_):
+
+	  Changed the type of this class member from CORBA::Request_var to
+	  CORBA::Request_ptr.  There is no need to use "_var" type in this
+	  case.
+
+	* tao/DynamicInterface/DII_ClientRequestInfo.cpp
+	  (TAO_DII_ClientRequestInfo):
+
+	  No need to increase the reference count since the "request_"
+	  member is no longer a "_var" type, and since the
+	  TAO_DII_ClientRequestInfo instance used in the
+	  CORBA::Request::invoke() methd is local to that method.  This is
+	  a lighter weight solution to the problem that Phil Mesnier
+	  detected and fixed since no CORBA::Request reference count locks
+	  are used.
+
+	* examples/Callback_Quoter/Supplier_i.cpp (run):
+
+	  Fixed unused value warning.
+
 Mon Mar 10 08:10:02 2003  Ossama Othman  <ossama@uci.edu>
 
 	* orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp (setup_multicast):
