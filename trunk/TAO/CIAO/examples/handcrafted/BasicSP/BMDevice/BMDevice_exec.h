@@ -112,7 +112,9 @@ namespace MyImpl
 
 // Executor DLL entry point.  CIAO's deployment and assembly framework
 // invokes this function on the resulting DLL to get the home executor.
-extern "C" BMDEVICE_EXEC_Export ::Components::HomeExecutorBase_ptr
-createBMDeviceHome_Impl (void);
+extern "C" BMDEVICE_EXEC_Export {
+  ::Components::HomeExecutorBase_ptr
+  createBMDeviceHome_Impl (void);
+}
 
 #endif /* CIAO_BMDEVICE_EXEC_H*/

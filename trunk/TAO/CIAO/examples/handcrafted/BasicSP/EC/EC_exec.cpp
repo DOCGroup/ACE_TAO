@@ -152,6 +152,7 @@ void
 MyImpl::EC_exec_i::start (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  cout << "Amba " << endl;
   if (this->hertz_ == 0 || this->pulser_.active())
     ACE_THROW (CORBA::BAD_INV_ORDER ());
 
@@ -256,7 +257,7 @@ MyImpl::ECHome_exec_i::~ECHome_exec_i ()
 
 ::Components::EnterpriseComponent_ptr
 MyImpl::ECHome_exec_i::new_EC (CORBA::Long hertz
-                                            ACE_ENV_ARG_DECL)
+                               ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
@@ -268,6 +269,7 @@ MyImpl::ECHome_exec_i::create (ACE_ENV_SINGLE_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException,
                    Components::CCMException))
 {
+  cout << "Got here" << endl;
   return new MyImpl::EC_exec_i ();
 }
 

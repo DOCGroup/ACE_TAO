@@ -1,0 +1,108 @@
+<?xml version="1.0"?> <!-- -*- SGML -*-  -->
+
+<!-- XML doesn't really support the following $(CIAO_ROOT) syntax :) -->
+<!DOCTYPE componentassembly SYSTEM "$(CIAO_ROOT)/docs/XML/componentassembly.dtd">
+
+<componentassembly id="Single-process Basic assembly">
+  <componentfiles>
+    <componentfile id="com-EC">
+      <fileinarchive name="EC.csd"/>
+    </componentfile>
+    <componentfile id="com-BMDevice">
+      <fileinarchive name="BMDevice.csd"/>
+    </componentfile>
+        <componentfile id="com-BMClosedED">
+      <fileinarchive name="BMClosedED.csd"/>
+    </componentfile>
+    <componentfile id="com-BMDisplay">
+      <fileinarchive name="BMDisplay.csd"/>
+    </componentfile>
+  </componentfiles>
+
+  <partitioning>
+
+  <!-- A plain vanilla partition.  We don't even need the processcollocation tag here. -->
+      <homeplacement id="a_ECHome">
+        <componentfileref idref="com-EC"/>
+        <componentinstantiation id="a_EC">
+          <registercomponent>
+            <!-- writeiortofile is a non-standard CIAO extension.  -->
+            <writeiortofile name="ec.ior"/>
+          </registercomponent>
+        </componentinstantiation>
+      </homeplacement>
+      <homeplacement id="a_BMDeviceHome">
+        <componentfileref idref="com-BMDevice"/>
+        <componentinstantiation id="a_BMDevice"/>
+      </homeplacement>
+      <homeplacement id="a_BMClosedEDHome">
+        <componentfileref idref="com-BMClosedED"/>
+        <componentinstantiation id="a_BMClosedED"/>
+      </homeplacement>
+      <homeplacement id="a_BMDisplayHome">
+        <componentfileref idref="com-BMDisplay"/>
+        <componentinstantiation id="a_BMDisplay"/>
+      </homeplacement>
+
+  </partitioning>
+
+  <connections>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>timeout</consumesidentifier>
+        <componentinstantiationref idref="a_BMDevice"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>timeout</publishesidentifier>
+        <componentinstantiationref idref="a_EC"/>
+      </publishesport>
+    </connectevent>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>in_avail</consumesidentifier>
+        <componentinstantiationref idref="a_BMClosedED"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>data_available</publishesidentifier>
+        <componentinstantiationref idref="a_BMDevice"/>
+      </publishesport>
+    </connectevent>
+
+    <connectevent>
+      <consumesport>
+        <consumesidentifier>data_ready</consumesidentifier>
+        <componentinstantiationref idref="a_BMDisplay"/>
+      </consumesport>
+      <publishesport>
+        <publishesidentifier>in_avail</publishesidentifier>
+        <componentinstantiationref idref="a_BMClosedED"/>
+      </publishesport>
+    </connectevent>
+
+    <connectinterface>
+      <usesport>
+        <usesidentifier>datain</usesidentifier>
+        <componentinstantiationref idref="a_BMClosedED"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>data_read</providesidentifier>
+        <componentinstantiationref idref="a_BMDevice"/>
+      </providesport>
+    </connectinterface>
+
+    <connectinterface>
+      <usesport>
+        <usesidentifier>comp_data</usesidentifier>
+        <componentinstantiationref idref="a_BMDisplay"/>
+      </usesport>
+      <providesport>
+        <providesidentifier>datain</providesidentifier>
+        <componentinstantiationref idref="a_BMClosedED"/>
+      </providesport>
+    </connectinterface>
+
+  </connections>
+
+</componentassembly>

@@ -1,3 +1,29 @@
+Fri May 16 18:11:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* examples/handcrafted/BasicSP/BMDisplay/BMDisplay.idl (BasicSP): 
+	* examples/handcrafted/BasicSP/BasicSP.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice.mpc:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.cpp:
+	* examples/handcrafted/BasicSP/BMDevice/BMDevice_exec.h:
+	* examples/handcrafted/BasicSP/EC/EC.idl:
+	* examples/handcrafted/BasicSP/EC/ECE.idl:
+	* examples/handcrafted/BasicSP/EC/EC_exec.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.cpp:
+	* examples/handcrafted/BasicSP/EC/EC_svnt.h:
+	* examples/handcrafted/BasicSP/EC/client.cpp:
+	* examples/handcrafted/BasicSP/EC/controller.cpp:
+	* examples/handcrafted/BasicSP/descriptors/BMClosedED.csd:
+	* examples/handcrafted/BasicSP/descriptors/BMClosedED.ssd:
+	* examples/handcrafted/BasicSP/descriptors/BMDevice.csd:
+	* examples/handcrafted/BasicSP/descriptors/BMDevice.ssd:
+	* examples/handcrafted/BasicSP/descriptors/BMDisplay.csd:
+	* examples/handcrafted/BasicSP/descriptors/BMDisplay.ssd:
+	* examples/handcrafted/BasicSP/descriptors/BasicSP.cad:
+	* examples/handcrafted/BasicSP/descriptors/CIAO_Installation_Data.ini:
+	* examples/handcrafted/BasicSP/descriptors/EC.csd:
+	* examples/handcrafted/BasicSP/descriptors/EC.ssd: Some more files
+	  for the BasicSP example.
+
 Wed May 14 17:02:29 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * examples/handcrafted/BasicSP/EC/EC.idl:
