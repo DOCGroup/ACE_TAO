@@ -18,14 +18,14 @@ main ()
   ACE_Message_Block *start_message =
     encoder.encode_start_message ();
 
-  for (int i = 0; i < start_message->length (); i++)
-    cerr << i << (start_message->rd_ptr ())[i] << endl;
+  //  for (int i = 0; i < start_message->length (); i++)
+  //    cerr << i << (start_message->rd_ptr ())[i] << endl;
 
   SFP_Decoder decoder;
 
   decoder.decode_start_message (start_message);
   
-  encoder.encode_simple_frame (message);
+  //  encoder.encode_simple_frame (message);
 
   return 0;
 }
