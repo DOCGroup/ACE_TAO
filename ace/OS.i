@@ -8718,6 +8718,7 @@ ACE_OS::tzset (void)
 }
 
 // Linux won't compile unless we explicitly use a namespace here.
+#if defined (linux)
 namespace ACE_OS {
   ACE_INLINE long
   timezone (void)
@@ -8725,6 +8726,13 @@ namespace ACE_OS {
     return ::ace_timezone ();
   }
 } /* namespace ACE_OS */
+#else
+ACE_INLINE long
+ACE_OS::timezone (void)
+{
+  return ::ace_timezone ();
+}
+#endif /* linux */
 
 #if !defined (ACE_LACKS_DIFFTIME)
 ACE_INLINE double
