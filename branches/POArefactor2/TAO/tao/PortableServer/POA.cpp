@@ -2411,7 +2411,13 @@ TAO_POA::reference_to_id (CORBA::Object_ptr reference
       // Otherwise, it is the NON_RETAIN policy.  Therefore, the
       // system id is the id (and no conversion/transformation is
       // needed).
-      return new PortableServer::ObjectId (system_id);
+      CORBA::OctetSeq *id = 0;
+      ACE_NEW_THROW_EX (id,
+                        PortableServer::ObjectId (system_id),
+                        CORBA::NO_MEMORY ());
+      ACE_CHECK_RETURN (0);
+
+      return id;
     }
 }
 
