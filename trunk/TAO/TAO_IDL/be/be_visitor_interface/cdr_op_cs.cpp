@@ -75,10 +75,10 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &," << be_nl
       << node->name () << "_ptr &" << be_uidt_nl
-      << ");" << be_uidt << "\n";
+      << ");" << be_uidt << "\n\n";
 
   // Now it really the type to generate the operators for the members
-  // of the interface... 
+  // of the interface...
 
   // set the substate as generating code for the types defined in our scope
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_SCOPE);
@@ -101,27 +101,9 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "const " << node->name () << "_ptr _tao_objref" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
-  // hand over the encoding to the TAO's internal engine
-  //  *os << "CORBA::Environment env;" << be_nl;
-  *os << "ACE_TRY_NEW_ENV" << be_nl
-      << "{" << be_idt_nl;
-  // resolve the nastiness created due to casting to void* and then to
-  // CORBA::Object_ptr
   *os << "CORBA::Object_ptr _tao_corba_obj = _tao_objref;" << be_nl;
-  *os << "if (TAO_MARSHAL_OBJREF::instance ()->" << be_nl
-      << "        encode (0, &_tao_corba_obj, 0, &strm, ACE_TRY_ENV) == "
-      << be_nl
-      << "        CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_idt_nl
-      << "return 1;" << be_uidt_nl
-      << "ACE_TRY_CHECK;" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_CATCHANY" << be_nl
-      << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
-      << "}" << be_nl
-      << "ACE_ENDTRY;" << be_nl
-      << "return 0;" << be_uidt_nl;
-  *os << "}\n\n";
+  *os << "return (strm << _tao_corba_obj);" << be_uidt_nl
+      << "}\n\n";
 
   // set the substate as generating code for the input operator
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
@@ -137,26 +119,24 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
   //  *os << "CORBA::Environment env;" << be_nl;
   *os << "ACE_TRY_NEW_ENV" << be_nl
       << "{" << be_idt_nl;
-  *os << "CORBA::Object_ptr obj;" << be_nl;
-  *os << "if (TAO_MARSHAL_OBJREF::instance ()->" << be_nl
-      << "        decode (0, &obj, 0, &strm, ACE_TRY_ENV) == " << be_nl
-      << "        CORBA::TypeCode::TRAVERSE_CONTINUE)" << be_nl
-      << "{" << be_idt_nl;
+  *os << "CORBA::Object_var obj;" << be_nl;
+  *os << "if ((strm >> obj.inout ()) == 0)" << be_idt_nl
+      << "return 0;" << be_uidt_nl
+      << "// narrow to the right type" << be_nl;
+  *os << "_tao_objref =" << be_idt_nl
+      << node->name () << "::_narrow (" << be_idt << be_idt_nl
+      << "obj.in ()," << be_nl
+      << "ACE_TRY_ENV" << be_uidt_nl
+      << ");" << be_uidt << be_uidt_nl;
   *os << "ACE_TRY_CHECK;" << be_nl;
-  *os << "// narrow to the right type" << be_nl;
-  *os << "_tao_objref = " << node->name ()
-      << "::_narrow (obj, ACE_TRY_ENV);" << be_nl;
-  *os << "ACE_TRY_CHECK;" << be_nl;
-  *os << "CORBA::release (obj);" << be_nl;
   *os << "return 1;" << be_uidt_nl;
-  *os << "}" << be_uidt_nl;
   *os << "}" << be_nl
       << "ACE_CATCHANY" << be_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "// do nothing" << be_uidt_nl
       << "}" << be_nl
       << "ACE_ENDTRY;" << be_nl
-      << "ACE_NOTREACHED (return 0);" << be_uidt_nl;
+      << "return 0;" << be_uidt_nl;
   *os << "}\n\n";
 
   node->cli_stub_cdr_op_gen (1);
