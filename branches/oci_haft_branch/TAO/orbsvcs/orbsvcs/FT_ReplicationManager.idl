@@ -49,6 +49,10 @@ module FT
     */
     ObjectGroup create_test_iogr ();
  
+    /**
+    * TAO-specific shutdown operation.
+    */
+    void oneway shutdown ();
   };
 };
 

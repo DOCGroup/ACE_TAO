@@ -117,6 +117,23 @@ namespace TAO
     /// Read and IOR from a file.
     int readIORFile (const char * filename, CORBA::String_var & ior);
 
+    /// Registers the Fault Notifier with the Replication Manager.
+    void register_fault_notifier_i (
+        FT::FaultNotifier_ptr fault_notifier
+        ACE_ENV_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+
+    /// Implementation of TAO-specific shutdown operation.
+    void shutdown_i (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
+      ));
+
   public:
 
     /**
@@ -142,6 +159,14 @@ namespace TAO
       ACE_THROW_SPEC ((
         CORBA::SystemException
         , FT::InterfaceNotFound
+      ));
+
+    /// TAO-specific shutdown operation.
+    virtual void shutdown (
+        ACE_ENV_SINGLE_ARG_DECL_WITH_DEFAULTS
+      )
+      ACE_THROW_SPEC ((
+        CORBA::SystemException
       ));
 
     //@}

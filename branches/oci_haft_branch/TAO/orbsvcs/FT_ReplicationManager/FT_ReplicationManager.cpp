@@ -110,6 +110,16 @@ const char * TAO::FT_ReplicationManager::identity () const
 
 int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
 {
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "Enter TAO::FT_ReplicationManager::init.\n")
+    ));
+  }
+
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
@@ -168,6 +178,40 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     this_obj.in() ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (-1);
 
+  // If we were given an initial IOR string for a Fault Notifier on the
+  // command line, convert it to an IOR.
+  if (this->fault_notifier_ior_file_ != 0)
+  {
+    CORBA::String_var notifierIOR;
+    if (this->readIORFile (this->fault_notifier_ior_file_, notifierIOR))
+    {
+      CORBA::Object_var notifier_obj = this->orb_->string_to_object (
+        notifierIOR.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      FT::FaultNotifier_var notifier = FT::FaultNotifier::_narrow (
+        notifier_obj.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+      this->register_fault_notifier_i (notifier.in() ACE_ENV_ARG_PARAMETER);
+      ACE_CHECK_RETURN (-1);
+    }
+    else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManager::init: "
+          "Could not read %s.\n"),
+        this->fault_notifier_ior_file_),
+        -1);
+    }
+  }
+
+  // Activate the RootPOA.
+  PortableServer::POAManager_var poa_mgr =
+    this->poa_->the_POAManager (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+  poa_mgr->activate (ACE_ENV_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
   // Publish our IOR, either to a file or the Naming Service.
   if (this->ior_output_file_ != 0)
   {
@@ -211,37 +255,14 @@ int TAO::FT_ReplicationManager::init (CORBA::ORB_ptr orb ACE_ENV_ARG_DECL)
     ACE_CHECK_RETURN (-1);
   }
 
-  // If we were given an initial IOR string for a Fault Notifier on the
-  // command line, convert it to an IOR.
-  if (this->fault_notifier_ior_file_ != 0)
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
   {
-    CORBA::String_var notifierIOR;
-    if (this->readIORFile (this->fault_notifier_ior_file_, notifierIOR))
-    {
-      CORBA::Object_var notifier_obj = this->orb_->string_to_object (
-        notifierIOR.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      this->fault_notifier_ = FT::FaultNotifier::_narrow (
-        notifier_obj.in() ACE_ENV_ARG_PARAMETER);
-      ACE_CHECK_RETURN (-1);
-      if (CORBA::is_nil (this->fault_notifier_.in()))
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-          ACE_TEXT (
-            "TAO::FT_ReplicationManager::init: "
-            "Bad Fault Notifier object reference provided on command line.\n")),
-          -1);
-      }
-    }
-    else
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT (
-          "TAO::FT_ReplicationManager::init: "
-          "Could not read %s.\n"),
-        this->fault_notifier_ior_file_),
-        -1);
-    }
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "Leave TAO::FT_ReplicationManager::init.\n")
+    ));
   }
 
   return result;
@@ -257,6 +278,11 @@ int TAO::FT_ReplicationManager::idle (int & result)
 
 int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
 {
+  int result = 0;
+
+  //@@ Should we ever return -1 from this function, or should we
+  // catch and swallow all exceptions?
+
   if (this->ior_output_file_ != 0)
   {
     ACE_OS::unlink (this->ior_output_file_);
@@ -265,9 +291,14 @@ int TAO::FT_ReplicationManager::fini (ACE_ENV_SINGLE_ARG_DECL)
   if (this->ns_name_ != 0)
   {
     this->naming_context_->unbind (this->this_name_ ACE_ENV_ARG_PARAMETER);
+    ACE_CHECK_RETURN (-1);
     this->ns_name_ = 0;
   }
-  return 0;
+
+  result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK_RETURN (-1);
+
+  return result;
 }
 
 ////////////////////////////////////////////
@@ -305,6 +336,51 @@ TAO::FT_ReplicationManager::register_fault_notifier (
   ACE_ENV_ARG_DECL)
   ACE_THROW_SPEC ((CORBA::SystemException))
 {
+  this->register_fault_notifier_i (fault_notifier ACE_ENV_ARG_DECL);
+}
+
+void
+TAO::FT_ReplicationManager::register_fault_notifier_i (
+  FT::FaultNotifier_ptr fault_notifier
+  ACE_ENV_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "Enter TAO::FT_ReplicationManager::register_fault_notifier_i.\n")
+    ));
+  }
+
+  if (CORBA::is_nil (fault_notifier))
+  {
+    ACE_ERROR ((LM_ERROR,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+        "Bad Fault Notifier object reference provided.\n")
+    ));
+    ACE_THROW (CORBA::BAD_PARAM (
+      CORBA::SystemException::_tao_minor_code (
+        TAO_DEFAULT_MINOR_CODE,
+        EINVAL),
+      CORBA::COMPLETED_NO));
+  }
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+        "Duplicate FaultNotifier object reference.\n")
+    ));
+  }
+
   // Cache new Fault Notifier object reference.
   this->fault_notifier_ = FT::FaultNotifier::_duplicate (fault_notifier);
 
@@ -313,8 +389,31 @@ TAO::FT_ReplicationManager::register_fault_notifier (
   int result = 0;
   ACE_TRY_NEW_ENV
   {
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+    if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+          "Calling fault_consumer_.fini().\n")
+      ));
+    }
+
     result = this->fault_consumer_.fini (ACE_ENV_SINGLE_ARG_PARAMETER);
     ACE_TRY_CHECK;
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+    if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+    {
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT (
+          "TAO::FT_ReplicationManager::register_fault_notifier_i: "
+          "Calling fault_consumer_.init().\n")
+      ));
+    }
 
     result = this->fault_consumer_.init (
       this->poa_.in(),
@@ -327,7 +426,7 @@ TAO::FT_ReplicationManager::register_fault_notifier (
   {
     ACE_PRINT_EXCEPTION (ACE_ANY_EXCEPTION,
       ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier: "
+        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
         "Error reinitializing FT_FaultConsumer.\n")
     );
   }
@@ -337,7 +436,7 @@ TAO::FT_ReplicationManager::register_fault_notifier (
   {
     ACE_ERROR((LM_ERROR,
       ACE_TEXT (
-        "TAO::FT_ReplicationManager::register_fault_notifier: "
+        "TAO::FT_ReplicationManager::register_fault_notifier_i: "
         "Could not re-initialize FT_FaultConsumer.\n")
     ));
 
@@ -347,6 +446,17 @@ TAO::FT_ReplicationManager::register_fault_notifier (
         EINVAL),
       CORBA::COMPLETED_NO));
   }
+
+#if (TAO_DEBUG_LEVEL_NEEDED == 1)
+  if (TAO_debug_level > 1)
+#endif /* (TAO_DEBUG_LEVEL_NEEDED == 1) */
+  {
+    ACE_DEBUG ((LM_DEBUG,
+      ACE_TEXT (
+        "Leave TAO::FT_ReplicationManager::register_fault_notifier_i.\n")
+    ));
+  }
+
 }
 
 
@@ -357,6 +467,25 @@ TAO::FT_ReplicationManager::get_fault_notifier (
   ACE_THROW_SPEC ((CORBA::SystemException, FT::InterfaceNotFound))
 {
   return FT::FaultNotifier::_duplicate (this->fault_notifier_.in());
+}
+
+/// TAO-specific shutdown operation.
+void TAO::FT_ReplicationManager::shutdown (
+  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  this->shutdown_i (ACE_ENV_SINGLE_ARG_PARAMETER);
+}
+
+void TAO::FT_ReplicationManager::shutdown_i (
+  ACE_ENV_SINGLE_ARG_DECL)
+  ACE_THROW_SPEC ((CORBA::SystemException))
+{
+  int result = 0;
+  result = this->fini (ACE_ENV_SINGLE_ARG_PARAMETER);
+  ACE_CHECK;
+
+  this->orb_->shutdown (0 ACE_ENV_SINGLE_ARG_PARAMETER);
 }
 
 //////////////////////////////////////////////////////

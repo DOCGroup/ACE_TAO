@@ -1,3 +1,20 @@
+Mon Oct 13 11:37:03 2003  Steve Totten  <totten_s@ociweb.com>
+
+        * orbsvcs/orbsvcs/FT_ReplicationManager.idl:
+          Added a TAO-specific shutdown() operation to the Replication
+          Manager's interface.
+
+        * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.cpp:
+        * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
+          Continued working on integration of FT_FaultConsumer with
+          the Replication Manager.  Made several improvements to
+          initializtion and finalization code.  Implemented
+          TAO-specific shutdown() operation on Replication Manager.
+
+        * orbsvcs/tests/FT_App/run_test_replication_mgr.pl:
+          Added this unit test (still in work).
+
 Fri Oct 10 17:19:03 2003  Steve Totten  <totten_s@ociweb.com>
 
         * orbsvcs/FT_ReplicationManager/FT_FaultConsumer.cpp:
@@ -5,7 +22,7 @@ Fri Oct 10 17:19:03 2003  Steve Totten  <totten_s@ociweb.com>
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.h:
         * orbsvcs/FT_ReplicationManager/FT_ReplicationManager.mpc:
           More clean up of Replication Manager code.
-          Integrated FT_FaultConsumer into Replication Manager.
+          Initial integration of FT_FaultConsumer into Replication Manager.
 
 Fri Oct 10 13:58:04 2003  Steve Totten  <totten_s@ociweb.com>
 
