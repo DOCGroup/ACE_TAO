@@ -11,7 +11,6 @@
 #include "tao/Environment.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/Protocols_Hooks.h"
-#include "tao/Invocation.h"
 
 #include "UIPMC_Profile.h"
 
@@ -110,20 +109,17 @@ TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
   return 0;
 }
 
-int
-TAO_UIPMC_Connector::make_connection (TAO_GIOP_Invocation *invocation,
-                                      TAO_Transport_Descriptor_Interface *desc,
-                                      ACE_Time_Value * /*max_wait_time*/)
-
+TAO_Transport *
+TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
+                                      TAO_Transport_Descriptor_Interface &desc,
+                                      ACE_Time_Value *)
 {
-  TAO_Transport *&transport = invocation->transport ();
-
   TAO_UIPMC_Endpoint *uipmc_endpoint =
     ACE_dynamic_cast (TAO_UIPMC_Endpoint *,
-                      desc->endpoint ());
+                      desc.endpoint ());
 
   if (uipmc_endpoint == 0)
-    return -1;
+    return 0;
 
   const ACE_INET_Addr &remote_address =
     uipmc_endpoint->object_addr ();
@@ -136,7 +132,7 @@ TAO_UIPMC_Connector::make_connection (TAO_GIOP_Invocation *invocation,
       ACE_NEW_RETURN (svc_handler_i,
                       TAO_UIPMC_Connection_Handler (this->orb_core (),
                                                    0 /* TAO_UIPMC_Properties */),
-                      -1);
+                      0);
 
       svc_handler_i->local_addr (ACE_sap_any_cast (ACE_INET_Addr &));
       svc_handler_i->addr (remote_address);
@@ -156,10 +152,10 @@ TAO_UIPMC_Connector::make_connection (TAO_GIOP_Invocation *invocation,
 
   // @@ Michael: We do not use traditional connection management.
   svc_handler->add_reference ();
-  transport = svc_handler->transport ();
 
-  return 0;
+  return svc_handler->transport ();
 }
+
 
 TAO_Profile *
 TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
