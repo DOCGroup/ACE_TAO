@@ -36,7 +36,7 @@ ACE_Pipe::open (int buffer_size)
 {
   ACE_TRACE ("ACE_Pipe::open");
 
-#if defined (ACE_WIN32) || defined (ACE_LACKS_SOCKETPAIR) || defined (__Lynx__)
+#if defined (ACE_LACKS_SOCKETPAIR) || defined (__Lynx__)
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
   ACE_SOCK_Connector connector;
@@ -138,7 +138,7 @@ ACE_Pipe::open (int buffer_size)
     }
 #endif /* __QNX__ */
 
-#else  /* ! ACE_WIN32 && ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
+#else  /* ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   if (ACE_OS::socketpair (AF_UNIX,
                           SOCK_STREAM,
                           0,
@@ -171,7 +171,7 @@ ACE_Pipe::open (int buffer_size)
       return -1;
     }
 # endif /* ! ACE_LACKS_SOCKET_BUFSIZ */
-#endif  /* ! ACE_WIN32 && ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
+#endif  /* ! ACE_LACKS_SOCKETPAIR && ! ACE_HAS_STREAM_PIPES */
   // Point both the read and write HANDLES to the appropriate socket
   // HANDLEs.
 
