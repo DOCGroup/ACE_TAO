@@ -11,6 +11,11 @@ Tue Feb 20 16:35:27 2001  Carlos O'Ryan  <coryan@cs.wustl.edu>
 	  This fix should solve the crashes under Sun/CC 4.2 that have
 	  plagued TAO-1.1.12 and our nightly builds too.
 
+	  This problem was identified by many members of the community,
+	  including Scott Gunn <gunns@tvratings.com>, J. Russell
+	  Noseworthy <rnosewor@objectsciences.com> and Keith Nicewarner
+	  <knicewar@erg.sri.com>.
+
 Tue Feb 20 16:13:22 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tao/IIOP_Connection_Handler.cpp (handle_close):  Fixed a problem
