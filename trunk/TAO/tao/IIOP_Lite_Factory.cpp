@@ -56,7 +56,7 @@ TAO_IIOP_Lite_Protocol_Factory::make_acceptor (void)
 
 int
 TAO_IIOP_Lite_Protocol_Factory::init (int /*argc*/,
-                                      char* /*argv*/ [])
+                                      ACE_TCHAR* /*argv*/ [])
 {
   return 0;
 }
@@ -82,7 +82,7 @@ TAO_IIOP_Lite_Protocol_Factory::requires_explicit_endpoint (void) const
 }
 
 ACE_STATIC_SVC_DEFINE (TAO_IIOP_Lite_Protocol_Factory,
-                       ACE_TEXT ("IIOP_Lite_Factory"),
+                       ACE_LIB_TEXT ("IIOP_Lite_Factory"),
                        ACE_SVC_OBJ_T,
                        &ACE_SVC_NAME (TAO_IIOP_Lite_Protocol_Factory),
                        ACE_Service_Type::DELETE_THIS |

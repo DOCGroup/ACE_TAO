@@ -406,7 +406,7 @@ TAO_ORB_Core::resolve_typecodefactory (ACE_ENV_SINGLE_ARG_DECL)
 ACE_INLINE const char *
 TAO_ORB_Core::server_id (void) const
 {
-  return this->server_id_;
+  return this->server_id_.c_str();
 }
 
 ACE_INLINE TAO_POA_PortableGroup_Hooks *

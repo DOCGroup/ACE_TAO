@@ -41,7 +41,7 @@ class TAO_Export TAO_Protocol_Item
 public:
   /// creator method, the protocol name can only be set when the
   /// object is created.
-  TAO_Protocol_Item (const ACE_CString &name);
+  TAO_Protocol_Item (const ACE_TString &name);
 
   /// destructor that deallocates the factory object if the
   /// Protocol_Item retains ownership.
@@ -49,7 +49,7 @@ public:
 
   /// return a reference to the character representation of the protocol
   /// factories name.
-  const ACE_CString &protocol_name (void);
+  const ACE_TString &protocol_name (void);
 
   /// return a pointer to the protocol factory.
   TAO_Protocol_Factory *factory (void);
@@ -64,7 +64,7 @@ private:
 
 private:
   /// protocol factory name.
-  ACE_CString name_;
+  ACE_TString name_;
 
   /// pointer to factory object.
   TAO_Protocol_Factory *factory_;

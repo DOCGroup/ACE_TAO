@@ -33,15 +33,13 @@
  */
 class TAO_Export TAO_Default_Server_Strategy_Factory : public TAO_Server_Strategy_Factory
 {
-
-
 public:
   // = Initialization and termination methods.
   TAO_Default_Server_Strategy_Factory (void);
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 
   // = Service Configurator hooks.
-  virtual int init (int argc, char *argv[]);
+  virtual int init (int argc, ACE_TCHAR* argv[]);
 
   // = The TAO_Server_Strategy_Factory methods, please read the
   //   documentation in "tao/Server_Strategy_Factory.h"
@@ -54,13 +52,13 @@ public:
 
   /// Parse the arguments, check the documentation in
   /// $TAO_ROOT/docs/Options.html for details
-  int parse_args (int argc, char *argv[]);
+  int parse_args (int argc, ACE_TCHAR* argv[]);
 
 protected:
-  void tokenize (char *flag_string);
+  void tokenize (ACE_TCHAR* flag_string);
 
-  void report_option_value_error (const char* option_name,
-                                  const char* option_value);
+  void report_option_value_error (const ACE_TCHAR* option_name,
+                                  const ACE_TCHAR* option_value);
 
 protected:
   /// Should the server connection handlers run in their own thread?

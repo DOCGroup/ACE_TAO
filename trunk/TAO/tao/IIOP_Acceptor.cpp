@@ -534,9 +534,9 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       for (size_t i = 0; i < this->endpoint_count_; ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
-                      this->hosts_[i],
+                      ACE_LIB_TEXT ("\nTAO (%P|%t) IIOP_Acceptor::open_i - ")
+                      ACE_LIB_TEXT ("listening on: <%s:%u>\n"),
+                      ACE_TEXT_CHAR_TO_TCHAR(this->hosts_[i]),
                       this->addrs_[i].get_port_number ()));
         }
     }
@@ -757,8 +757,8 @@ TAO_IIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) TAO_IIOP_Acceptor::object_key - ")
-                      ACE_TEXT ("error while decoding host/port")));
+                      ACE_LIB_TEXT ("TAO (%P|%t) TAO_IIOP_Acceptor::object_key - ")
+                      ACE_LIB_TEXT ("error while decoding host/port")));
         }
       return -1;
     }

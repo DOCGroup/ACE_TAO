@@ -11,7 +11,7 @@ ACE_RCSID(tao, Resource_Factory, "$Id$")
 
 // ****************************************************************
 
-TAO_Protocol_Item::TAO_Protocol_Item (const ACE_CString &name)
+TAO_Protocol_Item::TAO_Protocol_Item (const ACE_TString &name)
   :   name_ (name),
       factory_ (0),
       factory_owner_ (0)
@@ -24,7 +24,7 @@ TAO_Protocol_Item::~TAO_Protocol_Item (void)
     delete this->factory_;
 }
 
-const ACE_CString &
+const ACE_TString &
 TAO_Protocol_Item::protocol_name (void)
 {
   return this->name_;

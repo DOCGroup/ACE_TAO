@@ -49,6 +49,7 @@ ACE_RCSID (tao,
 #include "ace/Auto_Ptr.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Reactor.h"
+#include "ace/Argv_Type_Converter.h"
 
 #if defined (ACE_HAS_EXCEPTIONS)
 # if defined (ACE_MVS)
@@ -213,9 +214,8 @@ CORBA_ORB::destroy (ACE_ENV_SINGLE_ARG_DECL)
   if (TAO_debug_level >= 3)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("CORBA::ORB::destroy() has been ")
-                  ACE_TEXT ("called on ORB <%s>.\n"),
-                  this->orb_core ()->orbid ()));
+                  ACE_LIB_TEXT("CORBA::ORB::destroy() has been called on ORB <%s>.\n"),
+                  ACE_TEXT_CHAR_TO_TCHAR(this->orb_core ()->orbid ())));
     }
 
   this->orb_core ()->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);
@@ -1377,6 +1377,12 @@ CORBA::ORB_init (int &argc,
   // This ugly macro will go away once we've merged the two ORB_init's.
   ACE_UNUSED_ARG(ACE_TRY_ENV); // FUZZ: ignore check_for_ace_check
 
+  // Use this string variable to hold the orbid
+  ACE_CString orbid_string = orbid;
+
+  // Copy command line parameter not to use original.
+  ACE_Argv_Type_Converter command_line(argc, argv);
+
   // Using ACE_Static_Object_Lock::instance() precludes <ORB_init>
   // from being called within a static object CTOR.
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, guard,
@@ -1396,9 +1402,9 @@ CORBA::ORB_init (int &argc,
   // It doesn't make sense for argc to be zero and argv to be
   // non-empty/zero, or for argc to be greater than zero and argv be
   // zero.
-  size_t argv0_len = (argv ? (*argv ? ACE_OS::strlen (*argv) : 0) : 0);
-  if ((argc == 0 && argv0_len != 0) ||
-      (argc != 0 && (argv == 0 || argv[0] == 0)))
+  size_t argv0_len = (command_line.get_TCHAR_argv() ? (*command_line.get_TCHAR_argv() ? ACE_OS::strlen (*command_line.get_TCHAR_argv()) : 0) : 0);
+  if ((command_line.get_argc() == 0 && argv0_len != 0) ||
+      (command_line.get_argc() != 0 && (command_line.get_TCHAR_argv() == 0 || command_line.get_TCHAR_argv()[0] == 0)))
     {
       ACE_THROW_RETURN (CORBA::BAD_PARAM (
                           CORBA_SystemException::_tao_minor_code (
@@ -1408,24 +1414,24 @@ CORBA::ORB_init (int &argc,
                         CORBA::ORB::_nil ());
     }
 
-  if (orbid == 0 || ACE_OS::strcmp (orbid, "") == 0)
+  if (orbid_string.length () == 0)
     {
-      orbid = "";
-      ACE_Arg_Shifter arg_shifter (argc, argv);
+      ACE_Arg_Shifter arg_shifter (command_line.get_argc(),
+                                   command_line.get_TCHAR_argv());
 
       while (arg_shifter.is_anything_left ())
         {
-          const char *current_arg = arg_shifter.get_current ();
+          const ACE_TCHAR *current_arg = arg_shifter.get_current ();
 
-          const char orbid_opt[] = "-ORBid";
-          const int orbid_len = sizeof (orbid_opt) - 1;
+          const ACE_TCHAR orbid_opt[] = ACE_TEXT("-ORBid");
+          size_t orbid_len = ACE_OS::strlen (orbid_opt);
           if (ACE_OS::strcasecmp (current_arg,
                                   orbid_opt) == 0)
             {
               arg_shifter.consume_arg ();
               if (arg_shifter.is_parameter_next ())
                 {
-                  orbid = arg_shifter.get_current ();
+                  orbid_string = ACE_TEXT_ALWAYS_CHAR(arg_shifter.get_current ());
                   arg_shifter.consume_arg ();
                 }
             }
@@ -1434,10 +1440,11 @@ CORBA::ORB_init (int &argc,
             {
               arg_shifter.consume_arg ();
               // The rest of the argument is the ORB id...
-              orbid = orbid_opt + orbid_len;
               // but we should skip an optional space...
-              if (orbid[0] == ' ')
-                orbid++;
+              if (current_arg[orbid_len] == ' ')
+                orbid_string = ACE_TEXT_ALWAYS_CHAR(current_arg + orbid_len + 1);
+              else
+                orbid_string = ACE_TEXT_ALWAYS_CHAR(current_arg + orbid_len);
             }
           else
             arg_shifter.ignore_arg ();
@@ -1446,7 +1453,7 @@ CORBA::ORB_init (int &argc,
 
   // Get ORB Core
   TAO_ORB_Core *oc =
-    TAO_ORB_Table::instance ()->find (orbid);
+    TAO_ORB_Table::instance ()->find (orbid_string.c_str ());
 
   // The ORB was initialized already, just return that one!
   if (oc != 0)
@@ -1471,7 +1478,7 @@ CORBA::ORB_init (int &argc,
   // An ORB corresponding to the desired ORBid doesn't exist so create
   // a new one.
   ACE_NEW_THROW_EX (oc,
-                    TAO_ORB_Core (orbid),
+                    TAO_ORB_Core (orbid_string.c_str ()),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -1487,7 +1494,8 @@ CORBA::ORB_init (int &argc,
   // Initialize the Service Configurator.  This must occur before the
   // ORBInitializer::pre_init() method is invoked on each registered
   // ORB initializer.
-  int result = TAO_Internal::open_services (argc, argv);
+  int result = TAO_Internal::open_services (command_line.get_argc(),
+                                            command_line.get_TCHAR_argv());
 
   // Check for errors returned from <TAO_Internal::open_services>.
   if (result != 0 && errno != ENOENT)
@@ -1508,8 +1516,8 @@ CORBA::ORB_init (int &argc,
   TAO_ORBInitInfo *orb_init_info_temp;
   ACE_NEW_THROW_EX (orb_init_info_temp,
                     TAO_ORBInitInfo (safe_oc.get (),
-                                     argc,
-                                     argv),
+                                     command_line.get_argc(),
+                                     command_line.get_ASCII_argv()),
                     CORBA::NO_MEMORY (
                       CORBA_SystemException::_tao_minor_code (
                         TAO_DEFAULT_MINOR_CODE,
@@ -1530,7 +1538,9 @@ CORBA::ORB_init (int &argc,
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Initialize the ORB Core instance.
-  result = safe_oc->init (argc, argv ACE_ENV_ARG_PARAMETER);
+  result = safe_oc->init (command_line.get_argc(),
+                          command_line.get_TCHAR_argv()
+                           ACE_ENV_ARG_PARAMETER);
   ACE_CHECK_RETURN (CORBA::ORB::_nil ());
 
   // Check for errors and return nil pseudo-reference on error.
@@ -1555,11 +1565,11 @@ CORBA::ORB_init (int &argc,
 
   if (TAO_debug_level >= 3)
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) created new ORB <%s>\n"),
-                orbid));
+                ACE_LIB_TEXT("TAO (%P|%t) created new ORB <%s>\n"),
+                ACE_TEXT_CHAR_TO_TCHAR(orbid_string.c_str ())));
 
   // Before returning remember to store the ORB into the table...
-  if (TAO_ORB_Table::instance ()->bind (orbid, safe_oc.get ()) != 0)
+  if (TAO_ORB_Table::instance ()->bind (orbid_string.c_str (), safe_oc.get ()) != 0)
     ACE_THROW_RETURN (CORBA::INTERNAL (TAO_DEFAULT_MINOR_CODE,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
