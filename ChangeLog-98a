@@ -1,6 +1,24 @@
+Sun Dec 21 16:19:40 1997  Nanbor Wang  <nw1@merengue.cs.wustl.edu>
+
+	* ace/OS.{h,i} (ACE_OS::sema_*): Added semaphore simulation code
+	  for WinCE.  This code is currently protected
+	  ACE_USES_WINCE_SEMA_SIMULATION for debugging the code on NT.
+	  This flag should soon be obsolete and changed to ACE_HAS_WINCE.
+
+	  Moved ACE_event_t macro definition for Win32 before ACE_sema_t
+	  definition for NT.  I need to use it in semaphore simulation.
+
+	* ace/OS.h (class ACE_Cleanup_Info::operator ==, !=): Removed
+	  keyword struct.  ACE_Cleanup_Info is a class now.
+
+	* ace/Containers.h (class ACE_Double_Linked_List): Removed
+	  unused function declarations.
+
+	* ace/Containers.h (class ACE_DNode): Removed ACE_DNode class.
+
 Sun Dec 21 18:47:09 1997  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
-        * ACE version 4.4.8, released Sun Dec 21 18:47:09 1997.
+	* ACE version 4.4.8, released Sun Dec 21 18:47:09 1997.
 
 Sun Dec 21 12:39:38 1997  Douglas C. Schmidt  <schmidt@flamenco.cs.wustl.edu>
 
