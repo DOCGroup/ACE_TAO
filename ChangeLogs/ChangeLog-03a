@@ -1,3 +1,11 @@
+Mon Dec 25 00:18:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
+
+	* Merry Christmas to the members of the doc_group and to all the
+	  users the world over.
+
+	* ace/ace_lib.dsp:
+	* ace/ace_dll.dsp: Added Atomic_Op.{h,cpp} to the project files. 
+
 Mon Dec 24 23:52:43 2001  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* ace/Synch_T.cpp:
