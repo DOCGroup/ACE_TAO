@@ -1,10 +1,3 @@
-Mon Oct 04 10:33:26 1999  David L. Levine  <levine@cs.wustl.edu>
-
-        * tests/run_tests.lst: disabled Signal_Test, using DISABLED
-          instead of DISABLE, so it's really disabled :-)  Thanks to
-          Carlos for disagnosing why it was still being run by
-          run_tests.pl. [Bug 309]
-
 Mon Oct  4 08:31:58 1999  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
         * ace/INET_Addr.cpp (set):  Added ACE_UNUSED_ARG
