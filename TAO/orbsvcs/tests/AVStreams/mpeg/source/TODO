@@ -44,3 +44,7 @@ Things to do
 Naga:
 ----
 * handle leaks on the server side. 
+
+* handle leak on the client side due to Naming Service.
+
+
