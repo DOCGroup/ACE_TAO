@@ -1,3 +1,13 @@
+Mon Nov 17 20:00:14 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* ace/Default_Constants.h: 
+	  
+	  Added a new #define ACE_IPV6_LOCALHOST. The
+	  ACE_DEFAULT_SERVER_HOST would point to ACE_IPV6_LOCALHOST if
+	  IPV6 is enabled and ACE_LOCALHOSt of IPV4 is used. 
+
+	  Thanks to Bryan Bruesker for providing the patches. 
+
 Mon Nov 17 18:55:49 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
 	* ace/Asynch_Connector.cpp:
