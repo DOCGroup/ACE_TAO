@@ -456,21 +456,21 @@ ACE_Message_Block::locking_strategy (ACE_Lock *nls)
 ////////////////////////////////////////
 
 ACE_INLINE u_long
-ACE_Dynamic_Message_Strategy::static_bit_field_mask (void)
+ACE_Dynamic_Message_Strategy::static_bit_field_mask (void) const
 {
   return static_bit_field_mask_;
 }
   // get static bit field mask
 
 ACE_INLINE void
-ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul)
+ACE_Dynamic_Message_Strategy::static_bit_field_mask (u_long ul) 
 {
   static_bit_field_mask_ = ul;
 }
   // set static bit field mask
 
 ACE_INLINE u_long
-ACE_Dynamic_Message_Strategy::static_bit_field_shift (void)
+ACE_Dynamic_Message_Strategy::static_bit_field_shift (void) const
 {
   return static_bit_field_shift_;
 }
@@ -484,7 +484,7 @@ ACE_Dynamic_Message_Strategy::static_bit_field_shift (u_long ul)
   // set left shift value to make room for static bit field
 
 ACE_INLINE u_long
-ACE_Dynamic_Message_Strategy::dynamic_priority_max (void)
+ACE_Dynamic_Message_Strategy::dynamic_priority_max (void) const
 {
   return dynamic_priority_max_;
 }
@@ -503,7 +503,7 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_max (u_long ul)
   // set maximum supported priority value
 
 ACE_INLINE u_long
-ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void)
+ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void) const
 {
   return dynamic_priority_offset_;
 }
@@ -512,13 +512,11 @@ ACE_Dynamic_Message_Strategy::dynamic_priority_offset (void)
 ACE_INLINE void
 ACE_Dynamic_Message_Strategy::dynamic_priority_offset (u_long ul)
 {
-
-
-  // max_late_ and min_pending_ depend on dynamic_priority_offset_: for
-  // performance reasons, the values in max_late_ and min_pending_ are
-  // (re)calculated only when dynamic_priority_offset_ is initialized
-  // or changes, and are stored as a class member rather than being
-  // derived each time one of their values is needed.
+  // max_late_ and min_pending_ depend on dynamic_priority_offset_:
+  // for performance reasons, the values in max_late_ and min_pending_
+  // are (re)calculated only when dynamic_priority_offset_ is
+  // initialized or changes, and are stored as a class member rather
+  // than being derived each time one of their values is needed.
   dynamic_priority_offset_ = ul;
   max_late_ = ACE_Time_Value (0, ul - 1);
   min_pending_ = ACE_Time_Value (0, ul);
@@ -541,28 +539,24 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
 
   // if the priority is negative, the message is pending
   if (priority < ACE_Time_Value::zero)
-  {
-    // priority for pending messages must be shifted
-    // upward above the late priority range
-    priority += pending_shift_;
-    if (priority < min_pending_)
     {
-      priority = min_pending_;
+      // priority for pending messages must be shifted
+      // upward above the late priority range
+      priority += pending_shift_;
+      if (priority < min_pending_)
+        priority = min_pending_;
     }
-  }
   // otherwise, if the priority is greater than the maximum late
   // priority value that can be represented, it is beyond late
   else if (priority > max_late_)
-  {
-    // all messages that are beyond late are assigned lowest priority (zero)
-    mb.msg_priority (0);
-    return ACE_Dynamic_Message_Strategy::BEYOND_LATE;
-  }
+    {
+      // all messages that are beyond late are assigned lowest priority (zero)
+      mb.msg_priority (0);
+      return ACE_Dynamic_Message_Strategy::BEYOND_LATE;
+    }
   // otherwise, the message is late, but its priority is correct
   else
-  {
     status = ACE_Dynamic_Message_Strategy::LATE;
-  }
 
   // use (fast) bitwise operators to isolate and replace
   // the dynamic portion of the message's priority

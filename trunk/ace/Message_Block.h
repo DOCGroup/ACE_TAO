@@ -790,25 +790,25 @@ public:
                                    const ACE_Time_Value &tv);
 
   /// Get static bit field mask.
-  u_long static_bit_field_mask (void);
+  u_long static_bit_field_mask (void) const;
 
   /// Set static bit field mask.
   void static_bit_field_mask (u_long);
 
   /// Get left shift value to make room for static bit field.
-  u_long static_bit_field_shift (void);
+  u_long static_bit_field_shift (void) const;
 
   /// Set left shift value to make room for static bit field.
   void static_bit_field_shift (u_long);
 
   /// Get maximum supported priority value.
-  u_long dynamic_priority_max (void);
+  u_long dynamic_priority_max (void) const;
 
   /// Set maximum supported priority value.
   void dynamic_priority_max (u_long);
 
   /// Get offset to boundary between signed range and unsigned range.
-  u_long dynamic_priority_offset (void);
+  u_long dynamic_priority_offset (void) const;
 
   /// Set offset to boundary between signed range and unsigned range.
   void dynamic_priority_offset (u_long);
