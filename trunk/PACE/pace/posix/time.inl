@@ -73,12 +73,7 @@ int
 pace_clock_settime (clockid_t clock_id,
                     const pace_timespec * tp)
 {
-#if PACE_HAS_POSIX == PACE_LYNXOS
-  /* Cast away const for Lynx prototype compatability. */
-  return clock_settime (clock_id, (struct timespec *) tp);
-#else
-  return clock_settime (clock_id, tp);
-#endif /* PACE_LYNXOS */
+  return clock_settime (clock_id, PACE_NONCONST_ARG_CAST (struct timespec *) tp);
 }
 
 PACE_INLINE
@@ -156,7 +151,7 @@ int
 pace_nanosleep (const pace_timespec * rqtp,
                 pace_timespec * rmtp)
 {
-  return nanosleep (rqtp, rmtp);
+  return nanosleep (PACE_NONCONST_ARG_CAST (struct timespec *) rqtp, rmtp);
 }
 
 PACE_INLINE
@@ -213,7 +208,8 @@ pace_timer_settime (timer_t timerid,
                     const pace_itimerspec * value,
                     pace_itimerspec * ovalue)
 {
-  return timer_settime (timerid, flags, value, ovalue);
+  return timer_settime (timerid, flags, PACE_NONCONST_ARG_CAST (struct itimerspec *) value,
+                        ovalue);
 }
 
 PACE_INLINE

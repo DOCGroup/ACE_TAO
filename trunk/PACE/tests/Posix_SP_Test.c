@@ -31,7 +31,12 @@ check_sysconf ()
 {
   long retval;
   int index;
+#if PACE_HAS_POSIX == PACE_LYNXOS
+  const int confnamessize = 30;
+#else
   const int confnamessize = 38;
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
+
   int confnames[] = {_SC_AIO_LISTIO_MAX,
                      _SC_AIO_MAX,
                      _SC_AIO_PRIO_DELTA_MAX,
@@ -39,9 +44,11 @@ check_sysconf ()
                      _SC_CHILD_MAX,
                      _SC_CLK_TCK,
                      _SC_DELAYTIMER_MAX,
+#if PACE_HAS_POSIX != PACE_LYNXOS
                      _SC_GETGR_R_SIZE_MAX,
                      _SC_GETPW_R_SIZE_MAX,
                      _SC_LOGIN_NAME_MAX,
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
                      _SC_MQ_OPEN_MAX,
                      _SC_MQ_PRIO_MAX,
                      _SC_NGROUPS_MAX,
@@ -52,12 +59,16 @@ check_sysconf ()
                      _SC_SEM_VALUE_MAX,
                      _SC_SIGQUEUE_MAX,
                      _SC_STREAM_MAX,
+#if PACE_HAS_POSIX != PACE_LYNXOS
                      _SC_THREAD_DESTRUCTOR_ITERATIONS,
                      _SC_THREAD_KEYS_MAX,
                      _SC_THREAD_STACK_MIN,
                      _SC_THREAD_THREADS_MAX,
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
                      _SC_TIMER_MAX,
+#if PACE_HAS_POSIX != PACE_LYNXOS
                      _SC_TTY_NAME_MAX,
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
                      _SC_TZNAME_MAX,
                      _SC_ASYNCHRONOUS_IO,
                      _SC_FSYNC,
@@ -77,9 +88,11 @@ check_sysconf ()
                        "_SC_CHILD_MAX",
                        "_SC_CLK_TCK",
                        "_SC_DELAYTIMER_MAX",
+#if PACE_HAS_POSIX != PACE_LYNXOS
                        "_SC_GETGR_R_SIZE_MAX",
                        "_SC_GETPW_R_SIZE_MAX",
                        "_SC_LOGIN_NAME_MAX",
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
                        "_SC_MQ_OPEN_MAX",
                        "_SC_MQ_PRIO_MAX",
                        "_SC_NGROUPS_MAX",
@@ -90,12 +103,16 @@ check_sysconf ()
                        "_SC_SEM_VALUE_MAX",
                        "_SC_SIGQUEUE_MAX",
                        "_SC_STREAM_MAX",
+#if PACE_HAS_POSIX != PACE_LYNXOS
                        "_SC_THREAD_DESTRUCTOR_ITERATIONS",
                        "_SC_THREAD_KEYS_MAX",
                        "_SC_THREAD_STACK_MIN",
                        "_SC_THREAD_THREADS_MAX",
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
                        "_SC_TIMER_MAX",
+#if PACE_HAS_POSIX != PACE_LYNXOS
                        "_SC_TTY_NAME_MAX",
+#endif /* PACE_HAS_POSIX != PACE_LYNXOS */
                        "_SC_TZNAME_MAX",
                        "_SC_ASYNCHRONOUS_IO",
                        "_SC_FSYNC",
