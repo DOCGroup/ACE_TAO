@@ -6,6 +6,23 @@ Sat Mar 20 09:06:10 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * examples/ASX/Message_Queue/Makefile: changed LSRC to PSRC.
 
+        * ace/Object_Manager.{h,cpp}: removed complex support from
+          ACE_Object_Manager for cleanup of some ACE_Singleton locks
+          during static construction/destruction, only.  The affected
+          lock types are ACE_Thread_Mutex, ACE_Mutex, and
+          ACE_RW_Thread_Mutex.  ACE_Recursive_Thread_Mutex and
+          ACE_Null_Mutex will still be cleaned up if used to create
+          ACE_Singletons during static construction/destruction.  As
+          noted in ace/Singleton.h, those are the best type of locks
+          to use with ACE_Singleton, anyways.
+
+          This support was tricky to get right, and increased the size of
+          the Object_Manager object file by 46 to 59 percent.  Now, if
+          ACE_Singletons are created during static construction or
+          destruction, with either an ACE_Thread_Mutex, ACE_Mutex, or
+          ACE_RW_Thread_Mutex lock, those locks will be dynamically
+          allocated and leaked.
+
 Sat Mar 20 02:03:53 1999  Ossama Othman  <othman@cs.wustl.edu>
 
         * acinclude.m4:
