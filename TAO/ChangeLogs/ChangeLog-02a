@@ -1,3 +1,18 @@
+Wed Jun 13 15:01:11 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
+
+	* docs/tutorials/Quoter/Event_Service/Makefile:
+	* docs/tutorials/Quoter/Naming_Service/Makefile:
+	* docs/tutorials/Quoter/On_Demand_Activation/Makefile:
+	* docs/tutorials/Quoter/RT_Event_Service/Makefile:
+	* docs/tutorials/Quoter/Simple/Impl-Repo/Makefile:
+	* docs/tutorials/Quoter/Simple/ImprovedServer/Makefile:
+	* docs/tutorials/Quoter/Simple/Persistent/Makefile:
+	* docs/tutorials/Quoter/Simple/Server/Makefile:
+	* docs/tutorials/Quoter/idl/Makefile:
+
+	  Updated dependencies since some old RT CORBA header files were
+	  being included.
+
 Wed Jun 13 13:50:27 2001  Frank Hunleth  <fhunleth@cs.wustl.edu>
 
 	* performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/Makefile:
