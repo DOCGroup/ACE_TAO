@@ -49,10 +49,8 @@ realclean:
 
 endif # VXWORKS
 
-clean:
-	rm -f TAGS
-
 tags:
+	rm -f TAGS
 	etags -C include/*.h be_include/*.h
 	etags -a ast/*.cpp util/*.cpp narrow/*.cpp \
 		driver/*.cpp fe/*.cpp be/*.cpp
