@@ -233,7 +233,7 @@ extern TAO_Export int operator== (const TAO_ObjectKey &l,
 // TODO: Currently the IDL compiler does not support C++ exceptions, so we
 // cannot use them even if the platform has them.
 //
-#if defined (ACE_HAS_EXCEPTIONS) && defined (TAO_IDL_COMPILER_HAS_EXCEPTIONS)
+#if defined (TAO_USE_EXCEPTIONS)
 
 #define TAO_TRY_ENV __env
 // The first "do" scope is for the env.
@@ -250,11 +250,14 @@ try { CORBA::Environment TAO_TRY_ENV;
 #define TAO_CHECK_ENV
 #define TAO_CHECK_ENV_RETURN(X, Y)
 
-#define TAO_THROW(EXCEPTION) throw EXCEPTION;
+#define TAO_THROW(EXCEPTION) throw EXCEPTION
 #define TAO_THROW_RETURN(EXCEPTION, RETURN) throw EXCEPTION
 #define TAO_RETHROW throw;
 
 #define TAO_THROW_SPEC(X) ACE_THROW_SPEC(X)
+
+#define TAO_RAISE(EXCEPTION) throw EXCEPTION
+// This is used in the implementation of the _raise methods
 
 #else /* ACE_HAS_EXCEPTIONS && TAO_IDL_COMPILES_HAS_EXCEPTIONS */
 
@@ -262,8 +265,7 @@ try { CORBA::Environment TAO_TRY_ENV;
 #define TAO_TRY_ENV __env
 
 // I would like to experiment with this idea in the future....
-#if 0 /* g++ on VxWorks didn't like the backslashes at the end of comment
-         lines . . . */
+#if 0
 #define TAO_TRY_VAR(X) \
 do { CORBA::Environment &TAO_TRY_ENV = X; \
 int TAO_TRY_FLAG = 1; \
@@ -354,6 +356,8 @@ _env.exception (TAO_TRY_ENV.exception ()); \
 return RETURN
 
 #define TAO_THROW_SPEC(X)
+
+#define TAO_RAISE(EXCEPTION)
 
 #endif /* ACE_HAS_EXCEPTIONS */
 

@@ -69,7 +69,7 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       *os << "// copy constructor" << be_nl;
       *os << node->name () << "::" << node->local_name () << " (const " <<
         node->name () << " &_tao_excp)" << be_nl;
-      *os << "  :CORBA_UserException (" <<
+      *os << "  : CORBA_UserException (" <<
         "_tao_excp._type ())" << be_nl;
       *os << "{\n";
       os->incr_indent ();
@@ -93,12 +93,11 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       os->indent ();
       *os << "// assignment operator" << be_nl;
       *os << node->name () << "&" << be_nl;
-      *os << node->name () << "::operator= (const " <<
-        node->name () << " &_tao_excp)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
-      *os << "this->ACE_CORBA_1 (UserException)::operator= " <<
-        "(_tao_excp._type ());\n";
+      *os << node->name () << "::operator= (const "
+	  << node->name () << " &_tao_excp)" << be_nl
+	  << "{\n" << be_idt_nl
+	  << "this->CORBA_UserException::operator= "
+	  << "(_tao_excp);\n";
       // assign each individual member
       ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_EXCEPTION_CTOR_ASSIGN_CS);
@@ -113,8 +112,38 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
         }
       delete visitor;
       os->indent ();
-      *os << "return *this;\n";
+      *os << "return *this;" << be_uidt_nl
+	  << "}\n\n";
+
+      // narrow method
+      os->indent ();
+      *os << "// narrow" << be_nl;
+      *os << node->name () << "_ptr " << be_nl;
+      *os << node->name () << "::_narrow (CORBA::Exception *exc)" << be_nl;
+      *os << "{\n";
+      os->incr_indent ();
+      *os << "if (!ACE_OS::strcmp (\"" << node->repoID () <<
+        "\", exc->_id ())) // same type" << be_nl;
+      *os << "  return ACE_dynamic_cast (" << node->name () << "_ptr, exc);" <<
+        be_nl;
+      *os << "else" << be_nl;
+      *os << "  return 0;\n";
       os->decr_indent ();
+      *os << "}\n\n";
+
+      *os << be_nl
+	  << "void " << node->name () << "::_raise ()" << be_nl
+	  << "{" << be_idt_nl
+	  << "TAO_RAISE(*this);" << be_uidt_nl
+	  << "}\n\n";
+
+      // generate the _alloc method
+      os->indent ();
+      *os << "// TAO extension - the _alloc method" << be_nl;
+      *os << "CORBA::Exception *" << node->name ()
+          << "::_alloc (void)" << be_nl;
+      *os << "{" << be_idt_nl;
+      *os << "return new " << node->name () << ";" << be_uidt_nl;
       *os << "}\n\n";
 
       // constructor taking all members. It exists only if there are any
@@ -158,31 +187,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           os->decr_indent ();
           *os << "}\n\n";
         }
-
-      // narrow method
-      os->indent ();
-      *os << "// narrow" << be_nl;
-      *os << node->name () << "_ptr " << be_nl;
-      *os << node->name () << "::_narrow (CORBA::Exception *exc)" << be_nl;
-      *os << "{\n";
-      os->incr_indent ();
-      *os << "if (!ACE_OS::strcmp (\"" << node->repoID () <<
-        "\", exc->_id ())) // same type" << be_nl;
-      *os << "  return ACE_dynamic_cast (" << node->name () << "_ptr, exc);" <<
-        be_nl;
-      *os << "else" << be_nl;
-      *os << "  return 0;\n";
-      os->decr_indent ();
-      *os << "}\n\n";
-
-      // generate the _alloc method
-      os->indent ();
-      *os << "// TAO extension - the _alloc method" << be_nl;
-      *os << "CORBA::Exception *" << node->name ()
-          << "::_alloc (void)" << be_nl;
-      *os << "{" << be_idt_nl;
-      *os << "return new " << node->name () << ";" << be_uidt_nl;
-      *os << "}\n\n";
 
       // by using a visitor to declare and define the TypeCode, we have the
       // added advantage to conditionally not generate any code. This will be
