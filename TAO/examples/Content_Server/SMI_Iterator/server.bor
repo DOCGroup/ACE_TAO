@@ -20,7 +20,10 @@ CFLAGS = \
         $(TAO_NAMING_CFLAGS)  \
         $(TAO_SVC_UTILS_CFLAGS) \
         $(TAO_IORTABLE_CFLAGS) \
-        $(TAO_MESSAGING_CFLAGS)
+        $(TAO_MESSAGING_CFLAGS) \
+        $(TAO_VALUETYPE_CFLAGS) \
+	$(TAO_IORINTERCEPTOR_CFLAGS) \
+	$(TAO_ORT_CFLAGS)
 
 LIBFILES = \
         $(ACE_LIB) \
@@ -29,8 +32,11 @@ LIBFILES = \
         $(TAO_NAMING_LIB) \
         $(TAO_SVC_UTILS_LIB) \
         $(TAO_IORTABLE_LIB) \
-        $(TAO_MESSAGING_LIB)
-
+        $(TAO_MESSAGING_LIB) \
+        $(TAO_VALUETYPE_LIB) \
+	$(TAO_IORINTERCEPTOR_LIB) \
+	$(TAO_ORT_LIB)
+        
 IDLFILES = \
         $(IDLDIR)\Web_Server.idl
 

@@ -1,10 +1,72 @@
+Tue May 13 12:58:18 2003  Simon McQueen  <sm@prismtechnologies.com>
+
+        * examples/Content_Server/SMI_Iterator/client.bor:
+        * examples/Content_Server/SMI_Iterator/server.bor:
+        * examples/ior_corbaloc/client.bor:
+        * examples/ior_corbaloc/corbaname_client.bor:
+        * examples/ior_corbaloc/server.bor:
+        * examples/OBV/Typed_Events/client.bor:
+        * examples/OBV/Typed_Events/server.bor:
+        * examples/PluggableUDP/tests/Basic/client.bor:
+        * examples/PluggableUDP/tests/Basic/server.bor:
+        * examples/PluggableUDP/tests/Performance/client.bor:
+        * examples/PluggableUDP/tests/Performance/server.bor:
+        * examples/PluggableUDP/tests/SimplePerformance/client.bor:
+        * examples/PluggableUDP/tests/SimplePerformance/server.bor:
+        * examples/POA/Adapter_Activator/Makefile.bor:
+        * examples/POA/DSI/client.bor:
+        * examples/POA/DSI/server.bor:
+        * examples/POA/Explicit_Activation/Makefile.bor:
+        * examples/POA/Forwarding/client.bor:
+        * examples/POA/Forwarding/server.bor:
+        * examples/POA/Generic_Servant/client.bor:
+        * examples/POA/Loader/Makefile.bor:
+        * examples/POA/On_Demand_Activation/Makefile.bor:
+        * examples/POA/On_Demand_Loading/Makefile.bor:
+        * examples/POA/POA_BiDir/Makefile.bor:
+        * examples/POA/Reference_Counted_Servant/Makefile.bor:
+        * examples/POA/TIE/client.bor:
+        * examples/POA/TIE/server.bor:
+        * examples/Quoter/Client.bor:
+        * examples/Quoter/Factory_finder.bor:
+        * examples/Quoter/Generic_factory.bor:
+        * examples/Quoter/Server.bor:
+        * examples/RTCORBA/Activity/Makefile.bor:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.bor:
+        * orbsvcs/ImplRepo_Service/tao_imr.bor:
+        * tests/AMH_Exceptions/server.bor:
+        * tests/AMH_Oneway/client.bor:
+        * tests/AMH_Oneway/server.bor:
+        * tests/AMI/client.bor:
+        * tests/AMI/server.bor:
+        * tests/AMI/simple_client.bor:
+        * tests/AMI_Buffering/admin.bor:
+        * tests/AMI_Buffering/client.bor:
+        * tests/AMI_Buffering/server.bor:
+        * tests/AMI_Timeouts/client.bor:
+        * tests/AMI_Timeouts/server.bor:
+        * tests/BiDirectional/client.bor:
+        * tests/BiDirectional/server.bor:
+        * tests/BiDirectional_NestedUpcall/client.bor:
+        * tests/BiDirectional_NestedUpcall/server.bor:
+        * tests/Big_Oneways/client.bor:
+        * tests/Big_Oneways/server.bor:
+        * tests/Big_Reply/server.bor:
+        * tests/Big_Request_Muxing/client.bor:
+        * tests/Big_Request_Muxing/server.bor:
+        * tests/Big_Twoways/client.bor:
+        * tests/Big_Twoways/server.bor:
+        * tests/Blocking_Sync_None/client.bor:
+
+          Fixed more static link errors from TAO sub setting.
+
 Mon May 12 18:42:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * TAO_IDL/ast/ast_expression.cpp:
         * TAO_IDL/be/be_visitor_constant/constant_ch.cpp:
         * TAO_IDL/include/ast_expression.h:
 
-          Moved storage of an expression's typedef node out of 
+          Moved storage of an expression's typedef node out of
           AST_Expression::AST_ExprValue and into AST_Expression itself.
           If the rhs of a constant literal is an arithmetic or logical
           expression, the AST_ExprValue's creation is deferred, and the
@@ -14,7 +76,7 @@ Mon May 12 18:42:58 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Mon May 12 10:24:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IIOP_Profile.cpp  (parse_string_i): 
+	* tao/IIOP_Profile.cpp  (parse_string_i):
 	* tao/Strategies/DIOP_Profile.cpp:
 	* tao/Strategies/SHMIOP_Profile.cpp:
 	* tao/Strategies/UIOP_Profile.cpp: Fixed a memory management
@@ -84,8 +146,8 @@ Sun May 11 22:48:13 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* orbsvcs/tests/Trading/Makefile:
 	* orbsvcs/tests/ior_corbaname/Makefile:
 
-	  Yet another setof fixes to get the static builds linking fine. 
-	
+	  Yet another setof fixes to get the static builds linking fine.
+
 	* orbsvcs/tests/Notify/notify_tests.GNU: Removed all the common
 	  libraries to a GNU file. Probably this idea needs to be done for
 	  all the tests.
@@ -111,33 +173,33 @@ Sun May 11 10:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         ObjectKey which added to the memory consumed by the IORs. This
         checkin builds a map to store and access the object key
         efficiently.
-	
+
 	* tao/ObjectKey_Table.cpp:
 	* tao/ObjectKey_Table.h: Class that builds a map to store the
-	  object key. 
-	
+	  object key.
+
 	* tao/Refcounted_ObjectKey.cpp:
 	* tao/Refcounted_ObjectKey.h:
 	* tao/Refcounted_ObjectKey.inl: A wrapper class for the object key
 	  that provides reference counting and automatic lifetime
 	  management to the object keys.
-	
+
 	* tao/Profile.cpp:
 	* tao/Profile.h:
 	* tao/Profile.i: Have a pointer to the refcounted object key
 	  instead of the actual object key. After unmarshalling the
 	  object key from the profile we now bind it with the ObjectKey
 	  table which returns a pointer to the refcounted object key
-	  which is cached and  used during invocation. 
-	
-	* tao/IIOP_Profile.cpp: 
+	  which is cached and  used during invocation.
+
+	* tao/IIOP_Profile.cpp:
 	* tao/Strategies/DIOP_Profile.cpp:
 	* tao/Strategies/SHMIOP_Profile.cpp:
 	* tao/Strategies/UIOP_Profile.cpp: Use the refcounted object key
 	  pointer instead of object keys.
-	
+
 	* tao/IIOP_Transport.cpp: Removed gratuitious inclusion of the
-	  Stub.h. 
+	  Stub.h.
 
 	* tao/ORB_Core.cpp:
 	* tao/ORB_Core.h:
@@ -146,15 +208,15 @@ Sun May 11 10:44:56 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	  destroyed during TAO_ORB_Core::fini (). This class also provides
 	  an accessor for accessing the ObjectKey_Table.
 
-	* tao/Resource_Factory.cpp: 
+	* tao/Resource_Factory.cpp:
 	* tao/Resource_Factory.h: Added a virtual method
 	  create_object_key_table_lock () that helps in creating the right
 	  type of lock for the ObjectKey_Table.
-	
+
 	* tao/default_resource.cpp:
 	* tao/default_resource.h: Implementation for
 	  create_object_key_table_lock ().
-	  
+
 	  Added an option -ORBObjectKeyTableLock that helps the user to
 	  configure the type of lock used.
 
