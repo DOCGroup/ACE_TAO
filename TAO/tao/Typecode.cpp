@@ -830,7 +830,12 @@ CORBA_TypeCode::private_equal_struct (CORBA::TypeCode_ptr tc,
   if (my_count != tc_count)
     return 0; // number of members don't match
 
-  for (CORBA::ULong i=0; i < my_count; i++)
+  // The checks below indicate that we are in the first 
+  // recursion of a recursive struct.
+  if (this->parent_ != 0 && this->tc_base_ == this->root_tc_base_)
+    return 1;
+
+  for (CORBA::ULong i = 0; i < my_count; i++)
     {
       const char *my_member_name =
         this->member_name (i, ACE_TRY_ENV);
@@ -923,6 +928,11 @@ CORBA_TypeCode::private_equal_union (CORBA::TypeCode_ptr tc,
 
   if (my_count != tc_count)
     return 0; // number of members don't match
+
+  // The checks below indicate that we are in the first 
+  // recursion of a recursive union.
+  if (this->parent_ != 0 && this->tc_base_ == this->root_tc_base_)
+    return 1;
 
   for (CORBA::ULong i=0; i < my_count; i++)
     {
