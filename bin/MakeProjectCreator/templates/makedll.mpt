@@ -3,7 +3,7 @@ conditional_include "common"
 
 configurations = gcc
 soext          = so
-cppflags       =
+cppflags       = -O
 
 gcc {
   cxx       = g++
@@ -15,6 +15,7 @@ SunCC {
   cxx       = CC
   pic       = -KPIC
   linkflags = -library=Cstd -library=Crun
+  clean     = SunWS_cache
   platforms = solaris
 }
 
@@ -22,6 +23,19 @@ aCC {
   cxx       = aCC
   pic       = +Z
   platforms = hpux
+}
+
+xlC_r {
+  cxx       = xlC_r
+  platforms = aix
+}
+
+SGICC {
+  cxx       = CC
+  pic       = -KPIC
+  linkflags = -Wl,-woff,84
+  clean     = ii_files
+  platforms = irix
 }
 
 linux {
@@ -38,4 +52,14 @@ hpux {
   soext   = sl
   shflags = -b
   ldlibs  = -lxti -lpthread -lrt -ldld
+}
+
+aix {
+  soext  = a
+  ldlibs = -ldl
+}
+
+irix {
+  shflags = -shared
+  ldlibs  = -lsocket -ldl -lnsl -lgen -lpthread
 }
