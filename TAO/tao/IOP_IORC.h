@@ -132,6 +132,11 @@ TAO_NAMESPACE  IOP
   // TAO_IDL - Generated from
   // be/be_type.cpp:249
 
+#ifdef HPUX_11
+  // Remove clash with /usr/include/machine/inline.h and
+  // /usr/include/pa/inline.h
+#undef IOR
+#endif
   struct IOR;
 
   typedef
