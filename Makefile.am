@@ -20,6 +20,10 @@ SUBDIRS = \
 ##        ASNMP \
 ##        websvcs
 
+if BUILD_TAO
+SUBDIRS += TAO
+endif
+
 man_MANS = ace-config.1
 
 bin_SCRIPTS = ace-config

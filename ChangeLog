@@ -1,10 +1,16 @@
+Tue Sep 28 21:05:37 2004  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	* Makefile.am:
+
+	  Changed to add TAO to subdirs if BUILD_TAO is defined.
+
 Tue Sep 28 15:38:57 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 
 	* ACEXML/apps/svcconf/svcconf.mpc:
 	* ACEXML/common/common.mpc:
 	* ACEXML/parser/parser/parser.mpc:
 
-	  Changed to inherit from core.mpb, so that libraries will 
+	  Changed to inherit from core.mpb, so that libraries will
 	  be installed.
 
 Tue Sep 28 15:22:01 2004  J.T. Conklin  <jtc@acorntoolworks.com>
@@ -24,7 +30,7 @@ Tue Sep 28 15:16:54 2004  J.T. Conklin  <jtc@acorntoolworks.com>
 	* ace/SSL/Makefile.am:
 	* ace/TMCast/Makefile.am:
 
-	  Added includedir definitions so headers are installed in 
+	  Added includedir definitions so headers are installed in
 	  the expected place.
 
 	* ACEXML/apps/svcconf/Makefile.am:
