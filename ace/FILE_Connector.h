@@ -19,7 +19,7 @@
 
 #include "ace/FILE_IO.h"
 
-class ACE_Export ACE_FILE_Connector : public ACE_FILE
+class ACE_Export ACE_FILE_Connector
 {
   // = TITLE
   //     Defines an active connection factory for the ACE_FILE wrappers. 
