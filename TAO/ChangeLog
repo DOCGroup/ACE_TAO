@@ -1,3 +1,18 @@
+Thu Nov 20 11:04:09 2003  Dale Wilson  <wilson_d@>
+
+        * orbsvcs/orbsvcs/FT_ORB.dsp:
+          Remove this and replace it with the following three libraries.
+
+        * orbsvcs/orbsvcs/FTORB_Utils.dsp:
+        * orbsvcs/orbsvcs/FT_ClientORB.dsp:
+        * orbsvcs/orbsvcs/FT_ServerORB.dsp:
+          New shared libraries.
+
+        * TAOACE.dsw:
+          Include above changes in dsw
+          Working on VC6 build errors in scoreboard.
+
+
 Thu Nov 20 15:39:44 2003  Simon McQueen  <sm@prismtechnologies.com>
 
         * TAOACE.dsw:
@@ -7,10 +22,10 @@ Thu Nov 20 15:39:44 2003  Simon McQueen  <sm@prismtechnologies.com>
 
 Thu Nov 20 08:20:18 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
-	* examples/RTScheduling/MIF_Scheduler/Makefile:
+        * examples/RTScheduling/Fixed_Priority_Scheduler/Makefile:
+        * examples/RTScheduling/MIF_Scheduler/Makefile:
 
-	  Added TAO_Messaging to the link line.
+          Added TAO_Messaging to the link line.
 
 Wed Nov 19 21:38:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -21,26 +36,26 @@ Wed Nov 19 21:38:59 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 19 20:09:17 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Concurrency_Service/Makefile:
-	* orbsvcs/Naming_Service/Makefile:
-	* orbsvcs/Time_Service/Makefile
-	* orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
-	* orbsvcs/tests/AVStreams/Component_Switching/Makefile
-	* orbsvcs/tests/AVStreams/Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast/Makefile:
-	* orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
-	* orbsvcs/tests/AVStreams/Pluggable/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
-	* orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
-	* orbsvcs/tests/Concurrency/Makefile:
-	* orbsvcs/tests/Property/Makefile:
-	* orbsvcs/tests/Sched_Conf/Makefile:
-	* orbsvcs/tests/Simple_Naming/Makefile:
-	* orbsvcs/tests/Time/Makefile:
+        * orbsvcs/Concurrency_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Time_Service/Makefile
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Bidirectional_Flows/Makefile:
+        * orbsvcs/tests/AVStreams/Component_Switching/Makefile
+        * orbsvcs/tests/AVStreams/Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast/Makefile:
+        * orbsvcs/tests/AVStreams/Multicast_Full_Profile/Makefile:
+        * orbsvcs/tests/AVStreams/Pluggable/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Three_Stage/Makefile:
+        * orbsvcs/tests/AVStreams/Simple_Two_Stage/Makefile:
+        * orbsvcs/tests/Concurrency/Makefile:
+        * orbsvcs/tests/Property/Makefile:
+        * orbsvcs/tests/Sched_Conf/Makefile:
+        * orbsvcs/tests/Simple_Naming/Makefile:
+        * orbsvcs/tests/Time/Makefile:
 
-	  Added TAO_Messaging to the link line. Further made sure that we
-	  don't build these when messaging is disabled.
+          Added TAO_Messaging to the link line. Further made sure that we
+          don't build these when messaging is disabled.
 
 Wed Nov 19 19:43:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -61,11 +76,11 @@ Wed Nov 19 19:43:15 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
 Wed Nov 19 19:24:50 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp:
+        * tao/ORB.cpp:
 
-	  Fixed a warning. Probably this would be millionth time in the
-	  history of ACE+TAO that we fix a warning, which is basically
-	  a .in () for a _var.
+          Fixed a warning. Probably this would be millionth time in the
+          history of ACE+TAO that we fix a warning, which is basically
+          a .in () for a _var.
 
 Wed Nov 19 17:39:56 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
@@ -90,8 +105,8 @@ Wed Nov 19 13:51:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
 
         * tao/Any_Special_Impl_T.cpp (insert):
 
-	  Eliminated a memory leak (TypeCode copy not released) when
-	  inserting a string into an Any.
+          Eliminated a memory leak (TypeCode copy not released) when
+          inserting a string into an Any.
 
         * tao/DynamicAny/DynAny_i.cpp:
         * tao/DynamicAny/DynArray_i.cpp:
@@ -101,72 +116,72 @@ Wed Nov 19 13:51:18 2003  Jeff Parsons <j.parsons@vanderbilt.edu>
         * tao/DynamicAny/DynStruct_i.cpp:
         * tao/DynamicAny/DynUnion_i.cpp:
 
-	  Eliminated memory leaks (ACE_Message_Block copy not released) that
-	  occur when an Any of known type is used to create or assign to a
-	  Dynamic Any. Such Anys do not contain their value encoded in a
-	  CDR stream as Anys of unknown type do. However, all of TAO's
-	  interpretive (de)marshaling code assumes the latter so, if the
-	  Any's type is known, it must be marshaled into a CDR stream
-	  before it can be processed by Dynamic Any code. In taking this
-	  step, we were leaving an extra copy of a message block lying
-	  around. Thanks to Harvinder Sawhney <harvinder_sawhney@agilent.com>
-	  for pointing out the leaks. Also made cosmetic changes to keep
-	  line lengths under 80 characters.
+          Eliminated memory leaks (ACE_Message_Block copy not released) that
+          occur when an Any of known type is used to create or assign to a
+          Dynamic Any. Such Anys do not contain their value encoded in a
+          CDR stream as Anys of unknown type do. However, all of TAO's
+          interpretive (de)marshaling code assumes the latter so, if the
+          Any's type is known, it must be marshaled into a CDR stream
+          before it can be processed by Dynamic Any code. In taking this
+          step, we were leaving an extra copy of a message block lying
+          around. Thanks to Harvinder Sawhney <harvinder_sawhney@agilent.com>
+          for pointing out the leaks. Also made cosmetic changes to keep
+          line lengths under 80 characters.
 
 Tue Nov 18 23:17:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Concurrency_Service/Makefile:
-	* orbsvcs/Time_Service/Makefile:
+        * orbsvcs/Concurrency_Service/Makefile:
+        * orbsvcs/Time_Service/Makefile:
 
-	  Added messaging library. This is not sufficient. We need to make
-	  a check whether messaging is on or not. I just wanted to fix
-	  this before I went to bed.
+          Added messaging library. This is not sufficient. We need to make
+          a check whether messaging is on or not. I just wanted to fix
+          this before I went to bed.
 
-	* orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_TargetCredentials.cpp:
 
-	  Fixed an unused variable warning.
+          Fixed an unused variable warning.
 
 Tue Nov 18 22:49:33 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/Naming_Service/Makefile:
+        * orbsvcs/Naming_Service/Makefile:
 
-	  Added messaging library.
+          Added messaging library.
 
 Tue Nov 18 22:32:48 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/CosNaming.mpc:
+        * orbsvcs/orbsvcs/CosNaming.mpc:
 
-	  Naming service now uses the messaging library.
+          Naming service now uses the messaging library.
 
 Tue Nov 18 22:26:41 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/ORB.cpp:
+        * tao/ORB.cpp:
 
-	  Cosmetic fixes.
+          Cosmetic fixes.
 
 Tue Nov 18 12:11:32 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/LoadBalancer/Makefile.LoadManager:
-	* orbsvcs/LoadBalancer/Makefile.LoadMonitor:
+        * orbsvcs/LoadBalancer/Makefile.LoadManager:
+        * orbsvcs/LoadBalancer/Makefile.LoadMonitor:
 
-	  Fixed brain damaged way of doing things. Checks for whether
-	  certain options have been turned on or off made sure that they
-	  would never be built.
+          Fixed brain damaged way of doing things. Checks for whether
+          certain options have been turned on or off made sure that they
+          would never be built.
 
 Tue Nov 18 12:03:11 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* orbsvcs/orbsvcs/Makefile.CosNotification:
+        * orbsvcs/orbsvcs/Makefile.CosNotification:
 
-	  Updated dependencies.
+          Updated dependencies.
 
 Tue Nov 18 11:29:30 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
-	* tao/IFR_Client_Adapter.h:
-	* tao/ORB.cpp:
-	* tao/IFR_Client/IFR_Client_Adapter_Impl.h:
+        * tao/IFR_Client_Adapter.h:
+        * tao/ORB.cpp:
+        * tao/IFR_Client/IFR_Client_Adapter_Impl.h:
 
-	  Fixed compile errors that were caused due to improper macro
-	  usage.
+          Fixed compile errors that were caused due to improper macro
+          usage.
 
 Tue Nov 18 13:59:11 2003  Simon McQueen  <sm@prismtechnologies.com>
 
