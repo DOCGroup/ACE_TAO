@@ -12,7 +12,7 @@ require ACEutils;
 $file="test.ior";
 $mtfile="mttest.ior";
 
-print "\n\n==== Single-threaded test\n";
+print STDERR "\n\n==== Single-threaded test\n";
 
 $SV = Process::Create ($EXEPREFIX."server".$Process::EXE_EXT,
                        "-o $file");
@@ -27,7 +27,7 @@ $SV->Wait ();
 
 unlink ($file);
 
-print "\n\n==== Multi-threaded test\n";
+print STDERR "\n\n==== Multi-threaded test\n";
 
 sleep 5;
 
