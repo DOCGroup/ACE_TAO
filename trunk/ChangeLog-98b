@@ -1,6 +1,11 @@
+Sat Jun 27 11:27:28 1998  David L. Levine  <levine@cs.wustl.edu>
+
+        * ace/Basic_Types.h: use ACE_CAST_CONST instead of const in
+          ACE_CU64_TO_CU32.
+
 Sat Jun 27 11:03:52 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
-	* README: Updated the list of people who have contributed to TAO.
+        * README: Updated the list of people who have contributed to TAO.
 
 Sat Jun 27 07:07:43 1998  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
