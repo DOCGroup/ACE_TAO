@@ -190,7 +190,7 @@ TAO_NS_Default_Factory::create (TAO_NS_SequenceProxyPushSupplier*& proxy ACE_ENV
                     CORBA::NO_MEMORY ());
 }
 
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_Default_Factory)
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_Default_Factory)
 
 #if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
 

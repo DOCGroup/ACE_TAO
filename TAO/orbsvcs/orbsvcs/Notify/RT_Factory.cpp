@@ -26,4 +26,4 @@ TAO_NS_RT_Factory::create (TAO_NS_StructuredProxyPushSupplier*& proxy ACE_ENV_AR
                     CORBA::NO_MEMORY ());
 }
 
-ACE_FACTORY_DECLARE (TAO_Notify, TAO_NS_RT_Factory)
+ACE_FACTORY_DEFINE (TAO_Notify, TAO_NS_RT_Factory)
