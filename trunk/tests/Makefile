@@ -14,7 +14,7 @@ BIN =   Aio_Platform_Test \
         Barrier_Test \
         Basic_Types_Test \
         Buffer_Stream_Test \
-	Cache_Map_Manager_Test \
+        Cache_Map_Manager_Test \
         CDR_Test \
         Collection_Test \
         Conn_Test \
@@ -115,7 +115,9 @@ include $(ACE_ROOT)/include/makeinclude/rules.bin.GNU
 ifndef SOEXT
   SOEXT=so
 endif
-BUILD += libDLL_Test.$(SOEXT)
+ifdef shared_libs
+  BUILD += libDLL_Test.$(SOEXT)
+endif # shared_libs
 
 include $(ACE_ROOT)/include/makeinclude/rules.local.GNU
 
