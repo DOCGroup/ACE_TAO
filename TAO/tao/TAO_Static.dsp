@@ -687,6 +687,10 @@ SOURCE=.\Service_Callbacks.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Service_Context.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\Services.h
 # End Source File
 # Begin Source File
@@ -1296,6 +1300,10 @@ SOURCE=.\Sequence_T.i
 # Begin Source File
 
 SOURCE=.\Service_Callbacks.i
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Context.inl
 # End Source File
 # Begin Source File
 
@@ -1960,6 +1968,10 @@ SOURCE=.\Server_Strategy_Factory.cpp
 # Begin Source File
 
 SOURCE=.\Service_Callbacks.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\Service_Context.cpp
 # End Source File
 # Begin Source File
 

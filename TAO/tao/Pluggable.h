@@ -224,6 +224,9 @@ public:
   // connector  side. On the acceptor side the connection handler
   // would take care of the messaging objects.
 
+  virtual void bidirectional_flag (int flag);
+  // Set the bidirectional flag
+
   void dequeue_all (void);
 
   /// Return the TAO_ORB_Core

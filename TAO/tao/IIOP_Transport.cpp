@@ -30,7 +30,8 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
   : TAO_Transport (TAO_TAG_IIOP_PROFILE,
                    orb_core),
     connection_handler_ (handler),
-    messaging_object_ (0)
+    messaging_object_ (0),
+    bidirectional_flag_ (0)
 {
   if (flag)
     {
@@ -301,10 +302,12 @@ TAO_IIOP_Transport::send_request_header (TAO_Operation_Details &opdetails,
 {
   // Check whether we have a Bi Dir IIOP policy set
   if (this->orb_core ()->bidir_giop_policy () &&
-      this->messaging_object_->is_ready_for_bidirectional ())
+      this->messaging_object_->is_ready_for_bidirectional () &&
+      this->bidirectional_flag_ == 0)
     {
-
+      this->set_bidirectional_context_info (opdetails);
     }
+
   // We are going to pass on this request to the underlying messaging
   // layer. It should take care of this request
   if (this->messaging_object_->generate_request_header (opdetails,
@@ -323,6 +326,13 @@ TAO_IIOP_Transport::messaging_init (CORBA::Octet major,
                                  minor);
   return 1;
 }
+
+void
+TAO_IIOP_Transport::bidirectional_flag (int flag)
+{
+  this->bidirectional_flag_ = flag;
+}
+
 
 int
 TAO_IIOP_Transport::process_message (void)
@@ -427,4 +437,11 @@ TAO_IIOP_Transport::process_message (void)
 
   this->messaging_object_->reset ();
   return 1;
+}
+
+
+void
+TAO_IIOP_Transport::set_bidirectional_context_info (TAO_Operation_Details &opdetails)
+{
+  //
 }

@@ -138,10 +138,16 @@ public:
   virtual int messaging_init (CORBA::Octet major,
                               CORBA::Octet minor);
 
+  /// Set the bidirectional flag
+  virtual void bidirectional_flag (int flag);
+
 private:
 
   /// Process the message that we have read
   int process_message (void);
+
+  /// Set the Bidirectional context info in the service context list
+  void set_bidirectional_context_info (TAO_Operation_Details &opdetails);
 
 private:
 
@@ -151,6 +157,19 @@ private:
 
   /// Our messaging object.
   TAO_Pluggable_Messaging *messaging_object_;
+
+  /// Have we sent any info on bidirectional information or have we
+  /// received any info regarding making the connection
+  /// served by this transport bidirectional. This is essentially for
+  /// this -- we dont want to send the bidirectional context info more
+  /// than once on the connection. Why? Waste of marshalling and
+  /// demarshalling time on the client. On the server side, we need
+  /// this flag for this -- once a client that has established the
+  /// connection asks the server to use the connection bith ways, we
+  /// *dont* want the server to go pack service info to the
+  /// client. That would be *bad*..
+  int bidirectional_flag_;
+
 };
 
 #if defined (__ACE_INLINE__)

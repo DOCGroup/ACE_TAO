@@ -89,8 +89,9 @@ TAO_ServerRequest::service_info (void)
 ACE_INLINE void
 TAO_ServerRequest::service_info (IOP::ServiceContextList &service_info)
 {
-  this->service_info_ = service_info;
+  this->service_info_= service_info;
 }
+
 
 ACE_INLINE CORBA::ULong
 TAO_ServerRequest::request_id (void)
