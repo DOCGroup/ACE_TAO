@@ -121,3 +121,16 @@ BasicLogFactory_i::create_with_id (DsLogAdmin::LogId id,
 
   return basic_log._retn ();
 }
+
+
+#if defined (ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION)
+
+template class auto_ptr <BasicLog_i>;
+template class ACE_Auto_Basic_Ptr<BasicLog_i>;
+
+#elif defined(ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA)
+
+#pragma instantiate auto_ptr <BasicLog_i>
+#pragma instantiate ACE_Auto_Basic_Ptr <BasicLog_i>
+
+#endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
