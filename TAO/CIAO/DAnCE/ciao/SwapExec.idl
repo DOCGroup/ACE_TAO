@@ -2,6 +2,7 @@
 
 #include "CCM_Container.idl"
 
+
 module CIAO
 {
   local interface Swap_Exec : ::Components::EnterpriseComponent
