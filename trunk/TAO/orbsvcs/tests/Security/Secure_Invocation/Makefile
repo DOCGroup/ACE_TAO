@@ -60,7 +60,6 @@ CLNT_LIBS += -lTAO_SSLIOP
 SRVR_LIBS += -lTAO_SSLIOP
 endif  # static_libs_only = 1
 
-CLNT_LIBS += -lTAO_Security $(TAO_CLNT_LIBS)
 SRVR_LIBS += \
   -lTAO_Security $(TAO_SRVR_LIBS) -lssl -lcrypto
 
@@ -79,7 +78,7 @@ server: $(addprefix $(VDIR),$(SERVER_OBJS))
 	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(SRVR_LIBS) $(POSTLINK)
 
 client: $(addprefix $(VDIR),$(CLIENT_OBJS))
-	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(CLNT_LIBS) $(POSTLINK)
+	$(LINK.cc) $(LDFLAGS) -o $@ $^ $(SRVR_LIBS) $(POSTLINK)
 
 
 # DO NOT DELETE THIS LINE -- g++dep uses it.
