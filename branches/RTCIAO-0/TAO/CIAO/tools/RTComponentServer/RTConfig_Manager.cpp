@@ -1,6 +1,7 @@
 // $Id$
 
 #include "RTConfig_Manager.h"
+#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 # include "RTConfig_Manager.inl"
@@ -10,7 +11,7 @@ void
 CIAO::RTResource_Config_Manager::init
 (const CIAO::RTConfiguration::RTORB_Resources_Info &info
  ACE_ENV_ARG_DECL)
-  // @@ THROW SPEC HERE?
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   CORBA::ULong i;
 
@@ -64,7 +65,7 @@ CIAO::RTResource_Config_Manager::init
 
 void
 CIAO::RTResource_Config_Manager::fini (ACE_ENV_SINGLE_ARG_DECL)
-  // @@ THROW SPEC?
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   TP_MAP::ITERATOR iter = this->threadpool_map_.begin ();
   TP_MAP::ITERATOR end = this->threadpool_map_.end ();
@@ -81,7 +82,7 @@ CIAO::RTResource_Config_Manager::fini (ACE_ENV_SINGLE_ARG_DECL)
 RTCORBA::ThreadpoolId
 CIAO::RTResource_Config_Manager::find_threadpool_by_name (const char *name
                                                           ACE_ENV_ARG_DECL)
-  // @@ THROW SPEC?
+  ACE_THROW_SPEC ((CORBA::SystemException))
 {
   if (name == 0)
     {
