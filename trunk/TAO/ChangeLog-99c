@@ -1,17 +1,24 @@
+Wed Apr 28 09:47:05 1999  David L. Levine  <levine@cs.wustl.edu>
+
+        * TAO/tests/CDR/octet_sequence.cpp: replaced use of cout
+          with ACE_DEBUG statements.  Thanks to James D Rucker
+          <jdrucker@huey.jpl.nasa.gov> for reporting that it
+          didn't build on VxWorks.
+
 Wed Apr 28 09:19:24 1999  Carlos O'Ryan  <coryan@cs.wustl.edu>
 
-	* tao/ORB_Core.cpp:
-	  ORB_init() was crashing if argv was nil or argc was 0, thanks to 
-	  David for reporting this one.
+        * tao/ORB_Core.cpp:
+          ORB_init() was crashing if argv was nil or argc was 0, thanks to
+          David for reporting this one.
 
-	* tao/ORB.cpp:
-	  Use double checked pattern to reduce locking overhead in
-	  CORBA::instance(), the method is invoked on the critical path,
-	  that needs fixing too. Thanks to Irfan for reporting this
-	  problem.
+        * tao/ORB.cpp:
+          Use double checked pattern to reduce locking overhead in
+          CORBA::instance(), the method is invoked on the critical path,
+          that needs fixing too. Thanks to Irfan for reporting this
+          problem.
 
-	* tao/Exception.cpp:
-	  Added missing template instantiation.
+        * tao/Exception.cpp:
+          Added missing template instantiation.
 
 Wed Apr 28 09:09:03 1999  David L. Levine  <levine@cs.wustl.edu>
 
