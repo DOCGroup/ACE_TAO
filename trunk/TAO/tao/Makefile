@@ -76,6 +76,8 @@ PUB_HDRS = \
   DLL_ORB \
   Adapter \
   Acceptor_Filter \
+  Services_Activate \
+  Service_Callbacks \
   Parser_Registry \
   IOR_Parser \
   DLL_Parser \
@@ -223,6 +225,8 @@ ORB_CORE_FILES = \
   TAO_Singleton_Manager \
   DLL_ORB \
   Adapter \
+  Services_Activate \
+  Service_Callbacks \
   Parser_Registry \
   IOR_Parser \
   DLL_Parser \
