@@ -25,6 +25,9 @@
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// The following is needed for Mac OSX 10.2 (Jaguar).  Mac OSX 10.3 (Panther)
+// doesn't seem to have this issue.
+
 #if defined (ACE_SYS_SELECT_NEEDS_UNISTD_H)
  #include "ace/OS_NS_unistd.h"
 #endif
