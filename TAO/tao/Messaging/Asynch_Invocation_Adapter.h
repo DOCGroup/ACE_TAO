@@ -57,7 +57,7 @@ namespace TAO
         CORBA::Object *target,
         Argument **args,
         int arg_number,
-        char *operation,
+        const char *operation,
         int op_len,
         Collocation_Proxy_Broker *b,
         TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
