@@ -825,7 +825,7 @@ namespace
            << STRS[ENV_ARG] << ");"
            << "ACE_CHECK_RETURN (0);" << endl;
 
-        os << "ACE_NEW_RETURN (" << endl
+        os << "ACE_NEW_THROW_EX (" << endl
            << "retv[i].ck," << endl
            << "CIAO::Map_Key_Cookie (entry.ext_id_)," << endl
            << "CORBA::NO_MEMORY ());" << endl
