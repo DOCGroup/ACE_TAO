@@ -1,3 +1,10 @@
+Thu Jan  1 16:42:12 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
+
+	* orbsvcs/tests/EC_MT_MCast/MCast.cpp:
+
+	  Tested and applied a patch from Johnny Willemsen for the crash
+	  of this test in the daily builds.
+
 Thu Jan  1 22:32:14 UTC 2004  Don Hinton  <dhinton@dresystems.com>
 
         * rules.tao.GNU:
