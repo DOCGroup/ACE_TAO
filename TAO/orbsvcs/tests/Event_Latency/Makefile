@@ -4,7 +4,7 @@ EVENT_LATENCY_SRCS = Event_Latency.cpp
 LSRC = $(EVENT_LATENCY_SRCS)
 EVENT_LATENCY_OBJS = $(EVENT_LATENCY_SRCS:.cpp=.o)
 
-LDLIBS = -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_PortableServer -lTAO
+LDLIBS = -lTAO_RTEvent -lTAO_CosNaming -lTAO_Svc_Utils -lTAO_IORTable -lTAO_PortableServer -lTAO
 
 BIN2 = Event_Latency
 
