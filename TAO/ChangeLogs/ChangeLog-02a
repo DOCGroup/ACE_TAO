@@ -1,3 +1,21 @@
+Sat Nov 10 16:31:10 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
+
+	* tao/ORB_Core.cpp (init): 
+	  Did some checking before actually changing the default value
+	  of the TAO_ORB_Parameters::default_init_ref_. Was doing wrong
+	  things when this checking wasnt done.
+
+	* tao/MCAST_Parser.cpp : 
+	  Modified to include the default port values for the services
+	  other than Naming Service. Previously, irrespective of the
+	  service, the default port for any multicast service was made the
+	  same as that for Naming Service. But, this is not maintaining
+	  backward compatibility for other services. So, the default
+	  multicast port now is dependent on the service being run. 
+
+	  Thanks to Michael Sawczyn <msawczyn@columbus.rr.com> for
+	  reporting the bug. 
+
 Sat Nov 10 15:31:15 2001  Priyanka Gontla  <pgontla@ece.uci.edu>
 
 	* docs/Options.html :
