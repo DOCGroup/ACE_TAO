@@ -6,6 +6,7 @@
 #include "NodeManager/NodeDaemonC.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/streams.h"
+using namespace std;
 
 const char * exec_ior = "file://exec_mgr.ior";
 const char * node_daemon_ior = 0;
@@ -200,7 +201,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "Press <Enter> to tear down application \n"));
 
       char dummy [256];
-      std::cin.getline (dummy, 256);
+      cin.getline (dummy, 256);
       // Tear down the assembly
 
       ACE_DEBUG ((LM_DEBUG, "Executor: destroy the application....."));

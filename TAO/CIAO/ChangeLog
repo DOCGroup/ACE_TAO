@@ -1,3 +1,9 @@
+Thu Jun 24 16:40:53 2004  Tao Lu  <lu@dre.vanderbilt.edu>
+
+	* DnC/RepositoryManager/RepositoryManager.mpc:
+	* DnC/RepositoryManager/Repository_Manager.cpp:
+	  Some more changes for VC6.
+
 Thu Jun 24 15:34:53 2004  Tao Lu  <lu@dre.vanderbilt.edu>
 
 	* CIAOTAO.mwc

@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project(Repository_Manager): ciao_deployment_svnt, ciao_deployment_stub, taoexe {
+project(Repository_Manager): ciao_server_dnc,ciao_deployment_svnt, ciao_deployment_stub, taoexe {
   requires += dnc
   exename = executor
   after += Config_Handlers ExecutionManager_stub NodeDaemon_stub
