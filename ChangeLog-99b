@@ -1,3 +1,9 @@
+Tue Feb 02 08:58:32 1999  Steve Huston  <shuston@riverace.com>
+
+        * tests/MT_Reactor_Timer_Test.cpp: Moved definition of status outside
+          of ACE_HAS_THREADS condition since it's used in either case.  Thanks
+          to Frederic Andres <andres@rd.nacsis.ac.jp> for this fix.
+
 Mon Feb 01 23:16:34 1999  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
         * ACE version 4.6.19 released.
