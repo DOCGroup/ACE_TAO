@@ -42,7 +42,7 @@ main (int argc, char *argv[])
                             1);
         }
 
-      server->shutdown(ACE_ENV_ARG_PARAMETER);
+      server->shutdown (ACE_ENV_SINGLE_ARG_PARAMETER);
       ACE_TRY_CHECK;
 
       orb->destroy (ACE_ENV_SINGLE_ARG_PARAMETER);

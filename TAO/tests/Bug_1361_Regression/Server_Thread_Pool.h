@@ -33,7 +33,7 @@ public:
 
   virtual int svc (void);
 
-  virtual int Thread_Pool::put (Test::Echo_ptr echoptr);
+  virtual int put (Test::Echo_ptr echoptr);
 
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = 0);
@@ -44,4 +44,3 @@ private:
   int nt_;                      // number of threads
   // Close hook.
 };
-
