@@ -1,3 +1,14 @@
+Wed Jun 24 15:55:33 1998  Irfan Pyarali  <irfan@cs.wustl.edu>
+
+	* tao/ORB.cpp (resolve_poa): Rearranged this method so that the
+ 	  user can specify the name, POA Manager, policies, and active
+ 	  object map of a root poa.  Use this method instead of
+ 	  resolve_initial_reference("RootPOA"). This method also allows
+ 	  the user the specify the policies used by the root POA - the
+ 	  most common change will be to switch the lifespan policy of the
+ 	  root POA from TRANSIENT to PERSISTENT. resolve_poa() is
+ 	  non-standard.
+
 Wed Jun 24 15:49:19 1998  Aniruddha Gokhale  <gokhale@mambo.cs.wustl.edu>
 
 	* tao/Union.{h, cpp}:

@@ -28,6 +28,7 @@
 #define TAO_OBJID_NAMESERVICE      "NameService"
 #define TAO_OBJID_TRADINGSERVICE   "TradingService"
 #define TAO_OBJID_ROOTPOA          "RootPOA"
+#define TAO_DEFAULT_ROOTPOA_NAME   ""
 #define TAO_OBJID_POACURRENT       "POACurrent"
 #define TAO_OBJID_INTERFACEREP     "InterfaceRepository"
 
@@ -62,6 +63,10 @@ typedef enum
 #endif /* TAO_CONST */
 
 // Forward declarations of some data types are needed.
+
+class TAO_POA_Manager;
+class TAO_POA_Policies;
+class TAO_Object_Table;
 
 class CORBA_Any;
 class CORBA_Any_var;
@@ -850,6 +855,12 @@ public:
 
   // = TAO-specific Extensions
 
+  CORBA_Object_ptr resolve_poa (const char *adapter_name = TAO_DEFAULT_ROOTPOA_NAME,
+                                TAO_POA_Manager *poa_manager = 0,
+                                const TAO_POA_Policies *policies = 0,
+                                TAO_Object_Table *active_object_map = 0);
+  // Resolve the POA.
+
   CORBA_Object_ptr key_to_object (const TAO_ObjectKey &key,
                                   const char *type_id,
                                   CORBA::Environment &env);
@@ -903,9 +914,6 @@ protected:
   // We must be created via the <ORB_init> call.
   CORBA_ORB (void);
   virtual ~CORBA_ORB (void);
-
-  CORBA_Object_ptr resolve_poa (void);
-  // Resolve the POA.
 
   CORBA_Object_ptr resolve_poa_current (void);
   // Resolve the POA current.

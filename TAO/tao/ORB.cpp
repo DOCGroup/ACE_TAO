@@ -291,13 +291,23 @@ CORBA_ORB::run (const ACE_Time_Value &tv)
 }
 
 CORBA_Object_ptr
-CORBA_ORB::resolve_poa (void)
+CORBA_ORB::resolve_poa (const char *adapter_name,
+                        TAO_POA_Manager *poa_manager,
+                        const TAO_POA_Policies *policies,
+                        TAO_Object_Table *active_object_map)
 {
   CORBA::Environment env;
 
-  TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa ();
+  TAO_POA *poa = TAO_ORB_Core_instance ()->root_poa (adapter_name,
+                                                     poa_manager,
+                                                     policies,
+                                                     active_object_map);
+  
+  if (env.exception () != 0)
+    return CORBA_Object::_nil ();
 
   PortableServer::POA_var result = poa->_this (env);
+
   if (env.exception () != 0)
     return CORBA_Object::_nil ();
   else
