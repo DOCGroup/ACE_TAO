@@ -1,7 +1,8 @@
 Mon Aug 09 09:38:00 1999  David L. Levine  <levine@cs.wustl.edu>
 
         * tao/Exception.cpp (_tao_errno): only provide the
-          ENOTSUP case if ENOTSUP != ENOSYS.
+          ENOTSUP case if ENOTSUP != ENOSYS.  Thanks to Andy
+          for reporting this, on NT.
 
 Sun Aug 08 21:09:30 1999  David L. Levine  <levine@cs.wustl.edu>
 
