@@ -1,3 +1,8 @@
+Mon Sep 21 15:00:34 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* ace/Thread_Manager.{h,cpp} (join): Allow passing back of thread
+	  exit status of the thread being joined.
+
 Mon Sep 21 11:24:33 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* docs/ACE-categories.html (HREF): Updated the links to ace/ and
