@@ -45,7 +45,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /D "NDEBUG" /O2 /MD /D "ACE_SVC_BUILD_DLL" /I "../../../../" /I "" /D ACE_HAS_MFC=1
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /D "ACE_SVC_BUILD_DLL" /D ACE_HAS_MFC=1 /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -55,7 +55,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386
-# ADD LINK32 /nologo /dll /machine:I386 ../../../../ace/ACEmfc.lib /out:"../../../../bin/Servermfc.dll" 
+# ADD LINK32 ../../../../ace/ACEmfc.lib /nologo /dll /machine:I386 /out:"../../../../bin/Servermfc.dll"
 
 !ELSEIF  "$(CFG)" == "Examples Service Configurator Server Library - Win32 MFC Debug"
 
@@ -70,8 +70,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\MFC\Server"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /Gm /Zi
-# ADD CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /Gm /Zi /D "_DEBUG" /Od /MDd /D "ACE_SVC_BUILD_DLL" /I "../../../../" /I "" /D ACE_HAS_MFC=1
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /D "ACE_SVC_BUILD_DLL" /D ACE_HAS_MFC=1 /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -80,8 +80,8 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386 /debug /pdbtype:sept
-# ADD LINK32 /nologo /dll /machine:I386 /debug /pdbtype:sept ../../../../ace/ACEmfcd.lib /out:"../../../../bin/Servermfcd.dll" 
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 ../../../../ace/ACEmfcd.lib /nologo /dll /debug /machine:I386 /out:"../../../../bin/Servermfcd.dll" /pdbtype:sept
 
 !ELSEIF  "$(CFG)" == "Examples Service Configurator Server Library - Win32 Release"
 
@@ -97,7 +97,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
-# ADD CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /D "NDEBUG" /O2 /MD /D "ACE_SVC_BUILD_DLL" /I "../../../../" /I ""
+# ADD CPP /nologo /MD /W3 /GX /O2 /I "../../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "NDEBUG" /D "ACE_SVC_BUILD_DLL" /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -107,7 +107,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386
-# ADD LINK32 /nologo /dll /machine:I386 ../../../../ace/ACE.lib /out:"../../../../bin/Server.dll" 
+# ADD LINK32 ../../../../ace/ACE.lib advapi32.lib /nologo /dll /machine:I386 /out:"../../../../bin/Server.dll"
 
 !ELSEIF  "$(CFG)" == "Examples Service Configurator Server Library - Win32 Debug"
 
@@ -122,8 +122,8 @@ LINK32=link.exe
 # PROP Intermediate_Dir "Debug\Server"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /Gm /Zi
-# ADD CPP /nologo /W3 /GX /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c /Gm /Zi /D "_DEBUG" /Od /MDd /D "ACE_SVC_BUILD_DLL" /I "../../../../" /I ""
+# ADD BASE CPP /nologo /W3 /Gm /GX /Zi /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /Zi /Od /I "../../../../" /D "WIN32" /D "_WINDOWS" /D "_CONSOLE" /D "_MBCS" /D "_DEBUG" /D "ACE_SVC_BUILD_DLL" /FD /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
@@ -132,10 +132,10 @@ BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
-# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /machine:I386 /debug /pdbtype:sept
-# ADD LINK32 /nologo /dll /machine:I386 /debug /pdbtype:sept ../../../../ace/ACEd.lib /out:"../../../../bin/Serverd.dll" 
+# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 ../../../../ace/ACEd.lib /nologo /dll /debug /machine:I386 /out:"../../../../bin/Serverd.dll" /pdbtype:sept
 
-!ENDIF
+!ENDIF 
 
 # Begin Target
 
