@@ -12,24 +12,24 @@
 
 
 #ifndef ACE_OS_TLI_H
-#define ACE_OS_TLI_H
-#include /**/ "ace/pre.h"
+# define ACE_OS_TLI_H
+# include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+# include "ace/config-all.h"
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
+# if !defined (ACE_LACKS_PRAGMA_ONCE)
+#  pragma once
+# endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_Errno.h"
-#include "ace/ACE_export.h"
+# include "ace/OS_Errno.h"
+# include "ace/ACE_export.h"
 
-#if defined (ACE_EXPORT_MACRO)
+# if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
-#endif
-#define ACE_EXPORT_MACRO ACE_Export
+# endif
+# define ACE_EXPORT_MACRO ACE_Export
 
-# if !defined (ACE_HAS_TLI)
+# if !(defined(ACE_HAS_TLI) || defined(ACE_HAS_XTI))
 // Dummies to help compilation.
 struct t_call { };
 struct t_bind { };
@@ -40,9 +40,56 @@ struct t_unitdata { };
 struct t_uderr { };
 struct netbuf { };
 
-# else /* !ACE_HAS_TLI */
+# else /* !(ACE_HAS_TLI || ACE_HAS_XTI) */
 
-#   if !defined (ACE_HAS_TLI_PROTOTYPES)
+#   if defined (ACE_HAS_CONFLICTING_XTI_MACROS)
+      // Make sure tcp.h gets included before sys/xti.h.
+#     include "ace/os_include/netinet/os_tcp.h"
+#     undef TCP_NODELAY
+#     undef TCP_MAXSEG
+#   endif /* ACE_HAS_CONFLICTING_XTI_MACROS */
+
+#   if defined (ACE_HAS_XTI)
+#     if defined (ACE_HAS_SYS_XTI_H)   /* Nonstandard header placement */
+#       define class ace_xti_class
+#       include /**/ <sys/xti.h>
+#       undef class
+#     elif defined (ACE_HAS_FORE_ATM_XTI)
+#       include /**/ <fore_xti/xti_user_types.h>
+#       include /**/ <fore_xti/xti.h>
+#       include /**/ <fore_xti/xti_atm.h>
+#       include /**/ <fore_xti/netatm/atm.h>
+#       include /**/ <fore_xti/ans.h>
+#     else
+#       include /**/ <xti.h>
+#     endif /* ACE_HAS_SYS_XTI_H */
+
+      // If the xti.h file redefines the function names, do it now, else
+      // when the function definitions are encountered, they won't match the
+      // declaration here.
+#     if defined (ACE_REDEFINES_XTI_FUNCTIONS)
+#       include /**/ <xti.h>
+#       if defined (UNIXWARE_2_0)         /* They apparently forgot one... */
+           extern "C" int _xti_error(char *);
+#       endif /* UNIXWARE_2_0 */
+#     endif /* ACE_REDEFINES_XTI_FUNCTIONS */
+
+      // The XTI API for obtaining local/peer addresses is t_getprotaddr().
+      // The ACE API was developed in TLI days and so uses t_getname().
+      // t_getname() has a type argument that specifies which address is
+      // desired, local or peer, while t_getprotaddr() gets both at once.
+      // t_getname() has values defined for the type, so these aren't defined
+      // for XTI systems. So, define them here for ACE API users to use.
+      // These values were taken from sys/tiuser.h on Solaris.
+#     if !defined (LOCALNAME)
+#       define LOCALNAME  0
+#     endif
+#     if !defined (REMOTENAME)
+#       define REMOTENAME 1
+#     endif
+
+#   else /* !ACE_HAS_XTI, so this is a TLI system */
+#     if !defined (ACE_HAS_TLI_PROTOTYPES)
 
 // Define ACE_TLI headers for systems that don't prototype them....
 extern "C"
@@ -76,64 +123,39 @@ extern "C"
   int t_sync(int fildes);
   int t_unbind(int fildes);
 }
-#   endif /* !ACE_HAS_TLI_PROTOTYPES */
+#     endif /* !ACE_HAS_TLI_PROTOTYPES */
 
-#   if defined (ACE_HAS_TIUSER_H) || defined (ACE_HAS_XTI) || defined (ACE_HAS_FORE_ATM_XTI)
-#     if defined (ACE_HAS_CONFLICTING_XTI_MACROS)
-        // Make sure tcp.h gets included before sys/xti.h.
-#       include "ace/os_include/netinet/os_tcp.h"
-#       undef TCP_NODELAY
-#       undef TCP_MAXSEG
-#     endif /* ACE_HAS_BROKEN_XTI_MACROS */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 extern "C" {
 #     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
-#     if defined (ACE_HAS_FORE_ATM_XTI)
-#       include /**/ <fore_xti/xti_user_types.h>
-#       include /**/ <fore_xti/xti.h>
-#       include /**/ <fore_xti/xti_atm.h>
-#       include /**/ <fore_xti/netatm/atm.h>
-#       include /**/ <fore_xti/ans.h>
-#     elif defined (ACE_HAS_TIUSER_H)
+#     if defined (ACE_HAS_TIUSER_H)
 #       include /**/ <tiuser.h>
-#     elif defined (ACE_HAS_SYS_XTI_H)
-#         define class ace_xti_class
-#         include /**/ <sys/xti.h>
-#         undef class
 #     else
-#         include /**/ <xti.h>
-#     endif /* ACE_HAS_FORE_ATM_XTI */
+#       /* What to do here??? Is there a tli.h? */
+#     endif /* ACE_HAS_TIUSER_H */
 #     if defined (ACE_HAS_TIUSER_H_BROKEN_EXTERN_C)
 }
 #     endif /* ACE_HAS_TIUSER_H_BROKEN_EXTERN_C */
-#   endif /* ACE_HAS_TIUSER_H || ACE_HAS_XTI */
 
-// Apparently this particular prototype is missing in so many
-// platforms that is just better to declare it ourselves.
-extern "C" int t_getname (int, struct netbuf *, int);
+#     if defined (ACE_HAS_SVR4_TLI)
+         // t_getname is a TLI extension added by some platforms before XTI
+         // was widely available. However, it's not often in the system's
+         // header files. Sun OS, for example, is like this.
+         extern "C" int t_getname (int, struct netbuf *, int);
+#     endif /* ACE_HAS_SVR4_TLI */
+#   endif /* !ACE_HAS_XTI */
 
-# endif /* ACE_WIN32 */
-
-// If the xti.h file redefines the function names, do it now, else
-// when the function definitions are encountered, they won't match the
-// declaration here.
-
-# if defined (ACE_REDEFINES_XTI_FUNCTIONS)
-#   include /**/ <xti.h>
-#   if defined (UNIXWARE_2_0)         /* They apparently forgot one... */
-extern "C" int _xti_error(char *);
-#   endif /* UNIXWARE */
-# endif /* ACE_REDEFINES_XTI_FUNCTIONS */
+# endif /* ACE_HAS_XTI || ACE_HAS_TLI */
 
 /**
  * @namespace ACE_OS
  *
- * @brief This class is a wrapper for the TLI operations
+ * @brief This class is a wrapper for the XTI/TLI operations
  *
  */
 namespace ACE_OS
 {
-  // = A set of wrappers for TLI.
+  // = A set of wrappers for XTI/TLI.
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_accept (ACE_HANDLE fildes,
                 ACE_HANDLE resfd,
@@ -149,8 +171,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_bind (ACE_HANDLE fildes,
               struct t_bind *req,
-              struct
-              t_bind *ret);
+              struct t_bind *ret);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_close (ACE_HANDLE fildes);
@@ -192,7 +213,7 @@ namespace ACE_OS
                      struct t_info *info);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int t_optmgmt (ACE_HANDLE fildes,
+  int t_optmgmt (ACE_HANDLE handle,
                  struct t_optmgmt *req,
                  struct t_optmgmt *ret);
 

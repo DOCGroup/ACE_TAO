@@ -410,9 +410,6 @@ AH_TEMPLATE([ACE_HAS_BROKEN_WRITEV],
 [OS/compiler omits the const from the iovec parameter in the
 writev() prototype.])
 
-AH_TEMPLATE([ACE_HAS_BROKEN_XTI_MACROS],
-[OS header files have some problems with XTI (HP/UX 11).])
-
 AH_TEMPLATE([ACE_HAS_BSTRING],
 [Platform has <bstring.h> (which contains bzero() prototype)])
 
@@ -429,6 +426,9 @@ AH_TEMPLATE([ACE_HAS_CHARPTR_SPRINTF],
 
 AH_TEMPLATE([ACE_HAS_CLOCK_GETTIME],
 [Platform supports POSIX 1.b clock_gettime()])
+
+AH_TEMPLATE([ACE_HAS_CONFLICTING_XTI_MACROS],
+[OS header files have some problems with XTI (HP/UX 11).])
 
 AH_TEMPLATE([ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES],
 [Prototypes for both signal() and struct sigaction are consistent.])
@@ -639,6 +639,9 @@ AH_TEMPLATE([ACE_HAS_RECURSIVE_MUTEXES],
 AH_TEMPLATE([ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS],
 [Platform will recurse infinitely on thread exits from TSS cleanup
    routines (e.g., AIX)])
+
+AH_TEMPLATE([ACE_HAS_SIGACTION_CONSTP2],
+[Platform's sigaction() function takes const sigaction* as 2nd parameter])
 
 AH_TEMPLATE([ACE_HAS_REENTRANT_FUNCTIONS],
 [Platform supports reentrant functions (i.e., all the POSIX *_r
@@ -1101,14 +1104,6 @@ AH_TEMPLATE([ACE_LACKS_RLIMIT],
 
 AH_TEMPLATE([ACE_LACKS_RLIMIT_PROTOTYPE],
 [Platform/compiler lacks {get,set}rlimit() prototypes (e.g., Tandem)])
-
-AH_TEMPLATE([ACE_LACKS_POSIX_PROTOTYPES],
-[Platform lacks POSIX prototypes for certain System V functions like
-   shared memory and message queues.])
-
-AH_TEMPLATE([ACE_LACKS_SOME_POSIX_PROTOTYPES],
-[Platform lacks POSIX prototypes for certain System V functions like
-   shared memory and message queues.])
 
 AH_TEMPLATE([ACE_LACKS_PLACEMENT_OPERATOR_NEW],
 [Compiler doesn't support placement operator new(size_t, void *).])

@@ -3,7 +3,8 @@
 
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
-#include "ace/OS.h"
+#include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/Default_Constants.h"
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_string.h"
@@ -205,9 +206,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
-#   if defined (ACE_LACKS_POSIX_PROTOTYPES)
-  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
-#   elif defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
+#   if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
   int l = ACE_OS::strlen (symbolname) + 2;
   char *asm_symbolname = 0;
   ACE_NEW_RETURN (asm_symbolname, char[l], 0);

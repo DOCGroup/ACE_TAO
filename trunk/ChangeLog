@@ -1,3 +1,115 @@
+Mon Dec 22 17:46:12 2003  Steve Huston  <shuston@riverace.com>
+
+	* configure.ac: Don't bother getting a ACE_HAS_TLI_PROTOTYPES
+	  setting if ACE_HAS_XTI. It's not needed. Fix the check for
+	  ACE_HAS_CONFLICTING_XTI_MACROS to only include xti.h, not tliuser.h,
+	  since that's where the errors are. The XTI and TLI parts are now
+	  separate; if the platform has XTI, none of the TLI checks are done.
+	  Made the check for sigaction()'s second argument set (or not)
+	  new config setting, ACE_HAS_SIGACTION_CONSTP2. See below.
+
+	* m4/config_h.m4: Removed entries for ACE_LACKS_POSIX_PROTOTYPES and
+	  ACE_LACKS_SOME_POSIX_PROTOTYPES. Renamed ACE_HAS_BROKEN_XTI_MACROS
+	  to ACE_HAS_CONFLICTING_XTI_MACROS. Added entries for
+	  ACE_HAS_SIGACTION_CONSTP2. See rationale in ace/README entry, below.
+
+	* ace/README: Clarified the meanings of ACE_HAS_TLI, ACE_HAS_XTI,
+	  and ACE_HAS_SVR4_TLI. Changed entry for ACE_HAS_BROKEN_XTI_MACROS to
+	  ACE_HAS_CONFLICTING_XTI_MACROS and explained it more (both names were
+	  used previously). Removed entries for ACE_LACKS_POSIX_PROTOTYPES
+	  and ACE_LACKS_SOME_POSIX_PROTOTYPES. These ended up a catch-all for
+	  platforms that had odd, or non-conforming (these days anyway) APIs
+	  for some SysV, signal, or stdio functions. Any reference to
+	  ACE_LACKS_POSIX_PROTOYPES is now gone. If it causes any problems
+	  (very doubtful since the only configs that used it were
+	  SunOS 4) it can be added back in a more explanatory fashion.
+	  Uses of ACE_LACKS_SOME_POSIX_PROTOTYPES are replaced by
+	  more specific settings that autoconf is detecting now anyway.
+	  These are:
+	     ACE_HAS_SIGACTION_CONSTP2: sigaction() 2nd parameter is
+	     const sigaction*, as opposed to non-const.
+
+	* ace/config-hpux-11.00.h: Removed #define ACE_HAS_BROKEN_XTI_MACROS.
+	  This is not sued any longer (see README above).
+
+	* ace/config-linux-common.h:
+	* ace/config-integritySCA.h:
+	* ace/config-lynxos.h:
+	* ace/config-qnx-neutrino.h:
+	* ace/config-qnx-rtp.h:
+	* ace/config-unixware-7.1.0.h:
+	* ace/config-unixware-7.1.0.udk.h: Removed entry for
+	  ACE_LACKS_SOME_POSIX_PROTOTYPES. Applies only for glibc earlier than
+	  2.2. If this breaks something, send details to me.
+
+	* ace/config-rtems.h: Removed ACE_LACKS_POSIX_PROTOTYPES and
+	  ACE_LACKS_SOME_POSIX_PROTOTYPES; added ACE_HAS_SIGACTION_CONSTP2.
+
+	* ace/config-sco-5.0.0.h:
+	* ace/config-sco-5.0.0-mit-pthread.h:
+	* ace/config-tandem.h: Removed entry for ACE_LACKS_POSIX_PROTOTYPES
+	  (was commented out anyway).
+
+	* ace/config-sunos4-sun3.x.h:
+	* ace/config-sunos4-sun4.1.4.h:
+	* ace/config-sunos4-sun4.x.h: Removed entry for
+	  ACE_LACKS_POSIX_PROTOTYPES. If this breaks a build, please email
+	  shuston@riverace.com with compile errors and PRF.
+
+	* ace/OS_NS_dlfcn.inl: Removed #include "ace/OS.h"; replaced with
+	  #include "ace/OS_NS_fcntl.h" and "ace/OS_NS_unistd.h".
+	  (dlsym): Removed the #if defined (ACE_LACKS_POSIX_PROTOTYPES) - this
+	  is not needed.
+
+	* ace/OS_NS_signal.inl (sigaction): const_cast the new sigaction arg
+	  if ACE_HAS_SIGACTION_CONSTP2 is not defined. This takes the place
+	  of either ACE_LACKS_SOME_POSIX_PROTOTYPES or
+	  ACE_LACKS_POSIX_PROTOTYPES.
+
+	* ace/OS_TLI.h: Rearranged the places and situations that TLI or XTI
+	  headers are included. These wre confused over the years as platforms
+	  were ported to, and the TLI API evolved to XTI. The way this now
+	  works mirrors the way modern platforms work. XTI is the newer and
+	  current API. If XTI is available, ACE_HAS_XTI should be set. If
+	  XTI is not available, but the older TLI is, ACE_HAS_TLI should be
+	  set. ACE_HAS_XTI takes precedence if they're both set. If only TLI
+	  is available, the correct header (tiuser.h) is included if
+	  ACE_HAS_TIUSER_H is set. tiuser.h is a compatibility carryover for
+	  platforms with XTI. If the platform has TLI, not XTI, and no
+	  tiuser.h, this file doesn't include any system headers - this may
+	  be wrong, but I don't have any platforms available to try.
+	  Also, ACE_HAS_SVR4_TLI applies to platforms with TLI (not XTI) and
+	  additional, pre-XTI functionality such as t_getname(). This is
+	  true for older SunOS, but I don't think any modern platforms
+	  should set this. XTI includes all the things that distinguish
+	  ACE_HAS_SVR4_TLI from TLI, so if ACE_HAS_XTI is set, ACE_HAS_SVR4_TLI
+	  is ignored. To summarize, the order of precedence is, XTI, then
+	  TLI, optionally modified by ACE_HAS_SVR4_TLI.
+
+	* ace/OS_TLI.inl (t_getname): Add code for calling t_getprotaddr()
+	  if ACE_HAS_XTI. It would be good to add ACE_OS::t_getprotaddr()
+	  since most platforms support XTI these days. But this will do
+	  for now.
+
+	* ace/TLI.cpp (get_local_addr): Forward this through to
+	  ACE_OS::t_getname(), which can now handle both ACE_HAS_XTI and
+	  ACE_HAS_SVR4_TLI.
+	  (set_option, get_option): Added the XTI code for these.
+
+	* ace/TLI_Connector.cpp (complete):
+	* ace/TLI_Stream.cpp (get_remote_addr): Regardless of which flavor of
+	  XTI/TLI is set, call ACE_OS::t_getname() to get the address info.
+	  It now can do both XTI and TLI.
+
+	* ace/os_include/os_errno.h: Removed the #defines for LOCALNAME and
+	  REMOTENAME. These are now in ace/OS_TLI.h where they come from.
+
+	* ace/config-lite.h: Add a check after including config.h for
+	  ACE_HAS_XTI. XTI is what TLI evolved to, and wherever ACE
+	  wants to provide a TLI function or not, it checks for ACE_HAS_TLI.
+	  Since ACE_HAS_XTI can be set without ACE_HAS_TLI, we set ACE_HAS_TLI
+	  to get the basic functionality-providing checks taken care of.
+
 Mon Dec 22 17:01:39 2003  Steve Huston  <shuston@riverace.com>
 
 	* tests/Makefile.am: Removed comment on -module option for

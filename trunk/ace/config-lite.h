@@ -27,6 +27,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+// ACE_HAS_TLI is used to decide whether to try any XTI/TLI functionality
+// so if it isn't set, set it. Capabilities and differences between
+// XTI and TLI favor XTI, but when deciding to do anything, as opposed to
+// ACE_NOTSUP_RETURN for example, ACE_HAS_TLI is the deciding factor.
+#if !defined (ACE_HAS_TLI)
+#  if defined (ACE_HAS_XTI)
+#    define ACE_HAS_TLI
+#  endif /* ACE_HAS_XTI */
+#endif /* ACE_HAS_TLI */
+
 // By default we perform no tracing on the OS layer, otherwise the
 // coupling between the OS layer and Log_Msg is too tight.  But the
 // application can override the default if they wish to.
