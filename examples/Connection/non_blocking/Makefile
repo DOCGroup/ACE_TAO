@@ -26,8 +26,7 @@ LSRC  	= CPP-connector.cpp \
           CPP-acceptor.cpp
 
 LDLIBS 	= -lConn
-
-VLDLIBS = $(LDLIBS:%=%$(VAR))
+LIBS   += $(ACELIB)
 
 BUILD = $(VLIB) $(VSHLIB) $(SHLIBA) $(VBIN)
 
