@@ -23,6 +23,8 @@ namespace Deployment
   public:
     // Exception thrown when there is a node with the same name in the map
     class Node_Exist { };
+    // Exception thrown when there is no node with the name given in the map
+    class Node_Not_Exist { };
 
     // Constructor prints out the caption and increases indent
     Dump_Obj(const char* caption)
@@ -34,12 +36,13 @@ namespace Deployment
 
     // Constructor prints out the caption, increases indent and inserts the given desc into the map
     template <typename DESC>
-    Dump_Obj(const char* caption, DESC &desc): desc_(caption)
+    Dump_Obj(const char* caption, DESC &desc)
+      : desc_(caption)
     {
       ACE_DEBUG ((LM_DEBUG, "%s%s:\n", indent_.c_str(), caption));
       indent_.append("   ");
 
-      if (desc_map_.find(caption) != desc_map_.end())
+      if (desc_map_.find(std::string(caption)) != desc_map_.end())
         {
           ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - The item with name %s is already in the node map.\n", caption));
           throw Node_Exist();
@@ -48,7 +51,7 @@ namespace Deployment
         {
           CORBA::Any val;
           val <<= desc;
-          desc_map_[caption] = val;
+          desc_map_[std::string(caption)] = val;
         }
     }
 
@@ -58,7 +61,16 @@ namespace Deployment
       indent_.erase(indent_.size() - 2, 2);
       if (desc_.size() != 0)
         {
-          desc_map_.erase(desc_map_.find(desc_.c_str()));
+          if (desc_map_.find(desc_) != desc_map_.end())
+            {
+              desc_map_.erase(desc_map_.find(desc_));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG, "DnC_Dump.cpp:Dump_Obj - The item with name %s is not in the node map.\n",
+                          desc_.c_str()));
+              throw Node_Not_Exist();
+            }
         }
     }
 
@@ -81,14 +93,14 @@ namespace Deployment
     // indent string
     static std::string indent_;
     // map for reference lookup
-    static std::map<const char*, CORBA::Any> desc_map_;
+    static std::map<std::string, CORBA::Any> desc_map_;
     // descriptor - used by destructor for deleting the correct descriptor from the map
     std::string desc_;
   };
 
   // static member initialization
   std::string Dump_Obj::indent_ = "-";
-  std::map<const char*, CORBA::Any> Dump_Obj::desc_map_;
+  std::map<std::string, CORBA::Any> Dump_Obj::desc_map_;
 
   // Dumps a string sequence
   void DnC_Dump::dump (const char* caption, const ::CORBA::StringSeq &str_seq)
