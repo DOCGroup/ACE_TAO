@@ -22,7 +22,7 @@ Cubit_ptr Cubit::_narrow (CORBA::Object_ptr obj)
   if (obj->_is_a ("IDL:Cubit:1.0", env))
     {
       obj->Release (); // Release the reference grabbed by _is_a ()
-      
+
       STUB_Object *istub;
 
       if (obj->QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
@@ -45,13 +45,13 @@ Cubit_ptr Cubit::_nil (void)
 
 // CUBE OCTET
 
-static const TAO_Param_Data Cubit_cube_octet_params [] = 
+static const TAO_Param_Data Cubit_cube_octet_params [] =
 {
   { CORBA::_tc_octet, PARAM_RETURN, 0 },
   { CORBA::_tc_octet, PARAM_IN, 0 }
 };
-    
-static const TAO_Call_Data Cubit_cube_octet_calldata = 
+
+static const TAO_Call_Data Cubit_cube_octet_calldata =
 {
   "cube_octet", CORBA::B_TRUE,
   2, &Cubit_cube_octet_params [0],
@@ -73,7 +73,7 @@ Cubit::Cubit_cube_octet (CORBA::Octet o,
     }
 
   this->Release ();
-   
+
   istub->do_call (env, &Cubit_cube_octet_calldata,
 		  &retval, &o);
   istub->Release ();
@@ -83,13 +83,13 @@ Cubit::Cubit_cube_octet (CORBA::Octet o,
 
 // CUBE SHORT
 
-static const TAO_Param_Data Cubit_cube_short_params [] = 
+static const TAO_Param_Data Cubit_cube_short_params [] =
 {
   { CORBA::_tc_short, PARAM_RETURN, 0 },
   { CORBA::_tc_short, PARAM_IN, 0 }
 };
 
-static const TAO_Call_Data Cubit_cube_short_calldata = 
+static const TAO_Call_Data Cubit_cube_short_calldata =
 {
   "cube_short", CORBA::B_TRUE,
   2, &Cubit_cube_short_params [0],
@@ -115,21 +115,21 @@ Cubit::Cubit_cube_short (CORBA::Short s,
 
   istub->do_call (env, &Cubit_cube_short_calldata,
                   &retval, &s);
-   
+
   istub->Release ();
-   
+
   return retval;
 }
 
 // CUBE LONG
 
-static const TAO_Param_Data Cubit_cube_long_params [] = 
+static const TAO_Param_Data Cubit_cube_long_params [] =
 {
   { CORBA::_tc_long, PARAM_RETURN, 0 },
   { CORBA::_tc_long, PARAM_IN, 0 }
 };
 
-static const TAO_Call_Data Cubit_cube_long_calldata = 
+static const TAO_Call_Data Cubit_cube_long_calldata =
 {
   "cube_long", CORBA::B_TRUE,
   2, &Cubit_cube_long_params [0],
@@ -141,7 +141,7 @@ Cubit::Cubit_cube_long (CORBA::Long l,
 			CORBA::Environment &env)
 {
   CORBA::Long retval;
-   
+
   STUB_Object *istub;
 
   if (this->QueryInterface (IID_STUB_Object, (void **) &istub) != NOERROR)
@@ -151,11 +151,11 @@ Cubit::Cubit_cube_long (CORBA::Long l,
     }
 
   this->Release ();
-   
+
   istub->do_call (env, &Cubit_cube_long_calldata,
                   &retval, &l);
   istub->Release ();
-   
+
   return retval;
 }
 
@@ -165,23 +165,23 @@ Cubit::Cubit_cube_long (CORBA::Long l,
 //
 // NOTE:  it's important that this be longword aligned!!
 
-static const CORBA::Long _oc_Cubit_Many [] = 
+static const CORBA::Long _oc_Cubit_Many [] =
 {
-  MY_BYTE_SEX,          // byte order flag (TRICKY!)
-      
+  TAO_ENCAP_BYTE_ORDER,          // byte order flag (TRICKY!)
+
   1, 0,       // empty string:  repository/type ID
   1, 0,       // empty string:  struct name
-      
+
   3,          // three struct elements
-      
+
   // First structure element:  name, typecode for Octet
   1, 0,       // empty string:  name "o"
   CORBA::tk_octet,
-      
+
   // Second structure element:  name, typecode for Long
   1, 0,       // empty string:  name "l"
   CORBA::tk_long,
-      
+
   // Third structure element:  name, typecode for Short
   1, 0,       // empty string:  name "s"
   CORBA::tk_short,
@@ -195,13 +195,13 @@ CORBA::TypeCode_ptr TC_Cubit_Many = &_tc_Cubit_Many;
 
 // CUBE STRUCT
 
-static const TAO_Param_Data Cubit_cube_struct_params [] = 
+static const TAO_Param_Data Cubit_cube_struct_params [] =
 {
   { &_tc_Cubit_Many, PARAM_RETURN, sizeof (Cubit_Many) },
   { &_tc_Cubit_Many, PARAM_IN, 0 }
 };
 
-static const TAO_Call_Data Cubit_cube_struct_calldata = 
+static const TAO_Call_Data Cubit_cube_struct_calldata =
 {
   "cube_struct", CORBA::B_TRUE,
   2, &Cubit_cube_struct_params [0],
@@ -223,11 +223,11 @@ Cubit::Cubit_cube_struct (Cubit_Many &values,
     }
 
   this->Release ();
-  
+
   istub->do_call (env, &Cubit_cube_struct_calldata,
 		  &retval, &values);
   istub->Release ();
-   
+
   return retval;
 }
 
@@ -242,73 +242,73 @@ Cubit::Cubit_cube_struct (Cubit_Many &values,
 // aligned for the typecode interpreter to use, so no additional
 // runtime copy needs to be made.
 
-static const CORBA::Long _oc_Cubit_oneof [] = 
+static const CORBA::Long _oc_Cubit_oneof [] =
 {
-  MY_BYTE_SEX,          // byte order flag (TRICKY)
+  TAO_ENCAP_BYTE_ORDER,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted struct name, "oneof"
-   
+
   //
   // discriminant typecode:
   //
   CORBA::tk_enum,    // CORBA::tk_enum
   72,         // encapsulation length
-   
-  MY_BYTE_SEX,          // byte order flag (TRICKY)
+
+  TAO_ENCAP_BYTE_ORDER,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted enum name, "discrim"
   6,          // 5 elements in the enum
-   
+
   1, 0,       // omitted member name, "e_0th"
   1, 0,       // omitted member name, "e_1st"
   1, 0,       // omitted member name, "e_2nd"
-  1, 0,       // omitted member name, "e_3rd" 
-  1, 0,       // omitted member name, "e_4th" 
-  1, 0,       // omitted member name, "e_5th" 
-   
+  1, 0,       // omitted member name, "e_3rd"
+  1, 0,       // omitted member name, "e_4th"
+  1, 0,       // omitted member name, "e_5th"
+
   4,       	// default member index (zero based)
   5,       	// number of union members
-   
+
   // the 1st union branch arm
   e_0th,       // member label value
   1, 0,        // omitted member name, "o"
   CORBA::tk_octet,    // member typecode
-   
+
   // the 2nd union branch arm
   e_1st,      // member label value
   1, 0,       // omitted member name, "s"
   CORBA::tk_short,   // member typecode
-   
+
   // the 3rd union branch arm
   e_2nd,      // member label value
   1, 0,       // omitted member name, "l"
   CORBA::tk_long,    // member typecode
-   
+
   // the 4th union branch arm
   e_3rd,      // member label value
   1, 0,       // omitted member name, "cm"
-   
+
   // the 4th union member typecode
   CORBA::tk_struct,  // CORBA::tk_struct
   60,         // encap length
-   
-  MY_BYTE_SEX,          // byte order flag (TRICKY)
+
+  TAO_ENCAP_BYTE_ORDER,          // byte order flag (TRICKY)
   1, 0,       // omitted repository/type ID
   1, 0,       // omitted struct name, "Many"
   3,          // three struct members
-   
+
   // First structure element
   1, 0,       // omitted member name, "o"
   CORBA::tk_octet,   // member type, CORBA::tk_octet
-   
+
   // Second structure element
   1, 0,       // omitted member name, "l"
   CORBA::tk_long,    // member type, CORBA::tk_long
-   
+
   // Third structure element
   1, 0,       // omitted member name, "s"
   CORBA::tk_short,   // member type, CORBA::tk_short
-   
+
   // the 5th union branch arm
   4,          // the 5th member label value
   1, 0,       // omitted member name, "cm"
@@ -322,13 +322,13 @@ static CORBA::TypeCode _tc_Cubit_oneof (CORBA::tk_union,
                                        CORBA::B_FALSE);
 CORBA::TypeCode_ptr TC_Cubit_oneof = &_tc_Cubit_oneof;
 
-static const TAO_Param_Data Cubit_cube_union_params [] = 
+static const TAO_Param_Data Cubit_cube_union_params [] =
 {
   { &_tc_Cubit_oneof, PARAM_RETURN, sizeof (Cubit_oneof) },
   { &_tc_Cubit_oneof, PARAM_IN, 0 }
 };
 
-static const TAO_Call_Data Cubit_cube_union_calldata = 
+static const TAO_Call_Data Cubit_cube_union_calldata =
 {
   "cube_union", CORBA::B_TRUE,
   2, &Cubit_cube_union_params [0],
@@ -354,13 +354,13 @@ Cubit::Cubit_cube_union (Cubit_oneof &values,
   istub->do_call (env, &Cubit_cube_union_calldata,
                   &retval, &values);
   istub->Release ();
-   
+
   return retval;
 }
 
 // PLEASE EXIT
 
-static const TAO_Call_Data Cubit_please_exit_calldata = 
+static const TAO_Call_Data Cubit_please_exit_calldata =
 {
   "please_exit", CORBA::B_FALSE,
   0, 0,
