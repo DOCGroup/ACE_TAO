@@ -560,16 +560,8 @@ ACE_OutputCDR::current_alignment (void) const
 ACE_INLINE int
 ACE_OutputCDR::align_write_ptr (size_t alignment)
 {
-  char *buf = ACE_ptr_align_binary (this->current_->wr_ptr (),
-                                    alignment);
-
-  if (buf <= this->current_->end ())
-    {
-      this->current_->wr_ptr (buf);
-      return 0;
-    }
-
-  return this->grow_and_adjust (0, alignment, buf);
+  char *dummy;
+  return this->grow_and_adjust (0, alignment, dummy);
 }
 
 ACE_INLINE ACE_Char_Codeset_Translator *
