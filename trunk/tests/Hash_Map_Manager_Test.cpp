@@ -27,6 +27,7 @@
 
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<char *, char *>
 #define HASH_STRING_MAP ACE_Hash_Map_Manager<char *, char *, ACE_Null_Mutex>
+#define HASH_STRING_ITER ACE_Hash_Map_Iterator<char *, char *, ACE_Null_Mutex>
 
 #define MAP_STRING char *
 #define ENTRY entry
@@ -72,6 +73,8 @@ HASH_STRING_MAP::equal (char *const &id1, char *const &id2)
 #define HASH_STRING_ENTRY ACE_Hash_Map_Entry<Dumb_String, Dumb_String>
 #define HASH_STRING_MAP \
         ACE_Hash_Map_Manager<Dumb_String, Dumb_String, ACE_Null_Mutex>
+#define HASH_STRING_ITER \
+        ACE_Hash_Map_Iterator<Dumb_String, Dumb_String, ACE_Null_Mutex>
 
 #define MAP_STRING Dumb_String
 #define ENTRY ((char *)entry)
@@ -161,6 +164,16 @@ main (int, char *[])
     if (hash.find ("funny", entry) == 0)
       ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "funny", ENTRY));
 
+    // Let's test the iterator while we are at it.
+    {
+      HASH_STRING_ENTRY *i;
+      for (HASH_STRING_ITER hash_iter (hash);
+           hash_iter.next (i);
+           hash_iter.advance ())
+        ACE_DEBUG ((LM_DEBUG, "iterating: [%s, %s]\n",
+                    i->ext_id_, i->int_id_));
+    }
+
     hash.unbind ("goodbye", entry);
 
     if (hash.find ("hello", entry) == 0)
@@ -169,6 +182,16 @@ main (int, char *[])
       ACE_DEBUG ((LM_DEBUG, "OOPS!  `%s' found `%s'\n", "goodbye", ENTRY));
     if (hash.find ("funny", entry) == 0)
       ACE_DEBUG ((LM_DEBUG, "`%s' found `%s'\n", "funny", ENTRY));
+
+    // Let's test the iterator again.
+    {
+      HASH_STRING_ENTRY *i;
+      for (HASH_STRING_ITER hash_iter (hash);
+           hash_iter.next (i);
+           hash_iter.advance ())
+        ACE_DEBUG ((LM_DEBUG, "iterating: [%s, %s]\n",
+                    i->ext_id_, i->int_id_));
+    }
   }
 
   ACE_END_TEST;
