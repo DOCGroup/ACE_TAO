@@ -1,7 +1,8 @@
 <?xml version="1.0"?> <!-- -*- SGML -*-  -->
 
-<!-- XML doesn't really support the following $(CIAO_ROOT) syntax :) -->
-<!DOCTYPE softpkg SYSTEM "$(CIAO_ROOT)/docs/XML/softpkg.dtd">
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+<!DOCTYPE softpkg SYSTEM "../../../../docs/XML/softpkg.dtd">
 
 <!-- NavDisplay's Servant Software Descriptor  -->
 <!-- This file describes various NavDisplay servant -->

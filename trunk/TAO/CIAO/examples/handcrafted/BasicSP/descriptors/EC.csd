@@ -1,7 +1,8 @@
 <?xml version="1.0"?> <!-- -*- SGML -*-  -->
 
-<!-- XML doesn't really support the following $(CIAO_ROOT) syntax :) -->
-<!DOCTYPE softpkg SYSTEM "$(CIAO_ROOT)/docs/XML/softpkg.dtd">
+<!-- If this file is moved to a different directory, make sure to change the
+     path to the DTD below. Otherwise the examples won't work. -->
+<!DOCTYPE softpkg SYSTEM "../../../../docs/XML/softpkg.dtd">
 
 <!-- RateGen's Software Package Descriptor  -->
 <!-- This file describes various RateGen executor -->
@@ -10,7 +11,7 @@
 
 <softpkg name="CIAO-EC" version="1.0">
   <pkgtype>CORBA Component</pkgtype>
-  <title>Event Generator</title>
+  <title>EC</title>
   <author>
     <company>ISIS at Vanderbilt University</company>
     <webpage href="http://www.dre.vanderbilt.edu/"/>
