@@ -1,4 +1,4 @@
-Thu Apr 25 16:35:28 2002 Balachandran Natarajan  <bala@cs.wustl.edu>
+Thu Apr 25 16:37:28 2002 Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	* tests/RTCORBA/Server_Protocol/run_test.pl: For a change the hack
 	  in this test to get around bug 1197 is to disable SHMIOP at
