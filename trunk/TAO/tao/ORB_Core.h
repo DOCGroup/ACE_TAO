@@ -452,6 +452,10 @@ public:
   void typecode_factory (const CORBA::Object_ptr tf);
   // Get/Set the IOR of the TypeCodeFactory DLL.
 
+  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _decr_refcnt (void);
+  // Reference counting...
+
 protected:
 
   int init (int &argc, char **argv, CORBA::Environment &ACE_TRY_ENV);
@@ -656,6 +660,9 @@ protected:
 
   char **svc_config_argv_;
   // The argument vector for the service configurator.
+
+  CORBA::ULong refcount_;
+  // Number of outstanding references to this object.
 };
 
 // ****************************************************************

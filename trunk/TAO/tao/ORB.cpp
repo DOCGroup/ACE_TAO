@@ -1372,9 +1372,6 @@ CORBA::ORB_init (int &argc,
                                        CORBA::COMPLETED_NO),
                       CORBA::ORB::_nil ());
 
-  // It is safe to release the ORB_Core from the auto_ptr now.
-  oc = safe_oc.release ();
-
   // Return a duplicate since the ORB_Core should release the last
   // reference to the ORB.
   return CORBA::ORB::_duplicate (oc->orb ());
