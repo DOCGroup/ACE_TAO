@@ -1,7 +1,25 @@
+Wed Jul 14 18:07:00 1999  Nanbor Wang  <nanbor@cs.wustl.edu>
+
+	* tao/POA.cpp (create_reference_i,create_reference_with_id_i):
+	  (servant_to_reference,id_to_reference_i): All these methods
+	  should generate collocated object reference.  Thanks to Francois
+	  Bernier <fbernier@gel.ulaval.ca> for reporting the bug.
+
+	* tao/ORB.{h,cpp} (key_to_object): The function now takes two
+	  extra arguments <servant> and <collocated> to create collocated
+	  object reference.  Actually, this seems to be the only use case
+	  for key_to_object.
+
+	* tao/Object.cpp (_is_a): Fixed the collocation resolving scheme
+	  so that thru_poa collocated calls don't go remote and collocated
+	  _is_a calls obey the collocated strategy use by the servants.
+
+	  Thanks to Irfan for helping this change.
+
 Wed Jul 14 17:23:23 1999  Jeff Parsons  <parsons@cs.wustl.edu>
 
 	* TAO_IDL/be/be_sunsoft.cpp:
-	  Added a 'f' at the end of a printed floating point literal, to 
+	  Added a 'f' at the end of a printed floating point literal, to
 	  avoid the MSVC warning, since it reads decimal constants as
 	  doubles.
 
