@@ -159,10 +159,6 @@ SOURCE=.\cubitC.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\cubitS.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\RTI_IO.cpp
 # End Source File
 # End Group
@@ -176,10 +172,6 @@ SOURCE=.\Cubit_Client.h
 # Begin Source File
 
 SOURCE=.\cubitC.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\cubitS.h
 # End Source File
 # End Group
 # Begin Group "IDL Files"

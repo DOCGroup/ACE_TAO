@@ -163,10 +163,6 @@ SOURCE=.\param_testCli.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\param_testSer.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=.\recursive_struct.cpp
 # End Source File
 # Begin Source File
@@ -308,10 +304,6 @@ SOURCE=.\options.h
 # Begin Source File
 
 SOURCE=.\Param_TestCli.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\Param_TestSer.h
 # End Source File
 # Begin Source File
 
