@@ -256,15 +256,16 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (u_long bytes_transferred,
   {
     for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
     {
-      if (mb->size () >= bytes_transferred)
+      if (mb->space () >= bytes_transferred)
       {
         mb->wr_ptr (bytes_transferred);
         bytes_transferred = 0;
       }
       else
       {
-        mb->wr_ptr (mb->size ());
-        bytes_transferred -= mb->size ();
+        size_t len = mb->space ();
+        mb->wr_ptr (len);
+        bytes_transferred -= len;
       }
     }
   }
@@ -419,7 +420,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
   for (const ACE_Message_Block* msg = &message_block; msg != 0; msg = msg->cont ())
   {
     iov[iovcnt].iov_base  = msg->wr_ptr ();
-    iov[iovcnt].iov_len   = msg->size ();
+    iov[iovcnt].iov_len   = msg->space ();
     ++iovcnt;
     if (iovcnt >= ACE_IOV_MAX)
     {
@@ -940,15 +941,16 @@ ACE_WIN32_Asynch_Read_File_Result::complete (u_long bytes_transferred,
   {
     for (ACE_Message_Block* mb = &this->message_block_; (mb != 0) && (bytes_transferred > 0); mb = mb->cont ())
     {
-      if (mb->size () >= bytes_transferred)
+      if (mb->space () >= bytes_transferred)
       {
         mb->wr_ptr (bytes_transferred);
         bytes_transferred = 0;
       }
       else
       {
-        mb->wr_ptr (mb->size ());
-        bytes_transferred -= mb->size ();
+        size_t len = mb->space ();
+        mb->wr_ptr (len);
+        bytes_transferred -= len;
       }
     }
   }
