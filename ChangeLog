@@ -1,3 +1,16 @@
+Wed Jun 18 08:11:35 2003  Chad Elliott  <elliott_c@ociweb.com>
+
+        * bin/MakeProjectCreator/modules/NMakeProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC6ProjectCreator.pm:
+        * bin/MakeProjectCreator/modules/VC7ProjectCreator.pm:
+
+          For custom defined values, convert $(...) to the corresponding
+          environment variable accessor, if it is required.  Custom builds
+          done in the MS based IDE's are placed in a batch file and then
+          executed.  For this particular case, $(...) doesn't work so we
+          convert the values on assignment.
+
 Wed Jun 18 07:38:26 2003  Chad Elliott  <elliott_c@ociweb.com>
 
         * bin/pch_cmd.pl:
