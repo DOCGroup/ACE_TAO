@@ -1,5 +1,8 @@
 Wed Jun 16 13:23:57 1999  Vishal Kachroo  <vishal@cs.wustl.edu>
 
+	* orbsvcs/Time_Service/IR_Helper.cpp: 
+	Fixed ACE_THROW_SPEC
+
 	Fixed ACE_THROW_SPEC.
 	* tests/InterOp-Naming/INS_i.cpp: 
 	* tests/InterOp-Naming/INS_i.h: 
