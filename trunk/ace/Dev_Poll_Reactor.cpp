@@ -1088,11 +1088,11 @@ ACE_Dev_Poll_Reactor::work_pending (const ACE_Time_Value & max_wait_time)
   // Update the countdown to reflect time waiting for the mutex.
   ACE_MT (countdown.update ());
 
-  return this->work_pending_i (mwt);
+  return this->work_pending_i (&mwt);
 }
 
 int
-ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value & max_wait_time)
+ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value * max_wait_time)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::work_pending_i");
 
@@ -1106,7 +1106,7 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value & max_wait_time)
   ACE_Time_Value timer_buf (0);
   ACE_Time_Value *this_timeout = 0;
 
-  this_timeout = this->timer_queue_->calculate_timeout (&max_wait_time,
+  this_timeout = this->timer_queue_->calculate_timeout (max_wait_time,
                                                         &timer_buf);
 
   // If "this_timeout" != 0, the poll must timeout to allow timers
@@ -1156,9 +1156,15 @@ ACE_Dev_Poll_Reactor::work_pending_i (ACE_Time_Value & max_wait_time)
   if (nfds > -1)
     this->end_pfds_ = this->start_pfds_ + nfds;
 
-  // "nfds > 0" means that we have IO events to dispatch.
-  // "this_timeout != 0" means that we have timers to fire.
-  return (nfds > 0 || this_timeout != 0 ? 1 : nfds);
+  // Check if we have timers to fire.
+  int timers_pending =
+    ((this_timeout != 0 && max_wait_time == 0)
+     || (this_timeout != 0 && max_wait_time != 0
+         && *this_timeout != *max_wait_time) ? 1 : 0);
+
+  // If timers are pending, override any error condition from the
+  // poll.
+  return (nfds <= 0 && timers_pending != 0 ? 1 : nfds);
 }
 
 
@@ -1199,7 +1205,7 @@ ACE_Dev_Poll_Reactor::handle_events_i (ACE_Time_Value *max_wait_time)
   // be restarted if so desired.
   do
     {
-      result = this->work_pending_i (*max_wait_time);
+      result = this->work_pending_i (max_wait_time);
     }
   while (result == -1 && this->restart_ != 0 && errno == EINTR);
 
