@@ -21,7 +21,7 @@ IDL_FILES = \
 
 FILES= $(IDL_FILES) \
 	Event_Utilities \
-#	Scheduler_Factory \
+	Scheduler_Factory \
 	Runtime_Scheduler \
 	Scheduler_Utilities \
 
