@@ -1,3 +1,9 @@
+Sun Nov 30 17:08:56 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
+
+	* orbsvcs/lib/RtecSchedulerC.cpp: 
+	  Added missed parameter in do_call() for
+	  RtecScheduler::Scheduler::set().
+
 Sat Nov 29 13:34:58 1997  Carlos O'Ryan  <coryan@macarena.cs.wustl.edu>
 
 	* tao/stub.i (STUB_Object): 
