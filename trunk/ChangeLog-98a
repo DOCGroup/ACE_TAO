@@ -1,3 +1,14 @@
+Wed Mar 18 16:36:17 1998  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
+
+	* Makefile (releaseall): There is no more TAO.tar.gz.  There are
+ 	  now two tar files, ACE.tar.gz and ACE+TAO.tar.gz.
+  	  ACE+TAO.tar.gz contains ALL of ACE.  In particular, it will
+ 	  always have the same version number and same ACE contents as
+ 	  ACE.tar.gz.  The intent here is that people who just want to use
+ 	  ACE will use ACE.tar.gz and people who want to use ACE and TAO
+ 	  will use ACE+TAO.tar.gz.  Thanks to David Levine and Irfan for
+ 	  helping with this.
+
 Wed Mar 18 15:50:30 1998  Nanbor Wang  <nanbor@cs.wustl.edu>
 
 	* ace/Log_Msg.cpp (ACE_Log_Msg): Added codes to grab 

@@ -183,9 +183,9 @@ releaseall: release
 	@cd TAO; make releaseall
 	@(cd ..; \
          find $(ALL_RELEASE_FILES) $(FILTER) | \
-           cpio -o -H tar | gzip -9 > TAO.tar.gz; \
-         chmod a+r TAO.tar.gz \
-         mv TAO.tar.gz ./ACE_wrappers/)
+           cpio -o -H tar | gzip -9 > ACE+TAO.tar.gz; \
+         chmod a+r ACE+TAO.tar.gz \
+         mv ACE+TAO.tar.gz ./ACE_wrappers/)
 
 ACE-INSTALL: ACE-INSTALL.html
 	@lynx -dump $< > $@
