@@ -1,3 +1,8 @@
+Wed Feb 18 21:40:24 1998    <coryan@MILONGA>
+
+	* docs/orbsvcs.html: 
+	  Updated the description of orbsvcs directory hierarchy.
+
 Wed Feb 18 19:45:57 1998  Alexander Babu Arulanthu  <alex@merengue.cs.wustl.edu>
 
 	* Added the idl file for the CosPropertyService , i.e.
