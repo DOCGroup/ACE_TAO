@@ -131,6 +131,7 @@ project(TAO) : acelib, taoversion, core, tao_output, extra_core {
       DynamicA.cpp
       Dynamic_ParameterC.cpp
       ParameterMode.cpp
+      OctetSeqA.cpp
       OctetSeqC.cpp
       StringSeqC.cpp
       Codeset_Manager.cpp

@@ -5,12 +5,13 @@
 #include "Basic_Replication_Strategy.h"
 #include "FTEC_ORBInitializer.h"
 
+#include "tao/ORBInitializer_Registry.h"
+
+#include "ace/OS_NS_strings.h"
+
 ACE_RCSID (EventChannel,
            Replication_Service,
            "$Id$")
-
-
-
 
 namespace FTRTEC
 {

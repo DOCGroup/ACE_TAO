@@ -151,7 +151,8 @@ TAO_ECG_Mcast_Gateway::init (int argc, char* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const char* opt = arg_shifter.get_current ();
-              this->ttl_value_ = ACE_OS::strtoul(opt, 0, 0) & 0xff;
+              unsigned long tmp = ACE_OS::strtoul (opt, 0, 0) & 0xff;
+              this->ttl_value_ = ACE_static_cast (u_char, tmp);
               arg_shifter.consume_arg ();
             }
         }

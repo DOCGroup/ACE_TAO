@@ -1,5 +1,6 @@
 project : taolib, portableserver {
   sharedname = TAO_Utils
+  dynamicflags = TAO_UTILS_BUILD_DLL
   source_files {
    ORB_Destroyer.cpp
    Implicit_Deactivator.cpp
