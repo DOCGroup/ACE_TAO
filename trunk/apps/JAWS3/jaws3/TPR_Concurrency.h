@@ -4,6 +4,8 @@
 #ifndef JAWS_TPR_CONCURRENCY_H
 #define JAWS_TPR_CONCURRENCY_H
 
+#include "ace/Atomic_Op.h"
+
 #include "jaws3/Concurrency.h"
 
 class JAWS_Export JAWS_TPR_Concurrency : public JAWS_Concurrency_Impl
