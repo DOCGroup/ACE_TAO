@@ -27,6 +27,11 @@ class ACE_Export ACE_Process_Options
   // = DESCRIPTION
   //    This class controls the options passed to <CreateProcess> (or <fork>
   //    and <exec>).
+  //    Notice that on Windows CE, creating a process merely means
+  //    instantiating a new process.  You can't set the handles (since
+  //    there's no stdin, stdout and stderr,) specify process/thread
+  //    options, set environment,...  So, basically, this class only
+  //    set the command line and nothing else.
 public:
   enum 
   { 
@@ -158,24 +163,26 @@ public:
 
 protected:
 
-  int setenv_i (LPTSTR assignment, int len);
-  // Add <assignment> to environment_buf_ and adjust
-  // environment_argv_.  <len> is the strlen of <assignment>.
-
   enum { 
     MAX_COMMAND_LINE_OPTIONS = 128,
     ENVIRONMENT_BUFFER = 8192,
     MAX_ENVIRONMENT_ARGS = 128
   };
 
+#if !defined (ACE_HAS_WINCE)
+  int setenv_i (LPTSTR assignment, int len);
+  // Add <assignment> to environment_buf_ and adjust
+  // environment_argv_.  <len> is the strlen of <assignment>.
+
   int inherit_environment_;
   // Whether the child process inherits the current process
   // environment.
+#endif /* !ACE_HAS_WINCE */
 
   u_long creation_flags_;
   // Default 0.
 
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
   void inherit_environment (void);
   // Helper function to grab win32 environment and stick it in
   // environment_buf_ using this->setenv_i.
@@ -206,6 +213,7 @@ protected:
   ACE_HANDLE stderr_;
 #endif /* ACE_WIN32 */
 
+#if !defined (ACE_HAS_WINCE)
   int set_handles_called_;
   // Is 1 if stdhandles was called.
 
@@ -222,17 +230,18 @@ protected:
   LPTSTR environment_argv_[MAX_ENVIRONMENT_ARGS];
   // Pointers into environment_buf_.
 
+  TCHAR working_directory_[MAXPATHLEN + 1];
+  // The current working directory.
+#endif /* !ACE_HAS_WINCE */
+
+  int command_line_argv_calculated_;
+  // Ensures command_line_argv is only calculated once.
+
   LPTSTR command_line_buf_;
   // Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
 
   LPTSTR command_line_argv_[MAX_COMMAND_LINE_OPTIONS];
   // Argv-style command-line arguments.
-
-  int command_line_argv_calculated_;
-  // Ensures command_line_argv is only calculated once.
-
-  TCHAR working_directory_[MAXPATHLEN + 1];
-  // The current working directory.
 };
 
 // ************************************************************
