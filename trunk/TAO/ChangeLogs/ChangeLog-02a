@@ -1,3 +1,18 @@
+Tue Jun 20 15:07:30 2000  Ossama Othman  <ossama@uci.edu>
+
+	* examples/Content_Server/SMI_Iterator/Makefile (TAO_IDLFLAGS):
+	* examples/Content_Server/AMI_Iterator/Makefile (TAO_IDLFLAGS):
+	* examples/Content_Server/AMI_Observer/Makefile (TAO_IDLFLAGS):
+
+	  Added "-Ge 1" TAO IDL compiler flag so that a CORBA Environment
+	  variable argument is added to each method.  This fixes a compile
+	  error that occured when native exception support was enabled.
+
+	* docs/compiler.html:
+
+	  Added missing description of "-GC" flag.  It causes stubs with
+	  AMI support to be generated.
+
 Tue Jun 20 15:03:07 2000  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* examples/Content_Server/AMI_Observer: Fixed some more style
