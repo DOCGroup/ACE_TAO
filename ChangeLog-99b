@@ -21,6 +21,10 @@ Tue Aug 03 18:30:47 1999  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
 	  making the non-locking version of <marked_as_closed> public
 	  arose in the first place.
 
+	* ace/OS.h (ACE_Recyclable_State):
+	  Removed hardcoded values and left the enum values to the
+	  discretion of the compiler.
+
 Tue Aug 03 16:58:08 1999  Joe Hoffert  <joeh@cs.wustl.edu>
 
 	* ace/ATM_Acceptor.{h,cpp}:
