@@ -97,7 +97,7 @@ Task_Handler::svc (void)
 }
 
 Task_Handler::Task_Handler (size_t number_of_handles,
-			    size_t int concurrent_threads)
+			    size_t concurrent_threads)
 {
   ACE_NEW (this->events_, ACE_Auto_Event [number_of_handles]);
 
@@ -145,7 +145,7 @@ Task_Handler::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 }
 
 int 
-Task_Handler::signal (size_T index)
+Task_Handler::signal (size_t index)
 {
   return this->events_[index].signal ();
 }

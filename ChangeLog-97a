@@ -1,3 +1,19 @@
+Mon Feb 17 03:15:48 1997  Irfan Pyarali  <irfan@flamenco.cs.wustl.edu>
+
+	* tests/SOCK_Test.cpp (server): Changed recv_n() to recv().
+
+	* tests/tests.{mak,mdp}: Added two new tests: IOStream and
+	  Reactor_Notify.
+
+	* ace/Reactor: Removed all special checks for setting
+ 	  ACE_Reactor::max_notify_iterations_ on WIN32 to be 1.  This was
+ 	  made possible after we figured out that the errno was being
+ 	  reset after the recv() call in handle_input().  This allows
+ 	  ACE_Reactor_Notify::handle_input() to serve upto
+ 	  ACE_Reactor::max_notify_iterations_ notifications in one shot
+ 	  rather than just 1 on WIN32. This should speed up the Reactor on
+ 	  WIN32 platforms.
+	
 Mon Feb 17 00:07:47 1997  Douglas C. Schmidt  <schmidt@tango.cs.wustl.edu>
 
 	* ace/Reactor: Finished rewriting and testing the new dispatching
