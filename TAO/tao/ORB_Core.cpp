@@ -451,12 +451,12 @@ TAO_ORB_Core::init (int &argc, char *argv[])
       }
   }
 #endif  /* DEBUG */
-  
+
   // Set the endpoint
   ACE_INET_Addr rendezvous;
   if (this->set_endpoint (dotted_decimal_addresses,
-                          port, 
-                          host, 
+                          port,
+                          host,
                           rendezvous) == -1)
     return -1;
 
@@ -915,7 +915,7 @@ TAO_ORB_Core::root_poa (TAO_POA *np)
   this->resource_factory ()->set_root_poa (np);
   TAO_POA *old_poa = this->root_poa_;
   this->root_poa_ = np;
-  this->root_poa_reference_ = PortableServer::POA::_nil ();  
+  this->root_poa_reference_ = PortableServer::POA::_nil ();
   return old_poa;
 }
 
@@ -1007,7 +1007,7 @@ TAO_ORB_Core::create_and_set_root_poa (const char *adapter_name,
 
   if (delete_policies)
     delete root_poa_policies;
-  
+
   if (env.exception () == 0)
     // set the poa in the orbcore instance
     this->root_poa (poa);
@@ -1492,9 +1492,9 @@ TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
     {
     case TAO_GLOBAL:
       {
-        ACE_Allocator* buffer_alloc = 
+        ACE_Allocator* buffer_alloc =
           this->input_cdr_buffer_allocator ();
-        ACE_Allocator* dblock_alloc = 
+        ACE_Allocator* dblock_alloc =
           this->input_cdr_dblock_allocator ();
 
         typedef
@@ -1518,9 +1518,9 @@ TAO_Resource_Factory::create_input_cdr_data_block (size_t size)
 
     case TAO_TSS:
       {
-        ACE_Allocator* buffer_alloc = 
+        ACE_Allocator* buffer_alloc =
           this->input_cdr_buffer_allocator ();
-        ACE_Allocator* dblock_alloc = 
+        ACE_Allocator* dblock_alloc =
           this->input_cdr_dblock_allocator ();
 
         ACE_Data_Block *nb;
@@ -1728,5 +1728,14 @@ template class ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> 
 #pragma instantiate ACE_Select_Reactor_T< ACE_Select_Reactor_Token_T<ACE_Noop_Token> >
 
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION */
+
+#if defined (TAO_USES_STATIC_SERVICE)
+ACE_STATIC_SVC_DEFINE (TAO_Resource_Factory,
+		       ASYS_TEXT ("TAO_Resource_Factory"),
+                       ACE_SVC_OBJ_T,
+                       &ACE_SVC_NAME (TAO_Resource_Factory),
+		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+                       0)
+#endif /* TAO_USES_STATIC_SERVICE */
 
 ACE_FACTORY_DEFINE (TAO, TAO_Resource_Factory)

@@ -17,7 +17,7 @@ TAO_Internal::open_services (int& argc, char** argv)
 #if defined (TAO_PLATFORM_SVC_CONF_FILE_NOTSUP)
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
-  
+
   char *rfactory_args[] = TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
   char *client_args[] = TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
   char *server_args[] = TAO_DEFAULT_SERVER_STRATEGY_FACTORY_ARGS;
@@ -29,7 +29,11 @@ TAO_Internal::open_services (int& argc, char** argv)
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, *ACE_Static_Object_Lock::instance (), -1));
 
   if (TAO_Internal::service_open_count_++ == 0)
+#if defined (TAO_USES_STATIC_SERVICE)
+    return ACE_Service_Config::open (argc, argv, 0);
+#else
     return ACE_Service_Config::open (argc, argv);
+#endif /* TAO_USES_STATIC_SERVICE */
   else
     return 0;
 #endif /* TAO_PLATFORM_SVC_CONF_FILE_NOTSUP */
